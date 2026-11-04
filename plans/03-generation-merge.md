@@ -1,5 +1,8 @@
 # 03 — Integrate the completed generation increment
 
+## Goal
+
+Provide one consistent end-to-end path for supported generation, with shared defaults and predictable setup, execution, and results. This plan integrates and publishes the completed generation work after installer consent; managed model execution, training, and GPU support remain unproven or deferred.
 
 ## Starting code and branch policy
 

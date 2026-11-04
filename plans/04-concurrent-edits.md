@@ -2,6 +2,10 @@
 
 [Master](MASTER.md) · [Manager](MANAGER.md). Final publication follows [generation merge](03-generation-merge.md); independent completion on the retained tuple may proceed earlier after initiative start.
 
+## Goal
+
+Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes.
+
 Reuse Agent `4f111c2153184a73a5ca333a16f4b9a69a3313f1`, App `438159b030cd3b0b81653415f1018f9a1349f0c5`, Runtime `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`. App's full eight-case repair verification passed; original CE-2 still needs independent final acceptance. Prior 351 SDK passes are reusable evidence for unchanged internals, not proof of a newly composed tuple.
 
 | ID | Action and output | Dependencies | Lead | Done evidence |

@@ -2,6 +2,10 @@
 
 [Master](MASTER.md) · [Manager](MANAGER.md). After the CE increment, account for and integrate the remaining eligible fixes. A disposition ledger is not a tested product release. This plan also owns the separate Runtime CAS lane intentionally omitted from generation. It does not wait for Packs merely to ship unrelated fixes.
 
+## Goal
+
+Bring the accepted fixes together into a coherent release while preserving existing behavior.
+
 Use accepted SF receipts `83f39c24e731fe199efa60bb2f5a262c9d4a871b` and `1c4cab15b614336c752f44976c8b283ca9b36667`, the [original provenance](../references/evidence-summary.md) and [donor manifest](../references/donor-manifest.json). Each ledger member gets exactly one inclusion/equivalence/deferred record. Do not merge superseded originals as well as their fold.
 
 

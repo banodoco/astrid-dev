@@ -1,5 +1,8 @@
 # 06 — CPU Packs completion and final integration
 
+## Goal
+
+Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows.
 
 Target is the existing CPU pack scope: 19 named packs move to `poms_packs`; training stays deferred pending K census; H3 remains in Agent core. Preserve namespace/schema repair heads and the exact old-to-new test mappings. Existing card TEST blocks are authoritative and narrowly selected; do not run broad suites or recursive integration/pack tests. Classes below are difficulty: N normal/Luna; X very hard/Terra with native Luna helper; S super-hard/Sol with native Luna helpers. Astra reviews are existing required reviews, not new approval gates.
 

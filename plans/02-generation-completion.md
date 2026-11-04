@@ -1,5 +1,8 @@
 # 02 — Complete the retained Astrid generation work
 
+## Goal
+
+Provide one consistent end-to-end path for supported generation, with shared defaults and predictable setup, execution, and results. This plan completes the retained generation work; managed model readiness or execution, training, and GPU support remain unproven or deferred.
 
 ## Starting code and branch policy
 

@@ -2,9 +2,9 @@
 
 [Master](MASTER.md). This documentation-only plan reconciles Task L launcher validation with M4-4a source/engine controls and M4-6 custody. It does not resume Pinokio work or claim validation, qualification, release, or completion. The main README owns current status and estimate.
 
-## End state
+## Goal
 
-Deliver a Pinokio launcher whose hosted and fully-local install/update/start/stop/recovery/reset/uninstall paths preserve Astrid-owned data and process boundaries, and whose real native Stop/Quit behavior refuses safely while work is busy or state is unknown. Any Pinokio direct-custody provider must bind the selected installed app, exact action bytes and engine/session/process identities; it must distinguish request acceptance from terminal settlement and fail closed when evidence is missing. The adapter may report only outcomes supported by the deployed engine and independent postconditions. Native Stop/Quit refusal is a release boundary: the historical Pinokio 8.1.1 review found hook errors swallowed before forced cleanup and Quit/signals bypassing the hook. This boundary is unsatisfied until the deployed version and a compatible upstream veto contract are evidenced.
+Provide a tested, reliable Pinokio launcher for installing, starting, updating, stopping, and removing Astrid safely.
 
 ## Starting sources, base, and destination
 

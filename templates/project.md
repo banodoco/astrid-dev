@@ -1,8 +1,10 @@
 # Project: <name>
 
-## Goal and scope
+## Goal
 
-State the useful outcome and what behavior must remain. Keep the project status and remaining human-days estimate in the root README only.
+State the useful end-state outcome in one or two sentences, including existing behavior that must remain. Keep task/process steps in the task table, and keep project status and remaining human-days estimate in the root README only.
+
+## Scope
 
 ### In scope
 

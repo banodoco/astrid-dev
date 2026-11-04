@@ -8,16 +8,16 @@ Navigation: [plan index](plans/MASTER.md) · [execution handoff](plans/MANAGER.m
 
 ## Active and upcoming projects
 
-Estimates are human focused engineering days remaining, not agent elapsed time. Use a range when evidence supports one and `TBD` otherwise. Estimates inform sequencing and capacity; they are not approval gates.
+The goals below are intended outcomes, not claims of delivery; each plan specifies current scope, exclusions, and proof. Estimates are human focused engineering days remaining, not agent elapsed time. Use a range when evidence supports one and `TBD` otherwise. Estimates inform sequencing and capacity; they are not approval gates.
 
-| Project | Description | Status | Estimate | Plan |
+| Project | Goal | Status | Estimate | Plan |
 |---|---|---|---:|---|
-| Installer consent | Deliver the accepted installer increment to pre-main | queued | 0.5–1 day | [Plan 01](plans/01-installer-consent.md) |
-| Generation | Complete retained generation work and integrate it after installer | queued | 1–2 days + native Linux x86_64 verification | [Completion 02](plans/02-generation-completion.md), [merge 03](plans/03-generation-merge.md) |
-| Concurrent editing | Finish combined acceptance and integrate the exact verified inputs | queued | TBD | [Plan 04](plans/04-concurrent-edits.md) |
-| Remaining fixes | Account for accepted remaining fixes and their final disposition | queued | TBD | [Plan 05](plans/05-remaining-fixes.md) |
-| Packs | Complete the scoped CPU pack work and integration | queued | TBD | [Plan 06](plans/06-packs.md) |
-| Pinokio | Reconcile historical plans, then define current scope before any product work | queued | TBD | [Plan 07](plans/07-pinokio.md) |
+| Installer consent | Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior. | queued | 0.5–1 day | [Plan 01](plans/01-installer-consent.md) |
+| Generation | Provide one consistent end-to-end path for supported generation, with shared defaults and predictable setup, execution, and results. | queued | 1–2 days + native Linux x86_64 verification | [Completion 02](plans/02-generation-completion.md), [merge 03](plans/03-generation-merge.md) |
+| Concurrent editing | Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes. | queued | TBD | [Plan 04](plans/04-concurrent-edits.md) |
+| Remaining fixes | Bring the accepted fixes together into a coherent release while preserving existing behavior. | queued | TBD | [Plan 05](plans/05-remaining-fixes.md) |
+| Packs | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | TBD | [Plan 06](plans/06-packs.md) |
+| Pinokio | Provide a tested, reliable Pinokio launcher for installing, starting, updating, stopping, and removing Astrid safely. | queued | TBD | [Plan 07](plans/07-pinokio.md) |
 
 ### Status key
 

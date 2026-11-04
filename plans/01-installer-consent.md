@@ -2,7 +2,11 @@
 
 [Initiative](MASTER.md) · [Manager](MANAGER.md). First release slice; it does not depend on generation, CE or Packs and does not authorize product execution. Source evidence: [Astra merge plan](../references/PLAN.md), [exact manifest](../references/donor-manifest.json), [IC END acceptance](../references/evidence-summary.md).
 
-Outcome: preserve current pre-main installer/root/rollback behavior while delivering consent choices, saved policy, optional command/autostart/skills behavior, onboarding, terminal summaries and matching App/Agent arguments. Preserve the accepted known nonblocking skills-off rendering limitation; do not silently claim it fixed.
+## Goal
+
+Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior.
+
+Preserve the accepted known nonblocking skills-off rendering limitation; do not silently claim it fixed.
 
 ## Starting code and branch policy
 
