@@ -1,0 +1,6 @@
+# Megado control state is local to each run and never belongs in the planning repo.
+.otto/
+
+# Common local/editor noise.
+.DS_Store
+Thumbs.db

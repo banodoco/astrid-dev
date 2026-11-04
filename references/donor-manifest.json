@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "scope": "partial-first-increment-install-consent",
+  "observed_utc": "2026-11-04T20:58:44.201266+00:00",
+  "audit_only": true,
+  "execution_owner": "existing orchestrator",
+  "bases": [
+    {
+      "repo": "astrid-agent",
+      "base": "e50d9a6daf2124a21f9cdf78826253ddadec7f83",
+      "base_ref": "pre-main",
+      "observed_pre_main": "e50d9a6daf2124a21f9cdf78826253ddadec7f83",
+      "publish": true,
+      "no_change": false
+    },
+    {
+      "repo": "astrid-app",
+      "base": "878c28df7a6c80fa9aaa6540c5fccad95473e7c1",
+      "base_ref": "pre-main",
+      "observed_pre_main": "878c28df7a6c80fa9aaa6540c5fccad95473e7c1",
+      "publish": true,
+      "no_change": false
+    },
+    {
+      "repo": "astrid-runtime",
+      "base": "9fc53b771134940aaac901e4cfc5d03c1db1a20a",
+      "base_ref": "pre-main",
+      "observed_pre_main": "9fc53b771134940aaac901e4cfc5d03c1db1a20a",
+      "publish": false,
+      "no_change": true
+    },
+    {
+      "repo": "VibeComfy",
+      "base": "e2905d068d5851b9c32856d32b8251852a01d6dd",
+      "base_ref": "main",
+      "observed_pre_main": null,
+      "publish": false,
+      "no_change": true
+    },
+    {
+      "repo": "runpod-lifecycle",
+      "base": "db79345536985c701b7aff2eb5eec36667aae204",
+      "base_ref": "main",
+      "observed_pre_main": null,
+      "publish": false,
+      "no_change": true
+    }
+  ],
+  "merge_order": {
+    "astrid-agent": [
+      "6087e0fbe7e2bd45c9911ff5cf1093614d715863",
+      "19229d2325879c12e01c6bcdc604fd743b158ece"
+    ],
+    "astrid-app": [
+      "e97450cff0ed570cfaa077369b28c269b562bd1e",
+      "9ddff8efbc9e914efbe04cb49da2648c4feb4db4"
+    ]
+  },
+  "donors": [
+    {
+      "repo": "astrid-runtime",
+      "name": "stop",
+      "sha": "b005394b06602c84e2abd4ba7eec8fa2f1dd8e94",
+      "source": "RI-0",
+      "decision": "defer",
+      "reason": "Independent shutdown work but not needed by IC; defer its generation lock/stop qualification to remainder.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-runtime",
+      "name": "CAS",
+      "sha": "1e60e3b746c37c1fd22c14f0ceeb1218dc36b373",
+      "source": "RI-0",
+      "decision": "defer",
+      "reason": "Generation/publication service-store change; three conflict paths; not needed by IC.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-runtime",
+      "name": "editing-lease",
+      "sha": "33e9195a8ac57c4ba61f372ef6f25139c37eaa97",
+      "source": "RI-0",
+      "decision": "defer",
+      "reason": "CE cross-repository API; full tuple acceptance pending.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-runtime",
+      "name": "test-health-fold",
+      "sha": "287042b2426f7465a1fba77bba075766f18f26b1",
+      "source": "RI-0",
+      "decision": "defer",
+      "reason": "Accepted fold intent does not isolate its production ancestry; defer production pack/executor or runtime cancellation changes.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "test-health-fold",
+      "sha": "47d67d8d13bcbf4ab437bc41ae6ec5b6cf60598b",
+      "source": "RI-0",
+      "decision": "defer",
+      "reason": "Accepted fold intent does not isolate its production ancestry; defer production pack/executor or runtime cancellation changes.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "test-health-rank2-host-cancel",
+      "sha": "aff7686d0f6e6314dd5531600d173bbd265e437e",
+      "source": "SF-0 accepted83f39c24",
+      "decision": "defer",
+      "reason": "Execution cancellation/generation ancestry and seven conflict paths; not needed by IC.",
+      "lane": []
+    },
+    {
+      "repo": "VibeComfy",
+      "name": "p1-test-health-rank9-vc-boundary",
+      "sha": "1ac3b91fedf4a15842ff655442869569d4855396",
+      "source": "SF-0 accepted83f39c24",
+      "decision": "defer",
+      "reason": "Independently eligible accepted test-only change (test_porting_emitter.py7added/2removed); omit from fastest installer increment because it delivers no installer behavior and adds another repo publication. No pending-feature dependency claimed.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "h-installed-boundary-smoke",
+      "sha": "9c06b674dfe27d513eccc528e14fb423cf3a1881",
+      "source": "SF-1-FINAL accepted1c4cab15",
+      "decision": "defer",
+      "reason": "Generation installed-product boundary coverage; test_installer_wheel conflict; defer with installed acceptance.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "g-integration",
+      "sha": "7ab6aa10859b19bc3b13cf90966cc0da18026c68",
+      "source": "SF-1-FINAL accepted1c4cab15",
+      "decision": "defer",
+      "reason": "Generation CLI/listing/readiness/entry IDs and nine conflicts; defer with generation.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "p1-sdk-target-fix2",
+      "sha": "9d6af90b1ae4bd4a7afd346942c07e57f75201c7",
+      "source": "SF-1-FINAL accepted1c4cab15",
+      "decision": "defer",
+      "reason": "Generation target fixtures and conflict; defer with generation.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "p1-a10-runpod-owner",
+      "sha": "aee88cb87c4acd249023d16f096bce5f40c1b6f9",
+      "source": "SF-1-FINAL accepted1c4cab15",
+      "decision": "defer",
+      "reason": "23-file RunPod ownership/preparation production delta; defer with generation.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "FIC-1A-3",
+      "sha": "6087e0fbe7e2bd45c9911ff5cf1093614d715863",
+      "source": "install-consent:FIC-1A-3",
+      "decision": "include",
+      "reason": "Accepted installer bundle; no pending gen/CE source ancestry.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "FIC-2A-2",
+      "sha": "19229d2325879c12e01c6bcdc604fd743b158ece",
+      "source": "install-consent:FIC-2A-2",
+      "decision": "include",
+      "reason": "Accepted installer bundle; no pending gen/CE source ancestry.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-app",
+      "name": "FIC-1P-1",
+      "sha": "e97450cff0ed570cfaa077369b28c269b562bd1e",
+      "source": "install-consent:FIC-1P-1",
+      "decision": "include",
+      "reason": "Accepted installer bundle; no pending gen/CE source ancestry.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-app",
+      "name": "FIC-2P-1",
+      "sha": "9ddff8efbc9e914efbe04cb49da2648c4feb4db4",
+      "source": "install-consent:FIC-2P-1",
+      "decision": "include",
+      "reason": "Accepted installer bundle; no pending gen/CE source ancestry.",
+      "lane": []
+    },
+    {
+      "repo": "VibeComfy",
+      "name": "FVFIX-1",
+      "sha": "1b2e242ce7396442c85395d3220a2481216b57c1",
+      "source": "generation:FVFIX-1",
+      "decision": "defer",
+      "reason": "Verified interim generation source; full pins/defaults/installed acceptance unfinished.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "FAGENT-1",
+      "sha": "620a3fd5146fed9f623a2f7101c40c4279f03516",
+      "source": "generation:FAGENT-1",
+      "decision": "defer",
+      "reason": "Verified interim generation source; full pins/defaults/installed acceptance unfinished.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "PINS",
+      "sha": "c785d11feb991f75434ee8b99352f10d31290449",
+      "source": "generation:PINS",
+      "decision": "defer",
+      "reason": "Superseded interim PINS; latest1608 remains blocked.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-app",
+      "name": "FCE-APP-JOURNEYS-8",
+      "sha": "0e4ff5a9961ea3f91c1cb3c6a6de4eac6a3646f7",
+      "source": "concurrent-edits:FCE-APP-JOURNEYS-8",
+      "decision": "defer",
+      "reason": "Old individually verified repair; not final fully accepted CE tuple.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "FCE-2-3",
+      "sha": "142ae82a171db4d2ee754f5ce0c7ed506dfbcae7",
+      "source": "concurrent-edits:FCE-2-3",
+      "decision": "defer",
+      "reason": "Older partial SDK result is not full CE feature acceptance.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "CE latest pending tuple",
+      "sha": "4f111c2153184a73a5ca333a16f4b9a69a3313f1",
+      "source": "FCE-2-7 running, FCE-2-6 dropped",
+      "decision": "defer",
+      "reason": "SDK351 passes but full CE journey acceptance fails.",
+      "lane": []
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "FPINS-1",
+      "sha": "1608dbbf7036ad3c3b2b5e10956a726921bd4f9f",
+      "decision": "defer",
+      "reason": "Unfinished PINS; latest verification cancelled rc143 by owner, not a new product test failure. Retain source and earlier evidence."
+    },
+    {
+      "repo": "astrid-app",
+      "name": "FCE-APP-JOURNEYS-15",
+      "sha": "438159b030cd3b0b81653415f1018f9a1349f0c5",
+      "decision": "defer",
+      "reason": "App repair now verified original full8 plus scope/migration/owner; independent final CE Agent/App/Runtime tuple acceptance still pending. Keep deferred.",
+      "observed_state": "verified",
+      "evidence": "local-only source evidence (summarized in evidence-summary.md)"
+    },
+    {
+      "repo": "runpod-lifecycle",
+      "name": "K27",
+      "sha": "c47fa76be6e7c0aa661d044a0de5b3b73f6fdbac",
+      "decision": "defer",
+      "reason": "Generation adopted dependency; not required by IC; defer qualification and pin update."
+    },
+    {
+      "repo": "astrid-runtime",
+      "name": "forbidden-custody-CAS",
+      "sha": "103f97803f7f391e2c810ebdf086f798326cd75a",
+      "decision": "defer",
+      "reason": "Forbidden deferred custody ancestry; do not substitute for CAS port."
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "parked-H3-refusal",
+      "sha": "d88a1c69e45fb5d2e729e449d4b2c1b8062b6956",
+      "decision": "defer",
+      "reason": "Explicit PARKED H3 production."
+    },
+    {
+      "repo": "astrid-agent",
+      "name": "parked-H3-lock",
+      "sha": "ed985e81bbdf8e5b0535cf10ce28e1196ab56145",
+      "decision": "defer",
+      "reason": "Explicit PARKED H3 production."
+    },
+    {
+      "project": "generation",
+      "name": "LB-PINS",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Unfinished remainder; this increment does not satisfy or alter acceptance."
+    },
+    {
+      "project": "generation",
+      "name": "DEFAULTS",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "blocked",
+      "evidence": null,
+      "reason": "Exited blocked before cancellation; dirty SDK generation.py and new CLI075b test retained, not a published donor."
+    },
+    {
+      "project": "generation",
+      "name": "INSTALLED-TEST",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Unfinished remainder; this increment does not satisfy or alter acceptance."
+    },
+    {
+      "project": "generation",
+      "name": "END",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Unfinished remainder; this increment does not satisfy or alter acceptance."
+    },
+    {
+      "project": "concurrent-edits",
+      "name": "END",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": "local-only source evidence (summarized in evidence-summary.md)",
+      "reason": "Unfinished remainder; this increment does not satisfy or alter acceptance."
+    },
+    {
+      "project": "packs",
+      "name": "PK-0",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-1",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-2",
+      "sha": "04e74695a6cded0139ba31b20ce59a81ee91d564",
+      "decision": "defer",
+      "observed_state": "verified",
+      "evidence": "local-only source evidence (summarized in evidence-summary.md)",
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-3",
+      "sha": "ed04114d255bfec53b5fda1d768530fe5b848da1",
+      "decision": "defer",
+      "observed_state": "verified",
+      "evidence": "local-only source evidence (summarized in evidence-summary.md)",
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-4",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "blocked",
+      "evidence": "local-only source evidence (summarized in evidence-summary.md)",
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-5",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-6",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-7",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-8",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-9",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "LB-TXN",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-10",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-11",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-12",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-13",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-14",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-15",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-16",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-17",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "END",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-BRANCH",
+      "sha": null,
+      "decision": "defer",
+      "observed_state": "todo",
+      "evidence": null,
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-1-NAMESPACE",
+      "sha": "c08c38eade92f0b3241b02a575e0c9889e89b1c3",
+      "decision": "defer",
+      "observed_state": "verified",
+      "evidence": "local-only source evidence (summarized in evidence-summary.md)",
+      "reason": "Owner-paused Packs; do not resume."
+    },
+    {
+      "project": "packs",
+      "name": "PK-1-SCHEMA",
+      "sha": "c02386e56ceb039448e699d346482bc12348d032",
+      "decision": "defer",
+      "observed_state": "verified",
+      "evidence": "local-only source evidence (summarized in evidence-summary.md)",
+      "reason": "Owner-paused Packs; do not resume."
+    }
+  ],
+  "publication": {
+    "candidate_branch": "lane/M-GPU/integrated",
+    "changed_repos_only": [
+      "astrid-agent",
+      "astrid-app"
+    ],
+    "later_candidate_branch": "lane/M-GPU/integrated-r2",
+    "create_only": true,
+    "force": false
+  },
+  "pin_policy": {
+    "runtime": "Canonical regenerate Agent/App locks against frozen existing Runtime9fc53; contract artifacts unchanged versus current source2776ba; validate metadata-only expectation.",
+    "vibecomfy": "Keep configured source e2905d068d5851b9c32856d32b8251852a01d6dd; rank9 changes tests only.",
+    "lifecycle": "Keep configured source96360a27a53c4608f780f7b370f747a2aa3c7ca8; no K27 repin.",
+    "app": "Canonical pin.mjs final reviewed Agent; keep release counter monotonic and source-consistent Runtime/schema."
+  },
+  "audit_resumed_utc": "2026-11-04T21:07:13.584298+00:00",
+  "execution_status": "Owner cancellation confirmed: product workers/verifiers/managers/wake loop stopped; both heartbeats paused; source/evidence retained. Read-only audit completed; do not resume from this plan.",
+  "pause_receipt_note": "Cancellation status supplied by orchestrator via root after original20:58snapshot; include decisions unchanged."
+}
