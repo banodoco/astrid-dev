@@ -5,8 +5,8 @@ This is a static handoff for a future, explicitly started effort. It does not st
 ## Before work
 
 1. Read the relevant project plan and shared references from [MASTER.md](MASTER.md).
-2. Create or resume the matching Megado run. Keep its `run.yaml` as the single source of actual role/model/effort bindings and its `.otto/` control and evidence state local and ignored.
-3. Confirm the owner's explicit start and select source custody for the product repository as required by Megado. Freeze actual current source identities; do not reuse historical refs as current inputs or invent branches.
+2. Create or resume the matching run using [Manage](../skills/astrid-dev-manage/SKILL.md). Keep its `run.yaml` as the single source of actual role/model/effort bindings and its `.otto/` control and evidence state local and ignored.
+3. Confirm the owner's explicit start and select source custody for the product repository as required by the [shared run contract](../skills/astrid-dev-shared/run-contract.md). Freeze actual current source identities; do not reuse historical refs as current inputs or invent branches.
 4. Dispatch only scoped tasks with outcomes, exact dependencies, feature-focused acceptance selectors, resource limits, and evidence destinations. Use N/Luna, X/Terra, S/Sol routing. Terra/Sol execution leads use Luna helpers; reviewers do not.
 
 ## Initial card preparation

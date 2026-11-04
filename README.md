@@ -1,6 +1,6 @@
 # Astrid development plans
 
-This private planning repository holds the shared Megado method and focused plans. The ordered table below is the sole source for project status and remaining human engineering-days estimates. Task checkboxes inside plans track task progress only. Finished or explicitly cancelled projects move from this queue to [ARCHIVE.md](ARCHIVE.md); keep their plan file at its stable path.
+This private planning repository holds concise role guidance and focused plans. The ordered table below is the sole source for project status and remaining human engineering-days estimates. Task checkboxes inside plans track task progress only. Finished or explicitly cancelled projects move from this queue to [ARCHIVE.md](ARCHIVE.md); keep their plan file at its stable path.
 
 **Initiative status: paused.** The owner has not started product execution. All worker activity and existing automation remain stopped. Preparing or linking a plan does not start it.
 
@@ -32,8 +32,14 @@ The status above applies to each project. The initiative-wide pause is separate 
 
 ## How to use this repo
 
-- Read the vendored [Megado skill](.agents/skills/megado/SKILL.md) and [repo rules](AGENTS.md) before planning or executing.
+- Read the relevant role guide in [skills/](skills/README.md) and [repo rules](AGENTS.md) before planning or executing.
 - Use the [project-plan template](templates/project.md) for new plans. Keep project status and estimate here, not duplicated in individual plans.
 - Keep plans, shared references, and proof summaries portable. `.otto/` is ignored local run-control/evidence state.
 - Product work targets `pre-main` only when explicitly started and supported by the current plan. Do not infer branch names or source refs; freeze and record actual inputs at execution time.
 - Pinokio's historical findings are leads, not current delivery or proof. Reconciliation comes first; it does not resume its blocked product work.
+
+## Install the role skills
+
+Run `./sync.sh` to add the five Astrid role skills and their namespaced shared references to existing local Claude, Codex, and Agents skill directories. The script preserves existing entries, reports conflicts, and does not create destination directories. Use `./sync.sh --dry-run` to preview, or pass `--destination /path/to/skills` to target an existing skill directory.
+
+The script adapts the local missing-only symlink logic from `poms_skills/sync.sh`; it does not manage global instruction files or perform cloud/remote sync.

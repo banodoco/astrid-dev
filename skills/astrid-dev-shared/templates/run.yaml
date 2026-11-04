@@ -1,0 +1,62 @@
+# Copy into a new run only. Fill exact model IDs, supported effort, and
+# availability from the active runtime before dispatch. Class labels are not IDs.
+# This template does not initialize, reset, or authorize any existing run.
+mode: planning_only
+models:
+  normal:
+    class: Luna/Haiku-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
+  very_hard:
+    class: Terra/Sonnet-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
+  super_hard:
+    class: Sol/Opus-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
+  plan_judgment:
+    class: Astra/Opus/Fable-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
+  advisor:
+    class: Astra/Opus/Fable-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
+  completion_reviewer:
+    class: Astra/Opus/Fable-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
+roles:
+  manager: normal
+  worker_normal: normal
+  worker_very_hard: very_hard
+  worker_super_hard: super_hard
+  plan_judgment: plan_judgment
+  advisor: advisor
+  completion_reviewer: completion_reviewer
+source:
+  repository: ""
+  ref: ""
+  sha: ""
+  dirty_state: ""
+  custody: ""
+review:
+  # Copy the actual accepted policy and remaining counters; never reset them here.
+  # This template is planning-only; it does not activate a review or execution.
+  # For ordinary delivery, unless the owner or accepted plan selects another
+  # policy, configure one integrated final review after scoped checks (max 5
+  # total rounds; stop at uncontested PASS). Preserve existing runs' policy.
+  # Example delivery stage:
+  # - id: final
+  #   role: completion_reviewer
+  #   after: ALL_REQUIRED_WORK_AND_SCOPED_CHECKS
+  #   max_rounds: 5
+  stages: []
+  consumed_rounds: {}

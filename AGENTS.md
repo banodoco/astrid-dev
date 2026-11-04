@@ -1,6 +1,6 @@
 # Repository rules
 
-This is a planning and evidence-summary repository. Read the vendored [Megado method](.agents/skills/megado/SKILL.md) for planning/delivery mechanics; its linked references and templates are included in the same directory.
+This is a planning and evidence-summary repository. Use the role-specific guidance in [skills/](skills/README.md) for planning, management, execution, and advice.
 
 ## Scope and authority
 
@@ -11,7 +11,7 @@ This is a planning and evidence-summary repository. Read the vendored [Megado me
 
 ## User routing and proof policy
 
-- Route normal (`N`) execution work to Luna, very hard (`X`) work to Terra, and super-hard (`S`) work to Sol. Every Terra or Sol **execution lead** uses Luna helpers for bounded research, mechanical edits, fixtures, and focused checks. This helper requirement does not apply to reviewers.
-- A run's `run.yaml` is the sole declaration of actual role, model, and reasoning-effort bindings for that run. Plans use the route labels above; do not duplicate divergent bindings in prose.
-- `targeted-tests-only` is the repo's test policy and overrides general Megado defaults: run only explicitly scoped, feature-focused tests. Do not run broad, auto-discovered, repository-wide, or full affected suites, including the vendored method's general final broad-suite default. No tests are needed for planning-only work unless specifically requested.
-- Reviews are only those required by the applicable plan/run and user instruction. Do not create extra approval stages or schedules.
+- Route normal (`N`) work to a configured Luna/Haiku-class model, very hard (`X`) work to a configured Terra/Sonnet-class model, and super-hard (`S`) work to a configured Sol/Opus-class model. These are routing classes, not exact model identities. Every `X` or `S` execution lead delegates bounded research or mechanical work to configured `N` helpers. Reviewers do not inherit this helper requirement.
+- Each run's `run.yaml` is the sole declaration of actual model IDs, reasoning efforts, availability, and role bindings. Do not infer exact equivalence from class labels or silently substitute an unavailable model.
+- Run only explicitly scoped, feature-focused checks. Do not run broad, auto-discovered, repository-wide, or full affected suites. Planning-only work runs no tests unless specifically requested.
+- Reviews are only those already required by the applicable plan, run configuration, and owner instruction. Preserve their exact candidate, scope, and remaining rounds; do not create extra approval stages or schedules.
