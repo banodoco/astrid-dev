@@ -4,17 +4,17 @@ This is the single policy owner for run identity, routing, focused proof, failur
 
 ## Routing and bindings
 
-Use `N` for normal established work, `X` for very hard work with coupled or non-obvious reasoning, and `S` for super-hard work where deeper reasoning materially improves correctness. These labels describe capability bands, not exact model identities. Configure actual available model IDs, supported reasoning efforts, availability, and role bindings in that run's `run.yaml`. A role resolves through the binding in `run.yaml` to a model entry's exact `model_id` and `reasoning_effort`; do not infer availability from a class label, invent IDs, or silently substitute. Resolve unavailability explicitly. Plan/advisor/reviewer judgment bindings are configured separately from execution routes.
+Use `N` for everything below very hard, including ordinary hard work; `X` for very hard work with coupled or non-obvious reasoning; and `S` for super-hard work where deeper reasoning materially improves correctness. `N` is the default; tag a task `X` or `S` only when it clearly needs that depth. These labels describe capability bands, not exact model identities. Configure actual available model IDs, supported reasoning efforts, availability, and role bindings in that run's `run.yaml`. A role resolves through the binding in `run.yaml` to a model entry's exact `model_id` and `reasoning_effort`; do not infer availability from a class label, invent IDs, or silently substitute. Resolve unavailability explicitly. Plan/advisor/reviewer judgment bindings are configured separately from execution routes.
 
 Default model for each route, using the newest available model of that family:
 
 | Route | Work | Claude | Codex |
 | --- | --- | --- | --- |
-| `N` | Normal: research, search, reading, running checks, simple to average changes | Haiku | Luna |
-| `X` | Very hard: intricate changes, subtle bugs, coupled reasoning | Sonnet | Terra |
+| `N` | Everything below very hard, including ordinary hard work: research, reading, running checks, most changes and fixes | Haiku | Luna |
+| `X` | Very hard: intricate changes, subtle bugs, coupled or non-obvious reasoning | Sonnet | Terra |
 | `S` | Super hard: deep design, or correctness that needs the deepest reasoning | Opus | Sol |
 
-The coordinating agent keeps the judgment. It hands each ready task to a subagent on its route’s model, runs independent tasks in parallel, and treats what comes back as evidence to check. Record the exact model IDs and efforts used in `run.yaml`.
+Plans tag each task with its route, and execution uses that same tag. The coordinating agent keeps the judgment. It hands each ready task to a subagent on its route’s model, runs independent tasks in parallel, and treats what comes back as evidence to check. Record the exact model IDs and efforts used in `run.yaml`.
 
 For `X`/`S` execution leads, delegate bounded research or mechanical work to `N` helpers where useful. Reviewers and leaf advisors do not inherit that requirement. A plan may name route labels but must not duplicate model bindings.
 

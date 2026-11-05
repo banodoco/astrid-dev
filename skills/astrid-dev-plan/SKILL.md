@@ -19,4 +19,8 @@ Use exact configured model IDs and supported effort from the run's `run.yaml`; c
 
 ## Produce a ready plan
 
-After scope agreement, write focused tasks with outcome, `N`/`X`/`S` difficulty, actual base and donor identities, dependencies, explicitly scoped acceptance checks, estimate, deferred scope, and required inputs. Distinguish evidence from assumptions. Keep active/upcoming project status and remaining human-day estimate in the working repo's authoritative project index; plans own technical detail and task progress. Do not run tests while planning unless asked, create a generic framework, or add recurring reviews. Existing accepted plans continue under their accepted scope and review policy without new planning sign-off.
+After scope agreement, write focused tasks with outcome, route (`N`, `X` or `S`; see below), actual base and donor identities, dependencies, explicitly scoped acceptance checks, estimate, deferred scope, and required inputs. Distinguish evidence from assumptions. Keep active/upcoming project status and remaining human-day estimate in the working repo's authoritative project index; plans own technical detail and task progress. Do not run tests while planning unless asked, create a generic framework, or add recurring reviews. Existing accepted plans continue under their accepted scope and review policy without new planning sign-off.
+
+## Tag each task with its route
+
+Use the [routing table](../astrid-dev-shared/run-contract.md#routing-and-bindings). `N` is the default and covers everything below very hard, including ordinary hard work (Haiku or Luna). Tag a task `X` only when it is very hard (Sonnet or Terra) and `S` only when it is super hard (Opus or Sol). Name the route, not the model: execution sends each task to its route’s model, so one tag serves both the plan and the build.

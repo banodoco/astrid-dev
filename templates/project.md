@@ -36,7 +36,7 @@ Record these before changing source code. Freeze actual identities; do not assum
 
 ## Tasks
 
-Break the goal into outcomes. For each, record its route (`N`, `X`, or `S`), dependency, and focused acceptance evidence. See the shared run contract for route details.
+Break the goal into outcomes. For each, record its route, dependency, and focused acceptance evidence. The route is `N` by default, including ordinary hard work; `X` only for very hard work; `S` only for super-hard work. Name the route, not the model; see the [routing table](../skills/astrid-dev-shared/run-contract.md#routing-and-bindings).
 
 | Outcome | Route | Depends on | How to check | Done |
 |---|---|---|---|---|

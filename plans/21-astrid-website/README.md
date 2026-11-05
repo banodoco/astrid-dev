@@ -63,7 +63,7 @@ Per-section frames are in [`mockups/night/`](mockups/night/) and [`mockups/day/`
 
 ## Tasks
 
-The plan has 34 tasks: 8 XHARD (Codex `gpt-6.1-sol`), 13 NORMAL (Codex `gpt-6-luna`), 7 TASTE-HIGH (Claude Opus), 2 TASTE-LOW (Claude Sonnet) and 4 ASSET placeholders. They run in phases, from Step 0 through the review rounds R1 to R4. The full table is in [PLAN.md](PLAN.md) part 7, and task progress is kept there, not here.
+The plan has 34 tasks: 8 XHARD (route `X`), 13 NORMAL (route `N`), 7 TASTE-HIGH (Opus taste passes), 2 TASTE-LOW (Sonnet taste passes) and 4 ASSET placeholders. Routes `N` and `X` take their models from the [routing table](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). They run in phases, from Step 0 through the review rounds R1 to R4. The full table is in [PLAN.md](PLAN.md) part 7, and task progress is kept there, not here.
 
 ## Completion
 

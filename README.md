@@ -28,11 +28,12 @@ dependencies to avoid duplicate work. Before implementation, agree with me on on
 its starting code, and focused completion checks. Follow the repository’s existing
 workflow and current authorization.
 
-When we build it, coordinate rather than doing everything yourself: keep the judgment,
-and hand each task to a subagent on the model that matches its route in the plan:
-normal (N) tasks to Haiku, very hard (X) to Sonnet, super hard (S) to Opus (the run
-contract lists Codex equivalents). Run independent tasks in parallel and check what
-comes back. If you can’t start subagents, tell me and do the work yourself.
+Plans tag every task with a route, and building uses the same routes: N (everything
+below very hard, including ordinary hard work) goes to Haiku or Luna, X (very hard) to
+Sonnet or Terra, and S (super hard) to Opus or Sol. When we build, coordinate rather
+than doing everything yourself: keep the judgment, hand each task to a subagent on its
+route’s model, run independent tasks in parallel, and check what comes back. If you
+can’t start subagents, tell me and do the work yourself.
 ```
 
 ## Active and upcoming projects

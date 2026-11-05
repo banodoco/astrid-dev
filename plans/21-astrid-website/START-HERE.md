@@ -53,15 +53,15 @@ The plan's code pointers were checked against `main` at `17e46de99` (20 Oct 2026
 
 - **Node 20.19.x for vitest.** Node 26 fakes hundreds of failures. Use a local Node 20.19.4 install: `export PATH=<path to Node 20.19.4>/bin:$PATH`.
 - **Playwright.** The iPhone and iPad projects run on WebKit, so install it locally with `npx playwright install webkit`. CI installs only Chromium; task T26 deals with that.
-- **Codex CLI 0.163 or later.** Use `gpt-6-luna`, `gpt-6.1-sol` (with `-c model_reasoning_effort='"xhigh"'`) and `gpt-6-astra`. If `gpt-6.1-sol` is refused, fall back to `gpt-6-sol`. Pass the repo's `.git` with `--add-dir` so that workers can commit (plan 9.2).
+- **Codex CLI 0.163 or later.** Use Luna and Terra for routes `N` and `X`, and `gpt-6-astra` for R1. Pass the repo's `.git` with `--add-dir` so that workers can commit (plan 9.2).
 - **Claude Code** with Opus 5.5, Sonnet 5.5 and Haiku 5.5.
 
 ## Who does what
 
 | Work | Model | Hands the legwork to |
 |---|---|---|
-| NORMAL tasks | Codex `gpt-6-luna` | more Luna |
-| XHARD tasks | Codex `gpt-6.1-sol`, xhigh | Luna |
+| NORMAL tasks (route `N`) | Haiku or Luna | more Haiku or Luna |
+| XHARD tasks (route `X`) | Sonnet or Terra | Haiku or Luna, in its own family |
 | TASTE-HIGH tasks; the desktop (R2-D) and phone (R2-P) iteration passes | Claude Opus 5.5 | Haiku |
 | TASTE-LOW tasks | Claude Sonnet 5.5 | Haiku |
 | R1, the performance pass | Codex `gpt-6-astra` | Luna |

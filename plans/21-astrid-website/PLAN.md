@@ -42,10 +42,10 @@ When time is short, spend it on these two. R2 judges them first.
 **Briefing.** Use the templates in part 9.6. Every brief names the task id, its row from part 7, the plan parts to read, the worktree and branch, the files it may touch, the done-when, and the fan-out rule.
 
 **The fan-out rule.** This applies to every senior agent, whether it's building, fixing or reviewing.
-- Opus, Sonnet, Sol and Astra direct and judge. They hand the hands-on work to parallel subagents from their own family: reading, searching, captures, running tests, and the edits themselves.
+- Opus, Sonnet, Terra, Sol and Astra direct and judge. They hand the hands-on work to parallel subagents from their own family: reading, searching, captures, running tests, and the edits themselves.
 - **Claude agents (Opus, Sonnet) deploy Haiku subagents** (Agent tool, `model: "haiku"`).
-- **Codex agents (Sol, Astra) deploy Luna subagents** (`spawn_agent` with `model: "gpt-6-luna"`).
-- The senior agent checks each subagent's result before accepting it, and keeps the decisions: taste with Opus or Sonnet, mechanism with Sol.
+- **Codex agents (Terra, Sol, Astra) deploy Luna subagents** (`spawn_agent` with `model: "gpt-6-luna"`).
+- The senior agent checks each subagent's result before accepting it, and keeps the decisions: taste with Opus or Sonnet, mechanism with Sonnet or Terra.
 - Plumbing that's bigger than a fix stays in its own NORMAL or XHARD task. Engineering never writes a millisecond or an easing curve: they come from `J/journeyMotion.ts` (T0).
 
 **Practical limits.**
@@ -60,7 +60,7 @@ When time is short, spend it on these two. R2 judges them first.
 
 **When to ask the user.** Only for: shipping placeholder media, and merging to `main`. Everything else: decide, record the decision in the task report, carry on. The user may look at the preview and send notes at any time; fold them into the next pass, but never wait for them.
 
-> **34 tasks:** 8 XHARD (Sol) · 13 NORMAL (Luna) · 7 TASTE-HIGH (Opus) · 2 TASTE-LOW (Sonnet) · 4 ASSET (placeholders), then R1–R4. Real assets are deferred (part 6.2).
+> **34 tasks:** 8 XHARD (route `X`) · 13 NORMAL (route `N`) · 7 TASTE-HIGH (Opus) · 2 TASTE-LOW (Sonnet) · 4 ASSET (placeholders), then R1–R4. Real assets are deferred (part 6.2).
 > **Day one:** P1 Artifact preview · S1 snapshot publishing without writes · S2 the live stack pose (App, Agent, interrupted, WebKit, phone) · S4 the scroll-driven sky.
 
 ## Step 0, on "go"
@@ -418,7 +418,7 @@ Because placeholders use the real registry format and dimensions, each swap is d
 
 ## 7. Tasks
 
-**Tiers:** NORMAL = Codex Luna (`gpt-6-luna`) · XHARD = Codex Sol (`gpt-6.1-sol`, reasoning xhigh) · TASTE-HIGH = Claude Opus 5.5 · TASTE-LOW = Claude Sonnet 5.5 · ASSET = generation or capture (placeholders). Every senior agent fans legwork out within its family (executor brief).
+**Tiers:** NORMAL = route `N` (Haiku or Luna) · XHARD = route `X` (Sonnet or Terra), per the astrid-dev routing table · TASTE-HIGH = Claude Opus 5.5 · TASTE-LOW = Claude Sonnet 5.5 · ASSET = generation or capture (placeholders). Every senior agent fans legwork out within its family (executor brief).
 
 **Visual checks:** **D** 1586×992 light and dark · **P** 390×844 light and dark on every visual task. **N** 320×693, **S** 1440×700 and **RM** reduced motion only in T6, T8 and R2. H0 ids name the evidence (part 9.4). A TASTE task's done-when is its named stills and recordings, judged at 2× against the named mockup, not "tests pass". **Every TASTE-HIGH task has two passes:** pass 2 runs once its moment is on the preview, folding in any notes the user has sent (never waiting for them).
 
@@ -488,7 +488,7 @@ Because placeholders use the real registry format and dimensions, each swap is d
 | R1 | Astra (`gpt-6-astra`, xhigh, legwork to Luna; the coordinator runs the browsers) | **Per section at D and P:** dropped frames and p95 frame time while scrolling (1× and 4× CPU throttle); the longest main-thread task during its demo (adoption commits, three.js init, tray video start, waveform decode); sky raster ms per paint and paints per second; the cost of the ambient cycle at rest (compositor and CSS motion only; no per-frame React; paused off-screen and in hidden tabs); bytes fetched entering it. **Page-level:** hero LCP, TBT and initial JS compared with `main`; peak memory and live video/WebGL counts on an iPhone. **One real-iPhone pass** via Safari Web Inspector on the LAN preview | A short report with numbers against `main`, named regressions and a ranked, tiered fix list |
 | R2-D | Opus, **desktop iteration pass** (deploys Haiku subagents for captures and edits) | Iterates on the running page at D and S (1440×700), both audiences and both palettes, from H0 recordings, 2× stills and the live preview. It judges the two priorities first: each section alive at rest (`rest-*`) and every transition really nice (`pull-*`, `fold`, `grow`, `back-*`, `flick`). Then it checks the rest of the journey against part 10 and the mockups, and that every cut-list item (part 10.7) is absent. Each loop: judge → fix taste issues directly (Haiku subagents make the edits; Opus checks them) → send mechanism issues to the coordinator as tiered fix tasks → re-capture. Up to 3 loops | Both priorities pass at D and S on a fresh capture; any remaining findings are tiered for R3 |
 | R2-P | Opus, **phone iteration pass** (deploys Haiku subagents for captures and edits) | The same loop at P (390×844) and N (320×693), plus reduced motion and "Show the steps". It includes one look on a real iPhone in Safari via the LAN preview (toolbar collapse, sticky stage, sky), with the coordinator driving the device or the user sending notes. Runs in parallel with R2-D on its own port; layout changes that could affect desktop are checked against D before they're kept | Both priorities pass at P and N on a fresh capture and on the real iPhone; remaining findings tiered for R3 |
-| R3 | Tiered like everything else; each fixer follows the fan-out rule (Opus → Haiku, Sol/Astra → Luna) | One fix round over R1's findings and anything R2-D or R2-P couldn't close in its loops | Findings fixed or explicitly dropped; R1's numbers and the R2 priorities still pass on a re-capture |
+| R3 | Tiered like everything else; each fixer follows the fan-out rule (Opus/Sonnet → Haiku, Terra/Sol/Astra → Luna) | One fix round over R1's findings and anything R2-D or R2-P couldn't close in its loops | Findings fixed or explicitly dropped; R1's numbers and the R2 priorities still pass on a re-capture |
 | R4 | Coordinator, **after asking the user** | (a) May placeholder media ship, or make real assets first (part 6.2)? (b) Merge `feat/home-journey` into `main` | E2E green, budget green, R3 done, the user has seen the preview, the user said go |
 
 ## 8. Phase order
@@ -513,7 +513,7 @@ TASTE-HIGH pass 2s run as each moment reaches the preview, before R2-D and R2-P.
 ### 9.2 Agents
 - **Codex:** `codex exec -m <model> --skip-git-repo-check -C ../hj-<id> -s workspace-write --add-dir <repo>/.git -o reports/<id>.last.txt "<brief>" < /dev/null`, in the background; Sol adds `-c model_reasoning_effort='"xhigh"'`. No ports, signals or nested sandboxes.
 - **Claude:** Agent tool with `model: "opus"` or `"sonnet"`; they deploy Haiku subagents (`model: "haiku"`) for the hands-on work, fixes included.
-- **Fan-out:** Sol and Astra deploy Luna subagents (`spawn_agent`, `model: "gpt-6-luna"`) for the hands-on work, fixes included. Every brief says this explicitly (part 9.6).
+- **Fan-out:** Terra, Sol and Astra deploy Luna subagents (`spawn_agent`, `model: "gpt-6-luna"`) for the hands-on work, fixes included. Every brief says this explicitly (part 9.6).
 - **Preview:** only the coordinator republishes the Artifact (P1's script, then the Artifact publish with the same file path/URL). Fallback: `vite preview --host` from `dist-preview/`, opened at the Mac's LAN address `/home` on the iPhone (or a quick tunnel).
 
 ### 9.3 Dev server, tests, rules
@@ -530,13 +530,13 @@ Recordings `h0/<id>-<D|P>.webm`; stills `h0/<id>-<D|P>-<ms>.png` at 2× DPR. Scr
 
 ### 9.6 Brief templates
 
-Fix tasks (hand-offs from R2-D or R2-P, and R3) use the same template for their tier, with the finding and its capture in place of the task row. Every senior fixer follows the fan-out rule: Opus and Sonnet deploy Haiku, Sol and Astra deploy Luna.
+Fix tasks (hand-offs from R2-D or R2-P, and R3) use the same template for their tier, with the finding and its capture in place of the task row. Every senior fixer follows the fan-out rule: Opus and Sonnet deploy Haiku; Terra, Sol and Astra deploy Luna.
 
-**NORMAL (Luna)**
-> Task `<id>` (NORMAL) for the Astrid homepage journey. Read `docs/plans/home-journey/PLAN.md` parts `<…>` and the `<id>` row in part 7. Work in `../hj-<id>` on branch `hj/<id>`; touch only `<files>`. Timings and easings come from `J/journeyMotion.ts`; never write `ms` or `cubic-bezier` literals. For any legwork that splits, including fixes, spawn parallel `gpt-6-luna` subagents. Run vitest on Node 20 (`export PATH=<path to Node 20.19.4>/bin:$PATH`, `--maxWorkers=2`). You can't run a dev server or Playwright: list the visual and E2E checks the coordinator should run. Done when: `<row>`. Commit to `hj/<id>` and write `reports/<id>.md`.
+**NORMAL (route `N`: Haiku or Luna)**
+> Task `<id>` (NORMAL) for the Astrid homepage journey. Read `docs/plans/home-journey/PLAN.md` parts `<…>` and the `<id>` row in part 7. Work in `../hj-<id>` on branch `hj/<id>`; touch only `<files>`. Timings and easings come from `J/journeyMotion.ts`; never write `ms` or `cubic-bezier` literals. For any legwork that splits, including fixes, spawn parallel subagents of your own model. Run vitest on Node 20 (`export PATH=<path to Node 20.19.4>/bin:$PATH`, `--maxWorkers=2`). You can't run a dev server or Playwright: list the visual and E2E checks the coordinator should run. Done when: `<row>`. Commit to `hj/<id>` and write `reports/<id>.md`.
 
-**XHARD (Sol 6.1, xhigh)**
-> Task `<id>` (XHARD) … *(as NORMAL, plus:)* You own the mechanism and its correctness. Write the tests that pin the behaviour rules first. Deploy parallel `gpt-6-luna` subagents (`spawn_agent`) for the hands-on work (reading, searching, edits, running unit tests), including when you're fixing; keep the design decisions yourself and check what they return. You're bound by the experience, not the suggested implementation: prefer the simplest mechanism that meets the done-when, and record any deviation and anything you chose not to build.
+**XHARD (route `X`: Sonnet or Terra)**
+> Task `<id>` (XHARD) … *(as NORMAL, plus:)* You own the mechanism and its correctness. Write the tests that pin the behaviour rules first. Deploy parallel `N` subagents in your family (Haiku via `model: "haiku"`, Luna via `spawn_agent`) for the hands-on work (reading, searching, edits, running unit tests), including when you're fixing; keep the design decisions yourself and check what they return. You're bound by the experience, not the suggested implementation: prefer the simplest mechanism that meets the done-when, and record any deviation and anything you chose not to build.
 
 **TASTE-HIGH (Opus)**
 > You own the feel of `<moment>` (task `<id>`, TASTE-HIGH). Read PLAN parts `<…>`, part 10, and `notes/opus-craft.md`. Run your own dev server on port `<2223+>` and H0 for `<ids>`; judge at 2× against `mockups/<frames>`. Decide the tuning of tokens, CSS custom properties and choreography yourself. Deploy parallel Haiku subagents (`model: "haiku"`) to make the edits, run captures and read code, and check every result before keeping it. If the mechanism needs changing, write a note for the coordinator rather than rebuilding it. You're bound by the experience (the executor brief), not the suggested implementation. Two passes: pass 2 once it's on the preview, folding in any user notes. Done when: you sign off `<named stills/recordings>`. Append your decisions to `notes/opus-craft.md` and write `reports/<id>.md`.
