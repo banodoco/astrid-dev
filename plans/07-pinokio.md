@@ -9,6 +9,7 @@ Make the Pinokio backend launcher dependable for the everyday user path, proven 
 ## Starting point (5 Nov 2026)
 
 - Pinokio has no users yet, so there is no old-launcher migration or compatibility work, now or later. `astrid-pinokio` `main` ships with R1, and this gate proves it afterwards.
+- Status at R1: **shipped, not yet proven**. Pinokio reuses the installer transaction, locks, Runtime and data, but its own start/stop supervision (about 1,500 launcher lines), the `--update-app` route, its uninstall and the foreground Runtime are not exercised by any hosted test until this gate is green.
 - The six earlier Pinokio rows (`RELEASE1_1_DEFERRED_PINOKIO_MATRIX`) never got past setup (0/6). They mixed the everyday path with engine, custody and fully-local work. They are retired rather than revived; their scope moves to Plan 10.
 - Known hosted failures to fix: setup-install ends with "terminated shell" and no inner exit code on macOS and Windows; Windows `npm ci` exits 1 (better-sqlite3); the Linux Worker profile is missing.
 
