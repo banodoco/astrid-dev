@@ -19,6 +19,7 @@ The Agent snapshot `2958bacea3e3c7961788fa9c625dd9db0be282de` contains tracked `
 - Inventory tracked files and distinguish current product code, tests, generated assets, useful examples, historical evidence, and temporary material. Establish references and packaging use before removal.
 - Remove demonstrably obsolete or duplicated scripts, docs, artifacts, and dead code; consolidate competing instructions and entry points into one clear location per purpose.
 - Move useful examples or historical documentation to an appropriate home and repair links. Preserve unpublished work, active experiments, required package data, and evidence still supporting releases.
+- Where agent catalogs or integration instructions are duplicated, coordinate with [Plan 16](16-streamlined-agent-experience.md) so cleanup leaves one authoritative extension path.
 - Make small changes by repository and category. Validate only affected imports, entry points, packaging, documentation links, and named feature checks; do not turn cleanup into a repository-wide test run.
 
 ## Completion

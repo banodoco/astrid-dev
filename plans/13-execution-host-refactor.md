@@ -17,6 +17,7 @@ The inspected main snapshot identifies handwritten orchestration rather than gen
 ## Intended work and focused proof
 
 - Map the file's responsibilities, callers, shared state, and existing focused tests; choose natural extraction boundaries.
+- Keep the [shared inference lifecycle](12-multiple-inference-routes.md) and [single agent extension path](16-streamlined-agent-experience.md) under their existing owners; extraction should not create competing schedulers or agent registries.
 - Extract one cohesive responsibility at a time, preserving public entry points and avoiding a replacement execution framework.
 - Characterize affected behavior before extraction and rerun those exact checks afterwards. Explicitly cover any touched lifecycle, cancellation, process ownership, and result-handling boundaries.
 - Keep semantic bug fixes separate and named when required; moving code alone must not silently change execution contracts.
