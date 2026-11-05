@@ -90,7 +90,7 @@ Proof is bound to the final head. Producers land first, Plan 01 is a preconditio
 - **K27**: the three lifecycle regression tests (completed-job eviction, capacity reuse, delete and retire) in `tests/test_https.py`.
 - **RI-V, RI-L, RI-R**: the selector lists for VibeComfy, lifecycle and Runtime from the retained release-integration cards.
 - **Closure**: a fresh CPU install reaching the ComfyUI engine environment stage with every pinned piece resolving, and the node packages importing.
-- **K-owned files**: the pin and recipe files PINS owns (`astrid/packs/runpod`, `comfyui`, `vibecomfy`, `engine-index.json`, `runtime.lock.json`); the DEFAULTS merge must leave their bytes as PINS had them.
+- **K-owned files**: the pin and recipe files PINS owns (`astrid/packs/runpod`, `comfyui`, `vibecomfy`, `engine-index.json`, `runtime.lock.json`); the DEFAULTS merge must leave their bytes as PINS had them. The `comfyui` folder is deleted by [Plan 06](../06-packs/plan.md) (PK-15B, owner decision 5 Nov 2026): keep PINS's bytes here until then, and do not add new work that depends on the `comfyui` engine recipe.
 - **Deselect**: tell pytest to skip a named test node (`--deselect`); used only for the nine owner-approved shared failures.
 - **Ancestor / ancestry**: commit A is an ancestor of B when B's history contains A (`git merge-base --is-ancestor A B`); used to prove a donor is really inside a candidate.
 - **Journey test**: a test that drives a public CLI command end to end (for example `generate image`) and checks the receipt.

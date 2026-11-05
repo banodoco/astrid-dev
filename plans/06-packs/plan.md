@@ -2,7 +2,7 @@
 
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
-Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, and finishes the pack loading, trust, install, update, rollback and live-editor work that goes with it, across Agent, Runtime and App. Supported workflows keep working, and the result is promoted to `pre-main`. It reuses a large body of work that exists only on retained branches, composes it once onto current `pre-main`, proves it once and reviews it once.
+Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, deletes the two comfy packs other than VibeComfy (`comfyui`, `comfy_wrap`; Decision 13), and finishes the pack loading, trust, install, update, rollback and live-editor work that goes with it, across Agent, Runtime and App. Supported workflows keep working, and the result is promoted to `pre-main`. It reuses a large body of work that exists only on retained branches, composes it once onto current `pre-main`, proves it once and reviews it once.
 
 “v1.3” is a working project name, not a confirmed package/release version. Status, owner and estimate are in the [README queue](../../README.md).
 
@@ -10,9 +10,9 @@ Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, and f
 
 ## Goal and scope
 
-- **Included:** the 19-pack move to `poms_packs`, plus the loading, trust, transaction, rendering, Runtime and App work that goes with it (tasks PK-0 to PK-17), and the final review, rebase and promotion.
+- **Included:** the 19-pack move to `poms_packs`, the deletion of `comfyui` and `comfy_wrap` (PK-15B), plus the loading, trust, transaction, rendering, Runtime and App work that goes with it (tasks PK-0 to PK-17), and the final review, rebase and promotion.
 - **Deferred:** GPU work, H3, RunPod extraction, `training`, default packs and signing; nine of the 30 owner statements ([inputs.md](inputs.md#the-30-statements)).
-- **Still undecided:** the final home of the retired `local` effects, and the disposition of `comfyui`, `comfy_wrap` and `developer` (owner to decide).
+- **Still undecided:** only the final home of the retired `local` effects (owner to decide). `comfyui` and `comfy_wrap` are deleted (Decision 13); `developer` and `training` stay in Agent (Decision 14).
 
 ## How to work on it
 
@@ -56,10 +56,11 @@ Base refs are observations from 5 Nov 2026; re-freeze at start ([inputs.md](inpu
 3. **Finish Agent behavior**: PK-5 to PK-12 (installed CLI, loading, trust, build contract, transactions, rendering, registry, seams). A transaction review (LB-TXN) sits between PK-9 and PK-10.
 4. **Runtime and App in parallel**: PK-13 (Runtime) after PK-0; PK-14 (App) after PK-13, PK-9 and LB-TXN.
 5. **Move the packs**: PK-15 removes the 19 from Agent; PK-16 lands them in poms_packs and proves each installs.
-6. **Prove once** (PK-17) on the final heads: the installed CPU journey and the statement mapping.
-7. **Review once** (END): one integrated completion review of all candidate heads.
-8. **Rebase** the reviewed heads onto current destinations (RB1), rerunning only what the move invalidates.
-9. **Promote** by fast-forward or create (PK-PREMAIN).
+6. **Delete the two comfy packs** (PK-15B), after PK-15 and PK-14, on the same Agent line (and the stale App contract lines).
+7. **Prove once** (PK-17) on the final heads: the installed CPU journey and the statement mapping.
+8. **Review once** (END): one integrated completion review of all candidate heads.
+9. **Rebase** the reviewed heads onto current destinations (RB1), rerunning only what the move invalidates.
+10. **Promote** by fast-forward or create (PK-PREMAIN).
 
 Proof is bound to the final head. Fixes found during review go forward on the final head and rerun the affected checks; there is no downward cascade to earlier tasks.
 
@@ -84,11 +85,13 @@ Proof is bound to the final head. Fixes found during review go forward on the fi
 | 5 | The retained cards are inlined: every task has its real selectors, plain git and pytest commands, inputs, merges, exclusions and a done condition. No cards folder is published. PK-16 runs `tests/integration/test_install_each_pack.py` (a new file PK-16 writes in poms_packs). PK-4R is done when `scripts/check_core_pack_boundary.py --check` passes and `python -m astrid timelines --help` still works. The retained "recover at setup" step and PK-4's local-only evidence are dropped. | Coordinator; [inputs.md](inputs.md) |
 | 6 | poms_packs has no `main`. PK-PREMAIN creates `main` from the reviewed head, with the owner's go. If the owner prefers a pull request, create `main` at the skeleton `80a46912` first and open the pull request from the reviewed head. | Coordinator; owner's go |
 | 7 | PIN files are written by the installer into installed copies and never committed. The poms README (1 Nov 2026) and the retained PK-16 card (3 Nov 2026) agree on this once read together; the README wording is corrected in PK-16. | [inputs.md](inputs.md#pin-files) |
-| 8 | Pack inventory: the 19 move, the four core packs stay, runpod and h3_av come later, training stays. Every other folder has a disposition in [inputs.md](inputs.md#pack-inventory-on-agent-pre-main); where only a proposal exists it stays in Agent and the owner decides. `local` is retired by PK-12 because the owner stopped shipping the 15 personal effects (E10) and the retained PK-12 card deletes it; the final home of the bytes is the owner's. | Owner (1 Nov 2026); retained cards |
+| 8 | Pack inventory: the 19 move, the four core packs stay, runpod and h3_av come later, training stays, `comfyui` and `comfy_wrap` are deleted (Decision 13). Every other folder has a disposition in [inputs.md](inputs.md#pack-inventory-on-agent-pre-main). `local` is retired by PK-12 because the owner stopped shipping the 15 personal effects (E10) and the retained PK-12 card deletes it; the final home of the bytes is the owner's. | Owner (1 Nov 2026); retained cards |
 | 9 | Tasks carry routes N, X or S, never model names. Reviews use the run contract's completion-reviewer role. The transaction review (LB-TXN) is capped at 2 rounds and the final review (END) at 3, then the owner decides. These are owner caps (3 Nov 2026) and override the default of 5. | Coordinator; owner |
 | 10 | Status stays `queued`. The retained "owner-paused; do not resume" refers to the stopped M-GPU run; this plan restarts from current `pre-main` on the owner's go. | Coordinator |
 | 11 | The end state is stated as the short list below. The retained "30 CPU-provable statements" is corrected: the hand-off has 30 statements in three groups, 9 of them deferred by the owner's CPU-only decision. PK-17 maps all 30 and names the 9 deferred. | Coordinator; [inputs.md](inputs.md#the-30-statements) |
 | 12 | Conflicts in the generated pin, recipe and engine-index files are resolved to the `pre-main` side; locks are regenerated, never hand-merged. The three core-to-pack imports at `core/generation/listing.py:15` and `core/timeline/snapshot.py:22,28` import core packs (`vibecomfy`, `rendering`); PK-15 removes the imports of the 19 moved packs first and leaves those three unless the guard reports them. | Coordinator; Agent `pre-main` |
+| 13 | **Delete `astrid/packs/comfyui` and `astrid/packs/comfy_wrap` from Agent; `vibecomfy` stays a core pack.** Basis for the task (PK-15B, from the pre-main `23174f32` census): `comfy_wrap` is one action, `comfy_wrap.run`, which only injects `--prompt` into a workflow and calls VibeComfy; `vibecomfy.run <workflow> --workflow-inputs '{"prompt": ...}' --out` does the same and more, so users lose only the `comfy_wrap.run` name and its prompt-only shorthand. `comfyui` is not a pack (no `pack.yaml`): it is the Linux x86_64 cu130 managed-ComfyUI engine recipe (pins, models lock, requirements lock) that `engine-index.json` serves to engine `comfyui`; the Windows engine (`vibecomfy` recipe), the RunPod recipe (`vibecomfy-h3`, in `runpod`) and Wan2GP are separate files and stay. What users lose: the Astrid-managed Linux ComfyUI install recipe; a Linux user brings their own ComfyUI through VibeComfy (the `vibecomfy` skill). The hand-off proposed the same for `comfy_wrap` ("nothing calls it") and moving `comfyui` into core; the owner chose deletion for both, and its manifest said to repeat the caller census first, which PK-15B does. | Owner (5 Nov 2026); [inputs.md](inputs.md#pack-inventory-on-agent-pre-main) |
+| 14 | `training` stays in Agent as it is, grouped with `runpod` and `h3_av` (the GPU-era packs). It is not a core pack and cannot be one: core names it today (`core/execution/generic_host.py:4160` and the `_training_review_*` helpers at `3936-4151`, `core/generation/availability.json:11-13`, `core/contracts/output_result_exemptions.json`, `core/execution/capability_ledger.py:154-156,191`, `core/pack/validate_first_party.py:45`), it hard-codes the `runpod` pack (`actions/training_run/compute_backends.py:210-213`) and the moved `editorial` pack uses its `pool_build` and `pool_merge`. Moving it needs the K census and the RunPod work, both deferred; those core names are existing guard-baseline findings that this plan neither adds nor removes (E3 stays partial). `developer` stays in Agent as it is: it is a skill-only pack (`pack.yaml` without actions; three `SKILL.md` documents) installed by `astrid skills sync --developer` (`astrid/skills/cli.py:144`); core names it only in the first-party id list (`core/pack/validate_first_party.py:28`); one test (`tests/test_skills_developer.py`); no other pack uses it. Moving it would break that flag for no gain, deleting it would drop the developer skills. `_core` is docs only and stays. These are coordinator decisions from the pre-main census; the owner may override. | Coordinator; Agent `pre-main` `23174f32` |
 
 ## Completion
 
@@ -98,7 +101,8 @@ Proof is bound to the final head. Fixes found during review go forward on the fi
 - Install is the trust moment: origin labelled, pin checked, receipts record the fingerprint, declared secrets only, personal pack created empty and never shipped.
 - A pack's effect appears in the open editor live; a failed update keeps the old effect; disabling removes it; opening a project is passive.
 - Locks are regenerated once; the boundary guard passes and only shrinks.
-- `runpod` and `h3_av` stay in Agent until a later plan moves them; `training` stays; `wan2gp` stays a pack.
+- `runpod` and `h3_av` stay in Agent until a later plan moves them; `training` and `developer` stay; `wan2gp` stays a pack.
+- `astrid/packs/comfyui` and `astrid/packs/comfy_wrap` are absent from Agent, nothing names them (App included), and `vibecomfy` still runs a workflow with a prompt.
 - Deferred, by name: statements E1 (defaults), E3 (part), E4 (internal access), E5, E6, N6, N8, N9, X7.
 
 ## Estimate
