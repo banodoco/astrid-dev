@@ -8,3 +8,5 @@ Pick the guide for the work you need to do:
 - [Release (`astrid-dev-release`)](astrid-dev-release/SKILL.md): integrate an accepted change and carry out an authorized release action.
 
 The [shared run contract](astrid-dev-shared/run-contract.md) owns run, proof, review, and authority rules. Role notes and the run template are in [shared](astrid-dev-shared/).
+
+For a user-reported failure, follow [**Bug response**](../docs/bug-response.md): investigate, recover the user, and track the incident centrally.
