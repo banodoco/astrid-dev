@@ -1,5 +1,7 @@
 # Packs v1.3
 
+**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+
 Move the existing 19-pack CPU scope out of Agent core into `poms_packs`, while keeping supported workflows working. Finish the pack installation, discovery, update, and editing integration across Agent, Runtime, and App, then promote the reviewed result to `pre-main`.
 
 “v1.3” is a working project name, not a confirmed package/release version. Current status, owner, and estimate live in the [project queue](../../README.md).

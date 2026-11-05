@@ -1,5 +1,20 @@
 # Project: <name>
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
+## Prerequisites
+
+| Item | Record |
+|---|---|
+| Hardware | Operating systems, architecture, disk or other machine needs for the checks, or `none` |
+| Access | Repository push rights, accounts or approved spend needed, or `none` |
+| Predecessors | Plans or landed work that must exist first, with links, or `none` |
+| Authorization | Queued plans start only on the owner's explicit go ([AGENTS.md](../AGENTS.md)) |
+
+## Can start?
+
+List the tasks a contributor can begin today and what each one waits on. Say plainly which tasks are blocked and by what.
+
 ## Goal
 
 What useful result will users get? Include important behavior that must remain.

@@ -1,6 +1,8 @@
 # 04 — Refined concurrent editing: completion and integration
 
-[README queue](../README.md) · [Initiative handoff](MANAGER.md). Final publication follows [generation integration (formerly Plan 03)](02-consistent-generation/plan.md); independent completion on the retained tuple may proceed earlier after initiative start.
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). Final publication follows [Plan 02 integration phase (consistent generation)](02-consistent-generation/plan.md); independent completion on the retained tuple may proceed earlier after initiative start.
 
 ## Goal
 
@@ -19,7 +21,7 @@ Reuse Agent `4f111c2153184a73a5ca333a16f4b9a69a3313f1`, App `438159b030cd3b0b816
 
 ## Starting code and branch policy
 
-Plan 04 consumes the exact promoted plan 03 Agent/App/Runtime tuple, then the retained CE work: Agent `4f111c2153184a73a5ca333a16f4b9a69a3313f1`, App `438159b030cd3b0b81653415f1018f9a1349f0c5`, Runtime `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`. Those are historical donor/checkpoint identities, not current target heads. A plan-04 merge base was not frozen in the supplied audit; its concrete base is the exact plan-03 promoted Agent/App/Runtime tuple plus then-current destination refs at execution. Audit-time target details were not frozen for this later increment; capture actual current pre-main heads when integration starts and use them as bases. Use fresh isolated candidate branches in touched repos, and promote exact independently reviewed candidates to pre-main. Do not reuse the historical `lane/M-GPU/integrated` lane.
+Plan 04 consumes the exact promoted Plan 02 (integration phase) Agent/App/Runtime tuple, then the retained CE work: Agent `4f111c2153184a73a5ca333a16f4b9a69a3313f1`, App `438159b030cd3b0b81653415f1018f9a1349f0c5`, Runtime `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`. Those are historical donor/checkpoint identities, not current target heads. A plan-04 merge base was not frozen in the supplied audit; its concrete base is the exact plan-03 promoted Agent/App/Runtime tuple plus then-current destination refs at execution. Audit-time target details were not frozen for this later increment; capture actual current pre-main heads when integration starts and use them as bases. Use fresh isolated candidate branches in touched repos, and promote exact independently reviewed candidates to pre-main. Do not reuse the historical `lane/M-GPU/integrated` lane.
 
 ## Exact focused selectors
 

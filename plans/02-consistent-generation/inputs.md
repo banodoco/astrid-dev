@@ -1,41 +1,68 @@
 # Inputs and provenance
 
-## How to use these identities
+**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
-The SHAs below are exact historical observations or retained source identities recorded in the historical source audit. They are provenance, not presumed current refs, accepted publication donors, current running status, or authorization to start work. Re-freeze current heads and destination refs when product work starts; use the actual reviewed retained worktree or immutable refs. If a repository has no current `pre-main`, record that absence and use frozen `main` as merge base.
+[Plan](plan.md) · [Tasks](tasks.md)
 
-## Historical base observations
+## Re-freeze rule
 
-- Agent: `01eceda02e58a1940ada4a261f4789539d6f0a56` — pre-main observation.
-- App: `878c28df7a6c80fa9aaa6540c5fccad95473e7c1` — pre-main observation.
-- Runtime: `9fc53b771134940aaac901e4cfc5d03c1db1a20a` — pre-main observation.
-- VibeComfy: `e2905d068d5851b9c32856d32b8251852a01d6dd` — main; no pre-main observed.
-- Lifecycle: `db79345536985c701b7aff2eb5eec36667aae204` — main; no pre-main observed.
+Every SHA below is an observation from 5 Nov 2026, not a presumed current ref. At the start of each task, record the actual branch and SHA of its base and donors. If a recorded value and the live repository disagree, the live repository wins for branch heads; this file wins for the identity of retained donors. If a destination moves after proof, reconcile and rerun only the affected checks and review ([run contract](../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)).
 
-These audit-time bases are historical only. Integration consumes exact promoted Plan 01 Agent/App heads and accepted completion outcomes, then freezes the actual rolling `pre-main` at execution. When VibeComfy/lifecycle still lack `pre-main`, explicitly record that and use their frozen `main` as merge base.
+## Current heads (5 Nov 2026)
 
-## Retained and conditional inputs
+| Repository | Branch | SHA | Note |
+|---|---|---|---|
+| Agent | `pre-main` | `40a6fd7ecf9138c6d9861631096a79820dc4c9b1` | Earlier the same day it was `dc6dd01899813aaf460bb082c03f84f9783fa85f`; four commits later. `int/r1` equals it. `main` is `2958bacea3e3c7961788fa9c625dd9db0be282de`. |
+| Runtime | `pre-main` | `9fc53b771134940aaac901e4cfc5d03c1db1a20a` | `main` is `ebd412199a9c1e53c3a984d27d335de8b40654a1`. |
+| App | `pre-main` | `878c28df7a6c80fa9aaa6540c5fccad95473e7c1` | `main` is `d38edf434a575f3aed941c516fe2a5338135820b`. |
+| VibeComfy | `main` | `e2905d068d5851b9c32856d32b8251852a01d6dd` | No `pre-main`. |
+| runpod-lifecycle | `main` | `db79345536985c701b7aff2eb5eec36667aae204` | No `pre-main`. |
 
-- **Agent PINS candidate:** `1608dbbf7036ad3c3b2b5e10956a726921bd4f9f`. Retain its implementation; the task is candidate-only proof and acceptance, not rebuilding broad selectors.
-- **Agent DEFAULTS donor:** `9d3bb24831676cbfc2a0d3dd1c7769f1937569c3`, merged with PINS at unpublished checkpoint `3fe46b90e4081b20bfb5e6face00520eddafbebd`. The checkpoint is incomplete and unaccepted; `astrid/sdk/generation.py` and `tests/core/generation/test_cli_gold_075b.py` remain unfinished/uncommitted per audit.
-- **VibeComfy donor:** `1b2e242ce7396442c85395d3220a2481216b57c1`; audit composition base `e2905d068d5851b9c32856d32b8251852a01d6dd` (observed main).
-- **Lifecycle donor:** `c47fa76be6e7c0aa661d044a0de5b3b73f6fdbac`; audit composition base `db79345536985c701b7aff2eb5eec36667aae204` (observed main).
-- **Possible Runtime stop/ownership donor:** `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94`. Include only if source comparison proves the retained included Agent behavior depends on it; otherwise preserve the current Runtime source. Historical composition base `9fc53b771134940aaac901e4cfc5d03c1db1a20a` (observed pre-main).
-- **Older verified Agent comparison:** `620a3fd5146fed9f623a2f7101c40c4279f03516`, pins VibeComfy `1b2e242...`, Runtime `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lifecycle `db79345536985c701b7aff2eb5eec36667aae204`. It is not a shortcut or automatic input: it predates retained PINS closure/asset/receipt repairs and selects older dependencies.
-- **App:** no generation feature donor. Retain the Installer Consent candidate and refresh canonical Agent/Runtime manifest and lock against the final reviewed heads.
+Agent `pre-main` pins runpod-lifecycle `96360a27a53c4608f780f7b370f747a2aa3c7ca8` (`pyproject.toml`) and Runtime `2776ba973b6c8f3555b5629b0840d9691a98d3c2` (`runtime.lock.json`, checked at `dc6dd018`).
 
-## Existing decisions and provenance limits
+## Producer and donor SHAs
 
-- PINS cancellation exit `143` had no final pytest summary, so it is neither acceptance nor a product failure. The audit reported 231 generation checks, 28 asset/installed-child checks, and pin/recipe/ancestry/source-policy investigation as reusable local evidence; fresh native Linux x86_64 closure and the specified candidate-only proof remain required.
-- Two supplemental bootstrap checks failed before assertions because distribution metadata was absent. If this recurs, repair that specific test setup rather than unrelated product behavior.
-- DEFAULTS is an unpublished local merge, not passed work. A prior static contract required real managed Qwen readiness without model bytes, while readiness requires a receipt and three locked model files. No installed execution occurred. Replace that contradiction with the narrower honest proof described in the task details; do not weaken readiness.
-- The original candidate tuple used Runtime `b005394...` in the PINS lock, but final Agent/App locks must be regenerated against the actual final reviewed producer heads. Do not ship stale historical locks.
-- Audit-time pairwise merge probes recorded 20 conflicting paths for Agent `620a3fd...`, 22 for PINS `1608db...`, and one for VibeComfy; Runtime stop merged cleanly in its then-current-base probe. These are historical pairwise observations, not bug counts or a tested sequential aggregate.
-- Keep separate Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lease `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`, healthfold `2870…`, and custody `103f97803f7f391e2c810ebdf086f798326cd75a` deferred unless a separately named included dependency is proven. Do not substitute custody-chain `103f978...` for Runtime stop.
-- The historical inclusion rationale remains at [INCLUDING-GENERATION.md](../../references/INCLUDING-GENERATION.md). It is supporting audit evidence, not another plan or active task list.
+Every one of these exists today only on a lane branch of its repository. No protected branch contains them. Pins that point at a lane-only commit break if the lane is deleted, which is why phase 1 lands them first.
 
-## Composition and publication boundaries
+| Item | Repository | SHA | Lands on | Note |
+|---|---|---|---|---|
+| PINS | Agent | `1608dbbf7036ad3c3b2b5e10956a726921bd4f9f` | merged into the candidate (C1) | About 482 commits behind the Agent `pre-main` of the earlier review, and 22 conflicting paths when merged then. Proof on it does not carry over. |
+| DEFAULTS donor | Agent | `9d3bb24831676cbfc2a0d3dd1c7769f1937569c3` | merged into the candidate (D1) | Contains the `[saved]` journey parameter, `test_generation_defaults_075a.py` and `test_phase2_audio_discovery.py`. |
+| VibeComfy donor (VFIX) | VibeComfy | `1b2e242ce7396442c85395d3220a2481216b57c1` | `main` (P1) | Only on two lane branches; one conflict (`template_index.json`) against `main`. |
+| Lifecycle donor | runpod-lifecycle | `c47fa76be6e7c0aa661d044a0de5b3b73f6fdbac` | `main` (P2) | Fast-forward of `main`. |
+| Runtime stop | Runtime | `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94` | `pre-main` (P3) | Merges cleanly. `1608dbbf` pins it in `runtime.lock.json` (line 71), so it is required. |
 
-Use a unique immutable create-only candidate lane per touched repository, for example `lane/M-GPU/increment-02-generation-<run-id>`; do not overwrite or depend on fixed historical `lane/M-GPU/integrated`. Compose producers first (VibeComfy, lifecycle, any required Runtime stop), then Agent, then App pin/lock refresh. Preserve valid ancestry and Installer Consent protections; resolve conflicts only in already changed files with focused behavior checks. Do not salvage by extraction/cherry-pick. Promote only exact reviewed immutable candidate heads to current `pre-main` using the existing release procedure, and recapture/reconcile if a frozen base moves. No new approval stage is introduced.
+## Not available
 
-No broad suite, unrelated baseline repair, ARM project, general hardening, concurrent editing, Packs, or unproven full model execution enters this increment. Installer 01 is the required predecessor for final composition/publication, not for all preparation. The full managed-generation journey remains deferred. At normal task setup, recover the exact retained card/check identities and evidence from the referenced source evidence and retained run materials: the complete card corpus and logs are not bundled in this documentation set. This setup is part of the existing tasks, not a new approval gate. A named test file does not authorize running its whole suite; use only selectors already designated by the retained cards, and do not invent missing node IDs.
+- **Checkpoint `3fe46b90`** (a local merge of PINS and the DEFAULTS donor, with uncommitted edits) was never published and cannot be recovered. The plan does not use it: DEFAULTS is rebuilt by merging the donor and writing the new test (decision D1).
+- **`tests/core/generation/test_cli_gold_075b.py`** does not exist anywhere. It is a new file to write (task D2).
+- **The retained run materials** (the earlier M-GPU cards, input reports and logs) are not in this repository. Everything a task needs from them is written into [tasks.md](tasks.md) or copied into [env/](env/README.md). Cards are evidence for what to do, not instructions to run. Ask the owner for the package only if a Step 0 item cannot be resolved without it.
+- **Linux CI:** no workflow runs the closure test or any Linux x86_64 job on Agent `pre-main`.
+
+## Installer Consent (Plan 01) status
+
+Not landed. On 5 Nov 2026 none of these were ancestors of `pre-main`: Agent `6087e0fbe7e2bd45c9911ff5cf1093614d715863` and `19229d2325879c12e01c6bcdc604fd743b158ece`; App `e97450cff0ed570cfaa077369b28c269b562bd1e` and `9ddff8efbc9e914efbe04cb49da2648c4feb4db4`. They exist only on `lane/M-GPU/install-consent/*` branches. Task W1 gates on them.
+
+## Foley
+
+- Agent `pre-main` (`astrid/sdk/generation.py` line 36) makes Foley explicit-only (`_EXPLICIT_ONLY_ENTRIES` containing `audio/hunyuan_foley_v2a`), from commit `8395174a5` ("keep Foley explicit-only without H-19", 1 Nov 2026). No owner record for it was found.
+- The DEFAULTS donor (`generation.py` line 1019) makes `audio/hunyuan_video_foley` the sound-effects default.
+- VibeComfy `main` has only `audio/hunyuan_foley_v2a` (`template_index.json` line 131; added in `a05864c6`, 1 Nov). The VibeComfy donor has only `audio/hunyuan_video_foley` (line 130; added in `afffb7ee`, 2 Nov). These are two separate templates, not a rename. Merging the donor leaves both.
+- The owner's later decision (retained directive, 2 Nov 2026) is sound effects = HunyuanVideo-Foley with no silent fallback. Decision D2 applies it using `audio/hunyuan_foley_v2a`. Qualifying Foley on real hardware (the earlier lane H-21) stays an open gap outside this plan.
+
+## Lifecycle SHA question
+
+`c47fa76` descends from `96360a27` (11 files changed, 1022 insertions and 49 deletions between them), and `c47fa76` fast-forwards `main`. Agent `pre-main` pins `96360a27`; `1608dbbf` pins `c47fa76`. Resolution: land `c47fa76` (P2) and pin it in C2. Repository: https://github.com/banodoco/runpod-lifecycle.
+
+## Reusable evidence and limits
+
+- The earlier PINS run reported 231 generation checks and 28 asset and installed-child checks passing locally, on a head far behind today's `pre-main`. It is a guide to what to expect, not proof for the new head. The latest verifier run was cancelled (exit 143) with no verdict.
+- Two supplemental bootstrap checks once failed before assertions because distribution metadata was missing. If that recurs, repair that test's setup, not unrelated product behavior.
+- Nine named test nodes fail on both the old base and head and are excepted by the owner (answer A, 3 Nov 2026 17:40Z): [env/shared-failure-exceptions.txt](env/shared-failure-exceptions.txt).
+- Merge conflict counts (22 for PINS, 9 for the DEFAULTS donor, 1 for the VibeComfy donor, none for Runtime stop) are pairwise probes from 5 Nov 2026, not a tested sequential result. Re-probe at C1 and D1.
+- The Linux closure proof once ran on a RunPod CPU pod with 60 GB of container disk; a host with 23 GB free was not enough.
+- Kept out of this plan: Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lease `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`, custody `103f97803f7f391e2c810ebdf086f798326cd75a`, the older verified Agent `620a3fd5146fed9f623a2f7101c40c4279f03516`, concurrent editing, Packs, ARM, and any broad suite. The [inclusion assessment](../../references/INCLUDING-GENERATION.md) is background; where it calls Runtime stop conditional, decision D4 supersedes it.
+
+## Composition and publication rules
+
+Use a fresh candidate branch per repository and record its name; do not overwrite a fixed historical lane. Compose producers first, then Agent, then the App repin. Preserve Plan 01. Do not cherry-pick or extract; merge, and resolve conflicts only in files the inputs changed, with focused checks. Promote only exact reviewed heads by ordinary fast-forward or create operations. No new approval stage is added, and a plan or review does not expand the owner's authorization.

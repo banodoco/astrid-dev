@@ -1,5 +1,7 @@
 # 08 — Release 1: install and update
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
 [README queue](../README.md) · [Initiative handoff](MANAGER.md). This plan records the Release 1 (R1) merge that the owner started on 4 Nov 2026. It runs under its own merge coordinator and lane managers, with detailed decisions and evidence in the [R1 merge docs](https://github.com/hannahsubmarine/repo/tree/claude/jolly-feynman-l6ckx7/docs/merge-plan) (`R1-PLAN.md`, `DECISIONS.md`, `status/FAILURES.md`). It doesn't start or authorize any other plan. Deferred work goes to [Plan 09](09-install-and-update-confidence.md).
 
 ## Goal

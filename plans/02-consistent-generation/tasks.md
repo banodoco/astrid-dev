@@ -1,161 +1,218 @@
 # Tasks: consistent generation path
 
+**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+
 [Project explanation](plan.md) · [Inputs and branch rules](inputs.md) · [Current project status](../../README.md)
 
-These are the existing four completion items and seven integration steps, not eleven new features. Click an item for its instructions below. The historical phase names Plan 02 and Plan 03 mean completion and integration respectively. Recorded evidence must be rechecked against the actual candidate; it does not mark a task done.
+Routes: `N` is the default (including ordinary hard work), `X` very hard, `S` super hard; see the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Run only the checks named here, with the exact selectors given; never a whole suite. A check that fails follows the run contract: keep the first failure, repair the cause, rerun the same check. Start only on the owner's go.
 
-## Task index
+Selectors marked **Step 0** were not found in the repositories and must be named from the place given before the task starts. If a Step 0 lookup finds nothing, record that in the task and drop the check; do not invent a selector.
 
-| Phase | Task | What it does |
-|---|---|---|
-| Complete | [PINS](#pins) | Finish dependency/build-path proof on the retained implementation. |
-| Complete | [DEFAULTS](#defaults) | Finish default selection and its focused checks. |
-| Complete | [INSTALLED-TEST](#installed-test) | Prove the installed package without claiming real model readiness. |
-| Complete | [END](#end) | Complete the existing acceptance review. |
-| Integrate | [GEN-VFIX](#gen-vfix) | Combine the VibeComfy resource/template changes. |
-| Integrate | [GEN-LIFE](#gen-life) | Qualify the lifecycle dependency. |
-| Integrate | [GEN-RUNTIME-STOP](#gen-runtime-stop) | Include the Runtime stop change only if required. |
-| Integrate | [GEN-AGENT](#gen-agent) | Combine Agent work and regenerate dependency pins. |
-| Integrate | [GEN-APP-PINS](#gen-app-pins) | Update the App to the verified Agent/Runtime versions. |
-| Integrate | [GEN-REVIEW](#gen-review) | Review the exact combined candidates. |
-| Integrate | [GEN-PROMOTE](#gen-promote) | Promote the reviewed commits to `pre-main`. |
+`CHECK_ENV` below means the scripts in [env/](env/README.md), run from a checkout root: `bash env/agent-setup.sh` once, then `bash env/agent-pytest.sh -q <selectors>` (VibeComfy: `vc-setup.sh`, `vc-pytest.sh`). Copy the scripts out of the checkout first or call them by path; they build `<checkout>.env/` beside it.
 
-## Completion tasks (historical Plan 02)
+## Phase 1: land the producers (can start today, any OS)
 
-### PINS
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [P1](#p1-vibecomfy) | VibeComfy donor `1b2e242` is on VibeComfy `main`; record the resulting SHA. | N | none | Focused checks below pass on the landed SHA. | [ ] |
+| [P2](#p2-lifecycle) | Lifecycle donor `c47fa76` is on runpod-lifecycle `main`; record the SHA. | N | none | Focused checks below pass on the landed SHA. | [ ] |
+| [P3](#p3-runtime-stop) | Runtime stop change `b005394` is on Runtime `pre-main`; record the SHA. | N | none | Focused checks below pass on the landed SHA. | [ ] |
 
-**Outcome and action:** finish candidate-only pin/closure acceptance on retained Agent candidate `1608dbbf7036ad3c3b2b5e10956a726921bd4f9f`; retain its implementation and do not rebuild old broad selectors.
+### P1 VibeComfy
 
-**Dependencies:** Existing Agent/VFIX sources. Implementation and verification can proceed after initiative start, independently of installer publication.
+Base: `main` (frozen at `e2905d06` on 5 Nov 2026). Donor `1b2e242ce7396442c85395d3220a2481216b57c1`.
 
-**Lead / class:** Terra / X: Linux x86_64 closure, strict process-custody, and multi-source pinned dependency proof interact; deploy bounded Luna helpers.
+1. Freeze `main` and confirm the donor is fetchable (`git fetch origin 1b2e242ce7396442c85395d3220a2481216b57c1`).
+2. On a fresh branch from `main`, `git merge --no-ff 1b2e242ce7396442c85395d3220a2481216b57c1`. Expect exactly one conflict, `template_index.json` (checked 5 Nov 2026). Keep every entry from both sides. Keep both Foley templates: `audio/hunyuan_foley_v2a` from `main` and `audio/hunyuan_video_foley` from the donor. Delete neither.
+3. Step 0: list which of the selectors below exist on the merged tree (`git ls-files tests`). `tests/test_installed_resources.py` and `tests/test_phase2_defaults.py` come from the donor. Drop and record any selector missing from both `main` and the donor.
+4. Setup `bash vc-setup.sh`, then run (this is the retained RI-V and QV list, plus the Foley template test on `main`):
 
-**Reuse and focused evidence:** Reuse the 231 generation checks, 28 asset/installed-child checks, pin/recipe/ancestry checks, and source-policy/closure investigation recorded in [local-only source evidence](../../references/evidence-summary.md). Latest verifier ended with exit 143 after setup and lifecycle identity; it produced **no final verdict**, so cancellation is not a product failure. Focus only current PINS candidate-only selectors: retained failure nodes, the three named CPU integration nodes, asset/installed-child checks, and real fresh-cache Linux x86_64 closure. CORE/CPU/closure returning ENV 3 for missing `VERIFY_SIDE` remain unexecuted, not passed. The complete retained card corpus and logs are not bundled here; at normal task setup, recover the exact retained card/check identities and evidence from the referenced source evidence and task materials. This is setup for the existing task, not an added approval gate. Do not treat a named test file as authorization for its entire suite, and do not invent missing node IDs.
+```text
+bash vc-pytest.sh -q tests/test_ready_templates.py tests/test_template_roundtrip.py tests/test_comfy_version_compat.py tests/test_phase2_defaults.py tests/test_comfy_backend.py tests/test_target_model_bundle_custody.py tests/test_target_model_approval.py tests/test_schema_target_authority.py tests/test_workflow_bundle.py::test_bundle_compile_rejects_nested_reconciliation_and_model_presence tests/test_workflow_bundle.py::test_bundle_model_gate_checks_picker_metadata_and_requirements tests/test_workflow_bundle.py::test_bundle_model_gate_rejects_metadata_model_not_registered tests/test_installed_resources.py tests/test_installed_wheel_execution.py tests/test_packaging.py tests/test_packaged_ready_trust.py tests/test_repo_relative_path_installed.py tests/test_h3_canonical_fixture.py tests/test_h3_av_audio_output.py tests/test_hunyuan_foley_v2a.py
+```
 
-**Done condition:** Exact candidate head gets complete required Linux evidence and the existing LB-PINS load-bearing review; any real failure follows the existing orchestrator reproduce/repair/targeted-retest flow. No BASE rerun.
+5. If a node fails, run the same node once on `main` (frozen) to classify it; a failure that also fails on `main` is reported, not fixed here.
+6. Land the branch through VibeComfy's normal reviewed merge (pull request), only with the owner's go. Record the resulting `main` SHA in [inputs.md](inputs.md).
 
-### DEFAULTS
+### P2 lifecycle
 
-**Outcome and action:** finish the retained local merge `3fe46b90e4081b20bfb5e6face00520eddafbebd` (PINS plus donor `9d3bb24831676cbfc2a0d3dd1c7769f1937569c3`), including dirty SDK/CLI-GOLD work; it is an unpublished checkpoint, not accepted code.
+Base: `main` (frozen `db79345536985c701b7aff2eb5eec36667aae204`). Donor `c47fa76be6e7c0aa661d044a0de5b3b73f6fdbac`, which contains `96360a27a53c4608f780f7b370f747a2aa3c7ca8`. It is a fast-forward of `main` (checked 5 Nov 2026).
 
-**Dependencies:** PINS candidate. Implementation/checks can proceed independently after initiative start; final composition waits for installer increment 01.
+1. Setup: `uv venv -q --python 3.13 .venv && uv pip install -q --python .venv/bin/python -e . pytest`.
+2. Run, using `.venv/bin/python -m pytest -q`:
 
-**Lead / class:** Terra / X: CLI dispatch/default selection crosses SDK, generation entries and dry-run behavior; deploy bounded Luna helpers.
+```text
+tests/test_https.py
+tests/test_engine_bridge.py
+tests/test_session_engine_proxy.py::test_session_enable_binary_http_and_no_bearer_projection
+tests/test_session_engine_proxy.py::test_session_enable_and_ws_auth_before_upstream
+tests/test_session_engine_proxy.py::test_session_enable_rejects_invalid_conflicting_and_observation_claims
+tests/test_session_engine_proxy.py::test_session_websocket_frames_ping_close_and_header_filtering
+tests/test_session_engine_proxy.py::test_session_enable_transport_rejections_are_specific_and_sanitized
+tests/test_session_engine_proxy.py::test_session_prompt_relay_never_retries_or_exposes_transport_secrets
+tests/test_observation_policy.py
+tests/test_engine_startup_config.py
+tests/test_api.py
+tests/test_provider_mounts.py
+```
 
-**Reuse and focused evidence:** Reuse the local merge and two prompt-only video-refusal checks. Finish `astrid/sdk/generation.py` and `tests/core/generation/test_cli_gold_075b.py`; focused proof: six defaults on `auto` and RunPod dry-run, Foley RunPod refusal, prompt-only video refusal, no-GPU/no-RunPod guidance, K-owned bytes unchanged, existing SDK defaults test and saved-output journey node.
+The three K27 regressions are inside `tests/test_https.py`: `test_completed_jobs_are_evicted_after_both_streams_reach_eof` (line 78), `test_sequential_commands_reuse_the_claim_job_capacity` (107) and `test_delete_cleans_output_after_exit_and_retires_record_on_next_start` (115), at `c47fa76`. The file also contains a seventh session-proxy test, `test_session_upload_image_is_bounded_and_relayed_without_client_secrets`, which the retained list does not name; leave it out unless you want it.
+3. No real provider, pod or GPU run. Land by fast-forwarding `main` through the repository's normal process, with the owner's go. Record the SHA.
 
-**Done condition:** Complete implementation, targeted checks and evidence on the exact PINS descendant; do not count the local checkpoint as passed.
+### P3 Runtime stop
 
-### INSTALLED-TEST
+Base: Runtime `pre-main` (frozen `9fc53b771134940aaac901e4cfc5d03c1db1a20a`). Donor `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94`. Merges cleanly with `pre-main` (checked 5 Nov 2026); the change touches `astrid_runtime/cli.py`, `astrid_runtime/selected_source.py` and two test files.
 
-**Outcome and action:** amend DEFAULTS step 6, this card and END to an honest installed-package proof. This is a test-contract mismatch; no installed runtime failure has been observed.
+1. Merge the donor onto a fresh branch from `pre-main`.
+2. Setup: `uv venv -q --python 3.13 .venv && uv pip install -q --python .venv/bin/python -e '.[test]'`.
+3. Run `.venv/bin/python -m pytest -q tests/test_astrid_product_down.py tests/test_local_cli.py`. These are the two test files the donor changes; if they are slow or broad, narrow to the nodes covering the changed stop and ownership behavior, found with `git diff pre-main...b005394 -- tests` (Step 0).
+4. Do not take the other Runtime lines (CAS `1e60e3b`, lease `33e9195a`, custody `103f9780`); they are outside this plan.
+5. Land on Runtime `pre-main` with the owner's go; record the SHA.
 
-**Dependencies:** Completed PINS and DEFAULTS.
+## Phase 2: wait for Plan 01
 
-**Lead / class:** Terra / X: the proof spans isolated package installation, CLI behavior and a separate real child/protocol boundary; deploy bounded Luna helpers.
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [W1](#w1-installer-consent-gate) | Plan 01 is on Agent and App `pre-main`. | N | [Plan 01](../01-installer-consent.md) | Both ancestry checks below succeed. | [ ] |
 
-**Reuse and focused evidence:** Reuse fresh-install/import/CLI/defaults coverage and `tests/packs/vibecomfy/test_installed_child_path.py::test_installed_qwen_managed_child_path` for the separate installed-child `/prompt`→`/history`→`/view` protocol-fixture boundary. Assert managed-unavailable/fail-closed at the actual gate reached; assert missing-model-specific refusal only if legitimate receipt prerequisites allow reaching that check. Never fabricate a receipt or bypass readiness.
+### W1 Installer Consent gate
 
-**Done condition:** Fresh non-editable package install, import origins, CLI inventory/defaults/dry-run, installed-child boundary, and honest managed-unavailable/fail-closed result are evidenced on the exact tuple. **The full fresh-install→managed-model-generation→gallery journey and real model readiness/execution remain explicitly unproven and deferred.** No weights, GPU, or provider call.
+Check, in an Agent checkout, that the Plan 01 donors are ancestors of `origin/pre-main`: `git merge-base --is-ancestor 6087e0fbe7e2bd45c9911ff5cf1093614d715863 origin/pre-main` and the same for `19229d2325879c12e01c6bcdc604fd743b158ece`; in an App checkout, for `e97450cff0ed570cfaa077369b28c269b562bd1e` and `9ddff8efbc9e914efbe04cb49da2648c4feb4db4`. On 5 Nov 2026 none were (see [inputs.md](inputs.md)). If Plan 01 lands under different commits, check for its recorded result in the [Plan 01 file](../01-installer-consent.md) and use that.
 
-### END
+## Phase 3: compose Agent (release workflow)
 
-**Outcome and action:** perform the existing scoped final review after all required rows are verified; update its DONE MEANS/remainder to match the revised proof.
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [C1](#c1-compose-pins) | Agent PINS `1608dbbf` is merged onto current Agent `pre-main` on a fresh candidate branch. | X | W1 | Merge commit exists; PINS ancestry holds; conflicts resolved without new behavior. | [ ] |
+| [C2](#c2-repin-agent) | Agent pins the landed P1, P2 and P3 SHAs, and its locks and digests are regenerated. | N | C1, P1, P2, P3 | Repin checks below pass. | [ ] |
 
-**Dependencies:** PINS, LB-PINS, DEFAULTS, INSTALLED-TEST and VFIX/QV evidence; all required source pins finalized.
+### C1 compose PINS
 
-**Lead / class:** Astra independent review (not an implementation tier).
+1. Freeze Agent `pre-main` (it was `40a6fd7ecf9138c6d9861631096a79820dc4c9b1` on 5 Nov 2026; Plan 01 will move it). Create a fresh candidate branch from it and record the name. Fetch PINS from its lane (`git fetch https://github.com/banodoco/astrid-agent.git 1608dbbf7036ad3c3b2b5e10956a726921bd4f9f`).
+2. Step 0: dry-run the merge to list conflicts (`git merge-tree --write-tree --name-only HEAD 1608dbbf7036ad3c3b2b5e10956a726921bd4f9f`). On 5 Nov 2026 there were 22 conflicting paths against an earlier `pre-main`: `generic_host.py`, `warm_hold.py`, `gateway/dispatch.py`, `asset_alignment.py`, `asset_gaps.py`, `entries.py`, `comfyui/recipe.linux-cu130.json`, `engine-index.json`, `runpod/pins.json`, `runpod/recipe.linux-cu130.json`, `target_selection.py`, `vibecomfy/environment.windows-nvidia.json`, `vibecomfy/pins.json`, `vibecomfy/recipe.windows-cu130.json`, `sdk/generation.py`, `pyproject.toml`, `runtime.lock.json`, `scripts/vibecomfy_pin.py`, and four test files (`test_engine_cli.py`, `test_engine_recipe.py`, `test_generate_align.py`, `test_target_selection.py`). The pin and digest files are regenerated in C2, so resolve them to either side and let C2 fix them.
+3. `git merge --no-ff 1608dbbf7036ad3c3b2b5e10956a726921bd4f9f`. Keep both sides of code conflicts and add no behavior; a hunk where both sides change the same statement to different results is a stop: record it and ask. Keep `pre-main`'s Plan 01 changes.
+4. Put the conflict list and resolution notes in the merge commit body.
+5. Done check: `git merge-base --is-ancestor 1608dbbf7036ad3c3b2b5e10956a726921bd4f9f HEAD` succeeds.
 
-**Reuse and focused evidence:** Reuse the current END review procedure and exact candidate/evidence links.
+### C2 repin Agent
 
-**Done condition:** Review records each required item and any blockers; managed model readiness/execution are listed as deferred, not silently dropped or reported complete.
+All commands are from the Agent candidate root.
 
-## Integration tasks (historical Plan 03)
+1. VibeComfy: `python scripts/vibecomfy_pin.py <P1 SHA>`. With no argument it prints the current pin; with a 40-character SHA it changes the pin.
+2. Lifecycle: edit the `runpod-lifecycle @ git+https://github.com/banodoco/runpod-lifecycle.git@<sha>` line in `pyproject.toml` (line 83 on `pre-main` on 5 Nov 2026) to the P2 SHA.
+3. Runtime: `python scripts/regenerate_runtime_pins.py --runtime-sha <P3 SHA> --agent-sha <candidate head> --runtime-checkout <path to a Runtime checkout at P3> --app-checkout <path to an App checkout> --agent-checkout .` is a dry run that prints a diff; add `--apply` to write. `runtime.lock.json` must end at the P3 SHA (`1608dbbf` has `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94` at line 71 of that file). Step 0: read the script's usage first; if `--agent-sha` cannot be the candidate head before it exists, use the head of C1's merge commit.
+4. Digests and locks: PINS carries Foley and QwenTTS node sources in `astrid/packs/runpod/pins.json` and `recipe.linux-cu130.json`, a hash-locked `requirements.linux-cu130.lock`, model-lock rows, and sha256 references in the three recipes, `environment.linux-cu130.json` and `engine-index.json`. If the landed VibeComfy `pyproject.toml` or `custom_nodes.lock` differ from what PINS locked against, regenerate the requirements lock with the command in its own header and recompute every referencing sha256 (`sha256sum` of the changed file; `git grep -n` the old digest and update every hit). Confirm with `python -c "from astrid.core.generation.engine_recipe import load_recipe; [load_recipe(e, p) for e, p in (('comfyui','linux-x86_64-cu130'),('vibecomfy','windows-x86_64-cu130'),('vibecomfy-h3','linux-x86_64-cu130'))]"` inside the check environment.
+5. Done check: `astrid/packs/runpod/pins.json` `vibecomfy` and `vibecomfy-h3` equal the P1 SHA; `runtime.lock.json` `source_commit` equals the P3 SHA; no pin points at a lane-only commit (each SHA is contained in its repository's `main` or `pre-main`).
 
-### GEN-VFIX
+## Phase 4: port DEFAULTS
 
-**Outcome and action:** compose VibeComfy resource/template donor; resolve its single template-index conflict, preserving Foley and current entries.
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [D1](#d1-merge-the-defaults-donor) | Donor `9d3bb248` is merged onto the C2 head, with the Foley default per D2. | X | C2 | Merge commit; K-owned files unchanged from C2; Foley default in place. | [ ] |
+| [D2](#d2-cli-gold-test) | `test_cli_gold_075b.py` exists and passes. | N | D1 | The CLI-GOLD test passes. | [ ] |
 
-**Dependencies:** Implementation may proceed after start; final composition waits for installer increment 01. Freeze the current target at composition. If no pre-main ref exists, record that and use observed main as merge base; create only the immutable candidate lane.
+### D1 merge the DEFAULTS donor
 
-**Lead / class:** Luna / N (normal).
+1. Fetch `9d3bb24831676cbfc2a0d3dd1c7769f1937569c3` from the Agent repository and `git merge --no-ff` it onto the C2 head. Keep PINS-side bytes for the pin and recipe files: after the merge, `git diff <C2 head> HEAD -- astrid/packs/runpod astrid/packs/comfyui astrid/packs/vibecomfy astrid/packs/engine-index.json runtime.lock.json` must print nothing.
+2. Step 0: list conflicts first. Against `pre-main` the donor alone had nine on 5 Nov 2026: `generic_host.py`, `warm_hold.py`, `gateway/dispatch.py`, `core/generation/preflight.py`, `runpod/target_selection.py`, `sdk/generation.py`, `test_generate_align.py`, `test_generate_target_journey.py`, `test_target_selection.py`. Keep both sides; add no behavior except step 3.
+3. Foley default (D2). In `astrid/sdk/generation.py`, `pre-main` has `_EXPLICIT_ONLY_ENTRIES = frozenset({"hunyuan-foley-local", "audio/hunyuan_foley_v2a"})` (line 36), added by commit `8395174a5`. The donor makes `audio/hunyuan_video_foley` the sound-effects default (donor line 1019). Resolve as: the sound-effects default is `audio/hunyuan_foley_v2a`; remove `audio/hunyuan_foley_v2a` from the explicit-only set; do not use the donor's `hunyuan_video_foley` id. With no Foley installed, `generate audio` for sound effects on `auto` must fail with guidance and never fall back to another route. Keep the existing RunPod refusal for Foley (`_refuse_runpod_foley`) unchanged; removing it is outside this plan.
+4. Put the merge order, conflict list and the Foley choice in the commit body.
 
-**Reuse and focused evidence:** Donor `1b2e242ce7396442c85395d3220a2481216b57c1`. Focused current RI-V selectors: `tests/test_ready_templates.py`, `tests/test_template_roundtrip.py`, `tests/test_installed_resources.py`, `tests/test_installed_wheel_execution.py`, `tests/test_packaging.py`, `tests/test_packaged_ready_trust.py`, `tests/test_repo_relative_path_installed.py`.
+### D2 CLI-GOLD test
 
-**Done condition:** Candidate preserves current template entries and passes targeted resource/package/template checks.
+Write the new file `tests/core/generation/test_cli_gold_075b.py` (never `pytest.skip`). Each case is a subprocess `python -m astrid generate ...` with an empty working directory and an environment of only `PATH`, `HOME`/`TMPDIR`/`XDG_CACHE_HOME` under `tmp_path`, `PYTHONNOUSERSITE=1`, plus the test process's `PYTHONPATH` and `ASTRID_RUNTIME_CHECKOUT`; no RunPod key. Assert that every flag you use appears in the subcommand's `--help`. RunPod dry-run flags in the earlier rehearsal were `--consent paid --max-usd 1 --deadline 2099-01-01T00:00:00Z`.
 
-### GEN-LIFE
+| Slot | Entry | Workflow or action | `--target auto` and `--target runpod --dry-run --json` |
+|---|---|---|---|
+| image | `qwen-image-2.1-turbo` | `image/qwen_image_2_1_turbo` | exit 0; entry and workflow appear in the JSON |
+| edit | `qwen-image-2.1-turbo-edit` | `edit/qwen_image_2_1_turbo_edit` | same |
+| video with references | `h3` | action `h3_av.transform` | same; copy the argv from `tests/core/generation/test_h3_action_entry.py::test_public_h3_cli_and_sdk_preserve_the_same_producer_local_inputs` |
+| voice | `audio/qwen3_tts_custom_voice` | same id | same |
+| music | `audio/minimax_music_3` | same id | same |
+| sound effects | `audio/hunyuan_foley_v2a` (D2) | its VibeComfy workflow | `auto`: resolves; `runpod`: non-zero exit with the existing refusal and no task admitted |
 
-**Outcome and action:** qualify adopted lifecycle source/API; carry the final source pin into Agent composition.
+Also assert: `generate list --json` contains all six entry ids and `generate describe --entry <id> --json` exits 0 for each; no result names Z-Image, LTX, Wan or a hosted (fal) entry as selected; prompt-only `generate video "A lighthouse in gentle rain." --target <auto|runpod> --dry-run --json` exits non-zero, admits no task and substitutes no entry; with no engine installed and no RunPod configured, `generate image "A tiny blue lighthouse." --target auto --json` exits non-zero and its output contains `needs a local GPU or --target runpod`, and `generate audio --mode tts --input "text=The exact authored words." --target auto --json` contains the same text and names the Edge TTS option. Update the sound-effects row if D1's Foley change shows a different workflow id.
 
-**Dependencies:** CPU qualification may proceed after start; final composition waits for installer increment 01. Freeze lifecycle target; if no pre-main ref exists, record absence and use observed main as merge base.
+Existing tests that encode the old default may change an assertion only where it records the old sound-effects default; name each in the commit message.
 
-**Lead / class:** Luna / N (normal); known source and prescribed CPU contract checks.
+## Phase 5: prove once on the final head
 
-**Reuse and focused evidence:** Source `c47fa76be6e7c0aa661d044a0de5b3b73f6fdbac`. Run current RI-L selected CPU/fake-provider nodes: `tests/test_https.py`; `tests/test_engine_bridge.py`; `tests/test_session_engine_proxy.py::test_session_enable_binary_http_and_no_bearer_projection`, `::test_session_enable_and_ws_auth_before_upstream`, `::test_session_enable_rejects_invalid_conflicting_and_observation_claims`, `::test_session_websocket_frames_ping_close_and_header_filtering`, `::test_session_enable_transport_rejections_are_specific_and_sanitized`, `::test_session_prompt_relay_never_retries_or_exposes_transport_secrets`; `tests/test_observation_policy.py`, `tests/test_engine_startup_config.py`, `tests/test_api.py`, `tests/test_provider_mounts.py`; and RI-L’s three named K27 regressions in `tests/test_https.py` (completed-job eviction, sequential capacity reuse, delete/retire).
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [V1](#v1-focused-checks) | The focused Agent checks pass on the D2 head. | N | D2 | PASS for each command, or only the nine excepted failures. | [ ] |
+| [V2](#v2-linux-closure) | The Linux x86_64 closure passes. | N | D2, Linux environment | PASS. | [ ] |
+| [V3](#v3-installed-package-proof) | The installed-package proof passes (D10). | N | D2 | PASS. | [ ] |
 
-**Done condition:** Exact source/API identity passes these selected CPU checks. No real provider, pod or GPU run.
+Record, for each, the exact command, the candidate SHA, the inputs and the inner exit status ([run contract](../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)). Do not claim a pass for a check not run.
 
-### GEN-RUNTIME-STOP
+### V1 focused checks
 
-**Outcome and action:** compose Runtime stop/ownership `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94` only if source comparison proves the retained included Agent behavior depends on it; otherwise omit it.
+Run from the Agent candidate with the setup in `env/`. `GEN_DESELECT_FILE` is `env/shared-failure-exceptions.txt` (nine owner-approved shared failures; D11).
 
-**Dependencies:** Start after initiative start; freeze current Runtime target. Include only on named dependency evidence, before canonical locks are generated.
+```text
+GEN_DESELECT_FILE=env/shared-failure-exceptions.txt bash env/agent-pytest.sh -q tests/core/generation/test_cli.py tests/core/generation/test_entries.py tests/core/generation/test_generate_target_journey.py tests/core/generation/test_h3_action_entry.py tests/core/generation/test_preflight.py tests/sdk/test_generation_source_retention.py tests/sdk/test_generation_target.py tests/core/generation/test_engine_recipe.py tests/core/generation/test_engine_runner.py tests/core/generation/test_engine_bootstrap.py tests/core/generation/test_engine_cli.py tests/core/generation/test_release_python.py tests/test_installer_wheel.py tests/packs/runpod tests/integrations/test_runpod_cpu_path.py tests/integrations/test_runpod_host_endpoint_r5.py tests/core/generation/test_generate_align.py tests/core/generation/test_model_root_binding.py tests/core/generation/test_engine_local_model_root.py tests/core/generation/test_engine_local_endpoint.py tests/core/generation/test_entry_readiness.py tests/core/generation/test_preflight_managed_fix.py tests/core/generation/test_preflight_installed_target.py tests/core/generation/test_targets.py
+bash env/agent-pytest.sh -q "tests/core/generation/test_generate_target_journey.py::test_public_image_command_registers_view_bytes_and_canonical_receipt[saved]"
+bash env/agent-pytest.sh -q "tests/core/generation/test_engine_runner.py::test_old_environment_identity_refuses_then_clean_root_installs_after_owned_stop"
+GEN_DESELECT_FILE=env/shared-failure-exceptions.txt bash env/agent-pytest.sh -q tests/core/generation/test_phase2_audio_discovery.py tests/sdk/test_generation_defaults_075a.py tests/core/generation/test_target_asset_declaration.py tests/core/generation/test_cli_gold_075b.py
+bash env/agent-pytest.sh -q tests/packs/vibecomfy/test_installed_child_path.py
+```
 
-**Lead / class:** Luna / N.
+Notes: the `[saved]` parameter, `tests/sdk/test_generation_defaults_075a.py` and `test_phase2_audio_discovery.py` exist only after the DEFAULTS donor is merged (D1), so they cannot be found on `pre-main` or on PINS alone. `tests/packs/vibecomfy/test_installed_child_path.py::test_installed_qwen_managed_child_path` and the engine-runner node arrive with PINS. Step 0: confirm each selector exists on the candidate with `git grep`; a node missing there means a merge dropped it. Shared failures outside the nine: run the node once on the frozen `pre-main` to classify it, then report it (D11).
 
-**Reuse and focused evidence:** RI-R focused checks only: `tests/test_astrid_product_down.py` and `tests/test_local_cli.py`, narrowed to the changed stop/ownership behavior. Keep separate CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lease `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`, healthfold `2870…` and custody `103f97803f7f391e2c810ebdf086f798326cd75a` deferred unless an independently named included dependency is proven.
+Also check the K-owned bytes (D1 step 1) and that the pins still match C2.
 
-**Done condition:** Record the actual source-level dependency decision and exact check result. Never pin an unverified Runtime tuple; if stop is not required, preserve current Runtime source.
+### V2 Linux closure
 
-### GEN-AGENT
+Needs a Linux x86_64 environment (see [plan.md](plan.md#prerequisites)); about 6 GB of engine environment plus the checkout and virtual environments, so use at least 40 GB of disk. On a RunPod CPU pod, record the owner-approved spend and the stop. Run:
 
-**Outcome and action:** compose the completed Agent generation sources after producers; preserve PINS and completed DEFAULTS once, then generate canonical pins/locks against final VibeComfy, lifecycle and Runtime heads.
+```text
+bash env/agent-pytest.sh -q tests/core/generation/test_closure_install_cpu.py
+```
 
-**Dependencies:** PINS, DEFAULTS, INSTALLED-TEST accepted; GEN-VFIX/GEN-LIFE qualified; any required GEN-RUNTIME-STOP qualified; installer increment 01 accepted before composition/publication.
+The test is `test_linux_x86_64_h3_environment_closure_before_model_stages`. It installs the `vibecomfy-h3` engine for `linux-x86_64-cu130` into fresh roots, CPU only, with `HF_HUB_OFFLINE=1`, stops after the `environment:comfy` stage, and imports the Foley and QwenTTS node packages (`HunyuanFoleyModelLoader`, `HunyuanFoleySampler`, `DACHunyuanVAEDecode`, `LoadDACHunyuanVAE`, `AILab_Qwen3TTSCustomVoice`). The retained run recorded an earlier version of this check cancelled with no verdict (exit 143); a cancellation is neither a pass nor a product failure. A result is valid only for the exact head tested.
 
-**Lead / class:** Terra / X: multi-repository producer ordering and coupled canonical pins/lock require integration decisions; Luna helpers required.
+### V3 installed-package proof
 
-**Reuse and focused evidence:** Agent PINS `1608dbbf7036ad3c3b2b5e10956a726921bd4f9f`; DEFAULTS `3fe46b90e4081b20bfb5e6face00520eddafbebd` is an unpublished incomplete checkpoint, reuse only after completion. Run only affected selectors: recover the current PINS card exact candidate-only TEST block at task setup; DEFAULTS `tests/core/generation/test_cli_gold_075b.py`, existing SDK defaults file and saved-output journey node; revised installed-package proof.
+Outcome (D10): a fresh, non-editable install of the candidate through the supported installer (`astrid/installer/backend.py`, Step 0: name its public install entry), with no checkout or user site visible to the installed program, shows: import origins of `astrid` and `vibecomfy` inside the installed environment; `vibecomfy.utils.find_repo_root()` raising `CheckoutRequiredError`; the `generate list` inventory with the six defaults; a dry run per default; and fail-closed guidance (`needs a local GPU or --target runpod`) with no engine and no RunPod. Together with `test_installed_qwen_managed_child_path` (the installed child driving a stand-in `/prompt`, `/history`, `/view` server), this is the proof. No weights, GPU, provider call or model download. Write it as a new test under `tests/installed/` (Step 0: no `tests/installed` directory was found on `pre-main`; create it). If an installer stage needs a model download, stop and record `model download needed: <stage>: <first error line>`; never fetch weights.
 
-**Done condition:** Combined Agent candidate has reviewed producer pins/lock and all affected focused checks pass; no stale historical lock.
+Not proven, by design: a full managed Qwen generation through readback. Record it as an open gap in the review.
 
-### GEN-APP-PINS
+## Phase 6: review once
 
-**Outcome and action:** refresh App’s canonical Agent/Runtime manifest and lock; no App feature donor.
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [R1](#r1-integrated-review) | One integrated completion review of the exact head. | completion reviewer | V1, V2, V3 | Uncontested PASS, or the round budget is used and the owner decides. | [ ] |
 
-**Dependencies:** GEN-AGENT candidate verified; retain installer-consent work.
+### R1 integrated review
 
-**Lead / class:** Luna / N (normal).
+Use the completion-reviewer role from the [run contract](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, at most five rounds, stop on an uncontested PASS. Give the reviewer the candidate head, the producer SHAs, the check outputs and these items to confirm: PINS and the DEFAULTS donor are ancestors; K-owned files are unchanged; the six defaults resolve as in D2; no pin points at a lane-only commit; the Plan 01 changes survive; the Foley default and its fail-closed behavior; V1 to V3 results are attached to this exact head; no GPU, pod, provider call, model download or credential read appears in the logs. Real inference and Foley hardware qualification are listed as deferred, not dropped. A repair returns to the same iterate loop and reruns the failed check.
 
-**Reuse and focused evidence:** No App feature SHA. Reuse current focused manifest/lock and installer-consent checks.
+## Phase 7: App repin
 
-**Done condition:** App identifies the exact verified Agent/Runtime candidate heads; final tuple acceptance occurs at GEN-REVIEW. No concurrent-editing source imported.
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [A1](#a1-app-repin) | App's install manifest names the reviewed Agent head and its Runtime. | N | R1 | `--check` and the manifest test pass. | [ ] |
 
-### GEN-REVIEW
+### A1 App repin
 
-**Outcome and action:** independently review exact composed candidate heads/evidence; do not publish in this row.
+From an App checkout on a fresh branch from App `pre-main` (with Plan 01):
 
-**Dependencies:** All included rows verified; immutable candidate refs and evidence available.
+```text
+node scripts/installer/pin.mjs <reviewed Agent SHA>
+node scripts/installer/pin.mjs --check
+node --import tsx --test scripts/installer/manifest.test.mjs
+```
 
-**Lead / class:** Astra independent review, separate from implementation tiers.
+`pin.mjs` rewrites only `public/install-manifest.json` (`agent.sha`, `runtime.sha`, `runtime.schema_digest`, `release`) and reads the Agent's `runtime.lock.json` from GitHub, so the reviewed Agent head must already be pushed to a branch where it can be read (a candidate branch is enough; it does not need to be promoted). `--check` is read-only. The Agent SHA must be 40 hex characters. No App feature donor exists.
 
-**Reuse and focused evidence:** Use existing scoped review process and row evidence; no broad suite.
+## Phase 8: promote
 
-**Done condition:** Review is clear or blockers return through the existing reproduce/repair/targeted-retest flow.
+| ID | Outcome | Route | Depends on | Done when | Done |
+|---|---|---|---|---|---|
+| [PR1](#pr1-promote) | The reviewed heads are on `pre-main`. | N | R1, A1 | `pre-main` equals the reviewed heads; receipts recorded. | [ ] |
 
-### GEN-PROMOTE
+### PR1 promote
 
-**Outcome and action:** promote the exact Astra-reviewed immutable candidates to current `pre-main` with ordinary fast-forward/create operations and record receipts.
+Follow the release workflow's pre-main integration lane ([release skill](../../skills/astrid-dev-release/SKILL.md)): recapture each destination `pre-main` immediately before, and promote the exact reviewed heads (Agent, then App) by ordinary fast-forward or create operations. Never force-push; never publish to `main`, `int/r1` or `release-1`. If a destination moved, reconcile and rerun only the affected checks and review. Only with the owner's explicit authority.
 
-**Dependencies:** GEN-REVIEW clear; installer increment 01 already on `pre-main`; target has not moved incompatibly.
-
-**Lead / class:** Luna / N (normal).
-
-**Reuse and focused evidence:** Use the exact reviewed candidate heads/manifest from GEN-REVIEW; recapture current target immediately before promotion.
-
-**Done condition:** `pre-main` resolves to the reviewed heads and promotion receipts match them; if target moved, reconcile and rerun only affected checks/review before promotion.
-
-## Shared execution rules
-
-Use the [composition/publication rules and evidence interpretation](inputs.md) for every task. Adapt the retained cards and runner inputs in place after start; add no new framework or approval gate. The orchestrator owns technical contract corrections and reproduce → repair → targeted retest. Keep row evidence separate from the original deliverable count; these integration steps do not rewrite original completion. See the [initiative handoff](../MANAGER.md) for execution ownership and existing run controls.
+Order: Agent is promoted first, then App, so App's manifest never names an Agent head that is not yet on `pre-main`.

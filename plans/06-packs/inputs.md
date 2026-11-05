@@ -2,7 +2,7 @@
 
 ## Identity and scope
 
-The SHA values below are historical retained inputs, not assumptions about current destination refs or authorization to start. Plan 06 consumes promoted Plan 05 heads (including the Plan 03/04 history). At PK-0, freeze the actual Agent, Runtime, and App rolling `pre-main` heads, the poms base, and the eight park heads; record immutable `BASES.tsv`, `ADOPT.md`, `NOTED`/exclusions, and the park SHA inventory. Verify the four repositories and exact ancestry. Do not freeze old `main` or obsolete `lane/M-GPU/integrated` as final. Create fresh isolated candidates from PK-0's exact frozen bases, preserve candidate immutability, and promote only exact reviewed heads to `pre-main` under PK-PREMAIN.
+The SHA values below are historical retained inputs, not assumptions about current destination refs or authorization to start. Plan 06 consumes promoted Plan 05 heads (including the Plan 02 integration-phase and Plan 04 history). At PK-0, freeze the actual Agent, Runtime, and App rolling `pre-main` heads, the poms base, and the eight park heads; record immutable `BASES.tsv`, `ADOPT.md`, `NOTED`/exclusions, and the park SHA inventory. Verify the four repositories and exact ancestry. Do not freeze old `main` or obsolete `lane/M-GPU/integrated` as final. Create fresh isolated candidates from PK-0's exact frozen bases, preserve candidate immutability, and promote only exact reviewed heads to `pre-main` under PK-PREMAIN.
 
 ## Historical retained identities
 

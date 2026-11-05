@@ -1,5 +1,7 @@
 # 09 — Install and update confidence
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
 [README queue](../README.md) · [Initiative handoff](MANAGER.md). Next after [Plan 08](08-release1-install-update.md) (Release 1); it starts from Plan 08's verified output. It doesn't authorize product execution until the owner starts it. Pinokio stays in [Plan 07](07-pinokio.md), and pack updates stay in [Plan 06](06-packs/tasks.md#pk-9) PK-9.
 
 ## Goal

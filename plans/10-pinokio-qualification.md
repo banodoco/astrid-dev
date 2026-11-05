@@ -1,5 +1,7 @@
 # 10 — Pinokio qualification: engine controls, custody and fully-local
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
 [README queue](../README.md) · [Initiative handoff](MANAGER.md). The follow-up to [Plan 07](07-pinokio.md) (Pinokio basic, R1.1). It holds the Pinokio work deliberately left out of the basic increment: engine Stop/Quit refusal veto, direct custody, fully-local mode and unknown-state stop. There is no old-launcher migration or compatibility work: Pinokio had no users when R1 shipped. It starts after Plan 07 is done, from Plan 07's verified launcher and gate. The source audit below was recorded on 4 Nov 2026 (it was Plan 07's text then). Re-resolve every head at start.
 
 ## Goal

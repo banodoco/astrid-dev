@@ -1,5 +1,7 @@
 # 07 — Pinokio basic: install, run, update and remove
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
 [README queue](../README.md) · [Initiative handoff](MANAGER.md). The first Pinokio increment, shipped as Release 1.1 straight after [Plan 08](08-release1-install-update.md). Its goal is a hosted test proving that a user can install, start, stop, update and remove Astrid through Pinokio on Linux, macOS and Windows without losing data. The full engine, custody and fully-local qualification work moves to [Plan 10](10-pinokio-qualification.md). Decisions and evidence are in the R1 merge docs (`DECISIONS.md`, 5 Nov 2026 "Pinokio for R1").
 
 ## Goal

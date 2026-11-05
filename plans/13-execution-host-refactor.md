@@ -1,5 +1,7 @@
 # 13 — Execution host refactor
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
 **Draft scope — not yet fully specified.** Current status and owner are in the [README queue](../README.md).
 
 ## Goal

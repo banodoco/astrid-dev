@@ -1,5 +1,7 @@
 # 1 — Merge completed installer consent
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
 [README queue](../README.md) · [Initiative handoff](MANAGER.md). First release slice; it does not depend on generation, CE or Packs and does not authorize product execution. Source evidence: [Astra merge plan](../references/PLAN.md), [exact manifest](../references/donor-manifest.json), [IC END acceptance](../references/evidence-summary.md).
 
 ## Goal

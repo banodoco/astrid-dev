@@ -1,45 +1,105 @@
 # Consistent generation path
 
-Finish the retained generation work and merge it into `pre-main`, preserving the installer work already there. Reuse the existing implementation; finish its missing behavior and checks, then integrate the repositories together.
+**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
-Current status, owner, and estimate are in the [project queue](../../README.md). The retained-work descriptions below come from the historical audit, not a fresh execution report.
+Plan 02 makes supported generation pick consistent defaults (image, edit, video, voice, music, sound effects), and makes the Agent, Runtime, App, VibeComfy and runpod-lifecycle repositories pin one compatible set of versions that installs on a fresh Linux machine. Users get predictable defaults and clear guidance when no GPU is available. It reuses work that already exists on retained branches and merges it into `pre-main`.
 
-## What this delivers
+**Not proven here:** a real model producing an image that reaches the gallery. Model downloads, GPU or provider calls, real inference and Foley hardware qualification are outside this plan. The checks use fixtures (a stand-in ComfyUI server) and a CPU-only install. The [first-image onboarding](../20-zero-to-first-image.md) and [multiple inference routes](../12-multiple-inference-routes.md) plans cover real inference.
 
-A coherent generation code path: consistent default selection, compatible dependency versions, and a tested installed-package interface. The checks cover the actual installation and a controlled generation-service protocol fixture.
+Status, owner and estimate are in the [README queue](../../README.md).
 
-**This increment does not yet prove an actual model-generated image reaching the gallery.** Model readiness, real inference, training, and GPU execution remain outside its accepted scope. The [first-image onboarding](../20-zero-to-first-image.md) and [multiple inference routes](../12-multiple-inference-routes.md) projects define later real-inference outcomes.
+## How to work on it
 
-## What we build on
+1. Read [AGENTS.md](../../AGENTS.md) for repository rules, and the [skills guide](../../skills/README.md). Use the **iterate** workflow for a single scoped change or check (P1 to P3, C2, D2, V1 to V3, A1), and the **release** workflow for integration, review and promotion (C1, D1, R1, PR1).
+2. Routes `N`, `X`, `S` and review rules are in the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Terms are in the [glossary](../../docs/glossary.md); plan-specific terms are at the end of this file.
+3. Do the tasks in [tasks.md](tasks.md); exact SHAs and what is missing are in [inputs.md](inputs.md).
 
-There are two kinds of starting code: **the current destination base** and **retained feature work from other branches or checkpoints**. Both matter. Using `pre-main` does not mean starting generation from scratch or discarding the existing implementation.
+## Prerequisites
 
-| Repository | Existing work to reuse | How it joins the result |
-|---|---|---|
-| Agent | PINS implementation and the unfinished DEFAULTS checkpoint. | Finish the retained work, then combine it with current `pre-main`, preserving Installer Consent. |
-| VibeComfy | Resource and template changes. | Compose them onto the current producer base and check the result. |
-| Lifecycle | Retained source/API changes. | Qualify the source and use the resulting exact version in Agent. |
-| Runtime | Stop/ownership change, if generation actually depends on it. | Include only on source evidence; otherwise keep the current Runtime version. |
-| App | Current base including Installer Consent; no separate generation feature donor. | Update its references to the final verified Agent and Runtime versions. |
+- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../AGENTS.md)). Nothing here authorizes pushing, spending or promotion by itself.
+- **Predecessor:** [Plan 01, Installer Consent](../01-installer-consent.md) must be on Agent and App `pre-main` before phase 3. It is not there yet (see [inputs.md](inputs.md)). Phase 1 can start before it.
+- **Hardware for the Linux closure check (task V2):** a Linux x86_64 environment: a Linux machine, WSL2 on a Windows PC, or a RunPod CPU pod with at least 40 GB of disk (owner-approved spend). The check installs the pinned Linux recipe (`linux-x86_64-cu130`), so a Mac can't run it. Everything else, including the phase 1 producer tasks, runs on any OS.
+- **Access:** push access to the repositories below, or open pull requests for the owner to merge. Producers land only with the owner's go.
+- **Tools on the proof machine:** `uv`, `git`, `ffmpeg`, Python 3.13, and network reads to PyPI and GitHub (see [env/README.md](env/README.md)).
 
-The [input record](inputs.md) identifies the retained commits. Some are incomplete or only partly verified, so they are inputs to finish and integrate, not automatically ready-to-merge branches. Final dependency locks must describe the combined result.
+## Can start today
+
+With the owner's go, and no predecessor needed:
+
+- P1 land the VibeComfy donor, P2 land the lifecycle donor, P3 land the Runtime stop change. All can run in parallel, on any OS.
+- Step 0 items inside later tasks (re-probe merge conflicts, name unnamed selectors) are read-only and can be done any time.
+
+Waiting: everything from phase 3 needs Plan 01 on Agent and App `pre-main` and the phase 1 SHAs. V2 also needs the hardware above.
+
+## Repositories
+
+Base refs are observations from 5 Nov 2026; re-freeze at start ([inputs.md](inputs.md)).
+
+| Repository | URL | Role | Base ref | Retained SHA and where it lives now |
+|---|---|---|---|---|
+| Agent | https://github.com/banodoco/astrid-agent | Generation, pins, installer; the main integration | `pre-main` | PINS `1608dbbf7036ad3c3b2b5e10956a726921bd4f9f`, DEFAULTS donor `9d3bb24831676cbfc2a0d3dd1c7769f1937569c3`; both on lane branches only |
+| VibeComfy | https://github.com/banodoco/VibeComfy | Workflow templates and resources | `main` (no `pre-main`) | donor `1b2e242ce7396442c85395d3220a2481216b57c1`; lane only |
+| runpod-lifecycle | https://github.com/banodoco/runpod-lifecycle | RunPod pod lifecycle library | `main` (no `pre-main`) | donor `c47fa76be6e7c0aa661d044a0de5b3b73f6fdbac`; lane only |
+| Runtime | https://github.com/banodoco/astrid-runtime | Stop/ownership change that Agent's lock requires | `pre-main` | donor `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94`; lane only |
+| App | https://github.com/banodoco/astrid-app | Install manifest; repin only | `pre-main` | no donor |
 
 ## The sequence
 
-1. **Finish the retained work.** Verify the dependency/build path (PINS), finish default selection (DEFAULTS), check the installed package (INSTALLED-TEST), and complete the existing acceptance review (END). Some code and local evidence already exist; the retained defaults edits are incomplete, and the cancelled verification run has no final verdict.
-2. **Prepare the integration base.** Installer Consent must already be merged into Agent/App `pre-main` before final generation composition. Snapshot the then-current destination in each repository and create a separate candidate branch from it. Independent completion and producer checks can proceed earlier after the project is started.
-3. **Combine the work and check the combined result.** Integrate VibeComfy and lifecycle inputs first, then Agent, then update the App's dependency references. Include the Runtime stop change only if source comparison proves generation needs it. Resolve conflicts, regenerate dependency locks, and run the affected focused checks on the combined code.
-4. **Review and merge to `pre-main`.** Use the existing independent integration review, then promote those same reviewed commits. If the destination has moved, reconcile the change and repeat only the affected checks and review.
+1. **Land producers.** Put the VibeComfy, lifecycle and Runtime donors on their repository's `main` (Runtime: `pre-main`) so no pin points at a commit that exists only on a lane.
+2. **Wait for Plan 01** on Agent and App `pre-main`.
+3. **Compose PINS** onto current Agent `pre-main`, then repin Agent to the landed producer SHAs.
+4. **Port DEFAULTS** onto that head: merge the donor and write the new CLI-GOLD test.
+5. **Prove once** on that head: the focused checks, an installed-package proof and the Linux closure.
+6. **Review once**, with one integrated completion review.
+7. **Repin App** to the reviewed Agent head.
+8. **Promote** the exact reviewed commits.
 
-So `pre-main` is both the integration starting point and the final destination. We do not replace it with an old generation branch. If a producer repository has no `pre-main`, use its recorded current `main` as the candidate base and create `pre-main` only through the reviewed promotion procedure.
+Proof is bound to the final head. Producers land first and Plan 01 is a precondition so the composed head is not changed again after it is proven.
+
+## Decisions
+
+| # | Decision | Source |
+|---|---|---|
+| D1 | Drop the unpublished checkpoint `3fe46b90` and the "finish dirty work" framing. DEFAULTS merges donor `9d3bb248` onto the composed head and writes `test_cli_gold_075b.py` as a new file, as the DEFAULTS card says. Neither exists on GitHub. | Coordinator; [DEFAULTS card](inputs.md#not-available) |
+| D2 | Foley follows the owner's later decision ("sfx = HunyuanVideo-Foley", "no silent fallback"). DEFAULTS makes `audio/hunyuan_foley_v2a` the sound-effects default and removes it from Agent's explicit-only set. If Foley is not installed, `auto` fails with guidance and never falls back. Real-hardware qualification of Foley stays an open gap outside this plan. | Coordinator; owner decision recorded in the retained directive, 2 Nov 2026 |
+| D3 | Order: producers, wait for Plan 01, compose, port DEFAULTS, prove once, review once, App repin, promote. | Coordinator |
+| D4 | The Runtime stop change is unconditional, because the PINS lock already requires it. | Coordinator; `1608dbbf:runtime.lock.json:71` |
+| D5 | One review: the retained END review is folded into GEN-REVIEW (here R1), at most five rounds per the run contract. | Coordinator; run contract |
+| D6 | Compose (route X) and repin (route N) are separate tasks. | Coordinator |
+| D7 | Tasks carry routes N, X or S, never model names; the review uses the run contract's completion-reviewer role. | Coordinator; run contract |
+| D8 | The Linux x86_64 closure check runs on Linux, WSL2 on Windows, or a RunPod CPU pod (at least 40 GB disk, owner-approved spend). It installs the pinned Linux recipe, so macOS can't run it. | Coordinator, owner update |
+| D9 | The newer plan wins on scope (no real inference), unless a card's stronger check runs wholly on fixtures. Choices below. | Coordinator |
+| D10 | INSTALLED-TEST keeps the plan's narrow proof (fresh non-editable install, import origins, CLI inventory, defaults, dry run, fail-closed guidance, the installed-child protocol test). The card's full managed Qwen 512x512 generation through the fixture is not adopted: it never ran, and the earlier audit found managed readiness needs a receipt and three locked model files, so it cannot be shown to need no model bytes. The card itself stops with "model download needed" in that case. | D9; retained INSTALLED-TEST card; [inputs.md](inputs.md) |
+| D11 | Base comparison is kept only to classify a failure. The owner approved nine named failures that fail on both base and head (answer A, 3 Nov 2026 17:40Z); only those nine are deselected. Any other failure is checked once against `pre-main` and, if it also fails there, reported to the owner rather than excepted. Nothing else runs on the base. | D9; retained ANSWERS; run contract |
+| D12 | The retained QV check is folded into P1: the same VibeComfy selectors run on the donor composed onto `main`, rather than on the old b2123edf base. | D9; retained QV card |
+| D13 | The lifecycle donor is `c47fa76` (it contains `96360a27`). Agent `pre-main` pins `96360a27`, so the Agent pin moves forward. | Verified in the lifecycle repository; [inputs.md](inputs.md) |
+| D14 | There was no Foley rename. VibeComfy `main` ships only `audio/hunyuan_foley_v2a` (added 1 Nov, `a05864c6`); the donor line separately ships only `audio/hunyuan_video_foley` (added 2 Nov). Merging the donor onto `main` therefore leaves both templates; P1 keeps both in the index, deletes neither, and Agent's default points at `v2a` (D2). | Verified in VibeComfy history; [inputs.md](inputs.md) |
+| D15 | The earlier split into a completion plan and an integration plan is gone; other plans that wait on generation integration point at phases 3 to 8 here. | Coordinator |
+
+## Plan-specific terms
+
+- **PINS**: the Agent commit `1608dbbf` that pins a compatible version set (VibeComfy, Runtime, node sources, model and requirements locks) and adds the Linux closure test.
+- **DEFAULTS**: the Agent donor `9d3bb248` that selects default entries per generation type, plus the new CLI-GOLD test.
+- **CLI-GOLD**: `tests/core/generation/test_cli_gold_075b.py`, a test that runs real `python -m astrid generate ...` subprocesses with dry run and checks which default each type resolves to.
+- **VFIX**: the VibeComfy donor `1b2e242`, which makes an installed VibeComfy find its own templates without a source checkout.
+- **QV**: the retained check that VFIX still passes VibeComfy's focused tests against the production base. Here part of P1.
+- **K27**: the three lifecycle regression tests (completed-job eviction, capacity reuse, delete and retire) in `tests/test_https.py`.
+- **RI-V, RI-L, RI-R**: the selector lists for VibeComfy, lifecycle and Runtime from the retained release-integration cards.
+- **Closure**: a fresh CPU install reaching the ComfyUI engine environment stage with every pinned piece resolving, and the node packages importing.
+- **K-owned files**: the pin and recipe files PINS owns (`astrid/packs/runpod`, `comfyui`, `vibecomfy`, `engine-index.json`, `runtime.lock.json`); the DEFAULTS merge must leave their bytes as PINS had them.
+- **Deselect**: tell pytest to skip a named test node (`--deselect`); used only for the nine owner-approved shared failures.
+- **Ancestor / ancestry**: commit A is an ancestor of B when B's history contains A (`git merge-base --is-ancestor A B`); used to prove a donor is really inside a candidate.
+- **Journey test**: a test that drives a public CLI command end to end (for example `generate image`) and checks the receipt.
+- **Step 0**: a lookup to do before a task starts, naming something this plan could not find (see [tasks.md](tasks.md)).
+- **CAS, lease**: other Runtime changes (content-addressed storage metadata, an editing lease) kept out of this plan.
+- **R1 / P1 / C1 ...**: task IDs in [tasks.md](tasks.md); R1 is the review task, not Release 1.
+- **Protocol fixture**: a stand-in ComfyUI server that answers `/prompt`, `/history` and `/view`, so no real model runs.
 
 ## Where to read next
 
 | Document | Purpose |
 |---|---|
-| [tasks.md](tasks.md) | The four completion items and seven integration steps, with links to each task's instructions, dependencies, lead, checks, and done condition. |
-| [inputs.md](inputs.md) | Exact retained commits, source evidence, branch rules, and how to recover the original targeted checks. |
-
-The task details are sections within `tasks.md`; separate files are unnecessary for these short cards. The old Plan 02 and Plan 03 are now the completion and integration phases of this one project. The [older inclusion assessment](../../references/INCLUDING-GENERATION.md) remains background evidence, not another plan to follow.
-
-Installer Consent is a separate preceding increment. Concurrent editing, Packs, and unrelated fixes are not pulled into this generation merge. No broad test suites, new approval stages, or product execution are introduced by this reorganization.
+| [tasks.md](tasks.md) | Every task: outcome, route, dependencies, exact commands, done condition. |
+| [inputs.md](inputs.md) | Current heads, producer SHAs, what is missing, Installer Consent status. |
+| [env/README.md](env/README.md) | Setup and test runner scripts used by the checks. |
+| [Inclusion assessment](../../references/INCLUDING-GENERATION.md) | Background evidence only, not a task list. |

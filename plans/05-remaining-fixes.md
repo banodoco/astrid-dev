@@ -1,5 +1,7 @@
 # 05 — Release fixes integration
 
+**Start here:** read [AGENTS.md](../AGENTS.md), choose a workflow in the [skills guide](../skills/README.md), follow the [run contract](../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../docs/glossary.md).
+
 [README queue](../README.md) · [Initiative handoff](MANAGER.md). After the CE increment, account for and integrate the remaining eligible fixes. A disposition ledger is not a tested product release. This plan also owns the separate Runtime CAS lane intentionally omitted from generation. It does not wait for Packs merely to ship unrelated fixes.
 
 ## Goal
@@ -11,7 +13,7 @@ Use accepted SF receipts `83f39c24e731fe199efa60bb2f5a262c9d4a871b` and `1c4cab1
 
 ## Starting code and branch policy
 
-This plan consumes the exact promoted plan 03 and plan 04 heads. Historical SF donor identities include accepted receipts `83f39c24e731fe199efa60bb2f5a262c9d4a871b` and `1c4cab15b614336c752f44976c8b283ca9b36667`; Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, Runtime fold `287042b2426f7465a1fba77bba075766f18f26b1`, Agent fold `47d67d8d13bcbf4ab437bc41ae6ec5b6cf60598b`, and RunPod owner `aee88cb87c4acd249023d16f096bce5f40c1b6f9`. SF provenance and donors are historical references, not a frozen base. No later plan-05 destination base was frozen in the supplied audit; its base is the exact promoted plan-03/04 tuple and current pre-main at execution. Freeze then-current pre-main for every changed repository after predecessors promote; create isolated candidate branches and promote only reviewed exact heads. The Agent fold is consumed once by plan 06 PK-6, not merged here.
+This plan consumes the exact promoted Plan 02 (integration phase) and Plan 04 heads. Historical SF donor identities include accepted receipts `83f39c24e731fe199efa60bb2f5a262c9d4a871b` and `1c4cab15b614336c752f44976c8b283ca9b36667`; Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, Runtime fold `287042b2426f7465a1fba77bba075766f18f26b1`, Agent fold `47d67d8d13bcbf4ab437bc41ae6ec5b6cf60598b`, and RunPod owner `aee88cb87c4acd249023d16f096bce5f40c1b6f9`. SF provenance and donors are historical references, not a frozen base. No later plan-05 destination base was frozen in the supplied audit; its base is the exact promoted plan-03/04 tuple and current pre-main at execution. Freeze then-current pre-main for every changed repository after predecessors promote; create isolated candidate branches and promote only reviewed exact heads. The Agent fold is consumed once by plan 06 PK-6, not merged here.
 
 | ID / input | Action, dependency and owner | Focused evidence / done |
 |---|---|---|
