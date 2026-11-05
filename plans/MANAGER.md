@@ -10,7 +10,7 @@ When using the existing orchestrator, keep these first two IDs and meanings:
 
 | ID | Purpose | Completion evidence |
 |---|---|---|
-| M-00 | Stage card amendments for the next increment and any independently ready work. Map plan task IDs to existing rows; preserve prior cards and results; scope each task's FILES and TEST selectors; resolve pinned inputs once. Do not make all six plan rewrites a prerequisite to the first Installer Consent increment. | Concise card-to-plan map, exact selectors, immutable input manifest, and no stale whole-release assertion on selected rows. |
+| M-00 | Stage card amendments for the next increment and any independently ready work. Map plan task IDs to existing rows; preserve prior cards and results; scope each task's FILES and TEST selectors; resolve pinned inputs once. Prepare the first Installer Consent increment as soon as its own cards are ready. | Concise card-to-plan map, exact selectors, immutable input manifest, and no stale whole-release assertion on selected rows. |
 | M-01 | Validate staged cards and the actual dependency graph; align ready rows with configured N/X/S routes through the existing manager. Do not edit live state by hand. | Every ready row has a valid card, configured route, and real prerequisites; independent eligible work is not blanket-gated. |
 
 These IDs retain their existing meanings and dependency references. They do not authorize hand-editing live run state or require rewriting every plan before the first Installer Consent increment.
@@ -19,7 +19,7 @@ These IDs retain their existing meanings and dependency references. They do not 
 
 Use the accepted project plan for scope, exclusions, dependencies, and focused acceptance evidence. The root [README queue](../README.md) alone owns project status and remaining human-day estimates; plans own task progress. Use the shared contract for `N`/`X`/`S` route meanings and configured model bindings.
 
-Plan 08 (Release 1) runs under its own merge coordinator. Plan 09 (install and update confidence) is first in the queue (the [README queue](../README.md) owns current priority) and starts from Plan 08's verified output. Plans 01–06 describe the staged pre-main sequence. Generation may be prepared independently after explicit start, but its integration follows Installer Consent. Later work uses reviewed inputs. Plan 07 (Pinokio basic) runs as Release 1.1 alongside Plan 09: a separate three-row hosted gate for install, start, stop, busy stop, update and uninstall through Pinokio. Plan 10 (Pinokio qualification) follows Plan 07 and starts with a review of historical notes against current source. Neither has an automatic dependency on Packs.
+Plan 08 (Release 1) runs under its own merge coordinator. Plan 09 (install and update confidence) starts from Plan 08's verified output. Plans 01, 02, 04, 05 and 06 describe the staged pre-main sequence. Generation may be prepared independently after explicit start, but its integration follows Installer Consent. Later work uses reviewed inputs. Plan 07 (Pinokio basic) runs as Release 1.1 alongside Plan 09: a separate three-row hosted gate for install, start, stop, busy stop, update and uninstall through Pinokio. Plan 10 (Pinokio qualification) follows Plan 07 and starts with a review of historical notes against current source. Neither has an automatic dependency on Packs.
 
 ## Review and stopping
 

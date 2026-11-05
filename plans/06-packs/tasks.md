@@ -36,7 +36,7 @@ The index links to the existing work rows below. These are preserved task rows, 
 
 **Action and outcome:** PK-0 — freeze Agent/Runtime/App rolling pre-main candidate, poms base, eight park heads; adopt inventory
 
-**Dependencies; owner / tier:** Latest promoted plan05 increment (including plan03/04 history); N/Luna
+**Dependencies; owner / tier:** Latest promoted [Plan 05](../05-remaining-fixes/plan.md) increment, including the integrated [Generation](../02-consistent-generation/plan.md) and [Concurrent Editing](../04-concurrent-edits/plan.md) work; N/Luna
 
 **Reuse, focused evidence, and done condition:** Reuse existing `PK-0` inputs. Freeze immutable `BASES.tsv`, `ADOPT.md`, `NOTED`/exclusions and park SHA inventory; verify the four repos and exact ancestry. Do not freeze old main or obsolete `lane/M-GPU/integrated` as if final.
 

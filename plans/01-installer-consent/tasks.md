@@ -23,7 +23,7 @@ First release slice; it does not depend on generation, concurrent editing (CE), 
 - **Outcome:** Record exact current Agent/App `pre-main` targets, four accepted donors, and unchanged producer identities; adapt RI-0 to installer-only selection and freeze final test selectors.
 - **Route:** N / Luna.
 - **Dependencies and inputs:** M-00/01; see [inputs.md](inputs.md). Use the source audit and accepted donor evidence linked above.
-- **Work:** Freeze targets anew; historical audit SHAs are observations only. Establish executable RI assertions for this slice, preserve/archive old full-release cards, remove unconditional generation/CE/K27/five-repository tests and DEPS from this increment, mark unused RI-V/L/R composition rows out-of-scope (not verified), and amend MINT/PROGRAM DONE wording to describe one delivered increment. Preserve later ownership in plans 3/5.
+- **Work:** Freeze targets anew; historical audit SHAs are observations only. Establish executable RI assertions for this slice, preserve/archive old full-release cards, remove unconditional generation/CE/K27/five-repository tests and DEPS from this increment, mark unused RI-V/L/R composition rows out-of-scope (not verified), and amend MINT/PROGRAM DONE wording to describe one delivered increment. Generation integration belongs to [Plan 02](../02-consistent-generation/plan.md), and the remaining fixes belong to [Plan 05](../05-remaining-fixes/plan.md).
 - **Focused checks:** Freeze the exact selectors listed in I-02/I-03; no whole UI/SDK suite. No historical base replay.
 - **Done:** Exact source manifest and scoped assertions are recorded; acceptance is preserved. This is setup, not authorization to execute product work.
 
