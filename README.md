@@ -44,6 +44,10 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 | Packs v1.3 | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | Unassigned | TBD | [Plan 06](plans/06-packs.md) |
 | Three.js as a pack | Move the existing built-in Three.js functionality into a native pack that remains included by default, with current behavior preserved through conversion. | queued | Unassigned | TBD | [Plan 11](plans/11-threejs-pack.md) |
 | Multiple inference routes (Wan2GP) | Keep VibeComfy as the primary route and add Wan2GP through the shared generation path, reusing existing setup and connection infrastructure where it fits. | queued | Unassigned | TBD | [Plan 12](plans/12-multiple-inference-routes.md) |
+| Execution host refactor | Split the oversized execution host into clear, maintainable modules while preserving supported execution behavior. | queued | Unassigned | TBD | [Plan 13](plans/13-execution-host-refactor.md) |
+| Repository cleanup | Make the repositories easy to navigate and maintain by removing proven clutter and consolidating code, docs, and tooling. | queued | Unassigned | TBD | [Plan 14](plans/14-repository-cleanup.md) |
+| Sandboxed execution with OpenShell | Let users run Astrid in an isolated environment with explicit permissions and tested safety boundaries. | queued | Unassigned | TBD | [Plan 15](plans/15-openshell-safe-execution.md) |
+| Streamlined agent setup and execution | Make Astrid's agent the easy default, with simple in-app account connection and reliable execution while preserving alternative agents and pack runs. | queued | Unassigned | TBD | [Plan 16](plans/16-streamlined-agent-experience.md) |
 
 ### Status key
 
@@ -54,7 +58,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. Plans 11 and 12 are draft scopes awaiting source identity and remaining scoping decisions before execution. See [plans](plans/) and [shared references](references/) for details.
+Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. Plans 11–16 are draft scopes awaiting source identity and remaining scoping decisions before execution. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
