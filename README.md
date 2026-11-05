@@ -2,14 +2,16 @@
 
 This workspace brings together Astrid development skills and current projects.
 
+**[Our philosophy: a simple foundation for creative tools, built to be extended.](philosophy.md)**
+
 ## Want to contribute? Give this to your agent.
 
-Copy this prompt into your agent, or browse the current plans below.
+Start with [our philosophy](philosophy.md), then copy this prompt into your agent or browse the current plans below.
 
 ```text
 Help me choose and complete a contribution to Astrid. Start at
 https://github.com/banodoco/astrid-dev: open my existing checkout or clone it, and
-update it only while preserving local changes. Read its AGENTS.md and README.md. From
+update it only while preserving local changes. Read its philosophy.md, AGENTS.md, and README.md. From
 the repository root, preview and sync the skills with ./sync.sh --dry-run and ./sync.sh,
 respecting local permissions; the destination must already exist, and use --destination
 /path/to/skills if needed. Keep the linked checkout in place.
@@ -48,6 +50,9 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 | Repository cleanup | Make the repositories easy to navigate and maintain by removing proven clutter and consolidating code, docs, and tooling. | queued | Unassigned | TBD | [Plan 14](plans/14-repository-cleanup.md) |
 | Sandboxed execution with OpenShell | Let users run Astrid in an isolated environment with explicit permissions and tested safety boundaries. | queued | Unassigned | TBD | [Plan 15](plans/15-openshell-safe-execution.md) |
 | Streamlined agent setup and execution | Make Astrid's agent the easy default, with simple in-app account connection and reliable execution while preserving alternative agents and pack runs. | queued | Unassigned | TBD | [Plan 16](plans/16-streamlined-agent-experience.md) |
+| VibeComfy extensibility with H3_AV | Make it easy to build and share higher-level tools on VibeComfy workflows, using H3_AV to prove reusable extension primitives. | queued | Unassigned | TBD | [Plan 17](plans/17-vibecomfy-extensibility.md) |
+| Extensible timeline editing | Provide reliable timeline editing primitives as a pack that people and agents can extend with their own views, tools, and creative workflows. | queued | Unassigned | TBD | [Plan 18](plans/18-timeline-editing.md) |
+| First-principles documentation | Make Astrid understandable to humans and agents through a clear path from its purpose and central skill to workflows, pack design, and precise references. | queued | Unassigned | TBD | [Plan 19](plans/19-first-principles-documentation.md) |
 
 ### Status key
 
@@ -58,7 +63,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. Plans 11–16 are draft scopes awaiting source identity and remaining scoping decisions before execution. See [plans](plans/) and [shared references](references/) for details.
+Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. Plans 11–19 are draft scopes awaiting source identity and remaining scoping decisions before execution. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
