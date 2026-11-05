@@ -25,7 +25,7 @@ Indicative evidence: hosted `pinokio-linux` driver runs on the astrid-agent lane
 | Update to the stand-in release and uninstall through Pinokio are not yet proven on a hosted row | Get a full six-step `pinokio-linux` pass (driver fixes for the app-folder layout and the busy task are on the lane branch) |
 | macOS and Windows rows not run | Reuse the same driver; replace the dropped macOS-only "other Runtime unchanged" process check with a per-OS one |
 | The row driver and `pinokio-row-v1` checker are only on the lane branch | Land them on astrid-agent and re-align the App pins in the same change |
-| The real Pinokio app is not exercised: the rows run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | One manual check in the Pinokio app (install, Start, Stop, Update); a hosted engine-driven row stays in [Plan 10](../10-pinokio-qualification/plan.md) |
+| The real Pinokio app is not exercised by the hosted rows: they run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | macOS: the owner tested the real Pinokio app by hand on 5 Nov 2026 and everything worked. Linux and Windows: not yet checked by hand. A hosted engine-driven row stays in [Plan 10](../10-pinokio-qualification/plan.md) |
 | A process that ignores the graceful stop is left running after the refusal | Accepted fail-closed limitation; Plan 10 covers engine Stop/Quit |
 | The retired old-launcher Pinokio route (`execute_pinokio_backend`, M4-4a backend checks) is still in astrid-agent | Remove it once nothing selects it |
 
