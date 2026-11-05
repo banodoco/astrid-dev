@@ -4,7 +4,7 @@ This repository contains plans and evidence summaries, not product source. Follo
 
 ## Scope and authority
 
-- The initiative is paused. Plans and installed skills do not authorize product work; wait for the owner's explicit start before dispatching work or running checks.
+- Follow each project’s current authorization and run controls. For the legacy M-GPU run, consult the [initiative handoff](plans/MANAGER.md). Creating plans or installing skills does not itself start or resume product work.
 - When started, follow the accepted plan and use its intended `pre-main` destination. Confirm source identities in the run; do not assume branches or refs.
 - Keep plans, decisions, and evidence portable. Do not add credentials, private logs, machine-specific absolute paths, or local `.otto/` state.
 - The root `README.md` owns active/upcoming status and remaining human-day estimates. `ARCHIVE.md` owns completed and cancelled entries. Plans own technical scope and task checkboxes.

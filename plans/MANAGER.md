@@ -2,7 +2,7 @@
 
 This initiative-specific note adapts the existing orchestrator's M-00/M-01 preparation cards. It is not a general workflow; use the [shared manager role](../skills/astrid-dev-shared/roles/manager.md) and [run contract](../skills/astrid-dev-shared/run-contract.md) for current run policy.
 
-The initiative is paused: product work and product workers have not started. Existing advisor and orchestrator automations remain paused under STOP. A plan or skill install does not start work. Keep STOP in force until the owner explicitly starts the relevant project. Do not create replacement schedules.
+This handoff records the legacy M-GPU run as stopped under the owner’s STOP instruction, with existing work preserved and its advisor/orchestrator automations paused. It is not a blanket pause on other projects or use of this repository. Check the actual run controls before dispatch; do not resume that stopped run without authorization or create replacement schedules.
 
 ## First preparation cards
 

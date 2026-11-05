@@ -2,8 +2,6 @@
 
 This repository holds Astrid development workflows and initiative plans. The queue below is the source of project status and remaining engineering-day estimates. Plans track task progress. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping each plan at its stable path.
 
-**This planned initiative is paused.** Product work and product workers have not started. Existing advisor and orchestrator automations remain paused. Preparing a plan or installing its skills does not start the initiative.
-
 Start with the example that matches your work:
 
 - [Dev (`astrid-dev`)](skills/astrid-dev/SKILL.md): “Which repo owns installer consent?”
@@ -11,7 +9,7 @@ Start with the example that matches your work:
 - [Iterate (`astrid-dev-iterate`)](skills/astrid-dev-iterate/SKILL.md): “Fix exported captions losing their timing; run focused checks.”
 - [Release (`astrid-dev-release`)](skills/astrid-dev-release/SKILL.md): “Integrate the reviewed installer changes onto pre-main.”
 
-For this initiative, see the [plan queue](plans/) and [handoff](plans/MANAGER.md).
+Browse the [project plans](plans/) or the [legacy M-GPU handoff](plans/MANAGER.md).
 
 ## Active and upcoming projects
 
@@ -38,13 +36,13 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Es
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is separate from the initiative pause. Plans 08 (Release 1) and 07 (Pinokio basic) are underway under the Release 1 merge coordinator, outside this initiative; no other product work has started. Plan 09 follows Plan 08 and is first in the queue; Plan 07 (Pinokio basic) runs alongside it as Release 1.1, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence; Generation may be prepared after an explicit start, and its integration follows Installer Consent. Plan 10 begins by reconciling historical Pinokio notes with current source. See [plans](plans/) and [shared references](references/) for details.
+Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08 and is next in the queue; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
 - Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [plan template](templates/project.md) for new plans.
 - Keep plans and evidence portable; `.otto/` is local run state.
-- Product work stays paused until explicitly started. When started, follow the plan and record the actual source and destination; do not assume branches or refs.
+- Follow the selected project’s plan and current run controls. Record the actual source and destination; do not assume branches or refs.
 - Pinokio historical findings need current-source review before they count as evidence.
 
 ## Install the role skills
@@ -56,4 +54,4 @@ From the repository root, preview or install the workflow skills and shared guid
 ./sync.sh
 ```
 
-The destination skill directories must already exist. To target another existing directory, add `--destination /path/to/skills` to either command. The script links only these Astrid files, leaves unrelated files and links untouched, and reports conflicts. Keep this checkout in place while using the links. Installing skills does not start the initiative.
+The destination skill directories must already exist. To target another existing directory, add `--destination /path/to/skills` to either command. The script links only these Astrid files, leaves unrelated files and links untouched, and reports conflicts. Keep this checkout in place while using the links. Installing skills does not launch project work.
