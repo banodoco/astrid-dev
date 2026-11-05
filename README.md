@@ -2,16 +2,14 @@
 
 This workspace brings together Astrid development skills and current projects.
 
-**[Our philosophy: a simple foundation for creative tools, built to be extended.](philosophy.md)**
-
 ## Want to contribute? Give this to your agent.
 
-Start with [our philosophy](philosophy.md), then copy this prompt into your agent or browse the current plans below.
+Copy this prompt into your agent or browse the current plans below.
 
 ```text
 Help me choose and complete a contribution to Astrid. Start at
 https://github.com/banodoco/astrid-dev: open my existing checkout or clone it, and
-update it only while preserving local changes. Read its philosophy.md, AGENTS.md, and README.md. From
+update it only while preserving local changes. Read its AGENTS.md and README.md. From
 the repository root, preview and sync the skills with ./sync.sh --dry-run and ./sync.sh,
 respecting local permissions; the destination must already exist, and use --destination
 /path/to/skills if needed. Keep the linked checkout in place.
@@ -69,6 +67,7 @@ Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pino
 
 ## How to use this repo
 
+- See the [extensibility philosophy](docs/extensibility-philosophy.md) for the design direction.
 - Keep project status and remaining estimates in the queue, and task progress in the plans. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping their plan links stable.
 - Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [plan template](templates/project.md) for new plans.
 - Keep plans and evidence portable; `.otto/` is local run state.

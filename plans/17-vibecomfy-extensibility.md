@@ -4,7 +4,7 @@
 
 ## Goal
 
-Make VibeComfy a clear set of simple, composable workflow primitives that users and agents can inspect, combine, customize, and share as creative tools. Use H3_AV as a concrete proving pack to improve extension points, so users can build on VibeComfy without forking core. This supports the broader goal of a simple foundation where the core just works and people retain control at every level, including over extensions built on extensions. See the [Astrid philosophy](../philosophy.md).
+Make VibeComfy a clear set of simple, composable workflow primitives that users and agents can inspect, combine, customize, and share as creative tools. Use H3_AV, a higher-level abstraction over MiniMax H3 workflows in VibeComfy, as a concrete proving pack to improve extension points, so users can build on VibeComfy without forking core. This supports the broader goal of a simple foundation where the core just works and people retain control at every level, including over extensions built on extensions. See the [extensibility philosophy](../docs/extensibility-philosophy.md).
 
 ## Owner
 
@@ -22,7 +22,7 @@ Treat H3_AV as a concrete user-provided example, not evidence of particular APIs
 | Input | Why it matters | Link or evidence |
 |---|---|---|
 | Current VibeComfy implementation | Shows which workflow primitives and extension contracts already exist and should be reused. | Inspect the owning source at execution start. |
-| H3_AV | Supplies the concrete pack and workflow for proving customization and composition. | Inspect the user-identified pack and its source at execution start. |
+| H3_AV | Supplies a higher-level abstraction over MiniMax H3 workflows in VibeComfy for proving customization and composition. | Inspect the user-identified pack and its source at execution start. |
 
 ## Intended work and focused proof
 

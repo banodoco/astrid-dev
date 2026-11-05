@@ -4,7 +4,7 @@
 
 ## Goal
 
-Make Astrid understandable from its purpose down to its working contracts: a new reader should grasp the mental model, find the central Astrid skill, choose a workflow or pack, and learn how to extend it from concrete examples. Documentation should support a simple composable foundation where the core works and users and agents can build tools with control at every level. See the [Astrid philosophy](../philosophy.md).
+Make Astrid understandable from its purpose down to its working contracts: a new reader should grasp the mental model, find the central Astrid skill, choose a workflow or pack, and learn how to extend it from concrete examples. Documentation should support a simple composable foundation where the core works and users and agents can build tools with control at every level. See the [extensibility philosophy](../docs/extensibility-philosophy.md).
 
 ## Owner
 
@@ -22,7 +22,7 @@ At execution start, identify the relevant repositories, current refs and SHAs, d
 | Input | Why it matters | Link or evidence |
 |---|---|---|
 | Existing Astrid repositories and docs | Reveals current canonical sources, entry points, and duplication to address. | Identify and inspect source repositories at execution start. |
-| Astrid philosophy | Anchors the explanation in the intended product purpose and mental model. | [Astrid philosophy](../philosophy.md) |
+| Extensibility philosophy | Anchors the explanation in the intended product purpose and mental model. | [Extensibility philosophy](../docs/extensibility-philosophy.md) |
 
 ## Intended work and focused proof
 

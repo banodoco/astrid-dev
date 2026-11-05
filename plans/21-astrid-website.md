@@ -4,7 +4,7 @@
 
 ## Goal
 
-Build out the full Astrid website. Define its audience, purpose, content, and relationship to the Astrid app in a later planning pass, guided by the [philosophy](../philosophy.md).
+Build out the full Astrid website. Define its audience, purpose, content, and relationship to the Astrid app in a later planning pass, guided by the [extensibility philosophy](../docs/extensibility-philosophy.md).
 
 ## To define
 

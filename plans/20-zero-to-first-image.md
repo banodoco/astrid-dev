@@ -4,7 +4,7 @@
 
 ## Goal
 
-Make the first useful result effortless for a person and their agent: starting with an existing supported inference installation, one copyable command takes them through setup to a generated image visibly placed on an Astrid timeline. Apply the [philosophy](../philosophy.md): good defaults, understandable choices, and user control.
+Make the first useful result effortless for a person and their agent: starting with an existing supported inference installation, one copyable command takes them through setup to a generated image visibly placed on an Astrid timeline. Apply the [extensibility philosophy](../docs/extensibility-philosophy.md): good defaults, understandable choices, and user control.
 
 ## Scope
 

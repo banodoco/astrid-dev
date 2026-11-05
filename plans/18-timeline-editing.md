@@ -4,7 +4,7 @@
 
 ## Goal
 
-Provide reliable, composable timeline editing primitives as a pack that lets humans and agents build and share alternate understanding, views, effects, and workflows on the same creative material. Keep the core useful on its own while giving users control over how they extend it, including through extensions built on other extensions. See the [Astrid philosophy](../philosophy.md).
+Provide reliable, composable timeline editing primitives as a pack that lets humans and agents build and share alternate understanding, views, effects, and workflows on the same creative material. Keep the core useful on its own while giving users control over how they extend it, including through extensions built on other extensions. See the [extensibility philosophy](../docs/extensibility-philosophy.md).
 
 ## Owner
 

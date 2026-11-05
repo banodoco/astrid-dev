@@ -1,6 +1,6 @@
 # Repository rules
 
-This repository contains plans and evidence summaries, not product source. Read [our philosophy](philosophy.md) for the design direction. Follow the relevant [workflow guide](skills/README.md), [shared run contract](skills/astrid-dev-shared/run-contract.md), and role notes for run mechanics.
+This repository contains plans and evidence summaries, not product source. Read the [extensibility philosophy](docs/extensibility-philosophy.md) for the design direction. Follow the relevant [workflow guide](skills/README.md), [shared run contract](skills/astrid-dev-shared/run-contract.md), and role notes for run mechanics.
 
 ## Scope and authority
 
