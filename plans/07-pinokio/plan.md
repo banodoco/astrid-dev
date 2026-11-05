@@ -14,7 +14,20 @@ Prove the everyday Pinokio backend path on hosted Linux, macOS, and Windows thro
 
 R1 shipped Pinokio on `astrid-pinokio` `main`, but the basic path is **shipped, not yet proven**. It reuses the installer transaction, locks, Runtime, and data; the Pinokio start/stop supervision (about 1,500 launcher lines), `--update-app` route, uninstall, and foreground Runtime remain untested by a hosted gate. Known issues are setup-install ending with “terminated shell” without an inner exit code on macOS and Windows, Windows `npm ci` failing in `better-sqlite3`, and a missing Linux Worker profile. Current source identities must be confirmed at task start; see [inputs](inputs.md).
 
-**Deferred during R1 (5 Nov 2026, 08:10Z).** The three-row gate was not built in this release. Each attempt needed more launcher stop and coordination machinery: stop must never force-kill, and must signal only validated processes of this install. Restart from the parked launcher stop changes on the M-RT lane branch, choosing the fail-closed Stop (one clear refusal when ownership can't be proven; an ordinary preview Stop may refuse).
+**Restarted and shipped on indicative evidence (5 Nov 2026).** The launcher no longer force-stops (astrid-pinokio #12, `main` `7144bc130fbe8c22e33d2dcc698edfaac2a74cfc`): Stop sends SIGTERM (or `taskkill` without `/F`), waits about 5 s, and otherwise refuses once and exits non-zero, leaving the process running. A Runtime busy refusal stays retryable. The owner chose to ship once there was indicative evidence and track the gaps here.
+
+Indicative evidence: hosted `pinokio-linux` driver runs on the astrid-agent lane branch `lane/M-INT/pinokio-rows` (not yet on `main`) against App `57d39bd6`, Agent `9373955d`, Runtime `9fc53b77` and launcher `7144bc13`. Run 42058623476 passed the first four of six steps: install, start and a settled task, graceful stop and restart, and busy stop (one refusal, the same Runtime, the task finished, the retried stop succeeded, data kept). Update and uninstall were not reached in that run.
+
+**Open gaps (remaining Plan 07 work):**
+
+| Gap | Next step |
+|---|---|
+| Update to the stand-in release and uninstall through Pinokio are not yet proven on a hosted row | Get a full six-step `pinokio-linux` pass (driver fixes for the app-folder layout and the busy task are on the lane branch) |
+| macOS and Windows rows not run | Reuse the same driver; replace the dropped macOS-only "other Runtime unchanged" process check with a per-OS one |
+| The row driver and `pinokio-row-v1` checker are only on the lane branch | Land them on astrid-agent and re-align the App pins in the same change |
+| The real Pinokio app is not exercised: the rows run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | One manual check in the Pinokio app (install, Start, Stop, Update); a hosted engine-driven row stays in [Plan 10](../10-pinokio-qualification/plan.md) |
+| A process that ignores the graceful stop is left running after the refusal | Accepted fail-closed limitation; Plan 10 covers engine Stop/Quit |
+| The retired old-launcher Pinokio route (`execute_pinokio_backend`, M4-4a backend checks) is still in astrid-agent | Remove it once nothing selects it |
 
 ## Sequence
 

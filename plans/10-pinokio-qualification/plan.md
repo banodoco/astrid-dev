@@ -6,7 +6,7 @@ Qualify Pinokio Stop/Quit safety, direct custody, fully-local journeys, and unkn
 
 ## Goal and scope
 
-- **Included:** engine-backed Stop/Quit refusal or safe settlement while Astrid is busy; end-to-end direct custody; the same journey in hosted and fully-local modes on every supported OS; unknown-state stop as a negative control. Fully-local CI rows are `pinokio-fully-local-{linux,macos,windows}`.
+- **Included:** engine-backed Stop/Quit refusal or safe settlement while Astrid is busy; end-to-end direct custody; the same journey in hosted and fully-local modes on every supported OS; unknown-state stop as a negative control. Also a hosted row that drives the Pinokio app itself (its Install, Start, Stop and Update buttons through `pinokio.js`), which Plan 07's launcher-command rows do not cover. Fully-local CI rows are `pinokio-fully-local-{linux,macos,windows}`.
 - **Deferred:** old-launcher compatibility. No dependency on Packs completion; if work is composed into the Astrid product tuple, use then-current reviewed Agent, Runtime, and App pins.
 - Native engine veto and settlement semantics, deployed version, supported API, and OS qualification remain to be established. Historical reports, fake fixtures, and adapter lifecycle ordering do not qualify these behaviors.
 
