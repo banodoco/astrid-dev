@@ -1,4 +1,4 @@
-# 03 — Integrate the completed generation increment
+# 03 — Consistent generation path: integration
 
 ## Goal
 

@@ -1,4 +1,6 @@
-# 06 — CPU Packs completion and final integration
+# 06 — Packs v1.3: completion and final integration
+
+“v1.3” is the working project title suggested for this plan. Establish package and release versions before execution.
 
 ## Goal
 

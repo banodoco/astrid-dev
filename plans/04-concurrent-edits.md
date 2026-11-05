@@ -1,4 +1,4 @@
-# 04 — Finish concurrent editing and merge it
+# 04 — Refined concurrent editing: completion and integration
 
 [README queue](../README.md) · [Initiative handoff](MANAGER.md). Final publication follows [generation merge](03-generation-merge.md); independent completion on the retained tuple may proceed earlier after initiative start.
 

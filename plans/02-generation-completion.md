@@ -1,4 +1,4 @@
-# 02 — Complete the retained Astrid generation work
+# 02 — Consistent generation path: completion
 
 ## Goal
 
