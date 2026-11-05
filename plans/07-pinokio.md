@@ -8,7 +8,7 @@ Make the Pinokio backend launcher dependable for the everyday user path, proven 
 
 ## Starting point (5 Nov 2026)
 
-- R1 ships with `astrid-pinokio` `main` held at `bbba620` (the current launcher). Old launchers fetch the installer from `astrid-app` `main`, so after R1 their Update refuses safely on the R1 storage change and keeps data. The sentence they see is fixed in R1 or R1.1 (X-PINOKIO-MSG). Named limitation: Pinokio users reinstall to get R1.
+- Pinokio has no users yet, so there is no old-launcher migration or compatibility work, now or later. `astrid-pinokio` `main` ships with R1, and this gate proves it afterwards.
 - The six earlier Pinokio rows (`RELEASE1_1_DEFERRED_PINOKIO_MATRIX`) never got past setup (0/6). They mixed the everyday path with engine, custody and fully-local work. They are retired rather than revived; their scope moves to Plan 10.
 - Known hosted failures to fix: setup-install ends with "terminated shell" and no inner exit code on macOS and Windows; Windows `npm ci` exits 1 (better-sqlite3); the Linux Worker profile is missing.
 
@@ -26,25 +26,24 @@ A new gate, separate from the R1 five-row gate (`RELEASE1_1_PINOKIO_MATRIX`, its
 6. Start waits for readiness. Health reports the new release, and one task passes.
 7. Uninstall.
 
-Then publish the new launcher from `astrid-pinokio` `int/r1` to `main`, only once this gate is green.
+Fix whatever the gate finds on `int/r1` and fast-forward `main` again.
 
 ### Out of scope (Plan 10)
 
-Engine Stop/Quit refusal veto, direct-custody provider, fully-local mode, unknown-state stop, old-launcher first-click/retry migration, historical launcher compatibility.
+Engine Stop/Quit refusal veto, direct-custody provider, fully-local mode, unknown-state stop.
 
 ## Tasks and acceptance
 
 | Task / outcome | Route | Dependency | Focused acceptance evidence | Progress |
 |---|---|---|---|---|
-| PB-0 Fix the old launcher's Update refusal sentence (X-PINOKIO-MSG) | N + Astra | — | Unit test asserts the new sentence; refusal still precedes any change | [ ] |
 | PB-1 Separate three-row gate: matrix constant, checker, dispatch | N | — | Checker requires exactly the three job ids; R1 gate unchanged | [ ] |
 | PB-2 Linux row, steps 1–7 | X | PB-1 | Hosted `pinokio-linux` passes | [ ] |
 | PB-3 macOS row: capture the real setup-install exit, fix it | X | PB-2 | Hosted `pinokio-macos` passes, or a named limitation | [ ] |
 | PB-4 Windows row: setup-install exit, `npm ci` better-sqlite3 | X | PB-2 | Hosted `pinokio-windows` passes, or a named limitation | [ ] |
-| PB-END Publish the launcher to `main` at the verified heads | N | PB-2–4 | Gate green at frozen heads; `main` fast-forwarded and checked with `git ls-remote` | [ ] |
+| PB-END Record the green gate; fast-forward `main` to the verified heads | N | PB-2–4 | Gate green at frozen heads; `main` checked with `git ls-remote` | [ ] |
 
 If PB-3 or PB-4 needs Sol-level digging, stop with the evidence. The coordinator decides, most likely recording a named limitation for that OS.
 
 ## Completion and handoff
 
-Done when the three-row gate is green at frozen heads and the launcher is on `main`. Record any OS left unsupported as a named limitation here. Hand everything out of scope to [Plan 10](10-pinokio-qualification.md).
+Done when the three-row gate is green at frozen heads and those heads are on `main`. Record any OS left unsupported as a named limitation here. Hand everything out of scope to [Plan 10](10-pinokio-qualification.md).

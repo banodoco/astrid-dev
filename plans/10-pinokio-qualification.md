@@ -1,6 +1,6 @@
 # 10 — Pinokio qualification: engine controls, custody and fully-local
 
-[README queue](../README.md) · [Initiative handoff](MANAGER.md). The follow-up to [Plan 07](07-pinokio.md) (Pinokio basic, R1.1). It holds the Pinokio work deliberately left out of the basic increment: engine Stop/Quit refusal veto, direct custody, fully-local mode, unknown-state stop, old-launcher first-click/retry migration and historical launcher compatibility. It starts after Plan 07 is done, from Plan 07's verified launcher and gate. The source audit below was recorded on 4 Nov 2026 (it was Plan 07's text then). Re-resolve every head at start.
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). The follow-up to [Plan 07](07-pinokio.md) (Pinokio basic, R1.1). It holds the Pinokio work deliberately left out of the basic increment: engine Stop/Quit refusal veto, direct custody, fully-local mode and unknown-state stop. There is no old-launcher migration or compatibility work: Pinokio had no users when R1 shipped. It starts after Plan 07 is done, from Plan 07's verified launcher and gate. The source audit below was recorded on 4 Nov 2026 (it was Plan 07's text then). Re-resolve every head at start.
 
 ## Goal
 
@@ -9,7 +9,6 @@ Qualify Pinokio natively beyond the everyday path. Quitting or stopping Pinokio 
 ## Added scope beyond the original audit
 
 - Fully-local rows `pinokio-fully-local-{linux,macos,windows}`. Today `ci_journey.py` raises for non-direct modes and `journey_fully_local.py` isn't wired into the workflow.
-- Old-launcher migration: first click refused, stop after refusal, retry with the new launcher. Historical compatibility of older launcher versions.
 - Unknown-state stop, as a negative control.
 
 ## Starting sources, base, and destination
