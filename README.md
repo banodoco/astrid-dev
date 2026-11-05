@@ -1,15 +1,29 @@
-# Astrid development plans
+# Astrid development workspace
 
-This repository holds Astrid development workflows and initiative plans. The queue below is the source of project status and remaining engineering-day estimates. Plans track task progress. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping each plan at its stable path.
+This workspace brings together Astrid development skills and current projects.
 
-Start with the example that matches your work:
+## Want to contribute? Give this to your agent.
 
-- [Dev (`astrid-dev`)](skills/astrid-dev/SKILL.md): “Which repo owns installer consent?”
-- [Plan (`astrid-dev-plan`)](skills/astrid-dev-plan/SKILL.md): “Plan a reusable captions pack, starting with existing solutions.”
-- [Iterate (`astrid-dev-iterate`)](skills/astrid-dev-iterate/SKILL.md): “Fix exported captions losing their timing; run focused checks.”
-- [Release (`astrid-dev-release`)](skills/astrid-dev-release/SKILL.md): “Integrate the reviewed installer changes onto pre-main.”
+Copy this prompt into your agent, or browse the current plans below.
 
-Browse the [project plans](plans/) or the [legacy M-GPU handoff](plans/MANAGER.md).
+```text
+Help me choose and complete a contribution to Astrid. Start at
+https://github.com/banodoco/astrid-dev: open my existing checkout or clone it, and
+update it only while preserving local changes. Read its AGENTS.md and README.md. From
+the repository root, preview and sync the skills with ./sync.sh --dry-run and ./sync.sh,
+respecting local permissions; the destination must already exist, and use --destination
+/path/to/skills if needed. Keep the linked checkout in place.
+
+Inspect the current queue, relevant plans, and selected skill guide. First ask about my
+preferred time/token budget (quick fix, a few hours, or a larger project), interests,
+experience, available tools, hardware and agent capabilities, what I would personally
+find useful in Astrid, and what help I want.
+
+Suggest 2–3 bounded contributions that fit. Check active ownership and dependencies to
+avoid duplicate work. Before implementation, agree with me on one task, its starting
+code, and focused completion checks. Follow the repository’s existing workflow and
+current authorization.
+```
 
 ## Active and upcoming projects
 
@@ -40,18 +54,8 @@ Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pino
 
 ## How to use this repo
 
+- Keep project status and remaining estimates in the queue, and task progress in the plans. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping their plan links stable.
 - Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [plan template](templates/project.md) for new plans.
 - Keep plans and evidence portable; `.otto/` is local run state.
 - Follow the selected project’s plan and current run controls. Record the actual source and destination; do not assume branches or refs.
 - Pinokio historical findings need current-source review before they count as evidence.
-
-## Install the role skills
-
-From the repository root, preview or install the workflow skills and shared guide:
-
-```sh
-./sync.sh --dry-run
-./sync.sh
-```
-
-The destination skill directories must already exist. To target another existing directory, add `--destination /path/to/skills` to either command. The script links only these Astrid files, leaves unrelated files and links untouched, and reports conflicts. Keep this checkout in place while using the links. Installing skills does not launch project work.
