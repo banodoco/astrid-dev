@@ -1,6 +1,6 @@
 # Why the overnight run stopped at 04:45 instead of 06:00, and what to change
 
-For POM and the Banodoco team, from Dylan's overnight help-out (2026-11-04 22:00 to 2026-11-05 06:00 ET). The results are in Dylan's hand-off, and every judgment call is in his decisions ledger; both are shared separately, and the branches are on `github.com/matlowai/*` under `astrid-help/*`. This is a retrospective plus a proposal; it changes no rule by itself.
+For POM and the Banodoco team, from Dylan's overnight help-out (2026-11-04 22:00 to 2026-11-05 06:00 ET). The results are in Dylan's hand-off, and every judgment call is in his decisions ledger; both are in the private repo `matlowai/astrid-overnight-2026-11-05` (https://github.com/matlowai/astrid-overnight-2026-11-05; POM is invited), and the branches are on `github.com/matlowai/*` under `astrid-help/*`. This is a retrospective plus a proposal; it changes no rule by itself.
 
 ## What happened
 
