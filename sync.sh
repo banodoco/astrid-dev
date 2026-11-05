@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Link the four Astrid development workflows and shared references locally.
+# Link Astrid development workflows and shared references locally.
 # This installs only skills owned by this repository; it does not sync globally.
 
 set -u
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_DIR="$SCRIPT_DIR/skills"
-SKILL_NAMES=(astrid-dev astrid-dev-plan astrid-dev-iterate astrid-dev-release astrid-dev-shared)
+SKILL_NAMES=(astrid-dev astrid-dev-plan astrid-dev-bugfix astrid-dev-iterate astrid-dev-release astrid-dev-shared)
 OBSOLETE_NAMES=(astrid-dev-manage astrid-dev-work astrid-dev-advise)
 TARGET_DIRS=()
 DRY_RUN=0

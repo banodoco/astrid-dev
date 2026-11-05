@@ -6,7 +6,7 @@
 - **User goal, observed failure, reproduction:**
 - **Environment:** OS, hosted/local frontend, agent/provider, installed versions and upgrade path.
 - **Data and service state:** selected Runtime/realm, process health, affected data (sanitized).
-- **Evidence:** key redacted logs, diagnostics, links to evidence pack and relevant code.
+- **Evidence:** key redacted logs, diagnostics, relevant code, and (if a UI bug) browser URL/build, steps, screenshots and console/network observations.
 - **Cause:** established facts vs hypotheses; systemic, upgrade-specific or machine-specific; unknowns.
 
 ## Get this user working

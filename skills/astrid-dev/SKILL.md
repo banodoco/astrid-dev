@@ -21,6 +21,7 @@ The normal pin order is **Runtime → Agent → App → Pinokio**. A Runtime cha
 ## Choose a workflow
 
 - [Plan](../astrid-dev-plan/SKILL.md): genuinely new project or materially new scope; find prior art, challenge complexity, and agree the intended end state.
+- [Bug fixing](../astrid-dev-bugfix/SKILL.md): investigate a user-reported failure, reproduce the frontend when useful, restore their workflow, and log the incident.
 - [Iterate](../astrid-dev-iterate/SKILL.md): implement, debug, or repair one scoped feature through focused proof; return a candidate for integration.
 - [Release](../astrid-dev-release/SKILL.md): integrate and recheck an accepted candidate, then perform only the explicitly authorized promotion or publication.
 
