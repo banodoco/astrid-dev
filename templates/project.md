@@ -2,47 +2,44 @@
 
 ## Goal
 
-State the useful end-state outcome in one or two sentences, including existing behavior that must remain. Keep task/process steps in the task table, and keep project status and remaining human-days estimate in the root README only.
+What useful result will users get? Include important behavior that must remain.
 
 ## Scope
 
-### In scope
+- Included:
+- Deferred:
 
--
+## Inputs
 
-### Out of scope / deferred
+List the plan, code, decisions, or other evidence needed to do the work. Link portable sources; confirm changing source details when work starts.
 
--
-
-## Inputs and dependencies
-
-Link portable references and identify source identities that must be refreshed at execution time. Do not paste private logs or machine-specific paths.
-
-| Input or dependency | Why it matters | Evidence / link |
+| Input | Why it matters | Link or evidence |
 |---|---|---|
 | | | |
 
-### Starting code and custody
+## Starting code
 
-Complete before any source mutation. Record actual identities from the selected product repository; do not invent or carry forward historical refs as current.
+Record these before changing source code. Freeze actual identities; do not assume a branch exists.
 
-| Field | Value / rule |
+| Field | Record |
 |---|---|
-| Product repository | `<repository URL or local identity>` |
-| Starting branch/base | Freeze the actual current intended base at start; use the plan's target policy and do not assume a branch exists |
-| Reusable donor commits and dirty-work custody | List exact current commits and retained dirty work; name where each will be used or preserved |
-| Predecessor output | Link the exact verified prior project's output/head, or state `none` |
-| Fresh candidate branch | Record the actual create-only candidate name at execution; never invent a ref in advance |
-| Merge destination | `pre-main` only for this initiative; verify it exists or record its absence at execution |
+| Product repository | Repository URL or local identity |
+| Starting branch and commit | Actual branch and SHA at the start |
+| Existing work to preserve | Exact commits and unfinished local changes |
+| Predecessor output | Link to verified output, or `none` |
+| Working candidate branch | Fresh branch name, recorded at start |
+| Intended merge destination | `pre-main` for this initiative; verify the branch exists |
 
-## Tasks and acceptance
+## Tasks
 
-Use task checkboxes for task-level progress only. Route each task as `N`, `X`, or `S` under the shared run contract. Keep tests feature-focused and list exact selectors.
+Break the goal into outcomes. For each, record its route (`N`, `X`, or `S`), dependency, and focused acceptance evidence. See the shared run contract for route details.
 
-| Task / outcome | Route | Dependency | Focused acceptance evidence | Progress |
+| Outcome | Route | Depends on | How to check | Done |
 |---|---|---|---|---|
-| | N / X / S | | | [ ] |
+| | | | | |
 
-## Completion and handoff
+Example: “Preserve the current export format” could use route `N`, no dependency, and a focused export check on a sample project.
 
-State the evidence that proves the project outcome and intended integration. Record unresolved limitations and deferred claims. Once done or cancelled, move its README row to [ARCHIVE.md](../ARCHIVE.md); keep this plan at its stable path.
+## Completion
+
+State what evidence shows the goal is met, what remains unresolved, and where the accepted result should go. When done or cancelled, move the project from the root README queue to [ARCHIVE.md](../ARCHIVE.md); keep this plan at its stable path.

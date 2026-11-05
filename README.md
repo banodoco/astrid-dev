@@ -1,14 +1,21 @@
 # Astrid development plans
 
-This private planning repository holds concise role guidance and focused plans. The ordered table below is the sole source for project status and remaining human engineering-days estimates. Task checkboxes inside plans track task progress only. Finished or explicitly cancelled projects move from this queue to [ARCHIVE.md](ARCHIVE.md); keep their plan file at its stable path.
+This repository holds Astrid development workflows and initiative plans. The queue below is the source of project status and remaining engineering-day estimates. Plans track task progress. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping each plan at its stable path.
 
-**Initiative status: paused.** The owner has not started product execution. All worker activity and existing automation remain stopped. Preparing or linking a plan does not start it.
+**This planned initiative is paused.** Product work and product workers have not started. Existing advisor and orchestrator automations remain paused. Preparing a plan or installing its skills does not start the initiative.
 
-Navigation: [initiative handoff](plans/MANAGER.md) · [project plans](plans/).
+Start with the example that matches your work:
+
+- [Dev (`astrid-dev`)](skills/astrid-dev/SKILL.md): “Which repo owns installer consent?”
+- [Plan (`astrid-dev-plan`)](skills/astrid-dev-plan/SKILL.md): “Plan a reusable captions pack, starting with existing solutions.”
+- [Iterate (`astrid-dev-iterate`)](skills/astrid-dev-iterate/SKILL.md): “Fix exported captions losing their timing; run focused checks.”
+- [Release (`astrid-dev-release`)](skills/astrid-dev-release/SKILL.md): “Integrate the reviewed installer changes onto pre-main.”
+
+For this initiative, see the [plan queue](plans/) and [handoff](plans/MANAGER.md).
 
 ## Active and upcoming projects
 
-The goals below are intended outcomes, not claims of delivery; each plan specifies current scope, exclusions, and proof. Estimates are human focused engineering days remaining, not agent elapsed time. Use a range when evidence supports one and `TBD` otherwise. Estimates inform sequencing and capacity; they are not approval gates.
+Each goal describes an intended outcome; its plan defines scope and evidence. Estimates are remaining human engineering days, not agent elapsed time. Use a range when supported by evidence, or `TBD`.
 
 | Project | Goal | Status | Estimate | Plan |
 |---|---|---|---:|---|
@@ -28,18 +35,22 @@ The goals below are intended outcomes, not claims of delivery; each plan specifi
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-The status above applies to each project. The initiative-wide pause is separate and keeps every product activity stopped until the owner starts it. Plans 01–06 form the staged pre-main sequence; generation work may be prepared independently after an explicit start, while its final integration consumes the installer increment. Plan 07 starts with reconciliation and is independent of the Packs gate unless that review identifies a real dependency. The complete plan inventory and shared evidence links are in the project plans and [references](references/).
+Project status is separate from the initiative pause: no product work has started. Plans 01–06 define the staged pre-main sequence; Generation may be prepared after an explicit start, and its integration follows Installer Consent. Plan 07 begins by reconciling historical notes with current source. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
-- Read the relevant role guide in [skills/](skills/README.md) and [repo rules](AGENTS.md) before planning or executing.
-- Use the [project-plan template](templates/project.md) for new plans. Keep project status and estimate here, not duplicated in individual plans.
-- Keep plans, shared references, and proof summaries portable. `.otto/` is ignored local run-control/evidence state.
-- Product work targets `pre-main` only when explicitly started and supported by the current plan. Do not infer branch names or source refs; freeze and record actual inputs at execution time.
-- Pinokio's historical findings are leads, not current delivery or proof. Reconciliation comes first; it does not resume its blocked product work.
+- Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [plan template](templates/project.md) for new plans.
+- Keep plans and evidence portable; `.otto/` is local run state.
+- Product work stays paused until explicitly started. When started, follow the plan and record the actual source and destination; do not assume branches or refs.
+- Pinokio historical findings need current-source review before they count as evidence.
 
 ## Install the role skills
 
-Run `./sync.sh` to add the four Astrid workflow guides and shared contract to existing local Claude, Codex, and Agents skill directories. The script preserves unrelated entries, reports conflicts, and does not create destination directories. Use `./sync.sh --dry-run` to preview, or pass `--destination /path/to/skills` to target an existing skill directory.
+From the repository root, preview or install the workflow skills and shared guide:
 
-The script links the four workflow guides and shared contract into existing local skill directories. It preserves unrelated entries and reports conflicts; it never manages global instruction files or performs cloud/remote sync.
+```sh
+./sync.sh --dry-run
+./sync.sh
+```
+
+The destination skill directories must already exist. To target another existing directory, add `--destination /path/to/skills` to either command. The script links only these Astrid files, leaves unrelated files and links untouched, and reports conflicts. Keep this checkout in place while using the links. Installing skills does not start the initiative.
