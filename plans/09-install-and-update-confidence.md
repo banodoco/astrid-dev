@@ -1,6 +1,6 @@
 # 09 — Install and update confidence
 
-[README queue](../README.md) · [Initiative handoff](MANAGER.md). Next after [Plan 08](08-release1-install-update.md) (Release 1); it starts from Plan 08's verified output. It doesn't authorize product execution until the owner starts it. Pinokio stays in [Plan 07](07-pinokio.md), and pack updates stay in [Plan 06](06-packs.md) PK-9.
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). Next after [Plan 08](08-release1-install-update.md) (Release 1); it starts from Plan 08's verified output. It doesn't authorize product execution until the owner starts it. Pinokio stays in [Plan 07](07-pinokio.md), and pack updates stay in [Plan 06](06-packs/tasks.md#pk-9) PK-9.
 
 ## Goal
 
@@ -31,7 +31,7 @@ Preserve user data in every case: a failed or unsupported operation leaves the p
 ### Out of scope / deferred
 
 - Pinokio install and update routes and rows: [Plan 07](07-pinokio.md).
-- Pack install, update and rollback: [Plan 06](06-packs.md) PK-9.
+- Pack install, update and rollback: [Plan 06](06-packs/tasks.md#pk-9) PK-9.
 - The unused Release-2 browser machinery (`scripts/release2_executor.py`, `installed_browser_adapter.py`, the `m4_5` job): retire it unless a task here reuses it.
 - Broad unit-suite debt in the Agent repository: recorded as known debt, not fixed here.
 

@@ -22,7 +22,7 @@ The user-provided starting premise is that VibeComfy is the existing primary rou
 | Input | Why it matters | Link or evidence |
 |---|---|---|
 | Shared generation behavior | Defines the common user-facing route and existing setup/execution/results contract. | [Consistent generation plan](02-consistent-generation/plan.md) and its [task details](02-consistent-generation/tasks.md); verify current state at start. |
-| Pack implementation and composition | Reuse current native pack conventions and boundaries. | [Plan 06 — Packs](06-packs.md); verify current source at start. |
+| Pack implementation and composition | Reuse current native pack conventions and boundaries. | [Plan 06 — Packs](06-packs/plan.md); verify current source at start. |
 | Wan2GP install and connection paths | Distinguishes full installation from attaching to an existing instance. | Establish exact code paths, supported environments, and focused proof during execution scoping. |
 
 ## Intended work and focused proof

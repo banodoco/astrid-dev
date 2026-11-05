@@ -21,7 +21,7 @@ The user-provided starting premise is that Three.js functionality is currently b
 
 | Input | Why it matters | Link or evidence |
 |---|---|---|
-| Pack conventions and integration | Reuse the established native pack boundary and focused acceptance. | [Plan 06 — Packs](06-packs.md); confirm current source at start. |
+| Pack conventions and integration | Reuse the established native pack boundary and focused acceptance. | [Plan 06 — Packs](06-packs/plan.md); confirm current source at start. |
 | Existing Three.js behavior | Defines what must survive the move. | Establish source paths and current behavior checks before editing. |
 
 ## Intended work and focused proof

@@ -10,6 +10,20 @@ A coherent generation code path: consistent default selection, compatible depend
 
 **This increment does not yet prove an actual model-generated image reaching the gallery.** Model readiness, real inference, training, and GPU execution remain outside its accepted scope. The [first-image onboarding](../20-zero-to-first-image.md) and [multiple inference routes](../12-multiple-inference-routes.md) projects define later real-inference outcomes.
 
+## What we build on
+
+There are two kinds of starting code: **the current destination base** and **retained feature work from other branches or checkpoints**. Both matter. Using `pre-main` does not mean starting generation from scratch or discarding the existing implementation.
+
+| Repository | Existing work to reuse | How it joins the result |
+|---|---|---|
+| Agent | PINS implementation and the unfinished DEFAULTS checkpoint. | Finish the retained work, then combine it with current `pre-main`, preserving Installer Consent. |
+| VibeComfy | Resource and template changes. | Compose them onto the current producer base and check the result. |
+| Lifecycle | Retained source/API changes. | Qualify the source and use the resulting exact version in Agent. |
+| Runtime | Stop/ownership change, if generation actually depends on it. | Include only on source evidence; otherwise keep the current Runtime version. |
+| App | Current base including Installer Consent; no separate generation feature donor. | Update its references to the final verified Agent and Runtime versions. |
+
+The [input record](inputs.md) identifies the retained commits. Some are incomplete or only partly verified, so they are inputs to finish and integrate, not automatically ready-to-merge branches. Final dependency locks must describe the combined result.
+
 ## The sequence
 
 1. **Finish the retained work.** Verify the dependency/build path (PINS), finish default selection (DEFAULTS), check the installed package (INSTALLED-TEST), and complete the existing acceptance review (END). Some code and local evidence already exist; the retained defaults edits are incomplete, and the cancelled verification run has no final verdict.
