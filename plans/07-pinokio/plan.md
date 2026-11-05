@@ -14,6 +14,8 @@ Prove the everyday Pinokio backend path on hosted Linux, macOS, and Windows thro
 
 R1 shipped Pinokio on `astrid-pinokio` `main`, but the basic path is **shipped, not yet proven**. It reuses the installer transaction, locks, Runtime, and data; the Pinokio start/stop supervision (about 1,500 launcher lines), `--update-app` route, uninstall, and foreground Runtime remain untested by a hosted gate. Known issues are setup-install ending with “terminated shell” without an inner exit code on macOS and Windows, Windows `npm ci` failing in `better-sqlite3`, and a missing Linux Worker profile. Current source identities must be confirmed at task start; see [inputs](inputs.md).
 
+**Deferred during R1 (5 Nov 2026, 08:10Z).** The three-row gate was not built in this release. Each attempt needed more launcher stop and coordination machinery: stop must never force-kill, and must signal only validated processes of this install. Restart from the parked launcher stop changes on the M-RT lane branch, choosing the fail-closed Stop (one clear refusal when ownership can't be proven; an ordinary preview Stop may refuse).
+
 ## Sequence
 
 1. Add a gate separate from the R1 five-row gate: its own `RELEASE1_1_PINOKIO_MATRIX`, checker, and dispatch; leave `RELEASE1_MATRIX` unchanged (PB-1).
