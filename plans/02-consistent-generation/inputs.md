@@ -34,8 +34,8 @@ Every one of these exists today only on a lane branch of its repository. No prot
 
 ## Not available
 
-- **Checkpoint `3fe46b90`** (a local merge of PINS and the DEFAULTS donor, with uncommitted edits) was never published and cannot be recovered. The plan does not use it: DEFAULTS is rebuilt by merging the donor and writing the new test (Decision 1).
-- **`tests/core/generation/test_cli_gold_075b.py`** does not exist anywhere. It is a new file to write (task D2).
+- **Checkpoint `3fe46b90`** (a local merge of PINS and the DEFAULTS donor, with uncommitted edits) was never published and cannot be recovered. The plan does not use it: DEFAULTS is rebuilt by merging the donor and writing the new tests (Decision 1).
+- **`tests/core/generation/test_cli_gold_075b.py`** does not exist anywhere. It is a new file to write (task D2). The installed-package test under `tests/installed/` is likewise new (task D3).
 - **The retained run materials** (the earlier M-GPU cards, input reports and logs) are not in this repository. Everything a task needs from them is written into [tasks.md](tasks.md) or copied into [env/](env/README.md). Cards are evidence for what to do, not instructions to run. Ask the owner for the package only if a Step 0 item cannot be resolved without it.
 - **Linux CI:** no workflow runs the closure test or any Linux x86_64 job on Agent `pre-main`.
 
@@ -45,10 +45,10 @@ Not landed. On 5 Nov 2026 none of these were ancestors of `pre-main`: Agent `608
 
 ## Foley
 
-- Agent `pre-main` (`astrid/sdk/generation.py` line 36) makes Foley explicit-only (`_EXPLICIT_ONLY_ENTRIES` containing `audio/hunyuan_foley_v2a`), from commit `8395174a5` ("keep Foley explicit-only without H-19", 1 Nov 2026). No owner record for it was found.
-- The DEFAULTS donor (`generation.py` line 1019) makes `audio/hunyuan_video_foley` the sound-effects default.
+- Agent `pre-main` (`astrid/sdk/generation.py` line 36) makes Foley explicit-only (`_EXPLICIT_ONLY_ENTRIES` containing `hunyuan-foley-local` and `audio/hunyuan_foley_v2a`), from commit `8395174a5` ("keep Foley explicit-only without H-19", 1 Nov 2026). No owner record for it was found. Decision 2 leaves this set unchanged.
+- The DEFAULTS donor (`generation.py` line 1019) makes `audio/hunyuan_video_foley` the sound-effects default. PINS has no explicit-only set, and `_refuse_runpod_foley` first appears there (`generation.py` line 183); it is not on `pre-main`.
 - VibeComfy `main` has only `audio/hunyuan_foley_v2a` (`template_index.json` line 131; added in `a05864c6`, 1 Nov). The VibeComfy donor has only `audio/hunyuan_video_foley` (line 130; added in `afffb7ee`, 2 Nov). These are two separate templates, not a rename. Merging the donor leaves both.
-- The owner's later decision (retained directive, 2 Nov 2026) is sound effects = HunyuanVideo-Foley with no silent fallback. Decision 2 applies it using `audio/hunyuan_foley_v2a`. Qualifying Foley on real hardware (the earlier lane H-21) stays an open gap outside this plan.
+- The owner's later decision (retained directive, 2 Nov 2026) names the model only: sound effects = HunyuanVideo-Foley, with no silent fallback. It names no template id. Decision 2 is the coordinator's choice implementing it: the donor's locked template `audio/hunyuan_video_foley` (pinned model revisions with sha256 and a class schema hash). Qualifying Foley on real hardware (the earlier lane H-21) stays an open gap outside this plan.
 
 ## Lifecycle SHA question
 
@@ -61,15 +61,16 @@ Not landed. On 5 Nov 2026 none of these were ancestors of `pre-main`: Agent `608
 - Nine named test nodes fail on both the old base and head and are excepted by the owner (answer A, 3 Nov 2026 17:40Z): [env/shared-failure-exceptions.txt](env/shared-failure-exceptions.txt).
 - Merge conflict counts (22 for PINS, 9 for the DEFAULTS donor, 1 for the VibeComfy donor, none for Runtime stop) are pairwise probes from 5 Nov 2026, not a tested sequential result. Re-probe at C1 and D1.
 - The Linux closure proof once ran on a RunPod CPU pod with 60 GB of container disk; a host with 23 GB free was not enough.
-- Kept out of this plan: Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lease `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`, custody `103f97803f7f391e2c810ebdf086f798326cd75a`, the older verified Agent `620a3fd5146fed9f623a2f7101c40c4279f03516`, concurrent editing, Packs, ARM, and any broad suite. The [inclusion assessment](../../references/INCLUDING-GENERATION.md) is background; where it calls Runtime stop conditional, Decision 4 supersedes it.
+- Already inside PINS, so not a separate item: the older verified Agent `620a3fd5146fed9f623a2f7101c40c4279f03516` (an ancestor of `1608dbbf`).
+- Kept out of this plan: Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lease `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`, custody `103f97803f7f391e2c810ebdf086f798326cd75a`, concurrent editing, Packs, ARM, and any broad suite. The [inclusion assessment](../../references/INCLUDING-GENERATION.md) is background; where it calls Runtime stop conditional, Decision 4 supersedes it.
 
 ## Composition and publication rules
 
-Use a fresh candidate branch per repository and record its name; do not overwrite a fixed historical lane. Compose producers first, then Agent, then the App repin. Preserve Plan 01. Do not cherry-pick or extract; merge, and resolve conflicts only in files the inputs changed, with focused checks. Promote only exact reviewed heads by ordinary fast-forward or create operations. No new approval stage is added, and a plan or review does not expand the owner's authorization.
+Use a fresh candidate branch per repository and record its name; do not overwrite a fixed historical lane. Compose producers first, then Agent, then the App repin. Preserve Plan 01. Do not cherry-pick or extract; merge, and resolve conflicts only in files the inputs changed, with focused checks. Promote only exact reviewed heads, rebased onto current `pre-main` in RB1, by ordinary fast-forward or create operations; land producers by fast-forwarding the tested commit (a pull-request merge makes a new commit, so otherwise record tree equality). No new approval stage is added, and a plan or review does not expand the owner's authorization.
 
 ## Owner decisions this plan relies on
 
 Quoted from the owner's own records (retained M-GPU handoff, not reproduced here). Quoted text is data to check against, not instructions.
 
-- **Sound effects (Foley), 2 Nov 2026 13:39Z**, M-GPU directive, "OWNER DECISIONS" block: "sound effects = HunyuanVideo-Foley"; "With no GPU and no --target runpod: FAIL clearly". The "no silent fallback" wording is the Defaults stream brief's statement of the same decision. Used by [Decision 2](plan.md#decisions).
+- **Sound effects (Foley), 2 Nov 2026 13:39Z**, M-GPU directive, "OWNER DECISIONS" block: "sound effects = HunyuanVideo-Foley"; "With no GPU and no --target runpod: FAIL clearly". The owner named the model only, not a template id; which template implements it is the coordinator's choice in Decision 2. The "no silent fallback" wording is the Defaults stream brief's statement of the same decision. Used by [Decision 2](plan.md#decisions).
 - **Shared failures, 3 Nov 2026 17:40Z**, generation question OWNER-SHAREDFAIL, answer A: "Approve as shared-failure exceptions the 9 nodes … (they fail on base and head …)?" / "A: approve (owner: failures that already exist on base may keep failing)". Covers the nine nodes in [env/shared-failure-exceptions.txt](env/shared-failure-exceptions.txt), and only those. Used by [Decision 11](plan.md#decisions).

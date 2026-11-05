@@ -10,7 +10,7 @@ Status, owner and estimate are in the [README queue](../../README.md).
 
 ## How to work on it
 
-1. Read [AGENTS.md](../../AGENTS.md) for repository rules, and the [skills guide](../../skills/README.md). Use the **iterate** workflow for a single scoped change or check (P1 to P3, D2, V1 to V3, A1), and the **release** workflow for integration, review and promotion (C1, C2, D1, R1, PR1).
+1. Read [AGENTS.md](../../AGENTS.md) for repository rules, and the [skills guide](../../skills/README.md). Use the **iterate** workflow for a single scoped change or check (P1 to P3, D2, V1 to V3, A1), and the **release** workflow for integration, review and promotion (C1, C2, D1, D1b, D3, R1, RB1, PR1).
 2. Routes `N`, `X`, `S` and review rules are in the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Terms are in the [glossary](../../docs/glossary.md); plan-specific terms are at the end of this file.
 3. Do the tasks in [tasks.md](tasks.md); exact SHAs and what is missing are in [inputs.md](inputs.md).
 
@@ -48,21 +48,22 @@ Base refs are observations from 5 Nov 2026; re-freeze at start ([inputs.md](inpu
 1. **Land producers.** Put the VibeComfy, lifecycle and Runtime donors on their repository's `main` (Runtime: `pre-main`) so no pin points at a commit that exists only on a lane.
 2. **Wait for Plan 01** on Agent and App `pre-main`.
 3. **Compose PINS** onto current Agent `pre-main`, then repin Agent to the landed producer SHAs.
-4. **Port DEFAULTS** onto that head: merge the donor and write the new CLI-GOLD test.
-5. **Prove once** on that head: the focused checks, an installed-package proof and the Linux closure.
-6. **Review once**, with one integrated completion review.
-7. **Repin App** to the reviewed Agent head.
-8. **Promote** the exact reviewed commits.
+4. **Port DEFAULTS** onto that head: merge the donor, make the RunPod dry run resolve each default (D1b), write the CLI-GOLD test (D2) and the installed-package test (D3).
+5. **Repin App** to the Agent head (A1), so both heads exist before the review.
+6. **Prove once** on that head: the focused checks, the installed-package test and the Linux closure.
+7. **Review once**, with one integrated completion review of the Agent and App heads.
+8. **Rebase** the reviewed heads onto current `pre-main` (RB1) and rerun only what the move invalidates.
+9. **Promote** the rebased commits.
 
-Proof is bound to the final head. Producers land first and Plan 01 is a precondition so the composed head is not changed again after it is proven.
+Proof is bound to the final head. Producers land first, Plan 01 is a precondition, and all code (including the new tests) is written before the proof phase, so the composed head is not changed again after it is proven. The only later move is the final rebase, which is re-checked rather than re-reviewed in full.
 
 ## Decisions
 
 | # | Decision | Source |
 |---|---|---|
 | 1 | Drop the unpublished checkpoint `3fe46b90` and the "finish dirty work" framing. DEFAULTS merges donor `9d3bb248` onto the composed head and writes `test_cli_gold_075b.py` as a new file, as the DEFAULTS card says. Neither exists on GitHub. | Coordinator; [DEFAULTS card](inputs.md#not-available) |
-| 2 | Foley follows the owner's later decision ("sfx = HunyuanVideo-Foley", "no silent fallback"). DEFAULTS makes `audio/hunyuan_foley_v2a` the sound-effects default and removes it from Agent's explicit-only set. If Foley is not installed, `auto` fails with guidance and never falls back. Real-hardware qualification of Foley stays an open gap outside this plan. | Coordinator; [owner decision, 2 Nov 2026](inputs.md#owner-decisions-this-plan-relies-on) |
-| 3 | Order: producers, wait for Plan 01, compose, port DEFAULTS, prove once, review once, App repin, promote. | Coordinator |
+| 2 | Foley follows the owner's later decision ("sfx = HunyuanVideo-Foley", "no silent fallback"). The owner named the model, not a template id. DEFAULTS makes the donor's locked template `audio/hunyuan_video_foley` the sound-effects default; `audio/hunyuan_foley_v2a` and the entry `hunyuan-foley-local` stay explicit-only exactly as on `pre-main` (commit `8395174a5`), so `pre-main`'s explicit-only set is unchanged. If Foley is not installed, `auto` fails with guidance and never falls back. Both templates stay in VibeComfy's index. Coordinator's choice implementing the owner's model decision: the locked template is preferred over the hand-written v2a template, whose node inputs are unverified against live `/object_info`. Real-hardware qualification of Foley stays an open gap outside this plan. | Coordinator; [owner decision, 2 Nov 2026](inputs.md#owner-decisions-this-plan-relies-on) |
+| 3 | Order: producers, wait for Plan 01, compose, port DEFAULTS, App repin, prove once, review once, final rebase onto current `pre-main`, promote. The App repin comes before the review so the review covers both heads. | Coordinator; owner |
 | 4 | The Runtime stop change is unconditional, because the PINS lock already requires it. | Coordinator; `1608dbbf:runtime.lock.json:71` |
 | 5 | One review: the retained END review is folded into GEN-REVIEW (here R1), at most five rounds per the run contract. | Coordinator; run contract |
 | 6 | Compose (route X) and repin (route N) are separate tasks. | Coordinator |
@@ -73,14 +74,17 @@ Proof is bound to the final head. Producers land first and Plan 01 is a precondi
 | 11 | Base comparison is kept only to classify a failure. The owner approved nine named failures that fail on both base and head (answer A, 3 Nov 2026 17:40Z); only those nine are deselected. Any other failure is checked once against `pre-main` and, if it also fails there, reported to the owner rather than excepted. Nothing else runs on the base. | Decision 9; [owner answer A](inputs.md#owner-decisions-this-plan-relies-on); run contract |
 | 12 | The retained QV check is folded into P1: the same VibeComfy selectors run on the donor composed onto `main`, rather than on the old b2123edf base. | Decision 9; retained QV card |
 | 13 | The lifecycle donor is `c47fa76` (it contains `96360a27`). Agent `pre-main` pins `96360a27`, so the Agent pin moves forward. | Verified in the lifecycle repository; [inputs.md](inputs.md) |
-| 14 | There was no Foley rename. VibeComfy `main` ships only `audio/hunyuan_foley_v2a` (added 1 Nov, `a05864c6`); the donor line separately ships only `audio/hunyuan_video_foley` (added 2 Nov). Merging the donor onto `main` therefore leaves both templates; P1 keeps both in the index, deletes neither, and Agent's default points at `v2a` (Decision 2). | Verified in VibeComfy history; [inputs.md](inputs.md) |
+| 14 | There was no Foley rename. VibeComfy `main` ships only `audio/hunyuan_foley_v2a` (added 1 Nov, `a05864c6`); the donor line separately ships only `audio/hunyuan_video_foley` (added 2 Nov). Merging the donor onto `main` therefore leaves both templates; P1 keeps both in the index, deletes neither, and Agent's default points at `hunyuan_video_foley` (Decision 2). | Verified in VibeComfy history; [inputs.md](inputs.md) |
 | 15 | The earlier split into a completion plan and an integration plan is gone; other plans that wait on generation integration point at phases 3 to 8 here. | Coordinator |
+| 16 | The new tests are written before the proof phase: D1b (RunPod dry run, the only new behaviour in DEFAULTS) and D3 (installed-package test) join D2 in phase 4, so V1 to V3 only run them and the head does not move during proof. Both are route X. | Coordinator; reviewer |
+| 17 | The plan ends with a rebase onto current `pre-main` (RB1) before promotion. A moved target invalidates only the proof that depends on it; a conflict resolution gets a delta review inside R1's existing budget; promotion is by fast-forward and never a force-push. | Owner |
 
 ## Plan-specific terms
 
 - **PINS**: the Agent commit `1608dbbf` that pins a compatible version set (VibeComfy, Runtime, node sources, model and requirements locks) and adds the Linux closure test.
 - **DEFAULTS**: the Agent donor `9d3bb248` that selects default entries per generation type, plus the new CLI-GOLD test.
 - **CLI-GOLD**: `tests/core/generation/test_cli_gold_075b.py`, a test that runs real `python -m astrid generate ...` subprocesses with dry run and checks which default each type resolves to.
+- **ENV**: the plan's `env/` folder in the astrid-dev checkout (`<astrid-dev checkout>/plans/02-consistent-generation/env`), where the check scripts live; it is not inside any product checkout.
 - **VFIX**: the VibeComfy donor `1b2e242`, which makes an installed VibeComfy find its own templates without a source checkout.
 - **QV**: the retained check that VFIX still passes VibeComfy's focused tests against the production base. Here part of P1.
 - **K27**: the three lifecycle regression tests (completed-job eviction, capacity reuse, delete and retire) in `tests/test_https.py`.

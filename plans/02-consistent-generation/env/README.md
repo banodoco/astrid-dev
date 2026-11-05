@@ -2,6 +2,8 @@
 
 Small scripts from the earlier generation run, copied unchanged. They build a clean test environment next to a checkout and run `pytest` in it with a wiped environment. They are inputs to the checks in [tasks.md](../tasks.md); nothing here authorizes running them.
 
+Call the scripts as `bash "$ENV/<script>"` with `ENV=<astrid-dev checkout>/plans/02-consistent-generation/env`, from the product checkout root; they are not inside the product checkouts.
+
 | File | What it does |
 |---|---|
 | `agent-setup.sh` | Run from an Agent checkout root. Needs `uv`, `git`, `ffmpeg` and network reads to PyPI and GitHub. Builds `<checkout>.env/` (Python 3.13 venv with `-e .[dev]`, Runtime at the commit in `runtime.lock.json`, VibeComfy at the checkout's own pinned revision). Exit 3 means a missing tool or environment, not a test result. |
