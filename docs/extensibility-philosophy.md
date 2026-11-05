@@ -10,9 +10,9 @@ Keep shared primitives focused, composable, and reliable. Before extending the f
 
 Every tool and every extension should be designed so it can itself be extended. Provide deliberate, documented, agent-accessible interfaces that let people and agents adapt tools during creative work, then share new tools and reusable foundations with others. We shape our tools and our tools shape us. With agents, that becomes an ongoing creative process: we reshape our tools as we work, and new possibilities in those tools change what we can imagine and make.
 
-**[H3_AV and VibeComfy](../plans/17-vibecomfy-extensibility.md):** H3_AV provides a higher-level abstraction over MiniMax H3 workflows in VibeComfy. Improve VibeComfy’s existing foundations so people can build similar packs more easily, then make those packs open to further extension.
+**[H3_AV and VibeComfy](../plans/17-vibecomfy-extensibility/plan.md):** H3_AV provides a higher-level abstraction over MiniMax H3 workflows in VibeComfy. Improve VibeComfy’s existing foundations so people can build similar packs more easily, then make those packs open to further extension.
 
-**[Timeline editing](../plans/18-timeline-editing.md):** a pack of dependable editing primitives becomes a foundation for custom ways to understand video, alternative views, effects, and creative workflows. People and agents can build these extensions on the same underlying material and combine them with other tools.
+**[Timeline editing](../plans/18-timeline-editing/plan.md):** a pack of dependable editing primitives becomes a foundation for custom ways to understand video, alternative views, effects, and creative workflows. People and agents can build these extensions on the same underlying material and combine them with other tools.
 
 ## 3. Let people choose their level of control
 

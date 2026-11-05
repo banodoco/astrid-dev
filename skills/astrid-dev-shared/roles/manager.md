@@ -7,3 +7,5 @@ The manager owns dispatch and run state. Follow the [shared run contract](../run
 - For `X`/`S` execution leads, use bounded `N` help where useful; reviewers and leaf advisors do not inherit that requirement.
 - Keep minimal state: candidate, completed/blocked tasks, exact failures, evidence, consumed review rounds, and next action. Route an integrated candidate to [release](../../astrid-dev-release/SKILL.md) only when the accepted plan and authority allow it.
 - Never start/resume paused work, add review stages, reset counters, or schedule work based on these skill documents. Report a blocker with its dependency, producer, candidate/job, awaited event, and deadline when known.
+
+In this workspace, start each project at `plan.md`, dispatch from `tasks.md`, and resolve source identities from `inputs.md`. Keep task progress in the task index and project status/owner/estimate in the root queue. A draft folder is not an execution authorization.

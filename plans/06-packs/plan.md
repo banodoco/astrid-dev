@@ -20,7 +20,7 @@ These are historical retained inputs, not a fresh execution report. Their exact 
 ## The sequence
 
 1. **Repair the known boundary failure.** After project start, fix the recorded PK-4 core/pack and locking problem on the retained inputs. This can happen before the final integration bases are ready.
-2. **Freeze the integration bases and combine retained work.** After [Release fixes integration](../05-remaining-fixes.md), PK-0 records current bases. Combine the parked work and namespace/schema repairs without losing completed work.
+2. **Freeze the integration bases and combine retained work.** After [Release fixes integration](../05-remaining-fixes/plan.md), PK-0 records current bases. Combine the parked work and namespace/schema repairs without losing completed work.
 3. **Finish pack behavior across the repositories.** Complete the Agent's discovery, trust, transactions, rendering, and management work. Runtime's data-move work can proceed independently once PK-0 is ready. App loading work waits for that Runtime result and the transaction checks, not the whole Agent chain.
 4. **Move and prove the packs.** Remove the designated packs from core, install them from `poms_packs`, and check the installed CPU and browser journeys. Complete the existing transaction and final reviews.
 5. **Promote the reviewed result.** Publish the immutable candidate, then promote those same reviewed commits to `pre-main`. If the destination moved, reconcile and recheck only affected work; do not build a second combined release by default.

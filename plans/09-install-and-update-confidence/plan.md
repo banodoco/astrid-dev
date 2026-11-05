@@ -1,0 +1,28 @@
+# 09 — Install and update confidence
+
+**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+
+Make supported install, update, rollback, repair, and uninstall routes dependable on Linux, macOS, and Windows. Qualify them with real hosted evidence and a single update transaction while preserving the previous working version and user data on failure or refusal.
+
+## Goal and scope
+
+- **Included:** one transaction shared by supported update routes; hosted real-path coverage across the three operating systems; real released-R1-to-candidate update with schema migration; Windows locked-file handling; post-R0→R1 uninstall; platform breadth; typed Agent↔Runtime control contract and dead R0-code retirement; captured real service-manager output for unit fakes. See [tasks.md](tasks.md) for the preserved boundaries and task cards.
+- **Deferred:** Pinokio install/update routes ([Plan 07](../07-pinokio/plan.md)); pack transactions ([Plan 06, PK-9](../06-packs/tasks.md#pk-9)); unused Release-2 browser machinery unless reused by a task; broad Agent unit-suite debt.
+- **Owner decision:** Windows R0→R1 upgrade may be implemented or refused permanently; its existing low-priority rationale is preserved in IU-7.
+
+## What we build on
+
+Start from Plan 08's verified Release 1 output, including its five-row hosted gate and update step. Freeze current `pre-main` heads for astrid-agent, astrid-runtime, and astrid-app when work starts; the exact heads and donor commits are not recorded here. Plan 01 shares installer files (`cli.py`, `backend.py`) and must be sequenced with IU-1. Historical source observations and the R1 stand-in do not prove current identities or real schema migration; see [inputs.md](inputs.md).
+
+## Sequence
+
+IU-0 freezes source identities and records the path × OS × evidence-mode baseline. IU-1 consolidates the update transaction; IU-2 and IU-3 then cover hosted runtime/rollback legs and real version migration, with IU-4 and IU-9 extending platform evidence. IU-5, IU-6, IU-7, IU-8, and IU-10 follow their indexed dependencies and can proceed independently where the graph permits. IU-END reviews and promotes the exact candidate. Full routes and acceptance are in [tasks.md](tasks.md).
+
+## Completion
+
+The IU-0 matrix must show a real hosted test for every supported path on every OS, or a named limitation for that cell; IU-END then reviews the exact candidate and promotes it to `pre-main`. Evidence must preserve the old working version and data on failure/refusal. Any unsupported path is recorded as a named limitation. Existing run authority and review limits apply; this plan does not start work or expand publication authority.
+
+## Read next
+
+- [tasks.md](tasks.md): task index, routes, dependencies, acceptance, and progress.
+- [inputs.md](inputs.md): repositories, starting identities, predecessor/donor inputs, and evidence limits.

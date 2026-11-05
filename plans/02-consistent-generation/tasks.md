@@ -73,11 +73,11 @@ Base: Runtime `pre-main` (frozen `9fc53b771134940aaac901e4cfc5d03c1db1a20a`). Do
 
 | ID | Outcome | Route | Depends on | Done when | Done |
 |---|---|---|---|---|---|
-| [W1](#w1-installer-consent-gate) | Plan 01 is on Agent and App `pre-main`. | N | [Plan 01](../01-installer-consent.md) | Both ancestry checks below succeed. | [ ] |
+| [W1](#w1-installer-consent-gate) | Plan 01 is on Agent and App `pre-main`. | N | [Plan 01](../01-installer-consent/plan.md) | Both ancestry checks below succeed. | [ ] |
 
 ### W1 Installer Consent gate
 
-Check, in an Agent checkout, that the Plan 01 donors are ancestors of `origin/pre-main`: `git merge-base --is-ancestor 6087e0fbe7e2bd45c9911ff5cf1093614d715863 origin/pre-main` and the same for `19229d2325879c12e01c6bcdc604fd743b158ece`; in an App checkout, for `e97450cff0ed570cfaa077369b28c269b562bd1e` and `9ddff8efbc9e914efbe04cb49da2648c4feb4db4`. On 5 Nov 2026 none were (see [inputs.md](inputs.md)). If Plan 01 lands under different commits, check for its recorded result in the [Plan 01 file](../01-installer-consent.md) and use that.
+Check, in an Agent checkout, that the Plan 01 donors are ancestors of `origin/pre-main`: `git merge-base --is-ancestor 6087e0fbe7e2bd45c9911ff5cf1093614d715863 origin/pre-main` and the same for `19229d2325879c12e01c6bcdc604fd743b158ece`; in an App checkout, for `e97450cff0ed570cfaa077369b28c269b562bd1e` and `9ddff8efbc9e914efbe04cb49da2648c4feb4db4`. On 5 Nov 2026 none were (see [inputs.md](inputs.md)). If Plan 01 lands under different commits, check for its recorded result in the [Plan 01 file](../01-installer-consent/plan.md) and use that.
 
 ## Phase 3: compose Agent (release workflow)
 

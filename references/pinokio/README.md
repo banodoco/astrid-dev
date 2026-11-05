@@ -1,6 +1,6 @@
 # Pinokio references
 
-These small historical texts support [plan 07](../../plans/07-pinokio.md). They are copied for review, not current source-state evidence or authorization. Original material dates from the Task L launcher work and the October 31 M4-4a/M4-6 handoff.
+These small historical texts support [plan 07](../../plans/07-pinokio/plan.md). They are copied for review, not current source-state evidence or authorization. Original material dates from the Task L launcher work and the October 31 M4-4a/M4-6 handoff.
 
 | Copy | Provenance / use |
 |---|---|

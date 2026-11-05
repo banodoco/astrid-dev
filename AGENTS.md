@@ -7,7 +7,9 @@ This repository contains plans and evidence summaries, not product source. Read 
 - Follow each project’s current authorization and run controls. For the legacy M-GPU run, consult the [initiative handoff](plans/MANAGER.md). Creating plans or installing skills does not itself start or resume product work.
 - When started, follow the accepted plan and use its intended `pre-main` destination. Confirm source identities in the run; do not assume branches or refs.
 - Keep plans, decisions, and evidence portable. Do not add credentials, private logs, machine-specific absolute paths, or local `.otto/` state.
-- The root `README.md` owns active/upcoming status, owner, and remaining human-day estimates. `ARCHIVE.md` owns completed and cancelled entries. Plans own technical scope and task checkboxes; do not keep a second owner record in a plan. Owner identifies accountability, not work authorization or status.
+- The root `README.md` owns active/upcoming status, owner, and remaining human-day estimates. `ARCHIVE.md` owns completed and cancelled entries. Each project lives in a folder with required `plan.md` (overview), `tasks.md` (work and progress), and `inputs.md` (starting code and evidence). The queue links directly to `plan.md`. Do not keep a second owner record in a plan. Owner identifies accountability, not work authorization or status.
+
+Use the [project folder template](templates/project/plan.md) for every new project, including drafts. The [project format guide](docs/project-format.md) explains how to extend it for different kinds of work. Keep unknowns explicit; the three files can be short. Add task, design, asset, or evidence files only when they provide useful detail, linked from the three entry documents. Do not create competing README/START-HERE/PLAN overviews.
 
 ## Routing and checks
 

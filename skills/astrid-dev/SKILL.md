@@ -26,6 +26,10 @@ The normal pin order is **Runtime → Agent → App → Pinokio**. A Runtime cha
 
 A repository plan already accepted does not need another planning agreement. This skill is orientation and routing only; it is not a second execution path. The exact identity, evidence, retry, review, and authority policy lives in the [shared run contract](../astrid-dev-shared/run-contract.md). Concise coordinator and advisor role references live in [roles](../astrid-dev-shared/roles/manager.md) and [roles](../astrid-dev-shared/roles/advisor.md). Plans tag each task `N` (the default, including ordinary hard work), `X` (very hard) or `S` (super hard), and execution hands each task to a subagent on that route’s model: Haiku or Luna, Sonnet or Terra, Opus or Sol (see the [routing table](../astrid-dev-shared/run-contract.md#routing-and-bindings)).
 
+## Project navigation
+
+In this workspace, projects are folders: read `plan.md` for the explanation, `tasks.md` for the work and checks, and `inputs.md` for source identities and references. The root project queue links to each `plan.md`; use its status and owner rather than inventing another record.
+
 ## Source provenance
 
 The repository ownership and pin-order summary was adapted from `banodoco/astrid-agent`'s developer skill at commit `43b6fb2cdb877afd6d37832c7f279754ba01592d` (2026-11-02). Verify it against the current product repositories before making a change.
