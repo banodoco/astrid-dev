@@ -29,19 +29,19 @@ workflow and current authorization.
 
 ## Active and upcoming projects
 
-Each goal describes an intended outcome; its plan defines scope and evidence. Estimates are remaining human engineering days, not agent elapsed time. Use a range when supported by evidence, or `TBD`.
+Each goal describes an intended outcome; its plan defines scope and evidence. Owner names the accountable person, team, or coordinating role; it does not imply that work is authorized or active. Use `Unassigned` when no current owner is known. Estimates are remaining human engineering days, not agent elapsed time. Use a range when supported by evidence, or `TBD`.
 
-| Project | Goal | Status | Estimate | Plan |
-|---|---|---|---:|---|
-| Release 1: install and update | Ship R1: new users install and update on Linux, macOS and Windows; R0 users on Linux and macOS upgrade without data loss, proven by the five-row hosted gate. | active | TBD | [Plan 08](plans/08-release1-install-update.md) |
-| Install and update confidence | Make installing and updating dependable on all three OSes: one update path, and a real hosted test for every install, update, rollback and removal route. | queued | TBD | [Plan 09](plans/09-install-and-update-confidence.md) |
-| Installer consent | Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior. | queued | 0.5–1 day | [Plan 01](plans/01-installer-consent.md) |
-| Generation | Provide one consistent end-to-end path for supported generation, with shared defaults and predictable setup, execution, and results. | queued | 1–2 days + native Linux x86_64 verification | [Completion 02](plans/02-generation-completion.md), [merge 03](plans/03-generation-merge.md) |
-| Concurrent editing | Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes. | queued | TBD | [Plan 04](plans/04-concurrent-edits.md) |
-| Remaining fixes | Bring the accepted fixes together into a coherent release while preserving existing behavior. | queued | TBD | [Plan 05](plans/05-remaining-fixes.md) |
-| Packs | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | TBD | [Plan 06](plans/06-packs.md) |
-| Pinokio basic (R1.1) | Prove users can install, start, stop (including while busy), update and remove Astrid through Pinokio on Linux, macOS and Windows, with a separate three-row hosted gate. | active | TBD | [Plan 07](plans/07-pinokio.md) |
-| Pinokio qualification | Engine Stop/Quit refusal veto, direct custody and fully-local mode, qualified natively. | queued | TBD | [Plan 10](plans/10-pinokio-qualification.md) |
+| Project | Goal | Status | Owner | Estimate | Plan |
+|---|---|---|---|---:|---|
+| Release 1: install and update | Ship R1: new users install and update on Linux, macOS and Windows; R0 users on Linux and macOS upgrade without data loss, proven by the five-row hosted gate. | active | Release 1 merge coordinator | TBD | [Plan 08](plans/08-release1-install-update.md) |
+| Install and update confidence | Make installing and updating dependable on all three OSes: one update path, and a real hosted test for every install, update, rollback and removal route. | queued | Unassigned | TBD | [Plan 09](plans/09-install-and-update-confidence.md) |
+| Installer consent | Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior. | queued | Unassigned | 0.5–1 day | [Plan 01](plans/01-installer-consent.md) |
+| Generation | Provide one consistent end-to-end path for supported generation, with shared defaults and predictable setup, execution, and results. | queued | Unassigned | 1–2 days + native Linux x86_64 verification | [Completion 02](plans/02-generation-completion.md), [merge 03](plans/03-generation-merge.md) |
+| Concurrent editing | Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes. | queued | Unassigned | TBD | [Plan 04](plans/04-concurrent-edits.md) |
+| Remaining fixes | Bring the accepted fixes together into a coherent release while preserving existing behavior. | queued | Unassigned | TBD | [Plan 05](plans/05-remaining-fixes.md) |
+| Packs | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | Unassigned | TBD | [Plan 06](plans/06-packs.md) |
+| Pinokio basic (R1.1) | Prove users can install, start, stop (including while busy), update and remove Astrid through Pinokio on Linux, macOS and Windows, with a separate three-row hosted gate. | active | Release 1 merge coordinator | TBD | [Plan 07](plans/07-pinokio.md) |
+| Pinokio qualification | Engine Stop/Quit refusal veto, direct custody and fully-local mode, qualified natively. | queued | Unassigned | TBD | [Plan 10](plans/10-pinokio-qualification.md) |
 
 ### Status key
 

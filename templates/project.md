@@ -4,6 +4,10 @@
 
 What useful result will users get? Include important behavior that must remain.
 
+## Owner
+
+Set the accountable person, team, or coordinating role in the root [README queue](../README.md). Use `Unassigned` until a current owner is known; this field does not grant work authorization. Keep the queue as the only owner record.
+
 ## Scope
 
 - Included:
