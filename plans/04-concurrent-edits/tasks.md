@@ -12,6 +12,7 @@
 | [CE-COMPOSE](#ce-compose): compose CE inputs after generation integration | X / Terra + Luna · CE-END and generation integration promotion | Not recorded |
 | [CE-REVIEW](#ce-review): review exact composed heads | Review / Astra · CE-COMPOSE | Not recorded |
 | [CE-PROMOTE](#ce-promote): promote reviewed immutable heads | N / Luna · CE-REVIEW | Not recorded |
+| [CE-REF](#ce-ref): dev reference builder on commitTimeline | X / Terra + Luna · none recorded; fixes App CI Lanes/quick-journey | Not recorded |
 
 ## Task details
 
@@ -77,3 +78,11 @@ The CE-LIMIT check selector and the exact identities/definitions of CE-0 and CE-
 - **Dependencies and inputs:** CE-REVIEW and its exact reviewed heads.
 - **Focused checks:** Verify remote heads equal reviewed heads; follow [MANAGER.md](../MANAGER.md) for moved targets.
 - **Done:** Exact reviewed heads are promoted; no force push and no second aggregate. Existing project/initiative authority governs publication.
+
+### CE-REF
+
+- **Outcome / work:** Move the dev reference builder off the retired publish path. Astrid-agent `astrid/core/dev/reference_realm.py` `build_reference` still calls the retired `publish_parent_composition`, which fails App CI Lanes/quick-journey. Rebuild it on `commit_timeline` as a fresh-timeline commit: `track.create` plus `clip.add-media` with a `MediaSelection`, steps, and base revision. Update `tests/journeys/test_journey_plumbing.py` and `tests/journeys/test_quick_journey_f1.py` to match.
+- **Route:** X / Terra + Luna.
+- **Dependencies and inputs:** Agent source in astrid-agent; the failing App CI Lanes/quick-journey job. No other dependency is recorded.
+- **Focused checks:** `tests/journeys/test_journey_plumbing.py` and `tests/journeys/test_quick_journey_f1.py`, plus the App CI Lanes/quick-journey job. Exact selectors TBD at setup.
+- **Done:** The builder commits through `commit_timeline`, the two journey test files pass, and the retired call is gone from the builder.

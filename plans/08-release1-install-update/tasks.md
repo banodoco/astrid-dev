@@ -78,7 +78,7 @@ This records the R1 merge started by the owner on 4 Nov 2026. It is coordinated 
 - **Outcome:** Bump Agent and App locks once to verified heads and run the strict gate once at frozen heads.
 - **Route:** `N`.
 - **Dependencies and inputs:** All preceding tasks and their verified candidate heads; exact SHAs are frozen at run time and recorded per landing in the merge fixes log.
-- **Work:** Make the single coordinated lock update, then execute the five-row strict gate.
+- **Work:** Make the single coordinated lock update, then execute the five-row strict gate. The bump is two steps: Agent `runtime.lock` first, then the App manifest pinned to the new Agent commit (`scripts/regenerate_runtime_pins.py` with `--agent-sha`). Chain them in one command (R1.1).
 - **Focused checks:** Strict hosted run passes on all five rows at those frozen heads. Use the accepted run's recorded command and evidence; this migration does not invent a selector or report a result.
 - **Done / progress:** Pin bump and strict run remain to be completed; open.
 

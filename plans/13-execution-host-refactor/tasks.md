@@ -6,7 +6,7 @@
 
 ## Task index
 
-No executable task cards are assigned yet. Scope them from the actual source base, preserving the original intent below:
+Only the card below is recorded so far. Scope the rest from the actual source base, preserving the original intent below:
 
 - Map responsibilities, callers, shared state, and existing focused tests; select natural extraction boundaries.
 - Characterize affected behavior before extraction and rerun those exact checks.
@@ -15,3 +15,14 @@ No executable task cards are assigned yet. Scope them from the actual source bas
 - Keep semantic bug fixes separately named where needed; moving code alone must not silently change execution contracts.
 
 Before execution, each task needs a difficulty route, exact inputs and dependencies, bounded work, explicit focused checks, completion evidence, and the existing review/publication boundary. No broad suites or automatic test discovery are authorized by this draft.
+
+## Task details
+
+### host_bootstrap retirement safety follow-ups
+
+- **Outcome / work:** `_stop_registered_host`, a test-helper path, trusts the registration's own `support_root` rather than the current Runtime's. An empty `support_root` also opens `generic-host.lock` relative to the cwd. Bind both to the current Runtime support root.
+- **Route:** N.
+- **Dependencies and inputs:** Execution host bootstrap retirement code; exact file paths TBD at setup.
+- **Focused checks:** Exact focused selectors TBD at setup; no broad suites.
+- **Done:** Both paths use the current Runtime support root, and the focused checks are recorded.
+- **Progress:** [ ]

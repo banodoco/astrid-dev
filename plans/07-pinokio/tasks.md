@@ -28,6 +28,8 @@ Each hosted row (`pinokio-linux`, `pinokio-macos`, `pinokio-windows`) uses the P
 
 The source task provided no exact hosted workflow job selector or focused command beyond the row IDs and stand-in script. Recover the existing selectors at task setup; do not invent selectors or run broad/auto-discovered suites. Freeze source heads and record them with the gate evidence. Current implementation findings are not yet recorded; the known hosted failures below are historical observations from 5 Nov 2026.
 
+**Stop safety (PB-2 to PB-4):** The launcher stop must never force-kill. It may signal only validated processes of this install, and it fails closed with one refusal. An ordinary preview Stop may refuse; this is accepted. Parked launcher changes are on the M-RT lane branch of `astrid-pinokio`.
+
 ## Task cards
 
 ### PB-1 Separate three-row gate: matrix constant, checker, dispatch

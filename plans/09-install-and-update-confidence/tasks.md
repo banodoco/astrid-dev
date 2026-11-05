@@ -19,6 +19,8 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 | [IU-8 Typed Agent↔Runtime control contract and dead-code retirement](#iu-8-typed-agentruntime-control-contract-and-dead-code-retirement) | S | IU-1 | [ ] |
 | [IU-9 Platform breadth](#iu-9-platform-breadth) | N | IU-2 | [ ] |
 | [IU-10 Captured real service-manager output in unit fakes](#iu-10-captured-real-service-manager-output-in-unit-fakes) | N | IU-0 | [ ] |
+| [IU-11 Update-test hardening (from the R1 update-test review)](#iu-11-update-test-hardening-from-the-r1-update-test-review) | N / Luna | IU-1 | [ ] |
+| [IU-12 Windows pack-host retirement premise](#iu-12-windows-pack-host-retirement-premise) | X | IU-0 | [ ] |
 | [IU-END Scoped review and promotion](#iu-end-scoped-review-and-promotion) | X | all | [ ] |
 
 ## Task details
@@ -63,7 +65,7 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 - **Outcome:** Hosted Linux, macOS, and Windows legs update while Runtime is running and roll back after an injected failure after staging.
 - **Route:** X
 - **Dependencies and inputs:** IU-1; frozen candidate and matrix from IU-0.
-- **Work:** Exercise both behaviors per OS. On injected failure, verify the old version remains current and healthy and user data remains intact.
+- **Work:** Exercise both behaviors per OS. On injected failure, verify the old version remains current and healthy and user data remains intact. Include: an upgrade or update stops a busy Runtime and interrupts its in-flight task (R1 named limitation); prove the task is resumed or cleanly failed.
 - **Focused checks:** Exact hosted workflow/job selectors TBD at setup; record each OS result and fault-injection point.
 - **Done:** Both hosted legs pass on all three OSes, or affected matrix cells are explicitly recorded as unsupported limitations.
 
@@ -81,7 +83,7 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 - **Outcome:** Windows update handles stop ordering and locked files safely.
 - **Route:** X
 - **Dependencies and inputs:** IU-2; Windows service behavior at `service.py` around lines 972–983 (verify current source at setup).
-- **Work:** Exercise service stop ordering and a locked file during update; refuse cleanly when the file cannot be safely changed.
+- **Work:** Exercise service stop ordering and a locked file during update; refuse cleanly when the file cannot be safely changed. The CI direct-windows row now uses the real user profile on hosted runners (astrid-agent #270); the old sandbox profile split the installer from the Task-Scheduler-started Runtime and hid its logs. Keep the real profile, or make the Runtime's paths profile-independent.
 - **Focused checks:** Exact Windows hosted selector and lock injection mechanism TBD at setup.
 - **Done:** Update succeeds or refuses in one sentence while the old version remains working and data remains intact.
 
@@ -126,7 +128,7 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 - **Outcome:** Fresh install and update coverage addresses Linux without a systemd user manager, Intel macOS, and Windows 11 Home, non-admin users, and Defender.
 - **Route:** N
 - **Dependencies and inputs:** IU-2; per-OS gap matrix from IU-0. Linux fallback is identified in `service.py` around lines 110–127; verify current source at setup.
-- **Work:** Exercise each named environment and classify supported versus limited behavior for fresh install and update.
+- **Work:** Exercise each named environment and classify supported versus limited behavior for fresh install and update. Add the real-Mac (self-hosted) fresh install and update smoke: it never passed during R1 (MAC-UPDATE-01..04 on astrid-agent issue #167); hosted macOS passes.
 - **Focused checks:** Exact environment/hosted selectors TBD at setup.
 - **Done:** Fresh install and update pass for each environment, or a named limitation is recorded for each unsupported matrix cell.
 
@@ -138,6 +140,24 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 - **Work:** Replace synthetic output that previously missed the `=> true` versus `=> disabled` distinction, a bug hit twice in R1.
 - **Focused checks:** Exact focused unit selectors TBD at setup; compare fake fixtures to captured output.
 - **Done:** Captures and provenance are recorded, fakes match them, and the focused tests pass.
+
+### IU-11 Update-test hardening (from the R1 update-test review)
+
+- **Outcome:** The update tests share one stand-in release generator, check old-version retention by digest, and use fewer mocks.
+- **Route:** N / Luna.
+- **Dependencies and inputs:** IU-1. Source: the R1 update-test review.
+- **Work:** Dedupe the stand-in release generator into `make_standin_release.py`; `journey_fresh_update.standin` and `windows_update_journey.py` hold copies with differing markers. Strengthen the old-version retention check: compare the old manifest digest before and after the update, not only that `version.json` exists. The gate binds `manifest_sha256` to the uploaded artifact bytes and marker. Reduce mocks in `tests/test_journey_fresh_update.py` and `tests/test_windows_fresh_update.py`.
+- **Focused checks:** Exact selectors TBD at setup; the two test files above only, no broad suite.
+- **Done:** One generator remains; the retention check compares digests; the gate binding is covered by a focused check; both test files use fewer mocks.
+
+### IU-12 Windows pack-host retirement premise
+
+- **Outcome:** The R1 fix B premise holds on Windows, and parked fix A is decided.
+- **Route:** X.
+- **Dependencies and inputs:** IU-0. R1 fix B (astrid-agent #283) retires an old pack-host registration when its Runtime instance has exited. It relies on Runtime services running in a Windows Job with `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` (astrid-runtime `runtime_protocol/platform.py`, around line 724).
+- **Work:** Confirm that every Windows service launch is inside that Job, with no breakaway. Decide parked fix A: the Runtime writes the pack-host `job_drained` receipt before the installer's manager-stop callback (astrid-runtime `runtime_protocol/services.py`).
+- **Focused checks:** Source inspection of each Windows service launch path; exact selectors TBD at setup.
+- **Done:** Evidence lists each Windows launch path as inside the Job or a named breakaway, and fix A has a recorded decision.
 
 ### IU-END Scoped review and promotion
 

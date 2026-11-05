@@ -65,6 +65,8 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 | First-principles documentation | Make Astrid understandable to humans and agents through a clear path from its purpose and central skill to workflows, pack design, and precise references. | queued | Unassigned | TBD | scope agreement | [Plan 19](plans/19-first-principles-documentation/plan.md) |
 | Astrid website | Build the scroll journey below the Astrid homepage hero: three sections and a vision finale that re-explain the hero's notes, with the sky following the visitor's time of day. The rest of the website is not yet scoped. | queued | Unassigned | TBD | — | [Plan 21](plans/21-astrid-website/plan.md) |
 
+App CI items outside these plans: the `extension-visual` screenshot baseline is stale (failing since before R1); the scheduled `Lanes installer-powershell` and `Direct Journey` jobs were failing before R1.
+
 ### Status key
 
 - `queued`: planned and waiting for its actual start.
