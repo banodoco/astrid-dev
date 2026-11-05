@@ -1,6 +1,6 @@
 # 04 — Refined concurrent editing: completion and integration
 
-[README queue](../README.md) · [Initiative handoff](MANAGER.md). Final publication follows [generation merge](03-generation-merge.md); independent completion on the retained tuple may proceed earlier after initiative start.
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). Final publication follows [generation integration (formerly Plan 03)](02-consistent-generation/plan.md); independent completion on the retained tuple may proceed earlier after initiative start.
 
 ## Goal
 
@@ -13,7 +13,7 @@ Reuse Agent `4f111c2153184a73a5ca333a16f4b9a69a3313f1`, App `438159b030cd3b0b816
 | CE-FINAL | Run the exact final tuple checks below, retaining code and fixture repairs. | Verified App repair, CE-LIMIT, retained Agent/Runtime | N / Luna | Independent verifier passes the seven SDK nodes and full-eight hosted cases on the recorded tuple. No unchanged 351-node replay. |
 | CE-REPAIR, only if required | Reproduce a newly demonstrated failed boundary; repair its real cause with one owner. | Exact failure from CE-FINAL | S / Sol + Luna | Same boundary and affected neighboring checks pass; preserve unknown flights, late ACKs, body/key/base/fence, deadline and user edits. Sol is reserved for unresolved concurrency/ownership invariants, not setup or test-running. Ordinary fixture/setup repairs remain N/Luna. |
 | CE-END | Existing project END review of required outcomes and exact tuple. | CE-FINAL, CE-0, CE-LIMIT | Review / Astra | No blocking findings; real hosted outcomes, SDK guarantees and cooperative limit all evidenced. |
-| CE-COMPOSE | Freeze rolling pre-main after plan03; compose accepted CE Runtime, Agent, App inputs once and regenerate canonical pins/locks. | CE-END; plan03 promotion | X / Terra + Luna | Preserve generation/installer behavior while integrating lease/retry/save contracts; actual final tuple passes affected checks below. |
+| CE-COMPOSE | Freeze rolling pre-main after generation integration; compose accepted CE Runtime, Agent, App inputs once and regenerate canonical pins/locks. | CE-END; generation integration promotion | X / Terra + Luna | Preserve generation/installer behavior while integrating lease/retry/save contracts; actual final tuple passes affected checks below. |
 | CE-REVIEW | Scoped review of composed tuple and changed-boundary proof. | CE-COMPOSE | Review / Astra | Exact immutable heads have no blocking integration findings. |
 | CE-PROMOTE | Publish fresh immutable increment lanes and promote those same heads to pre-main. | CE-REVIEW | N / Luna | Remote heads equal reviewed heads; moved targets handled by MANAGER.md, no force or second aggregate. |
 

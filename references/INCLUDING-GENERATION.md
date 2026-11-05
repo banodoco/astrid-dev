@@ -1,3 +1,11 @@
+# Generation inclusion assessment — historical reference
+
+This is the dated assessment used to prepare the generation project, not a second execution plan or a current status report. Start with the [current project plan](../plans/02-consistent-generation/plan.md); its [tasks](../plans/02-consistent-generation/tasks.md) and [source inputs](../plans/02-consistent-generation/inputs.md) govern execution.
+
+The current integration rule makes Runtime stop donor `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94` **conditional on a demonstrated source dependency**. Statements below proposing it as part of the tuple describe the earlier assessment, not an instruction to include it automatically. The library-only option below is background; it is not the selected full generation scope. All branch observations and progress claims below are historical.
+
+---
+
 Including the useful Astrid generation feature is feasible, but it changes the installer-only cut into a substantial integration job: allow roughly **1–2 additional engineering days**, plus completion of the already required native Linux checks. That estimate assumes the retained fixes pass and a suitable Linux venue is available. There is no honest “merge the old verified heads and call generation finished” shortcut.
 
 My recommendation is to keep the installer increment independent, then include generation using the retained PINS/defaults work and a simpler, honest installed-package proof. Generation need not wait for concurrent editing or paused Packs. If it must join the same publication, budget the additional work below rather than waiting for the original impossible installed-test contract.
