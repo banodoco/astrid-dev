@@ -2,7 +2,20 @@
 
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
-Prove that new users can install and update Astrid on Linux, macOS, and Windows, and that R0 users on Linux and macOS can upgrade to R1 without losing data. The project remains active under the Release 1 merge coordinator recorded in the [project queue](../../README.md); this plan does not start or authorize product work.
+Prove that new users can install and update Astrid on Linux, macOS, and Windows, and that R0 users on Linux and macOS can upgrade to R1 without losing data. The project is done; see Shipped below.
+
+## Shipped (2026-11-05)
+
+Done. The strict five-row hosted gate passed 5/5 at frozen heads (astrid-agent journey run 42031626837), and the owner gave the ship call. Release 1 is on `main` in all four repositories with aligned pins:
+
+| Repository | `main` |
+|---|---|
+| astrid-agent | `9373955d4458aebcd73390484d4047ae06f4e83b` |
+| astrid-runtime | `9fc53b771134940aaac901e4cfc5d03c1db1a20a` |
+| astrid-app | `57d39bd68973dc081ade464e66bef207434436f4` (pins Agent `9373955d`, Runtime `9fc53b77`; deployed to Railway) |
+| astrid-pinokio | `3a6a98ae251ca126505245286e2d3e760f4348e9` |
+
+App commits after the gated tuple (`910982c7`, `57d39bd6`) change only App UI and tests; the Agent/Runtime pins are unchanged. Deferred items are recorded in [Plan 09](../09-install-and-update-confidence/plan.md), [Plan 07](../07-pinokio/plan.md), [Plan 04](../04-concurrent-edits/plan.md) and [Plan 13](../13-execution-host-refactor/plan.md) where they apply.
 
 ## Goal and scope
 
