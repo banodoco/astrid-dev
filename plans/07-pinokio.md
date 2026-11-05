@@ -1,39 +1,50 @@
-# 07 — Pinokio launcher, engine contract, and custody
+# 07 — Pinokio basic: install, run, update and remove
 
-[README queue](../README.md) · [Initiative handoff](MANAGER.md). This documentation-only plan reconciles Task L launcher validation with M4-4a source/engine controls and M4-6 custody. It does not resume Pinokio work or claim validation, qualification, release, or completion. The main README owns current status and estimate.
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). The first Pinokio increment, shipped as Release 1.1 straight after [Plan 08](08-release1-install-update.md). Its goal is a hosted test proving that a user can install, start, stop, update and remove Astrid through Pinokio on Linux, macOS and Windows without losing data. The full engine, custody and fully-local qualification work moves to [Plan 10](10-pinokio-qualification.md). Decisions and evidence are in the R1 merge docs (`DECISIONS.md`, 5 Nov 2026 "Pinokio for R1").
 
 ## Goal
 
-Provide a tested, reliable Pinokio launcher for installing, starting, updating, stopping, and removing Astrid safely.
+Make the Pinokio backend launcher dependable for the everyday user path, proven by a separate three-row hosted gate. Preserve user data in every case: a failed or refused action leaves the previous working version and all data in place.
 
-## Starting sources, base, and destination
+## Starting point (5 Nov 2026)
 
-The historical source checkout permitted for this audit is `banodoco/astrid-pinokio` (`origin` = `https://github.com/banodoco/astrid-pinokio`). It is clean at `f8f1077eea22a729f7fe68b88acc1e4963495e18`, local branch `ci-smoke`, whose configured upstream is `origin/codex/astrid-updater-only-20261028-pinokio`. The locally observed origin-tracking refs also include `origin/main` at `bbba620`, `origin/codex/astrid-updater-integration-20261028-pinokio` at `34d6416`, `origin/codex/tst-pinokio-20261028` at `1df7e67`, and `origin/feat/pinokio` at `5cea465`. These are checkout observations, not a fresh remote query; refs are distinct source lines, not interchangeable donors. The current checkout is evidence only; no branch is authorized as a donor by this plan.
+- R1 ships with `astrid-pinokio` `main` held at `bbba620` (the current launcher). Old launchers fetch the installer from `astrid-app` `main`, so after R1 their Update refuses safely on the R1 storage change and keeps data. The sentence they see is fixed in R1 or R1.1 (X-PINOKIO-MSG). Named limitation: Pinokio users reinstall to get R1.
+- The six earlier Pinokio rows (`RELEASE1_1_DEFERRED_PINOKIO_MATRIX`) never got past setup (0/6). They mixed the everyday path with engine, custody and fully-local work. They are retired rather than revived; their scope moves to Plan 10.
+- Known hosted failures to fix: setup-install ends with "terminated shell" and no inner exit code on macOS and Windows; Windows `npm ci` exits 1 (better-sqlite3); the Linux Worker profile is missing.
 
-The intended destination is the user's `pre-main` in `banodoco/astrid-pinokio`; its existence and current base were not established by this read-only checkout inspection. PIN-0 must resolve the remote/repository identity, whether the branch exists, its current head, and the ordinary create-or-fast-forward policy before any mutation. Do not infer that `origin/main`, `ci-smoke`, or the updater branch is that destination. Also compare the selected starting head with Task L's recorded environment work and retained donor heads; historical reports do not prove those changes are present in `f8f1077`. If Pinokio work is composed into the Astrid product tuple, freeze and use the then-current reviewed Agent, Runtime and App pins; there is no dependency on completing Packs first.
+## Scope
 
-Task L's source was a separate `astrid-pinokio` checkout and records its own historical changes, CI and tests. Reuse its interface and validation documents as requirements/reference, not as proof on this checkout. M4-4a source research is separately pinned to `pinokiocomputer/pterm@5be43718701c448b43daf0ce51d8935f170065bb` and `pinokiocomputer/pinokiod@add4a674ad1ba95bb62ec427fce519fe5bf0e9bf`. These establish an internal request/event boundary only: queued acceptance is not settlement, disconnect or exit code zero is not success, and no general terminal task readback is evidenced. They do not establish the deployed Pinokio version or a supported action-engine invocation surface.
+### In scope
 
-M4-6's historical Agent implementation is recorded at `98fc9af5752216ba298e34daa094435f8117a3b6` on a branch based on `64e18fb6b6812e04732f0bedd75e6e0f251ee6a9`, with separate observer commit `4e60a4b249ddd4a4d2478ad3637127158a94aefc`. Treat this as a source-backed, fail-closed provider report—not as a reusable product release, authorization path, or proof that current Q/Agent interfaces still match. Reconcile its integration against current owners and heads before adopting anything.
+A new gate, separate from the R1 five-row gate (`RELEASE1_1_PINOKIO_MATRIX`, its own checker function and dispatch; `RELEASE1_MATRIX` unchanged). The rows are `pinokio-linux`, `pinokio-macos` and `pinokio-windows`, on hosted runners. Each runs through the Pinokio backend launcher scripts:
 
-## Work and evidence
+1. Install.
+2. Start, then check health and run one task.
+3. Stop. Only this install's Runtime stops (same root and instance id); any other Runtime on the host is untouched. Start again and check it's healthy.
+4. Busy stop: start a task and press Stop while it runs. Start again. The data marker is intact, and the task has either finished or cleanly failed (never stuck or corrupt).
+5. Update to the stand-in next release (`scripts/make_standin_release.py`).
+6. Start waits for readiness. Health reports the new release, and one task passes.
+7. Uninstall.
 
-Difficulty routes: **N = Luna**, **X = Terra + Luna helpers**, **S = Sol + Luna helpers**. Leads do not imply workers are active. Existing Astra END review remains scoped to the exact candidate and evidence; it is not a new approval flow.
+Then publish the new launcher from `astrid-pinokio` `int/r1` to `main`, only once this gate is green.
 
-| ID / outcome | Dependencies | Route | Focused checks and completion evidence |
-|---|---|---|---|
-| PIN-0 — Freeze and reconcile sources | Start of this plan | N / Luna | Record exact repo/remotes/branches/heads and clean/dirty state for chosen Pinokio base, intended pre-main target, and any proposed donors. Resolve target existence/base/create-or-fast-forward policy. Map Task L environment/lifecycle changes and M4-4a/M4-6 inputs to current ancestry and paths. Mark each as reusable, superseded, absent, or incompatible; no arbitrary latest-branch selection. |
-| PIN-1 — Preserve launcher interface and Task L behavior | PIN-0 | X / Terra + Luna helpers | Reconcile current scripts against the focused interface contract: install modes, manifest/ref selection, foreground ownership, readiness-before-Open, stop ordering, recovery-before-pull, local update, reset/data-safe uninstall, platform quoting and environment isolation. Run only the exact affected selectors after source composition: `node --test tests/launcher.test.mjs tests/lifecycle.test.mjs tests/environment.test.mjs tests/process.test.mjs`; run `node tests/check-bootstrap.mjs <selected bootstrap path>` only if bootstrap bytes/manifest handling are changed. Retain per-platform CI evidence; fake fixtures do not qualify native Pinokio/OS behavior. |
-| PIN-2 — Establish real engine controls and Stop/Quit refusal | PIN-0; deployed Pinokio fixture/version and supported API | S / Sol + Luna helpers | First establish the actual engine/API contract from supported deployed source/dependencies. Bind `start.js`, `stop.js`, `update.js` and resolved helper bytes, selected app/mode, engine/action/session identity and owned cleanup. Invoke immutable Stop/Update through the actual engine, await terminal settlement, and prove busy/unknown refusal leaves process/listener/health/session identity unchanged before same-session retry. If the engine, settlement/readback, or refusal-veto semantics are absent, stop this implementation row at a concrete NEEDS report; do not invent a wrapper, run descriptors with Node, substitute disposable commands, or claim success. Native OS qualification requires the exact deployed version and each supported OS. |
-| PIN-3 — Reconcile direct-custody provider | PIN-2 contract; current Agent/Q adapter and process observer heads | X / Terra + Luna helpers | Adopt only source-backed pieces that still match current interfaces. Keep Pinokio custody distinct from direct slots; bind immutable action graph and selected app, distinguish queued from settled, and refuse errors, timeout, disconnect, missing readback, source drift, ambiguous session, observer gap/overflow, or unbound execution before authorization/receipt. Verify with focused provider/observer/request-settlement tests selected from the current owning repo. Completion requires authenticated context, engine-backed terminal readback, independent gap-free custody observation and action-specific postconditions; historical fail-closed tests alone do not satisfy this row. |
-| PIN-4 — Focused validation and scoped review | PIN-1 through PIN-3; exact candidate frozen | X / Terra + Luna helpers; Astra review | Run only changed-boundary launcher/provider tests and explicitly required native canaries. For launcher changes retain the exact selectors listed in PIN-1. For custody, use the exact current provider/observer/adapter selectors frozen in the task brief. Native acceptance covers hosted and fully-local flows, busy/unknown Stop and Quit, readiness, interrupted install/update recovery, port conflicts, data-safe reset/uninstall, and platform-specific command handling. Review exact source heads, diffs, test output, skipped cases and unresolved native gaps; no broad suites or GPU/model execution. |
-| PIN-END — Record disposition | PIN-4 | N / Luna | Report only demonstrated outcomes and remaining NEEDS. If native refusal-veto or custody settlement is unresolved, mark that release boundary blocked/unqualified and preserve the specific evidence gap; do not turn historical `BLOCKED` snapshots into current status. |
-| PIN-PROMOTE — Publish accepted launcher increment | Scoped acceptance of the launcher increment's exact head; mutation authorization | N / Luna | Publish only the reviewed immutable Pinokio candidate and promote that same head to the resolved `pre-main` by ordinary create/fast-forward rules. Recheck target immediately before mutation; if it moved, retain the reviewed candidate and reconcile on a fresh base. This launcher increment may be delivered independently of the engine/custody rows only if it makes no unsupported native Stop/Quit safety or qualification claim. A full Pinokio native qualification/release remains gated by PIN-2/3 evidence. |
+### Out of scope (Plan 10)
 
-## Explicitly deferred and constraints
+Engine Stop/Quit refusal veto, direct-custody provider, fully-local mode, unknown-state stop, old-launcher first-click/retry migration, historical launcher compatibility.
 
-- No product edits, test execution, commit, push, worker launch, hosted action, schedule change, install, daemon launch, GPU/model work, or broad suite is authorized by this documentation plan.
-- The Task L document's 12 native checks guide eventual qualification, but do not turn this plan into a broad documentation rewrite. Revisit its known render-smoke omission, manual-only fully-local journey, and upstream diagnostics hint only when a changed boundary or qualification owner selects them.
-- Native Pinokio Stop/Quit refusal veto is a hard unsatisfied requirement. Adapter-side lifecycle ordering, fake kernel tests, POSIX child fixtures, and the pinned historical engine source cannot establish deployed veto behavior.
-- M4-6's historical provider intentionally had no success-producing authorization path. Do not weaken fail-closed ownership for a passing test or infer that old Q coordination, provisional `TrustedCollectorContext`, hosted rows, or receipts are current.
-- Keep references compact; they capture only the validation/interface contract and source/engine/custody reports needed to execute this plan. Historical local paths in copied material are sanitized and references are not current evidence.
+## Tasks and acceptance
+
+| Task / outcome | Route | Dependency | Focused acceptance evidence | Progress |
+|---|---|---|---|---|
+| PB-0 Fix the old launcher's Update refusal sentence (X-PINOKIO-MSG) | N + Astra | — | Unit test asserts the new sentence; refusal still precedes any change | [ ] |
+| PB-1 Separate three-row gate: matrix constant, checker, dispatch | N | — | Checker requires exactly the three job ids; R1 gate unchanged | [ ] |
+| PB-2 Linux row, steps 1–7 | X | PB-1 | Hosted `pinokio-linux` passes | [ ] |
+| PB-3 macOS row: capture the real setup-install exit, fix it | X | PB-2 | Hosted `pinokio-macos` passes, or a named limitation | [ ] |
+| PB-4 Windows row: setup-install exit, `npm ci` better-sqlite3 | X | PB-2 | Hosted `pinokio-windows` passes, or a named limitation | [ ] |
+| PB-END Publish the launcher to `main` at the verified heads | N | PB-2–4 | Gate green at frozen heads; `main` fast-forwarded and checked with `git ls-remote` | [ ] |
+
+If PB-3 or PB-4 needs Sol-level digging, stop with the evidence. The coordinator decides, most likely recording a named limitation for that OS.
+
+## Completion and handoff
+
+Done when the three-row gate is green at frozen heads and the launcher is on `main`. Record any OS left unsupported as a named limitation here. Hand everything out of scope to [Plan 10](10-pinokio-qualification.md).

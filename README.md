@@ -26,7 +26,8 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Es
 | Concurrent editing | Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes. | queued | TBD | [Plan 04](plans/04-concurrent-edits.md) |
 | Remaining fixes | Bring the accepted fixes together into a coherent release while preserving existing behavior. | queued | TBD | [Plan 05](plans/05-remaining-fixes.md) |
 | Packs | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | TBD | [Plan 06](plans/06-packs.md) |
-| Pinokio | Provide a tested, reliable Pinokio launcher for installing, starting, updating, stopping, and removing Astrid safely. | queued | TBD | [Plan 07](plans/07-pinokio.md) |
+| Pinokio basic (R1.1) | Prove users can install, start, stop (including while busy), update and remove Astrid through Pinokio on Linux, macOS and Windows, with a separate three-row hosted gate. | queued | TBD | [Plan 07](plans/07-pinokio.md) |
+| Pinokio qualification | Engine Stop/Quit refusal veto, direct custody, fully-local mode and old-launcher migration, qualified natively. | queued | TBD | [Plan 10](plans/10-pinokio-qualification.md) |
 
 ### Status key
 
@@ -37,7 +38,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Es
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is separate from the initiative pause. Plan 08 (Release 1) is underway under its own merge coordinator, outside this initiative; no other product work has started. Plan 09 follows Plan 08 and is first in the queue. Plans 01–06 define the staged pre-main sequence; Generation may be prepared after an explicit start, and its integration follows Installer Consent. Plan 07 begins by reconciling historical notes with current source. See [plans](plans/) and [shared references](references/) for details.
+Project status is separate from the initiative pause. Plan 08 (Release 1) is underway under its own merge coordinator, outside this initiative; no other product work has started. Plan 09 follows Plan 08 and is first in the queue; Plan 07 (Pinokio basic) runs alongside it as Release 1.1, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence; Generation may be prepared after an explicit start, and its integration follows Installer Consent. Plan 10 begins by reconciling historical Pinokio notes with current source. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
