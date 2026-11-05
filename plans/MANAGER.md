@@ -19,7 +19,7 @@ These IDs retain their existing meanings and dependency references. They do not 
 
 Use the accepted project plan for scope, exclusions, dependencies, and focused acceptance evidence. The root [README queue](../README.md) alone owns project status and remaining human-day estimates; plans own task progress. Use the shared contract for `N`/`X`/`S` route meanings and configured model bindings.
 
-Plans 01–06 describe the staged pre-main sequence. Generation may be prepared independently after explicit start, but its integration follows Installer Consent. Later work uses reviewed inputs. Plan 07 (Pinokio) starts with a review of historical notes against current source. It has no automatic dependency on Packs; record any concrete dependency found during that review.
+Plan 08 (Release 1) runs under its own merge coordinator. Plan 09 (install and update confidence) is first in the queue and starts from Plan 08's verified output. Plans 01–06 describe the staged pre-main sequence. Generation may be prepared independently after explicit start, but its integration follows Installer Consent. Later work uses reviewed inputs. Plan 07 (Pinokio) starts with a review of historical notes against current source. It has no automatic dependency on Packs; record any concrete dependency found during that review.
 
 ## Review and stopping
 

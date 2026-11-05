@@ -19,6 +19,8 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Es
 
 | Project | Goal | Status | Estimate | Plan |
 |---|---|---|---:|---|
+| Release 1: install and update | Ship R1: new users install and update on Linux, macOS and Windows; R0 users on Linux and macOS upgrade without data loss, proven by the five-row hosted gate. | active | TBD | [Plan 08](plans/08-release1-install-update.md) |
+| Install and update confidence | Make installing and updating dependable on all three OSes: one update path, and a real hosted test for every install, update, rollback and removal route. | queued | TBD | [Plan 09](plans/09-install-and-update-confidence.md) |
 | Installer consent | Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior. | queued | 0.5–1 day | [Plan 01](plans/01-installer-consent.md) |
 | Generation | Provide one consistent end-to-end path for supported generation, with shared defaults and predictable setup, execution, and results. | queued | 1–2 days + native Linux x86_64 verification | [Completion 02](plans/02-generation-completion.md), [merge 03](plans/03-generation-merge.md) |
 | Concurrent editing | Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes. | queued | TBD | [Plan 04](plans/04-concurrent-edits.md) |
@@ -35,7 +37,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Es
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is separate from the initiative pause: no product work has started. Plans 01–06 define the staged pre-main sequence; Generation may be prepared after an explicit start, and its integration follows Installer Consent. Plan 07 begins by reconciling historical notes with current source. See [plans](plans/) and [shared references](references/) for details.
+Project status is separate from the initiative pause. Plan 08 (Release 1) is underway under its own merge coordinator, outside this initiative; no other product work has started. Plan 09 follows Plan 08 and is first in the queue. Plans 01–06 define the staged pre-main sequence; Generation may be prepared after an explicit start, and its integration follows Installer Consent. Plan 07 begins by reconciling historical notes with current source. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
