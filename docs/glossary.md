@@ -17,7 +17,7 @@ The normal pin order is Runtime, then Agent, then App, then Pinokio (see the [de
 
 ## Branches and refs
 
-- **main**: the repository's default branch. Plans never publish to it directly.
+- **main**: the repository's default branch. Plans publish Agent, Runtime and App work to `pre-main`, never straight to their `main`. Repositories without a `pre-main` (VibeComfy, runpod-lifecycle) take reviewed work on `main` through a pull request.
 - **pre-main**: the rolling integration branch this initiative lands work on in Agent, Runtime and App before anything reaches `main`. Some producer repositories (VibeComfy, runpod-lifecycle) have no `pre-main`; the plan then says what to use instead.
 - **int/r1**: the Release 1 integration branch in each product repository (see [Plan 08](../plans/08-release1-install-update.md)). Landed work is mirrored fast-forward to `pre-main`.
 - **release-1**: the Release 1 release branch. Like `main` and `int/r1`, it is never force-pushed or published to by an ordinary plan task.

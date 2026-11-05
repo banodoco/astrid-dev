@@ -10,21 +10,21 @@ Status, owner and estimate are in the [README queue](../../README.md).
 
 ## How to work on it
 
-1. Read [AGENTS.md](../../AGENTS.md) for repository rules, and the [skills guide](../../skills/README.md). Use the **iterate** workflow for a single scoped change or check (P1 to P3, C2, D2, V1 to V3, A1), and the **release** workflow for integration, review and promotion (C1, D1, R1, PR1).
+1. Read [AGENTS.md](../../AGENTS.md) for repository rules, and the [skills guide](../../skills/README.md). Use the **iterate** workflow for a single scoped change or check (P1 to P3, D2, V1 to V3, A1), and the **release** workflow for integration, review and promotion (C1, C2, D1, R1, PR1).
 2. Routes `N`, `X`, `S` and review rules are in the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Terms are in the [glossary](../../docs/glossary.md); plan-specific terms are at the end of this file.
 3. Do the tasks in [tasks.md](tasks.md); exact SHAs and what is missing are in [inputs.md](inputs.md).
 
 ## Prerequisites
 
-- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../AGENTS.md)). Nothing here authorizes pushing, spending or promotion by itself.
+- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../AGENTS.md)). Nothing here authorizes pushing, spending or promotion by itself. To ask for the go, see [How to use this repo](../../README.md#how-to-use-this-repo).
 - **Predecessor:** [Plan 01, Installer Consent](../01-installer-consent.md) must be on Agent and App `pre-main` before phase 3. It is not there yet (see [inputs.md](inputs.md)). Phase 1 can start before it.
 - **Hardware for the Linux closure check (task V2):** a Linux x86_64 environment: a Linux machine, WSL2 on a Windows PC, or a RunPod CPU pod with at least 40 GB of disk (owner-approved spend). The check installs the pinned Linux recipe (`linux-x86_64-cu130`), so a Mac can't run it. Everything else, including the phase 1 producer tasks, runs on any OS.
 - **Access:** push access to the repositories below, or open pull requests for the owner to merge. Producers land only with the owner's go.
 - **Tools on the proof machine:** `uv`, `git`, `ffmpeg`, Python 3.13, and network reads to PyPI and GitHub (see [env/README.md](env/README.md)).
 
-## Can start today
+## Ready once the owner says go
 
-With the owner's go, and no predecessor needed:
+No predecessor needed:
 
 - P1 land the VibeComfy donor, P2 land the lifecycle donor, P3 land the Runtime stop change. All can run in parallel, on any OS.
 - Step 0 items inside later tasks (re-probe merge conflicts, name unnamed selectors) are read-only and can be done any time.
@@ -60,21 +60,21 @@ Proof is bound to the final head. Producers land first and Plan 01 is a precondi
 
 | # | Decision | Source |
 |---|---|---|
-| D1 | Drop the unpublished checkpoint `3fe46b90` and the "finish dirty work" framing. DEFAULTS merges donor `9d3bb248` onto the composed head and writes `test_cli_gold_075b.py` as a new file, as the DEFAULTS card says. Neither exists on GitHub. | Coordinator; [DEFAULTS card](inputs.md#not-available) |
-| D2 | Foley follows the owner's later decision ("sfx = HunyuanVideo-Foley", "no silent fallback"). DEFAULTS makes `audio/hunyuan_foley_v2a` the sound-effects default and removes it from Agent's explicit-only set. If Foley is not installed, `auto` fails with guidance and never falls back. Real-hardware qualification of Foley stays an open gap outside this plan. | Coordinator; owner decision recorded in the retained directive, 2 Nov 2026 |
-| D3 | Order: producers, wait for Plan 01, compose, port DEFAULTS, prove once, review once, App repin, promote. | Coordinator |
-| D4 | The Runtime stop change is unconditional, because the PINS lock already requires it. | Coordinator; `1608dbbf:runtime.lock.json:71` |
-| D5 | One review: the retained END review is folded into GEN-REVIEW (here R1), at most five rounds per the run contract. | Coordinator; run contract |
-| D6 | Compose (route X) and repin (route N) are separate tasks. | Coordinator |
-| D7 | Tasks carry routes N, X or S, never model names; the review uses the run contract's completion-reviewer role. | Coordinator; run contract |
-| D8 | The Linux x86_64 closure check runs on Linux, WSL2 on Windows, or a RunPod CPU pod (at least 40 GB disk, owner-approved spend). It installs the pinned Linux recipe, so macOS can't run it. | Coordinator, owner update |
-| D9 | The newer plan wins on scope (no real inference), unless a card's stronger check runs wholly on fixtures. Choices below. | Coordinator |
-| D10 | INSTALLED-TEST keeps the plan's narrow proof (fresh non-editable install, import origins, CLI inventory, defaults, dry run, fail-closed guidance, the installed-child protocol test). The card's full managed Qwen 512x512 generation through the fixture is not adopted: it never ran, and the earlier audit found managed readiness needs a receipt and three locked model files, so it cannot be shown to need no model bytes. The card itself stops with "model download needed" in that case. | D9; retained INSTALLED-TEST card; [inputs.md](inputs.md) |
-| D11 | Base comparison is kept only to classify a failure. The owner approved nine named failures that fail on both base and head (answer A, 3 Nov 2026 17:40Z); only those nine are deselected. Any other failure is checked once against `pre-main` and, if it also fails there, reported to the owner rather than excepted. Nothing else runs on the base. | D9; retained ANSWERS; run contract |
-| D12 | The retained QV check is folded into P1: the same VibeComfy selectors run on the donor composed onto `main`, rather than on the old b2123edf base. | D9; retained QV card |
-| D13 | The lifecycle donor is `c47fa76` (it contains `96360a27`). Agent `pre-main` pins `96360a27`, so the Agent pin moves forward. | Verified in the lifecycle repository; [inputs.md](inputs.md) |
-| D14 | There was no Foley rename. VibeComfy `main` ships only `audio/hunyuan_foley_v2a` (added 1 Nov, `a05864c6`); the donor line separately ships only `audio/hunyuan_video_foley` (added 2 Nov). Merging the donor onto `main` therefore leaves both templates; P1 keeps both in the index, deletes neither, and Agent's default points at `v2a` (D2). | Verified in VibeComfy history; [inputs.md](inputs.md) |
-| D15 | The earlier split into a completion plan and an integration plan is gone; other plans that wait on generation integration point at phases 3 to 8 here. | Coordinator |
+| 1 | Drop the unpublished checkpoint `3fe46b90` and the "finish dirty work" framing. DEFAULTS merges donor `9d3bb248` onto the composed head and writes `test_cli_gold_075b.py` as a new file, as the DEFAULTS card says. Neither exists on GitHub. | Coordinator; [DEFAULTS card](inputs.md#not-available) |
+| 2 | Foley follows the owner's later decision ("sfx = HunyuanVideo-Foley", "no silent fallback"). DEFAULTS makes `audio/hunyuan_foley_v2a` the sound-effects default and removes it from Agent's explicit-only set. If Foley is not installed, `auto` fails with guidance and never falls back. Real-hardware qualification of Foley stays an open gap outside this plan. | Coordinator; [owner decision, 2 Nov 2026](inputs.md#owner-decisions-this-plan-relies-on) |
+| 3 | Order: producers, wait for Plan 01, compose, port DEFAULTS, prove once, review once, App repin, promote. | Coordinator |
+| 4 | The Runtime stop change is unconditional, because the PINS lock already requires it. | Coordinator; `1608dbbf:runtime.lock.json:71` |
+| 5 | One review: the retained END review is folded into GEN-REVIEW (here R1), at most five rounds per the run contract. | Coordinator; run contract |
+| 6 | Compose (route X) and repin (route N) are separate tasks. | Coordinator |
+| 7 | Tasks carry routes N, X or S, never model names; the review uses the run contract's completion-reviewer role. | Coordinator; run contract |
+| 8 | The Linux x86_64 closure check runs on Linux, WSL2 on Windows, or a RunPod CPU pod (at least 40 GB disk, owner-approved spend). It installs the pinned Linux recipe, so macOS can't run it. | Coordinator, owner update |
+| 9 | The newer plan wins on scope (no real inference), unless a card's stronger check runs wholly on fixtures. Choices below. | Coordinator |
+| 10 | INSTALLED-TEST keeps the plan's narrow proof (fresh non-editable install, import origins, CLI inventory, defaults, dry run, fail-closed guidance, the installed-child protocol test). The card's full managed Qwen 512x512 generation through the fixture is not adopted: it never ran, and the earlier audit found managed readiness needs a receipt and three locked model files, so it cannot be shown to need no model bytes. The card itself stops with "model download needed" in that case. | Decision 9; retained INSTALLED-TEST card; [inputs.md](inputs.md) |
+| 11 | Base comparison is kept only to classify a failure. The owner approved nine named failures that fail on both base and head (answer A, 3 Nov 2026 17:40Z); only those nine are deselected. Any other failure is checked once against `pre-main` and, if it also fails there, reported to the owner rather than excepted. Nothing else runs on the base. | Decision 9; [owner answer A](inputs.md#owner-decisions-this-plan-relies-on); run contract |
+| 12 | The retained QV check is folded into P1: the same VibeComfy selectors run on the donor composed onto `main`, rather than on the old b2123edf base. | Decision 9; retained QV card |
+| 13 | The lifecycle donor is `c47fa76` (it contains `96360a27`). Agent `pre-main` pins `96360a27`, so the Agent pin moves forward. | Verified in the lifecycle repository; [inputs.md](inputs.md) |
+| 14 | There was no Foley rename. VibeComfy `main` ships only `audio/hunyuan_foley_v2a` (added 1 Nov, `a05864c6`); the donor line separately ships only `audio/hunyuan_video_foley` (added 2 Nov). Merging the donor onto `main` therefore leaves both templates; P1 keeps both in the index, deletes neither, and Agent's default points at `v2a` (Decision 2). | Verified in VibeComfy history; [inputs.md](inputs.md) |
+| 15 | The earlier split into a completion plan and an integration plan is gone; other plans that wait on generation integration point at phases 3 to 8 here. | Coordinator |
 
 ## Plan-specific terms
 

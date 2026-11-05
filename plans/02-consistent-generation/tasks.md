@@ -101,21 +101,21 @@ All commands are from the Agent candidate root.
 1. VibeComfy: `python scripts/vibecomfy_pin.py <P1 SHA>`. With no argument it prints the current pin; with a 40-character SHA it changes the pin.
 2. Lifecycle: edit the `runpod-lifecycle @ git+https://github.com/banodoco/runpod-lifecycle.git@<sha>` line in `pyproject.toml` (line 83 on `pre-main` on 5 Nov 2026) to the P2 SHA.
 3. Runtime: `python scripts/regenerate_runtime_pins.py --runtime-sha <P3 SHA> --agent-sha <candidate head> --runtime-checkout <path to a Runtime checkout at P3> --app-checkout <path to an App checkout> --agent-checkout .` is a dry run that prints a diff; add `--apply` to write. `runtime.lock.json` must end at the P3 SHA (`1608dbbf` has `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94` at line 71 of that file). Step 0: read the script's usage first; if `--agent-sha` cannot be the candidate head before it exists, use the head of C1's merge commit.
-4. Digests and locks: PINS carries Foley and QwenTTS node sources in `astrid/packs/runpod/pins.json` and `recipe.linux-cu130.json`, a hash-locked `requirements.linux-cu130.lock`, model-lock rows, and sha256 references in the three recipes, `environment.linux-cu130.json` and `engine-index.json`. If the landed VibeComfy `pyproject.toml` or `custom_nodes.lock` differ from what PINS locked against, regenerate the requirements lock with the command in its own header and recompute every referencing sha256 (`sha256sum` of the changed file; `git grep -n` the old digest and update every hit). Confirm with `python -c "from astrid.core.generation.engine_recipe import load_recipe; [load_recipe(e, p) for e, p in (('comfyui','linux-x86_64-cu130'),('vibecomfy','windows-x86_64-cu130'),('vibecomfy-h3','linux-x86_64-cu130'))]"` inside the check environment.
+4. Digests and locks: PINS carries Foley and QwenTTS node sources in `astrid/packs/runpod/pins.json` and `recipe.linux-cu130.json`, a hash-locked `requirements.linux-cu130.lock`, model-lock rows, and sha256 references in the three recipes, `environment.linux-cu130.json` and `engine-index.json`. If the landed VibeComfy `pyproject.toml` or `custom_nodes.lock` differ from what PINS locked against, regenerate the requirements lock with the command in its own header and recompute every referencing sha256 (`sha256sum <file>` of the changed file; macOS: `shasum -a 256 <file>`; `git grep -n` the old digest and update every hit). Confirm with `python -c "from astrid.core.generation.engine_recipe import load_recipe; [load_recipe(e, p) for e, p in (('comfyui','linux-x86_64-cu130'),('vibecomfy','windows-x86_64-cu130'),('vibecomfy-h3','linux-x86_64-cu130'))]"` inside the check environment.
 5. Done check: `astrid/packs/runpod/pins.json` `vibecomfy` and `vibecomfy-h3` equal the P1 SHA; `runtime.lock.json` `source_commit` equals the P3 SHA; no pin points at a lane-only commit (each SHA is contained in its repository's `main` or `pre-main`).
 
 ## Phase 4: port DEFAULTS
 
 | ID | Outcome | Route | Depends on | Done when | Done |
 |---|---|---|---|---|---|
-| [D1](#d1-merge-the-defaults-donor) | Donor `9d3bb248` is merged onto the C2 head, with the Foley default per D2. | X | C2 | Merge commit; K-owned files unchanged from C2; Foley default in place. | [ ] |
+| [D1](#d1-merge-the-defaults-donor) | Donor `9d3bb248` is merged onto the C2 head, with the Foley default per Decision 2. | X | C2 | Merge commit; K-owned files unchanged from C2; Foley default in place. | [ ] |
 | [D2](#d2-cli-gold-test) | `test_cli_gold_075b.py` exists and passes. | N | D1 | The CLI-GOLD test passes. | [ ] |
 
 ### D1 merge the DEFAULTS donor
 
 1. Fetch `9d3bb24831676cbfc2a0d3dd1c7769f1937569c3` from the Agent repository and `git merge --no-ff` it onto the C2 head. Keep PINS-side bytes for the pin and recipe files: after the merge, `git diff <C2 head> HEAD -- astrid/packs/runpod astrid/packs/comfyui astrid/packs/vibecomfy astrid/packs/engine-index.json runtime.lock.json` must print nothing.
 2. Step 0: list conflicts first. Against `pre-main` the donor alone had nine on 5 Nov 2026: `generic_host.py`, `warm_hold.py`, `gateway/dispatch.py`, `core/generation/preflight.py`, `runpod/target_selection.py`, `sdk/generation.py`, `test_generate_align.py`, `test_generate_target_journey.py`, `test_target_selection.py`. Keep both sides; add no behavior except step 3.
-3. Foley default (D2). In `astrid/sdk/generation.py`, `pre-main` has `_EXPLICIT_ONLY_ENTRIES = frozenset({"hunyuan-foley-local", "audio/hunyuan_foley_v2a"})` (line 36), added by commit `8395174a5`. The donor makes `audio/hunyuan_video_foley` the sound-effects default (donor line 1019). Resolve as: the sound-effects default is `audio/hunyuan_foley_v2a`; remove `audio/hunyuan_foley_v2a` from the explicit-only set; do not use the donor's `hunyuan_video_foley` id. With no Foley installed, `generate audio` for sound effects on `auto` must fail with guidance and never fall back to another route. Keep the existing RunPod refusal for Foley (`_refuse_runpod_foley`) unchanged; removing it is outside this plan.
+3. Foley default (Decision 2). In `astrid/sdk/generation.py`, `pre-main` has `_EXPLICIT_ONLY_ENTRIES = frozenset({"hunyuan-foley-local", "audio/hunyuan_foley_v2a"})` (line 36), added by commit `8395174a5`. The donor makes `audio/hunyuan_video_foley` the sound-effects default (donor line 1019). Resolve as: the sound-effects default is `audio/hunyuan_foley_v2a`; remove `audio/hunyuan_foley_v2a` from the explicit-only set; do not use the donor's `hunyuan_video_foley` id. With no Foley installed, `generate audio` for sound effects on `auto` must fail with guidance and never fall back to another route. Keep the existing RunPod refusal for Foley (`_refuse_runpod_foley`) unchanged; removing it is outside this plan.
 4. Put the merge order, conflict list and the Foley choice in the commit body.
 
 ### D2 CLI-GOLD test
@@ -129,7 +129,7 @@ Write the new file `tests/core/generation/test_cli_gold_075b.py` (never `pytest.
 | video with references | `h3` | action `h3_av.transform` | same; copy the argv from `tests/core/generation/test_h3_action_entry.py::test_public_h3_cli_and_sdk_preserve_the_same_producer_local_inputs` |
 | voice | `audio/qwen3_tts_custom_voice` | same id | same |
 | music | `audio/minimax_music_3` | same id | same |
-| sound effects | `audio/hunyuan_foley_v2a` (D2) | its VibeComfy workflow | `auto`: resolves; `runpod`: non-zero exit with the existing refusal and no task admitted |
+| sound effects | `audio/hunyuan_foley_v2a` (Decision 2) | its VibeComfy workflow | `auto`: resolves; `runpod`: non-zero exit with the existing refusal and no task admitted |
 
 Also assert: `generate list --json` contains all six entry ids and `generate describe --entry <id> --json` exits 0 for each; no result names Z-Image, LTX, Wan or a hosted (fal) entry as selected; prompt-only `generate video "A lighthouse in gentle rain." --target <auto|runpod> --dry-run --json` exits non-zero, admits no task and substitutes no entry; with no engine installed and no RunPod configured, `generate image "A tiny blue lighthouse." --target auto --json` exits non-zero and its output contains `needs a local GPU or --target runpod`, and `generate audio --mode tts --input "text=The exact authored words." --target auto --json` contains the same text and names the Edge TTS option. Update the sound-effects row if D1's Foley change shows a different workflow id.
 
@@ -141,13 +141,13 @@ Existing tests that encode the old default may change an assertion only where it
 |---|---|---|---|---|---|
 | [V1](#v1-focused-checks) | The focused Agent checks pass on the D2 head. | N | D2 | PASS for each command, or only the nine excepted failures. | [ ] |
 | [V2](#v2-linux-closure) | The Linux x86_64 closure passes. | N | D2, Linux environment | PASS. | [ ] |
-| [V3](#v3-installed-package-proof) | The installed-package proof passes (D10). | N | D2 | PASS. | [ ] |
+| [V3](#v3-installed-package-proof) | The installed-package proof passes (Decision 10). | N | D2 | PASS. | [ ] |
 
 Record, for each, the exact command, the candidate SHA, the inputs and the inner exit status ([run contract](../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)). Do not claim a pass for a check not run.
 
 ### V1 focused checks
 
-Run from the Agent candidate with the setup in `env/`. `GEN_DESELECT_FILE` is `env/shared-failure-exceptions.txt` (nine owner-approved shared failures; D11).
+Run from the Agent candidate with the setup in `env/`. `GEN_DESELECT_FILE` is `env/shared-failure-exceptions.txt` (nine owner-approved shared failures; Decision 11).
 
 ```text
 GEN_DESELECT_FILE=env/shared-failure-exceptions.txt bash env/agent-pytest.sh -q tests/core/generation/test_cli.py tests/core/generation/test_entries.py tests/core/generation/test_generate_target_journey.py tests/core/generation/test_h3_action_entry.py tests/core/generation/test_preflight.py tests/sdk/test_generation_source_retention.py tests/sdk/test_generation_target.py tests/core/generation/test_engine_recipe.py tests/core/generation/test_engine_runner.py tests/core/generation/test_engine_bootstrap.py tests/core/generation/test_engine_cli.py tests/core/generation/test_release_python.py tests/test_installer_wheel.py tests/packs/runpod tests/integrations/test_runpod_cpu_path.py tests/integrations/test_runpod_host_endpoint_r5.py tests/core/generation/test_generate_align.py tests/core/generation/test_model_root_binding.py tests/core/generation/test_engine_local_model_root.py tests/core/generation/test_engine_local_endpoint.py tests/core/generation/test_entry_readiness.py tests/core/generation/test_preflight_managed_fix.py tests/core/generation/test_preflight_installed_target.py tests/core/generation/test_targets.py
@@ -157,7 +157,7 @@ GEN_DESELECT_FILE=env/shared-failure-exceptions.txt bash env/agent-pytest.sh -q 
 bash env/agent-pytest.sh -q tests/packs/vibecomfy/test_installed_child_path.py
 ```
 
-Notes: the `[saved]` parameter, `tests/sdk/test_generation_defaults_075a.py` and `test_phase2_audio_discovery.py` exist only after the DEFAULTS donor is merged (D1), so they cannot be found on `pre-main` or on PINS alone. `tests/packs/vibecomfy/test_installed_child_path.py::test_installed_qwen_managed_child_path` and the engine-runner node arrive with PINS. Step 0: confirm each selector exists on the candidate with `git grep`; a node missing there means a merge dropped it. Shared failures outside the nine: run the node once on the frozen `pre-main` to classify it, then report it (D11).
+Notes: the `[saved]` parameter, `tests/sdk/test_generation_defaults_075a.py` and `test_phase2_audio_discovery.py` exist only after the DEFAULTS donor is merged (D1), so they cannot be found on `pre-main` or on PINS alone. `tests/packs/vibecomfy/test_installed_child_path.py::test_installed_qwen_managed_child_path` and the engine-runner node arrive with PINS. Step 0: confirm each selector exists on the candidate with `git grep`; a node missing there means a merge dropped it. Shared failures outside the nine: run the node once on the frozen `pre-main` to classify it, then report it (Decision 11).
 
 Also check the K-owned bytes (D1 step 1) and that the pins still match C2.
 
@@ -173,7 +173,7 @@ The test is `test_linux_x86_64_h3_environment_closure_before_model_stages`. It i
 
 ### V3 installed-package proof
 
-Outcome (D10): a fresh, non-editable install of the candidate through the supported installer (`astrid/installer/backend.py`, Step 0: name its public install entry), with no checkout or user site visible to the installed program, shows: import origins of `astrid` and `vibecomfy` inside the installed environment; `vibecomfy.utils.find_repo_root()` raising `CheckoutRequiredError`; the `generate list` inventory with the six defaults; a dry run per default; and fail-closed guidance (`needs a local GPU or --target runpod`) with no engine and no RunPod. Together with `test_installed_qwen_managed_child_path` (the installed child driving a stand-in `/prompt`, `/history`, `/view` server), this is the proof. No weights, GPU, provider call or model download. Write it as a new test under `tests/installed/` (Step 0: no `tests/installed` directory was found on `pre-main`; create it). If an installer stage needs a model download, stop and record `model download needed: <stage>: <first error line>`; never fetch weights.
+Outcome (Decision 10): a fresh, non-editable install of the candidate through the supported installer (`astrid/installer/backend.py`, Step 0: name its public install entry), with no checkout or user site visible to the installed program, shows: import origins of `astrid` and `vibecomfy` inside the installed environment; `vibecomfy.utils.find_repo_root()` raising `CheckoutRequiredError`; the `generate list` inventory with the six defaults; a dry run per default; and fail-closed guidance (`needs a local GPU or --target runpod`) with no engine and no RunPod. Together with `test_installed_qwen_managed_child_path` (the installed child driving a stand-in `/prompt`, `/history`, `/view` server), this is the proof. No weights, GPU, provider call or model download. Write it as a new test under `tests/installed/` (Step 0: no `tests/installed` directory was found on `pre-main`; create it). If an installer stage needs a model download, stop and record `model download needed: <stage>: <first error line>`; never fetch weights.
 
 Not proven, by design: a full managed Qwen generation through readback. Record it as an open gap in the review.
 
@@ -181,11 +181,11 @@ Not proven, by design: a full managed Qwen generation through readback. Record i
 
 | ID | Outcome | Route | Depends on | Done when | Done |
 |---|---|---|---|---|---|
-| [R1](#r1-integrated-review) | One integrated completion review of the exact head. | completion reviewer | V1, V2, V3 | Uncontested PASS, or the round budget is used and the owner decides. | [ ] |
+| [R1](#r1-integrated-review) | One integrated completion review of the exact head. | — (completion-reviewer role; reviews have no route) | V1, V2, V3 | Uncontested PASS, or the round budget is used and the owner decides. | [ ] |
 
 ### R1 integrated review
 
-Use the completion-reviewer role from the [run contract](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, at most five rounds, stop on an uncontested PASS. Give the reviewer the candidate head, the producer SHAs, the check outputs and these items to confirm: PINS and the DEFAULTS donor are ancestors; K-owned files are unchanged; the six defaults resolve as in D2; no pin points at a lane-only commit; the Plan 01 changes survive; the Foley default and its fail-closed behavior; V1 to V3 results are attached to this exact head; no GPU, pod, provider call, model download or credential read appears in the logs. Real inference and Foley hardware qualification are listed as deferred, not dropped. A repair returns to the same iterate loop and reruns the failed check.
+Use the completion-reviewer role from the [run contract](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, at most five rounds, stop on an uncontested PASS. Give the reviewer the candidate head, the producer SHAs, the check outputs and these items to confirm: PINS and the DEFAULTS donor are ancestors; K-owned files are unchanged; the six defaults resolve as in Decision 2; no pin points at a lane-only commit; the Plan 01 changes survive; the Foley default and its fail-closed behavior; V1 to V3 results are attached to this exact head; no GPU, pod, provider call, model download or credential read appears in the logs. Real inference and Foley hardware qualification are listed as deferred, not dropped. A repair returns to the same iterate loop and reruns the failed check.
 
 ## Phase 7: App repin
 
@@ -213,6 +213,6 @@ node --import tsx --test scripts/installer/manifest.test.mjs
 
 ### PR1 promote
 
-Follow the release workflow's pre-main integration lane ([release skill](../../skills/astrid-dev-release/SKILL.md)): recapture each destination `pre-main` immediately before, and promote the exact reviewed heads (Agent, then App) by ordinary fast-forward or create operations. Never force-push; never publish to `main`, `int/r1` or `release-1`. If a destination moved, reconcile and rerun only the affected checks and review. Only with the owner's explicit authority.
+Follow the release workflow's pre-main integration lane ([release skill](../../skills/astrid-dev-release/SKILL.md)): recapture each destination `pre-main` immediately before, and promote the exact reviewed heads (Agent, then App) by ordinary fast-forward or create operations. Never force-push; never publish to Agent, Runtime or App `main`, `int/r1` or `release-1`. If a destination moved, reconcile and rerun only the affected checks and review. Only with the owner's explicit authority.
 
 Order: Agent is promoted first, then App, so App's manifest never names an Agent head that is not yet on `pre-main`.
