@@ -52,7 +52,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 | VibeComfy extensibility with H3_AV | Make it easy to build and share higher-level tools on VibeComfy workflows, using H3_AV to prove reusable extension primitives. | queued | Unassigned | TBD | [Plan 17](plans/17-vibecomfy-extensibility.md) |
 | Extensible timeline editing | Provide reliable timeline editing primitives as a pack that people and agents can extend with their own views, tools, and creative workflows. | queued | Unassigned | TBD | [Plan 18](plans/18-timeline-editing.md) |
 | First-principles documentation | Make Astrid understandable to humans and agents through a clear path from its purpose and central skill to workflows, pack design, and precise references. | queued | Unassigned | TBD | [Plan 19](plans/19-first-principles-documentation.md) |
-| Astrid website | Build out the full Astrid website; scope and details to follow. | queued | Unassigned | TBD | [Plan 21](plans/21-astrid-website.md) |
+| Astrid website | Build the scroll journey below the Astrid homepage hero: three sections and a vision finale that re-explain the hero's notes, with the sky following the visitor's time of day. The rest of the website is not yet scoped. | queued | Unassigned | TBD | [Plan 21](plans/21-astrid-website/README.md) |
 
 ### Status key
 
@@ -63,7 +63,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. Zero-to-first-image onboarding (Plan 20) is a top-priority upcoming project. Plans 11–20 are draft scopes awaiting source identity and remaining scoping decisions before execution. Plan 21 is a website placeholder. See [plans](plans/) and [shared references](references/) for details.
+Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. Zero-to-first-image onboarding (Plan 20) is a top-priority upcoming project. Plans 11–20 are draft scopes awaiting source identity and remaining scoping decisions before execution. Plan 21 is a complete hand-off for the homepage journey; nothing is built yet. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
