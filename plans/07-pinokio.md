@@ -1,6 +1,6 @@
 # 07 — Pinokio launcher, engine contract, and custody
 
-[Master](MASTER.md). This documentation-only plan reconciles Task L launcher validation with M4-4a source/engine controls and M4-6 custody. It does not resume Pinokio work or claim validation, qualification, release, or completion. The main README owns current status and estimate.
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). This documentation-only plan reconciles Task L launcher validation with M4-4a source/engine controls and M4-6 custody. It does not resume Pinokio work or claim validation, qualification, release, or completion. The main README owns current status and estimate.
 
 ## Goal
 

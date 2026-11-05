@@ -1,6 +1,6 @@
 # 04 — Finish concurrent editing and merge it
 
-[Master](MASTER.md) · [Manager](MANAGER.md). Final publication follows [generation merge](03-generation-merge.md); independent completion on the retained tuple may proceed earlier after initiative start.
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). Final publication follows [generation merge](03-generation-merge.md); independent completion on the retained tuple may proceed earlier after initiative start.
 
 ## Goal
 

@@ -1,6 +1,6 @@
 # 05 — Integrate remaining accepted work without duplication
 
-[Master](MASTER.md) · [Manager](MANAGER.md). After the CE increment, account for and integrate the remaining eligible fixes. A disposition ledger is not a tested product release. This plan also owns the separate Runtime CAS lane intentionally omitted from generation. It does not wait for Packs merely to ship unrelated fixes.
+[README queue](../README.md) · [Initiative handoff](MANAGER.md). After the CE increment, account for and integrate the remaining eligible fixes. A disposition ledger is not a tested product release. This plan also owns the separate Runtime CAS lane intentionally omitted from generation. It does not wait for Packs merely to ship unrelated fixes.
 
 ## Goal
 

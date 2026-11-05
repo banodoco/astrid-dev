@@ -37,7 +37,7 @@ Complete before any source mutation. Record actual identities from the selected 
 
 ## Tasks and acceptance
 
-Use task checkboxes for task-level progress only. Route each task as `N`, `X`, or `S` under [AGENTS.md](../AGENTS.md). Keep tests feature-focused and list exact selectors.
+Use task checkboxes for task-level progress only. Route each task as `N`, `X`, or `S` under the shared run contract. Keep tests feature-focused and list exact selectors.
 
 | Task / outcome | Route | Dependency | Focused acceptance evidence | Progress |
 |---|---|---|---|---|

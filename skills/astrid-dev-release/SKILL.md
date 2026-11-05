@@ -1,46 +1,51 @@
 ---
 name: astrid-dev-release
-description: Integrate Astrid changes into a named pre-main destination or coordinate an explicitly scoped Astrid build, release, deployment, or publication across Agent and App. Use the repository runbooks for implementation details; this skill owns the cross-repo workflow and action boundaries.
+description: Freeze, compose, qualify, integrate, or publish an explicitly scoped Astrid Runtime/Agent/App candidate. Release is the sole workflow for cross-repository integration and publication; it does not grant unrequested deployment or publication authority.
 ---
 
-# Astrid development release workflow
+# Astrid development release
 
-Use this skill for developer integration and release work across Astrid Agent and App. It was assembled from product runbooks, gates, and tools: neither inspected product checkout contained a dedicated developer release skill. The end-user `astrid-setup` skill is unrelated. See [authoritative sources and discovery provenance](references/sources.md).
+Use this workflow for cross-repository integration, candidate qualification, and explicitly authorized release or publication. [Iterate](../astrid-dev-iterate/SKILL.md) owns assigned implementation and repair; [Plan](../astrid-dev-plan/SKILL.md) prepares a new plan. Release consumes accepted work and owns integration and publication. The shared run contract is the authority for source identity, proof policy, and review budgets; do not restate or reset those choices here. [Source provenance and product runbooks](references/sources.md).
 
-## Select the requested lane
+## Choose the requested lane
 
-First identify the concrete outcome and target from the user’s request:
+Name the outcome, destination, and authorized actions before acting:
 
-1. **Pre-main integration:** integrate specified changes into the actual, named integration destination. This does not imply an App deployment, installer tuple change, version release, registry publication, or any other publication.
-2. **General Agent or hosted App release/deployment:** prepare or promote the explicitly named product artifact or deployment. Separate source changes, artifact creation, deployment, and public verification; a build or passing checks do not perform the later actions.
-3. **Agent/Runtime installer tuple update:** update the shared installed compatibility tuple only when requested. This is separate from an App web-bundle deployment.
-4. **Extension-platform RC:** use only when the request names the extension-platform release. This is a distinct, evidence-heavy App/Astrid candidate lane, not the routine hosted App path.
+1. **Pre-main integration:** compose requested donors into the named integration destination. This does not imply deployment, installer tuple change, version release, registry publication, or public release.
+2. **Agent or hosted App artifact/release/deployment:** prepare or promote the named artifact or deployment. Source integration, artifact creation, deployment, and public verification are distinct actions.
+3. **Agent/Runtime installer tuple:** update the shared installed compatibility tuple only when requested; this is separate from an App web-bundle deployment.
+4. **Extension-platform RC:** use only when the request names this lane. Its App/Astrid candidate is distinct from a routine hosted App deployment.
 
-If the user has already authorized a specific action in the conversation, carry it through without asking them to authorize that same scope again. Do not infer missing scope: a merge, green check, or prior authorization to prepare a build does not authorize deployment, registry publication, or a different target.
+Carry out actions already authorized in the conversation. A merge, green check, or authorization to prepare does not authorize a different destination, deployment, tag, registry publication, or public release. Do not ask again for authority already given.
 
-## Freeze inputs before work
+## Freeze and compose the candidate
 
-Record each participating repository’s canonical identity, actual branch/ref and HEAD SHA, dirty state, and role as base or donor. Preserve existing user changes. Record the intended integration destination from the active plan or user instruction; never invent a branch name or substitute a convenient checkout. For a paired release, freeze the exact Agent, Runtime, and App commits and the compatibility tuple the artifact is meant to use. If a required source ref, target, tuple value, or publication authority is missing, state the specific unresolved input and stop only the dependent action.
+Freeze the named base and each donor: canonical repository, actual ref, HEAD SHA, dirty state, and role. Preserve existing project plans, user changes, and their candidate/review scope. For a paired product artifact, record the exact Runtime, Agent, and App SHAs and intended compatibility tuple. Do not infer missing targets, tuple values, or publication authority.
 
-Respect the target repository’s local rules, including any pause or allowed-destination constraint. Use ordinary pushes only when explicitly in scope; never force-push. Preserve donor provenance and the exact candidate identity in the resulting evidence.
+Compose an isolated candidate from the frozen base and donors, preserving provenance. Record its exact head/tree identity and affected paths. Reuse existing evidence only when its inputs still match. Build or regenerate through product-owned interfaces; release-specific locks, manifests, artifact receipts, and gate implementations remain in the product repositories.
 
-## Integrate and select proof narrowly
+## State the claim and select evidence
 
-For pre-main integration, build an isolated candidate from the frozen target and requested donors, retaining each donor’s provenance. Run the scoped checks and any review required by the applicable plan, then promote that same exact reviewed HEAD to the explicitly authorized target with an ordinary push. Do not substitute a staging framework or different candidate. Reuse valid proof for unchanged inputs. Choose the smallest feature-focused selectors that cover the changed behavior, plus narrowly relevant canonical checks for changed pins, locks, or build artifacts. Run only explicitly scoped checks necessary for the requested outcome. Never run broad suites, including opt-in lanes: this includes `make check`, `make ci`, `make release-check`, full affected suites, and broad extension evidence runs such as all 23 workstreams. Historical product gate instructions do not override this rule. Select focused checks from the affected behavior and product contract. If prescribed release evidence cannot be produced without a forbidden broad run, record the exact unmet evidence and resolve the scoped contract; never run the banned gate or claim completion without that evidence. See the [shared run contract](../astrid-dev-shared/run-contract.md).
+Before checking, state the release claim and map each required claim to its exact candidate-bound evidence. Run only authorized, focused checks for affected behavior and the prescribed review. Never run broad suites, including opt-in suites or broad RC matrices. The historical release gates do not authorize running them. If a required claim has no lawful focused evidence available, mark that claim and the candidate **unqualified**; do not fabricate a pass, silently reduce the claim, or imply that an input feature candidate automatically qualifies the composed Runtime/Agent/App tuple.
 
-When a focused check fails, retain its exact command and candidate identity, fix the in-scope cause, and rerun that check. Do not discard unaffected passing evidence or claim checks passed without results.
+The source release contract identifies these protected product invariants:
 
-## Prepare a release or deployment
+- The installed Runtime/Agent/App combination is one integrated tuple; repository branches qualified separately do not qualify it together.
+- Install, update, rollback, keep-data uninstall, migration, and update-bridge journeys retain their product semantics. The frozen `POST /v1/update` contract includes its signatures, errors, stop payload, proxy policy, and journal linkage. Lost-ack recovery requires stable operation identity, positive evidence nothing is running, one continuation, journal precedence, and refusal under unknown state; recovery does not send an update POST by itself.
+- The App update guard resolves actions, flushes guarded persistence, then starts an update. Failed or delayed saves/flushes, recovery-needed state, edits during flush, pending identity, owner change, unmount, IndexedDB failure, stale markers, and restart replay mean no POST; a successful save means exactly one POST. Status GETs only observe. A local recovery snapshot is not a saved draft.
+- Timeline persistence is qualified on the integrated tuple. Advertised GPU capabilities require live evidence at RC; prepared-only output is not live evidence. Evidence must bind the actual candidate and inner command result, not a wrapper status or historical baseline.
 
-Use the product-owned build and release interfaces instead of copying implementation logic into this skill:
+Apply change-directed invalidation: a changed input invalidates only proof that depends on it, while protected exact-head claims require proof for the exact integrated head. If a scoped check fails, hand the same failure to [Iterate](../astrid-dev-iterate/SKILL.md) as a concrete repair assignment, preserving its exact command, candidate identity, evidence, owner, and context. Keep unaffected passing evidence. Do not start a separate debug loop or ask an advisor for routine approval; consult the shared [advisor role](../astrid-dev-shared/roles/advisor.md) only for a genuine blocker or consequential judgment.
 
-- **Agent:** consult the reproducible-release runbook for hashed dependency locks, installed-wheel evidence, toolchain records, and Remotion’s pinned Node/npm closure. Keep lock and package rules in the repo. The product’s `Makefile` targets and `scripts/reshape/` tools remain authoritative. Historical `make check` and `make ci` descriptions do not override targeted-check policy.
-- **Hosted App bundle:** use the deployment guide’s source-of-truth files (`Dockerfile`, `Makefile`, `railway.toml`, and `package.json`) and its hosted editor-only build path, `npm run build:hosted`, when preparing that artifact. `npm run build` and `npm run dev:local` are not hosted releases. For Docker, Make deploy-target, or Railway configuration changes, use the guide to select relevant deploy checks; do not silently turn a broad gate into the default. The served-manifest canary verifies a deployed public manifest; it does not deploy or promote the App.
-- **Agent/Runtime installer tuple:** use App’s `scripts/installer/pin.mjs` for the authorized Agent/Runtime tuple. Derive the paired Runtime commit and schema digest from the pinned Agent source, then use the monotonic release guard. When tuple regeneration is required by the authorized release, do it as part of that work without seeking separate authorization. Preserve the exact `agent.sha`, `runtime.sha`, and `runtime.schema_digest` provenance. Do not confuse this tuple with an App/Astrid extension RC pair.
-- **Extension-platform RC:** follow the App extension release runbook and checklist as the authority for this lane. Its final ship verification expects frozen candidate refs, pinned tools, clean evidence trees, and complete receipts. Treat its current manifest/evidence snapshot as historical discovery only; inspect the actual requested candidate. Do not apply its RC process to routine App deployments.
+## Promote or publish
 
-Keep release-specific identity, lock, manifest, evidence, and check implementations in their product repositories. Link to the authoritative product contract instead of copying it. Reuse unaffected qualification where its exact inputs still match; qualify the installed closure that matters to the requested artifact without imposing every release proof on a small change.
+After scoped checks and prescribed review pass, promote the **same reviewed head** to the explicitly authorized target using an ordinary push. Never force-push or substitute a different candidate. Movement of a target ref invalidates only affected proof; re-evaluate its dependencies and retain unaffected evidence. A failed check or unresolved review blocker means no promotion.
 
-## Complete only the authorized actions
+For product artifact preparation, follow the current product runbooks rather than copying their procedures here:
 
-Report the exact integrated or built candidate, selected checks and results, source tuple, and remaining actions. Perform a deployment, tag, registry publication, or public release only when that action, destination, and scope are explicitly authorized. If authorization covers preparation only, stop with a reviewable prepared artifact and the precise next action; do not treat evidence or a successful build as publication authority. Verify any public/deployed result using the relevant product-owned canary or receipt and report its observed result.
+- **Agent:** [reproducible release](https://github.com/banodoco/astrid-agent/blob/main/docs/runbooks/reproducible-release.md) and [release recipe](https://github.com/banodoco/astrid-agent/blob/main/docs/setup/release-recipe.md) own locks, toolchain, installed artifact, and paired-release receipts.
+- **Hosted App:** [deployment and migration guide](https://github.com/banodoco/astrid-app/blob/main/docs/structure_detail/deployment_and_migration_guide.md) owns the hosted editor-only build path (`npm run build:hosted`) and Docker/Railway configuration. A build does not deploy; the served-manifest canary observes public state but does not deploy.
+- **Installer tuple:** App's `scripts/installer/pin.mjs` and release guard own tuple generation and monotonicity. Preserve `agent.sha`, `runtime.sha`, and `runtime.schema_digest`; do not confuse this tuple with the extension RC pair.
+- **Extension RC:** App's [extension release runbook](https://github.com/banodoco/astrid-app/blob/main/docs/extensions/extension-release-runbook.md) and [checklist](https://github.com/banodoco/astrid-app/blob/main/docs/video-editor/extension-platform-release-checklist.md) own this lane. Inspect the requested candidate; historical snapshot material is discovery context, not current evidence.
+
+Deployment, tagging, registry publication, and public release each require explicit scope and authority. Verify a deployed/public outcome through its product-owned receipt or canary. Report exact candidate identity, claims, focused checks and results, review result, tuple/artifact identity where relevant, and any unqualified claim or remaining authorized action.

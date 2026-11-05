@@ -4,7 +4,7 @@ This private planning repository holds concise role guidance and focused plans. 
 
 **Initiative status: paused.** The owner has not started product execution. All worker activity and existing automation remain stopped. Preparing or linking a plan does not start it.
 
-Navigation: [plan index](plans/MASTER.md) · [execution handoff](plans/MANAGER.md) · [focused check-in notes](plans/CHECK-IN.md) · [paused schedules](plans/SCHEDULE.md).
+Navigation: [initiative handoff](plans/MANAGER.md) · [project plans](plans/).
 
 ## Active and upcoming projects
 
@@ -28,7 +28,7 @@ The goals below are intended outcomes, not claims of delivery; each plan specifi
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-The status above applies to each project. The initiative-wide pause is separate and keeps every product activity stopped until the owner starts it. Plans 01–06 form the staged pre-main sequence; generation work may be prepared independently after an explicit start, while its final integration consumes the installer increment. Plan 07 starts with reconciliation and is independent of the Packs gate unless that review identifies a real dependency.
+The status above applies to each project. The initiative-wide pause is separate and keeps every product activity stopped until the owner starts it. Plans 01–06 form the staged pre-main sequence; generation work may be prepared independently after an explicit start, while its final integration consumes the installer increment. Plan 07 starts with reconciliation and is independent of the Packs gate unless that review identifies a real dependency. The complete plan inventory and shared evidence links are in the project plans and [references](references/).
 
 ## How to use this repo
 
@@ -40,6 +40,6 @@ The status above applies to each project. The initiative-wide pause is separate 
 
 ## Install the role skills
 
-Run `./sync.sh` to add the five Astrid role skills and their namespaced shared references to existing local Claude, Codex, and Agents skill directories. The script preserves existing entries, reports conflicts, and does not create destination directories. Use `./sync.sh --dry-run` to preview, or pass `--destination /path/to/skills` to target an existing skill directory.
+Run `./sync.sh` to add the four Astrid workflow guides and shared contract to existing local Claude, Codex, and Agents skill directories. The script preserves unrelated entries, reports conflicts, and does not create destination directories. Use `./sync.sh --dry-run` to preview, or pass `--destination /path/to/skills` to target an existing skill directory.
 
-The script adapts the local missing-only symlink logic from `poms_skills/sync.sh`; it does not manage global instruction files or perform cloud/remote sync.
+The script links the four workflow guides and shared contract into existing local skill directories. It preserves unrelated entries and reports conflicts; it never manages global instruction files or performs cloud/remote sync.
