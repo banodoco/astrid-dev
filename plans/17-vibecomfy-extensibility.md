@@ -4,7 +4,7 @@
 
 ## Goal
 
-Make VibeComfy a clear set of simple, composable workflow primitives that users and agents can inspect, combine, customize, and share as creative tools. Use H3_AV, a higher-level abstraction over MiniMax H3 workflows in VibeComfy, as a concrete proving pack to improve extension points, so users can build on VibeComfy without forking core. This supports the broader goal of a simple foundation where the core just works and people retain control at every level, including over extensions built on extensions. See the [extensibility philosophy](../docs/extensibility-philosophy.md).
+Make it easier for people and their agents to build and share creative tools on VibeComfy. Use H3_AV’s abstraction over MiniMax H3 workflows to improve the existing extension primitives, then show how someone can adapt or build on H3_AV itself without forking core. See the [extensibility philosophy](../docs/extensibility-philosophy.md).
 
 ## Owner
 
