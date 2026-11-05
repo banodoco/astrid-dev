@@ -14,7 +14,7 @@
 | [SF-CAS](#sf-cas) — Runtime CAS composition | S / Sol + Luna | Post-CE Runtime; SF-INVENTORY | Not started |
 | [SF-RUNTIME-FOLD](#sf-runtime-fold) — Runtime fold composition | S / Sol + Luna | Post-CE Runtime; SF-CAS; SF-INVENTORY | Not started |
 | [SF-RUNPOD-OWNER](#sf-runpod-owner) — CPU-testable owner/custody behavior | S / Sol + Luna | Plan 02 integration/K27; SF-INVENTORY | Not started |
-| [SF-AGENT-FOLD](#sf-agent-fold) — record Plan 06 ownership | S / Sol + Luna (Plan 06 PK-6) | Plan 06 PK-6/END | Outstanding in Plan 06 |
+| [SF-AGENT-FOLD](#sf-agent-fold) — record Plan 06 ownership | S / Sol + Luna (Plan 06 PK-6) | Plan 06 PK-6 | Fold transferred to Plan 06 PK-6 |
 | [SF-H3-PARKED](#sf-h3-parked) — preserve exclusions | N / Luna | Source ledger | Not started |
 | [SF-ALREADY-COVERED](#sf-already-covered) — retain source proof and check inclusion | N / Luna | Source ledger; relevant Plan 02 integration and Plan 04 heads | Not started |
 | [SF-COMPOSE](#sf-compose) — final producer-to-consumer composition | X / Terra + Luna | Selected independent rows; actual S invariants | Not started |
@@ -103,7 +103,7 @@ Route labels and model bindings follow the [shared run contract](../../skills/as
 - **Dependencies and inputs:** Plan 06 PK-6; donor `47d67d8d13bcbf4ab437bc41ae6ec5b6cf60598b` in [inputs.md](inputs.md).
 - **Work:** Do not merge both the fold and its superseded members.
 - **Focused checks:** Plan 06 must record whole-fold inclusion or documented behavior/byte-equivalent final result. Its 46-file production ancestry is not tests-only.
-- **Done:** This record closes only when Plan 06 PK-6/END evidence closes it; a deferment label is not closure.
+- **Done:** Recorded as fold transferred to Plan 06 PK-6, which closes it; this plan does not wait for it.
 
 ### SF-H3-PARKED
 

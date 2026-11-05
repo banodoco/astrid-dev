@@ -36,4 +36,4 @@ The RunPod-owner donor is in `astrid-agent`; do not infer a separate lifecycle r
 - The listed test paths are selectors, not authorization for broad suites. M-00 derives exact `FILES` and nodes from immutable diffs and named contracts; no wildcard selectors.
 - Use only existing review/publication authority: scoped independent Astra review, fresh immutable candidates, exact reviewed heads, remote receipt, and no force. Do not publish empty changes for already-covered repositories.
 - No provider or GPU work. Explicitly retain any live-provider result that cannot be proved. H3/GPU exclusions are not completed CPU features.
-- Plan 05 completion does not close Agent fold work; Plan 06 PK-6/END must establish inclusion or equivalence. Final initiative completion requires that later closure.
+- Plan 05 completes at SF-PROMOTE and records the Agent fold as transferred to Plan 06 PK-6, which establishes inclusion or equivalence.

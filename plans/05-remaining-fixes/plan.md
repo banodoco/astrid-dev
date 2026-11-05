@@ -22,7 +22,7 @@ The work starts from the exact promoted Plan 02 integration and Plan 04 heads. T
 
 ## Completion
 
-Plan 05 completes when selected changes are promoted and every accepted item has an evidenced disposition. Its Agent-fold record remains open until Plan 06 PK-6/END proves inclusion or equivalence. This plan does not prove H3/GPU readiness or final initiative completion. Use the existing candidate and publication authority recorded in [inputs](inputs.md); do not assume branches or publish empty changes.
+Plan 05 completes when selected changes are promoted and every accepted item has an evidenced disposition. The Agent fold is recorded as fold transferred to Plan 06 PK-6, which closes it; Plan 05 does not wait for Plan 06. This plan does not prove H3/GPU readiness or final initiative completion. Use the existing candidate and publication authority recorded in [inputs](inputs.md); do not assume branches or publish empty changes.
 
 ## Read next
 

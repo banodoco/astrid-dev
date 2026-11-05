@@ -12,6 +12,7 @@ Plain definitions for terms used across the plans and skills. Plan-specific term
 | Pinokio launcher | https://github.com/banodoco/astrid-pinokio | Pinokio install, start, stop and update scripts. Follows the published tuple. |
 | VibeComfy | https://github.com/banodoco/VibeComfy | ComfyUI workflow and template library that Agent uses as its inference route. Also reachable as `banodoco/VibeComfy`. |
 | runpod-lifecycle | https://github.com/banodoco/runpod-lifecycle | Library that provisions, runs and tears down RunPod pods. Agent depends on it. |
+| poms_packs | https://github.com/banodoco/poms_packs | Destination repository for the packs that move out of Agent core ([Plan 06](../plans/06-packs/plan.md)). Has no `main` or `pre-main` yet. |
 
 The normal pin order is Runtime, then Agent, then App, then Pinokio (see the [dev skill](../skills/astrid-dev/SKILL.md)).
 

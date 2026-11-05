@@ -7,7 +7,7 @@ Make supported install, update, rollback, repair, and uninstall routes dependabl
 ## Goal and scope
 
 - **Included:** one transaction shared by supported update routes; hosted real-path coverage across the three operating systems; real released-R1-to-candidate update with schema migration; Windows locked-file handling; post-R0→R1 uninstall; platform breadth; typed Agent↔Runtime control contract and dead R0-code retirement; captured real service-manager output for unit fakes. See [tasks.md](tasks.md) for the preserved boundaries and task cards.
-- **Deferred:** Pinokio install/update routes ([Plan 07](../07-pinokio/plan.md)); pack transactions ([Plan 06, PK-9](../06-packs/tasks.md#pk-9)); unused Release-2 browser machinery unless reused by a task; broad Agent unit-suite debt.
+- **Deferred:** Pinokio install/update routes ([Plan 07](../07-pinokio/plan.md)); pack transactions ([Plan 06, PK-9](../06-packs/tasks.md#pk-9-transactions)); unused Release-2 browser machinery unless reused by a task; broad Agent unit-suite debt.
 - **Owner decision:** Windows R0→R1 upgrade may be implemented or refused permanently; its existing low-priority rationale is preserved in IU-7.
 
 ## What we build on

@@ -10,7 +10,8 @@ Copy this prompt into your agent or browse the current plans below.
 Help me choose and complete a contribution to Astrid. Start at
 https://github.com/banodoco/astrid-dev: open my existing checkout or clone it, and
 update it only while preserving local changes. Read its AGENTS.md and README.md. From
-the repository root, preview and sync the skills with ./sync.sh --dry-run and ./sync.sh,
+the repository root, preview and sync the skills (./sync.sh --dry-run, then ./sync.sh),
+which links them into my existing ~/.claude/skills, ~/.codex/skills or ~/.agents/skills,
 respecting local permissions; the destination must already exist, and use --destination
 /path/to/skills if needed. Keep the linked checkout in place.
 
@@ -52,7 +53,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 | Pinokio qualification | Engine Stop/Quit refusal veto, direct custody and fully-local mode, qualified natively. | queued | Unassigned | TBD | — | [Plan 10](plans/10-pinokio-qualification/plan.md) |
 | Refined concurrent editing | Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes. | queued | Unassigned | TBD | — | [Plan 04](plans/04-concurrent-edits/plan.md) |
 | Release fixes integration | Bring the accepted fixes together into a coherent release while preserving existing behavior. | queued | Unassigned | TBD | — | [Plan 05](plans/05-remaining-fixes/plan.md) |
-| Packs v1.3 | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | Unassigned | TBD | — | [Plan 06](plans/06-packs/plan.md) |
+| Packs v1.3 | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | Unassigned | TBD | owner's go; a Playwright browser for the App checks | [Plan 06](plans/06-packs/plan.md) |
 | Three.js as a pack | Move the existing built-in Three.js functionality into a native pack that remains included by default, with current behavior preserved through conversion. | queued | Unassigned | TBD | scope agreement | [Plan 11](plans/11-threejs-pack/plan.md) |
 | Multiple inference routes (Wan2GP) | Keep VibeComfy as the primary route and add Wan2GP through the shared generation path, with shared setup, task/resource ownership, model lifecycle, and cleanup. | queued | Unassigned | TBD | scope agreement | [Plan 12](plans/12-multiple-inference-routes/plan.md) |
 | Execution host refactor | Split the oversized execution host into clear, maintainable modules while preserving supported execution behavior. | queued | Unassigned | TBD | scope agreement | [Plan 13](plans/13-execution-host-refactor/plan.md) |

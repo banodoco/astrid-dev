@@ -14,6 +14,8 @@ Default model for each route, using the newest available model of that family:
 | `X` | Very hard: intricate changes, subtle bugs, coupled or non-obvious reasoning | Sonnet | Terra |
 | `S` | Super hard: deep design, or correctness that needs the deepest reasoning | Opus | Sol |
 
+Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
+
 Plans tag each task with its route, and execution uses that same tag. The coordinating agent keeps the judgment. It hands each ready task to a subagent on its route’s model, runs independent tasks in parallel, and treats what comes back as evidence to check. Record the exact model IDs and efforts used in `run.yaml`.
 
 For `X`/`S` execution leads, delegate bounded research or mechanical work to `N` helpers where useful. Reviewers and leaf advisors do not inherit that requirement. A plan may name route labels but must not duplicate model bindings.
