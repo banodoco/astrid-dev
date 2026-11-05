@@ -28,6 +28,10 @@ For a new run, keep control artifacts at `<project>/.otto/runs/<run-id>/`; inspe
 
 Keep only the recovery state needed to resume: goal, ready tasks/dependencies, candidate identity, completed/blocked tasks, failures, evidence, consumed review rounds, and next action. Do not add an acceptance-ledger or document framework without a concrete need. Continue independent work when another task is blocked. Never reset accepted run choices, budgets, evidence, or program state because guidance changed.
 
+### Decisions ledger when the owner is unavailable
+
+When work proceeds without the owner (for example, a contributor or agent helping while the owner is offline or out of quota), keep a decisions ledger from the [template](templates/decisions-ledger.md). Record every override of the written plan, every best guess where the plan is silent, every STOP hunk you resolved provisionally instead of waiting, the trajectory you inferred, and improvements you did not build, each with evidence, the candidate SHA and how to revert. This is the concrete need the paragraph above asks for: it lets the owner accept, change or revert each call later, without rereading the run. A ledger entry is never authorization; anything that lands still needs the owner's go.
+
 ## Checks and failure repair
 
 Run only explicitly scoped, feature-focused checks; never broad, auto-discovered, repository-wide, full affected, or opt-in suites. Planning-only work runs no checks unless specifically requested. Use a documented narrow command/selector grounded in the current repository and task; do not invent test names, selectors, or commands.
