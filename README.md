@@ -14,17 +14,25 @@ the repository root, preview and sync the skills with ./sync.sh --dry-run and ./
 respecting local permissions; the destination must already exist, and use --destination
 /path/to/skills if needed. Keep the linked checkout in place.
 
-Inspect the current queue, relevant plans, and selected skill guide. First ask about my
-preferred time/token budget (quick fix, a few hours, or a larger project), interests,
-experience, available tools, hardware and agent capabilities, what I would personally
-find useful in Astrid, and what help I want.
+Inspect the current queue, relevant plans, and selected skill guide. First ask me
+whether I already have something in mind that I’d like to contribute. Then ask about
+my preferred time/token budget (quick fix, a few hours, or a larger project),
+interests, experience, available tools, hardware and agent capabilities, what I would
+personally find useful in Astrid, and what help I want.
 
-Suggest 2–3 bounded contributions that fit. If I have nothing in mind, recommend one
-small, satisfying starting task that fits my budget and capabilities instead. Explain
-why it is interesting and how it would help other people. Check active ownership and
+If I have something in mind, help me shape it into one bounded contribution and check
+it against the queue and plans. If not, recommend 2–3 bounded contributions that fit
+my budget and capabilities, including one small, satisfying starting task. Explain why
+each is interesting and how it would help other people. Check active ownership and
 dependencies to avoid duplicate work. Before implementation, agree with me on one task,
 its starting code, and focused completion checks. Follow the repository’s existing
 workflow and current authorization.
+
+When we build it, coordinate rather than doing everything yourself: keep the judgment,
+and hand each task to a subagent on the model that matches its route in the plan:
+normal (N) tasks to Haiku, very hard (X) to Sonnet, super hard (S) to Opus (the run
+contract lists Codex equivalents). Run independent tasks in parallel and check what
+comes back. If you can’t start subagents, tell me and do the work yourself.
 ```
 
 ## Active and upcoming projects

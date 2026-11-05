@@ -24,7 +24,7 @@ The normal pin order is **Runtime → Agent → App → Pinokio**. A Runtime cha
 - [Iterate](../astrid-dev-iterate/SKILL.md): implement, debug, or repair one scoped feature through focused proof; return a candidate for integration.
 - [Release](../astrid-dev-release/SKILL.md): integrate and recheck an accepted candidate, then perform only the explicitly authorized promotion or publication.
 
-A repository plan already accepted does not need another planning agreement. This skill is orientation and routing only; it is not a second execution path. The exact identity, evidence, retry, review, and authority policy lives in the [shared run contract](../astrid-dev-shared/run-contract.md). Concise coordinator and advisor role references live in [roles](../astrid-dev-shared/roles/manager.md) and [roles](../astrid-dev-shared/roles/advisor.md).
+A repository plan already accepted does not need another planning agreement. This skill is orientation and routing only; it is not a second execution path. The exact identity, evidence, retry, review, and authority policy lives in the [shared run contract](../astrid-dev-shared/run-contract.md). Concise coordinator and advisor role references live in [roles](../astrid-dev-shared/roles/manager.md) and [roles](../astrid-dev-shared/roles/advisor.md). Plans split work into `N`/`X`/`S` tasks; hand each to a subagent on its route’s model (Haiku, Sonnet, Opus by default; see the [routing table](../astrid-dev-shared/run-contract.md#routing-and-bindings)).
 
 ## Source provenance
 
