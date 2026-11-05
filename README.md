@@ -19,10 +19,12 @@ preferred time/token budget (quick fix, a few hours, or a larger project), inter
 experience, available tools, hardware and agent capabilities, what I would personally
 find useful in Astrid, and what help I want.
 
-Suggest 2–3 bounded contributions that fit. Check active ownership and dependencies to
-avoid duplicate work. Before implementation, agree with me on one task, its starting
-code, and focused completion checks. Follow the repository’s existing workflow and
-current authorization.
+Suggest 2–3 bounded contributions that fit. If I have nothing in mind, recommend one
+small, satisfying starting task that fits my budget and capabilities instead. Explain
+why it is interesting and how it would help other people. Check active ownership and
+dependencies to avoid duplicate work. Before implementation, agree with me on one task,
+its starting code, and focused completion checks. Follow the repository’s existing
+workflow and current authorization.
 ```
 
 ## Active and upcoming projects
