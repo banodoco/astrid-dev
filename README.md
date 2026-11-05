@@ -42,6 +42,8 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 | Packs | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | Unassigned | TBD | [Plan 06](plans/06-packs.md) |
 | Pinokio basic (R1.1) | Prove users can install, start, stop (including while busy), update and remove Astrid through Pinokio on Linux, macOS and Windows, with a separate three-row hosted gate. | active | Release 1 merge coordinator | TBD | [Plan 07](plans/07-pinokio.md) |
 | Pinokio qualification | Engine Stop/Quit refusal veto, direct custody and fully-local mode, qualified natively. | queued | Unassigned | TBD | [Plan 10](plans/10-pinokio-qualification.md) |
+| Three.js as a pack | Move the existing built-in Three.js functionality into a native pack that remains included by default, with current behavior preserved through conversion. | queued | Unassigned | TBD | [Plan 11](plans/11-threejs-pack.md) |
+| Multiple inference routes (Wan2GP) | Keep VibeComfy as the primary route and add Wan2GP through the shared generation path, reusing existing setup and connection infrastructure where it fits. | queued | Unassigned | TBD | [Plan 12](plans/12-multiple-inference-routes.md) |
 
 ### Status key
 
@@ -52,7 +54,7 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08 and is next in the queue; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. See [plans](plans/) and [shared references](references/) for details.
+Project status is recorded in the queue above. Plans 08 (Release 1) and 07 (Pinokio basic) are coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08 and is next in the queue; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01–06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. Plans 11 and 12 are draft scopes awaiting source identity and remaining scoping decisions before execution. See [plans](plans/) and [shared references](references/) for details.
 
 ## How to use this repo
 
