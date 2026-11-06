@@ -1,0 +1,41 @@
+name: Documentation integrity
+
+on:
+  pull_request:
+    paths:
+      - "README.md"
+      - "ARCHIVE.md"
+      - "AGENTS.md"
+      - "plans/**"
+      - "visions/**"
+      - "docs/**"
+      - "templates/project/**"
+      - "scripts/check_docs.py"
+      - "scripts/test_check_docs.py"
+      - ".github/workflows/docs.yml"
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+      - "ARCHIVE.md"
+      - "AGENTS.md"
+      - "plans/**"
+      - "visions/**"
+      - "docs/**"
+      - "templates/project/**"
+      - "scripts/check_docs.py"
+      - "scripts/test_check_docs.py"
+      - ".github/workflows/docs.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test catalog validator
+        run: python3 -m unittest discover -s scripts -p "test_check_docs.py"
+      - name: Validate document structure and generated README
+        run: python3 scripts/check_docs.py
