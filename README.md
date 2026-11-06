@@ -1,6 +1,16 @@
 # Astrid development workspace
 
-This workspace brings together Astrid development skills and current projects.
+This is where Astrid connects its creative ambition to practical work, alongside the development skills and project queue.
+
+## What we're building
+
+**[Make Extraordinary Art Possible, Together](visions/vision.md).** We bring together powerful creative tools, agent-powered software that adapts to the work, collective intelligence that improves with experience, and a community with the challenges and shared stake to push artistic ambition further.
+
+**[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md) record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
+
+The queue below remains the sole source for plan status, ownership and priority. [How gap reassessment works](visions/gaps.md).
+
+
 
 ## Want to contribute? Give this to your agent.
 
@@ -64,6 +74,9 @@ Each goal describes an intended outcome; its plan defines scope and evidence. Ow
 | Extensible timeline editing | Provide reliable timeline editing primitives as a pack that people and agents can extend with their own views, tools, and creative workflows. | queued | Unassigned | TBD | scope agreement | [Plan 18](plans/18-timeline-editing/plan.md) |
 | First-principles documentation | Make Astrid understandable to humans and agents through a clear path from its purpose and central skill to workflows, pack design, and precise references. | queued | Unassigned | TBD | scope agreement | [Plan 19](plans/19-first-principles-documentation/plan.md) |
 | Astrid website | Build the scroll journey below the Astrid homepage hero: three sections and a vision finale that re-explain the hero's notes, with the sky following the visitor's time of day. The rest of the website is not yet scoped. | queued | Unassigned | TBD | — | [Plan 21](plans/21-astrid-website/plan.md) |
+| Hivemind protocol | Reconcile the Hivemind protocol proposal with real knowledge records, then prove independent private/community datasets can exchange permitted evidence. | queued | Unassigned | TBD | scope agreement; Hivemind source review | [Plan 22](plans/22-hivemind-protocol/plan.md) |
+| Continuous agent learning | Make retrieval, observed local learning and optional contributions a real Astrid Agent workflow. | queued | Unassigned | TBD | scope agreement; approved knowledge API | [Plan 23](plans/23-agent-learning-integration/plan.md) |
+| Agent-powered liquid workspace | Prove real components can be positioned, bound and adapted by people and agents without losing editing state. | queued | Unassigned | TBD | scope agreement; relevant editing/pack foundations | [Plan 24](plans/24-liquid-workspace/plan.md) |
 
 App CI items outside these plans: the `extension-visual` screenshot baseline is stale (failing since before R1); the scheduled `Lanes installer-powershell` and `Direct Journey` jobs were failing before R1.
 
@@ -81,7 +94,7 @@ Project status is recorded in the queue above. Plan 08 (Release 1) is done (ship
 ## How to use this repo
 
 - See the [extensibility philosophy](docs/extensibility-philosophy.md) for the design direction.
-- Read [Astrid's overarching vision](visions/vision.md) and its [principles and source-backed bridges](visions/README.md); implementation authority remains in the project plans.
+- Start with [Astrid's vision](visions/vision.md), its [principles and gap records](visions/README.md), and the [gap/plan evidence contract](visions/gaps.md); implementation authority remains in the project plans.
 - Keep project status and remaining estimates in the queue, and task progress in the plans. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping their plan links stable.
 - Look up unfamiliar terms in the [glossary](docs/glossary.md).
 - Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [project folder template](templates/project/plan.md) for new projects.
@@ -92,7 +105,7 @@ Project status is recorded in the queue above. Plan 08 (Release 1) is done (ship
 
 ## Project format
 
-Every project is a folder, including an early draft:
+Every project is a folder, including an early draft. New plans link to the relevant vision gaps (or describe why they are foundational enablers) in `plan.md`:
 
 ```text
 plans/<id-name>/
