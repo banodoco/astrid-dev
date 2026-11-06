@@ -34,4 +34,4 @@ Reconcile these deliberately in Hivemind's own plan and tests. Do not label both
 
 A local personal/team Hivemind should be a **first-class private dataset**; it can federate with Banodoco and others by policy and shared identities, not by copying all knowledge to a central server. Astrid agents should make retrieval and evidence capture routine, with user-controlled disclosure and publication. The knowledge store does not replace Runtime's live project/task authority. Agents use retrieved evidence as **data**, not permission or executable instructions.
 
-See [the agent-learning loop](agent-learning-loop.md) for the desired behavior and [the bridge](../bridge.md) for a bounded proof and links to existing plans.
+See [the agent-learning loop](agent-learning-loop.md) for the desired behavior and [the agent learning gap](../gaps/CI-001-agent-learning-loop.md) and [the federation gap](../gaps/CI-002-federated-knowledge.md) for what remains to prove.
