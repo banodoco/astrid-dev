@@ -1,4 +1,4 @@
-# F-004 — Dependable pack and extension lifecycle
+# F-004 — Pack installation and upgrades aren't yet reliable
 
 **Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [Open by design](../principles.md#open-by-design) · **Assessment:** Open / partial current mechanisms (2026-11-06).
 

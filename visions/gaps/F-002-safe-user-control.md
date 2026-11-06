@@ -1,4 +1,4 @@
-# F-002 — Trustworthy user control and operation
+# F-002 — User control and recovery aren't fully proven
 
 **Applies to:** [In the creator's control](../principles.md#in-the-creators-control) · [Agent-Powered Liquid Software](../pillars/liquid-software.md) · **Assessment:** Open / partly implemented foundations (2026-11-06).
 
