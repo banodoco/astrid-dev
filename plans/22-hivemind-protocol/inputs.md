@@ -5,7 +5,7 @@
 ## Authoritative design input (proposed, not yet verified)
 
 - [**The Hivemind protocol, proven on Banodoco Hivemind**](../../visions/principles/collective-intelligence/references/hivemind-protocol-proposal.md), user-supplied Markdown dated **2026-10-29**. Defines Entry/Link/Scope/Access; `cites/carries/supports/opposes/qualifies/supersedes`; `find/inspect/contribute`; local/private and public datasets, custody, conditions, evidence, agent receipts, editorial grants, and suggested migration sequence. Treat all reported corpus counts, tests, migration and exposure assertions as **claims to verify**, not established facts.
-- [Collective Intelligence principle](../../visions/principles/collective-intelligence/principle.md) and [current-state bridge](../../visions/principles/collective-intelligence/bridge.md).
+- [Collective Intelligence principle](../../visions/principles/collective-intelligence/principle.md) and [federated knowledge gap](../../visions/principles/collective-intelligence/gaps/CI-002-federated-knowledge.md).
 - [Agent learning-loop reference](../../visions/principles/collective-intelligence/references/agent-learning-loop.md) for the desired end-user experience, not protocol-level authority.
 
 ## Current source anchors to re-verify at execution
