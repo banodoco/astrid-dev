@@ -1,31 +1,37 @@
 # Principle 2 — Collective Intelligence
 
-**Claim:** Astrid should continually draw on the **best of the creative community**, so each person and agent can benefit from knowledge, techniques, workflows and tools developed by others—and useful discoveries can make the shared foundation better.
+**Claim:** **Every creative agent should get better from what it and the wider community learn.** Knowledge from people's experiences, agents' work, shared tools and public or private communities should continually become more useful, contextual and reusable—without requiring everyone to surrender control of their data.
 
-This is more than search, a Discord archive or a popularity feed. It is a **living, evidence-backed body of creative intelligence** that stays current, contextual and open to contribution.
+This is not merely a search engine or a central repository. It is a **learning loop connecting personal/local intelligence with collectively maintained knowledge**. Hivemind is a proposed interoperable protocol for that loop; Banodoco Hivemind is one concrete dataset and proving ground.
 
-## What this means
+## How it should feel
 
-- **Gather distributed knowledge.** Community conversations, open-source repositories, workflow collections, demonstrations, troubleshooting, documentation and shared artifacts contain valuable knowledge that is otherwise scattered or lost. Ingest sources with permission and attribution, respecting public/private boundaries.
-- **Turn noise into reusable understanding.** Capture source material, extract techniques and claims, deduplicate, connect related knowledge and retain the conditions under which methods work. Not every message becomes advice.
-- **Make quality inspectable, not mystical.** Distinguish raw reports, observed evidence, editorial acceptance, uncertainty, counterexamples and provenance. Revisions and source pins matter; popular or curated does not mean proven.
-- **Put knowledge where it helps.** Agents and UI components retrieve relevant, current guidance in the context of a user's project, models, environment, skills and task—not a generic search result detached from the work.
-- **Create a contribution flywheel.** People can contribute corrections, methods, workflows, results and reusable tools. With their consent and appropriate review, the ecosystem learns; contributors retain attribution and intended access boundaries.
-- **Keep it collectively extensible.** Multiple public/private communities can supply and curate knowledge through a generalizable format and process; no single Discord, site or model should become the only source of authority.
+An agent helping with a project routinely looks for useful prior understanding: what has worked with similar models, workflows, versions and hardware, including lessons from the user's own previous work. It tries an approach, observes the result and captures an accurate, scoped lesson—including failure or uncertainty. That lesson improves the user's local knowledge. With the user's approval and appropriate filtering/review, a generalizable finding can also contribute to a community dataset. Other agents can then benefit.
 
-## Example
+The goal is **continuous learning before, during and after creative work**, not requiring the user to search documentation manually or remember to write a guide after every success.
 
-A user asks Astrid to fix a generation workflow or use a newly released model. The agent looks up compatible methods, recent successes, limitations and their supporting evidence. It suggests an appropriate technique or pack, explains its provenance and context, and uses it. If the user discovers a better setup, that knowledge can be proposed back for review, versioning and future reuse.
+## Principles of the learning system
 
-Combined with [Liquid Software](../liquid-software/principle.md), this means the community can help Astrid **know what to do**, while the environment can assemble the tools to **do it**.
+- **Local first, connected by choice.** A personal or team agent can maintain a private/local knowledge dataset. Public communities and specialized teams can maintain their own. Ownership, permission and provenance stay with each dataset; knowledge need not live in a single central database.
+- **Agents both consume and contribute.** Before action, find and inspect applicable guidance. During/after work, capture what was attempted, conditions, outputs, failures and evidence. Promote helpful findings to durable local knowledge; offer useful community contributions rather than silently broadcasting private work.
+- **Use knowledge in context.** Model versions, GPU, workflow dependencies, task type and evidence basis determine applicability. Retrieval should surface competing approaches, uncertainty and what has become outdated.
+- **Distil rather than accumulate noise.** Transform raw conversations, run receipts, documents and artifacts into discoverable, reviewable knowledge. Attribute sources and distinguish reported, observed, inferred and editorially endorsed statements.
+- **Federate and improve knowledge.** Independent datasets can cite, qualify, support or dispute one another, including through selectively shared, sanitized evidence. Revisions and review preserve corrections without erasing useful history.
+- **Keep authority with people.** Learning from content never grants an agent permission to install software, run code, spend resources or publish sensitive data. Dataset owners decide access and endorsement; agents can draft and triage, but local policy and human authority govern consequential sharing and changes.
 
-## Boundaries
+## One possible implementation: Hivemind
 
-Do not flatten disagreements into a single unqualified answer, confuse acceptance with truth, or expose private communities without authorization. Retrieval must not grant untrusted source text tool-execution authority. Knowledge contribution and use should retain source identity, credit, licensing/permission boundaries and the user's control.
+The [2026-10-29 Hivemind protocol proposal](references/hivemind-protocol-proposal.md) describes dataset-prefixed identities, immutable entries, typed and attributed links, scopes and access decisions, exposed through `find`, `inspect` and `contribute`. Datasets can reference one another without merging.
+
+That is a useful technical proposal, **not the definition of this principle** and not yet a verified standard implemented across Astrid. A local Hivemind and Banodoco Hivemind would be *peers* under a common protocol, not a local instance subordinate to a centrally owned Banodoco database.
+
+In combination with [Liquid Software](../liquid-software/principle.md), collective intelligence helps agents discover **what is useful and how it works**; liquid software helps people and agents assemble the **tools to act on it**.
 
 ## Read next
 
-- [Current-state-to-plan bridge](bridge.md)
-- [Hivemind and supporting source map](references/source-map.md)
+- [Bridge from current implementations to proof](bridge.md)
+- [Agent learning loop](references/agent-learning-loop.md)
+- [Original Hivemind protocol proposal](references/hivemind-protocol-proposal.md)
+- [Verified source map](references/source-map.md)
 
-This is one [Astrid vision principle](../../vision.md), **not the whole vision** or a claim that multi-community intelligence is already shipping.
+This is one [Astrid vision principle](../../vision.md), not an implementation mandate or a claim of shipped agent-learning/federation functionality.
