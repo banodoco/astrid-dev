@@ -79,6 +79,12 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Older queued jobs must not overwrite the feed after a newer main push.
+          git fetch origin refs/heads/main
+          if [ "$(git rev-parse FETCH_HEAD)" != "$GITHUB_SHA" ]; then
+            echo "Source commit $GITHUB_SHA was superseded; a later push owns publication."
+            exit 0
+          fi
           if git ls-remote --exit-code --heads origin vision-published >/dev/null 2>&1; then
             git fetch origin vision-published
             git switch -C vision-published FETCH_HEAD
