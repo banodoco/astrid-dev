@@ -1,6 +1,6 @@
 # Component and extension reference
 
-**Purpose:** Preserve concrete examples and the proposed design vocabulary for the [Liquid Software vision](../principle.md). **Not an API specification:** “Existing” paths are source anchors, whereas “Desired” behaviors are proposed. Verify source again before implementation.
+**Purpose:** Preserve concrete examples and the proposed design vocabulary for the [Liquid Software pillar](../../pillars/liquid-software.md). **Not an API specification:** “Existing” paths are source anchors, whereas “Desired” behaviors are proposed. Verify source again before implementation.
 
 ## Objects and their roles
 

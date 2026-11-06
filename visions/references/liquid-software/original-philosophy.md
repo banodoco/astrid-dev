@@ -1,6 +1,6 @@
 # Original philosophy — Liquid Software
 
-**Provenance:** Preserved text of the earlier user-directed “Liquid Software: A Philosophy for Composable, Agent-Native Applications” document, 2026-11-06. Retained as a source/reference, not a second canonical vision or an approved implementation spec. The distilled current entry is [../principle.md](../principle.md).
+**Provenance:** Preserved text of the earlier user-directed “Liquid Software: A Philosophy for Composable, Agent-Native Applications” document, 2026-11-06. Retained as a source/reference, not a second canonical vision or an approved implementation spec. The distilled current entry is [../principle.md](../../pillars/liquid-software.md).
 
 ---
 

@@ -22,7 +22,7 @@
 | [VibeComfy workflow semantics](https://github.com/banodoco/hivemind/blob/2efd9ce7e17e19f3e7820374ddfd566cb0b4adbc/docs/vibecomfy_workflow_semantics.md) | Same | Task type, model family, dependencies, provenance and structured conditions for workflow matching | Generality across arbitrary resources/models and tested agent choice quality |
 | [Astrid Agent pack authoring](https://github.com/banodoco/astrid-agent/blob/9f42441231836ab461853951710f6a99860c55f9/docs/packs/creating-packs.md) | Agent `main` `9f42441` | Packs can declare actions, skills, UI, rendering, documents and discovery metadata | Hivemind as the underlying knowledge source for agents or automatic two-way learning |
 | [Astrid Runtime](https://github.com/banodoco/astrid-runtime/blob/9fc53b771134940aaac901e4cfc5d03c1db1a20a/README.md) | Runtime `main` `9fc53b7` | Canonical workspace/task/artifact authority and versioned client contracts | A knowledge dataset, a federation protocol or permission to publish local history |
-| [Astrid Dev extensibility philosophy](../../../../docs/extensibility-philosophy.md) | Dev `main` `17ec8fc` before the draft | Collective, agent-shaped creative tooling | End-to-end distributed knowledge learning, capture and approved contribution |
+| [Astrid Dev extensibility philosophy](../../../docs/extensibility-philosophy.md) | Dev `main` `17ec8fc` before the draft | Collective, agent-shaped creative tooling | End-to-end distributed knowledge learning, capture and approved contribution |
 
 ## Important design divergence
 
@@ -34,4 +34,4 @@ Reconcile these deliberately in Hivemind's own plan and tests. Do not label both
 
 A local personal/team Hivemind should be a **first-class private dataset**; it can federate with Banodoco and others by policy and shared identities, not by copying all knowledge to a central server. Astrid agents should make retrieval and evidence capture routine, with user-controlled disclosure and publication. The knowledge store does not replace Runtime's live project/task authority. Agents use retrieved evidence as **data**, not permission or executable instructions.
 
-See [the agent-learning loop](agent-learning-loop.md) for the desired behavior and [the agent learning gap](../gaps/CI-001-agent-learning-loop.md) and [the federation gap](../gaps/CI-002-federated-knowledge.md) for what remains to prove.
+See [the agent-learning loop](agent-learning-loop.md) for the desired behavior and [the agent learning gap](../../gaps/CI-001-agent-learning-loop.md) and [the federation gap](../../gaps/CI-002-federated-knowledge.md) for what remains to prove.

@@ -1,6 +1,6 @@
 # Source map — Liquid Software
 
-**Purpose:** Source-backed technical reference for the [Liquid Software principle](../principle.md), not a second roadmap. Links below point to specific source revisions captured on **2026-11-06**. They establish the **observed design/code contracts**, not that the full Liquid Software behavior ships or that every referenced test currently passes.
+**Purpose:** Source-backed technical reference for the [Liquid Software pillar](../../pillars/liquid-software.md), not a second roadmap. Links below point to specific source revisions captured on **2026-11-06**. They establish the **observed design/code contracts**, not that the full Liquid Software behavior ships or that every referenced test currently passes.
 
 ## Captured source identities
 
@@ -32,13 +32,13 @@ Agent `main` was one documentation commit ahead of Agent `pre-main` at inspectio
 
 ## Existing direction and implementation plans
 
-- [Extensibility philosophy](../../../../docs/extensibility-philosophy.md): small dependable foundations; every extension can be extended; people choose their level of control.
-- [Plan 06 — Packs v1.3](../../../../plans/06-packs/plan.md): loading, trust, distribution and integration; queued separately.
-- [Plan 18 — Extensible timeline editing](../../../../plans/18-timeline-editing/plan.md): candidate independent timeline editing/views; draft.
-- [Plan 11 — Three.js as a pack](../../../../plans/11-threejs-pack/plan.md): refactor current feature ownership, **not** a general 3D workspace plan.
-- [Plan 04 — Concurrent editing](../../../../plans/04-concurrent-edits/plan.md): human/agent edit safety.
-- [Plan 15 — OpenShell](../../../../plans/15-openshell-safe-execution/plan.md): full-stack sandboxing investigation, not automatic browser extension isolation.
-- [Plan 17 — VibeComfy extensibility](../../../../plans/17-vibecomfy-extensibility/plan.md): another test of reusable specialized tools.
+- [Extensibility philosophy](../../../docs/extensibility-philosophy.md): small dependable foundations; every extension can be extended; people choose their level of control.
+- [Plan 06 — Packs v1.3](../../../plans/06-packs/plan.md): loading, trust, distribution and integration; queued separately.
+- [Plan 18 — Extensible timeline editing](../../../plans/18-timeline-editing/plan.md): candidate independent timeline editing/views; draft.
+- [Plan 11 — Three.js as a pack](../../../plans/11-threejs-pack/plan.md): refactor current feature ownership, **not** a general 3D workspace plan.
+- [Plan 04 — Concurrent editing](../../../plans/04-concurrent-edits/plan.md): human/agent edit safety.
+- [Plan 15 — OpenShell](../../../plans/15-openshell-safe-execution/plan.md): full-stack sandboxing investigation, not automatic browser extension isolation.
+- [Plan 17 — VibeComfy extensibility](../../../plans/17-vibecomfy-extensibility/plan.md): another test of reusable specialized tools.
 
 These plans retain their own scope, status, authorization and implementation evidence. This vision neither replaces nor starts them.
 
