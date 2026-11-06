@@ -1,20 +1,24 @@
 # Visions
 
-**[Astrid's overarching vision](vision.md)** is the starting point: a living collective foundation for creative work, shaped by people and their agents.
+Start with **[Astrid's overarching vision](vision.md): help people create beyond what they believed possible.**
 
-The vision names the principles that make it tangible. **Two are established so far; additional principles remain open** rather than being invented to complete a fixed list.
+Its four principles describe complementary parts of the same mission:
 
-| Principle | What it means | Current state → plans | Supporting references |
-| --- | --- | --- | --- |
-| [Liquid Software](principles/liquid-software/principle.md) | Software reshapes itself around creative work, with composable opinionated tools and agent-native capabilities | [Bridge](principles/liquid-software/bridge.md) | [Component reference](principles/liquid-software/references/components.md) · [source map](principles/liquid-software/references/source-map.md) · [original philosophy](principles/liquid-software/references/original-philosophy.md) |
-| [Collective Intelligence](principles/collective-intelligence/principle.md) | Agents continually learn from their own local work and connected community knowledge, then contribute useful findings under user control | [Bridge](principles/collective-intelligence/bridge.md) | [Agent learning loop](principles/collective-intelligence/references/agent-learning-loop.md) · [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md) · [source map](principles/collective-intelligence/references/source-map.md) |
+| Principle | Focus | Bridge to reality |
+| --- | --- | --- |
+| [Built for Artistic Ambition](principles/artistic-ambition/principle.md) | Powerful, controllable tools that support extraordinary creative work | [Current state → proofs](principles/artistic-ambition/bridge.md) |
+| [Liquid Software](principles/liquid-software/principle.md) | Tools that people and agents can continuously adapt, compose and extend | [Current state → plans](principles/liquid-software/bridge.md) |
+| [Collective Intelligence](principles/collective-intelligence/principle.md) | Agents learn from local and community experience and contribute useful discoveries | [Current state → plans](principles/collective-intelligence/bridge.md) |
+| [Collective Ambition](principles/collective-ambition/principle.md) | A culture, reasons and shared ownership that motivate people to push further | [Current state → mechanisms](principles/collective-ambition/bridge.md) |
 
-## Documentation hierarchy
+The collective ownership aim is explicit: **100% of the company behind the collective is intended for those who advance its mission.** How to allocate and govern that ownership is an unresolved design and legal question, not an established entitlement.
 
-1. **[Vision](vision.md):** the overarching purpose and concise, evolving set of principles—not a backlog.
-2. **Principle documents:** why each principle matters, the experience it creates, and enduring design rules.
-3. **Bridges:** current real foundations → missing seams → small meaningful proofs → links to existing/planned work. These can evolve as the code changes.
-4. **References:** original proposals and artifacts, detailed experience/architecture notes, code evidence and observed constraints. Keep proposals distinct from current implementation; code references are pinned to captured revisions.
-5. **[Implementation plans](../plans/):** accepted work scope, authority, dependencies, tasks, evidence and delivery. No vision document authorizes implementation or changes a plan's status.
+## Documentation pattern
 
-Keep one canonical overarching vision and one canonical statement per principle. Create supporting documents only when they have independent value; never turn the vision into a parallel project queue or copy the same technical specification across different principles. Respect [repository rules](../AGENTS.md).
+- **[Vision](vision.md):** the overarching destination and how the principles reinforce one another.
+- **`principle.md`:** the enduring idea, at a level useful across product, community and governance.
+- **`bridge.md`:** existing reality → missing capabilities or mechanisms → a meaningful proof → relevant plans. Bridges can change as work evolves.
+- **`references/`:** source documents, component examples, designs and code evidence; add only when useful. See Liquid Software's [component reference](principles/liquid-software/references/components.md), Collective Intelligence's [learning loop](principles/collective-intelligence/references/agent-learning-loop.md), and the [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md).
+- **[Implementation plans](../plans/):** scope, priority, ownership, authorized execution and evidence. These are independent of the vision.
+
+Keep each idea authoritative in one place; link rather than duplicate. A vision does not authorize product work, legally allocate equity or supersede [repository rules](../AGENTS.md).
