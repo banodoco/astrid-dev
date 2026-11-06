@@ -1,8 +1,10 @@
-# Principle 2 — Collective Intelligence
+# Principle 3 — Collective Intelligence
 
 **Claim:** **Every creative agent should get better from what it and the wider community learn.** Knowledge from people's experiences, agents' work, shared tools and public or private communities should continually become more useful, contextual and reusable—without requiring everyone to surrender control of their data.
 
 This is not merely a search engine or a central repository. It is a **learning loop connecting personal/local intelligence with collectively maintained knowledge**. Hivemind is a proposed interoperable protocol for that loop; Banodoco Hivemind is one concrete dataset and proving ground.
+
+The purpose is to expand [artistic ambition](../artistic-ambition/principle.md): shared understanding should help people solve creative challenges they otherwise could not tackle.
 
 ## How it should feel
 
