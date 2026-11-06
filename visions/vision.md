@@ -17,7 +17,7 @@ The collective inspires a more ambitious goal. Powerful, adaptable tools and sha
 
 ## From vision to practice
 
-Each principle has a short statement, a **[bridge](README.md)** from present reality to concrete proofs and relevant plans, and optional references for deeper design and source evidence. **[Implementation plans](../plans/)** own work, priority, authorization and acceptance. Plans link back to the principles they advance; these links express purpose, not permission to start work.
+**[Vision → Gaps → Plans → Evidence](README.md)** is how we keep this ambition grounded. The principles describe what should be true. Versioned [gap assessments](gaps.md) say what is *not yet true* and what would demonstrate progress. [Plans](../plans/) address those gaps; completed work contributes evidence that agents and reviewers use to reassess them. Finishing a plan never closes a gap automatically. The vision is not a parallel roadmap.
 
 The ownership statement is a **goal, not a description of an already implemented legal allocation**. Eligibility, governance, financing and legal mechanics require separate decisions.
 
