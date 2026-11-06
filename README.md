@@ -81,6 +81,7 @@ Project status is recorded in the queue above. Plan 08 (Release 1) is done (ship
 ## How to use this repo
 
 - See the [extensibility philosophy](docs/extensibility-philosophy.md) for the design direction.
+- Browse [visions](visions/README.md) for long-term product directions and their source-backed references (not implementation authorizations).
 - Keep project status and remaining estimates in the queue, and task progress in the plans. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping their plan links stable.
 - Look up unfamiliar terms in the [glossary](docs/glossary.md).
 - Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [project folder template](templates/project/plan.md) for new projects.
