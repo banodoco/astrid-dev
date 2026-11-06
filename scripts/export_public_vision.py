@@ -108,8 +108,8 @@ def build(root: Path, revision: str) -> dict:
     for gap_file in sorted((root / "visions/gaps").glob("*.md")):
         path = gap_file.relative_to(root)
         contents = read(root, path)
-        match = re.match(r"^# ([A-Z]{1,3}-\d{3}) — (.+)$", contents)
-        if not match or not GAP_ID.fullmatch(gap_file.name) or gap_file.name.split("-")[0] != match.group(1).split("-")[0]:
+        match = re.match(r"^# ([A-Z]{1,3}-\d{3}) — (.+)$", contents, re.M)
+        if not match or not GAP_ID.fullmatch(gap_file.name) or GAP_ID.fullmatch(gap_file.name).group(1) != match.group(1):
             raise ValueError(f"{path}: invalid gap heading/name")
         gap_id, name = match.groups()
         if gap_id in seen:
