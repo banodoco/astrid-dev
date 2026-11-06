@@ -13,6 +13,8 @@ Astrid should be built for people with unusually ambitious creative goals, inclu
 
 [Liquid Software](../liquid-software/principle.md) lets the tools adapt to that ambition. [Collective Intelligence](../collective-intelligence/principle.md) makes accumulated techniques accessible. [Collective Ambition](../collective-ambition/principle.md) gives people inspiration, challenge and a stake in pushing further.
 
-## From vision to practice
+## Gaps and evidence
 
-[Current-state bridge](bridge.md) · [Overarching vision](../../vision.md)
+- [AA-001 — Sustained, ambitious creative work](gaps/AA-001-sustained-creative-work.md)
+
+[Overarching vision](../../vision.md) · [Gap model](../../gaps.md)
