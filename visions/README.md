@@ -1,20 +1,24 @@
 # Visions
 
-Begin with **[Astrid's overarching vision](vision.md): Make Extraordinary Art Possible, Together.**
+Begin with **[Astrid's vision](vision.md): Make Extraordinary Art Possible, Together.**
 
-| Principle | Promise | From current state to plans |
-| --- | --- | --- |
-| [Built for Artistic Ambition](principles/artistic-ambition/principle.md) | Powerful creative tools and meaningful artistic control | [Bridge](principles/artistic-ambition/bridge.md) |
-| [Agent-Powered Liquid Software](principles/liquid-software/principle.md) | Interfaces and agent capabilities that adapt to the work | [Bridge](principles/liquid-software/bridge.md) |
-| [Collective Intelligence That Compounds](principles/collective-intelligence/principle.md) | Local and community knowledge continually improves agents' work | [Bridge](principles/collective-intelligence/bridge.md) |
-| [Collective Ambition, Shared Ownership](principles/collective-ambition/principle.md) | Culture, challenges, recognition and a real contributor stake | [Bridge](principles/collective-ambition/bridge.md) |
+**Vision (including four principles) → Gaps → Plans → Evidence → reassessment.** The vision describes the destination. Gaps document where the observed reality still falls short. Plans are bounded interventions; their evidence is used to update the gaps, not assumed to prove them closed.
 
-## How it is organized
+| Principle | Current gap assessments |
+| --- | --- |
+| [Built for Artistic Ambition](principles/artistic-ambition/principle.md) | [AA-001 — Sustained artistic work](principles/artistic-ambition/gaps/AA-001-sustained-creative-work.md) |
+| [Agent-Powered Liquid Software](principles/liquid-software/principle.md) | [LS-001 — Portable components](principles/liquid-software/gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](principles/liquid-software/gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](principles/liquid-software/gaps/LS-003-full-stack-contributions.md) |
+| [Collective Intelligence That Compounds](principles/collective-intelligence/principle.md) | [CI-001 — Agent learning loop](principles/collective-intelligence/gaps/CI-001-agent-learning-loop.md) · [CI-002 — Federated knowledge](principles/collective-intelligence/gaps/CI-002-federated-knowledge.md) |
+| [Collective Ambition, Shared Ownership](principles/collective-ambition/principle.md) | [CA-001 — Artistic challenge culture](principles/collective-ambition/gaps/CA-001-creative-challenge-culture.md) · [CA-002 — Contributor ownership](principles/collective-ambition/gaps/CA-002-contributor-ownership.md) |
 
-**Vision → principles → bridges/references → plans.** The vision says *why*; principles say *what must be true*; bridges distinguish current foundations from missing capabilities and meaningful proofs; [plans](../plans/) say *who will do what and how completion is evidenced*.
+These are **initial assessed gaps**, not an exhaustive taxonomy or an approved work queue. An unplanned gap is legitimate. A plan can serve several gaps, while foundational enablers may not directly close any.
 
-**Plan alignment lives in each `plans/<id>/plan.md`**, as a short `**Vision alignment:**` line linking to one primary principle and, where materially useful, a supporting principle. This is contextual metadata, **not a second status or priority authority**. To discover work for a principle, search those links; do not hand-maintain a duplicate list here. New plans use the [project template](../templates/project/plan.md).
+## How the system stays coherent
 
-Preserve original evidence and deeper explorations under principle-specific `references/` only where useful, for example the [Liquid Software components](principles/liquid-software/references/components.md), [agent learning loop](principles/collective-intelligence/references/agent-learning-loop.md), and [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md).
+- **[Vision](vision.md):** one concise north star and four stable principles.
+- **Gap documents:** live, source-grounded *desired → current → difference → closure evidence* assessments, one per independently provable outcome. See the [gap contract and maintenance process](gaps.md).
+- **[Plans](../plans/):** each owns its implementation scope and records a **Vision gaps** link to the primary gap(s), or explicitly identifies itself as a foundational **enabler**. **The plan is the sole owner of this relationship**; do not manually copy lists of plan IDs into gap files.
+- **Evidence:** attached to the plan's existing tasks/inputs/evidence or a source-revision-pinned artifact. An agent can propose a gap update after a plan completes; a reviewer determines whether the result closes, partly closes or does not change the gap.
+- **References:** detailed evidence/design notes only when useful; e.g. [Liquid Software components](principles/liquid-software/references/components.md), [agent learning loop](principles/collective-intelligence/references/agent-learning-loop.md) and the [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md).
 
-The intended 100% contributor ownership of the company belongs to the [Collective Ambition](principles/collective-ambition/principle.md) principle. Eligibility, allocation and legal instruments remain unresolved; the vision does not itself transfer ownership or authorize work. Follow [repository rules](../AGENTS.md).
+**Not yet automated:** no vision CI check, gap updater or scheduled audit is implemented by this documentation. Future deterministic checks can validate IDs/links/fields and plan declarations; agent review can assess evidence and propose PRs, not silently rewrite strategy. The [project queue](../README.md) remains the only source of plan status, ownership and priority. [Repository rules](../AGENTS.md) still govern authorization.
