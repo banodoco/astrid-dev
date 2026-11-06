@@ -2,7 +2,7 @@
 
 **Start here:** read [AGENTS.md](../../AGENTS.md), use the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and inspect [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate are in the [project queue](../../README.md).
 
-**Vision alignment:** [Collective Intelligence That Compounds](../../visions/principles/collective-intelligence/principle.md) — make personal/local and community knowledge interoperable, inspectable and improvable.
+**Vision gaps:** [CI-002 — Independently owned, interoperable Hiveminds](../../visions/principles/collective-intelligence/gaps/CI-002-federated-knowledge.md) (primary). This plan provides the protocol and dataset proof; routine agent use is addressed separately.
 
 ## Goal and scope
 
