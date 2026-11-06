@@ -1,6 +1,6 @@
 # AA-001 — Sustained, ambitious creative work
 
-**Principle:** [Built for Artistic Ambition](../principle.md) · **Assessment:** Open, initial source assessment (2026-11-06); not a live product qualification.
+**Applies to:** [Built for Artistic Ambition](../pillars/artistic-ambition.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open, initial source assessment (2026-11-06); not a live product qualification.
 
 ## Desired state
 
@@ -20,4 +20,4 @@ A real artist-led project is completed through repeated revision, with demonstra
 
 ## Sources and reassessment
 
-[Artistic ambition reference principle](../principle.md) · [Existing project plans](../../../../plans/). This assessment must be refreshed against actual completed work and creator evidence; implementation-plan completion alone cannot close it.
+[Artistic ambition reference principle](../pillars/artistic-ambition.md) · [Existing project plans](../../plans). This assessment must be refreshed against actual completed work and creator evidence; implementation-plan completion alone cannot close it.

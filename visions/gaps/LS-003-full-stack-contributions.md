@@ -1,6 +1,6 @@
 # LS-003 — Composable frontend and backend contributions
 
-**Principle:** [Agent-Powered Liquid Software](../principle.md) · **Assessment:** Open, source inspection (2026-11-06).
+**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [Open by design](../principles.md#open-by-design) · **Assessment:** Open, source inspection (2026-11-06).
 
 ## Desired state
 
@@ -20,4 +20,4 @@ An installed/trusted music capability yields a typed beat-grid result used in a 
 
 ## Sources and reassessment
 
-[Pack + SDK evidence](../references/source-map.md) · [Component examples](../references/components.md). Preserve existing packs, domain authorities and permission boundaries; a manifest declaration alone is not execution proof.
+[Pack + SDK evidence](../references/liquid-software/source-map.md) · [Component examples](../references/liquid-software/components.md). Preserve existing packs, domain authorities and permission boundaries; a manifest declaration alone is not execution proof.

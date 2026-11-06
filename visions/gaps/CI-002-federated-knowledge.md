@@ -1,6 +1,6 @@
 # CI-002 — Independently owned, interoperable Hiveminds
 
-**Principle:** [Collective Intelligence That Compounds](../principle.md) · **Assessment:** Open, proposal compared with source (2026-11-06).
+**Applies to:** [Intelligence That Compounds](../pillars/compounding-intelligence.md) · [Open by design](../principles.md#open-by-design) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open, proposal compared with source (2026-11-06).
 
 ## Desired state
 
@@ -8,7 +8,7 @@ Independent personal, team and community knowledge datasets can preserve attribu
 
 ## Current state
 
-[Banodoco Hivemind](../references/source-map.md) documents source-custodied messages, revisioned resources, an accepted search head and editorial contribution operations. The [uploaded October 29 protocol proposal](../references/hivemind-protocol-proposal.md) proposes dataset-scoped entries, typed links and `find`/`inspect`/`contribute`. **These are not yet identical proven contracts.**
+[Banodoco Hivemind](../references/compounding-intelligence/source-map.md) documents source-custodied messages, revisioned resources, an accepted search head and editorial contribution operations. The [uploaded October 29 protocol proposal](../references/compounding-intelligence/hivemind-protocol-proposal.md) proposes dataset-scoped entries, typed links and `find`/`inspect`/`contribute`. **These are not yet identical proven contracts.**
 
 ## Gap
 
@@ -20,4 +20,4 @@ Two separately owned datasets can exchange a scoped, independently attributed re
 
 ## Sources and reassessment
 
-[Current Hivemind source map](../references/source-map.md) · [Dated protocol proposal](../references/hivemind-protocol-proposal.md). Source claims in the proposal, including migration and privacy assertions, require verification; a draft spec is not implementation proof.
+[Current Hivemind source map](../references/compounding-intelligence/source-map.md) · [Dated protocol proposal](../references/compounding-intelligence/hivemind-protocol-proposal.md). Source claims in the proposal, including migration and privacy assertions, require verification; a draft spec is not implementation proof.

@@ -1,6 +1,6 @@
 # LS-001 — Portable creative components
 
-**Principle:** [Agent-Powered Liquid Software](../principle.md) · **Assessment:** Open, source inspection (2026-11-06).
+**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [Open by design](../principles.md#open-by-design) · **Assessment:** Open, source inspection (2026-11-06).
 
 ## Desired state
 
@@ -8,7 +8,7 @@ Real creative components (timeline, player, inspector, gallery and others) can m
 
 ## Current state
 
-The [App source map](../references/source-map.md) identifies actual reusable editor views and a custom two-pane assembly. The standard editor shell still includes host-specific layout, gesture and context responsibilities. **This does not establish a general-purpose portable workspace host.**
+The [App source map](../references/liquid-software/source-map.md) identifies actual reusable editor views and a custom two-pane assembly. The standard editor shell still includes host-specific layout, gesture and context responsibilities. **This does not establish a general-purpose portable workspace host.**
 
 ## Gap
 
@@ -20,4 +20,4 @@ Rearrange the **real** player, inspector and timeline; retain playback, editing,
 
 ## Sources and reassessment
 
-[Component reference](../references/components.md) · [Pinned App code map](../references/source-map.md). Reassess only from exact candidate and tested behavior; a different mock shell does not close this gap.
+[Component reference](../references/liquid-software/components.md) · [Pinned App code map](../references/liquid-software/source-map.md). Reassess only from exact candidate and tested behavior; a different mock shell does not close this gap.
