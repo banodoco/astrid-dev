@@ -1,4 +1,4 @@
-# Principle 4 — Collective Ambition
+# Principle 4 — Collective Ambition, Shared Ownership
 
 **Give people a reason, a challenge and a stake in making extraordinary work.**
 
@@ -17,6 +17,9 @@ Ownership is a **vision-level commitment**, not a claim that a legal allocation 
 
 The collective inspires a new artistic goal. [Built for Artistic Ambition](../artistic-ambition/principle.md) makes the work worth pursuing; [Liquid Software](../liquid-software/principle.md) shapes tools around it; [Collective Intelligence](../collective-intelligence/principle.md) makes knowledge available. The resulting work, discoveries and contributions raise standards and help the next person go further.
 
-## From vision to practice
+## Gaps and evidence
 
-[Current-state bridge](bridge.md) · [Overarching vision](../../vision.md)
+- [CA-001 — Artistic challenge culture](gaps/CA-001-creative-challenge-culture.md)
+- [CA-002 — Contributor ownership](gaps/CA-002-contributor-ownership.md)
+
+[Overarching vision](../../vision.md) · [Gap model](../../gaps.md)
