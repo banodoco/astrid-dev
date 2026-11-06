@@ -1,5 +1,7 @@
 # VibeComfy extensibility with H3_AV
 
+**Vision gaps:** [Composable capabilities](../../visions/gaps/LS-003-full-stack-contributions.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Make it easier for people and their agents to build and share creative tools on VibeComfy. Use H3_AV, a user-provided abstraction over MiniMax H3 workflows, to improve existing extension primitives and demonstrate customization and composition without forking core. This remains a draft; queue status, owner, and estimate are in the [project queue](../../README.md).

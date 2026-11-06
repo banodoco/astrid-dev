@@ -1,5 +1,7 @@
 # Astrid Homepage Journey — Plan
 
+**Vision role:** Communication enabler — explains the creative vision without itself proving artistic or community outcomes.
+
 ## Goal
 
 Build the approved scroll journey below the Astrid homepage hero: §2 creative suite, §3 open models, §4 creative partner, and §5 finale. The two binding priorities are lively sections while visitors rest and continuous, unhurried transitions using the same live objects. Full accepted experience and craft specification: [design.md](design.md).

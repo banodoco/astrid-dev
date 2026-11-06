@@ -1,5 +1,7 @@
 # Sandboxed execution with OpenShell
 
+**Vision gaps:** [Trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Offer an onboarding path to run the full Astrid stack—app/frontend, Runtime, and Agent backend—in OpenShell with clear, user-selected permissions. This is a draft; supported platforms and the isolation contract remain to be scoped against current source.

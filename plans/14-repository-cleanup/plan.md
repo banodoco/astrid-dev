@@ -1,5 +1,7 @@
 # Repository cleanup
 
+**Vision role:** Foundational enabler — improves source navigability without itself proving a user-facing outcome.
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Make Astrid's repositories easier to navigate and maintain, with clear homes for source and documentation and no unnecessary duplicate or abandoned material. This remains a draft until the cleanup inventory is bounded.
