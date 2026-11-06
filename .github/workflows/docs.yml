@@ -57,3 +57,41 @@ jobs:
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python3 scripts/check_completion.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
+
+  publish-vision:
+    # Never publish the unreviewed content of a PR or a contributor branch.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: documentation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: astrid-dev-public-vision
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Export validated source to a temporary file
+        run: python3 scripts/export_public_vision.py --revision "$GITHUB_SHA" --output "$RUNNER_TEMP/vision.json"
+      - name: Publish feed to generated-only vision-published branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin vision-published >/dev/null 2>&1; then
+            git fetch origin vision-published
+            git switch -C vision-published FETCH_HEAD
+          else
+            git switch --orphan vision-published
+            git rm -rf --cached . >/dev/null
+          fi
+          # The feed branch is generated output only, not a second CMS.
+          cp "$RUNNER_TEMP/vision.json" vision.json
+          git add vision.json
+          if git diff --cached --quiet; then
+            echo "Published vision feed is already current."
+            exit 0
+          fi
+          git commit -m "publish(vision): source $GITHUB_SHA"
+          git push origin HEAD:refs/heads/vision-published
