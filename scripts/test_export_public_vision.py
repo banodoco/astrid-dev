@@ -21,6 +21,12 @@ class PublicVisionProjectionTests(unittest.TestCase):
         )
         self.assertTrue(all(p["descriptor"] and p["bodyMarkdown"] for p in self.page["pillars"]))
 
+    def test_vision_contribution_call_to_action(self):
+        vision = self.page["vision"]
+        self.assertIn("collective artistic ambition", vision["title"])
+        self.assertIn("Astrid aims to help people", vision["introMarkdown"])
+        self.assertIn("ownership", vision["contributeMarkdown"])
+
     def test_principles_and_gap_relationships(self):
         self.assertEqual(len(self.page["principles"]), 3)
         self.assertGreater(len(self.page["gaps"]), 0)
