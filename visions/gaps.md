@@ -44,4 +44,6 @@ Or state `**Vision role:** Foundational enabler — ...` for work whose completi
 
 After a plan completes or important new evidence emerges, an agent may propose a gap update comparing the *actual* results with the desired state and closure criteria. A reviewer decides whether the gap is closed, partly evidenced, unchanged or needs recheck; the proposal doesn't change plan authority. A completed plan never closes a gap automatically.
 
-**Future checks, not built:** validate unique gap IDs, `Applies to` targets, basic fields and valid plan references; later let agents propose evidence-grounded reassessments. Prove the manual process before adding automation. Preserve sources and avoid a second roadmap or duplicate status ledger.
+**Checks today:** `python3 scripts/check_docs.py` validates unique gap IDs, required fields, local target paths, plan-folder structure, plan declarations, the authoritative [plan catalog](../plans/index.md) and its generated README preview. Run `python3 scripts/check_docs.py --sync` after editing catalog order or statuses. The focused GitHub Actions workflow runs those checks without pushing changes.
+
+**Not automatically checked:** truth of evidence, whether a gap has really closed, external URLs and GitHub heading fragments. An agent may later propose evidence-grounded reassessments, reviewed by humans. Do not turn the catalog into a duplicate gap/status ledger.

@@ -15,7 +15,7 @@ Use the [project folder template](templates/project/plan.md) for every new proje
 
 The [gap contract](visions/gaps.md) defines a small, enforceable-in-principle structure. The vision's pillars describe the creative outcomes; its operating principles describe cross-cutting constraints; stable shared gap IDs record a current source-grounded difference and closure evidence; plans declare the gaps they address (or an explicit foundational-enabler rationale). Plans own their gap links, and the plan catalog remains the only owner of project status, priority and responsibility. Do not maintain a second gap-to-plan list inside gap files.
 
-When a plan finishes, use its exact evidence to **propose** updates to linked gaps and distinguish closed, partial, unchanged or needs-recheck outcomes. A completed plan is not proof a vision gap has closed. Preserve evidence provenance, review the proposal, and do not silently change the vision, execution scope or publication authority. Existing plans can be aligned incrementally; no automated gap updater or structural CI gate is installed yet.
+When a plan finishes, use its exact evidence to **propose** updates to linked gaps and distinguish closed, partial, unchanged or needs-recheck outcomes. A completed plan is not proof a vision gap has closed. Preserve evidence provenance, review the proposal, and do not silently change the vision, execution scope or publication authority. Plans have been aligned to current gap IDs or enabler roles. The focused structural CI check is installed; automated evidence-based gap updates are not.
 
 ## Local documentation checks
 

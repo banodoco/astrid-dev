@@ -65,8 +65,6 @@ The ten highest-ranked nonterminal plans from the [full plan catalog](plans/inde
 | Three.js as a pack | Move the existing built-in Three.js functionality into a native pack that remains included by default, with current behavior preserved through conversion. | queued | Unassigned | TBD | scope agreement | [Plan 11](plans/11-threejs-pack/plan.md) |
 <!-- plans:top10:end -->
 
-App CI items outside these plans: the `extension-visual` screenshot baseline is stale (failing since before R1); the scheduled `Lanes installer-powershell` and `Direct Journey` jobs were failing before R1.
-
 For statuses, delivery context, remaining work and the full history, see the [plan catalog](plans/index.md).
 
 ## How to use this repo
