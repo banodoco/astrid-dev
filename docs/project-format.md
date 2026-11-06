@@ -31,6 +31,6 @@ Keep work inside a project when it serves that project's outcome. Give it its ow
 
 ## At catalog scale
 
-Keep folder IDs stable as priorities, owners, and status change. Link dependencies to project or task outputs, not to row numbers. Archiving moves the index entry; it does not move its sources or break its links.
+Keep folder IDs stable as priorities, owners, and status change. Link dependencies to project or task outputs, not to row numbers. Archiving changes status in the catalog; it does not move files or break links.
 
-Today the [queue](../README.md) owns active/upcoming metadata and the [archive](../ARCHIVE.md) owns terminal entries. At hundreds or thousands of projects, discovery becomes the constraint: the front page should show active work and a short upcoming list, with searchable views of the rest. When the manual index stops serving that job, **migrate** its fields to one small record per project (for example `plan.md` front matter), and derive views by status, owner, or project type. Do not start hand-maintaining both a catalog and copies of the same metadata. The folder structure need not change for that migration.
+Today the [plan catalog](../plans/index.md) owns all plans' status, owner, priority and estimate, including terminal entries; the root README top-ten list is generated from it. At hundreds or thousands of projects, discovery becomes the constraint: the front page should show active work and a short upcoming list, with searchable views of the rest. If the catalog eventually becomes unmanageable, **migrate** its fields to one small record per project and derive views. Do not maintain the catalog and copied metadata in parallel. The folder structure need not change for that migration.
