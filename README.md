@@ -4,11 +4,11 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 ## What we're building
 
-**[Make Extraordinary Art Possible, Together](visions/vision.md).** We bring together powerful creative tools, agent-powered software that adapts to the work, collective intelligence that improves with experience, and a community with the challenges and shared stake to push artistic ambition further.
+**[Make Extraordinary Art Possible, Together](visions/vision.md).** Four artistic [pillars](visions/vision.md#four-pillars) describe the creative aim; three [operating principles](visions/principles.md) — local-first/cloud-capable, open by design and creator-controlled — apply across the whole system.
 
-**[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—both principle-specific and [shared foundations](visions/foundations/README.md)—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
+**[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 
-The queue below remains the sole source for plan status, ownership and priority. [How gap reassessment works](visions/gaps.md) · [Initial mapping of existing plans](visions/references/plan-gap-assessment-2026-11-06.md).
+The queue below remains the sole source for plan status, ownership and priority. [How gap reassessment works](visions/gaps.md) · [Dated plan-to-gap assessment](visions/references/plan-gap-assessment-2026-11-06.md).
 
 ## Want to contribute? Give this to your agent.
 
@@ -87,12 +87,12 @@ App CI items outside these plans: the `extension-visual` screenshot baseline is 
 - `done`: agreed acceptance evidence exists and the intended integration is recorded.
 - `cancelled`: the owner explicitly abandoned the project; preserve the reason in [ARCHIVE.md](ARCHIVE.md).
 
-Project status is recorded in the queue above. Plan 08 (Release 1) is done (shipped 2026-11-05); Plan 07 (Pinokio basic) is coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01, 02, 04, 05 and 06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. The queue above owns priority; zero-to-first-image onboarding (Plan 20) is a top-priority upcoming project. Plans 11–20 are draft scopes awaiting source identity and remaining scoping decisions before execution. Plan 21 is a complete hand-off for the homepage journey; nothing is built yet. See [plans](plans/) and [shared references](references/) for details.
+Project status is recorded in the queue above. Plan 08 (Release 1) is done (shipped 2026-11-05); Plan 07 (Pinokio basic) is coordinated by the Release 1 merge coordinator. Plan 09 follows Plan 08; Plan 07 runs as Release 1.1 alongside it, and Plan 10 follows Plan 07. Plans 01, 02, 04, 05 and 06 define the staged pre-main sequence: Generation integration follows Installer Consent, while independent work can proceed when its inputs and authorization are available. Plan 10 begins by reconciling historical Pinokio notes with current source. The queue above owns priority; zero-to-first-image onboarding (Plan 20) is a top-priority upcoming project. Plans 11–20 are draft scopes awaiting source identity and remaining scoping decisions before execution. Plan 21 is a complete hand-off for the homepage journey; nothing is built yet. See [plans](plans) and [shared references](references) for details.
 
 ## How to use this repo
 
 - See the [extensibility philosophy](docs/extensibility-philosophy.md) for the design direction.
-- Start with [Astrid's vision](visions/vision.md), its [principles and gap records](visions/README.md), and the [gap/plan evidence contract](visions/gaps.md); implementation authority remains in the project plans.
+- Start with [Astrid's vision](visions/vision.md), its [four pillars and operating principles](visions/README.md), and the [gap/plan evidence contract](visions/gaps.md); implementation authority remains in the project plans.
 - Keep project status and remaining estimates in the queue, and task progress in the plans. Move finished or cancelled projects to [ARCHIVE.md](ARCHIVE.md), keeping their plan links stable.
 - Look up unfamiliar terms in the [glossary](docs/glossary.md).
 - Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [project folder template](templates/project/plan.md) for new projects.
@@ -103,7 +103,7 @@ Project status is recorded in the queue above. Plan 08 (Release 1) is done (ship
 
 ## Project format
 
-Every project is a folder, including an early draft. New plans link to the relevant vision gaps (or describe why they are foundational enablers) in `plan.md`:
+Every project is a folder, including an early draft. New plans link to relevant gap IDs (or explain why they are foundational enablers) in `plan.md`:
 
 ```text
 plans/<id-name>/
@@ -114,4 +114,4 @@ plans/<id-name>/
 
 Start at `plan.md`; every queue link points there. Short tasks stay in `tasks.md`. Add supporting files only when they have a distinct job. See [how project folders grow](docs/project-format.md) for the website example, other project types, and how to handle a larger catalog.
 
-Copy [the template folder](templates/project/) for a new project. Drafts use the same three files and can be brief. The queue owns project status, owner, and estimate; the task index or linked card owns task progress. Archive the queue row when work finishes and keep the folder in place.
+Copy [the template folder](templates/project) for a new project. Drafts use the same three files and can be brief. The queue owns project status, owner, and estimate; the task index or linked card owns task progress. Archive the queue row when work finishes and keep the folder in place.

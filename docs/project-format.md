@@ -19,9 +19,9 @@ The [Astrid website](../plans/21-astrid-website/plan.md) illustrates the distinc
 | Website material | Why it has its own home |
 |---|---|
 | [`design.md`](../plans/21-astrid-website/design.md) | Many tasks depend on the same visitor journey, copy, visual rules, and motion specification. The plan can explain the goal in a page. |
-| [`mockups/`](../plans/21-astrid-website/mockups/) | Day/night reference frames show the intended result. Link the exact frame from the task that needs it. |
-| [`tasks/`](../plans/21-astrid-website/tasks/) | The 34 implementation cards have five distinct phases. `tasks.md` indexes them; each phase file holds its cards once. |
-| [`evidence/`](../plans/21-astrid-website/evidence/) | Prior inspections and reviews record what was observed and why decisions were made. A mockup is a target, not proof that the site matches it. |
+| [`mockups/`](../plans/21-astrid-website/mockups) | Day/night reference frames show the intended result. Link the exact frame from the task that needs it. |
+| [`tasks/`](../plans/21-astrid-website/tasks) | The 34 implementation cards have five distinct phases. `tasks.md` indexes them; each phase file holds its cards once. |
+| [`evidence/`](../plans/21-astrid-website/evidence) | Prior inspections and reviews record what was observed and why decisions were made. A mockup is a target, not proof that the site matches it. |
 
 Generation has a different extension: its [environment recipes](../plans/02-consistent-generation/env/README.md) describe the setup needed to reproduce its focused checks. Those recipes belong with that project; other projects do not need an `env/` folder by default.
 
