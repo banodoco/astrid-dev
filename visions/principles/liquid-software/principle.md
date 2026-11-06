@@ -1,4 +1,4 @@
-# Principle 2 — Liquid Software
+# Principle 2 — Agent-Powered Liquid Software
 
 **Claim:** Software should be shaped by the creative process, not force creative work into a fixed application. People and AI agents should be able to assemble, manipulate, extend and reuse coherent tools as their needs change.
 
@@ -23,7 +23,9 @@ Keep project state, workspace layout, interaction state and task execution disti
 
 ## Read next
 
-- [Current-state-to-plan bridge](bridge.md)
+- [LS-001 — Portable components](gaps/LS-001-portable-components.md)
+- [LS-002 — Agent workspace control](gaps/LS-002-agent-workspace-control.md)
+- [LS-003 — Full-stack contributions](gaps/LS-003-full-stack-contributions.md)
 - [Component and extension examples](references/components.md)
 - [Source-backed App/Agent/Runtime map](references/source-map.md)
 - [Preserved originating philosophy](references/original-philosophy.md)
