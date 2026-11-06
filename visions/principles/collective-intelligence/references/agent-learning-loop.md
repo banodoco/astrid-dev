@@ -71,4 +71,4 @@ Measure decision quality against **no knowledge** and **raw search**. Demonstrat
 
 - [Hivemind protocol proposal](hivemind-protocol-proposal.md): suggested entry/link/scope/access records, cross-dataset references and `find`/`inspect`/`contribute`.
 - [Source map](source-map.md): distinguishes current Banodoco Hivemind implementation from the protocol proposal.
-- [Current-state bridge](../bridge.md): where architectural gaps connect to practical scoping and plans.
+- [Agent learning gap](../gaps/CI-001-agent-learning-loop.md): the current limitation and closure evidence.
