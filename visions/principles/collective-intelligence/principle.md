@@ -1,4 +1,4 @@
-# Principle 3 — Collective Intelligence
+# Principle 3 — Collective Intelligence That Compounds
 
 **Claim:** **Every creative agent should get better from what it and the wider community learn.** Knowledge from people's experiences, agents' work, shared tools and public or private communities should continually become more useful, contextual and reusable—without requiring everyone to surrender control of their data.
 
@@ -31,7 +31,8 @@ In combination with [Liquid Software](../liquid-software/principle.md), collecti
 
 ## Read next
 
-- [Bridge from current implementations to proof](bridge.md)
+- [CI-001 — Continuous agent learning](gaps/CI-001-agent-learning-loop.md)
+- [CI-002 — Federated knowledge](gaps/CI-002-federated-knowledge.md)
 - [Agent learning loop](references/agent-learning-loop.md)
 - [Original Hivemind protocol proposal](references/hivemind-protocol-proposal.md)
 - [Verified source map](references/source-map.md)
