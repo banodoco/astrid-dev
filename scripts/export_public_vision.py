@@ -134,7 +134,9 @@ def build(root: Path, revision: str) -> dict:
                 relationships.append(relationship)
         if not relationships:
             raise ValueError(f"{path}: no valid relationships")
-        gap = {"id": gap_id, "title": name, "assessment": status.group(1).lower(),
+        gap = {"id": gap_id, "title": name,
+               "githubUrl": f"{REPO_URL}/blob/{revision}/{path.as_posix()}",
+               "assessment": status.group(1).lower(),
                "assessmentDetail": assessment[1].strip(), "appliesTo": relationships}
         for source_title, out_key in [
             ("Desired state", "desiredMarkdown"),
