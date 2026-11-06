@@ -1,28 +1,30 @@
 # Astrid — a living collective foundation for creative work
 
-**Status:** Evolving north star · **Captured:** 2026-11-06 · Not a roadmap or implementation authorization.
+**Status:** Evolving north star · **Updated:** 2026-11-06 · Not a roadmap or implementation authorization.
 
 ## The vision
 
-**Creative software should continuously grow with the people who use it and the community that builds it.** A person brings an idea; Astrid helps them reach the best available tools, knowledge and collaborators, and shape their own creative environment around the work. People and agents can build on what others have learned instead of repeatedly starting from scratch. Their discoveries can, with appropriate consent, make the whole ecosystem better.
+**Creative software and creative intelligence should continuously grow with the people and agents who use them.** A person brings an idea; Astrid brings together the best available tools, accumulated understanding and creative capabilities, then helps shape the working environment around that idea. What people and agents learn while creating can improve both their own future work and, when shared deliberately, the wider community.
 
-This is larger than a video editor or any single app. Astrid aims to be a **collective foundation for AI-powered creative work**, combining adaptable software, shared intelligence and open-ended participation—without giving up the coherence and reliability of excellent, opinionated tools.
+This is bigger than a video editor, an AI agent or a knowledge database. Astrid aims to become a **collective foundation for creative work**: people and agents adapt their tools while continuously drawing from—and contributing back to—a growing body of creative knowledge.
 
-## Principles
+## The first principles
 
-These are the *first two established principles*, not an exhaustive or fixed five-part taxonomy. The remaining anchors should emerge from deliberate product discussion, not be filled in to meet a number.
+These are the *first two articulated principles*, not an exhaustive or fixed five-part taxonomy. Additional anchors should emerge from product discussion rather than be invented to complete a list.
 
-1. **[Liquid Software](principles/liquid-software/principle.md)** — The software adapts to the creative process. People and their agents assemble, extend and reshape opinionated tools live: from ordinary 2D editing to spatial workspaces. Frontend components and backend capabilities operate on the same underlying resources.
-2. **[Collective Intelligence](principles/collective-intelligence/principle.md)** — The software continuously taps into the best of the community. Knowledge, workflows, lessons and tools from distributed contributors become discoverable, contextual, evidence-backed and improvable—and useful work can feed back into that shared intelligence.
+1. **[Liquid Software](principles/liquid-software/principle.md)** — Tools adapt to the creative process. People and agents assemble and reshape opinionated interfaces and backend capabilities around shared resources, from ordinary 2D software to spatial workspaces.
+2. **[Collective Intelligence](principles/collective-intelligence/principle.md)** — Agents learn continually from their own work and from the best available community knowledge, then help useful, evidence-backed discoveries flow back. Private/local knowledge and public/community datasets can remain independently owned while informing each other.
 
-**The reinforcing loop:** collective knowledge helps agents and people find better tools, techniques and solutions; liquid software makes those capabilities usable and adaptable in the moment; valuable outcomes and learnings can flow back to the community. This loop is an intended experience, not a claim of fully shipped integration.
+**The reinforcing loop:** an agent finds relevant knowledge → helps the person assemble or extend the right tools → work produces outcomes and new understanding → the local knowledge improves → selected contributions improve the wider network → future agents benefit. This is a desired product behavior, **not** a claim that the full loop is already shipped.
 
-**Further principles:** intentionally undefined. Candidate ideas belong in discussion or reference notes until they are articulate and distinct enough to earn an anchor here.
+The [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md) explores one way to make the knowledge side interoperable across private, local and community-owned datasets. It is a supporting *mechanism*, not the overarching vision; Banodoco Hivemind is a concrete proving ground, not the only intended knowledge source.
+
+**Further principles:** intentionally undefined.
 
 ## From vision to reality
 
-Each principle has one concise [principle statement](principles/), a **bridge** describing current foundations, gaps and a meaningful next proof, and **references** that preserve source material and code evidence. Actual scope, ownership, priority, tasks and accepted evidence remain in [Astrid Dev plans](../plans/) under [repository rules](../AGENTS.md).
+Each principle has a concise statement, a [bridge](README.md) between current reality and meaningful next proofs, and references preserving designs and source evidence. [Implementation plans](../plans/) own priority, scope, authorization, dependencies, tasks and accepted proof.
 
-Do not mistake a vision for a feature checklist or create parallel authorities for project data, software extensions or community knowledge. Build from the existing App, Agent, Runtime, packs and Hivemind foundations; preserve explicit user control, trust, provenance and authorial credit.
+Preserve coherent defaults, versioned domain authority, consent, contributor credit and source provenance. Agents may continually *learn* without automatically publishing private data or treating retrieved advice as permission to execute code.
 
-The destination is an environment where **people can pursue creative ideas with less friction, while the tools and collective intelligence available to them keep improving**.
+The destination is an environment where **every person's creative possibilities expand as their tools, their own agents and the community's shared intelligence improve together**.
