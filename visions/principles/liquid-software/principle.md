@@ -1,6 +1,8 @@
-# Principle 1 — Liquid Software
+# Principle 2 — Liquid Software
 
 **Claim:** Software should be shaped by the creative process, not force creative work into a fixed application. People and AI agents should be able to assemble, manipulate, extend and reuse coherent tools as their needs change.
+
+This adaptability exists in service of [artistic ambition](../artistic-ambition/principle.md): it should help people attempt more demanding, original work rather than merely rearrange interfaces.
 
 ## What this means
 
