@@ -1,35 +1,13 @@
-# Visions
+# Vision, gaps, plans and evidence
 
-Begin with **[Astrid's vision](vision.md): Make Extraordinary Art Possible, Together.**
+Start with **[Make Extraordinary Art Possible, Together](vision.md)**.
 
-**Vision (including four principles) → Gaps → Plans → Evidence → reassessment.** The vision describes the destination. Gaps document where the observed reality still falls short. Plans are bounded interventions; their evidence is used to update the gaps, not assumed to prove them closed.
+The vision contains four [pillars](vision.md#four-pillars)—**Built for Artistic Ambition, Agent-Powered Liquid Software, Intelligence That Compounds, Shared Creative Endeavour**—and three [cross-cutting principles](principles.md): **local-first/cloud-capable, open by design, creator-controlled**.
 
-| Principle | Current gap assessments |
-| --- | --- |
-| [Built for Artistic Ambition](principles/artistic-ambition/principle.md) | [AA-001 — Sustained artistic work](principles/artistic-ambition/gaps/AA-001-sustained-creative-work.md) |
-| [Agent-Powered Liquid Software](principles/liquid-software/principle.md) | [LS-001 — Portable components](principles/liquid-software/gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](principles/liquid-software/gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](principles/liquid-software/gaps/LS-003-full-stack-contributions.md) |
-| [Collective Intelligence That Compounds](principles/collective-intelligence/principle.md) | [CI-001 — Agent learning loop](principles/collective-intelligence/gaps/CI-001-agent-learning-loop.md) · [CI-002 — Federated knowledge](principles/collective-intelligence/gaps/CI-002-federated-knowledge.md) |
-| [Collective Ambition, Shared Ownership](principles/collective-ambition/principle.md) | [CA-001 — Artistic challenge culture](principles/collective-ambition/gaps/CA-001-creative-challenge-culture.md) · [CA-002 — Contributor ownership](principles/collective-ambition/gaps/CA-002-contributor-ownership.md) |
+**[Gaps](gaps.md) → [Plans](../plans/) → Evidence → reassessment.** A gap may apply to one or several pillars and principles. The files live in **one** [`gaps/` directory](gaps/); they are not duplicated beneath their conceptual owners.
 
-## Shared foundations — not a fifth principle
+The current gaps are [AA-001](gaps/AA-001-sustained-creative-work.md), [LS-001](gaps/LS-001-portable-components.md), [LS-002](gaps/LS-002-agent-workspace-control.md), [LS-003](gaps/LS-003-full-stack-contributions.md), [CI-001](gaps/CI-001-agent-learning-loop.md), [CI-002](gaps/CI-002-federated-knowledge.md), [CA-001](gaps/CA-001-creative-challenge-culture.md), [CA-002](gaps/CA-002-contributor-ownership.md), and cross-cutting [F-001](gaps/F-001-platform-reliability.md), [F-002](gaps/F-002-safe-user-control.md), [F-003](gaps/F-003-creative-execution.md), [F-004](gaps/F-004-pack-lifecycle.md).
 
-Some missing outcomes underpin **all four** principles rather than fitting naturally under one:
+Existing gaps should be reused before proposing new ones. For example, **local/cloud deployment** is already partly addressed by F-001 and F-003; assess whether their closure criteria really need another independent gap before introducing one.
 
-- [F-001 — Reliability across supported environments](foundations/gaps/F-001-platform-reliability.md)
-- [F-002 — Trustworthy user control and operation](foundations/gaps/F-002-safe-user-control.md)
-- [F-003 — Dependable end-to-end creative execution](foundations/gaps/F-003-creative-execution.md)
-- [F-004 — Dependable pack and extension lifecycle](foundations/gaps/F-004-pack-lifecycle.md)
-
-Read [what a foundation gap means](foundations/README.md) and the [2026-11-06 provisional assessment of every current plan](references/plan-gap-assessment-2026-11-06.md). This dated assessment is **not a second maintained plan registry**; adopt mappings in the owning `plan.md` files only after review.
-
-These are **initial assessed gaps**, not an exhaustive taxonomy or an approved work queue. An unplanned gap is legitimate. A plan can serve several gaps, while foundational enablers may not directly close any.
-
-## How the system stays coherent
-
-- **[Vision](vision.md):** one concise north star and four stable principles.
-- **Gap documents:** live, source-grounded *desired → current → difference → closure evidence* assessments, one per independently provable outcome. See the [gap contract and maintenance process](gaps.md).
-- **[Plans](../plans/):** each owns its implementation scope and records a **Vision gaps** link to its primary gap(s), whether principle-specific or cross-cutting, or explicitly identifies itself as a foundational **enabler**. **The plan is the sole owner of this relationship**; do not manually copy lists of plan IDs into gap files.
-- **Evidence:** attached to the plan's existing tasks/inputs/evidence or a source-revision-pinned artifact. An agent can propose a gap update after a plan completes; a reviewer determines whether the result closes, partly closes or does not change the gap.
-- **References:** detailed evidence/design notes only when useful; e.g. [Liquid Software components](principles/liquid-software/references/components.md), [agent learning loop](principles/collective-intelligence/references/agent-learning-loop.md) and the [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md).
-
-**Not yet automated:** no vision CI check, gap updater or scheduled audit is implemented by this documentation. Future deterministic checks can validate IDs/links/fields and plan declarations; agent review can assess evidence and propose PRs, not silently rewrite strategy. The [project queue](../README.md) remains the only source of plan status, ownership and priority. [Repository rules](../AGENTS.md) still govern authorization.
+[Reference documents](references/) preserve the original Liquid Software philosophy, component/source maps, the proposed Hivemind protocol and a [dated assessment of current plans](references/plan-gap-assessment-2026-11-06.md). Plans own their gap links and the [root queue](../README.md) alone owns status, priority and ownership. No automatic gap reviewer or CI enforcement exists yet.
