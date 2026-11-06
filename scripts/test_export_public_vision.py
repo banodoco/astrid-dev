@@ -24,7 +24,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
     def test_vision_contribution_call_to_action(self):
         vision = self.page["vision"]
         self.assertIn("collective artistic ambition", vision["title"])
-        self.assertIn("Astrid aims to help people", vision["introMarkdown"])
+        self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
         self.assertIn("ownership", vision["contributeMarkdown"])
 
     def test_principles_and_gap_relationships(self):

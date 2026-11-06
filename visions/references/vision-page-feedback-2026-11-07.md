@@ -8,7 +8,7 @@
 |---|---|---|---|
 | V-01 | Headline frames Astrid as unlocking the collective artistic ambition of the open-source community | [Vision](../vision.md) | Current draft |
 | V-02 | Lead includes **individual artists and the community as a whole** pursuing artistic work beyond what they thought possible | [Vision](../vision.md) | Incorporated in draft |
-| V-03 | Four pillars have grounded, first-person descriptions and explicit **1–4** numbering; fourth is **A Shared Creative Endeavor** | [Vision](../vision.md), [App](https://github.com/banodoco/astrid-app) | Rename proposed; numbering implemented |
+| V-03 | Four pillars have grounded, first-person descriptions and explicit **1–4** numbering; fourth is **A Shared Creative Endeavor** | [Vision](../vision.md), [App](https://github.com/banodoco/astrid-app) | Renamed in proposed Dev branch; numbering implemented |
 | V-04 | Four operating principles: local-first/cloud-capable, open by design, creator control, **eliminate needless technical wrangling**; agents handle model selection, setup and infrastructure, people create | [Principles](../principles.md) | Proposed in draft |
 | V-05 | Gap titles read as **short statements of missing outcomes/problems** rather than aspirational project names | [Gaps](../gaps.md) | Draft, retained stable IDs |
 | V-06 | Creative challenge gap acknowledges Banodoco community and prior Arca Gidan art competitions while stating Astrid-specific creative culture is not yet established | [CA-001](../gaps/CA-001-creative-challenge-culture.md) | Draft, not audited |
@@ -23,7 +23,7 @@
 | UI-01 | Expanded gap details use the **full available width**, not an indented column beside the ID | Planned |
 | UI-02 | Mobile gap details start **collapsed**; tapping opens/closes; **show all gaps** reveals newly mounted rows | Already covered by prior App fix; keep regression tests |
 | UI-03 | On initial page load show stable **text skeletons**, rather than an empty page that pops into layout | Planned |
-| UI-04 | Show about **eight projects plus a final View all tile** in a responsive desktop three-column grid; fewer columns on mobile | Planned; editorial layout choice |
+| UI-04 | Show about **eight projects plus a final View all tile** in a responsive desktop three-column grid; fewer columns on mobile | Proposed layout, App implementation not yet complete |
 | UI-05 | View all projects opens immediately; rows preloaded in memory, reveal observer registers newly rendered rows, no leaving/reopening page | Planned; preserve button accessibility |
 | UI-06 | Keep actual status, priority and links sourced from the [plan catalog](../../plans/index.md); never duplicate project copy in App | Existing contract |
 
