@@ -1,6 +1,6 @@
 # Vision, gaps, plans and evidence
 
-Start with **[Make Extraordinary Art Possible, Together](vision.md)**.
+Start with **[A tool to unlock the collective artistic ambition of the open-source community](vision.md)**.
 
 The vision contains four [pillars](vision.md#four-pillars)—**A Tool for Artistic Ambition, Agent-Powered Liquid Software, Intelligence That Compounds, Shared Creative Endeavour**—and three [cross-cutting principles](principles.md): **local-first/cloud-capable, open by design, creator-controlled**.
 
