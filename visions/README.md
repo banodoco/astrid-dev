@@ -1,24 +1,20 @@
 # Visions
 
-Start with **[Astrid's overarching vision](vision.md): help people create work more ambitious than they imagined possible.**
+Begin with **[Astrid's overarching vision](vision.md): Make Extraordinary Art Possible, Together.**
 
-The four principles answer different obstacles to that goal:
-
-| What stands in the way? | Principle | Bridge to reality |
+| Principle | Promise | From current state to plans |
 | --- | --- | --- |
-| **Creative capability:** I cannot yet realize this idea | [Built for Artistic Ambition](principles/artistic-ambition/principle.md) | [Current state → proofs](principles/artistic-ambition/bridge.md) |
-| **Adaptability:** My software cannot keep up with the work | [Liquid Software](principles/liquid-software/principle.md) | [Current state → plans](principles/liquid-software/bridge.md) |
-| **Knowledge:** I don't know how to do it | [Collective Intelligence](principles/collective-intelligence/principle.md) | [Current state → plans](principles/collective-intelligence/bridge.md) |
-| **Motivation and stake:** I need a reason to push further | [Collective Ambition](principles/collective-ambition/principle.md) | [Current state → mechanisms](principles/collective-ambition/bridge.md) |
+| [Built for Artistic Ambition](principles/artistic-ambition/principle.md) | Powerful creative tools and meaningful artistic control | [Bridge](principles/artistic-ambition/bridge.md) |
+| [Agent-Powered Liquid Software](principles/liquid-software/principle.md) | Interfaces and agent capabilities that adapt to the work | [Bridge](principles/liquid-software/bridge.md) |
+| [Collective Intelligence That Compounds](principles/collective-intelligence/principle.md) | Local and community knowledge continually improves agents' work | [Bridge](principles/collective-intelligence/bridge.md) |
+| [Collective Ambition, Shared Ownership](principles/collective-ambition/principle.md) | Culture, challenges, recognition and a real contributor stake | [Bridge](principles/collective-ambition/bridge.md) |
 
-## Structure
+## How it is organized
 
-**Vision → principles → bridges and references → implementation plans.**
+**Vision → principles → bridges/references → plans.** The vision says *why*; principles say *what must be true*; bridges distinguish current foundations from missing capabilities and meaningful proofs; [plans](../plans/) say *who will do what and how completion is evidenced*.
 
-- **[Vision](vision.md):** the purpose, four complementary principles and how they reinforce one another.
-- **`principle.md`:** the enduring intent of one principle, independent of any specific implementation.
-- **`bridge.md`:** what's real today, what's missing, what would prove progress, and links to relevant plans.
-- **`references/`:** original source documents and deeper explorations when useful. Examples: the [Liquid Software component reference](principles/liquid-software/references/components.md), [agent learning loop](principles/collective-intelligence/references/agent-learning-loop.md), and [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md).
-- **[Implementation plans](../plans/):** priorities, owned scopes, work, authorizations and evidence.
+**Plan alignment lives in each `plans/<id>/plan.md`**, as a short `**Vision alignment:**` line linking to one primary principle and, where materially useful, a supporting principle. This is contextual metadata, **not a second status or priority authority**. To discover work for a principle, search those links; do not hand-maintain a duplicate list here. New plans use the [project template](../templates/project/plan.md).
 
-Keep the vision minimal. Don't repeat a principle's technical detail in the overview or create a second implementation queue. The [Collective Ambition principle](principles/collective-ambition/principle.md) records the **100% contributor-ownership intention**; its allocation and legal mechanism are not yet defined. Nothing in the vision authorizes product work or creates an equity entitlement. Follow [repository rules](../AGENTS.md).
+Preserve original evidence and deeper explorations under principle-specific `references/` only where useful, for example the [Liquid Software components](principles/liquid-software/references/components.md), [agent learning loop](principles/collective-intelligence/references/agent-learning-loop.md), and [Hivemind protocol proposal](principles/collective-intelligence/references/hivemind-protocol-proposal.md).
+
+The intended 100% contributor ownership of the company belongs to the [Collective Ambition](principles/collective-ambition/principle.md) principle. Eligibility, allocation and legal instruments remain unresolved; the vision does not itself transfer ownership or authorize work. Follow [repository rules](../AGENTS.md).
