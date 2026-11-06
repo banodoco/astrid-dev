@@ -2,6 +2,7 @@ name: Documentation integrity
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
     paths:
       - "README.md"
       - "ARCHIVE.md"
@@ -12,6 +13,8 @@ on:
       - "templates/project/**"
       - "scripts/check_docs.py"
       - "scripts/test_check_docs.py"
+      - "scripts/check_completion.py"
+      - "scripts/test_check_completion.py"
       - ".github/workflows/docs.yml"
   push:
     branches: [main]
@@ -35,7 +38,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Test catalog validator
-        run: python3 -m unittest discover -s scripts -p "test_check_docs.py"
+        run: python3 -m unittest discover -s scripts -p "test_*.py"
       - name: Validate document structure and generated README
         run: python3 scripts/check_docs.py
+      - name: Require completion assessments for newly done plans
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: python3 scripts/check_completion.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"

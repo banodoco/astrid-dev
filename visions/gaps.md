@@ -42,7 +42,7 @@ Or state `**Vision role:** Foundational enabler — ...` for work whose completi
 
 ## Evidence updates gaps, not vice versa
 
-After a plan completes or important new evidence emerges, an agent may propose a gap update comparing the *actual* results with the desired state and closure criteria. A reviewer decides whether the gap is closed, partly evidenced, unchanged or needs recheck; the proposal doesn't change plan authority. A completed plan never closes a gap automatically.
+When a PR changes a plan to `done`, its description must include a [completion assessment](../AGENTS.md#completing-a-plan-one-decision-gate): evidence against plan completion and a justified disposition for **every linked gap** (or no-gap explanation for an enabler). After a plan completes or important new evidence emerges, an agent may propose a gap update comparing the *actual* results with the desired state and closure criteria. A reviewer decides whether the gap is closed, partly evidenced, unchanged or needs recheck; the proposal doesn't change plan authority. A completed plan never closes a gap automatically.
 
 **Checks today:** `python3 scripts/check_docs.py` validates unique gap IDs, required fields, local target paths, plan-folder structure, plan declarations, the authoritative [plan catalog](../plans/index.md) and its generated README preview. Run `python3 scripts/check_docs.py --sync` after editing catalog order or statuses. The focused GitHub Actions workflow runs those checks without pushing changes.
 
