@@ -4,7 +4,7 @@ Each project gets a stable folder under `plans/`. A reader should be able to ope
 
 | Required file | What belongs here |
 |---|---|
-| `plan.md` | The goal, scope, starting point, sequence, and completion boundary. Link the supporting details. |
+| `plan.md` | The goal, scope, starting point, sequence, completion boundary, and a [vision gap](../visions/gaps.md) relationship (or enabler rationale). Link supporting details. |
 | `tasks.md` | The work index. A ready task identifies its outcome, route or responsible role, dependencies, focused evidence, and progress. |
 | `inputs.md` | The sources the work relies on: code and branches, a brief, visual references, research data, an existing decision, or a predecessor's output. Record identity and limitations where they matter. |
 
