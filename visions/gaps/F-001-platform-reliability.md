@@ -1,4 +1,4 @@
-# F-001 — Reliability across supported environments
+# F-001 — Reliability isn't proven across supported setups
 
 **Applies to:** [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
 

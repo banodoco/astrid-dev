@@ -1,4 +1,4 @@
-# CI-001 — Agents learn from real creative work
+# CI-001 — Agents don't yet reliably learn from creative work
 
 **Applies to:** [Intelligence That Compounds](../pillars/compounding-intelligence.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open, source assessment (2026-11-06).
 
