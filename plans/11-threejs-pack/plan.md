@@ -1,5 +1,7 @@
 # Three.js as a pack
 
+**Vision gaps:** [Dependable pack lifecycle](../../visions/gaps/F-004-pack-lifecycle.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Move the existing built-in Three.js functionality into the native pack format, keep it included by default, and preserve its currently supported behavior. This remains a draft until the current source and executable tasks are scoped. Status, owner, and estimate live in the [project queue](../../README.md).
