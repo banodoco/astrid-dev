@@ -1,14 +1,20 @@
 # Visions
 
-Long-term product and architectural directions for Astrid. A vision explains **why and what**; [plans](../plans/) own **approved scope, tasks, evidence, status and execution**. A vision does not authorize product changes or supersede existing repository rules.
+**[Astrid's overarching vision](vision.md)** is the starting point: a living collective foundation for creative work, shaped by people and their agents.
 
-## Visions
+The vision names the principles that make it tangible. **Two are established so far; additional principles remain open** rather than being invented to complete a fixed list.
 
-- [Liquid Software — composable, agent-native creative environments](liquid-software/vision.md)
-  - [Original philosophy](liquid-software/references/original-philosophy.md): preserved source text
-  - [Component and extension reference](liquid-software/references/components.md): concrete examples and proposed contracts
-  - [Code and plan references](liquid-software/references/source-map.md): verified repository anchors, observations and limitations
+| Principle | What it means | Current state → plans | Supporting references |
+| --- | --- | --- | --- |
+| [Liquid Software](principles/liquid-software/principle.md) | Software reshapes itself around creative work, with composable opinionated tools and agent-native capabilities | [Bridge](principles/liquid-software/bridge.md) | [Component reference](principles/liquid-software/references/components.md) · [source map](principles/liquid-software/references/source-map.md) · [original philosophy](principles/liquid-software/references/original-philosophy.md) |
+| [Collective Intelligence](principles/collective-intelligence/principle.md) | Continuously draw on, improve and credit the best knowledge of the creative community | [Bridge](principles/collective-intelligence/bridge.md) | [Hivemind source map](principles/collective-intelligence/references/source-map.md) |
 
-## How to use these
+## Documentation hierarchy
 
-Read the vision first. Treat the references as evidence at the recorded source revisions, not as perpetual claims about current behavior. Implementation projects should link to the vision where useful, re-inspect current code, and follow their own plan and authority boundaries. Keep the vision concise; add supporting reference documents only when their content has an independently useful purpose.
+1. **[Vision](vision.md):** the overarching purpose and concise, evolving set of principles—not a backlog.
+2. **Principle documents:** why each principle matters, the experience it creates, and enduring design rules.
+3. **Bridges:** current real foundations → missing seams → small meaningful proofs → links to existing/planned work. These can evolve as the code changes.
+4. **References:** preserved originating material, existing component/code sources, examples and observed constraints. Source references are pinned to their captured revisions.
+5. **[Implementation plans](../plans/):** accepted work scope, authority, dependencies, tasks, evidence and delivery. No vision document authorizes implementation or changes a plan's status.
+
+Keep one canonical overarching vision and one canonical statement per principle. Create supporting documents only when they have independent value; never turn the vision into a parallel project queue or copy the same technical specification across different principles. Respect [repository rules](../AGENTS.md).
