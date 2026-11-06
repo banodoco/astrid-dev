@@ -14,6 +14,10 @@ The tools, extension mechanisms and the thinking behind them should be inspectab
 
 Creative decisions, project data, agent permissions, installed tools, execution location and spending remain under the person's authority. Agents should make consequential proposals legible and reversible where possible. Private knowledge stays private unless its owner chooses to share it. This principle requires concrete safety and reliability evidence, not just good intentions.
 
+## Eliminate needless technical wrangling
+
+Creative work should not require people to become environment managers, model installers or execution troubleshooters. **Agents should handle the technical work**: choosing a suitable model with the creator's consent, setting up and maintaining environments, preparing dependencies, running jobs and recovering from errors. Expose understandable choices, costs and failure states without making technical configuration the main creative interface. The goal is for people to spend their attention on creating—not on infrastructure. This is an aspiration requiring demonstrated reliability, not a claim that setup is already effortless.
+
 ## Evidence and delivery
 
 A [gap](gaps.md) may apply to any number of [pillars](vision.md) and principles, and one gap may concern several. No principle automatically creates a new gap: first check whether an existing outcome already captures the missing behavior. [Plans](../plans/) link to those specific gaps and deliver evidence.

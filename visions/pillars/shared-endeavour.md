@@ -1,4 +1,4 @@
-# Pillar 4 — Shared Creative Endeavour
+# Pillar 4 — A Shared Creative Endeavor
 
 **Give people a reason, encouragement and a genuine stake in attempting more ambitious creative work.**
 

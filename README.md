@@ -4,7 +4,7 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 ## What we're building
 
-**[A tool to unlock the collective artistic ambition of the open-source community](visions/vision.md).** Four artistic [pillars](visions/vision.md#four-pillars) describe the creative aim; three [operating principles](visions/principles.md) — local-first/cloud-capable, open by design and creator-controlled — apply across the whole system.
+**[A tool to unlock the collective artistic ambition of the open-source community](visions/vision.md).** Four artistic [pillars](visions/vision.md#four-pillars) describe the creative aim; four [operating principles](visions/principles.md) — local-first/cloud-capable, open by design, creator-controlled and eliminating needless technical wrangling — apply across the whole system.
 
 **[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 

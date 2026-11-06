@@ -17,7 +17,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(
             [p["title"] for p in self.page["pillars"]],
             ["A Tool for Artistic Ambition", "Agent-Powered Liquid Software",
-             "Intelligence That Compounds", "Shared Creative Endeavour"],
+             "Intelligence That Compounds", "A Shared Creative Endeavor"],
         )
         self.assertTrue(all(p["descriptor"] and p["bodyMarkdown"] for p in self.page["pillars"]))
 
@@ -28,7 +28,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("ownership", vision["contributeMarkdown"])
 
     def test_principles_and_gap_relationships(self):
-        self.assertEqual(len(self.page["principles"]), 3)
+        self.assertEqual(len(self.page["principles"]), 4)
         self.assertGreater(len(self.page["gaps"]), 0)
         self.assertEqual(len({g["id"] for g in self.page["gaps"]}), len(self.page["gaps"]))
         self.assertTrue(all(g["appliesTo"] and g["currentMarkdown"] and g["desiredMarkdown"]
