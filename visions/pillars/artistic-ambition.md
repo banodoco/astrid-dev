@@ -1,20 +1,9 @@
-# Principle 1 — Built for Artistic Ambition
+# Pillar 1 — Built for Artistic Ambition
 
-**The point is not to make creation merely faster or easier. It is to help people make work beyond what they previously believed themselves capable of.**
+**Give people the creative power and control to make work beyond what they previously thought possible.**
 
-Astrid should be built for people with unusually ambitious creative goals, including people who do not yet have the skills, resources or collaborators to realize them. The ceiling matters: control, craft, coherence and the ability to refine work over time are as important as accessibility.
+Astrid must support serious, sustained artistic practice—not just quick generations. The artist can refine, direct and understand the work, from early experiment through a demanding project to a finished piece. We judge success by **quality, originality and artistic agency**, not throughput alone.
 
-## What this means
+**What it requires:** meaningful creative control; continuity and iteration across complex projects; agents that extend rather than replace human judgment; real finished work that demonstrates an increased ceiling of possibility.
 
-- **Support the full ambition.** Help someone make a compelling film, not merely generate a clip; develop an artistic practice, not merely produce outputs.
-- **Keep the artist in charge.** Give people fine control, iteration, reversibility and understanding. Agents should expand their agency, taste and reach rather than obscure decisions.
-- **Grow with the work.** A first experiment should be able to become a complex, sustained project without hitting an arbitrary product ceiling.
-- **Judge success by the work.** Creative quality, originality, depth, the artist's intent and what becomes possible matter more than generation counts or time saved alone.
-
-[Liquid Software](../liquid-software/principle.md) lets the tools adapt to that ambition. [Collective Intelligence](../collective-intelligence/principle.md) makes accumulated techniques accessible. [Collective Ambition](../collective-ambition/principle.md) gives people inspiration, challenge and a stake in pushing further.
-
-## Gaps and evidence
-
-- [AA-001 — Sustained, ambitious creative work](gaps/AA-001-sustained-creative-work.md)
-
-[Overarching vision](../../vision.md) · [Gap model](../../gaps.md)
+**Gap:** [AA-001 — Sustained, ambitious creative work](../gaps/AA-001-sustained-creative-work.md). The [principles](../principles.md) apply here too; creative ambition does not require forfeiting openness or control.
