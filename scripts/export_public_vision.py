@@ -169,6 +169,7 @@ def build(root: Path, revision: str) -> dict:
         })
 
     return {
+        "schemaVersion": 1,
         "source": {"repository": "banodoco/astrid-dev", "revision": revision},
         "vision": {"title": title, "introMarkdown": rewrite_links(intro, vision_file, revision, root)},
         "pillars": pillars, "principles": principles, "gaps": gaps, "projects": projects,

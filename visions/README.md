@@ -22,3 +22,11 @@ Astrid App should consume a build-time snapshot of the **existing** Markdown, ge
 - **Page layout and visual behaviour:** Astrid App. Show a substantial slice of nonterminal plans in catalog order (for example 10–12, with an option to show the rest). Distinguish `active` from `queued`/`blocked`/`paused` honestly. No new public-summary metadata is required for this first version.
 
 The exporter and its focused tests fail on invalid identities, missing fields, unresolved relationships and invalid local links. The actual page should additionally test that the rendered copy, project links and status labels come from the snapshot. Do not fetch GitHub from browsers on each page visit or maintain a second editorial record.
+
+## Live public vision feed
+
+After merging validated content to `main`, [the documentation workflow](../.github/workflows/docs.yml) publishes a **generated, versioned JSON feed** to the `vision-published` branch. The public endpoint is `https://raw.githubusercontent.com/banodoco/astrid-dev/vision-published/vision.json`. The published branch is **generated output only**: contributors edit the Markdown and plan catalog on `main`, never `vision-published`.
+
+The exporter provides `schemaVersion: 1`, the exact source commit, pillar/operating-principle/gap content and the complete plan catalog with GitHub permalinks. Publication runs only after the documentation validator and content-contract tests pass. A failed validation leaves the previous published feed unchanged. A browser's normal HTTP cache may delay visibility briefly; this is not instant real-time updating. Astrid App reads the feed at runtime and owns only presentation. **No cross-repository sync PR or copied editorial snapshot is required.**
+
+The public feed changes independently of Astrid App releases. Breaking schema changes must use a new version or be deployed compatibly; existing clients must not be silently broken.

@@ -23,7 +23,8 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
     def test_principles_and_gap_relationships(self):
         self.assertEqual(len(self.page["principles"]), 3)
-        self.assertEqual(len(self.page["gaps"]), 12)
+        self.assertGreater(len(self.page["gaps"]), 0)
+        self.assertEqual(len({g["id"] for g in self.page["gaps"]}), len(self.page["gaps"]))
         self.assertTrue(all(g["appliesTo"] and g["currentMarkdown"] and g["desiredMarkdown"]
                             for g in self.page["gaps"]))
         self.assertTrue(all(g["assessment"] in
@@ -32,11 +33,12 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
     def test_open_projects_derive_from_catalog_in_priority_order(self):
         projects = self.page["projects"]
-        self.assertEqual(len(projects), 23)
+        self.assertGreater(len(projects), 0)
+        self.assertEqual(len({p["id"] for p in projects}), len(projects))
         open_projects = [p for p in projects if p["status"] not in {"done", "cancelled"}]
-        self.assertEqual(len(open_projects), 22)
-        self.assertEqual(open_projects[0]["id"], "07-pinokio")
-        self.assertEqual(projects[-1]["status"], "done")
+        self.assertTrue(all(p["status"] in {"queued", "active", "blocked", "paused"} for p in open_projects))
+        self.assertEqual([p["priorityOrder"] for p in projects], list(range(1, len(projects)+1)))
+        self.assertEqual(self.page["schemaVersion"], 1)
         self.assertTrue(all(p["title"] and p["goalMarkdown"] and p["githubUrl"] for p in projects))
         self.assertTrue(all(p["githubUrl"].startswith(
             "https://github.com/banodoco/astrid-dev/blob/" + SHA + "/plans/")
