@@ -2,7 +2,9 @@
 
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
-State the useful result in one or two sentences. Current status, owner, and remaining estimate live in the [project queue](../../README.md), not a second record here.
+State the useful result in one or two sentences. Current status, owner, priority and remaining estimate live in the [plan catalog](../../plans/index.md), not a second record here.
+
+**Vision gaps:** Link the primary gap (and only truly supported secondary gap IDs) from [the gap index](../../visions/README.md), including cross-cutting gaps where appropriate, or use **Vision role: Foundational enabler** and explain why. Use one declaration, not both. Existing project scopes and status stay authoritative; [gap contract](../../visions/gaps.md).
 
 ## Goal and scope
 
@@ -31,4 +33,4 @@ Describe the observable result and its evidence, including any outcome this proj
 - [tasks.md](tasks.md): task index, instructions, routes, checks, and progress.
 - [inputs.md](inputs.md): starting code, retained work, references, and source limits.
 
-When done or cancelled, move the queue row to [ARCHIVE.md](../../ARCHIVE.md); keep this project folder at its stable path.
+When done or cancelled, update the row in the [plan catalog](../../plans/index.md); keep this project folder at its stable path.

@@ -1,5 +1,7 @@
 # 1 — Merge completed installer consent
 
+**Vision gaps:** [Trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Deliver the accepted installer consent increment on Agent and App, with clear choices, saved preferences, and predictable installation behavior. Preserve the accepted nonblocking skills-off rendering limitation; this increment does not claim to fix it.

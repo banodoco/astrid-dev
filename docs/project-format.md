@@ -4,7 +4,7 @@ Each project gets a stable folder under `plans/`. A reader should be able to ope
 
 | Required file | What belongs here |
 |---|---|
-| `plan.md` | The goal, scope, starting point, sequence, and completion boundary. Link the supporting details. |
+| `plan.md` | The goal, scope, starting point, sequence, completion boundary, and a [vision gap](../visions/gaps.md) relationship (or enabler rationale). Link supporting details. |
 | `tasks.md` | The work index. A ready task identifies its outcome, route or responsible role, dependencies, focused evidence, and progress. |
 | `inputs.md` | The sources the work relies on: code and branches, a brief, visual references, research data, an existing decision, or a predecessor's output. Record identity and limitations where they matter. |
 
@@ -19,9 +19,9 @@ The [Astrid website](../plans/21-astrid-website/plan.md) illustrates the distinc
 | Website material | Why it has its own home |
 |---|---|
 | [`design.md`](../plans/21-astrid-website/design.md) | Many tasks depend on the same visitor journey, copy, visual rules, and motion specification. The plan can explain the goal in a page. |
-| [`mockups/`](../plans/21-astrid-website/mockups/) | Day/night reference frames show the intended result. Link the exact frame from the task that needs it. |
-| [`tasks/`](../plans/21-astrid-website/tasks/) | The 34 implementation cards have five distinct phases. `tasks.md` indexes them; each phase file holds its cards once. |
-| [`evidence/`](../plans/21-astrid-website/evidence/) | Prior inspections and reviews record what was observed and why decisions were made. A mockup is a target, not proof that the site matches it. |
+| [`mockups/`](../plans/21-astrid-website/mockups) | Day/night reference frames show the intended result. Link the exact frame from the task that needs it. |
+| [`tasks/`](../plans/21-astrid-website/tasks) | The 34 implementation cards have five distinct phases. `tasks.md` indexes them; each phase file holds its cards once. |
+| [`evidence/`](../plans/21-astrid-website/evidence) | Prior inspections and reviews record what was observed and why decisions were made. A mockup is a target, not proof that the site matches it. |
 
 Generation has a different extension: its [environment recipes](../plans/02-consistent-generation/env/README.md) describe the setup needed to reproduce its focused checks. Those recipes belong with that project; other projects do not need an `env/` folder by default.
 
@@ -31,6 +31,6 @@ Keep work inside a project when it serves that project's outcome. Give it its ow
 
 ## At catalog scale
 
-Keep folder IDs stable as priorities, owners, and status change. Link dependencies to project or task outputs, not to row numbers. Archiving moves the index entry; it does not move its sources or break its links.
+Keep folder IDs stable as priorities, owners, and status change. Link dependencies to project or task outputs, not to row numbers. Archiving changes status in the catalog; it does not move files or break links.
 
-Today the [queue](../README.md) owns active/upcoming metadata and the [archive](../ARCHIVE.md) owns terminal entries. At hundreds or thousands of projects, discovery becomes the constraint: the front page should show active work and a short upcoming list, with searchable views of the rest. When the manual index stops serving that job, **migrate** its fields to one small record per project (for example `plan.md` front matter), and derive views by status, owner, or project type. Do not start hand-maintaining both a catalog and copies of the same metadata. The folder structure need not change for that migration.
+Today the [plan catalog](../plans/index.md) owns all plans' status, owner, priority and estimate, including terminal entries; the root README top-ten list is generated from it. At hundreds or thousands of projects, discovery becomes the constraint: the front page should show active work and a short upcoming list, with searchable views of the rest. If the catalog eventually becomes unmanageable, **migrate** its fields to one small record per project and derive views. Do not maintain the catalog and copied metadata in parallel. The folder structure need not change for that migration.

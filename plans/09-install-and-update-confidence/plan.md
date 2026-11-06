@@ -1,5 +1,7 @@
 # 09 — Install and update confidence
 
+**Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Make supported install, update, rollback, repair, and uninstall routes dependable on Linux, macOS, and Windows. Qualify them with real hosted evidence and a single update transaction while preserving the previous working version and user data on failure or refusal.

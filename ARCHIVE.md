@@ -1,8 +1,5 @@
-# Completed and cancelled projects
+# Completed and cancelled plans
 
-This index is the only location for terminal project rows. When a project is completed or explicitly cancelled, move its row here from [README.md](README.md). Leave its plan at the same path so links and history stay stable: `plans/<id-name>/plan.md`, with its `tasks.md`, `inputs.md`, and supporting files kept alongside it. Do not copy the row into both files.
+All current and historical plans live in **[the single plan catalog](plans/index.md)**. Filter that table by `done` or `cancelled` for terminal entries; no separate archive table is maintained.
 
-No projects have been archived in this repository yet.
-
-| Project | Status | Date | Result or cancellation reason | Plan |
-|---|---|---|---|---|
+Keep each plan folder and its evidence at its original path. To close or cancel a plan, change its status in the catalog and refresh the root README preview with `python3 scripts/check_docs.py --sync`.

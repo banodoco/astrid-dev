@@ -1,5 +1,7 @@
 # Multiple inference routes (Wan2GP)
 
+**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 **Draft; not ready for execution.** Provide one shared generation route for VibeComfy (primary) and Wan2GP (additional), with both integrations represented as packs. Current status and owner remain in the [project queue](../../README.md).

@@ -1,0 +1,47 @@
+# Plan catalog
+
+**Single source of truth for every plan's status, owner, priority order and estimate**, including completed and cancelled work. The [root README](../README.md) shows a generated preview of the first ten nonterminal plans; [ARCHIVE.md](../ARCHIVE.md) is a pointer, not a second register.
+
+**Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. This initial order preserves the existing README ordering (excluding the completed plan), **not a new prioritization decision**. Move a row to reprioritize; update its status in place. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
+
+**Definitions:** `active` = explicitly started; `queued` = planned, not started; `blocked` = known impediment; `paused` = deliberately stopped; `done` = accepted completion evidence; `cancelled` = intentionally abandoned, with reason in the plan. Owner is accountability, not permission. Estimates are remaining human engineering days or `TBD`.
+
+## All plans
+
+| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |
+|---|---|---|---|---:|---|---|
+| Pinokio basic (R1.1) | Prove users can install, start, stop (including while busy), update and remove Astrid through Pinokio on Linux, macOS and Windows, with a separate three-row hosted gate. Shipped on indicative evidence (5 Nov); gaps in the plan. | active | Release 1 merge coordinator | TBD | — | [Plan 07](07-pinokio/plan.md) |
+| Zero-to-first-image onboarding | Go from an existing inference setup to a generated image visible on the timeline through one simple command, with tested recovery and minimal agent effort. | queued | Unassigned | TBD | scope agreement | [Plan 20](20-zero-to-first-image/plan.md) |
+| Install and update confidence | Make installing and updating dependable on all three OSes: one update path, and a real hosted test for every install, update, rollback and removal route. | queued | Unassigned | TBD | — | [Plan 09](09-install-and-update-confidence/plan.md) |
+| Installer consent | Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior. | queued | Unassigned | 0.5–1 day | — | [Plan 01](01-installer-consent/plan.md) |
+| Consistent generation path | Make supported generation choose consistent defaults and set up a compatible, pinned stack, proven on fixtures and a fresh Linux install; real model inference is not proven here. | queued | Unassigned | 4–5 days after Plan 01 (includes the RunPod dry-run work, the installed-package test and the final rebase), plus a Linux x86_64 environment | Plan 01 (from phase 3); a Linux x86_64 environment for task V2 only | [Generation plan](02-consistent-generation/plan.md) |
+| Pinokio qualification | Engine Stop/Quit refusal veto, direct custody and fully-local mode, qualified natively. | queued | Unassigned | TBD | — | [Plan 10](10-pinokio-qualification/plan.md) |
+| Refined concurrent editing | Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes. | queued | Unassigned | TBD | — | [Plan 04](04-concurrent-edits/plan.md) |
+| Release fixes integration | Bring the accepted fixes together into a coherent release while preserving existing behavior. | queued | Unassigned | TBD | — | [Plan 05](05-remaining-fixes/plan.md) |
+| Packs v1.3 | Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows. | queued | Unassigned | TBD | owner's go; a Playwright browser for the App checks | [Plan 06](06-packs/plan.md) |
+| Three.js as a pack | Move the existing built-in Three.js functionality into a native pack that remains included by default, with current behavior preserved through conversion. | queued | Unassigned | TBD | scope agreement | [Plan 11](11-threejs-pack/plan.md) |
+| Multiple inference routes (Wan2GP) | Keep VibeComfy as the primary route and add Wan2GP through the shared generation path, with shared setup, task/resource ownership, model lifecycle, and cleanup. | queued | Unassigned | TBD | scope agreement | [Plan 12](12-multiple-inference-routes/plan.md) |
+| Execution host refactor | Split the oversized execution host into clear, maintainable modules while preserving supported execution behavior. | queued | Unassigned | TBD | scope agreement | [Plan 13](13-execution-host-refactor/plan.md) |
+| Repository cleanup | Make the repositories easy to navigate and maintain by removing proven clutter and consolidating code, docs, and tooling. | queued | Unassigned | TBD | scope agreement | [Plan 14](14-repository-cleanup/plan.md) |
+| Sandboxed execution with OpenShell | Let users onboard into an isolated full Astrid stack, including the app/frontend and backend, with explicit permissions and tested boundaries. | queued | Unassigned | TBD | scope agreement | [Plan 15](15-openshell-safe-execution/plan.md) |
+| Streamlined agent setup and execution | Simplify account connection and execution, and let contributors add an agent in one place while preserving alternative agents and pack runs. | queued | Unassigned | TBD | scope agreement | [Plan 16](16-streamlined-agent-experience/plan.md) |
+| VibeComfy extensibility with H3_AV | Make it easy to build and share higher-level tools on VibeComfy workflows, using H3_AV to prove reusable extension primitives. | queued | Unassigned | TBD | scope agreement | [Plan 17](17-vibecomfy-extensibility/plan.md) |
+| Extensible timeline editing | Provide reliable timeline editing primitives as a pack that people and agents can extend with their own views, tools, and creative workflows. | queued | Unassigned | TBD | scope agreement | [Plan 18](18-timeline-editing/plan.md) |
+| First-principles documentation | Make Astrid understandable to humans and agents through a clear path from its purpose and central skill to workflows, pack design, and precise references. | queued | Unassigned | TBD | scope agreement | [Plan 19](19-first-principles-documentation/plan.md) |
+| Astrid website | Build the scroll journey below the Astrid homepage hero: three sections and a vision finale that re-explain the hero's notes, with the sky following the visitor's time of day. The rest of the website is not yet scoped. | queued | Unassigned | TBD | — | [Plan 21](21-astrid-website/plan.md) |
+| Hivemind protocol | Reconcile the Hivemind protocol proposal with real knowledge records, then prove independent private/community datasets can exchange permitted evidence. | queued | Unassigned | TBD | scope agreement; Hivemind source review | [Plan 22](22-hivemind-protocol/plan.md) |
+| Continuous agent learning | Make retrieval, observed local learning and optional contributions a real Astrid Agent workflow. | queued | Unassigned | TBD | scope agreement; approved knowledge API | [Plan 23](23-agent-learning-integration/plan.md) |
+| Agent-powered liquid workspace | Prove real components can be positioned, bound and adapted by people and agents without losing editing state. | queued | Unassigned | TBD | scope agreement; relevant editing/pack foundations | [Plan 24](24-liquid-workspace/plan.md) |
+| Release 1: install and update | Ship R1: new users install and update on Linux, macOS and Windows; R0 users on Linux and macOS upgrade without data loss, proven by the five-row hosted gate. | done | Release 1 merge coordinator | 0 | — | [Plan 08](08-release1-install-update/plan.md) |
+
+## Delivery context
+
+Plan 08 records the R1 ship on 2026-11-05. Plan 07 is the R1.1 Pinokio effort, and Plan 10 follows its qualification. Plans 01, 02, 04, 05 and 06 retain their existing staged integration and authorization constraints. Plan 20 is the top-priority upcoming zero-to-first-image project from the prior queue; this catalog keeps it first among queued plans. Plans 11–20 are draft scopes with unresolved source/scoping decisions. Plan 21 is a homepage hand-off, not yet implementation. Use each plan's `plan.md`, `tasks.md` and `inputs.md` for scope and evidence.
+
+The App's `extension-visual` screenshot baseline and scheduled installer/Direct Journey checks have known historical failures; see relevant product evidence rather than mistaking the catalog for a CI report.
+
+## How to edit safely
+
+Change **this table once** for status, owner, estimate, waiting-on or priority. Preserve a row for every `plans/<id>/plan.md`. Never copy status into a plan's metadata or a second archive table.
+
+Run `python3 scripts/check_docs.py --sync` from repo root to refresh the generated README excerpt, then `python3 scripts/check_docs.py` before committing. CI will **check**, never push generated changes. **Moving a plan to `done` also requires a [completion assessment in the PR description](../AGENTS.md#completing-a-plan-one-decision-gate)**, covering acceptance evidence and every linked gap.
