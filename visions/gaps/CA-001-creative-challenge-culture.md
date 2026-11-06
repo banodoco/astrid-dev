@@ -1,6 +1,6 @@
-# CA-001 — A culture that challenges people artistically
+# CA-001 — Astrid lacks its own creative challenge culture
 
-**Applies to:** [Shared Creative Endeavour](../pillars/shared-endeavour.md) · **Assessment:** Open; founder-described community practices, no current program/outcome audit.
+**Applies to:** [Shared Creative Endeavour](../pillars/shared-endeavour.md) · **Assessment:** Open; prior Banodoco competitions, but no established Astrid-specific program/outcome audit.
 
 ## Desired state
 
@@ -8,11 +8,11 @@ People have compelling reasons to attempt work beyond their current abilities: a
 
 ## Current state
 
-The founder describes Banodoco community activity and art competitions. This is evidence of an intention and starting point, **not** evidence that a repeatable program demonstrably raises creative ambition or artistic quality.
+Astrid builds on the existing Banodoco community, which has run art competitions including the [Arca Gidan Prize](https://arcagidan.com/). But **Astrid has not yet established a community centred on this tool and its artistic mission**, with a repeatable culture of challenges, critique and collective artistic growth. Earlier competitions provide experience and a starting point, not evidence that this new culture already exists.
 
 ## Gap
 
-Challenge formats, high-quality review, recognition and reliable feedback loops must become repeatable practices judged by their creative effects rather than participation metrics alone.
+The existing community experience has not yet become an Astrid-centred program of challenges, serious critique, recognition and feedback loops, judged by what people actually make rather than participation alone.
 
 ## Closure evidence
 
