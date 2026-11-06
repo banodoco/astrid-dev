@@ -1,6 +1,6 @@
 # F-001 — Reliability across supported environments
 
-**Category:** [Shared foundations](../README.md) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
+**Applies to:** [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
 
 ## Desired state
 
@@ -8,7 +8,7 @@ On each **declared supported** OS, device and deployment mode, people can reliab
 
 ## Current state
 
-[Plan 08](../../../plans/08-release1-install-update/plan.md) records a completed five-row hosted R1 installation/update gate, proving that *specific* paths worked on *specific* candidates. The [project queue](../../../README.md) records Plan 07 as active with indicative Pinokio evidence and existing CI failures, while Plans 09/10 target broader routes and native qualification. This is **not** proof that all devices, browser variants or real engines are covered.
+[Plan 08](../../plans/08-release1-install-update/plan.md) records a completed five-row hosted R1 installation/update gate, proving that *specific* paths worked on *specific* candidates. The [project queue](../../README.md) records Plan 07 as active with indicative Pinokio evidence and existing CI failures, while Plans 09/10 target broader routes and native qualification. This is **not** proof that all devices, browser variants or real engines are covered.
 
 ## Gap
 
@@ -20,4 +20,4 @@ A declared OS/browser/device/deployment matrix, including realistic new-install 
 
 ## Sources and reassessment
 
-[Plan 08](../../../plans/08-release1-install-update/plan.md) · [Current queue](../../../README.md) · [Gap model](../../gaps.md). Reassess on shipped versions, new supported platforms, incident reports or finished evidence—not solely when a CI job turns green.
+[Plan 08](../../plans/08-release1-install-update/plan.md) · [Current queue](../../README.md) · [Gap model](../gaps.md). Reassess on shipped versions, new supported platforms, incident reports or finished evidence—not solely when a CI job turns green.

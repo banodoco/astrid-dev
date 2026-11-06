@@ -1,6 +1,6 @@
 # CA-002 — A meaningful contributor-ownership model
 
-**Principle:** [Collective Ambition, Shared Ownership](../principle.md) · **Assessment:** Open; vision-level commitment, legal and operating terms not established.
+**Applies to:** [Shared Creative Endeavour](../pillars/shared-endeavour.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open; vision-level commitment, legal and operating terms not established.
 
 ## Desired state
 
@@ -20,4 +20,4 @@ An explicit owner decision and qualified legal/tax review of a concrete model co
 
 ## Sources and reassessment
 
-[Collective Ambition principle](../principle.md). This is **not** an equity offer, promise of automatic entitlement or claim that ownership has been legally transferred.
+[Collective Ambition principle](../pillars/shared-endeavour.md). This is **not** an equity offer, promise of automatic entitlement or claim that ownership has been legally transferred.

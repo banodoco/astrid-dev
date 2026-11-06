@@ -1,6 +1,6 @@
 # CA-001 — A culture that challenges people artistically
 
-**Principle:** [Collective Ambition, Shared Ownership](../principle.md) · **Assessment:** Open; founder-described community practices, no current program/outcome audit.
+**Applies to:** [Shared Creative Endeavour](../pillars/shared-endeavour.md) · **Assessment:** Open; founder-described community practices, no current program/outcome audit.
 
 ## Desired state
 
@@ -20,4 +20,4 @@ Run a bounded challenge with clear artistic intent and fair participation; docum
 
 ## Sources and reassessment
 
-[Collective Ambition principle](../principle.md). Any community program needs an accountable owner, accessibility considerations and its own execution/assessment plan. No such plan is authorized by this gap.
+[Collective Ambition principle](../pillars/shared-endeavour.md). Any community program needs an accountable owner, accessibility considerations and its own execution/assessment plan. No such plan is authorized by this gap.

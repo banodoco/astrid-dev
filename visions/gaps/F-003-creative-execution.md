@@ -1,6 +1,6 @@
 # F-003 — Dependable end-to-end creative execution
 
-**Category:** [Shared foundations](../README.md) · **Assessment:** Open / foundations exist (2026-11-06).
+**Applies to:** [Built for Artistic Ambition](../pillars/artistic-ambition.md) · [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · **Assessment:** Open / foundations exist (2026-11-06).
 
 ## Desired state
 
@@ -8,7 +8,7 @@ From a declared supported starting environment, a person and their agent can cho
 
 ## Current state
 
-Astrid has Runtime execution/task primitives, packs, generation integrations and the video editor. [Plan 02](../../../plans/02-consistent-generation/plan.md) aims to establish consistent defaults and pinned stack on fixtures and a fresh Linux CPU setup, **explicitly not real inference**. [Plan 12](../../../plans/12-multiple-inference-routes/plan.md) targets real multiple inference routes. [Plan 20](../../../plans/20-zero-to-first-image/plan.md) targets a real first generated image on a timeline; [Plan 16](../../../plans/16-streamlined-agent-experience/plan.md) improves agent readiness.
+Astrid has Runtime execution/task primitives, packs, generation integrations and the video editor. [Plan 02](../../plans/02-consistent-generation/plan.md) aims to establish consistent defaults and pinned stack on fixtures and a fresh Linux CPU setup, **explicitly not real inference**. [Plan 12](../../plans/12-multiple-inference-routes/plan.md) targets real multiple inference routes. [Plan 20](../../plans/20-zero-to-first-image/plan.md) targets a real first generated image on a timeline; [Plan 16](../../plans/16-streamlined-agent-experience/plan.md) improves agent readiness.
 
 ## Gap
 
@@ -20,4 +20,4 @@ A bounded, explicitly scoped real model execution on an approved environment, wi
 
 ## Sources and reassessment
 
-[Plan 02](../../../plans/02-consistent-generation/plan.md) · [Plan 12](../../../plans/12-multiple-inference-routes/plan.md) · [Plan 16](../../../plans/16-streamlined-agent-experience/plan.md) · [Plan 20](../../../plans/20-zero-to-first-image/plan.md). Do not equate fixture checks with real GPU/inference qualification.
+[Plan 02](../../plans/02-consistent-generation/plan.md) · [Plan 12](../../plans/12-multiple-inference-routes/plan.md) · [Plan 16](../../plans/16-streamlined-agent-experience/plan.md) · [Plan 20](../../plans/20-zero-to-first-image/plan.md). Do not equate fixture checks with real GPU/inference qualification.
