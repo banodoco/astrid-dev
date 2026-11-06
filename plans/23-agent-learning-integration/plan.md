@@ -2,7 +2,7 @@
 
 **Start here:** read [AGENTS.md](../../AGENTS.md), the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and this project's [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate live in the [project queue](../../README.md).
 
-**Vision alignment:** [Collective Intelligence That Compounds](../../visions/principles/collective-intelligence/principle.md) (primary) and [Agent-Powered Liquid Software](../../visions/principles/liquid-software/principle.md) (supporting) — agents use collective learning to improve how creative capabilities are selected and applied in a live workspace.
+**Vision gaps:** [CI-001 — Agents learn from real creative work](../../visions/principles/collective-intelligence/gaps/CI-001-agent-learning-loop.md) (primary); [CI-002 — Interoperable Hiveminds](../../visions/principles/collective-intelligence/gaps/CI-002-federated-knowledge.md) (supporting dependency). This plan integrates learning; it does not own the underlying protocol.
 
 ## Goal and scope
 
