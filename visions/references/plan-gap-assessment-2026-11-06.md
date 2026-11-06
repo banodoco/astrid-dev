@@ -7,7 +7,7 @@
 - **Direct:** the plan's accepted outcome would produce testable evidence toward the named gap. The outcome might only *partially* reduce the gap.
 - **Enabler:** the plan improves the system's ability to deliver/verify later outcomes, but does **not by itself** demonstrate a gap's desired state.
 - **Primary / supporting:** one strong closest relationship is preferred; supporting associations only count if actual evidence is relevant. Related work is not automatically a dependency.
-- **Foundation:** `F-` gaps sit as cross-cutting gaps, separate from the four artistic principles. Platform reliability and safety are outcomes; **testing is their evidence**, not automatically a fifth principle.
+- **Foundation:** `F-` gaps sit as cross-cutting gaps, separate from the four artistic pillars. Platform reliability and safety are outcomes; **testing is their evidence**, not automatically another pillar.
 
 ## Current plan mapping
 
@@ -41,7 +41,7 @@
 
 ## What this reveals
 
-1. **Infrastructure dominates the near-term queue.** Many plans improve supported-environment reliability, trustworthy operation or creative execution. These are not secondary in importance, just different in kind from the four artistic principles.
+1. **Infrastructure dominates the near-term queue.** Many plans improve supported-environment reliability, trustworthy operation or creative execution. These are not secondary in importance, just different in kind from the four artistic pillars.
 2. **Three artistic/community gaps have no direct plan:** [AA-001](../gaps/AA-001-sustained-creative-work.md) (sustained ambitious finished art), [CA-001](../gaps/CA-001-creative-challenge-culture.md) (ongoing artistic challenges/critique) and [CA-002](../gaps/CA-002-contributor-ownership.md) (real contributor ownership). This may be an intentional sequencing choice; the map makes it visible rather than forcing unrelated plans to masquerade as progress.
 3. **Existing vision gaps still matter independently:** [LS-002](../gaps/LS-002-agent-workspace-control.md) and [LS-003](../gaps/LS-003-full-stack-contributions.md) have partial or proposed work, not proven closure.
 4. **Plan 08 is the first useful manual reconciliation example.** Its accepted five-row result can update F-001 to *partially evidenced* without implying F-001 is fully closed.
