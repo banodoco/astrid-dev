@@ -4,6 +4,8 @@
 
 State the useful result in one or two sentences. Current status, owner, and remaining estimate live in the [project queue](../../README.md), not a second record here.
 
+**Vision gaps:** Link the primary gap (and only truly supported secondary gap IDs) under [`visions/principles/*/gaps/`](../../visions/README.md), or use **Vision role: Foundational enabler** and explain why. Use one declaration, not both. Existing project scopes and status stay authoritative; [gap contract](../../visions/gaps.md).
+
 ## Goal and scope
 
 - Included:
