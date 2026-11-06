@@ -1,6 +1,6 @@
 # F-003 — Dependable end-to-end creative execution
 
-**Applies to:** [Built for Artistic Ambition](../pillars/artistic-ambition.md) · [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · **Assessment:** Open / foundations exist (2026-11-06).
+**Applies to:** [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) · [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · **Assessment:** Open / foundations exist (2026-11-06).
 
 ## Desired state
 

@@ -37,7 +37,7 @@ Locally, `python3 -m unittest discover -s scripts -p "test_*.py"` tests the gate
 
 ## Local documentation checks
 
-After catalog or documentation edits, run the focused `python3 scripts/check_docs.py` check. For catalog changes, regenerate the root preview with `python3 scripts/check_docs.py --sync`. CI checks this invariant and the local links/plan structure; it never rewrites the repository. See [the plan catalog](plans/index.md). These checks do not constitute product acceptance or authorization.
+After catalog or documentation edits, run `python3 scripts/check_docs.py` and `python3 scripts/export_public_vision.py` to validate both repository structure and the public-site content projection. For catalog changes, regenerate the root preview with `python3 scripts/check_docs.py --sync`. CI checks this invariant and the local links/plan structure; it never rewrites the repository. See [the plan catalog](plans/index.md). These checks do not constitute product acceptance or authorization.
 
 ## Routing and checks
 

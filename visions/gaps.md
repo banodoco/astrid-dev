@@ -38,7 +38,7 @@ Each `plans/<id>/plan.md` specifies one primary and, where useful, supporting ga
 **Vision gaps:** [LS-001 — Portable components](../../visions/gaps/LS-001-portable-components.md) (primary).
 ```
 
-Or state `**Vision role:** Foundational enabler — ...` for work whose completion is not direct proof of a gap. Gaps must **not** maintain reverse lists of plans. The root [project queue](../README.md) alone owns plan status, owner and priority.
+Or state `**Vision role:** Foundational enabler — ...` for work whose completion is not direct proof of a gap. Gaps must **not** maintain reverse lists of plans. The [plan catalog](../plans/index.md) alone owns plan status, owner and priority.
 
 ## Evidence updates gaps, not vice versa
 
