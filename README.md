@@ -6,11 +6,9 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 **[Make Extraordinary Art Possible, Together](visions/vision.md).** We bring together powerful creative tools, agent-powered software that adapts to the work, collective intelligence that improves with experience, and a community with the challenges and shared stake to push artistic ambition further.
 
-**[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md) record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
+**[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—both principle-specific and [shared foundations](visions/foundations/README.md)—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 
-The queue below remains the sole source for plan status, ownership and priority. [How gap reassessment works](visions/gaps.md).
-
-
+The queue below remains the sole source for plan status, ownership and priority. [How gap reassessment works](visions/gaps.md) · [Initial mapping of existing plans](visions/references/plan-gap-assessment-2026-11-06.md).
 
 ## Want to contribute? Give this to your agent.
 
