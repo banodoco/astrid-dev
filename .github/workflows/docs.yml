@@ -28,6 +28,8 @@ on:
       - "templates/project/**"
       - "scripts/check_docs.py"
       - "scripts/test_check_docs.py"
+      - "scripts/check_completion.py"
+      - "scripts/test_check_completion.py"
       - ".github/workflows/docs.yml"
 
 permissions:
