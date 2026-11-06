@@ -5,7 +5,9 @@
 ## What belongs where
 
 - **[Vision](vision.md)** and four `principle.md` files: durable goals and reasoning about what matters; not technical status or implementation tasks.
-- **`visions/principles/<principle>/gaps/<ID>-<slug>.md`**: one independently assessable missing outcome. A gap may be open with no plan or survive several completed plans.
+- **`visions/principles/<principle>/gaps/<ID>-<slug>.md`**: a missing outcome directly tied to one of the four principles.
+- **`visions/foundations/gaps/F-<number>-<slug>.md`**: a cross-cutting outcome required by multiple principles, e.g. reliable use on supported platforms. **Foundations are not another artistic principle.**
+- **Both types of gap** are independently assessable and may be open with no plan or survive several completed plans.
 - **`plans/<id>/plan.md`**: a specific attempt to close one or more gaps, or an explicitly named foundational enabler. Plans own their gap links, scope, tasks, dependencies, authorizations, status (through the root queue), and acceptance evidence.
 - **Evidence:** a plan's recorded checks/reviews/artifacts, or a revision-pinned independent source. Evidence is assessed against a *gap's closure test*, not assumed from a task checkbox.
 
@@ -36,7 +38,7 @@ Observable outcome and the proof needed to judge it, including important negativ
 Links to source/evidence; what remains uncertain or due for re-check.
 ```
 
-Stable IDs are principle-prefixed (currently `AA`, `LS`, `CI`, `CA`) and do not change when filenames or priority change. The file's ID is its heading; links should point to the actual file, not assume GitHub can resolve the ID automatically. A gap's assessment may be **open**, **partially evidenced**, **closed**, or **needs recheck**; these are descriptions backed by evidence, not an automatic numeric score. Don't create new gaps for every plan task, and avoid claiming unknown things are absent just because the reviewer did not find them.
+Stable IDs are principle-prefixed (`AA`, `LS`, `CI`, `CA`), or `F` for cross-cutting foundations; they do not change when filenames or priority change. Foundation records replace the sample `**Principle:**` line with `**Category:** [Shared foundations](../README.md)`. The file's ID is its heading; links should point to the actual file, not assume GitHub can resolve the ID automatically. A gap's assessment may be **open**, **partially evidenced**, **closed**, or **needs recheck**; these are descriptions backed by evidence, not an automatic numeric score. Don't create new gaps for every plan task, and avoid claiming unknown things are absent just because the reviewer did not find them.
 
 ## Minimal plan declaration
 
@@ -46,13 +48,15 @@ Near the beginning of a plan, after its introduction:
 **Vision gaps:** [LS-001 — Portable components](../../visions/principles/liquid-software/gaps/LS-001-portable-components.md) (primary); [LS-002 — Agent workspace control](../../visions/principles/liquid-software/gaps/LS-002-agent-workspace-control.md) (supporting).
 ```
 
-Or, where a plan is infrastructure rather than a direct gap closure attempt:
+The primary gap can instead be a [cross-cutting foundation](foundations/README.md) such as `F-001`. Do not force operating-system qualification or safe update behavior into a single artistic principle.
+
+Or, where a plan is infrastructure **without directly proving a gap outcome**, such as a behavior-preserving refactor:
 
 ```md
 **Vision role:** Foundational enabler — explain in one sentence what future creative capability this makes safer or possible.
 ```
 
-**Prefer one primary gap; list supporting gaps only where the plan really produces evidence toward them.** A plan completion may contribute only partial evidence to several gaps. For the existing backlog, add these declarations incrementally after reviewing actual plan scope; **do not pretend every legacy plan is already classified**. New plans should use the [project template](../templates/project/plan.md).
+**Prefer one primary gap; list supporting gaps only where the plan really produces evidence toward them.** A plan completion may contribute only partial evidence to several gaps. For the existing backlog, add these declarations incrementally after reviewing actual plan scope; use the [dated assessment](references/plan-gap-assessment-2026-11-06.md) as a starting proposal, **not as a second live map**. Do not pretend every legacy plan is already classified. New plans should use the [project template](../templates/project/plan.md).
 
 ## Reconciliation: plan completion → new gap assessment
 
