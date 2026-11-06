@@ -4,7 +4,7 @@ Astrid helps people pursue work beyond what they thought possible: **powerful cr
 
 ## Four pillars
 
-1. **[Built for Artistic Ambition](pillars/artistic-ambition.md)** — The creative depth and control to make exceptional work, not merely quick outputs.
+1. **[A Tool for Artistic Ambition](pillars/artistic-ambition.md)** — The creative depth and control to make exceptional work, not merely quick outputs.
 2. **[Agent-Powered Liquid Software](pillars/liquid-software.md)** — Tools that people and agents reshape as their ideas evolve.
 3. **[Intelligence That Compounds](pillars/compounding-intelligence.md)** — What artists and agents learn helps others go further, and future agents build on it.
 4. **[Shared Creative Endeavour](pillars/shared-endeavour.md)** — Challenges, critique, collaboration and meaningful ownership give people reasons to aim higher.

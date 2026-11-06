@@ -1,4 +1,4 @@
-# Pillar 1 — Built for Artistic Ambition
+# Pillar 1 — A Tool for Artistic Ambition
 
 **Give people the creative power and control to make work beyond what they previously thought possible.**
 
