@@ -1,5 +1,7 @@
 # Packs v1.3
 
+**Vision gaps:** [Dependable pack lifecycle](../../visions/gaps/F-004-pack-lifecycle.md) (primary). [Supporting gap](../../visions/gaps/LS-003-full-stack-contributions.md).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, deletes the two comfy packs other than VibeComfy (`comfyui`, `comfy_wrap`; Decision 13), and finishes the pack loading, trust, install, update, rollback and live-editor work that goes with it, across Agent, Runtime and App. Supported workflows keep working, and the result is promoted to `pre-main`. It reuses a large body of work that exists only on retained branches, composes it once onto current `pre-main`, proves it once and reviews it once.

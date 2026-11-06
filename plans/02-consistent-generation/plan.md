@@ -1,5 +1,7 @@
 # Consistent generation path
 
+**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Plan 02 makes supported generation pick consistent defaults (image, edit, video, voice, music, sound effects), and makes the Agent, Runtime, App, VibeComfy and runpod-lifecycle repositories pin one compatible set of versions that installs on a fresh Linux machine. Users get predictable defaults and clear guidance when no GPU is available. It reuses work that already exists on retained branches and merges it into `pre-main`.

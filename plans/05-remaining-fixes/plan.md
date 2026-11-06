@@ -1,5 +1,7 @@
 # 05 — Release fixes integration
 
+**Vision role:** Foundational enabler — integrates previously accepted fixes without independently proving a new user-facing outcome.
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Account for the accepted remaining fixes and compose the eligible changes into a coherent release while preserving existing behavior. The [project queue](../../README.md) remains authoritative for status, owner, and estimate.

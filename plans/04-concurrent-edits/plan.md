@@ -1,5 +1,7 @@
 # 04 — Refined concurrent editing
 
+**Vision gaps:** [Trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (primary).
+
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
 Complete the retained concurrent-editing behavior so agent edits respect user edits, surface conflicts, and retry safely without silently overwriting changes. The project remains queued; this plan does not authorize execution.
