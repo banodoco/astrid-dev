@@ -82,7 +82,7 @@ class GapBoundaryGateTests(unittest.TestCase):
         }
         self.assertEqual(check_pr({"F-005"}, RECEIPT, expected), [])
         missing = RECEIPT.replace(
-            "Primary connection: principle:local-first-cloud-capable — Optional cloud work preserves the local-first promise at the heart of this gap.\\n", "")
+            "Primary connection: principle:local-first-cloud-capable — Optional cloud work preserves the local-first promise at the heart of this gap.\n", "")
         self.assertTrue(any("Primary connection" in x for x in check_pr({"F-005"}, missing, expected)))
         wrong = RECEIPT.replace(
             "Primary connection: principle:local-first-cloud-capable",
