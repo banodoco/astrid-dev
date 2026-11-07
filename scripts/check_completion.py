@@ -9,9 +9,9 @@ import subprocess
 from pathlib import Path
 
 from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
+from project_contract import plan_gap_ids, project_number
 
-SECTION = re.compile(r"^#{2,3}\s+Completion assessment\s*[—:-]\s*Plan\s+(\d{2})\s*$", re.I | re.M)
-GAP_LINK = re.compile(r"\]\(\.\./\.\./visions/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)")
+SECTION = re.compile(r"^#{2,3}\s+Completion assessment\s*[—:-]\s*Plan\s+(\d{2,})\s*$", re.I | re.M)
 GAP_LINE = re.compile(
     r"^Gap\s+([A-Z]{1,3}-\d{3}):\s*"
     r"(Closed|Partially evidenced|Unchanged|Needs recheck)\s*[—:-]\s*(.+)$", re.I | re.M,
@@ -29,12 +29,7 @@ def transitions_to_done(before: str, after: str) -> list[str]:
 
 
 def linked_gaps(plan_text: str) -> set[str]:
-    lines = re.findall(r"^\*\*Vision gaps:\*\*\s*(.+)$", plan_text, re.M)
-    if lines:
-        return set(GAP_LINK.findall(lines[0]))
-    if re.search(r"^\*\*Vision role:\*\*", plan_text, re.M):
-        return set()
-    raise ValueError("plan must declare Vision gaps or Vision role")
+    return set(plan_gap_ids(plan_text))
 
 
 def assessment_section(body: str, plan_id: str) -> tuple[str | None, bool]:
@@ -52,7 +47,7 @@ def assessment_section(body: str, plan_id: str) -> tuple[str | None, bool]:
 
 def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
     """Check the PR's *stated* judgment, not the truth of its evidence."""
-    plan_id = Path(plan_path).parent.name.split("-", 1)[0]
+    plan_id = project_number(plan_path)
     section, duplicates = assessment_section(body, plan_id)
     if duplicates:
         return [f"Plan {plan_id}: duplicate completion assessment sections"]
