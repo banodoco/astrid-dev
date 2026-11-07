@@ -10,6 +10,8 @@ The current gaps are [F-005](gaps/F-005-local-files-cloud-assist.md), [F-006](ga
 
 Existing gaps should be reused before proposing new ones. For example, **local/cloud deployment** is already partly addressed by F-001 and F-003; assess whether their closure criteria really need another independent gap before introducing one.
 
+[Review of all 15 existing gap boundaries](references/gap-abstraction-audit-2026-11-07.md) explains why each outcome is distinct from nearby gaps and projects, and the [first-principles PR review rule](gaps.md#reviewing-a-new-or-redefined-gap) applies when a gap is added or redefined.
+
 [Reference documents](references/) preserve the original Liquid Software philosophy, component/source maps, the proposed Hivemind protocol and a [dated assessment of current plans](references/plan-gap-assessment-2026-11-06.md). Plans own their gap links and the [plan catalog](../plans/index.md) alone owns status, priority and ownership. The documentation and public-content integrity checks run in CI; evidence-based gap reassessment still requires review.
 
 ## Public vision page (GitHub-authored)
