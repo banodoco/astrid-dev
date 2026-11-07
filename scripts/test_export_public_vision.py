@@ -25,11 +25,11 @@ class PublicVisionProjectionTests(unittest.TestCase):
         vision = self.page["vision"]
         self.assertIn("collective artistic ambition", vision["title"])
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
-        self.assertIn("100% of the ownership", vision["introMarkdown"])
+        self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
         self.assertNotIn("legal and allocation model", vision["contributeMarkdown"].lower())
         self.assertNotIn("The information on this page is pulled from", vision["introMarkdown"])
-        self.assertIn("collective inspires ambitious work", vision["introMarkdown"])
+        self.assertNotIn("collective inspires ambitious work", vision["introMarkdown"])
         self.assertIn(
             "[Give these instructions to your agent](https://github.com/banodoco/astrid-dev/blob/"
             + SHA + "/README.md#want-to-contribute-give-this-to-your-agent)",
