@@ -14,7 +14,7 @@ on:
       - "templates/**"
       - "scripts/**"
       - "sync.sh"
-      - ".github/workflows/docs.yml"
+      - ".github/**"
   push:
     branches: [main]
     paths:
@@ -28,7 +28,7 @@ on:
       - "templates/**"
       - "scripts/**"
       - "sync.sh"
-      - ".github/workflows/docs.yml"
+      - ".github/**"
 
 permissions:
   contents: read

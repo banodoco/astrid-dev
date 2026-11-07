@@ -68,6 +68,26 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
     if not conclusion or not has_real_reason(conclusion.group(2)):
         issues.append(f"Plan {plan_id}: Completion needs 'Yes —' and a specific reason")
 
+    # Final review summary is kept in this PR, not a parallel evidence-pack file.
+    # CI checks references and explicit limits, not whether a linked test proves the claim.
+    def has_reference_or_none(field: str) -> bool:
+        hit = re.search(r"^" + re.escape(field) + r":\s*(.+)$", section, re.I | re.M)
+        if not hit:
+            return False
+        value = hit.group(1).strip()
+        return bool(
+            EVIDENCE_REF.search(value)
+            or (re.match(r"^None\s*[—:-]\s*\S", value, re.I) and has_real_reason(value[4:]))
+        )
+
+    if not has_reference_or_none("Implementation PRs"):
+        issues.append(f"Plan {plan_id}: Implementation PRs needs linked PRs or 'None — <reason>'")
+    if not has_reference_or_none("Integrated candidate"):
+        issues.append(f"Plan {plan_id}: Integrated candidate needs exact source links/SHAs or 'None — <reason>'")
+    limitations = re.search(r"^Unproven:\s*(.+)$", section, re.I | re.M)
+    if not limitations or not has_real_reason(limitations.group(1)):
+        issues.append(f"Plan {plan_id}: Unproven must state remaining limits or 'None within stated scope'")
+
     gaps = linked_gaps(plan_text)
     found: dict[str, str] = {}
     for match in GAP_LINE.finditer(section):

@@ -2,6 +2,8 @@
 
 **Start at [astrid-dev](skills/astrid-dev/SKILL.md)** for every contribution. Apply the [contribution design principles](docs/contribution-design-principles.md) when changing workflows, data contracts or evidence rules. Its [domain map](skills/astrid-dev/references/domains.md) is the one index to repositories, reference materials and specialist workflows. The [shared run contract](skills/astrid-dev-shared/run-contract.md) owns source identity, model routing, proof, retries, review and authority.
 
+For claiming, proposing, asking questions, submitting cross-repository PRs and completing work, use the [single contributor workflow](docs/contribution-workflow.md). The claim bot may merge **only** a verified one-cell owner change; every other scope/implementation/completion change follows normal review.
+
 ## Scope and authority
 
 - **Bugs and small improvements are issues or existing tasks—not projects.** Keep reproduction, source evidence, user-safety precautions, focused checks and a linked PR. [Bug fixing](skills/astrid-dev-bugfix/SKILL.md) covers recovery; [Iterate](skills/astrid-dev-iterate/SKILL.md) covers scoped repairs. A fact-finding incident can produce an issue without code changes.
@@ -31,7 +33,7 @@ Completion: Yes — A real result met the stated criteria on the named candidate
 Gap F-003: Partially evidenced — This route worked, but other supported routes need proof.
 ```
 
-Use **Gap ID: Closed / Partially evidenced / Unchanged / Needs recheck — reason** for each linked gap. For a no-gap enabler use **Gap impact: None — reason**. CI enforces presence and linkage, not the truth of proof. An independent reviewer judges completeness; completion is not authorization to publish.
+The receipt also names **Implementation PRs**, the **Integrated candidate** and what remains **Unproven** (or explains why no code applies). Use **Gap ID: Closed / Partially evidenced / Unchanged / Needs recheck — reason** for each linked gap. For a no-gap enabler use **Gap impact: None — reason**. CI enforces presence and linkage, not the truth of proof. An independent reviewer judges completeness; completion is not authorization to publish.
 
 ## Local documentation checks
 

@@ -7,6 +7,8 @@ description: Define independently useful new Astrid project scope by reusing pri
 
 Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astrid-dev/references/domains.md). **Bugs, small fixes and maintenance normally belong in issues, not projects.** Existing project tasks use their accepted plan. This process is for a new, separately useful outcome that merits its own priority, owner and completion proof.
 
+A contributor may [open a proposal issue](../../docs/contribution-workflow.md#propose-and-greenlight-new-work) without permission. New independent project scope is greenlit by a maintainer-reviewed Astrid-dev **scope PR** that records the owner's actual decision in `inputs.md` and adds one queued catalog entry. A PR draft is not acceptance.
+
 Planning is a decision, **not** authority to execute or release. Preserve earlier accepted scope and avoid repeated owner sign-offs.
 
 ## Investigate, decide, preserve

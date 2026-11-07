@@ -17,7 +17,7 @@ Copy this prompt into your agent:
 ```text
 Help me contribute to Astrid. Begin at
 https://github.com/banodoco/astrid-dev and read
-skills/astrid-dev/SKILL.md and its domain map.
+skills/astrid-dev/SKILL.md and docs/contribution-workflow.md.
 Find existing issues or project tasks before suggesting new work.
 Match a useful contribution to my interests, time and tools.
 For bugs and small fixes, use an issue and real focused proof,
@@ -26,7 +26,9 @@ prior art, choose a simple approach, and agree a clear outcome.
 Respect source identity, user data and execution permissions.
 ```
 
-The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the process; the [domain map](skills/astrid-dev/references/domains.md) routes agents to the right code and references.
+**[How to contribute: claim, propose, submit and complete](docs/contribution-workflow.md).** You can [claim an available project](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) with a single owner-only PR, [propose a project](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), or [open an issue](https://github.com/banodoco/astrid-dev/issues/new) for a small fix.
+
+The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the agent process; the [domain map](skills/astrid-dev/references/domains.md) routes people to the right code and references.
 
 ## Highest-priority active and upcoming plans
 
