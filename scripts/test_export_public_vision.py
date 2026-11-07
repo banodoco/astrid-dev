@@ -75,9 +75,10 @@ class PublicVisionProjectionTests(unittest.TestCase):
             "Create entirely on your own machine, online or offline, with your files and projects under your control.",
         )
 
-    def test_local_first_promise_is_shorter_without_losing_offline_control(self):
+    def test_local_first_promise_is_balanced_without_losing_offline_control(self):
         first = self.page["principles"][0]["bodyMarkdown"]
-        self.assertEqual(len(first.split()), 43)
+        self.assertEqual(len(first.split()), 47)
+        self.assertIn("what gets shared", first)
         self.assertIn("online or offline", first)
         self.assertIn("files and projects under your control", first)
 
