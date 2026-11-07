@@ -1,6 +1,6 @@
 # Astrid development workspace
 
-This is where Astrid connects its creative ambition to practical work, alongside development skills and the plan catalog.
+This is where Astrid connects its creative ambition to practical work, alongside development skills and the plan catalog. Our [contribution design principles](docs/contribution-design-principles.md) guide how we keep that work rigorous and simple.
 
 ## What we're building
 
