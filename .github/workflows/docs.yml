@@ -15,6 +15,8 @@ on:
       - "scripts/test_check_docs.py"
       - "scripts/check_completion.py"
       - "scripts/test_check_completion.py"
+      - "scripts/check_gap_boundaries.py"
+      - "scripts/test_check_gap_boundaries.py"
       - "scripts/export_public_vision.py"
       - "scripts/test_export_public_vision.py"
       - ".github/workflows/docs.yml"
@@ -32,6 +34,8 @@ on:
       - "scripts/test_check_docs.py"
       - "scripts/check_completion.py"
       - "scripts/test_check_completion.py"
+      - "scripts/check_gap_boundaries.py"
+      - "scripts/test_check_gap_boundaries.py"
       - "scripts/export_public_vision.py"
       - "scripts/test_export_public_vision.py"
       - ".github/workflows/docs.yml"
@@ -57,6 +61,11 @@ jobs:
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python3 scripts/check_completion.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
+      - name: Require first-principles assessments for new or redefined gaps
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: python3 scripts/check_gap_boundaries.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
 
   publish-vision:
     # Never publish the unreviewed content of a PR or a contributor branch.
