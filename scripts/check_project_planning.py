@@ -98,11 +98,18 @@ def changed_projects(base: str, root: Path) -> set[str]:
     for name in set(path for path in changed.stdout.splitlines() if PLAN.fullmatch(path)):
         match = PLAN.fullmatch(name)
         project = match.group(1)
-        path = root / "plans" / project / "inputs.md"
+        path = root / "strategy/projects" / project / "inputs.md"
         if not path.exists():
             continue  # check_docs.py reports missing project files
         previous_plan = git("cat-file", "-e", f"{base}:strategy/projects/{project}/plan.md")
         previous_inputs = git("show", f"{base}:strategy/projects/{project}/inputs.md")
+        # A pure migration of existing project folders must not retroactively
+        # require the new planning template. Truly new projects still do.
+        if previous_plan.returncode != 0:
+            legacy = git("cat-file", "-e", f"{base}:plans/{project}/plan.md")
+            if legacy.returncode == 0:
+                previous_plan = legacy
+                previous_inputs = git("show", f"{base}:plans/{project}/inputs.md")
         opted_in = planning_block(path.read_text(encoding="utf-8")) is not None or (
             previous_inputs.returncode == 0 and planning_block(previous_inputs.stdout) is not None
         )

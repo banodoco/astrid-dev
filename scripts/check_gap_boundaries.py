@@ -74,6 +74,16 @@ def after_file(root: Path, path: str) -> str | None:
     return file.read_text(encoding="utf-8") if file.is_file() else None
 
 
+def migration_signature(text: str) -> tuple[str, ...]:
+    """Normalize only link-root moves, never wording or closure criteria."""
+    return tuple(
+        value.replace("../../projects/", "../../plans/")
+             .replace("../projects/", "../plans/")
+             .replace("strategy/projects/", "plans/")
+        for value in boundary_signature(text)
+    )
+
+
 def affected_gaps(base: str, root: Path) -> set[str]:
     """Determine newly created, deleted and materially redefined gaps in the PR."""
     git(root, "cat-file", "-e", f"{base}^{{commit}}")
@@ -98,6 +108,11 @@ def affected_gaps(base: str, root: Path) -> set[str]:
                 continue
             old = before_file(root, base, path)
             new = after_file(root, path)
+            if old is None and new is not None:
+                legacy_path = path.replace("strategy/vision/gaps/", "visions/gaps/", 1)
+                legacy = before_file(root, base, legacy_path)
+                if legacy is not None and migration_signature(legacy) == migration_signature(new):
+                    continue
             if needs_boundary_review(old, new):
                 required.add(match.group(1))
     return required
