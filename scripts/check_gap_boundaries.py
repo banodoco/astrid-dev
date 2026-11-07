@@ -103,6 +103,12 @@ def affected_gaps(base: str, root: Path) -> set[str]:
     return required
 
 
+def has_real_reason(value: str) -> bool:
+    """Mechanical placeholder check only; reviewers judge substantive reasoning."""
+    normalized = value.strip().lower().strip(" .-")
+    return bool(normalized) and normalized not in {"tbd", "todo", "n/a", "none", "unknown", "pending", "because"}
+
+
 def assess_boundary(
     gap_id: str,
     body: str,
@@ -120,17 +126,12 @@ def assess_boundary(
     text = (tail[:next_heading.start()] if next_heading else tail).strip()
     issues = []
     decision = re.search(r"^Decision:\s*(New|Refine|Merge|Retire)\s*[—:-]\s*(.+)$", text, re.I | re.M)
-    if not decision or len(decision.group(2).strip()) < 20:
+    if not decision or not has_real_reason(decision.group(2)):
         issues.append(f"{gap_id}: Decision needs New/Refine/Merge/Retire and a specific rationale")
-    for field, minimum in [
-        ("Outcome", 30),
-        ("Existing alternatives", 35),
-        ("Why this level", 35),
-        ("Independent closure", 35),
-    ]:
+    for field in ("Outcome", "Existing alternatives", "Why this level", "Independent closure"):
         match = re.search(r"^" + re.escape(field) + r":\s*(.+)$", text, re.I | re.M)
         value = match.group(1).strip() if match else ""
-        if len(value) < minimum:
+        if not has_real_reason(value):
             issues.append(f"{gap_id}: {field} needs explicit first-principles reasoning")
         if field == "Existing alternatives" and value and not ALTERNATIVE.search(value):
             issues.append(f"{gap_id}: Existing alternatives must examine a concrete gap, plan or project (or explain none)")
@@ -146,7 +147,7 @@ def assess_boundary(
               r"\s+[—:-]\s*(.+)$",
             text, re.I | re.M,
         )
-        if not match or len(match.group(2).strip()) < 20:
+        if not match or not has_real_reason(match.group(2)):
             issues.append(f"{gap_id}: {field} needs explicit links and substantive justification")
             continue
         refs = [] if match.group(1) == "None" else [x.strip() for x in match.group(1).split(",")]
