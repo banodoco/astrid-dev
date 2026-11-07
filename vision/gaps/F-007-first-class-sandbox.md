@@ -1,6 +1,6 @@
 # F-007 — Running Astrid in a sandbox isn't yet a first-class option
 
-**Applies to:** [In the creator's control](../principles.md#in-the-creators-control) (primary) · [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) (supporting) · **Assessment:** Open; sandbox foundations exist, but an integrated, qualified user-facing full-stack path has not been demonstrated (2026-11-07).
+**Applies to:** [In the creator's control](../principles/in-the-creators-control.md) (primary) · [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (supporting) · **Assessment:** Open; sandbox foundations exist, but an integrated, qualified user-facing full-stack path has not been demonstrated (2026-11-07).
 
 ## Desired state
 

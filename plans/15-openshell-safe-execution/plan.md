@@ -1,6 +1,6 @@
 # Sandboxed execution with OpenShell
 
-**Vision gaps:** [F-007 — First-class full-stack sandboxing](../../visions/gaps/F-007-first-class-sandbox.md) (primary); [F-002 — trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (supporting). The sandbox outcome is independently testable; broader consent and recovery require separate evidence.
+**Vision gaps:** [F-007 — First-class full-stack sandboxing](../../vision/gaps/F-007-first-class-sandbox.md) (primary); [F-002 — trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). The sandbox outcome is independently testable; broader consent and recovery require separate evidence.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 

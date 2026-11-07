@@ -1,6 +1,6 @@
 # F-001 — Reliability isn't proven across supported setups
 
-**Applies to:** [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) (primary) · [In the creator's control](../principles.md#in-the-creators-control) (supporting) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
+**Applies to:** [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (primary) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
 
 ## Desired state
 

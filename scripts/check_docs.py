@@ -101,7 +101,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     for extra in sorted(indexed - actual):
         errors.append(f'catalog references non-plan: {extra}')
 
-    gaps = sorted((root / 'visions/gaps').glob('*.md'))
+    gaps = sorted((root / 'vision/gaps').glob('*.md'))
     gap_ids = set()
     for file in gaps:
         match = GAP_NAME.fullmatch(file.name)
@@ -136,12 +136,19 @@ def check(root: Path) -> tuple[list[str], list[str]]:
                     errors.append(f'{plan}: unknown vision gap {gap}')
         except ValueError as exc:
             errors.append(f'{plan}: {exc}')
-    mandatory = [README, CATALOG, Path('AGENTS.md'),
+    mandatory = [README, CATALOG, Path('vision/README.md'), Path('vision/gaps.md'),
                  Path('CONTRIBUTING.md'),
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
                  Path('docs/contribution-workflow.md'), Path('docs/contribution-automation-setup.md'),
                  Path('templates/review-submission.md')]
+    for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md'):
+        if (root / stale).exists():
+            errors.append(f'obsolete source must be removed: {stale}')
+    expected_principles = {'local-first-cloud-capable', 'open-by-design', 'in-the-creators-control', 'eliminate-needless-technical-wrangling'}
+    actual_principles = {p.stem for p in (root / 'vision/principles').glob('*.md')}
+    if actual_principles != expected_principles:
+        errors.append(f'expected four canonical principle pages, got {sorted(actual_principles)}')
     # Every Markdown file must be current. No grandfathered dead references.
     # Product evidence and old task cards must either have valid local links
     # or be removed/replaced by their authoritative project source.

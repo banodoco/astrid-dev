@@ -1,6 +1,6 @@
 # Agent learning loop — local memory and shared Hiveminds
 
-**Status:** Plan 23's proposed end-user behavior for [Collective Intelligence](../../visions/pillars/compounding-intelligence.md), not a shipped workflow, mandatory always-on service, or implementation plan.
+**Status:** Plan 23's proposed end-user behavior for [Collective Intelligence](../../vision/pillars/compounding-intelligence.md), not a shipped workflow, mandatory always-on service, or implementation plan.
 
 ## The behavior, not the database
 
@@ -71,4 +71,4 @@ Measure decision quality against **no knowledge** and **raw search**. Demonstrat
 
 - [Hivemind protocol proposal](../22-hivemind-protocol/protocol-proposal.md): suggested entry/link/scope/access records, cross-dataset references and `find`/`inspect`/`contribute`.
 - [Source map](../22-hivemind-protocol/inputs.md): distinguishes current Banodoco Hivemind implementation from the protocol proposal.
-- [Agent learning gap](../../visions/gaps/CI-001-agent-learning-loop.md): the current limitation and closure evidence.
+- [Agent learning gap](../../vision/gaps/CI-001-agent-learning-loop.md): the current limitation and closure evidence.

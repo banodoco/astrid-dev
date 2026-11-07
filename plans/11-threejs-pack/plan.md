@@ -1,6 +1,6 @@
 # Three.js as a pack
 
-**Vision gaps:** [Dependable pack lifecycle](../../visions/gaps/F-004-pack-lifecycle.md) (primary).
+**Vision gaps:** [Dependable pack lifecycle](../../vision/gaps/F-004-pack-lifecycle.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 

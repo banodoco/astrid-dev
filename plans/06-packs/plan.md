@@ -1,6 +1,6 @@
 # Packs v1.3
 
-**Vision gaps:** [Dependable pack lifecycle](../../visions/gaps/F-004-pack-lifecycle.md) (primary). [Supporting gap](../../visions/gaps/LS-003-full-stack-contributions.md).
+**Vision gaps:** [Dependable pack lifecycle](../../vision/gaps/F-004-pack-lifecycle.md) (primary). [Supporting gap](../../vision/gaps/LS-003-full-stack-contributions.md).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
@@ -22,7 +22,7 @@ Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, delet
 
 ## Prerequisites
 
-- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../AGENTS.md)); none is recorded. Nothing here authorizes pushing, creating a `main`, spending or promotion by itself. To ask for the go, see [How to use this repo](../../README.md#how-to-use-this-repo).
+- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([Astrid development skill](../../skills/astrid-dev/SKILL.md)); none is recorded. Nothing here authorizes pushing, creating a `main`, spending or promotion by itself. To ask for the go, see [How to use this repo](../../README.md#how-to-use-this-repo).
 - **No predecessor.** PK-0 freezes whatever `pre-main` is when the plan starts. It does not wait for [Plan 05](../05-remaining-fixes/plan.md) or any other plan (Decision 1).
 - **Tools on the proof machine:** `git`, `uv`, `ffmpeg`, Python 3.13, Node 20 or newer with `npm`, Chromium installed through Playwright (PK-14 and PK-17), and network reads to PyPI, npm and GitHub. Linux or macOS. No GPU, no RunPod, no provider keys.
 - **Access:** push access to the repositories below, or pull requests for the owner to merge. Creating `main` in `poms_packs` also needs the owner's go (Decision 6).

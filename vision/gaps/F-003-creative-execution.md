@@ -1,6 +1,6 @@
 # F-003 — Creative execution isn't yet dependable end to end
 
-**Applies to:** [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) (primary) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (supporting) · **Assessment:** Open / foundations exist (2026-11-06).
+**Applies to:** [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (primary) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (supporting) · **Assessment:** Open / foundations exist (2026-11-06).
 
 ## Desired state
 

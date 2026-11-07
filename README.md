@@ -4,11 +4,11 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 ## What we're building
 
-**[A tool to unlock the collective artistic ambition of the open-source community](visions/vision.md).** Four artistic [pillars](visions/vision.md#four-pillars) describe the creative aim; four [guiding principles](visions/principles.md) — local-first/cloud-capable, open by design, creator-controlled and eliminating needless technical wrangling — apply across the whole system.
+**[A tool to unlock the collective artistic ambition of the open-source community](vision/README.md).** Four artistic [pillars](vision/README.md#four-pillars) describe the creative aim; four [guiding principles](vision/README.md#four-creator-principles) — local-first/cloud-capable, open by design, creator-controlled and eliminating needless technical wrangling — apply across the whole system.
 
-**[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
+**[Vision → Gaps → Plans → Evidence](vision/README.md).** The vision defines the destination. [Gaps](vision/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. Projects in the [plan catalog](plans/index.md) are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 
-The [project catalog](plans/index.md) alone owns status, ownership, priority and estimates. [How gaps are assessed](visions/gaps.md).
+The [project catalog](plans/index.md) alone owns status, ownership, priority and estimates. [How gaps are assessed](vision/gaps.md).
 
 ## Want to contribute? Give this to your agent.
 

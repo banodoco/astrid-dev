@@ -1,6 +1,6 @@
 # CI-002 — Independent Hiveminds don't yet work together
 
-**Applies to:** [Intelligence That Compounds](../pillars/compounding-intelligence.md) (primary) · [Open by design](../principles.md#open-by-design) (supporting) · [In the creator's control](../principles.md#in-the-creators-control) (supporting) · **Assessment:** Open, proposal compared with source (2026-11-06).
+**Applies to:** [Intelligence That Compounds](../pillars/compounding-intelligence.md) (primary) · [Open by design](../principles/open-by-design.md) (supporting) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open, proposal compared with source (2026-11-06).
 
 ## Desired state
 

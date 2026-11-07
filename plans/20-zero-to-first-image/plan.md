@@ -1,6 +1,6 @@
 # Zero-to-first-image onboarding
 
-**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
@@ -15,7 +15,7 @@ Make the first useful result effortless: from an existing supported inference in
 
 ## What we build on
 
-Reuse existing installation, connection, generation, media, and timeline capabilities where verified. The [Liquid Software vision](../../visions/pillars/liquid-software.md) calls for good defaults, understandable choices, and user control. Exact source identities and evidence limits belong in [inputs](inputs.md).
+Reuse existing installation, connection, generation, media, and timeline capabilities where verified. The [Liquid Software vision](../../vision/pillars/liquid-software.md) calls for good defaults, understandable choices, and user control. Exact source identities and evidence limits belong in [inputs](inputs.md).
 
 ## Sequence
 

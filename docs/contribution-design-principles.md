@@ -7,7 +7,7 @@ Astrid Dev is a shared knowledge and coordination layer for many contributors, t
 ## Eight principles
 
 1. **One understandable path.** Orient → Investigate → Decide → Build → Prove → Land. Enter at the first unresolved stage, reuse accepted decisions, and stop where the work requires. Specialist skills deepen a stage rather than create a competing process.
-2. **One authoritative home per fact.** Keep status, owner and priority in the [project catalog](../plans/index.md); scope and inherited knowledge in the project pack; missing outcomes in the [gap records](../visions/gaps.md); product behavior in its product repository. Derive views or link sources, never maintain competing copies.
+2. **One authoritative home per fact.** Keep status, owner and priority in the [project catalog](../plans/index.md); scope and inherited knowledge in the project pack; missing outcomes in the [gap records](../vision/gaps.md); product behavior in its product repository. Derive views or link sources, never maintain competing copies.
 3. **Proportional rigor and competent judgment.** Small fixes belong in issues, independently useful outcomes in projects. Increase investigation, independent challenge and review with uncertainty, impact, cost and irreversibility—not with document type, word counts or a fixed number of agents.
 4. **Reuse before invention.** Trace existing behavior and prior art, preserve qualified work, and justify replacing or extending it. Prefer a simpler implementation or an existing abstraction when it can meet the user outcome.
 5. **Clear ownership, boundaries and handoffs.** One accountable owner per project; ownership can be relinquished or reassigned transparently. Each project states what it consumes, produces and proves so another agent can safely build on the result. Avoid a centralized agent scheduler.
@@ -17,6 +17,6 @@ Astrid Dev is a shared knowledge and coordination layer for many contributors, t
 
 ## Where to apply them
 
-The [contributor skill](../skills/astrid-dev/SKILL.md) owns entry and routing. The [contribution workflow](contribution-workflow.md) describes GitHub claims, proposals, reviews and completion; [maintainer setup](contribution-automation-setup.md) owns bot configuration. The [project format](project-format.md), [run contract](../skills/astrid-dev-shared/run-contract.md) and [repository rules](../AGENTS.md) own the actual work and safety boundaries.
+The [contributor skill](../skills/astrid-dev/SKILL.md) owns entry and routing. The [contribution workflow](contribution-workflow.md) describes GitHub claims, proposals, reviews and completion; [maintainer setup](contribution-automation-setup.md) owns bot configuration. The [project format](project-format.md) owns project records; the [run contract](../skills/astrid-dev-shared/run-contract.md) and each product repository's instructions govern execution, evidence and safety.
 
 **Before extending the system, ask:** Which concrete failure are we preventing? Is the fact already owned? Is this objectively checkable or a judgment? Could we remove something instead? Will a new contributor understand the next action without reconstructing a conversation?

@@ -1,6 +1,6 @@
 # F-004 — Pack installation and upgrades aren't yet reliable
 
-**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [Open by design](../principles.md#open-by-design) (supporting) · **Assessment:** Open / partial current mechanisms (2026-11-06).
+**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [Open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open / partial current mechanisms (2026-11-06).
 
 ## Desired state
 

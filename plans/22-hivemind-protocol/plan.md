@@ -1,8 +1,8 @@
 # 22 — Hivemind protocol: local and collective knowledge
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), use the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and inspect [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate are in the [project queue](../../README.md).
+**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), use the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and inspect [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate are in the [project queue](../../README.md).
 
-**Vision gaps:** [CI-002 — Independently owned, interoperable Hiveminds](../../visions/gaps/CI-002-federated-knowledge.md) (primary). This plan provides the protocol and dataset proof; routine agent use is addressed separately.
+**Vision gaps:** [CI-002 — Independently owned, interoperable Hiveminds](../../vision/gaps/CI-002-federated-knowledge.md) (primary). This plan provides the protocol and dataset proof; routine agent use is addressed separately.
 
 ## Goal and scope
 

@@ -178,7 +178,7 @@ def main() -> int:
     for issue in issues:
         print(f"ERROR {issue}")
     if issues:
-        print("Add a completion assessment to the PR description; see AGENTS.md")
+        print("Add a completion assessment to the PR description; see skills/astrid-dev/SKILL.md")
         return 1
     print(f"Completion gate passed for {len(changes)} plan(s): {', '.join(changes)}")
     return 0

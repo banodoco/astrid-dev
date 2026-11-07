@@ -1,8 +1,8 @@
 # 24 — Agent-powered liquid workspace
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). The [project queue](../../README.md) owns status, owner and estimate.
+**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). The [project queue](../../README.md) owns status, owner and estimate.
 
-**Vision gaps:** [LS-001 — Portable creative components](../../visions/gaps/LS-001-portable-components.md) (primary); [LS-002 — Agent workspace control](../../visions/gaps/LS-002-agent-workspace-control.md) and [LS-003 — Full-stack contributions](../../visions/gaps/LS-003-full-stack-contributions.md) (supporting). A proof of this plan does not automatically close all three.
+**Vision gaps:** [LS-001 — Portable creative components](../../vision/gaps/LS-001-portable-components.md) (primary); [LS-002 — Agent workspace control](../../vision/gaps/LS-002-agent-workspace-control.md) and [LS-003 — Full-stack contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (supporting). A proof of this plan does not automatically close all three.
 
 ## Goal and scope
 

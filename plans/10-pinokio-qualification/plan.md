@@ -1,6 +1,6 @@
 # 10 — Pinokio qualification: engine controls, custody and fully-local
 
-**Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../visions/gaps/F-002-safe-user-control.md).
+**Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../vision/gaps/F-002-safe-user-control.md).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
