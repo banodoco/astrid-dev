@@ -92,7 +92,7 @@ def build(root: Path, revision: str) -> dict:
         raise ValueError("the vision must reference four distinct pillars")
 
     principles = []
-    for m in PRINCIPLE.finditer(section(vision, "Four creator principles")):
+    for m in PRINCIPLE.finditer(section(vision, "Four driving principles")):
         name, relative_path = m.groups()
         path = Path("vision") / relative_path
         source = read(root, path)
@@ -207,7 +207,7 @@ def render_readme(root: Path, page: dict) -> str:
             "",
         ])
 
-    lines.extend(["## Four creator principles", ""])
+    lines.extend(["## Four driving principles", ""])
     for principle in page["principles"]:
         title = principle["title"]
         path = vision_root / "principles" / (principle["id"] + ".md")
