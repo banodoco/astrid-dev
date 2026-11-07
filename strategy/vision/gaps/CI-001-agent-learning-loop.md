@@ -8,7 +8,7 @@ An agent routinely uses applicable earlier lessons **before** work, captures tru
 
 ## Current state
 
-Astrid Agent has executable creative tools and Runtime task/artifact records. Banodoco Hivemind has an evidence-bearing read/contribution system. The [source map](../../plans/22-hivemind-protocol/inputs.md) **does not establish a complete private/local → community → later-agent learning loop**.
+Astrid Agent has executable creative tools and Runtime task/artifact records. Banodoco Hivemind has an evidence-bearing read/contribution system. The [source map](../../projects/22-hivemind-protocol/inputs.md) **does not establish a complete private/local → community → later-agent learning loop**.
 
 ## Gap
 
@@ -20,4 +20,4 @@ Two real agent sessions: the first retrieves applicable knowledge and produces a
 
 ## Sources and reassessment
 
-[Learning-loop reference](../../plans/23-agent-learning-integration/learning-loop.md) · [Protocol proposal](../../plans/22-hivemind-protocol/protocol-proposal.md) · [current implementation evidence](../../plans/22-hivemind-protocol/inputs.md). Never treat model-generated summaries or third-party text as observed proof or action authority.
+[Learning-loop reference](../../projects/23-agent-learning-integration/learning-loop.md) · [Protocol proposal](../../projects/22-hivemind-protocol/protocol-proposal.md) · [current implementation evidence](../../projects/22-hivemind-protocol/inputs.md). Never treat model-generated summaries or third-party text as observed proof or action authority.

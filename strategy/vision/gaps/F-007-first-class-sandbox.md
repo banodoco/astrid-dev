@@ -8,7 +8,7 @@ People can choose to run Astrid's creative environment—App, Agent, Runtime and
 
 ## Current state
 
-There is relevant ongoing work: [Astrid Agent PR #109](https://github.com/banodoco/astrid-agent/pull/109) contains OpenShell sandbox setup and controls, and [Plan 15](../../plans/15-openshell-safe-execution/plan.md) covers an integrated full-stack option. Current Agent sources include sandbox scripts, but their existence does not demonstrate a supported, first-class end-to-end user experience or verified isolation across the App, Agent and Runtime. The PR was open when checked on 2026-11-07; environment and platform qualification remain to be established.
+There is relevant ongoing work: [Astrid Agent PR #109](https://github.com/banodoco/astrid-agent/pull/109) contains OpenShell sandbox setup and controls, and [Plan 15](../../projects/15-openshell-safe-execution/plan.md) covers an integrated full-stack option. Current Agent sources include sandbox scripts, but their existence does not demonstrate a supported, first-class end-to-end user experience or verified isolation across the App, Agent and Runtime. The PR was open when checked on 2026-11-07; environment and platform qualification remain to be established.
 
 ## Gap
 
@@ -20,4 +20,4 @@ On a declared supported platform, a user can choose the sandbox mode, start the 
 
 ## Sources and reassessment
 
-[Plan 15](../../plans/15-openshell-safe-execution/plan.md) · [Agent PR #109](https://github.com/banodoco/astrid-agent/pull/109) · [Plan 15 source assessment](../../plans/15-openshell-safe-execution/inputs.md) · [F-002 — safe user control](F-002-safe-user-control.md). Reassess only against integrated, version-pinned evidence; do not treat a proposed sandbox, available script or a green test suite by itself as proof of this outcome.
+[Plan 15](../../projects/15-openshell-safe-execution/plan.md) · [Agent PR #109](https://github.com/banodoco/astrid-agent/pull/109) · [Plan 15 source assessment](../../projects/15-openshell-safe-execution/inputs.md) · [F-002 — safe user control](F-002-safe-user-control.md). Reassess only against integrated, version-pinned evidence; do not treat a proposed sandbox, available script or a green test suite by itself as proof of this outcome.

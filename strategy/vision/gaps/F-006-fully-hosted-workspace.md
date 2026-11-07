@@ -8,7 +8,7 @@ A creator can use Astrid from a browser without maintaining a local install. The
 
 ## Current state
 
-Astrid has a browser-capable App, Runtime and cloud/provider execution paths, but the [Cloud-assisted V1 plan](../../plans/25-cloud-assist-v1/plan.md) deliberately **keeps durable files and project database local**. An always-available hosted tenancy, canonical cloud database, durable object storage and migration/recovery contract are not qualified.
+Astrid has a browser-capable App, Runtime and cloud/provider execution paths, but the [Cloud-assisted V1 plan](../../projects/25-cloud-assist-v1/plan.md) deliberately **keeps durable files and project database local**. An always-available hosted tenancy, canonical cloud database, durable object storage and migration/recovery contract are not qualified.
 
 ## Gap
 
@@ -20,4 +20,4 @@ A new user can open a hosted Astrid workspace in a browser, create a project, sa
 
 ## Sources and reassessment
 
-[Plan 26 — fully hosted Astrid V2](../../plans/26-fully-hosted-v2/plan.md) · [Plan 25 — cloud-assisted local-files V1](../../plans/25-cloud-assist-v1/plan.md) · [F-001 — platform reliability](F-001-platform-reliability.md). This gap is **cloud persistence/tenancy** and has a separate closure test from F-005.
+[Plan 26 — fully hosted Astrid V2](../../projects/26-fully-hosted-v2/plan.md) · [Plan 25 — cloud-assisted local-files V1](../../projects/25-cloud-assist-v1/plan.md) · [F-001 — platform reliability](F-001-platform-reliability.md). This gap is **cloud persistence/tenancy** and has a separate closure test from F-005.

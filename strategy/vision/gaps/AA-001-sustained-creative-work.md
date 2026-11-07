@@ -20,4 +20,4 @@ A real artist-led project is completed through repeated revision, with demonstra
 
 ## Sources and reassessment
 
-[Artistic ambition reference principle](../pillars/artistic-ambition.md) · [Existing project plans](../../plans). This assessment must be refreshed against actual completed work and creator evidence; implementation-plan completion alone cannot close it.
+[Artistic ambition reference principle](../pillars/artistic-ambition.md) · [Existing project plans](../../projects). This assessment must be refreshed against actual completed work and creator evidence; implementation-plan completion alone cannot close it.
