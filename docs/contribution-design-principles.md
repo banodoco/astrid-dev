@@ -1,73 +1,22 @@
-# Principles for contributing to Astrid
+# Contribution design principles
 
 > **Make good contributions easy, poor decisions difficult, and results independently verifiable—with the least machinery necessary.**
 
-Astrid Dev is a version-controlled coordination and knowledge layer for many independently operated agents, generally **one accountable owner and one contributing agent per project**. It is **not** an agent scheduler, a product source repository, or another database. Agents with different levels of context should be able to contribute without making the product or its decisions incoherent.
+Astrid Dev is a shared knowledge and coordination layer for many contributors, typically **one accountable owner and one agent per project**. It should remain understandable to newcomers without constraining capable agents to unnecessary ceremony.
 
-## Design principles
+## Eight principles
 
-1. **One coherent path.** Understand → Decide → Do → Prove → Integrate. Enter at the first unresolved stage; keep accepted prior work. Specialist skills deepen stages rather than create competing processes.
-2. **One source of truth per fact.** The [catalog](../plans/index.md) owns project status, priority, owner and estimate. A project owns its scope and inputs. Gap files own their assessment; product repositories own product behavior. Generate views and link evidence instead of copying authority.
-3. **Rigor proportional to consequence.** A small issue needs a focused investigation and proof, not a project. Consequential, irreversible, safety-sensitive or cross-repository choices deserve deeper research and independent challenge. Scrutiny follows risk, **not** a fixed number of planners, documents or alternatives.
-4. **Use agent judgment, don't replace it with forms.** Require decisions to be intelligible and defensible, but let competent agents choose proportionate means. Reviewers challenge the reasoning, not prose length.
-5. **Build on prior art.** Before inventing an implementation, trace the actual behavior, search live and retained work, identify reusable paths and explain what is preserved. Distinguish a negative search result from an assumption that nothing exists.
-6. **Evidence proves a specific claim.** A claim names its result, exact code/dependency identity, applicable environment, method, observed pass/failure and limits. Record the **actual agent models used during work**, with a clear distinction between observed runtime metadata and self-reporting; never infer model identity from the intended role. A green wrapper, a URL, an old test or a completed task list is not automatically proof.
-7. **CI checks objective invariants; reviewers judge meaning.** CI parses records, validates references and state transitions, and runs scoped tests. It should not score confidence by paragraph length, infer consent from a link or assert that a test demonstrates more than it does.
-8. **Templates are prompts for useful information.** A draft may be short and honestly unfinished. Defined projects preserve their actual reasoning and owner decision. Add fields or files only when they reduce uncertainty for the next worker.
-9. **Project boundaries should be independently useful.** Each project consumes identified inputs and produces an artifact or behavior that another agent can use with stated qualifications. A hard bug is still normally an issue; difficulty alone doesn't create a project.
-10. **State transitions are minimal and explicit.** Claiming ownership, accepting new scope, authorizing execution, admitting a PR to review, approving the implementation, proving completion and publishing are **different decisions**. Automate low-risk bookkeeping, not consequential approval. Reuse current catalog and run controls; do not introduce parallel status ledgers.
-11. **Keep provenance discoverable, not duplicated.** Point to exact source commits, decisions, first failures and receipts. Distinguish historical snapshots from current facts; keep the next handoff short and link details where they live.
-12. **Prefer subtraction.** Before adding a schema, validator, approval stage, role or helper, show which duplication or failure it removes. Reuse existing mechanics when their semantics match; don't force unrelated decisions into one abstraction just to reduce file count.
+1. **One understandable path.** Orient → Investigate → Decide → Build → Prove → Land. Enter at the first unresolved stage, reuse accepted decisions, and stop where the work requires. Specialist skills deepen a stage rather than create a competing process.
+2. **One authoritative home per fact.** Keep status, owner and priority in the [project catalog](../plans/index.md); scope and inherited knowledge in the project pack; missing outcomes in the [gap records](../visions/gaps.md); product behavior in its product repository. Derive views or link sources, never maintain competing copies.
+3. **Proportional rigor and competent judgment.** Small fixes belong in issues, independently useful outcomes in projects. Increase investigation, independent challenge and review with uncertainty, impact, cost and irreversibility—not with document type, word counts or a fixed number of agents.
+4. **Reuse before invention.** Trace existing behavior and prior art, preserve qualified work, and justify replacing or extending it. Prefer a simpler implementation or an existing abstraction when it can meet the user outcome.
+5. **Clear ownership, boundaries and handoffs.** One accountable owner per project; ownership can be relinquished or reassigned transparently. Each project states what it consumes, produces and proves so another agent can safely build on the result. Avoid a centralized agent scheduler.
+6. **Evidence bound to actual claims.** Name the exact source/dependency identity, environment, check, observed result, relevant failures and unproven cases. Record models *actually used*, distinguishing runtime evidence from self-reporting or unknown identities. The review submission links original receipts; it is not another evidence database.
+7. **Objective CI, independent judgment and explicit authority.** CI validates structures, relationships, transitions and checks it actually runs; it does **not** establish that a linked result proves a claim. Reviewers judge sufficiency and risks. Claiming, accepting scope, authorizing execution, admitting review, merging code, completing work and publishing are distinct decisions. Automation of bookkeeping must fail closed and never run untrusted code with merge credentials.
+8. **Subtract before adding.** Templates ask only what helps the next agent act; drafts can be incomplete without pretending otherwise. Prefer existing skills, parsers and GitHub capabilities. Add a new state, document, role or validator only if it removes a real ambiguity or failure, and keep decisions reversible where practical.
 
-## How automation should behave
+## Where to apply them
 
-A contributor's GitHub identity is the claim identity. Ownership claims may be merged automatically **only** when an authenticated, unassigned, queued project's owner cell is the entire change, the current source still agrees, CI passes and protected-branch controls are configured. No automation should execute untrusted PR code while holding merge privileges.
+The [contributor skill](../skills/astrid-dev/SKILL.md) owns entry and routing. The [contribution workflow](contribution-workflow.md) describes GitHub claims, proposals, reviews and completion; [maintainer setup](contribution-automation-setup.md) owns bot configuration. The [project format](project-format.md), [run contract](../skills/astrid-dev-shared/run-contract.md) and [repository rules](../AGENTS.md) own the actual work and safety boundaries.
 
-A claimed owner's submission may be **accepted into a review queue automatically**. A review label means neither source acceptance nor release authorization. New project scope and consequential implementation still require human/qualified independent judgment. Multiple product PRs can contribute to one project, with one completion review referencing the qualified integrated result.
-
-A completion evidence pack is the PR's concise **index of real receipts**, not a new database or mandatory folder. Keep the original model-use records, candidate identities, negative tests and failures at their source. When an external action or prerequisite is unavailable, fail closed and provide a manual path rather than silently skipping the guard.
-
-## Where each responsibility belongs
-
-| Layer | Owns | Does not own |
-| --- | --- | --- |
-| [Contributor skill](../skills/astrid-dev/SKILL.md) | Entry, work classification and the common path | Product-specific source facts or a second authority system |
-| [Domain map](../skills/astrid-dev/references/domains.md) | Where to find canonical expertise and product owners | Replicas of domain runbooks |
-| Specialist skills and [run contract](../skills/astrid-dev-shared/run-contract.md) | Stage-specific judgment, source identity, authority and exact proof | New statuses or new approval rounds |
-| [Issues](https://github.com/banodoco/astrid-dev/issues) | Bugs, small contributions and investigation threads | Project-sized strategy |
-| [Project packs](project-format.md) | Outcome (`plan.md`), inherited facts (`inputs.md`), tasks/proof (`tasks.md`) | Copied status, competing histories or generic orchestration |
-| [Project catalog](../plans/index.md) | Project accountability, priority, status and estimate | Task progress or proof validity |
-| [Vision gaps](../visions/gaps.md) | Missing outcomes and evidence-based reassessment | The list of projects or automatic closure upon delivery |
-| PR receipts and product evidence | What was decided, built, observed and qualified | Permissions to ship that weren't granted |
-| [Documentation CI](../.github/workflows/docs.yml) | Mechanical integrity and exact-revision public projection | Architectural judgment or a claim that all relevant scenarios passed |
-
-## Proof and review boundary
-
-**An evidence pack is a view of existing receipts, not necessarily a new file.** For each consequential claim a reviewer should be able to answer:
-
-- What precise behavior or decision is claimed, and what scope is excluded?
-- Which repository, candidate commit/tree, dependencies, setup and inputs were actually examined?
-- Which specific check or observation was performed, what happened, and which negative case matters?
-- What remains unknown, untested, failed, or blocked? What previous failure did the change address?
-- Where is the durable result another agent can inspect or consume?
-
-Put detailed commands, logs and artifacts where they naturally belong (product test receipts, issue, run evidence or project records). A PR links them and states the conclusion. **CI verifies references and actual checks; independent review decides whether they substantiate the conclusion.**
-
-## A project handoff in existing files
-
-An agent should be able to answer four questions without reconstructing an author's chat:
-
-| Question | Home |
-| --- | --- |
-| What creator outcome, scope and completion criteria? | `plan.md` |
-| What code, prior art, accepted decisions and actual source revisions are inherited? | `inputs.md` |
-| What must be changed, consumed and produced; what proves it? | `tasks.md` |
-| What exact candidate, actual result, limitations and integration destination were delivered? | Completion PR/receipt, linked from the project when useful |
-
-A project is typically owned and executed by one contributor. Optimize for **a dependable boundary between projects**, not an elaborate internal agent-management platform.
-
-## Change checklist
-
-Before introducing a new mechanism, ask: **Is the fact already owned somewhere? Is the decision objectively checkable or judgmental? Which real failure does this prevent? Can an existing parser/skill/record serve it? Can we remove an old rule instead?**
-
-The expected result is fewer concepts and more meaningful proof—not a higher count of validated fields. This document governs design choices; [AGENTS.md](../AGENTS.md) and the run contract remain the executable authority and safety boundaries.
+**Before extending the system, ask:** Which concrete failure are we preventing? Is the fact already owned? Is this objectively checkable or a judgment? Could we remove something instead? Will a new contributor understand the next action without reconstructing a conversation?
