@@ -181,7 +181,6 @@ def render_readme(root: Path, page: dict) -> str:
     vision_text = read(root, vision_root / "README.md")
     intro = section(vision_text, "Ambition")
     contribution = section(vision_text, "Build Astrid with us")
-    gap_contract = section(vision_text, "Assessing and changing gaps")
     lines = [
         "# Astrid — " + page["vision"]["title"],
         "",
@@ -243,7 +242,6 @@ def render_readme(root: Path, page: dict) -> str:
             f"{gap['assessment'].capitalize()}. {synopsis}"
         )
 
-    lines.extend(["", "## Assessing and changing gaps", "", gap_contract, ""])
     lines.extend([
         "",
         "## Projects and participation",
@@ -252,8 +250,7 @@ def render_readme(root: Path, page: dict) -> str:
         "status and accountability; project packs contain their own scope, "
         "sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) "
         "covers issues, claims, scope review, PRs, writing and completion. "
-        "The gap assessment and authoring rules above apply when an outcome "
-        "is added or redefined.",
+        "Individual gap records hold their own evidence and closure criteria.",
         "",
     ])
     lines.extend(["## Build Astrid with us", "", contribution, ""])

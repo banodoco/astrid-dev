@@ -74,32 +74,9 @@ Each gap describes a result that remains independently verifiable even if its pr
 - **[LS-002 — Agents can't yet reconfigure the workspace](gaps/LS-002-agent-workspace-control.md)** — Open. An agent arranges the same real components as a user, binds the correct timeline/selection/clock, offers reversible operations, does not clobber user edits, and restores a prior workspace from a saved representation.
 - **[LS-003 — Frontend and backend extensions don't yet compose](gaps/LS-003-full-stack-contributions.md)** — Open. An installed/trusted music capability yields a typed beat-grid result used in a real timeline view and music control surface.
 
-## Assessing and changing gaps
-
-The list above is the complete current gap overview. Each linked record in [`gaps/`](gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
-
-Every gap has **one primary pillar or principle**, with supporting connections only when they explain a distinct relationship. IDs identify records, not ownership. Plans link to the outcomes they address; gaps do not duplicate the project queue, status, or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
-
-**Changes to evidence** (current state, assessment, or sources) use a normal reviewed PR. **Creating, retiring, renaming, or materially redefining an outcome** requires one short first-principles record in the PR description—not another document:
-
-```md
-## Gap boundary assessment — F-005
-
-Decision: Refine — why this boundary should change
-Outcome: missing creator-facing result
-Existing alternatives: nearby gaps/projects and why they do not suffice
-Why this level: why the result survives a different implementation
-Independent closure: real positive and negative proof
-Primary connection: principle:local-first-cloud-capable — reason
-Supporting connections: principle:in-the-creators-control — reason
-Evidence: source URL or exact source SHA
-```
-
-Use `Supporting connections: None — reason` when appropriate. [CI checks structure and linkage](../scripts/check_gap_boundaries.py), not philosophical merit or actual proof. A reviewer judges overlap, source claims, chosen relationships, and meaningful independent closure. When evidence changes, reassess honestly; don't fabricate a new approval process.
-
 ## Projects and participation
 
-The [project catalog](../plans/index.md) owns current priority, status and accountability; project packs contain their own scope, sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) covers issues, claims, scope review, PRs, writing and completion. The gap assessment and authoring rules above apply when an outcome is added or redefined.
+The [project catalog](../plans/index.md) owns current priority, status and accountability; project packs contain their own scope, sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) covers issues, claims, scope review, PRs, writing and completion. Individual gap records hold their own evidence and closure criteria.
 
 ## Build Astrid with us
 

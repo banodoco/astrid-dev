@@ -20,14 +20,39 @@ No mandatory project-conversation issue. Questions belong in an issue or PR; upd
 
 | Writing work | Canonical source and route |
 | --- | --- |
-| Vision, artistic pillars, creator principles, public copy | [Vision authoring guide](../vision/README.md). Edit the source files in `vision/` and run `python3 scripts/export_public_vision.py --sync-readme` to refresh their derived overview; after review, CI publishes the public JSON feed. Don't copy editorial content into Astrid App |
-| Gap statements or gap evidence | [Gap contract](../vision/README.md). Material changes need a boundary review; factual current-state/evidence updates use normal PRs |
+| Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` and run `python3 scripts/export_public_vision.py --sync-readme` to refresh their derived overview; after review, CI publishes the public JSON feed. Don't copy editorial content into Astrid App |
+| Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
 | Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. Documentation CI checks these paths |
 | Product API, UI, installer or extension technical docs | The owning [product repository](../skills/astrid-dev/references/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
 | Typo, small wording or README improvement | Normal, focused PR. No project, new skill, evidence-pack file or planning ceremony |
 
 Describe the intended correction and relevant source; give a real reviewer a way to verify technical claims. For consequential vision/architecture changes, review the *meaning*, not just Markdown validity. Don't invent a documentation-only state machine or keep copies of old drafts for posterity.
+
+## Define or reassess a vision gap
+
+The [vision overview](../vision/README.md#gaps--15-assessed-outcomes) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
+
+Every gap has **one primary pillar or principle**, with supporting connections only when they explain a distinct relationship. IDs identify records, not ownership. Plans link to the outcomes they address; gaps do not duplicate the project queue, status, or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
+
+**Changes to evidence** (current state, assessment, or sources) use a normal reviewed PR. **Creating, retiring, renaming, or materially redefining an outcome** requires one short first-principles record in the PR description—not another document:
+
+```md
+## Gap boundary assessment — F-005
+
+Decision: Refine — why this boundary should change
+Outcome: missing creator-facing result
+Existing alternatives: nearby gaps/projects and why they do not suffice
+Why this level: why the result survives a different implementation
+Independent closure: real positive and negative proof
+Primary connection: principle:local-first-cloud-capable — reason
+Supporting connections: principle:in-the-creators-control — reason
+Evidence: source URL or exact source SHA
+```
+
+Use `Supporting connections: None — reason` when appropriate. [CI checks structure and linkage](../scripts/check_gap_boundaries.py), not philosophical merit or actual proof. A reviewer judges overlap, source claims, chosen relationships, and meaningful independent closure. When evidence changes, reassess honestly; don't fabricate a new approval process.
+
+**Each gap file must include** `Applies to` (one primary and only justified supporting relationships), `Assessment` (with dated evidence), **Desired state**, **Current state**, **Gap**, **Closure evidence**, and **Sources and reassessment**. The plan catalog remains the only home for project statuses and ownership.
 
 ## Claim a project without waiting for a maintainer
 
