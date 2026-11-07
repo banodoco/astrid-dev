@@ -14,6 +14,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Bug, small fix, docs or maintenance | [Issue](https://github.com/banodoco/astrid-dev/issues) and focused PR. [Bug fixing](../astrid-dev-bugfix/SKILL.md) handles incidents; [Iterate](../astrid-dev-iterate/SKILL.md) handles scoped repairs |
 | Task in a claimed project | Existing [plan, inputs and tasks](../../docs/project-format.md); inherit accepted decisions and permissions |
 | New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/README.md), then use [Plan](../astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
+| Running a project or multi-agent effort | [Manage](../astrid-dev-manage/SKILL.md); call on [Advise](../astrid-dev-advise/SKILL.md) for a genuine blocker or consequential choice |
 | Integration, release or publication | [Release](../astrid-dev-release/SKILL.md), with explicit current authorization |
 
 ## One path, proportionate depth
