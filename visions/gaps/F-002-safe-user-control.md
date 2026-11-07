@@ -8,7 +8,7 @@ Human and agent actions are transparent, permissioned and recoverable. Creative 
 
 ## Current state
 
-Astrid Runtime has versioned project/task authority and the App/Agent have meaningful editing and conflict primitives. [Plan 01](../../plans/01-installer-consent/plan.md) is for installer choice; [Plan 04](../../plans/04-concurrent-edits/plan.md) addresses concurrent edits; [Plan 15](../../plans/15-openshell-safe-execution/plan.md) proposes qualified sandbox boundaries. These are different safeguards; together they **have not yet established this general outcome**.
+Astrid Runtime has versioned project/task authority and the App/Agent have meaningful editing and conflict primitives. [Plan 01](../../plans/01-installer-consent/plan.md) is for installer choice; [Plan 04](../../plans/04-concurrent-edits/plan.md) addresses concurrent edits; [Plan 15](../../plans/15-openshell-safe-execution/plan.md) targets the independent [F-007 sandbox outcome](F-007-first-class-sandbox.md). These are different safeguards; together they **have not yet established this broader user-control outcome**.
 
 ## Gap
 

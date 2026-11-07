@@ -4,6 +4,22 @@
 
 A gap records a **missing, independently assessable outcome**. It is neither a task nor an implementation design. All gap files live in `visions/gaps/<stable-id>-<slug>.md`, including cross-cutting infrastructure gaps.
 
+## How to normalize gap boundaries
+
+A gap is **a missing outcome we would still care about if today's proposed project were cancelled or replaced**. A project is **one chosen piece of work** intended to change that outcome. They are related, not interchangeable, and the relationship need not be one-to-one.
+
+Before adding or rewriting a gap, answer these questions:
+
+1. **Outcome, not implementation:** Can the heading name what people cannot yet do or rely on, without naming a particular provider, component, project milestone or proposed solution?
+2. **One coherent proof:** Is the desired result specific enough to have its own acceptance evidence, including meaningful negative cases? Avoid sweeping goals like "make everything safe" unless they explicitly describe a cross-cutting class of results.
+3. **Stable under replanning:** Would this missing outcome remain important if its current project, technology or owner changed? If a project can finish and the outcome still isn't demonstrated, the distinction is real.
+4. **No duplicate:** Does an existing gap already have essentially the same closure test? If so, link the new plan to it or sharpen the existing gap rather than create a duplicate.
+5. **Evidence and scope:** Can we say what is demonstrably true today and what would change the assessment, on a named supported environment? An absent project, missing roadmap item or unverified feature claim alone is not evidence.
+
+Gaps are **typically one abstraction level above projects**, but do not manufacture another layer just to maintain a hierarchy. One gap can be addressed by several projects; one project can improve several gaps; a gap may exist before a project is chosen. Give a project one primary gap when appropriate and supporting relationships only where its evidence genuinely contributes. Plan status and ownership never belong in the gap file.
+
+**Example:** [F-007](gaps/F-007-first-class-sandbox.md) asks whether people can choose and use a supported fully isolated Astrid environment. [Plan 15](../plans/15-openshell-safe-execution/plan.md) proposes OpenShell as one implementation. [F-002](gaps/F-002-safe-user-control.md) is the broader trust, permissions and recovery outcome. Completing Plan 15 could establish the narrower F-007 result while providing only partial evidence for F-002. Neither the vendor name nor a project's completion defines the gap.
+
 ## Minimal record
 
 ```md

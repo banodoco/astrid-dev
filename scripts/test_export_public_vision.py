@@ -71,6 +71,15 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("F-003", matches[0]["gapIds"])
         self.assertIn("F-002", matches[0]["gapIds"])
 
+    def test_sandbox_outcome_is_distinct_from_its_openshell_project(self):
+        gaps = {gap["id"]: gap for gap in self.page["gaps"]}
+        projects = {project["id"]: project for project in self.page["projects"]}
+        self.assertIn("F-007", gaps)
+        self.assertNotIn("OpenShell", gaps["F-007"]["title"])
+        self.assertIn("F-007", projects["15-openshell-safe-execution"]["gapIds"])
+        self.assertIn("F-002", projects["15-openshell-safe-execution"]["gapIds"])
+        self.assertEqual(projects["15-openshell-safe-execution"]["status"], "queued")
+
     def test_project_gap_ids_resolve(self):
         ids = {gap["id"] for gap in self.page["gaps"]}
         self.assertTrue(all(set(project["gapIds"]) <= ids for project in self.page["projects"]))

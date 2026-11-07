@@ -1,6 +1,6 @@
 # Sandboxed execution with OpenShell
 
-**Vision gaps:** [Trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (primary).
+**Vision gaps:** [F-007 — First-class full-stack sandboxing](../../visions/gaps/F-007-first-class-sandbox.md) (primary); [F-002 — trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (supporting). The sandbox outcome is independently testable; broader consent and recovery require separate evidence.
 
 **Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
 
