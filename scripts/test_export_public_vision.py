@@ -2,7 +2,7 @@
 import unittest
 
 from check_docs import ROOT
-from export_public_vision import build, rewrite_links
+from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary
 
 
 SHA = "a" * 40
@@ -105,6 +105,23 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(text,
                          f"[source](https://github.com/banodoco/astrid-dev/blob/{SHA}"
                          "/vision/pillars/artistic-ambition.md)")
+
+    def test_root_vision_counts_follow_source_data(self):
+        actual = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertEqual(render_root_readme(actual, self.page), actual)
+        self.assertIn("[four main pillars](vision/README.md#four-pillars)", actual)
+        self.assertIn("[four guiding principles](vision/README.md#four-driving-principles)", actual)
+        self.assertIn(f"[{len(self.page['gaps'])} gaps]", actual)
+        self.assertIn(f"[{len(self.page['projects'])} projects]", actual)
+
+        # Adding a gap or project changes the summary without hand-edited counts.
+        hypothetical = {**self.page,
+                        "gaps": self.page["gaps"] + [{}],
+                        "projects": self.page["projects"] + [{}]}
+        changed = render_root_summary(hypothetical)
+        self.assertIn(f"[{len(self.page['gaps']) + 1} gaps]", changed)
+        self.assertIn(f"[{len(self.page['projects']) + 1} projects]", changed)
+        self.assertNotEqual(actual, render_root_readme(actual, hypothetical))
 
     def test_immutable_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "40-character"):

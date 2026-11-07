@@ -257,6 +257,31 @@ def render_readme(root: Path, page: dict) -> str:
     return "\n".join(lines)
 
 
+ROOT_SUMMARY_START = "<!-- vision-summary:start -->"
+ROOT_SUMMARY_END = "<!-- vision-summary:end -->"
+
+
+def render_root_summary(page: dict) -> str:
+    """Derive the root README's gap/project counts from the validated public content."""
+    gaps, projects = len(page["gaps"]), len(page["projects"])
+    return (
+        "Our vision has [four main pillars](vision/README.md#four-pillars) "
+        "and [four guiding principles](vision/README.md#four-driving-principles). "
+        f"We've identified [{gaps} gaps](vision/README.md#gaps--{gaps}-assessed-outcomes) "
+        "between us and that end state, "
+        f"informing [{projects} projects](plans/index.md)."
+    )
+
+
+def render_root_readme(source: str, page: dict) -> str:
+    """Keep just the source-dependent summary generated; all other copy is editable."""
+    if source.count(ROOT_SUMMARY_START) != 1 or source.count(ROOT_SUMMARY_END) != 1:
+        raise ValueError("README.md needs exactly one vision summary marker pair")
+    before, remainder = source.split(ROOT_SUMMARY_START, 1)
+    _, after = remainder.split(ROOT_SUMMARY_END, 1)
+    return before + ROOT_SUMMARY_START + "\n" + render_root_summary(page) + "\n" + ROOT_SUMMARY_END + after
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--revision", help="40-character Astrid Dev revision (defaults to local HEAD)")
@@ -270,10 +295,18 @@ def main() -> int:
         result = build(ROOT, revision)
         expected_readme = render_readme(ROOT, result)
         readme = ROOT / "vision/README.md"
+        root_readme = ROOT / "README.md"
+        root_text = root_readme.read_text(encoding="utf-8")
+        expected_root_text = render_root_readme(root_text, result)
         if args.sync_readme:
             readme.write_text(expected_readme, encoding="utf-8")
-        elif readme.read_text(encoding="utf-8") != expected_readme:
-            raise ValueError("vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme")
+            if root_text != expected_root_text:
+                root_readme.write_text(expected_root_text, encoding="utf-8")
+        else:
+            if readme.read_text(encoding="utf-8") != expected_readme:
+                raise ValueError("vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme")
+            if root_text != expected_root_text:
+                raise ValueError("README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme")
     except (ValueError, OSError) as exc:
         print(f"ERROR public vision content: {exc}")
         return 1
