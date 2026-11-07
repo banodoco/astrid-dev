@@ -1,4 +1,4 @@
-# F-006 — A fully hosted Astrid workspace does not yet exist
+# F-006 — Creators can't yet work in Astrid entirely from the cloud
 
 **Applies to:** [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · [In the creator's control](../principles.md#in-the-creators-control) · [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) · **Assessment:** Open; no qualified fully hosted project/database/media lifecycle.
 
@@ -12,7 +12,7 @@ Astrid has a browser-capable App, Runtime and cloud/provider execution paths, bu
 
 ## Gap
 
-Hosted ownership and tenancy of persistent project state, database and media are missing, as are the authenticated project API, account permissions, asset retention, durability, quotas/spend controls, backups and migrations. These are not automatically supplied by remote inference or cloud-hosted agents.
+There is no qualified way to start a creative project, keep its working state and files, and return to it in a browser without maintaining a local Astrid install. Durable, account-scoped access, recovery and export are part of that user outcome; the particular database, storage and hosting architecture are choices for implementing it, not the definition of the gap.
 
 ## Closure evidence
 
