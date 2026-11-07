@@ -104,10 +104,16 @@ class GapBoundaryGateTests(unittest.TestCase):
             "Other solutions could exist in the future, so this is needed.")
         weak = weak.replace(
             "A real user delegates work and receives editable results with custody, consent, cost and recovery checks.",
-            "It works.")
+            "TBD.")
         issues = assess_boundary("F-005", weak)
         self.assertTrue(any("Existing alternatives" in issue for issue in issues))
         self.assertTrue(any("Independent closure" in issue for issue in issues))
+
+    def test_concise_but_specific_rationale_is_allowed(self):
+        succinct = RECEIPT.replace(
+            "A real user delegates work and receives editable results with custody, consent, cost and recovery checks.",
+            "Demonstrate local custody with an approved remote result.")
+        self.assertEqual(assess_boundary("F-005", succinct), [])
 
     def test_rejects_missing_evidence_and_duplicate_sections(self):
         without = RECEIPT.replace(
