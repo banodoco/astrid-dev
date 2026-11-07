@@ -1,13 +1,15 @@
 # Pillar 2 — Agent-Powered Liquid Software
 
-**Tools should adapt to creative work as people and agents use them—not lock that work inside a fixed application.**
+**Tools should adapt to creative work as people and agents create, not force the work into fixed interfaces.**
 
-Astrid is a **collective foundation for AI-powered creative tools**. The foundation supplies small, dependable, composable primitives: shared resources and identities, validated capabilities, permissions, and interfaces people and agents can use. Specialized creative behavior belongs in **packs**; shared primitives improve when multiple tools genuinely need the same capability. Reuse existing code before inventing a new layer.
+Astrid is a shared foundation for open, composable creative tools. Its foundation should stay small, understandable and dependable: durable resources (timelines, media and projects), validated capabilities for changing them, and interfaces for people and agents to use the same underlying work. Specialized behavior belongs in packs and reusable components. Extend core only when a genuinely shared capability requires it.
 
-**Every extension should itself be extendable.** Excellent, opinionated tools should work out of the box, while deliberate agent-accessible extension points let others modify their behavior and build further tools on top. A pack can offer both agent actions and human-facing interfaces operating on the same underlying resources. Components should move, dock, nest, combine and adapt to context without losing the user's underlying work; composition can be spatial, functional or both.
+An excellent tool is an **opinionated composition**, not a generic blank canvas. A creator can use it as-is or arrange, connect, adapt and extend its components while working. Every extension should expose useful extension points of its own: a timeline can support custom lanes, an inspector new sections, and a workspace new views. Packs can provide both agent actions and human-facing interfaces, sharing authoritative resource identities and permission checks.
 
-Creators choose their level of control: use a polished tool unchanged, alter one part, or reshape the experience. Agents help with the technical work, but creator intent, data, costs and permissions remain understandable and controllable.
+**Composition has two distinct concerns:** where a component is placed (dock, float, nest, spatially arrange) and what it is bound to (timeline, selection, playback, media, task). Moving a view should not silently change the creator's data or lose its state. Both conventional 2D workspaces and spatial/3D experiences can use the same primitives; neither should be required for the other.
 
-**Generalize the shared mechanisms; preserve the opinions of individual tools.** This is not a requirement to build a generic blank canvas or to replace working foundations in advance of a real creative need.
+Build on existing components before inventing new architecture. Let creators choose their degree of customization and where tools run. The result should be a responsive creative environment whose capabilities grow through contributions—not a new framework for its own sake.
 
 **Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md).
+
+**Implementation exploration:** [Liquid workspace](../../plans/24-liquid-workspace/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals and projects, not proof that the capabilities already ship.

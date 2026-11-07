@@ -17,3 +17,7 @@ Everything about Astrid is designed to give creators control. They can change ev
 ## Eliminate needless technical wrangling
 
 Artists should spend their time creating, not installing models or troubleshooting environments. Agents should handle choosing and setting up tools, managing dependencies, running jobs and recovering from errors. Technical choices, permissions and costs should be easy to understand without becoming the focus of the creative experience.
+
+## Evidence and delivery
+
+The [vision gaps](gaps.md) are assessed against the pillars and principles. [Projects](../plans/index.md) propose ways to narrow them; source-specific evidence supports reassessment. For writing, reviews and publication, use the [vision authoring guide](README.md) and [contributor workflow](../docs/contribution-workflow.md). This is delivery context, not a fifth creator-facing principle.

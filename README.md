@@ -8,7 +8,7 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 **[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 
-The [plan catalog](plans/index.md) owns status, ownership and priority; the list below is generated from it. [How gap reassessment works](visions/gaps.md) · [Dated plan-to-gap assessment](visions/references/plan-gap-assessment-2026-11-06.md).
+The [plan catalog](plans/index.md) owns status, ownership and priority; the list below is generated from it. [How gap reassessment works](visions/gaps.md).
 
 ## Want to contribute? Give this to your agent.
 
@@ -28,7 +28,7 @@ Respect source identity, user data and execution permissions.
 
 **[How to contribute: claim, propose, submit and complete](docs/contribution-workflow.md).** You can [claim an available project](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) with a single owner-only PR, [propose a project](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), or [open an issue](https://github.com/banodoco/astrid-dev/issues/new) for a small fix.
 
-The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the agent process; the [domain map](skills/astrid-dev/references/domains.md) routes people to the right code and references. [Ask a project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) if you need help or a start decision; claiming alone doesn't authorize execution.
+The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the agent process; the [domain map](skills/astrid-dev/references/domains.md) routes people to the right code. [Writing and documentation](docs/contribution-workflow.md#write-or-improve-documentation) use the same reviewed PR pipeline. [Ask a project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) if you need help or a start decision; claiming alone doesn't authorize execution.
 
 ## Highest-priority active and upcoming plans
 

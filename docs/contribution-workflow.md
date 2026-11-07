@@ -14,6 +14,21 @@
 
 No mandatory project-conversation issue. Questions belong in an issue or PR; update the authoritative project documents only when a decision actually changes.
 
+## Write or improve documentation
+
+**Writing uses the same issue/PR pipeline as code.** Find the owner of the information before making a second document:
+
+| Writing work | Canonical source and route |
+| --- | --- |
+| Vision, artistic pillars, creator principles, public copy | [Vision authoring guide](../visions/README.md). Edit `visions/`; after review, documentation CI publishes the public JSON feed. Don't copy editorial content into Astrid App |
+| Gap statements or gap evidence | [Gap contract](../visions/gaps.md). Material changes need a boundary review; factual current-state/evidence updates use normal PRs |
+| New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
+| Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. Documentation CI checks these paths |
+| Product API, UI, installer or extension technical docs | The owning [product repository](../skills/astrid-dev/references/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
+| Typo, small wording or README improvement | Normal, focused PR. No project, new skill, evidence-pack file or planning ceremony |
+
+Describe the intended correction and relevant source; give a real reviewer a way to verify technical claims. For consequential vision/architecture changes, review the *meaning*, not just Markdown validity. Don't invent a documentation-only state machine or keep copies of old drafts for posterity.
+
 ## Claim a project without waiting for a maintainer
 
 1. Find an existing `queued`, `Unassigned` [catalog project](../plans/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.
