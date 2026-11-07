@@ -154,5 +154,35 @@ class GapBoundaryGateTests(unittest.TestCase):
             self.assertEqual(affected_gaps(base, root), {"F-005", "F-007"})
 
 
+    def test_vision_folder_move_preserves_gap_boundary_without_new_review(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            def git(*args):
+                return subprocess.check_output(["git", *args], cwd=root, text=True).strip()
+            git("init", "-q")
+            git("config", "user.name", "Gap tests")
+            git("config", "user.email", "gap-tests@example.com")
+            old = root / "visions/gaps/F-005-test.md"
+            old.parent.mkdir(parents=True)
+            old.write_text(ORIGINAL, encoding="utf-8")
+            git("add", ".")
+            git("commit", "-qm", "legacy vision location")
+            base = git("rev-parse", "HEAD")
+            new = root / "vision/gaps/F-005-test.md"
+            new.parent.mkdir(parents=True)
+            new.write_text(ORIGINAL.replace(
+                "../principles.md#local-first-cloud-capable",
+                "../principles/local-first-cloud-capable.md"), encoding="utf-8")
+            old.unlink()
+            git("add", ".")
+            git("commit", "-qm", "move only")
+            self.assertEqual(affected_gaps(base, root), set())
+            new.write_text(new.read_text(encoding="utf-8").replace(
+                "without moving their persistent workspace",
+                "by moving their persistent workspace"), encoding="utf-8")
+            git("add", ".")
+            git("commit", "-qm", "material outcome change")
+            self.assertEqual(affected_gaps(base, root), {"F-005"})
+
 if __name__ == "__main__":
     unittest.main()

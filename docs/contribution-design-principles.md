@@ -17,6 +17,6 @@ Astrid Dev is a shared knowledge and coordination layer for many contributors, t
 
 ## Where to apply them
 
-The [contributor skill](../skills/astrid-dev/SKILL.md) owns entry and routing. The [contribution workflow](contribution-workflow.md) describes GitHub claims, proposals, reviews and completion; [maintainer setup](contribution-automation-setup.md) owns bot configuration. The [project format](project-format.md), [run contract](../skills/astrid-dev-shared/run-contract.md) and [repository rules](../skills/astrid-dev/SKILL.md) own the actual work and safety boundaries.
+The [contributor skill](../skills/astrid-dev/SKILL.md) owns entry and routing. The [contribution workflow](contribution-workflow.md) describes GitHub claims, proposals, reviews and completion; [maintainer setup](contribution-automation-setup.md) owns bot configuration. The [project format](project-format.md) owns project records; the [run contract](../skills/astrid-dev-shared/run-contract.md) and each product repository's instructions govern execution, evidence and safety.
 
 **Before extending the system, ask:** Which concrete failure are we preventing? Is the fact already owned? Is this objectively checkable or a judgment? Could we remove something instead? Will a new contributor understand the next action without reconstructing a conversation?
