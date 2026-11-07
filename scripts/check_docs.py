@@ -153,7 +153,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
                  Path('docs/contribution-workflow.md'), Path('docs/contribution-automation-setup.md'),
-                 Path('templates/review-submission.md')]
+                 Path('templates/product-pr/review.md')]
     for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md', 'vision/gaps.md'):
         if (root / stale).exists():
             errors.append(f'obsolete source must be removed: {stale}')
