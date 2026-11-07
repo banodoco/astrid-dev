@@ -26,6 +26,12 @@ Reuse existing installation, connection, generation, media, and timeline capabil
 
 See [tasks](tasks.md) for the intended proof and the scoping still required.
 
+## Project interface and handoff
+
+**Consumes:** an explicitly supported Astrid Runtime/App and an existing inference service/model, as verified in [inputs.md](inputs.md). Prior setup or compatible packs are reusable foundations, not assumed-working features.
+
+**Produces:** one copyable first-image onboarding path and matching agent instruction, with real generation-to-timeline evidence and measured recovery/effort on the selected supported environment. Record the exact tested candidate and proof in the completion PR; [Plan 15](../15-openshell-safe-execution/plan.md) owns any separately qualified sandbox mode.
+
 ## Completion
 
 A new user can follow the short instruction from the declared starting state and see a real generated image on the timeline. Focused evidence covers the selected recovery paths, setup steps, interventions, and token cost; the chosen route's unsupported variants remain explicit. Isolated full-stack execution is proven separately by Plan 15. The roughly 50,000-token figure is a measured design target, not a recorded result. This draft does not authorize product work, compute use, or publication; follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md).
