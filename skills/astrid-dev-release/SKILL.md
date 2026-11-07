@@ -5,7 +5,7 @@ description: Freeze, compose, qualify, integrate, or publish an explicitly scope
 
 # Astrid development release
 
-Use this workflow for cross-repository integration, candidate qualification, and explicitly authorized release or publication. [Iterate](../astrid-dev-iterate/SKILL.md) owns assigned implementation and repair; [Plan](../astrid-dev-plan/SKILL.md) prepares a new plan. Release consumes accepted work and owns integration and publication. The shared run contract is the authority for source identity, proof policy, and review budgets; do not restate or reset those choices here. [Source provenance and product runbooks](references/sources.md).
+Use this workflow for cross-repository integration, candidate qualification, and explicitly authorized release or publication. [Iterate](../astrid-dev-iterate/SKILL.md) owns assigned implementation and repair; [Plan](../astrid-dev-plan/SKILL.md) prepares a new plan. Release consumes accepted work and owns integration and publication. The shared run contract is the authority for source identity, proof policy, and review budgets; do not restate or reset those choices here. Use the [domain map](../astrid-dev/references/domains.md) to locate current product-owned release runbooks; verify the actual source SHAs before integration.
 
 ## Choose the requested lane
 

@@ -1,8 +1,8 @@
 # Plan catalog
 
-**Single source of truth for every plan's status, owner, priority order and estimate**, including completed and cancelled work. The [root README](../README.md) shows a generated preview of the first ten nonterminal plans; [ARCHIVE.md](../ARCHIVE.md) is a pointer, not a second register.
+**Single source of truth for every plan's status, owner, priority order and estimate**, including completed and cancelled work. The [root README](../README.md) links here rather than repeating a snapshot; terminal plans remain in this same catalog.
 
-**Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. This initial order preserves the existing README ordering (excluding the completed plan), **not a new prioritization decision**. Move a row to reprioritize; update its status in place. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
+**Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. Priority is determined by the ordered rows, not by a separate queue or a README snapshot. Move a row to reprioritize; update its status in place. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
 
 **Definitions:** `active` = explicitly started; `queued` = planned, not started; `blocked` = known impediment; `paused` = deliberately stopped; `done` = accepted completion evidence; `cancelled` = intentionally abandoned, with reason in the plan. Owner is accountability, not permission. Estimates are remaining human engineering days or `TBD`.
 
@@ -47,4 +47,4 @@ The App's `extension-visual` screenshot baseline and scheduled installer/Direct 
 
 Change **this table once** for status, owner, estimate, waiting-on or priority. Preserve a row for every `plans/<id>/plan.md`. Never copy status into a plan's metadata or a second archive table.
 
-Run `python3 scripts/check_docs.py --sync` from repo root to refresh the generated README excerpt, then `python3 scripts/check_docs.py` before committing. CI will **check**, never push generated changes. **Moving a plan to `done` also requires a [completion assessment in the PR description](../AGENTS.md#completing-a-plan-one-decision-gate)**, covering acceptance evidence and every linked gap.
+Run `python3 scripts/check_docs.py` and `python3 scripts/export_public_vision.py` from the repository root. CI validates on every PR and `main` push; the public vision feed is published only after a validated `main` push. **Moving a plan to `done` also requires the [completion assessment](../.github/PULL_REQUEST_TEMPLATE/project-completion.md)** with actual acceptance evidence and an assessment of every linked gap.

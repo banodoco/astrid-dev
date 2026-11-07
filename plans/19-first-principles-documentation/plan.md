@@ -2,7 +2,7 @@
 
 **Vision role:** Foundational enabler — makes existing tools and contracts discoverable without claiming new capabilities.
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Make Astrid understandable from its purpose to its working contracts: readers should find the central Astrid skill, choose a workflow or pack, and learn to extend it through concrete examples. The documentation should support a small composable foundation, with control at every level.
 
@@ -12,7 +12,7 @@ Make Astrid understandable from its purpose to its working contracts: readers sh
 - **Deferred:** a mandatory comprehensive manual, wholesale rewriting of every page, and parallel documentation systems.
 - **Still undecided:** repository set, detailed task breakdown, and the bounded human and agent journeys; determine these after inspecting current docs.
 
-See the [extensibility philosophy](../../docs/extensibility-philosophy.md) for the product foundation.
+See the [Liquid Software vision](../../visions/pillars/liquid-software.md) for the product foundation.
 
 ## What we build on
 

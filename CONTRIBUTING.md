@@ -1,15 +1,9 @@
 # Contributing to Astrid
 
-Everyone is welcome to help improve Astrid. **Bugs and small fixes are issues; substantial independent outcomes are projects.**
+**[Start here: contribution workflow](docs/contribution-workflow.md)** · [Use an agent? Give it the main skill](skills/astrid-dev/SKILL.md) · [Find work](plans/index.md) · [Report a bug](https://github.com/banodoco/astrid-dev/issues/new)
 
-- **Start here:** [Contributor workflow](docs/contribution-workflow.md) — discover, claim, propose, ask questions, submit PRs and finish a project
-- **Using an agent?** Give it the [single development skill](skills/astrid-dev/SKILL.md), which links to the right [domain expertise](skills/astrid-dev/references/domains.md)
-- **Find work:** [Project catalog](plans/index.md) · [Issues](https://github.com/banodoco/astrid-dev/issues)
-- **Claim:** edit a queued, `Unassigned` project's **Owner** cell to your GitHub handle in an owner-only PR. Then check scope and request explicit permission to start if not already granted
-- **Propose:** [Open a project proposal](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md); a new project joins the catalog through a maintainer-reviewed scope PR
-- **Submit work:** Link the project or issue from each product PR and include exact code identity, test results and limitations; multi-repo projects finish with one Astrid-dev completion PR
-- **Ask or hand off:** [Ask a project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md). To return non-active work, request a reviewed owner change to `Unassigned`; for active work, coordinate a reviewed pause or owner handoff, preserving unfinished work
+Everyone can propose work. Claim an available queued project with a one-cell owner PR; scope changes need review; implementation PRs carry actual source-bound evidence; completed projects need qualified integration and an independent completion review. A claim or review-queue label is not execution or merge permission.
 
-Claiming records ownership, not permission to execute or deploy. The automated claim merger is enabled only after appropriate GitHub branch protections and a restricted App are configured. Read [the full process](docs/contribution-workflow.md) for those details.
+**Writing or documentation?** Use the same contribution process—[find the right source and review path](docs/contribution-workflow.md#write-or-improve-documentation). Small fixes need only a focused PR. Public vision prose lives in [visions/](visions/README.md), project content in [plans/](plans/index.md), and product API docs with the owning product repo.
 
-**Good contributions should be easy; evidence, decisions and integration must remain independently verifiable.**
+[Questions or blockers](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) use ordinary issues or the relevant PR. Decisions that affect scope belong in the project pack, not a mandatory discussion hub.

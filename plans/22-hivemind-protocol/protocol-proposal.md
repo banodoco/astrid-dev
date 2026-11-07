@@ -1,4 +1,4 @@
-> **Source reference — proposal, not shipped protocol.** User-supplied Markdown, dated 2026-10-29. Preserved here as a technical proposal for [Collective Intelligence](../../pillars/compounding-intelligence.md). Its proposed federation, schema, operations, migration, counts and evaluation results must **not** be represented as verified current Banodoco Hivemind capabilities. See the [federated knowledge gap](../../gaps/CI-002-federated-knowledge.md) and [source map](source-map.md) for the distinction.
+> **Plan 22 design input — proposal, not a shipped protocol.** User-supplied Markdown, dated 2026-10-29. Preserved here as a technical proposal for [Collective Intelligence](../../visions/pillars/compounding-intelligence.md). Its proposed federation, schema, operations, migration, counts and evaluation results must **not** be represented as verified current Banodoco Hivemind capabilities. See the [federated knowledge gap](../../visions/gaps/CI-002-federated-knowledge.md) and the verified sources listed in [inputs.md](inputs.md) for the distinction.
 
 ---
 

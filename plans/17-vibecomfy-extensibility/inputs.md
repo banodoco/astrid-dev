@@ -13,7 +13,7 @@ Repository ownership, starting branch and SHA, retained dirty work, and candidat
 
 ## References and evidence
 
-- [Extensibility philosophy](../../docs/extensibility-philosophy.md) sets the design direction.
+- [Liquid Software vision](../../visions/pillars/liquid-software.md) sets the design direction.
 - The draft identifies H3_AV and current VibeComfy code as inputs but supplies no source links, SHAs, or recorded proof. Recover them at setup.
 - No generation evidence is established. Scope any real-generation proof and authorized compute requirements before execution; this planning effort runs no GPU work.
 

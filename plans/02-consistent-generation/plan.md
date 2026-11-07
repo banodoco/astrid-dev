@@ -2,19 +2,17 @@
 
 **Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Plan 02 makes supported generation pick consistent defaults (image, edit, video, voice, music, sound effects), and makes the Agent, Runtime, App, VibeComfy and runpod-lifecycle repositories pin one compatible set of versions that installs on a fresh Linux machine. Users get predictable defaults and clear guidance when no GPU is available. It reuses work that already exists on retained branches and merges it into `pre-main`.
 
 **Not proven here:** a real model producing an image that reaches the gallery. Model downloads, GPU or provider calls, real inference and Foley hardware qualification are outside this plan. The checks use fixtures (a stand-in ComfyUI server) and a CPU-only install. The [first-image onboarding](../20-zero-to-first-image/plan.md) and [multiple inference routes](../12-multiple-inference-routes/plan.md) plans cover real inference.
 
-Status, owner and estimate are in the [README queue](../../README.md).
+Status, owner and estimate are in the [catalog](../index.md).
 
-## How to work on it
+## Execution handoff
 
-1. Read [AGENTS.md](../../AGENTS.md) for repository rules, and the [skills guide](../../skills/README.md). Use the **iterate** workflow for a single scoped change or check (P1 to P3, D2, V1 to V3, A1), and the **release** workflow for integration, review and promotion (C1, C2, D1, D1b, D3, R1, RB1, PR1).
-2. Routes `N`, `X`, `S` and review rules are in the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Terms are in the [glossary](../../docs/glossary.md); plan-specific terms are at the end of this file.
-3. Do the tasks in [tasks.md](tasks.md); exact SHAs and what is missing are in [inputs.md](inputs.md).
+[Tasks](tasks.md) own the work and focused proof; [inputs](inputs.md) own actual source identities and retained work. Use the [contributor skill](../../skills/astrid-dev/SKILL.md), then its [Iterate](../../skills/astrid-dev-iterate/SKILL.md) or [Release](../../skills/astrid-dev-release/SKILL.md) specialist as the task requires. Do not infer a model ID or new permission from this plan.
 
 ## Prerequisites
 
@@ -108,4 +106,3 @@ Proof is bound to the final head. Producers land first, Plan 01 is a preconditio
 | [tasks.md](tasks.md) | Every task: outcome, route, dependencies, exact commands, done condition. |
 | [inputs.md](inputs.md) | Current heads, producer SHAs, what is missing, Installer Consent status. |
 | [env/README.md](env/README.md) | Setup and test runner scripts used by the checks. |
-| [Inclusion assessment](../../references/INCLUDING-GENERATION.md) | Background evidence only, not a task list. |

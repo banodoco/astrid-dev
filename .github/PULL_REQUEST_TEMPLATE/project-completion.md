@@ -1,4 +1,4 @@
-Project: plans/<NN-project-name>/plan.md
+Project: strategy/projects/<NN-project-name>/plan.md
 Review request: completion
 
 ## Project completion — evidence review

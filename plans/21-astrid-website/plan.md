@@ -8,7 +8,7 @@ Build the approved scroll journey below the Astrid homepage hero: §2 creative s
 
 ## Prerequisites and authority
 
-Live status and owner: [root queue](../../README.md). This plan does not authorize product work. Start only after Hannah says go. At that point, follow Step 0 below, confirm source identity and re-check all pinned pointers against the actual branch point. Do not infer authorization, branch identity, or merge approval from this plan.
+Live status and owner: [catalog](../index.md). This plan does not authorize product work. Start only after Hannah says go. At that point, follow Step 0 below, confirm source identity and re-check all pinned pointers against the actual branch point. Do not infer authorization, branch identity, or merge approval from this plan.
 
 Product repo: `banodoco/astrid-app`, route `/home`. Source baseline and asset/evidence provenance are recorded in [inputs.md](inputs.md). The live hero stays as-is. Placeholders only; real media remain deferred unless the owner decides otherwise.
 

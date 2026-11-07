@@ -15,11 +15,6 @@ CATALOG = Path('plans/index.md')
 README = Path('README.md')
 HEADER = '| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |'
 DIVIDER = '|---|---|---|---|---:|---|---|'
-# Owner stays only in the canonical catalog: owner-only claims require no README edit.
-PREVIEW_HEADER = '| Project | Goal | Status | Estimate | Waiting on | Plan |'
-PREVIEW_DIVIDER = '|---|---|---|---:|---|---|'
-BEGIN = '<!-- plans:top10:start -->'
-END = '<!-- plans:top10:end -->'
 STATUSES = {'queued', 'active', 'blocked', 'paused', 'done', 'cancelled'}
 VISIBLE = {'queued', 'active', 'blocked', 'paused'}
 LINK = re.compile(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)')
@@ -56,27 +51,6 @@ def catalog_rows(text: str) -> list[list[str]]:
     return rows
 
 
-def preview(rows: list[list[str]]) -> str:
-    """Derived shortlist without owner, so self-claim PRs change one cell only."""
-    selected = [r for r in rows if r[2] in VISIBLE][:10]
-    output = [PREVIEW_HEADER, PREVIEW_DIVIDER]
-    for row in selected:
-        # Owner is authoritative in plans/index.md; omit it from this projection.
-        cells = [row[i] for i in (0, 1, 2, 4, 5, 6)]
-        cells[-1] = cells[-1].replace('](', '](plans/', 1)
-        output.append('| ' + ' | '.join(cells) + ' |')
-    return '\n'.join(output)
-
-
-def replace_preview(text: str, rendered: str) -> str:
-    if text.count(BEGIN) != 1 or text.count(END) != 1:
-        raise ValueError('README needs exactly one top-ten marker pair')
-    a, b = text.index(BEGIN) + len(BEGIN), text.index(END)
-    if a >= b:
-        raise ValueError('README top-ten markers out of order')
-    return text[:a] + '\n' + rendered + '\n' + text[b:]
-
-
 def local_links(root: Path, path: Path) -> list[str]:
     """Check paths, not GitHub-generated anchor fragments or external URLs."""
     text = read(root, path)
@@ -101,7 +75,7 @@ def unnamed_active_owners(rows: list[list[str]]) -> list[str]:
     ]
 
 
-def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
+def check(root: Path) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
     try:
@@ -126,17 +100,6 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
         errors.append(f'plan folder absent from catalog: {missing}')
     for extra in sorted(indexed - actual):
         errors.append(f'catalog references non-plan: {extra}')
-
-    try:
-        current = read(root, README)
-        expected = replace_preview(current, preview(rows))
-        if current != expected:
-            if sync:
-                (root / README).write_text(expected, encoding='utf-8')
-            else:
-                errors.append('README top ten is stale; run python3 scripts/check_docs.py --sync')
-    except (OSError, ValueError) as exc:
-        errors.append(f'README preview: {exc}')
 
     gaps = sorted((root / 'visions/gaps').glob('*.md'))
     gap_ids = set()
@@ -173,37 +136,27 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
                     errors.append(f'{plan}: unknown vision gap {gap}')
         except ValueError as exc:
             errors.append(f'{plan}: {exc}')
-    # The archive is a pointer, never a second status table.
-    if '| Project | Status |' in read(root, Path('ARCHIVE.md')):
-        errors.append('ARCHIVE.md contains a duplicate plan registry')
-
-    mandatory = [README, CATALOG, Path('ARCHIVE.md'), Path('AGENTS.md'),
+    mandatory = [README, CATALOG, Path('AGENTS.md'),
                  Path('CONTRIBUTING.md'),
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
                  Path('docs/contribution-workflow.md'), Path('docs/contribution-automation-setup.md'),
                  Path('templates/review-submission.md')]
-    mandatory += [p.relative_to(root) for p in (root / 'visions').rglob('*.md')]
-    mandatory += sorted(actual)
-    # Include the actual agent entrypoint, domain map and project templates:
-    # broken guidance links should fail the same CI as broken plan links.
-    mandatory += [p.relative_to(root) for p in (root / 'skills').rglob('*.md')]
-    mandatory += [p.relative_to(root) for p in (root / 'templates/project').glob('*.md')]
-    mandatory += [p.relative_to(root) for p in (root / '.github/ISSUE_TEMPLATE').glob('*.md')]
-    mandatory += [p.relative_to(root) for p in (root / '.github/PULL_REQUEST_TEMPLATE').glob('*.md')]
-    mandatory += [Path('.github/pull_request_template.md')]
+    # Every Markdown file must be current. No grandfathered dead references.
+    # Product evidence and old task cards must either have valid local links
+    # or be removed/replaced by their authoritative project source.
+    mandatory += [p.relative_to(root) for p in root.rglob("*.md")
+                  if ".git" not in p.relative_to(root).parts]
     for path in sorted(set(mandatory)):
         errors.extend(local_links(root, path))
-    # Older task/evidence documents may have legacy references; don't fail this
-    # catalog migration on those. Their references can be audited separately.
+
     return errors, warnings
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--sync', action='store_true', help='regenerate README summary from plans/index.md')
     args = parser.parse_args()
-    errors, warnings = check(ROOT, args.sync)
+    errors, warnings = check(ROOT)
     for issue in warnings:
         print(f'WARN {issue}')
     for issue in errors:
@@ -211,7 +164,7 @@ def main() -> int:
     if errors:
         print(f'Document validation failed with {len(errors)} error(s).')
         return 1
-    print('Documentation structure, plan catalog, README excerpt and managed local links: OK')
+    print('Documentation structure, project catalog and every Markdown local link: OK')
     return 0
 
 

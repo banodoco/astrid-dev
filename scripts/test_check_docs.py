@@ -3,8 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_docs import (BEGIN, DIVIDER, END, HEADER, catalog_rows, local_links,
-                        preview, replace_preview, unnamed_active_owners)
+from check_docs import (DIVIDER, HEADER, catalog_rows, local_links,
+                        unnamed_active_owners)
 
 
 def example(status='active', key='01-alpha'):
@@ -12,17 +12,6 @@ def example(status='active', key='01-alpha'):
 
 
 class CatalogTests(unittest.TestCase):
-    def test_top_ten_ignores_terminal_statuses(self):
-        lines = [example('done'), example('active', '02-beta'),
-                 example('queued', '03-gamma')]
-        # Completed work must follow prioritized rows.
-        text = '# Index\n\n' + HEADER + '\n' + DIVIDER + '\n' + '\n'.join(lines[1:] + lines[:1])
-        rows = catalog_rows(text)
-        self.assertEqual(len(rows), 3)
-        result = preview(rows)
-        self.assertIn('](plans/02-beta/plan.md)', result)
-        self.assertNotIn('](plans/01-alpha/plan.md)', result)
-
     def test_invalid_status(self):
         text = HEADER + '\n' + DIVIDER + '\n' + example('maybe')
         with self.assertRaisesRegex(ValueError, 'invalid status'):
@@ -39,21 +28,6 @@ class CatalogTests(unittest.TestCase):
         unnamed = catalog_rows(HEADER + '\n' + DIVIDER + '\n'
                                + example('active').replace('| Owner |', '| Unassigned |'))
         self.assertEqual(len(unnamed_active_owners(unnamed)), 1)
-
-    def test_owner_only_change_does_not_change_readme_preview(self):
-        before = catalog_rows(HEADER + '\n' + DIVIDER + '\n'
-                              + example('queued').replace('| Owner |', '| Unassigned |'))
-        after = catalog_rows(HEADER + '\n' + DIVIDER + '\n'
-                             + example('queued').replace('| Owner |', '| @casey |'))
-        self.assertEqual(preview(before), preview(after))
-        self.assertNotIn('| Owner |', preview(before))
-
-    def test_generated_preview_drift(self):
-        before = f'# README\n{BEGIN}\noutdated\n{END}\n'
-        after = replace_preview(before, 'updated')
-        self.assertIn(f'{BEGIN}\nupdated\n{END}', after)
-        self.assertEqual(after, replace_preview(after, 'updated'))
-        self.assertNotEqual(before, after)
 
     def test_relative_links(self):
         with tempfile.TemporaryDirectory() as directory:

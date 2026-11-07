@@ -1,6 +1,6 @@
 # Inputs: Release fixes integration
 
-[Plan](plan.md) · [Tasks](tasks.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Tasks](tasks.md) · [Project status and owner](../index.md)
 
 ## Starting code
 
@@ -18,9 +18,7 @@ The RunPod-owner donor is in `astrid-agent`; do not infer a separate lifecycle r
 
 | Source | What it establishes | Identity or link | Limits / missing information |
 |---|---|---|---|
-| Accepted SF receipts | Two accepted source receipts used for the ledger | `83f39c24e731fe199efa60bb2f5a262c9d4a871b` and `1c4cab15b614336c752f44976c8b283ca9b36667`; [source evidence summary](../../references/evidence-summary.md) | Historical evidence; neither receipt freezes this plan's later destination base. |
-| Donor manifest | Historical donor-to-repository mapping, include/defer reasons, and superseded/member records | [donor-manifest.json](../../references/donor-manifest.json) | Audit snapshot, not proof of inclusion in future Plan 02 integration and Plan 04 `pre-main`. |
-| Source provenance | Small-fixes ledger and scope decisions | [references/PLAN.md](../../references/PLAN.md) and [evidence-summary.md](../../references/evidence-summary.md) | Full local runtime logs and card corpus are not bundled; summaries do not establish fresh candidate results. |
+| Accepted SF receipts | Two accepted source receipts used for the ledger | `83f39c24e731fe199efa60bb2f5a262c9d4a871b` and `1c4cab15b614336c752f44976c8b283ca9b36667` | Historical evidence; neither receipt freezes this plan's later destination base. |
 | SF host-cancel | Host-cancel fix donor | Agent `aff7686d0f6e6314dd5531600d173bbd265e437e` | Historical donor; compare changed behavior and preserve current receipts. |
 | SF VibeComfy rank 9 | Independent boundary-test donor | VibeComfy `1ac3b91fedf4a15842ff655442869569d4855396` | Test-only change; no product rewrite or broad emitter sweep. |
 | SF generation extras | Installed-boundary, generation ID/listing, and SDK fixture donors | Agent `9c06b674dfe27d513eccc528e14fb423cf3a1881`, `7ab6aa10859b19bc3b13cf90966cc0da18026c68`, `9d6af90b1ae4bd4a7afd346942c07e57f75201c7` | Reconcile once with Plan 02 integration. Freeze exact affected test nodes from immutable donor diffs at task setup. |

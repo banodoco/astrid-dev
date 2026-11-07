@@ -1,6 +1,6 @@
 # Tasks: Packs v1.3
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 [Project explanation](plan.md) · [Inputs and provenance](inputs.md) · [Current project status](../../README.md)
 

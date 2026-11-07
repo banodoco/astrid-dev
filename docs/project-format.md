@@ -1,6 +1,6 @@
 # Issues and project packs
 
-[Start with Astrid's single contributor skill](../skills/astrid-dev/SKILL.md) and [GitHub contributor process](contribution-workflow.md). **Bugs, small improvements, maintenance and documentation fixes belong in an issue or an existing task**, with a focused PR and evidence. They do not need a new project folder. Create a project only for an independently useful result that merits its own priority, owner, dependencies and completion criteria.
+[Start with Astrid's development skill](../skills/astrid-dev/SKILL.md) and the [contributor/writing workflow](contribution-workflow.md). **Bugs, small improvements, maintenance and documentation fixes belong in an issue or an existing task**, with a focused PR and evidence. They do not need a new project folder. Create a project only for an independently useful result that merits its own priority, owner, dependencies and completion criteria.
 
 Each project uses one folder with three complementary files:
 
