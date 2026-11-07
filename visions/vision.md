@@ -2,6 +2,8 @@
 
 Astrid aims to help individuals and the community as a whole pursue artistic work beyond what they thought possible.
 
+The information on this page is pulled from the Astrid Dev repository. If you'd like to contribute, visit [the contribution guide](https://github.com/banodoco/astrid-dev#want-to-contribute-give-this-to-your-agent).
+
 ## Four pillars
 
 1. **[A Tool for Artistic Ambition](pillars/artistic-ambition.md)** — We want to make it easier for artists to push their work—and themselves—toward more ambitious projects.
