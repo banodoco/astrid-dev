@@ -18,17 +18,19 @@ R1 shipped Pinokio on `astrid-pinokio` `main`, but the basic path is **shipped, 
 
 **Restarted and shipped on indicative evidence (5 Nov 2026).** The launcher no longer force-stops (astrid-pinokio #12, `main` `7144bc130fbe8c22e33d2dcc698edfaac2a74cfc`): Stop sends SIGTERM (or `taskkill` without `/F`), waits about 5 s, and otherwise refuses once and exits non-zero, leaving the process running. A Runtime busy refusal stays retryable. The owner chose to ship once there was indicative evidence and track the gaps here.
 
-Indicative evidence: hosted `pinokio-linux` driver runs on the astrid-agent lane branch `lane/M-INT/pinokio-rows` (not yet on `main`) against App `57d39bd6`, Agent `9373955d`, Runtime `9fc53b77` and launcher `7144bc13`. Run 42058623476 passed the first four of six steps: install, start and a settled task, graceful stop and restart, and busy stop (one refusal, the same Runtime, the task finished, the retried stop succeeded, data kept). Update and uninstall were not reached in that run.
+Evidence (7 Nov 2026): the hosted Pinokio rows (`scripts/pinokio_row_driver.py`, `pinokio-row-v1` checker) are on astrid-agent `int/r1` (#290). Against Agent `996b757b` (with the fix below), Runtime `9fc53b77` and launcher `7144bc13`, run 42333603780 passed all six steps on **Linux and macOS**: install, start and a settled task, graceful stop and restart, busy stop, update to the stand-in Release 2, and uninstall with the workspace data kept. On Linux the busy stop refused once, the Runtime stayed the same, and the retried stop succeeded. The five direct rows stayed 5/5 with the same Agent (run 42330232851).
+
+**Bug found and fixed by these rows:** every Pinokio release update failed with "another installer owns the installation lifetime lock" and rolled back. The update ran a Runtime workspace migration even when the schema was unchanged, and the updater's own stopped-path custody held the lock. Fix (astrid-agent #290, `core.py` `schema_unchanged()` shared with the direct path): same-schema Pinokio updates skip the migration, as direct updates already did.
 
 **Open gaps (remaining Plan 07 work):**
 
 | Gap | Next step |
 |---|---|
-| Update to the stand-in release and uninstall through Pinokio are not yet proven on a hosted row | Get a full six-step `pinokio-linux` pass (driver fixes for the app-folder layout and the busy task are on the lane branch) |
-| macOS and Windows rows not run | Reuse the same driver; replace the dropped macOS-only "other Runtime unchanged" process check with a per-OS one |
-| The row driver and `pinokio-row-v1` checker are only on the lane branch | Land them on astrid-agent and re-align the App pins in the same change |
 | The real Pinokio app is not exercised by the hosted rows: they run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | macOS: the owner tested the real Pinokio app by hand on 5 Nov 2026 and everything worked. Linux and Windows: not yet checked by hand. A hosted engine-driven row stays in [Plan 10](../10-pinokio-qualification/plan.md) |
 | A process that ignores the graceful stop is left running after the refusal | Accepted fail-closed limitation; Plan 10 covers engine Stop/Quit |
+| `pinokio-windows` fails at install: with `USERPROFILE`/`LOCALAPPDATA`/`APPDATA` isolated, `install.ps1` exits 1 after the media-tool (ffmpeg) setup output (run 42333603780) | Read the Windows install log from the row's evidence and fix the driver or installer; the row stays a named gap until then |
+| The "other Runtime unchanged" process check was dropped (it was macOS-only) | Add a per-OS check |
+| On fast runners the busy-stop task can finish before Stop lands; the row then sends Stop right after admission and accepts a clean stop, so a busy refusal is not exercised every run | Use a deterministic long-running test task |
 | The retired old-launcher Pinokio route (`execute_pinokio_backend`, M4-4a backend checks) is still in astrid-agent | Remove it once nothing selects it |
 
 ## Sequence

@@ -21,6 +21,7 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 | [IU-10 Captured real service-manager output in unit fakes](#iu-10-captured-real-service-manager-output-in-unit-fakes) | N | IU-0 | [ ] |
 | [IU-11 Update-test hardening (from the R1 update-test review)](#iu-11-update-test-hardening-from-the-r1-update-test-review) | N / Luna | IU-1 | [ ] |
 | [IU-12 Windows pack-host retirement premise](#iu-12-windows-pack-host-retirement-premise) | X | IU-0 | [ ] |
+| [IU-13 Installer lock hand-off for schema-changing updates](#iu-13-installer-lock-hand-off-for-schema-changing-updates) | X | IU-1 | [ ] |
 | [IU-END Scoped review and promotion](#iu-end-scoped-review-and-promotion) | X | all | [ ] |
 
 ## Task details
@@ -158,6 +159,15 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 - **Work:** Confirm that every Windows service launch is inside that Job, with no breakaway. Decide parked fix A: the Runtime writes the pack-host `job_drained` receipt before the installer's manager-stop callback (astrid-runtime `runtime_protocol/services.py`).
 - **Focused checks:** Source inspection of each Windows service launch path; exact selectors TBD at setup.
 - **Done:** Evidence lists each Windows launch path as inside the Job or a named breakaway, and fix A has a recorded decision.
+
+### IU-13 Installer lock hand-off for schema-changing updates
+
+- **Outcome:** An update that changes the workspace schema completes on both the direct and Pinokio paths.
+- **Route:** X.
+- **Dependencies and inputs:** IU-1. Found while proving Pinokio (Plan 07; astrid-agent #290). The installer holds `astrid-install.lock` for the whole update: the direct CLI holds it itself, and on Pinokio the stopped-path custody child holds it. The Runtime's `upgrade` takes the same lock without waiting (astrid-runtime `astrid_runtime/operator_upgrade.py` `_installer_mutex`, around lines 208-226) and refuses with "another installer owns the installation lifetime lock". #290 made same-schema updates skip `upgrade`, so no released update hits this yet. The first schema-changing release will.
+- **Work:** Let the Runtime accept proof that its parent installer already holds the lock: an inherited lock descriptor on the direct path, and a custody lease on Pinokio, because a Windows byte-range lock cannot be handed to another process. Or have the Agent run the migration without the Runtime's own installer mutex. Do not weaken or bypass the lock.
+- **Focused checks:** A stand-in release with a newer schema target updates through both paths on Linux, macOS and Windows, with the workspace preserved.
+- **Done:** That stand-in update passes on all six direct and Pinokio rows.
 
 ### IU-END Scoped review and promotion
 
