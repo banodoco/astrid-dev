@@ -1,22 +1,22 @@
-# Principles — how we build Astrid
+# The principles that drive us
 
-The [four pillars](vision.md) describe **what we're trying to enable**. These principles describe **how we insist on pursuing it**. They apply across the tools, agents, community and supporting infrastructure.
+Our [four pillars](vision.md) describe the creative ambition. These principles describe the experience we're building toward for artists, agents and the open-source community.
 
 ## Local-first, cloud-capable
 
-People should be able to work on their own machines, including offline for supported workflows with available models. **Local-first is not local-only**: when the work exceeds local hardware or people prefer hosted services, cloud computation and hosted workspaces should be optional choices. Keep where the interface runs, where project data lives, and where tasks execute distinct; don't silently move work or incur costs. This is a target, not a claim that every deployment combination ships today.
+Create on your own machine, including offline, with your files and projects under your control. When you need more power or convenience, choose cloud models, agents, rendering or a fully hosted workspace. Moving between local and cloud should feel natural, with clear choices about where work runs, where files live and what it costs.
 
 ## Open by design
 
-The tools, extension mechanisms and the thinking behind them should be inspectable, modifiable, forkable and shareable. Build on open-source software and the open-model ecosystem; enable others to contribute tools and knowledge without tying the shared foundation to one proprietary provider. Optional hosted services may extend choice, but not become an unavoidable gate.
+Our tools, models and ideas should be open to inspect, adapt, fork and share. Build on open-source software and open models so artists and developers can extend each other's work, contribute their own tools and knowledge, and choose the providers that suit them rather than being locked into one ecosystem.
 
 ## In the creator's control
 
-Creative decisions, project data, agent permissions, installed tools, execution location and spending remain under the person's authority. Agents should make consequential proposals legible and reversible where possible. Private knowledge stays private unless its owner chooses to share it. This principle requires concrete safety and reliability evidence, not just good intentions.
+Artists decide what to make, which tools and models to use, where their projects live and what they spend. Agents should be helpful collaborators, with permissions, proposed changes and costs that are easy to understand and control. Private projects and knowledge remain private unless their owners decide to share them.
 
 ## Eliminate needless technical wrangling
 
-Creative work should not require people to become environment managers, model installers or execution troubleshooters. **Agents should handle the technical work**: choosing a suitable model with the creator's consent, setting up and maintaining environments, preparing dependencies, running jobs and recovering from errors. Expose understandable choices, costs and failure states without making technical configuration the main creative interface. The goal is for people to spend their attention on creating—not on infrastructure. This is an aspiration requiring demonstrated reliability, not a claim that setup is already effortless.
+Artists should spend their time creating, not installing models or troubleshooting environments. Agents should handle choosing and setting up tools, managing dependencies, running jobs and recovering from errors. Technical choices, permissions and costs should be easy to understand without becoming the focus of the creative experience.
 
 ## Evidence and delivery
 
