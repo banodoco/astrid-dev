@@ -145,7 +145,7 @@ def handle_run(repo: str, run: dict) -> list[str]:
         try:
             api("POST", f"/repos/{repo}/issues/{number}/comments", {"body":
                 f"Project **{project}** is claimed by @{login}. "
-                f"[Start from its plan](https://github.com/{repo}/blob/main/plans/{project}/plan.md) "
+                f"[Start from its plan](https://github.com/{repo}/blob/main/strategy/projects/{project}/plan.md) "
                 f"and [contribution guide](https://github.com/{repo}/blob/main/docs/contribution-workflow.md). "
                 "Ownership does not imply scope acceptance, authorization to run, or permission to merge."})
         except Exception as exc:

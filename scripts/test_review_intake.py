@@ -9,7 +9,7 @@ CATALOG = ("# Projects\n" + HEADER + "\n" + DIVIDER + "\n"
 BASE = {"state": "open", "draft": False,
         "base": {"ref": "main", "repo": {"full_name": "banodoco/astrid-dev"}},
         "user": {"login": "casey", "type": "User"},
-        "body": "Project: plans/25-cloud/plan.md\nReview request: implementation\n"}
+        "body": "Project: strategy/projects/25-cloud/plan.md\nReview request: implementation\n"}
 
 
 class ReviewIntakeTests(unittest.TestCase):
@@ -22,21 +22,21 @@ class ReviewIntakeTests(unittest.TestCase):
                                    "banodoco/astrid-dev", CATALOG, []))
 
     def test_completion_requires_matching_receipt_and_catalog_change(self):
-        body = ("Project: plans/25-cloud/plan.md\nReview request: completion\n"
+        body = ("Project: strategy/projects/25-cloud/plan.md\nReview request: completion\n"
                 "## Completion assessment — Plan 25\n")
         pr = {**BASE, "body": body}
-        files = [{"filename": "plans/index.md", "status": "modified"}]
+        files = [{"filename": "strategy/projects/index.md", "status": "modified"}]
         self.assertEqual(classify(pr, "banodoco/astrid-dev", CATALOG, files), "completion")
         self.assertIsNone(classify(pr, "banodoco/astrid-dev", CATALOG, []))
         self.assertIsNone(classify({**pr, "body": body.replace("Plan 25", "Plan 26")},
                                    "banodoco/astrid-dev", CATALOG, files))
 
     def test_new_scope_routes_any_contributor_with_three_file_pack(self):
-        proposal = {**BASE, "body": "Project: plans/27-new/plan.md\nReview request: scope\n",
+        proposal = {**BASE, "body": "Project: strategy/projects/27-new/plan.md\nReview request: scope\n",
                     "user": {"login": "new", "type": "User"}}
-        files = [{"filename": f"plans/27-new/{name}", "status": "added"}
+        files = [{"filename": f"strategy/projects/27-new/{name}", "status": "added"}
                  for name in ("plan.md", "inputs.md", "tasks.md")]
-        files.append({"filename": "plans/index.md", "status": "modified"})
+        files.append({"filename": "strategy/projects/index.md", "status": "modified"})
         self.assertEqual(classify(proposal, "banodoco/astrid-dev", CATALOG, files), "scope")
         self.assertIsNone(classify(proposal, "banodoco/astrid-dev", CATALOG, files[:2]))
 
@@ -65,7 +65,7 @@ class ReviewIntakeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_intent("Review request: implementation\n")
         with self.assertRaises(ValueError):
-            parse_intent("Project: plans/25-cloud/plan.md\n")
+            parse_intent("Project: strategy/projects/25-cloud/plan.md\n")
         self.assertIsNone(classify({**BASE, "base": {"ref": "other",
                               "repo": {"full_name": "banodoco/astrid-dev"}}},
                               "banodoco/astrid-dev", CATALOG, []))

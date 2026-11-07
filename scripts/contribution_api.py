@@ -6,7 +6,7 @@ import os
 import urllib.parse
 import urllib.request
 
-CATALOG = "plans/index.md"
+CATALOG = "strategy/projects/index.md"
 
 
 def request(method: str, path: str, payload=None):

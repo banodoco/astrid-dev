@@ -65,7 +65,7 @@ class ClaimTests(unittest.TestCase):
              "base": {"ref": "main", "repo": {"full_name": "banodoco/astrid-dev"}},
              "head": {"sha": "a"*40, "repo": {"full_name": "casey/astrid-dev"}},
              "user": {"login": "casey", "type": "User"}}
-        changed = [{"filename": "plans/index.md", "status": "modified"}]
+        changed = [{"filename": "strategy/projects/index.md", "status": "modified"}]
         self.assertTrue(eligible(p, "banodoco/astrid-dev", "a"*40, changed))
         self.assertFalse(eligible(p, "banodoco/astrid-dev", "b"*40, changed))
         self.assertFalse(eligible(p, "banodoco/astrid-dev", "a"*40,

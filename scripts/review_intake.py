@@ -17,7 +17,7 @@ from contribution_api import catalog, changed_files, ensure_review_label, reques
 from project_contract import PLAN_FOLDER
 
 LABEL = "needs-review"
-PROJECT = re.compile(r"^Project:\s*plans/(" + PLAN_FOLDER.pattern + r")/plan\.md\s*$", re.I | re.M)
+PROJECT = re.compile(r"^Project:\s*strategy/projects/(" + PLAN_FOLDER.pattern + r")/plan\.md\s*$", re.I | re.M)
 ROUTE = re.compile(r"^Review request:\s*(scope|implementation|completion)\s*$", re.I | re.M)
 COMPLETION = re.compile(r"^#{2,3}\s+Completion assessment\s*[—:-]\s*Plan\s+(\d{2,})\s*$", re.I | re.M)
 
@@ -48,18 +48,18 @@ def classify(pr: dict, repo: str, main_catalog: str, files: list[dict]) -> str |
              if PLAN_LINK.fullmatch(row[6]).group(1) == folder + "/plan.md"]
     if route == "scope":
         if not found:
-            necessary = {f"plans/{folder}/{filename}" for filename in ("plan.md", "inputs.md", "tasks.md")}
+            necessary = {f"strategy/projects/{folder}/{filename}" for filename in ("plan.md", "inputs.md", "tasks.md")}
             if not all(changes.get(p) == "added" for p in necessary):
                 return None
-            if changes.get("plans/index.md") not in ("modified", "added"):
+            if changes.get("strategy/projects/index.md") not in ("modified", "added"):
                 return None
-        elif f"plans/{folder}/plan.md" not in changes and "plans/index.md" not in changes:
+        elif f"strategy/projects/{folder}/plan.md" not in changes and "strategy/projects/index.md" not in changes:
             return None
         return "scope"
     if len(found) != 1 or found[0][3].casefold() != ("@" + user.get("login", "")).casefold():
         return None
     if route == "completion":
-        if changes.get("plans/index.md") != "modified":
+        if changes.get("strategy/projects/index.md") != "modified":
             return None
         if COMPLETION.findall(pr.get("body") or "") != [folder.split("-", 1)[0]]:
             return None

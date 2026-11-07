@@ -86,16 +86,16 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     indexed: set[Path] = set()
     for row in rows:
         dest = PLAN_LINK.fullmatch(row[6]).group(1)
-        plan = Path('plans') / dest
+        plan = Path('strategy/projects') / dest
         if plan in indexed:
             errors.append(f'duplicate plan catalog entry: {plan}')
         indexed.add(plan)
-        if len(plan.parts) != 3 or plan.parts[2] != 'plan.md' or not PLAN_FOLDER.fullmatch(plan.parts[1]):
+        if len(plan.parts) != 4 or plan.parts[3] != 'plan.md' or not PLAN_FOLDER.fullmatch(plan.parts[2]):
             errors.append(f'invalid catalog plan path: {plan}')
         if not (root / plan).is_file():
             errors.append(f'catalog plan missing: {plan}')
     errors.extend(unnamed_active_owners(rows))
-    actual = set(Path('plans') / p.parent.name / 'plan.md' for p in (root / 'plans').glob('*/plan.md'))
+    actual = set(Path('strategy/projects') / p.parent.name / 'plan.md' for p in (root / 'strategy/projects').glob('*/plan.md'))
     for missing in sorted(actual - indexed):
         errors.append(f'plan folder absent from catalog: {missing}')
     for extra in sorted(indexed - actual):

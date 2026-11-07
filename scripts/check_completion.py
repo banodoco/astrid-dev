@@ -140,7 +140,7 @@ def check_pr(before: str | None, after: str, body: str, root: Path) -> list[str]
         return []
     errors = []
     for path in transitions_to_done(before, after):
-        plan_path = Path("plans") / path
+        plan_path = Path("strategy/projects") / path
         try:
             plan = read(root, plan_path)
             errors.extend(assess_completion(path, plan, body))
