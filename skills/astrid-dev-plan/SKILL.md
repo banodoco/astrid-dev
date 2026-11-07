@@ -19,6 +19,21 @@ Planning is a decision, **not** authority to execute or release. Preserve earlie
 4. **Agree the outcome once.** Present the real options, their user-facing tradeoffs and a testable end state. Record the owner's actual selection with a traceable source. Creating a draft project or receiving no objection is not approval.
 5. **Leave a compact handoff.** [`inputs.md`](../../templates/project/inputs.md) owns the source evidence, alternatives, challenge decision, approval and uncertainty. [`plan.md`](../../templates/project/plan.md) owns outcome, scope, sequence and completion. [`tasks.md`](../../templates/project/tasks.md) owns assignments and focused proof. Link to detailed work only when it has a distinct use; do not copy reasoning across all three files.
 
+## Scale the method to the project
+
+Each step below earns its cost only under its condition; skip it otherwise. Each produces a file the next step reads.
+
+| Step | Do it when |
+|---|---|
+| Map current behaviour with parallel N helpers, one read-only area each | the behaviour spans several repositories or areas, or no one planning knows it |
+| List each problem with its root cause and where it is fixed | the request starts from symptoms (bugs, confusing UI) rather than a new capability |
+| Independent S critic, briefed to build as little as possible and to verify claims in code | the plan touches a cross-repository contract, a user-visible flow, release, security or data, or exceeds about five days |
+| Phase it: a first phase with most of the value, later phases committed, estimates per phase | the estimate exceeds about ten days or value is uneven across tasks |
+| Ambiguity pass by N helpers per task group, resolving from code and listing only real owner decisions | other agents will execute the tasks, or any task is X or S |
+| Record owner decisions in `inputs.md` and enforce them with a test | a later merge could silently undo the decision |
+
+Route each task by the [run contract](../astrid-dev-shared/run-contract.md): N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol that has never run end to end, security, data safety, migration).
+
 ## Readiness
 
 A draft can explicitly mark what is **Pending** and the next action. A defined project needs genuine prior-art findings, an explained reuse decision, a traceable owner choice and meaningful completion evidence; a consequential design additionally needs critique or an explicit unresolved blocker. Don't make the agent fabricate evidence or add a heavyweight ritual to a straightforward decision.
