@@ -9,14 +9,20 @@ import subprocess
 from pathlib import Path
 
 from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
+from project_contract import plan_gap_ids, project_number
 
-SECTION = re.compile(r"^#{2,3}\s+Completion assessment\s*[—:-]\s*Plan\s+(\d{2})\s*$", re.I | re.M)
-GAP_LINK = re.compile(r"\]\(\.\./\.\./visions/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)")
+SECTION = re.compile(r"^#{2,3}\s+Completion assessment\s*[—:-]\s*Plan\s+(\d{2,})\s*$", re.I | re.M)
 GAP_LINE = re.compile(
     r"^Gap\s+([A-Z]{1,3}-\d{3}):\s*"
     r"(Closed|Partially evidenced|Unchanged|Needs recheck)\s*[—:-]\s*(.+)$", re.I | re.M,
 )
 EVIDENCE_REF = re.compile(r"https?://[^\s)]+|(?<![\da-f])[0-9a-f]{40}(?![\da-f])", re.I)
+
+
+def has_real_reason(value: str) -> bool:
+    """Reject missing/placeholder decisions; review determines their quality."""
+    normalized = value.strip().lower().strip(" .-")
+    return bool(normalized) and normalized not in {"tbd", "todo", "none", "unknown", "n/a", "pending"}
 
 
 def plan_statuses(catalog: str) -> dict[str, str]:
@@ -29,12 +35,7 @@ def transitions_to_done(before: str, after: str) -> list[str]:
 
 
 def linked_gaps(plan_text: str) -> set[str]:
-    lines = re.findall(r"^\*\*Vision gaps:\*\*\s*(.+)$", plan_text, re.M)
-    if lines:
-        return set(GAP_LINK.findall(lines[0]))
-    if re.search(r"^\*\*Vision role:\*\*", plan_text, re.M):
-        return set()
-    raise ValueError("plan must declare Vision gaps or Vision role")
+    return set(plan_gap_ids(plan_text))
 
 
 def assessment_section(body: str, plan_id: str) -> tuple[str | None, bool]:
@@ -52,7 +53,7 @@ def assessment_section(body: str, plan_id: str) -> tuple[str | None, bool]:
 
 def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
     """Check the PR's *stated* judgment, not the truth of its evidence."""
-    plan_id = Path(plan_path).parent.name.split("-", 1)[0]
+    plan_id = project_number(plan_path)
     section, duplicates = assessment_section(body, plan_id)
     if duplicates:
         return [f"Plan {plan_id}: duplicate completion assessment sections"]
@@ -64,7 +65,7 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
     if not evidence or not EVIDENCE_REF.search(evidence.group(1)):
         issues.append(f"Plan {plan_id}: Evidence needs a concrete URL or full 40-character commit SHA")
     conclusion = re.search(r"^Completion:\s*(Yes|Met)\s*[—:-]\s*(.+)$", section, re.I | re.M)
-    if not conclusion or len(conclusion.group(2).strip()) < 15:
+    if not conclusion or not has_real_reason(conclusion.group(2)):
         issues.append(f"Plan {plan_id}: Completion needs 'Yes —' and a specific reason")
 
     gaps = linked_gaps(plan_text)
@@ -73,15 +74,17 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
         gap, outcome, reason = match.groups()
         if gap in found:
             issues.append(f"Plan {plan_id}: duplicate assessment for {gap}")
-        if len(reason.strip()) < 15:
+        if not has_real_reason(reason):
             issues.append(f"Plan {plan_id}: {gap} needs an evidence-based explanation")
         found[gap] = outcome.lower()
     for gap in sorted(gaps - found.keys()):
         issues.append(f"Plan {plan_id}: missing gap disposition for {gap}")
     for gap in sorted(found.keys() - gaps):
         issues.append(f"Plan {plan_id}: {gap} is not linked from its plan")
-    if not gaps and not re.search(r"^Gap impact:\s*None\s*[—:-]\s*.{15,}$", section, re.I | re.M):
-        issues.append(f"Plan {plan_id}: enabler needs 'Gap impact: None — <reason>'")
+    if not gaps:
+        impact = re.search(r"^Gap impact:\s*None\s*[—:-]\s*(.+)$", section, re.I | re.M)
+        if not impact or not has_real_reason(impact.group(1)):
+            issues.append(f"Plan {plan_id}: enabler needs 'Gap impact: None — <reason>'")
     return issues
 
 

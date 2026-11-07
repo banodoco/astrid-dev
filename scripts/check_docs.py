@@ -8,6 +8,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 from gap_relationships import parse_gap_relationships
+from project_contract import PLAN_FOLDER, plan_gap_ids
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
@@ -86,6 +87,15 @@ def local_links(root: Path, path: Path) -> list[str]:
     return missing
 
 
+def unnamed_active_owners(rows: list[list[str]]) -> list[str]:
+    """Active work must have one named accountable catalog owner."""
+    return [
+        f"active project needs a named accountable owner: {row[0]}"
+        for row in rows
+        if row[2] == 'active' and row[3].strip().lower() in {'unassigned', 'tbd', 'none', '—', '-'}
+    ]
+
+
 def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -101,10 +111,11 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
         if plan in indexed:
             errors.append(f'duplicate plan catalog entry: {plan}')
         indexed.add(plan)
-        if len(plan.parts) != 3 or plan.parts[2] != 'plan.md' or not re.fullmatch(r'\d{2}-[a-z0-9-]+', plan.parts[1]):
+        if len(plan.parts) != 3 or plan.parts[2] != 'plan.md' or not PLAN_FOLDER.fullmatch(plan.parts[1]):
             errors.append(f'invalid catalog plan path: {plan}')
         if not (root / plan).is_file():
             errors.append(f'catalog plan missing: {plan}')
+    errors.extend(unnamed_active_owners(rows))
     actual = set(Path('plans') / p.parent.name / 'plan.md' for p in (root / 'plans').glob('*/plan.md'))
     for missing in sorted(actual - indexed):
         errors.append(f'plan folder absent from catalog: {missing}')
@@ -150,24 +161,27 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
             if not (root / plan.parent / name).is_file():
                 errors.append(f'{plan.parent}: missing {name}')
         body = read(root, plan)
-        declarations = re.findall(r'^\*\*Vision (?:gaps|role):\*\*', body, re.M)
-        if len(declarations) != 1:
-            errors.append(f'{plan}: expected one Vision gaps or Vision role declaration')
-        if '**Vision gaps:**' in body and not re.search(r'\]\(\.\./\.\./visions/gaps/[A-Z]{1,3}-\d{3}-[^)]+\.md\)', body):
-            errors.append(f'{plan}: Vision gaps declaration needs a link to a known gap')
+        try:
+            refs = plan_gap_ids(body)
+            for gap in refs:
+                if gap not in gap_ids:
+                    errors.append(f'{plan}: unknown vision gap {gap}')
+        except ValueError as exc:
+            errors.append(f'{plan}: {exc}')
     # The archive is a pointer, never a second status table.
     if '| Project | Status |' in read(root, Path('ARCHIVE.md')):
         errors.append('ARCHIVE.md contains a duplicate plan registry')
 
     mandatory = [README, CATALOG, Path('ARCHIVE.md'), Path('AGENTS.md'),
-                 Path('templates/project/plan.md'), Path('docs/project-format.md')]
+                 Path('templates/project/plan.md'), Path('docs/project-format.md'),
+                 Path('docs/contribution-design-principles.md')]
     mandatory += [p.relative_to(root) for p in (root / 'visions').rglob('*.md')]
     mandatory += sorted(actual)
     # Include the actual agent entrypoint, domain map and project templates:
     # broken guidance links should fail the same CI as broken plan links.
     mandatory += [p.relative_to(root) for p in (root / 'skills').rglob('*.md')]
     mandatory += [p.relative_to(root) for p in (root / 'templates/project').glob('*.md')]
-    for path in mandatory:
+    for path in sorted(set(mandatory)):
         errors.extend(local_links(root, path))
     # Older task/evidence documents may have legacy references; don't fail this
     # catalog migration on those. Their references can be audited separately.

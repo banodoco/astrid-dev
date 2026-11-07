@@ -10,6 +10,8 @@ Each project uses one folder with three complementary files:
 | [`inputs.md`](../templates/project/inputs.md) | Why this approach: prior art, reuse/placement decision, any needed independent challenge, owner choice, source identities and limits |
 | [`tasks.md`](../templates/project/tasks.md) | Bounded work, dependencies, focused checks, route and task progress |
 
+The **handoff between projects** is a contract, not an extra file: name the actual prior output consumed, the artifact or behavior produced, and the exact proof that would let another agent use it. An unqualified dependency or a plan being marked done isn't sufficient evidence; link the accepted candidate and its receipt when available.
+
 These are not three long forms. Drafts can state genuine unknowns; a defined scope must cite findings and the decision. The [planning skill](../skills/astrid-dev-plan/SKILL.md) scales scrutiny to actual risk. Existing accepted plans do not require another planning exercise because a different agent joins.
 
 The [catalog](../plans/index.md) is the one authority for project status, priority, owner and estimate. Issues own small fixes and incidents; PRs contain the exact candidate and proof. Completing a project is not automatic evidence that its [vision gap](../visions/gaps.md) closed.

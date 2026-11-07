@@ -13,8 +13,9 @@ import subprocess
 from pathlib import Path
 
 from check_docs import ROOT
+from project_contract import PLAN_FOLDER
 
-PLAN = re.compile(r"^plans/(\d{2,}-[a-z0-9-]+)/(plan|inputs)\.md$")
+PLAN = re.compile(r"^plans/(" + PLAN_FOLDER.pattern + r")/(plan|inputs)\.md$")
 LABELS = ("Scope decision", "Prior art", "Approach", "Challenge", "Proof and limits")
 FIELD = re.compile(r"^\*\*(Scope decision|Prior art|Approach|Challenge|Proof and limits):\*\*\s*(.+)$", re.M)
 REFERENCE = re.compile(

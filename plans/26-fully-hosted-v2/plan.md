@@ -29,6 +29,12 @@ V1 ([Plan 25](../25-cloud-assist-v1/plan.md)) is intentionally local-first with 
 5. Test new-user signup/open, project edits/reopen across devices, storage reliability, billing/quotas and stop/retry.
 6. Test backup/restore, privacy, deletion, export/migration to local custody, and security/load evidence. Publish only supported cells.
 
+## Project interface and handoff
+
+**Consumes:** [Plan 25](../25-cloud-assist-v1/plan.md)'s *verified* remote-work/job and artifact contracts, with exact source/evidence references recorded at implementation start. Plan 25 being queued or eventually marked done is not, by itself, proof that a particular integration contract is qualified.
+
+**Produces:** an authenticated hosted project-state and media-custody contract (identity, access, persistence, backup, export and deletion) that other hosted features can consume, with exact candidate revisions and negative tenancy tests linked from the completion PR. Do not duplicate V1's remote worker orchestration.
+
 ## Completion
 
 An authenticated browser user can create and revisit a hosted Astrid project with durable cloud files/database, run a generation and render, and recover after interruption. Evidence includes tenancy isolation, revocation, permission controls, backup/restore, export/deletion, limits and disaster recovery. The existing local-first mode remains available.

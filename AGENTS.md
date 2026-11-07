@@ -1,6 +1,6 @@
 # Repository rules
 
-**Start at [astrid-dev](skills/astrid-dev/SKILL.md)** for every contribution. Its [domain map](skills/astrid-dev/references/domains.md) is the one index to repositories, reference materials and specialist workflows. The [shared run contract](skills/astrid-dev-shared/run-contract.md) owns source identity, model routing, proof, retries, review and authority.
+**Start at [astrid-dev](skills/astrid-dev/SKILL.md)** for every contribution. Apply the [contribution design principles](docs/contribution-design-principles.md) when changing workflows, data contracts or evidence rules. Its [domain map](skills/astrid-dev/references/domains.md) is the one index to repositories, reference materials and specialist workflows. The [shared run contract](skills/astrid-dev-shared/run-contract.md) owns source identity, model routing, proof, retries, review and authority.
 
 ## Scope and authority
 

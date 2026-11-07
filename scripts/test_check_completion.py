@@ -61,6 +61,16 @@ Completion: Yes — The plan completion criteria were tested on the reviewed sou
         self.assertTrue(any("Evidence" in error for error in
                             check_pr(catalog("active"), catalog("done"), body, self.root)))
 
+    def test_future_project_ids_and_concise_reasons(self):
+        future = RECEIPT.replace("Plan 20", "Plan 100").replace(
+            "One complete route works, but not all inference backends or machines.",
+            "One route works; others are unproven.")
+        self.assertEqual(assess_completion("100-later/plan.md", PLAN, future), [])
+        placeholder = RECEIPT.replace(
+            "One complete route works, but not all inference backends or machines.", "TBD")
+        self.assertTrue(any("F-003" in error for error in
+                            assess_completion("20-zero-to-first-image/plan.md", PLAN, placeholder)))
+
     def test_enabler_needs_explicit_no_gap_impact(self):
         self.assertTrue(assess_completion("21-site/plan.md", ENABLER,
                         """## Completion assessment — Plan 21

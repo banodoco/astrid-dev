@@ -27,6 +27,12 @@ Ship a **cloud-assisted local-first Astrid**: user's project database, timeline 
 5. **Generation and render.** Demonstrate one remote image-generation route and one remote video-render route from a real Astrid project. Remote render may use existing FFmpeg/Remotion components behind a service; choosing a new engine requires separate evidence.
 6. **Integrate and qualify.** Return and reconcile artifacts locally, preserve edits and database authority; test failure, cancellation, budget limits and interrupted connections end to end.
 
+## Project interface and handoff
+
+**Consumes:** current Runtime project/task/artifact custody, Agent execution contracts, existing generation/rendering paths and verified donor facts recorded in [inputs.md](inputs.md). These are starting points to inspect, not assumed-live cloud services.
+
+**Produces:** a qualified, versioned contract for approved remote agent/generation/render jobs, temporary input staging, progress/cancel/retry, spend/permissions and **reconciliation back into the authoritative local project**. Record the integrated candidate and exact evidence in the completion PR. [Hosted V2](../26-fully-hosted-v2/plan.md) may reuse those proven contracts, but must independently qualify cloud-owned persistent data and account boundaries.
+
 ## Completion
 
 With local project files and database clearly retained, a creator can instruct their agent to complete approved cloud work, generate an image, render a video and recover editable results in the local workspace. Evidence names exact versions/providers, transfer/retention behavior, spend/cancel controls and non-success tests. This is not proof of fully hosted Astrid.

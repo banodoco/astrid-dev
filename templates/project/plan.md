@@ -16,6 +16,10 @@ What do we retain or build on, and why is this the smallest sound approach? Summ
 
 Describe the shortest path, real dependencies, source/environment or budget constraints and unresolved decisions. Link task details to [tasks.md](tasks.md); recording a plan does not authorize implementation.
 
+## Interfaces and handoff
+
+What existing output or contract does this project **consume**, and how will its exact version be identified? What artifact or observable behavior will it **produce** that another agent can safely build on? Name any unresolved compatibility or provenance limits. Link actual qualified outputs and the completion PR when available; do not duplicate the evidence.
+
 ## Completion
 
 What observable result, evidence and negative case would show the chosen outcome works? State the limits of that proof and the relevant integration/release boundary without presuming authority.
