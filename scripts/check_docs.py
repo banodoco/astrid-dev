@@ -173,7 +173,8 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
         errors.append('ARCHIVE.md contains a duplicate plan registry')
 
     mandatory = [README, CATALOG, Path('ARCHIVE.md'), Path('AGENTS.md'),
-                 Path('templates/project/plan.md'), Path('docs/project-format.md')]
+                 Path('templates/project/plan.md'), Path('docs/project-format.md'),
+                 Path('docs/contribution-design-principles.md')]
     mandatory += [p.relative_to(root) for p in (root / 'visions').rglob('*.md')]
     mandatory += sorted(actual)
     # Include the actual agent entrypoint, domain map and project templates:
