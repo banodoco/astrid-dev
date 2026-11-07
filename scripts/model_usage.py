@@ -69,24 +69,26 @@ def read_records(folder: Path) -> list[dict]:
 
 
 def summarize(records: list[dict]) -> str:
+    """Return one copyable PR line, compatible with completion validation."""
     if not records:
-        return "Models used: Not recorded — include a reason; do not guess."
-    entries: dict[tuple, list[dict]] = {}
+        return ("Models used: Not recorded — No local invocation records exist; "
+                "state why model identity is unavailable before submission.")
+    entries: dict[tuple, int] = {}
     for record in records:
         key = (record["provider"], record["model_id"], record["role"],
                record.get("reasoning_effort") or "unknown", record["basis"])
-        entries.setdefault(key, []).append(record)
-    lines = ["Models used:", "| Provider / model ID | Role | Effort | Basis | Tasks / records |",
-             "| --- | --- | --- | --- | --- | --- |"]
-    for (provider, model, role, effort, basis), grouped in sorted(entries.items()):
-        tasks = sorted({r["task"] for r in grouped})
-        # Keep URLs/logs in the source JSONL. The PR summary is not a new evidence ledger.
-        lines.append(f"| {provider} / {model} | {role} | {effort} | {basis} | "
-                     f"{', '.join(tasks)} ({len(grouped)} records) |")
-    lines.append("Provenance: model IDs are runtime-observed only where a matching "
-                 "receipt was supplied; otherwise self-reported. "
-                 "This is not an independent audit of model execution.")
-    return "\n".join(lines)
+        entries[key] = entries.get(key, 0) + 1
+
+    summary = "; ".join(
+        f"{provider}/{model} ({role}, effort: {effort}, {basis}, {count} invocation(s))"
+        for (provider, model, role, effort, basis), count in sorted(entries.items())
+    )
+    return (
+        "Models used: " + summary + "\n"
+        "Basis: 'runtime-observed' means a source receipt was recorded; "
+        "'self-reported' is not independently authenticated. "
+        "The detailed local JSONL is not a public evidence pack."
+    )
 
 
 def main() -> int:
