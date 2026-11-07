@@ -13,10 +13,10 @@ Repository ownership, starting branch and SHA, retained dirty work, and candidat
 
 ## References and evidence
 
-- [Liquid Software vision](../../visions/pillars/liquid-software.md) sets the design direction.
+- [Liquid Software vision](../../vision/pillars/liquid-software.md) sets the design direction.
 - The draft identifies H3_AV and current VibeComfy code as inputs but supplies no source links, SHAs, or recorded proof. Recover them at setup.
 - No generation evidence is established. Scope any real-generation proof and authorized compute requirements before execution; this planning effort runs no GPU work.
 
 ## Constraints
 
-Follow repository [AGENTS.md](../../AGENTS.md) and the shared [run contract](../../skills/astrid-dev-shared/run-contract.md) for execution, resources, routes, and publication. Confirm source identities and destination at setup.
+Follow repository [AGENTS.md](../../../AGENTS.md) and the shared [run contract](../../../skills/astrid-dev-shared/run-contract.md) for execution, resources, routes, and publication. Confirm source identities and destination at setup.

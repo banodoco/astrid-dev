@@ -1,6 +1,6 @@
 # Tasks: Streamlined agent setup and execution
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 ## Draft task index
 
@@ -20,4 +20,4 @@ These are organizing work areas only. Executable task breakdown, route/difficult
 
 ## Predecessor and authority
 
-Use [PR #112](https://github.com/banodoco/astrid-agent/pull/112) to trace the Octop integration, not as proof that its files or behavior match current source. Preserve useful coverage; raw file-count reduction is not the goal. Check selectors and commands during task setup; do not invent them or run broad/automatic suites. Keep the project's existing review and publication authority under the [shared run contract](../../skills/astrid-dev-shared/run-contract.md).
+Use [PR #112](https://github.com/banodoco/astrid-agent/pull/112) to trace the Octop integration, not as proof that its files or behavior match current source. Preserve useful coverage; raw file-count reduction is not the goal. Check selectors and commands during task setup; do not invent them or run broad/automatic suites. Keep the project's existing review and publication authority under the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md).

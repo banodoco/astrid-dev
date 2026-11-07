@@ -1,6 +1,6 @@
 # Tasks: execution host refactor
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 **Draft only; not executable assignments.** The original plan supplied intended work but no task IDs or assignments. Exact breakdown, dependencies, difficulty routes, focused selectors, and review rounds remain to be scoped after inspecting the selected source. Do not infer that work is ready to start.
 

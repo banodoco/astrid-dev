@@ -1,10 +1,10 @@
 # 16 — Streamlined agent setup and execution
 
-**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
-Make Astrid's own agent the simple default way to get work done, with clear agent selection, account connection, readiness, and execution. Preserve supported alternative agents and pack execution. Status, owner, and estimate remain in the [project queue](../../README.md).
+Make Astrid's own agent the simple default way to get work done, with clear agent selection, account connection, readiness, and execution. Preserve supported alternative agents and pack execution. Status, owner, and estimate remain in the [project queue](../../../README.md).
 
 ## Goal and scope
 

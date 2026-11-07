@@ -1,6 +1,6 @@
 # Tasks: sandboxed execution with OpenShell
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Status and owner](../../../README.md)
 
 ## Draft outline
 
@@ -12,4 +12,4 @@ No executable task IDs or assignments are established. After inspecting current 
 - Prove permitted agent/pack operations, cancellation, and restart. Check that forbidden host files, credentials, network destinations, and unapproved services remain inaccessible.
 - Coordinate first use, account setup, and inference behavior with [onboarding](../20-zero-to-first-image/plan.md), [agent setup](../16-streamlined-agent-experience/plan.md), and [inference routing](../12-multiple-inference-routes/plan.md).
 
-Historical full-suite results are evidence to assess, not a request to rerun broad suites. Shared execution and publication limits are in the [run contract](../../skills/astrid-dev-shared/run-contract.md).
+Historical full-suite results are evidence to assess, not a request to rerun broad suites. Shared execution and publication limits are in the [run contract](../../../skills/astrid-dev-shared/run-contract.md).

@@ -24,4 +24,4 @@ The intended extension is one owned implementation location in one repository, w
 
 ## Constraints
 
-First-increment account/provider flows and “path runs” need clarification. Existing routes remain until resolved. Follow [shared run policy](../../skills/astrid-dev-shared/run-contract.md) for source verification, execution, review, and publication; planning this draft does not authorize product work.
+First-increment account/provider flows and “path runs” need clarification. Existing routes remain until resolved. Follow [shared run policy](../../../skills/astrid-dev-shared/run-contract.md) for source verification, execution, review, and publication; planning this draft does not authorize product work.

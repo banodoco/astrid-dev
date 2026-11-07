@@ -1,6 +1,6 @@
 # Tasks: repository cleanup
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 **Draft only; no executable assignments are ready.** Task IDs, breakdown, routes, dependencies, selectors, review rounds, and per-task acceptance evidence must be scoped after inspecting current sources. Do not infer assignments or readiness from this outline.
 

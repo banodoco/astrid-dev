@@ -2,7 +2,7 @@
 
 **Vision role:** Foundational enabler — improves source navigability without itself proving a user-facing outcome.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Make Astrid's repositories easier to navigate and maintain, with clear homes for source and documentation and no unnecessary duplicate or abandoned material. This remains a draft until the cleanup inventory is bounded.
 

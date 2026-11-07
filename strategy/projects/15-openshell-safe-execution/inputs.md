@@ -10,7 +10,7 @@
 
 ## At implementation start
 
-Current repositories, base branches and SHAs, retained changes, verified predecessor inputs, fresh candidate branches, and intended `pre-main` destinations: **TBD**. Record actual identities before work; historical evidence does not establish them. Define task dependencies and selectors from inspected source. Follow the existing branch, execution, and publication limits in the [shared run contract](../../skills/astrid-dev-shared/run-contract.md).
+Current repositories, base branches and SHAs, retained changes, verified predecessor inputs, fresh candidate branches, and intended `pre-main` destinations: **TBD**. Record actual identities before work; historical evidence does not establish them. Define task dependencies and selectors from inspected source. Follow the existing branch, execution, and publication limits in the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md).
 
 ## Related project context
 
