@@ -20,13 +20,14 @@ Every screen agrees, because each one shows what the installed Astrid says rathe
   - remove setup and consent UI from update surfaces;
   - a release number that moves only with the installed tuple, guarded by a small required check;
   - protected App `main`.
-- **Deferred:**
-  - dropping the systemd 254 floor on Linux;
-  - update status for Pinokio fully local (its preview server answers 501);
-  - a typed status contract;
-  - [Plan 09](../09-install-and-update-confidence/plan.md) IU-1 transaction consolidation.
+- **Also included, not deferred:**
+  - a Runtime capability that says the installed Astrid can update itself;
+  - removing the systemd 254 floor so Linux updates in-app like Windows;
+  - update status for Pinokio fully local (its preview server answers 501 today);
+  - fully local Update now through the existing in-page updater;
+  - typed contracts with tests at both broken boundaries: Runtime↔Agent helper actions, and Runtime update status↔App.
 
-  This plan takes over Plan 09 IU-5 (in-app route).
+  This plan takes over [Plan 09](../09-install-and-update-confidence/plan.md) IU-5 (in-app route). Plan 09 keeps IU-1 transaction consolidation.
 - **Not building:**
   - new status fields;
   - a new resolver;
@@ -48,23 +49,11 @@ The owner's decisions (7 Nov 2026) are recorded in [inputs.md](inputs.md#owner-d
 
 ## Sequence and readiness
 
-Three slices, in order.
+One coherent release, Release 10, with the App part allowed to ship first as permanent code:
 
-1. **App only, no release.** Stop showing a button that always fails, and stop silent re-pin releases.
-   - Releases 9 and earlier show the command, with one line explaining it.
-   - Show the real refusal reason.
-   - Remove the setup block from update surfaces and from "Astrid on this computer".
-   - Fully-local pages show their own command.
-   - The Pinokio memory reads `identity`.
-   - Add the decision table test, plus a required `release-guard` check and branch protection.
-2. **Release 10.** Make the button work.
-   - Merge the existing Agent `reconcile` handler, with a test that drives the Runtime's real update request through the real Agent helper.
-   - The Runtime always gives a reason when an update is not available.
-   - Hosted rows update through the button path.
-   - `pin.mjs` stops changing `release`.
-   - Remove the second pin tool and stale release files.
-   - Publish 10.
-3. **Deferred items** (see scope), each when needed.
+1. **App.** Offer Update now only when the installed Astrid reports it can update itself (installs on 9 and earlier can't, and are told once why, with the command). Show the real refusal reason. Remove the setup block from update surfaces and "Astrid on this computer". Fully local uses the in-page updater. The Pinokio memory reads `identity`. Add the decision table test, a required `release-guard` check, and branch protection.
+2. **Agent and Runtime.** Merge the existing `reconcile` handler. Add the capability and a reason whenever an update is not available. Remove the systemd 254 floor. Serve update status in Pinokio fully local. Add both contracts with tests.
+3. **Release.** `pin.mjs` stops changing `release`; remove the second pin tool and stale release files; hosted rows on every OS update through the button path; publish 10.
 
 Pending owner decisions are listed in [inputs.md](inputs.md#pending-decisions). Recording this plan does not authorize implementation. Task cards: [tasks.md](tasks.md).
 
@@ -82,7 +71,7 @@ Pending owner decisions are listed in [inputs.md](inputs.md#pending-decisions). 
 ## Completion
 
 On the published release 10 tuple:
-- a hosted row per OS updates from the installed candidate to a stand-in 11 through the in-app request;
+- a hosted row on every OS, Linux included without the systemd floor, updates from the installed candidate to a stand-in 11 through the in-app request, for a normal install, a fully local install and Pinokio;
 - the decision table test passes for every install type × situation;
 - `release-guard` is required on App `main`;
 - an App-only merge leaves `release` unchanged, and a re-pin without a bump is refused.

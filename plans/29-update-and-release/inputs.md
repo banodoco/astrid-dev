@@ -37,7 +37,7 @@
   - repair is the plain install line, not Update now;
   - fully local needs its own path.
 - **Gaps added:** systemd below 254 on Ubuntu 22.04 and Debian 12; the 501 status in Pinokio fully-local preview; bootstrap files as release bytes; downgrade via `--update`.
-- **Rejected or deferred:** none rejected. The systemd floor, the Pinokio preview status and a typed status schema are deferred.
+- **Rejected:** the review's deferrals and its release-number constant. The owner asked for a proper fix with no stopgaps, so the systemd floor, the Pinokio preview status and typed contracts are in scope, and a Runtime capability replaces the "release 9 or earlier" constant.
 
 **Proof and limits:** see [plan.md](plan.md#completion). Existing installs on releases 9 and earlier keep the command path once; the button works only for installs from release 10.
 
@@ -54,12 +54,9 @@ From the owner, 7 Nov 2026 (session chat):
 
 ## Pending decisions
 
-1. **Fully local (a normal install with a local editor).**
-   - Recommended: command only (`npm run update`).
-   - Alternative: wire the unused in-page updater.
+1. **Fully local:** planned as Update now through the existing in-page updater, following "Update now or Pinokio, no middle ground". Confirm.
 2. **Pinokio fresh install consent.** Pinokio's terminal currently shows Plan 01's setup questions. Should Pinokio ask them, or accept the recommended choices, given that Pinokio manages start itself?
-3. **Linux below systemd 254.** Slice 1 shows the command expanded under a disabled button. Should the floor then be dropped (deferred here)?
-4. **Branch protection on App `main`.** This needs a repository admin.
+3. **Branch protection on App `main`.** This needs a repository admin.
 
 ## Source identities
 
