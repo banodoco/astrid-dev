@@ -136,13 +136,13 @@ def check(root: Path) -> tuple[list[str], list[str]]:
                     errors.append(f'{plan}: unknown vision gap {gap}')
         except ValueError as exc:
             errors.append(f'{plan}: {exc}')
-    mandatory = [README, CATALOG, Path('vision/README.md'), Path('vision/gaps.md'),
+    mandatory = [README, CATALOG, Path('vision/README.md'),
                  Path('CONTRIBUTING.md'),
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
                  Path('docs/contribution-workflow.md'), Path('docs/contribution-automation-setup.md'),
                  Path('templates/review-submission.md')]
-    for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md'):
+    for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md', 'vision/gaps.md'):
         if (root / stale).exists():
             errors.append(f'obsolete source must be removed: {stale}')
     expected_principles = {'local-first-cloud-capable', 'open-by-design', 'in-the-creators-control', 'eliminate-needless-technical-wrangling'}

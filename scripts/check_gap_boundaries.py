@@ -229,7 +229,7 @@ def main() -> int:
     for issue in issues:
         print(f"ERROR {issue}")
     if issues:
-        print("Add a first-principles gap boundary assessment to the PR description; see vision/gaps.md")
+        print("Add a first-principles gap boundary assessment to the PR description; see vision/README.md#assessing-and-changing-gaps")
         return 1
     print(f"Gap boundary gate passed for {len(required)} gap(s): {', '.join(sorted(required))}")
     return 0
