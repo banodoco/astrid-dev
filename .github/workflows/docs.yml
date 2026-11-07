@@ -10,18 +10,10 @@ on:
       - "plans/**"
       - "visions/**"
       - "docs/**"
-      - "templates/project/**"
-      - "scripts/check_docs.py"
-      - "scripts/test_check_docs.py"
-      - "scripts/check_completion.py"
-      - "scripts/test_check_completion.py"
-      - "scripts/check_gap_boundaries.py"
-      - "scripts/check_project_planning.py"
-      - "scripts/test_check_project_planning.py"
-      - "scripts/gap_relationships.py"
-      - "scripts/test_check_gap_boundaries.py"
-      - "scripts/export_public_vision.py"
-      - "scripts/test_export_public_vision.py"
+      - "skills/**"
+      - "templates/**"
+      - "scripts/**"
+      - "sync.sh"
       - ".github/workflows/docs.yml"
   push:
     branches: [main]
@@ -32,18 +24,10 @@ on:
       - "plans/**"
       - "visions/**"
       - "docs/**"
-      - "templates/project/**"
-      - "scripts/check_docs.py"
-      - "scripts/test_check_docs.py"
-      - "scripts/check_completion.py"
-      - "scripts/test_check_completion.py"
-      - "scripts/check_gap_boundaries.py"
-      - "scripts/check_project_planning.py"
-      - "scripts/test_check_project_planning.py"
-      - "scripts/gap_relationships.py"
-      - "scripts/test_check_gap_boundaries.py"
-      - "scripts/export_public_vision.py"
-      - "scripts/test_export_public_vision.py"
+      - "skills/**"
+      - "templates/**"
+      - "scripts/**"
+      - "sync.sh"
       - ".github/workflows/docs.yml"
 
 permissions:
@@ -56,27 +40,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Test catalog validator
+      - name: Test documentation validators
         run: python3 -m unittest discover -s scripts -p "test_*.py"
       - name: Validate document structure and generated README
         run: python3 scripts/check_docs.py
       - name: Validate GitHub-sourced public vision content
         run: python3 scripts/export_public_vision.py
-      - name: Require completion assessments for newly done plans
+      - name: Validate PR contribution evidence
         if: github.event_name == 'pull_request'
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: python3 scripts/check_completion.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
-      - name: Require first-principles assessments for new or redefined gaps
-        if: github.event_name == 'pull_request'
-        env:
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: python3 scripts/check_gap_boundaries.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
-      - name: Require evidence in new or opted-in project packs
-        if: github.event_name == 'pull_request'
-        env:
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: python3 scripts/check_project_planning.py --base "$PR_BASE_SHA"
+        run: |
+          set -e
+          python3 scripts/check_completion.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
+          python3 scripts/check_gap_boundaries.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
+          python3 scripts/check_project_planning.py --base "$PR_BASE_SHA"
 
   publish-vision:
     # Never publish the unreviewed content of a PR or a contributor branch.
