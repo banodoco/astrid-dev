@@ -23,11 +23,19 @@ No mandatory project-conversation issue. Questions belong in an issue or PR; upd
 
 If the safe claim bot is not enabled, the **same PR** can be merged by a maintainer. No extra registration service, OAuth application for contributors or duplicate owner record.
 
+### After claiming: start, pause or hand back
+
+1. Check the project's `Waiting on` field, `inputs.md` planning decision and existing run controls. If the scope is already accepted **and** a specific authorized start is recorded, follow it; do not request the same approval again.
+2. If scope is unresolved, open a [scope-review PR](../.github/PULL_REQUEST_TEMPLATE/project-scope.md) against the *existing* project. If the scope is settled but execution authority is missing, ask the maintainer in a [project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) for an explicit go specifying the task, permitted environment/cost and destination. Record that decision in the existing project/run context and, when authorized, use an ordinary reviewed catalog PR to update status to `active`. **Claiming alone never activates work.**
+3. If you cannot continue, open a **one-cell owner-release PR** changing only your own `@handle` back to `Unassigned` (and explain any unfinished work/branches in the PR). This is reviewed normally; **it is not an auto-claim**. A replacement owner or maintainer may instead propose an explicitly reviewed handoff. Preserve unfinished work and blockers—don't rewrite project history.
+
+No lease timer or separate ownership system. The catalog is authoritative, and normal GitHub history records claims and handoffs.
+
 ## Propose and greenlight new work
 
 A proposal issue captures the desired independent outcome, relevant existing work and gaps, alternative issue/project placements, and likely proof. Anyone can propose—without claiming the work.
 
-To accept a new independent project, open a **scope PR** with one `queued` catalog entry and the existing three-file pack: `plan.md` (outcome, scope, interfaces, completion), `inputs.md` (prior art, reuse choice, actual owner decision, uncertainty), and `tasks.md` (work and focused proof). Use [the scope template](../.github/PULL_REQUEST_TEMPLATE/project-scope.md):
+To accept a new independent project, open a **scope PR** with one `queued` catalog entry and the existing three-file pack: `plan.md` (outcome, scope, interfaces, completion), `inputs.md` (prior art, reuse choice, actual owner decision, uncertainty), and `tasks.md` (work and focused proof). Use [the scope template](../.github/PULL_REQUEST_TEMPLATE/project-scope.md) (choose it from the GitHub PR template chooser, or copy its opening lines):
 
 ```text
 Project: plans/NN-project-name/plan.md
@@ -40,14 +48,16 @@ A maintainer compares the plan with existing issues, projects, gaps and source e
 
 A project can have **multiple PRs across Runtime, Agent, App and other repositories**. Each product PR links the project/task, states exact source/dependency revisions, describes the claim and actual checks, and names what remains unproven. Use the small [review submission](../templates/review-submission.md) in a target product repo; the product repo’s own CI, reviewers, branch and release rules remain authoritative.
 
-If the contributor needs an Astrid-dev PR to review a project handoff or implementation evidence, use [the implementation-review template](../.github/PULL_REQUEST_TEMPLATE/implementation-review.md) and identify the canonical plan:
+If the contributor needs an Astrid-dev PR to review a project handoff or implementation evidence, use [the implementation-review template](../.github/PULL_REQUEST_TEMPLATE/implementation-review.md) (select it when creating the PR) and identify the canonical plan:
 
 ```text
 Project: plans/NN-project-name/plan.md
 Review request: implementation
 ```
 
-The low-permission [review-intake workflow](../.github/workflows/review-intake.yml) checks the GitHub PR author against the **live catalog owner**. A matching, non-draft request receives `needs-review` and an acknowledgement. Scope PRs are also queued when their project files/catalog change appropriately. This means **accepted into the review queue**, **not approved**. Reviewers watch the [open queue](https://github.com/banodoco/astrid-dev/pulls?q=is%3Apr+is%3Aopen+label%3Aneeds-review). This workflow does not run fork code, approve, merge or deploy.
+**PR intake requires those two exact opening lines** (`Project:` and `Review request:`). The generic GitHub PR template doesn't infer a project or review lane from checkboxes; add those lines explicitly or choose the matching template. Small bug PRs don't need them.
+
+The low-permission [review-intake workflow](../.github/workflows/review-intake.yml) checks the GitHub PR author against the **live catalog owner**. A matching, non-draft request receives `needs-review` and an acknowledgement. Scope PRs are also queued when their project files/catalog change appropriately. This means **accepted into the review queue**, **not approved**. Reviewers watch the [open queue](https://github.com/banodoco/astrid-dev/pulls?q=is%3Apr+is%3Aopen+label%3Aneeds-review). A label is not a reviewer assignment: a maintainer must take responsibility or request a reviewer through GitHub's normal review UI. This workflow does not run fork code, approve, merge or deploy.
 
 **Independent review:** A fresh qualified reviewer examines actual diff and retained implementation, claims versus tests, first failures, negative cases, model provenance, dependencies and risks. They return concrete blocking findings or a justified acceptance with limitations. The contributor repairs the same failing cases on the new candidate. Human approval remains necessary for consequential changes, security, user data, migrations, costs and deployment under the product repositories’ policies. A CI pass or an agent’s advice alone does not override these authorities.
 
@@ -57,7 +67,7 @@ The low-permission [review-intake workflow](../.github/workflows/review-intake.y
 
 `run.yaml` configures **intended** model roles, but the review should report which models were **actually used**. Record the provider, exact model ID where visible, task, role, effort if available, and whether the information is **runtime-observed with a receipt** or **self-reported**. Do this at the relevant invocation, not from memory at the end.
 
-In a normal repo checkout, the lightweight [model-use helper](../scripts/model_usage.py) is available:
+In an **Astrid-dev checkout** (not necessarily a product-repository checkout), the [model-use helper](../scripts/model_usage.py) is available:
 
 ```sh
 python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record \
@@ -66,7 +76,7 @@ python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record 
 python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> summary
 ```
 
-When the running agent framework offers actual invocation metadata, it should write the same records directly. The local JSONL stays gitignored under `.otto/`; publish only a concise sanitized **Models used** line/summary in the review PR. If the identity is inaccessible, use **Unknown — reason**. A manual record is not proof of what the model provider actually executed.
+When the running agent framework offers actual invocation metadata, it should write the same records directly. The local JSONL stays gitignored under `.otto/`; copy the helper's one-line **Models used:** summary into the review PR (and add source receipts where appropriate). If the identity is inaccessible, use **Unknown — reason**. A manual record is not proof of what the model provider actually executed.
 
 ## Submit a completed project
 
@@ -83,6 +93,6 @@ CI enforces the mechanical completion contract and current references. A reviewe
 
 ## Get help and keep decisions discoverable
 
-Ask a project question in an [Astrid-dev issue](https://github.com/banodoco/astrid-dev/issues/new) naming the plan ID, or directly on a relevant PR. Record durable scope decisions in the project pack, not a new standing conversation hub.
+Ask a project question using the [optional issue template](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) (or comment on a relevant PR). Reference the plan ID and tag the owner/maintainer when appropriate. Record durable scope decisions in the project pack, not a new standing conversation hub.
 
 The README and main skill point here, templates link back, and the automated claim/review response gives the next action. **Maintainers:** [safe automation setup and adversarial smoke tests](contribution-automation-setup.md).
