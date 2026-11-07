@@ -8,7 +8,7 @@ Each project uses one folder with three complementary files:
 | --- | --- |
 | [`plan.md`](../templates/project/plan.md) | What useful result, scope, existing foundation, sequence and completion proof |
 | [`inputs.md`](../templates/project/inputs.md) | Why this approach: prior art, reuse/placement decision, any needed independent challenge, owner choice, source identities and limits |
-| [`tasks.md`](../templates/project/tasks.md) | Bounded work, dependencies, focused checks, route and task progress |
+| [`tasks.md`](../templates/project/tasks.md) | Bounded work, dependencies, scope, focused checks, route and task progress |
 
 The **handoff between projects** is a contract, not an extra file: name the actual prior output consumed, the artifact or behavior produced, and the exact proof that would let another agent use it. An unqualified dependency or a plan being marked done isn't sufficient evidence; link the accepted candidate and its receipt when available.
 

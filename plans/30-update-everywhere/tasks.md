@@ -4,14 +4,14 @@
 
 Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run contract](../../skills/astrid-dev-shared/run-contract.md)).
 
-| Task / outcome | Route | Depends on | Focused proof | Progress |
-| --- | --- | --- | --- | --- |
-| UR-15 Remove the systemd 254 floor | S | Plan 29 | On systemd 249, the Linux worker runs from an owner-only file with no `$` or `%` expansion. An update started before the change still reconciles. An Ubuntu 22.04 row passes | [ ] |
-| UR-16a Helper-protocol schema owned by the Runtime | X | Plan 29 UR-10 | A JSON Schema (Python on both sides) under `astrid_runtime/`, outside `contract/`; both repos test against it | [ ] |
-| UR-16b Update-status schema, kept outside the versioned contract | N | Plan 29 UR-11 | The App validates against it, and `schema_digest` is unchanged | [ ] |
-| UR-17 Refusal rule | N | Plan 29 UR-1 | A separate `resolveRefusal`; refused cards show update wording only when the installed release is behind | [ ] |
-| UR-18a Pinokio update proof | N | — | The Pinokio row runs the launcher's own Update action (`update.js`), not a direct installer re-run | [ ] |
-| UR-18b Fully local update proof | X | Plan 29 UR-9 | A dev:local test drives the in-page updater (no new hosted row) | [ ] |
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| UR-15 Remove the systemd 254 floor | S | Plan 29 | agent `update_job*.py`, journey matrix; contract update helper | On systemd 249, the Linux worker runs from an owner-only file with no `$` or `%` expansion. An update started before the change still reconciles. An Ubuntu 22.04 row passes | [ ] |
+| UR-16a Helper-protocol schema owned by the Runtime | X | Plan 29 UR-10 | runtime helper-protocol schema; agent helper tests | A JSON Schema (Python on both sides) under `astrid_runtime/`, outside `contract/`; both repos test against it | [ ] |
+| UR-16b Update-status schema, kept outside the versioned contract | N | Plan 29 UR-11 | app `client.ts`; update-status schema | The App validates against it, and `schema_digest` is unchanged | [ ] |
+| UR-17 Refusal rule | N | Plan 29 UR-1 | app `CopyRefusedInstructions.tsx`, `RuntimeConnectionPanel.tsx`, `RuntimeConnectionPill.tsx`, `copy.ts` | A separate `resolveRefusal`; refused cards show update wording only when the installed release is behind | [ ] |
+| UR-18a Pinokio update proof | N | — | agent `scripts/pinokio_row_driver.py` (coordinate with Plan 10) | The Pinokio row runs the launcher's own Update action (`update.js`), not a direct installer re-run | [ ] |
+| UR-18b Fully local update proof | X | Plan 29 UR-9 | app local-update control tests | A dev:local test drives the in-page updater (no new hosted row) | [ ] |
 
 ## Task details
 
