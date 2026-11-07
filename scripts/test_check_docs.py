@@ -40,9 +40,9 @@ class CatalogTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'plans').mkdir()
-            (root / 'plans/index.md').write_text(HEADER + '\\n' + DIVIDER + '\\n' + example())
+            (root / 'plans/index.md').write_text(HEADER + '\n' + DIVIDER + '\n' + example())
             (root / 'docs').mkdir()
-            (root / 'docs/guide.md').write_text('Use strategy/projects/01-alpha/plan.md.\\n')
+            (root / 'docs/guide.md').write_text('Use strategy/projects/01-alpha/plan.md.\n')
             errors, _ = check(root)
             self.assertTrue(any('obsolete strategy/projects path' in error for error in errors))
 
