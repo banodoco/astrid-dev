@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 ENTRY = re.compile(
-    r"\[([^\]\n]+)\]\((\.\./(?:pillars/[a-z0-9-]+\.md|principles\.md#[a-z0-9-]+))\)"
+    r"\[([^\]\n]+)\]\((\.\./(?:pillars/[a-z0-9-]+\.md|principles/[a-z0-9-]+\.md))\)"
     r"\s+\((primary|supporting)\)"
 )
 
