@@ -1,21 +1,20 @@
 # Review submission
 
-Use this compact summary in a **product repository PR**. A bug PR may use its existing bug template instead. Link real observations; omit irrelevant sections rather than creating empty evidence paperwork.
+Use this concise summary in a **product repository PR**. A small bug can use its existing bug template. Link primary receipts rather than copying logs or adding another document.
 
-**Related work:** Link the Astrid-dev project `plan.md` or incident issue. For project work, identify the project ID and the task/outcome.
+**Related work:** Canonical Astrid-dev `plan.md` (project ID/task), or incident issue.
 
 ## Claim and change
-- **What changed and why:** The user-visible behavior and how this builds on retained work.
-- **Exact source:** This PR/head SHA; any required Runtime/Agent/App/provider revisions and cross-repository dependencies.
-- **Other PRs:** Links, sequencing and unresolved interfaces, if applicable.
+- **Outcome and source:** What changed, retained implementation, candidate SHA and relevant Runtime/Agent/App/provider revisions
+- **Other PRs:** Cross-repository dependencies, integration order and unresolved contracts
 
-## Evidence
-- **Claim → check → observed result:** Name the focused commands, environment, test artifacts or reproducible manual demonstration and actual outcomes.
-- **Negative and recovery paths:** What fails safely and what remains untested.
-- **Previous failure or regression:** Original failing case and how it now behaves, if applicable.
+## Evidence and model provenance
+- **Claim → check → actual result:** Named command/visual comparison, environment, exit/result and exact receipt; what a failed case does
+- **Models used:** Actual provider/model ID and role for research, planning, implementation and review; effort and runtime receipt if available. Or `Unknown — reason`. See [model-use recording](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#record-models-as-work-happens).
+- **Remaining uncertainty:** Unrun scenarios, first failure/regression, recovery and source provenance limits
 
 ## Review decision
-- **Requested:** Review this implementation / Integrate into named branch / Qualify the combined candidate (choose one).
-- **Remaining risks:** Data safety, security, compatibility, migration, rollback, costs and unsupported cases—or explicitly none found within the tested scope.
+- **Request:** Review implementation / integrate a named candidate / qualify the combined result
+- **Risks:** Data, security, compatibility, migrations, rollback, cost and unsupported cases—or explicitly none found within the tested scope
 
-The reviewer examines the code and actual evidence, not just this summary. CI success alone does not authorize promotion or deployment. The final project completion assessment lives in Astrid-dev.
+The reviewer independently examines actual code and evidence. A CI pass or review label is not a merge or deployment authorization. The final Astrid-dev completion assessment points to all relevant PRs.
