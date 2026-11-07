@@ -1,8 +1,8 @@
 # 27 — Complete video rendering and export options
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). Status, owner, priority and estimate belong only in the [plan catalog](../index.md).
+**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). Status, owner, priority and estimate belong only in the [plan catalog](../index.md).
 
-**Vision gaps:** [F-003 — Dependable end-to-end creative execution](../../visions/gaps/F-003-creative-execution.md) (primary); [F-002 — Trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (supporting). This project would establish video-export capability within those broader gaps, not close either gap on its own.
+**Vision gaps:** [F-003 — Dependable end-to-end creative execution](../../vision/gaps/F-003-creative-execution.md) (primary); [F-002 — Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). This project would establish video-export capability within those broader gaps, not close either gap on its own.
 
 ## Goal and scope
 

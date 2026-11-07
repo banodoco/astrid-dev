@@ -16,7 +16,7 @@ from pathlib import Path
 from check_docs import ROOT
 from gap_relationships import parse_gap_relationships
 
-GAP_PATH = re.compile(r"^visions/gaps/([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
+GAP_PATH = re.compile(r"^(?:visions|vision)/gaps/([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
 SECTION = re.compile(
     r"^#{2,3}\s+Gap boundary assessment\s*[—:-]\s*([A-Z]{1,3}-\d{3})\s*$",
     re.I | re.M,
@@ -44,7 +44,7 @@ def boundary_signature(text: str) -> tuple[str, ...]:
     applies = re.search(r"^\*\*Applies to:\*\*(.+)$", text, re.M)
     return (
         title.group(1).strip() if title else "",
-        applies.group(1).split("**Assessment:**", 1)[0].strip() if applies else "",
+        re.sub(r"\.\./principles\.md#([a-z0-9-]+)", r"../principles/\1.md", applies.group(1).split("**Assessment:**", 1)[0].strip()) if applies else "",
         section(text, "Desired state"),
         section(text, "Gap"),
         section(text, "Closure evidence"),
@@ -75,31 +75,45 @@ def after_file(root: Path, path: str) -> str | None:
 
 
 def affected_gaps(base: str, root: Path) -> set[str]:
-    """Determine newly created, deleted and materially redefined gaps in the PR."""
+    """Compare stable gap outcomes, not file moves or representation-only links.
+
+    Moving the vision folder or splitting principle pages must not demand 15
+    fresh philosophical approval receipts when the underlying outcomes have
+    not changed. A real title, relationship, outcome or closure change still
+    requires one boundary review per affected ID.
+    """
     git(root, "cat-file", "-e", f"{base}^{{commit}}")
-    changed = git(root, "diff", "--name-status", "--find-renames", base, "HEAD", "--", "visions/gaps")
+    listing = git(root, "ls-tree", "-r", "--name-only", base, "--", "visions/gaps", "vision/gaps")
+    old_paths: dict[str, str] = {}
+    for path in listing.stdout.splitlines():
+        match = GAP_PATH.fullmatch(path)
+        if match:
+            gap_id = match.group(1)
+            if gap_id in old_paths:
+                raise ValueError(f"duplicate historical gap ID: {gap_id}")
+            old_paths[gap_id] = path
+
+    new_paths: dict[str, str] = {}
+    for file in sorted((root / "vision/gaps").glob("*.md")):
+        path = file.relative_to(root).as_posix()
+        match = GAP_PATH.fullmatch(path)
+        if match:
+            gap_id = match.group(1)
+            if gap_id in new_paths:
+                raise ValueError(f"duplicate gap ID: {gap_id}")
+            new_paths[gap_id] = path
+
     required: set[str] = set()
-    for line in changed.stdout.splitlines():
-        cells = line.split("\t")
-        if len(cells) < 2:
-            raise ValueError(f"unexpected git diff name-status row: {line}")
-        change = cells[0]
-        paths = cells[1:]
-        # Renaming a gap or changing its stable identity is always a review event.
-        if change.startswith(("R", "C")):
-            for path in paths:
-                match = GAP_PATH.fullmatch(path)
-                if match:
-                    required.add(match.group(1))
+    for gap_id in old_paths.keys() | new_paths.keys():
+        old_path, new_path = old_paths.get(gap_id), new_paths.get(gap_id)
+        if old_path is None or new_path is None:
+            required.add(gap_id)
             continue
-        for path in paths:
-            match = GAP_PATH.fullmatch(path)
-            if not match:
-                continue
-            old = before_file(root, base, path)
-            new = after_file(root, path)
-            if needs_boundary_review(old, new):
-                required.add(match.group(1))
+        if Path(old_path).name != Path(new_path).name:
+            required.add(gap_id)
+            continue
+        if needs_boundary_review(before_file(root, base, old_path), after_file(root, new_path)):
+            required.add(gap_id)
     return required
 
 
@@ -199,7 +213,7 @@ def main() -> int:
             raise ValueError("gap boundary changes require --event or --body-file")
         expected_by_gap = {}
         for gap_id in sorted(required):
-            paths = list((ROOT / "visions/gaps").glob(gap_id + "-*.md"))
+            paths = list((ROOT / "vision/gaps").glob(gap_id + "-*.md"))
             if len(paths) > 1:
                 raise ValueError(f"{gap_id}: duplicate gap files")
             if paths:
@@ -215,7 +229,7 @@ def main() -> int:
     for issue in issues:
         print(f"ERROR {issue}")
     if issues:
-        print("Add a first-principles gap boundary assessment to the PR description; see visions/gaps.md")
+        print("Add a first-principles gap boundary assessment to the PR description; see vision/gaps.md")
         return 1
     print(f"Gap boundary gate passed for {len(required)} gap(s): {', '.join(sorted(required))}")
     return 0

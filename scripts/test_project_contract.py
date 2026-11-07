@@ -4,17 +4,17 @@ from project_contract import plan_gap_ids, project_number
 
 class ProjectContractTests(unittest.TestCase):
     def test_gap_links_and_enabler(self):
-        text = ("**Vision gaps:** [Execution](../../visions/gaps/F-003-creative-execution.md) "
-                "(primary); [Control](../../visions/gaps/F-002-safe-user-control.md) (supporting).\n")
+        text = ("**Vision gaps:** [Execution](../../vision/gaps/F-003-creative-execution.md) "
+                "(primary); [Control](../../vision/gaps/F-002-safe-user-control.md) (supporting).\n")
         self.assertEqual(plan_gap_ids(text), ["F-003", "F-002"])
         self.assertEqual(plan_gap_ids("**Vision role:** Foundational enabler — documentation\n"), [])
 
     def test_rejects_duplicates_and_ambiguity(self):
-        gap = "**Vision gaps:** [Execution](../../visions/gaps/F-003-creative-execution.md)\n"
+        gap = "**Vision gaps:** [Execution](../../vision/gaps/F-003-creative-execution.md)\n"
         for text in ["# Missing", gap + gap,
                      gap + "**Vision role:** Foundational enabler\n",
                      "**Vision gaps:** missing link\n",
-                     "**Vision gaps:** [1](../../visions/gaps/F-003-a.md) [2](../../visions/gaps/F-003-b.md)"]:
+                     "**Vision gaps:** [1](../../vision/gaps/F-003-a.md) [2](../../vision/gaps/F-003-b.md)"]:
             with self.subTest(text=text), self.assertRaises(ValueError):
                 plan_gap_ids(text)
 

@@ -14,7 +14,7 @@ from check_gap_boundaries import (
 
 ORIGINAL = """# F-005 — An outcome is not yet available
 
-**Applies to:** [Local-first](../principles.md#local-first-cloud-capable) · **Assessment:** Open (evidence under review).
+**Applies to:** [Local-first](../principles/local-first-cloud-capable.md) · **Assessment:** Open (evidence under review).
 
 ## Desired state
 
@@ -131,7 +131,7 @@ class GapBoundaryGateTests(unittest.TestCase):
             git("init", "-q")
             git("config", "user.name", "Gap tests")
             git("config", "user.email", "gap-tests@example.com")
-            gap = root / "visions/gaps/F-005-test.md"
+            gap = root / "vision/gaps/F-005-test.md"
             gap.parent.mkdir(parents=True)
             gap.write_text(ORIGINAL, encoding="utf-8")
             git("add", ".")
@@ -147,7 +147,7 @@ class GapBoundaryGateTests(unittest.TestCase):
             git("add", ".")
             git("commit", "-qm", "reframe outcome")
             self.assertEqual(affected_gaps(base, root), {"F-005"})
-            added = root / "visions/gaps/F-007-sandbox.md"
+            added = root / "vision/gaps/F-007-sandbox.md"
             added.write_text(ORIGINAL.replace("F-005", "F-007"), encoding="utf-8")
             git("add", ".")
             git("commit", "-qm", "add gap")

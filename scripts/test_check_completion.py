@@ -7,7 +7,7 @@ from check_completion import assess_completion, check_pr, transitions_to_done
 from check_docs import DIVIDER, HEADER
 
 PLAN = ("# Zero-to-first-image\n\n"
-        "**Vision gaps:** [Creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).\n\n"
+        "**Vision gaps:** [Creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).\n\n"
         "## Completion\nA real generated image appears on the timeline with captured recovery evidence.\n")
 ENABLER = "# Documentation refactor\n\n**Vision role:** Foundational enabler — no direct gap.\n"
 RECEIPT = """## Completion assessment — Plan 20

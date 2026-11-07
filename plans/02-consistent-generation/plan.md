@@ -1,6 +1,6 @@
 # Consistent generation path
 
-**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
@@ -16,7 +16,7 @@ Status, owner and estimate are in the [catalog](../index.md).
 
 ## Prerequisites
 
-- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../AGENTS.md)). Nothing here authorizes pushing, spending or promotion by itself. To ask for the go, see [How to use this repo](../../README.md#how-to-use-this-repo).
+- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([Astrid development skill](../../skills/astrid-dev/SKILL.md)). Nothing here authorizes pushing, spending or promotion by itself. To ask for the go, see [How to use this repo](../../README.md#how-to-use-this-repo).
 - **Predecessor:** [Plan 01, Installer Consent](../01-installer-consent/plan.md) must be on Agent and App `pre-main` before phase 3. It is not there yet (see [inputs.md](inputs.md)). Phase 1 can start before it.
 - **Hardware for the Linux closure check (task V2):** a Linux x86_64 environment: a Linux machine, WSL2 on a Windows PC, or a RunPod CPU pod with at least 40 GB of disk (owner-approved spend). The check installs the pinned Linux recipe (`linux-x86_64-cu130`), so a Mac can't run it. Everything else, including the phase 1 producer tasks, runs on any OS.
 - **Access:** push access to the repositories below, or open pull requests for the owner to merge. Producers land only with the owner's go.

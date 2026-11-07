@@ -6,4 +6,4 @@ Astrid must support serious, sustained artistic practice—not just quick genera
 
 **What it requires:** meaningful creative control; continuity and iteration across complex projects; agents that extend rather than replace human judgment; real finished work that demonstrates an increased ceiling of possibility.
 
-**Gap:** [AA-001 — Sustained, ambitious creative work](../gaps/AA-001-sustained-creative-work.md). The [principles](../principles.md) apply here too; creative ambition does not require forfeiting openness or control.
+**Gap:** [AA-001 — Sustained, ambitious creative work](../gaps/AA-001-sustained-creative-work.md). The [principles](../README.md#four-creator-principles) apply here too; creative ambition does not require forfeiting openness or control.

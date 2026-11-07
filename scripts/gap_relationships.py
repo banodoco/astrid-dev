@@ -32,7 +32,7 @@ def parse_gap_relationships(metadata: str) -> tuple[list[str], str]:
         if target.startswith("../pillars/"):
             ref = "pillar:" + Path(target).stem
         else:
-            ref = "principle:" + target.partition("#")[2]
+            ref = "principle:" + Path(target).stem
         if ref in relationships:
             raise ValueError(f"duplicate gap relationship: {ref}")
         relationships.append(ref)

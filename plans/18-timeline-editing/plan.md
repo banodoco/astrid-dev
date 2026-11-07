@@ -2,7 +2,7 @@
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
-**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../visions/gaps/LS-003-full-stack-contributions.md) (supporting). This plan proves one timeline-specific foundation, not the entire workspace/component contract.
+**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (supporting). This plan proves one timeline-specific foundation, not the entire workspace/component contract.
 
 Draft: provide dependable timeline editing primitives as a pack, so people and agents can build their own ways to understand, view, and edit the same creative material. Current status, owner, and estimate live in the [project queue](../../README.md).
 
@@ -14,7 +14,7 @@ Draft: provide dependable timeline editing primitives as a pack, so people and a
 
 ## What we build on
 
-The existing timeline, editing implementation, state ownership, execution contracts, and pack conventions are to be identified at execution start. Do not assume primitives or extension support are absent. The design direction is in the [Liquid Software vision](../../visions/pillars/liquid-software.md); source identities and recorded inputs belong in [inputs.md](inputs.md).
+The existing timeline, editing implementation, state ownership, execution contracts, and pack conventions are to be identified at execution start. Do not assume primitives or extension support are absent. The design direction is in the [Liquid Software vision](../../vision/pillars/liquid-software.md); source identities and recorded inputs belong in [inputs.md](inputs.md).
 
 ## Sequence
 

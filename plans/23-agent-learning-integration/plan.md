@@ -1,8 +1,8 @@
 # 23 — Continuous agent learning in creative workflows
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and this project's [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate live in the [project queue](../../README.md).
+**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and this project's [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate live in the [project queue](../../README.md).
 
-**Vision gaps:** [CI-001 — Agents learn from real creative work](../../visions/gaps/CI-001-agent-learning-loop.md) (primary); [CI-002 — Interoperable Hiveminds](../../visions/gaps/CI-002-federated-knowledge.md) (supporting dependency). This plan integrates learning; it does not own the underlying protocol.
+**Vision gaps:** [CI-001 — Agents learn from real creative work](../../vision/gaps/CI-001-agent-learning-loop.md) (primary); [CI-002 — Interoperable Hiveminds](../../vision/gaps/CI-002-federated-knowledge.md) (supporting dependency). This plan integrates learning; it does not own the underlying protocol.
 
 ## Goal and scope
 

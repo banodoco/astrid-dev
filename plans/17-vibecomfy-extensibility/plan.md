@@ -1,6 +1,6 @@
 # VibeComfy extensibility with H3_AV
 
-**Vision gaps:** [Composable capabilities](../../visions/gaps/LS-003-full-stack-contributions.md) (primary).
+**Vision gaps:** [Composable capabilities](../../vision/gaps/LS-003-full-stack-contributions.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
@@ -14,7 +14,7 @@ Make it easier for people and their agents to build and share creative tools on 
 
 ## What we build on
 
-H3_AV is a concrete example, not evidence of particular APIs or missing capabilities. First identify its source and the existing VibeComfy workflow and pack extension points. See the [Liquid Software vision](../../visions/pillars/liquid-software.md); exact starting identities are in [inputs.md](inputs.md).
+H3_AV is a concrete example, not evidence of particular APIs or missing capabilities. First identify its source and the existing VibeComfy workflow and pack extension points. See the [Liquid Software vision](../../vision/pillars/liquid-software.md); exact starting identities are in [inputs.md](inputs.md).
 
 ## Sequence
 

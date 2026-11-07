@@ -1,6 +1,6 @@
 # Release 1: install and update
 
-**Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary).
+**Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 

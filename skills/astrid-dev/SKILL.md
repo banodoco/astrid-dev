@@ -13,7 +13,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | --- | --- |
 | Bug, small fix, docs or maintenance | [Issue](https://github.com/banodoco/astrid-dev/issues) and focused PR. [Bug fixing](../astrid-dev-bugfix/SKILL.md) handles incidents; [Iterate](../astrid-dev-iterate/SKILL.md) handles scoped repairs |
 | Task in a claimed project | Existing [plan, inputs and tasks](../../docs/project-format.md); inherit accepted decisions and permissions |
-| New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../visions/gaps.md), then use [Plan](../astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
+| New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/gaps.md), then use [Plan](../astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
 | Integration, release or publication | [Release](../astrid-dev-release/SKILL.md), with explicit current authorization |
 
 ## One path, proportionate depth
@@ -33,4 +33,4 @@ If a person has a goal, find the closest issue or existing task first. Otherwise
 
 Use the [GitHub contributor guide](../../docs/contribution-workflow.md) to **claim, propose, request a start decision, ask a question, submit multiple product PRs or finish a project**. Claiming is ownership, not authorization. No mandatory project conversation hub is created. The concise completion PR is an index of real evidence, not another database.
 
-**Authority:** [Repository rules](../../AGENTS.md) · [run contract](../astrid-dev-shared/run-contract.md) · [design principles](../../docs/contribution-design-principles.md). These and the product repo's instructions take precedence over this navigational skill. Never install skills or change a contributor's machine merely to orient them.
+**Authority:** [Repository rules](../../skills/astrid-dev/SKILL.md) · [run contract](../astrid-dev-shared/run-contract.md) · [design principles](../../docs/contribution-design-principles.md). These and the product repo's instructions take precedence over this navigational skill. Never install skills or change a contributor's machine merely to orient them.

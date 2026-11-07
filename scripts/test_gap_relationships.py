@@ -4,7 +4,7 @@ import unittest
 from gap_relationships import parse_gap_relationships
 
 PRIMARY = "[Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary)"
-SUPPORT = "[In the creator's control](../principles.md#in-the-creators-control) (supporting)"
+SUPPORT = "[In the creator's control](../principles/in-the-creators-control.md) (supporting)"
 
 
 class GapRelationshipTests(unittest.TestCase):

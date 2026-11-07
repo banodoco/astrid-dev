@@ -12,7 +12,7 @@ Make Astrid understandable from its purpose to its working contracts: readers sh
 - **Deferred:** a mandatory comprehensive manual, wholesale rewriting of every page, and parallel documentation systems.
 - **Still undecided:** repository set, detailed task breakdown, and the bounded human and agent journeys; determine these after inspecting current docs.
 
-See the [Liquid Software vision](../../visions/pillars/liquid-software.md) for the product foundation.
+See the [Liquid Software vision](../../vision/pillars/liquid-software.md) for the product foundation.
 
 ## What we build on
 

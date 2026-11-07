@@ -99,11 +99,11 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
     def test_relative_markdown_links_point_at_pinned_source(self):
         text = rewrite_links("[source](../pillars/artistic-ambition.md)",
-                             __import__("pathlib").Path("visions/gaps/AA-001-sustained-creative-work.md"),
+                             __import__("pathlib").Path("vision/gaps/AA-001-sustained-creative-work.md"),
                              SHA, ROOT)
         self.assertEqual(text,
                          f"[source](https://github.com/banodoco/astrid-dev/blob/{SHA}"
-                         "/visions/pillars/artistic-ambition.md)")
+                         "/vision/pillars/artistic-ambition.md)")
 
     def test_immutable_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "40-character"):

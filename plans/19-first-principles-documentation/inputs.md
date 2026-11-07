@@ -14,7 +14,7 @@ Freeze actual refs, SHAs, dirty state, and custody before edits. Historical obse
 
 | Source | What it establishes | Identity or link | Limits / missing information |
 |---|---|---|---|
-| Extensibility philosophy | Purpose: a dependable, composable foundation; deliberate extension; user choice of control. | [Liquid Software vision](../../visions/pillars/liquid-software.md) | Use as the conceptual anchor; implementation contracts remain in their owning code/docs. |
+| Extensibility philosophy | Purpose: a dependable, composable foundation; deliberate extension; user choice of control. | [Liquid Software vision](../../vision/pillars/liquid-software.md) | Use as the conceptual anchor; implementation contracts remain in their owning code/docs. |
 | Current Astrid docs and code | Existing entry points, canonical concepts, examples, and gaps. | Relevant repositories TBD | Must inspect and identify at setup; preserve source ownership and avoid duplicated concepts. |
 
 ## Constraints

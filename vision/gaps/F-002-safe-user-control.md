@@ -1,6 +1,6 @@
 # F-002 — User control and recovery aren't fully proven
 
-**Applies to:** [In the creator's control](../principles.md#in-the-creators-control) (primary) · **Assessment:** Open / partly implemented foundations (2026-11-06).
+**Applies to:** [In the creator's control](../principles/in-the-creators-control.md) (primary) · **Assessment:** Open / partly implemented foundations (2026-11-06).
 
 ## Desired state
 

@@ -1,6 +1,6 @@
 # Gaps — outcomes Astrid has not yet proven
 
-**[Vision](vision.md) → Gaps → [Projects](../plans/index.md) → Evidence.** A gap describes something creators still cannot reliably do, independently of any particular proposed implementation. Its own document defines the desired result, current evidence and a meaningful closure test. Completing a project does **not** automatically close a gap.
+**[Vision](README.md) → Gaps → [Projects](../plans/index.md) → Evidence.** A gap describes something creators still cannot reliably do, independently of any particular proposed implementation. Its own document defines the desired result, current evidence and a meaningful closure test. Completing a project does **not** automatically close a gap.
 
 ## Current gaps
 
@@ -12,7 +12,7 @@
 | **Shared creative endeavor** | [CA-001 — Creative challenge culture](gaps/CA-001-creative-challenge-culture.md) · [CA-002 — Contributor ownership model](gaps/CA-002-contributor-ownership.md) |
 | **Cross-cutting product experience** | [F-001 — Platform reliability](gaps/F-001-platform-reliability.md) · [F-002 — Safe user control and recovery](gaps/F-002-safe-user-control.md) · [F-003 — Dependable creative execution](gaps/F-003-creative-execution.md) · [F-004 — Pack lifecycle](gaps/F-004-pack-lifecycle.md) · [F-005 — Cloud execution for local projects](gaps/F-005-local-files-cloud-assist.md) · [F-006 — Fully hosted workspaces](gaps/F-006-fully-hosted-workspace.md) · [F-007 — First-class sandbox](gaps/F-007-first-class-sandbox.md) |
 
-Each record lives once in `gaps/<ID>-<slug>.md`. The stable ID is identity, not exclusive conceptual ownership. Every gap has one **primary** [pillar](vision.md#four-pillars) *or* [creator principle](principles.md), with only justified supporting connections. Plan files own their forward gap links; gap files do not repeat project status, owner or reverse plan lists.
+Each record lives once in `gaps/<ID>-<slug>.md`. The stable ID is identity, not exclusive conceptual ownership. Every gap has one **primary** [pillar](README.md#four-pillars) *or* [creator principle](README.md#four-creator-principles), with only justified supporting connections. Plan files own their forward gap links; gap files do not repeat project status, owner or reverse plan lists.
 
 ## When to add or change a gap
 
