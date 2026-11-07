@@ -8,7 +8,7 @@ Independent personal, team and community knowledge datasets can preserve attribu
 
 ## Current state
 
-[Banodoco Hivemind](../../projects/22-hivemind-protocol/inputs.md) documents source-custodied messages, revisioned resources, an accepted search head and editorial contribution operations. The [uploaded October 29 protocol proposal](../../projects/22-hivemind-protocol/protocol-proposal.md) proposes dataset-scoped entries, typed links and `find`/`inspect`/`contribute`. **These are not yet identical proven contracts.**
+[Banodoco Hivemind](../../plans/22-hivemind-protocol/inputs.md) documents source-custodied messages, revisioned resources, an accepted search head and editorial contribution operations. The [uploaded October 29 protocol proposal](../../plans/22-hivemind-protocol/protocol-proposal.md) proposes dataset-scoped entries, typed links and `find`/`inspect`/`contribute`. **These are not yet identical proven contracts.**
 
 ## Gap
 
@@ -20,4 +20,4 @@ Two separately owned datasets can exchange a scoped, independently attributed re
 
 ## Sources and reassessment
 
-[Current Hivemind source map](../../projects/22-hivemind-protocol/inputs.md) · [Dated protocol proposal](../../projects/22-hivemind-protocol/protocol-proposal.md). Source claims in the proposal, including migration and privacy assertions, require verification; a draft spec is not implementation proof.
+[Current Hivemind source map](../../plans/22-hivemind-protocol/inputs.md) · [Dated protocol proposal](../../plans/22-hivemind-protocol/protocol-proposal.md). Source claims in the proposal, including migration and privacy assertions, require verification; a draft spec is not implementation proof.
