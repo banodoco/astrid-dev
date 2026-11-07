@@ -18,14 +18,9 @@ Earlier research snapshots were Agent `01eceda...` and App `878c28...`; they are
 
 After independent review, promote the exact immutable candidate heads to `pre-main` by the destination's ordinary fast-forward/create procedure. Never overwrite an earlier candidate or publish to `main`, `int`, or `r1`. The four Agent/App donors above are the only feature inputs.
 
-## References and evidence
+## Provenance and evidence boundaries
 
-| Source | What it establishes | Identity or link | Limits / missing information |
-|---|---|---|---|
-| Astra merge plan | Accepted merge context and original slice framing. | [PLAN.md](../../references/PLAN.md) | Does not replace fresh source freeze. |
-| Donor manifest | Exact accepted donor/source manifest. | [donor-manifest.json](../../references/donor-manifest.json) | Reconfirm source identities at task start. |
-| IC END acceptance | Installer consent acceptance and affected App paths. | [evidence-summary.md](../../references/evidence-summary.md) | Recheck affected behavior on composition and immutable tuple; no historical base replay. |
-| Existing IC-1A / IC-2A cards | Exact affected consent/autostart/shim test nodes. | Referenced by accepted source plan and evidence above. | Freeze final selectors in I-01. |
+The exact accepted donor SHAs and merge order are recorded **once** in [Starting code](#starting-code). The old source-audit summaries are not live execution evidence: freeze the target anew and rerun focused acceptance checks from [tasks.md](tasks.md). The earlier M-GPU orchestration and its advisor automations remain **stopped**; this project does not resume them.
 
 ## Constraints
 

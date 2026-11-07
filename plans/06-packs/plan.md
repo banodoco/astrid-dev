@@ -16,11 +16,9 @@ Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, delet
 - **Deferred:** GPU work, H3, RunPod extraction, `training`, default packs and signing; nine of the 30 owner statements ([inputs.md](inputs.md#the-30-statements)).
 - **Still undecided:** only the final home of the retired `local` effects (owner to decide). `comfyui` and `comfy_wrap` are deleted (Decision 13); `developer` and `training` stay in Agent (Decision 14).
 
-## How to work on it
+## Execution handoff
 
-1. Read [AGENTS.md](../../AGENTS.md) and the [contributor skill](../../skills/astrid-dev/SKILL.md). Use the **iterate** workflow for a single scoped change or check, and the **release** workflow for composition, review and promotion.
-2. Routes `N`, `X`, `S` and review rules are in the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). plan-specific terms are at the end of this file.
-3. Do the tasks in [tasks.md](tasks.md); exact SHAs, probes and what is missing are in [inputs.md](inputs.md).
+[Tasks](tasks.md) own the work and focused proof; [inputs](inputs.md) own actual source identities and retained work. Use the [contributor skill](../../skills/astrid-dev/SKILL.md), then its [Iterate](../../skills/astrid-dev-iterate/SKILL.md) or [Release](../../skills/astrid-dev-release/SKILL.md) specialist as the task requires. Do not infer a model ID or new permission from this plan.
 
 ## Prerequisites
 
@@ -143,4 +141,3 @@ The README keeps **TBD**. The only retained figure (16 to 20 working days, 1 Nov
 | [tasks.md](tasks.md) | Every task: route, dependencies, exact commands, done condition. |
 | [inputs.md](inputs.md) | Current heads, retained SHAs, what is missing, pack inventory, the 30 statements, owner decisions. |
 | [Plan 02 env folder](../02-consistent-generation/env/README.md) | The Agent test-environment scripts. |
-| [Evidence summary](../../references/evidence-summary.md) | Background evidence only, not a task list. |

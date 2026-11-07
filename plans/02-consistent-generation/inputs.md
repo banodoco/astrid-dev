@@ -1,6 +1,6 @@
 # Inputs and provenance
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
@@ -62,7 +62,7 @@ Not landed. On 5 Nov 2026 none of these were ancestors of `pre-main`: Agent `608
 - Merge conflict counts (22 for PINS, 9 for the DEFAULTS donor, 1 for the VibeComfy donor, none for Runtime stop) are pairwise probes from 5 Nov 2026, not a tested sequential result. Re-probe at C1 and D1.
 - The Linux closure proof once ran on a RunPod CPU pod with 60 GB of container disk; a host with 23 GB free was not enough.
 - Already inside PINS, so not a separate item: the older verified Agent `620a3fd5146fed9f623a2f7101c40c4279f03516` (an ancestor of `1608dbbf`).
-- Kept out of this plan: Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lease `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`, custody `103f97803f7f391e2c810ebdf086f798326cd75a`, concurrent editing, Packs, ARM, and any broad suite. The [inclusion assessment](../../references/INCLUDING-GENERATION.md) is background; where it calls Runtime stop conditional, Decision 4 supersedes it.
+- Kept out of this plan: Runtime CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`, lease `33e9195a8ac57c4ba61f372ef6f25139c37eaa97`, custody `103f97803f7f391e2c810ebdf086f798326cd75a`, concurrent editing, Packs, ARM, and any broad suite. Prior inclusion proposals are superseded by Decision 4 of this project.
 
 ## Composition and publication rules
 

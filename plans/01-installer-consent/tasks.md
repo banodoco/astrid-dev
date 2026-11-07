@@ -1,8 +1,8 @@
 # Tasks: installer consent
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../index.md)
 
-First release slice; it does not depend on generation, concurrent editing (CE), or Packs. It does not authorize product execution. Source evidence: [Astra merge plan](../../references/PLAN.md), [exact donor manifest](../../references/donor-manifest.json), and [IC END acceptance](../../references/evidence-summary.md).
+First release slice; it does not depend on generation, concurrent editing (CE), or Packs. It does not authorize product execution. Source identities and donor order are in [inputs.md](inputs.md); the named checks below must be rerun on the actual candidate.
 
 ## Task index
 
@@ -46,7 +46,7 @@ First release slice; it does not depend on generation, concurrent editing (CE), 
 - **Route:** N / Luna.
 - **Dependencies and inputs:** I-02; App donor order in [inputs.md](inputs.md). The known conflict is `public/install-manifest.json`.
 - **Work:** Use canonical `scripts/installer/pin.mjs`; do not copy an old manifest or lower release semantics. Keep VibeComfy/lifecycle pins unchanged. R1 findings: the App emits `--yes` and choice flags that the release Agent rejects, so align the App argv with the Agent CLI; the donor manifest drops the ffmpeg pin, so carry it via `scripts/installer/pin.mjs`, not by hand.
-- **Focused checks:** Exact affected paths in [IC-1P and IC-2P acceptance](../../references/evidence-summary.md) for `SetupBlock.done2.test.tsx`, `WelcomeRunMode.test.tsx`, `WelcomeFlow.test.tsx`, `installArgv.fixture.test.ts`, `SetupBlock.test.tsx`, and `copy.test.ts`; `scripts/installer/manifest.test.mjs`, `release.test.mjs`, canonical pin check, and cross-repo argv fixture byte equality. No whole UI/SDK suite.
+- **Focused checks:** Exact affected paths in the accepted scope recorded in [inputs.md](inputs.md) and the check names below for `SetupBlock.done2.test.tsx`, `WelcomeRunMode.test.tsx`, `WelcomeFlow.test.tsx`, `installArgv.fixture.test.ts`, `SetupBlock.test.tsx`, and `copy.test.ts`; `scripts/installer/manifest.test.mjs`, `release.test.mjs`, canonical pin check, and cross-repo argv fixture byte equality. No whole UI/SDK suite.
 - **Done:** Matching argv fixture, exact Agent source, and scoped App checks pass.
 
 ### I-04
