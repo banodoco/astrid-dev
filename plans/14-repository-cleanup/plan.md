@@ -14,7 +14,7 @@ Coordinate with [Plan 16](../16-streamlined-agent-experience/plan.md) where agen
 
 ## What we build on
 
-An initial Agent snapshot identifies concrete files and directories to inspect. The exact snapshot and evidence limits are in [inputs.md](inputs.md); none of those candidates is approved for deletion.
+An initial Agent snapshot identifies concrete files and directories to inspect. The exact snapshot and evidence limits are in [inputs.md](inputs.md); none of those candidates is approved for deletion. Also carried from [Plan 07](../07-pinokio/plan.md): the retired old-launcher Pinokio route in astrid-agent (`execute_pinokio_backend` and the M4-4a backend checks) should be removed once nothing selects it.
 
 ## Sequence
 

@@ -22,16 +22,15 @@ Evidence (7 Nov 2026): the hosted Pinokio rows (`scripts/pinokio_row_driver.py`,
 
 **Bug found and fixed by these rows:** every Pinokio release update failed with "another installer owns the installation lifetime lock" and rolled back. The update ran a Runtime workspace migration even when the schema was unchanged, and the updater's own stopped-path custody held the lock. Fix (astrid-agent #290, `core.py` `schema_unchanged()` shared with the direct path): same-schema Pinokio updates skip the migration, as direct updates already did.
 
-**Open gaps (remaining Plan 07 work):**
+**Done (7 Nov 2026) on Linux, macOS and Windows.** The hosted rows pass all six steps on all three OSes with the exact `main` versions: astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462` and launcher `d15c58b5` (run https://github.com/banodoco/astrid-agent/actions/runs/42421306190). The owner also checked the real Pinokio app on macOS by hand.
 
-| Gap | Next step |
-|---|---|
-| The real Pinokio app is not exercised by the hosted rows: they run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | macOS: the owner tested the real Pinokio app by hand on 5 Nov 2026 and everything worked. Linux and Windows: not yet checked by hand. A hosted engine-driven row stays in [Plan 10](../10-pinokio-qualification/plan.md) |
-| A process that ignores the graceful stop is left running after the refusal | Accepted fail-closed limitation; Plan 10 covers engine Stop/Quit |
-| `pinokio-windows` fails at install: with `USERPROFILE`/`LOCALAPPDATA`/`APPDATA` isolated, `install.ps1` exits 1 after the media-tool (ffmpeg) setup output (run 42333603780) | Read the Windows install log from the row's evidence and fix the driver or installer; the row stays a named gap until then |
-| The "other Runtime unchanged" process check was dropped (it was macOS-only) | Add a per-OS check |
-| On fast runners the busy-stop task can finish before Stop lands; the row then sends Stop right after admission and accepts a clean stop, so a busy refusal is not exercised every run | Use a deterministic long-running test task |
-| The retired old-launcher Pinokio route (`execute_pinokio_backend`, M4-4a backend checks) is still in astrid-agent | Remove it once nothing selects it |
+Getting Windows to pass found and fixed real product bugs:
+- Windows install: uv hard-linked packages from its cache, so the Runtime's schema files inherited the cache's permissions and failed its private-file check. Packages are now copied into each version (astrid-agent #294).
+- First task on Windows (any install, not only Pinokio): the Runtime's task host takes about 60 s to start, and a task sent in that window tried to retire it and was refused. A task now waits for a host the Runtime supervises and never retires or duplicates it (#294).
+- Windows stop and uninstall: install records were written with inherited permissions the Runtime's private read refuses, so a stopped uninstall could not prove the stop. Windows install records are now private, and the install selection moved into the installer's private folder (astrid-runtime #34, astrid-agent #294, astrid-pinokio #15). Moving it never hides a live older install's record (#297).
+- Linux and macOS updates: the install script built its bootstrap environment next to a supplied manifest, so every Pinokio Update after the first failed. Each run now uses its own temporary folder (astrid-app #198).
+
+**Differences from the plan:** the rows check six steps, not the seven this plan named, because start and the health check are one step. The macOS-only "other Runtime unchanged" process check was dropped. Both, and the remaining gaps, are tracked in [Plan 10](../10-pinokio-qualification/plan.md#carried-from-plan-07).
 
 ## Sequence
 

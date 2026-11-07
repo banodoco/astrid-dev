@@ -24,6 +24,28 @@ Freeze and reconcile source identities (PIN-0), then preserve launcher behavior 
 
 Report only demonstrated outcomes. Missing deployed veto, settlement/readback, or custody evidence leaves that release boundary unqualified with a concrete NEEDS report. A launcher increment may be delivered independently only without unsupported native safety or qualification claims. Publication remains limited to the reviewed immutable candidate and resolved `pre-main` under ordinary create/fast-forward rules; this plan itself authorizes no execution or mutation.
 
+## Carried from Plan 07
+
+Plan 07 (Pinokio basic) closed on 7 Nov 2026 with hosted Linux, macOS and Windows rows passing all six steps on `main` (astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462`, launcher `d15c58b5`; run https://github.com/banodoco/astrid-agent/actions/runs/42421306190). These Plan 07 gaps are now part of this plan:
+
+| Gap | Next step |
+|---|---|
+| The real Pinokio app is not exercised by the hosted rows: they run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | macOS: the owner tested the real Pinokio app by hand on 5 Nov 2026 and everything worked. Linux and Windows: not yet checked by hand. Add a hosted row that drives the Pinokio app itself |
+| A process that ignores the graceful stop is left running after the refusal | Accepted fail-closed limitation; Plan 10 covers engine Stop/Quit |
+| The "other Runtime unchanged" process check was dropped (it was macOS-only) | Add a per-OS check |
+| A Windows Pinokio install made before the private-record fix keeps its inherited version records, so a stopped uninstall refuses (safely, keeping data) until one Update rewrites them | None needed while Pinokio has no users; recheck if any pre-fix install is reported |
+| On fast runners the busy-stop task can finish before Stop lands; the row then sends Stop right after admission and accepts a clean stop, so a busy refusal is not exercised every run | Use a deterministic long-running test task |
+
+## Test robustness
+
+Getting the Windows Pinokio row to pass on 7 Nov 2026 took seven fix-and-rerun rounds. Each 20–40 minute run showed only the next failure, and early rounds had to guess the cause. These changes make one run show every failure, with its cause:
+
+| Gap | Next step |
+|---|---|
+| A row stops at its first failed step, and its evidence was cut short: the receipt kept only the first 500 characters of an error, and Windows and macOS logs were not uploaded until added one by one | Run every step even after one fails, record each step's full error in the receipt, and always upload every Astrid log and install record for every OS |
+| A test candidate is built by hand: repin, commit an App candidate, hash the manifest and install scripts, and start the run. The Release-1 workflow tests the Agent the App pins, not the Agent commit just landed, and forgetting that cost a run | One script that builds a candidate from the commits under test, starts the chosen rows and prints the run link, and refuses when the App does not pin the Agent being tested |
+| Windows install records were written with inherited permissions that the Runtime's private read refuses, which caused three separate failures (installed packages, the selection record and version records) | One shared helper that writes every record the Runtime reads privately, plus a cross-repo test that each written record passes the Runtime's own Windows read |
+
 ## Read next
 
 - [tasks.md](tasks.md): task index, routes, dependencies, focused checks, and completion evidence.

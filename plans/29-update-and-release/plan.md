@@ -20,12 +20,8 @@ Every screen agrees, because each one shows what the installed Astrid says rathe
   - remove setup and consent UI from update surfaces;
   - a release number that moves only with the installed tuple, guarded by a small required check;
   - protected App `main`.
-- **Also included, not deferred:**
-  - a Runtime capability that says the installed Astrid can update itself;
-  - removing the systemd 254 floor so Linux updates in-app like Windows;
-  - update status for Pinokio fully local (its preview server answers 501 today);
-  - fully local Update now through the existing in-page updater;
-  - typed contracts with tests at both broken boundaries: Runtime↔Agent helper actions, and Runtime update status↔App.
+- **Also included:** a Runtime `self_update` capability; update status for Pinokio fully local (its preview server answers 501 today); fully local Update now through the existing in-page updater.
+- **Committed in [Plan 30](../30-update-everywhere/plan.md):** removing the systemd 254 floor, typed contracts at both broken boundaries, the refused cards, and Pinokio and fully local update proof.
 
   This plan takes over [Plan 09](../09-install-and-update-confidence/plan.md) IU-5 (in-app route). Plan 09 keeps IU-1 transaction consolidation.
 - **Not building:**
@@ -49,7 +45,7 @@ The owner's decisions (7 Nov 2026) are recorded in [inputs.md](inputs.md#owner-d
 
 ## Sequence and readiness
 
-Two committed phases. Phase 1 (about 11–13 engineer-days) gives every normal install a working, honest Update now from Release 10, and a release number that only moves when it should. Phase 2 (about 7–9 days) finishes the less common setups. Both are part of this plan; phase 2 is not optional.
+This plan (about 11–13 engineer-days) gives every normal install a working, honest Update now from Release 10, and a release number that only moves when it should. The less common setups follow in [Plan 30](../30-update-everywhere/plan.md) (about 7–9 days), which is committed, not optional.
 
 **Phase 1a: App only, deployable this week (about 3.5–4 days).**
 - Show Update now only when the installed Astrid's update status reports it can update itself. No Runtime reports it yet, so the button that has never worked disappears for everyone today, and turns on by itself with Release 10. Everyone else sees the reason and the command.
@@ -68,7 +64,7 @@ Two committed phases. Phase 1 (about 11–13 engineer-days) gives every normal i
 - Freeze `public/install*` while 10 is qualified; publish 10 without marking it required.
 - **Owner step:** turn on branch protection with the release check required on App `main`.
 
-**Phase 2 (about 7–9 days).** Remove the systemd 254 floor, proven on an Ubuntu 22.04 row; typed schemas at both boundaries; the refused cards onto the shared decision; Pinokio and fully local button-path proof.
+**Then:** [Plan 30](../30-update-everywhere/plan.md) finishes the remaining setups.
 
 Owner decisions are recorded in [inputs.md](inputs.md#decisions-recorded-7-nov-2026). Recording this plan does not authorize implementation. Task cards: [tasks.md](tasks.md).
 
