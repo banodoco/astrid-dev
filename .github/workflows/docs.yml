@@ -16,6 +16,8 @@ on:
       - "scripts/check_completion.py"
       - "scripts/test_check_completion.py"
       - "scripts/check_gap_boundaries.py"
+      - "scripts/check_project_planning.py"
+      - "scripts/test_check_project_planning.py"
       - "scripts/gap_relationships.py"
       - "scripts/test_check_gap_boundaries.py"
       - "scripts/export_public_vision.py"
@@ -36,6 +38,8 @@ on:
       - "scripts/check_completion.py"
       - "scripts/test_check_completion.py"
       - "scripts/check_gap_boundaries.py"
+      - "scripts/check_project_planning.py"
+      - "scripts/test_check_project_planning.py"
       - "scripts/gap_relationships.py"
       - "scripts/test_check_gap_boundaries.py"
       - "scripts/export_public_vision.py"
@@ -68,6 +72,11 @@ jobs:
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python3 scripts/check_gap_boundaries.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
+      - name: Require evidence in new or opted-in project packs
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: python3 scripts/check_project_planning.py --base "$PR_BASE_SHA"
 
   publish-vision:
     # Never publish the unreviewed content of a PR or a contributor branch.
