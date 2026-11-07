@@ -10,4 +10,4 @@ Shared knowledge is not automatically trustworthy or executable instruction. Age
 
 **Gaps:** [CI-001 — Agent learning loop](../gaps/CI-001-agent-learning-loop.md) · [CI-002 — Federated knowledge](../gaps/CI-002-federated-knowledge.md).
 
-**Implementation exploration:** [Federation protocol](../../projects/22-hivemind-protocol/plan.md) and its [proposal](../../projects/22-hivemind-protocol/protocol-proposal.md) · [Agent learning](../../projects/23-agent-learning-integration/plan.md) and its [experience design](../../projects/23-agent-learning-integration/learning-loop.md). Proposals do not establish shipped behavior.
+**Implementation exploration:** [Federation protocol](../../plans/22-hivemind-protocol/plan.md) and its [proposal](../../plans/22-hivemind-protocol/protocol-proposal.md) · [Agent learning](../../plans/23-agent-learning-integration/plan.md) and its [experience design](../../plans/23-agent-learning-integration/learning-loop.md). Proposals do not establish shipped behavior.
