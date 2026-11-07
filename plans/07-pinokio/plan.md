@@ -22,7 +22,15 @@ Evidence (7 Nov 2026): the hosted Pinokio rows (`scripts/pinokio_row_driver.py`,
 
 **Bug found and fixed by these rows:** every Pinokio release update failed with "another installer owns the installation lifetime lock" and rolled back. The update ran a Runtime workspace migration even when the schema was unchanged, and the updater's own stopped-path custody held the lock. Fix (astrid-agent #290, `core.py` `schema_unchanged()` shared with the direct path): same-schema Pinokio updates skip the migration, as direct updates already did.
 
-**Done (7 Nov 2026).** Accepted on Linux and macOS: hosted rows pass all six steps, the update-lock bug they found is fixed on `main`, and the owner checked the real Pinokio app on macOS by hand. The Windows row and the remaining gaps below moved to [Plan 10](../10-pinokio-qualification/plan.md#carried-from-plan-07) and are no longer Plan 07 work.
+**Done (7 Nov 2026) on Linux, macOS and Windows.** The hosted rows pass all six steps on all three OSes with the exact `main` versions: astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462` and launcher `d15c58b5` (run https://github.com/banodoco/astrid-agent/actions/runs/42419011936). The owner also checked the real Pinokio app on macOS by hand.
+
+Getting Windows to pass found and fixed real product bugs:
+- Windows install: uv hard-linked packages from its cache, so the Runtime's schema files inherited the cache's permissions and failed its private-file check. Packages are now copied into each version (astrid-agent #294).
+- First task on Windows (any install, not only Pinokio): the Runtime's task host takes about 60 s to start, and a task sent in that window tried to retire it and was refused. A task now waits for a host the Runtime supervises and never retires or duplicates it (#294).
+- Windows stop and uninstall: install records were written with inherited permissions the Runtime's private read refuses, so a stopped uninstall could not prove the stop. Windows install records are now private, and the install selection moved into the installer's private folder (astrid-runtime #34, astrid-agent #294, astrid-pinokio #15). Moving it never hides a live older install's record (#297).
+- Linux and macOS updates: the install script built its bootstrap environment next to a supplied manifest, so every Pinokio Update after the first failed. Each run now uses its own temporary folder (astrid-app #198).
+
+**Differences from the plan:** the rows check six steps, not the seven this plan named, because start and the health check are one step. The macOS-only "other Runtime unchanged" process check was dropped. Both, and the remaining gaps, are tracked in [Plan 10](../10-pinokio-qualification/plan.md#carried-from-plan-07).
 
 ## Sequence
 

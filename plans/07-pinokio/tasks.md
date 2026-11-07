@@ -8,11 +8,11 @@ The six-row `RELEASE1_1_DEFERRED_PINOKIO_MATRIX` is historical, retired evidence
 
 | ID / outcome | Route | Depends on | Progress |
 |---|---|---|---|
-| [PB-1 Separate three-row gate: matrix constant, checker, dispatch](#pb-1-separate-three-row-gate-matrix-constant-checker-dispatch) | N | — | [ ] |
-| [PB-2 Linux row, steps 1–7](#pb-2) | X | PB-1 | [ ] |
-| [PB-3 macOS row: capture the real setup-install exit, fix it](#pb-3-macos-row-capture-the-real-setup-install-exit-fix-it) | X | PB-2 | [ ] |
-| [PB-4 Windows row: setup-install exit, `npm ci` better-sqlite3](#pb-4-windows-row-setup-install-exit-npm-ci-better-sqlite3) | X | PB-2 | [ ] |
-| [PB-END Record the green gate; fast-forward `main` to the verified heads](#pb-end-record-the-green-gate-fast-forward-main-to-the-verified-heads) | N | PB-2–PB-4 | [ ] |
+| [PB-1 Separate three-row gate: matrix constant, checker, dispatch](#pb-1-separate-three-row-gate-matrix-constant-checker-dispatch) | N | — | [x] |
+| [PB-2 Linux row, steps 1–7](#pb-2) | X | PB-1 | [x] |
+| [PB-3 macOS row: capture the real setup-install exit, fix it](#pb-3-macos-row-capture-the-real-setup-install-exit-fix-it) | X | PB-2 | [x] |
+| [PB-4 Windows row: setup-install exit, `npm ci` better-sqlite3](#pb-4-windows-row-setup-install-exit-npm-ci-better-sqlite3) | X | PB-2 | [x] |
+| [PB-END Record the green gate; fast-forward `main` to the verified heads](#pb-end-record-the-green-gate-fast-forward-main-to-the-verified-heads) | N | PB-2–PB-4 | [x] |
 
 ## Shared row contract
 
@@ -40,7 +40,7 @@ The source task provided no exact hosted workflow job selector or focused comman
 - **Work:** Implement and wire the isolated matrix/checker/dispatch. Required row IDs are exactly `pinokio-linux`, `pinokio-macos`, and `pinokio-windows`.
 - **Focused checks:** The existing gate checker must require exactly those three job IDs; inspect that the R1 matrix remains unchanged. Exact command/selector was not supplied and must be recovered at setup.
 - **Done:** Evidence shows the isolated checker enforces exactly three IDs and the R1 gate is unchanged. No additional review stage is specified.
-- **Progress:** [ ]
+- **Progress:** [x]
 
 ### PB-2
 
@@ -52,7 +52,7 @@ The source task provided no exact hosted workflow job selector or focused comman
 - **Work:** Add/fix the Linux Worker profile and exercise install, start/health/task, isolated normal stop/restart, busy stop/restart with intact marker and clean task outcome, stand-in update/readiness/new release/task, and uninstall.
 - **Focused checks:** Hosted `pinokio-linux` row only, plus the gate checker from PB-1. Recover its exact workflow selector at setup.
 - **Done:** Hosted `pinokio-linux` passes all seven steps at a frozen head; preserve row logs/evidence and head identity in the project evidence record. No broad suite is specified.
-- **Progress:** [ ]
+- **Progress:** [x]
 
 ### PB-3 macOS row: capture the real setup-install exit, fix it
 
@@ -62,7 +62,7 @@ The source task provided no exact hosted workflow job selector or focused comman
 - **Work:** Capture the actual setup-install exit status, fix the cause on the authorized integration branch, then run the complete shared row contract on hosted macOS.
 - **Focused checks:** Hosted `pinokio-macos` row only, plus the gate checker. Recover the exact workflow selector at setup; no exact command was supplied.
 - **Done:** Hosted row passes all seven steps, or coordinator records a named limitation based on the captured failure evidence. If this needs Sol-level digging, stop with evidence for the coordinator's decision.
-- **Progress:** [ ]
+- **Progress:** [x]
 
 ### PB-4 Windows row: setup-install exit, `npm ci` better-sqlite3
 
@@ -72,7 +72,7 @@ The source task provided no exact hosted workflow job selector or focused comman
 - **Work:** Capture the actual setup-install exit status, fix the cause(s) on the authorized integration branch, then run the complete shared row contract on hosted Windows.
 - **Focused checks:** Hosted `pinokio-windows` row only, plus the gate checker. Recover the exact workflow selector at setup; no exact command was supplied.
 - **Done:** Hosted row passes all seven steps, or coordinator records a named limitation based on captured failure evidence. If this needs Sol-level digging, stop with evidence for the coordinator's decision.
-- **Progress:** [ ]
+- **Progress:** [x]
 
 ### PB-END Record the green gate; fast-forward `main` to the verified heads
 
@@ -82,7 +82,7 @@ The source task provided no exact hosted workflow job selector or focused comman
 - **Work:** Record row results, frozen heads, and any named unsupported OS; verify the destination `main` heads with `git ls-remote` as required by the original task.
 - **Focused checks:** Gate green at the frozen heads; `git ls-remote` confirms the intended `main` heads. No other release or publication step is specified.
 - **Done:** Green gate and verified heads on `main`; or preserve named OS limitation and hand off unresolved platform scope to the coordinator. Authority boundary is the original fast-forward task; no plan migration itself authorizes execution.
-- **Progress:** [ ]
+- **Progress:** [x]
 
 ## Completion and handoff
 
