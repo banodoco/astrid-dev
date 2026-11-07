@@ -20,6 +20,29 @@ Gaps are **typically one abstraction level above projects**, but do not manufact
 
 **Example:** [F-007](gaps/F-007-first-class-sandbox.md) asks whether people can choose and use a supported fully isolated Astrid environment. [Plan 15](../plans/15-openshell-safe-execution/plan.md) proposes OpenShell as one implementation. [F-002](gaps/F-002-safe-user-control.md) is the broader trust, permissions and recovery outcome. Completing Plan 15 could establish the narrower F-007 result while providing only partial evidence for F-002. Neither the vendor name nor a project's completion defines the gap.
 
+## Reviewing a new or redefined gap
+
+Before opening a PR that **creates, retires, renames or materially redefines** a gap, reconsider it from first principles. Start with the [existing gap list](README.md) and the [project catalog](../plans/index.md), not with the proposed implementation. A new project may simply be a way of closing an existing gap; a new gap is warranted only when it has a **different missing outcome and independently useful closure evidence**.
+
+For each new or materially redefined gap, put a short, specific record in the **PR description**, not a second status registry:
+
+```md
+## Gap boundary assessment — F-005
+
+Decision: Refine — Name local-first cloud delegation as the outcome rather than a single bundled project.
+Outcome: A creator can use approved cloud compute without giving up the authority of their local project.
+Existing alternatives: F-003 covers reliable creative execution; F-006 covers fully hosted state. Plan 25 is one project to approach F-005.
+Why this level: The creator still needs this capability if the present Plan 25 implementation or provider is replaced.
+Independent closure: A supported local project delegates work, returns editable results, and passes consent, custody, cancellation and failure tests.
+Evidence: https://github.com/banodoco/astrid-dev/blob/main/plans/25-cloud-assist-v1/plan.md
+```
+
+Consider **reuse an existing gap**, **add a project to an existing gap**, **refine/split/merge existing gaps**, **create a genuinely independent gap**, and **use a foundational enabler plan without a gap**. The `Existing alternatives` and `Why this level` lines must explain *why the chosen alternative wins* over concrete nearby gaps/projects—not just say there is no overlap. If a project were replaced, would the outcome remain? Would completing the project still leave meaningful room to assess the gap? Is the closure proof specific and independent of a vendor or task checklist?
+
+The existing [documentation CI](../.github/workflows/docs.yml) runs [`check_gap_boundaries.py`](../scripts/check_gap_boundaries.py) on PRs. It compares the proposed gap definition with the PR base. New/removed gaps and changes to the **title, Applies to relationships, Desired state, Gap, or Closure evidence** require one review record per affected stable gap ID. Changes confined to Current state, Assessment, or Sources and reassessment **do not** require another boundary decision. The check requires the decision, outcome, concrete alternatives, argument for abstraction level, independent closure test and source evidence, but **cannot judge their truth or quality**. A reviewer must challenge shallow rationales, unsupported assumptions, duplicated closure tests and project-specific wording before approving. No new approval layer is created, and the [plan-completion evidence gate](../AGENTS.md#completing-a-plan-one-decision-gate) remains separate.
+
+For a baseline review of every existing ID and its closest overlap, see the [November 7 gap abstraction audit](references/gap-abstraction-audit-2026-11-07.md). Revisit its conclusions when real evidence exposes a different boundary; do not treat it as a parallel project or gap-status database.
+
 ## Minimal record
 
 ```md
