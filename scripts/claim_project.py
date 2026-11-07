@@ -44,6 +44,8 @@ def verify_claim(before: str, after: str, actor: str) -> str:
     row, updated = diffs[0]
     if row != [v.strip() for v in old[1:8]]:
         raise ValueError("edited row is not in the catalog")
+    if row[2] not in {"queued", "blocked"}:
+        raise ValueError("only queued or blocked projects may be claimed")
     if row[3] != "Unassigned" or updated[3] != "@" + actor:
         raise ValueError("catalog owner mismatch")
     if any(row[i] != updated[i] for i in range(7) if i != 3):
