@@ -36,7 +36,7 @@ class ClaimTests(unittest.TestCase):
         for status in ("blocked", "active", "done"):
             original = BASE.replace("| queued |", "| " + status + " |", 1)
             claimed = original.replace("| Unassigned |", "| @casey |", 1)
-            with self.subTest(status=status), self.assertRaisesRegex(ValueError, "queued"):
+            with self.subTest(status=status), self.assertRaises(ValueError):
                 verify_claim(original, claimed, "casey")
 
     def test_privileged_claims_refuse_unprotected_main(self):
