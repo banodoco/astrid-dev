@@ -17,6 +17,14 @@ The [gap contract](visions/gaps.md) defines a small, enforceable-in-principle st
 
 When a plan finishes, use its exact evidence to **propose** updates to linked gaps and distinguish closed, partial, unchanged or needs-recheck outcomes. A completed plan is not proof a vision gap has closed. Preserve evidence provenance, review the proposal, and do not silently change the vision, execution scope or publication authority. Plans have been aligned to current gap IDs or enabler roles. The focused structural CI check is installed; automated evidence-based gap updates are not.
 
+## Creating or redefining a vision gap — first-principles boundary gate
+
+Start with the [gap normalization questions](visions/gaps.md#how-to-normalize-gap-boundaries), the [current gaps](visions/README.md) and the [existing projects](plans/index.md). A gap is a **missing, independently assessable user/creative outcome** that remains relevant even if its current project is cancelled or replaced. A project is one implementation path. Do not create a new gap just because a feature request or project lacks a tracking entry; first test whether an existing gap already has the same closure evidence.
+
+When a PR adds, retires, renames or **substantively changes** a gap definition, provide a separate **`## Gap boundary assessment — ID`** in its PR description, with `Decision`, `Outcome`, `Existing alternatives`, `Why this level`, `Independent closure` and `Evidence`. Compare overlapping existing gaps and possible project-only alternatives; justify what would demonstrate the missing outcome **independent of the proposed fix**. See [the contract and example](visions/gaps.md#reviewing-a-new-or-redefined-gap) and the [current 15-gap boundary audit](visions/references/gap-abstraction-audit-2026-11-07.md).
+
+CI checks the *presence and structure* of the rationale against the PR's actual gap-boundary changes, using [`scripts/check_gap_boundaries.py`](scripts/check_gap_boundaries.py). It does not decide the right abstraction, verify evidence or substitute for editorial review. Updating Current state, Assessment or source citations without redefining the gap does not trigger the gate. This is part of the existing documentation integrity job, not a new release or owner approval round. New project planning should prefer linking to an existing gap and use a new gap only if its closure test is genuinely distinct.
+
 ## Completing a plan: one decision gate
 
 When a PR changes a plan's status in [`plans/index.md`](plans/index.md) **to `done`**, the contributing agent must compare its actual, linked evidence with the plan's `Completion` criteria **and** assess every gap named in the plan's `**Vision gaps:**` line. Include **one short completion assessment per newly completed plan in the PR description**:

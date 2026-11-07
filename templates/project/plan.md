@@ -4,6 +4,8 @@
 
 State the useful result in one or two sentences. Current status, owner, priority and remaining estimate live in the [plan catalog](../../plans/index.md), not a second record here.
 
+**Before proposing a new gap:** Search the [existing gap outcomes](../../visions/README.md) and the [project catalog](../../plans/index.md). If this project advances an existing outcome, link it rather than creating a project-shaped gap. If a genuinely distinct gap is necessary, follow the [first-principles review contract](../../visions/gaps.md#reviewing-a-new-or-redefined-gap).
+
 **Vision gaps:** Link the primary gap (and only truly supported secondary gap IDs) from [the gap index](../../visions/README.md), including cross-cutting gaps where appropriate, or use **Vision role: Foundational enabler** and explain why. Use one declaration, not both. Existing project scopes and status stay authoritative; [gap contract](../../visions/gaps.md).
 
 ## Goal and scope

@@ -1,4 +1,4 @@
-# F-005 — Local projects can't yet use a coherent cloud agent, generation and rendering service
+# F-005 — Local-first projects can't yet use cloud execution seamlessly
 
 **Applies to:** [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) · [In the creator's control](../principles.md#in-the-creators-control) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) · **Assessment:** Open; remote routes exist but an integrated cloud-assisted local-files workflow has not been qualified.
 
@@ -12,7 +12,7 @@ Astrid Agent has local orchestration and selected provider/RunPod generation rou
 
 ## Gap
 
-No supported integration has demonstrated secure, consented cloud-agent execution and remote generation/rendering as a coherent local-files Astrid workflow. The task/result protocol, permissions, provider choice, remote temporary-file handling, cost controls, local result reconciliation, crash/stop recovery and artifact provenance must be qualified.
+Creators do not yet have a qualified, coherent way to delegate approved work from a locally owned Astrid project to cloud compute and return to that same editable project with clear consent, costs and recovery. The missing outcome is the reliable boundary between local custody and remote work—not a specific cloud provider, agent API or rendering service.
 
 ## Closure evidence
 

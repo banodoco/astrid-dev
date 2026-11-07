@@ -1,0 +1,176 @@
+#!/usr/bin/env python3
+"""Require a first-principles PR decision when a gap is added, retired, or redefined.
+
+CI verifies that reasoning is supplied and refers to a concrete source.
+A human reviewer must judge whether the reasoning and evidence are good.
+Ordinary current-state/assessment/source refreshes don't redefine a gap.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import subprocess
+from pathlib import Path
+
+from check_docs import ROOT
+
+GAP_PATH = re.compile(r"^visions/gaps/([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
+SECTION = re.compile(
+    r"^#{2,3}\s+Gap boundary assessment\s*[—:-]\s*([A-Z]{1,3}-\d{3})\s*$",
+    re.I | re.M,
+)
+LINK = re.compile(r"https?://[^\s)]+|(?<![\da-f])[0-9a-f]{40}(?![\da-f])", re.I)
+ALTERNATIVE = re.compile(r"\b(?:[A-Z]{1,3}-\d{3}|Plan\s+\d{2}|project|none)\b", re.I)
+
+
+def section(text: str, title: str) -> str:
+    match = re.search(r"^## " + re.escape(title) + r"\s*$", text, re.M)
+    if not match:
+        return ""
+    tail = text[match.end():]
+    end = re.search(r"^## ", tail, re.M)
+    return (tail[:end.start()] if end else tail).strip()
+
+
+def boundary_signature(text: str) -> tuple[str, ...]:
+    """Only semantic outcome boundaries trigger a new rationale.
+
+    Updating assessment, current evidence or citations without redefining
+    the outcome does not require a second architecture review.
+    """
+    title = re.search(r"^# (.+)$", text, re.M)
+    applies = re.search(r"^\*\*Applies to:\*\*(.+)$", text, re.M)
+    return (
+        title.group(1).strip() if title else "",
+        applies.group(1).split("**Assessment:**", 1)[0].strip() if applies else "",
+        section(text, "Desired state"),
+        section(text, "Gap"),
+        section(text, "Closure evidence"),
+    )
+
+
+def needs_boundary_review(before: str | None, after: str | None) -> bool:
+    return before is None or after is None or boundary_signature(before) != boundary_signature(after)
+
+
+def git(root: Path, *args: str, must_succeed: bool = True) -> subprocess.CompletedProcess[str]:
+    result = subprocess.run(["git", *args], cwd=root, text=True, capture_output=True, check=False)
+    if must_succeed and result.returncode:
+        raise ValueError(f"git {' '.join(args)} failed: {result.stderr.strip()}")
+    return result
+
+
+def before_file(root: Path, base: str, path: str) -> str | None:
+    result = git(root, "show", f"{base}:{path}", must_succeed=False)
+    if result.returncode:
+        return None
+    return result.stdout
+
+
+def after_file(root: Path, path: str) -> str | None:
+    file = root / path
+    return file.read_text(encoding="utf-8") if file.is_file() else None
+
+
+def affected_gaps(base: str, root: Path) -> set[str]:
+    """Determine newly created, deleted and materially redefined gaps in the PR."""
+    git(root, "cat-file", "-e", f"{base}^{{commit}}")
+    changed = git(root, "diff", "--name-status", "--find-renames", base, "HEAD", "--", "visions/gaps")
+    required: set[str] = set()
+    for line in changed.stdout.splitlines():
+        cells = line.split("\t")
+        if len(cells) < 2:
+            raise ValueError(f"unexpected git diff name-status row: {line}")
+        change = cells[0]
+        paths = cells[1:]
+        # Renaming a gap or changing its stable identity is always a review event.
+        if change.startswith(("R", "C")):
+            for path in paths:
+                match = GAP_PATH.fullmatch(path)
+                if match:
+                    required.add(match.group(1))
+            continue
+        for path in paths:
+            match = GAP_PATH.fullmatch(path)
+            if not match:
+                continue
+            old = before_file(root, base, path)
+            new = after_file(root, path)
+            if needs_boundary_review(old, new):
+                required.add(match.group(1))
+    return required
+
+
+def assess_boundary(gap_id: str, body: str) -> list[str]:
+    matches = list(SECTION.finditer(body))
+    selected = [i for i, match in enumerate(matches) if match.group(1).upper() == gap_id]
+    if len(selected) != 1:
+        if not selected:
+            return [f"{gap_id}: missing '## Gap boundary assessment — {gap_id}' in PR description"]
+        return [f"{gap_id}: duplicate gap boundary assessment sections"]
+    start = matches[selected[0]].end()
+    tail = body[start:]
+    next_heading = re.search(r"^#{1,6}\s+\S", tail, re.M)
+    text = (tail[:next_heading.start()] if next_heading else tail).strip()
+    issues = []
+    decision = re.search(r"^Decision:\s*(New|Refine|Merge|Retire)\s*[—:-]\s*(.+)$", text, re.I | re.M)
+    if not decision or len(decision.group(2).strip()) < 20:
+        issues.append(f"{gap_id}: Decision needs New/Refine/Merge/Retire and a specific rationale")
+    for field, minimum in [
+        ("Outcome", 30),
+        ("Existing alternatives", 35),
+        ("Why this level", 35),
+        ("Independent closure", 35),
+    ]:
+        match = re.search(r"^" + re.escape(field) + r":\s*(.+)$", text, re.I | re.M)
+        value = match.group(1).strip() if match else ""
+        if len(value) < minimum:
+            issues.append(f"{gap_id}: {field} needs explicit first-principles reasoning")
+        if field == "Existing alternatives" and value and not ALTERNATIVE.search(value):
+            issues.append(f"{gap_id}: Existing alternatives must examine a concrete gap, plan or project (or explain none)")
+    evidence = re.search(r"^Evidence:\s*(.+)$", text, re.I | re.M)
+    if not evidence or not LINK.search(evidence.group(1)):
+        issues.append(f"{gap_id}: Evidence needs a concrete URL or full 40-character source SHA")
+    return issues
+
+
+def check_pr(required: set[str], body: str) -> list[str]:
+    issues = []
+    for gap_id in sorted(required):
+        issues.extend(assess_boundary(gap_id, body))
+    return issues
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--base", required=True, help="PR base commit SHA or fetched base ref")
+    parser.add_argument("--event", type=Path, help="GitHub pull request event JSON")
+    parser.add_argument("--body-file", type=Path, help="Local PR description")
+    args = parser.parse_args()
+    try:
+        required = affected_gaps(args.base, ROOT)
+        if not required:
+            print("No new or materially redefined gaps; boundary review not required")
+            return 0
+        if args.body_file:
+            body = args.body_file.read_text(encoding="utf-8")
+        elif args.event:
+            body = json.loads(args.event.read_text(encoding="utf-8")).get("pull_request", {}).get("body") or ""
+        else:
+            raise ValueError("gap boundary changes require --event or --body-file")
+        issues = check_pr(required, body)
+    except (OSError, ValueError) as exc:
+        print(f"ERROR gap boundary gate: {exc}")
+        return 1
+    for issue in issues:
+        print(f"ERROR {issue}")
+    if issues:
+        print("Add a first-principles gap boundary assessment to the PR description; see visions/gaps.md")
+        return 1
+    print(f"Gap boundary gate passed for {len(required)} gap(s): {', '.join(sorted(required))}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
