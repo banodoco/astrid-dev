@@ -11,13 +11,21 @@ Astrid Dev is a version-controlled coordination and knowledge layer for many ind
 3. **Rigor proportional to consequence.** A small issue needs a focused investigation and proof, not a project. Consequential, irreversible, safety-sensitive or cross-repository choices deserve deeper research and independent challenge. Scrutiny follows risk, **not** a fixed number of planners, documents or alternatives.
 4. **Use agent judgment, don't replace it with forms.** Require decisions to be intelligible and defensible, but let competent agents choose proportionate means. Reviewers challenge the reasoning, not prose length.
 5. **Build on prior art.** Before inventing an implementation, trace the actual behavior, search live and retained work, identify reusable paths and explain what is preserved. Distinguish a negative search result from an assumption that nothing exists.
-6. **Evidence proves a specific claim.** A claim names its result, exact code/dependency identity, applicable environment, method, observed pass/failure and limits. A green wrapper, a URL, an old test or a completed task list is not automatically proof.
+6. **Evidence proves a specific claim.** A claim names its result, exact code/dependency identity, applicable environment, method, observed pass/failure and limits. Record the **actual agent models used during work**, with a clear distinction between observed runtime metadata and self-reporting; never infer model identity from the intended role. A green wrapper, a URL, an old test or a completed task list is not automatically proof.
 7. **CI checks objective invariants; reviewers judge meaning.** CI parses records, validates references and state transitions, and runs scoped tests. It should not score confidence by paragraph length, infer consent from a link or assert that a test demonstrates more than it does.
 8. **Templates are prompts for useful information.** A draft may be short and honestly unfinished. Defined projects preserve their actual reasoning and owner decision. Add fields or files only when they reduce uncertainty for the next worker.
 9. **Project boundaries should be independently useful.** Each project consumes identified inputs and produces an artifact or behavior that another agent can use with stated qualifications. A hard bug is still normally an issue; difficulty alone doesn't create a project.
-10. **State transitions are minimal and explicit.** Defining scope, authorizing execution, proving a result and publishing it are different facts. Reuse current catalog and run controls; do not introduce parallel status ledgers or automatic approval through CI.
+10. **State transitions are minimal and explicit.** Claiming ownership, accepting new scope, authorizing execution, admitting a PR to review, approving the implementation, proving completion and publishing are **different decisions**. Automate low-risk bookkeeping, not consequential approval. Reuse current catalog and run controls; do not introduce parallel status ledgers.
 11. **Keep provenance discoverable, not duplicated.** Point to exact source commits, decisions, first failures and receipts. Distinguish historical snapshots from current facts; keep the next handoff short and link details where they live.
 12. **Prefer subtraction.** Before adding a schema, validator, approval stage, role or helper, show which duplication or failure it removes. Reuse existing mechanics when their semantics match; don't force unrelated decisions into one abstraction just to reduce file count.
+
+## How automation should behave
+
+A contributor's GitHub identity is the claim identity. Ownership claims may be merged automatically **only** when an authenticated, unassigned, queued project's owner cell is the entire change, the current source still agrees, CI passes and protected-branch controls are configured. No automation should execute untrusted PR code while holding merge privileges.
+
+A claimed owner's submission may be **accepted into a review queue automatically**. A review label means neither source acceptance nor release authorization. New project scope and consequential implementation still require human/qualified independent judgment. Multiple product PRs can contribute to one project, with one completion review referencing the qualified integrated result.
+
+A completion evidence pack is the PR's concise **index of real receipts**, not a new database or mandatory folder. Keep the original model-use records, candidate identities, negative tests and failures at their source. When an external action or prerequisite is unavailable, fail closed and provide a manual path rather than silently skipping the guard.
 
 ## Where each responsibility belongs
 

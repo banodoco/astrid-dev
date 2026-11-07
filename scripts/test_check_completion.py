@@ -17,6 +17,7 @@ Completion: Yes — A real image reached the timeline in the supported environme
 Implementation PRs: https://github.com/banodoco/astrid-agent/pull/123
 Integrated candidate: abcdef0123456789abcdef0123456789abcdef01
 Unproven: Other inference providers and machines are unqualified.
+Models used: openai/gpt-6 — implementation, self-reported.
 Gap F-003: Partially evidenced — One complete route works, but not all inference backends or machines.
 """
 
@@ -91,6 +92,7 @@ Implementation PRs: None — Communication-only project.
 Integrated candidate: None — Reviewed documentation and non-code assets.
 Unproven: None within the recorded communication deliverable.
 Gap impact: None — It is a communication deliverable, not proof that a gap was closed.
+Models used: Unknown — Historical run did not record model identity.
 """), [])
 
     def test_completion_requires_cross_repo_review_context(self):
@@ -106,6 +108,20 @@ Gap impact: None — It is a communication deliverable, not proof that a gap was
 
     def test_new_catalog_during_migration_is_not_transition(self):
         self.assertEqual(check_pr(None, catalog("done"), "", self.root), [])
+
+    def test_model_use_is_explicit_but_unknown_is_honest(self):
+        missing = RECEIPT.replace("Models used: openai/gpt-6 — implementation, self-reported.\n", "")
+        self.assertTrue(any("Models used" in x for x in
+                            assess_completion("20-zero-to-first-image/plan.md", PLAN, missing)))
+        unknown = RECEIPT.replace(
+            "Models used: openai/gpt-6 — implementation, self-reported.",
+            "Models used: Unknown — The agent runtime did not disclose its model identity.")
+        self.assertEqual(assess_completion("20-zero-to-first-image/plan.md", PLAN, unknown), [])
+        vague = RECEIPT.replace(
+            "Models used: openai/gpt-6 — implementation, self-reported.",
+            "Models used: Some models were used")
+        self.assertTrue(any("provider/model" in x for x in
+                            assess_completion("20-zero-to-first-image/plan.md", PLAN, vague)))
 
     def test_existing_done_is_not_rechecked(self):
         self.assertEqual(check_pr(catalog("done"), catalog("done"), "", self.root), [])

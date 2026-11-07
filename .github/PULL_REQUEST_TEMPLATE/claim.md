@@ -1,8 +1,10 @@
 ## Claim an existing project
 
-- **Project:** Link the exact existing project in [the catalog](../../plans/index.md).
-- **Owner:** Your own `@GitHubUsername`.
+- **Project:** Link the exact [queued, unassigned project](https://github.com/banodoco/astrid-dev/blob/main/plans/index.md).
+- **Owner:** Your own authenticated GitHub `@username`.
 
-This PR must change **only one Owner cell** in `plans/index.md`, from `Unassigned` to the account that opened the PR. Do not edit status, scope, priority, waiting-on, tasks or any other file.
+Change **only one Owner cell** in `plans/index.md` from `Unassigned` to your own `@username`. Do not change status, priority, waiting-on, estimate, scope or other files. The safe claim bot may auto-merge this PR after CI **only when branch protection and its GitHub App are configured**.
 
-[How claiming works](../../docs/contribution-workflow.md#claim-a-project-without-waiting-for-a-maintainer). The bot accepts only this exact change and only after CI; a claim does **not** authorize execution.
+Claiming records accountability. It does not authorize code execution, costs, merging other PRs or publication.
+
+[Claiming and next steps](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#claim-a-project-without-waiting-for-a-maintainer)

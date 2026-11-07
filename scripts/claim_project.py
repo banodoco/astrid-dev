@@ -4,16 +4,14 @@
 Trusted default-branch code; forked PR content is read as data, never executed.
 """
 import argparse
-import base64
 import json
 import os
 import re
 import sys
-import urllib.parse
-import urllib.request
 from pathlib import Path
 
-from check_docs import CATALOG, PLAN_LINK, catalog_rows
+from check_docs import PLAN_LINK, catalog_rows
+from contribution_api import CATALOG, request as api, catalog, changed_files as files_in_pr
 
 LOGIN = re.compile(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37})")
 
@@ -44,36 +42,14 @@ def verify_claim(before: str, after: str, actor: str) -> str:
     row, updated = diffs[0]
     if row != [v.strip() for v in old[1:8]]:
         raise ValueError("edited row is not in the catalog")
-    if row[2] not in {"queued", "blocked"}:
-        raise ValueError("only queued or blocked projects may be claimed")
+    if row[2] != "queued":
+        raise ValueError("only queued projects may be claimed")
     if row[3] != "Unassigned" or updated[3] != "@" + actor:
         raise ValueError("catalog owner mismatch")
     if any(row[i] != updated[i] for i in range(7) if i != 3):
         raise ValueError("other catalog cells changed")
     return PLAN_LINK.fullmatch(row[6]).group(1).split("/")[0]
 
-
-def api(method: str, path: str, payload=None):
-    root = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
-    data = json.dumps(payload).encode() if payload is not None else None
-    req = urllib.request.Request(
-        root + path, data=data, method=method,
-        headers={"Authorization": "Bearer " + os.environ["GH_TOKEN"],
-                 "Accept": "application/vnd.github+json",
-                 "X-GitHub-Api-Version": "2022-11-28",
-                 "User-Agent": "astrid-dev-claim-bot",
-                 **({"Content-Type": "application/json"} if data is not None else {})})
-    with urllib.request.urlopen(req, timeout=20) as response:
-        return json.loads(response.read())
-
-
-def catalog(repository: str, ref: str) -> str:
-    owner, name = repository.split("/", 1)
-    query = urllib.parse.quote(ref, safe="")
-    result = api("GET", f"/repos/{owner}/{name}/contents/{CATALOG}?ref={query}")
-    if result.get("type") != "file" or result.get("encoding") != "base64":
-        raise ValueError("expected a plain catalog file")
-    return base64.b64decode(result["content"]).decode("utf-8")
 
 
 def open_pulls(repo: str):
@@ -84,15 +60,6 @@ def open_pulls(repo: str):
             return
     raise ValueError("claim scan exceeded bounded PR list")
 
-
-def files_in_pr(repo: str, number: int):
-    files = []
-    for page in range(1, 4):
-        page_files = api("GET", f"/repos/{repo}/pulls/{number}/files?per_page=100&page={page}")
-        files.extend(page_files)
-        if len(page_files) < 100:
-            return files
-    raise ValueError("claim cannot contain hundreds of changed files")
 
 
 def eligible(pr: dict, repo: str, sha: str, files: list[dict]) -> bool:
@@ -110,12 +77,21 @@ def eligible(pr: dict, repo: str, sha: str, files: list[dict]) -> bool:
     )
 
 
+def main_has_protection(repo: str) -> bool:
+    """Fail closed until rules/branch protection are active on main."""
+    return api("GET", f"/repos/{repo}/branches/main").get("protected") is True
+
+
 def handle_run(repo: str, run: dict) -> list[str]:
     if run.get("event") != "pull_request" or run.get("conclusion") != "success":
         return []
     sha = run.get("head_sha", "")
     if not re.fullmatch(r"[0-9a-f]{40}", sha, re.I):
         return []
+    # A privileged GitHub App must never merge on an unprotected default branch.
+    # Maintainers must configure a review ruleset and restrict App bypass to PRs.
+    if not main_has_protection(repo):
+        raise ValueError("main is not protected; claim auto-merge stays disabled")
     merged = []
     for summary in open_pulls(repo):
         if (summary.get("head") or {}).get("sha") != sha:

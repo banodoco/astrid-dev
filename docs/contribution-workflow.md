@@ -1,71 +1,88 @@
-# Contribute to Astrid: claim, propose, submit, complete
+# Contribute to Astrid: claim, propose, review, complete
 
-**One entrypoint:** [the Astrid development skill](../skills/astrid-dev/SKILL.md). [The domain map](../skills/astrid-dev/references/domains.md) points to product repositories and specialized skills. This page is the *how-to* for GitHub contribution events; [the design principles](contribution-design-principles.md) explain why the process is intentionally small.
+**Start at [the Astrid development skill](../skills/astrid-dev/SKILL.md).** It gives agents one contributor process. The [domain map](../skills/astrid-dev/references/domains.md) locates source and specialists; this page explains GitHub actions. [Our contribution principles](contribution-design-principles.md) explain what must stay simple.
 
-## Choose the smallest unit
+## Choose a route
 
-- **Bug or small improvement:** search or open an [Astrid-dev issue](https://github.com/banodoco/astrid-dev/issues); use the [bug-fixing skill](../skills/astrid-dev-bugfix/SKILL.md) as needed. Submit a focused product PR. No project pack or ownership claim is needed.
-- **Existing project task:** consult its [catalog](../plans/index.md), [plan](../templates/project/plan.md), inputs and tasks. Inherit accepted scope and current source evidence.
-- **New independent outcome:** [propose it as an issue](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md). Anyone may suggest work; an issue is a conversation, **not** a second project registry. Once the outcome, prior art and boundaries are ready, open one Astrid-dev **scope PR** with the [three-file project pack](project-format.md) and catalog entry. A maintainer reviews and greenlights the scope by approving/merging that PR; mere submission is not acceptance.
+| You want to… | Action | Approval boundary |
+| --- | --- | --- |
+| Fix a bug or small issue | Search/open an [Astrid-dev issue](https://github.com/banodoco/astrid-dev/issues) and submit a focused product PR | Reproduction, actual proof and appropriate product PR review; no project pack |
+| Take on an existing project | Claim one `queued` and `Unassigned` project through a one-cell catalog PR | **Claim may auto-merge.** It gives ownership, not execution authority |
+| Propose new substantial work | Open a [project proposal issue](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), then a reviewed scope PR | Maintainer accepts the new scope and project pack |
+| Submit project work | Open product PRs; optionally open an Astrid-dev implementation review PR | An owner’s PR is **queued for review**, not auto-approved |
+| Finish a project | Open an Astrid-dev completion PR linking integrated evidence | Independent completion review and authorized merge |
 
-## Claim a project, without waiting for a maintainer
+No mandatory project-conversation issue. Questions belong in an issue or PR; update the authoritative project documents only when a decision actually changes.
 
-1. Check [the project catalog](../plans/index.md) for a `queued` project whose **Owner** is `Unassigned`, and read its plan and dependencies. A claim can reserve the project even when scope remains queued for approval.
-2. [Edit the catalog on GitHub](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) (fork if asked). Change **only that row's Owner cell** from `Unassigned` to your own `@GitHubUsername`. Open a PR using the [claim PR template](../.github/PULL_REQUEST_TEMPLATE/claim.md). No other changes, including status, priority, estimate or waiting-on.
-3. The optional claim automation runs after documentation CI passes. It confirms the PR author's GitHub identity, the exact one-cell diff, and that live `main` still has the project unassigned; it then squash-merges the claim PR and comments with your next step. If two people claim simultaneously, the stale claim must be rebased or another project chosen.
-4. **Claiming is not scope approval or execution authorization.** Review the plan's scope and waiting-on constraints; propose a scope update if needed. Respect the [run contract](../skills/astrid-dev-shared/run-contract.md) and any existing STOP controls.
+## Claim a project without waiting for a maintainer
 
-When claim automation is not configured, the exact same one-cell PR is reviewed and merged normally. You do **not** need a separate project discussion issue for claims.
+1. Find an existing `queued`, `Unassigned` [catalog project](../plans/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.
+2. [Edit the catalog on GitHub](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) (fork if needed) and change **only that row’s Owner** from `Unassigned` to your own `@GitHubUsername`. Open a PR using [the claim template](../.github/PULL_REQUEST_TEMPLATE/claim.md).
+3. When configured, the protected claim bot verifies the authenticated PR author, one-cell change, permitted status, successful documentation CI and that the live main catalog still has the project available. It then automatically squash-merges and replies with next steps. If two people compete, the second claim fails closed.
+4. **This is ownership only.** It neither changes status to `active` nor accepts unresolved scope, grants code execution, incurs cost, or permits release. Honor the project’s accepted scope and existing authority/STOP controls.
+
+If the safe claim bot is not enabled, the **same PR** can be merged by a maintainer. No extra registration service, OAuth application for contributors or duplicate owner record.
 
 ## Propose and greenlight new work
 
-A proposal issue should answer the outcome, relevant existing work, why this is not an issue/task of an existing project, and how success might be demonstrated. Discussion belongs in the issue only while deciding.
+A proposal issue captures the desired independent outcome, relevant existing work and gaps, alternative issue/project placements, and likely proof. Anyone can propose—without claiming the work.
 
-The **scope PR** then creates the full project record:
-- `plan.md`: outcome, boundaries, consumed interfaces and what completion would prove
-- `inputs.md`: source-grounded prior art, alternatives/reuse choice, appropriate challenge and traceable owner decision
-- `tasks.md`: bounded work, dependencies and focused proof
-- one catalog row, initially **`queued`**, with a GitHub owner if already claimed (or `Unassigned`) and no claim of active execution
+To accept a new independent project, open a **scope PR** with one `queued` catalog entry and the existing three-file pack: `plan.md` (outcome, scope, interfaces, completion), `inputs.md` (prior art, reuse choice, actual owner decision, uncertainty), and `tasks.md` (work and focused proof). Use [the scope template](../.github/PULL_REQUEST_TEMPLATE/project-scope.md):
 
-A maintainer challenges the fit against existing gaps/projects and reviews the actual source findings. Once satisfied, they approve and merge the scope PR; the `inputs.md` record should reflect the accepted decision. If approval is not yet possible, leave the issue or a draft PR open and give a concrete requested change. **Do not auto-merge new scope.**
+```text
+Project: plans/NN-project-name/plan.md
+Review request: scope
+```
 
-There is one owner for each project, but product implementation may involve other reviewers. Permission to run, spend, access credentials or publish remains separate from scope approval and an owner claim.
+A maintainer compares the plan with existing issues, projects, gaps and source evidence. Their review/merge greenlights **the scope**, not implementation or publishing. Leave unaccepted proposals as an issue/draft PR with a specific next decision; don't manufacture accepted decisions just to satisfy CI.
 
-## Implement, review and integrate
+## Submit work for review
 
-A project may have **multiple PRs in different repositories**. Each product PR should link the canonical Astrid-dev `plan.md` and identify its exact candidate revision, what is claimed, tests and failures, and any other PRs needed. Use the compact [review-submission template](../templates/review-submission.md) if the target repository has no suitable template. Keep all substantive code reviews in their own PRs—not copied into a project issue.
+A project can have **multiple PRs across Runtime, Agent, App and other repositories**. Each product PR links the project/task, states exact source/dependency revisions, describes the claim and actual checks, and names what remains unproven. Use the small [review submission](../templates/review-submission.md) in a target product repo; the product repo’s own CI, reviewers, branch and release rules remain authoritative.
 
-**Independent review** means a reviewer (human or qualified agent) inspects the actual diff, retained implementation, selected checks, their inner results and limitations. Agent review is advice unless the product repository's existing policies authorize it. Humans approve consequential architecture, data custody, security, migrations and publication. Repair failed checks on the corrected candidate; don't turn unrelated tests into evidence.
+If the contributor needs an Astrid-dev PR to review a project handoff or implementation evidence, use [the implementation-review template](../.github/PULL_REQUEST_TEMPLATE/implementation-review.md) and identify the canonical plan:
 
-**Integration** follows the product repos' pin order, existing [release skill](../skills/astrid-dev-release/SKILL.md) and authorization. Separately green product PRs do not prove the assembled Runtime/Agent/App tuple. Never silently change the intended destination or deploy just because a merge is green.
+```text
+Project: plans/NN-project-name/plan.md
+Review request: implementation
+```
+
+The low-permission [review-intake workflow](../.github/workflows/review-intake.yml) checks the GitHub PR author against the **live catalog owner**. A matching, non-draft request receives `needs-review` and an acknowledgement. Scope PRs are also queued when their project files/catalog change appropriately. This means **accepted into the review queue**, **not approved**. Reviewers watch the [open queue](https://github.com/banodoco/astrid-dev/pulls?q=is%3Apr+is%3Aopen+label%3Aneeds-review). This workflow does not run fork code, approve, merge or deploy.
+
+**Independent review:** A fresh qualified reviewer examines actual diff and retained implementation, claims versus tests, first failures, negative cases, model provenance, dependencies and risks. They return concrete blocking findings or a justified acceptance with limitations. The contributor repairs the same failing cases on the new candidate. Human approval remains necessary for consequential changes, security, user data, migrations, costs and deployment under the product repositories’ policies. A CI pass or an agent’s advice alone does not override these authorities.
+
+**Integration:** Freeze the intended target/donor revisions and reuse unchanged proof only where justified. Separate green product PRs do not qualify a combined Runtime/Agent/App installation. The [release skill](../skills/astrid-dev-release/SKILL.md) governs cross-repository integration and separately authorized promotion.
+
+## Record models as work happens
+
+`run.yaml` configures **intended** model roles, but the review should report which models were **actually used**. Record the provider, exact model ID where visible, task, role, effort if available, and whether the information is **runtime-observed with a receipt** or **self-reported**. Do this at the relevant invocation, not from memory at the end.
+
+In a normal repo checkout, the lightweight [model-use helper](../scripts/model_usage.py) is available:
+
+```sh
+python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record \
+  --provider openai --model-id <actual-model-id> --role implementation \
+  --task <task-id> --basis self-reported
+python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> summary
+```
+
+When the running agent framework offers actual invocation metadata, it should write the same records directly. The local JSONL stays gitignored under `.otto/`; publish only a concise sanitized **Models used** line/summary in the review PR. If the identity is inaccessible, use **Unknown — reason**. A manual record is not proof of what the model provider actually executed.
 
 ## Submit a completed project
 
-When all required product changes have reached their intended integration destination and the *combined* outcome is verified, submit one **Astrid-dev completion PR**:
+Once the required product changes are integrated into their intended destinations and the **combined result** has been qualified, the owner submits one Astrid-dev completion PR using the [completion template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md):
 
-- Update the catalog status to `done`, preserving the existing project folder.
-- Include the already-required `## Completion assessment — Plan NN` in the PR description, with linked evidence and an assessment of **each linked gap** (or an explicit foundational-enabler explanation).
-- In that assessment, include **Implementation PRs**, **Integrated candidate** and **Unproven**. Use an explained `None — ...` for non-code work. These are pointers/limits, not a second evidence database.
-- Use the [completion PR template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md) to link **all relevant implementation PRs**, actual integrated candidate(s), focused checks, negative scenarios and limitations. A compact review summary in the PR **is the evidence pack**; link original receipts instead of duplicating them in a new required file.
-- Optionally add the final PR/receipt link to the project plan's handoff section when it improves future discovery.
+```text
+Project: plans/NN-project-name/plan.md
+Review request: completion
+```
 
-CI checks structural transitions, references and required assessments. The independent reviewer judges whether the evidence establishes the project outcome, particularly across repos. A maintainer merges the completion PR; the gap only changes when its own evidence merits reassessment.
+It changes that project’s catalog status to `done` and includes the existing `## Completion assessment — Plan NN`: actual evidence, implementation PRs in every repo, the exact integrated candidate, **Models used**, what remains unproven and a justified disposition for each linked vision gap (or the enabler exception). This concise PR summary is the **review evidence pack**: link real receipts, do not create another required file.
 
-## Questions and visibility
+CI enforces the mechanical completion contract and current references. A reviewer judges actual integrated behavior against the project’s agreed acceptance criteria. A maintainer merges only after required independent review and authorization. Completing the project does **not** automatically close a vision gap or deploy the result.
 
-Questions may be raised in [Astrid-dev issues](https://github.com/banodoco/astrid-dev/issues/new), clearly referencing the plan ID, or directly on the relevant PR. **No mandatory project conversation hub**. When a decision changes the agreed scope, update the project document so the next agent doesn't need to reconstruct a chat.
+## Get help and keep decisions discoverable
 
-The [README](../README.md) and main skill point here. The claim PR receives a bot response when auto-merged. Project and submission templates link back to this guide. People can contribute without installing a skill; agents should read it at the outset.
+Ask a project question in an [Astrid-dev issue](https://github.com/banodoco/astrid-dev/issues/new) naming the plan ID, or directly on a relevant PR. Record durable scope decisions in the project pack, not a new standing conversation hub.
 
-## Enable secure claim auto-merge (maintainer setup)
-
-The repository's existing `main` branch was **unprotected when this workflow was authored**. Do not turn on privileged automatic merging before protecting ordinary changes.
-
-1. Under GitHub **Settings → Rules → Rulesets**, protect `main`: require PRs, relevant documentation checks and human review for normal changes, restrict direct pushes and force-pushes.
-2. Create/install a dedicated **GitHub App**, restricted to `banodoco/astrid-dev`, with repository **Contents: write**, **Pull requests: write**, and **Issues: write** (for the optional confirmation comment). Give this App **PR-only bypass** of the review ruleset; do not grant a general contributor, broad organization bot or personal token that bypass.
-3. In repository **Settings → Secrets and variables → Actions**, add variable `CLAIM_BOT_APP_ID`, secret `CLAIM_BOT_PRIVATE_KEY` and variable `CLAIM_AUTO_MERGE_ENABLED=true` **after** protection and App installation are ready.
-4. Test one claim from a separate GitHub account and verify that a non-owner, two-row, stale, changed-status and code-bearing PR cannot auto-merge. Confirm the normal `main` push and published vision feed update.
-
-The [claim workflow](../.github/workflows/claim-project.yml) uses `workflow_run` only **after successful ordinary PR CI**, checks out the trusted default branch, and reads the fork's proposed catalog **as inert data**. It checks against both the PR's original base and live `main`, then merges with the exact head SHA. It never runs fork code with privileged credentials. The bot is **disabled by default** until the three settings above are configured. If GitHub itself holds a first-time contributor's CI for approval, that contributor's auto-claim also waits; this is a GitHub Actions policy, not a project approval decision.
-
-GitHub native rulesets and PR reviews remain the authority; do not create another permissions database.
+The README and main skill point here, templates link back, and the automated claim/review response gives the next action. **Maintainers:** [safe automation setup and adversarial smoke tests](contribution-automation-setup.md).

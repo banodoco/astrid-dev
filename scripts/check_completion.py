@@ -88,6 +88,18 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
     if not limitations or not has_real_reason(limitations.group(1)):
         issues.append(f"Plan {plan_id}: Unproven must state remaining limits or 'None within stated scope'")
 
+    models = re.search(r"^Models used:\s*(.+)$", section, re.I | re.M)
+    if not models:
+        issues.append(f"Plan {plan_id}: Models used must name actual model(s) or explain why unavailable")
+    else:
+        value = models.group(1).strip()
+        unknown = re.fullmatch(r"(?:Unknown|Not recorded)\s*[—:-]\s*(.+)", value, re.I)
+        has_model = re.search(r"\b[A-Za-z0-9][\w.+-]*/[A-Za-z0-9][\w.+:-]*\b", value)
+        if unknown and not has_real_reason(unknown.group(1)):
+            issues.append(f"Plan {plan_id}: missing reason for unknown model provenance")
+        elif not unknown and not has_model and not EVIDENCE_REF.search(value):
+            issues.append(f"Plan {plan_id}: Models used needs provider/model IDs or a linked invocation receipt")
+
     gaps = linked_gaps(plan_text)
     found: dict[str, str] = {}
     for match in GAP_LINE.finditer(section):

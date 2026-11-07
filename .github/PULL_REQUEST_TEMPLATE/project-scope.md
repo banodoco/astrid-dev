@@ -1,3 +1,6 @@
+Project: plans/<NN-project-name>/plan.md
+Review request: scope
+
 ## New project — scope review
 
 **Proposal issue:** Link the original proposal or explain why the PR itself is the initial proposal.
