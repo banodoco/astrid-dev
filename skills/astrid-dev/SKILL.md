@@ -7,7 +7,7 @@ description: One entrypoint for people and agents contributing to Astrid: find t
 
 **Start here for any change to Astrid**—a small fix, a new idea, an existing project, documentation, or a release. For artwork made *with* Astrid, use the separate creative skill.
 
-An agent should be able to join without prior Astrid knowledge. Start with the contributor's goal, find the existing work, and do not demand that they understand the entire system before making a useful contribution.
+The [contribution design principles](../../docs/contribution-design-principles.md) govern workflow, template and CI changes. An agent should be able to join without prior Astrid knowledge. Start with the contributor's goal, find the existing work, and do not demand that they understand the entire system before making a useful contribution.
 
 ## Choose the right unit of work
 
