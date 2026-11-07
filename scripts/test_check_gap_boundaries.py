@@ -171,7 +171,7 @@ class GapBoundaryGateTests(unittest.TestCase):
             new = root / "vision/gaps/F-005-test.md"
             new.parent.mkdir(parents=True)
             new.write_text(ORIGINAL.replace(
-                "../principles.md#local-first-cloud-capable",
+                "../principles/local-first-cloud-capable.md",
                 "../principles/local-first-cloud-capable.md"), encoding="utf-8")
             old.unlink()
             git("add", ".")

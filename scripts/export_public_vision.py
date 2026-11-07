@@ -250,8 +250,7 @@ def render_readme(root: Path, page: dict) -> str:
         "status and accountability; project packs contain their own scope, "
         "sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) "
         "covers issues, claims, scope review, PRs, writing and completion. "
-        "The [gap authoring contract](gaps.md) applies only when an outcome "
-        "is added or redefined.",
+        "Individual gap records hold their own evidence and closure criteria.",
         "",
     ])
     lines.extend(["## Build Astrid with us", "", contribution, ""])

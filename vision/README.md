@@ -76,7 +76,7 @@ Each gap describes a result that remains independently verifiable even if its pr
 
 ## Projects and participation
 
-The [project catalog](../plans/index.md) owns current priority, status and accountability; project packs contain their own scope, sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) covers issues, claims, scope review, PRs, writing and completion. The [gap authoring contract](gaps.md) applies only when an outcome is added or redefined.
+The [project catalog](../plans/index.md) owns current priority, status and accountability; project packs contain their own scope, sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) covers issues, claims, scope review, PRs, writing and completion. Individual gap records hold their own evidence and closure criteria.
 
 ## Build Astrid with us
 
