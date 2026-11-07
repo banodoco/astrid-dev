@@ -34,10 +34,44 @@ jobs:
           python3 scripts/check_gap_boundaries.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
           python3 scripts/check_project_planning.py --base "$PR_BASE_SHA"
 
+  vision-consumer-contract:
+    # The Dev exporter alone cannot prove Astrid App can render the feed.
+    # Test the proposed JSON with the actual App main parser before publication.
+    needs: documentation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout proposed Astrid Dev content
+        uses: actions/checkout@v4
+        with:
+          path: astrid-dev
+      - name: Checkout the live Astrid App consumer
+        uses: actions/checkout@v4
+        with:
+          repository: banodoco/astrid-app
+          ref: main
+          path: astrid-app
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.0"
+          cache: npm
+          cache-dependency-path: astrid-app/package-lock.json
+      - name: Export exactly the candidate content
+        working-directory: astrid-dev
+        run: python3 scripts/export_public_vision.py --output "$GITHUB_WORKSPACE/proposed-vision.json"
+      - name: Install the App's test dependencies
+        working-directory: astrid-app
+        run: npm ci --legacy-peer-deps
+      - name: Require the App parser to accept the candidate feed
+        working-directory: astrid-app
+        env:
+          PUBLIC_VISION_FEED_FILE: ${{ github.workspace }}/proposed-vision.json
+        run: npm run vision:check
+
   publish-vision:
     # Never publish the unreviewed content of a PR or a contributor branch.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: documentation
+    needs: [documentation, vision-consumer-contract]
     runs-on: ubuntu-latest
     permissions:
       contents: write
