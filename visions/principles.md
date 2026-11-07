@@ -8,11 +8,11 @@ Create on your own machine, including offline, with your files and projects unde
 
 ## Open by design
 
-Our tools, models and ideas should be open to inspect, adapt, fork and share. Build on open-source software and open models so artists and developers can extend each other's work, contribute their own tools and knowledge, and choose the providers that suit them rather than being locked into one ecosystem.
+Everything about our tools, models and even ideas should be open to inspect, adapt, fork and share. We build on open-source software and open models so artists and developers can build on one another's work, contribute their own tools and knowledge, and choose the providers that suit them.
 
 ## In the creator's control
 
-Artists decide what to make, which tools and models to use, where their projects live and what they spend. Agents should be helpful collaborators, with permissions, proposed changes and costs that are easy to understand and control. Private projects and knowledge remain private unless their owners decide to share them.
+Everything about Astrid is designed to give creators control. They can change even its core workings, choose which features and services to opt into, set agent permissions, and decide what data stays private or gets shared. We present all those choices as simply and clearly as possible.
 
 ## Eliminate needless technical wrangling
 
