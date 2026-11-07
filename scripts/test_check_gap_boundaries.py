@@ -44,6 +44,8 @@ Outcome: A local-first creator can delegate selected work without giving up loca
 Existing alternatives: Compared F-003 general creative execution and F-006 durable hosting; Plan 25 is a project, not the gap.
 Why this level: The independent user outcome remains important if Plan 25 or its provider choices are replaced.
 Independent closure: A real user delegates work and receives editable results with custody, consent, cost and recovery checks.
+Primary connection: principle:local-first-cloud-capable — Optional cloud work preserves the local-first promise at the heart of this gap.
+Supporting connections: principle:in-the-creators-control — Consenting to transfers and retaining data custody matter but do not define the main outcome.
 Evidence: https://github.com/banodoco/astrid-dev/blob/main/plans/25-cloud-assist-v1/plan.md
 """
 
@@ -70,6 +72,27 @@ class GapBoundaryGateTests(unittest.TestCase):
 
     def test_valid_first_principles_receipt_passes(self):
         self.assertEqual(check_pr({"F-005"}, RECEIPT), [])
+
+    def test_primary_and_supporting_justification_required_and_matched(self):
+        expected = {
+            "F-005": (
+                ["principle:local-first-cloud-capable", "principle:in-the-creators-control"],
+                "principle:local-first-cloud-capable",
+            )
+        }
+        self.assertEqual(check_pr({"F-005"}, RECEIPT, expected), [])
+        missing = RECEIPT.replace(
+            "Primary connection: principle:local-first-cloud-capable — Optional cloud work preserves the local-first promise at the heart of this gap.\\n", "")
+        self.assertTrue(any("Primary connection" in x for x in check_pr({"F-005"}, missing, expected)))
+        wrong = RECEIPT.replace(
+            "Primary connection: principle:local-first-cloud-capable",
+            "Primary connection: pillar:artistic-ambition")
+        self.assertTrue(any("differs" in x for x in check_pr({"F-005"}, wrong, expected)))
+        extra = RECEIPT.replace(
+            "Supporting connections: principle:in-the-creators-control",
+            "Supporting connections: principle:in-the-creators-control, principle:open-by-design")
+        self.assertTrue(any("Supporting connections differ" in x for x in
+                            check_pr({"F-005"}, extra, expected)))
 
     def test_requires_each_changed_gap(self):
         issues = check_pr({"F-005", "F-006"}, RECEIPT)

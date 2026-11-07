@@ -14,6 +14,7 @@ import subprocess
 from pathlib import Path
 
 from check_docs import ROOT
+from gap_relationships import parse_gap_relationships
 
 GAP_PATH = re.compile(r"^visions/gaps/([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
 SECTION = re.compile(
@@ -102,7 +103,11 @@ def affected_gaps(base: str, root: Path) -> set[str]:
     return required
 
 
-def assess_boundary(gap_id: str, body: str) -> list[str]:
+def assess_boundary(
+    gap_id: str,
+    body: str,
+    expected: tuple[list[str], str] | None = None,
+) -> list[str]:
     matches = list(SECTION.finditer(body))
     selected = [i for i, match in enumerate(matches) if match.group(1).upper() == gap_id]
     if len(selected) != 1:
@@ -129,16 +134,48 @@ def assess_boundary(gap_id: str, body: str) -> list[str]:
             issues.append(f"{gap_id}: {field} needs explicit first-principles reasoning")
         if field == "Existing alternatives" and value and not ALTERNATIVE.search(value):
             issues.append(f"{gap_id}: Existing alternatives must examine a concrete gap, plan or project (or explain none)")
+    # A rationale must identify the actual chosen vision connection and
+    # explicitly defend any secondary ones. When a gap still exists, compare
+    # the PR prose against its source metadata rather than only checking prose.
+    relationships = {}
+    for field in ("Primary connection", "Supporting connections"):
+        match = re.search(
+            r"^" + re.escape(field)
+            + r":\s*(None|(?:(?:pillar|principle):[a-z0-9-]+"
+              r"(?:,\s*(?:pillar|principle):[a-z0-9-]+)*))"
+              r"\s+[—:-]\s*(.+)$",
+            text, re.I | re.M,
+        )
+        if not match or len(match.group(2).strip()) < 20:
+            issues.append(f"{gap_id}: {field} needs explicit links and substantive justification")
+            continue
+        refs = [] if match.group(1) == "None" else [x.strip() for x in match.group(1).split(",")]
+        if field == "Primary connection" and len(refs) != 1 and (expected is not None or refs):
+            issues.append(f"{gap_id}: Primary connection must contain exactly one vision ref")
+        if field == "Supporting connections" and len(refs) != len(set(refs)):
+            issues.append(f"{gap_id}: duplicate supporting connection")
+        relationships[field] = refs
+    if expected is not None:
+        all_links, chosen_primary = expected
+        if relationships.get("Primary connection") != [chosen_primary]:
+            issues.append(f"{gap_id}: Primary connection differs from gap metadata ({chosen_primary})")
+        if set(relationships.get("Supporting connections", [])) != set(all_links) - {chosen_primary}:
+            issues.append(f"{gap_id}: Supporting connections differ from gap metadata")
     evidence = re.search(r"^Evidence:\s*(.+)$", text, re.I | re.M)
     if not evidence or not LINK.search(evidence.group(1)):
         issues.append(f"{gap_id}: Evidence needs a concrete URL or full 40-character source SHA")
     return issues
 
 
-def check_pr(required: set[str], body: str) -> list[str]:
+def check_pr(
+    required: set[str],
+    body: str,
+    expected_by_gap: dict[str, tuple[list[str], str] | None] | None = None,
+) -> list[str]:
     issues = []
     for gap_id in sorted(required):
-        issues.extend(assess_boundary(gap_id, body))
+        expected = expected_by_gap.get(gap_id) if expected_by_gap else None
+        issues.extend(assess_boundary(gap_id, body, expected=expected))
     return issues
 
 
@@ -159,7 +196,18 @@ def main() -> int:
             body = json.loads(args.event.read_text(encoding="utf-8")).get("pull_request", {}).get("body") or ""
         else:
             raise ValueError("gap boundary changes require --event or --body-file")
-        issues = check_pr(required, body)
+        expected_by_gap = {}
+        for gap_id in sorted(required):
+            paths = list((ROOT / "visions/gaps").glob(gap_id + "-*.md"))
+            if len(paths) > 1:
+                raise ValueError(f"{gap_id}: duplicate gap files")
+            if paths:
+                metadata = next((line for line in paths[0].read_text(encoding="utf-8").splitlines()
+                                 if line.startswith("**Applies to:**")), "")
+                expected_by_gap[gap_id] = parse_gap_relationships(metadata)
+            else:
+                expected_by_gap[gap_id] = None  # a retired gap has no current source mapping
+        issues = check_pr(required, body, expected_by_gap)
     except (OSError, ValueError) as exc:
         print(f"ERROR gap boundary gate: {exc}")
         return 1
