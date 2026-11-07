@@ -262,16 +262,18 @@ ROOT_SUMMARY_END = "<!-- vision-summary:end -->"
 
 
 def render_root_summary(page: dict) -> str:
-    """Derive the root README's gap/project counts from the validated public content."""
+    """Derive the counts and minimal navigation from canonical vision and catalog."""
     gaps, projects = len(page["gaps"]), len(page["projects"])
     return (
-        "Our vision has [four main pillars](vision/README.md#four-pillars) "
-        "and [four guiding principles](vision/README.md#four-driving-principles). "
-        f"We've identified [{gaps} gaps](vision/README.md#gaps--{gaps}-assessed-outcomes) "
-        "between us and that end state, "
-        f"informing [{projects} projects](plans/index.md)."
+        "Our vision has four main pillars and four guiding principles. "
+        f"We've identified {gaps} gaps between us and that end state, "
+        f"informing {projects} projects.\n\n"
+        "[Vision](vision/README.md) · "
+        "[Pillars](vision/README.md#four-pillars) · "
+        "[Principles](vision/README.md#four-driving-principles) · "
+        f"[Gaps](vision/README.md#gaps--{gaps}-assessed-outcomes) · "
+        "[Projects](plans/index.md)"
     )
-
 
 def render_root_readme(source: str, page: dict) -> str:
     """Keep just the source-dependent summary generated; all other copy is editable."""

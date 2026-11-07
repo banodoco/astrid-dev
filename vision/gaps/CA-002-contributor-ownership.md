@@ -8,7 +8,7 @@ The people who meaningfully advance the collective have a genuine, understandabl
 
 ## Current state
 
-Pom reports having previously used a contributor ownership/share arrangement within Banodoco. That arrangement has lapsed over roughly the past year while he has been building Astrid. The earlier terms and their legal status have not been independently verified in this assessment. **A suitable Astrid-specific model has yet to be worked out**, including eligibility, allocation, vesting, governance, financing and legal implementation.
+Banodoco published a contributor-ownership approach, monthly grant lists and reported transfers. Its earlier proposal described splitting 1% per month over 8.5 years, with changing contributor categories and an explicitly provisional legal structure. The program has not been actively maintained during Astrid's recent development. **The historical publications are evidence of earlier commitments, not proof of legally issued equity.** An Astrid-specific arrangement must reconcile those records and existing promises before deciding new eligibility, allocation, governance, financing or implementation.
 
 ## Gap
 
@@ -20,4 +20,4 @@ An explicit owner decision and qualified legal/tax review of a concrete model co
 
 ## Sources and reassessment
 
-[Collective Ambition principle](../pillars/shared-endeavour.md). This is **not** an equity offer, promise of automatic entitlement or claim that ownership has been legally transferred.
+[Shared creative endeavor](../pillars/shared-endeavour.md) · [Banodoco's published ownership explanation](https://github.com/banodoco/Banodoco-website/blob/main/ownership/index.html) · [historical grant listings](https://github.com/banodoco/Banodoco-website/blob/main/ownership/data.js) · [existing contribution-review tooling](https://github.com/banodoco/equity-review/blob/main/README.md) · [Plan 28 — contributor ownership](../../plans/28-contributor-ownership/plan.md). The historical terms, any personal grants or transfers, enforceability and successor-entity treatment still require verification; this page is not an equity offer or a declaration of transferred shares.

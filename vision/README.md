@@ -6,7 +6,7 @@
 
 Astrid aims to help individuals and the community as a whole pursue artistic work beyond what they thought possible.
 
-The collective inspires ambitious work; adaptable tools and shared knowledge help realize it; results raise the bar and improve the foundation for everyone. The stated goal is **100% ownership of the company behind the collective by those advancing its mission**. The actual allocation and legal structure remain to be designed.
+The collective inspires ambitious work; adaptable tools and shared knowledge help realize it, while each contribution improves the foundation for everyone. To align incentives, we aim to share **100% of the ownership of the company behind the collective with those advancing this mission**.
 
 ## Four pillars
 
@@ -78,6 +78,6 @@ The [project catalog](../plans/index.md) owns current priority, status and accou
 
 ## Build Astrid with us
 
-You and your agents can contribute to Astrid's tools, knowledge and creative community. We want people who meaningfully advance the mission to share in ownership of the company behind it, though the legal and allocation model still needs to be worked out.
+You and your agents can contribute to Astrid's tools, knowledge and creative community.
 
 [Give these instructions to your agent](../README.md#want-to-contribute-give-this-to-your-agent)
