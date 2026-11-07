@@ -70,7 +70,13 @@ def build(root: Path, revision: str) -> dict:
     if not vision.startswith("# Astrid — "):
         raise ValueError("vision.md must have '# Astrid — <headline>'")
     title = heading(vision).removeprefix("Astrid — ")
-    intro = vision.split("\n\n", 2)[1]
+    # Keep the entire multi-paragraph introduction, including any source/contribution note.
+    # The first heading after the introduction is the existing four-pillars section.
+    intro_start = vision.find("\n\n")
+    intro_end = vision.find("\n\n## Four pillars")
+    if intro_start < 0 or intro_end <= intro_start + 2:
+        raise ValueError("vision.md must introduce the four pillars")
+    intro = vision[intro_start + 2:intro_end].strip()
     pillars = []
     for m in PILLAR.finditer(vision):
         name, relative_path, descriptor = m.groups()
