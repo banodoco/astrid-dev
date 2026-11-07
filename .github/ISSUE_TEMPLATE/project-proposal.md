@@ -6,18 +6,18 @@ title: "[Project proposal] "
 
 ## What should become possible?
 
-Describe the user/creator outcome, not a technology to adopt.
+Describe the creator-facing outcome rather than a technology to adopt.
 
 ## What already exists?
 
-Link the closest existing project, gap, source implementation or issue. What could be reused? Briefly explain why this doesn't fit an existing issue or task.
+Link the nearest existing project, gap, issue and actual source implementation. Explain what may be reused and why a small issue or existing project task isn't sufficient.
 
 ## Scope and evidence
 
-What would a small complete result look like? What could prove it? What is intentionally excluded or uncertain?
+What's the smallest meaningful result, what would prove it, what is deferred, and what remains uncertain?
 
-## Would you like to own it?
+## Interested in owning it?
 
-Optional GitHub handle, availability and relevant experience. Proposals are open to anyone; no claim or build permission is inferred.
+Optional GitHub handle, time, experience and relevant capabilities. Anyone may propose work; this does not claim or authorize it.
 
-If this merits a project, the [contributor guide](../../docs/contribution-workflow.md) explains the reviewed scope PR and three-file pack. A proposal issue isn't the project catalog.
+If the idea merits independent scope, open a [reviewed scope PR](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#propose-and-greenlight-new-work) with the existing project template.
