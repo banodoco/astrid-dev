@@ -2,7 +2,7 @@
 
 **Single source of truth for every plan's status, owner, priority order and estimate**, including completed and cancelled work. The [root README](../README.md) links here rather than repeating a snapshot; terminal plans remain in this same catalog.
 
-**Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. This initial order preserves the existing README ordering (excluding the completed plan), **not a new prioritization decision**. Move a row to reprioritize; update its status in place. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
+**Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. Priority is determined by the ordered rows, not by a separate queue or a README snapshot. Move a row to reprioritize; update its status in place. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
 
 **Definitions:** `active` = explicitly started; `queued` = planned, not started; `blocked` = known impediment; `paused` = deliberately stopped; `done` = accepted completion evidence; `cancelled` = intentionally abandoned, with reason in the plan. Owner is accountability, not permission. Estimates are remaining human engineering days or `TBD`.
 
