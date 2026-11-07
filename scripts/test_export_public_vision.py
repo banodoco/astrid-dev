@@ -123,18 +123,22 @@ class PublicVisionProjectionTests(unittest.TestCase):
     def test_root_vision_counts_follow_source_data(self):
         actual = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertEqual(render_root_readme(actual, self.page), actual)
-        self.assertIn("[four main pillars](vision/README.md#four-pillars)", actual)
-        self.assertIn("[four guiding principles](vision/README.md#four-driving-principles)", actual)
-        self.assertIn(f"[{len(self.page['gaps'])} gaps]", actual)
-        self.assertIn(f"[{len(self.page['projects'])} projects]", actual)
+        self.assertIn("Our vision has four main pillars and four guiding principles.", actual)
+        self.assertIn(f"We've identified {len(self.page['gaps'])} gaps", actual)
+        self.assertIn(f"informing {len(self.page['projects'])} projects.", actual)
+        self.assertIn("[Vision](vision/README.md) · [Pillars]", actual)
+        self.assertIn("[Principles](vision/README.md#four-driving-principles)", actual)
+        self.assertIn(f"[Gaps](vision/README.md#gaps--{len(self.page['gaps'])}-assessed-outcomes)", actual)
+        self.assertIn("[Projects](plans/index.md)", actual)
+        self.assertNotIn("Read the full vision", actual)
 
-        # Adding a gap or project changes the summary without hand-edited counts.
         hypothetical = {**self.page,
                         "gaps": self.page["gaps"] + [{}],
                         "projects": self.page["projects"] + [{}]}
         changed = render_root_summary(hypothetical)
-        self.assertIn(f"[{len(self.page['gaps']) + 1} gaps]", changed)
-        self.assertIn(f"[{len(self.page['projects']) + 1} projects]", changed)
+        self.assertIn(f"We've identified {len(self.page['gaps']) + 1} gaps", changed)
+        self.assertIn(f"informing {len(self.page['projects']) + 1} projects", changed)
+        self.assertIn(f"gaps--{len(self.page['gaps']) + 1}-assessed-outcomes", changed)
         self.assertNotEqual(actual, render_root_readme(actual, hypothetical))
 
     def test_immutable_revision_is_required(self):
