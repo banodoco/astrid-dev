@@ -13,18 +13,18 @@
 | V-05 | Gap titles read as **short statements of missing outcomes/problems** rather than aspirational project names | [Gaps](../gaps.md) | Draft, retained stable IDs |
 | V-06 | Creative challenge gap acknowledges Banodoco community and prior Arca Gidan art competitions while stating Astrid-specific creative culture is not yet established | [CA-001](../gaps/CA-001-creative-challenge-culture.md) | Draft, not audited |
 | V-07 | Ownership gap says **no implemented contributor-ownership model**; mention founder-reported prior Banodoco arrangement that lapsed and need to design terms for Astrid | [CA-002](../gaps/CA-002-contributor-ownership.md) | Draft; legal details remain unverified |
-| V-08 | End with one contribution invitation, workbench mink beside it, and a link to the [agent contribution instructions](../../README.md#want-to-contribute-give-this-to-your-agent) | [App](https://github.com/banodoco/astrid-app), [Vision](../vision.md) | UI draft |
-| V-09 | Remove old aphorism and tools-shaped-by-AI scene, second mobile juggling mink, and the generated-data provenance footer | [App](https://github.com/banodoco/astrid-app) | UI draft |
+| V-08 | End with one contribution invitation, workbench mink beside it, and a link to the [agent contribution instructions](../../README.md#want-to-contribute-give-this-to-your-agent) | [App PR #175](https://github.com/banodoco/astrid-app/pull/175), [Vision](../vision.md) | Draft implementation |
+| V-09 | Remove old aphorism and tools-shaped-by-AI scene, second mobile juggling mink, and the generated-data provenance footer | [App PR #175](https://github.com/banodoco/astrid-app/pull/175) | Draft implementation |
 
 ## Mobile, loading, and project presentation
 
 | ID | Requested outcome | State |
 |---|---|---|
-| UI-01 | Expanded gap details use the **full available width**, not an indented column beside the ID | Planned |
+| UI-01 | Expanded gap details use the **full available width**, not an indented column beside the ID | [App PR #175](https://github.com/banodoco/astrid-app/pull/175): implemented in draft; validation in progress |
 | UI-02 | Mobile gap details start **collapsed**; tapping opens/closes; **show all gaps** reveals newly mounted rows | Already covered by prior App fix; keep regression tests |
-| UI-03 | On initial page load show stable **text skeletons**, rather than an empty page that pops into layout | Planned |
-| UI-04 | Show about **eight projects plus a final View all tile** in a responsive desktop three-column grid; fewer columns on mobile | Proposed layout, App implementation not yet complete |
-| UI-05 | View all projects opens immediately; rows preloaded in memory, reveal observer registers newly rendered rows, no leaving/reopening page | Planned; preserve button accessibility |
+| UI-03 | On initial page load show stable **text skeletons**, rather than an empty page that pops into layout | [App PR #175](https://github.com/banodoco/astrid-app/pull/175): implemented in draft; validation in progress |
+| UI-04 | Show **eight projects plus a final View all tile** in a responsive desktop three-column grid; fewer columns on mobile | [App PR #175](https://github.com/banodoco/astrid-app/pull/175): implemented in draft; validation in progress |
+| UI-05 | View all projects opens immediately; rows already in loaded feed, with no newly mounted card reveal animation, no leaving/reopening page | [App PR #175](https://github.com/banodoco/astrid-app/pull/175): implemented in draft; validation in progress |
 | UI-06 | Keep actual status, priority and links sourced from the [plan catalog](../../plans/index.md); never duplicate project copy in App | Existing contract |
 
 ## Cloud roadmap — separate project stages
@@ -43,6 +43,11 @@
 - Determine the V2 backend, tenancy, database, object storage, account model, data residency, migration/export and rollback only after V1 has evidence.
 - Ensure both cloud stages have independent closure tests and don't duplicate [F-001](../gaps/F-001-platform-reliability.md) or [F-003](../gaps/F-003-creative-execution.md); these remain cross-cutting.
 - Existing Plan 25/26 queue items are **queued drafts** only. They are not authorized product work and must honor the shared run contract.
+
+## Active review links
+
+- [Astrid Dev PR #4](https://github.com/banodoco/astrid-dev/pull/4) — editorial proposals, problem-statement gaps, four operating principles, and Plan 25/Plan 26 cloud roadmaps.
+- [Astrid App PR #175](https://github.com/banodoco/astrid-app/pull/175) — presentational fixes, project grid and skeleton, full-width gaps, and simplified closing. The App retrieves its words from Dev after publication.
 
 ## How to maintain this tracker
 
