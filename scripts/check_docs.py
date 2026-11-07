@@ -87,6 +87,15 @@ def local_links(root: Path, path: Path) -> list[str]:
     return missing
 
 
+def unnamed_active_owners(rows: list[list[str]]) -> list[str]:
+    """Active work must have one named accountable catalog owner."""
+    return [
+        f"active project needs a named accountable owner: {row[0]}"
+        for row in rows
+        if row[2] == 'active' and row[3].strip().lower() in {'unassigned', 'tbd', 'none', '—', '-'}
+    ]
+
+
 def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -106,9 +115,7 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
             errors.append(f'invalid catalog plan path: {plan}')
         if not (root / plan).is_file():
             errors.append(f'catalog plan missing: {plan}')
-    for row in rows:
-        if row[2] == 'active' and row[3].strip().lower() in {'unassigned', 'tbd', 'none', '—', '-'}:
-            errors.append(f"active project needs a named accountable owner: {row[0]}")
+    errors.extend(unnamed_active_owners(rows))
     actual = set(Path('plans') / p.parent.name / 'plan.md' for p in (root / 'plans').glob('*/plan.md'))
     for missing in sorted(actual - indexed):
         errors.append(f'plan folder absent from catalog: {missing}')
