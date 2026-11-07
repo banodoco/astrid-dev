@@ -37,6 +37,14 @@ class PublicVisionProjectionTests(unittest.TestCase):
                             {"open", "partially evidenced", "closed", "needs recheck"}
                             for g in self.page["gaps"]))
 
+    def test_principles_are_concise_and_balanced(self):
+        bodies = [p["bodyMarkdown"] for p in self.page["principles"]]
+        lengths = [len(body.split()) for body in bodies]
+        self.assertEqual(len(lengths), 4)
+        self.assertLessEqual(max(lengths), 60)
+        self.assertLessEqual(max(lengths) - min(lengths), 10)
+        self.assertTrue(all("not a claim" not in body.lower() for body in bodies))
+
     def test_open_projects_derive_from_catalog_in_priority_order(self):
         projects = self.page["projects"]
         self.assertGreater(len(projects), 0)

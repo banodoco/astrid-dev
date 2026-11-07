@@ -4,7 +4,7 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 ## What we're building
 
-**[A tool to unlock the collective artistic ambition of the open-source community](visions/vision.md).** Four artistic [pillars](visions/vision.md#four-pillars) describe the creative aim; four [operating principles](visions/principles.md) — local-first/cloud-capable, open by design, creator-controlled and eliminating needless technical wrangling — apply across the whole system.
+**[A tool to unlock the collective artistic ambition of the open-source community](visions/vision.md).** Four artistic [pillars](visions/vision.md#four-pillars) describe the creative aim; four [guiding principles](visions/principles.md) — local-first/cloud-capable, open by design, creator-controlled and eliminating needless technical wrangling — apply across the whole system.
 
 **[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 
@@ -70,7 +70,7 @@ For statuses, delivery context, remaining work and the full history, see the [pl
 ## How to use this repo
 
 - See the [extensibility philosophy](docs/extensibility-philosophy.md) for the design direction.
-- Start with [Astrid's vision](visions/vision.md), its [four pillars and operating principles](visions/README.md), and the [gap/plan evidence contract](visions/gaps.md); implementation authority remains in the project plans.
+- Start with [Astrid's vision](visions/vision.md), its [four pillars and guiding principles](visions/README.md), and the [gap/plan evidence contract](visions/gaps.md); implementation authority remains in the project plans.
 - Keep all status, priority and estimates in the [plan catalog](plans/index.md), and task progress in the plan folders. Completed and cancelled entries remain in that same catalog.
 - Look up unfamiliar terms in the [glossary](docs/glossary.md).
 - Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [project folder template](templates/project/plan.md) for new projects.
