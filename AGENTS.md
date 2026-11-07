@@ -1,44 +1,21 @@
-# Repository rules
+# Astrid Dev — repository policy
 
-**Start at [astrid-dev](skills/astrid-dev/SKILL.md)** for every contribution. Apply the [contribution design principles](docs/contribution-design-principles.md) when changing workflows, data contracts or evidence rules. Its [domain map](skills/astrid-dev/references/domains.md) is the one index to repositories, reference materials and specialist workflows. The [shared run contract](skills/astrid-dev-shared/run-contract.md) owns source identity, model routing, proof, retries, review and authority.
+**Start:** [the contributor skill](skills/astrid-dev/SKILL.md) for the one contribution process, [domain map](skills/astrid-dev/references/domains.md) to find product owners, and [contributor workflow](docs/contribution-workflow.md) for GitHub claims, proposals and submissions. The [design principles](docs/contribution-design-principles.md) guide changes to this system.
 
-For claiming, proposing, asking questions, submitting cross-repository PRs and completing work, use the [single contributor workflow](docs/contribution-workflow.md). The claim bot may merge **only** a verified one-cell owner change; every other scope/implementation/completion change follows normal review.
+## Authority and source of truth
 
-## Scope and authority
+- [The project catalog](plans/index.md) alone owns project status, priority, accountable owner and estimate. The [project pack](docs/project-format.md) owns outcome (`plan.md`), inherited facts (`inputs.md`) and tasks (`tasks.md`). Bugs and small fixes use issues, **not projects**. Reuse existing projects and [vision gaps](visions/gaps.md) before creating another.
+- A claim, queued plan or passing test does **not** accept unresolved scope, authorize execution or allow publishing. Follow existing owner decisions, pause/STOP controls, budgets, repository-specific instructions and the [shared run contract](skills/astrid-dev-shared/run-contract.md). Do not restart a stopped run or reset a review budget because the contributor changed.
+- Freeze real base, donor and integrated candidate SHAs. Preserve user changes and private data. Never publish credentials, private logs, local `.otto/` state or user projects; no unapproved external calls, compute or deployments.
+- Use actual focused checks and source-bound evidence; missing proof is not success. Review and integration follow the owning product repository's controls. A green PR in one repo does not qualify an assembled Runtime/Agent/App tuple.
 
-- **Bugs and small improvements are issues or existing tasks—not projects.** Keep reproduction, source evidence, user-safety precautions, focused checks and a linked PR. [Bug fixing](skills/astrid-dev-bugfix/SKILL.md) covers recovery; [Iterate](skills/astrid-dev-iterate/SKILL.md) covers scoped repairs. A fact-finding incident can produce an issue without code changes.
-- **Projects** require independently useful outcomes; use the [project planning skill](skills/astrid-dev-plan/SKILL.md) only for genuinely new scope. The [catalog](plans/index.md) alone owns project status, priority, accountable owner and estimate. The [project pack](docs/project-format.md) owns outcome (`plan.md`), prior art/decisions (`inputs.md`), and tasks/proof (`tasks.md`). Never invent research, owner agreement or source identity.
-- A plan, skill install, queued status or green CI does **not** authorize implementation, spending, deployment or release. Respect existing run authorization and STOP/pause controls. When authorized, use the actual base and intended integration destination (including `pre-main` where prescribed), retain local changes and avoid unauthorized data access. Preserve the current project run's accepted decisions rather than resetting them.
-- Keep credentials, user projects, machine-local `.otto/` state, private logs and tokens out of public issue/PR evidence. Run only documented, explicitly scoped checks; planning does not run product tests unless requested.
+## Changes requiring specific review
 
-## Vision, gaps and plans
+- **New/redefined vision gap:** Follow the [gap boundary contract](visions/gaps.md#reviewing-a-new-or-redefined-gap); include its first-principles PR assessment and exact primary/supporting vision relationships. CI checks the record; reviewers judge its distinct outcome.
+- **New project scope:** Use [project planning](skills/astrid-dev-plan/SKILL.md) and the three-file pack; a maintainer accepts the scope through PR review. Starting, spending and shipping remain separate decisions.
+- **Project completion:** Use the [completion PR template](.github/PULL_REQUEST_TEMPLATE/project-completion.md). Include the integrated candidate, all implementation PRs, actual check receipts, models used or an honest unknown, unproven cases and dispositions for every linked gap. A project marked `done` does not close a gap automatically.
+- **Self-claim:** Only the authenticated author's single `Unassigned` owner-cell change may auto-merge, and only under protected branch controls. Other catalog changes follow normal review.
 
-The [vision](visions/vision.md) defines the ambition, the [gap contract](visions/gaps.md) defines independently assessable missing outcomes, and a project is one approach to narrowing a gap. Use existing gaps and projects before adding new ones. Plans own their gap links; gap files do not repeat plan status or maintain reverse project lists. Evidence may justify a reassessment but finishing a plan never closes a gap automatically.
+## Mechanical checks
 
-## Creating or redefining a vision gap — first-principles boundary gate
-
-For a new, retired or materially redefined gap, follow [the gap boundary contract and example PR receipt](visions/gaps.md#reviewing-a-new-or-redefined-gap). In the PR description, provide one **Gap boundary assessment — ID** with Decision, Outcome, Existing alternatives, Why this level, Independent closure, Primary connection, Supporting connections and Evidence. Explain why the missing outcome survives replacing its planned implementation; compare concrete existing gaps/projects and justify the primary vision relationship.
-
-CI compares the receipt against changed gap definitions and the explicitly declared primary/supporting links. It checks structure, not the quality of reasoning; the reviewer must challenge duplication, forced links and insufficient closure criteria. Updating only current evidence and assessment does not require another boundary review.
-
-## Completing a plan: one decision gate
-
-When a PR moves an entry in [the catalog](plans/index.md) to **done**, include a concrete completion assessment against the project's actual proof and **every linked gap**, or explain that a foundational enabler has no direct gap impact.
-
-```md
-## Completion assessment — Plan 20
-
-Evidence: [real task result](https://github.com/example/repo/actions/runs/123)
-Completion: Yes — A real result met the stated criteria on the named candidate.
-Implementation PRs: https://github.com/banodoco/astrid-agent/pull/123
-Integrated candidate: Full tested SHA or versioned result URL
-Models used: openai/gpt-6 — implementation, self-reported (or Unknown — reason).
-Unproven: Other supported routes still need integrated qualification.
-Gap F-003: Partially evidenced — This route worked, but other supported routes need proof.
-```
-
-The receipt also names **Implementation PRs**, the **Integrated candidate** and what remains **Unproven** (or explains why no code applies). Use **Gap ID: Closed / Partially evidenced / Unchanged / Needs recheck — reason** for each linked gap. For a no-gap enabler use **Gap impact: None — reason**. The **Models used** line names actual invocations or explains unknowns; configured roles alone are not execution evidence. CI enforces presence and linkage, not the truth of proof. An independent reviewer judges completeness; completion is not authorization to publish.
-
-## Local documentation checks
-
-The [documentation workflow](.github/workflows/docs.yml) checks project-pack structure, scope evidence for new/opted-in projects, gap boundary decisions, completion receipts, source links and the published vision feed. Run `python3 scripts/check_docs.py` and `python3 scripts/export_public_vision.py` after documentation changes; catalog edits require `python3 scripts/check_docs.py --sync` to regenerate the README preview. The workflow does not change the author's sources and publishes the feed only after validated `main` pushes. Use the [run contract](skills/astrid-dev-shared/run-contract.md) and product-owned runbooks for executable work.
+[Documentation CI](.github/workflows/docs.yml) validates links, catalog/project relationships, required PR receipts and public feed structure. It **does not** validate the truth of research or product test claims. Locally run `python3 scripts/check_docs.py` and `python3 scripts/export_public_vision.py`; after changes affecting the top-ten project preview run `python3 scripts/check_docs.py --sync`. The public feed is generated from validated `main` only.
