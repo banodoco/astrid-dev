@@ -2,7 +2,7 @@
 
 **Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary).
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Prove the everyday Pinokio backend path on hosted Linux, macOS, and Windows through a separate three-row gate. This is the basic R1.1 increment; full engine, custody, and fully-local qualification stays in [Plan 10](../10-pinokio-qualification/plan.md).
 

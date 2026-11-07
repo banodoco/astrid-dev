@@ -2,11 +2,11 @@
 
 **Vision gaps:** [Dependable pack lifecycle](../../visions/gaps/F-004-pack-lifecycle.md) (primary). [Supporting gap](../../visions/gaps/LS-003-full-stack-contributions.md).
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, deletes the two comfy packs other than VibeComfy (`comfyui`, `comfy_wrap`; Decision 13), and finishes the pack loading, trust, install, update, rollback and live-editor work that goes with it, across Agent, Runtime and App. Supported workflows keep working, and the result is promoted to `pre-main`. It reuses a large body of work that exists only on retained branches, composes it once onto current `pre-main`, proves it once and reviews it once.
 
-“v1.3” is a working project name, not a confirmed package/release version. Status, owner and estimate are in the [README queue](../../README.md).
+“v1.3” is a working project name, not a confirmed package/release version. Status, owner and estimate are in the [catalog](../index.md).
 
 **Not in this plan:** GPU work, H3 changes, RunPod extraction, training moves, default packs and signing (the owner's CPU-only decision, 3 Nov 2026; the full deferred list is in [inputs.md](inputs.md#already-deferred-never-blocks-a-review-here)). H3, RunPod and training stay in Agent.
 
@@ -18,8 +18,8 @@ Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, delet
 
 ## How to work on it
 
-1. Read [AGENTS.md](../../AGENTS.md) and the [skills guide](../../skills/README.md). Use the **iterate** workflow for a single scoped change or check, and the **release** workflow for composition, review and promotion.
-2. Routes `N`, `X`, `S` and review rules are in the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Terms are in the [glossary](../../docs/glossary.md); plan-specific terms are at the end of this file.
+1. Read [AGENTS.md](../../AGENTS.md) and the [contributor skill](../../skills/astrid-dev/SKILL.md). Use the **iterate** workflow for a single scoped change or check, and the **release** workflow for composition, review and promotion.
+2. Routes `N`, `X`, `S` and review rules are in the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). plan-specific terms are at the end of this file.
 3. Do the tasks in [tasks.md](tasks.md); exact SHAs, probes and what is missing are in [inputs.md](inputs.md).
 
 ## Prerequisites

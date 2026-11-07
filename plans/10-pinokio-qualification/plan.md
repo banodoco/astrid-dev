@@ -2,7 +2,7 @@
 
 **Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../visions/gaps/F-002-safe-user-control.md).
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Qualify Pinokio Stop/Quit safety, direct custody, fully-local journeys, and unknown-state stop on every supported OS. This follows [Plan 07](../07-pinokio/plan.md), from its verified launcher and gate; no legacy migration is needed because Pinokio had no users when R1 shipped.
 

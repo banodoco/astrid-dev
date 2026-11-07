@@ -2,7 +2,7 @@
 
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Separate Astrid's execution host into cohesive modules while preserving its existing execution behavior. Current status, owner, and estimate remain in the [project queue](../../README.md).
 

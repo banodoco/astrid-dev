@@ -2,7 +2,7 @@
 
 **Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary).
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Prove that new users can install and update Astrid on Linux, macOS, and Windows, and that R0 users on Linux and macOS can upgrade to R1 without losing data. The project is done; see Shipped below.
 
