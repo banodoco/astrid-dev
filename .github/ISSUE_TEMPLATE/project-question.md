@@ -4,7 +4,7 @@ about: Ask about an existing project, scope, prerequisites or permission to star
 title: "[Plan NN] "
 ---
 
-**Project:** Link the existing `plans/NN-name/plan.md`.
+**Project:** Link the existing `strategy/projects/NN-name/plan.md`.
 
 **Question or blocker:** What decision or help do you need?
 

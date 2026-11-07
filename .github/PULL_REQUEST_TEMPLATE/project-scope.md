@@ -1,4 +1,4 @@
-Project: plans/<NN-project-name>/plan.md
+Project: strategy/projects/<NN-project-name>/plan.md
 Review request: scope
 
 ## New project — scope review

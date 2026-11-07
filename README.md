@@ -4,11 +4,11 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 ## What we're building
 
-**[A tool to unlock the collective artistic ambition of the open-source community](visions/vision.md).** Four artistic [pillars](visions/vision.md#four-pillars) describe the creative aim; four [guiding principles](visions/principles.md) — local-first/cloud-capable, open by design, creator-controlled and eliminating needless technical wrangling — apply across the whole system.
+**[A tool to unlock the collective artistic ambition of the open-source community](strategy/vision/vision.md).** Four artistic [pillars](strategy/vision/vision.md#four-pillars) describe the creative aim; four [guiding principles](strategy/vision/principles.md) — local-first/cloud-capable, open by design, creator-controlled and eliminating needless technical wrangling — apply across the whole system.
 
-**[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
+**[Vision → Gaps → Plans → Evidence](strategy/vision/README.md).** The vision defines the destination. [Gaps](strategy/vision/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 
-The [project catalog](plans/index.md) alone owns status, ownership, priority and estimates. [How gaps are assessed](visions/gaps.md).
+The [project catalog](strategy/projects/index.md) alone owns status, ownership, priority and estimates. [How gaps are assessed](strategy/vision/gaps.md).
 
 ## Want to contribute? Give this to your agent.
 
@@ -26,7 +26,7 @@ prior art, choose a simple approach, and agree a clear outcome.
 Respect source identity, user data and execution permissions.
 ```
 
-**[How to contribute: claim, propose, submit and complete](docs/contribution-workflow.md).** Browse the full [project catalog](plans/index.md) for current status, ownership and priorities. You can [claim an available project](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) with a single owner-only PR, [propose a project](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), or [open an issue](https://github.com/banodoco/astrid-dev/issues/new) for a small fix.
+**[How to contribute: claim, propose, submit and complete](docs/contribution-workflow.md).** Browse the full [project catalog](strategy/projects/index.md) for current status, ownership and priorities. You can [claim an available project](https://github.com/banodoco/astrid-dev/edit/main/strategy/projects/index.md) with a single owner-only PR, [propose a project](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), or [open an issue](https://github.com/banodoco/astrid-dev/issues/new) for a small fix.
 
 The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the agent process; the [domain map](skills/astrid-dev/references/domains.md) routes people to the right code. [Writing and documentation](docs/contribution-workflow.md#write-or-improve-documentation) use the same reviewed PR pipeline. [Ask a project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) if you need help or a start decision; claiming alone doesn't authorize execution.
 

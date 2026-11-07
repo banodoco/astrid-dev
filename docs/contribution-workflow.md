@@ -20,8 +20,8 @@ No mandatory project-conversation issue. Questions belong in an issue or PR; upd
 
 | Writing work | Canonical source and route |
 | --- | --- |
-| Vision, artistic pillars, creator principles, public copy | [Vision authoring guide](../visions/README.md). Edit `visions/`; after review, documentation CI publishes the public JSON feed. Don't copy editorial content into Astrid App |
-| Gap statements or gap evidence | [Gap contract](../visions/gaps.md). Material changes need a boundary review; factual current-state/evidence updates use normal PRs |
+| Vision, artistic pillars, creator principles, public copy | [Vision authoring guide](../strategy/vision/README.md). Edit `strategy/vision/`; after review, documentation CI publishes the public JSON feed. Don't copy editorial content into Astrid App |
+| Gap statements or gap evidence | [Gap contract](../strategy/vision/gaps.md). Material changes need a boundary review; factual current-state/evidence updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
 | Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. Documentation CI checks these paths |
 | Product API, UI, installer or extension technical docs | The owning [product repository](../skills/astrid-dev/references/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
@@ -31,8 +31,8 @@ Describe the intended correction and relevant source; give a real reviewer a way
 
 ## Claim a project without waiting for a maintainer
 
-1. Find an existing `queued`, `Unassigned` [catalog project](../plans/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.
-2. [Edit the catalog on GitHub](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) (fork if needed) and change **only that row’s Owner** from `Unassigned` to your own `@GitHubUsername`. Open a PR using [the claim template](../.github/PULL_REQUEST_TEMPLATE/claim.md).
+1. Find an existing `queued`, `Unassigned` [catalog project](../strategy/projects/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.
+2. [Edit the catalog on GitHub](https://github.com/banodoco/astrid-dev/edit/main/strategy/projects/index.md) (fork if needed) and change **only that row’s Owner** from `Unassigned` to your own `@GitHubUsername`. Open a PR using [the claim template](../.github/PULL_REQUEST_TEMPLATE/claim.md).
 3. When configured, the protected claim bot verifies the authenticated PR author, one-cell change, permitted status, successful documentation CI and that the live main catalog still has the project available. It then automatically squash-merges and replies with next steps. If two people compete, the second claim fails closed.
 4. **This is ownership only.** It neither changes status to `active` nor accepts unresolved scope, grants code execution, incurs cost, or permits release. Honor the project’s accepted scope and existing authority/STOP controls.
 
@@ -53,7 +53,7 @@ A proposal issue captures the desired independent outcome, relevant existing wor
 To accept a new independent project, open a **scope PR** with one `queued` catalog entry and the existing three-file pack: `plan.md` (outcome, scope, interfaces, completion), `inputs.md` (prior art, reuse choice, actual owner decision, uncertainty), and `tasks.md` (work and focused proof). Use [the scope template](../.github/PULL_REQUEST_TEMPLATE/project-scope.md) (choose it from the GitHub PR template chooser, or copy its opening lines):
 
 ```text
-Project: plans/NN-project-name/plan.md
+Project: strategy/projects/NN-project-name/plan.md
 Review request: scope
 ```
 
@@ -66,7 +66,7 @@ A project can have **multiple PRs across Runtime, Agent, App and other repositor
 If the contributor needs an Astrid-dev PR to review a project handoff or implementation evidence, use [the implementation-review template](../.github/PULL_REQUEST_TEMPLATE/implementation-review.md) (select it when creating the PR) and identify the canonical plan:
 
 ```text
-Project: plans/NN-project-name/plan.md
+Project: strategy/projects/NN-project-name/plan.md
 Review request: implementation
 ```
 
@@ -85,10 +85,10 @@ The low-permission [review-intake workflow](../.github/workflows/review-intake.y
 In an **Astrid-dev checkout** (not necessarily a product-repository checkout), the [model-use helper](../scripts/model_usage.py) is available:
 
 ```sh
-python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record \
+python3 scripts/model_usage.py --run-dir strategy/projects/<project>/.otto/runs/<id> record \
   --provider openai --model-id <actual-model-id> --role implementation \
   --task <task-id> --basis self-reported
-python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> summary
+python3 scripts/model_usage.py --run-dir strategy/projects/<project>/.otto/runs/<id> summary
 ```
 
 When the running agent framework offers actual invocation metadata, it should write the same records directly. The local JSONL stays gitignored under `.otto/`; copy the helper's one-line **Models used:** summary into the review PR (and add source receipts where appropriate). If the identity is inaccessible, use **Unknown — reason**. A manual record is not proof of what the model provider actually executed.
@@ -98,7 +98,7 @@ When the running agent framework offers actual invocation metadata, it should wr
 Once the required product changes are integrated into their intended destinations and the **combined result** has been qualified, the owner submits one Astrid-dev completion PR using the [completion template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md):
 
 ```text
-Project: plans/NN-project-name/plan.md
+Project: strategy/projects/NN-project-name/plan.md
 Review request: completion
 ```
 
