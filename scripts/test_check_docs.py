@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from check_docs import (BEGIN, DIVIDER, END, HEADER, catalog_rows, local_links,
-                        preview, replace_preview)
+                        preview, replace_preview, unnamed_active_owners)
 
 
 def example(status='active', key='01-alpha'):
@@ -32,6 +32,13 @@ class CatalogTests(unittest.TestCase):
         text = HEADER + '\n' + DIVIDER + '\n' + example('done') + '\n' + example('queued', '02-beta')
         with self.assertRaisesRegex(ValueError, 'follow'):
             catalog_rows(text)
+
+    def test_active_projects_require_a_named_owner_without_new_statuses(self):
+        named = catalog_rows(HEADER + '\n' + DIVIDER + '\n' + example('active'))
+        self.assertEqual(unnamed_active_owners(named), [])
+        unnamed = catalog_rows(HEADER + '\n' + DIVIDER + '\n'
+                               + example('active').replace('| Owner |', '| Unassigned |'))
+        self.assertEqual(len(unnamed_active_owners(unnamed)), 1)
 
     def test_generated_preview_drift(self):
         before = f'# README\n{BEGIN}\noutdated\n{END}\n'
