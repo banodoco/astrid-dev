@@ -1,6 +1,6 @@
 # <Project name>
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** Link the relevant [existing gap](../../visions/README.md), with its primary and truly useful supporting relationships, or state **Vision role: Foundational enabler** with a reason. A small bug or maintenance fix belongs in an issue.
 
