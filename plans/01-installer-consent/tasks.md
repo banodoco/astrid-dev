@@ -1,5 +1,7 @@
 # Tasks: installer consent
 
+**Landed 7 Nov 2026.** Agent `main` = `c5a970aa3c048db1ee9c5100d1db2b4444358592` (was `0b6a7aef0`); App `main` = `ae6c777ca8f4afa4c98a0319b58963d2f4bbe4f8` (was `5fa4c0909`); Runtime pin unchanged. Donor work credited to Dylan (@matlowai); plan owner @AstridPseudon. Evidence is for the installer-choice slice only, not F-002's broader outcome.
+
 [Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../index.md)
 
 First release slice; it does not depend on generation, concurrent editing (CE), or Packs. It does not authorize product execution. Source identities and donor order are in [inputs.md](inputs.md); the named checks below must be rerun on the actual candidate.
@@ -8,11 +10,11 @@ First release slice; it does not depend on generation, concurrent editing (CE), 
 
 | ID / outcome | Route | Depends on | Progress |
 |---|---|---|---|
-| [I-01](#i-01) Freeze current Agent/App bases and accepted inputs; adapt RI-0 to this slice. | N / Luna | M-00/01 | |
-| [I-02](#i-02) Integrate Agent donors and resolve consent/handoff behavior. | X / Terra + Luna | I-01 | |
-| [I-03](#i-03) Integrate App donors and pin to the verified Agent candidate. | N / Luna | I-02 | |
-| [I-04](#i-04) Independently review the exact Agent/App tuple. | Review / Astra | I-02, I-03 | |
-| [I-05](#i-05) Publish immutable candidates and promote the reviewed heads. | N / Luna | I-04 | |
+| [I-01](#i-01) Freeze current Agent/App bases and accepted inputs; adapt RI-0 to this slice. | N / Luna | M-00/01 | Done 7 Nov 2026: bases frozen (Agent `0b6a7aef0`, App `5fa4c0909`); deviations in ledger M01-1..M01-27. |
+| [I-02](#i-02) Integrate Agent donors and resolve consent/handoff behavior. | X / Terra + Luna | I-01 | Done 7 Nov 2026: Agent landed at `c5a970aa3c048db1ee9c5100d1db2b4444358592`. |
+| [I-03](#i-03) Integrate App donors and pin to the verified Agent candidate. | N / Luna | I-02 | Done 7 Nov 2026: App candidate `7165b6e7f`, manifest pins the landed Agent; pin check passed. |
+| [I-04](#i-04) Independently review the exact Agent/App tuple. | Review / Astra | I-02, I-03 | Done 7 Nov 2026: independent completion review, round 3, PASS. |
+| [I-05](#i-05) Publish immutable candidates and promote the reviewed heads. | N / Luna | I-04 | Done 7 Nov 2026: fast-forwarded to `main`. Agent `c5a970aa3c048db1ee9c5100d1db2b4444358592`; App `ae6c777ca8f4afa4c98a0319b58963d2f4bbe4f8` (merge of `7165b6e7f` with 4 vision commits). Runtime pin `9fc53b771134940aaac901e4cfc5d03c1db1a20a` unchanged. |
 
 ## Task details
 

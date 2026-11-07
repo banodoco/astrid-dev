@@ -18,6 +18,18 @@ Earlier research snapshots were Agent `01eceda...` and App `878c28...`; they are
 
 After independent review, promote the exact immutable candidate heads to `pre-main` by the destination's ordinary fast-forward/create procedure. Never overwrite an earlier candidate or publish to `main`, `int`, or `r1`. The four Agent/App donors above are the only feature inputs.
 
+## Final heads (landed 7 Nov 2026)
+
+| Repository | Final `main` head | Previous |
+|---|---|---|
+| Agent | `c5a970aa3c048db1ee9c5100d1db2b4444358592` | `0b6a7aef0` |
+| App | `ae6c777ca8f4afa4c98a0319b58963d2f4bbe4f8` (merge of M-01's `7165b6e7f` with 4 vision commits) | `5fa4c0909` |
+| Runtime | `9fc53b771134940aaac901e4cfc5d03c1db1a20a` (pin, unchanged) | same |
+
+Both advanced by fast-forward. Donor work credited to Dylan (@matlowai).
+
+Owner ruling (7 Nov 2026) set this run's target to `main`, replacing the `pre-main`-only promotion above. `pre-main` was left to the parallel Pinokio lane, which merges `main` when it promotes (merge-run ledger M-19).
+
 ## Provenance and evidence boundaries
 
 The exact accepted donor SHAs and merge order are recorded **once** in [Starting code](#starting-code). The old source-audit summaries are not live execution evidence: freeze the target anew and rerun focused acceptance checks from [tasks.md](tasks.md). The earlier M-GPU orchestration and its advisor automations remain **stopped**; this project does not resume them.
