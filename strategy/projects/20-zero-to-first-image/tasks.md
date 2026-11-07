@@ -1,6 +1,6 @@
 # Tasks: zero-to-first-image onboarding
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 This is a draft outline, not a ready-to-dispatch breakdown. Executable task boundaries, dependencies, route labels, and exact focused selectors remain to be scoped from current source; do not infer them here.
 
@@ -11,4 +11,4 @@ This is a draft outline, not a ready-to-dispatch breakdown. Executable task boun
 - **20 — Recovery proof.** Cover unavailable service/model, interrupted setup, cancelled generation, and safe rerun without duplicate installs or unintended work. Show the failed step and shortest recovery.
 - **20 — First-image effort evidence.** Measure total agent tokens from initial instruction to visible result, including retries; record model, starting state, interventions, elapsed time, and token use against the ~50,000-token target. If users choose the separate sandbox setup, report any onboarding friction to [Plan 15](../15-openshell-safe-execution/plan.md); do not expand this plan's acceptance checks into a full-stack isolation qualification.
 
-These are outcome areas, not assigned task cards: split or combine them only after identifying source paths, dependencies, route labels, and grounded selectors. Follow existing authority and review limits in the [shared run contract](../../skills/astrid-dev-shared/run-contract.md); this draft adds no review stage or round count.
+These are outcome areas, not assigned task cards: split or combine them only after identifying source paths, dependencies, route labels, and grounded selectors. Follow existing authority and review limits in the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md); this draft adds no review stage or round count.

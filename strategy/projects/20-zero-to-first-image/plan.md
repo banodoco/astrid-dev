@@ -1,10 +1,10 @@
 # Zero-to-first-image onboarding
 
-**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
-Make the first useful result effortless: from an existing supported inference installation, one copyable command guides a person and their agent through setup to a generated image visible on an Astrid timeline. This is a top-priority upcoming draft; status, owner, and estimate live in the [project queue](../../README.md).
+Make the first useful result effortless: from an existing supported inference installation, one copyable command guides a person and their agent through setup to a generated image visible on an Astrid timeline. This is a top-priority upcoming draft; status, owner, and estimate live in the [project queue](../../../README.md).
 
 ## Goal and scope
 
@@ -15,7 +15,7 @@ Make the first useful result effortless: from an existing supported inference in
 
 ## What we build on
 
-Reuse existing installation, connection, generation, media, and timeline capabilities where verified. The [Liquid Software vision](../../visions/pillars/liquid-software.md) calls for good defaults, understandable choices, and user control. Exact source identities and evidence limits belong in [inputs](inputs.md).
+Reuse existing installation, connection, generation, media, and timeline capabilities where verified. The [Liquid Software vision](../../vision/pillars/liquid-software.md) calls for good defaults, understandable choices, and user control. Exact source identities and evidence limits belong in [inputs](inputs.md).
 
 ## Sequence
 
@@ -34,7 +34,7 @@ See [tasks](tasks.md) for the intended proof and the scoping still required.
 
 ## Completion
 
-A new user can follow the short instruction from the declared starting state and see a real generated image on the timeline. Focused evidence covers the selected recovery paths, setup steps, interventions, and token cost; the chosen route's unsupported variants remain explicit. Isolated full-stack execution is proven separately by Plan 15. The roughly 50,000-token figure is a measured design target, not a recorded result. This draft does not authorize product work, compute use, or publication; follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md).
+A new user can follow the short instruction from the declared starting state and see a real generated image on the timeline. Focused evidence covers the selected recovery paths, setup steps, interventions, and token cost; the chosen route's unsupported variants remain explicit. Isolated full-stack execution is proven separately by Plan 15. The roughly 50,000-token figure is a measured design target, not a recorded result. This draft does not authorize product work, compute use, or publication; follow the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md).
 
 ## Read next
 

@@ -9,7 +9,7 @@ This is a planning handoff for the Astrid homepage journey. It does not authoriz
 - Target working branch, if authorized: `feat/home-journey`, from `origin/main`; destination `main` only after R4 and the owner's go.
 - Existing work recorded to preserve: none; hero remains as-is. Predecessor output: none.
 - Existing assets: composition mockups in `mockups/`; the accepted requirements are in [design.md](design.md).
-- At Step 0, copy this folder into `docs/plans/home-journey/` in astrid-app.
+- At Step 0, copy this folder into `docs/strategy/projects/home-journey/` in astrid-app.
 
 ## Starting code facts
 

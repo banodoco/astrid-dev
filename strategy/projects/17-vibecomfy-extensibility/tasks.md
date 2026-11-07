@@ -1,6 +1,6 @@
 # Tasks: VibeComfy extensibility with H3_AV
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 ## Draft task outline
 
@@ -12,4 +12,4 @@ This source draft defines intended work but no executable task IDs, difficulty r
 | Improve only the existing extension primitives needed for H3_AV composition and customization without a core fork. | To scope after mapping. |
 | Document H3_AV's inputs, outputs, and extension points; establish focused contract and extension proof. | To scope after implementation boundaries are known. |
 
-For structural changes, define focused workflow or contract checks during scoping. Define real-generation evidence and its authorized compute requirements then; this draft performs no GPU work. Completion evidence and destination limits are in the [plan](plan.md) and shared [run contract](../../skills/astrid-dev-shared/run-contract.md).
+For structural changes, define focused workflow or contract checks during scoping. Define real-generation evidence and its authorized compute requirements then; this draft performs no GPU work. Completion evidence and destination limits are in the [plan](plan.md) and shared [run contract](../../../skills/astrid-dev-shared/run-contract.md).

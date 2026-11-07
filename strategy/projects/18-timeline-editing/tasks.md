@@ -1,6 +1,6 @@
 # Tasks: Extensible timeline editing
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 ## Draft breakdown
 
@@ -12,4 +12,4 @@ The source plan defines intended work but has no task IDs or executable task car
 | Shape composable pack primitives around existing behavior and preserve supported media/edit state. | To scope from the verified source. |
 | Demonstrate one alternate view, effect, or workflow on the same material with focused evidence. | To scope from the verified source. |
 
-Before dispatch, define task IDs, dependencies, routes, exact focused checks/selectors, and evidence for each executable task, grounded in the identified repositories and existing contracts. Follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md); preserve its authority and review boundaries.
+Before dispatch, define task IDs, dependencies, routes, exact focused checks/selectors, and evidence for each executable task, grounded in the identified repositories and existing contracts. Follow the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md); preserve its authority and review boundaries.

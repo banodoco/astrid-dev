@@ -2,7 +2,7 @@
 
 **Vision role:** Foundational enabler — makes existing tools and contracts discoverable without claiming new capabilities.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Make Astrid understandable from its purpose to its working contracts: readers should find the central Astrid skill, choose a workflow or pack, and learn to extend it through concrete examples. The documentation should support a small composable foundation, with control at every level.
 
@@ -12,7 +12,7 @@ Make Astrid understandable from its purpose to its working contracts: readers sh
 - **Deferred:** a mandatory comprehensive manual, wholesale rewriting of every page, and parallel documentation systems.
 - **Still undecided:** repository set, detailed task breakdown, and the bounded human and agent journeys; determine these after inspecting current docs.
 
-See the [Liquid Software vision](../../visions/pillars/liquid-software.md) for the product foundation.
+See the [Liquid Software vision](../../vision/pillars/liquid-software.md) for the product foundation.
 
 ## What we build on
 
@@ -28,7 +28,7 @@ The executable task breakdown, routes, and focused selectors remain to be scoped
 
 ## Completion
 
-The path is navigable from a clear entry point to canonical sources, explains key purpose and contracts at the right level, and supports the selected bounded journeys. Record remaining gaps without creating a second mandatory manual. Any source changes and publication follow the repository's [shared run contract](../../skills/astrid-dev-shared/run-contract.md); this draft does not authorize execution.
+The path is navigable from a clear entry point to canonical sources, explains key purpose and contracts at the right level, and supports the selected bounded journeys. Record remaining gaps without creating a second mandatory manual. Any source changes and publication follow the repository's [shared run contract](../../../skills/astrid-dev-shared/run-contract.md); this draft does not authorize execution.
 
 ## Read next
 
