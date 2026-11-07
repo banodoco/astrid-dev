@@ -18,7 +18,7 @@ Run [CE-FINAL](tasks.md#ce-final) and, only for a demonstrated failure, [CE-REPA
 
 ## Completion boundary
 
-Completion means the exact retained tuple passes the scoped checks, required outcomes have no blocking END-review findings, and the reviewed composed candidates are promoted under the existing authority. Proof must cover seven SDK nodes, the unchanged eight-case hosted wrapper, real hosted outcomes, SDK guarantees, and the cooperative limit. This does not claim full-suite coverage or establish future candidate results from historical evidence. The shared [run contract](../../skills/astrid-dev-shared/run-contract.md) and [initiative handoff](../MANAGER.md) retain execution and publication authority.
+Completion means the exact retained tuple passes the scoped checks, required outcomes have no blocking END-review findings, and the reviewed composed candidates are promoted under the existing authority. Proof must cover seven SDK nodes, the unchanged eight-case hosted wrapper, real hosted outcomes, SDK guarantees, and the cooperative limit. This does not claim full-suite coverage or establish future candidate results from historical evidence. The [shared run contract](../../skills/astrid-dev-shared/run-contract.md) and the actual product repositories' release policies govern execution and publication; this plan grants neither.
 
 ## Read next
 

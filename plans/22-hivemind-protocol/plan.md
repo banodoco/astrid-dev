@@ -6,7 +6,7 @@
 
 ## Goal and scope
 
-Turn the [October 29 Hivemind protocol proposal](../../visions/references/compounding-intelligence/hivemind-protocol-proposal.md) into a **bounded, testable interoperable protocol and Banodoco proving-ground increment**. Independently owned datasets (local/private/team/community) should be able to record findings, link to each other, retain conditions and evidence, and exchange permitted knowledge without surrendering ownership.
+Turn the [October 29 Hivemind protocol proposal](protocol-proposal.md) into a **bounded, testable interoperable protocol and Banodoco proving-ground increment**. Independently owned datasets (local/private/team/community) should be able to record findings, link to each other, retain conditions and evidence, and exchange permitted knowledge without surrendering ownership.
 
 The proposal is a *design input*, not a settled spec. Resolve its differences from [current Hivemind](https://github.com/banodoco/hivemind) before writing migrations or claiming compatibility.
 

@@ -12,7 +12,7 @@ The following are retained historical donor/checkpoint commits, not live bases o
 | App | `438159b030cd3b0b81653415f1018f9a1349f0c5` | Branch and current SHA TBD | Fresh isolated candidate; promote reviewed head to `pre-main` |
 | Runtime | `33e9195a8ac57c4ba61f372ef6f25139c37eaa97` | Branch and current SHA TBD | Fresh isolated candidate; promote reviewed head to `pre-main` |
 
-The integration consumes the exact Agent/App/Runtime tuple promoted by Plan 02 integration (consistent generation), then the retained CE work. The concrete base is that promoted tuple plus then-current destination refs; freeze actual current `pre-main` heads when integration starts. The audit did not freeze Plan 04's merge base or target heads. Do not reuse historical `lane/M-GPU/integrated`; use fresh isolated candidate branches and promote the exact independently reviewed heads. Follow [MANAGER.md](../MANAGER.md) for moved targets and publication control.
+The integration consumes the exact Agent/App/Runtime tuple promoted by Plan 02 integration (consistent generation), then the retained CE work. The concrete base is that promoted tuple plus then-current destination refs; freeze actual current `pre-main` heads when integration starts. The audit did not freeze Plan 04's merge base or target heads. Do not reuse historical `lane/M-GPU/integrated`; use fresh isolated candidate branches and promote the exact independently reviewed heads. Follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md) and the product repositories' actual branch/release controls for moved targets and publication authority.
 
 ## References and evidence
 
