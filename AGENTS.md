@@ -30,10 +30,14 @@ When a PR moves an entry in [the catalog](plans/index.md) to **done**, include a
 
 Evidence: [real task result](https://github.com/example/repo/actions/runs/123)
 Completion: Yes — A real result met the stated criteria on the named candidate.
+Implementation PRs: https://github.com/banodoco/astrid-agent/pull/123
+Integrated candidate: Full tested SHA or versioned result URL
+Models used: openai/gpt-6 — implementation, self-reported (or Unknown — reason).
+Unproven: Other supported routes still need integrated qualification.
 Gap F-003: Partially evidenced — This route worked, but other supported routes need proof.
 ```
 
-The receipt also names **Implementation PRs**, the **Integrated candidate** and what remains **Unproven** (or explains why no code applies). Use **Gap ID: Closed / Partially evidenced / Unchanged / Needs recheck — reason** for each linked gap. For a no-gap enabler use **Gap impact: None — reason**. CI enforces presence and linkage, not the truth of proof. An independent reviewer judges completeness; completion is not authorization to publish.
+The receipt also names **Implementation PRs**, the **Integrated candidate** and what remains **Unproven** (or explains why no code applies). Use **Gap ID: Closed / Partially evidenced / Unchanged / Needs recheck — reason** for each linked gap. For a no-gap enabler use **Gap impact: None — reason**. The **Models used** line names actual invocations or explains unknowns; configured roles alone are not execution evidence. CI enforces presence and linkage, not the truth of proof. An independent reviewer judges completeness; completion is not authorization to publish.
 
 ## Local documentation checks
 
