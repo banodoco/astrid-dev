@@ -28,7 +28,7 @@ Respect source identity, user data and execution permissions.
 
 **[How to contribute: claim, propose, submit and complete](docs/contribution-workflow.md).** You can [claim an available project](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) with a single owner-only PR, [propose a project](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), or [open an issue](https://github.com/banodoco/astrid-dev/issues/new) for a small fix.
 
-The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the agent process; the [domain map](skills/astrid-dev/references/domains.md) routes people to the right code and references.
+The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the agent process; the [domain map](skills/astrid-dev/references/domains.md) routes people to the right code and references. [Ask a project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) if you need help or a start decision; claiming alone doesn't authorize execution.
 
 ## Highest-priority active and upcoming plans
 
