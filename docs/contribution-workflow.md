@@ -16,7 +16,7 @@ No mandatory project-conversation issue. Questions belong in an issue or PR; upd
 
 ## Write or improve documentation
 
-**Writing uses the same issue/PR pipeline as code.** Find the owner of the information before making a second document:
+**Writing uses the same reviewed issue/PR pipeline as code; no new project or evidence form for small edits.** Find the owner of the information before making a second document:
 
 | Writing work | Canonical source and route |
 | --- | --- |
