@@ -6,27 +6,27 @@
 
 This is the **single reviewable record** of why this project should exist and why this approach was chosen. Use exact sources or clearly scoped pending questions, not assertions that research happened. The [project-planning skill](../../skills/astrid-dev-plan/SKILL.md) defines the required process. For a draft, each pending subsection must state **why it remains unknown and the next action**; do not silently imply the owner has accepted the scope.
 
-**Scope decision:** Pending — Owner end-state agreement has not yet been established; capture the decision and its source before treating the scope as accepted.
+**Scope decision:** Pending — Owner end-state agreement has not yet been established. Next: obtain the owner's selected outcome and record its dated source before treating the scope as accepted.
 
 ### Prior art and behavior traced
 
-Pending — Search the relevant repositories, existing project packs, documentation and comparable approaches; pin useful source revisions and trace actual input → existing behavior → observed output. Record both reuse opportunities and negative findings.
+Pending — Prior-art coverage and current behavior have not yet been established. Next: search relevant repositories, existing projects and comparable approaches, pin useful revisions, and trace actual input → behavior → output, including reuse opportunities and negative findings.
 
 ### Reuse and placement decision
 
-Pending — Compare extending a current pack, creating a pack, modifying shared core, and simpler/no-build alternatives against the observed prior art; record the smallest justified option and its tradeoffs.
+Pending — No evidence-backed placement choice has been made. Next: compare extending a current pack, creating a pack, changing shared core and simpler/no-build alternatives; record the smallest justified option and its tradeoffs.
 
 ### Independent simplification challenge
 
-Pending — Obtain a distinct high-judgment critique of the chosen approach. Record concrete proposed removals/consolidations, source of the critique, and which suggestions were accepted or rejected with reasons.
+Pending — The independent simplification challenge has not been conducted. Next: obtain distinct high-judgment critique, record specific removals/consolidations, the source of that critique and the accepted/rejected suggestions.
 
 ### End-state options and owner choice
 
-Pending — Present ten meaningful end-state alternatives to the owner, then record the actually selected outcome and meaningful rejected tradeoffs with a dated decision/source. Do not invent acceptance.
+Pending — Ten end-state alternatives and the owner's selection have not yet been recorded. Next: present the options, preserve them or their source, and capture the actual decision and rejected tradeoffs; do not infer approval.
 
 ### Assumptions and evidence limits
 
-Pending — Separate directly observed capabilities from unverified inferences, unknown repositories/platforms, unavailable evidence and questions that must be resolved before tasks are ready.
+Pending — Evidence limits and implementation unknowns have not yet been distinguished. Next: separate observed capabilities from assumptions, unavailable sources, and questions that need resolution before task dispatch.
 
 ## What we build on
 
