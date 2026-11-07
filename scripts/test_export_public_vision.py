@@ -110,6 +110,18 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("F-002", projects["15-openshell-safe-execution"]["gapIds"])
         self.assertEqual(projects["15-openshell-safe-execution"]["status"], "queued")
 
+    def test_cross_modal_gap_is_distinct_from_extension_composition(self):
+        gaps = {gap["id"]: gap for gap in self.page["gaps"]}
+        self.assertIn("LS-004", gaps)
+        cross_modal = gaps["LS-004"]
+        self.assertEqual(cross_modal["appliesTo"][0], "pillar:liquid-software")
+        self.assertIn("principle:open-by-design", cross_modal["appliesTo"])
+        self.assertIn("video plus at least two non-video modality foundations",
+                      cross_modal["closureEvidenceMarkdown"])
+        self.assertIn("another independent contributor", cross_modal["closureEvidenceMarkdown"])
+        self.assertNotEqual(cross_modal["missingMarkdown"], gaps["LS-003"]["missingMarkdown"])
+        self.assertIn("LS-003", cross_modal["missingMarkdown"])
+
     def test_contributor_ownership_plan_uses_existing_gap_and_prior_sources(self):
         plan = next((p for p in self.page["projects"] if p["id"] == "28-contributor-ownership"), None)
         self.assertIsNotNone(plan)

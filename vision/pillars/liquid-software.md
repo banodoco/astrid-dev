@@ -10,6 +10,6 @@ An excellent tool is an **opinionated composition**, not a generic blank canvas.
 
 Build on existing components before inventing new architecture. Let creators choose their degree of customization and where tools run. The result should be a responsive creative environment whose capabilities grow through contributions—not a new framework for its own sake.
 
-**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md).
+**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md).
 
 **Implementation exploration:** [Liquid workspace](../../plans/24-liquid-workspace/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals and projects, not proof that the capabilities already ship.
