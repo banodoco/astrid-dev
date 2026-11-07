@@ -2,7 +2,7 @@
 import unittest
 
 from check_docs import ROOT
-from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary
+from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary, canonical_agent_prompt
 
 
 SHA = "a" * 40
@@ -34,6 +34,8 @@ class PublicVisionProjectionTests(unittest.TestCase):
         vision = self.page["vision"]
         self.assertEqual(vision["title"], "A tool to unlock the collective artistic ambition of the open-source AI community")
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
+        self.assertEqual(vision["agentPrompt"], canonical_agent_prompt(ROOT))
+        self.assertIn("skills/astrid-dev/SKILL.md", vision["agentPrompt"])
         self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
         self.assertNotIn("legal and allocation model", vision["contributeMarkdown"].lower())
@@ -73,13 +75,21 @@ class PublicVisionProjectionTests(unittest.TestCase):
             "Create entirely on your own machine, online or offline, with your files and projects under your control.",
         )
 
+    def test_local_first_promise_is_balanced_without_losing_offline_control(self):
+        first = self.page["principles"][0]["bodyMarkdown"]
+        self.assertEqual(len(first.split()), 47)
+        self.assertIn("what gets shared", first)
+        self.assertIn("online or offline", first)
+        self.assertIn("files and projects under your control", first)
+
     def test_principles_are_concise_and_balanced(self):
-        bodies = [p["bodyMarkdown"] for p in self.page["principles"]]
-        lengths = [len(body.split()) for body in bodies]
+        principles = self.page["principles"]
+        self.assertEqual(principles[1]["title"], "Completely open by design")
+        lengths = [len(p["bodyMarkdown"].split()) for p in principles]
         self.assertEqual(len(lengths), 4)
-        self.assertLessEqual(max(lengths), 60)
-        self.assertLessEqual(max(lengths) - min(lengths), 10)
-        self.assertTrue(all("not a claim" not in body.lower() for body in bodies))
+        self.assertLessEqual(max(lengths), 48)
+        self.assertLessEqual(max(lengths) - min(lengths), 8)
+        self.assertTrue(all("not a claim" not in p["bodyMarkdown"].lower() for p in principles))
 
     def test_open_projects_derive_from_catalog_in_priority_order(self):
         projects = self.page["projects"]
@@ -109,6 +119,18 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("F-007", projects["15-openshell-safe-execution"]["gapIds"])
         self.assertIn("F-002", projects["15-openshell-safe-execution"]["gapIds"])
         self.assertEqual(projects["15-openshell-safe-execution"]["status"], "queued")
+
+    def test_cross_modal_gap_is_distinct_from_extension_composition(self):
+        gaps = {gap["id"]: gap for gap in self.page["gaps"]}
+        self.assertIn("LS-004", gaps)
+        cross_modal = gaps["LS-004"]
+        self.assertEqual(cross_modal["appliesTo"][0], "pillar:liquid-software")
+        self.assertIn("principle:open-by-design", cross_modal["appliesTo"])
+        self.assertIn("video plus at least two non-video modality foundations",
+                      cross_modal["closureEvidenceMarkdown"])
+        self.assertIn("another independent contributor", cross_modal["closureEvidenceMarkdown"])
+        self.assertNotEqual(cross_modal["missingMarkdown"], gaps["LS-003"]["missingMarkdown"])
+        self.assertIn("LS-003", cross_modal["missingMarkdown"])
 
     def test_contributor_ownership_plan_uses_existing_gap_and_prior_sources(self):
         plan = next((p for p in self.page["projects"] if p["id"] == "28-contributor-ownership"), None)

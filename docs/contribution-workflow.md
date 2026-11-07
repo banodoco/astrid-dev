@@ -33,7 +33,7 @@ Describe the intended correction and relevant source; give a real reviewer a way
 
 ## Define or reassess a vision gap
 
-The [vision overview](../vision/README.md#gaps--15-assessed-outcomes) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
+The [vision overview](../vision/README.md#gaps--16-assessed-outcomes) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
 
 Every gap has **one primary pillar or principle**, with supporting connections only when they explain a distinct relationship. IDs identify records, not ownership. Plans link to the outcomes they address; gaps do not duplicate the project queue, status, or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
 
