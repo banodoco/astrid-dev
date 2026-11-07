@@ -1,6 +1,6 @@
 # Plan catalog
 
-**Single source of truth for every plan's status, owner, priority order and estimate**, including completed and cancelled work. The [root README](../README.md) shows a generated preview of the first ten nonterminal plans; [ARCHIVE.md](../ARCHIVE.md) is a pointer, not a second register.
+**Single source of truth for every plan's status, owner, priority order and estimate**, including completed and cancelled work. The [root README](../README.md) links here rather than repeating a snapshot; terminal plans remain in this same catalog.
 
 **Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. This initial order preserves the existing README ordering (excluding the completed plan), **not a new prioritization decision**. Move a row to reprioritize; update its status in place. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
 

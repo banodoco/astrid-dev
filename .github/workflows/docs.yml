@@ -1,34 +1,12 @@
 name: Documentation integrity
 
+# Validate every PR, and refresh the derived public feed after every main push.
+# No path allowlist can silently skip a Markdown or metadata change.
 on:
   pull_request:
     types: [opened, synchronize, reopened, edited]
-    paths:
-      - "README.md"
-      - "ARCHIVE.md"
-      - "AGENTS.md"
-      - "plans/**"
-      - "visions/**"
-      - "docs/**"
-      - "skills/**"
-      - "templates/**"
-      - "scripts/**"
-      - "sync.sh"
-      - ".github/**"
   push:
     branches: [main]
-    paths:
-      - "README.md"
-      - "ARCHIVE.md"
-      - "AGENTS.md"
-      - "plans/**"
-      - "visions/**"
-      - "docs/**"
-      - "skills/**"
-      - "templates/**"
-      - "scripts/**"
-      - "sync.sh"
-      - ".github/**"
 
 permissions:
   contents: read
@@ -42,9 +20,9 @@ jobs:
           fetch-depth: 0
       - name: Test documentation validators
         run: python3 -m unittest discover -s scripts -p "test_*.py"
-      - name: Validate document structure and generated README
+      - name: Validate canonical Markdown and all internal references
         run: python3 scripts/check_docs.py
-      - name: Validate GitHub-sourced public vision content
+      - name: Validate derived public vision content
         run: python3 scripts/export_public_vision.py
       - name: Validate PR contribution evidence
         if: github.event_name == 'pull_request'
