@@ -32,7 +32,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
     def test_vision_contribution_call_to_action(self):
         vision = self.page["vision"]
-        self.assertIn("collective artistic ambition", vision["title"])
+        self.assertEqual(vision["title"], "A tool to unlock the collective artistic ambition of the open-source AI community")
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
         self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
@@ -67,6 +67,11 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertTrue(all(g["assessment"] in
                             {"open", "partially evidenced", "closed", "needs recheck"}
                             for g in self.page["gaps"]))
+
+        self.assertEqual(
+            self.page["principles"][0]["bodyMarkdown"].split(". ", 1)[0] + ".",
+            "Create entirely on your own machine, online or offline, with your files and projects under your control.",
+        )
 
     def test_principles_are_concise_and_balanced(self):
         bodies = [p["bodyMarkdown"] for p in self.page["principles"]]
