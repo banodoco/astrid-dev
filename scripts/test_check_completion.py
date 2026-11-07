@@ -14,6 +14,9 @@ RECEIPT = """## Completion assessment — Plan 20
 
 Evidence: [real task run](https://github.com/banodoco/astrid-agent/actions/runs/123)
 Completion: Yes — A real image reached the timeline in the supported environment.
+Implementation PRs: https://github.com/banodoco/astrid-agent/pull/123
+Integrated candidate: abcdef0123456789abcdef0123456789abcdef01
+Unproven: Other inference providers and machines are unqualified.
 Gap F-003: Partially evidenced — One complete route works, but not all inference backends or machines.
 """
 
@@ -76,13 +79,30 @@ Completion: Yes — The plan completion criteria were tested on the reviewed sou
                         """## Completion assessment — Plan 21
 Evidence: https://github.com/example/repo/pull/4
 Completion: Yes — The existing homepage work passes its stated requirements.
+Implementation PRs: None — Communication-only project.
+Integrated candidate: None — Reviewed documentation and non-code assets.
+Unproven: None within the recorded communication deliverable.
 """))
         self.assertEqual(assess_completion("21-site/plan.md", ENABLER,
                          """## Completion assessment — Plan 21
 Evidence: https://github.com/example/repo/pull/4
 Completion: Yes — The existing homepage work passes its stated requirements.
+Implementation PRs: None — Communication-only project.
+Integrated candidate: None — Reviewed documentation and non-code assets.
+Unproven: None within the recorded communication deliverable.
 Gap impact: None — It is a communication deliverable, not proof that a gap was closed.
 """), [])
+
+    def test_completion_requires_cross_repo_review_context(self):
+        bad = RECEIPT.replace(
+            "Implementation PRs: https://github.com/banodoco/astrid-agent/pull/123\n", "")
+        issues = assess_completion("20-zero-to-first-image/plan.md", PLAN, bad)
+        self.assertTrue(any("Implementation PRs" in x for x in issues))
+        bad = RECEIPT.replace(
+            "Integrated candidate: abcdef0123456789abcdef0123456789abcdef01",
+            "Integrated candidate: TBD")
+        self.assertTrue(any("Integrated candidate" in x for x in
+                            assess_completion("20-zero-to-first-image/plan.md", PLAN, bad)))
 
     def test_new_catalog_during_migration_is_not_transition(self):
         self.assertEqual(check_pr(None, catalog("done"), "", self.root), [])

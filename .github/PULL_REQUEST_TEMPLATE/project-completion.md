@@ -1,9 +1,12 @@
 ## Project completion — review submission
 
-### Completion assessment — Plan NN
+## Completion assessment — Plan NN
 
 Evidence: [real integrated test or review receipt](https://github.com/owner/repo/pull/NUMBER)
 Completion: Yes — State exactly which project acceptance criteria were demonstrated.
+Implementation PRs: https://github.com/owner/repo/pull/NUMBER (all relevant PRs; or None — non-code work)
+Integrated candidate: Full SHA(s)/exact versioned result URL (or None — non-code work)
+Unproven: Name remaining untested/failing scenarios and unsupported cases, or None within the stated scope.
 Gap F-XXX: Unchanged — Replace with a justified disposition for **each actual linked gap**.
 
 ### Implementation and integration

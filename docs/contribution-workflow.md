@@ -45,6 +45,7 @@ When all required product changes have reached their intended integration destin
 
 - Update the catalog status to `done`, preserving the existing project folder.
 - Include the already-required `## Completion assessment — Plan NN` in the PR description, with linked evidence and an assessment of **each linked gap** (or an explicit foundational-enabler explanation).
+- In that assessment, include **Implementation PRs**, **Integrated candidate** and **Unproven**. Use an explained `None — ...` for non-code work. These are pointers/limits, not a second evidence database.
 - Use the [completion PR template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md) to link **all relevant implementation PRs**, actual integrated candidate(s), focused checks, negative scenarios and limitations. A compact review summary in the PR **is the evidence pack**; link original receipts instead of duplicating them in a new required file.
 - Optionally add the final PR/receipt link to the project plan's handoff section when it improves future discovery.
 

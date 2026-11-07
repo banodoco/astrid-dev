@@ -33,7 +33,7 @@ Completion: Yes — A real result met the stated criteria on the named candidate
 Gap F-003: Partially evidenced — This route worked, but other supported routes need proof.
 ```
 
-Use **Gap ID: Closed / Partially evidenced / Unchanged / Needs recheck — reason** for each linked gap. For a no-gap enabler use **Gap impact: None — reason**. CI enforces presence and linkage, not the truth of proof. An independent reviewer judges completeness; completion is not authorization to publish.
+The receipt also names **Implementation PRs**, the **Integrated candidate** and what remains **Unproven** (or explains why no code applies). Use **Gap ID: Closed / Partially evidenced / Unchanged / Needs recheck — reason** for each linked gap. For a no-gap enabler use **Gap impact: None — reason**. CI enforces presence and linkage, not the truth of proof. An independent reviewer judges completeness; completion is not authorization to publish.
 
 ## Local documentation checks
 
