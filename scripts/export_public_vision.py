@@ -11,11 +11,11 @@ from urllib.parse import quote
 
 from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
 from gap_relationships import parse_gap_relationships
+from project_contract import plan_gap_ids
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"
 PILLAR = re.compile(r"^\d+\. \*\*\[([^\]]+)\]\((pillars/[^)]+\.md)\)\*\* — (.+)$", re.M)
 GAP_ID = re.compile(r"([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md")
-GAP_LINK = re.compile(r"\]\(\.\./\.\./visions/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)")
 MD_LINK = re.compile(r"(?<!!)\[([^\]\n]+)\]\(([^)\n]+)\)")
 STATUS = re.compile(r"^(Open|Partially evidenced|Closed|Needs recheck)\b", re.I)
 REVISION = re.compile(r"^[a-f0-9]{40}$", re.I)
@@ -153,12 +153,9 @@ def build(root: Path, revision: str) -> dict:
         name, goal, status, owner, estimate, waiting, link = row
         plan = Path("plans") / PLAN_LINK.fullmatch(link).group(1)
         plan_text = read(root, plan)
-        declaration = re.findall(r"^\*\*Vision gaps:\*\*\s*(.+)$", plan_text, re.M)
-        linked = GAP_LINK.findall(declaration[0]) if declaration else []
-        if len(linked) != len(set(linked)) or any(gap not in seen for gap in linked):
-            raise ValueError(f"{plan}: duplicate or unknown gap references")
-        if not declaration and not re.search(r"^\*\*Vision role:\*\*", plan_text, re.M):
-            raise ValueError(f"{plan}: missing gap/enabler declaration")
+        linked = plan_gap_ids(plan_text)
+        if any(gap not in seen for gap in linked):
+            raise ValueError(f"{plan}: unknown gap reference")
         projects.append({
             "id": plan.parent.name, "title": name, "goalMarkdown": goal,
             "status": status, "owner": owner, "estimate": estimate,
