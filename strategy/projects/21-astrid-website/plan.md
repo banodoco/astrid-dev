@@ -30,7 +30,7 @@ Product repo: `banodoco/astrid-app`, route `/home`. Source baseline and asset/ev
 
 1. `git fetch origin && git switch -c feat/home-journey origin/main`.
 2. Pointer re-check (read-only): validate every `path:line` against the new branch point, update moved pointers in `inputs.md`/`design.md`, and report any code fact in [inputs.md](inputs.md#starting-code-facts) that is no longer true. Coordinator decides implications before phase 0.
-3. Commit this folder to `docs/plans/home-journey/` on `feat/home-journey`; create reports and seed `notes/opus-craft.md` from [design.md](design.md#10-craft-details-t0s-starting-values-from-the-opus-craft-pass).
+3. Commit this folder to `docs/strategy/projects/home-journey/` on `feat/home-journey`; create reports and seed `notes/opus-craft.md` from [design.md](design.md#10-craft-details-t0s-starting-values-from-the-opus-craft-pass).
 4. Add `h0/` to `.gitignore`.
 
 ## Completion
