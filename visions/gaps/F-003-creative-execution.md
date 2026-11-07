@@ -1,10 +1,10 @@
 # F-003 — Creative execution isn't yet dependable end to end
 
-**Applies to:** [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) · [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · **Assessment:** Open / foundations exist (2026-11-06).
+**Applies to:** [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) (primary) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (supporting) · **Assessment:** Open / foundations exist (2026-11-06).
 
 ## Desired state
 
-From a declared supported starting environment, a person and their agent can choose a suitable creative capability, connect or install what is needed with clear consent, execute real inference or processing, and receive a correct, editable result in the intended workspace—with understandable failures, cleanup and recovery.
+From a declared supported, usable Astrid workspace, a creator and agent can choose a creative operation, prepare an appropriate model or provider, execute real inference or media processing, and receive the intended **correct, editable creative result** with progress and recoverable failures. The core proof is successful creative work—not reinstalling or updating Astrid.
 
 ## Current state
 
@@ -12,11 +12,11 @@ Astrid has Runtime execution/task primitives, packs, generation integrations and
 
 ## Gap
 
-Reliably going from intent through correct model/provider readiness and task execution to usable creative output has not yet been demonstrated across chosen supported routes and recovery cases.
+The end-to-end **creative job**—capability selection, model/provider readiness, actual task execution, artifact identity and usable output—has not been dependably proven across selected supported workflows and failure paths. Install/update lifecycle belongs to F-001; approval and access decisions belong to F-002.
 
 ## Closure evidence
 
-A bounded, explicitly scoped real model execution on an approved environment, with setup/defaults, input/output identity, resource lifecycle, failure/retry/stop and a verified creative result in Astrid. Extend route/platform support only as qualified; realistic user effort and recoverability are measured.
+On a stated supported setup, run real creative generation or processing and inspect the resulting editable artifact for correct content, project identity, output settings and usable timeline/workspace integration. Demonstrate failed-job diagnostics, stop/retry and cleanup; separately qualify platform installation and permission boundaries in F-001/F-002.
 
 ## Sources and reassessment
 
