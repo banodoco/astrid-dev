@@ -1,4 +1,4 @@
-Project: strategy/projects/<NN-project-name>/plan.md
+Project: plans/<NN-project-name>/plan.md
 Review request: implementation
 
 ## What changed

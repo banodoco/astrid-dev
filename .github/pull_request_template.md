@@ -9,6 +9,6 @@
 
 **Result and evidence:** State the claim, tested source and relevant proof—or `Owner-only claim; no product code`.
 
-For project review intake, select the corresponding specialized template or add two exact lines near the top: `Project: strategy/projects/NN-name/plan.md` and `Review request: scope` (or `implementation` / `completion`). A checklist alone doesn't enter the review queue.
+For project review intake, select the corresponding specialized template or add two exact lines near the top: `Project: plans/NN-name/plan.md` and `Review request: scope` (or `implementation` / `completion`). A checklist alone doesn't enter the review queue.
 
 Read the [contributor workflow](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md). Separate [claim](https://github.com/banodoco/astrid-dev/blob/main/.github/PULL_REQUEST_TEMPLATE/claim.md), [scope](https://github.com/banodoco/astrid-dev/blob/main/.github/PULL_REQUEST_TEMPLATE/project-scope.md) and [completion](https://github.com/banodoco/astrid-dev/blob/main/.github/PULL_REQUEST_TEMPLATE/project-completion.md) examples are available; no extra project discussion issue is required.

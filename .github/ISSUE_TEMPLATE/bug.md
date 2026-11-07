@@ -1,4 +1,8 @@
-# [Bug] Short description
+---
+name: Bug or incident
+about: Report or investigate an Astrid failure, including verified recovery
+title: "[Bug] "
+---
 
 **Status:** Investigating / Recovery proposed / Locally recovered / Upstream fix pending / Resolved
 

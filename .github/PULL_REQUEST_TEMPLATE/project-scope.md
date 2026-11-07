@@ -1,4 +1,4 @@
-Project: strategy/projects/<NN-project-name>/plan.md
+Project: plans/<NN-project-name>/plan.md
 Review request: scope
 
 ## New project — scope review
@@ -15,4 +15,4 @@ Review request: scope
 
 **Decision requested:** Greenlight the bounded scope for the catalog **only**. No automatic project activation, code execution or deployment permission.
 
-[Contributor process](../../docs/contribution-workflow.md#propose-and-greenlight-new-work).
+[Contributor process](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#propose-and-greenlight-new-work).

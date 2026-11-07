@@ -75,6 +75,18 @@ def unnamed_active_owners(rows: list[list[str]]) -> list[str]:
     ]
 
 
+
+def obsolete_template_paths(root: Path) -> list[str]:
+    """Reject stale project paths in Markdown, including GitHub's absolute form links."""
+    issues: list[str] = []
+    for path in root.rglob("*.md"):
+        if ".git" not in path.relative_to(root).parts and "strategy/projects/" in path.read_text(encoding="utf-8"):
+            issues.append(f"{path.relative_to(root)}: obsolete strategy/projects path; use plans/")
+    for obsolete in ("templates/bug-issue.md", "templates/bug-pr.md", "templates/review-submission.md"):
+        if (root / obsolete).exists():
+            issues.append(f"{obsolete}: obsolete duplicate or ungrouped template")
+    return issues
+
 def check(root: Path) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -141,7 +153,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
                  Path('docs/contribution-workflow.md'), Path('docs/contribution-automation-setup.md'),
-                 Path('templates/review-submission.md')]
+                 Path('templates/product-pr/review.md')]
     for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md', 'vision/gaps.md'):
         if (root / stale).exists():
             errors.append(f'obsolete source must be removed: {stale}')
@@ -149,6 +161,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     actual_principles = {p.stem for p in (root / 'vision/principles').glob('*.md')}
     if actual_principles != expected_principles:
         errors.append(f'expected four canonical principle pages, got {sorted(actual_principles)}')
+    errors.extend(obsolete_template_paths(root))
     # Every Markdown file must be current. No grandfathered dead references.
     # Product evidence and old task cards must either have valid local links
     # or be removed/replaced by their authoritative project source.

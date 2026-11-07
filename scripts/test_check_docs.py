@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_docs import (DIVIDER, HEADER, catalog_rows, local_links,
+from check_docs import (DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
                         unnamed_active_owners)
 
 
@@ -35,6 +35,14 @@ class CatalogTests(unittest.TestCase):
             (root / 'plans').mkdir()
             (root / 'README.md').write_text('[ok](plans/) and [missing](absent.md)\n')
             self.assertEqual(len(local_links(root, Path('README.md'))), 1)
+
+    def test_obsolete_project_paths_are_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'docs').mkdir()
+            (root / 'docs/guide.md').write_text('Use strategy/projects/01-alpha/plan.md.\n')
+            errors = obsolete_template_paths(root)
+            self.assertTrue(any('obsolete strategy/projects path' in error for error in errors))
 
 
 if __name__ == '__main__':
