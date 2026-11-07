@@ -4,12 +4,9 @@
 
 ## Planning evidence
 
-**Scope decision:**
-- **Draft.** The owner asked for this project on 7 Nov 2026: one elegant update path, as simple as possible, with root-cause fixes, and the release process designed together with it.
-- **Owner decisions** recorded below. The owner settled the remaining decisions the same day; see below.
-- **Next:** owner review of this draft.
+**Scope decision:** Pending — the owner asked for this project and made the decisions below on 7 Nov 2026; added to the catalog as queued at the owner's request. Next: owner confirms the scope before the first task starts.
 
-**Prior art:**
+**Prior art:** seven read-only maps of the current state and six task ambiguity reviews, summarised here:
 - Seven read-only maps of the current state, at App `915bfa84`, Agent `709492fa`, Runtime `61e2c301`, launcher `d15c58b5` and astrid-dev `dd87b92`. The maps covered:
   - the App surfaces;
   - Settings and the decision logic;
@@ -29,7 +26,7 @@
 
 **Approach:** reuse and correct the existing pieces (`identity`, `resolveUpdate`, the status `reason`, `release-check.mjs`, the canary). Don't add new fields, a new resolver, a publish script or new CI rows.
 
-**Challenge:** an independent high-judgment review of the first draft was accepted almost entirely. It contributed these items:
+**Challenge:** Reviewed — an independent high-judgment review of the first draft was accepted almost entirely. It contributed these items:
 - **Cuts:** the new status fields, the new resolver, the publish script and new check, and the "main only moves by release" rule.
 - **Corrections:**
   - releases 0–9 can never update in-app;
