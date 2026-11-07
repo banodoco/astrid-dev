@@ -16,7 +16,7 @@ from pathlib import Path
 from check_docs import ROOT
 from gap_relationships import parse_gap_relationships
 
-GAP_PATH = re.compile(r"^visions/gaps/([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
+GAP_PATH = re.compile(r"^strategy/vision/gaps/([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md$")
 SECTION = re.compile(
     r"^#{2,3}\s+Gap boundary assessment\s*[—:-]\s*([A-Z]{1,3}-\d{3})\s*$",
     re.I | re.M,
@@ -77,7 +77,7 @@ def after_file(root: Path, path: str) -> str | None:
 def affected_gaps(base: str, root: Path) -> set[str]:
     """Determine newly created, deleted and materially redefined gaps in the PR."""
     git(root, "cat-file", "-e", f"{base}^{{commit}}")
-    changed = git(root, "diff", "--name-status", "--find-renames", base, "HEAD", "--", "visions/gaps")
+    changed = git(root, "diff", "--name-status", "--find-renames", base, "HEAD", "--", "strategy/vision/gaps")
     required: set[str] = set()
     for line in changed.stdout.splitlines():
         cells = line.split("\t")
@@ -199,7 +199,7 @@ def main() -> int:
             raise ValueError("gap boundary changes require --event or --body-file")
         expected_by_gap = {}
         for gap_id in sorted(required):
-            paths = list((ROOT / "visions/gaps").glob(gap_id + "-*.md"))
+            paths = list((ROOT / "strategy/vision/gaps").glob(gap_id + "-*.md"))
             if len(paths) > 1:
                 raise ValueError(f"{gap_id}: duplicate gap files")
             if paths:
@@ -215,7 +215,7 @@ def main() -> int:
     for issue in issues:
         print(f"ERROR {issue}")
     if issues:
-        print("Add a first-principles gap boundary assessment to the PR description; see visions/gaps.md")
+        print("Add a first-principles gap boundary assessment to the PR description; see strategy/vision/gaps.md")
         return 1
     print(f"Gap boundary gate passed for {len(required)} gap(s): {', '.join(sorted(required))}")
     return 0

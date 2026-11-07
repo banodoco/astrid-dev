@@ -11,7 +11,7 @@ from gap_relationships import parse_gap_relationships
 from project_contract import PLAN_FOLDER, plan_gap_ids
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG = Path('plans/index.md')
+CATALOG = Path('strategy/projects/index.md')
 README = Path('README.md')
 HEADER = '| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |'
 DIVIDER = '|---|---|---|---|---:|---|---|'
@@ -31,7 +31,7 @@ def catalog_rows(text: str) -> list[list[str]]:
     lines = text.splitlines()
     heads = [i for i, line in enumerate(lines) if line.strip() == HEADER]
     if len(heads) != 1 or lines[heads[0] + 1].strip() != DIVIDER:
-        raise ValueError('plans/index.md needs one canonical plan table')
+        raise ValueError('strategy/projects/index.md needs one canonical plan table')
     rows: list[list[str]] = []
     for line in lines[heads[0] + 2:]:
         if not line.startswith('|'):
@@ -101,7 +101,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     for extra in sorted(indexed - actual):
         errors.append(f'catalog references non-plan: {extra}')
 
-    gaps = sorted((root / 'visions/gaps').glob('*.md'))
+    gaps = sorted((root / 'strategy/vision/gaps').glob('*.md'))
     gap_ids = set()
     for file in gaps:
         match = GAP_NAME.fullmatch(file.name)

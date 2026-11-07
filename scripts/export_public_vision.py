@@ -66,7 +66,7 @@ def rewrite_links(text: str, source: Path, revision: str, root: Path) -> str:
 def build(root: Path, revision: str) -> dict:
     if not REVISION.fullmatch(revision):
         raise ValueError("revision must be an immutable 40-character commit SHA")
-    vision_file = Path("visions/vision.md")
+    vision_file = Path("strategy/vision/vision.md")
     vision = read(root, vision_file)
     if not vision.startswith("# Astrid — "):
         raise ValueError("vision.md must have '# Astrid — <headline>'")
@@ -94,7 +94,7 @@ def build(root: Path, revision: str) -> dict:
     if len(pillars) != 4 or len({p["id"] for p in pillars}) != 4:
         raise ValueError("the vision must reference four distinct pillars")
 
-    principles_file = Path("visions/principles.md")
+    principles_file = Path("strategy/vision/principles.md")
     principles_text = read(root, principles_file)
     principles = []
     for m in re.finditer(r"^## (.+)$", principles_text, re.M):
@@ -110,7 +110,7 @@ def build(root: Path, revision: str) -> dict:
 
     gaps = []
     seen = set()
-    for gap_file in sorted((root / "visions/gaps").glob("*.md")):
+    for gap_file in sorted((root / "strategy/vision/gaps").glob("*.md")):
         path = gap_file.relative_to(root)
         contents = read(root, path)
         match = re.match(r"^# ([A-Z]{1,3}-\d{3}) — (.+)$", contents, re.M)

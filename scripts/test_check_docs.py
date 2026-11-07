@@ -33,7 +33,7 @@ class CatalogTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'plans').mkdir()
-            (root / 'README.md').write_text('[ok](plans/) and [missing](absent.md)\n')
+            (root / 'README.md').write_text('[ok](strategy/projects/) and [missing](absent.md)\n')
             self.assertEqual(len(local_links(root, Path('README.md'))), 1)
 
 

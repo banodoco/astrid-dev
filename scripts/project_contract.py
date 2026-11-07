@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 PLAN_FOLDER = re.compile(r"\d{2,}-[a-z0-9-]+")
-GAP_LINK = re.compile(r"\]\(\.\./\.\./visions/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)")
+GAP_LINK = re.compile(r"\]\(\.\./\.\./strategy/vision/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)")
 VISION_GAPS = re.compile(r"^\*\*Vision gaps:\*\*\s*(.+)$", re.M)
 VISION_ROLE = re.compile(r"^\*\*Vision role:\*\*\s*(.+)$", re.M)
 

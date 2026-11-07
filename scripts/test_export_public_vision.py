@@ -74,7 +74,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(self.page["schemaVersion"], 1)
         self.assertTrue(all(p["title"] and p["goalMarkdown"] and p["githubUrl"] for p in projects))
         self.assertTrue(all(p["githubUrl"].startswith(
-            "https://github.com/banodoco/astrid-dev/blob/" + SHA + "/plans/")
+            "https://github.com/banodoco/astrid-dev/blob/" + SHA + "/strategy/projects/")
                             for p in projects))
 
     def test_video_rendering_options_is_a_queued_gap_linked_plan(self):
@@ -99,11 +99,11 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
     def test_relative_markdown_links_point_at_pinned_source(self):
         text = rewrite_links("[source](../pillars/artistic-ambition.md)",
-                             __import__("pathlib").Path("visions/gaps/AA-001-sustained-creative-work.md"),
+                             __import__("pathlib").Path("strategy/vision/gaps/AA-001-sustained-creative-work.md"),
                              SHA, ROOT)
         self.assertEqual(text,
                          f"[source](https://github.com/banodoco/astrid-dev/blob/{SHA}"
-                         "/visions/pillars/artistic-ambition.md)")
+                         "/strategy/vision/pillars/artistic-ambition.md)")
 
     def test_immutable_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "40-character"):
