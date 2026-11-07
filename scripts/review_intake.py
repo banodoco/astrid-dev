@@ -73,9 +73,15 @@ def route_event(event: dict, repo: str) -> str:
     pr = request("GET", f"/repos/{repo}/pulls/{number}")
     main = request("GET", f"/repos/{repo}/git/ref/heads/main")["object"]["sha"]
     lane = classify(pr, repo, catalog(repo, main), changed_files(repo, number))
+    labeled = LABEL in {label.get("name") for label in pr.get("labels", [])}
     if not lane:
+        if labeled:
+            # A changed PR body or lost ownership must not leave a stale
+            # bot-managed review request in the queue.
+            request("DELETE", f"/repos/{repo}/issues/{number}/labels/{LABEL}")
+            return "Removed stale review-intake label; request no longer eligible"
         return "Not an eligible project review submission"
-    if LABEL in {label.get("name") for label in pr.get("labels", [])}:
+    if labeled:
         return f"Already queued for {lane} review"
     ensure_review_label(repo, LABEL)
     request("POST", f"/repos/{repo}/issues/{number}/labels", {"labels": [LABEL]})
