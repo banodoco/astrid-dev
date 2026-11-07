@@ -52,6 +52,31 @@ def verify_claim(before: str, after: str, actor: str) -> str:
 
 
 
+
+def verify_live_claim(base: str, proposed: str, live: str, actor: str) -> str:
+    """An unrelated main edit must not block a valid claim.
+
+    The candidate must be a one-cell self-claim relative to its PR base.
+    For that *same project*, current main must still have the original
+    unassigned, queued row, including its unchanged scope/metadata.
+    GitHub's normal merge handles unrelated catalog changes.
+    """
+    project = verify_claim(base, proposed, actor)
+    old_rows, current_rows = catalog_rows(base), catalog_rows(live)
+
+    def selected(rows: list[list[str]]) -> list[str]:
+        matching = [
+            row for row in rows
+            if PLAN_LINK.fullmatch(row[6]).group(1).split("/", 1)[0] == project
+        ]
+        if len(matching) != 1:
+            raise ValueError("claimed project is missing or duplicated on main")
+        return matching[0]
+
+    if selected(old_rows) != selected(current_rows):
+        raise ValueError("claimed project's live row changed; rebase or choose another project")
+    return project
+
 def open_pulls(repo: str):
     for page in range(1, 11):
         prs = api("GET", f"/repos/{repo}/pulls?state=open&per_page=100&page={page}")
@@ -104,9 +129,9 @@ def handle_run(repo: str, run: dict) -> list[str]:
         from_repo, from_ref = pr["head"]["repo"]["full_name"], pr["head"]["sha"]
         base_repo, base_ref = pr["base"]["repo"]["full_name"], pr["base"]["sha"]
         candidate = catalog(from_repo, from_ref)
-        project = verify_claim(catalog(base_repo, base_ref), candidate, login)
+        original = catalog(base_repo, base_ref)
         main_ref = api("GET", f"/repos/{repo}/git/ref/heads/main")["object"]["sha"]
-        verify_claim(catalog(repo, main_ref), candidate, login)
+        project = verify_live_claim(original, candidate, catalog(repo, main_ref), login)
         if api("GET", f"/repos/{repo}/git/ref/heads/main")["object"]["sha"] != main_ref:
             raise ValueError("main moved during claim validation; rebase the PR")
         fresh = api("GET", f"/repos/{repo}/pulls/{number}")

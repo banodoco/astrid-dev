@@ -15,6 +15,9 @@ CATALOG = Path('plans/index.md')
 README = Path('README.md')
 HEADER = '| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |'
 DIVIDER = '|---|---|---|---|---:|---|---|'
+# Owner stays only in the canonical catalog: owner-only claims require no README edit.
+PREVIEW_HEADER = '| Project | Goal | Status | Estimate | Waiting on | Plan |'
+PREVIEW_DIVIDER = '|---|---|---|---:|---|---|'
 BEGIN = '<!-- plans:top10:start -->'
 END = '<!-- plans:top10:end -->'
 STATUSES = {'queued', 'active', 'blocked', 'paused', 'done', 'cancelled'}
@@ -54,11 +57,13 @@ def catalog_rows(text: str) -> list[list[str]]:
 
 
 def preview(rows: list[list[str]]) -> str:
+    """Derived shortlist without owner, so self-claim PRs change one cell only."""
     selected = [r for r in rows if r[2] in VISIBLE][:10]
-    output = [HEADER, DIVIDER]
+    output = [PREVIEW_HEADER, PREVIEW_DIVIDER]
     for row in selected:
-        cells = list(row)
-        cells[6] = cells[6].replace('](', '](plans/', 1)
+        # Owner is authoritative in plans/index.md; omit it from this projection.
+        cells = [row[i] for i in (0, 1, 2, 4, 5, 6)]
+        cells[-1] = cells[-1].replace('](', '](plans/', 1)
         output.append('| ' + ' | '.join(cells) + ' |')
     return '\n'.join(output)
 

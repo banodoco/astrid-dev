@@ -14,10 +14,29 @@ class ModelUseTests(unittest.TestCase):
             append_record(root, item)
             rows = read_records(root)
             self.assertEqual(len(rows), 1)
-            self.assertIn("openai / gpt-6", summarize(rows))
+            self.assertIn("Models used: openai/gpt-6", summarize(rows))
             self.assertIn("self-reported", summarize(rows))
             self.assertIn("Not recorded", summarize([]))
             self.assertEqual((root / "model-usage.jsonl").read_text().count("\n"), 1)
+
+    def test_summary_is_accepted_by_completion_receipt_validator(self):
+        from check_completion import assess_completion
+        summary = summarize([make_record(
+            "gpt-6", "openai", "implementation", "task-1", "self-reported")])
+        self.assertTrue(summary.startswith("Models used: openai/gpt-6"))
+        plan = ("# Result\n\n**Vision role:** Foundational enabler — "
+                "not a directly linked gap.\n")
+        receipt = (
+            "## Completion assessment — Plan 20\n"
+            "Evidence: https://github.com/banodoco/astrid-dev/pull/15\n"
+            "Completion: Yes — The accepted deliverable was independently checked.\n"
+            "Implementation PRs: None — Research-only deliverable with no product code.\n"
+            "Integrated candidate: None — No code was changed in this project.\n"
+            "Unproven: Remaining environments are explicitly out of scope.\n"
+            "Gap impact: None — This enabler has no directly attributed outcome.\n"
+            + summary + "\n"
+        )
+        self.assertEqual(assess_completion("20-example/plan.md", plan, receipt), [])
 
     def test_verified_claim_requires_receipt(self):
         with self.assertRaisesRegex(ValueError, "requires a source"):

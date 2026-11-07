@@ -40,6 +40,14 @@ class CatalogTests(unittest.TestCase):
                                + example('active').replace('| Owner |', '| Unassigned |'))
         self.assertEqual(len(unnamed_active_owners(unnamed)), 1)
 
+    def test_owner_only_change_does_not_change_readme_preview(self):
+        before = catalog_rows(HEADER + '\n' + DIVIDER + '\n'
+                              + example('queued').replace('| Owner |', '| Unassigned |'))
+        after = catalog_rows(HEADER + '\n' + DIVIDER + '\n'
+                             + example('queued').replace('| Owner |', '| @casey |'))
+        self.assertEqual(preview(before), preview(after))
+        self.assertNotIn('| Owner |', preview(before))
+
     def test_generated_preview_drift(self):
         before = f'# README\n{BEGIN}\noutdated\n{END}\n'
         after = replace_preview(before, 'updated')

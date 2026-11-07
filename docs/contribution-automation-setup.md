@@ -28,11 +28,11 @@ From a second GitHub account, submit one owner-only claim PR from a fork against
 
 - A claim for somebody else's `@handle`, or a blocked/active/already-owned project
 - Two projects in one PR, an edited goal/status, any changed workflow/code or an extra file
-- A stale PR after somebody else claims the same project or after `main` changes
+- A stale PR after somebody else claims the **same project** or changes that project's scope/status. An unrelated project's catalog edit should **not** invalidate the claim; GitHub's normal merge must preserve both changes.
 - A PR whose CI failed or did not run, or a PR with changing head SHA
 - A PR while `main` protection is absent
 
-For review intake, confirm that a proposal with the required scope pack is labelled but **not** approved, and an owner's implementation/completion request is queued. A non-owner's attempt must not enter the owner-specific review queue. Repeat after editing the PR body.
+For review intake, confirm that a proposal with the required scope pack is labelled but **not** approved, and an owner's implementation/completion request is queued. The generic PR template must include explicit `Project:` and `Review request:` lines (or the contributor chooses a specialized template); check that an invalidated PR loses its `needs-review` label. A non-owner's attempt must not enter the owner-specific review queue. Repeat after editing the PR body.
 
 Check the GitHub workflow logs, repository ruleset history and generated vision feed. Do not interpret local unit tests as a full live security verification.
 
