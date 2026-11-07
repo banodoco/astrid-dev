@@ -22,4 +22,4 @@ Also identify the feature entry points, supported behavior, current focused chec
 
 ## Constraints
 
-This is a planning draft and does not authorize execution. Do not infer branches, refs, or source identities. Follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md) for routes, source identity, proof, and publication limits; preserve existing authority and do not treat this plan or Plan 06 as blanket scheduling approval.
+This is a planning draft and does not authorize execution. Do not infer branches, refs, or source identities. Follow the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md) for routes, source identity, proof, and publication limits; preserve existing authority and do not treat this plan or Plan 06 as blanket scheduling approval.

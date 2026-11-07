@@ -1,6 +1,6 @@
 # Tasks: Pinokio qualification
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 ## Task index
 

@@ -1,8 +1,8 @@
 # 10 — Pinokio qualification: engine controls, custody and fully-local
 
-**Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../visions/gaps/F-002-safe-user-control.md).
+**Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../vision/gaps/F-002-safe-user-control.md).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Qualify Pinokio Stop/Quit safety, direct custody, fully-local journeys, and unknown-state stop on every supported OS. This follows [Plan 07](../07-pinokio/plan.md), from its verified launcher and gate; no legacy migration is needed because Pinokio had no users when R1 shipped.
 
@@ -28,4 +28,4 @@ Report only demonstrated outcomes. Missing deployed veto, settlement/readback, o
 
 - [tasks.md](tasks.md): task index, routes, dependencies, focused checks, and completion evidence.
 - [inputs.md](inputs.md): source identities, retained work, provenance, and evidence limits.
-- [Project status and owner](../../README.md): queue authority.
+- [Project status and owner](../../../README.md): queue authority.

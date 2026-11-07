@@ -1,6 +1,6 @@
 # Tasks: Install and update confidence
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
 The project is planned, not dispatched. Exact test selectors are not present in the source plan; identify them during task setup. Do not run broad or auto-discovered suites. Task progress is the single `[ ]` record in each index row/card.
 

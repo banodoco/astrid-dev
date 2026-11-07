@@ -1,10 +1,10 @@
 # Multiple inference routes (Wan2GP)
 
-**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
-**Draft; not ready for execution.** Provide one shared generation route for VibeComfy (primary) and Wan2GP (additional), with both integrations represented as packs. Current status and owner remain in the [project queue](../../README.md).
+**Draft; not ready for execution.** Provide one shared generation route for VibeComfy (primary) and Wan2GP (additional), with both integrations represented as packs. Current status and owner remain in the [project queue](../../../README.md).
 
 ## Goal and scope
 
@@ -30,4 +30,4 @@ See [tasks.md](tasks.md) for the draft work outline and [inputs.md](inputs.md) f
 
 ## Completion
 
-Both packs use the shared lifecycle, VibeComfy remains primary, both Wan2GP setup paths are demonstrated, and real inference succeeds through each backend. Focused lifecycle evidence covers failure, cancellation, cleanup/release, and contention. Existing external instances and unrelated loaded models remain untouched, and unsupported hardware, model, or environment combinations are recorded. This draft does not yet define executable tasks, routes, exact selectors, or source identities; those must be scoped before dispatch. Follow the existing [shared run contract](../../skills/astrid-dev-shared/run-contract.md) and its execution/publication authority limits.
+Both packs use the shared lifecycle, VibeComfy remains primary, both Wan2GP setup paths are demonstrated, and real inference succeeds through each backend. Focused lifecycle evidence covers failure, cancellation, cleanup/release, and contention. Existing external instances and unrelated loaded models remain untouched, and unsupported hardware, model, or environment combinations are recorded. This draft does not yet define executable tasks, routes, exact selectors, or source identities; those must be scoped before dispatch. Follow the existing [shared run contract](../../../skills/astrid-dev-shared/run-contract.md) and its execution/publication authority limits.
