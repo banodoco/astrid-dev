@@ -4,7 +4,7 @@ about: Ask about an existing project, scope, prerequisites or permission to star
 title: "[Plan NN] "
 ---
 
-**Project:** Link the existing `strategy/projects/NN-name/plan.md`.
+**Project:** Link the existing `plans/NN-name/plan.md`.
 
 **Question or blocker:** What decision or help do you need?
 
@@ -14,4 +14,4 @@ title: "[Plan NN] "
 
 Mention the catalog owner or appropriate maintainer when useful. Once resolved, update the existing project documents *only if the durable decision changes*. This issue is optional; **no standing discussion hub is created for every project**.
 
-[How questions and project ownership work](../../docs/contribution-workflow.md#get-help-and-keep-decisions-discoverable).
+[How questions and project ownership work](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#get-help-and-keep-decisions-discoverable).

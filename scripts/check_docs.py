@@ -149,6 +149,15 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     actual_principles = {p.stem for p in (root / 'vision/principles').glob('*.md')}
     if actual_principles != expected_principles:
         errors.append(f'expected four canonical principle pages, got {sorted(actual_principles)}')
+    # Reject old generated/moved roots even inside GitHub templates and code examples.
+    # GitHub URL links are external to the local-link scanner, so validate this
+    # canonical path explicitly instead of accepting silently broken forms.
+    for path in root.rglob("*.md"):
+        if ".git" not in path.relative_to(root).parts and "strategy/projects/" in path.read_text(encoding="utf-8"):
+            errors.append(f"{path.relative_to(root)}: obsolete strategy/projects path; use plans/")
+    for obsolete in ("templates/bug-issue.md", "templates/bug-pr.md", "templates/review-submission.md"):
+        if (root / obsolete).exists():
+            errors.append(f"{obsolete}: obsolete duplicate or ungrouped template")
     # Every Markdown file must be current. No grandfathered dead references.
     # Product evidence and old task cards must either have valid local links
     # or be removed/replaced by their authoritative project source.

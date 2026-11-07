@@ -14,6 +14,8 @@
 
 No mandatory project-conversation issue. Questions belong in an issue or PR; update the authoritative project documents only when a decision actually changes.
 
+**Templates have two destinations.** GitHub issue and Astrid-dev PR forms live in [`.github/`](../.github/), where GitHub discovers them. The portable [project scaffolds](../templates/project/) and [product-repository PR examples](../templates/product-pr/) live in `templates/` because GitHub does not automatically use them in another repository. An incident starts with the [Astrid-dev bug issue template](../.github/ISSUE_TEMPLATE/bug.md); its product fix can use the [portable bug PR example](../templates/product-pr/bug.md). No second bug-issue template is kept.
+
 ## Write or improve documentation
 
 **Writing uses the same reviewed issue/PR pipeline as code; no new project or evidence form for small edits.** Find the owner of the information before making a second document:
@@ -86,7 +88,7 @@ A maintainer compares the plan with existing issues, projects, gaps and source e
 
 ## Submit work for review
 
-A project can have **multiple PRs across Runtime, Agent, App and other repositories**. Each product PR links the project/task, states exact source/dependency revisions, describes the claim and actual checks, and names what remains unproven. Use the small [review submission](../templates/review-submission.md) in a target product repo; the product repo’s own CI, reviewers, branch and release rules remain authoritative.
+A project can have **multiple PRs across Runtime, Agent, App and other repositories**. Each product PR links the project/task, states exact source/dependency revisions, describes the claim and actual checks, and names what remains unproven. Use the small [review submission](../templates/product-pr/review.md) in a target product repo; the product repo’s own CI, reviewers, branch and release rules remain authoritative.
 
 If the contributor needs an Astrid-dev PR to review a project handoff or implementation evidence, use [the implementation-review template](../.github/PULL_REQUEST_TEMPLATE/implementation-review.md) (select it when creating the PR) and identify the canonical plan:
 
