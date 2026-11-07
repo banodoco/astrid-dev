@@ -20,4 +20,4 @@ With one approved provider/configuration and a declared local project, a user or
 
 ## Sources and reassessment
 
-[Plan 25 — cloud-assisted Astrid V1](../../projects/25-cloud-assist-v1/plan.md) · [F-003 — creative execution](F-003-creative-execution.md) · [F-001 — platform reliability](F-001-platform-reliability.md). This gap is about a **specific local-data/remote-execution product boundary**, not all inference-provider plumbing.
+[Plan 25 — cloud-assisted Astrid V1](../../plans/25-cloud-assist-v1/plan.md) · [F-003 — creative execution](F-003-creative-execution.md) · [F-001 — platform reliability](F-001-platform-reliability.md). This gap is about a **specific local-data/remote-execution product boundary**, not all inference-provider plumbing.
