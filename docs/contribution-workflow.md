@@ -57,7 +57,7 @@ The low-permission [review-intake workflow](../.github/workflows/review-intake.y
 
 `run.yaml` configures **intended** model roles, but the review should report which models were **actually used**. Record the provider, exact model ID where visible, task, role, effort if available, and whether the information is **runtime-observed with a receipt** or **self-reported**. Do this at the relevant invocation, not from memory at the end.
 
-In a normal repo checkout, the lightweight local helper is available:
+In a normal repo checkout, the lightweight [model-use helper](../scripts/model_usage.py) is available:
 
 ```sh
 python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record \
