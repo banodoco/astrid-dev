@@ -15,7 +15,7 @@
 | Rendering and finished-video options | [rendering-options Plan 27](../../../plans/27-video-render-options/plan.md), App render/export paths. Remote execution belongs separately to [cloud V1 Plan 25](../../../plans/25-cloud-assist-v1/plan.md) |
 | Cloud execution versus fully hosted projects | [cloud V1 Plan 25](../../../plans/25-cloud-assist-v1/plan.md) retains local project custody; [hosted V2 Plan 26](../../../plans/26-fully-hosted-v2/plan.md) moves durable project state into hosted infrastructure |
 | Shared knowledge and agent learning | [Hivemind protocol Plan 22](../../../plans/22-hivemind-protocol/plan.md), [agent learning Plan 23](../../../plans/23-agent-learning-integration/plan.md), [Hivemind](https://github.com/banodoco/hivemind) |
-| End-user incident and recovery | [Bug-fixing skill](../../astrid-dev-bugfix/SKILL.md); search issues in [Astrid Dev](https://github.com/banodoco/astrid-dev/issues) before reporting |
+| Bugs, small fixes and user incidents | [Astrid Dev issues](https://github.com/banodoco/astrid-dev/issues) are the tracking unit, not projects. Use [Bug fixing](../../astrid-dev-bugfix/SKILL.md) for recovery and [Iterate](../../astrid-dev-iterate/SKILL.md) for focused repair |
 | Integration, releases, public deployments | [Release skill](../../astrid-dev-release/SKILL.md) and product-owned [release references](../../astrid-dev-release/references/sources.md) |
 
 ## Cross-repository order
