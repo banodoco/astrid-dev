@@ -38,7 +38,7 @@ bash "$ENV/vc-pytest.sh" -q tests/test_ready_templates.py tests/test_template_ro
 
 Base: `main` (frozen `db79345536985c701b7aff2eb5eec36667aae204`). Donor `c47fa76be6e7c0aa661d044a0de5b3b73f6fdbac`, which contains `96360a27a53c4608f780f7b370f747a2aa3c7ca8`. It is a fast-forward of `main` (checked 5 Nov 2026).
 
-1. Setup: `uv venv -q --python 3.13 .venv && uv pip install -q --python .venv/bin/python -e '.[dev]'`. The `dev` extra brings in `pytest-asyncio` and `pytest-mock`, and `pyproject.toml` sets `asyncio_mode = "auto"`; async tests such as `test_fake_provider_and_pod_facade` (`tests/test_https.py:218`) need them.
+1. Setup: `uv venv -q --python 3.13 .venv && uv sync --frozen --extra dev`. The lifecycle repo's `uv.lock` is authoritative; the earlier `uv pip install -e '.[dev]'` gave 4 spurious failures. The `dev` extra brings in `pytest-asyncio` and `pytest-mock`, and `pyproject.toml` sets `asyncio_mode = "auto"`; async tests such as `test_fake_provider_and_pod_facade` (`tests/test_https.py:218`) need them.
 2. Run, using `.venv/bin/python -m pytest -q`:
 
 ```text
@@ -57,11 +57,13 @@ tests/test_provider_mounts.py
 ```
 
 The three K27 regressions are inside `tests/test_https.py`: `test_completed_jobs_are_evicted_after_both_streams_reach_eof` (line 78), `test_sequential_commands_reuse_the_claim_job_capacity` (107) and `test_delete_cleans_output_after_exit_and_retires_record_on_next_start` (115), at `c47fa76`. `tests/test_session_engine_proxy.py` also contains a seventh session-proxy test, `test_session_upload_image_is_bounded_and_relayed_without_client_secrets` (line 164), which the retained list does not name; leave it out unless you want it.
-3. No real provider, pod or GPU run. Land by fast-forwarding `main` to the tested commit (it is a fast-forward of `main`), with the owner's go. Record the SHA.
+3. No real provider, pod or GPU run. Note: `c47fa76` alone fails 3 tests in [banodoco/runpod-lifecycle#3](https://github.com/banodoco/runpod-lifecycle/pull/3) (the K27 regressions in `tests/test_https.py` listed above). Those failures are lifecycle-side, not Agent selectors. Land by fast-forwarding `main` to the tested commit (it is a fast-forward of `main`), with the owner's go. Record the SHA.
 
 ### P3 Runtime stop
 
 Base: Runtime `pre-main` (frozen `9fc53b771134940aaac901e4cfc5d03c1db1a20a`). Donor `b005394b06602c84e2abd4ba7eec8fa2f1dd8e94`. Merges cleanly with `pre-main` (checked 5 Nov 2026); the change touches `astrid_runtime/cli.py`, `astrid_runtime/selected_source.py` and two test files.
+
+Ordering: P3 cannot land before the Agent carries PINS (the Agent needs `1cc6142b4`, G3b). P3 lands only with or after the Agent carrying PINS.
 
 1. Merge the donor onto a fresh branch from `pre-main`.
 2. Setup: `uv venv -q --python 3.13 .venv && uv pip install -q --python .venv/bin/python -e '.[test]'`.
