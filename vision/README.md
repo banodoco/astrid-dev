@@ -36,19 +36,19 @@ We want to inspire and equip people to push themselves—and reward them for doi
 
 ### [Local-first, cloud-capable](principles/local-first-cloud-capable.md)
 
-Create entirely on your own machine, online or offline, with your files and projects under your control. When you need more power or convenience, choose cloud models, agents, rendering or a fully hosted workspace. Moving between local and cloud should feel natural, with clear choices about where work runs, where files live and what it costs.
+Create entirely on your own machine, online or offline, with your files and projects under your control. When helpful, use cloud models, agents or rendering. Switching between local and cloud should be straightforward, with clear choices about where work runs, where files stay and what it costs.
 
-### [Open by design](principles/open-by-design.md)
+### [Completely open by design](principles/open-by-design.md)
 
-Everything about our tools, models and even ideas should be open to inspect, adapt, fork and share. We build on open-source software and open models so artists and developers can build on one another's work, contribute their own tools and knowledge, and choose the providers that suit them.
+Our tools, models and ideas should be completely open to inspect, adapt, fork and share. Build on open-source software and models so artists and developers can extend one another's work, contribute reusable tools and knowledge, and choose the services that suit their needs.
 
 ### [In the creator's control](principles/in-the-creators-control.md)
 
-Everything about Astrid is designed to give creators control. They can change even its core workings, choose which features and services to opt into, set agent permissions, and decide what data stays private or gets shared. We present all those choices as simply and clearly as possible.
+Creators should control every part of Astrid, including its core workings. Choose features and services, set agent permissions, and decide what remains private or gets shared. These controls should be clear and approachable, without requiring creators to become experts in the underlying technology.
 
 ### [Eliminate needless technical wrangling](principles/eliminate-needless-technical-wrangling.md)
 
-Artists should spend their time creating, not installing models or troubleshooting environments. Agents should handle choosing and setting up tools, managing dependencies, running jobs and recovering from errors. Technical choices, permissions and costs should be easy to understand without becoming the focus of the creative experience.
+Artists should focus on creating, not installing models or fixing environments. Agents handle finding and setting up tools, managing dependencies, running jobs and recovering from errors. The choices that matter—permissions, costs and where work runs—remain visible and easy to understand.
 
 ## Gaps — 16 assessed outcomes
 

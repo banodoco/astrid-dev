@@ -1,3 +1,3 @@
 # In the creator's control
 
-Everything about Astrid is designed to give creators control. They can change even its core workings, choose which features and services to opt into, set agent permissions, and decide what data stays private or gets shared. We present all those choices as simply and clearly as possible.
+Creators should control every part of Astrid, including its core workings. Choose features and services, set agent permissions, and decide what remains private or gets shared. These controls should be clear and approachable, without requiring creators to become experts in the underlying technology.
