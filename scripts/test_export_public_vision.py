@@ -24,7 +24,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
     def test_vision_contribution_call_to_action(self):
         vision = self.page["vision"]
         self.assertIn("collective artistic ambition", vision["title"])
-        self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
+        self.assertEqual(vision["introMarkdown"], "We want to inspire people to push themselves beyond their creative limits with AI - and reward them for doing so.")
         self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
         self.assertNotIn("legal and allocation model", vision["contributeMarkdown"].lower())

@@ -4,7 +4,7 @@
 
 ## Ambition
 
-Astrid aims to help individuals and the community as a whole pursue artistic work beyond what they thought possible.
+We want to inspire people to push themselves beyond their creative limits with AI - and reward them for doing so.
 
 ## Four pillars
 
