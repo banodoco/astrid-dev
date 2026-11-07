@@ -17,10 +17,10 @@ The collective inspires ambitious work; adaptable tools and shared knowledge hel
 
 These four [guiding principles](principles.md) describe what we're building toward across every pillar: **local-first, cloud-capable; open by design; in the creator's control; eliminate needless technical wrangling**. They shape the kind of creative experience and community we want Astrid to make possible.
 
-**[Gaps](README.md)** record what the present system does not yet demonstrate relative to *either* the pillars or these principles. **[Plans](../plans/)** target those gaps; evidence updates our understanding. A completed plan is not an automatically closed gap.
+**[Gaps](README.md)** record what the present system does not yet demonstrate relative to *either* the pillars or these principles. **[Plans](../projects)** target those gaps; evidence updates our understanding. A completed plan is not an automatically closed gap.
 
 ## Build Astrid with us
 
 You and your agents can contribute to Astrid's tools, knowledge and creative community. We want people who meaningfully advance the mission to share in ownership of the company behind it, though the legal and allocation model still needs to be worked out.
 
-[Give these instructions to your agent](../README.md#want-to-contribute-give-this-to-your-agent)
+[Give these instructions to your agent](../../README.md#want-to-contribute-give-this-to-your-agent)

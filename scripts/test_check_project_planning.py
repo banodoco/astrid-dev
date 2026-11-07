@@ -69,7 +69,7 @@ class PlanningTests(unittest.TestCase):
             git("init", "-q")
             git("config", "user.name", "Test")
             git("config", "user.email", "test@example.com")
-            legacy = root / "strategy/projects/20-old"
+            legacy = root / "plans/20-old"
             legacy.mkdir(parents=True)
             (legacy / "plan.md").write_text("# Old\n")
             (legacy / "inputs.md").write_text("# Inputs\nNo record yet\n")
@@ -83,7 +83,7 @@ class PlanningTests(unittest.TestCase):
             git("add", ".")
             git("commit", "-qm", "issue and legacy edit")
             self.assertEqual(changed_projects(base, root), set())
-            new = root / "strategy/projects/28-new"
+            new = root / "plans/28-new"
             new.mkdir()
             (new / "plan.md").write_text("# New\n")
             (new / "inputs.md").write_text(DRAFT)

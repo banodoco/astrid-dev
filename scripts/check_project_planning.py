@@ -15,7 +15,7 @@ from pathlib import Path
 from check_docs import ROOT
 from project_contract import PLAN_FOLDER
 
-PLAN = re.compile(r"^strategy/projects/(" + PLAN_FOLDER.pattern + r")/(plan|inputs)\.md$")
+PLAN = re.compile(r"^plans/(" + PLAN_FOLDER.pattern + r")/(plan|inputs)\.md$")
 LABELS = ("Scope decision", "Prior art", "Approach", "Challenge", "Proof and limits")
 FIELD = re.compile(r"^\*\*(Scope decision|Prior art|Approach|Challenge|Proof and limits):\*\*\s*(.+)$", re.M)
 REFERENCE = re.compile(
@@ -91,7 +91,7 @@ def changed_projects(base: str, root: Path) -> set[str]:
 
     if git("cat-file", "-e", f"{base}^{{commit}}").returncode:
         raise ValueError(f"base revision {base!r} is unavailable")
-    changed = git("diff", "--name-only", base, "HEAD", "--", "strategy/projects/")
+    changed = git("diff", "--name-only", base, "HEAD", "--", "plans/")
     if changed.returncode:
         raise ValueError(f"can't compare project changes: {changed.stderr.strip()}")
     selected = set()
@@ -101,8 +101,8 @@ def changed_projects(base: str, root: Path) -> set[str]:
         path = root / "plans" / project / "inputs.md"
         if not path.exists():
             continue  # check_docs.py reports missing project files
-        previous_plan = git("cat-file", "-e", f"{base}:strategy/projects/{project}/plan.md")
-        previous_inputs = git("show", f"{base}:strategy/projects/{project}/inputs.md")
+        previous_plan = git("cat-file", "-e", f"{base}:plans/{project}/plan.md")
+        previous_inputs = git("show", f"{base}:plans/{project}/inputs.md")
         opted_in = planning_block(path.read_text(encoding="utf-8")) is not None or (
             previous_inputs.returncode == 0 and planning_block(previous_inputs.stdout) is not None
         )

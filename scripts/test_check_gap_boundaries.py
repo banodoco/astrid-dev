@@ -46,7 +46,7 @@ Why this level: The independent user outcome remains important if Plan 25 or its
 Independent closure: A real user delegates work and receives editable results with custody, consent, cost and recovery checks.
 Primary connection: principle:local-first-cloud-capable — Optional cloud work preserves the local-first promise at the heart of this gap.
 Supporting connections: principle:in-the-creators-control — Consenting to transfers and retaining data custody matter but do not define the main outcome.
-Evidence: https://github.com/banodoco/astrid-dev/blob/main/strategy/projects/25-cloud-assist-v1/plan.md
+Evidence: https://github.com/banodoco/astrid-dev/blob/main/plans/25-cloud-assist-v1/plan.md
 """
 
 
@@ -117,7 +117,7 @@ class GapBoundaryGateTests(unittest.TestCase):
 
     def test_rejects_missing_evidence_and_duplicate_sections(self):
         without = RECEIPT.replace(
-            "https://github.com/banodoco/astrid-dev/blob/main/strategy/projects/25-cloud-assist-v1/plan.md",
+            "https://github.com/banodoco/astrid-dev/blob/main/plans/25-cloud-assist-v1/plan.md",
             "my impression")
         self.assertTrue(any("Evidence" in issue for issue in assess_boundary("F-005", without)))
         self.assertTrue(any("duplicate" in issue for issue in
@@ -131,7 +131,7 @@ class GapBoundaryGateTests(unittest.TestCase):
             git("init", "-q")
             git("config", "user.name", "Gap tests")
             git("config", "user.email", "gap-tests@example.com")
-            gap = root / "strategy/vision/gaps/F-005-test.md"
+            gap = root / "visions/gaps/F-005-test.md"
             gap.parent.mkdir(parents=True)
             gap.write_text(ORIGINAL, encoding="utf-8")
             git("add", ".")
@@ -147,7 +147,7 @@ class GapBoundaryGateTests(unittest.TestCase):
             git("add", ".")
             git("commit", "-qm", "reframe outcome")
             self.assertEqual(affected_gaps(base, root), {"F-005"})
-            added = root / "strategy/vision/gaps/F-007-sandbox.md"
+            added = root / "visions/gaps/F-007-sandbox.md"
             added.write_text(ORIGINAL.replace("F-005", "F-007"), encoding="utf-8")
             git("add", ".")
             git("commit", "-qm", "add gap")

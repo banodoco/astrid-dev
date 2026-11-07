@@ -12,4 +12,4 @@ Build on existing components before inventing new architecture. Let creators cho
 
 **Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md).
 
-**Implementation exploration:** [Liquid workspace](../../plans/24-liquid-workspace/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals and projects, not proof that the capabilities already ship.
+**Implementation exploration:** [Liquid workspace](../../projects/24-liquid-workspace/plan.md) · [Component design input](../../projects/24-liquid-workspace/components.md) · [Pack lifecycle](../../projects/06-packs/plan.md). These are proposals and projects, not proof that the capabilities already ship.

@@ -8,7 +8,7 @@ Real creative components (timeline, player, inspector, gallery and others) can m
 
 ## Current state
 
-The [App source map](../../plans/24-liquid-workspace/inputs.md) identifies actual reusable editor views and a custom two-pane assembly. The standard editor shell still includes host-specific layout, gesture and context responsibilities. **This does not establish a general-purpose portable workspace host.**
+The [App source map](../../projects/24-liquid-workspace/inputs.md) identifies actual reusable editor views and a custom two-pane assembly. The standard editor shell still includes host-specific layout, gesture and context responsibilities. **This does not establish a general-purpose portable workspace host.**
 
 ## Gap
 
@@ -20,4 +20,4 @@ Rearrange the **real** player, inspector and timeline; retain playback, editing,
 
 ## Sources and reassessment
 
-[Component reference](../../plans/24-liquid-workspace/components.md) · [Pinned App code map](../../plans/24-liquid-workspace/inputs.md). Reassess only from exact candidate and tested behavior; a different mock shell does not close this gap.
+[Component reference](../../projects/24-liquid-workspace/components.md) · [Pinned App code map](../../projects/24-liquid-workspace/inputs.md). Reassess only from exact candidate and tested behavior; a different mock shell does not close this gap.

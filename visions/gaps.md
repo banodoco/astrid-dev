@@ -1,6 +1,6 @@
 # Gaps — outcomes Astrid has not yet proven
 
-**[Vision](vision.md) → Gaps → [Projects](../plans/index.md) → Evidence.** A gap describes something creators still cannot reliably do, independently of any particular proposed implementation. Its own document defines the desired result, current evidence and a meaningful closure test. Completing a project does **not** automatically close a gap.
+**[Vision](vision.md) → Gaps → [Projects](../projects/index.md) → Evidence.** A gap describes something creators still cannot reliably do, independently of any particular proposed implementation. Its own document defines the desired result, current evidence and a meaningful closure test. Completing a project does **not** automatically close a gap.
 
 ## Current gaps
 
@@ -16,7 +16,7 @@ Each record lives once in `gaps/<ID>-<slug>.md`. The stable ID is identity, not 
 
 ## When to add or change a gap
 
-Before creating a new gap, check the list above and the [project catalog](../plans/index.md). Prefer refining an existing gap or proposing a project under it. Add a gap only when **the missing outcome would still matter if today's proposed project disappeared** and it has distinct closure evidence. Don't create a gap for a technology choice, a task or an incomplete milestone.
+Before creating a new gap, check the list above and the [project catalog](../projects/index.md). Prefer refining an existing gap or proposing a project under it. Add a gap only when **the missing outcome would still matter if today's proposed project disappeared** and it has distinct closure evidence. Don't create a gap for a technology choice, a task or an incomplete milestone.
 
 A gap record keeps the standard headings: **Desired state**, **Current state**, **Gap**, **Closure evidence**, and **Sources and reassessment**, plus `Applies to` and `Assessment` metadata. Source revisions and dates are *observations*, not automatic proof that external code still behaves that way.
 
@@ -35,6 +35,6 @@ Supporting connections: principle:in-the-creators-control — <reason>
 Evidence: <source URL or exact SHA>
 ```
 
-Use `Supporting connections: None — <reason>` when appropriate. The [gap boundary validator](../scripts/check_gap_boundaries.py) checks structural consistency, **not whether the judgment is correct**. Reviewers decide if the gap duplicates another or has meaningful independent proof. Updating only **Current state**, **Assessment**, or **Sources and reassessment** does not need another boundary review.
+Use `Supporting connections: None — <reason>` when appropriate. The [gap boundary validator](../../scripts/check_gap_boundaries.py) checks structural consistency, **not whether the judgment is correct**. Reviewers decide if the gap duplicates another or has meaningful independent proof. Updating only **Current state**, **Assessment**, or **Sources and reassessment** does not need another boundary review.
 
-Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, supported by current evidence. A [completion PR](../.github/PULL_REQUEST_TEMPLATE/project-completion.md) assesses the linked gaps without automatically changing their status. Small evidence updates follow the normal [contributor/writing workflow](../docs/contribution-workflow.md).
+Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, supported by current evidence. A [completion PR](../../.github/PULL_REQUEST_TEMPLATE/project-completion.md) assesses the linked gaps without automatically changing their status. Small evidence updates follow the normal [contributor/writing workflow](../../docs/contribution-workflow.md).
