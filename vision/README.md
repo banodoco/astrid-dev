@@ -10,25 +10,25 @@ Astrid aims to help individuals and the community as a whole pursue artistic wor
 
 ### [A Tool for Artistic Ambition](pillars/artistic-ambition.md)
 
-We want to make it easier for artists to push their work—and themselves—toward more ambitious projects.
+We want to help artists push the limits of AI and their own creativity to make their most ambitious work possible.
 
 **Give people the creative power and control to make work beyond what they previously thought possible.**
 
 ### [Agent-Powered Liquid Software](pillars/liquid-software.md)
 
-In the age of agents, we believe every layer of software should adapt to the needs of the artist and the work.
+In the age of agents, every layer of our tools should adapt to the needs of artists and their work.
 
 **Tools should adapt to creative work as people and agents create, not force the work into fixed interfaces.**
 
 ### [Intelligence That Compounds](pillars/compounding-intelligence.md)
 
-We want everything artists and their agents learn to help others push their work further.
+We want what artists and their agents discover to give others a stronger foundation for more ambitious work.
 
 **Creative agents should benefit from what they and others have learned—and help make that knowledge more useful over time.**
 
 ### [A Shared Creative Endeavor](pillars/shared-endeavour.md)
 
-We want to inspire and equip people to push themselves beyond their creative limits - and reward them for doing so.
+We want to inspire and equip people to push themselves—and reward them for doing so.
 
 **Give people a reason, encouragement and a genuine stake in attempting more ambitious creative work.**
 
