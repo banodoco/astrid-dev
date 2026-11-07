@@ -1,11 +1,11 @@
 ---
 name: astrid-dev-advise
-description: Answer one bounded question when an Astrid manager or working agent is genuinely blocked, faces conflicting evidence, or must make a consequential judgment; return one concrete next action. Use only when asked for advice.
+description: Answer one bounded question when an Astrid planner, manager or working agent is genuinely blocked, faces conflicting evidence, or must make a consequential judgment; return one concrete next action. Use only when asked for advice.
 ---
 
 # Advise on an Astrid blocker
 
-Use this only when a manager or working agent asks. That means a genuine blocker, conflicting evidence, or a consequential judgment the accepted plan cannot settle. It is not routine per-task approval. Follow the [run contract](../astrid-dev-shared/run-contract.md), and answer the bounded question you were given.
+Planners and managers are administrators; this is where their high-judgment work goes. Use it only when a planner, manager or working agent asks, for a genuine blocker, conflicting evidence, or a consequential judgment the accepted plan cannot settle. It is not routine per-task approval. Follow the [run contract](../astrid-dev-shared/run-contract.md), and answer the bounded question you were given.
 
 - **Refresh the facts first:** the exact candidate, source and donor identities, dirty state, the brief, the first failing command, the repair history, and the review budget.
 - **Diagnose from evidence.** A claim in the request is a claim until code, logs or a run supports it. If the cause isn't visible, the next action is to make it visible.
