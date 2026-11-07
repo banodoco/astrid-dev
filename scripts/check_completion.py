@@ -19,6 +19,12 @@ GAP_LINE = re.compile(
 EVIDENCE_REF = re.compile(r"https?://[^\s)]+|(?<![\da-f])[0-9a-f]{40}(?![\da-f])", re.I)
 
 
+def has_real_reason(value: str) -> bool:
+    """Reject missing/placeholder decisions; review determines their quality."""
+    normalized = value.strip().lower().strip(" .-")
+    return bool(normalized) and normalized not in {"tbd", "todo", "none", "unknown", "n/a", "pending"}
+
+
 def plan_statuses(catalog: str) -> dict[str, str]:
     return {PLAN_LINK.fullmatch(row[6]).group(1): row[2] for row in catalog_rows(catalog)}
 
@@ -59,7 +65,7 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
     if not evidence or not EVIDENCE_REF.search(evidence.group(1)):
         issues.append(f"Plan {plan_id}: Evidence needs a concrete URL or full 40-character commit SHA")
     conclusion = re.search(r"^Completion:\s*(Yes|Met)\s*[—:-]\s*(.+)$", section, re.I | re.M)
-    if not conclusion or len(conclusion.group(2).strip()) < 15:
+    if not conclusion or not has_real_reason(conclusion.group(2)):
         issues.append(f"Plan {plan_id}: Completion needs 'Yes —' and a specific reason")
 
     gaps = linked_gaps(plan_text)
@@ -68,15 +74,17 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
         gap, outcome, reason = match.groups()
         if gap in found:
             issues.append(f"Plan {plan_id}: duplicate assessment for {gap}")
-        if len(reason.strip()) < 15:
+        if not has_real_reason(reason):
             issues.append(f"Plan {plan_id}: {gap} needs an evidence-based explanation")
         found[gap] = outcome.lower()
     for gap in sorted(gaps - found.keys()):
         issues.append(f"Plan {plan_id}: missing gap disposition for {gap}")
     for gap in sorted(found.keys() - gaps):
         issues.append(f"Plan {plan_id}: {gap} is not linked from its plan")
-    if not gaps and not re.search(r"^Gap impact:\s*None\s*[—:-]\s*.{15,}$", section, re.I | re.M):
-        issues.append(f"Plan {plan_id}: enabler needs 'Gap impact: None — <reason>'")
+    if not gaps:
+        impact = re.search(r"^Gap impact:\s*None\s*[—:-]\s*(.+)$", section, re.I | re.M)
+        if not impact or not has_real_reason(impact.group(1)):
+            issues.append(f"Plan {plan_id}: enabler needs 'Gap impact: None — <reason>'")
     return issues
 
 
