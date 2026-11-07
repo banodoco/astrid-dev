@@ -27,7 +27,7 @@ If the safe claim bot is not enabled, the **same PR** can be merged by a maintai
 
 A proposal issue captures the desired independent outcome, relevant existing work and gaps, alternative issue/project placements, and likely proof. Anyone can propose—without claiming the work.
 
-To accept a new independent project, open a **scope PR** with one `queued` catalog entry and the existing three-file pack: `plan.md` (outcome, scope, interfaces, completion), `inputs.md` (prior art, reuse choice, actual owner decision, uncertainty), and `tasks.md` (work and focused proof). Use [the scope template](../.github/PULL_REQUEST_TEMPLATE/scope.md):
+To accept a new independent project, open a **scope PR** with one `queued` catalog entry and the existing three-file pack: `plan.md` (outcome, scope, interfaces, completion), `inputs.md` (prior art, reuse choice, actual owner decision, uncertainty), and `tasks.md` (work and focused proof). Use [the scope template](../.github/PULL_REQUEST_TEMPLATE/project-scope.md):
 
 ```text
 Project: plans/NN-project-name/plan.md
