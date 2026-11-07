@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md) · [Catalog status](../index.md)
 
-These are **proposed, not dispatched** tasks. Routes (N/X/S), estimates, owners, exact source revisions at execution and test selectors must be assigned under the [shared run contract](../../skills/astrid-dev-shared/run-contract.md) when implementation is authorized.
+These are **proposed, not dispatched** tasks. Routes (N/X/S), estimates, owners, exact source revisions at execution and test selectors must be assigned under the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md) when implementation is authorized.
 
 | ID / outcome | Depends on | Route | Progress | Focused evidence |
 |---|---|---|---|---|

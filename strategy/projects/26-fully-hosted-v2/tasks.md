@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs and unresolved choices](inputs.md) · [Status, priority and owner](../index.md)
 
-**Scope boundary:** this is a distinct, **fully hosted** project, not authorization to relocate V1 users or launch cloud services. The V1 execution/artifact contract must be demonstrated and accepted before implementation here. No database, object store or identity provider has been selected. Apply the [shared run contract](../../skills/astrid-dev-shared/run-contract.md); route (`N`, `X`, `S`), estimate and accountable task owners remain TBD until scoped.
+**Scope boundary:** this is a distinct, **fully hosted** project, not authorization to relocate V1 users or launch cloud services. The V1 execution/artifact contract must be demonstrated and accepted before implementation here. No database, object store or identity provider has been selected. Apply the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md); route (`N`, `X`, `S`), estimate and accountable task owners remain TBD until scoped.
 
 ## Task index
 
