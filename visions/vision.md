@@ -23,4 +23,4 @@ These four [guiding principles](principles.md) describe what we're building towa
 
 You and your agents can contribute to Astrid's tools, knowledge and creative community. We want people who meaningfully advance the mission to share in ownership of the company behind it, though the legal and allocation model still needs to be worked out.
 
-[Give these instructions to your agent](../../README.md#want-to-contribute-give-this-to-your-agent)
+[Give these instructions to your agent](../README.md#want-to-contribute-give-this-to-your-agent)
