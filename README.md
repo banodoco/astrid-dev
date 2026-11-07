@@ -21,7 +21,7 @@ Contributing without an agent? See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## What we're building
 
-**A tool to unlock and elevate the collective artistic ambition of the open-source community.**
+**A tool to unlock the collective artistic ambition of the open-source AI community.**
 
 <!-- vision-summary:start -->
 Our vision has four main pillars and four guiding principles. We've identified 15 gaps between us and that end state, informing 27 projects.

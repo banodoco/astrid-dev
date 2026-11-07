@@ -21,13 +21,18 @@ class PublicVisionProjectionTests(unittest.TestCase):
         )
         self.assertTrue(all(p["descriptor"] and p["bodyMarkdown"] for p in self.page["pillars"]))
         self.assertEqual(
-            self.page["pillars"][3]["descriptor"],
-            "We want to inspire and equip people to push themselves beyond their creative limits - and reward them for doing so.",
+            [p["descriptor"] for p in self.page["pillars"]],
+            [
+                "We want to help artists push the limits of AI and their own creativity to make their most ambitious work possible.",
+                "In the age of agents, every layer of our tools should adapt to the needs of artists and their work.",
+                "We want what artists and their agents discover to give others a stronger foundation for more ambitious work.",
+                "We want to inspire and equip people to push themselves—and reward them for doing so.",
+            ],
         )
 
     def test_vision_contribution_call_to_action(self):
         vision = self.page["vision"]
-        self.assertIn("collective artistic ambition", vision["title"])
+        self.assertEqual(vision["title"], "A tool to unlock the collective artistic ambition of the open-source AI community")
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
         self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
@@ -62,6 +67,11 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertTrue(all(g["assessment"] in
                             {"open", "partially evidenced", "closed", "needs recheck"}
                             for g in self.page["gaps"]))
+
+        self.assertEqual(
+            self.page["principles"][0]["bodyMarkdown"].split(". ", 1)[0] + ".",
+            "Create entirely on your own machine, online or offline, with your files and projects under your control.",
+        )
 
     def test_principles_are_concise_and_balanced(self):
         bodies = [p["bodyMarkdown"] for p in self.page["principles"]]
