@@ -1,0 +1,49 @@
+"""Pure negative tests for the privileged owner-only claim validation."""
+import unittest
+from claim_project import eligible, verify_claim
+from check_docs import HEADER, DIVIDER
+
+BASE = ("# Projects\n\n" + HEADER + "\n" + DIVIDER + "\n"
+        "| Alpha | Goal | queued | Unassigned | TBD | — | [Plan 25](25-cloud/plan.md) |\n"
+        "| Beta | Goal | queued | Unassigned | TBD | — | [Plan 26](26-hosted/plan.md) |\n")
+
+class ClaimTests(unittest.TestCase):
+    def test_claim(self):
+        self.assertEqual(verify_claim(BASE, BASE.replace("| Unassigned |", "| @casey |", 1), "casey"), "25-cloud")
+
+    def test_cannot_change_anything_else(self):
+        claimed = BASE.replace("| Unassigned |", "| @casey |", 1)
+        cases = {
+            "wrong person": BASE.replace("| Unassigned |", "| @other |", 1),
+            "two projects": claimed.replace("| Unassigned |", "| @casey |", 1),
+            "project scope": claimed.replace("Alpha", "Renamed"),
+            "project status": claimed.replace("queued", "active", 1),
+            "extra line": claimed + "a malicious extra line\n",
+            "header edit": claimed.replace("# Projects", "# Projects!"),
+            "no edit": BASE,
+        }
+        for reason, content in cases.items():
+            with self.subTest(reason=reason), self.assertRaises(ValueError):
+                verify_claim(BASE, content, "casey")
+
+    def test_cannot_steal_owner(self):
+        old = BASE.replace("Unassigned", "@alex", 1)
+        with self.assertRaisesRegex(ValueError, "not unassigned"):
+            verify_claim(old, old.replace("@alex", "@casey"), "casey")
+
+    def test_eligibility_filters_untrusted_prs(self):
+        p = {"state": "open", "draft": False,
+             "base": {"ref": "main", "repo": {"full_name": "banodoco/astrid-dev"}},
+             "head": {"sha": "a"*40, "repo": {"full_name": "casey/astrid-dev"}},
+             "user": {"login": "casey", "type": "User"}}
+        changed = [{"filename": "plans/index.md", "status": "modified"}]
+        self.assertTrue(eligible(p, "banodoco/astrid-dev", "a"*40, changed))
+        self.assertFalse(eligible(p, "banodoco/astrid-dev", "b"*40, changed))
+        self.assertFalse(eligible(p, "banodoco/astrid-dev", "a"*40,
+                                  changed + [{"filename": "scripts/evil.py", "status": "added"}]))
+        self.assertFalse(eligible({**p, "draft": True}, "banodoco/astrid-dev", "a"*40, changed))
+        self.assertFalse(eligible({**p, "user": {"login": "casey", "type": "Bot"}},
+                                  "banodoco/astrid-dev", "a"*40, changed))
+
+if __name__ == "__main__":
+    unittest.main()
