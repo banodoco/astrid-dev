@@ -24,6 +24,19 @@ Freeze and reconcile source identities (PIN-0), then preserve launcher behavior 
 
 Report only demonstrated outcomes. Missing deployed veto, settlement/readback, or custody evidence leaves that release boundary unqualified with a concrete NEEDS report. A launcher increment may be delivered independently only without unsupported native safety or qualification claims. Publication remains limited to the reviewed immutable candidate and resolved `pre-main` under ordinary create/fast-forward rules; this plan itself authorizes no execution or mutation.
 
+## Carried from Plan 07
+
+Plan 07 (Pinokio basic) closed on 7 Nov 2026 with hosted Linux and macOS rows passing all six steps on `main` (astrid-agent `fdeac6a5`, App `94670289`, launcher `7144bc13`; run 42333603780). These Plan 07 gaps are now part of this plan:
+
+| Gap | Next step |
+|---|---|
+| The real Pinokio app is not exercised by the hosted rows: they run the launcher's own commands, not Pinokio's buttons or `pinokio.js` wiring | macOS: the owner tested the real Pinokio app by hand on 5 Nov 2026 and everything worked. Linux and Windows: not yet checked by hand. A hosted engine-driven row stays in [Plan 10](../10-pinokio-qualification/plan.md) |
+| A process that ignores the graceful stop is left running after the refusal | Accepted fail-closed limitation; Plan 10 covers engine Stop/Quit |
+| `pinokio-windows` fails at install: with `USERPROFILE`/`LOCALAPPDATA`/`APPDATA` isolated, `install.ps1` exits 1 after the media-tool (ffmpeg) setup output (run 42333603780) | Read the Windows install log from the row's evidence and fix the driver or installer; the row stays a named gap until then |
+| The "other Runtime unchanged" process check was dropped (it was macOS-only) | Add a per-OS check |
+| On fast runners the busy-stop task can finish before Stop lands; the row then sends Stop right after admission and accepts a clean stop, so a busy refusal is not exercised every run | Use a deterministic long-running test task |
+| The retired old-launcher Pinokio route (`execute_pinokio_backend`, M4-4a backend checks) is still in astrid-agent | Remove it once nothing selects it |
+
 ## Read next
 
 - [tasks.md](tasks.md): task index, routes, dependencies, focused checks, and completion evidence.
