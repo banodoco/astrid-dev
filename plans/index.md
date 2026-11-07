@@ -47,4 +47,4 @@ The App's `extension-visual` screenshot baseline and scheduled installer/Direct 
 
 Change **this table once** for status, owner, estimate, waiting-on or priority. Preserve a row for every `plans/<id>/plan.md`. Never copy status into a plan's metadata or a second archive table.
 
-Run `python3 scripts/check_docs.py --sync` from repo root to refresh the generated README excerpt, then `python3 scripts/check_docs.py` before committing. CI will **check**, never push generated changes. **Moving a plan to `done` also requires a [completion assessment in the PR description](../AGENTS.md#completing-a-plan-one-decision-gate)**, covering acceptance evidence and every linked gap.
+Run `python3 scripts/check_docs.py` and `python3 scripts/export_public_vision.py` from the repository root. CI validates on every PR and `main` push; the public vision feed is published only after a validated `main` push. **Moving a plan to `done` also requires the [completion assessment](../.github/PULL_REQUEST_TEMPLATE/project-completion.md)** with actual acceptance evidence and an assessment of every linked gap.
