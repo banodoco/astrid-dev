@@ -6,8 +6,6 @@
 
 Astrid aims to help individuals and the community as a whole pursue artistic work beyond what they thought possible.
 
-The collective inspires ambitious work; adaptable tools and shared knowledge help realize it, while each contribution improves the foundation for everyone. To align incentives, we aim to share **100% of the ownership of the company behind the collective with those advancing this mission**.
-
 ## Four pillars
 
 ### [A Tool for Artistic Ambition](pillars/artistic-ambition.md)
