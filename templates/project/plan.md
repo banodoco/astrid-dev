@@ -16,6 +16,8 @@ State the useful result in one or two sentences. Current status, owner, priority
 
 ## What we build on
 
+Summarize the prior-art findings and actual behavior established in [inputs.md's planning evidence](inputs.md#planning-evidence). Name the retained source implementation and why a simpler or existing-pack alternative was not sufficient. Don't claim research or owner approval is complete if those records still say Pending.
+
 Explain the existing work and predecessor outputs in plain language. For a code project, explain which implementation is retained. Distinguish the destination base from feature work to integrate. Exact source identities belong in [inputs.md](inputs.md).
 
 ## Prerequisites and readiness
@@ -28,7 +30,7 @@ Explain the shortest path from the starting state to the result, including genui
 
 ## Completion
 
-Describe the observable result and its evidence, including any outcome this project does not prove. State the integration/publication destination and existing authority limits.
+Describe the **owner-chosen end state** and the observable acceptance evidence that proves it rather than merely counting tasks, with reference to the [planning decision](inputs.md#end-state-options-and-owner-choice). Include any outcome this project does not prove. State the integration/publication destination and existing authority limits.
 
 ## Read next
 

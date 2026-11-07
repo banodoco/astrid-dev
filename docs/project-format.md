@@ -6,9 +6,9 @@ Each project gets a stable folder under `plans/`. A reader should be able to ope
 |---|---|
 | `plan.md` | The goal, scope, starting point, sequence, completion boundary, and a [vision gap](../visions/gaps.md) relationship (or enabler rationale). Link supporting details. |
 | `tasks.md` | The work index. A ready task identifies its outcome, route or responsible role, dependencies, focused evidence, and progress. |
-| `inputs.md` | The sources the work relies on: code and branches, a brief, visual references, research data, an existing decision, or a predecessor's output. Record identity and limitations where they matter. |
+| `inputs.md` | Sources **and planning evidence**: prior-art search, actual behavior traced, reuse/placement choice, independent simplification challenge, end-state alternatives and owner's decision, assumptions and limits. Link exact source identities when they matter; keep legitimate unknowns marked Pending in drafts. |
 
-These are three questions, not three long forms. A draft can answer each in a few lines and name what is unknown. A software change needs base and donor commits; a design study may need a brief, source frames, and comparison criteria instead. See the [copyable template](../templates/project/plan.md).
+These are three questions, not three long forms. A new project must preserve the [planning skill's evidence](../skills/astrid-dev-plan/SKILL.md#preserve-planning-evidence-in-the-project-pack) in `inputs.md`, so a new agent can verify why it exists before changing code. The owner-chosen outcome remains in `plan.md` and downstream tests stay in `tasks.md`; don't repeat entire research transcripts in each file. For genuinely new project folders, CI checks the presence of this record and whether accepted scopes still contain pending claims. Existing project packs are not silently required to backfill it merely because this policy changed. A draft can answer each in a few lines and name what is unknown. A software change needs base and donor commits; a design study may need a brief, source frames, and comparison criteria instead. See the [copyable template](../templates/project/plan.md).
 
 ## Extend for a real job
 

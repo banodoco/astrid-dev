@@ -17,9 +17,25 @@ Use this workflow only for a genuinely new project or materially new scope. Cons
 
 Use exact configured model IDs and supported effort from the run's `run.yaml`; class labels are not identities. Do not invent IDs or silently substitute an unavailable model.
 
+## Preserve planning evidence in the project pack
+
+The planning conversation is not evidence by itself. Leave a **reviewable trail in `inputs.md`** before representing a project as accepted and ready for execution:
+
+1. **Prior art and actual behavior:** cite the repositories, docs, earlier plans and useful external approaches searched (including exact revision/links where it matters). Trace the current behavior from input to user-visible outcome; record promising reuse points, negative search results, and uncertainties. "No prior art" is a finding to justify, not a default assumption.
+2. **Reuse and placement:** compare extending an existing pack, creating a pack, adapting shared core, and doing less or nothing. State the chosen placement, source-backed rationale, tradeoffs and what it preserves. Do not mistake a new project for a new vision gap: use the existing [gap contract](../../visions/gaps.md), identify the most relevant existing gap first, and only propose a new outcome-level gap with its own independent closure test.
+3. **Independent simplification challenge:** record the separate high-judgment planner's concrete suggested removals, consolidations, or reuse; record what was accepted/rejected and why. Identify what it actually reviewed and where the record lives. A rubber-stamp approval or unrun challenge is not proof.
+4. **End-state choice:** preserve the ten genuinely different end-state statements or a durable link to them, the meaningful alternatives the owner rejected, and the *actual owner-agreed outcome*, with a date/source. Do not infer approval from silence or from creating a queued catalog entry.
+5. **Evidence limitations:** separate observed facts, reasoned assumptions and unresolved source/permission/hardware questions. Link relevant evidence rather than pasting bulky transcripts into multiple files.
+
+Use the [project pack's `inputs.md` template](../../templates/project/inputs.md) as the **single planning-evidence location**. `plan.md` holds the *decision* (the chosen end state, scope, retained work and completion test); `tasks.md` holds the *implementation handoff* (source inputs, dependencies and focused proof). Link to supporting research or owner-decision records when they need independent homes. Never maintain duplicate findings/status ledgers across those files.
+
+**Draft versus accepted:** a new project may be recorded as a draft while research, the independent challenge, ten end-state options or owner approval is genuinely pending. State each missing item as `Pending — <why; next action>`; do not fill it with invented links or claim readiness. Before promoting the scope as accepted, replace pending evidence with actual findings, a specific owner decision, and the aligned ready tasks. The catalog still owns status/owner/priority; this scope-decision record does not change that or authorize execution.
+
+The existing documentation CI checks that newly introduced project packs have an explicit planning-evidence record and that an **Accepted** record has sources rather than unresolved placeholders. It cannot judge whether an actual search was diligent, the proposed architecture is minimal, or owner agreement is authentic. A reviewer must make that judgment; this is not an additional sign-off round.
+
 ## Produce a ready plan
 
-After scope agreement, write focused tasks with outcome, route (`N`, `X` or `S`; see below), actual base and donor identities, dependencies, explicitly scoped acceptance checks, estimate, deferred scope, and required inputs. Distinguish evidence from assumptions. Keep active/upcoming project status and remaining human-day estimate in the working repo's authoritative project index; plans own technical detail and task progress. Do not run tests while planning unless asked, create a generic framework, or add recurring reviews. Existing accepted plans continue under their accepted scope and review policy without new planning sign-off.
+After scope agreement and with the planning evidence captured in `inputs.md`, write focused tasks with outcome, route (`N`, `X` or `S`; see below), actual base and donor identities, dependencies, explicitly scoped acceptance checks, estimate, deferred scope, and required inputs. Distinguish evidence from assumptions. Keep active/upcoming project status and remaining human-day estimate in the working repo's authoritative project index; plans own technical detail and task progress. Do not run tests while planning unless asked, create a generic framework, or add recurring reviews. Existing accepted plans continue under their accepted scope and review policy without new planning sign-off.
 
 ## Use one project folder
 
