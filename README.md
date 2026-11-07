@@ -8,7 +8,7 @@ This is where Astrid connects its creative ambition to practical work, alongside
 
 **[Vision → Gaps → Plans → Evidence](visions/README.md).** The vision defines the destination. [Gaps](visions/README.md)—relevant to one or more pillars and principles—record what's not yet true and what would prove it. The plans below are attempts to close those gaps; their actual evidence informs the next assessment. **Completing a plan does not automatically close a gap.**
 
-The [plan catalog](plans/index.md) owns status, ownership and priority; the list below is generated from it. [How gap reassessment works](visions/gaps.md).
+The [project catalog](plans/index.md) alone owns status, ownership, priority and estimates. [How gaps are assessed](visions/gaps.md).
 
 ## Want to contribute? Give this to your agent.
 
