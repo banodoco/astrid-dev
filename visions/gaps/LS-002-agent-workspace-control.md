@@ -8,7 +8,7 @@ An agent and a person use the same supported workspace operations to open, place
 
 ## Current state
 
-Astrid Agent has pack/skill/action discovery. Astrid App has extensions, commands and scoped editing contexts. The [source review](../references/liquid-software/source-map.md) has **not** established a public, domain-neutral workspace manipulation API.
+Astrid Agent has pack/skill/action discovery. Astrid App has extensions, commands and scoped editing contexts. The [source review](../../plans/24-liquid-workspace/inputs.md) has **not** established a public, domain-neutral workspace manipulation API.
 
 ## Gap
 
@@ -20,4 +20,4 @@ An agent arranges the same real components as a user, binds the correct timeline
 
 ## Sources and reassessment
 
-[Component vocabulary](../references/liquid-software/components.md) · [Source map](../references/liquid-software/source-map.md). Closing this gap requires a real human–agent journey and negative/conflict cases, not only registered commands.
+[Component vocabulary](../../plans/24-liquid-workspace/components.md) · [Source map](../../plans/24-liquid-workspace/inputs.md). Closing this gap requires a real human–agent journey and negative/conflict cases, not only registered commands.
