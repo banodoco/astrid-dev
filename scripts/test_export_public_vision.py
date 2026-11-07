@@ -2,7 +2,7 @@
 import unittest
 
 from check_docs import ROOT
-from export_public_vision import build, rewrite_links
+from export_public_vision import build, rewrite_links, render_root_counts, root_readme_with_counts
 
 
 SHA = "a" * 40
@@ -105,6 +105,32 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(text,
                          f"[source](https://github.com/banodoco/astrid-dev/blob/{SHA}"
                          "/vision/pillars/artistic-ambition.md)")
+
+
+    def test_root_readme_counts_are_derived_and_idempotent(self):
+        text = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertEqual(root_readme_with_counts(text, self.page), text)
+        gaps, projects = len(self.page["gaps"]), len(self.page["projects"])
+        self.assertIn(f"[{gaps} gaps](vision/README.md#gaps--{gaps}-assessed-outcomes)", text)
+        self.assertIn(f"[{projects} projects](plans/index.md)", text)
+        self.assertIn("four guiding [principles](vision/README.md#four-driving-principles)", text)
+
+    def test_root_readme_counts_follow_added_gaps_and_projects(self):
+        page = {**self.page, "gaps": [*self.page["gaps"], {"id": "XX-999"}],
+                "projects": [*self.page["projects"], {"id": "next-project"}]}
+        generated = render_root_counts(page)
+        gaps, projects = len(page["gaps"]), len(page["projects"])
+        self.assertIn(f"[{gaps} gaps](vision/README.md#gaps--{gaps}-assessed-outcomes)", generated)
+        self.assertIn(f"[{projects} projects](plans/index.md)", generated)
+        source = (ROOT / "README.md").read_text(encoding="utf-8")
+        changed = root_readme_with_counts(source, page)
+        self.assertNotEqual(changed, source)
+        self.assertEqual(root_readme_with_counts(changed, page), changed)
+        self.assertIn("## From vision to projects", changed)
+
+    def test_root_readme_generated_region_is_required(self):
+        with self.assertRaisesRegex(ValueError, "generated vision-count region"):
+            root_readme_with_counts("# README without the counts", self.page)
 
     def test_immutable_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "40-character"):

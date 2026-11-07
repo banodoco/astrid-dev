@@ -257,11 +257,36 @@ def render_readme(root: Path, page: dict) -> str:
     return "\n".join(lines)
 
 
+ROOT_COUNTS_START = "<!-- BEGIN GENERATED VISION COUNTS -->"
+ROOT_COUNTS_END = "<!-- END GENERATED VISION COUNTS -->"
+
+
+def render_root_counts(page: dict) -> str:
+    """A small derived summary, not another manually updated status list."""
+    gaps = len(page["gaps"])
+    projects = len(page["projects"])
+    return (
+        "There are four main [pillars](vision/README.md#four-pillars) to our vision, "
+        "four guiding [principles](vision/README.md#four-driving-principles), "
+        f"and [{gaps} gaps](vision/README.md#gaps--{gaps}-assessed-outcomes) "
+        f"between us and that goal, informing [{projects} projects](plans/index.md)."
+    )
+
+
+def root_readme_with_counts(text: str, page: dict) -> str:
+    """Replace only the generated paragraph; preserve surrounding human copy."""
+    if text.count(ROOT_COUNTS_START) != 1 or text.count(ROOT_COUNTS_END) != 1:
+        raise ValueError("README.md needs exactly one generated vision-count region")
+    before, rest = text.split(ROOT_COUNTS_START)
+    _, after = rest.split(ROOT_COUNTS_END)
+    return before + ROOT_COUNTS_START + "\n" + render_root_counts(page) + "\n" + ROOT_COUNTS_END + after
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--revision", help="40-character Astrid Dev revision (defaults to local HEAD)")
     parser.add_argument("--output", type=Path, help="optional JSON output; omit for validation only")
-    parser.add_argument("--sync-readme", action="store_true", help="regenerate vision/README.md from canonical sources")
+    parser.add_argument("--sync-readme", action="store_true", help="refresh vision/README.md and derived README.md counts")
     args = parser.parse_args()
     revision = args.revision or subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
@@ -270,10 +295,16 @@ def main() -> int:
         result = build(ROOT, revision)
         expected_readme = render_readme(ROOT, result)
         readme = ROOT / "vision/README.md"
+        root_readme = ROOT / "README.md"
+        expected_root_readme = root_readme_with_counts(root_readme.read_text(encoding="utf-8"), result)
         if args.sync_readme:
             readme.write_text(expected_readme, encoding="utf-8")
-        elif readme.read_text(encoding="utf-8") != expected_readme:
-            raise ValueError("vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme")
+            root_readme.write_text(expected_root_readme, encoding="utf-8")
+        else:
+            if readme.read_text(encoding="utf-8") != expected_readme:
+                raise ValueError("vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme")
+            if root_readme.read_text(encoding="utf-8") != expected_root_readme:
+                raise ValueError("README.md vision counts are stale; run python3 scripts/export_public_vision.py --sync-readme")
     except (ValueError, OSError) as exc:
         print(f"ERROR public vision content: {exc}")
         return 1

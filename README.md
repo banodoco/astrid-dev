@@ -4,13 +4,17 @@ Astrid Dev connects our creative ambition to practical contributions. Our [contr
 
 ## What we're building
 
-**A tool to unlock the collective artistic ambition of the open-source community.**
+**A tool to unlock and elevate the collective artistic ambition of the open-source community.**
 
-There are **four main pillars to our vision** and **four guiding principles**: local-first and cloud-capable, open by design, in the creator's control, and eliminating needless technical wrangling. [Read the full vision](vision/README.md).
+<!-- BEGIN GENERATED VISION COUNTS -->
+There are four main [pillars](vision/README.md#four-pillars) to our vision, four guiding [principles](vision/README.md#four-driving-principles), and [15 gaps](vision/README.md#gaps--15-assessed-outcomes) between us and that goal, informing [26 projects](plans/index.md).
+<!-- END GENERATED VISION COUNTS -->
+
+[Read the full vision](vision/README.md).
 
 ## From vision to projects
 
-The vision defines the destination. [Gaps](vision/README.md#gaps--15-assessed-outcomes), relating to one or more pillars or guiding principles, record what's not yet true and what would prove it. Projects in the [plan catalog](plans/index.md) are attempts to close those gaps. **Completing a plan doesn't automatically close a gap; it informs a reassessment.** [How gaps are assessed](docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
+The vision defines the destination, while projects in the [plan catalog](plans/index.md) are attempts to close the gaps between our current state and that goal. Completing a plan doesn't automatically close a gap; it informs our [reassessment](docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
 
 The [plan catalog](plans/index.md) is the single source of truth for project status, ownership, priority and estimates.
 
