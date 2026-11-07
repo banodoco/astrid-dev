@@ -39,7 +39,7 @@
 
 ## Delivery context
 
-Plan 08 records the R1 ship on 2026-11-05. Plan 07 is the R1.1 Pinokio effort, and Plan 10 follows its qualification. Plans 01, 02, 04, 05 and 06 retain their existing staged integration and authorization constraints. Plan 20 is the top-priority upcoming zero-to-first-image project from the prior queue; this catalog keeps it first among queued plans. Plans 11–20, 25 and 26 are draft scopes with unresolved source/scoping decisions. Plan 21 is a homepage hand-off, not yet implementation. Use each plan's `plan.md`, `tasks.md` and `inputs.md` for scope and evidence.
+Plan 08 records the R1 ship on 2026-11-05. Plan 07 is the R1.1 Pinokio effort, and Plan 10 follows its qualification. Plans 01, 02, 04, 05 and 06 retain their existing staged integration and authorization constraints. Plan 20 is the top-priority upcoming zero-to-first-image project from the prior queue; this catalog keeps it first among queued plans. Plans 11–20 and 25–27 are draft scopes with unresolved source/scoping decisions. Plan 21 is a homepage hand-off, not yet implementation. Use each plan's `plan.md`, `tasks.md` and `inputs.md` for scope and evidence.
 
 The App's `extension-visual` screenshot baseline and scheduled installer/Direct Journey checks have known historical failures; see relevant product evidence rather than mistaking the catalog for a CI report.
 
