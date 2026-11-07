@@ -17,9 +17,3 @@ Everything about Astrid is designed to give creators control. They can change ev
 ## Eliminate needless technical wrangling
 
 Artists should spend their time creating, not installing models or troubleshooting environments. Agents should handle choosing and setting up tools, managing dependencies, running jobs and recovering from errors. Technical choices, permissions and costs should be easy to understand without becoming the focus of the creative experience.
-
-## Evidence and delivery
-
-A [gap](gaps.md) may apply to any number of [pillars](vision.md) and principles, and one gap may concern several. No principle automatically creates a new gap: first check whether an existing outcome already captures the missing behavior. [Plans](../plans/) link to those specific gaps and deliver evidence.
-
-**Sources:** [public Astrid vision](https://astrid.haus/vision), [current page source](https://github.com/banodoco/astrid-app/blob/57d39bd68973dc081ade464e66bef207434436f4/src/pages/Home/PublicAstridVision.tsx), and [Runtime architecture direction](https://github.com/banodoco/astrid-app/blob/57d39bd68973dc081ade464e66bef207434436f4/docs/creative-workspace-runtime-vision.md). Public-page status statements are historical snapshots until independently revalidated.

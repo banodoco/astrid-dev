@@ -99,8 +99,6 @@ def build(root: Path, revision: str) -> dict:
     principles = []
     for m in re.finditer(r"^## (.+)$", principles_text, re.M):
         name = m.group(1).strip()
-        if name == "Evidence and delivery":
-            break
         content = section(principles_text, name)
         principles.append({
             "id": slug(name), "title": name,
