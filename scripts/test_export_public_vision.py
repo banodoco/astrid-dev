@@ -2,7 +2,7 @@
 import unittest
 
 from check_docs import ROOT
-from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary
+from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary, canonical_agent_prompt
 
 
 SHA = "a" * 40
@@ -34,6 +34,8 @@ class PublicVisionProjectionTests(unittest.TestCase):
         vision = self.page["vision"]
         self.assertEqual(vision["title"], "A tool to unlock the collective artistic ambition of the open-source AI community")
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
+        self.assertEqual(vision["agentPrompt"], canonical_agent_prompt(ROOT))
+        self.assertIn("skills/astrid-dev/SKILL.md", vision["agentPrompt"])
         self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
         self.assertNotIn("legal and allocation model", vision["contributeMarkdown"].lower())
@@ -72,6 +74,12 @@ class PublicVisionProjectionTests(unittest.TestCase):
             self.page["principles"][0]["bodyMarkdown"].split(". ", 1)[0] + ".",
             "Create entirely on your own machine, online or offline, with your files and projects under your control.",
         )
+
+    def test_local_first_promise_is_shorter_without_losing_offline_control(self):
+        first = self.page["principles"][0]["bodyMarkdown"]
+        self.assertEqual(len(first.split()), 43)
+        self.assertIn("online or offline", first)
+        self.assertIn("files and projects under your control", first)
 
     def test_principles_are_concise_and_balanced(self):
         principles = self.page["principles"]
