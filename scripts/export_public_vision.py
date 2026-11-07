@@ -64,6 +64,18 @@ def rewrite_links(text: str, source: Path, revision: str, root: Path) -> str:
     return MD_LINK.sub(replace, text)
 
 
+AGENT_PROMPT = re.compile(r"^\x60\x60\x60text[ \t]*\n(.*?)^\x60\x60\x60[ \t]*$", re.M | re.S)
+
+
+def read_agent_prompt(root: Path) -> str:
+    """Project the exact prompt from the root README, with no extra authored copy."""
+    text = section(read(root, Path("README.md")), "Want to contribute? Give this to your agent.")
+    matches = list(AGENT_PROMPT.finditer(text))
+    if len(matches) != 1 or not matches[0].group(1).strip():
+        raise ValueError("README contribution section must have exactly one nonempty text prompt")
+    return matches[0].group(1).strip("\n")
+
+
 def build(root: Path, revision: str) -> dict:
     if not REVISION.fullmatch(revision):
         raise ValueError("revision must be an immutable 40-character commit SHA")
@@ -164,7 +176,8 @@ def build(root: Path, revision: str) -> dict:
         "schemaVersion": 1,
         "source": {"repository": "banodoco/astrid-dev", "revision": revision},
         "vision": {"title": title, "introMarkdown": rewrite_links(intro, vision_file, revision, root),
-                   "contributeMarkdown": rewrite_links(section(vision, "Build Astrid with us"), vision_file, revision, root)},
+                   "contributeMarkdown": rewrite_links(section(vision, "Build Astrid with us").split("\n\n", 1)[0], vision_file, revision, root),
+                   "agentPrompt": read_agent_prompt(root)},
         "pillars": pillars, "principles": principles, "gaps": gaps, "projects": projects,
     }
 

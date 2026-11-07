@@ -2,7 +2,7 @@
 import unittest
 
 from check_docs import ROOT
-from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary
+from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary, read_agent_prompt
 
 
 SHA = "a" * 40
@@ -39,11 +39,9 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertNotIn("legal and allocation model", vision["contributeMarkdown"].lower())
         self.assertNotIn("The information on this page is pulled from", vision["introMarkdown"])
         self.assertNotIn("collective inspires ambitious work", vision["introMarkdown"])
-        self.assertIn(
-            "[Give these instructions to your agent](https://github.com/banodoco/astrid-dev/blob/"
-            + SHA + "/README.md#want-to-contribute-give-this-to-your-agent)",
-            vision["contributeMarkdown"],
-        )
+        self.assertNotIn("Give these instructions to your agent", vision["contributeMarkdown"])
+        self.assertEqual(vision["agentPrompt"], read_agent_prompt(ROOT))
+        self.assertIn("skills/astrid-dev/SKILL.md", vision["agentPrompt"])
 
     def test_principles_and_gap_relationships(self):
         self.assertEqual(len(self.page["principles"]), 4)
@@ -72,6 +70,15 @@ class PublicVisionProjectionTests(unittest.TestCase):
             self.page["principles"][0]["bodyMarkdown"].split(". ", 1)[0] + ".",
             "Create entirely on your own machine, online or offline, with your files and projects under your control.",
         )
+
+    def test_published_prompt_requires_canonical_readme_code_block(self):
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "README.md").write_text("## Want to contribute? Give this to your agent.\n\nNo prompt.\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "exactly one"):
+                read_agent_prompt(root)
 
     def test_principles_are_concise_and_balanced(self):
         principles = self.page["principles"]
