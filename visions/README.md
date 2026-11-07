@@ -2,7 +2,7 @@
 
 Start with **[A tool to unlock the collective artistic ambition of the open-source community](vision.md)**.
 
-The vision contains four [pillars](vision.md#four-pillars)—**A Tool for Artistic Ambition, Agent-Powered Liquid Software, Intelligence That Compounds, A Shared Creative Endeavor**—and four [cross-cutting principles](principles.md): **local-first/cloud-capable, open by design, creator-controlled, eliminate needless technical wrangling**.
+The vision contains four [pillars](vision.md#four-pillars)—**A Tool for Artistic Ambition, Agent-Powered Liquid Software, Intelligence That Compounds, A Shared Creative Endeavor**—and four [guiding principles](principles.md): **local-first/cloud-capable, open by design, creator-controlled, eliminate needless technical wrangling**.
 
 **[Gaps](gaps.md) → [Plans](../plans/) → Evidence → reassessment.** A gap may apply to one or several pillars and principles. The files live in **one** [`gaps/` directory](gaps/); they are not duplicated beneath their conceptual owners.
 
