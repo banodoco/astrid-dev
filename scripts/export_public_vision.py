@@ -10,6 +10,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
+from gap_relationships import parse_gap_relationships
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"
 PILLAR = re.compile(r"^\d+\. \*\*\[([^\]]+)\]\((pillars/[^)]+\.md)\)\*\* — (.+)$", re.M)
@@ -125,25 +126,16 @@ def build(root: Path, revision: str) -> dict:
         assessment = metadata.split("**Assessment:**", 1)
         if len(assessment) != 2 or not (status := STATUS.match(assessment[1].strip())):
             raise ValueError(f"{path}: Assessment must begin with an allowed status")
-        relationships = []
-        for dest in re.findall(r"\]\((\.\./(?:pillars/[^)]+|principles\.md(?:#[^)]+)?))\)", assessment[0]):
-            if dest.startswith("../pillars/"):
-                relationship = "pillar:" + Path(dest).stem
-            else:
-                _, sep, anchor = dest.partition("#")
-                if not sep:
-                    raise ValueError(f"{path}: principle relationship must identify a section")
-                relationship = "principle:" + anchor
+        relationships, primary_relationship = parse_gap_relationships(metadata)
+        for relationship in relationships:
             if relationship not in valid_anchors:
                 raise ValueError(f"{path}: unknown vision relationship {relationship}")
-            if relationship not in relationships:
-                relationships.append(relationship)
-        if not relationships:
-            raise ValueError(f"{path}: no valid relationships")
         gap = {"id": gap_id, "title": name,
                "githubUrl": f"{REPO_URL}/blob/{revision}/{path.as_posix()}",
                "assessment": status.group(1).lower(),
-               "assessmentDetail": assessment[1].strip(), "appliesTo": relationships}
+               "assessmentDetail": assessment[1].strip(),
+               "appliesTo": relationships,
+               "primaryAppliesTo": primary_relationship}
         for source_title, out_key in [
             ("Desired state", "desiredMarkdown"),
             ("Current state", "currentMarkdown"),

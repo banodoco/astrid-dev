@@ -39,6 +39,19 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(len({g["id"] for g in self.page["gaps"]}), len(self.page["gaps"]))
         self.assertTrue(all(g["appliesTo"] and g["currentMarkdown"] and g["desiredMarkdown"]
                             for g in self.page["gaps"]))
+        self.assertTrue(all(g["primaryAppliesTo"] == g["appliesTo"][0]
+                            and g["appliesTo"].count(g["primaryAppliesTo"]) == 1
+                            for g in self.page["gaps"]))
+        self.assertEqual(
+            {g["id"]: g["primaryAppliesTo"] for g in self.page["gaps"] if g["id"] in
+             {"CA-002", "F-001", "F-002", "F-003", "F-005", "LS-001"}},
+            {"CA-002": "pillar:shared-endeavour",
+             "F-001": "principle:eliminate-needless-technical-wrangling",
+             "F-002": "principle:in-the-creators-control",
+             "F-003": "principle:eliminate-needless-technical-wrangling",
+             "F-005": "principle:local-first-cloud-capable",
+             "LS-001": "pillar:liquid-software"},
+        )
         self.assertTrue(all(g["assessment"] in
                             {"open", "partially evidenced", "closed", "needs recheck"}
                             for g in self.page["gaps"]))
