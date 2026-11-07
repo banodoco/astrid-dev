@@ -26,6 +26,12 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("collective artistic ambition", vision["title"])
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
         self.assertIn("ownership", vision["contributeMarkdown"])
+        self.assertIn("\n\nThe information on this page is pulled from the Astrid Dev repository.", vision["introMarkdown"])
+        self.assertNotIn("[Astrid Dev repository]", vision["introMarkdown"])
+        self.assertIn(
+            "[the contribution guide](https://github.com/banodoco/astrid-dev#want-to-contribute-give-this-to-your-agent)",
+            vision["introMarkdown"],
+        )
 
     def test_principles_and_gap_relationships(self):
         self.assertEqual(len(self.page["principles"]), 4)
@@ -57,6 +63,13 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertTrue(all(p["githubUrl"].startswith(
             "https://github.com/banodoco/astrid-dev/blob/" + SHA + "/plans/")
                             for p in projects))
+
+    def test_video_rendering_options_is_a_queued_gap_linked_plan(self):
+        matches = [p for p in self.page["projects"] if p["id"] == "27-video-render-options"]
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0]["status"], "queued")
+        self.assertIn("F-003", matches[0]["gapIds"])
+        self.assertIn("F-002", matches[0]["gapIds"])
 
     def test_project_gap_ids_resolve(self):
         ids = {gap["id"] for gap in self.page["gaps"]}
