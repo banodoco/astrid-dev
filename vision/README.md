@@ -8,8 +8,6 @@ Astrid aims to help individuals and the community as a whole pursue artistic wor
 
 The collective inspires ambitious work; adaptable tools and shared knowledge help realize it; results raise the bar and improve the foundation for everyone. The stated goal is **100% ownership of the company behind the collective by those advancing its mission**. The actual allocation and legal structure remain to be designed.
 
-The information on this page is pulled from the Astrid Dev repository. If you'd like to contribute, visit [the contribution guide](https://github.com/banodoco/astrid-dev#want-to-contribute-give-this-to-your-agent).
-
 ## Four pillars
 
 ### [A Tool for Artistic Ambition](pillars/artistic-ambition.md)
@@ -36,7 +34,7 @@ We want to build a culture of people pushing AI—and themselves—beyond their 
 
 **Give people a reason, encouragement and a genuine stake in attempting more ambitious creative work.**
 
-## Four creator principles
+## Four driving principles
 
 ### [Local-first, cloud-capable](principles/local-first-cloud-capable.md)
 

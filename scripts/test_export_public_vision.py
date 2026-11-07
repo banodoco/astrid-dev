@@ -26,11 +26,12 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("collective artistic ambition", vision["title"])
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
         self.assertIn("ownership", vision["contributeMarkdown"])
-        self.assertIn("\n\nThe information on this page is pulled from the Astrid Dev repository.", vision["introMarkdown"])
-        self.assertNotIn("[Astrid Dev repository]", vision["introMarkdown"])
+        self.assertNotIn("The information on this page is pulled from", vision["introMarkdown"])
+        self.assertIn("collective inspires ambitious work", vision["introMarkdown"])
         self.assertIn(
-            "[the contribution guide](https://github.com/banodoco/astrid-dev#want-to-contribute-give-this-to-your-agent)",
-            vision["introMarkdown"],
+            "[Give these instructions to your agent](https://github.com/banodoco/astrid-dev/blob/"
+            + SHA + "/README.md#want-to-contribute-give-this-to-your-agent)",
+            vision["contributeMarkdown"],
         )
 
     def test_principles_and_gap_relationships(self):
