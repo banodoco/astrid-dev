@@ -1,4 +1,4 @@
-# LS-001 — Portable creative components
+# LS-001 — Creative components can't yet move freely
 
 **Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [Open by design](../principles.md#open-by-design) · **Assessment:** Open, source inspection (2026-11-06).
 

@@ -1,4 +1,4 @@
-# AA-001 — Sustained, ambitious creative work
+# AA-001 — Ambitious projects aren't yet proven end to end
 
 **Applies to:** [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open, initial source assessment (2026-11-06); not a live product qualification.
 

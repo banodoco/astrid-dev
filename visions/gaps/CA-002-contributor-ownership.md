@@ -1,6 +1,6 @@
-# CA-002 — A meaningful contributor-ownership model
+# CA-002 — No implemented contributor-ownership model
 
-**Applies to:** [Shared Creative Endeavour](../pillars/shared-endeavour.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open; vision-level commitment, legal and operating terms not established.
+**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open; earlier Banodoco arrangement lapsed, Astrid model and legal terms not established.
 
 ## Desired state
 
@@ -8,7 +8,7 @@ The people who meaningfully advance the collective have a genuine, understandabl
 
 ## Current state
 
-The ownership intention has been stated by the founder. No eligibility, allocation, vesting, governance, financing or legal instrument has been established within the materials reviewed for this vision.
+Pom reports having previously used a contributor ownership/share arrangement within Banodoco. That arrangement has lapsed over roughly the past year while he has been building Astrid. The earlier terms and their legal status have not been independently verified in this assessment. **A suitable Astrid-specific model has yet to be worked out**, including eligibility, allocation, vesting, governance, financing and legal implementation.
 
 ## Gap
 

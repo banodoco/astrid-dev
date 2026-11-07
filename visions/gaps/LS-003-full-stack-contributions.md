@@ -1,4 +1,4 @@
-# LS-003 — Composable frontend and backend contributions
+# LS-003 — Frontend and backend extensions don't yet compose
 
 **Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [Open by design](../principles.md#open-by-design) · **Assessment:** Open, source inspection (2026-11-06).
 
