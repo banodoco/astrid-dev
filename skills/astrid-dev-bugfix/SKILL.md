@@ -5,7 +5,7 @@ description: Investigate reported Astrid failures, reproduce UI issues in a brow
 
 # Bug fixing
 
-**Outcome:** understand the failure, recommend the fastest safe way to restore this user's actual workflow, and leave one central incident record—even when no code is changed.
+**Outcome:** understand the failure, recommend the fastest safe way to restore this user's actual workflow, and leave one central incident record—even when no code is changed. **A bug is an issue, not a new project**, unless it reveals a separate independently useful outcome.
 
 Read [the development entrypoint](../astrid-dev/SKILL.md), [shared run contract](../astrid-dev-shared/run-contract.md), and relevant product repository instructions. Use their existing model bindings, authority, focused checks and review rules. This skill owns the **user-incident path**, not a second implementation/release workflow.
 
@@ -25,7 +25,7 @@ References: [Runtime](https://github.com/banodoco/astrid-runtime/blob/main/READM
 
 ## Investigate and reproduce
 
-Use parallel **N-route (Haiku/Luna)** sub-agents for bounded evidence: **(1)** user journey and logs, **(2)** machine, install/upgrade history and data state, **(3)** cross-repository code paths and version changes, **(4)** competing causes (shared bug, upgrade regression, interrupted state, provider issue or machine-specific failure). Synthesize findings and send additional helpers after uncertainties. Treat hypotheses as hypotheses.
+Start with the original failing user journey, observed evidence and a source-level hypothesis. For ambiguous or cross-repository incidents, delegate bounded **N-route** investigations of environment, code paths or competing causes when helpers are available. Do not launch four parallel agents for a simple reproducible failure; scale the investigation to uncertainty and impact. Treat hypotheses as hypotheses.
 
 **If the failure involves the frontend, use an available browser to reproduce it when appropriate.** Prefer the user's actual frontend route: `astrid.haus` or their local editor. Capture sanitized steps, expected vs observed behavior, the URL/build, screenshot or recording if useful, browser console/network failures and Runtime health/handshake correlation. Compare hosted/local modes only if it helps isolate the bug. **A remote browser may not reach the user's localhost or credentials**; don't substitute an unrelated healthy environment and call it a reproduction. If access is unavailable, document what is blocked and use other evidence.
 
@@ -43,7 +43,7 @@ Create a concise, sanitized `bug-evidence-pack.md`:
 
 Give the user the pack and a practical recovery recommendation; invite them to share it with the maintainer. Offer to apply recovery, with a rough effort and risk summary, **only with approval**. If approved, verify the user's original journey and data preservation and record exactly what changed.
 
-## One issue for every incident
+## One issue for every incident, not a project
 
 Search for duplicates, then **create/update one issue in [banodoco/astrid-dev](https://github.com/banodoco/astrid-dev/issues)** using the [issue template](../../templates/bug-issue.md), whether the result is fact-finding, a one-machine workaround or an upstream fix. Include redacted evidence, recovery advice and outcome, and links to **every related product PR** with its repository, purpose and status. Every PR must link back to this issue. If public sharing isn't authorized or the evidence cannot be sanitized, prepare a ready-to-post issue and obtain approval instead of publishing.
 

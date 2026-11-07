@@ -12,39 +12,21 @@ The [plan catalog](plans/index.md) owns status, ownership and priority; the list
 
 ## Want to contribute? Give this to your agent.
 
-Copy this prompt into your agent or browse the current plans below.
+Copy this prompt into your agent:
 
 ```text
-Help me choose and complete a contribution to Astrid. Start at
-https://github.com/banodoco/astrid-dev: open my existing checkout or clone it, and
-update it only while preserving local changes. Read its AGENTS.md and README.md. From
-the repository root, preview and sync the skills (./sync.sh --dry-run, then ./sync.sh),
-which links them into my existing ~/.claude/skills, ~/.codex/skills or ~/.agents/skills,
-respecting local permissions; the destination must already exist, and use --destination
-/path/to/skills if needed. Keep the linked checkout in place.
-
-Inspect the [plan catalog](plans/index.md) and selected skill guide. Start each project at its folder’s
-plan.md, then read tasks.md for the work and inputs.md for the source material. First ask me
-whether I already have something in mind that I’d like to contribute. Then ask about
-my preferred time/token budget (quick fix, a few hours, or a larger project),
-interests, experience, available tools, hardware and agent capabilities, what I would
-personally find useful in Astrid, and what help I want.
-
-If I have something in mind, help me shape it into one bounded contribution and check
-it against the queue and plans. If not, recommend 2–3 bounded contributions that fit
-my budget and capabilities, including one small, satisfying starting task. Explain why
-each is interesting and how it would help other people. Check current ownership and
-dependencies to avoid duplicate work. Before implementation, agree with me on one task,
-its starting code, and focused completion checks. Follow the repository’s existing
-workflow and current authorization.
-
-Plans tag every task with a route, and building uses the same routes: N (everything
-below very hard, including ordinary hard work) goes to Haiku or Luna, X (very hard) to
-Sonnet or Terra, and S (super hard) to Opus or Sol. When we build, coordinate rather
-than doing everything yourself: keep the judgment, hand each task to a subagent on its
-route’s model, run independent tasks in parallel, and check what comes back. If you
-can’t start subagents, tell me and do the work yourself.
+Help me contribute to Astrid. Begin at
+https://github.com/banodoco/astrid-dev and read
+skills/astrid-dev/SKILL.md and its domain map.
+Find existing issues or project tasks before suggesting new work.
+Match a useful contribution to my interests, time and tools.
+For bugs and small fixes, use an issue and real focused proof,
+not a project. For independently useful new scope, investigate
+prior art, choose a simple approach, and agree a clear outcome.
+Respect source identity, user data and execution permissions.
 ```
+
+The [contributor entrypoint](skills/astrid-dev/SKILL.md) owns the process; the [domain map](skills/astrid-dev/references/domains.md) routes agents to the right code and references.
 
 ## Highest-priority active and upcoming plans
 
@@ -69,27 +51,6 @@ For statuses, delivery context, remaining work and the full history, see the [pl
 
 ## How to use this repo
 
-- See the [extensibility philosophy](docs/extensibility-philosophy.md) for the design direction.
-- Start with [Astrid's vision](visions/vision.md), its [four pillars and guiding principles](visions/README.md), and the [gap/plan evidence contract](visions/gaps.md); implementation authority remains in the project plans.
-- Keep all status, priority and estimates in the [plan catalog](plans/index.md), and task progress in the plan folders. Completed and cancelled entries remain in that same catalog.
-- Look up unfamiliar terms in the [glossary](docs/glossary.md).
-- Read [repository rules](AGENTS.md) and the selected workflow guide before work. Use the [project folder template](templates/project/plan.md) for new projects.
-- Keep plans and evidence portable; `.otto/` is local run state.
-- Follow the selected project’s plan and current run controls. Record the actual source and destination; do not assume branches or refs.
-- Pinokio historical findings need current-source review before they count as evidence.
-- To start a project, get the go from its owner in the catalog. If the owner is `Unassigned`, open an issue in [banodoco/astrid-dev](https://github.com/banodoco/astrid-dev/issues) naming the plan and the tasks you want to take.
+Start at the [contributor entrypoint](skills/astrid-dev/SKILL.md). Small fixes and incidents use [issues](https://github.com/banodoco/astrid-dev/issues); independently useful projects use [one catalog](plans/index.md) and the [three-file project format](docs/project-format.md). The [domain map](skills/astrid-dev/references/domains.md) points to product repositories and references.
 
-## Project format
-
-Every project is a folder, including an early draft. New plans link to relevant gap IDs (or explain why they are foundational enablers) in `plan.md`:
-
-```text
-plans/<id-name>/
-  plan.md     # What, why, scope, what exists, sequence, and completion
-  tasks.md    # Task index → detailed instructions, routes, checks, and progress
-  inputs.md   # Source materials, starting identities, references, and evidence limits
-```
-
-Start at `plan.md`; every catalog row links there. Short tasks stay in `tasks.md`. Add supporting files only when they have a distinct job. See [how project folders grow](docs/project-format.md) for the website example, other project types, and how to handle a larger catalog.
-
-Copy [the template folder](templates/project) for a new project. Drafts use the same three files and can be brief. The catalog owns project status, owner, priority and estimate; the task index or linked card owns task progress. Mark finished work `done` in the catalog, keeping its folder and history in place.
+[Vision and gap outcomes](visions/README.md) inform the work; [repository rules](AGENTS.md) and the [run contract](skills/astrid-dev-shared/run-contract.md) preserve source identity, permissions, focused evidence and review boundaries. Creating a plan does not authorize execution.

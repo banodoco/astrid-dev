@@ -1,12 +1,7 @@
-# Choose an Astrid development workflow
+# Contributing to Astrid
 
-Pick the guide for the work you need to do:
+**Everyone starts with [`astrid-dev`](astrid-dev/SKILL.md).** It gives one path from orienting and researching through deciding, building, proving and landing. [The domain map](astrid-dev/references/domains.md) points to the owners of the different parts of Astrid.
 
-- [Dev (`astrid-dev`)](astrid-dev/SKILL.md): find repository ownership and choose a workflow.
-- [Plan (`astrid-dev-plan`)](astrid-dev-plan/SKILL.md): define a new project or materially new scope.
-- [Bug fixing (`astrid-dev-bugfix`)](astrid-dev-bugfix/SKILL.md): investigate a user failure, reproduce frontend issues in a browser, restore their workflow, and track the incident.
-- [Iterate (`astrid-dev-iterate`)](astrid-dev-iterate/SKILL.md): implement, debug, or repair one scoped change.
-- [Release (`astrid-dev-release`)](astrid-dev-release/SKILL.md): integrate an accepted change and carry out an authorized release action.
+Use a specialist only when the corresponding stage requires it: [Plan](astrid-dev-plan/SKILL.md) for new scope, [Bug fixing](astrid-dev-bugfix/SKILL.md) for reported failures, [Iterate](astrid-dev-iterate/SKILL.md) for an agreed implementation, and [Release](astrid-dev-release/SKILL.md) for integration or authorized publication.
 
-The [shared run contract](astrid-dev-shared/run-contract.md) owns run, proof, review, and authority rules. Role notes and the run template are in [shared](astrid-dev-shared/).
-
+[Shared run contract](astrid-dev-shared/run-contract.md) is the one source for routing, source identity, focused evidence, reviews and authority. These guides aren't separate contributor processes.

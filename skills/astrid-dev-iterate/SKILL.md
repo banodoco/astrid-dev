@@ -5,7 +5,7 @@ description: Implement, debug, or repair one scoped Astrid change and return an 
 
 # Iterate on one Astrid change
 
-Read the [shared run contract](../astrid-dev-shared/run-contract.md), the assigned brief, and the working repository's instructions. This is the single implementation/debug/focused-test repair loop. Work only within the accepted outcome, paths, dependencies, frozen source identity, route, and authority. Do not create another worker workflow.
+Read the [shared run contract](../astrid-dev-shared/run-contract.md), the assigned brief (an issue, bug report or existing project task), and the working repository's instructions. **An issue or small fix needs no new project pack.** This is the single implementation/debug/focused-test repair loop. Work only within the accepted outcome, paths, dependencies, frozen source identity, route, and authority. Do not create another worker workflow.
 
 ## Map and change the behavior
 
