@@ -1,0 +1,41 @@
+name: Accept owner-only project claims
+
+# Privileged workflow runs only the trusted default branch after ordinary
+# unprivileged PR CI passes. Fork content is fetched as DATA, never executed.
+on:
+  workflow_run:
+    workflows: ["Documentation integrity"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  claim:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      vars.CLAIM_AUTO_MERGE_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: astrid-dev-project-claims
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      # The GitHub App is scoped only to this repo, with PR-only ruleset bypass.
+      # No PAT, no checkout or execution of the contributor's head SHA.
+      - uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ vars.CLAIM_BOT_APP_ID }}
+          private-key: ${{ secrets.CLAIM_BOT_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+      - name: Validate self-claim against live main and merge
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: python3 scripts/claim_project.py --event "$GITHUB_EVENT_PATH"
