@@ -173,6 +173,7 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
         errors.append('ARCHIVE.md contains a duplicate plan registry')
 
     mandatory = [README, CATALOG, Path('ARCHIVE.md'), Path('AGENTS.md'),
+                 Path('CONTRIBUTING.md'),
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
                  Path('docs/contribution-workflow.md'), Path('templates/review-submission.md')]
