@@ -28,6 +28,8 @@ After independent review, promote the exact immutable candidate heads to `pre-ma
 
 Both advanced by fast-forward. Donor work credited to Dylan (@matlowai).
 
+Owner ruling (7 Nov 2026) set this run's target to `main`, replacing the `pre-main`-only promotion above. `pre-main` was left to the parallel Pinokio lane, which merges `main` when it promotes (merge-run ledger M-19).
+
 ## Provenance and evidence boundaries
 
 The exact accepted donor SHAs and merge order are recorded **once** in [Starting code](#starting-code). The old source-audit summaries are not live execution evidence: freeze the target anew and rerun focused acceptance checks from [tasks.md](tasks.md). The earlier M-GPU orchestration and its advisor automations remain **stopped**; this project does not resume them.
