@@ -1,7 +1,7 @@
 """Pure negative tests for the privileged owner-only claim validation."""
 import unittest
 from unittest.mock import patch
-from claim_project import eligible, verify_claim
+from claim_project import eligible, verify_claim, verify_live_claim
 from check_docs import HEADER, DIVIDER
 
 BASE = ("# Projects\n\n" + HEADER + "\n" + DIVIDER + "\n"
@@ -26,6 +26,20 @@ class ClaimTests(unittest.TestCase):
         for reason, content in cases.items():
             with self.subTest(reason=reason), self.assertRaises(ValueError):
                 verify_claim(BASE, content, "casey")
+
+    def test_unrelated_catalog_updates_do_not_block_claim(self):
+        claimed = BASE.replace("| Unassigned |", "| @casey |", 1)
+        main = BASE.replace("Beta | Goal", "Beta | Another updated goal")
+        self.assertEqual(verify_live_claim(BASE, claimed, main, "casey"), "25-cloud")
+        # Changes to the actual project, including ownership, scope or status,
+        # require a rebase or a human review.
+        for changed in (
+            BASE.replace("| Unassigned |", "| @another |", 1),
+            BASE.replace("Alpha | Goal", "Alpha | Different goal"),
+            BASE.replace("| queued |", "| blocked |", 1),
+        ):
+            with self.subTest(changed=changed), self.assertRaises(ValueError):
+                verify_live_claim(BASE, claimed, changed, "casey")
 
     def test_cannot_steal_owner(self):
         old = BASE.replace("Unassigned", "@alex", 1)
