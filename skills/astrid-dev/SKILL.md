@@ -1,36 +1,42 @@
 ---
 name: astrid-dev
-description: Orient developers changing Astrid itself, identify repository ownership and pin order, and route new-project planning, implementation/debugging, or release work to the right workflow.
+description: One entrypoint for people and agents contributing to Astrid: find the right existing work, define a bounded change, prove it, and land it safely.
 ---
 
-# Develop Astrid
+# Contribute to Astrid
 
-Use this entrypoint for changes to Astrid's repositories, packs, skills, CI, or release machinery. For creative work made with Astrid, use the `astrid` skill.
+**Start here for any change to Astrid**—a small fix, a new idea, an existing project, documentation, or a release. For artwork made *with* Astrid, use the separate creative skill.
 
-## Repository map
+An agent should be able to join without prior Astrid knowledge. Start with the contributor's goal, find the existing work, and do not demand that they understand the entire system before making a useful contribution.
 
-| Repository | Owns | Pins / follows |
+## One path, six stages
+
+Work enters at the earliest stage that is **not already settled by accepted evidence**. Do not repeat completed planning or make a small change go through an architectural review. Stop at the stage the contributor actually requested.
+
+| Stage | Question and useful result | Go deeper when |
 | --- | --- | --- |
-| `banodoco/astrid-runtime` | Workspace Runtime: projects, media, timelines, tasks, runs, receipts/events, HTTP contract and generated clients | Integration tests pin Agent (`tests/astrid-agent.pin`) |
-| `banodoco/astrid-agent` | Python package and CLI, SDK, packs, skills, installer, MCP server, Remotion renderer | Runtime in `runtime.lock.json`; vendored Python client |
-| `banodoco/astrid-app` | Editor App and user-facing install manifest | Runtime lock/client and Agent + Runtime SHAs in `public/install-manifest.json` |
-| `banodoco/astrid-pinokio` | Pinokio launcher and channels | Published tuple |
+| **1. Orient** | What does the person want, what can they contribute, and [which domain owns it](references/domains.md)? Point to a good first task if they have no idea. | Ownership, safety or an installed version is unclear |
+| **2. Investigate** | What already exists? Check [the plan catalog](../../plans/index.md), relevant issues, product source, previous decisions and actual behavior. Cite the reusable implementation, its version and the gap it addresses. | Changes span repositories, contracts, or unexplained behavior |
+| **3. Decide** | What is the *smallest complete outcome*, why here, and what would prove it? Reuse an accepted plan or follow [Plan](../astrid-dev-plan/SKILL.md) for genuinely new scope. Don't mistake a project for a new [vision gap](../../visions/gaps.md). | The choice is consequential, hard to reverse or has meaningful competing designs |
+| **4. Build** | On the authorized source, make the bounded change and keep existing work intact. Use [Iterate](../astrid-dev-iterate/SKILL.md); reported user failures begin with [Bug fixing](../astrid-dev-bugfix/SKILL.md). | Source, permissions or dependencies differ from the accepted task |
+| **5. Prove** | Show the claimed behavior on a named candidate and environment, including meaningful failures. Preserve commands, actual results, limitations and unresolved claims using the [run contract](../astrid-dev-shared/run-contract.md). | The evidence does not actually demonstrate the claim |
+| **6. Land** | Link the result to the original issue or plan. Use the existing PR, evidence and review gates; [Release](../astrid-dev-release/SKILL.md) owns cross-repo integration and authorized promotion. | Pins change, a release is requested or the reviewed source moves |
 
-The normal pin order is **Runtime → Agent → App → Pinokio**. A Runtime change lands first; Agent updates its Runtime pin and generated client; App updates its Runtime pin/client and manifest; Pinokio follows the published tuple. Changes to an upstream pin or generated artifact can invalidate downstream evidence. Confirm current ownership, paths, and pin mechanisms in the working repositories before acting; this map is orientation, not a substitute for their instructions.
+**Each stage has one decision, not a new form.** A fact-finding report may end at Investigate. A new draft may end at Decide. An approved task can begin at Build. Don't invent another round of owner approval because an agent changed.
 
-## Choose a workflow
+## Your first contribution
 
-- [Plan](../astrid-dev-plan/SKILL.md): genuinely new project or materially new scope; find prior art, challenge complexity, and agree the intended end state.
-- [Bug fixing](../astrid-dev-bugfix/SKILL.md): investigate a user-reported failure, reproduce the frontend when useful, restore their workflow, and log the incident.
-- [Iterate](../astrid-dev-iterate/SKILL.md): implement, debug, or repair one scoped feature through focused proof; return a candidate for integration.
-- [Release](../astrid-dev-release/SKILL.md): integrate and recheck an accepted candidate, then perform only the explicitly authorized promotion or publication.
+Ask whether the person already has a concrete idea. If yes, trace it to an existing task or issue before proposing something new. If not, use the [catalog](../../plans/index.md) to suggest 2–3 bounded contributions, including a small satisfying one, based on their interests, available time, hardware and agent capabilities. Look for current ownership and dependencies to avoid competing implementations. Ask only for missing information that changes the decision.
 
-A repository plan already accepted does not need another planning agreement. This skill is orientation and routing only; it is not a second execution path. The exact identity, evidence, retry, review, and authority policy lives in the [shared run contract](../astrid-dev-shared/run-contract.md). Concise coordinator and advisor role references live in [roles](../astrid-dev-shared/roles/manager.md) and [roles](../astrid-dev-shared/roles/advisor.md). Plans tag each task `N` (the default, including ordinary hard work), `X` (very hard) or `S` (super hard), and execution hands each task to a subagent on that route’s model: Haiku or Luna, Sonnet or Terra, Opus or Sol (see the [routing table](../astrid-dev-shared/run-contract.md#routing-and-bindings)).
+Don't install skills, run code, spend money, access private data or alter another person's machine merely to orient someone. If skill installation is useful, explain the changes first; use the repository's existing sync mechanism only with their consent.
 
-## Project navigation
+## One source of truth per concern
 
-In this workspace, projects are folders: read `plan.md` for the explanation, `tasks.md` for the work and checks, and `inputs.md` for source identities and references. The root project queue links to each `plan.md`; use its status and owner rather than inventing another record.
+- **Domain ownership and where to read:** [domain map](references/domains.md). Don't copy the map into individual workflow skills.
+- **Project priority, owner, status and estimate:** [one catalog](../../plans/index.md). A project pack has [`plan.md`, `inputs.md` and `tasks.md`](../../docs/project-format.md); drafts can be short.
+- **Vision and missing outcomes:** [vision](../../visions/vision.md), [gap contract](../../visions/gaps.md) and existing gap records. A new project usually addresses an existing gap.
+- **Run identity, model routing, permissions, proof and reviews:** [shared run contract](../astrid-dev-shared/run-contract.md). Repository-specific instructions still apply.
+- **Mechanical PR requirements:** [repository rules](../../AGENTS.md) and the existing [documentation workflow](../../.github/workflows/docs.yml). CI checks structure, not the truth of an argument.
+- **Specialized instructions:** [Plan](../astrid-dev-plan/SKILL.md), [Bug fixing](../astrid-dev-bugfix/SKILL.md), [Iterate](../astrid-dev-iterate/SKILL.md), and [Release](../astrid-dev-release/SKILL.md) only for the stage you need.
 
-## Source provenance
-
-The repository ownership and pin-order summary was adapted from `banodoco/astrid-agent`'s developer skill at commit `43b6fb2cdb877afd6d37832c7f279754ba01592d` (2026-11-02). Verify it against the current product repositories before making a change.
+**Never conflate the three boundaries:** recording a project is not acceptance of its scope; accepting scope is not authorization to execute; passing tests or merging code is not authorization to deploy. Keep previously accepted decisions and safety/review constraints.
