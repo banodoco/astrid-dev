@@ -2,7 +2,7 @@
 
 **Vision gaps:** [F-007 — First-class full-stack sandboxing](../../visions/gaps/F-007-first-class-sandbox.md) (primary); [F-002 — trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (supporting). The sandbox outcome is independently testable; broader consent and recovery require separate evidence.
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Offer an onboarding path to run the full Astrid stack—app/frontend, Runtime, and Agent backend—in OpenShell with clear, user-selected permissions. This is a draft; supported platforms and the isolation contract remain to be scoped against current source.
 

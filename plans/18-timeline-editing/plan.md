@@ -1,6 +1,6 @@
 # 18 — Extensible timeline editing
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 **Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../visions/gaps/LS-003-full-stack-contributions.md) (supporting). This plan proves one timeline-specific foundation, not the entire workspace/component contract.
 
@@ -14,7 +14,7 @@ Draft: provide dependable timeline editing primitives as a pack, so people and a
 
 ## What we build on
 
-The existing timeline, editing implementation, state ownership, execution contracts, and pack conventions are to be identified at execution start. Do not assume primitives or extension support are absent. The design direction is in the [extensibility philosophy](../../docs/extensibility-philosophy.md); source identities and recorded inputs belong in [inputs.md](inputs.md).
+The existing timeline, editing implementation, state ownership, execution contracts, and pack conventions are to be identified at execution start. Do not assume primitives or extension support are absent. The design direction is in the [Liquid Software vision](../../visions/pillars/liquid-software.md); source identities and recorded inputs belong in [inputs.md](inputs.md).
 
 ## Sequence
 

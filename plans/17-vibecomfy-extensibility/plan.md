@@ -2,7 +2,7 @@
 
 **Vision gaps:** [Composable capabilities](../../visions/gaps/LS-003-full-stack-contributions.md) (primary).
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Make it easier for people and their agents to build and share creative tools on VibeComfy. Use H3_AV, a user-provided abstraction over MiniMax H3 workflows, to improve existing extension primitives and demonstrate customization and composition without forking core. This remains a draft; queue status, owner, and estimate are in the [project queue](../../README.md).
 
@@ -14,7 +14,7 @@ Make it easier for people and their agents to build and share creative tools on 
 
 ## What we build on
 
-H3_AV is a concrete example, not evidence of particular APIs or missing capabilities. First identify its source and the existing VibeComfy workflow and pack extension points. See the [extensibility philosophy](../../docs/extensibility-philosophy.md); exact starting identities are in [inputs.md](inputs.md).
+H3_AV is a concrete example, not evidence of particular APIs or missing capabilities. First identify its source and the existing VibeComfy workflow and pack extension points. See the [Liquid Software vision](../../visions/pillars/liquid-software.md); exact starting identities are in [inputs.md](inputs.md).
 
 ## Sequence
 

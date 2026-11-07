@@ -2,7 +2,7 @@
 
 **Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
 
-**Start here:** read [AGENTS.md](../../AGENTS.md), choose a workflow in the [skills guide](../../skills/README.md), follow the [run contract](../../skills/astrid-dev-shared/run-contract.md), and look up terms in the [glossary](../../docs/glossary.md).
+**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Make the first useful result effortless: from an existing supported inference installation, one copyable command guides a person and their agent through setup to a generated image visible on an Astrid timeline. This is a top-priority upcoming draft; status, owner, and estimate live in the [project queue](../../README.md).
 
@@ -15,7 +15,7 @@ Make the first useful result effortless: from an existing supported inference in
 
 ## What we build on
 
-Reuse existing installation, connection, generation, media, and timeline capabilities where verified. The [extensibility philosophy](../../docs/extensibility-philosophy.md) calls for good defaults, understandable choices, and user control. Exact source identities and evidence limits belong in [inputs](inputs.md).
+Reuse existing installation, connection, generation, media, and timeline capabilities where verified. The [Liquid Software vision](../../visions/pillars/liquid-software.md) calls for good defaults, understandable choices, and user control. Exact source identities and evidence limits belong in [inputs](inputs.md).
 
 ## Sequence
 
