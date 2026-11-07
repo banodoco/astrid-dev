@@ -173,6 +173,7 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
         errors.append('ARCHIVE.md contains a duplicate plan registry')
 
     mandatory = [README, CATALOG, Path('ARCHIVE.md'), Path('AGENTS.md'),
+                 Path('CONTRIBUTING.md'),
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
                  Path('docs/contribution-workflow.md'), Path('docs/contribution-automation-setup.md'),
@@ -185,6 +186,7 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
     mandatory += [p.relative_to(root) for p in (root / 'templates/project').glob('*.md')]
     mandatory += [p.relative_to(root) for p in (root / '.github/ISSUE_TEMPLATE').glob('*.md')]
     mandatory += [p.relative_to(root) for p in (root / '.github/PULL_REQUEST_TEMPLATE').glob('*.md')]
+    mandatory += [Path('.github/pull_request_template.md')]
     for path in sorted(set(mandatory)):
         errors.extend(local_links(root, path))
     # Older task/evidence documents may have legacy references; don't fail this
