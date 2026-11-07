@@ -25,7 +25,9 @@ class PublicVisionProjectionTests(unittest.TestCase):
         vision = self.page["vision"]
         self.assertIn("collective artistic ambition", vision["title"])
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
-        self.assertIn("ownership", vision["contributeMarkdown"])
+        self.assertIn("100% of the ownership", vision["introMarkdown"])
+        self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
+        self.assertNotIn("legal and allocation model", vision["contributeMarkdown"].lower())
         self.assertNotIn("The information on this page is pulled from", vision["introMarkdown"])
         self.assertIn("collective inspires ambitious work", vision["introMarkdown"])
         self.assertIn(
@@ -93,6 +95,18 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("F-007", projects["15-openshell-safe-execution"]["gapIds"])
         self.assertIn("F-002", projects["15-openshell-safe-execution"]["gapIds"])
         self.assertEqual(projects["15-openshell-safe-execution"]["status"], "queued")
+
+    def test_contributor_ownership_plan_uses_existing_gap_and_prior_sources(self):
+        plan = next((p for p in self.page["projects"] if p["id"] == "28-contributor-ownership"), None)
+        self.assertIsNotNone(plan)
+        self.assertEqual(plan["gapIds"], ["CA-002"])
+        self.assertEqual(plan["status"], "queued")
+        self.assertIn("earlier commitments", plan["goalMarkdown"].lower())
+        path = ROOT / "plans/28-contributor-ownership/inputs.md"
+        inputs = path.read_text(encoding="utf-8")
+        self.assertIn("Banodoco-website", inputs)
+        self.assertIn("Equity Review", inputs)
+        self.assertIn("Pending", inputs)
 
     def test_project_gap_ids_resolve(self):
         ids = {gap["id"] for gap in self.page["gaps"]}
