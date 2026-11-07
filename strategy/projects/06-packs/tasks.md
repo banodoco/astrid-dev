@@ -1,16 +1,16 @@
 # Tasks: Packs v1.3
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
-[Project explanation](plan.md) · [Inputs and provenance](inputs.md) · [Current project status](../../README.md)
+[Project explanation](plan.md) · [Inputs and provenance](inputs.md) · [Current project status](../../../README.md)
 
-Routes: `N` is the default (including ordinary hard work), `X` very hard, `S` super hard; see the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Run only the checks named here, with the exact selectors given; never a whole suite. A check that fails follows the run contract: keep the first failure, repair the cause, rerun the same check. Start only on the owner's go.
+Routes: `N` is the default (including ordinary hard work), `X` very hard, `S` super hard; see the [run contract](../../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Run only the checks named here, with the exact selectors given; never a whole suite. A check that fails follows the run contract: keep the first failure, repair the cause, rerun the same check. Start only on the owner's go.
 
 Selectors marked **Step 0** must be confirmed on the task's head before it starts (the place to look is given). If a Step 0 lookup finds nothing, record that in the task and drop the check; do not invent a selector. A selector marked **new** is a test the task writes.
 
 ## Shared rules
 
-- **`ENV`** is the [Plan 02 env folder](../02-consistent-generation/env/README.md) of this checkout: `ENV=<astrid-dev checkout>/plans/02-consistent-generation/env`. From an Agent checkout root, run `bash "$ENV/agent-setup.sh"` once per candidate head, then `bash "$ENV/agent-pytest.sh" -q <selectors>` (written `PYT` below). Do not use the nine-failure deselect file; it belongs to Plan 02.
+- **`ENV`** is the [Plan 02 env folder](../02-consistent-generation/env/README.md) of this checkout: `ENV=<astrid-dev checkout>/strategy/projects/02-consistent-generation/env`. From an Agent checkout root, run `bash "$ENV/agent-setup.sh"` once per candidate head, then `bash "$ENV/agent-pytest.sh" -q <selectors>` (written `PYT` below). Do not use the nine-failure deselect file; it belongs to Plan 02.
 - **`BND`** is the boundary guard, run from the Agent root: `"$(pwd -P).env/venv/bin/python" scripts/check_core_pack_boundary.py --check`. It exists only from PK-3 on. Never run its `--write-baseline` except to shrink `scripts/reshape/baselines/core_pack_boundary.json`; the guard and `tests/stage1/test_core_pack_boundary.py` refuse growth.
 - **`ANC`** `<sha> [...]`: for each, `git merge-base --is-ancestor <sha> HEAD` must succeed. **`NOANC`** `<sha> [...]`: for each, first `git cat-file -e <sha>^{commit}` must succeed (fetch it if not), then `git merge-base --is-ancestor <sha> HEAD` must fail. A negated check on a missing object proves nothing.
 - **Composition:** one candidate branch per repository from the frozen `pre-main`, named in PK-0. Merge with `git merge --no-ff --no-commit <sha>`; resolve; commit with the subject `PK-n: merge <name> <first 8 of sha>` and the conflict files and the side taken in the body. No rebase, cherry-pick or squash while composing. A hunk where both sides change the same statement to different results is a stop: record it and ask.
@@ -205,7 +205,7 @@ BND
 
 ## LB-TXN transaction review
 
-Use the completion-reviewer role from the [run contract](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries) on the PK-8 and PK-9 diffs (`git diff <PK-7 head> <PK-8 head>` and `<PK-8 head> <PK-9 head>`), before anything builds on them. Blocking classes: lost or corrupted pack bytes, an unrecoverable half-state, a consent not bound to the staged bytes, a secret reaching an undeclared action, a read path taking the exclusive lock. **At most 2 rounds** (owner decision, 3 Nov 2026; overrides the default of 5); at the cap, report `REVIEW-AT-CAP:` to the owner. A finding in PK-8 also sends PK-9 back for the same cause; a repair goes forward as a new commit on the current head, then the failed selector reruns.
+Use the completion-reviewer role from the [run contract](../../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries) on the PK-8 and PK-9 diffs (`git diff <PK-7 head> <PK-8 head>` and `<PK-8 head> <PK-9 head>`), before anything builds on them. Blocking classes: lost or corrupted pack bytes, an unrecoverable half-state, a consent not bound to the staged bytes, a secret reaching an undeclared action, a read path taking the exclusive lock. **At most 2 rounds** (owner decision, 3 Nov 2026; overrides the default of 5); at the cap, report `REVIEW-AT-CAP:` to the owner. A finding in PK-8 also sends PK-9 back for the same cause; a repair goes forward as a new commit on the current head, then the failed selector reruns.
 
 ## PK-10 rendering and composition
 
@@ -325,14 +325,14 @@ PYT tests/integrations/test_core_only_render_route.py tests/integrations/test_co
 
 Route X (core engine code and registries change, not only a folder). Owner decision, 5 Nov 2026 (Decision 13). Depends on PK-15 (same Agent line, same registries) and PK-14 (App candidate). Do not delete `vibecomfy`.
 
-1. Census first (the hand-off's own manifest asked for it): on the PK-15 head, `git grep -nE "comfy_wrap|packs[/.]comfyui|packs/comfyui" -- . ':!docs/plans/astrid-naming/old-tokens.txt' ':!tests/.test_durations'` and `git grep -n "load_recipe(" astrid`. Compare with the list below. A reference not in the list is added to the task and handled the same way. Stop and report to the owner if a non-test path other than those listed needs the Linux `comfyui` recipe at run time and has no sensible refusal.
+1. Census first (the hand-off's own manifest asked for it): on the PK-15 head, `git grep -nE "comfy_wrap|packs[/.]comfyui|packs/comfyui" -- . ':!docs/strategy/projects/astrid-naming/old-tokens.txt' ':!tests/.test_durations'` and `git grep -n "load_recipe(" astrid`. Compare with the list below. A reference not in the list is added to the task and handled the same way. Stop and report to the owner if a non-test path other than those listed needs the Linux `comfyui` recipe at run time and has no sensible refusal.
 2. Delete: `astrid/packs/comfy_wrap/` (5 files: `pack.yaml`, `docs/SKILL.md`, `actions/run/{__init__,run,STAGE}`); `astrid/packs/comfyui/` (5 files: `SOURCE.md`, `models.lock.json`, `pins.json`, `recipe.linux-cu130.json`, `requirements.linux-cu130.lock`); the skill `astrid-comfy_wrap` goes with the pack (generated from its `docs/SKILL.md`).
 3. Update references on the Agent line (all at `pre-main` `23174f32`; line numbers will have moved):
    - `astrid/packs/engine-index.json`: remove the `comfyui` / `linux-x86_64-cu130` entry (lines 5-11); the other three entries and their digests do not change. `pyproject.toml:188`: remove the `packs/comfyui/requirements.linux-cu130.lock` package-data line.
    - `astrid/core/execution/generic_host.py:1768`: drop `"comfy_wrap."` from the prefix tuple; `astrid/core/generation/gpu_environment.py:41-42`: remove the `comfy_wrap` / `run` branch; `astrid/core/pack/validate_first_party.py:27`: remove the id; `astrid/core/contracts/output_result_exemptions.json:97`: remove `comfy_wrap.run`.
    - Capability registries: `config/astrid-beta-capabilities.json:21`, `astrid/resources/astrid-beta-capabilities.json:21`, `config/astrid-capability-census.lock.json:8,128,242` (remove `comfy_wrap.run` and `comfy_wrap.run_workflow`); `tests/fixtures/recoverability_conformance_worklist.json` (the two `comfy_wrap` entries, lines 1658 and 2270).
    - Engine `comfyui` in core: `astrid/core/generation/preflight.py` (`_registered_managed_engine`, line 391-396: `load_recipe("comfyui", ...)` must catch the engine error and return `None`, as a missing recipe now means "no managed engine"), `engine_recipe.py:284-296` (a missing index entry must raise the existing unknown-engine error; confirm it does), and the `--engine` choices and defaults in `engine_readiness.py:874`, `engine_release.py:428,590,649` and `cli.py:166,199,205` (keep the name `comfyui` only as the label of the user's own ComfyUI where the code uses it for that, as in `asset_alignment.py`, `entries.py`; do not rewrite them in this task). `astrid generate targets`, `launch` and `describe` on a machine without a recipe must print the existing unavailable message, not a traceback.
-   - Docs: `docs/architecture/pack-layout-variants.json:34,43,255`, `docs/packs/pack-taxonomy.md:70,267,318-326`, `docs/architecture/repo-shape.md:190`, `docs/reference/where-things-run.md:29,51`, `astrid/packs/_core/docs/references/capabilities.md:14`, `astrid/packs/_core/docs/creative-work/references/packs.md:13`. Where the text says "generate an image from a prompt through a ComfyUI workflow", point to `vibecomfy.run` with `--workflow-inputs '{"prompt": "..."}'` (documented at `astrid/packs/vibecomfy/docs/SKILL.md`, prompt binding around lines 108-119). `docs/plans/astrid-naming/old-tokens.txt` is history; leave it.
+   - Docs: `docs/architecture/pack-layout-variants.json:34,43,255`, `docs/packs/pack-taxonomy.md:70,267,318-326`, `docs/architecture/repo-shape.md:190`, `docs/reference/where-things-run.md:29,51`, `astrid/packs/_core/docs/references/capabilities.md:14`, `astrid/packs/_core/docs/creative-work/references/packs.md:13`. Where the text says "generate an image from a prompt through a ComfyUI workflow", point to `vibecomfy.run` with `--workflow-inputs '{"prompt": "..."}'` (documented at `astrid/packs/vibecomfy/docs/SKILL.md`, prompt binding around lines 108-119). `docs/strategy/projects/astrid-naming/old-tokens.txt` is history; leave it.
    - Tests: `tests/packs/test_pack_layout_contract.py:402` (remove the id); `tests/core/generation/test_gpu_environment.py:109,128,148` and `tests/test_windows_gpu_availability.py` (use `vibecomfy.run` as the capability id; assertion change allowed: the id only); `tests/core/generation/test_engine_cli.py:162-165`, `test_engine_recipe.py:68,78,92` and `test_engine_release.py:126`: they assert the Linux `comfyui` recipe paths; re-point them to the `vibecomfy` Windows recipe (`packs/vibecomfy/recipe.windows-cu130.json`) where they test recipe loading in general, and delete a node that tests only the Linux ComfyUI recipe (record each in the commit body). **New** node in `tests/core/generation/test_engine_recipe.py`: `test_comfyui_engine_has_no_recipe_after_comfy_pack_removal` (loading engine `comfyui` for `linux-x86_64-cu130` raises the unknown-engine error, and `_registered_managed_engine()` returns `None`).
    - Regenerate with the shipped generators (`scripts/gen_capability_index.py`, `scripts/gen_tool_catalog.py`) and require `git diff --exit-code` afterwards. Shrink the guard baseline if it lists the removed names: `scripts/check_core_pack_boundary.py --write-baseline` only to shrink.
 4. App (candidate from PK-14): `config/contracts/astrid-plan-a-c1.json` (the stale `skillPath` entries around lines 879-884 and 1324-1326) and `docs/governance/contracts/astrid-plan-a.md:136`: remove the `comfy_wrap` entries. Step 0: name the test that reads that contract with `git grep -ln "astrid-plan-a-c1" -- '*.test.*'` and run it. Runtime has no references.
@@ -341,7 +341,7 @@ Route X (core engine code and registries change, not only a folder). Owner decis
 ```text
 for p in comfyui comfy_wrap; do test ! -e astrid/packs/$p || exit 1; done
 test -d astrid/packs/vibecomfy
-! git grep -nE "comfy_wrap|packs/comfyui" -- . ':!docs/plans/astrid-naming/old-tokens.txt' ':!tests/.test_durations'
+! git grep -nE "comfy_wrap|packs/comfyui" -- . ':!docs/strategy/projects/astrid-naming/old-tokens.txt' ':!tests/.test_durations'
 BND
 PYT tests/stage1/test_core_pack_boundary.py tests/core/generation/test_engine_recipe.py tests/core/generation/test_engine_cli.py tests/core/generation/test_engine_release.py tests/core/generation/test_gpu_environment.py tests/test_windows_gpu_availability.py tests/packs/test_pack_layout_contract.py
 PYT tests/core/generation/test_availability.py tests/core/generation/test_listing.py tests/test_capability_ledger.py tests/test_tool_catalog_v3.py tests/integrations/test_moved_packs_absent_from_core.py
@@ -386,7 +386,7 @@ test "$(grep -cE '^\| (E|N|X)([1-9]|10) \|' docs/packs/CPU-PROOF.md)" -eq 30
 
 ## END integrated review
 
-Use the completion-reviewer role from the [run contract](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, **at most 3 rounds** (owner decision, 3 Nov 2026; overrides the default of 5), stop on an uncontested PASS; at the cap report `REVIEW-AT-CAP:` to the owner. Give the reviewer the Agent, Runtime, App and poms_packs candidate heads, the check outputs and these items:
+Use the completion-reviewer role from the [run contract](../../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, **at most 3 rounds** (owner decision, 3 Nov 2026; overrides the default of 5), stop on an uncontested PASS; at the cap report `REVIEW-AT-CAP:` to the owner. Give the reviewer the Agent, Runtime, App and poms_packs candidate heads, the check outputs and these items:
 
 1. The foundation chain and the parks are ancestors; the excluded lanes (g3, the deferred M3-04 lanes, r6, CAS) are not.
 2. `astrid/packs/wan2gp` still exists and nothing else in the Wan2GP path changed.
@@ -404,13 +404,13 @@ Route N (X if conflicts).
 
 1. Re-freeze each destination: Agent, Runtime and App `pre-main`, and poms_packs (still no `main`). Record the SHAs.
 2. Rebase the reviewed Agent, Runtime and App candidates onto them. If nothing moved, record that and go to PK-PREMAIN.
-3. If the rebase is clean, rerun only the checks whose inputs changed (a moved target invalidates only the proof that depends on it, per the [run contract](../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)) and record why the rest carries forward. A rebased Runtime head has a new SHA: regenerate the Agent and App locks against it with their tools and rerun PK-14's lock check and PK-15's lock check.
+3. If the rebase is clean, rerun only the checks whose inputs changed (a moved target invalidates only the proof that depends on it, per the [run contract](../../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)) and record why the rest carries forward. A rebased Runtime head has a new SHA: regenerate the Agent and App locks against it with their tools and rerun PK-14's lock check and PK-15's lock check.
 4. If it conflicts, resolve the conflicts (route X), rerun the affected checks, and ask the completion reviewer for a delta review of the resolution. This counts against END's three-round budget; it adds no stage.
 5. PK-PREMAIN promotes the rebased heads by fast-forward. Never force-push.
 
 ## PK-PREMAIN promote
 
-Route N. Only with the owner's explicit authority. Follow the release workflow's `pre-main` integration lane ([release skill](../../skills/astrid-dev-release/SKILL.md)): recapture each destination immediately before and promote the exact rebased heads by ordinary fast-forward or create operations, in this order so no consumer names a producer that is not yet there: Runtime, Agent, App.
+Route N. Only with the owner's explicit authority. Follow the release workflow's `pre-main` integration lane ([release skill](../../../skills/astrid-dev-release/SKILL.md)): recapture each destination immediately before and promote the exact rebased heads by ordinary fast-forward or create operations, in this order so no consumer names a producer that is not yet there: Runtime, Agent, App.
 
 1. Verify the destination `pre-main` equals the RB1 record. If it moved, repeat RB1 for what moved.
 2. Push each candidate head to `pre-main` as a fast-forward.

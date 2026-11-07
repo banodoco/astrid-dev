@@ -1,8 +1,8 @@
 # 07 — Pinokio basic: install, run, update and remove
 
-**Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary).
+**Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Prove the everyday Pinokio backend path on hosted Linux, macOS, and Windows through a separate three-row gate. This is the basic R1.1 increment; full engine, custody, and fully-local qualification stays in [Plan 10](../10-pinokio-qualification/plan.md).
 
@@ -43,10 +43,10 @@ See [task cards](tasks.md) for routes, dependencies, and focused acceptance evid
 
 ## Completion
 
-Complete when all three rows pass at frozen heads and those heads are on `main`. Record any unsupported OS as a named limitation. This proves the hosted basic backend path, not the deferred qualification behaviors. PB-END preserves the original publication boundary; this plan does not start execution. See the [shared run contract](../../skills/astrid-dev-shared/run-contract.md) for run controls and route bindings.
+Complete when all three rows pass at frozen heads and those heads are on `main`. Record any unsupported OS as a named limitation. This proves the hosted basic backend path, not the deferred qualification behaviors. PB-END preserves the original publication boundary; this plan does not start execution. See the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md) for run controls and route bindings.
 
 ## Read next
 
 - [tasks.md](tasks.md): task routes, dependencies, work, acceptance, and progress.
 - [inputs.md](inputs.md): source identities, evidence provenance, and unresolved setup details.
-- [Project status and owner](../../README.md): queue authority.
+- [Project status and owner](../../../README.md): queue authority.

@@ -1,8 +1,8 @@
 # Release 1: install and update
 
-**Vision gaps:** [Platform reliability](../../visions/gaps/F-001-platform-reliability.md) (primary).
+**Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Prove that new users can install and update Astrid on Linux, macOS, and Windows, and that R0 users on Linux and macOS can upgrade to R1 without losing data. The project is done; see Shipped below.
 
@@ -36,7 +36,7 @@ Complete the open cleanup/refusal and update evidence, then the Windows refusal 
 
 ## Completion
 
-Completion requires a strict hosted pass on all five rows at frozen heads and a recorded owner ship decision. This demonstrates the specified install, update-mechanics, and safe-upgrade behavior; the same-code stand-in does not prove a real schema migration. The decision records the ship call but does not expand existing publication authority: follow the accepted R1 run and shared [run contract](../../skills/astrid-dev-shared/run-contract.md).
+Completion requires a strict hosted pass on all five rows at frozen heads and a recorded owner ship decision. This demonstrates the specified install, update-mechanics, and safe-upgrade behavior; the same-code stand-in does not prove a real schema migration. The decision records the ship call but does not expand existing publication authority: follow the accepted R1 run and shared [run contract](../../../skills/astrid-dev-shared/run-contract.md).
 
 ## Read next
 

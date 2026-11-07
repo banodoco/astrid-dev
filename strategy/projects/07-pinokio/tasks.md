@@ -1,8 +1,8 @@
 # Tasks: Pinokio basic (R1.1)
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../README.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../../../README.md)
 
-The six-row `RELEASE1_1_DEFERRED_PINOKIO_MATRIX` is historical, retired evidence: 0/6 passed setup. Do not revive it. The new three-row hosted gate is separate from the R1 five-row gate. Current progress is tracked in this file; status, owner, and estimate remain in the [queue](../../README.md).
+The six-row `RELEASE1_1_DEFERRED_PINOKIO_MATRIX` is historical, retired evidence: 0/6 passed setup. Do not revive it. The new three-row hosted gate is separate from the R1 five-row gate. Current progress is tracked in this file; status, owner, and estimate remain in the [queue](../../../README.md).
 
 ## Task index
 

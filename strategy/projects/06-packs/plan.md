@@ -1,8 +1,8 @@
 # Packs v1.3
 
-**Vision gaps:** [Dependable pack lifecycle](../../visions/gaps/F-004-pack-lifecycle.md) (primary). [Supporting gap](../../visions/gaps/LS-003-full-stack-contributions.md).
+**Vision gaps:** [Dependable pack lifecycle](../../vision/gaps/F-004-pack-lifecycle.md) (primary). [Supporting gap](../../vision/gaps/LS-003-full-stack-contributions.md).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, deletes the two comfy packs other than VibeComfy (`comfyui`, `comfy_wrap`; Decision 13), and finishes the pack loading, trust, install, update, rollback and live-editor work that goes with it, across Agent, Runtime and App. Supported workflows keep working, and the result is promoted to `pre-main`. It reuses a large body of work that exists only on retained branches, composes it once onto current `pre-main`, proves it once and reviews it once.
 
@@ -18,15 +18,15 @@ Plan 06 moves 19 packs out of Agent core into the `poms_packs` repository, delet
 
 ## Execution handoff
 
-[Tasks](tasks.md) own the work and focused proof; [inputs](inputs.md) own actual source identities and retained work. Use the [contributor skill](../../skills/astrid-dev/SKILL.md), then its [Iterate](../../skills/astrid-dev-iterate/SKILL.md) or [Release](../../skills/astrid-dev-release/SKILL.md) specialist as the task requires. Do not infer a model ID or new permission from this plan.
+[Tasks](tasks.md) own the work and focused proof; [inputs](inputs.md) own actual source identities and retained work. Use the [contributor skill](../../../skills/astrid-dev/SKILL.md), then its [Iterate](../../../skills/astrid-dev-iterate/SKILL.md) or [Release](../../../skills/astrid-dev-release/SKILL.md) specialist as the task requires. Do not infer a model ID or new permission from this plan.
 
 ## Prerequisites
 
-- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../AGENTS.md)); none is recorded. Nothing here authorizes pushing, creating a `main`, spending or promotion by itself. To ask for the go, see [How to use this repo](../../README.md#how-to-use-this-repo).
+- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../../AGENTS.md)); none is recorded. Nothing here authorizes pushing, creating a `main`, spending or promotion by itself. To ask for the go, see [How to use this repo](../../../README.md#how-to-use-this-repo).
 - **No predecessor.** PK-0 freezes whatever `pre-main` is when the plan starts. It does not wait for [Plan 05](../05-remaining-fixes/plan.md) or any other plan (Decision 1).
 - **Tools on the proof machine:** `git`, `uv`, `ffmpeg`, Python 3.13, Node 20 or newer with `npm`, Chromium installed through Playwright (PK-14 and PK-17), and network reads to PyPI, npm and GitHub. Linux or macOS. No GPU, no RunPod, no provider keys.
 - **Access:** push access to the repositories below, or pull requests for the owner to merge. Creating `main` in `poms_packs` also needs the owner's go (Decision 6).
-- **Check scripts:** the Agent environment scripts in [Plan 02's env folder](../02-consistent-generation/env/README.md) build the test environment and run `pytest` in it. Set `ENV=<astrid-dev checkout>/plans/02-consistent-generation/env`.
+- **Check scripts:** the Agent environment scripts in [Plan 02's env folder](../02-consistent-generation/env/README.md) build the test environment and run `pytest` in it. Set `ENV=<astrid-dev checkout>/strategy/projects/02-consistent-generation/env`.
 
 ## Ready once the owner says go
 

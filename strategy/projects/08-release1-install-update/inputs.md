@@ -34,4 +34,4 @@ The update stand-in is generated from the same code at release + 1. Its result e
 
 ## Constraints
 
-Keep the active Release 1 merge coordinator, scope, evidence, review state, and publication authority intact. A plan does not start or resume product work. Use the shared [run contract](../../skills/astrid-dev-shared/run-contract.md) for identity, proof, review, and authority rules; do not reset accepted choices or add approval stages. The owner ship call records a decision and does not itself broaden the accepted publication authority.
+Keep the active Release 1 merge coordinator, scope, evidence, review state, and publication authority intact. A plan does not start or resume product work. Use the shared [run contract](../../../skills/astrid-dev-shared/run-contract.md) for identity, proof, review, and authority rules; do not reset accepted choices or add approval stages. The owner ship call records a decision and does not itself broaden the accepted publication authority.

@@ -14,13 +14,13 @@ The separate source audit in [Plan 10 inputs](../10-pinokio-qualification/inputs
 
 | Source | What it establishes | Identity or link | Limits / missing information |
 |---|---|---|---|
-| Original Plan 07 source | Accepted basic Pinokio scope, R1.1 status, exact gate rows, task IDs/routes/dependencies, historical failures, and PB-END publication boundary | [Plan 07 before the folder migration](https://github.com/banodoco/astrid-dev/blob/b2828ebb6e814d088e012bc96915fb1b47217caf/plans/07-pinokio.md) | Historical plan content, not current product evidence. Source identity / full Git SHA for product code was absent. |
+| Original Plan 07 source | Accepted basic Pinokio scope, R1.1 status, exact gate rows, task IDs/routes/dependencies, historical failures, and PB-END publication boundary | [Plan 07 before the folder migration](https://github.com/banodoco/astrid-dev/blob/b2828ebb6e814d088e012bc96915fb1b47217caf/strategy/projects/07-pinokio.md) | Historical plan content, not current product evidence. Source identity / full Git SHA for product code was absent. |
 | R1 merge decision | Decision context and evidence for “Pinokio for R1,” dated 5 Nov 2026 | `DECISIONS.md`, entry titled “Pinokio for R1” (location not given in the source plan; recover at task setup) | The referenced document was not present in the supplied project record; recover before relying on its evidence. |
 | R1 hosted gate | Existing five-row gate that must remain unchanged | `RELEASE1_MATRIX` (source code location and exact selector not recorded in source plan) | Current implementation and exact focused checker command must be identified at PB-1 setup. |
 | Retired Pinokio matrix | Six earlier Pinokio rows stopped at setup, 0/6, and mixed basic path with qualification work | `RELEASE1_1_DEFERRED_PINOKIO_MATRIX` | Historical failure only; explicitly retired, not reusable passing evidence and not to be revived. |
 | New Pinokio gate contract | Separate matrix, checker, dispatch, and exact three hosted job IDs | `RELEASE1_1_PINOKIO_MATRIX`; required IDs: `pinokio-linux`, `pinokio-macos`, `pinokio-windows` | Exact workflow file, command, and selector are missing and must be recovered at task setup. |
 | Stand-in next release | Update target for hosted rows | `scripts/make_standin_release.py` | Current file location/behavior and invoking test selector must be confirmed in the frozen source tree. |
-| Shared run controls | Route bindings, task setup, source identity and proof conventions | [Shared run contract](../../skills/astrid-dev-shared/run-contract.md) | Follow project-specific scope and existing authorization above it; no route or plan grants execution by itself. |
+| Shared run controls | Route bindings, task setup, source identity and proof conventions | [Shared run contract](../../../skills/astrid-dev-shared/run-contract.md) | Follow project-specific scope and existing authorization above it; no route or plan grants execution by itself. |
 
 ## Constraints and evidence limits
 
