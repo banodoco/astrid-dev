@@ -163,6 +163,10 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
                  Path('templates/project/plan.md'), Path('docs/project-format.md')]
     mandatory += [p.relative_to(root) for p in (root / 'visions').rglob('*.md')]
     mandatory += sorted(actual)
+    # Include the actual agent entrypoint, domain map and project templates:
+    # broken guidance links should fail the same CI as broken plan links.
+    mandatory += [p.relative_to(root) for p in (root / 'skills').rglob('*.md')]
+    mandatory += [p.relative_to(root) for p in (root / 'templates/project').glob('*.md')]
     for path in mandatory:
         errors.extend(local_links(root, path))
     # Older task/evidence documents may have legacy references; don't fail this
