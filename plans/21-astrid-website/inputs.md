@@ -8,7 +8,7 @@ This is a planning handoff for the Astrid homepage journey. It does not authoriz
 - Baseline recorded by the accepted plan: `main` at `17e46de99` (20 Oct 2026). The start-here handoff records that `main` had moved to `bebadd0e1` when its zip was made; re-check every pointer at Step 0.
 - Target working branch, if authorized: `feat/home-journey`, from `origin/main`; destination `main` only after R4 and the owner's go.
 - Existing work recorded to preserve: none; hero remains as-is. Predecessor output: none.
-- Existing assets: mockups in `mockups/`; evidence summaries in `evidence/`. These are the accepted composition/review sources.
+- Existing assets: composition mockups in `mockups/`; the accepted requirements are in [design.md](design.md).
 - At Step 0, copy this folder into `docs/plans/home-journey/` in astrid-app.
 
 ## Starting code facts
@@ -79,6 +79,6 @@ This is a planning handoff for the Astrid homepage journey. It does not authoriz
 Because placeholders use the real registry format and dimensions, each swap is data only.
 
 
-## Review evidence
+## Review boundary
 
-The accepted plan was built from the Astra code read and two Opus reviews against `main` at `17e46de99`. Their records are preserved unchanged in `evidence/`: `DEEP-PASS-RESULT.md`, `OPUS-REVIEW-RESULT.md`, and `OPUS-CRAFT-RESULT.md`. The plan is authoritative where it differs from those records. The mockups under `mockups/` guide composition and tone; they are not pixel specifications.
+[design.md](design.md) is the accepted design brief; [tasks.md](tasks.md) owns implementation proof and the PR will link actual checks. Mockups are visual guides, not pixel-by-pixel specifications. Historical planner transcripts are not a separate source of authority.

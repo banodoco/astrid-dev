@@ -1,6 +1,6 @@
 # Tasks: Release 1 install and update
 
-[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../index.md) · [Initiative handoff](../MANAGER.md)
+[Plan](plan.md) · [Inputs](inputs.md) · [Project status and owner](../index.md)
 
 This records the R1 merge started by the owner on 4 Nov 2026. It is coordinated separately from the initiative by the Release 1 merge coordinator and lane managers. Detailed decisions, failure history, and run evidence remain in the [R1 merge docs](https://github.com/hannahsubmarine/repo/tree/claude/jolly-feynman-l6ckx7/docs/merge-plan): `R1-PLAN.md`, `DECISIONS.md`, and `status/FAILURES.md`. Preserve that run's accepted scope, review state, and authority. This plan authorizes no other work. Deferred work goes to [Plan 09](../09-install-and-update-confidence/plan.md).
 
