@@ -20,6 +20,10 @@ class PublicVisionProjectionTests(unittest.TestCase):
              "Intelligence That Compounds", "A Shared Creative Endeavor"],
         )
         self.assertTrue(all(p["descriptor"] and p["bodyMarkdown"] for p in self.page["pillars"]))
+        self.assertEqual(
+            self.page["pillars"][3]["descriptor"],
+            "We want to inspire and equip people to push themselves beyond their creative limits - and reward them for doing so.",
+        )
 
     def test_vision_contribution_call_to_action(self):
         vision = self.page["vision"]

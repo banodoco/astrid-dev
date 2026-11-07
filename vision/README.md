@@ -28,7 +28,7 @@ We want everything artists and their agents learn to help others push their work
 
 ### [A Shared Creative Endeavor](pillars/shared-endeavour.md)
 
-We want to build a culture of people pushing AI—and themselves—beyond their creative limits.
+We want to inspire and equip people to push themselves beyond their creative limits - and reward them for doing so.
 
 **Give people a reason, encouragement and a genuine stake in attempting more ambitious creative work.**
 
