@@ -16,7 +16,7 @@ Before adding or rewriting a gap, answer these questions:
 4. **No duplicate:** Does an existing gap already have essentially the same closure test? If so, link the new plan to it or sharpen the existing gap rather than create a duplicate.
 5. **Evidence and scope:** Can we say what is demonstrably true today and what would change the assessment, on a named supported environment? An absent project, missing roadmap item or unverified feature claim alone is not evidence.
 
-Gaps are **typically one abstraction level above projects**, but do not manufacture another layer just to maintain a hierarchy. One gap can be addressed by several projects; one project can improve several gaps; a gap may exist before a project is chosen. Give a project one primary gap when appropriate and supporting relationships only where its evidence genuinely contributes. Plan status and ownership never belong in the gap file.
+Gaps are **typically one abstraction level above projects**, but do not manufacture another layer just to maintain a hierarchy. **Each gap has exactly one primary vision pillar or principle**, followed by only genuinely relevant supporting connections. A primary connection is the clearest answer to "which aspiration does this outcome advance?"; supporting connections must describe a distinct, secondary implication rather than a general association. A gap may link only to a principle when no pillar is the natural conceptual owner. One gap can be addressed by several projects; one project can improve several gaps; a gap may exist before a project is chosen. Give a project one primary gap when appropriate and supporting relationships only where its evidence genuinely contributes. Plan status and ownership never belong in the gap file.
 
 **Example:** [F-007](gaps/F-007-first-class-sandbox.md) asks whether people can choose and use a supported fully isolated Astrid environment. [Plan 15](../plans/15-openshell-safe-execution/plan.md) proposes OpenShell as one implementation. [F-002](gaps/F-002-safe-user-control.md) is the broader trust, permissions and recovery outcome. Completing Plan 15 could establish the narrower F-007 result while providing only partial evidence for F-002. Neither the vendor name nor a project's completion defines the gap.
 
@@ -34,12 +34,14 @@ Outcome: A creator can use approved cloud compute without giving up the authorit
 Existing alternatives: F-003 covers reliable creative execution; F-006 covers fully hosted state. Plan 25 is one project to approach F-005.
 Why this level: The creator still needs this capability if the present Plan 25 implementation or provider is replaced.
 Independent closure: A supported local project delegates work, returns editable results, and passes consent, custody, cancellation and failure tests.
+Primary connection: principle:local-first-cloud-capable — Keeping local custody while drawing on cloud execution is the essential principle.
+Supporting connections: principle:in-the-creators-control, principle:eliminate-needless-technical-wrangling — Consent and convenient execution matter as supporting aspirations.
 Evidence: https://github.com/banodoco/astrid-dev/blob/main/plans/25-cloud-assist-v1/plan.md
 ```
 
 Consider **reuse an existing gap**, **add a project to an existing gap**, **refine/split/merge existing gaps**, **create a genuinely independent gap**, and **use a foundational enabler plan without a gap**. The `Existing alternatives` and `Why this level` lines must explain *why the chosen alternative wins* over concrete nearby gaps/projects—not just say there is no overlap. If a project were replaced, would the outcome remain? Would completing the project still leave meaningful room to assess the gap? Is the closure proof specific and independent of a vendor or task checklist?
 
-The existing [documentation CI](../.github/workflows/docs.yml) runs [`check_gap_boundaries.py`](../scripts/check_gap_boundaries.py) on PRs. It compares the proposed gap definition with the PR base. New/removed gaps and changes to the **title, Applies to relationships, Desired state, Gap, or Closure evidence** require one review record per affected stable gap ID. Changes confined to Current state, Assessment, or Sources and reassessment **do not** require another boundary decision. The check requires the decision, outcome, concrete alternatives, argument for abstraction level, independent closure test and source evidence, but **cannot judge their truth or quality**. A reviewer must challenge shallow rationales, unsupported assumptions, duplicated closure tests and project-specific wording before approving. No new approval layer is created, and the [plan-completion evidence gate](../AGENTS.md#completing-a-plan-one-decision-gate) remains separate.
+The existing [documentation CI](../.github/workflows/docs.yml) runs [`check_gap_boundaries.py`](../scripts/check_gap_boundaries.py) on PRs. It compares the proposed gap definition with the PR base. New/removed gaps and changes to the **title, Applies to relationships, Desired state, Gap, or Closure evidence** require one review record per affected stable gap ID. Changes confined to Current state, Assessment, or Sources and reassessment **do not** require another boundary decision. The check requires the decision, outcome, concrete alternatives, argument for abstraction level, independent closure test, **primary connection with its reason, explicitly defended supporting connections (or None)** and source evidence. CI compares the declared primary/supporting references with the changed gap's metadata; it **cannot judge whether those connections are philosophically warranted**. A reviewer must challenge shallow rationales, unsupported assumptions, duplicated closure tests and project-specific wording before approving. No new approval layer is created, and the [plan-completion evidence gate](../AGENTS.md#completing-a-plan-one-decision-gate) remains separate.
 
 For a baseline review of every existing ID and its closest overlap, see the [November 7 gap abstraction audit](references/gap-abstraction-audit-2026-11-07.md). Revisit its conclusions when real evidence exposes a different boundary; do not treat it as a parallel project or gap-status database.
 
@@ -48,8 +50,7 @@ For a baseline review of every existing ID and its closest overlap, see the [Nov
 ```md
 # LS-001 — Portable creative components
 
-**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [In the creator's control](../principles.md#in-the-creators-control)
-**Assessment:** Open (YYYY-MM-DD; evidence basis)
+**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [In the creator's control](../principles.md#in-the-creators-control) (supporting) · **Assessment:** Open (YYYY-MM-DD; evidence basis)
 
 ## Desired state
 What should be true?
@@ -67,7 +68,7 @@ What would demonstrate the desired result, including negative cases?
 What evidence supports the assessment, and when should it be revisited?
 ```
 
-**Applies to** may name any number of pillars and cross-cutting principles. The ID prefix (`AA`, `LS`, `CI`, `CA`, `F`) is stable identity only, **not exclusive ownership**. Add a new gap only if it has a genuinely distinct closure test; don't duplicate gaps for every principle or plan. Assessment values: **open**, **partially evidenced**, **closed**, **needs recheck**, always grounded in observations.
+**Applies to** must name exactly one **(primary)** pillar or principle, first, followed by zero or more explicitly labeled **(supporting)** references; never add an unlabeled or duplicate relationship. The ID prefix (`AA`, `LS`, `CI`, `CA`, `F`) is stable identity only, **not exclusive ownership**. Add a new gap only if it has a genuinely distinct closure test; don't duplicate gaps for every principle or plan. Assessment values: **open**, **partially evidenced**, **closed**, **needs recheck**, always grounded in observations.
 
 ## Plans own the links
 

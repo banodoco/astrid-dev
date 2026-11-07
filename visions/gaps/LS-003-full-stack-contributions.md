@@ -1,6 +1,6 @@
 # LS-003 — Frontend and backend extensions don't yet compose
 
-**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [Open by design](../principles.md#open-by-design) · **Assessment:** Open, source inspection (2026-11-06).
+**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [Open by design](../principles.md#open-by-design) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
 
 ## Desired state
 

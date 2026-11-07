@@ -1,6 +1,6 @@
 # F-005 — Local-first projects can't yet use cloud execution seamlessly
 
-**Applies to:** [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) · [In the creator's control](../principles.md#in-the-creators-control) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) · **Assessment:** Open; remote routes exist but an integrated cloud-assisted local-files workflow has not been qualified.
+**Applies to:** [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) (primary) · [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) (supporting) · [In the creator's control](../principles.md#in-the-creators-control) (supporting) · **Assessment:** Open; remote routes exist but an integrated cloud-assisted local-files workflow has not been qualified.
 
 ## Desired state
 

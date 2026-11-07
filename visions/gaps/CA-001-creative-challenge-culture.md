@@ -1,6 +1,6 @@
 # CA-001 — Astrid lacks its own creative challenge culture
 
-**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) · **Assessment:** Open; prior Banodoco competitions, but no established Astrid-specific program/outcome audit.
+**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · **Assessment:** Open; prior Banodoco competitions, but no established Astrid-specific program/outcome audit.
 
 ## Desired state
 

@@ -31,3 +31,27 @@
 - **The audit is a judgment, not proof of missing features.** Historical source snapshots and project proposals ground the current assessments. Do not update assessment status from a wording review, and reconsider a gap when actual implementation evidence changes its boundary.
 
 See [the proposed per-PR gap boundary decision gate](../gaps.md#reviewing-a-new-or-redefined-gap) for preventing future duplicate, project-shaped or untestably broad gaps. Preserve the [completion gate](../../AGENTS.md#completing-a-plan-one-decision-gate) as the independent evidence check for a project's transition to done.
+
+
+## Primary-link alignment (same day, after abstraction review)
+
+The [gap contract](../gaps.md) now requires **one explicit primary pillar/principle**, with supporting links only where a separate principle meaningfully contributes. This map is an editorial snapshot; the gap Markdown and public JSON are authoritative for current relationships.
+
+| Primary vision connection | Gap IDs | Interpretation |
+|---|---|---|
+| Artistic Ambition pillar | AA-001 | Sustained artist-led creative work is the direct outcome; creator control is secondary |
+| Shared Creative Endeavor pillar | CA-001, CA-002 | Creative challenge culture and contributor ownership are collective outcomes; ownership of a company is not the same as editor permission controls |
+| Compounding Intelligence pillar | CI-001, CI-002 | Learning loops and federated knowledge are distinct; privacy/openness are supporting concerns |
+| Liquid Software pillar | F-004, LS-001, LS-002, LS-003 | Pack lifecycle, portable UI, agent reconfiguration and cross-stack extension composition are different software outcomes |
+| Eliminate Needless Technical Wrangling principle | F-001, F-003 | Reliable product lifecycle and successful creative job execution are distinct kinds of friction removed |
+| In the Creator's Control principle | F-002, F-007 | General permission/reversibility and a selectable isolated workspace need separate evidence |
+| Local-first, Cloud-capable principle | F-005, F-006 | Local project custody with remote execution is distinct from a durable hosted workspace |
+
+**Removed weak cross-links:** CA-002 is not editor-control; LS-001 does not require open licensing to be rearrangeable; F-002 spans the entire product rather than just liquid software; F-003 is about usable creative execution regardless of cloud mode; F-005 is about local/cloud custody rather than an artistic pillar; and F-007's first-class safe setup is better supported by low-friction experience than by generic liquid software.
+
+The three cross-cutting gaps remain deliberately distinct:
+- **F-001: operational lifecycle** — installation, launch, stopping, update, rollback and repair on declared supported environments
+- **F-002: consent and creator authority** — what agents/tools may access, spend, share or change and how those decisions are respected/reversed
+- **F-003: creative execution** — actual inference/media processing yielding the intended correct editable artifact
+
+Do not merge these just because each requires failure and recovery tests: *what is being proven* differs. Completing a project may provide partial evidence for several gaps, and their closure decisions remain independent.

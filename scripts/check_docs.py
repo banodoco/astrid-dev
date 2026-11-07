@@ -7,6 +7,8 @@ import re
 from pathlib import Path
 from urllib.parse import unquote
 
+from gap_relationships import parse_gap_relationships
+
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
 README = Path('README.md')
@@ -138,8 +140,10 @@ def check(root: Path, sync: bool = False) -> tuple[list[str], list[str]]:
             if field not in text:
                 errors.append(f'{file.name}: missing {field}')
         applies = next((s for s in text.splitlines() if s.startswith('**Applies to:**')), '')
-        if not any(p in applies for p in ('../pillars/', '../principles.md')):
-            errors.append(f'{file.name}: Applies to must link at least one pillar/principle')
+        try:
+            parse_gap_relationships(applies)
+        except ValueError as exc:
+            errors.append(f'{file.name}: {exc}')
 
     for plan in sorted(actual):
         for name in ('plan.md', 'tasks.md', 'inputs.md'):

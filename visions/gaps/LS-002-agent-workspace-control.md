@@ -1,6 +1,6 @@
 # LS-002 — Agents can't yet reconfigure the workspace
 
-**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open, source inspection (2026-11-06).
+**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [In the creator's control](../principles.md#in-the-creators-control) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
 
 ## Desired state
 

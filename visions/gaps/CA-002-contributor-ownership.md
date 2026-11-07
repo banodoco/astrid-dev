@@ -1,6 +1,6 @@
 # CA-002 — No implemented contributor-ownership model
 
-**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Open; earlier Banodoco arrangement lapsed, Astrid model and legal terms not established.
+**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · **Assessment:** Open; earlier Banodoco arrangement lapsed, Astrid model and legal terms not established.
 
 ## Desired state
 

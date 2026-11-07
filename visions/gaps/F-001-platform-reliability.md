@@ -1,10 +1,10 @@
 # F-001 — Reliability isn't proven across supported setups
 
-**Applies to:** [Local-first, cloud-capable](../principles.md#local-first-cloud-capable) · [In the creator's control](../principles.md#in-the-creators-control) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
+**Applies to:** [Eliminate needless technical wrangling](../principles.md#eliminate-needless-technical-wrangling) (primary) · [In the creator's control](../principles.md#in-the-creators-control) (supporting) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
 
 ## Desired state
 
-On each **declared supported** OS, device and deployment mode, people can reliably install, start, use, stop, update, roll back, repair and remove Astrid without losing work or being stranded by unexplained state. Support claims are backed by a maintained matrix of real-path evidence.
+On each declared supported operating system, device and deployment route, people can reliably install, launch, stop, update, roll back, repair and remove Astrid without losing projects or becoming stranded in an unexplained state. This concerns the application's **operational lifecycle**, not whether every creative workflow succeeds.
 
 ## Current state
 
@@ -12,11 +12,11 @@ On each **declared supported** OS, device and deployment mode, people can reliab
 
 ## Gap
 
-Real supported-environment coverage, failure/recovery paths, launcher and engine lifecycle, update/rollback qualification and current source/version coherence need broader and ongoing verification.
+Supported installation, launcher and engine lifecycle transitions—especially updates, failures, rollback, cleanup and recovery—still lack sufficiently broad, current and reproducible qualification. Creative job correctness belongs to F-003; authority over agent actions belongs to F-002.
 
 ## Closure evidence
 
-A declared OS/browser/device/deployment matrix, including realistic new-install and update journeys, managed task/engine start and safe stop, recovery after interrupted operation, rollback/uninstall, preservation of project data, and meaningful negative controls. Exact candidate/source and platform evidence are attached. Unsupported cells remain explicit; do not claim "all devices" without defining the matrix.
+A declared and version-pinned OS/device/deployment matrix demonstrates clean installation, launch, stop, update, interruption recovery, rollback and removal with preserved work and meaningful negative tests. This qualifies supported operational paths, not creative inference accuracy or permission policy.
 
 ## Sources and reassessment
 
