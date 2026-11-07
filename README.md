@@ -1,6 +1,23 @@
 # Astrid development workspace
 
-Astrid Dev connects our creative ambition to practical contributions. Our [contribution design principles](docs/contribution-design-principles.md) help us keep that work rigorous and simple.
+Astrid Dev connects our creative ambition to practical contributions. Our [contribution design principles](docs/contribution-design-principles.md) keep that work rigorous and simple.
+
+## Want to contribute? Give this to your agent.
+
+Copy this prompt into your agent:
+
+```text
+Help me contribute to Astrid. Start at
+https://github.com/banodoco/astrid-dev and follow
+skills/astrid-dev/SKILL.md. Find relevant existing
+issues and project work before proposing anything new.
+Help me choose the smallest useful contribution,
+verify it, and follow the repository's review process.
+```
+
+**Prefer to do it yourself?** Follow [the contribution workflow](docs/contribution-workflow.md) to find work, [claim a project](plans/index.md), propose a change or submit a focused PR. You can also [open an issue](https://github.com/banodoco/astrid-dev/issues/new) for a small fix or [ask a project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md).
+
+**Want to use Astrid, rather than develop it?** Start at **[astrid.haus](https://astrid.haus)** (recommended). For manual installation of the local Runtime and agent, follow [Set up Astrid](https://github.com/banodoco/astrid-agent/blob/main/docs/getting-started.md). You don't need to clone `astrid-app` to use the editor.
 
 ## What we're building
 
@@ -14,22 +31,8 @@ The vision defines the destination. [Gaps](vision/README.md#gaps--15-assessed-ou
 
 The [plan catalog](plans/index.md) is the single source of truth for project status, ownership, priority and estimates.
 
-## Want to contribute? Give this to your agent.
+## Contributor reference
 
-Share this prompt with your agent, or, if you're an agent, follow it to get set up:
+The [contributor skill](skills/astrid-dev/SKILL.md) is the single agent entry point. The [domain map](skills/astrid-dev/references/domains.md) locates code and specialist instructions. [Writing and documentation](docs/contribution-workflow.md#write-or-improve-documentation) follow the same issue and PR workflow. For independently useful new work, [propose a project](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md).
 
-```text
-Help me contribute to Astrid. Begin at
-https://github.com/banodoco/astrid-dev and read
-skills/astrid-dev/SKILL.md and docs/contribution-workflow.md.
-Find existing issues or project tasks before suggesting new work.
-Match a useful contribution to my interests, time and tools.
-For bugs and small fixes, use an issue and real focused proof,
-not a project. For independently useful new scope, investigate
-prior art, choose a simple approach, and agree a clear outcome.
-Respect source identity, user data and execution permissions.
-```
-
-**[How to contribute: claim, propose, submit and complete](docs/contribution-workflow.md).** Browse the [plan catalog](plans/index.md) for available work. You can [claim an available project](https://github.com/banodoco/astrid-dev/edit/main/plans/index.md) with a single owner-only PR, automatically merged when the claim bot is enabled and its safety checks pass. You can also [propose a project](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md) or [open an issue](https://github.com/banodoco/astrid-dev/issues/new) for a small fix.
-
-The [contributor skill](skills/astrid-dev/SKILL.md) is the agent entrypoint, and the [domain map](skills/astrid-dev/references/domains.md) routes you to the right code. [Writing and documentation](docs/contribution-workflow.md#write-or-improve-documentation) use the same reviewed PR process. [Ask a project question](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) if you need help or permission to start; claiming alone doesn't authorize execution.
+A claim is ownership, not permission to execute. Before changing product source, follow the accepted scope, existing work and the relevant product repository's safeguards.
