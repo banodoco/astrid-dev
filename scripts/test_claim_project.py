@@ -1,5 +1,6 @@
 """Pure negative tests for the privileged owner-only claim validation."""
 import unittest
+from unittest.mock import patch
 from claim_project import eligible, verify_claim
 from check_docs import HEADER, DIVIDER
 
@@ -37,6 +38,13 @@ class ClaimTests(unittest.TestCase):
             claimed = original.replace("| Unassigned |", "| @casey |", 1)
             with self.subTest(status=status), self.assertRaisesRegex(ValueError, "queued"):
                 verify_claim(original, claimed, "casey")
+
+    def test_privileged_claims_refuse_unprotected_main(self):
+        from claim_project import main_has_protection
+        with patch("claim_project.api", return_value={"protected": False}):
+            self.assertFalse(main_has_protection("banodoco/astrid-dev"))
+        with patch("claim_project.api", return_value={"protected": True}):
+            self.assertTrue(main_has_protection("banodoco/astrid-dev"))
 
     def test_eligibility_filters_untrusted_prs(self):
         p = {"state": "open", "draft": False,
