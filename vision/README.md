@@ -36,7 +36,7 @@ We want to inspire and equip people to push themselves—and reward them for doi
 
 ### [Local-first, cloud-capable](principles/local-first-cloud-capable.md)
 
-Create entirely on your own machine, online or offline, with your files and projects under your control. Use cloud models, agents or rendering when helpful. Move between local and cloud with clear choices about where work runs, files stay and what it costs.
+Create entirely on your own machine, online or offline, with your files and projects under your control. Use cloud models, agents or rendering when helpful. Move between local and cloud with clear, deliberate choices about where work runs, files stay, what gets shared, and what it costs.
 
 ### [Completely open by design](principles/open-by-design.md)
 
