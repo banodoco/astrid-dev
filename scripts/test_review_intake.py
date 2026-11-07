@@ -1,5 +1,6 @@
 """PR intake routes are explicit, ownership verified, and never merge approvals."""
 import unittest
+from unittest.mock import patch
 from check_docs import HEADER, DIVIDER
 from review_intake import classify, parse_intent
 
@@ -38,6 +39,24 @@ class ReviewIntakeTests(unittest.TestCase):
         files.append({"filename": "plans/index.md", "status": "modified"})
         self.assertEqual(classify(proposal, "banodoco/astrid-dev", CATALOG, files), "scope")
         self.assertIsNone(classify(proposal, "banodoco/astrid-dev", CATALOG, files[:2]))
+
+    def test_stale_label_is_removed_when_owner_no_longer_matches(self):
+        from review_intake import route_event
+        bad_owner = {**BASE, "user": {"login": "other", "type": "User"},
+                     "number": 37, "labels": [{"name": "needs-review"}]}
+        event = {"pull_request": {"number": 37}}
+        with patch("review_intake.request") as req, \
+             patch("review_intake.catalog", return_value=CATALOG), \
+             patch("review_intake.changed_files", return_value=[]):
+            def outcome(method, path, *args):
+                if path.endswith("/pulls/37"):
+                    return bad_owner
+                if path.endswith("/git/ref/heads/main"):
+                    return {"object": {"sha": "a" * 40}}
+                return {}
+            req.side_effect = outcome
+            self.assertIn("Removed stale", route_event(event, "banodoco/astrid-dev"))
+            self.assertTrue(any(call.args[0] == "DELETE" for call in req.call_args_list))
 
     def test_missing_duplicate_or_unrelated_intent(self):
         self.assertIsNone(parse_intent("Ordinary bug fix"))
