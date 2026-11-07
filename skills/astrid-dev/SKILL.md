@@ -32,6 +32,12 @@ Work enters at the earliest stage **not already settled by accepted evidence**. 
 
 **Each stage has one decision, not a new form.** A fact-finding report may end at Investigate. A new draft may end at Decide. An approved task can begin at Build. Don't invent another round of owner approval because an agent changed.
 
+## Claim, propose, submit
+
+Use the [contributor workflow](../../docs/contribution-workflow.md) for the actual GitHub actions. Anyone can propose new work; a maintainer greenlights new scope through a reviewed PR. An available project's `Unassigned` catalog owner can be claimed by a GitHub-identity-verified **owner-only PR** (automatically merged only once the safe bot is enabled). Claiming records accountability; it does not change status or grant execution authority.
+
+For code review, a project may link **several PRs across Runtime, Agent, App and other repositories**. Each PR links the project and carries a small [review submission](../../templates/review-submission.md): claims, exact candidate, checks, limits and dependency PRs. After integrated qualification, the final Astrid-dev completion PR links all PRs and assesses each linked gap. A project issue or conversation hub is not mandatory: use issues for questions, and put durable decisions in the project pack.
+
 ## Your first contribution
 
 Ask whether the person already has a concrete idea. If yes, trace it to an existing issue or project task before proposing new work. If not, search [issues](https://github.com/banodoco/astrid-dev/issues) and the [catalog](../../plans/index.md) to suggest 2–3 bounded contributions, including a small satisfying one, based on their interests, available time, hardware and agent capabilities. Look for current ownership and dependencies to avoid competing implementations. Ask only for missing information that changes the decision.

@@ -18,7 +18,7 @@ Describe the shortest path, real dependencies, source/environment or budget cons
 
 ## Interfaces and handoff
 
-What existing output or contract does this project **consume**, and how will its exact version be identified? What artifact or observable behavior will it **produce** that another agent can safely build on? Name any unresolved compatibility or provenance limits. Link actual qualified outputs and the completion PR when available; do not duplicate the evidence.
+What existing output or contract does this project **consume**, and how will its exact version be identified? What artifact or observable behavior will it **produce** that another agent can safely build on? Name any unresolved compatibility or provenance limits. Link relevant product PRs and the final integrated completion PR when available. That PR's concise [review evidence](../../docs/contribution-workflow.md#submit-a-completed-project) should point to the exact tested revisions and results, without duplicating the evidence here.
 
 ## Completion
 
