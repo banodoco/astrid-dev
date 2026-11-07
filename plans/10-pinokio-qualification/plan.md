@@ -26,7 +26,7 @@ Report only demonstrated outcomes. Missing deployed veto, settlement/readback, o
 
 ## Carried from Plan 07
 
-Plan 07 (Pinokio basic) closed on 7 Nov 2026 with hosted Linux, macOS and Windows rows passing all six steps on `main` (astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462`, launcher `d15c58b5`; run https://github.com/banodoco/astrid-agent/actions/runs/42419011936). These Plan 07 gaps are now part of this plan:
+Plan 07 (Pinokio basic) closed on 7 Nov 2026 with hosted Linux, macOS and Windows rows passing all six steps on `main` (astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462`, launcher `d15c58b5`; run https://github.com/banodoco/astrid-agent/actions/runs/42421306190). These Plan 07 gaps are now part of this plan:
 
 | Gap | Next step |
 |---|---|

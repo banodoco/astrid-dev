@@ -22,7 +22,7 @@ Evidence (7 Nov 2026): the hosted Pinokio rows (`scripts/pinokio_row_driver.py`,
 
 **Bug found and fixed by these rows:** every Pinokio release update failed with "another installer owns the installation lifetime lock" and rolled back. The update ran a Runtime workspace migration even when the schema was unchanged, and the updater's own stopped-path custody held the lock. Fix (astrid-agent #290, `core.py` `schema_unchanged()` shared with the direct path): same-schema Pinokio updates skip the migration, as direct updates already did.
 
-**Done (7 Nov 2026) on Linux, macOS and Windows.** The hosted rows pass all six steps on all three OSes with the exact `main` versions: astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462` and launcher `d15c58b5` (run https://github.com/banodoco/astrid-agent/actions/runs/42419011936). The owner also checked the real Pinokio app on macOS by hand.
+**Done (7 Nov 2026) on Linux, macOS and Windows.** The hosted rows pass all six steps on all three OSes with the exact `main` versions: astrid-agent `709492fa`, App `915bfa84`, Runtime `f4c7a462` and launcher `d15c58b5` (run https://github.com/banodoco/astrid-agent/actions/runs/42421306190). The owner also checked the real Pinokio app on macOS by hand.
 
 Getting Windows to pass found and fixed real product bugs:
 - Windows install: uv hard-linked packages from its cache, so the Runtime's schema files inherited the cache's permissions and failed its private-file check. Packages are now copied into each version (astrid-agent #294).
