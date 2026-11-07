@@ -31,6 +31,13 @@ class ClaimTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "not unassigned"):
             verify_claim(old, old.replace("@alex", "@casey"), "casey")
 
+    def test_blocked_or_active_projects_cannot_be_claimed(self):
+        for status in ("blocked", "active", "done"):
+            original = BASE.replace("| queued |", "| " + status + " |", 1)
+            claimed = original.replace("| Unassigned |", "| @casey |", 1)
+            with self.subTest(status=status), self.assertRaisesRegex(ValueError, "queued"):
+                verify_claim(original, claimed, "casey")
+
     def test_eligibility_filters_untrusted_prs(self):
         p = {"state": "open", "draft": False,
              "base": {"ref": "main", "repo": {"full_name": "banodoco/astrid-dev"}},
