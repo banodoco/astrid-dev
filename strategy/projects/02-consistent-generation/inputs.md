@@ -1,12 +1,12 @@
 # Inputs and provenance
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Re-freeze rule
 
-Every SHA below is an observation from 5 Nov 2026, not a presumed current ref. At the start of each task, record the actual branch and SHA of its base and donors. If a recorded value and the live repository disagree, the live repository wins for branch heads; this file wins for the identity of retained donors. If a destination moves after proof, reconcile and rerun only the affected checks and review ([run contract](../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)).
+Every SHA below is an observation from 5 Nov 2026, not a presumed current ref. At the start of each task, record the actual branch and SHA of its base and donors. If a recorded value and the live repository disagree, the live repository wins for branch heads; this file wins for the identity of retained donors. If a destination moves after proof, reconcile and rerun only the affected checks and review ([run contract](../../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)).
 
 ## Current heads (5 Nov 2026)
 

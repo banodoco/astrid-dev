@@ -24,6 +24,6 @@ The exact accepted donor SHAs and merge order are recorded **once** in [Starting
 
 ## Constraints
 
-- Use the shared [run contract](../../skills/astrid-dev-shared/run-contract.md) for routes, bindings, source identity, and proof; preserve the accepted scoped END review and existing authorization limits.
+- Use the shared [run contract](../../../skills/astrid-dev-shared/run-contract.md) for routes, bindings, source identity, and proof; preserve the accepted scoped END review and existing authorization limits.
 - Only Agent and App change. Runtime, VibeComfy, and lifecycle are unchanged producers; keep their pins unchanged. No CPU generation, CE, broad suites, or full UI/SDK suite are acceptance for this increment.
 - Reuse accepted donor evidence; recheck only affected behavior on the composition and final immutable tuple. Confirm Runtime contract artifacts against the frozen target.

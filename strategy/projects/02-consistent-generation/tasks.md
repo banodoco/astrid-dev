@@ -1,14 +1,14 @@
 # Tasks: consistent generation path
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
-[Project explanation](plan.md) · [Inputs and branch rules](inputs.md) · [Current project status](../../README.md)
+[Project explanation](plan.md) · [Inputs and branch rules](inputs.md) · [Current project status](../../../README.md)
 
-Routes: `N` is the default (including ordinary hard work), `X` very hard, `S` super hard; see the [run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Run only the checks named here, with the exact selectors given; never a whole suite. A check that fails follows the run contract: keep the first failure, repair the cause, rerun the same check. Start only on the owner's go.
+Routes: `N` is the default (including ordinary hard work), `X` very hard, `S` super hard; see the [run contract](../../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings). Run only the checks named here, with the exact selectors given; never a whole suite. A check that fails follows the run contract: keep the first failure, repair the cause, rerun the same check. Start only on the owner's go.
 
 Selectors marked **Step 0** were not found in the repositories and must be named from the place given before the task starts. If a Step 0 lookup finds nothing, record that in the task and drop the check; do not invent a selector.
 
-`ENV` below is the [env/](env/README.md) folder of this plan's astrid-dev checkout: set `ENV=<astrid-dev checkout>/plans/02-consistent-generation/env` once. The scripts are not inside the product checkouts. Run them from the product checkout root: `bash "$ENV/agent-setup.sh"` once, then `bash "$ENV/agent-pytest.sh" -q <selectors>` (VibeComfy: `vc-setup.sh`, `vc-pytest.sh`). They build `<checkout>.env/` beside the checkout.
+`ENV` below is the [env/](env/README.md) folder of this plan's astrid-dev checkout: set `ENV=<astrid-dev checkout>/strategy/projects/02-consistent-generation/env` once. The scripts are not inside the product checkouts. Run them from the product checkout root: `bash "$ENV/agent-setup.sh"` once, then `bash "$ENV/agent-pytest.sh" -q <selectors>` (VibeComfy: `vc-setup.sh`, `vc-pytest.sh`). They build `<checkout>.env/` beside the checkout.
 
 ## Phase 1: land the producers (can start today, any OS)
 
@@ -157,7 +157,7 @@ Write the proof of Decision 10 as a new test under `tests/installed/` (Step 0: n
 | [V2](#v2-linux-closure) | The Linux x86_64 closure passes. | N | D3, Linux environment | PASS. | [ ] |
 | [V3](#v3-installed-package-proof) | The installed-package test from D3 passes (Decision 10). | N | D3 | PASS. | [ ] |
 
-Record, for each, the exact command, the candidate SHA, the inputs and the inner exit status ([run contract](../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)). Do not claim a pass for a check not run.
+Record, for each, the exact command, the candidate SHA, the inputs and the inner exit status ([run contract](../../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)). Do not claim a pass for a check not run.
 
 ### V1 focused checks
 
@@ -218,7 +218,7 @@ node --import tsx --test scripts/installer/manifest.test.mjs
 
 ### R1 integrated review
 
-Use the completion-reviewer role from the [run contract](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, at most five rounds, stop on an uncontested PASS. Give the reviewer the Agent and App candidate heads, the producer SHAs, the check outputs and these items to confirm: PINS and the DEFAULTS donor are ancestors; K-owned files are unchanged; the six defaults resolve as in Decision 2, including the `--target runpod --dry-run` results from D1b; no pin points at a lane-only commit; the Plan 01 changes survive; the Foley default and its fail-closed behavior; the App manifest names the Agent head; V1 to V3 results are attached to these exact heads; no GPU, provider call, model download or credential read appears in the logs, except V2's owner-approved RunPod CPU pod, whose recorded spend and stop are expected there. Real inference and Foley hardware qualification are listed as deferred, not dropped. A repair returns to the same iterate loop and reruns the failed check. The final rebase (RB1) is re-checked, not re-reviewed in full.
+Use the completion-reviewer role from the [run contract](../../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, at most five rounds, stop on an uncontested PASS. Give the reviewer the Agent and App candidate heads, the producer SHAs, the check outputs and these items to confirm: PINS and the DEFAULTS donor are ancestors; K-owned files are unchanged; the six defaults resolve as in Decision 2, including the `--target runpod --dry-run` results from D1b; no pin points at a lane-only commit; the Plan 01 changes survive; the Foley default and its fail-closed behavior; the App manifest names the Agent head; V1 to V3 results are attached to these exact heads; no GPU, provider call, model download or credential read appears in the logs, except V2's owner-approved RunPod CPU pod, whose recorded spend and stop are expected there. Real inference and Foley hardware qualification are listed as deferred, not dropped. A repair returns to the same iterate loop and reruns the failed check. The final rebase (RB1) is re-checked, not re-reviewed in full.
 
 ## Phase 8: rebase and promote
 
@@ -231,12 +231,12 @@ Use the completion-reviewer role from the [run contract](../../skills/astrid-dev
 
 1. Re-freeze each destination: Agent, Runtime and App `pre-main`; VibeComfy and runpod-lifecycle `main`. Record the SHAs.
 2. Rebase the reviewed Agent and App candidates onto them. If nothing moved, record that and go to PR1.
-3. If the rebase is clean, rerun only the checks whose inputs changed (a moved target invalidates only the proof that depends on it, per the [run contract](../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)) and record why the rest carries forward. A rebased Agent head has a new SHA, so push it and rerun A1's pin on it.
+3. If the rebase is clean, rerun only the checks whose inputs changed (a moved target invalidates only the proof that depends on it, per the [run contract](../../../skills/astrid-dev-shared/run-contract.md#checks-and-failure-repair)) and record why the rest carries forward. A rebased Agent head has a new SHA, so push it and rerun A1's pin on it.
 4. If it conflicts, resolve the conflicts (route X), rerun the affected checks, and ask the completion reviewer for a delta review of the resolution. This counts against R1's five-round budget; it adds no stage.
 5. PR1 promotes the rebased heads by fast-forward. Never force-push.
 
 ### PR1 promote
 
-Follow the release workflow's pre-main integration lane ([release skill](../../skills/astrid-dev-release/SKILL.md)): recapture each destination `pre-main` immediately before, and promote the exact rebased heads (Agent, then App) by ordinary fast-forward or create operations. Never force-push; never publish to Agent, Runtime or App `main`, `int/r1` or `release-1`. If a destination moved again, repeat RB1 for what moved. Only with the owner's explicit authority.
+Follow the release workflow's pre-main integration lane ([release skill](../../../skills/astrid-dev-release/SKILL.md)): recapture each destination `pre-main` immediately before, and promote the exact rebased heads (Agent, then App) by ordinary fast-forward or create operations. Never force-push; never publish to Agent, Runtime or App `main`, `int/r1` or `release-1`. If a destination moved again, repeat RB1 for what moved. Only with the owner's explicit authority.
 
 Order: Agent is promoted first, then App, so App's manifest never names an Agent head that is not yet on `pre-main`.

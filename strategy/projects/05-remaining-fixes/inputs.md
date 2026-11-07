@@ -12,7 +12,7 @@ The accepted SF receipts and donors below are historical references, not a froze
 | `astrid-runtime` | TBD at start: exact promoted Plan 02 integration and Plan 04 tuple and current `pre-main` | CAS `1e60e3b746c37c1fd22c14f0ceeb1218dc36b373`; Runtime fold `287042b2426f7465a1fba77bba075766f18f26b1`. Do not substitute custody `103f97803f7f391e2c810ebdf086f798326cd75a`. | TBD at start; isolated immutable candidate | `pre-main`, only after review |
 | `VibeComfy` | TBD at start: exact promoted Plan 02 integration and Plan 04 tuple and current target | Boundary test `1ac3b91fedf4a15842ff655442869569d4855396`; accepted test-only change, eligible only if absent. | TBD at start; isolated immutable candidate if changed | `pre-main`, only after review |
 
-The RunPod-owner donor is in `astrid-agent`; do not infer a separate lifecycle repository change. No candidate branch name or later base SHA is supplied. Verify each actual target at setup, use isolated candidates, and promote only exact reviewed heads under the [shared run contract](../../skills/astrid-dev-shared/run-contract.md). The Agent fold is consumed once by Plan 06 PK-6, not merged here. Do not merge a fold together with its superseded members.
+The RunPod-owner donor is in `astrid-agent`; do not infer a separate lifecycle repository change. No candidate branch name or later base SHA is supplied. Verify each actual target at setup, use isolated candidates, and promote only exact reviewed heads under the [shared run contract](../../../skills/astrid-dev-shared/run-contract.md). The Agent fold is consumed once by Plan 06 PK-6, not merged here. Do not merge a fold together with its superseded members.
 
 ## References and evidence
 

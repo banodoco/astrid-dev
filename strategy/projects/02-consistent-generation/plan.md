@@ -1,8 +1,8 @@
 # Consistent generation path
 
-**Vision gaps:** [Dependable creative execution](../../visions/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Plan 02 makes supported generation pick consistent defaults (image, edit, video, voice, music, sound effects), and makes the Agent, Runtime, App, VibeComfy and runpod-lifecycle repositories pin one compatible set of versions that installs on a fresh Linux machine. Users get predictable defaults and clear guidance when no GPU is available. It reuses work that already exists on retained branches and merges it into `pre-main`.
 
@@ -12,11 +12,11 @@ Status, owner and estimate are in the [catalog](../index.md).
 
 ## Execution handoff
 
-[Tasks](tasks.md) own the work and focused proof; [inputs](inputs.md) own actual source identities and retained work. Use the [contributor skill](../../skills/astrid-dev/SKILL.md), then its [Iterate](../../skills/astrid-dev-iterate/SKILL.md) or [Release](../../skills/astrid-dev-release/SKILL.md) specialist as the task requires. Do not infer a model ID or new permission from this plan.
+[Tasks](tasks.md) own the work and focused proof; [inputs](inputs.md) own actual source identities and retained work. Use the [contributor skill](../../../skills/astrid-dev/SKILL.md), then its [Iterate](../../../skills/astrid-dev-iterate/SKILL.md) or [Release](../../../skills/astrid-dev-release/SKILL.md) specialist as the task requires. Do not infer a model ID or new permission from this plan.
 
 ## Prerequisites
 
-- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../AGENTS.md)). Nothing here authorizes pushing, spending or promotion by itself. To ask for the go, see [How to use this repo](../../README.md#how-to-use-this-repo).
+- **Authorization:** this plan is `queued`. Start product work only on the owner's explicit go ([AGENTS.md](../../../AGENTS.md)). Nothing here authorizes pushing, spending or promotion by itself. To ask for the go, see [How to use this repo](../../../README.md#how-to-use-this-repo).
 - **Predecessor:** [Plan 01, Installer Consent](../01-installer-consent/plan.md) must be on Agent and App `pre-main` before phase 3. It is not there yet (see [inputs.md](inputs.md)). Phase 1 can start before it.
 - **Hardware for the Linux closure check (task V2):** a Linux x86_64 environment: a Linux machine, WSL2 on a Windows PC, or a RunPod CPU pod with at least 40 GB of disk (owner-approved spend). The check installs the pinned Linux recipe (`linux-x86_64-cu130`), so a Mac can't run it. Everything else, including the phase 1 producer tasks, runs on any OS.
 - **Access:** push access to the repositories below, or open pull requests for the owner to merge. Producers land only with the owner's go.
@@ -84,7 +84,7 @@ Proof is bound to the final head. Producers land first, Plan 01 is a preconditio
 - **PINS**: the Agent commit `1608dbbf` that pins a compatible version set (VibeComfy, Runtime, node sources, model and requirements locks) and adds the Linux closure test.
 - **DEFAULTS**: the Agent donor `9d3bb248` that selects default entries per generation type, plus the new CLI-GOLD test.
 - **CLI-GOLD**: `tests/core/generation/test_cli_gold_075b.py`, a test that runs real `python -m astrid generate ...` subprocesses with dry run and checks which default each type resolves to.
-- **ENV**: the plan's `env/` folder in the astrid-dev checkout (`<astrid-dev checkout>/plans/02-consistent-generation/env`), where the check scripts live; it is not inside any product checkout.
+- **ENV**: the plan's `env/` folder in the astrid-dev checkout (`<astrid-dev checkout>/strategy/projects/02-consistent-generation/env`), where the check scripts live; it is not inside any product checkout.
 - **VFIX**: the VibeComfy donor `1b2e242`, which makes an installed VibeComfy find its own templates without a source checkout.
 - **QV**: the retained check that VFIX still passes VibeComfy's focused tests against the production base. Here part of P1.
 - **K27**: the three lifecycle regression tests (completed-job eviction, capacity reuse, delete and retire) in `tests/test_https.py`.

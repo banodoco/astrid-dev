@@ -26,4 +26,4 @@ The SDK selectors and hosted wrapper requirements are recorded in [CE-FINAL](tas
 
 ## Constraints
 
-Execution requires the initiative's explicit start and the accepted run controls. Preserve the existing END review scope, stage, and remaining-round budget; the migration source does not specify their exact values. No full SDK/UI suite. Publication follows the existing project and [shared run contract](../../skills/astrid-dev-shared/run-contract.md); this plan adds no authorization or review stage.
+Execution requires the initiative's explicit start and the accepted run controls. Preserve the existing END review scope, stage, and remaining-round budget; the migration source does not specify their exact values. No full SDK/UI suite. Publication follows the existing project and [shared run contract](../../../skills/astrid-dev-shared/run-contract.md); this plan adds no authorization or review stage.

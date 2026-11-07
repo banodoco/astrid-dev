@@ -2,9 +2,9 @@
 
 **Vision role:** Foundational enabler — integrates previously accepted fixes without independently proving a new user-facing outcome.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
-Account for the accepted remaining fixes and compose the eligible changes into a coherent release while preserving existing behavior. The [project queue](../../README.md) remains authoritative for status, owner, and estimate.
+Account for the accepted remaining fixes and compose the eligible changes into a coherent release while preserving existing behavior. The [project queue](../../../README.md) remains authoritative for status, owner, and estimate.
 
 ## Goal and scope
 

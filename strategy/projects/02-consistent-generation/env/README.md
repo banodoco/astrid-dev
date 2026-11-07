@@ -2,7 +2,7 @@
 
 Small scripts from the earlier generation run, copied unchanged. They build a clean test environment next to a checkout and run `pytest` in it with a wiped environment. They are inputs to the checks in [tasks.md](../tasks.md); nothing here authorizes running them.
 
-Call the scripts as `bash "$ENV/<script>"` with `ENV=<astrid-dev checkout>/plans/02-consistent-generation/env`, from the product checkout root; they are not inside the product checkouts.
+Call the scripts as `bash "$ENV/<script>"` with `ENV=<astrid-dev checkout>/strategy/projects/02-consistent-generation/env`, from the product checkout root; they are not inside the product checkouts.
 
 | File | What it does |
 |---|---|

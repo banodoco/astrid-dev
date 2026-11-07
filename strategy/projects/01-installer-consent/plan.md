@@ -1,8 +1,8 @@
 # 1 — Merge completed installer consent
 
-**Vision gaps:** [Trustworthy user control](../../visions/gaps/F-002-safe-user-control.md) (primary).
+**Vision gaps:** [Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../../skills/astrid-dev/SKILL.md).
 
 Deliver the accepted installer consent increment on Agent and App, with clear choices, saved preferences, and predictable installation behavior. Preserve the accepted nonblocking skills-off rendering limitation; this increment does not claim to fix it.
 
@@ -28,4 +28,4 @@ Complete when the scoped Agent/App checks and independent review show preserved 
 
 - [tasks.md](tasks.md): task index, accepted routes, checks, and completion evidence.
 - [inputs.md](inputs.md): historical bases, donor identities, evidence, and branch rules.
-- [Project status and owner](../../README.md): queue authority.
+- [Project status and owner](../../../README.md): queue authority.

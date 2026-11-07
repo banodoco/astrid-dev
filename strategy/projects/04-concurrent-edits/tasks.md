@@ -76,7 +76,7 @@ The CE-LIMIT check selector and the exact identities/definitions of CE-0 and CE-
 - **Outcome / work:** Publish fresh immutable increment lanes and promote those same heads to `pre-main`.
 - **Route:** N / Luna.
 - **Dependencies and inputs:** CE-REVIEW and its exact reviewed heads.
-- **Focused checks:** Verify remote heads equal reviewed heads; reconcile moved targets and rerun affected checks under the [run contract](../../skills/astrid-dev-shared/run-contract.md).
+- **Focused checks:** Verify remote heads equal reviewed heads; reconcile moved targets and rerun affected checks under the [run contract](../../../skills/astrid-dev-shared/run-contract.md).
 - **Done:** Exact reviewed heads are promoted; no force push and no second aggregate. Existing project/initiative authority governs publication.
 
 ### CE-REF
