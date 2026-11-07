@@ -49,11 +49,26 @@ The owner's decisions (7 Nov 2026) are recorded in [inputs.md](inputs.md#owner-d
 
 ## Sequence and readiness
 
-One coherent release, Release 10, with the App part allowed to ship first as permanent code:
+Two committed phases. Phase 1 (about 11–13 engineer-days) gives every normal install a working, honest Update now from Release 10, and a release number that only moves when it should. Phase 2 (about 7–9 days) finishes the less common setups. Both are part of this plan; phase 2 is not optional.
 
-1. **App.** Offer Update now only when the installed Astrid reports it can update itself (installs on 9 and earlier can't, and are told once why, with the command). Show the real refusal reason. Remove the setup block from update surfaces and "Astrid on this computer". Fully local uses the in-page updater. The Pinokio memory reads `identity`. Add the decision table test, a required `release-guard` check, and branch protection.
-2. **Agent and Runtime.** Merge the existing `reconcile` handler. Add the capability and a reason whenever an update is not available. Remove the systemd 254 floor. Serve update status in Pinokio fully local. Add both contracts with tests.
-3. **Release.** `pin.mjs` stops changing `release`; remove the second pin tool and stale release files; hosted rows on every OS update through the button path; publish 10.
+**Phase 1a: App only, deployable this week (about 3.5–4 days).**
+- Show Update now only when the installed Astrid's update status reports it can update itself. No Runtime reports it yet, so the button that has never worked disappears for everyone today, and turns on by itself with Release 10. Everyone else sees the reason and the command.
+- Show the real refusal reason.
+- Remove SetupBlock from the four update surfaces and from "Astrid on this computer".
+- Move the chat update cards onto the shared decision (`resolveUpdate`, which already drives every other Update now button).
+- Pinokio memory reads the Runtime's own identity; Pinokio fully local serves its update status instead of 501.
+- `release-check.mjs` becomes one rule, run on pull requests and on push to `main`; `pin.mjs` stops changing `release`.
+
+**Phase 1b: fully local Update now (about 1.5 days).** Re-enable the existing in-page updater the owner hid in `f2eca0bd5`, after a short spike to confirm it works.
+
+**Phase 1c: Release 10 (about 6.5–7.5 days).**
+- Merge the existing five-commit `reconcile` lane (Agent `b97c43db8` and its tests), with one Agent test that drives the Runtime's real update request through the real helper.
+- The Runtime reports the capability and a reason on `GET /v1/update/status` (not in health `identity`, which would change the schema digest).
+- A narrow test-only seam lets a hosted row update to a stand-in release through the in-app request; one such row per OS for a normal install.
+- Freeze `public/install*` while 10 is qualified; publish 10 without marking it required.
+- **Owner step:** turn on branch protection with the release check required on App `main`.
+
+**Phase 2 (about 7–9 days).** Remove the systemd 254 floor, proven on an Ubuntu 22.04 row; typed schemas at both boundaries; the refused cards onto the shared decision; Pinokio and fully local button-path proof.
 
 Owner decisions are recorded in [inputs.md](inputs.md#decisions-recorded-7-nov-2026). Recording this plan does not authorize implementation. Task cards: [tasks.md](tasks.md).
 

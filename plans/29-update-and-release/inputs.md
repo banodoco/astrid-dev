@@ -39,6 +39,12 @@
 - **Gaps added:** systemd below 254 on Ubuntu 22.04 and Debian 12; the 501 status in Pinokio fully-local preview; bootstrap files as release bytes; downgrade via `--update`.
 - **Rejected:** the review's deferrals and its release-number constant. The owner asked for a proper fix with no stopgaps, so the systemd floor, the Pinokio preview status and typed contracts are in scope, and a Runtime capability replaces the "release 9 or earlier" constant.
 
+**Phasing review:** a second independent review checked a 90/10 cut against the code and moved the phase 1 estimate from 6–8 to about 11–13 days. It contributed four findings:
+- a hosted button test needs a test-only Runtime seam;
+- the capability belongs on update status, not health identity;
+- the App can hide the never-working button now without a release-number check;
+- three cheap items belong in phase 1: Pinokio fully local status, the Pinokio memory, and fully local Update now.
+
 **Proof and limits:** see [plan.md](plan.md#completion). Existing installs on releases 9 and earlier keep the command path once; the button works only for installs from release 10.
 
 ## Owner decisions
