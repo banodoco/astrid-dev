@@ -6,7 +6,7 @@
 
 **Scope decision:**
 - **Draft.** The owner asked for this project on 7 Nov 2026: one elegant update path, as simple as possible, with root-cause fixes, and the release process designed together with it.
-- **Owner decisions** recorded below. The end state still needs the owner's selection on the pending decisions.
+- **Owner decisions** recorded below. The owner settled the remaining decisions the same day; see below.
 - **Next:** owner review of this draft.
 
 **Prior art:**
@@ -52,11 +52,11 @@ From the owner, 7 Nov 2026 (session chat):
 - **Fix issues at their root,** and keep it as simple as possible.
 - **The release process is part of this project.** Release 9, currently live, is kept; the next release is 10.
 
-## Pending decisions
+## Decisions recorded 7 Nov 2026
 
-1. **Fully local:** planned as Update now through the existing in-page updater, following "Update now or Pinokio, no middle ground". Confirm.
-2. **Pinokio fresh install consent.** Pinokio's terminal currently shows Plan 01's setup questions. Should Pinokio ask them, or accept the recommended choices, given that Pinokio manages start itself?
-3. **Branch protection on App `main`.** This needs a repository admin.
+1. **Fully local:** Update now through the existing in-page updater (owner: yes).
+2. **Pinokio fresh install:** asks Plan 01's setup questions, as it does today in Pinokio's terminal (owner: should ask). The hosted Pinokio row accepts the recommended choices because it has no terminal.
+3. **Branch protection on App `main`:** the owner will turn it on later. UR-6's required check is ready before then.
 
 ## Source identities
 

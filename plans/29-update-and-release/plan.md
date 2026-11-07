@@ -55,7 +55,7 @@ One coherent release, Release 10, with the App part allowed to ship first as per
 2. **Agent and Runtime.** Merge the existing `reconcile` handler. Add the capability and a reason whenever an update is not available. Remove the systemd 254 floor. Serve update status in Pinokio fully local. Add both contracts with tests.
 3. **Release.** `pin.mjs` stops changing `release`; remove the second pin tool and stale release files; hosted rows on every OS update through the button path; publish 10.
 
-Pending owner decisions are listed in [inputs.md](inputs.md#pending-decisions). Recording this plan does not authorize implementation. Task cards: [tasks.md](tasks.md).
+Owner decisions are recorded in [inputs.md](inputs.md#decisions-recorded-7-nov-2026). Recording this plan does not authorize implementation. Task cards: [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
