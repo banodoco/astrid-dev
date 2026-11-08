@@ -25,27 +25,11 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | UR-R Up to three independent reviews of the integrated candidate | S | UR-1–UR-13 | all Plan 29 scopes (read-only review) | Each round produces either no blocking findings, or new routed task cards that are done before the next round; see [review rounds](#ur-r-review-rounds) | [ ] |
 | UR-14 Publish Release 10 | N | all, including UR-R | app `public/install-manifest.json`, `runtime.lock.json` | Owner names the tuple and says go; `public/install*` frozen; not required; canary passes | [ ] |
 | **Owner** | | | | | |
-| Turn on branch protection on App `main`, requiring `release-guard`, up to date, including admins | owner | UR-8 | Settings show the required check | [ ] |
+| Turn on branch protection on App `main`, requiring `release-guard`, up to date, including admins | owner | UR-8 | App repository settings | Settings show the required check | [ ] |
 
 **Overlap with other projects:** Plan 09 IU-1 and IU-8 change the same update helper and transaction as UR-10, UR-11 and Plan 30's UR-16, so they run after them. Plan 10's Pinokio row work shares `pinokio_row_driver.py` with Plan 30's UR-18a.
 
 ## Task details
-
-### UR-R Review rounds
-
-This plan sets its own review policy, as the [run contract](../../skills/astrid-dev-shared/run-contract.md) allows.
-
-1. **Run a round.** An independent S reviewer (Opus) reviews the integrated candidate across App, Agent, Runtime and launcher. It reviews against [the completion criteria and negative cases](plan.md#completion) and the recorded owner decisions. It returns each finding as a task card, with these fields:
-   - outcome;
-   - route (N, X or S, by the run contract);
-   - scope;
-   - dependencies;
-   - focused proof.
-2. **Do the findings.** The manager adds the cards here as `UR-R<round>.<n>`, orders any that overlap by dependency, and runs them like any other task.
-3. **Run the next round** on the new candidate.
-
-The stage stops after a round with no blocking findings, or after three rounds. A blocking finding still open after three rounds goes to the owner, not to a fourth round. Non-blocking findings are recorded, and are done only if the owner asks.
-
 
 ### UR-1 Update now only with `self_update`
 - **The new field.** `self_update` is a new boolean on `GET /v1/update/status`. The existing `available` doesn't serve this purpose, because it reports true on macOS and Windows even though the helper fails.
@@ -114,3 +98,18 @@ The stage stops after a round with no blocking findings, or after three rounds. 
 - **What changes:** the update leg of `journey_fresh_update.py` (about :126) and `windows_update_journey.py` (about :225). It is a POST with Origin `https://astrid.haus`, `Content-Length: 0`, no Authorization or Cookie, and the server-side `installer:update` scope.
 - **Hard-coded release:** fix `release == 1` (`journey_fresh_update.py:24-25`, `windows_update_journey.py:185`, `ci_journey_keepgoing.py:238`).
 - **Probes first:** launchd (macOS) and the Windows interactive scheduled task on hosted runners.
+
+### UR-R Review rounds
+
+This plan sets its own review policy, as the [run contract](../../skills/astrid-dev-shared/run-contract.md) allows.
+
+1. **Run a round.** An independent S reviewer (Opus) reviews the integrated candidate across App, Agent, Runtime and launcher. It reviews against [the completion criteria and negative cases](plan.md#completion) and the recorded owner decisions. It returns each finding as a task card, with these fields:
+   - outcome;
+   - route (N, X or S, by the run contract);
+   - scope;
+   - dependencies;
+   - focused proof.
+2. **Do the findings.** The manager adds each card as a row directly below UR-R in the task table, numbered `UR-R<round>.<n>`. It orders any that overlap by dependency, and runs them like any other task. UR-14 waits for all of them.
+3. **Run the next round** on the new candidate.
+
+The stage stops after a round with no blocking findings, or after three rounds. A blocking finding still open after three rounds goes to the owner, not to a fourth round. Non-blocking findings are recorded, and are done only if the owner asks.
