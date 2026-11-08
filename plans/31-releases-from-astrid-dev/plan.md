@@ -34,17 +34,22 @@ The design reuses the vision pipeline (`vision-consumer-contract`, `publish-visi
 
 ## Sequence and readiness
 
-1. **RL-1:** release records, checks and publishing. It publishes the legacy Release 9 and proves the generated manifest matches today's served one.
-2. **RL-2:** the App's generated copy and sync. It proves that syncing Release 9 changes only metadata.
-3. **RL-3:** versions on screen.
-4. **Review rounds.**
+Phase 1, releases defined and published from astrid-dev:
+1. **RL-0:** a worker setup script for the App, so workers can run its checks.
+2. **RL-1a–RL-1d:** release records and their checks, the `release-contract` job across repositories, the fail-closed `publish-release` gate, and the Release skill publishing through records. RL-1a records the release live at start (expected 10) and proves its rendered manifest matches the served one.
+3. **RL-2a–RL-2d:** a typed manifest schema shared by every App reader, the bootstrap move, the App's generated copy and sync (deleting `release-guard` and `pin.mjs` write mode in the same change), and the canary comparing with `release-published`. Syncing the legacy record changes only metadata.
+4. **Review rounds (RL-R),** then **go live (RL-G)** through the Release skill, in a fixed order with the owner's settings changes between steps.
 
-This plan starts after [Plan 29](../29-update-and-release/plan.md) publishes Release 10 (owner, 8 Nov 2026). Its first record is the release live at that point, expected to be Release 10 = `0.0.10`. The next release is the first one published through this path. The owner turns on astrid-dev `main` protection before the first publish. The details are in [tasks.md](tasks.md). Recording this plan does not authorize implementation.
+Phase 2, on screen: **RL-3**, users see versions. It ships with the next record after its own review round.
+
+All work lands on `int/31-releases-from-astrid-dev` in astrid-dev and the App. Only the Release skill moves either branch to `main`.
+
+This plan starts after [Plan 29](../29-update-and-release/plan.md) publishes Release 10 and the owner gives the go (owner, 8 Nov 2026). Its first record is the release live at that point, expected to be Release 10 = `0.0.10`. The next release is the first one published through this path. The owner turns on astrid-dev `main` protection before the first publish. The details are in [tasks.md](tasks.md). Recording this plan does not authorize implementation.
 
 ## Interfaces and handoff
 
 - **Consumes:**
-  - App `main`'s `pin.mjs` manifest check;
+  - the App's manifest checker (`checkManifest`, behind RL-2a's typed schema and `manifest-check`);
   - the served-manifest canary;
   - the Agent's `tools.validate_manifest`;
   - each product's `main` history.
@@ -57,8 +62,10 @@ This plan starts after [Plan 29](../29-update-and-release/plan.md) publishes Rel
 ## Completion
 
 The proof is these observable results:
-- The first release after this plan is published by merging an owner-approved `releases/<N>.json`, with no App PR, and the canary confirms the deployed manifest matches it.
-- A record that is incomplete, inconsistent or unapproved can't merge or publish.
-- A hand edit to the App's generated files fails its PR.
+- **Phase 1:**
+  - The first release after this plan is published by merging an owner-approved `releases/<N>.json`, with no App PR, and the canary confirms the deployed manifest matches it.
+  - A record that is incomplete, inconsistent or unapproved can't merge or publish. That includes a commit that isn't on its repository's `main`.
+  - A hand edit to the App's generated files fails its PR.
+- **Phase 2:** the hosted App and the local launcher show versions, such as "Astrid is up to date (0.0.11)", and never a release number.
 
 Limits: the trust root becomes astrid-dev `main`, so its protection is a prerequisite. Releases go live within one sync interval plus a deploy.
