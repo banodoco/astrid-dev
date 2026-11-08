@@ -17,7 +17,7 @@ Planners and managers are administrators; this is where their high-judgment work
 
 ## Check-ins (only when the owner asks)
 
-When the owner asks for regular check-ins on a run, take the cadence and end condition from that request and record them as `checkin` in the run's `run.yaml`. Schedule them from your own session, and remove the schedule when the run ends or the owner says stop. These documents never start a check-in themselves.
+When the owner asks for regular check-ins on a run, take the cadence and end condition from that request and record them as `checkin` in the run's `run.yaml`. Schedule them from your own session. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Moving:** tasks finished or candidates landed since last time.
@@ -34,3 +34,5 @@ Then do exactly one thing:
 **Improve astrid-dev as you go.** When the run hits friction in astrid-dev itself (an unclear skill, a missing template field, a slow check), add a row to the [process ledger](../../docs/process-ledger.md). If the fix is small and touches only astrid-dev docs or skills, open the fixing PR in the same check-in and add a `fix` row pointing to it. Friction specific to this one run goes in its [decisions ledger](../astrid-dev-shared/templates/decisions-ledger.md) instead.
 
 After three check-ins in a row with nothing to report, tell the owner, then slow down or stop. A check-in never starts, resumes or authorizes work.
+
+**Cancel them when the project is done.** When the project is complete, cancel every check-in you scheduled. Do the same when its end condition is met or the owner says stop. A project is complete when its completion PR merges. Confirm none remain, and tell the owner they have stopped.
