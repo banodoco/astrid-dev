@@ -20,4 +20,4 @@ On a stated supported setup, run real creative generation or processing and insp
 
 ## Sources and reassessment
 
-[Plan 02](../../plans/02-consistent-generation/plan.md) · [Plan 12](../../plans/12-multiple-inference-routes/plan.md) · [Plan 16](../../plans/16-streamlined-agent-experience/plan.md) · [Plan 20](../../plans/20-zero-to-first-image/plan.md). Do not equate fixture checks with real GPU/inference qualification.
+[Plan 02](../../plans/02-consistent-generation/plan.md) · [Plan 33](../../plans/33-unblock-live-generation/plan.md) · [Plan 12](../../plans/12-multiple-inference-routes/plan.md) · [Plan 16](../../plans/16-streamlined-agent-experience/plan.md) · [Plan 20](../../plans/20-zero-to-first-image/plan.md). Do not equate fixture checks with real GPU/inference qualification. Portability across machines and engines is [F-008](F-008-portable-generation.md).

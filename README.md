@@ -24,9 +24,9 @@ Contributing without an agent? See [CONTRIBUTING.md](CONTRIBUTING.md).
 **A tool to unlock the collective artistic ambition of the open-source AI community.**
 
 <!-- vision-summary:start -->
-Our vision has four main pillars and four guiding principles. We've identified 16 gaps between us and that end state, informing 31 projects.
+Our vision has four main pillars and four guiding principles. We've identified 17 gaps between us and that end state, informing 33 projects.
 
-[Vision](vision/README.md) · [Pillars](vision/README.md#four-pillars) · [Principles](vision/README.md#four-driving-principles) · [Gaps](vision/README.md#gaps--16-assessed-outcomes) · [Projects](plans/index.md)
+[Vision](vision/README.md) · [Pillars](vision/README.md#four-pillars) · [Principles](vision/README.md#four-driving-principles) · [Gaps](vision/README.md#gaps--17-assessed-outcomes) · [Projects](plans/index.md)
 <!-- vision-summary:end -->
 
 ## From vision to projects

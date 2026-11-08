@@ -50,7 +50,7 @@ Creators should control every part of Astrid, including its core workings. Choos
 
 Artists should focus on creating, not installing models or fixing environments. Agents handle finding and setting up tools, managing dependencies, running jobs and recovering from errors. The choices that matter—permissions, costs and where work runs—remain visible and easy to understand.
 
-## Gaps — 16 assessed outcomes
+## Gaps — 17 assessed outcomes
 
 Each gap describes a result that remains independently verifiable even if its proposed implementation changes. Follow its link for the full current assessment, sources and closure evidence. Project completion never closes a gap automatically.
 
@@ -66,6 +66,7 @@ Each gap describes a result that remains independently verifiable even if its pr
 - **[F-005 — Local-first projects can't yet use cloud execution seamlessly](gaps/F-005-local-files-cloud-assist.md)** — Open. With one approved provider/configuration and a declared local project, a user or their agent launches remote work (including image generation and a video render), watches status and costs, cancels/retries as appropriate, and receives correctly linked editable local artifacts with the **local database still authoritative**.
 - **[F-006 — Creators can't yet work in Astrid entirely from the cloud](gaps/F-006-fully-hosted-workspace.md)** — Open. A new user can open a hosted Astrid workspace in a browser, create a project, save and reopen across sessions/devices, run a generation and render, and observe durable, permission-scoped data; accounts are isolated.
 - **[F-007 — Running Astrid in a sandbox isn't yet a first-class option](gaps/F-007-first-class-sandbox.md)** — Open. On a declared supported platform, a user can choose the sandbox mode, start the required stack, perform an approved creative job, stop and restart, and recover their project.
+- **[F-008 — Generation isn't yet one portable, extensible path across machines and inference engines](gaps/F-008-portable-generation.md)** — Open. **Same request, different machines.** The same generation request, for every default slot plus h3_av, produces its result through the same code path on: - a local GPU; - a user's own ComfyUI; - a rented RunPod machine.
 - **[LS-001 — Creative components can't yet move freely](gaps/LS-001-portable-components.md)** — Open. Rearrange the **real** player, inspector and timeline; retain playback, editing, selection and recovery state; save/restore the layout.
 - **[LS-002 — Agents can't yet reconfigure the workspace](gaps/LS-002-agent-workspace-control.md)** — Open. An agent arranges the same real components as a user, binds the correct timeline/selection/clock, offers reversible operations, does not clobber user edits, and restores a prior workspace from a saved representation.
 - **[LS-003 — Frontend and backend extensions don't yet compose](gaps/LS-003-full-stack-contributions.md)** — Open. An installed/trusted music capability yields a typed beat-grid result used in a real timeline view and music control surface.
