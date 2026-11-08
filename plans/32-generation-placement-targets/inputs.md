@@ -4,11 +4,11 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — Hannah agreed this scope on 8 Nov 2026 (recorded in https://github.com/banodoco/astrid-dev/pull/79), with two amendments: (1) a default placement that can be changed per generation (including which local GPU, attached server or RunPod), built towards from the first version; (2) pods and other sessions may outlive a job when warm or explicitly started, governed by a lease with a default idle timeout beyond the job. Owner @AstridPseudon. Sequenced before Plan 12. Estimate about 2-4 days of engineering plus the live proof.
+**Scope decision:** Accepted — Hannah agreed this scope on 8 Nov 2026 (recorded in https://github.com/banodoco/astrid-dev/pull/79), with two amendments: (1) a default placement that can be changed per generation (including which local GPU, attached server or RunPod), built towards from the first version; (2) pods and other sessions may outlive a job when warm or explicitly started, governed by a lease with a default idle timeout beyond the job. Owner @AstridPseudon. Sequenced before Plan 12. Estimate, after the 8 Nov extension: about 6–9 days of engineering plus the live proof.
 
 **Prior art:** the merge run's routing map, `merge-run/review/generation-routing-map.md` in `banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`, written while proving `astrid generate --target runpod` live on 7-8 Nov 2026. It lists six placement decision points, two remote mechanisms, five dry-run divergences, three duplicated sfx/foley RunPod refusals and an h3_av-specific pod command in the runpod pack's `remote_placement.py`. About 43 test references are affected, and the routing map estimates 6-10 hours for the Placement half alone. [Plan 02](../02-consistent-generation/plan.md) lands the guard-rail tests and a targeted routing fix first. Next: re-check each cited line against current source before work starts.
 
-**Approach:** compute a frozen Placement once in `GenerationFacade._generate_on_target`, pass it down, and run through one Target interface with local, attached and RunPod implementations. Packs supply only a Job. This replaces the six decision points rather than patching each. Alternatives not chosen: keep patching each site (leaves two mechanisms and the dry-run drift), and let packs own their pod commands (keeps h3_av ignoring `--target`).
+**Approach:** compute a frozen Placement once in `GenerationFacade._generate_on_target` and pass it down. One `run(job, placement)` runs the whole path on the machine where ComfyUI runs; RunPod is a rented machine that runs the same local path. This replaces the decision points and the remote-ComfyUI plumbing rather than patching each. Alternatives not chosen: keep patching each site (leaves two mechanisms and the dry-run drift), and let packs own their pod commands (keeps h3_av ignoring `--target`).
 
 **Scope extension (8 Nov 2026):** after the live merge-run proof stalled, Hannah set the target as one path for every generation: requirements, placement, optional alignment, run and retrieve. Its evidence is the path review on the desk (`merge-run/path-review/`: `VISION.md`, seven audits, and `HOLISTIC.md`). The independent review there found four root causes:
 - placement carries no inventory past the host boundary;
@@ -16,12 +16,12 @@
 - alignment is a hidden precondition with three inventories;
 - the only test of the pod path was a paid live run.
 
-So this plan now also owns the manifest, the PlacementBinding, `align`, per-request model sets, the volume cache, a single submit and retrieve, and modality as data. The short-term unblock moved to [Plan 33](../33-unblock-live-generation/plan.md).
+So this plan now also owns the manifest, `align`, per-request model sets, the volume cache, a single submit and retrieve, RunPod as a remote machine, and modality as data. An independent sense check (`merge-run/path-review/PLAN-SENSE-CHECK.md`) recommended the remote-machine model for RunPod over carrying the pod's inventory to the controller. The short-term unblock moved to [Plan 33](../33-unblock-live-generation/plan.md).
 
 **Glossary and renames** (HOLISTIC.md section 7):
 - `--target` → `--placement`, and `target_policy` → `placement_policy`.
-- Profiles become `embedded` → removed (T5) and `local_server` → `http`; `checkout_server` is deleted.
-- The readiness profile is replaced by the binding.
+- Profiles: `pip_embedded` and `checkout_server` are deleted (T4), and `local_server` becomes the one local `run` path.
+- The readiness profile and the generation bridge are deleted (T4, T5).
 - `managed_assets` → `staged_inputs`.
 - `endpoint_checkout` is deleted.
 - `pending_host_readiness` → `pending_bind`.
@@ -29,9 +29,9 @@ So this plan now also owns the manifest, the PlacementBinding, `align`, per-requ
 - `auxiliary_model_custody: local|target` → `model_inventory: controller|placement`.
 - Stop using `ComfyTarget(url, "attached")` for the RunPod bridge.
 
-**Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the Target lease semantics is instead the entry gate of task T2 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built.
+**Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the Target lease semantics is instead the entry gate of task T3 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built.
 
-**Proof and limits:** the invariant test over every default slot x {auto, local, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1), plus a live matrix of six default slots and h3_av on RunPod and locally (T5). Limits: the live proof needs a RunPod budget and an authorized start that are not yet decided. Fixtures cover refusal and release on failure; they do not replace the live runs.
+**Proof and limits:** the invariant test over every default slot x {auto, local, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1), plus a live matrix of the five default slots and h3_av on RunPod and locally (T7). Limits: the live proof needs a RunPod budget and an authorized start that are not yet decided. Fixtures cover refusal and release on failure; they do not replace the live runs.
 
 ## Source identities
 

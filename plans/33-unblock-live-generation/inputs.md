@@ -23,12 +23,13 @@ Key facts the tasks rely on (Agent `5eac07e3f`, VibeComfy `e65f4941`):
 - **Pod reuse** is refused across `generate` invocations (`target_selection.py` ~446–452).
 - **The whole 95.8 GB lock** is required by readiness (`engine_readiness.py:745-756`). Narrowing it is Plan 32.
 
-**Approach:** finish the one missing wire using VibeComfy's existing target custody, and delete the preconditions that have no product reason (the sfx refusal, the source_video rejection, h3's separate pod route, the legacy route). Make reuse within a lease the only lifecycle change. Alternatives not chosen:
+**Approach:** finish the one missing wire using VibeComfy's existing target custody, and delete the preconditions that have no product reason (the sfx refusal, the source_video rejection, h3's separate pod route, the legacy route). Lifecycle changes (warm reuse) wait for Plan 32. Alternatives not chosen:
 - **Lock-derived inventory:** it claims rows a pod may not have; the receipt is the attested witness.
+- **Switching RunPod to the remote-machine model now:** it is the right end state (Plan 32), but h3's existing machine route bypasses paid consent (its spend limit comes from an environment variable), so generalizing it is not a short-term change.
 - **A new inventory type or VibeComfy change:** the mechanism already exists.
 - **The full Plan 32 redesign first:** too large to unblock the landing.
 
-**Challenge:** Pending — an independent sense check of this plan and Plan 32 is running. Next: record its result here and in the pull request before work starts.
+**Challenge:** Pending — an independent sense check (merge-run desk, `merge-run/path-review/PLAN-SENSE-CHECK.md`) rated this plan good with edits, and those edits are applied: U2 is interim with the receipt rows and a non-circular check; `--align check|trust`; the child-side sfx rejection; h3_av as one run per job; warm reuse dropped; the corrected storage and `comfy_wrap` facts. Next: the owner accepts the plan or amends it.
 
 **Proof and limits:** the CPU pod-path test (U1) and the live matrix (U7). The first pod for each engine still downloads the full lock.
 

@@ -21,48 +21,47 @@ The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reus
 - **Included:**
   - one requirements function;
   - one Placement value, with a default and an override (including which local GPU);
-  - one PlacementBinding that each kind of place produces;
-  - one `align` function;
-  - per-request model sets, so a pod fetches only what the job needs;
-  - the storage volume as a model cache;
-  - one submit and one retrieve;
+  - one local run path (Astrid starts ComfyUI, aligns, submits, fetches);
+  - RunPod as a remote machine that runs that same local path;
+  - attached servers checked or trusted;
+  - per-request model sets and the storage volume as a model cache;
+  - warm reuse under a minimal lease;
   - one `generate` entry point, with modality as data;
   - h3_av as an ordinary job;
-  - sessions as leases (pods may outlive a job);
   - deleting every superseded route;
   - one meaning per term.
 - **Not included:** new providers; Wan2GP ([Plan 12](../12-multiple-inference-routes/plan.md) consumes this plan); splitting `generic_host` ([Plan 13](../13-execution-host-refactor/plan.md)).
 
 ## Design
 
-Five pieces, each owned by one layer and each the only one of its kind:
+**A RunPod pod is just a machine.** The whole path (requirements, align, compile, check, submit, fetch) runs on the machine where ComfyUI runs, against that machine's own disk. For RunPod, the controller only rents the machine, ships the job, runs the same local command there, copies the outputs back and releases the machine. Nothing ever has to carry "what is on the pod" back to the controller. That one choice removes the bridge-based generation route, the inventory channel, the controller-side model check for remote places, the `source_video` upload problem, and h3_av's separate pod route.
 
-| Piece | Shape | Owner | Replaces |
-|---|---|---|---|
-| **Manifest** | `requirements(entry, inputs) -> {comfyui, nodes[repo, commit], models[name, subdir, url, sha256, size]}`, built from VibeComfy's per-workflow `ReadyMetadata`, which already holds these rows | generation entries | about six requirement shapes, name-only `requirements`, and engines as fixed model bundles |
-| **Placement** | frozen `{kind: local / attached / runpod, device or endpoint, policy}`; resolved request → project → user → built-in, in one place | generation facade | five re-inference sites; `--target` strings, `target_policy`, the dropped `placement` parameter |
-| **PlacementBinding** | `{placement, endpoint, inventory{object_info_sha256, models[...]}, attestation}`, produced by the place: local from its model root, attached from object_info (plus an optional declared models dir), RunPod from the pod's verified receipt | the Target for that kind | the bare `comfy_url`, readiness profiles, the execution-request env channels, and Plan 33's interim channel |
-| **align(binding, manifest, mode)** | `align` fetches only the missing manifest rows and installs the missing nodes; `check` reports; `trust` skips and marks the result unverified. It is the same code locally and on the pod (the pod runs the same CLI), and the receipt records the rows actually present | the Target | `generate align` vs `engines install` vs VibeComfy's hidden `ensure_models` download; the whole-lock readiness (`engine_readiness.py:745-756`) |
-| **run and retrieve** | VibeComfy compiles against a provider built from the binding, posts `/prompt` and fetches over `/view`. A local GPU is a ComfyUI server Astrid starts, so it takes the same HTTP path | the VibeComfy pack | three profiles (`pip_embedded`, `local_server`, `checkout_server`), two `/view` clients, embedded copy-out |
+There are four pieces, each the only one of its kind:
 
-**Engines** shrink to a base environment: a pinned ComfyUI plus Python plus a node set. Models are no longer part of an engine; they come from the manifest. Model locks become caches of manifest rows. The storage volume is a model root that a placement can mount.
+| Piece | Shape | Replaces |
+|---|---|---|
+| **Manifest** | `requirements(entry, inputs) -> {comfyui, nodes[repo, commit], models[name, subdir, url, sha256, size]}`, built from VibeComfy's per-workflow `ReadyMetadata`, which already holds these rows | about six requirement shapes; name-only `requirements`; engines as fixed model bundles |
+| **Placement** | frozen `{kind: local / attached / runpod, device or endpoint, policy}`, resolved request → project → user → built-in in one place | five re-inference sites; `--target` strings; `target_policy`; the dropped `placement` parameter |
+| **`run(job, placement)`** | **local:** start or reuse a ComfyUI on this machine (the chosen GPU), `align(manifest, mode)` against this disk, compile, submit to localhost, fetch over `/view`. **attached:** the user's ComfyUI URL; `check` (object_info) or `trust`, never `align`; submit and `/view`. **runpod:** claim a machine under the existing paid-consent and lease owner, ship the job, run `run(job, local)` on it with one generic remote Astrid invocation (runpod-lifecycle `ship_and_run`), fetch the outputs with a digest manifest, release | three profiles (`pip_embedded`, `local_server`, `checkout_server`); the generation bridge and its binding record; Plan 33's interim inventory wire; two `/view` clients; h3's own pod command |
+| **`align(manifest, mode)`** | `align` fetches only the missing manifest rows and installs missing nodes; `check` reports; `trust` skips and marks the result unverified. It always runs locally, on whichever machine runs ComfyUI | `generate align` vs `engines install`; VibeComfy's hidden `ensure_models` download; whole-lock readiness (`engine_readiness.py:745-756`) |
 
-**Sessions are leases, not job-scoped.** A pod may outlive the job that started it. A warm session is reused by any later job whose base engine matches. Each session has an owner and an idle timeout (by default beyond the job, overridable in the Placement policy), and the Target releases it when the lease expires. An orphaned session is a bug by construction.
+**Engines** shrink to a base environment: pinned ComfyUI, Python and a node set. Models come from the manifest. Model locks become caches of manifest rows, and release identity stops binding the whole models lock. The storage volume is a model root a RunPod machine can mount.
 
-**Modality is data.** The entry declares its modes, inputs (including media such as a source video) and outputs. There is one `generate(entry, inputs, placement)`. Image, video and audio become thin aliases. Refusals come from entry data in one place, never from per-modality code.
+**Leases stay minimal:** an owner and an idle timeout (by default beyond the job, overridable in the Placement policy). Because every slot shares one base environment, a warm machine is reusable by any later job. An orphaned machine is a bug by construction.
+
+**Modality is data.** The entry declares its modes, inputs (including media such as a source video) and outputs. There is one `generate(entry, inputs, placement)`, with image, video and audio as thin aliases. Refusals come from entry data, in one place.
 
 **Terms, one meaning each** (renamed as each task touches the code):
 - **engine:** a base environment recipe.
-- **placement:** the decision of where a job runs.
-- **target:** the implementation for a kind of place.
-- **binding:** a prepared place plus its inventory.
+- **placement:** where a job runs.
+- **machine:** where ComfyUI runs (local or rented).
 - **attached:** a user-owned server that can be checked or trusted but not aligned.
 - **managed:** installed by Astrid, with a receipt.
-- **readiness:** the result of checking a binding against a manifest.
+- **readiness:** the result of `align` in `check` mode.
 - **approval:** renamed `target check`.
 - **custody:** kept only for Runtime source trust.
 
-The full glossary and the list of renames are in [inputs.md](inputs.md#planning-evidence).
+The full rename list is in [inputs.md](inputs.md#planning-evidence).
 
 ## Existing work and decision
 
@@ -72,11 +71,14 @@ The full glossary and the list of renames are in [inputs.md](inputs.md#planning-
   - Alignment is a hidden precondition.
   - The only test of the pod path was a paid live run.
 - **Retained:**
-  - VibeComfy's target custody and `ReadyMetadata` rows;
+  - VibeComfy's `ReadyMetadata` rows;
   - `catalog_manifests` and `_lock_coverage` (`core/generation/asset_alignment.py`, `entries.py`) as the base of `requirements()`;
-  - the existing downloader and receipt parser;
-  - the bridge;
-  - Plan 33's inventory wire, CPU pod-path test and warm reuse.
+  - the existing downloader;
+  - runpod-lifecycle's `ship_and_run`;
+  - the generic remote helpers in `packs/runpod/remote_placement.py` (`_run_job`, `_download`, `_release`);
+  - the paid-consent and lease owner;
+  - Plan 33's CPU pod-path test and `--align check|trust`.
+- **Chosen over the alternatives:** an independent sense check (`merge-run/path-review/PLAN-SENSE-CHECK.md`) found that keeping the remote-ComfyUI model needs three objects (Placement, a PlacementBinding with the pod's inventory, and a Target interface) just to carry "what is on the pod" back to the controller. Running the path on the machine needs one Placement value and one `run`.
 - **Owner scope** (8 Nov 2026), unchanged from the first version: a default placement that can be overridden per generation, including the device; sessions as leases that can outlive a job. The details and the challenge are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
@@ -84,27 +86,28 @@ The full glossary and the list of renames are in [inputs.md](inputs.md#planning-
 Plan 33 lands first. Its CPU pod-path test is the characterization. Then:
 
 1. T1: characterize every capability.
-2. T2: Manifest.
+2. T2: Manifest and base engines.
 3. T3: Placement.
-4. T4: PlacementBinding and `align`.
-5. T5: one run and retrieve.
+4. T4: the local run path, with `align`.
+5. T5: RunPod as a remote machine.
 6. T6: one `generate`, with h3_av as a job.
 7. T7: live proof; then T8: completion.
 
-T2 and T3 can run in parallel; T4 needs both. Each task deletes what it replaces in the same change, so no task leaves two ways of doing one thing. See [tasks.md](tasks.md).
+T2 and T3 can run in parallel. T4 needs both, and T5 needs T4. Each task deletes what it replaces in the same change, so no task leaves two ways of doing one thing. See [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
 - **Consumes:** [Plan 33](../33-unblock-live-generation/plan.md)'s landed revision, which brings the CPU pod-path test, the receipt-row inventory and warm reuse. Its exact revision is recorded in [inputs.md](inputs.md#source-identities).
-- **Produces:** `requirements()`, the Placement value, PlacementBinding and `align`, plus the Target lifecycle (local, attached, RunPod). [Plan 12](../12-multiple-inference-routes/plan.md) builds Wan2GP on these. [Plan 25](../25-cloud-assist-v1/plan.md) reuses Placement, the binding and the storage-volume model cache.
+- **Produces:** `requirements()`, the Placement value, `run(job, placement)` and `align`, plus the remote-machine lifecycle with a lease. [Plan 12](../12-multiple-inference-routes/plan.md) builds Wan2GP on these. [Plan 25](../25-cloud-assist-v1/plan.md) reuses Placement, the remote machine and the storage-volume model cache.
 
 ## Completion
 
 - Every default slot and h3_av, under each placement (local, attached, RunPod), goes through the five steps with no per-modality branch. A grep and the invariant test show one placement decision site, one refusal site, one submit and one retrieve.
 - A RunPod job fetches only its manifest's missing models. With the storage volume mounted, a warm cache fetches nothing.
-- `align`, `check` and `trust` behave the same locally and on RunPod.
+- `align`, `check` and `trust` behave the same locally and on RunPod, because on RunPod they run on the machine itself.
+- The controller never checks model files for a RunPod job (grep: no generation bridge, no inventory channel).
 - The dry run equals the live run.
-- No orphaned session exists, and warm sessions are reused within their lease.
+- No orphaned machine exists, and warm machines are reused within their lease.
 - A live proof runs the same matrix on RunPod and locally (T7).
 
 The proof does not cover new providers, Wan2GP or the `generic_host` split. [F-003](../../vision/gaps/F-003-creative-execution.md) does not close automatically.

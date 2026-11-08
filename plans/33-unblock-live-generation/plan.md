@@ -12,14 +12,16 @@ This is the short-term fix. It adds no new architecture. It finishes the missing
 
 - **Included:**
   - a CPU test of the real pod path, so bugs show up without a paid pod;
-  - the pod's verified model inventory reaching the readiness check;
-  - an explicit "trust what's there" choice for places Astrid cannot inventory;
-  - deleting the sound-effects RunPod refusal and letting a source video travel like any other media input;
+  - the pod's verified model inventory reaching the readiness check (an interim wire that Plan 32 replaces);
+  - one `--align check|trust` flag;
+  - deleting the sound-effects RunPod refusals and letting a source video travel like any other media input;
   - h3_av reaching the pod the same way as every other generation;
-  - reusing a warm pod within its lease;
   - deleting the legacy second RunPod route;
   - the live proof and landing.
+
+  Music has not yet produced an output live; that is proven here, not assumed.
 - **Not included:**
+  - warm pod reuse;
   - per-request model subsets;
   - models on the storage volume;
   - one align step;
@@ -36,25 +38,24 @@ Full evidence is in [inputs.md](inputs.md#planning-evidence). In short:
 - **Sound effects** is refused on RunPod for a structural reason, not a product one: Foley needs a source video, and the host refuses to send a `source_video` to a URL-attached ComfyUI. The media upload already exists for images, audio and video inputs.
 - **h3_av** builds VibeComfy workflows like everything else. On RunPod, though, it ships its whole command to a pod through a separate route, instead of placing each workflow like every other generation.
 - **Every attempt paid for a fresh pod and a 95.8 GB download,** because a pod cannot be reused by the next job. The only test of the pod path was the paid live run, so bugs surfaced one per hour.
+- **The deeper cause** is that RunPod is used as a remote ComfyUI. The controller does every check across a bridge, so every check that touches files needs the pod's state carried back. Plan 32 makes a pod a generic machine that runs the same local path. This plan keeps today's route at minimum size, so the landing is not blocked on that redesign.
 
 ## Owner decisions recorded (8 Nov 2026)
 
-1. **No effects are deleted.** The 15 effects of the retired `local` pack stay. They live in the owner's personal collection as an installed pack, and the App reads `end-spanning-layer` and `frame-overlay` from it like any other installed pack. This amends [Plan 06 Decision 8](../06-packs/plan.md#decisions).
-2. **Storage volume:** wipe it for the live proof (authorized 8 Nov, 01:00Z) and prove h3_av on a fresh pod using it.
+1. **No effects are deleted.** Of the 15 effects in the retired `local` pack, the two the App needs for every user (`end-spanning-layer` and `frame-overlay`) move to core `rendering`, as `video-editor` did. The other 13 move to a pack in the owner's personal collection, under a non-reserved id, because `local` is reserved and skipped by discovery. This amends [Plan 06 Decision 8](../06-packs/plan.md#decisions).
+2. **Storage volume:** wipe it (authorized 8 Nov, 01:00Z). Today's generate route installs engines on the container disk, so proving generation from the volume moves to Plan 32 (the volume as a model root).
 3. **poms_packs `main`:** go, from the tested candidate, at landing.
 4. **Plan 31 → 32 renumbering** ([astrid-dev#90](https://github.com/banodoco/astrid-dev/pull/90)): merged.
 
 ## Sequence and readiness
 
 1. U1: the CPU pod-path test comes first, and every later task adds its case to it.
-2. U2: the inventory wire, plus the trust choice.
-3. In parallel after U1:
-   - U3: sound effects;
-   - U5: warm reuse;
-   - U6: delete the legacy route.
-4. U4: h3_av, after U5 if one h3 job issues more than one workflow.
-5. U7: live proof on the landing tuple.
-6. U8: land.
+2. U2 (the interim inventory wire and `--align`) and U3 (sound effects), in parallel.
+3. U4: h3_av, then U5: delete the legacy route.
+4. U6: live proof on the landing tuple, with one fresh pod per slot, in parallel.
+5. U7: land.
+
+One owner question is open: the region for the sound-effects proof, since the Foley licence excludes the EU and UK.
 
 The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime `b983b04`, VibeComfy `e65f4941`, lifecycle `f2948817`, poms `2379ab5`) and the WIP commit `e003778be`; see [inputs.md](inputs.md#source-identities). The live proof needs the owner's go and the remaining RunPod budget. See [tasks.md](tasks.md).
 
@@ -62,18 +63,17 @@ The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime 
 
 - **Consumes:** the merge-run candidates above, and Plan 02's slot × target invariant test (`tests/core/generation/test_runpod_engine_selection.py`).
 - **Produces:**
-  - the host-provided placement inventory (receipt rows) and the trust choice. Plan 32 folds both into its PlacementBinding.
-  - the CPU pod-path test, which Plan 32 T1 extends.
-  - warm reuse within a lease, which Plan 32 generalizes.
+  - the CPU pod-path test, which Plan 32 T1 extends;
+  - `--align check|trust`, which Plan 32 keeps;
+  - the interim inventory wire, which Plan 32 T5 deletes.
 - The landing of Plans 01, 02 and 06 records this plan's live evidence.
 
 ## Completion
 
 - **CPU:** the pod-path test runs every default slot and h3_av through the real host bind, against a stand-in ComfyUI. The models are absent on the controller and present in the stand-in's inventory. It is red before U2 and green after.
-- **Live, RunPod:** image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s) each produce an output. Each slot's engine is installed once and reused warm, every pod is released, and the pod census is empty at the end.
+- **Live, RunPod:** image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s) each produce an output on a fresh pod. Every pod is released, and the pod census is empty at the end.
 - **Live, local:** the same slots run where local hardware exists; otherwise this is recorded as not run.
 - **Negative cases:**
   - a model missing from the pod's receipt fails readiness, naming the place;
-  - `trust` is refused on RunPod (the receipt is the inventory there);
-  - a warm pod with a different engine is not reused.
-- **Limits:** the full 95.8 GB engine download happens on the first pod for each engine; Plan 32 fixes it. No new providers.
+  - an entry no engine lock covers is refused before any pod is claimed.
+- **Limits:** every pod downloads the full 95.8 GB engine (about 36 minutes). Plan 32 fixes this with per-request models, the volume cache and warm reuse. No new providers.

@@ -35,7 +35,7 @@ Selectors marked **Step 0** must be confirmed on the task's head before it start
 | [LB-TXN](#lb-txn-transaction-review) | Review of the PK-8 and PK-9 diffs. | review (no route) | PK-9 | `BLOCKING: 0`, or the 2-round cap and the owner decides. | [ ] |
 | [PK-10](#pk-10-rendering-and-composition) | One installed core-only render route. | X | LB-TXN | Selectors pass. | [ ] |
 | [PK-11](#pk-11-registry-and-selected-sources) | Selected-source composition; one registry and catalog. | S | PK-10 | Selectors pass. | [ ] |
-| [PK-12](#pk-12-seams-and-local) | Editorial cycle broken; selected-root resources; `local` retired. | X | PK-11 | Selectors pass. | [ ] |
+| [PK-12](#pk-12-seams-and-local) | Editorial cycle broken; selected-root resources; `local` retired from the shipped core, with its effects kept (Decision 8). | X | PK-11 | Selectors pass. | [ ] |
 | [PK-13](#pk-13-runtime-merge) | Runtime admitted inventory and assets merged. | S | PK-0 | Ancestry and selectors pass. | [ ] |
 | [PK-14](#pk-14-app-live-loading) | App live loading, refresh, disposal and passive open. | S | PK-13, PK-9, LB-TXN | Vitest and both Playwright journeys pass. | [ ] |
 | [PK-15](#pk-15-remove-the-19-packs-from-agent) | The 19 packs are gone from Agent; locks regenerated once. | X | PK-12, PK-13 | Absence, guard and core-only selectors pass. | [ ] |
