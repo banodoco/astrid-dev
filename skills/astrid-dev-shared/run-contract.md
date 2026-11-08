@@ -20,20 +20,17 @@ Plans tag each task with its route, and execution uses that same tag. Normally *
 
 An `X` or `S` execution lead always delegates bounded research, reading, mechanical edits and running checks to `N` helpers, and keeps the judgment and the final change itself. Reviewers and leaf advisors do not inherit that requirement. A plan may name route labels but must not duplicate model bindings.
 
-## Actual model provenance
+## Actual route provenance
 
-Plan and role bindings in `run.yaml` are not proof that a model actually ran. At each meaningful planning, research, implementation, testing or review invocation, record the **actual provider/model ID**, role, task, reasoning effort if available and timestamp. Use `runtime-observed` only with a linked actual invocation receipt; otherwise mark `self-reported`. Record `unknown` when the environment does not reveal the model. Never infer an exact ID from a route/class name.
-
-A lightweight append-only helper can record this **during execution**, not reconstruct it later:
+Plan and role bindings in `run.yaml` are not proof of what ran. At each meaningful planning, research, implementation, testing or review invocation, record the **route** (`N`, `X` or `S`), role and task. Add `--override <name>` only where the run used a model other than the route's. Never put exact model IDs in PRs or other repository artifacts.
 
 ```sh
 python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record \
-  --provider openai --model-id gpt-6 --role implementation --task task-1 \
-  --effort high --basis self-reported
+  --route N --role implementation --task task-1 [--override <name>]
 python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> summary
 ```
 
-When the runtime offers invocation hooks or usage metadata, have it write the same record automatically at dispatch or return. The local `model-usage.jsonl` is under gitignored `.otto/`; do not publish raw private logs. Summarize the observed provider/model IDs, roles and verification basis in the review submission. If unavailable, explicitly write `Unknown — <reason>` instead of inventing evidence. A manual log is **provenance reporting**, not independent authentication.
+The local `model-usage.jsonl` is under gitignored `.otto/`; do not publish raw logs. Copy the `Routes used:` line into the review submission, or write `Unknown — <reason>`. A manual log is reporting, not authentication.
 
 ## Scope, source identity, and state
 

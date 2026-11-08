@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Record actual agent model usage during a run; optionally summarize for PR review.
+"""Record the route (N, X or S) that ran each piece of work; summarize for PR review.
 
-Append-only local JSONL under .otto/ (gitignored). This records provided facts;
-it cannot discover hidden model identity or independently authenticate usage.
+Append-only local JSONL under .otto/ (gitignored). Optional provider/model-id stay
+local and are never summarized. This records provided facts; it cannot
+independently authenticate usage.
 """
 from __future__ import annotations
 
@@ -13,16 +14,19 @@ import os
 from pathlib import Path
 
 BASIS = ("runtime-observed", "self-reported")
+ROUTES = ("N", "X", "S")
 ROLES = ("planning", "research", "implementation", "testing", "review", "other")
 FILE = "model-usage.jsonl"
 
 
-def make_record(model_id: str, provider: str, role: str, task: str,
-                basis: str, effort: str = "unknown", receipt: str = "",
+def make_record(route: str, role: str, task: str, basis: str,
+                override: str = "", model_id: str = "", provider: str = "",
+                effort: str = "unknown", receipt: str = "",
                 tokens: int | None = None) -> dict:
-    for field, value in (("model", model_id), ("provider", provider), ("task", task)):
-        if not value or not value.strip():
-            raise ValueError(f"{field} must be named or explicitly 'unknown'")
+    if route not in ROUTES:
+        raise ValueError("route must be one of N, X or S")
+    if not task or not task.strip():
+        raise ValueError("task must be named")
     if role not in ROLES or basis not in BASIS:
         raise ValueError("unrecognized model-use role or evidence basis")
     if basis == "runtime-observed" and not receipt:
@@ -31,8 +35,10 @@ def make_record(model_id: str, provider: str, role: str, task: str,
         raise ValueError("token count cannot be negative")
     return {
         "observed_at": datetime.now(timezone.utc).isoformat(),
-        "provider": provider.strip(),
-        "model_id": model_id.strip(),
+        "route": route,
+        "override": override.strip() or None,
+        "provider": provider.strip() or None,
+        "model_id": model_id.strip() or None,
         "role": role, "task": task.strip(), "reasoning_effort": effort.strip() or "unknown",
         "basis": basis, "receipt": receipt.strip() or None,
         **({"tokens": tokens} if tokens is not None else {}),
@@ -60,7 +66,7 @@ def read_records(folder: Path) -> list[dict]:
     for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         try:
             record = json.loads(line)
-            if not all(k in record for k in ("model_id", "role", "task", "basis")):
+            if not all(k in record for k in ("role", "task", "basis")):
                 raise ValueError("missing required fields")
             records.append(record)
         except (ValueError, json.JSONDecodeError) as exc:
@@ -71,23 +77,22 @@ def read_records(folder: Path) -> list[dict]:
 def summarize(records: list[dict]) -> str:
     """Return one copyable PR line, compatible with completion validation."""
     if not records:
-        return ("Models used: Not recorded — No local invocation records exist; "
-                "state why model identity is unavailable before submission.")
+        return ("Routes used: Not recorded — No local invocation records exist; "
+                "state why the route is unavailable before submission.")
     entries: dict[tuple, int] = {}
     for record in records:
-        key = (record["provider"], record["model_id"], record["role"],
-               record.get("reasoning_effort") or "unknown", record["basis"])
+        key = (record.get("route") or "", record["role"], record.get("override") or "")
         entries[key] = entries.get(key, 0) + 1
 
-    summary = "; ".join(
-        f"{provider}/{model} ({role}, effort: {effort}, {basis}, {count} invocation(s))"
-        for (provider, model, role, effort, basis), count in sorted(entries.items())
-    )
+    parts = []
+    for (route, role, override), count in sorted(entries.items()):
+        label = f"{route} for {role}" if route else f"route not recorded for {role}"
+        note = f", override: {override}" if override else ""
+        parts.append(f"{label} ({count} invocation(s){note})")
     return (
-        "Models used: " + summary + "\n"
-        "Basis: 'runtime-observed' means a source receipt was recorded; "
-        "'self-reported' is not independently authenticated. "
-        "The detailed local JSONL is not a public evidence pack."
+        "Routes used: " + "; ".join(parts) + "\n"
+        "Basis: the detailed local JSONL is not a public evidence pack; "
+        "a manual record is not independently authenticated."
     )
 
 
@@ -96,9 +101,12 @@ def main() -> int:
     parser.add_argument("--run-dir", required=True, type=Path,
                         help="Existing .otto/runs/<id> folder; log remains local")
     sub = parser.add_subparsers(dest="command", required=True)
-    record = sub.add_parser("record", help="Append one actual model invocation")
-    record.add_argument("--model-id", required=True)
-    record.add_argument("--provider", required=True)
+    record = sub.add_parser("record", help="Append one invocation's route")
+    record.add_argument("--route", choices=ROUTES, required=True)
+    record.add_argument("--override", default="",
+                        help="Model name, only if the run used one other than the route's")
+    record.add_argument("--model-id", default="", help="Local JSONL only; never summarized")
+    record.add_argument("--provider", default="", help="Local JSONL only; never summarized")
     record.add_argument("--role", choices=ROLES, required=True)
     record.add_argument("--task", required=True)
     record.add_argument("--basis", choices=BASIS, default="self-reported")
@@ -110,8 +118,8 @@ def main() -> int:
     try:
         if args.command == "record":
             path = append_record(args.run_dir, make_record(
-                args.model_id, args.provider, args.role, args.task,
-                args.basis, args.effort, args.receipt, args.tokens))
+                args.route, args.role, args.task, args.basis, args.override,
+                args.model_id, args.provider, args.effort, args.receipt, args.tokens))
             print(f"Model invocation recorded locally: {path}")
         else:
             print(summarize(read_records(args.run_dir)))
