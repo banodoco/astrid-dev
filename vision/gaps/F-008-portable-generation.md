@@ -84,10 +84,12 @@ Each is a point in Astrid's existing pack extension protocol, which packs fill a
 | Step | Plan | Contributes (closure evidence it delivers) | Milestone |
 |---|---|---|---|
 | 1 | [Plan 33](../../plans/33-unblock-live-generation/plan.md) | On RunPod: a warm machine reused, models on attached storage not re-downloaded, `--align check\|trust`, a missing model failing before submit and naming the machine | A: every default slot and h3_av produce results on RunPod |
+| 1b | [Plan 34](../../plans/34-real-gpu-proof/plan.md) | The same milestone proven on real GPUs: real outputs per slot, models downloaded once to the volume, a warm pod reused | A on hardware |
 | 2 | [Plan 32](../../plans/32-generation-placement-targets/plan.md) | The same request through the same path on a local GPU, a user's ComfyUI and RunPod; a default placement overridden per generation; align, check and trust the same everywhere; one placement site, one submit, one retrieve, no per-modality branch; h3_av as a VibeComfy plugin with no h3 code in core; an expired lease releasing the machine, with no orphan; a test provider showing a further machine kind fits the contract | B: one path on any machine |
 | 3 | [Plan 12](../../plans/12-multiple-inference-routes/plan.md) ∥ [Plan 17](../../plans/17-vibecomfy-extensibility/plan.md) | A second engine (Wan2GP) on the same path (Plan 12); the pack extension protocol switched on and proven with a second, non-h3 composite pack (Plan 17) | C: extensible at every level |
+| — | unplanned | Paid consent given once per lease rather than per job; VibeComfy owning the whole ComfyUI environment, including ComfyUI itself; splitting the host file (owned by Plan 13, not a closure item) | — |
 
-Critical path: Plan 33 U1 → U2 → U4 → U8 → U9, then Plan 32 T1 → T2 → T4 → T5 → T6, then Plan 12's wiring. Plan 12's scoping and Linux recipe run alongside Plan 32 T2–T5, and Plan 17 runs alongside Plan 12.
+Critical path: Plan 33 U1 → U2 → U4 → U9, then Plan 34 G1–G2, then Plan 32 T1 → T2 → T4 → T5 → T6, then Plan 12's wiring. Plan 12's scoping and Linux recipe run alongside Plan 32 T2–T5, and Plan 17 runs alongside Plan 12.
 
 ## Sources and reassessment
 
