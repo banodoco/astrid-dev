@@ -37,15 +37,56 @@ So this plan now also owns the manifest, `align`, per-request model sets, the vo
 - `auxiliary_model_custody: local|target` → `model_inventory: controller|placement`.
 - Stop using `ComfyTarget(url, "attached")` for the RunPod bridge.
 
-**Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the lease semantics is instead the entry gate of task T3 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built.
+**Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the lease semantics is instead the entry gate of task T3 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built. The sense check (`merge-run/path-review/PLAN-SENSE-CHECK.md`) and the pack-extension review (`merge-run/path-review/PACK-EXTENSION-PROTOCOL.md`) are applied: one Placement and `run`, and the three extension points.
 
-**Proof and limits:** the invariant test over every default slot x {auto, local, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1), plus a live matrix of the five default slots and h3_av on RunPod and locally (T7). Limits: the live proof needs a RunPod budget and an authorized start that are not yet decided. Fixtures cover refusal and release on failure; they do not replace the live runs.
+**Proof and limits:** CPU only (owner, 8 Nov). The evidence is the invariant test over every default slot × {local, attached, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1). It is followed by T5's remote-machine harness on a CPU fake, with a test machine contribution. Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod; the live proof (T7) is a later pass of the GPU-tests plan that follows Plan 33. Fixtures cover refusal and release on failure.
 
 ## Source identities
 
-Not yet recorded. Before code work, record the actual repository, ref and SHA for astrid-agent (`astrid/sdk/generation.py`, `core/generation`, `core/execution/generic_host.py`, `sdk/invocation.py`), the vibecomfy, h3_av and runpod packs, and the merged Plan 02 revision this project consumes. The routing map line numbers come from the merge run branch and must be re-checked against the branch being built.
+Plan 32 consumes [Plan 33](../33-unblock-live-generation/plan.md)'s landed revisions, not the merge-run candidates directly. Record the exact SHAs here at Plan 33's U9, before T1.
+
+| Repository | Ref | SHA | Role |
+|---|---|---|---|
+| astrid-agent | Plan 33's landed head (`main` after its U9) | Pending — recorded at Plan 33 U9. Next: copy it here | base for T1–T6 |
+| astrid-agent, Plan 33's base | `cand/plan06-agent-20261107-33` | `5eac07e3fcadf8a6cca7eb6cf77c0fe234590894` | where the cited lines and selectors were checked (8 Nov) |
+| VibeComfy | the pin in Plan 33's landed Agent | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` unless Plan 33 moved it | base for T4 and T6's VibeComfy changes |
+| astrid-runtime | `runtime.lock.json` `source_commit` in Plan 33's landed Agent | `b983b0457dffbfd435e74a5c828e129e8ec46ba3` unless moved | fixed |
+| runpod-lifecycle | the pin in Plan 33's landed Agent | `f2948817eeb94af8dee76be21f6d673724f1606e` unless moved | fixed; `ship_and_run` (`src/runpod_lifecycle/runner.py:88`) |
+
+**What it takes from Plan 33:**
+- the CPU pod-path test `tests/integrations/test_runpod_slot_path_cpu.py` (U1), which T1 extends;
+- `--align check|trust` (U2), which T4 extends with `align`;
+- the interim inventory document (U2), which T5 deletes;
+- the volume model cache at `<mount>/astrid/engines/comfyui/models` (U6), which T5 turns into the models root;
+- the reuse key with the engine id (U7), which T5 keeps.
+
+Line numbers in [tasks.md](tasks.md) are at Agent `5eac07e3f` and must be re-checked on the landed head.
+
+## Owner decisions
+
+Recorded from the lead's relay of the owner's choices (Hannah, 8 Nov 2026, about 15:40Z):
+1. **CPU only for now.** Every task is provable on CPU, with no paid pods. The live proof (T7) leaves this plan and becomes a later pass of the GPU-tests plan. That plan comes right after Plan 33 completes on CPU, before this plan, because the priority is to get unblocked and running on GPU, then elegance.
+2. **Review rounds: owner-agreed 2, lead recommendation 3.** The row is set to at most 3. The reason for 3 is the run contract's case for a cross-repository contract change: an Agent plus VibeComfy integration, three new extension points, and the deletion of several routes (the bridge, the second `/view` client, `pip_embedded`, `checkout_server`, h3's route). Pending owner agreement of the third round.
+3. **The pack extension protocol is its own plan,** [Plan 17](../17-vibecomfy-extensibility/plan.md). This plan creates only the three points it needs (`generation.engine`, `generation.machine`, `vibecomfy.workflows`) and references Plan 17 for the rest.
+
+## Ambiguity pass (8 Nov 2026, from code)
+
+Settled from code at Agent `5eac07e3f` and VibeComfy `e65f4941`:
+- **The protocol exists and is unused:** `astrid/core/extensions/` (commit `864179976`), with tests in `tests/core/extensions`. `side` is fixed to `client` (`schema/point.json:11`, `model.py:86,428`). T2 allows `agent`.
+- **`Placement` is already a name:** a `Literal["local", "runpod"]` alias (`engine_contracts.py:9`), plus the pack-declared `PlacementDescriptor` (~475). T3 replaces the alias. Its `kind` is open and validated against `generation.machine` contributions, so packs can declare machines without a core change.
+- **Plugin templates are invisible today** (`entries.py:38`, `include_dynamic=False`). VibeComfy exposes `registered_ready_roots()` (`extras.py:62`).
+- **The node-pack hook is decided: none.** Workflow pins are authoritative over the lock (`custom_node_refs.py:241-247`).
+- **The `engines:` pack property is unused** (`schemas/v3/pack.json:195`), so T2 deletes it.
+- **Plan 33 U6's cache is keyed by lock row** (`model_downloader.py:173-177`), not in ComfyUI layout. T5 moves the entries into the models root by rename on the same volume, so nothing is downloaded again.
+- **The old T6 question about VibeComfy's `PluginAPI` growing a node-pack hook** is answered by the bullet above.
+
+### Genuine owner decisions
+
+- **D1, Plan 06 PK-15B (held, M06-4).** T2b merges `comfyui` and `vibecomfy-h3` into one base engine, which deletes the Linux `comfyui` recipe, and that is PK-15B's scope. Recommended: release PK-15B's engine half to T2b. Alternative: keep two engines through this plan, with two warm machines and two cache users.
+- **D2, renaming `--target` to `--placement`** (and `target_policy` to `placement_policy`) in T3. Recommended: rename in one change, updating the App's callers, with no alias. Alternative: keep `--target` as a deprecated alias for one release.
+- **D3, the third review round** (owner decision 2 above).
 
 ## References
 
 - Routing map: `merge-run/review/generation-routing-map.md` in `banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`.
-- [Plan 02](../02-consistent-generation/plan.md) (predecessor), [Plan 12](../12-multiple-inference-routes/plan.md) (consumer), [Plan 13](../13-execution-host-refactor/plan.md) (host split, excluded), [Plan 25](../25-cloud-assist-v1/plan.md) (would reuse Placement and the remote-machine route).
+- [Plan 02](../02-consistent-generation/plan.md) (predecessor), [Plan 12](../12-multiple-inference-routes/plan.md) (consumer), [Plan 13](../13-execution-host-refactor/plan.md) (host split, excluded), [Plan 25](../25-cloud-assist-v1/plan.md) (would reuse Placement, the remote machine and the volume cache), [Plan 33](../33-unblock-live-generation/plan.md) (predecessor), [Plan 17](../17-vibecomfy-extensibility/plan.md) (the extension protocol).
