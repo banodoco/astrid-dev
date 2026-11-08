@@ -14,7 +14,7 @@ This plan holds Plan 29's second phase, split out so it can have its own priorit
 
 **Challenge:** Reviewed — the same independent reviews as Plan 29, which moved these items out of the first phase.
 
-**Review rounds:** Pending — recommend at most two before closing. The work is mostly lower-risk proof and schema tasks, though UR-15 is S. Next: owner confirms the number.
+**Review rounds:** at most two before closing (owner, 8 Nov 2026). The work is mostly lower-risk proof and schema tasks, though UR-15 is S.
 
 **Proof and limits:** see [plan.md](plan.md#completion). The share of users on systemd below 254 is unknown; there is no install telemetry.
 
