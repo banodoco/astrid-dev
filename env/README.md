@@ -9,6 +9,10 @@ Setup and test scripts that any Astrid project's worker can run in a **single-re
 - **Public repositories and PyPI only.** Nothing private, no credentials, no cloud resources.
 - **Exit 3 means an environment problem,** never a test result.
 
+## Copy them into the product repository
+
+A single-repo cloud worker in auto mode refuses scripts cloned from another repository, even with an allow rule. Each product repository therefore carries its own copy under `scripts/worker-env/` (astrid-agent first, on Plan 33's integration branch), and workers call those copies. This folder is the canonical source; keep the copies in step.
+
 ## How a worker calls them
 
 Clone astrid-dev read-only to the fixed path `/home/user/astrid-dev`, then call each script by its **literal** path from the product checkout root. Each product repository's committed `.claude/settings.json` allows exactly these paths. A path built from a variable doesn't match an allow rule, so it is refused.
