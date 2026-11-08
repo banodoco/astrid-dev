@@ -4,9 +4,9 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — drafted on 8 Nov 2026 at Hannah's request after the live merge-run proof stalled on voice ("a plan to get it unblocked … and to unblock any of these silly preconditions we've added"), with Plan 32 as the long-term structural plan. Owner @AstridPseudon. Next: the owner reviews this plan together with the independent sense check, and accepts or amends it.
+**Scope decision:** Accepted — Hannah, 8 Nov 2026, merge-run desk DECISIONS-LEDGER.md M-78/M-79 (https://github.com/banodoco/astrid-overnight-2026-11-05/blob/merge-run/2026-11-07/merge-run/DECISIONS-LEDGER.md): the amended scope, CPU only, with at most 2 review rounds. It was drafted the same day at her request after the live merge-run proof stalled on voice ("a plan to get it unblocked … and to unblock any of these silly preconditions we've added"), with Plan 32 as the long-term structural plan. Owner @AstridPseudon.
 
-**Prior art:** the work rests on material on the merge-run desk (`banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`):
+**Prior art:** the work rests on material on the merge-run desk (`banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`, https://github.com/banodoco/astrid-overnight-2026-11-05/tree/merge-run/2026-11-07/merge-run/path-review):
 - `merge-run/path-review/VISION.md`: the owner's one-path vision.
 - Seven read-only audits: `1-requirements.md`, `2-4-placement-submit.md`, `3a-align-local.md`, `3b-align-runpod.md`, `5-retrieve.md`, `6-modality-branches.md` and `7-why-confused.md`.
 - `HOLISTIC.md`: an independent holistic review. Its verdict: voice alone needs one wire; the full scope is complex. It also gives the target design and the glossary.
@@ -29,7 +29,18 @@ Key facts the tasks rely on (Agent `5eac07e3f`, VibeComfy `e65f4941`):
 - **A new inventory type or VibeComfy change:** the mechanism already exists.
 - **The full Plan 32 redesign first:** too large to unblock the landing.
 
-**Challenge:** Pending — an independent sense check (merge-run desk, `merge-run/path-review/PLAN-SENSE-CHECK.md`) rated this plan good with edits, and those edits are applied: U2 is interim with the receipt rows and a non-circular check; `--align check|trust`; h3_av as one run per job; warm reuse dropped from the first draft and back as U7 with the corrected checks; the corrected storage and `comfy_wrap` facts. The pack-extension review (`merge-run/path-review/PACK-EXTENSION-PROTOCOL.md`) added one rule: no new extension key, engine-index row or backend descriptor. The 8 Nov ambiguity pass (below) changed U3, U4 and U6 from code. Next: the owner accepts the plan or amends it, and answers the decisions listed below.
+**Challenge:** Reviewed — two independent checks on the merge-run desk (https://github.com/banodoco/astrid-overnight-2026-11-05/tree/merge-run/2026-11-07/merge-run/path-review).
+- `PLAN-SENSE-CHECK.md` rated the plan good with edits. Applied: U2 is interim, with the receipt rows and a non-circular check; `--align check|trust`; h3_av as one run per job; the corrected storage and `comfy_wrap` facts.
+- `TASKS-SENSE-CHECK.md` rated the task breakdown ready with edits. Applied:
+  - `-m integration` and the full environment in `PYT_POD`;
+  - U5 shrunk to the dead binder, with the legacy route moved to Plan 32 T6;
+  - the uncovered-entry case pointed at an explicit entry;
+  - the receipt check moved into the host;
+  - a validating stand-in;
+  - the cache device and mount id;
+  - the reuse signature, with U7 routed S;
+  - the merge order.
+- The pack-extension review (`PACK-EXTENSION-PROTOCOL.md`) added one rule: no new extension key, engine-index row or backend descriptor.
 
 **Proof and limits:** CPU only (owner, 8 Nov): the CPU pod-path test (U1), extended by every later task, plus the focused nodes each task names. Not proven here: real inference, real model downloads to the storage volume, RunPod capacity, and whether the model cache accepts RunPod's network volume. The real-GPU proof moves to [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan. Each fresh pod still copies its rows from the volume to container disk (U6).
 
@@ -59,6 +70,12 @@ Recorded from the lead's relay of the owner's choices (Hannah, 8 Nov 2026, about
 2. **Review rounds: at most 2** (owner-agreed). The run contract's guide would give 3 for cross-repository landing work. 2 is accepted here because the change is Agent-only, interim, and replaced by Plan 32, and because the real-GPU proof follows in its own plan. The lead recommends 3 for Plan 32, not for this plan.
 3. **The pack extension protocol is its own plan,** [Plan 17](../17-vibecomfy-extensibility/plan.md). This plan adds no new extension key, engine-index row or backend descriptor.
 
+Decided by the owner at about 16:05Z (M-79, [ledger](https://github.com/banodoco/astrid-overnight-2026-11-05/blob/merge-run/2026-11-07/merge-run/DECISIONS-LEDGER.md)):
+
+4. **D1, video with an image but no entry:** `generate video` refuses, with guidance to `--entry h3`, until Plan 32 T6 (U4).
+5. **D2, scope:** the amended scope is accepted (the Scope decision above).
+6. The `comfyui` and `comfy_wrap` packs are deleted by Plan 32 T2b, superseding the M06-4 hold for them. They stay in this plan.
+
 ## Ambiguity pass (8 Nov 2026, from code)
 
 Settled from code at Agent `5eac07e3f`, VibeComfy `e65f4941` and lifecycle `f2948817`, so no owner question is needed:
@@ -66,14 +83,13 @@ Settled from code at Agent `5eac07e3f`, VibeComfy `e65f4941` and lifecycle `f294
 - **U3: the `source_video` rejections are not on the sfx path.** Foley's video is a media input that travels in `managed_assets` and `upload_media`. The host and child rejections cover only the separate `source_video` input, so they stay.
 - **U4: the Matrix request does not use `_refs`.** It has no reference images, so it uses `native_h3_continuation`, whose LoRA is locked. The Step 0 is resolved.
 - **U4: h3 through `generate` already uses the host bind.** Its own pod route is reached only with `--placement runpod`, so U4 is deletion.
-- **U5: PK-15B is held** (M06-4), so `comfy_wrap` and `comfyui` stay and the conditional is dropped.
+- **U5 is only the dead binder.** The rest of the legacy route is wired into `generic_host.py` (five `endpoint_checkout` imports) and h3's `legacy_prepared` route, so it moves to Plan 32 T6. `comfy_wrap` and `comfyui` stay here, because Plan 32 T2b deletes them (M-79).
 - **U6 reuses the existing verified model cache** (`--model-cache-root`, keyed by the lock row). No `extra_model_paths.yaml` or receipt change is needed. The directory takes the engine contribution key `comfyui`.
-- **U7: an engine change with an idle retained pod is refused today** (`adapter.py:455`). Reuse would make that refusal common, so U7 releases the idle pod instead. This is the third change allowed before the stop rule.
+- **U7: an engine change with an idle retained pod is refused today** (`adapter.py:461`). Reuse would make that refusal common, so U7 releases the idle pod instead. This is the third change allowed before the stop rule.
 
-### Genuine owner decisions
+### Open owner decisions
 
-- **D1, `--image-ref` video with no entry.** h3 takes an H3 request and asset map, not a bare image reference, and U4 adds no new h3 code. Recommended: with no entry, an H3 request resolves to `h3`; `--image-ref` refuses with guidance to `--entry h3` until Plan 32 T6 gives h3 declared media inputs. Alternative: a small SDK mapping from `--image-ref` to an H3 request (new code that Plan 32 deletes).
-- **D2, scope acceptance.** The plan as amended by the decisions above (Scope decision, still Pending).
+None. D1 and D2 were decided on 8 Nov (owner decisions 4 and 5 above).
 
 ## References
 

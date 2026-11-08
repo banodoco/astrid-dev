@@ -20,7 +20,7 @@ This is the short-term fix. It adds no new architecture. It finishes the missing
   - h3_av reaching the pod the same way as every other generation, with MiniMax H3 as the video default;
   - the engine's models kept on the storage volume, so the 95.8 GB downloads once rather than for every pod;
   - reusing a live pod for the next job (the checks that refuse it relaxed);
-  - deleting the legacy second RunPod route;
+  - deleting the dead RunPod preparation binder (the rest of the legacy second RunPod route moves to Plan 32 T6);
   - the landing.
 
   Music has not yet produced an output live; its CPU result is recorded here, not assumed.
@@ -51,14 +51,14 @@ Full evidence is in [inputs.md](inputs.md#planning-evidence). In short:
 4. **poms_packs `main`:** go, from the tested candidate, at landing.
 5. **Plan 31 → 32 renumbering** ([astrid-dev#90](https://github.com/banodoco/astrid-dev/pull/90)): merged.
 
-Later the same day the owner chose CPU only, at most 2 review rounds, and [Plan 17](../17-vibecomfy-extensibility/plan.md) as the home of the pack extension protocol; see [inputs.md](inputs.md#owner-decisions).
+Later the same day the owner chose CPU only, at most 2 review rounds, and [Plan 17](../17-vibecomfy-extensibility/plan.md) as the home of the pack extension protocol (M-78). She also refused image-only video without an entry and accepted the amended scope (M-79); see [inputs.md](inputs.md#owner-decisions).
 
 ## Sequence and readiness
 
 1. U1: the CPU pod-path test comes first, and every later task adds its case to it.
 2. U2 (the interim inventory wire and `--align`), then U3 (sound effects), then U4 (h3_av), which share the SDK files.
-3. U5 (delete the legacy route) and U6 (models on the volume), in parallel after U4.
-4. U7 (pod reuse), after U2 and U6.
+3. U6 (models on the volume), then U5 (delete the dead binder).
+4. U7 (pod reuse), from the U6 head, rebased onto U5.
 5. The review rounds, then U9: land, on the owner's go.
 
 The live proof is deferred to [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan.
@@ -86,4 +86,4 @@ All evidence is on CPU (owner, 8 Nov).
   - `--align check` on an attached server without the files fails with a fix;
   - a tampered cache row fails its sha256.
 - **Not proven by this plan:** real inference, real model downloads to the volume, RunPod capacity, and whether the cache accepts RunPod's network volume. These move to [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan.
-- **Limits:** the first fill of the volume downloads the full 95.8 GB engine (about 36 minutes), and each fresh pod copies its rows from the volume. Per-request model sets and a pod that is a generic machine come in Plan 32. Local H3 video needs a source video or reference images, because no plain text-to-video H3 model is in the lock (the cloud `minimax-h3` entry is not used: everything runs on our own compute). The `_refs` H3 variant is not covered until Plan 32 T2. No new providers.
+- **Limits:** the first fill of the volume downloads the full 95.8 GB engine (about 36 minutes), and each fresh pod copies its rows from the volume. Per-request model sets and a pod that is a generic machine come in Plan 32. A session that switches between image (engine `comfyui`) and voice (`vibecomfy-h3`) pays a new pod per switch until Plan 32 T2b merges the engines, and reuse across two separate `astrid generate` processes is not proven on CPU. Local H3 video needs a source video or reference images, because no plain text-to-video H3 model is in the lock (the cloud `minimax-h3` entry is not used: everything runs on our own compute). The `_refs` H3 variant is not covered until Plan 32 T2. No new providers.
