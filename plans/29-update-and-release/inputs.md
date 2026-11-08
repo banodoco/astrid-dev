@@ -4,9 +4,9 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — the owner asked for this project and made the decisions below on 7 Nov 2026; added to the catalog as queued at the owner's request. Next: owner confirms the scope before the first task starts.
+**Scope decision:** Accepted — the owner asked for this project and made the decisions below on 7 Nov 2026, then told the advisor to start it on 8 Nov 2026, with advisor check-ins every two hours ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9); recorded under [owner decisions](./inputs.md#owner-decisions)).
 
-**Prior art:** seven read-only maps of the current state and six task ambiguity reviews, summarised here:
+**Prior art:** seven read-only maps of the current state and six task ambiguity reviews, from astrid-dev `dd87b927676ba263707051be7926f245820d12e6`, summarised here; each [task card](./tasks.md) names the code it changes:
 - Seven read-only maps of the current state, at App `915bfa84`, Agent `709492fa`, Runtime `61e2c301`, launcher `d15c58b5` and astrid-dev `dd87b92`. The maps covered:
   - the App surfaces;
   - Settings and the decision logic;
@@ -26,7 +26,7 @@
 
 **Approach:** reuse and correct the existing pieces (`identity`, `resolveUpdate`, the status `reason`, `release-check.mjs`, the canary). Don't add new fields, a new resolver, a publish script or new CI rows.
 
-**Challenge:** Reviewed — an independent high-judgment review of the first draft was accepted almost entirely. It contributed these items:
+**Challenge:** Reviewed — an independent high-judgment review of the first draft ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)) was accepted almost entirely. It contributed these items:
 - **Cuts:** the new status fields, the new resolver, the publish script and new check, and the "main only moves by release" rule.
 - **Corrections:**
   - releases 0–9 can never update in-app;
@@ -61,6 +61,7 @@ From the owner, 7 Nov 2026 (session chat):
 2. **Pinokio fresh install:** asks Plan 01's setup questions, as it does today in Pinokio's terminal (owner: should ask). The hosted Pinokio row accepts the recommended choices because it has no terminal.
 3. **Review rounds:** at most three before publishing (owner, 7 Nov 2026). Recommended for cross-repository release work, including a protocol never run end to end.
 4. **Branch protection on App `main`:** the owner will turn it on later. UR-6's required check is ready before then.
+5. **Start and check-ins:** start now, run by a manager under the Manage skill, with advisor check-ins every two hours until this plan's completion PR merges (owner, 8 Nov 2026).
 
 ## Source identities
 
