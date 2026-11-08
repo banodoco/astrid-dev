@@ -5,21 +5,33 @@ description: Define independently useful new Astrid project scope by reusing pri
 
 # Plan a new Astrid project
 
-Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astrid-dev/references/domains.md). **Bugs, small fixes and maintenance normally belong in issues, not projects.** Existing project tasks use their accepted plan. This process is for a new, separately useful outcome that merits its own priority, owner and completion proof.
+Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astrid-dev/references/domains.md).
 
-A contributor may [open a proposal issue](../../docs/contribution-workflow.md#propose-and-greenlight-new-work) without permission. New independent project scope is greenlit by a maintainer-reviewed Astrid-dev **scope PR** that records the owner's actual decision in `inputs.md` and adds one queued catalog entry. A PR draft is not acceptance.
+## Terms
 
-Planning is a decision, **not** authority to execute or release. Preserve earlier accepted scope and avoid repeated owner sign-offs.
+- **Owner:** the person who chooses a project's outcome and makes its decisions.
+- **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to [Advise](../astrid-dev-advise/SKILL.md).
+- **Route:** N, X or S; the [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy.
+- **Scope** (of a task): the paths, and any shared surface or contract, it may change.
 
-## Investigate, decide, preserve
+## The answer
 
-1. **Find prior art.** Search the affected source, existing issues, [plans](../../plans/index.md), [gaps](../../vision/README.md), and external approaches where relevant. Trace input → actual implementation → user-visible result, including useful source revisions, reuse opportunities, negative findings and uncertainties. Delegate bounded research when helpful; don't commission a broad audit without a decision it could change.
-2. **Pick the smallest complete result.** Compare reusing or extending an existing pack, adding a pack, changing core, and doing less or nothing when relevant. Prefer an existing plan or gap to a new entry. Explain the chosen placement and tradeoffs from evidence, not a general architectural preference.
-3. **Challenge proportional to consequence.** The planner is an administrator: it gathers evidence, writes the cards and escalates judgment. For material architecture, cross-repository contracts, expensive or difficult-to-reverse decisions, consult [Advise](../astrid-dev-advise/SKILL.md) as the critic, to identify real removals, consolidation and reuse. Record its findings and what you accepted or rejected. For a simple bounded project, a concise alternatives review and a reason not to consult Advise is enough. Offer as many meaningful end-state alternatives as the owner needs; **ten are a useful exploration technique, not a quota**.
-4. **Agree the outcome once.** Present the real options, their user-facing tradeoffs and a testable end state. Record the owner's actual selection with a traceable source. Creating a draft project or receiving no objection is not approval.
-5. **Leave a compact handoff.** [`inputs.md`](../../templates/project/inputs.md) owns the source evidence, alternatives, challenge decision, approval and uncertainty. [`plan.md`](../../templates/project/plan.md) owns outcome, scope, sequence and completion. [`tasks.md`](../../templates/project/tasks.md) owns assignments and focused proof. Link to detailed work only when it has a distinct use; do not copy reasoning across all three files.
+You produce an agreed, testable end state and tasks another agent can run.
 
-## Scale the method to the project
+1. **Projects are for new, separately useful outcomes** with their own priority, owner and completion proof. Bugs, small fixes and maintenance normally go in issues; existing project tasks use their accepted plan.
+2. **Planning authorizes no execution or release.** Run no product tests and start no work unless asked.
+3. **Agree the outcome once.** Record the owner's actual choice with a traceable source; a draft project or PR, or no objection, is not approval. Keep earlier accepted scope; avoid repeated sign-offs.
+
+## Steps
+
+1. **Find prior art** in affected source, issues, [plans](../../plans/index.md), [gaps](../../vision/README.md) and, where relevant, outside approaches. Trace input → actual implementation → user-visible result, noting useful source revisions, reuse, negative findings and uncertainties. Delegate bounded research when helpful, but no broad audit without a decision it could change.
+2. **Pick the smallest complete result.** Compare reusing or extending a pack, adding one, changing core and, when relevant, doing less or nothing. Prefer an existing plan or gap to a new entry. Justify placement and tradeoffs from evidence, not architectural preference.
+3. **Challenge in proportion to consequence.** For material architecture, an expensive or hard-to-reverse decision, or a table case below, have Advise critique the plan for real removals, consolidation and reuse; record its findings and what you accepted or rejected. A simple bounded project needs only a concise alternatives review and a reason to skip Advise.
+4. **Agree the outcome.** Present the real options (as many as the owner needs; ten is a useful technique, not a quota), their user-facing tradeoffs and a testable end state.
+5. **Write a compact handoff,** one home per fact: [`inputs.md`](../../templates/project/inputs.md) for source evidence, alternatives, challenge decision, approval and uncertainty; [`plan.md`](../../templates/project/plan.md) for outcome, scope, sequence and completion; [`tasks.md`](../../templates/project/tasks.md) for assignments and focused proof ([rules below](#write-the-task-list)). Link detailed work only for a distinct use.
+6. **Seek greenlight.** A contributor may [open a proposal issue](../../docs/contribution-workflow.md#propose-and-greenlight-new-work) without permission. A maintainer-reviewed **scope PR** greenlights new scope by recording the owner's actual decision in `inputs.md` and adding one queued catalog entry.
+
+## Scale the method
 
 Each step below earns its cost only under its condition; skip it otherwise. Each produces a file the next step reads.
 
@@ -34,16 +46,16 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 
 ## Write the task list
 
-Use the [tasks template](../../templates/project/tasks.md). Every task has:
+In the [tasks template](../../templates/project/tasks.md), every task has a scope and:
 
-- **A route,** by the [run contract](../astrid-dev-shared/run-contract.md): N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol that has never run end to end, security, data safety, migration).
-- **A scope:** the paths, and any shared surface or contract, it may change.
-- **Dependencies,** including one between any two tasks whose scopes overlap, also against other active projects. If a shared surface needs one model first, consult Advise.
+- **A route:** N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration).
+- **Dependencies,** including one between tasks with overlapping scopes, also across other active projects. If a shared surface needs one model first, consult Advise.
+- **Before implementation:** its actual base and donor revisions, exact focused checks and authority.
 
-End with the review row, before any publishing task, which depends on it. Recommend how many review rounds from the project's risk and complexity (the run contract gives a guide), say why, and record the owner's agreed number in `inputs.md`; with 0, leave the row out.
+End with the review row, before any publishing task, which depends on it. Recommend its number of review rounds from risk and complexity (guide in the run contract), say why, and record the owner's agreed number in `inputs.md`. With 0, leave the row out.
 
 ## Readiness
 
-A draft can explicitly mark what is **Pending** and the next action. A defined project needs genuine prior-art findings, an explained reuse decision, a traceable owner choice and meaningful completion evidence; a consequential design additionally needs critique or an explicit unresolved blocker. Don't make the agent fabricate evidence or add a heavyweight ritual to a straightforward decision.
-
-Before implementation, tasks identify their actual base/donor revisions, dependencies, route, scope, exact focused checks and authority. The [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy. **Planning does not run product tests or start work unless asked.**
+- A draft can mark what is **Pending**, with the next action.
+- A defined project needs real prior-art findings, an explained reuse decision, a traceable owner choice and meaningful completion evidence; a consequential design also needs critique or an explicit unresolved blocker.
+- Don't make the agent fabricate evidence, or add heavy ritual to a simple decision.

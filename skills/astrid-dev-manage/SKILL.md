@@ -5,11 +5,21 @@ description: Run an accepted Astrid project or multi-agent effort end to end: di
 
 # Manage an Astrid project
 
-You coordinate work done by other agents. You are an administrator: you dispatch, check and keep state, and you send judgment calls to [Advise](../astrid-dev-advise/SKILL.md). [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change, and [Release](../astrid-dev-release/SKILL.md) publishes. The [run contract](../astrid-dev-shared/run-contract.md) owns routes, run state and review rules. Neither a draft project nor this skill authorizes execution.
+## Terms
 
-## Principles
+The [run contract](../astrid-dev-shared/run-contract.md) owns routes, run state and review rules.
 
-1. **One model per shared surface.** Work that touches the same screens, contract or files follows one agreed model. If the plan doesn't settle it, ask Advise before dispatching.
+- **Owner:** the person who makes the project's decisions.
+- **Manager:** you, an administrator coordinating other agents: dispatch, check and keep state; send judgment calls to [Advise](../astrid-dev-advise/SKILL.md), the high-judgment **advisor**.
+- **Route:** N, X or S, the capability band a task runs on.
+- **Scope:** what a task may change, as its task card states.
+- **Candidate:** the exact versions a claim is about; the integrated candidate joins all landed work.
+
+## The answer
+
+You take an accepted project to a reviewed, integrated candidate. [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change and [Release](../astrid-dev-release/SKILL.md) publishes. Neither a draft project nor this skill authorizes execution.
+
+1. **One model per shared surface.** Work touching the same screens, contract or files follows one agreed model; if the plan doesn't settle it, ask Advise before dispatching.
 2. **A report is a claim.** Check what your next step depends on against code, logs or a run.
 3. **See it before you fix it.** If a failure's cause isn't visible, make it visible first.
 4. **Prove what ships.** Evidence counts only for the exact versions users will get.
@@ -18,39 +28,24 @@ You coordinate work done by other agents. You are an administrator: you dispatch
 
 ## Steps
 
-1. **Resume.** Continue the existing run if there is one. Keep its recorded versions, model settings, scope, evidence, review count and any pause.
-2. **Dispatch.** Send each ready task to a subagent on its route. Give it:
-   - the outcome;
-   - the scope from its task card;
-   - its dependencies;
-   - the exact versions to start from;
-   - the acceptance check;
-   - its authority;
-   - for an X or S task, the instruction to delegate research, reading, mechanical edits and checks to N helpers.
-
-   Keep independent tasks moving while one is blocked.
-3. **Keep scopes apart.** Never run two tasks whose scopes overlap at once; start the later one from what the earlier one landed. A task's own checkout starts from the latest head and is deleted when the task lands.
-4. **Land.** Check that the changed files stay inside the scope; if not, stop and ask Advise. Keep one way into each integration branch, and bring in anything that arrived another way first.
+1. **Resume.** Continue any existing run, keeping its recorded versions, model settings, scope, evidence, review count and any pause.
+2. **Dispatch.** Send each ready task to a subagent on its route, with its outcome, scope, dependencies, exact starting versions, acceptance check and authority. Tell an X or S task to delegate research, reading, mechanical edits and checks to N helpers. Keep independent tasks moving while one is blocked.
+3. **Keep scopes apart.** Never run tasks with overlapping scopes at once; start the later from what the earlier landed. Each task gets a fresh checkout from the latest head, deleted when it lands.
+4. **Land.** Check the changed files stay inside the scope; if not, stop and ask Advise. Keep one way into each integration branch; first bring in anything that arrived another way.
 5. **Escalate.**
-   - **What to send:** one question to Advise, with its evidence: the versions, the brief, the first failing command and its output, and what was tried. Use the run's advisor if it has one; otherwise start one on its `advisor` setting.
-   - **What to do with the answer:** act on the one next step it returns. Advice is never permission to run or publish.
-   - **If no advisor model is available:** ask the owner.
-   - **If the owner asked for advisor check-ins:** answer them briefly, and treat their next step like any other advice.
-6. **Review.** When every task before the review row is done:
+   - **Send** Advise one question with its evidence: the versions, the brief, the first failing command and its output, and what was tried. Use the run's advisor, or start one on its `advisor` setting.
+   - **Act** on the one next step it returns. Advice is never permission to run or publish.
+   - **No advisor model available:** ask the owner.
+   - **Owner asked for advisor check-ins:** answer them briefly; treat their next step like any other advice.
+6. **Review,** once every task before the review row is done:
    - give the integrated candidate to the `completion_reviewer` for a round;
-   - add each finding as a row directly below the review row (`R<round>.<n>`, or the plan's own prefix), with the route, scope, dependencies and proof it came with; ask Advise if one is unclear;
+   - add each finding as a row directly below the review row (`R<round>.<n>`, or the plan's prefix), with its route, scope, dependencies and proof; ask Advise if one is unclear;
    - run those rows like any other task, then start the next round;
-   - stop after a clean round or the plan's agreed number of rounds; take any blocking finding left after the last round to the owner through Advise.
-7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and the next action. Progress goes in `tasks.md`; status goes in the catalog. When astrid-dev itself gets in the way, add a row to the [process ledger](../../docs/process-ledger.md).
+   - stop after a clean round or the plan's agreed number of rounds; take any blocking finding left after the last one to the owner through Advise.
+7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md`, status in the catalog. When astrid-dev itself gets in the way, add a row to the [process ledger](../../docs/process-ledger.md).
 
 Never start paused work, add review stages beyond the plan's, reset counts, or schedule work because of these documents.
 
 ## Report
 
-Tell the owner:
-- what changed;
-- what is proven, on which exact versions;
-- what failed and why;
-- each decision that needs them, with your recommendation.
-
-For a blocker, name what it waits on, who produces it, and any deadline.
+Tell the owner what changed; what is proven, on which exact versions; what failed and why; and each decision that needs them. For a blocker, name what it waits on, who produces it and any deadline.
