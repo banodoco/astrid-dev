@@ -4,9 +4,9 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the owner asked for this project and made the decisions below on 7 Nov 2026, then told the advisor to start it on 8 Nov 2026 (session chat), with advisor check-ins every two hours.
+**Scope decision:** Accepted — the owner asked for this project and made the decisions below on 7 Nov 2026, then told the advisor to start it on 8 Nov 2026, with advisor check-ins every two hours ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9); recorded under [owner decisions](./inputs.md#owner-decisions)).
 
-**Prior art:** seven read-only maps of the current state and six task ambiguity reviews, summarised here:
+**Prior art:** seven read-only maps of the current state and six task ambiguity reviews, from astrid-dev `dd87b927676ba263707051be7926f245820d12e6`, summarised here; each [task card](./tasks.md) names the code it changes:
 - Seven read-only maps of the current state, at App `915bfa84`, Agent `709492fa`, Runtime `61e2c301`, launcher `d15c58b5` and astrid-dev `dd87b92`. The maps covered:
   - the App surfaces;
   - Settings and the decision logic;
@@ -26,7 +26,7 @@
 
 **Approach:** reuse and correct the existing pieces (`identity`, `resolveUpdate`, the status `reason`, `release-check.mjs`, the canary). Don't add new fields, a new resolver, a publish script or new CI rows.
 
-**Challenge:** Reviewed — an independent high-judgment review of the first draft was accepted almost entirely. It contributed these items:
+**Challenge:** Reviewed — an independent high-judgment review of the first draft ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)) was accepted almost entirely. It contributed these items:
 - **Cuts:** the new status fields, the new resolver, the publish script and new check, and the "main only moves by release" rule.
 - **Corrections:**
   - releases 0–9 can never update in-app;
