@@ -2,6 +2,8 @@
 
 **Vision gaps:** [Composable capabilities](../../vision/gaps/LS-003-full-stack-contributions.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).
 
+**Contributes to closure:** F-008 step 3: the plugin contract documented and proven with a second, non-h3 plugin. Milestone C.
+
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Make it easier for people and their agents to build and share creative tools on VibeComfy. Use H3_AV, a user-provided abstraction over MiniMax H3 workflows, to improve existing extension primitives and demonstrate customization and composition without forking core. This remains a draft; queue status, owner, and estimate are in the [project queue](../../README.md).

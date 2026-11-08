@@ -4,6 +4,8 @@
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).
 
+**Contributes to closure:** F-008 step 1: on RunPod, a warm machine reused, models on attached storage not re-downloaded, `--align check|trust`, and a missing model failing before submit and naming the machine. Milestone A: every default slot and h3_av produce results on RunPod.
+
 ## Outcome and scope
 
 Every default generation slot (image, edit, voice, music, sound effects) and h3_av runs live through the **one existing path**, on RunPod and locally, so Plans 01, 02 and 06 can land proven end to end. That path is: the host places the job, VibeComfy builds the ComfyUI prompt, and the prompt is posted to that place's ComfyUI. The outputs come back over `/view`.

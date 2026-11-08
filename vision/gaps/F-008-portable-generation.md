@@ -61,12 +61,35 @@ There is no single, engine-neutral generation path whose placement is decided on
 
 **Negative cases:** a missing model fails before submit, naming the machine; an expired lease releases the machine; no orphaned machine remains.
 
+## Closure approach
+
+**The idea.** Generation is one short path with replaceable pieces. VibeComfy already knows what each workflow needs and how to set up and run ComfyUI. A rented RunPod pod is just another machine. So the strategy is to stop the controller from reaching into remote machines, and instead run the same local path wherever the work runs: declare needs, choose the machine once, align it if asked, run, and bring the files back. Each level then becomes a slot that can be extended without touching the others:
+- workflows, as VibeComfy plugins;
+- engines, from a small engine table;
+- machines and providers, behind one placement-and-lease contract.
+
+**Why this order.** First make every slot work on today's route, so creators get results and the landing of the generation and pack work is proven live. Do it with deletions and small wires rather than new structure: the sound-effects refusals, h3_av's own pod route, a cached model volume and reusable pods. Then replace that route with the one path. Placement is decided once. The pod runs the local path itself. Alignment is VibeComfy's own commands with `align`, `check` or `trust`. Each job fetches only its models. h3_av becomes a VibeComfy plugin entry. Making names engine-neutral there costs a few lines, and later saves a rewrite. Only then add the second engine (Wan2GP) and document the plugin contract with a second plugin, because both need the one path to plug into.
+
+**What creators notice at each stage.**
+- First, every default slot and h3_av produce results on RunPod, models download once, and a warm pod is reused.
+- Second, the same request runs the same way on their own GPU, their own ComfyUI or a rented machine, with a default they choose and can override.
+- Third, new engines and community workflows appear without Astrid changing its core.
+
+**Deliberately out.** Out of scope: new cloud APIs (everything runs on our own compute), attaching a user-owned Wan2GP instance, multi-pass h3 requests, and Astrid-wide composability beyond generation ([LS-003](LS-003-full-stack-contributions.md), [LS-004](LS-004-cross-modal-foundations.md)).
+
+## Route to closure
+
+| Step | Plan | Contributes (closure evidence it delivers) | Milestone |
+|---|---|---|---|
+| 1 | [Plan 33](../../plans/33-unblock-live-generation/plan.md) | On RunPod: a warm machine reused, models on attached storage not re-downloaded, `--align check\|trust`, a missing model failing before submit and naming the machine | A: every default slot and h3_av produce results on RunPod |
+| 2 | [Plan 32](../../plans/32-generation-placement-targets/plan.md) | The same request through the same path on a local GPU, a user's ComfyUI and RunPod; a default placement overridden per generation; align, check and trust the same everywhere; one placement site, one submit, one retrieve, no per-modality branch; h3_av as a VibeComfy plugin with no h3 code in core; an expired lease releasing the machine, with no orphan; a test provider showing a further machine kind fits the contract | B: one path on any machine |
+| 3 | [Plan 12](../../plans/12-multiple-inference-routes/plan.md) ∥ [Plan 17](../../plans/17-vibecomfy-extensibility/plan.md) | A second engine (Wan2GP) on the same path (Plan 12); the plugin contract documented and proven with a second, non-h3 plugin (Plan 17) | C: extensible at every level |
+
+Critical path: Plan 33 U1 → U2 → U4 → U8 → U9, then Plan 32 T1 → T2 → T4 → T5 → T6, then Plan 12's wiring. Plan 12's scoping and Linux recipe run alongside Plan 32 T2–T5, and Plan 17 runs alongside Plan 12.
+
 ## Sources and reassessment
 
-The rectifying sequence:
-1. [Plan 33](../../plans/33-unblock-live-generation/plan.md): unblock every slot live on today's route.
-2. [Plan 32](../../plans/32-generation-placement-targets/plan.md): the one path; a pod is just a machine; VibeComfy does align and run; h3_av is a VibeComfy plugin.
-3. [Plan 12](../../plans/12-multiple-inference-routes/plan.md): Wan2GP on the same path.
-4. [Plan 17](../../plans/17-vibecomfy-extensibility/plan.md): the plugin contract.
+- **Path review:** `merge-run/path-review/` in `banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`: VISION, HOLISTIC, PLAN-SENSE-CHECK, H3-AS-VIBECOMFY-EXTENSION, EXISTING-MACHINERY and INFERENCE-ROUTES-SEQUENCING.
+- **Related:** [Plan 25](../../plans/25-cloud-assist-v1/plan.md) reuses the result.
 
-[Plan 25](../../plans/25-cloud-assist-v1/plan.md) reuses the result. Astrid-wide composability beyond generation (UI, timeline, packs) is [LS-003](LS-003-full-stack-contributions.md) and [LS-004](LS-004-cross-modal-foundations.md). Reassess from tested revisions and live runs; a plan alone does not close this gap.
+Reassess from tested revisions and live runs, updating the assessment and the route as each plan lands. A plan alone does not close this gap.

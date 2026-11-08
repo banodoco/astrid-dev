@@ -2,6 +2,8 @@
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
+**Contributes to closure:** F-008 step 3: a second engine (Wan2GP) on the same path. Milestone C.
+
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 **Draft; not ready for execution.** Wan2GP becomes the **second engine on the one generation path** that [Plan 32](../32-generation-placement-targets/plan.md) builds. It shares the same Placement, lease and remote-machine route as ComfyUI through VibeComfy, which stays primary, and adds only its own `align` and `execute`. Current status and owner remain in the [project queue](../../README.md).

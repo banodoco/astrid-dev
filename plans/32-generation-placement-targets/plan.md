@@ -4,6 +4,8 @@
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
+**Contributes to closure:** F-008 step 2: the same request through the same path on a local GPU, a user's ComfyUI and RunPod; a default placement overridden per generation; align, check and trust the same everywhere; one placement site, one submit and one retrieve with no per-modality branch; h3_av as a VibeComfy plugin; lease release with no orphan; and a test provider showing a further machine kind fits the contract. Milestone B.
+
 ## Outcome and scope
 
 Every generation follows one path, whatever its modality (image, edit, video, voice, music, sound effects, h3_av) and wherever it runs (local GPU, an attached ComfyUI, RunPod):
