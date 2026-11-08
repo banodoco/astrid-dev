@@ -8,4 +8,4 @@ A draft can use a short outline with unknowns. Before dispatch, every task needs
 | --- | --- | --- | --- | --- | --- |
 | | | | | | |
 
-Add task details beneath the index only when useful. Scope names the paths, and any shared surface or contract, the task may change; tasks with overlapping scopes need a dependency. Use N by default and X/S only where warranted by [the run contract](../../skills/astrid-dev-shared/run-contract.md). A check must name the actual behavior it demonstrates and its inputs; do not invent broad suites, duplicate task ledgers or extra approvals.
+Add task details beneath the index only when useful. Scope names the paths, and any shared surface or contract, the task may change; tasks with overlapping scopes need a dependency. X and S tasks delegate research, reading, mechanical edits and checks to N helpers. Use N by default and X/S only where warranted by [the run contract](../../skills/astrid-dev-shared/run-contract.md). A check must name the actual behavior it demonstrates and its inputs; do not invent broad suites, duplicate task ledgers or extra approvals.

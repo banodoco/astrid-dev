@@ -18,7 +18,7 @@ Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claud
 
 Plans tag each task with its route, and execution uses that same tag. Normally **one accountable agent works on one project**. It can execute a scoped task directly; use a manager and bounded subagents when parallelism or genuinely separate research helps, not as mandatory ceremony for a small project. If delegating, the coordinating agent retains judgment, resolves each task's configured route model, checks returned evidence, and records actual model IDs and efforts in `run.yaml`.
 
-For `X`/`S` execution leads, delegate bounded research or mechanical work to `N` helpers where useful. Reviewers and leaf advisors do not inherit that requirement. A plan may name route labels but must not duplicate model bindings.
+An `X` or `S` execution lead always delegates bounded research, reading, mechanical edits and running checks to `N` helpers, and keeps the judgment and the final change itself. Reviewers and leaf advisors do not inherit that requirement. A plan may name route labels but must not duplicate model bindings.
 
 ## Actual model provenance
 
