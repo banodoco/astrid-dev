@@ -4,6 +4,8 @@
 
 **Vision gaps:** Link the relevant [existing gap](../../vision/README.md), with its primary and truly useful supporting relationships, or state **Vision role: Foundational enabler** with a reason. A small bug or maintenance fix belongs in an issue.
 
+**Contributes to closure:** When a gap's Route to closure names this plan, state the gap ID and the closure-evidence items this plan delivers, for example `F-008: every default slot runs live on RunPod`. Otherwise omit this line.
+
 ## Outcome and scope
 
 What independently useful change should creators experience? State the included work, the boundaries and what is deferred.

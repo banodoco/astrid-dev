@@ -87,6 +87,56 @@ def obsolete_template_paths(root: Path) -> list[str]:
             issues.append(f"{obsolete}: obsolete duplicate or ungrouped template")
     return issues
 
+ROUTE_PLAN = re.compile(r"\[Plan (\d{2})\]\(\.\./\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)")
+ROUTE_STATUS = re.compile(r"\b(active|queued|blocked|paused|done|cancelled)\b", re.I)
+
+
+def gap_section(text: str, title: str) -> str | None:
+    match = re.search(r"^## " + re.escape(title) + r"\s*$", text, re.M)
+    if not match:
+        return None
+    tail = text[match.end():]
+    end = re.search(r"^## ", tail, re.M)
+    return (tail[:end.start()] if end else tail).strip()
+
+
+def route_issues(name: str, gap_id: str, text: str, plans: dict[str, str]) -> list[str]:
+    """Route to closure: structure and two-way links only, never strategic merit.
+
+    `plans` maps a plan folder name (for example '33-unblock') to its plan.md text.
+    """
+    issues: list[str] = []
+    route = gap_section(text, "Route to closure")
+    approach = gap_section(text, "Closure approach")
+    if route is None:
+        return issues
+    if not approach:
+        issues.append(f"{name}: Route to closure needs a non-empty Closure approach section before it")
+    elif text.index("## Closure approach") > text.index("## Route to closure"):
+        issues.append(f"{name}: Closure approach must come before Route to closure")
+    rows = [line for line in route.splitlines() if line.startswith("|") and not re.fullmatch(r"\|[\s|:-]+\|", line)]
+    body = rows[1:] if rows else []
+    if not body:
+        issues.append(f"{name}: Route to closure needs at least one step row")
+    for line in body:
+        for match in ROUTE_STATUS.finditer(line):
+            issues.append(f"{name}: route row carries status/ownership word '{match.group(1)}'; the catalog owns it")
+        for _, folder in ROUTE_PLAN.findall(line):
+            plan = plans.get(folder)
+            if plan is None:
+                issues.append(f"{name}: route names missing plan {folder}")
+                continue
+            try:
+                declared = plan_gap_ids(plan)
+            except ValueError:
+                declared = []
+            if gap_id not in declared:
+                issues.append(f"{name}: routed plan {folder} does not name {gap_id} in its Vision gaps line")
+            if not re.search(r"^\*\*Contributes to closure:\*\*.*\b" + re.escape(gap_id) + r"\b", plan, re.M):
+                issues.append(f"{name}: routed plan {folder} needs a 'Contributes to closure:' line naming {gap_id}")
+    return issues
+
+
 def check(root: Path) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -135,6 +185,8 @@ def check(root: Path) -> tuple[list[str], list[str]]:
             parse_gap_relationships(applies)
         except ValueError as exc:
             errors.append(f'{file.name}: {exc}')
+        plan_texts = {p.parent.name: p.read_text(encoding='utf-8') for p in (root / 'plans').glob('*/plan.md')}
+        errors.extend(route_issues(file.name, gap_id, text, plan_texts))
 
     for plan in sorted(actual):
         for name in ('plan.md', 'tasks.md', 'inputs.md'):

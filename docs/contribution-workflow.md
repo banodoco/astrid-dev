@@ -56,6 +56,8 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 **Each gap file must include** `Applies to` (one primary and only justified supporting relationships), `Assessment` (with dated evidence), **Desired state**, **Current state**, **Gap**, **Closure evidence**, and **Sources and reassessment**. The plan catalog remains the only home for project statuses and ownership.
 
+**Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap skill](../skills/astrid-dev-gap/SKILL.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
+
 ## Claim a project without waiting for a maintainer
 
 1. Find an existing `queued`, `Unassigned` [catalog project](../plans/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.
