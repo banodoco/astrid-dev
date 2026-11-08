@@ -24,7 +24,7 @@ This is the short-term fix. It adds no new architecture. It finishes the missing
   Music has not yet produced an output live; that is proven here, not assumed.
 - **Not included:**
   - per-request model subsets (the volume cache makes them less urgent);
-  - models on the storage volume;
+  - a generic per-request model cache (this plan caches the one engine's models on the volume);
   - one align step;
   - one Placement object;
   - collapsing the submit and retrieve paths.

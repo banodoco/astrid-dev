@@ -1,18 +1,22 @@
-# Multiple inference routes (Wan2GP)
+# Wan2GP as a second engine on the one generation path
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
-**Draft; not ready for execution.** Provide one shared generation route for VibeComfy (primary) and Wan2GP (additional), with both integrations represented as packs. Current status and owner remain in the [project queue](../../README.md).
+**Draft; not ready for execution.** Wan2GP becomes the **second engine on the one generation path** that [Plan 32](../32-generation-placement-targets/plan.md) builds. It shares the same Placement, lease and remote-machine route as ComfyUI through VibeComfy, which stays primary, and adds only its own `align` and `execute`. Current status and owner remain in the [project queue](../../README.md).
 
 ## Goal and scope
 
-- **Included:** inspect reusable installation, setup, and instance-connection infrastructure; make both setup paths understandable and usable; run inference through the shared task lifecycle; demonstrate a full Wan2GP installation and connection to an existing Wan2GP instance as separate paths.
-- **Lifecycle:** claim the task and required compute resources, load and unload models, execute, handle cancellation, and release resources after success, failure, or cancellation. Reuse existing ownership, custody, and lease primitives first; make the smallest platform change only if they cannot support this lifecycle.
-- **External process ownership:** attaching to an external server does not transfer ownership of its process or GPU. Never stop or kill a user's server or unload models the route did not load or own. Explicitly selected external inference remains supported.
-- **Deferred:** other inference backends and provider-specific capabilities not needed to establish these routes.
-- **Still undecided:** hardware, models, and environment for real inference proof; whether either pack is installed or included by default; reusable setup/connection mechanisms and the smallest supported Wan2GP installation path.
+- **Included:**
+  - a Wan2GP entry whose manifest says `engine: wan2gp` and names its base environment;
+  - Wan2GP's `align` (environment and models on that machine) and `execute` (today an in-process persistent session: `shared.api.init` → `submit_task`, used through `_ManagedWanChildAdapter`, `core/execution/generic_host.py` ~969), returning output files in the job directory;
+  - a Linux recipe (today the only recipe is Windows cu128) and a filled models lock (empty today);
+  - running it locally and on a RunPod machine through Plan 32's route, with model load and unload inside the engine's `execute`, and models pre-fetched into the storage volume;
+  - `wan2gp.generate_video` as an explicit-only video entry (MiniMax H3 stays the default).
+- **External process ownership:** attaching to an external server does not transfer ownership of its process or GPU. Never stop or kill a user's server or unload models the route did not load or own.
+- **Deferred:** an attached, user-owned Wan2GP instance. It has no endpoint or object_info equivalent, so it waits until one is defined. Also deferred: other inference backends.
+- **Still undecided:** hardware and models for the real inference proof; whether the Wan2GP pack is installed by default.
 
 ## What we build on
 
@@ -20,14 +24,13 @@ The starting premise is that VibeComfy is already the primary route and some set
 
 ## Sequence
 
-1. Map current generation, setup, instance connection, ownership/custody, lease, and pack code; identify supported hardware, models, and environments for real inference evidence.
-2. Scope the shared lifecycle and focused proof, reusing current primitives where possible.
-3. Expose VibeComfy and Wan2GP as packs through the shared route, preserving VibeComfy as primary.
-4. Demonstrate Wan2GP full installation and existing-instance connection separately, plus actual inference through both backends. Prove lifecycle failure, cancellation, cleanup/release, and contention; controlled failures may use fixtures, but successful inference must be real.
-5. Confirm explicitly selected external inference remains usable and record unsupported combinations.
+1. **Scoping and the Linux recipe**, in parallel with Plan 32 T2–T5: map the current Wan2GP pack and its session, then build a Linux recipe and a models lock.
+2. **Wiring, after Plan 32 T6:** add `wan2gp` to the one engine table in `run()`, with its `align` and `execute`. Replace the host's Wan2GP-specific branches (`generic_host.py` ~11673, ~12497) with that engine entry.
+3. **Real inference:** run Wan2GP locally and on a RunPod machine through the same placement and lease. A warm second job loads nothing new. Prove failure, cancellation and release; controlled failures may use fixtures, but successful inference must be real.
+4. **Record unsupported combinations**, and confirm that explicitly selected external inference stays usable.
 
 See [tasks.md](tasks.md) for the draft work outline and [inputs.md](inputs.md) for provenance and source identities to establish.
 
 ## Completion
 
-Both packs use the shared lifecycle, VibeComfy remains primary, both Wan2GP setup paths are demonstrated, and real inference succeeds through each backend. Focused lifecycle evidence covers failure, cancellation, cleanup/release, and contention. Existing external instances and unrelated loaded models remain untouched, and unsupported hardware, model, or environment combinations are recorded. This draft does not yet define executable tasks, routes, exact selectors, or source identities; those must be scoped before dispatch. Follow the existing [shared run contract](../../skills/astrid-dev-shared/run-contract.md) and its execution/publication authority limits.
+Wan2GP runs a real generation through the same path as ComfyUI, locally and on RunPod, chosen only by `manifest.engine`; VibeComfy remains primary. Focused lifecycle evidence covers failure, cancellation, cleanup/release, and contention. Existing external instances and unrelated loaded models remain untouched, and unsupported hardware, model, or environment combinations are recorded. This draft does not yet define executable tasks, routes, exact selectors, or source identities; those must be scoped before dispatch. Follow the existing [shared run contract](../../skills/astrid-dev-shared/run-contract.md) and its execution/publication authority limits.

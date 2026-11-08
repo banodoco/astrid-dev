@@ -34,27 +34,27 @@ The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reus
 
 ## Design
 
-**A RunPod pod is just a machine.** The whole path (requirements, align, compile, check, submit, fetch) runs on the machine where ComfyUI runs, against that machine's own disk. For RunPod, the controller only rents the machine, ships the job, runs the same local command there, copies the outputs back and releases the machine. Nothing ever has to carry "what is on the pod" back to the controller. That one choice removes the bridge-based generation route, the inventory channel, the controller-side model check for remote places, the `source_video` upload problem, and h3_av's separate pod route.
+**A RunPod pod is just a machine.** The whole path (requirements, align, compile, check, submit, fetch) runs on the machine where the engine runs, against that machine's own disk. For RunPod, the controller only rents the machine, ships the job, runs the same local command there, copies the outputs back and releases the machine. Nothing ever has to carry "what is on the pod" back to the controller. That one choice removes the bridge-based generation route, the inventory channel, the controller-side model check for remote places, the `source_video` upload problem, and h3_av's separate pod route.
 
 There are four pieces, each the only one of its kind:
 
 | Piece | Shape | Replaces |
 |---|---|---|
-| **Manifest** | `requirements(entry, inputs) -> {comfyui, nodes[repo, commit], models[name, subdir, url, sha256, size]}`, built from VibeComfy's per-workflow `ReadyMetadata`, which already holds these rows | about six requirement shapes; name-only `requirements`; engines as fixed model bundles |
+| **Manifest** | `requirements(entry, inputs) -> {engine, base, models[name, subdir, url, sha256, size], nodes[repo, commit] (ComfyUI only)}`, built from VibeComfy's per-workflow `ReadyMetadata`, which already holds these rows | about six requirement shapes; name-only `requirements`; engines as fixed model bundles |
 | **Placement** | frozen `{kind: local / attached / runpod, device or endpoint, policy}`, resolved request → project → user → built-in in one place | five re-inference sites; `--target` strings; `target_policy`; the dropped `placement` parameter |
 | **`run(job, placement)`** | **local:** start or reuse a ComfyUI on this machine (the chosen GPU), `align(manifest, mode)` against this disk, compile, submit to localhost, fetch over `/view`. **attached:** the user's ComfyUI URL; `check` (object_info) or `trust`, never `align`; submit and `/view`. **runpod:** claim a machine under the existing paid-consent and lease owner, ship the job, run `run(job, local)` on it with one generic remote Astrid invocation (runpod-lifecycle `ship_and_run`), fetch the outputs with a digest manifest, release | three profiles (`pip_embedded`, `local_server`, `checkout_server`); the generation bridge and its binding record; Plan 33's interim inventory wire; two `/view` clients; h3's own pod command |
 | **`align(manifest, mode)`** | `align` fetches only the missing manifest rows and installs missing nodes; `check` reports; `trust` skips and marks the result unverified. It always runs locally, on whichever machine runs ComfyUI, and **is VibeComfy's own commands** (`doctor`, `prepare --deps sync`, `nodes restore`, `fetch`). The Agent keeps only the ComfyUI-core install, which VibeComfy lacks | `generate align` vs `engines install`; the Agent's duplicate downloader and node installer (`model_downloader.py`, `engine_runner.py` model steps); VibeComfy's hidden `ensure_models` download; whole-lock readiness (`engine_readiness.py:745-756`) |
 
-**Engines** shrink to a base environment: pinned ComfyUI, Python and a node set. Models come from the manifest. Model locks become caches of manifest rows, and release identity stops binding the whole models lock. The storage volume is a model root a RunPod machine can mount.
+**Engine-neutral from the start, without a registry.** Only `comfyui` exists in this plan; [Plan 12](../12-multiple-inference-routes/plan.md) adds `wan2gp` to the same dict. The manifest names its `engine` (`comfyui` first, then `wan2gp`) and its `base` environment. `run()` picks the engine's `align` and `execute` from one plain dict at one site, and `run` returns files in the job directory, whatever the engine. For ComfyUI, the base is a pinned ComfyUI, Python and a node set. Models come from the manifest. Model locks become caches of manifest rows, and release identity stops binding the whole models lock. The storage volume is a model root a RunPod machine can mount.
 
-**Leases stay minimal:** an owner and an idle timeout (by default beyond the job, overridable in the Placement policy). Because every slot shares one base environment, a warm machine is reusable by any later job. An orphaned machine is a bug by construction.
+**Leases stay minimal:** an owner and an idle timeout (by default beyond the job, overridable in the Placement policy). A warm machine is reusable by any later job with the same base environment, so the lease is keyed on the base id. An orphaned machine is a bug by construction.
 
 **Modality is data.** The entry declares its modes, inputs (including media such as a source video) and outputs, plus at most one optional `finalize` step. `finalize` is the only new piece: it is post-processing such as ffmpeg compose and verify, run on the same machine after the outputs come back, because VibeComfy has no hook for code that runs after ComfyUI. There is one `generate(entry, inputs, placement)`, with image, video and audio as thin aliases. Refusals come from entry data, in one place.
 
 **Terms, one meaning each** (renamed as each task touches the code):
 - **engine:** a base environment recipe.
 - **placement:** where a job runs.
-- **machine:** where ComfyUI runs (local or rented).
+- **machine:** where the engine runs (local or rented).
 - **attached:** a user-owned server that can be checked or trusted but not aligned.
 - **managed:** installed by Astrid, with a receipt.
 - **readiness:** the result of `align` in `check` mode.

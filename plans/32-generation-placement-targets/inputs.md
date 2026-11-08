@@ -37,7 +37,7 @@ So this plan now also owns the manifest, `align`, per-request model sets, the vo
 - `auxiliary_model_custody: local|target` → `model_inventory: controller|placement`.
 - Stop using `ComfyTarget(url, "attached")` for the RunPod bridge.
 
-**Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the Target lease semantics is instead the entry gate of task T3 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built.
+**Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the lease semantics is instead the entry gate of task T3 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built.
 
 **Proof and limits:** the invariant test over every default slot x {auto, local, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1), plus a live matrix of the five default slots and h3_av on RunPod and locally (T7). Limits: the live proof needs a RunPod budget and an authorized start that are not yet decided. Fixtures cover refusal and release on failure; they do not replace the live runs.
 
@@ -48,4 +48,4 @@ Not yet recorded. Before code work, record the actual repository, ref and SHA fo
 ## References
 
 - Routing map: `merge-run/review/generation-routing-map.md` in `banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`.
-- [Plan 02](../02-consistent-generation/plan.md) (predecessor), [Plan 12](../12-multiple-inference-routes/plan.md) (consumer), [Plan 13](../13-execution-host-refactor/plan.md) (host split, excluded), [Plan 25](../25-cloud-assist-v1/plan.md) (would reuse Placement and Target).
+- [Plan 02](../02-consistent-generation/plan.md) (predecessor), [Plan 12](../12-multiple-inference-routes/plan.md) (consumer), [Plan 13](../13-execution-host-refactor/plan.md) (host split, excluded), [Plan 25](../25-cloud-assist-v1/plan.md) (would reuse Placement and the remote-machine route).
