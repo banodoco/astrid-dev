@@ -25,6 +25,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
 4. **Prove what ships.** Evidence counts only for the exact versions users will get.
 5. **Spend judgment where it pays.** Use the cheapest route that can do the task. Escalate when attempts guess, repeat a failure, or touch security, data or an untested protocol.
 6. **Decisions are durable.** Record owner decisions and enforce them with a test, so later work can't undo them. Ask the owner only what is theirs, with a recommendation.
+7. **Progress is always current.** This is a key responsibility. Whenever a task's state changes, update its row in the plan's `tasks.md`: started, PR open (with link), blocked (and why), or merged `[x]`. Add rows for tasks you create, and mark stopped ones. Land each update promptly by PR. It is the run's only progress record, and the owner and every check-in read it there.
 
 ## Steps
 
@@ -42,7 +43,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
    - add each finding as a row directly below the review row (`R<round>.<n>`, or the plan's prefix), with its route, scope, dependencies and proof; ask Advise if one is unclear;
    - run those rows like any other task, then start the next round;
    - stop after a round with no blocking findings or the plan's agreed number of rounds; take any blocking finding left after the last one to the owner through Advise.
-7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md`, status in the catalog. When astrid-dev itself gets in the way, add a row to the [process ledger](../../docs/process-ledger.md).
+7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md`, kept current as principle 7 says, and status in the catalog. When astrid-dev itself gets in the way, add a row to the [process ledger](../../docs/process-ledger.md).
 
 Never start paused work, add review stages beyond the plan's, reset counts, or schedule work because of these documents.
 
