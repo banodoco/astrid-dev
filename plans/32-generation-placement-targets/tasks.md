@@ -40,15 +40,15 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | 1 | **T2a**: `generation.engine` point, ComfyUI contribution, registry loading; no caller switched | step 0 | T1 (Plan 33 U3, U4 still open) |
 | 2 | **T1** | Plan 33 U3 and U4 landed | T2a |
 | 3 | **T2b-manifest** (rest of T2): `requirements()` and the engine table | T1, T2a | T3 |
-| 4 | **T3**: one Placement value, default and override | T1, the advisor's review of the Placement and lease design | T2 manifest |
-| 5 | **T2b**: one base engine, comfy packs deleted | T2 manifest, T3 (`sdk/generation.py`; kept conservative until the symbol check says otherwise) | nothing |
+| 4 | **T3**: one Placement value, default and override. The advisor runs its Placement and lease design review now, against the updated plan, so T3 does not wait for it. | T1 | T2 manifest |
+| 5 | **T2b**: one base engine, comfy packs deleted. No link to T3 unless a symbol check finds a shared function; name it if one does. | T2 manifest (and T3 only if that check finds a shared function) | T3 |
 | 6 | **T4**: local run path with `align` | T2b | nothing |
-| 7 | **T5**: RunPod as a remote machine | T4 | nothing |
-| 8 | **T6**: one `generate`, `vibecomfy.workflows` point | T5 | nothing |
-| 9 | **T6b**: h3_av as one contribution | T6 | nothing |
+| 7 | **T5**: RunPod as a remote machine | T4 | T6, if their symbols are disjoint |
+| 8 | **T6**: one `generate`, `vibecomfy.workflows` point. Needs T4's single `run()`, not T5's result. | T4 | T5, if their symbols are disjoint |
+| 9 | **T6b**: h3_av as one contribution | T5 and T6 | nothing |
 | 10 | **R** review rounds, then **T8** completion | T1–T6b | nothing |
 
-**Critical path:** Plan 33 U3 and U4 → T1 → T3 → T2b → T4 → T5 → T6 → T6b → R → T8. T2a runs now, in parallel with the open Plan 33 work. T2's manifest and T3 can run in parallel once T1 lands. Every step after T2b is a chain.
+**Critical path:** Plan 33 U3 and U4 → T1 → T3 → T4 → T5 → T6b → R → T8. T6 runs in parallel with T5 once T4 lands, if their symbols are disjoint. T6b waits for both. T2a runs now, in parallel with the open Plan 33 work. T2's manifest and T3 can run in parallel once T1 lands.
 
 ## T1 Characterize every capability
 
