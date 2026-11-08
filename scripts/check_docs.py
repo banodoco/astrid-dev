@@ -137,6 +137,50 @@ def route_issues(name: str, gap_id: str, text: str, plans: dict[str, str]) -> li
     return issues
 
 
+STRATEGY = Path('strategy.md')
+STRATEGY_HEADER = '| Order | When | Gap | Plans | What creators get | Waiting on |'
+STRATEGY_WHEN = {'Now', 'Next', 'Later'}
+STRATEGY_SECTIONS = ('## Focus now', '## Sequence', '## Not now', '## Decisions')
+GAP_LINK = re.compile(r'\[[^\]]+\]\((?:\.\./)*vision/gaps/[A-Z]{1,3}-\d{3}-[a-z0-9-]+\.md\)')
+ANY_PLAN_LINK = re.compile(r'\[[^\]]+\]\((?:\.\./)*plans/[^)]+/plan\.md\)')
+
+
+def strategy_errors(text: str) -> list[str]:
+    """strategy.md has its sections, a review date and a structured sequence table."""
+    errors = [f'strategy.md: missing section {name}' for name in STRATEGY_SECTIONS
+              if not re.search(rf'^{re.escape(name)}\s*$', text, re.M)]
+    if not re.search(r'^\*\*Last reviewed:\*\* \d{4}-\d{2}-\d{2}', text, re.M):
+        errors.append('strategy.md: needs a "**Last reviewed:** YYYY-MM-DD" line')
+    lines = text.splitlines()
+    heads = [i for i, line in enumerate(lines) if line.strip() == STRATEGY_HEADER]
+    if len(heads) != 1:
+        return errors + ['strategy.md: needs one sequence table with the canonical header']
+    rows = []
+    for line in lines[heads[0] + 2:]:
+        if not line.startswith('|'):
+            break
+        rows.append([cell.strip() for cell in line.strip().strip('|').split('|')])
+    if not rows:
+        errors.append('strategy.md: the sequence table is empty')
+    for cells in rows:
+        if len(cells) != 6:
+            errors.append(f'strategy.md: malformed sequence row: {"|".join(cells)}')
+            continue
+        order, when, gap, plans, gets, waiting = cells
+        label = f'strategy.md row {order}'
+        if not order.isdigit():
+            errors.append(f'{label}: Order must be a number')
+        if when not in STRATEGY_WHEN:
+            errors.append(f'{label}: When must be Now, Next or Later')
+        if not GAP_LINK.search(gap):
+            errors.append(f'{label}: Gap must link a vision/gaps file')
+        if not ANY_PLAN_LINK.search(plans) and '(proposed)' not in plans:
+            errors.append(f'{label}: Plans must link a plan.md, or say "(proposed)"')
+        if not gets or not waiting:
+            errors.append(f'{label}: What creators get and Waiting on must be filled')
+    return errors
+
+
 def check(root: Path) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -145,6 +189,10 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     except (OSError, ValueError, IndexError) as exc:
         return [f'plan catalog: {exc}'], []
 
+    try:
+        errors.extend(strategy_errors(read(root, STRATEGY)))
+    except OSError as exc:
+        errors.append(f'strategy.md: {exc}')
     indexed: set[Path] = set()
     for row in rows:
         dest = PLAN_LINK.fullmatch(row[6]).group(1)
