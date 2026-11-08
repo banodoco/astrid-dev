@@ -32,6 +32,11 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
+**Manager state (run `plan32-2026-11-08-m1`, 8 Nov 2026).** Owner decision: Plan 32 starts now, in parallel with Plan 33, and does not wait for Plan 34. The dependency in T1's row ("Plan 34's first pass") is superseded by that decision and is to be corrected with the advisor's go.
+- Setup: `add_repo banodoco/astrid-agent` (push) was **denied** by the auto-mode classifier. Nothing in astrid-agent can start until access is granted. Integration branch `int/32-one-generation-path` is **not cut**. The smoke worker is **not created**, so the environment smoke is **not run**; `run.yaml` records it as blocked.
+- Dispatch: **none**. Every Plan 32 task changes astrid-agent. T1 also extends Plan 33's `tests/integrations/test_runpod_slot_path_cpu.py` (U1), which is not yet landed.
+- Next, when access exists: cut `int/32-one-generation-path` from the head of `int/33-unblock-live-generation`, run the smoke, then ask the advisor before any dispatch touching `sdk/generation.py`, `remote_placement.py`, `adapter.py`, `generic_host.py` or `local_server_engine.py` while Plan 33 is open.
+
 ## T1 Characterize every capability
 
 **Outcome:** the CPU tests name every capability that reaches generation, so later tasks see what they break. **Authority:** CPU only.
