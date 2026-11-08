@@ -12,7 +12,7 @@ The [run contract](../astrid-dev-shared/run-contract.md) owns routes, run state 
 - **Owner:** the person who makes the project's decisions.
 - **Manager:** you, an administrator coordinating other agents: dispatch, check and keep state; send judgment calls to [Advise](../astrid-dev-advise/SKILL.md), the high-judgment **advisor**.
 - **Route:** N, X or S, the capability band a task runs on.
-- **Scope:** what a task may change, as its task card states; a path includes its own tests.
+- **Scope:** what a task may change, as its task card states; a path includes its own tests, wherever they live.
 - **Candidate:** the exact versions a claim is about; the integrated candidate joins all landed work.
 
 ## The answer
