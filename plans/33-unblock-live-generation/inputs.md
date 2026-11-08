@@ -4,15 +4,15 @@
 
 ## Planning evidence
 
-**Scope decision:** requested by Hannah on 8 Nov 2026, after the live merge-run proof stalled on voice. She asked for "a plan to get it unblocked … and to unblock any of these silly preconditions we've added", and separately for a long-term structural plan (Plan 32). Owner @AstridPseudon.
+**Scope decision:** Pending — drafted on 8 Nov 2026 at Hannah's request after the live merge-run proof stalled on voice ("a plan to get it unblocked … and to unblock any of these silly preconditions we've added"), with Plan 32 as the long-term structural plan. Owner @AstridPseudon. Next: the owner reviews this plan together with the independent sense check, and accepts or amends it.
 
-**Source findings:** all of these are on the merge-run desk (`banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`):
+**Prior art:** the work rests on material on the merge-run desk (`banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`):
 - `merge-run/path-review/VISION.md`: the owner's one-path vision.
 - Seven read-only audits: `1-requirements.md`, `2-4-placement-submit.md`, `3a-align-local.md`, `3b-align-runpod.md`, `5-retrieve.md`, `6-modality-branches.md` and `7-why-confused.md`.
 - `HOLISTIC.md`: an independent holistic review. Its verdict: voice alone needs one wire; the full scope is complex. It also gives the target design and the glossary.
 - `DECISIONS-LEDGER.md` M-72 to M-75: the live voice failure, its root cause, the path map and the pause.
 
-**Key facts the tasks rely on** (Agent `5eac07e3f`, VibeComfy `e65f4941`):
+Key facts the tasks rely on (Agent `5eac07e3f`, VibeComfy `e65f4941`):
 - **RunPod route.** It is the host bind, which sets `comfy_url` to a bridge on the controller's 127.0.0.1 (`adapter.py:253-258`). The run then goes through `local_server` (`run.py:753-758`) and `_live_preflight`, with model custody "local" (`local_server_engine.py:67`).
 - **VibeComfy approval** (`workflow_bundle.py` ~2479–2630):
   - Loader-combo models listed in the place's object_info pass.
@@ -28,7 +28,7 @@
 - **A new inventory type or VibeComfy change:** the mechanism already exists.
 - **The full Plan 32 redesign first:** too large to unblock the landing.
 
-**Challenge:** an independent sense check of this plan and Plan 32 is recorded in [astrid-dev PR for Plans 32/33](#references) before work starts.
+**Challenge:** Pending — an independent sense check of this plan and Plan 32 is running. Next: record its result here and in the pull request before work starts.
 
 **Proof and limits:** the CPU pod-path test (U1) and the live matrix (U7). The first pod for each engine still downloads the full lock.
 
