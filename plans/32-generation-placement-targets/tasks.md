@@ -248,6 +248,8 @@ Delete, in the same change:
 
 **Outcome:** h3_av is one pack with one `vibecomfy.workflows` contribution, and every piece of h3 machinery that the generic path makes obsolete is deleted. The inventory is `merge-run/path-review/H3-GENERALIZATION.md` section 1 (class d) and `H3-AS-VIBECOMFY-EXTENSION.md` section 3 (20 sites). **Authority:** CPU only.
 
+**Input (Plan 33 U4 finding, advisor, 8 Nov):** the h3_av CPU case fails on the base `8df5c09c2` even when run alone, with `task_status_unavailable` and `transport_timeout` and four consecutive claim failures in the runtime status poll. It is a real failure, not load. Reference only: branch `plan33/u4-h3-default` at `9352f8d` (unmerged; it over-deletes `tests/packs/runpod/test_managed_source_root.py`, so do not take it whole).
+
 **Delegate to N helpers:** the site census, the deletions and the checks. The lead keeps the `build` and `finalize` boundaries.
 
 1. Contribute `astrid/packs/h3_av/extensions/vibecomfy.workflows/h3.yaml`, and add `dependencies.packs: [vibecomfy]` to h3_av.
@@ -279,6 +281,7 @@ Delete, in the same change:
 
 **Proof:**
 - The Matrix request (Plan 33 U1's fixture) runs as an ordinary `generate` on the CPU fake: `PYT_POD tests/integrations/test_remote_machine_cpu.py`.
+- The h3_av status-poll case (the Input above) reproduces on the base, and it passes after T6b: its test is named in the commit body, with the poll failure as its recorded cause.
 - `grep -ri h3 astrid/core astrid/sdk` returns nothing (about 156 lines today).
 - A grep finds no stage graph, journal, receipt or input bundle left in `astrid/packs/h3_av`, and `! git grep -n "pending38\|checkout_from_profile\|endpoint_checkout" -- astrid` finds no legacy route.
 - `PYT tests/packs/h3_av/test_compile.py tests/packs/h3_av/test_verify_fail_closed.py tests/packs/h3_av/test_compose_staged_104.py tests/packs/h3_av/test_workflow_model_urls.py`, with the deleted machinery's test files deleted and named in the commit body.
