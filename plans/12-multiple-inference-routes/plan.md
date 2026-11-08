@@ -11,7 +11,7 @@
 ## Goal and scope
 
 - **Included:**
-  - a Wan2GP entry whose manifest says `engine: wan2gp` and names its base environment;
+  - Wan2GP as a `generation.engine` contribution from the `wan2gp` pack (the extension point Plan 32 T2 declares), with a manifest saying `engine: wan2gp` and naming its base environment;
   - Wan2GP's `align` (environment and models on that machine) and `execute` (today an in-process persistent session: `shared.api.init` → `submit_task`, used through `_ManagedWanChildAdapter`, `core/execution/generic_host.py` ~969), returning output files in the job directory;
   - a Linux recipe (today the only recipe is Windows cu128) and a filled models lock (empty today);
   - running it locally and on a RunPod machine through Plan 32's route, with model load and unload inside the engine's `execute`, and models pre-fetched into the storage volume;
@@ -27,7 +27,7 @@ The starting premise is that VibeComfy is already the primary route and some set
 ## Sequence
 
 1. **Scoping and the Linux recipe**, in parallel with Plan 32 T2–T5: map the current Wan2GP pack and its session, then build a Linux recipe and a models lock.
-2. **Wiring, after Plan 32 T6:** add `wan2gp` to the one engine table in `run()`, with its `align` and `execute`. Replace the host's Wan2GP-specific branches (`generic_host.py` ~11673, ~12497) with that engine entry.
+2. **Wiring, after Plan 32 T6:** contribute `wan2gp` to the `generation.engine` point, with its `align` and `execute`. Replace the host's Wan2GP-specific branches (`generic_host.py` ~11673, ~12497) with that engine entry.
 3. **Real inference:** run Wan2GP locally and on a RunPod machine through the same placement and lease. A warm second job loads nothing new. Prove failure, cancellation and release; controlled failures may use fixtures, but successful inference must be real.
 4. **Record unsupported combinations**, and confirm that explicitly selected external inference stays usable.
 

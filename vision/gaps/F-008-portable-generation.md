@@ -64,9 +64,11 @@ There is no single, engine-neutral generation path whose placement is decided on
 ## Closure approach
 
 **The idea.** Generation is one short path with replaceable pieces. VibeComfy already knows what each workflow needs and how to set up and run ComfyUI. A rented RunPod pod is just another machine. So the strategy is to stop the controller from reaching into remote machines, and instead run the same local path wherever the work runs: declare needs, choose the machine once, align it if asked, run, and bring the files back. Each level then becomes a slot that can be extended without touching the others:
-- workflows, as VibeComfy plugins;
-- engines, from a small engine table;
-- machines and providers, behind one placement-and-lease contract.
+- workflows (`vibecomfy.workflows`);
+- engines (`generation.engine`);
+- machines and providers (`generation.machine`).
+
+Each is a point in Astrid's existing pack extension protocol, which packs fill and can combine.
 
 **Why this order.** First make every slot work on today's route, so creators get results and the landing of the generation and pack work is proven live. Do it with deletions and small wires rather than new structure: the sound-effects refusals, h3_av's own pod route, a cached model volume and reusable pods. Then replace that route with the one path. Placement is decided once. The pod runs the local path itself. Alignment is VibeComfy's own commands with `align`, `check` or `trust`. Each job fetches only its models. h3_av becomes a VibeComfy plugin entry. Making names engine-neutral there costs a few lines, and later saves a rewrite. Only then add the second engine (Wan2GP) and document the plugin contract with a second plugin, because both need the one path to plug into.
 
@@ -83,7 +85,7 @@ There is no single, engine-neutral generation path whose placement is decided on
 |---|---|---|---|
 | 1 | [Plan 33](../../plans/33-unblock-live-generation/plan.md) | On RunPod: a warm machine reused, models on attached storage not re-downloaded, `--align check\|trust`, a missing model failing before submit and naming the machine | A: every default slot and h3_av produce results on RunPod |
 | 2 | [Plan 32](../../plans/32-generation-placement-targets/plan.md) | The same request through the same path on a local GPU, a user's ComfyUI and RunPod; a default placement overridden per generation; align, check and trust the same everywhere; one placement site, one submit, one retrieve, no per-modality branch; h3_av as a VibeComfy plugin with no h3 code in core; an expired lease releasing the machine, with no orphan; a test provider showing a further machine kind fits the contract | B: one path on any machine |
-| 3 | [Plan 12](../../plans/12-multiple-inference-routes/plan.md) ∥ [Plan 17](../../plans/17-vibecomfy-extensibility/plan.md) | A second engine (Wan2GP) on the same path (Plan 12); the plugin contract documented and proven with a second, non-h3 plugin (Plan 17) | C: extensible at every level |
+| 3 | [Plan 12](../../plans/12-multiple-inference-routes/plan.md) ∥ [Plan 17](../../plans/17-vibecomfy-extensibility/plan.md) | A second engine (Wan2GP) on the same path (Plan 12); the pack extension protocol switched on and proven with a second, non-h3 composite pack (Plan 17) | C: extensible at every level |
 
 Critical path: Plan 33 U1 → U2 → U4 → U8 → U9, then Plan 32 T1 → T2 → T4 → T5 → T6, then Plan 12's wiring. Plan 12's scoping and Linux recipe run alongside Plan 32 T2–T5, and Plan 17 runs alongside Plan 12.
 
