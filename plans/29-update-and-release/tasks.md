@@ -19,7 +19,7 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | UR-9 Fully local Update now through the in-page updater | X | UR-1, UR-3 (shares `AstridUpdatesSection.tsx`) | app `updateOperation.ts` (`LocalPageUpdate`), `config/vite/localUpdatePage.ts`, `scripts/local-update*.mjs`, `resolveUpdate.ts`, `SettingsModal/sections/AstridUpdatesSection.tsx`, `scripts/dev-local-workspace.mjs` | Spike confirms why `f2eca0bd5` hid it; a dev:local test updates through the page | [ ] |
 | **Phase 1c — Release 10 (about 6.5–7.5 days)** | | | | | |
 | UR-10 Update now works end to end | S | — | agent `astrid/installer/update_job*.py`, new e2e test; contract update helper | Agent test: the Runtime's real request through the real helper, prepare → accept → launch and recovery-needed, with fake `systemctl`/`systemd-run` | [ ] |
-| UR-11 Runtime reports `self_update` and a reason in every state | X | UR-10 | runtime `astrid_runtime/update.py`; agent `update_job.py` availability; contract update status | `self_update` comes from the helper reporting its actions, on every OS; unclassified causes are `needs-repair`, Pinokio and source are `managed-elsewhere` | [ ] |
+| UR-11 Runtime reports `self_update` and a reason in every state | X | UR-10 | runtime `astrid_runtime/update.py`; agent `update_job.py` availability; contract update status | `self_update` comes from the helper reporting its actions, on every OS; unclassified causes are `needs-repair`, source is `source` and Pinokio is `managed-elsewhere` | [ ] |
 | UR-12 Hosted update can target a stand-in release | X | — (UR-11 if the fallback seam is chosen) | agent journey CI (`journey.yml`, `scripts/ci_*journey*.py`); runtime `update.py` only if the fallback seam is chosen, then after UR-11 | A probe on each OS runner chooses CI-level interception, or the owner-approved fallback seam | [ ] |
 | UR-13 Hosted button-path update on every OS | X | UR-10–UR-12 | agent `journey_fresh_update.py`, `windows_update_journey.py`, `ci_journey_keepgoing.py`, `journey.yml` | The update leg of the three direct fresh rows POSTs through the door to a stand-in release | [ ] |
 | **Review — before publishing** | | | | | |
@@ -104,10 +104,12 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
 
 ### UR-11 `self_update` and reasons
 - **Where `self_update` comes from:** the helper's `availability` action lists its supported actions, and old helpers can't, so they read false. Move the probe from Linux-only (`update.py:103`) to every OS.
+- **Which actions it requires:** exactly the ones the Runtime's request path calls: `availability`, `reconcile`, `accept`, `launch`, and prepare (sent with no action key). `reconcile` is the action whose absence broke Update now, so it must be included. The Runtime never calls `fail`. Keep one constant beside the calls, with a test that every action the request path sends is in it.
 - **Reasons:**
-  - Emit `reason` in every state, not only `none`.
+  - Emit `reason` in every state, including `none` when it can update.
   - Keep `busy`, `autostart-off` and `unsupported-service-manager`.
-  - Add `needs-repair` (anything unclassified) and `managed-elsewhere` (Pinokio, source).
+  - Add `needs-repair` (anything unclassified) and `managed-elsewhere` (Pinokio).
+  - Source installs keep `source`, the reason the POST refusal already uses (`update.py:163-164`) and the App already reads (`client.ts:200`), so status and refusal share one vocabulary.
 - **Compatibility:** older Apps ignore unknown keys (`client.ts:247-259`).
 - **Tests to update:** those asserting the old shape (`test_update_jobs.py` around :433-441 and :489-530).
 
