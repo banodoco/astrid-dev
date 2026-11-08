@@ -12,6 +12,7 @@ Integrated candidate: Exact candidate SHA(s)/versioned receipt (or None — non-
 Models used: provider/model-id — implementation or review, runtime-observed or self-reported (or Unknown — reason)
 Unproven: Named remaining failures/unsupported scenarios (or None within the stated scope)
 Gap F-XXX: Unchanged — Replace with a justified disposition for **every actually linked gap**.
+Strategy: Updated — the strategy.md row and sequence changes, and the gap route changes, in this PR
 
 ### Integrated result
 

@@ -25,6 +25,7 @@ When the owner asks for regular check-ins on a run, take the cadence and end con
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, the nudge is to wake it with one next action.
+- **Strategy:** if the catalog order or a plan's state no longer matches [`strategy.md`](../../strategy.md), report the mismatch to the owner. Don't edit it yourself.
 - **Progress record (every check-in):** check that the plan's `tasks.md` matches reality. Merged PRs should be ticked, and open and blocked tasks should show their state. If it lags, the nudge is to bring it up to date. Report progress from it, not from memory.
 - **Moving:** tasks finished or candidates landed since last time.
 - **Stuck:** the same failure twice, the same open question, or idle agents.

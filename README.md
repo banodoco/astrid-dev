@@ -33,4 +33,4 @@ Our vision has four main pillars and four guiding principles. We've identified 1
 
 The vision defines the destination, while projects in the [plan catalog](plans/index.md) are attempts to close the gaps between our current state and that goal. Completing a plan doesn't automatically close a gap; it informs our [reassessment](docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
 
-The [plan catalog](plans/index.md) is the single source of truth for project ownership, status, priority and estimates.
+**[Strategy](strategy.md)** says which gaps we're closing now, next and later, and why, pointing to each gap's route and its plans. The [plan catalog](plans/index.md) is the single source of truth for project ownership, status, priority and estimates.

@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_completion import assess_completion, check_pr, transitions_to_done
+from check_completion import assess_completion, check_pr, strategy_errors, transitions_to_done
 from check_docs import DIVIDER, HEADER
 
 PLAN = ("# Zero-to-first-image\n\n"
@@ -125,6 +125,16 @@ Models used: Unknown — Historical run did not record model identity.
 
     def test_existing_done_is_not_rechecked(self):
         self.assertEqual(check_pr(catalog("done"), catalog("done"), "", self.root), [])
+
+
+
+
+class StrategyGateTests(unittest.TestCase):
+    def test_completion_without_strategy_update_fails(self):
+        self.assertEqual(len(strategy_errors({"plans/index.md", "vision/gaps/F-001-platform-reliability.md"})), 1)
+
+    def test_completion_with_strategy_update_passes(self):
+        self.assertEqual(strategy_errors({"plans/index.md", "strategy.md"}), [])
 
 
 if __name__ == "__main__":
