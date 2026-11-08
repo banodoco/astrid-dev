@@ -148,6 +148,7 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
   - Create `cand/29-<task>` branches in App and Agent from the frozen heads, then run the Agent's `scripts/regenerate_runtime_pins.py ... --apply` to repin the Agent's runtime lock and the App manifest together. Check with `pin.mjs --check`.
   - Dispatch `journey.yml` (`workflow_dispatch`) with full SHAs, `manifest_sha256` and the three bootstrap hashes.
   - `cand/*` branches are evidence only. They are never merged; the real pin happens in UR-14.
+- **What UR-13 is judged on:** only its three fresh rows (direct-linux-fresh, direct-macos-fresh, direct-windows), each with its hosted receipt. The release0-to-release1 legs belong to the old Release 1 migration and are out of scope (owner decision 6). An aggregate gate failure caused only by those legs doesn't block UR-13.
 
 ### UR-R Review rounds
 
