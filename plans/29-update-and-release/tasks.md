@@ -7,8 +7,7 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
 | **Phase 1a — App (about 4 days)** | | | | | |
-| UR-1 Update now appears only when the installed Astrid reports `self_update` | N | — | app `src/shared/lib/updates/{useInstallerUpdate,updateOperation,resolveUpdate}.ts`; surface update UI | Without `self_update`, Update now is hidden and the one line plus the command show; busy shows it disabled | [ ] |
-| UR-2 Show the real refusal reason | N | UR-1 | app `updateOperation.ts`, `src/integrations/runtime/client.ts` | Each status `reason` and POST `details.reason` has its own line; an unknown reason reads as needs repair | [ ] |
+| UR-1 Update now only when the installed Astrid reports `self_update`, and the real reason whenever it can't run | N | — | app `src/shared/lib/updates/{useInstallerUpdate,updateOperation,resolveUpdate}.ts`, `src/integrations/runtime/client.ts`, `UpdateResolutionActions.tsx`, `SettingsModal/sections/AstridUpdatesSection.tsx`; surface update UI | Without `self_update`, Update now is hidden and the one line plus the command show; busy shows it disabled. Each status `reason` and POST `details.reason` has its own line; an unknown reason reads as needs repair | [ ] |
 | UR-3 Setup block off update surfaces; Updates gains a repair entry | N | UR-1 | app `UpdateResolutionActions.tsx`, `ChatUpdateNeeded.tsx`, `SettingsModal/sections/{AstridStatusSection,AstridUpdatesSection,astridStatusCopy}` | No SetupBlock on update surfaces or the status section; a degraded direct install finds the plain install line under Updates | [ ] |
 | UR-4 Chat update cards use the shared decision | N | UR-1, UR-3 | app `src/tools/video-editor/components/AgentChat/**` | One error renders one card; chat's action is "See updates" | [ ] |
 | UR-5 Pinokio memory reads `identity.managed_by` | N | — | app `RuntimeConnectionProvider.tsx` | Through both the proxy and the door, Pinokio is recognised and never sees the installer command | [ ] |
@@ -16,11 +15,11 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | UR-7 Decision table test | N | UR-1–UR-4 | app update decision tests | Install type × situation, plus the negative cases in the plan | [ ] |
 | UR-8 `release-guard` job | N | — | app `scripts/installer/**`, `.github/workflows/{test,served-manifest-canary}.yml`, `config/qualification/**`; contract release number | Tuple or bootstrap change without +1 fails; any other `release` change fails; it runs on pull requests and on push | [ ] |
 | **Phase 1b — fully local (about 1.5 days)** | | | | | |
-| UR-9 Fully local Update now through the in-page updater | X | UR-1, UR-2 | app `updateOperation.ts` (`LocalPageUpdate`), `config/vite/localUpdatePage.ts`, `scripts/local-update*.mjs` | Spike confirms why `f2eca0bd5` hid it; a dev:local test updates through the page | [ ] |
+| UR-9 Fully local Update now through the in-page updater | X | UR-1 | app `updateOperation.ts` (`LocalPageUpdate`), `config/vite/localUpdatePage.ts`, `scripts/local-update*.mjs` | Spike confirms why `f2eca0bd5` hid it; a dev:local test updates through the page | [ ] |
 | **Phase 1c — Release 10 (about 6.5–7.5 days)** | | | | | |
 | UR-10 Update now works end to end | S | — | agent `astrid/installer/update_job*.py`, new e2e test; contract update helper | Agent test: the Runtime's real request through the real helper, prepare → accept → launch and recovery-needed, with fake `systemctl`/`systemd-run` | [ ] |
 | UR-11 Runtime reports `self_update` and a reason in every state | X | UR-10 | runtime `astrid_runtime/update.py`; agent `update_job.py` availability; contract update status | `self_update` comes from the helper reporting its actions, on every OS; unclassified causes are `needs-repair`, Pinokio and source are `managed-elsewhere` | [ ] |
-| UR-12 Hosted update can target a stand-in release | X | — | agent journey CI (`journey.yml`, `scripts/ci_*journey*.py`); runtime `update.py` only if the fallback seam is chosen, then after UR-11 | A probe on each OS runner chooses CI-level interception, or the owner-approved fallback seam | [ ] |
+| UR-12 Hosted update can target a stand-in release | X | — (UR-11 if the fallback seam is chosen) | agent journey CI (`journey.yml`, `scripts/ci_*journey*.py`); runtime `update.py` only if the fallback seam is chosen, then after UR-11 | A probe on each OS runner chooses CI-level interception, or the owner-approved fallback seam | [ ] |
 | UR-13 Hosted button-path update on every OS | X | UR-10–UR-12 | agent `journey_fresh_update.py`, `windows_update_journey.py`, `ci_journey_keepgoing.py`, `journey.yml` | The update leg of the three direct fresh rows POSTs through the door to a stand-in release | [ ] |
 | UR-14 Publish Release 10 | N | all | app `public/install-manifest.json`, `runtime.lock.json` | Owner names the tuple and says go; `public/install*` frozen; not required; canary passes | [ ] |
 | **Owner** | | | | | |
@@ -36,7 +35,7 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 - **Behaviour today.** A missing field reads as false, so the button disappears for everyone until Release 10.
 - **Fixtures.** About 14 caller tests that assume `available: true` need fixtures.
 
-### UR-2 Real refusal reason
+### UR-1 (continued): real refusal reason
 - Read the POST refusal's `details.reason` (it's ignored today at `updateOperation.ts:134-141`).
 - Stop dropping unknown reasons (`:17-22`).
 - A 409 reconciliation has `kind`, not `reason`.
