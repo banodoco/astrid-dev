@@ -10,6 +10,25 @@
 
 **Approach:** compute a frozen Placement once in `GenerationFacade._generate_on_target`, pass it down, and run through one Target interface with local, attached and RunPod implementations. Packs supply only a Job. This replaces the six decision points rather than patching each. Alternatives not chosen: keep patching each site (leaves two mechanisms and the dry-run drift), and let packs own their pod commands (keeps h3_av ignoring `--target`).
 
+**Scope extension (8 Nov 2026):** after the live merge-run proof stalled, Hannah set the target as one path for every generation: requirements, placement, optional alignment, run and retrieve. Its evidence is the path review on the desk (`merge-run/path-review/`: `VISION.md`, seven audits, and `HOLISTIC.md`). The independent review there found four root causes:
+- placement carries no inventory past the host boundary;
+- requirements are per engine (a 95.8 GB whole lock per pod), not per request;
+- alignment is a hidden precondition with three inventories;
+- the only test of the pod path was a paid live run.
+
+So this plan now also owns the manifest, the PlacementBinding, `align`, per-request model sets, the volume cache, a single submit and retrieve, and modality as data. The short-term unblock moved to [Plan 33](../33-unblock-live-generation/plan.md).
+
+**Glossary and renames** (HOLISTIC.md section 7):
+- `--target` → `--placement`, and `target_policy` → `placement_policy`.
+- Profiles become `embedded` → removed (T5) and `local_server` → `http`; `checkout_server` is deleted.
+- The readiness profile is replaced by the binding.
+- `managed_assets` → `staged_inputs`.
+- `endpoint_checkout` is deleted.
+- `pending_host_readiness` → `pending_bind`.
+- Approval is called the `target check` in Agent text.
+- `auxiliary_model_custody: local|target` → `model_inventory: controller|placement`.
+- Stop using `ComfyTarget(url, "attached")` for the RunPod bridge.
+
 **Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the Target lease semantics is instead the entry gate of task T2 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built.
 
 **Proof and limits:** the invariant test over every default slot x {auto, local, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1), plus a live matrix of six default slots and h3_av on RunPod and locally (T5). Limits: the live proof needs a RunPod budget and an authorized start that are not yet decided. Fixtures cover refusal and release on failure; they do not replace the live runs.
