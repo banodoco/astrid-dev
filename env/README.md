@@ -11,11 +11,20 @@ Setup and test scripts that any Astrid project's worker can run in a **single-re
 
 ## Simplest: let the cloud environment run them
 
-Give the cloud environment workers run in `cloud-setup.sh` as its setup script, once. It runs before Claude starts, so no permission check applies. For each Astrid checkout in the session it builds `<checkout>.env/` and puts the test commands on PATH:
-- `astrid-agent-pytest` and `astrid-agent-pytest-pod`;
+Set the workers' cloud environment's setup script (Settings, Environments, Edit) to this one line, once:
+
+```bash
+git clone -q --depth 1 https://github.com/banodoco/astrid-dev /opt/astrid-dev && bash /opt/astrid-dev/env/cloud-setup.sh; exit 0
+```
+
+It runs before Claude starts, so no permission check applies. It installs three commands:
+- `astrid-agent-pytest`;
+- `astrid-agent-pytest-pod`;
 - `vibecomfy-pytest`.
 
-A worker then runs no setup, and a repository needs no copy of these scripts. It needs only an allow rule for its test command, for example `Bash(astrid-agent-pytest:*)`. Its log is `/var/log/astrid-cloud-setup.log`.
+Each builds `<checkout>.env/` on its first run, from the checkout root, then runs pytest. A slow setup script is stopped (one was stopped at 5 minutes), so the build happens on the first test run, not at start-up.
+
+A worker runs no setup, and repositories need no copies of these scripts. Changes reach every new session through astrid-dev `main`.
 
 ## Copy them into the product repository (when the environment can't run them)
 
