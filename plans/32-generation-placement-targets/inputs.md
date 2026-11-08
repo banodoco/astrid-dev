@@ -39,7 +39,7 @@ So this plan now also owns the manifest, `align`, per-request model sets, the vo
 
 **Challenge:** Not needed — at the scope stage. The independent review of the Placement shape (default/override, `device`) and the lease semantics is instead the entry gate of task T3 (see [tasks.md](tasks.md)), because it must review the design against the source revision being built. The sense check (`merge-run/path-review/PLAN-SENSE-CHECK.md`) and the pack-extension review (`merge-run/path-review/PACK-EXTENSION-PROTOCOL.md`) are applied: one Placement and `run`, and the three extension points.
 
-**Proof and limits:** CPU only (owner, 8 Nov). The evidence is the invariant test over every default slot × {local, attached, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1). It is followed by T5's remote-machine harness on a CPU fake, with a test machine contribution. Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod; the live proof (T7) is a later pass of the GPU-tests plan that follows Plan 33. Fixtures cover refusal and release on failure.
+**Proof and limits:** CPU only (owner, 8 Nov). The evidence is the invariant test over every default slot × {local, attached, runpod}, dry run == live, and no pod unless execution happens on it (from Plan 02, extended in T1). It is followed by T5's remote-machine harness on a CPU fake, with a test machine contribution. Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod; the live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows Plan 33. Fixtures cover refusal and release on failure.
 
 ## Source identities
 
@@ -65,7 +65,7 @@ Line numbers in [tasks.md](tasks.md) are at Agent `5eac07e3f` and must be re-che
 ## Owner decisions
 
 Recorded from the lead's relay of the owner's choices (Hannah, 8 Nov 2026, about 15:40Z):
-1. **CPU only for now.** Every task is provable on CPU, with no paid pods. The live proof (T7) leaves this plan and becomes a later pass of the GPU-tests plan. That plan comes right after Plan 33 completes on CPU, before this plan, because the priority is to get unblocked and running on GPU, then elegance.
+1. **CPU only for now.** Every task is provable on CPU, with no paid pods. The live proof (T7) leaves this plan and becomes a later pass of [Plan 34](../34-real-gpu-proof/plan.md). That plan comes right after Plan 33 completes on CPU, before this plan, because the priority is to get unblocked and running on GPU, then elegance.
 2. **Review rounds: owner-agreed 2, lead recommendation 3.** The row is set to at most 3. The reason for 3 is the run contract's case for a cross-repository contract change: an Agent plus VibeComfy integration, three new extension points, and the deletion of several routes (the bridge, the second `/view` client, `pip_embedded`, `checkout_server`, h3's route). Pending owner agreement of the third round.
 3. **The pack extension protocol is its own plan,** [Plan 17](../17-vibecomfy-extensibility/plan.md). This plan creates only the three points it needs (`generation.engine`, `generation.machine`, `vibecomfy.workflows`) and references Plan 17 for the rest.
 

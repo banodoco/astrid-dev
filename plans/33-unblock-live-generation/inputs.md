@@ -31,7 +31,7 @@ Key facts the tasks rely on (Agent `5eac07e3f`, VibeComfy `e65f4941`):
 
 **Challenge:** Pending — an independent sense check (merge-run desk, `merge-run/path-review/PLAN-SENSE-CHECK.md`) rated this plan good with edits, and those edits are applied: U2 is interim with the receipt rows and a non-circular check; `--align check|trust`; h3_av as one run per job; warm reuse dropped from the first draft and back as U7 with the corrected checks; the corrected storage and `comfy_wrap` facts. The pack-extension review (`merge-run/path-review/PACK-EXTENSION-PROTOCOL.md`) added one rule: no new extension key, engine-index row or backend descriptor. The 8 Nov ambiguity pass (below) changed U3, U4 and U6 from code. Next: the owner accepts the plan or amends it, and answers the decisions listed below.
 
-**Proof and limits:** CPU only (owner, 8 Nov): the CPU pod-path test (U1), extended by every later task, plus the focused nodes each task names. Not proven here: real inference, real model downloads to the storage volume, RunPod capacity, and whether the model cache accepts RunPod's network volume. The real-GPU proof moves to the GPU-tests plan that follows this plan. Each fresh pod still copies its rows from the volume to container disk (U6).
+**Proof and limits:** CPU only (owner, 8 Nov): the CPU pod-path test (U1), extended by every later task, plus the focused nodes each task names. Not proven here: real inference, real model downloads to the storage volume, RunPod capacity, and whether the model cache accepts RunPod's network volume. The real-GPU proof moves to [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan. Each fresh pod still copies its rows from the volume to container disk (U6).
 
 ## Source identities
 
@@ -49,13 +49,13 @@ Start from the merge-run candidates, and re-freeze before work. Only the Agent c
 
 Fetch the WIP with `git fetch <desk>/merge-run/bundles/agent-34-wip-e003778be.bundle refs/heads/m02/agent34-m73`; it touches six files (`generic_host.py`, `runpod/adapter.py`, `vibecomfy/local_server_engine.py` and three test files).
 
-**Consumed by:** [Plan 32](../32-generation-placement-targets/plan.md) starts from this plan's landed Agent head (recorded at U9), after the GPU-tests plan's first pass.
+**Consumed by:** [Plan 32](../32-generation-placement-targets/plan.md) starts from this plan's landed Agent head (recorded at U9), after Plan 34's first pass.
 
 ## Owner decisions
 
 Recorded from the lead's relay of the owner's choices (Hannah, 8 Nov 2026, about 15:40Z), in addition to those in [plan.md](plan.md#owner-decisions-recorded-8-nov-2026):
 
-1. **CPU only for now.** Every task is provable on CPU, with no paid pods. The live proof (former U8) leaves this plan. The real-GPU proof moves to the GPU-tests plan that follows this plan, written after Plan 33 completes on CPU and run before Plan 32, because the priority is to get unblocked and running on GPU, then elegance. U9 depends on the CPU tasks and the review rounds, and still needs the owner's explicit go to promote to main.
+1. **CPU only for now.** Every task is provable on CPU, with no paid pods. The live proof (former U8) leaves this plan. The real-GPU proof moves to [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan, written after Plan 33 completes on CPU and run before Plan 32, because the priority is to get unblocked and running on GPU, then elegance. U9 depends on the CPU tasks and the review rounds, and still needs the owner's explicit go to promote to main.
 2. **Review rounds: at most 2** (owner-agreed). The run contract's guide would give 3 for cross-repository landing work. 2 is accepted here because the change is Agent-only, interim, and replaced by Plan 32, and because the real-GPU proof follows in its own plan. The lead recommends 3 for Plan 32, not for this plan.
 3. **The pack extension protocol is its own plan,** [Plan 17](../17-vibecomfy-extensibility/plan.md). This plan adds no new extension key, engine-index row or backend descriptor.
 

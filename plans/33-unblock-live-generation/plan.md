@@ -4,11 +4,11 @@
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).
 
-**Contributes to closure:** F-008 step 1: on RunPod, a warm machine reused, models on attached storage not re-downloaded, `--align check|trust`, and a missing model failing before submit and naming the machine. Milestone A on CPU: every default slot and h3_av produce results through the real RunPod path against a stand-in. The real-GPU half of Milestone A is the GPU-tests plan that follows this plan.
+**Contributes to closure:** F-008 step 1: on RunPod, a warm machine reused, models on attached storage not re-downloaded, `--align check|trust`, and a missing model failing before submit and naming the machine. Milestone A on CPU: every default slot and h3_av produce results through the real RunPod path against a stand-in. The real-GPU half of Milestone A is [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan.
 
 ## Outcome and scope
 
-Every default generation slot (image, edit, voice, music, sound effects) and h3_av runs through the **one existing path**, on RunPod and locally, so Plans 01, 02 and 06 can land proven end to end on CPU. The owner chose CPU only for this plan (8 Nov); the real-GPU proof is the GPU-tests plan that follows it. That path is: the host places the job, VibeComfy builds the ComfyUI prompt, and the prompt is posted to that place's ComfyUI. The outputs come back over `/view`.
+Every default generation slot (image, edit, voice, music, sound effects) and h3_av runs through the **one existing path**, on RunPod and locally, so Plans 01, 02 and 06 can land proven end to end on CPU. The owner chose CPU only for this plan (8 Nov); the real-GPU proof is [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows it. That path is: the host places the job, VibeComfy builds the ComfyUI prompt, and the prompt is posted to that place's ComfyUI. The outputs come back over `/view`.
 
 This is the short-term fix. It adds no new architecture. It finishes the missing wire that broke voice and removes preconditions that block workflows for no product reason. The structural redesign (one requirements manifest, one alignment step, one binding) is [Plan 32](../32-generation-placement-targets/plan.md).
 
@@ -61,7 +61,7 @@ Later the same day the owner chose CPU only, at most 2 review rounds, and [Plan 
 4. U7 (pod reuse), after U2 and U6.
 5. The review rounds, then U9: land, on the owner's go.
 
-The live proof is deferred to the GPU-tests plan that follows this plan.
+The live proof is deferred to [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan.
 
 The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime `b983b04`, VibeComfy `e65f4941`, lifecycle `f2948817`, poms `2379ab5`) and the WIP commit `e003778be`; see [inputs.md](inputs.md#source-identities). Every task runs on CPU. See [tasks.md](tasks.md).
 
@@ -73,7 +73,7 @@ The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime 
   - `--align check|trust`, which Plan 32 keeps;
   - the interim inventory wire, which Plan 32 T5 deletes.
 - The landing of Plans 01, 02 and 06 records this plan's CPU evidence.
-- The GPU-tests plan that follows this plan consumes the landed head for the real-GPU proof.
+- [Plan 34](../34-real-gpu-proof/plan.md), which follows this plan, consumes the landed head for the real-GPU proof.
 
 ## Completion
 
@@ -85,5 +85,5 @@ All evidence is on CPU (owner, 8 Nov).
   - an entry no engine lock covers is refused before any pod is claimed;
   - `--align check` on an attached server without the files fails with a fix;
   - a tampered cache row fails its sha256.
-- **Not proven by this plan:** real inference, real model downloads to the volume, RunPod capacity, and whether the cache accepts RunPod's network volume. These move to the GPU-tests plan that follows this plan.
+- **Not proven by this plan:** real inference, real model downloads to the volume, RunPod capacity, and whether the cache accepts RunPod's network volume. These move to [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows this plan.
 - **Limits:** the first fill of the volume downloads the full 95.8 GB engine (about 36 minutes), and each fresh pod copies its rows from the volume. Per-request model sets and a pod that is a generic machine come in Plan 32. Local H3 video needs a source video or reference images, because no plain text-to-video H3 model is in the lock (the cloud `minimax-h3` entry is not used: everything runs on our own compute). The `_refs` H3 variant is not covered until Plan 32 T2. No new providers.

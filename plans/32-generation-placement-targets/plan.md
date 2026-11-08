@@ -4,7 +4,7 @@
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
-**Contributes to closure:** F-008 step 2: the same request through the same path on a local GPU, a user's ComfyUI and RunPod; a default placement overridden per generation; align, check and trust the same everywhere; one placement site, one submit and one retrieve with no per-modality branch; h3_av as a VibeComfy plugin; lease release with no orphan; and a test provider showing a further machine kind fits the contract. Milestone B on CPU; its live half is a later pass of the GPU-tests plan.
+**Contributes to closure:** F-008 step 2: the same request through the same path on a local GPU, a user's ComfyUI and RunPod; a default placement overridden per generation; align, check and trust the same everywhere; one placement site, one submit and one retrieve with no per-modality branch; h3_av as a VibeComfy plugin; lease release with no orphan; and a test provider showing a further machine kind fits the contract. Milestone B on CPU; its live half is a later pass of [Plan 34](../34-real-gpu-proof/plan.md).
 
 ## Outcome and scope
 
@@ -85,7 +85,7 @@ The full rename list is in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-Plan 33 lands first, then the first pass of the GPU-tests plan that follows it (owner, 8 Nov). Plan 33's CPU pod-path test is the characterization. Then:
+Plan 33 lands first, then the first pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows it (owner, 8 Nov). Plan 33's CPU pod-path test is the characterization. Then:
 
 1. T1: characterize every capability.
 2. T2: the manifest and the engine point; T2b: one base engine (owner decision D1 on Plan 06 PK-15B).
@@ -95,7 +95,7 @@ Plan 33 lands first, then the first pass of the GPU-tests plan that follows it (
 6. T6: one `generate`, with h3_av as one workflow contribution.
 7. The review rounds, then T8: completion.
 
-All of it is CPU only. The live proof (T7) is a later pass of the GPU-tests plan. T2 and T3 can run in parallel. T4 needs both, and T5 needs T4. Each task deletes what it replaces in the same change, so no task leaves two ways of doing one thing. See [tasks.md](tasks.md).
+All of it is CPU only. The live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md). T2 and T3 can run in parallel. T4 needs both, and T5 needs T4. Each task deletes what it replaces in the same change, so no task leaves two ways of doing one thing. See [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
@@ -112,6 +112,6 @@ All of it is CPU only. The live proof (T7) is a later pass of the GPU-tests plan
 - No orphaned machine exists, and warm machines are reused within their lease.
 - A test machine contribution runs a job through the same `generation.machine` contract.
 - `grep -ri h3 astrid/core astrid/sdk` returns nothing (about 156 lines today).
-- All of the above is CPU evidence (owner, 8 Nov). Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod. The live proof (T7) is a later pass of the GPU-tests plan that follows Plan 33.
+- All of the above is CPU evidence (owner, 8 Nov). Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod. The live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows Plan 33.
 
 The proof does not cover new providers, Wan2GP or the `generic_host` split. [F-003](../../vision/gaps/F-003-creative-execution.md) does not close automatically.
