@@ -12,7 +12,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astri
 - **Owner:** the person who chooses a project's outcome and makes its decisions.
 - **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md), advise path). An orchestrator may also plan a project itself before farming it out.
 - **Route:** N, X or S; the [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy.
-- **Scope** (of a task): the paths, and any shared surface or contract, it may change; a path includes its own tests, wherever they live.
+- **Scope** (of a task): the paths, and any shared surface or contract, it may change; a path includes its own tests, wherever they live. Name the functions or classes too (`path:symbol`) when the task changes only part of a file.
 
 ## The answer
 
@@ -49,7 +49,8 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 In the [tasks template](../../templates/project/tasks.md), every task has a scope and:
 
 - **A route:** N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration).
-- **Dependencies,** including one between tasks with overlapping scopes, also across other active projects. If a shared surface needs one model first, consult the advisor.
+- **Dependencies,** only where one task needs another's result, or both change the same function, class or contract. Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. The same applies across other active projects. If a shared surface needs one model first, consult the advisor.
+- **The critical path:** state it in `tasks.md`, and keep it as short as the work allows. Chain tasks only where the rule above requires it.
 - **Before implementation:** its actual base and donor revisions, exact focused checks and authority.
 - **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
   - other repositories come from public git at pinned commits;

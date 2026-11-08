@@ -85,7 +85,7 @@ The full rename list is in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-Plan 33 lands first, then the first pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows it (owner, 8 Nov). Plan 33's CPU pod-path test is the characterization. Then:
+Plan 32 runs alongside Plan 33 and does not wait for any GPU proof (owner, 8 Nov). Plan 34 runs once, after this plan. Plan 33's CPU pod-path test is the characterization. Then:
 
 1. T1: characterize every capability.
 2. T2: the manifest and the engine point.

@@ -41,6 +41,16 @@ Apply change-directed invalidation: a changed input invalidates only proof that 
 
 After scoped checks and prescribed review pass, promote the **same reviewed head** to the explicitly authorized target using an ordinary push. Never force-push or substitute a different candidate. Movement of a target ref invalidates only affected proof; re-evaluate its dependencies and retain unaffected evidence. A failed check or unresolved review blocker means no promotion.
 
+A publish never turns a passing check red. On each promotion PR into a product `main`, compare its checks by name with that `main`: any check that passes on `main` and fails on the PR blocks the publish. Report each `main`'s red checks by name; they are not this publish's work.
+
+**Publishing an installer release** (Runtime, Agent and App to `main`):
+0. **Cover real install states.** Before publishing, list the install states real users are in (diagnostics received, past releases, migrations they went through) and have CI cover each one from that real starting state. A proof row is named after its literal starting state. After publishing, the owner checks the release through the normal App path on a real long-lived install, with no custom commands. Plan 29 is not done until that check passes.
+1. **Owner's go, in this session.** As soon as the candidate qualifies, ask the owner for the go here, naming the exact SHAs. A go recorded elsewhere, in a plan's `inputs.md` or another session, does not satisfy this session's permission check. If a merge is refused as a production action, stop and ask the owner; don't retry another way.
+2. **Merge in order:** Agent, then Runtime, then App, whose manifest names the other two. Use merge PRs or fast-forwards of the exact reviewed SHAs.
+3. **Wait for the deploy.** The App merge starts a production deployment. The served-manifest canary runs only when that deployment succeeds, so a canary run before then shows as skipped. Wait for both, then confirm `https://astrid.haus/install-manifest.json` serves the release and the exact SHAs.
+4. **Bring integration branches up to `main`.** Fast-forward each `int/<project>` to its `main` with `git push`, never forced. Cloud sessions can't write refs through the GitHub API.
+5. **Close the project** through [Manage](../astrid-dev-manage/SKILL.md)'s completion PR.
+
 For product artifact preparation, follow the current product runbooks rather than copying their procedures here:
 
 - **Agent:** [reproducible release](https://github.com/banodoco/astrid-agent/blob/main/docs/runbooks/reproducible-release.md) and [release recipe](https://github.com/banodoco/astrid-agent/blob/main/docs/setup/release-recipe.md) own locks, toolchain, installed artifact, and paired-release receipts.
