@@ -84,9 +84,10 @@ Owner decisions are recorded in [inputs.md](inputs.md#decisions-recorded-7-nov-2
 Before publishing, up to three independent review rounds turn findings into routed tasks and complete them ([UR-R](tasks.md#ur-r-review-rounds)).
 
 On the published release 10 tuple:
-- a hosted row on every OS, Linux included without the systemd floor, updates from the installed candidate to a stand-in 11 through the in-app request, for a normal install, a fully local install and Pinokio;
+- a hosted row on every OS updates a normal install from the installed candidate to a stand-in 11 through the in-app request, and one of them through a real browser click in the candidate's hosted App (decision 13);
+- an installed Release 9 reaches the candidate through the install command (decision 13);
 - the decision table test passes for every install type × situation;
-- `release-guard` is required on App `main`;
+- `release-guard` checks the Release 10 PR to App `main` (making it a required check is the owner's, later; decision 14);
 - an App-only merge leaves `release` unchanged, and a re-pin without a bump is refused.
 
 **Negative cases:**
