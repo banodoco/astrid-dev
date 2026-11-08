@@ -19,16 +19,12 @@ Routes: `N` is the default, `X` very hard, `S` super hard ([run contract](../../
 
 **Base and line.** One Agent candidate branch from `5eac07e3f` (record its name). The merge order is U1, U2, U3, U4, U6, U5, U7. Each task starts from the head the previous task left on that branch, and records its own head SHA. U5 and U7 both start from the U6 head; their scopes are disjoint, so U5 lands first and U7 rebases onto it. VibeComfy `e65f4941`, Runtime `b983b04` and lifecycle `f2948817` do not change.
 
-**Check commands.** Set `ENV=<astrid-dev checkout>/plans/02-consistent-generation/env` and run `bash "$ENV/agent-setup.sh"` once from the Agent checkout root ([env README](../02-consistent-generation/env/README.md)). Then:
-- `PYT <selectors>` means `bash "$ENV/agent-pytest.sh" -q <selectors>`.
+**Check commands.** These use astrid-dev's shared worker environment ([env/README.md](../../env/README.md)). Clone astrid-dev read-only to `/home/user/astrid-dev` and call every script by its literal path from the Agent checkout root; allow rules match the literal command. Run `bash /home/user/astrid-dev/env/agent-setup.sh` once. Then:
+- `PYT <selectors>` means `bash /home/user/astrid-dev/env/agent-pytest.sh -q <selectors>`.
 - The Agent's `pyproject.toml` addopts deselect `integration` tests, so pass `-m integration` for any selector in an integration-marked file: `PYT -m integration <selectors>`. A later `-m` overrides the addopts one.
-- `PYT_POD <selectors>` is for the pod-path harness. `agent-pytest.sh` wipes the environment, and `tuple_sources` (`tests/integrations/test_runpod_host_endpoint_r5.py:33`) needs three more variables. Its source gate (`remote_placement.py:177-190`) needs clean checkouts at the pinned Runtime and VibeComfy commits, which setup already fetched.
+- `PYT_POD <selectors>` means `bash /home/user/astrid-dev/env/agent-pytest-pod.sh <selectors>`, for the pod-path harness. It sets the extra variables `tuple_sources` (`tests/integrations/test_runpod_host_endpoint_r5.py:33`) needs. Its source gate (`remote_placement.py:177-190`) needs clean checkouts at the pinned Runtime and VibeComfy commits, which setup already fetched.
 
-Create the lifecycle checkout once, from a local runpod-lifecycle clone: `git -C <runpod-lifecycle> worktree add --detach "$(pwd -P).env/lifecycle" f2948817eeb94af8dee76be21f6d673724f1606e`. Then `PYT_POD` is:
-
-```text
-E="$(pwd -P).env"; env -i PATH="$E/venv/bin:$(cat "$E/uv-dir"):/usr/local/bin:/usr/bin:/bin" HOME="$E/home" TMPDIR="$E/tmp" XDG_CACHE_HOME="$E/cache" LANG=C.UTF-8 PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONSAFEPATH=1 PYTHONPATH="$E/vibecomfy" VIBECOMFY_SOURCE="$E/vibecomfy" ASTRID_RUNTIME_CHECKOUT="$E/runtime" ASTRID_VIBECOMFY_CHECKOUT="$E/vibecomfy" ASTRID_TEST_LIFECYCLE_CHECKOUT="$E/lifecycle" "$E/venv/bin/python" -m pytest -q -p no:cacheprovider --basetemp="$E/basetemp/$(date +%s%N)" -m integration <selectors>
-```
+Create the lifecycle checkout once: `git clone -q https://github.com/banodoco/runpod-lifecycle /home/user/runpod-lifecycle`, then `git -C /home/user/runpod-lifecycle fetch -q --depth 1 origin f2948817eeb94af8dee76be21f6d673724f1606e`, then `git -C /home/user/runpod-lifecycle worktree add --detach "$(pwd -P).env/lifecycle" f2948817eeb94af8dee76be21f6d673724f1606e`.
 
 CI's integration lane (`.github/workflows/lanes.yml:190`, `-m integration`) sets no `ASTRID_TEST_LIFECYCLE_CHECKOUT`. The new harness therefore errors there, as `test_runpod_cpu_path.py` already does, until a lane sets the variable.
 
