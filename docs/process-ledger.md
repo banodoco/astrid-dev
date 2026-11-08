@@ -1,14 +1,6 @@
-# Process ledger
+# Process ledger (archive)
 
-Friction, ideas and fixes in astrid-dev itself: its skills, templates, checks and workflow. Product bugs go to their repository's issues instead.
-
-**Add-only.** Add new rows at the end; never edit or delete a row. To resolve one, add a `fix` row that names it, and to retract one, add a row saying so. Any planner, manager, advisor or contributor may add a row.
-
-Kinds:
-- **papercut:** small friction;
-- **issue:** something that went wrong or will;
-- **idea:** a possible improvement;
-- **fix:** resolves an earlier row.
+Rows 1–51 below are the frozen archive and are no longer added to. New entries go in [`docs/ledger/`](ledger/README.md), one file each.
 
 | # | Date | Kind | What | Evidence | Link |
 |---|---|---|---|---|---|
