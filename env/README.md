@@ -9,7 +9,15 @@ Setup and test scripts that any Astrid project's worker can run in a **single-re
 - **Public repositories and PyPI only.** Nothing private, no credentials, no cloud resources.
 - **Exit 3 means an environment problem,** never a test result.
 
-## Copy them into the product repository
+## Simplest: let the cloud environment run them
+
+Give the cloud environment workers run in `cloud-setup.sh` as its setup script, once. It runs before Claude starts, so no permission check applies. For each Astrid checkout in the session it builds `<checkout>.env/` and puts the test commands on PATH:
+- `astrid-agent-pytest` and `astrid-agent-pytest-pod`;
+- `vibecomfy-pytest`.
+
+A worker then runs no setup, and a repository needs no copy of these scripts. It needs only an allow rule for its test command, for example `Bash(astrid-agent-pytest:*)`. Its log is `/var/log/astrid-cloud-setup.log`.
+
+## Copy them into the product repository (when the environment can't run them)
 
 A single-repo cloud worker in auto mode refuses scripts cloned from another repository, even with an allow rule. Each product repository therefore carries its own copy under `scripts/worker-env/` (astrid-agent first, on Plan 33's integration branch), and workers call those copies. This folder is the canonical source; keep the copies in step.
 
