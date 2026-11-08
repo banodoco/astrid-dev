@@ -58,6 +58,24 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 **Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap skill](../skills/astrid-dev-gap/SKILL.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
 
+## Review the strategy
+
+[`strategy.md`](../strategy.md) is one page saying which gaps we're closing now, next and later, and why. Gaps say what success is and how each one closes. The catalog says the order, status and owner of each project. The strategy connects the two and restates neither.
+
+**It has four parts.** CI checks this structure (`scripts/check_docs.py`), not the strategy's merit:
+- **Focus now:** the one or two gaps that matter most, each with its reason.
+- **Sequence:** a table with columns `Order`, `When` (`Now`, `Next` or `Later`), `Gap`, `Plans`, `What creators get` and `Waiting on`. Every row links a gap file. Its Plans cell links each plan, or says `(proposed)` for work that has no plan yet. Put no statuses, estimates or tasks in it.
+- **Not now:** what is deliberately deferred and why, so it isn't re-argued.
+- **Decisions:** the owner's dated decisions that set the order, and a `**Last reviewed:**` date.
+
+**When it changes:**
+- **Starting a project:** the plan names its row, and the scope PR adds the row or updates it.
+- **Finishing a project:** the completion PR must update it. `scripts/check_completion.py` refuses a PR that moves a plan to `done` and leaves `strategy.md` untouched.
+- **Changing a gap's route,** when that moves its place in the sequence.
+- **An owner decision about priority:** record it under Decisions with its date. Changing the focus or the order is the owner's decision; anyone else proposes it.
+
+Keep it to one page, and if it and the catalog disagree, fix whichever is wrong in the same PR. The agent workflow is in [the gap skill](../skills/astrid-dev-gap/SKILL.md#revisit-the-strategy).
+
 ## Claim a project without waiting for a maintainer
 
 1. Find an existing `queued`, `Unassigned` [catalog project](../plans/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.

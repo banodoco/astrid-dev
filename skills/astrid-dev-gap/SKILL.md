@@ -1,6 +1,6 @@
 ---
 name: astrid-dev-gap
-description: Define, reassess and route Astrid vision gaps; write the closure approach and the route of plans that closes a gap, and keep both honest as plans land.
+description: Define, reassess and route Astrid vision gaps; write the closure approach and the route of plans that closes a gap, keep both honest as plans land, and revisit strategy.md, the order across gaps, when that changes.
 ---
 
 # Work on an Astrid vision gap
@@ -35,9 +35,19 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Use [Plan](../astrid-dev-pla
 5. **Reassess as plans land.** When a plan completes, update the gap's assessment and current state with real evidence, and adjust the route. Completing a plan never closes a gap automatically. Close the gap only when its closure evidence is observed.
 6. **Keep the strategy in step.** When a gap's route or assessment changes its place in the sequence, update its row in [`strategy.md`](../../strategy.md) in the same PR.
 
+## Revisit the strategy
+
+[`strategy.md`](../../strategy.md) orders the gaps. Revisit it whenever a gap's route, a plan's start or a plan's completion changes what comes now, next or later:
+1. **Read it first.** Check that the catalog and each gap's route still agree with it.
+2. **Update the row.** One row per stream of work gives the order, `Now`, `Next` or `Later`, the gap link, the plan links or `(proposed)`, what creators get, and what it's waiting on.
+3. **Move rows only on evidence or an owner decision.** A finished plan moves its row. A change of focus or order is the owner's; propose it with a recommendation, and record the decision with its date under Decisions.
+4. **Keep it one page.** Link the gap routes and plans rather than restating them, and update **Last reviewed**.
+5. **Check it.** `python3 scripts/check_docs.py` checks its structure, and a completion PR must touch it.
+
 ## Done when
 
 - The gap reads well to an agent who has seen none of its plans.
 - Every closure-evidence item has a route row, either a plan or `unplanned`.
 - Every routed plan points back with `Vision gaps` and `Contributes to closure`.
+- `strategy.md` still matches the route and the catalog.
 - `python3 scripts/check_docs.py` passes.

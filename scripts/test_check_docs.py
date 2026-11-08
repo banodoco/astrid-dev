@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_docs import (DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
+from check_docs import (ROOT, strategy_errors, DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
                         route_issues, unnamed_active_owners)
 
 
@@ -75,6 +75,35 @@ class RouteToClosureTests(unittest.TestCase):
         issues = route_issues('g.md', 'F-009', text, {})
         self.assertTrue(any('missing plan' in i for i in issues))
         self.assertTrue(any("'active'" in i for i in issues))
+
+
+class StrategyTests(unittest.TestCase):
+    GOOD = (
+        "# Strategy\n\n**Last reviewed:** 2026-11-08, by the owner.\n\n## Focus now\n\nF-001.\n\n## Sequence\n\n"
+        "| Order | When | Gap | Plans | What creators get | Waiting on |\n|---|---|---|---|---|---|\n"
+        "| 1 | Now | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 29](plans/29-update-and-release/plan.md) | Update now | owner go |\n"
+        "| 2 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | Green mains (proposed) | Green checks | Plan 31 |\n"
+        "\n## Not now\n\n- Other gaps.\n\n## Decisions\n\n- 2026-11-08: Release 10 first.\n")
+
+    def test_valid_strategy_passes(self):
+        self.assertEqual(strategy_errors(self.GOOD), [])
+
+    def test_real_strategy_passes(self):
+        self.assertEqual(strategy_errors((ROOT / 'strategy.md').read_text(encoding='utf-8')), [])
+
+    def test_row_without_gap_link_fails(self):
+        bad = self.GOOD.replace('[F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 29]', 'F-001 | [Plan 29]')
+        self.assertTrue(any('Gap must link' in e for e in strategy_errors(bad)))
+
+    def test_row_without_plan_or_proposed_fails(self):
+        bad = self.GOOD.replace('Green mains (proposed)', 'Green mains')
+        self.assertTrue(any('Plans must link' in e for e in strategy_errors(bad)))
+
+    def test_bad_when_and_missing_section_fail(self):
+        bad = self.GOOD.replace('| 1 | Now |', '| 1 | Soon |').replace('## Not now', '## Later stuff')
+        errors = strategy_errors(bad)
+        self.assertTrue(any('When must be' in e for e in errors))
+        self.assertTrue(any('## Not now' in e for e in errors))
 
 
 if __name__ == '__main__':
