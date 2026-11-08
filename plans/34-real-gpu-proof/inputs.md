@@ -12,7 +12,9 @@
 
 **Approach:** run VibeComfy smoke on the pod first, then the Astrid route, and route failures rather than patching them. This keeps hardware problems separate from routing problems.
 
-**Challenge:** Not needed — a proof-only plan with no code changes; failures go to the owning plans.
+**Challenge:** Not needed. Fixes run as repair tasks on Plan 32's line.
+
+**Owner decision (Hannah, 8 Nov, later):** "live GPU validation on RunPod once this is done, $25 budget, and fix every issue you find". It runs once, after Plan 32, with $25 approved. Every failure is fixed and re-run, not only recorded.
 
 **Proof and limits:** recorded outputs per slot with exact revisions, a pod census, and volume reuse. Limits: one region, the available GPU types, and no performance claims.
 

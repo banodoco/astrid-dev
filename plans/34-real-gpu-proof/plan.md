@@ -16,7 +16,8 @@ The CPU-proven generation path from [Plan 32](../32-generation-placement-targets
   3. **A pod census** before and after every run.
   4. **Local-managed voice on a real GPU.** Run voice through Astrid's managed local install, with the real weights present. Plan 33's CPU harness can't run this case, because VibeComfy verifies each model's sha256 (the `gpu`-marked `test_runpod_slot_path_cpu.py::test_local_managed_voice`). Run it where a local GPU exists; otherwise run it on the pod as a local placement.
   5. **Locally too,** where hardware exists: the same matrix on Plan 32's one path.
-- **Not included:** code changes. A failure that is "the controller and the pod disagree" is recorded and goes to Plan 32 rather than being patched here.
+- **Fixes are included** (owner, 8 Nov: "fix every issue you find"). Each real-hardware failure is reproduced on CPU where possible, fixed as a repair task on Plan 32's integration line (route X or S), then re-run live. The run stops only when every slot passes or the budget is spent.
+- **Budget:** $25 of RunPod spend for the whole plan (owner, 8 Nov). A pod census runs before and after every run, and spend is recorded per run.
 
 ## Existing work and decision
 
@@ -24,7 +25,7 @@ Built from the live attempts of 7–8 Nov 2026 and the path review on the merge-
 
 ## Sequence and readiness
 
-Starts after Plan 32's CPU tasks and review pass, on the owner's go and a RunPod budget. See [tasks.md](tasks.md).
+Starts as soon as Plan 32's CPU tasks and review pass, with the $25 budget already approved (owner, 8 Nov). Check the account balance first. See [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
