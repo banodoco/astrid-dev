@@ -1,6 +1,6 @@
-# F-008 — Generation isn't yet one portable path across machines and inference engines
+# F-008 — Generation isn't yet one portable, extensible path across machines and inference engines
 
-**Applies to:** [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (primary) · [Local-first, cloud-capable](../principles/local-first-cloud-capable.md) (supporting) · [Open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open; path review and live RunPod attempts (2026-11-08).
+**Applies to:** [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (primary) · [Local-first, cloud-capable](../principles/local-first-cloud-capable.md) (supporting) · [Open by design](../principles/open-by-design.md) (supporting) · [Agent-Powered Liquid Software](../pillars/liquid-software.md) (supporting) · **Assessment:** Open; path review and live RunPod attempts (2026-11-08).
 
 ## Desired state
 
@@ -11,7 +11,12 @@ Any generation, in any modality (image, edit, video, voice, music, sound effects
 4. Run it on the chosen inference engine. ComfyUI through VibeComfy comes first; others such as Wan2GP follow.
 5. Get the result back.
 
-A rented machine behaves like any other machine: it runs the same path. It can be reused while warm, and it keeps models on attached storage so they are downloaded once. Adding a new kind of machine or a new inference engine reuses the same path rather than adding per-modality or per-pack routes.
+A rented machine behaves like any other machine: it runs the same path. It can be reused while warm, and it keeps models on attached storage so they are downloaded once. **Every level is a replaceable piece**, extended through a declared contract rather than a core change:
+- **workflows:** a VibeComfy plugin adds templates such as h3_av;
+- **engines:** ComfyUI, Wan2GP;
+- **machines and providers:** local GPU, a user's server, RunPod, another rented-GPU provider.
+
+Adding one reuses the rest of the path rather than adding per-modality or per-pack routes.
 
 ## Current state
 
@@ -31,7 +36,7 @@ The evidence is the merge-run path review in `banodoco/astrid-overnight-2026-11-
 
 ## Gap
 
-There is no single, engine-neutral generation path whose placement is decided once. Creators can't freely choose and change where a generation runs, or which inference engine runs it, and get the same behaviour, setup and result every time. Distinct from [F-003](F-003-creative-execution.md), which is about one creative job being dependable end to end on a stated setup, and from [F-005](F-005-local-files-cloud-assist.md), which is about the local-data and cloud-execution product boundary.
+There is no single, engine-neutral generation path whose placement is decided once, and its levels (workflows, engines, machines) can't yet be extended independently. Creators can't freely choose and change where a generation runs, or which inference engine runs it, and get the same behaviour, setup and result every time. Distinct from [F-003](F-003-creative-execution.md), which is about one creative job being dependable end to end on a stated setup, and from [F-005](F-005-local-files-cloud-assist.md), which is about the local-data and cloud-execution product boundary.
 
 ## Closure evidence
 
@@ -47,7 +52,10 @@ There is no single, engine-neutral generation path whose placement is decided on
 - Models already on attached storage are not downloaded again.
 - Align, check and trust behave the same everywhere.
 
-**A second engine fits the same path.** A second inference engine (Wan2GP) runs a generation through the same placement, lease and machine route, adding only its own setup and run step.
+**Each level extends independently.**
+- A second inference engine (Wan2GP) runs a generation through the same placement, lease and machine route, adding only its own setup and run step.
+- A workflow added as a VibeComfy plugin (h3_av) runs with no plugin-specific code in Astrid's core.
+- A further kind of machine or provider can be added behind the same placement and lease contract, shown at least with a test provider, without changing the path.
 
 **One path in the code.** Source inspection shows one placement decision site, one submit and one retrieve, and no per-modality branch on the path.
 
@@ -61,4 +69,4 @@ The rectifying sequence:
 3. [Plan 12](../../plans/12-multiple-inference-routes/plan.md): Wan2GP on the same path.
 4. [Plan 17](../../plans/17-vibecomfy-extensibility/plan.md): the plugin contract.
 
-[Plan 25](../../plans/25-cloud-assist-v1/plan.md) reuses the result. Reassess from tested revisions and live runs; a plan alone does not close this gap.
+[Plan 25](../../plans/25-cloud-assist-v1/plan.md) reuses the result. Astrid-wide composability beyond generation (UI, timeline, packs) is [LS-003](LS-003-full-stack-contributions.md) and [LS-004](LS-004-cross-modal-foundations.md). Reassess from tested revisions and live runs; a plan alone does not close this gap.
