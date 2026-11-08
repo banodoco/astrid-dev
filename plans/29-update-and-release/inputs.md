@@ -67,6 +67,7 @@ From the owner, 7 Nov 2026 (session chat):
 8. **Required is its own decision:** a required update is set per release with a reason, never implied by kind. Kind changes no behaviour for now (owner, 8 Nov 2026).
 9. **Source and history:** the log starts at a legacy Release 9 = 0.0.9 (owner, 8 Nov 2026). Superseded the same day: releases are defined and published from astrid-dev, and the App keeps one generated copy. That work moved to [Plan 31](../31-releases-from-astrid-dev/plan.md), with UR-8b–UR-8d, to start after this plan.
 10. **Reviews start early:** review round 1 starts while UR-13 is still finishing, on everything already integrated, and is told what's already known so it doesn't re-report it. Round 2 covers the full integrated candidate, including UR-13 (owner, 8 Nov 2026).
+11. **Round 1 non-blocking findings run now:** UR-R1.3 to UR-R1.7 run as tasks before round 2, each with a focused test that fails before and passes after: busy shows Update now disabled with no command; a fully local source refusal shows its line; needs-repair shows the plain install line, not `--update`; `pin.mjs --require` floors to the release being published; a later push to `main` never cancels the release guard for an earlier one (Hannah, 8 Nov 2026, via the advisor).
 
 ## Source identities
 
