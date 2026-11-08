@@ -174,3 +174,14 @@ This plan sets its own review policy, as the [run contract](../../skills/astrid-
 3. **Run the next round** on the new candidate.
 
 The stage stops after a round with no blocking findings, or after three rounds. A blocking finding still open after three rounds goes to the owner, not to a fourth round. Non-blocking findings are recorded, and are done only if the owner asks.
+
+## Resume note (manager state, for compaction)
+
+- **Advisor session:** session_011EzfVzreGCJJQnTuXpbib9 (M-INT).
+- **run.yaml:** /root/astrid-dev/plans/29-update-and-release/.otto/runs/plan29-2026-11-08/run.yaml (gitignored), with state.md beside it.
+- **Next steps, in order:**
+  1. Merge Runtime #37 (head 1150fef6) once its checks finish with nothing new against base. The only new-looking failure is the flaky windows-realm-publication, recorded above as a pre-existing product issue.
+  2. Compose the release candidate per decision 14: Runtime int head; Agent int plus the runtime-lock pin; App manifest at release 10, not required; public/install* frozen. Freeze SHAs, manifest sha256 and bootstrap hashes in run.yaml.
+  3. Run the three fresh rows, UR-13m and UR-13n on the candidate (one `row=direct` dispatch covers all five direct rows). Review round 2 runs in parallel on the same SHAs.
+  4. Publish per decision 15 only if every proof passes and round 2 has no blocking finding: promote the same reviewed SHAs to main in Agent, Runtime and App by fast-forward or merge PR, never force; the App release-10 PR goes through release-guard; verify with the served-manifest canary.
+- **Open items outside Release 10:** the Windows discovery.json race (a Runtime bug issue, not yet opened, because the classifier refused it); UR-13p and UR-13q App gaps are merged; Plan 31, Green mains, Plan 30 and catalog clean-up all wait for Hannah's explicit go.
