@@ -8,14 +8,14 @@
 
 ## Outcome and scope
 
-The CPU-proven generation path from [Plan 33](../33-unblock-live-generation/plan.md) produces real outputs on real GPUs. The proof is image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s), each sent to the owner. Plans 33 and 32 are CPU only, so this plan proves what CPU cannot: real inference, real model downloads, real custom-node installs, and RunPod capacity.
+The CPU-proven generation path from [Plan 32](../32-generation-placement-targets/plan.md) produces real outputs on real GPUs. **Owner, 8 Nov:** the first pass, on Plan 33's route, is dropped, because Plan 32 replaces how a RunPod job runs. This plan now runs once, after Plan 32. The proof is image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s), each sent to the owner. Plans 33 and 32 are CPU only, so this plan proves what CPU cannot: real inference, real model downloads, real custom-node installs, and RunPod capacity.
 
 - **Included:**
   1. **VibeComfy smoke on one pod.** Run each slot's workflow directly with VibeComfy's own commands, with no Astrid routing. This separates "this model or node fails on a GPU" from "our routing is wrong", and fills the storage volume once.
-  2. **The Astrid route.** Run `astrid generate --target runpod` for every slot on the Plan 33 landing candidate, using the volume cache and warm reuse.
+  2. **The Astrid route.** Run every slot on Plan 32's one path on RunPod, using the volume cache and warm reuse.
   3. **A pod census** before and after every run.
-  4. **Local-managed voice on a real GPU.** Run voice through Astrid's managed local install, with the real weights present. Plan 33's CPU harness can't run this case, because VibeComfy verifies each model's sha256 (strict xfail in `test_runpod_slot_path_cpu.py::test_local_managed_voice`). Run it where a local GPU exists; otherwise run it on the pod as a local placement.
-  5. **A later pass, after [Plan 32](../32-generation-placement-targets/plan.md):** the same matrix on its one path, locally where hardware exists and on RunPod.
+  4. **Local-managed voice on a real GPU.** Run voice through Astrid's managed local install, with the real weights present. Plan 33's CPU harness can't run this case, because VibeComfy verifies each model's sha256 (the `gpu`-marked `test_runpod_slot_path_cpu.py::test_local_managed_voice`). Run it where a local GPU exists; otherwise run it on the pod as a local placement.
+  5. **Locally too,** where hardware exists: the same matrix on Plan 32's one path.
 - **Not included:** code changes. A failure that is "the controller and the pod disagree" is recorded and goes to Plan 32 rather than being patched here.
 
 ## Existing work and decision
@@ -24,17 +24,17 @@ Built from the live attempts of 7–8 Nov 2026 and the path review on the merge-
 
 ## Sequence and readiness
 
-Starts after Plan 33's CPU tasks and review pass, on the owner's go and a RunPod budget. The second pass follows Plan 32. See [tasks.md](tasks.md).
+Starts after Plan 32's CPU tasks and review pass, on the owner's go and a RunPod budget. See [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
-- **Consumes:** Plan 33's landing candidate, and later Plan 32's.
+- **Consumes:** Plan 32's landing candidate.
 - **Produces:** recorded outputs and run records with exact revisions, plus a list of real-hardware failures, each routed to its owning plan.
 
 ## Completion
 
 - Every slot and h3_av has a real output recorded against the tested revisions.
-- Local-managed voice has a real output, and Plan 33's strict xfail on it is removed or explained.
+- Local-managed voice has a real output, and Plan 33's `gpu`-marked case passes on it.
 - The 95.8 GB is downloaded at most once, a second job reuses a warm pod, and the census ends empty.
 - Every failure is recorded with its owning plan.
 - **Limits:** one region and the GPU types available there; this is not a performance qualification.
