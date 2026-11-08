@@ -25,7 +25,7 @@ Routes: `N` is the default, `X` very hard, `S` super hard ([run contract](../../
 - `PYT_POD <selectors>` means `bash scripts/worker-env/agent-pytest-pod.sh <selectors>`, for the pod-path harness. It sets the extra variables `tuple_sources` (`tests/integrations/test_runpod_host_endpoint_r5.py:33`) needs.
 - Before a run's first task, `bash scripts/worker-env/smoke.sh agent tests/core/generation/test_runpod_engine_selection.py` checks the environment.
 
-Create the lifecycle checkout once: `git clone -q https://github.com/banodoco/runpod-lifecycle /home/user/runpod-lifecycle`, then `git -C /home/user/runpod-lifecycle fetch -q --depth 1 origin f2948817eeb94af8dee76be21f6d673724f1606e`, then `git -C /home/user/runpod-lifecycle worktree add --detach "$(pwd -P).env/lifecycle" f2948817eeb94af8dee76be21f6d673724f1606e`.
+`agent-setup.sh` also fetches runpod-lifecycle at the revision pinned in `astrid/packs/runpod/pins.json` into `<checkout>.env/lifecycle` (int/33 3e551fd), so no lifecycle worktree is made by hand.
 
 CI's integration lane (`.github/workflows/lanes.yml:190`, `-m integration`) sets no `ASTRID_TEST_LIFECYCLE_CHECKOUT`. The new harness therefore errors there, as `test_runpod_cpu_path.py` already does, until a lane sets the variable.
 
