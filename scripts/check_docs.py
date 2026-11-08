@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import re
+from datetime import date
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -12,14 +13,25 @@ from project_contract import PLAN_FOLDER, plan_gap_ids
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
+RELEASES = Path('plans/releases.md')
 README = Path('README.md')
 HEADER = '| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |'
 DIVIDER = '|---|---|---|---|---:|---|---|'
+RELEASE_HEADER = ('| Release | Version | Kind | Date | App commit | Agent | Runtime | Pinokio | Required '
+                  '| Projects | Owner go |')
+RELEASE_DIVIDER = '|---|---|---|---|---|---|---|---|---|---|---|'
+RELEASE_KINDS = {'patch', 'minor', 'major'}
+LEGACY_RELEASE = 9
+LEGACY_VERSION = '0.0.9'
 STATUSES = {'queued', 'active', 'blocked', 'paused', 'done', 'cancelled'}
 VISIBLE = {'queued', 'active', 'blocked', 'paused'}
 LINK = re.compile(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)')
 PLAN_LINK = re.compile(r'\[[^\]]+\]\(([^)]+/plan\.md)\)')
 GAP_NAME = re.compile(r'([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md')
+VERSION = re.compile(r'\d+\.\d+\.\d+')
+DATE = re.compile(r'\d{4}-\d{2}-\d{2}')
+FULL_SHA = re.compile(r'[0-9a-f]{40}')
+PLACEHOLDERS = {'', '—', '-', 'tbd', 'none', 'unassigned'}
 
 
 def read(root: Path, path: Path) -> str:
@@ -48,6 +60,72 @@ def catalog_rows(text: str) -> list[list[str]]:
         raise ValueError('plan catalog is empty')
     if any(r[2] in VISIBLE for r in rows[next((i for i, r in enumerate(rows) if r[2] not in VISIBLE), len(rows)):]):
         raise ValueError('done/cancelled rows must follow prioritized nonterminal rows')
+    return rows
+
+
+def next_version(version: str, kind: str) -> str:
+    """The successor of a version for a patch, minor or major release."""
+    major, minor, patch = (int(part) for part in version.split('.'))
+    if kind == 'major':
+        return f'{major + 1}.0.0'
+    if kind == 'minor':
+        return f'{major}.{minor + 1}.0'
+    return f'{major}.{minor}.{patch + 1}'
+
+
+def release_log_rows(text: str) -> list[list[str]]:
+    """Parse one canonical eleven-column release table and validate each add-only row in order."""
+    lines = text.splitlines()
+    heads = [i for i, line in enumerate(lines) if line.strip() == RELEASE_HEADER]
+    if len(heads) != 1 or lines[heads[0] + 1].strip() != RELEASE_DIVIDER:
+        raise ValueError('plans/releases.md needs one canonical release table')
+    rows: list[list[str]] = []
+    for line in lines[heads[0] + 2:]:
+        if not line.startswith('|'):
+            break
+        cells = [cell.strip() for cell in line.strip().strip('|').split('|')]
+        if len(cells) != 11 or not all(cells):
+            raise ValueError(f'malformed release row: {line}')
+        rows.append(cells)
+    if not rows:
+        raise ValueError('release log is empty')
+    previous: tuple[int, str] | None = None
+    for row in rows:
+        release, version, kind, day, app, agent, runtime, pinokio, required, projects, owner = row
+        if not release.isdigit():
+            raise ValueError(f'release number must be an integer: {release}')
+        number = int(release)
+        if not VERSION.fullmatch(version):
+            raise ValueError(f'Release {number} version must be major.minor.patch: {version}')
+        if previous is None:
+            if (number, version, kind) != (LEGACY_RELEASE, LEGACY_VERSION, 'legacy'):
+                raise ValueError(f'the log must start with the legacy row Release {LEGACY_RELEASE} = {LEGACY_VERSION}')
+        else:
+            if number != previous[0] + 1:
+                raise ValueError(f'release gap: Release {number} follows Release {previous[0]}; '
+                                 'release numbers go up by exactly 1')
+            if kind not in RELEASE_KINDS:
+                raise ValueError(f'Release {number} kind must be patch, minor or major: {kind}')
+            expected = next_version(previous[1], kind)
+            if version != expected:
+                raise ValueError(f'wrong version step: Release {number} is a {kind} after {previous[1]}, '
+                                 f'so it must be {expected}, not {version}')
+        if not DATE.fullmatch(day):
+            raise ValueError(f'Release {number} date must be YYYY-MM-DD: {day}')
+        date.fromisoformat(day)
+        for name, sha in (('App commit', app), ('Agent', agent), ('Runtime', runtime)):
+            if not FULL_SHA.fullmatch(sha):
+                raise ValueError(f'Release {number} {name} must be a full 40-character SHA: {sha}')
+        if pinokio != '—' and not FULL_SHA.fullmatch(pinokio):
+            raise ValueError(f'Release {number} Pinokio must be a full SHA or — when not recorded: {pinokio}')
+        if required.lower() in PLACEHOLDERS:
+            raise ValueError(f'Release {number} Required must be no or a reason')
+        if owner.lower() in PLACEHOLDERS:
+            raise ValueError(f'Release {number} has an empty owner go')
+        for link in projects.split(','):
+            if not PLAN_LINK.fullmatch(link.strip()):
+                raise ValueError(f'Release {number} Projects must be plan.md links: {link.strip()}')
+        previous = (number, version)
     return rows
 
 
@@ -162,6 +240,10 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     if actual_principles != expected_principles:
         errors.append(f'expected four canonical principle pages, got {sorted(actual_principles)}')
     errors.extend(obsolete_template_paths(root))
+    try:
+        release_log_rows(read(root, RELEASES))
+    except (OSError, ValueError, IndexError) as exc:
+        errors.append(f'release log: {exc}')
     # Every Markdown file must be current. No grandfathered dead references.
     # Product evidence and old task cards must either have valid local links
     # or be removed/replaced by their authoritative project source.
