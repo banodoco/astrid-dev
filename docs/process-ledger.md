@@ -20,3 +20,8 @@ Kinds:
 | 6 | 2026-11-07 | papercut | The completion template asks for "Models used", which conflicts with keeping model identifiers out of repository artifacts | Plan 07 PR #35 | — |
 | 7 | 2026-11-07 | issue | Two projects redesigned the same App screens at once with no shared model; a merge undid an owner decision | Plans 01 and 29 | — |
 | 8 | 2026-11-07 | fix | Resolves #7: task scopes, a dependency for overlapping scopes, and one model per shared surface | — | [PR #53](https://github.com/banodoco/astrid-dev/pull/53) |
+| 9 | 2026-11-08 | papercut | `sync.sh` exits non-zero and reports "incomplete" for skill folders that don't exist (here `~/.codex/skills` and `~/.agents/skills`), so a run that only wants `~/.claude/skills` must pass `--destination` to get a clean exit | Install run, 2026-11-08 | — |
+| 10 | 2026-11-08 | issue | Plan 29 gives two different Agent start SHAs: `inputs.md` lists `709492fa` and `tasks.md` lists `a2c4ab7d`. A manager who starts from either one may build on the wrong base | `plans/29-update-and-release/inputs.md` and `tasks.md` line 5 | — |
+| 11 | 2026-11-08 | papercut | `sync.sh` installs `astrid-dev-shared`, which has no `SKILL.md`, as if it were a skill | `SKILL_NAMES` in `sync.sh`; `skills/astrid-dev-shared/` | — |
+| 12 | 2026-11-08 | papercut | A session without the repo attached can't read PR state: the GitHub API returns 403 for `gh api` and `gh pr view`, so merge status can only be inferred from `main` | `gh api repos/banodoco/astrid-dev/pulls/57` returned 403 | — |
+| 13 | 2026-11-08 | fix | Resolves #10: Plan 29's tasks say to start from the live heads recorded at task start, and that the listed SHAs only locate cited lines | — | this PR |
