@@ -15,16 +15,20 @@ A single-repo cloud worker in auto mode refuses scripts cloned from another repo
 
 ## How a worker calls them
 
-Clone astrid-dev read-only to the fixed path `/home/user/astrid-dev`, then call each script by its **literal** path from the product checkout root. Each product repository's committed `.claude/settings.json` allows exactly these paths. A path built from a variable doesn't match an allow rule, so it is refused.
+Create the worker session on the product repository's integration branch, in **auto** or **Accept edits** mode. Prefer auto: it doesn't stall on harmless unlisted commands. Call each in-repo copy by its **literal** path from the checkout root. The repository's committed `.claude/settings.json` allows exactly these commands, and a path built from a variable doesn't match an allow rule.
 
 ```text
-git clone -q --depth 1 https://github.com/banodoco/astrid-dev /home/user/astrid-dev
-bash /home/user/astrid-dev/env/agent-setup.sh                  # astrid-agent checkout
-bash /home/user/astrid-dev/env/agent-pytest.sh -q <selectors>
-bash /home/user/astrid-dev/env/vc-setup.sh                     # VibeComfy checkout
-bash /home/user/astrid-dev/env/vc-pytest.sh -q <selectors>
-bash /home/user/astrid-dev/env/smoke.sh agent|vc <one selector>
+bash scripts/worker-env/agent-setup.sh                  # astrid-agent checkout
+bash scripts/worker-env/agent-pytest.sh -q <selectors>
+bash scripts/worker-env/agent-pytest-pod.sh <selectors>
+bash scripts/worker-env/smoke.sh agent <one selector>
 ```
+
+What a permission stress test showed (three auto-mode workers, astrid-agent int/33 at 187d692, 8 Nov 2026):
+- **Ran without a prompt:** the in-repo scripts, the allow-listed git commands, pipes, an env-var prefix, and harmless unlisted commands.
+- **Denied by the deny list:** force-push.
+- **Refused every time, despite the allow rule:** a script run from a `/home/user/astrid-dev` clone ("Code from External").
+- **Never use `cd`:** a `cd` changes the working directory for every later command in the session, so later literal paths fail.
 
 | File | What it does |
 |---|---|
