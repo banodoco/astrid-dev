@@ -10,7 +10,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astri
 ## Terms
 
 - **Owner:** the person who chooses a project's outcome and makes its decisions.
-- **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to [Advise](../astrid-dev-advise/SKILL.md).
+- **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md), advise path). An orchestrator may also plan a project itself before farming it out.
 - **Route:** N, X or S; the [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy.
 - **Scope** (of a task): the paths, and any shared surface or contract, it may change; a path includes its own tests, wherever they live.
 
@@ -26,7 +26,7 @@ You produce an agreed, testable end state and tasks another agent can run.
 
 1. **Start from [`strategy.md`](../../strategy.md),** so the project fits the current sequence, then **find prior art** in affected source, issues, [plans](../../plans/index.md), [gaps](../../vision/README.md) and, where relevant, outside approaches. Trace input → actual implementation → user-visible result, noting useful source revisions, reuse, negative findings and uncertainties. Delegate bounded research when helpful, but no broad audit without a decision it could change.
 2. **Pick the smallest complete result.** Compare reusing or extending a pack, adding one, changing core and, when relevant, doing less or nothing. Prefer an existing plan or gap to a new entry. Justify placement and tradeoffs from evidence, not architectural preference. When the gap has a route to closure, place the plan in it with the [Gap](../astrid-dev-gap/SKILL.md) skill, and add the plan's `Contributes to closure:` line.
-3. **Challenge in proportion to consequence.** For material architecture, an expensive or hard-to-reverse decision, or a table case below, have Advise critique the plan for real removals, consolidation and reuse; record its findings and what you accepted or rejected. A simple bounded project needs only a concise alternatives review and a reason to skip Advise.
+3. **Challenge in proportion to consequence.** For material architecture, an expensive or hard-to-reverse decision, or a table case below, have the advisor critique the plan for real removals, consolidation and reuse; record its findings and what you accepted or rejected. A simple bounded project needs only a concise alternatives review and a reason to skip the advisor.
 4. **Agree the outcome.** Present the real options (as many as the owner needs; ten is a useful technique, not a quota), their user-facing tradeoffs and a testable end state.
 5. **Write a compact handoff,** one home per fact: [`inputs.md`](../../templates/project/inputs.md) for source evidence, alternatives, challenge decision, approval and uncertainty; [`plan.md`](../../templates/project/plan.md) for outcome, scope, sequence and completion; [`tasks.md`](../../templates/project/tasks.md) for assignments and focused proof ([rules below](#write-the-task-list)). Link detailed work only for a distinct use.
 6. **Seek greenlight.** A contributor may [open a proposal issue](../../docs/contribution-workflow.md#propose-and-greenlight-new-work) without permission. A maintainer-reviewed **scope PR** greenlights new scope by recording the owner's actual decision in `inputs.md` and adding one queued catalog entry.
@@ -39,7 +39,7 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 |---|---|
 | Map current behaviour with parallel N helpers, one read-only area each | the behaviour spans several repositories or areas, or no one planning knows it |
 | List each problem with its root cause and where it is fixed | the request starts from symptoms (bugs, confusing UI) rather than a new capability |
-| Consult [Advise](../astrid-dev-advise/SKILL.md) as the critic, briefed to build as little as possible and to verify claims in code | the plan touches a cross-repository contract, a user-visible flow, release, security or data, or exceeds about five days |
+| Consult the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) as the critic, briefed to build as little as possible and to verify claims in code | the plan touches a cross-repository contract, a user-visible flow, release, security or data, or exceeds about five days |
 | Phase it: a first phase with most of the value, later phases committed, estimates per phase | the estimate exceeds about ten days or value is uneven across tasks |
 | Ambiguity pass by N helpers per task group, resolving from code and listing only real owner decisions | other agents will execute the tasks, or any task is X or S |
 | Record owner decisions in `inputs.md` and enforce them with a test | a later merge could silently undo the decision |
@@ -49,7 +49,7 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 In the [tasks template](../../templates/project/tasks.md), every task has a scope and:
 
 - **A route:** N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration).
-- **Dependencies,** including one between tasks with overlapping scopes, also across other active projects. If a shared surface needs one model first, consult Advise.
+- **Dependencies,** including one between tasks with overlapping scopes, also across other active projects. If a shared surface needs one model first, consult the advisor.
 - **Before implementation:** its actual base and donor revisions, exact focused checks and authority.
 - **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
   - other repositories come from public git at pinned commits;

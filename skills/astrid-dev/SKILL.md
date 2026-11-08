@@ -16,7 +16,8 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/README.md), then use [Plan](../astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
 | What we're doing now, next and later | [Strategy](../../strategy.md): read it first; the order across gaps and why |
 | A gap, or the strategy across several plans | [Gap](../astrid-dev-gap/SKILL.md): define or reassess the outcome, write its closure approach and route to closure |
-| Running a project or multi-agent effort | [Manage](../astrid-dev-manage/SKILL.md); call on [Advise](../astrid-dev-advise/SKILL.md) for a genuine blocker or consequential choice |
+| Handing off a project, or overseeing several | [Orchestrate](../astrid-dev-orchestrate/SKILL.md): plan it, farm it out to a manager set up for cloud sessions, advise and check in |
+| Running one accepted project | [Manage](../astrid-dev-manage/SKILL.md); ask the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) for a genuine blocker or consequential choice |
 | Integration, release or publication | [Release](../astrid-dev-release/SKILL.md), with explicit current authorization |
 
 ## One path, proportionate depth
