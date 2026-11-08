@@ -4,11 +4,11 @@
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).
 
-**Contributes to closure:** F-008 step 1: on RunPod, a warm machine reused, models on attached storage not re-downloaded, `--align check|trust`, and a missing model failing before submit and naming the machine. Milestone A: every default slot and h3_av produce results on RunPod.
+**Contributes to closure:** F-008 step 1: on RunPod, a warm machine reused, models on attached storage not re-downloaded, `--align check|trust`, and a missing model failing before submit and naming the machine. Milestone A on CPU: every default slot and h3_av produce results through the real RunPod path against a stand-in. The real-GPU half of Milestone A is the GPU-tests plan that follows this plan.
 
 ## Outcome and scope
 
-Every default generation slot (image, edit, voice, music, sound effects) and h3_av runs live through the **one existing path**, on RunPod and locally, so Plans 01, 02 and 06 can land proven end to end. That path is: the host places the job, VibeComfy builds the ComfyUI prompt, and the prompt is posted to that place's ComfyUI. The outputs come back over `/view`.
+Every default generation slot (image, edit, voice, music, sound effects) and h3_av runs through the **one existing path**, on RunPod and locally, so Plans 01, 02 and 06 can land proven end to end on CPU. The owner chose CPU only for this plan (8 Nov); the real-GPU proof is the GPU-tests plan that follows it. That path is: the host places the job, VibeComfy builds the ComfyUI prompt, and the prompt is posted to that place's ComfyUI. The outputs come back over `/view`.
 
 This is the short-term fix. It adds no new architecture. It finishes the missing wire that broke voice and removes preconditions that block workflows for no product reason. The structural redesign (one requirements manifest, one alignment step, one binding) is [Plan 32](../32-generation-placement-targets/plan.md).
 
@@ -16,14 +16,14 @@ This is the short-term fix. It adds no new architecture. It finishes the missing
   - a CPU test of the real pod path, so bugs show up without a paid pod;
   - the pod's verified model inventory reaching the readiness check (an interim wire that Plan 32 replaces);
   - one `--align check|trust` flag;
-  - deleting the sound-effects RunPod refusals and letting a source video travel like any other media input;
+  - deleting the sound-effects RunPod refusals (Foley's source video already travels as an ordinary media input);
   - h3_av reaching the pod the same way as every other generation, with MiniMax H3 as the video default;
   - the engine's models kept on the storage volume, so the 95.8 GB downloads once rather than for every pod;
-  - reusing a live pod for the next job (two checks relaxed);
+  - reusing a live pod for the next job (the checks that refuse it relaxed);
   - deleting the legacy second RunPod route;
-  - the live proof and landing.
+  - the landing.
 
-  Music has not yet produced an output live; that is proven here, not assumed.
+  Music has not yet produced an output live; its CPU result is recorded here, not assumed.
 - **Not included:**
   - per-request model subsets (the volume cache makes them less urgent);
   - a generic per-request model cache (this plan caches the one engine's models on the volume);
@@ -38,7 +38,7 @@ This is the short-term fix. It adds no new architecture. It finishes the missing
 Full evidence is in [inputs.md](inputs.md#planning-evidence). In short:
 
 - **Voice:** at the host boundary, placement shrinks to one URL. On RunPod, that URL is a bridge on the controller, so the readiness check looked for the voice model's files on the controller's disk. Image and music passed only because their models are listed by the pod's ComfyUI node menus. The fix is a missing wire, and VibeComfy already has the mechanism ("target custody").
-- **Sound effects** is refused on RunPod for a structural reason, not a product one: Foley needs a source video, and the host refuses to send a `source_video` to a URL-attached ComfyUI. The media upload already exists for images, audio and video inputs.
+- **Sound effects** is refused on RunPod by an explicit refusal with no product reason. Foley's source video is an ordinary media input, which already travels in the staged assets and is uploaded like images and audio; the host's `source_video` rejection covers a different input.
 - **h3_av** builds VibeComfy workflows like everything else. On RunPod, though, it ships its whole command to a pod through a separate route, instead of placing each workflow like every other generation.
 - **Every attempt paid for a fresh pod and a 95.8 GB download,** because a pod cannot be reused by the next job. The only test of the pod path was the paid live run, so bugs surfaced one per hour.
 - **The deeper cause** is that RunPod is used as a remote ComfyUI. The controller does every check across a bridge, so every check that touches files needs the pod's state carried back. Plan 32 makes a pod a generic machine that runs the same local path. This plan keeps today's route at minimum size, so the landing is not blocked on that redesign.
@@ -51,16 +51,19 @@ Full evidence is in [inputs.md](inputs.md#planning-evidence). In short:
 4. **poms_packs `main`:** go, from the tested candidate, at landing.
 5. **Plan 31 → 32 renumbering** ([astrid-dev#90](https://github.com/banodoco/astrid-dev/pull/90)): merged.
 
+Later the same day the owner chose CPU only, at most 2 review rounds, and [Plan 17](../17-vibecomfy-extensibility/plan.md) as the home of the pack extension protocol; see [inputs.md](inputs.md#owner-decisions).
+
 ## Sequence and readiness
 
 1. U1: the CPU pod-path test comes first, and every later task adds its case to it.
-2. U2 (the interim inventory wire and `--align`) and U3 (sound effects), in parallel.
-3. U4: h3_av, then U5: delete the legacy route.
-4. U6 (models on the volume) and U7 (pod reuse), in parallel after U1.
-5. U8: live proof on the landing tuple.
-6. U9: land.
+2. U2 (the interim inventory wire and `--align`), then U3 (sound effects), then U4 (h3_av), which share the SDK files.
+3. U5 (delete the legacy route) and U6 (models on the volume), in parallel after U4.
+4. U7 (pod reuse), after U2 and U6.
+5. The review rounds, then U9: land, on the owner's go.
 
-The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime `b983b04`, VibeComfy `e65f4941`, lifecycle `f2948817`, poms `2379ab5`) and the WIP commit `e003778be`; see [inputs.md](inputs.md#source-identities). The live proof needs the owner's go and the remaining RunPod budget. See [tasks.md](tasks.md).
+The live proof is deferred to the GPU-tests plan that follows this plan.
+
+The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime `b983b04`, VibeComfy `e65f4941`, lifecycle `f2948817`, poms `2379ab5`) and the WIP commit `e003778be`; see [inputs.md](inputs.md#source-identities). Every task runs on CPU. See [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
@@ -69,14 +72,18 @@ The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime 
   - the CPU pod-path test, which Plan 32 T1 extends;
   - `--align check|trust`, which Plan 32 keeps;
   - the interim inventory wire, which Plan 32 T5 deletes.
-- The landing of Plans 01, 02 and 06 records this plan's live evidence.
+- The landing of Plans 01, 02 and 06 records this plan's CPU evidence.
+- The GPU-tests plan that follows this plan consumes the landed head for the real-GPU proof.
 
 ## Completion
 
-- **CPU:** the pod-path test runs every default slot and h3_av through the real host bind, against a stand-in ComfyUI. The models are absent on the controller and present in the stand-in's inventory. It is red before U2 and green after.
-- **Live, RunPod:** image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s) each produce an output. The models come from the storage volume (downloaded at most once), a live pod is reused where possible, every pod is released, and the pod census is empty at the end.
-- **Live, local:** the same slots run where local hardware exists; otherwise this is recorded as not run.
+All evidence is on CPU (owner, 8 Nov).
+- **Pod path:** the CPU pod-path test runs every default slot and h3_av (the Matrix request) through the real RunPod host bind, against a stand-in ComfyUI with real node schemas. The models are absent on the controller and present in the stand-in's receipt. It is red on the base for voice and sfx, and green at the end. Local-managed voice and attached voice (with `--align trust`) are green too.
+- **Volume and reuse:** with a saved volume, the install uses the volume model cache, and a second pod's install copies from it instead of downloading. Two sequential generates on one engine use one claim and one install, and no orphaned pod remains.
 - **Negative cases:**
   - a model missing from the pod's receipt fails readiness, naming the place;
-  - an entry no engine lock covers is refused before any pod is claimed.
-- **Limits:** the first fill of the volume downloads the full 95.8 GB engine (about 36 minutes). Per-request model sets and a pod that is a generic machine come in Plan 32. Local H3 video needs an image reference or a source video, because no plain text-to-video H3 model is in the lock (the cloud `minimax-h3` entry is not used: everything runs on our own compute). No new providers.
+  - an entry no engine lock covers is refused before any pod is claimed;
+  - `--align check` on an attached server without the files fails with a fix;
+  - a tampered cache row fails its sha256.
+- **Not proven by this plan:** real inference, real model downloads to the volume, RunPod capacity, and whether the cache accepts RunPod's network volume. These move to the GPU-tests plan that follows this plan.
+- **Limits:** the first fill of the volume downloads the full 95.8 GB engine (about 36 minutes), and each fresh pod copies its rows from the volume. Per-request model sets and a pod that is a generic machine come in Plan 32. Local H3 video needs a source video or reference images, because no plain text-to-video H3 model is in the lock (the cloud `minimax-h3` entry is not used: everything runs on our own compute). The `_refs` H3 variant is not covered until Plan 32 T2. No new providers.
