@@ -65,6 +65,11 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 - **The Updates section** gains that repair entry: the plain install line, without `--update`.
 - **Check in Agent code** that the plain line repairs a degraded install and respects autostart off.
 - **Copy:** `astridStatusCopy.ts:9` promises instructions that will no longer appear, so it changes.
+- **When repair shows** (advisor, 8 Nov):
+  - Only while no update is available. The plain line also applies a newer release, so while one is available, Update now and its secondary command are the only path, with no separate repair row.
+  - Only for direct installs (`installType === 'installer'`). Fully local repair isn't defined in this plan.
+- **Autostart off:** the card shows the plain line, not `--update`. The plain line respects autostart, so its sentence says to run it and then start Astrid.
+- **Chat cards** are UR-4's: their action is "See updates", which opens Settings → Updates. Leave `copy.ts` alone in UR-3.
 
 ### UR-4 Chat cards
 - **Today:** one error renders at `AgentChat.tsx:1318, 1632, 719-722`, `AgentChatMenu.tsx:321` and `NewChatMenu.tsx:286`.
@@ -92,6 +97,7 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
   - Primary: Update now.
   - Secondary: the normal install command (owner decision of 7 Nov).
 - **The 30 Oct hide is reversed.** `21fa6391` and `f2eca0bd5` came before the owner's 7 Nov decision 1 ("fully local: Update now through the existing in-page updater"), which supersedes them.
+- **Page notice:** `resolvePageUpdateStatus` keeps routing to Settings → Updates, the one place to act (owner decision of 7 Nov). It never offers Update now itself.
 - **When the button shows:** by UR-1's one rule, Update now appears only when the status reports `self_update`. The fully local status endpoint (UR-6) reports `self_update: false` with reason `source` when no installed backend exists, so a source-checkout Runtime gets UR-1's source line, never a button that fails. Don't add a new probe or a 503.
 
 ### UR-10 End to end
