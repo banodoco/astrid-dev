@@ -149,6 +149,24 @@ def check_pr(before: str | None, after: str, body: str, root: Path) -> list[str]
     return errors
 
 
+STRATEGY = "strategy.md"
+
+
+def strategy_errors(changed_paths: set[str]) -> list[str]:
+    """A completion must update strategy.md so the sequence stays current."""
+    if STRATEGY in changed_paths:
+        return []
+    return [f"{STRATEGY}: a plan completion must update the strategy (its row, and focus or sequence if they changed)"]
+
+
+def changed_paths(base: str, root: Path) -> set[str]:
+    result = subprocess.run(["git", "diff", "--name-only", base, "HEAD"], cwd=root, text=True,
+                            capture_output=True, check=False)
+    if result.returncode:
+        raise ValueError(f"cannot list changed files: {result.stderr.strip()}")
+    return set(result.stdout.split())
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", required=True, help="PR base commit SHA (or local base ref)")
@@ -172,6 +190,7 @@ def main() -> int:
         else:
             raise ValueError("completion requires --event or --body-file")
         issues = check_pr(before, after, body, ROOT)
+        issues.extend(strategy_errors(changed_paths(args.base, ROOT)))
     except (OSError, ValueError) as exc:
         print(f"ERROR completion gate: {exc}")
         return 1
