@@ -63,6 +63,9 @@ From the owner, 7 Nov 2026 (session chat):
 4. **Branch protection on App `main`:** the owner will turn it on later. UR-6's required check is ready before then.
 5. **Start and check-ins:** start now, run by a manager under the Manage skill, with advisor check-ins every two hours until this plan's completion PR merges (owner, 8 Nov 2026).
 6. **Which checks count:** only checks relevant to this project's scope, narrowly defined, that weren't already failing on the base. A check already red on `main` doesn't block a merge and isn't this project's to fix; full CI health is a separate project. Task work lands on each repository's `int/29-update-and-release` branch; moving the reviewed candidate to `main` follows the Release skill (owner, 8 Nov 2026). App `main` was red on Tests, E2E and Lanes, and Agent `main` on the Windows task-host journey, when this run started.
+7. **Release versions:** a release is named `major.minor.patch`, worked out from the release number: patch by default, minor or major only when the owner declares it. Release 10 is `0.0.10`. astrid-dev keeps a log of every release, with its versions, kind, projects and owner go (owner, 8 Nov 2026).
+8. **Required is its own decision:** a required update is set per release with a reason, never implied by kind. Kind changes no behaviour for now (owner, 8 Nov 2026).
+9. **Source and history:** the App manifest stays the source the product acts on, and the astrid-dev log records what shipped. The log starts at a legacy Release 9 = 0.0.9 (owner, 8 Nov 2026).
 
 ## Source identities
 

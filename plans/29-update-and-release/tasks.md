@@ -6,7 +6,7 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
-| **Phase 1a — App (about 4 days)** | | | | | |
+| **Phase 1a — App and release versions (about 6 days)** | | | | | |
 | UR-1 Update now only when the installed Astrid reports `self_update`, and the real reason whenever it can't run | N | — | app `src/shared/lib/updates/{useInstallerUpdate,updateOperation,resolveUpdate}.ts`, `src/integrations/runtime/client.ts`, `UpdateResolutionActions.tsx`, `SettingsModal/sections/AstridUpdatesSection.tsx`; surface update UI | Without `self_update`, Update now is hidden and the one line plus the command show; busy shows it disabled. Each status `reason` and POST `details.reason` has its own line; an unknown reason reads as needs repair | [ ] |
 | UR-1b One accepted-digest list for the App, local launcher and dev workspace | N | — | app `src/integrations/runtime/{contract-metadata.ts,runtime-update-contract.mjs}`, `scripts/dev-local-workspace.mjs`, `package.json` | `resolveUpdate.source-contract.test.mjs` passes through `npm run test:node` | [ ] |
 | UR-3 Setup block off update surfaces; Updates gains a repair entry | N | UR-1 | app `UpdateResolutionActions.tsx`, `ChatUpdateNeeded.tsx`, `SettingsModal/sections/{AstridStatusSection,AstridUpdatesSection,astridStatusCopy}` | No SetupBlock on update surfaces or the status section; a degraded direct install finds the plain install line under Updates | [ ] |
@@ -15,6 +15,9 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | UR-6 Pinokio fully local serves update status | N | UR-5 | app `config/vite/localUpdateStatus.ts` | Under `vite preview` the status answers instead of 501, and the 501 test is inverted | [ ] |
 | UR-7 Decision table test | N | UR-1–UR-4 | app update decision tests | Install type × situation, plus the negative cases in the plan | [ ] |
 | UR-8 `release-guard` job | N | — | app `scripts/installer/**`, `.github/workflows/{test,served-manifest-canary}.yml`, `config/qualification/**`; contract release number | Tuple or bootstrap change without +1 fails; any other `release` change fails; it runs on pull requests and on push | [ ] |
+| UR-8b Version names and the only release writer | N | UR-8 | app `scripts/installer/{pin,release-guard,served-manifest,releaseVersion}.mjs` (`releaseVersion` is new), `release.test.mjs`, `.github/workflows/test.yml` | `versionOf(10, [])` is `0.0.10`; a minor start at 15 gives `0.1.0`, then 16 gives `0.1.1`; a start that isn't the next minor or major, or comes without +1, is refused; a PR into `int/**` that changes `release`, `required` or `version_starts` is refused; changing `required` alone passes; `pin.mjs --release --require` sets the floor to the new release | [ ] |
+| UR-8c Release log in astrid-dev | N | — | astrid-dev `plans/releases.md` (new), `scripts/check_docs.py` and its test, `skills/astrid-dev-release/SKILL.md` | Check tests: a gap in release numbers, a wrong version step, a short SHA, an empty owner go and a broken plan link each fail; the legacy Release 9 row passes | [ ] |
+| UR-8d Users see versions, not release numbers | N | UR-8b, UR-1, UR-3 | app `src/shared/lib/updates/updateStatus.ts`, `SettingsModal/sections/AstridUpdatesSection.tsx` | Shows "Astrid is up to date (0.0.10)", "Update available: Astrid 0.0.11" and "Installed 0.0.9" from release 9; no screen shows "Release N" | [ ] |
 | **Phase 1b — fully local (about 1.5 days)** | | | | | |
 | UR-9 Fully local Update now through the in-page updater | X | UR-1 | app `updateOperation.ts` (`LocalPageUpdate`), `config/vite/localUpdatePage.ts`, `scripts/local-update*.mjs` | Spike confirms why `f2eca0bd5` hid it; a dev:local test updates through the page | [ ] |
 | **Phase 1c — Release 10 (about 6.5–7.5 days)** | | | | | |
@@ -23,8 +26,8 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | UR-12 Hosted update can target a stand-in release | X | — (UR-11 if the fallback seam is chosen) | agent journey CI (`journey.yml`, `scripts/ci_*journey*.py`); runtime `update.py` only if the fallback seam is chosen, then after UR-11 | A probe on each OS runner chooses CI-level interception, or the owner-approved fallback seam | [ ] |
 | UR-13 Hosted button-path update on every OS | X | UR-10–UR-12 | agent `journey_fresh_update.py`, `windows_update_journey.py`, `ci_journey_keepgoing.py`, `journey.yml` | The update leg of the three direct fresh rows POSTs through the door to a stand-in release | [ ] |
 | **Review — before publishing** | | | | | |
-| UR-R Up to three independent reviews of the integrated candidate | S | UR-1–UR-13 | all Plan 29 scopes (read-only review) | Each round produces either no blocking findings, or new routed task cards that are done before the next round; see [review rounds](#ur-r-review-rounds) | [ ] |
-| UR-14 Publish Release 10 | N | all, including UR-R | app `public/install-manifest.json`, `runtime.lock.json` | Owner names the tuple and says go; `public/install*` frozen; not required; canary passes | [ ] |
+| UR-R Up to three independent reviews of the integrated candidate | S | UR-1–UR-13, UR-8b–UR-8d | all Plan 29 scopes (read-only review) | Each round produces either no blocking findings, or new routed task cards that are done before the next round; see [review rounds](#ur-r-review-rounds) | [ ] |
+| UR-14 Publish Release 10 (0.0.10) | N | all, including UR-R | app `public/install-manifest.json`, `runtime.lock.json`; astrid-dev `plans/releases.md` | Owner names the tuple, the kind (patch) and whether it's required (no), and says go; `pin.mjs --release` writes the number; `public/install*` frozen; canary passes; the log row is added from `pin.mjs` output | [ ] |
 | **Owner** | | | | | |
 | Turn on branch protection on App `main`, requiring `release-guard`, up to date, including admins | owner | UR-8 | App repository settings | Settings show the required check | [ ] |
 
@@ -81,6 +84,25 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 - **Delete:** `update-manifest.mjs`, the release-0 and baseline files, and `check-public-updater-candidate.*`.
 - **Canary:** it also checks `release` and the bootstrap bytes.
 - **App draft PR #194 doesn't block this.** It edits the same manifest but targets `pre-main`, not `main`, and has been idle since 7 Nov. Build UR-8 on `main`. If #194 is later retargeted to `main`, it must pass UR-8's check like any other change.
+
+### UR-8b Version names
+- **Versions are names, not a new number.** The integer `release` stays the only ordering key everywhere: App, Agent, Runtime, Pinokio and on users' disks. A version is worked out from it with `versionOf(release, version_starts)`: `0.0.N` by default, and from each owner-declared minor or major start, counting on from there.
+- **`version_starts`** is a short, add-only list in the manifest, for example `[{"release": 15, "version": "0.1.0"}]`. It sits outside the tuple bytes and is validated separately. The Agent ignores unknown manifest keys, and Pinokio and the Runtime read only `release`, so nothing else changes.
+- **The only writer.** `pin.mjs --release [minor|major] [--require "reason"]` is the only way `release`, `version_starts` or `required` change. Plain pinning never touches them.
+- **Integration branches.** On PRs into `int/**`, `release`, `required` and `version_starts` must be byte-identical to the base. The number moves once, on the release PR to `main`. This prevents a double bump.
+- **Required stays its own decision.** It is set per release with a reason and never implied by the kind. With `--release`, `--require` sets the floor to the new release.
+- **Reuse:** extends `pin.mjs` and UR-8's guard. There's no new publish script.
+
+### UR-8c Release log
+- **`plans/releases.md`:** one row per published release, add-only. Its columns are Release, Version, Kind, Date, App commit, Agent, Runtime, Pinokio, Required (no, or the reason), Projects (plan links) and Owner go.
+- **A record, not a source.** The App manifest is what the product acts on. Release writes the row from `pin.mjs` output after the canary passes, and never edits it afterwards.
+- **History:** the log starts with a legacy row for Release 9 = 0.0.9. Earlier releases are named 0.0.N but not backfilled.
+- **App commit** is the merge commit that published the release. Later hosted App deploys aren't releases. The Pinokio SHA is informational only.
+- **`check_docs.py`:** release numbers go up by exactly 1; each version is the correct patch, minor or major successor; SHAs are full; Owner go isn't empty. Plan links use the existing link check.
+- **Release skill:** one paragraph in the installer-tuple lane covers the steps: propose the kind (patch by default), get the owner's go on version, kind and required, run `pin.mjs --release`, publish, verify with the canary, then add the row.
+
+### UR-8d Versions on screen
+- Users see versions, never release numbers. The kind isn't displayed.
 
 ### UR-9 Fully local Update now
 - **Independent of the broken path.** The updater runs the installed Agent's `local_update` module and doesn't use the broken `reconcile` path, so it should work on existing installs (from source; to confirm).
