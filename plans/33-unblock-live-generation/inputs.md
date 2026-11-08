@@ -23,7 +23,7 @@ Key facts the tasks rely on (Agent `5eac07e3f`, VibeComfy `e65f4941`):
 - **Pod reuse** is refused across `generate` invocations (`target_selection.py` ~446–452).
 - **The whole 95.8 GB lock** is required by readiness (`engine_readiness.py:745-756`). Narrowing it is Plan 32.
 
-**Approach:** finish the one missing wire using VibeComfy's existing target custody, and delete the preconditions that have no product reason (the sfx refusal, the source_video rejection, h3's separate pod route, the legacy route). Lifecycle changes (warm reuse) wait for Plan 32. Alternatives not chosen:
+**Approach:** finish the one missing wire using VibeComfy's existing target custody, and delete the preconditions that have no product reason (the sfx refusal, the source_video rejection, h3's separate pod route, the legacy route). Use the volume cache and pod reuse that already exist off the main path (`scripts/pod_session.py`, `prepare_retained_generation`), relaxing the two checks that refuse reuse. See `merge-run/path-review/EXISTING-MACHINERY.md`. Alternatives not chosen:
 - **Lock-derived inventory:** it claims rows a pod may not have; the receipt is the attested witness.
 - **Switching RunPod to the remote-machine model now:** it is the right end state (Plan 32), but h3's existing machine route bypasses paid consent (its spend limit comes from an environment variable), so generalizing it is not a short-term change.
 - **A new inventory type or VibeComfy change:** the mechanism already exists.

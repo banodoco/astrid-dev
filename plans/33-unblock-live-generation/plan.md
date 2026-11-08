@@ -15,14 +15,15 @@ This is the short-term fix. It adds no new architecture. It finishes the missing
   - the pod's verified model inventory reaching the readiness check (an interim wire that Plan 32 replaces);
   - one `--align check|trust` flag;
   - deleting the sound-effects RunPod refusals and letting a source video travel like any other media input;
-  - h3_av reaching the pod the same way as every other generation;
+  - h3_av reaching the pod the same way as every other generation, with MiniMax H3 as the video default;
+  - the engine's models kept on the storage volume, so the 95.8 GB downloads once rather than for every pod;
+  - reusing a live pod for the next job (two checks relaxed);
   - deleting the legacy second RunPod route;
   - the live proof and landing.
 
   Music has not yet produced an output live; that is proven here, not assumed.
 - **Not included:**
-  - warm pod reuse;
-  - per-request model subsets;
+  - per-request model subsets (the volume cache makes them less urgent);
   - models on the storage volume;
   - one align step;
   - one Placement object;
@@ -43,7 +44,7 @@ Full evidence is in [inputs.md](inputs.md#planning-evidence). In short:
 ## Owner decisions recorded (8 Nov 2026)
 
 1. **No effects are deleted.** Of the 15 effects in the retired `local` pack, the two the App needs for every user (`end-spanning-layer` and `frame-overlay`) move to core `rendering`, as `video-editor` did. The other 13 move to a pack in the owner's personal collection, under a non-reserved id, because `local` is reserved and skipped by discovery. This amends [Plan 06 Decision 8](../06-packs/plan.md#decisions).
-2. **Storage volume:** wipe it (authorized 8 Nov, 01:00Z). Today's generate route installs engines on the container disk, so proving generation from the volume moves to Plan 32 (the volume as a model root).
+2. **Storage volume:** wipe it (authorized 8 Nov, 01:00Z) and use it as the engine's model cache (U6). The code to do this already exists off the main path (`scripts/pod_session.py`).
 3. **poms_packs `main`:** go, from the tested candidate, at landing.
 4. **Plan 31 → 32 renumbering** ([astrid-dev#90](https://github.com/banodoco/astrid-dev/pull/90)): merged.
 
@@ -52,10 +53,11 @@ Full evidence is in [inputs.md](inputs.md#planning-evidence). In short:
 1. U1: the CPU pod-path test comes first, and every later task adds its case to it.
 2. U2 (the interim inventory wire and `--align`) and U3 (sound effects), in parallel.
 3. U4: h3_av, then U5: delete the legacy route.
-4. U6: live proof on the landing tuple, with one fresh pod per slot, in parallel.
-5. U7: land.
+4. U6 (models on the volume) and U7 (pod reuse), in parallel after U1.
+5. U8: live proof on the landing tuple.
+6. U9: land.
 
-One owner question is open: the region for the sound-effects proof, since the Foley licence excludes the EU and UK.
+One owner question is open: the region for the sound-effects proof, since the Foley licence excludes the EU, UK and South Korea, and the volume is in Norway (EEA, not EU).
 
 The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime `b983b04`, VibeComfy `e65f4941`, lifecycle `f2948817`, poms `2379ab5`) and the WIP commit `e003778be`; see [inputs.md](inputs.md#source-identities). The live proof needs the owner's go and the remaining RunPod budget. See [tasks.md](tasks.md).
 
@@ -71,9 +73,9 @@ The work starts from the merge run's candidates (Agent -33 `5eac07e3f`, Runtime 
 ## Completion
 
 - **CPU:** the pod-path test runs every default slot and h3_av through the real host bind, against a stand-in ComfyUI. The models are absent on the controller and present in the stand-in's inventory. It is red before U2 and green after.
-- **Live, RunPod:** image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s) each produce an output on a fresh pod. Every pod is released, and the pod census is empty at the end.
+- **Live, RunPod:** image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s) each produce an output. The models come from the storage volume (downloaded at most once), a live pod is reused where possible, every pod is released, and the pod census is empty at the end.
 - **Live, local:** the same slots run where local hardware exists; otherwise this is recorded as not run.
 - **Negative cases:**
   - a model missing from the pod's receipt fails readiness, naming the place;
   - an entry no engine lock covers is refused before any pod is claimed.
-- **Limits:** every pod downloads the full 95.8 GB engine (about 36 minutes). Plan 32 fixes this with per-request models, the volume cache and warm reuse. No new providers.
+- **Limits:** the first fill of the volume downloads the full 95.8 GB engine (about 36 minutes). Per-request model sets and a pod that is a generic machine come in Plan 32. Local H3 video needs an image reference or a source video, because no plain text-to-video H3 model is in the lock (the cloud `minimax-h3` entry has one). No new providers.
