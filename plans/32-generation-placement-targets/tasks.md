@@ -21,13 +21,14 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | --- | --- | --- | --- | --- | --- |
 | [T1](#t1-characterize-every-capability) Characterize every capability that calls generation, under local, attached and RunPod | N | Plan 33 landed; Plan 34's first pass (owner's order) | `tests/integrations/test_runpod_slot_path_cpu.py` (from Plan 33 U1), `tests/core/generation/test_runpod_engine_selection.py` | Every capability is a case; current failures are recorded as strict `xfail` with the reason | [ ] |
 | [T2](#t2-one-requirements-manifest-and-the-engine-point) One requirements manifest; the `generation.engine` point with ComfyUI as its one contribution | X | T1 | `astrid/core/extensions/{model.py,schema/point.json}`, new `astrid/packs/generation/extensions/points/engine.yaml`, new `astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml`, `astrid/core/generation/{entries,asset_alignment,engine_readiness,engine_recipe}.py`, `astrid/core/pack/schemas/v3/pack.json`, `astrid/packs/h3_av/shared/generation.py`, and their tests | New `tests/core/generation/test_requirements_manifest.py`; `tests/core/extensions`; the readiness and alignment nodes below | [ ] |
-| [T2b](#t2b-one-base-engine) `vibecomfy-h3` and `comfyui` become one base engine | X | T2; owner decision D1 (Plan 06 PK-15B) | `astrid/packs/{comfyui,runpod,vibecomfy}` recipes and locks, `astrid/packs/engine-index.json`, the engine names in core and sdk | One engine row per platform; `PYT` the engine nodes below; no `vibecomfy-h3` literal outside history (grep) | [ ] |
+| [T2b](#t2b-one-base-engine-comfy-packs-deleted) One base engine; the `comfyui` and `comfy_wrap` packs deleted | X | T2, T3 (shared `sdk/generation.py`; T3 first) | `astrid/packs/{comfyui,comfy_wrap}` (deleted), `astrid/packs/{runpod,vibecomfy}` recipes and locks, `astrid/packs/engine-index.json`, the engine and pack names in core, sdk, registries, docs and tests, and the App's `comfy_wrap` references | One engine row per platform; the PK-15B absence and engine selectors below; no `vibecomfy-h3`, `comfy_wrap` or `packs/comfyui` literal outside history (grep) | [ ] |
 | [T3](#t3-one-placement-with-default-and-override) One Placement value, with default and override | X | T1; an independent review of the Placement and lease design (Advise) | `astrid/core/generation/engine_contracts.py` (`Placement`), `astrid/sdk/{generation,invocation}.py`, `astrid/core/generation/{cli,targets}.py`, `astrid/core/generation/backends/registry.py`, `astrid/core/execution/generic_host.py` (target_policy), `astrid/packs/vibecomfy/actions/run/run.py`, `astrid/packs/h3_av/actions/transform/run.py`, and their tests | New `tests/core/generation/test_placement.py`; one decision site (grep); dry run equals live | [ ] |
-| [T4](#t4-the-local-run-path-with-one-align) The local run path, with one `align` | X | T2, T3 (T2b if D1 is yes) | `astrid/packs/vibecomfy/{local_server_engine,production_engine}.py`, `astrid/packs/vibecomfy/actions/run/run.py`, `astrid/core/generation/backends/vibecomfy.py`, `astrid/core/generation/{asset_alignment,engine_runner,model_downloader}.py`, `astrid/core/engine_cli.py`; VibeComfy `vibecomfy/runtime/session.py` (`ensure_models`) | New `tests/core/generation/test_run_local.py`; one submit and one retrieve function (grep); the VibeComfy nodes below | [ ] |
-| [T5](#t5-runpod-as-a-remote-machine-the-generationmachine-point) RunPod as a remote machine: the `generation.machine` point | S | T4 | New `astrid/packs/generation/extensions/points/machine.yaml`, new `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, `astrid/packs/runpod/{adapter,generation,remote_placement,target_selection,installed_session}.py`, `astrid/packs/runpod/h3_release*.py`, `astrid/core/execution/generic_host.py` (bind), `astrid/packs/vibecomfy/local_server_engine.py` (inventory channel), and their tests | New `tests/integrations/test_remote_machine_cpu.py` (every slot and h3_av, warm reuse, volume, a test machine contribution); no controller-side model check for RunPod (grep) | [ ] |
-| [T6](#t6-one-generate-h3_av-as-one-vibecomfyworkflows-contribution) One `generate`; h3_av as one `vibecomfy.workflows` contribution | X | T5 | New `astrid/packs/vibecomfy/extensions/points/workflows.yaml`, new `astrid/packs/h3_av/extensions/vibecomfy.workflows/h3.yaml`, `astrid/packs/h3_av/**`, `astrid/sdk/{generation,invocation}.py`, `astrid/core/generation/{entries,preflight,delivery}.py`, `astrid/core/generation/backends/{registry,vibecomfy_workflow}.py`, `astrid/core/execution/{generic_host,worker_qualification}.py`, `astrid/packs/runpod/prepared_task.py`; VibeComfy `node_packs/_defs.py` (H3 row) | `grep -ri h3 astrid/core astrid/sdk` empty; no modality branch on the path; `tests/core/extensions`; T5's harness green | [ ] |
-| [T8](#t8-completion) Completion | N | T1–T6, R | astrid-dev completion PR | The PR links the implementation PRs, the integrated revision, the CPU evidence and a disposition for F-003 | [ ] |
-| R Review rounds (at most 3: owner-agreed 2, lead recommendation 3) | S | T1–T6 | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
+| [T4](#t4-the-local-run-path-with-one-align) The local run path, with one `align` | X | T2b | `astrid/packs/vibecomfy/{local_server_engine,production_engine}.py`, `astrid/packs/vibecomfy/actions/run/run.py`, `astrid/core/generation/backends/vibecomfy.py`, `astrid/core/generation/asset_alignment.py`, `astrid/core/engine_cli.py`; VibeComfy `vibecomfy/runtime/session.py` (`ensure_models`) | New `tests/core/generation/test_run_local.py`; one submit and one retrieve function (grep); the VibeComfy nodes below | [ ] |
+| [T5](#t5-runpod-as-a-remote-machine-the-generationmachine-point) RunPod as a remote machine: the `generation.machine` point | S | T4 | New `astrid/packs/generation/extensions/points/machine.yaml`, new `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, `astrid/packs/runpod/{adapter,generation,remote_placement,target_selection,installed_session}.py`, `astrid/packs/runpod/h3_release*.py`, `astrid/core/generation/{model_downloader,engine_runner}.py` (the downloader and model steps), `astrid/core/execution/generic_host.py` (bind), `astrid/packs/vibecomfy/local_server_engine.py` (inventory channel), and their tests | New `tests/integrations/test_remote_machine_cpu.py` (every slot and h3_av, warm reuse, volume, a test machine contribution); no controller-side model check for RunPod (grep) | [ ] |
+| [T6](#t6-one-generate-and-the-vibecomfyworkflows-point) One `generate`; the `vibecomfy.workflows` point and its hooks; the legacy RunPod route deleted | X | T5 | New `astrid/packs/vibecomfy/extensions/points/workflows.yaml`, `astrid/sdk/{generation,invocation}.py`, `astrid/core/generation/{entries,preflight,delivery}.py`, `astrid/core/generation/backends/{registry,vibecomfy_workflow}.py`, `astrid/core/execution/generic_host.py`, `astrid/packs/vibecomfy/{endpoint_checkout.py,actions/run/run.py}`, and their tests | One `run()` site calls `build` and `finalize`; the file-map input type; no modality branch and no legacy route (grep); `tests/core/extensions`; T5's harness green | [ ] |
+| [T6b](#t6b-h3_av-becomes-one-contribution) h3_av becomes one contribution | X | T6 | `astrid/packs/h3_av/**`, new `astrid/packs/h3_av/extensions/vibecomfy.workflows/h3.yaml`, `astrid/packs/runpod/{remote_placement,prepared_task}.py` (h3 parts), `astrid/core/execution/worker_qualification.py`; VibeComfy `node_packs/_defs.py` (H3 row) | The Matrix request on the CPU fake; `grep -ri h3 astrid/core astrid/sdk` empty; no stage graph, journal, receipt or input bundle left (grep) | [ ] |
+| [T8](#t8-completion) Completion | N | T1–T6b, R | astrid-dev completion PR | The PR links the implementation PRs, the integrated revision, the CPU evidence and a disposition for F-003 | [ ] |
+| R Review rounds (at most 3, owner-agreed) | S | T1–T6b | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -54,7 +55,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
    - `run()`'s engine table is the registry's contributions for this point. Only `vibecomfy.comfyui` exists in this plan, and `wan2gp` is Plan 12's.
    - Environment setup is the `align` half of this point, not a separate point.
 2. **One manifest.** Build `requirements()` from VibeComfy `ReadyMetadata` rows (`vibecomfy/templates.py` ~1307-1380), reusing `catalog_manifests` (`asset_alignment.py:192`) and `_lock_coverage` (`entries.py:817`). Include registered plugin roots: `_ready_entries_for` uses `include_dynamic=False` (`entries.py:38`), so also read VibeComfy's `registered_ready_roots()` (`vibecomfy/extras.py:62`).
-3. Delete name-only `requirements` and the duplicated row shapes (`entries.py:785-813` path strings, the lock row, the provider inventory). Model locks become caches of manifest rows. h3's model rows come from its own templates: delete the read of the Agent lock (`h3_av/shared/generation.py:173-188`).
+3. Delete name-only `requirements` and the duplicated row shapes (`entries.py:785-813` path strings, the lock row, the provider inventory). Model locks become caches of manifest rows. h3's model rows and its `comfy_commit` become literals in its own templates. Delete the read of the Agent lock (`h3_av/shared/generation.py:173-188`) and the uses of `engine_source_revision("vibecomfy-h3")` (`compile.py:576,774,1115`, `generation.py:265`), and the action-entry model scan (`entries.py` ~785-800).
 4. **Readiness and release identity stop binding the whole lock.** `engine_readiness.py:745-756` compares every lock row. It becomes "the manifest's rows are present", and an engine install no longer fetches models.
 5. Delete the unused `engines:` property of `astrid/core/pack/schemas/v3/pack.json` (~195). Step 0: `git grep -ln "schemas/v3/pack.json" -- tests` names the schema test to run. Record in the commit that `engine-index.json` becomes generated from contributions after Plan 06 PK-15B (T2b).
 
@@ -69,14 +70,20 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 - `VCT tests/test_plugin_discovery.py::test_dynamic_ready_template_rows_are_explicit_and_unindexed`.
 - No second requirements shape is left (grep for the deleted names).
 
-## T2b One base engine
+## T2b One base engine; comfy packs deleted
 
-**Outcome:** one ComfyUI base environment per platform. Today `comfyui` (image, edit) and `vibecomfy-h3` (audio, H3) are separate RunPod engines (`test_runpod_engine_selection.py::test_audio_runpod_uses_h3_engine_and_image_keeps_comfyui`). **Depends on** owner decision D1, because deleting the `comfyui` recipe is Plan 06 PK-15B's scope, held by M06-4. **Authority:** CPU only.
+**Outcome:** one ComfyUI base environment per platform, and the `comfyui` and `comfy_wrap` packs gone. Today `comfyui` (image, edit) and `vibecomfy-h3` (audio, H3) are separate RunPod engines (`test_runpod_engine_selection.py::test_audio_runpod_uses_h3_engine_and_image_keeps_comfyui`). The owner decided to delete the old packs here (M-79, D1), superseding the M06-4 hold on [Plan 06](../06-packs/plan.md) PK-15B for them. **Input:** the T3 head (T3 lands first because both touch `sdk/generation.py`). **Authority:** CPU only.
 
-1. With D1 = "T2b absorbs PK-15B": follow [PK-15B](../06-packs/tasks.md#pk-15b-delete-the-comfy-packs)'s census and reference list for the engine half, and merge into one recipe keyed `comfyui` (the contribution key). Plan 33 U6's cache directory already uses that name, and its rows are keyed by identity, so the merge forces no re-fill.
-2. `engine-index.json` is generated from `generation.engine` contributions, with one shipped generator and a `--check`.
+**Delegate to N helpers:** PK-15B's census, the mechanical reference updates, the regenerations and the checks.
 
-**Proof:** `PYT tests/core/generation/test_engine_recipe.py tests/core/generation/test_engine_cli.py tests/core/generation/test_engine_release.py tests/core/generation/test_runpod_engine_selection.py tests/core/extensions`, plus the generator's `--check`. A grep finds no `vibecomfy-h3` literal except history.
+1. Follow [PK-15B](../06-packs/tasks.md#pk-15b-delete-the-comfy-packs) in full: its census, its delete list, its reference list (Agent and App) and its new node `test_comfyui_engine_has_no_recipe_after_comfy_pack_removal`. Re-run the census on this head, because line numbers have moved. Mark PK-15B done by this task in Plan 06.
+2. Merge the remaining recipes into one engine keyed `comfyui` (the contribution key). Plan 33 U6's cache directory already uses that name, and its rows are keyed by identity, so the merge forces no re-fill.
+3. `engine-index.json` is generated from `generation.engine` contributions, with one shipped generator and a `--check`.
+
+**Proof:**
+- PK-15B's absence checks and selectors (its step 5), including the App grep.
+- `PYT tests/core/generation/test_engine_recipe.py tests/core/generation/test_engine_cli.py tests/core/generation/test_engine_release.py tests/core/generation/test_runpod_engine_selection.py tests/core/extensions`, plus the generator's `--check`.
+- A grep finds no `vibecomfy-h3` literal except history.
 
 ## T3 One Placement, with default and override
 
@@ -92,7 +99,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
    - `run.py` ~707-717 and ~753-758;
    - h3's own placement (`transform/run.py` ~1938-1975);
    - the CLI.
-2. Rename `--target` to `--placement` and `target_policy` to `placement_policy`, per owner decision D2.
+2. Rename `--target` to `--placement` and `target_policy` to `placement_policy` in one change, including the App's callers, with no alias (owner decision D2, M-79).
 
 **Proof:**
 - New `tests/core/generation/test_placement.py`:
@@ -118,15 +125,13 @@ Delete, in the same change:
 - `checkout_server` and its `_EndpointArtifacts` `/view` client (`backends/vibecomfy.py:1432`);
 - the second HTTP submit (`VibeComfyEngine._post`, `backends/vibecomfy.py:1273`);
 - the `generate align` / `engines install` duplication;
-- the model steps of `engine_runner.py`;
-- `model_downloader.py`;
 - VibeComfy's hidden `ensure_models` download (`runtime/session.py` ~1209-1210, ~1672).
 
-**Keep Plan 33 U6's volume cache working:** the models root on a mounted volume becomes VibeComfy `fetch`'s models root (`tests/test_fetch.py::test_models_root_accepts_directory_extra_model_paths_env`). T5 moves U6's identity-keyed entries into that layout by rename on the same volume, so nothing is downloaded again.
+`model_downloader.py` and the model steps of `engine_runner.py` stay until T5. RunPod still installs through `engines install --model-cache-root` (Plan 33 U6) until T5 replaces that route. Locally, the models root becomes VibeComfy `fetch`'s (`tests/test_fetch.py::test_models_root_accepts_directory_extra_model_paths_env`).
 
 **Proof:**
 - New `tests/core/generation/test_run_local.py`: `align`, `check` and `trust` on CPU fakes for local and attached; `align` fetches only the missing rows; `trust` marks the result unverified.
-- `PYT tests/packs/vibecomfy/test_local_server_run.py tests/packs/vibecomfy/test_local_server_media.py tests/packs/vibecomfy/test_installed_child_path.py::test_installed_qwen_managed_child_path tests/core/generation/test_generate_align.py tests/core/generation/test_engine_runner.py`.
+- `PYT -m integration tests/packs/vibecomfy/test_local_server_run.py`, and `PYT tests/packs/vibecomfy/test_local_server_media.py tests/packs/vibecomfy/test_installed_child_path.py::test_installed_qwen_managed_child_path tests/core/generation/test_generate_align.py tests/core/generation/test_engine_runner.py`.
 - `VCT tests/test_fetch.py tests/test_doctor_models.py tests/test_custom_node_refs.py`.
 - One submit and one retrieve function (grep).
 
@@ -139,8 +144,9 @@ Delete, in the same change:
 1. Declare `astrid/packs/generation/extensions/points/machine.yaml`. Its protocol is `claim`, `ship_and_run`, `fetch` and `release`, under core consent and lease. `local` and `attached` are built in. RunPod contributes `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, and the test provider is a contribution under `tests/fixtures`.
 2. Generalize `RemotePlacement.run`, `_run_job`, `_download`, `_release`, `manifest_command` and `_MANIFEST_SCRIPT` (`remote_placement.py`, kept by Plan 33 U4). Replace `clip_command_argv` and `transform_command` with the one generic invocation.
 3. The lease is minimal: an owner and an idle timeout. Warm reuse covers any machine with the same base engine id (Plan 33 U7's key).
-4. The storage volume is mounted as the models root. Move Plan 33 U6's cache entries into it by rename.
+4. The storage volume is mounted as the models root. Move Plan 33 U6's identity-keyed cache entries into that layout by rename on the same volume, so nothing is downloaded again.
 5. Delete:
+   - `model_downloader.py` and the model steps of `engine_runner.py` (moved here from T4, because RunPod installs used them until now);
    - the generation bridge path in `adapter.bind_endpoint` and its binding record;
    - Plan 33 U2's inventory document;
    - the warm-reuse window check;
@@ -159,36 +165,72 @@ Delete, in the same change:
 - In the lifecycle checkout: `.venv/bin/python -m pytest -q tests/test_runner.py::test_ship_and_run_terminates_pod_by_default tests/test_runner.py::test_ship_and_run_keeps_pod_when_terminate_false` (setup as in [Plan 02 P2](../02-consistent-generation/tasks.md#p2-lifecycle)).
 - No controller-side model check for RunPod (grep: no `EngineBridge` use in generation, no `ASTRID_TARGET_MODEL_ASSETS`).
 
-## T6 One `generate`; h3_av as one `vibecomfy.workflows` contribution
+## T6 One `generate` and the `vibecomfy.workflows` point
 
 **Outcome:**
 - One `generate(entry, inputs, placement)`, with image, video and audio as thin aliases.
-- Entries declare modes, inputs (media included), outputs and an optional `finalize`.
+- Entries declare modes, inputs (media included), outputs, an optional `build` and an optional `finalize`.
 - There is one refusal site, driven by entry data.
-- h3_av is one pack with one contribution.
+- The legacy RunPod route is gone.
 
 **Authority:** CPU only.
 
-**Delegate to N helpers:** the h3 site census (`merge-run/path-review/H3-AS-VIBECOMFY-EXTENSION.md` section 3, 20 sites), the deletions and the checks.
+**Delegate to N helpers:** the census of branches and legacy-route callers, the deletions and the checks.
 
-1. **The workflow point.** Declare `astrid/packs/vibecomfy/extensions/points/workflows.yaml`. Its fields are `ready_root`, an optional `plugin: file.py:register`, and an optional per-template `finalize: file.py:fn` as a typed field. The `vibecomfy` pack loops over the contributions, calling `register_ready_root` and the optional `register`.
-2. **h3_av's contribution.** Contribute `astrid/packs/h3_av/extensions/vibecomfy.workflows/h3.yaml`, and add `dependencies.packs: [vibecomfy]` to h3_av. Move the trios and the builder into its ready root, the request mapping into `register_op("video", "h3")`, and compose and verify into `finalize`.
-3. **Node packs need no hook (decided).** A template's own node pins win over the lock (VibeComfy `custom_node_refs.py:241-247`), so move the H3 row out of `node_packs/_defs.py` ~52-57 into h3's templates. Step 0: confirm that class resolution finds a pinned class that is not listed there; if not, keep the row and record it.
+1. **The workflow point.** Declare `astrid/packs/vibecomfy/extensions/points/workflows.yaml` (version 1, `side: agent`, cardinality `many`, `effects_allowed: [none]`). Its fields:
+   - `ready_root` (required): the `vibecomfy` pack calls `plugin_api().register_ready_root()` for each contribution (VibeComfy `extras.py:48`).
+   - `entries`: a list in VibeComfy's thin-entry shape `{id, kind, modes, bundle, needs, binds, defaults}` (VibeComfy `entries.py:45-70`), because plugin templates are absent from the static template index.
+   - `build: file.py:fn` (optional): `build(inputs, files, out) -> {workflow, bindings, plan}`. It runs on the machine, on CPU and deterministically. `requirements()` reads the built graph's rows, and the dry run calls it and prints `plan`.
+   - `finalize: file.py:fn` (optional): `finalize(job_dir, inputs, files, outputs) -> outputs`. It runs on the same machine after execute and before copy-back, and if it raises, the job fails. The docs must say this is not VibeComfy's template `finalize` (`templates.py:1381`).
+2. **The hooks.** `run()` calls `build` and `finalize` at one site. Add the entry input type for a map of files (`{id: path}`), shipped in the existing managed-assets archive, whose manifest already keys by binding name (`asset_manifest.py:111-125`). `entries._input_type` has no such type today (`entries.py:171-176`).
+3. **Node packs need no hook (decided).** A template's own node pins win over the lock (VibeComfy `custom_node_refs.py:241-247`).
 4. **Delete:**
    - the hard-coded `vibecomfy-h3-workflow` backend (`backends/registry.py:28,240-250`, `backends/vibecomfy_workflow.py`);
-   - the action-entry kind (`entries.py:98-139`);
-   - the tracked parent, prepared and qualified workers (`core/execution/worker_qualification.py`, `runpod/prepared_task.py` ~559-581);
-   - the h3 dry-run special case;
+   - the action-entry kind (`entries.py:98-139, 636-640`);
    - the duplicate modality resolution (`sdk/invocation.py` ~4853);
-   - the per-modality branches in `merge-run/path-review/6-modality-branches.md`.
+   - the per-modality branches in `merge-run/path-review/6-modality-branches.md`;
+   - the legacy RunPod route, moved here from Plan 33 U5: `runpod_route` and `endpoint_checkout` in `run.py` (709-726, 1012-1036), `endpoint_checkout.py` and its five `generic_host.py` imports (1400, 9412, 9795, 11697, 17156), the legacy branch of `resolve_workflow_descriptor` (`registry.py` ~168-180), and the `placement` parameter of `workflow()`. The census and test list are in [Plan 33's U5 history](../33-unblock-live-generation/inputs.md#ambiguity-pass-8-nov-2026-from-code). h3's `legacy_prepared` caller goes in T6b.
 5. Leave Wan2GP's host branches (`generic_host.py:11673`, `:12497`) for Plan 12.
 
 **Proof:**
-- `grep -ri h3 astrid/core astrid/sdk` returns nothing (about 156 lines today).
 - No modality or entry branch on the path, and the engine is chosen only by `manifest.engine` (grep).
-- `PYT tests/core/extensions tests/core/generation/test_runpod_engine_selection.py tests/packs/h3_av/test_compile.py tests/packs/h3_av/test_verify_fail_closed.py tests/packs/h3_av/test_compose_staged_104.py`, plus `PYT_POD tests/integrations/test_remote_machine_cpu.py`.
+- `! git grep -n "pending38\|checkout_from_profile\|endpoint_checkout" -- astrid`.
+- `PYT tests/core/extensions tests/core/generation/test_runpod_engine_selection.py tests/core/test_generation_backend_registry.py`.
+- New nodes:
+  - `tests/core/extensions/test_registry.py::test_workflow_contribution_registers_ready_root_entries_build_and_finalize`;
+  - `tests/core/generation/test_entries.py::test_file_map_input_ships_in_the_managed_assets_archive`;
+  - `tests/core/generation/test_run_local.py::test_build_and_finalize_run_once_at_the_run_site`.
+- `PYT_POD tests/integrations/test_remote_machine_cpu.py`.
 - `VCT tests/test_plugin_discovery.py tests/test_custom_node_refs.py`.
-- A new node `tests/core/extensions/test_registry.py::test_workflow_contribution_registers_ready_root_and_finalize`.
+
+## T6b h3_av becomes one contribution
+
+**Outcome:** h3_av is one pack with one `vibecomfy.workflows` contribution, and every piece of h3 machinery that the generic path makes obsolete is deleted. The inventory is `merge-run/path-review/H3-GENERALIZATION.md` section 1 (class d) and `H3-AS-VIBECOMFY-EXTENSION.md` section 3 (20 sites). **Authority:** CPU only.
+
+**Delegate to N helpers:** the site census, the deletions and the checks. The lead keeps the `build` and `finalize` boundaries.
+
+1. Contribute `astrid/packs/h3_av/extensions/vibecomfy.workflows/h3.yaml`, and add `dependencies.packs: [vibecomfy]` to h3_av.
+   - `ready_root`: the three trios, plus the builder templates.
+   - `entries`: h3 with modes `i2v`, `v2v` and `video-edit`.
+   - `build`: wraps `prepare_request` and `compile_preparation` (`compile.py:1039`), including the trio choice and the ffprobe source measurement.
+   - `finalize`: wraps `compose_candidate` and `verify_candidate`, so preservation is still proven.
+2. Move the H3 node-pack row out of VibeComfy `node_packs/_defs.py` ~52-57 into h3's templates. Step 0: confirm that class resolution finds a pinned class that is not listed there; if not, keep the row and record it.
+3. **Delete:**
+   - the seven-stage graph, the tracked parent and `ManagedParentClient`;
+   - the operation journal and resume;
+   - the raw and final receipts and the publication finalizer;
+   - the input bundle (`shared/input_bundle.py`), because the generic managed-assets archive replaces it;
+   - worker qualification, prepared workers and the cleanup receipt (`core/execution/worker_qualification.py`, `runpod/prepared_task.py` ~559-581), including the `legacy_prepared` route (`transform/run.py:1947-1952`);
+   - h3's pod-route remnants in `remote_placement.py` and the release builder, where T5 has not already removed them;
+   - the h3 special cases in `generic_host.py`, `delivery.py`, `preflight.py` and `sdk/invocation.py`.
+
+   Multi-pass requests and parent resume are not included.
+
+**Proof:**
+- The Matrix request (Plan 33 U1's fixture) runs as an ordinary `generate` on the CPU fake: `PYT_POD tests/integrations/test_remote_machine_cpu.py`.
+- `grep -ri h3 astrid/core astrid/sdk` returns nothing (about 156 lines today).
+- A grep finds no stage graph, journal, receipt or input bundle left in `astrid/packs/h3_av`.
+- `PYT tests/packs/h3_av/test_compile.py tests/packs/h3_av/test_verify_fail_closed.py tests/packs/h3_av/test_compose_staged_104.py tests/packs/h3_av/test_workflow_model_urls.py`, with the deleted machinery's test files deleted and named in the commit body.
 
 ## T8 Completion
 
