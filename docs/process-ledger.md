@@ -1,6 +1,6 @@
 # Process ledger (archive)
 
-Rows 1–51 below are the frozen archive and are no longer added to. New entries go in [`docs/ledger/`](ledger/README.md), one file each.
+The rows below are the frozen archive, up to 8 November 2026, and are no longer added to. Some numbers repeat because sessions appended at the same time. New entries go in [`docs/ledger/`](ledger/README.md), one file each.
 
 | # | Date | Kind | What | Evidence | Link |
 |---|---|---|---|---|---|
