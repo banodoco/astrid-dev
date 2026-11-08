@@ -24,6 +24,7 @@ Planners and managers are administrators; this is where their high-judgment work
 When the owner asks for regular check-ins on a run, take the cadence and end condition from that request and record them as `checkin` in the run's `run.yaml`. Schedule them from your own session. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
+- **Progress record (every check-in):** check that the plan's `tasks.md` matches reality. Merged PRs should be ticked, and open and blocked tasks should show their state. If it lags, the nudge is to bring it up to date. Report progress from it, not from memory.
 - **Moving:** tasks finished or candidates landed since last time.
 - **Stuck:** the same failure twice, the same open question, or idle agents.
 - **Blocked:** waiting on a person, an event or a dependency, and for how long.
