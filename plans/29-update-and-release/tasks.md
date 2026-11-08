@@ -179,9 +179,15 @@ The stage stops after a round with no blocking findings, or after three rounds. 
 
 - **Advisor session:** session_011EzfVzreGCJJQnTuXpbib9 (M-INT).
 - **run.yaml:** /root/astrid-dev/plans/29-update-and-release/.otto/runs/plan29-2026-11-08/run.yaml (gitignored), with state.md beside it.
+- **Ruling (M-INT, 18:55 UTC):** Runtime #37 merged on verdict (a). The windows-realm-publication failure is a pre-existing discovery.json race (WinError 32), outside #37's change at `update.py:324`. The same SHA passed at 18:42 (job 128824616001) and failed at 18:45 (job 128824603162). Recorded under UR-13 as a pre-existing flake. Merged as Runtime `3d19ba9a` (merge of `1150fef6`), no rerun.
+- **Release 10 candidate (decision 14), composed 2026-11-08:**
+  - Runtime `int/29-update-and-release` `3d19ba9a`.
+  - Agent `cand/29-r10` `41170fdb`: int `2c8a1bcb` plus the `runtime.lock.json` pin to `3d19ba9a`.
+  - App `cand/29-r10` `55a8f96f`: int `30538edb` plus the repin (agent `41170fdb`, runtime `3d19ba9a`). Release stays 9 until publish. `public/install*` unchanged.
+  - Manifest sha256 `3162f384…`; `install.sh` `591c4c51…`; `install.ps1` `bba3f2ed…`; `install` `b5270a2d…`. Pinokio `d15c58b5` (astrid-pinokio int/r1, informational). `pin.mjs --check` passes.
+  - Proof dispatched: journey.yml `row=direct` on `cand/29-r10`, run 42515380385. Round 2 review running read-only on the same SHAs.
 - **Next steps, in order:**
-  1. Merge Runtime #37 (head 1150fef6) once its checks finish with nothing new against base. The only new-looking failure is the flaky windows-realm-publication, recorded above as a pre-existing product issue.
-  2. Compose the release candidate per decision 14: Runtime int head; Agent int plus the runtime-lock pin; App manifest at release 10, not required; public/install* frozen. Freeze SHAs, manifest sha256 and bootstrap hashes in run.yaml.
-  3. Run the three fresh rows, UR-13m and UR-13n on the candidate (one `row=direct` dispatch covers all five direct rows). Review round 2 runs in parallel on the same SHAs.
-  4. Publish per decision 15 only if every proof passes and round 2 has no blocking finding: promote the same reviewed SHAs to main in Agent, Runtime and App by fast-forward or merge PR, never force; the App release-10 PR goes through release-guard; verify with the served-manifest canary.
-- **Open items outside Release 10:** the Windows discovery.json race (a Runtime bug issue, not yet opened, because the classifier refused it); UR-13p and UR-13q App gaps are merged; Plan 31, Green mains, Plan 30 and catalog clean-up all wait for Hannah's explicit go.
+  1. Read run 42515380385 and confirm which of UR-13m and UR-13n's proofs it covers. Dispatch any that it does not cover.
+  2. Collect round 2 review findings. Any blocking finding goes to a UR-R2.n card before publish.
+  3. Publish per decision 15 only if every proof passes and round 2 has no blocking finding: promote the same reviewed SHAs to main in Agent, Runtime and App by fast-forward or merge PR, never force. The App release-10 PR goes through release-guard. Verify with the served-manifest canary. Publish waits on owner go (Hannah) and M-INT's ruling.
+- **Open items outside Release 10:** the Windows discovery.json race (a Runtime bug issue, not yet opened, because the classifier refused it; needs Hannah's go). UR-13p and UR-13q App gaps are merged. Plan 31, Green mains, Plan 30 and catalog clean-up all wait for Hannah's explicit go.
