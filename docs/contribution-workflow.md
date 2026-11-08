@@ -121,24 +121,23 @@ Review request: implementation
 
 The low-permission [review-intake workflow](../.github/workflows/review-intake.yml) checks the GitHub PR author against the **live catalog owner**. A matching, non-draft request receives `needs-review` and an acknowledgement. Scope PRs are also queued when their project files/catalog change appropriately. This means **accepted into the review queue**, **not approved**. Reviewers watch the [open queue](https://github.com/banodoco/astrid-dev/pulls?q=is%3Apr+is%3Aopen+label%3Aneeds-review). A label is not a reviewer assignment: a maintainer must take responsibility or request a reviewer through GitHub's normal review UI. This workflow does not run fork code, approve, merge or deploy.
 
-**Independent review:** A fresh qualified reviewer examines actual diff and retained implementation, claims versus tests, first failures, negative cases, model provenance, dependencies and risks. They return concrete blocking findings or a justified acceptance with limitations. The contributor repairs the same failing cases on the new candidate. Human approval remains necessary for consequential changes, security, user data, migrations, costs and deployment under the product repositories’ policies. A CI pass or an agent’s advice alone does not override these authorities.
+**Independent review:** A fresh qualified reviewer examines actual diff and retained implementation, claims versus tests, first failures, negative cases, route provenance, dependencies and risks. They return concrete blocking findings or a justified acceptance with limitations. The contributor repairs the same failing cases on the new candidate. Human approval remains necessary for consequential changes, security, user data, migrations, costs and deployment under the product repositories’ policies. A CI pass or an agent’s advice alone does not override these authorities.
 
 **Integration:** Freeze the intended target/donor revisions and reuse unchanged proof only where justified. Separate green product PRs do not qualify a combined Runtime/Agent/App installation. The [release skill](../skills/astrid-dev-release/SKILL.md) governs cross-repository integration and separately authorized promotion.
 
-## Record models as work happens
+## Record routes as work happens
 
-`run.yaml` configures **intended** model roles, but the review should report which models were **actually used**. Record the provider, exact model ID where visible, task, role, effort if available, and whether the information is **runtime-observed with a receipt** or **self-reported**. Do this at the relevant invocation, not from memory at the end.
+Name the **route** (`N`, `X` or `S`, see the [run contract](../skills/astrid-dev-shared/run-contract.md)) that ran each piece of work, at the relevant invocation rather than from memory at the end. Name a specific model only where the run used one other than its route's. Model identifiers stay out of repository artifacts.
 
-In an **Astrid-dev checkout** (not necessarily a product-repository checkout), the [model-use helper](../scripts/model_usage.py) is available:
+In an **Astrid-dev checkout**, the [route-use helper](../scripts/model_usage.py) is available:
 
 ```sh
 python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record \
-  --provider openai --model-id <actual-model-id> --role implementation \
-  --task <task-id> --basis self-reported
+  --route N --role implementation --task <task-id> [--override <name>]
 python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> summary
 ```
 
-When the running agent framework offers actual invocation metadata, it should write the same records directly. The local JSONL stays gitignored under `.otto/`; copy the helper's one-line **Models used:** summary into the review PR (and add source receipts where appropriate). If the identity is inaccessible, use **Unknown — reason**. A manual record is not proof of what the model provider actually executed.
+The local JSONL stays gitignored under `.otto/`; copy the helper's **Routes used:** line into the review PR. If the route is unknown, use **Unknown — reason**. A manual record is not proof of what actually executed.
 
 ## Submit a completed project
 
@@ -149,7 +148,7 @@ Project: plans/NN-project-name/plan.md
 Review request: completion
 ```
 
-It changes that project’s catalog status to `done` and includes the existing `## Completion assessment — Plan NN`: actual evidence, implementation PRs in every repo, the exact integrated candidate, **Models used**, what remains unproven and a justified disposition for each linked vision gap (or the enabler exception). This concise PR summary is the **review evidence pack**: link real receipts, do not create another required file.
+It changes that project’s catalog status to `done` and includes the existing `## Completion assessment — Plan NN`: actual evidence, implementation PRs in every repo, the exact integrated candidate, **Routes used**, what remains unproven and a justified disposition for each linked vision gap (or the enabler exception). This concise PR summary is the **review evidence pack**: link real receipts, do not create another required file.
 
 CI enforces the mechanical completion contract and current references. A reviewer judges actual integrated behavior against the project’s agreed acceptance criteria. A maintainer merges only after required independent review and authorization. Completing the project does **not** automatically close a vision gap or deploy the result.
 

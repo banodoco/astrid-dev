@@ -9,7 +9,7 @@ Evidence: https://github.com/owner/repo/actions/runs/NUMBER (real integrated pro
 Completion: Yes — Explain which actual acceptance criteria were demonstrated.
 Implementation PRs: https://github.com/owner/repo/pull/NUMBER (include all required product PRs; or None — non-code work)
 Integrated candidate: Exact candidate SHA(s)/versioned receipt (or None — non-code work)
-Models used: provider/model-id — implementation or review, runtime-observed or self-reported (or Unknown — reason)
+Routes used: N for the build tasks, X for UR-13n, S for reviews (override: name a specific model only where the run used one other than its route's), or Unknown — reason
 Unproven: Named remaining failures/unsupported scenarios (or None within the stated scope)
 Gap F-XXX: Unchanged — Replace with a justified disposition for **every actually linked gap**.
 Strategy: Updated — the strategy.md row and sequence changes, and the gap route changes, in this PR
