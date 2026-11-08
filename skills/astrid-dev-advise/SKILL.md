@@ -7,6 +7,8 @@ description: Answer one bounded question when an Astrid planner, manager or work
 
 Planners and managers are administrators; this is where their high-judgment work goes. Use it only when a planner, manager or working agent asks, for a genuine blocker, conflicting evidence, or a consequential judgment the accepted plan cannot settle. It is not routine per-task approval. Follow the [run contract](../astrid-dev-shared/run-contract.md), and answer the bounded question you were given.
 
+**Between questions and check-ins, stay idle.** Don't follow the run, answer progress updates or relay them to the owner. Progress lives in the plan's `tasks.md`, and the next check-in reads it there.
+
 - **Refresh the facts first:** the exact candidate, source and donor identities, dirty state, the brief, the first failing command, the repair history, and the review budget.
 - **Diagnose from evidence.** A claim in the request is a claim until code, logs or a run supports it. If the cause isn't visible, the next action is to make it visible.
 - **Question the question.** Ask why it reached you: missing evidence, an unclear task card, or a gap in a skill or the plan. Sometimes the right answer is a different question.
