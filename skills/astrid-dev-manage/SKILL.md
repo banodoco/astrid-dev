@@ -28,7 +28,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
 
 ## Steps
 
-1. **Resume.** Continue any existing run, keeping its recorded versions, model settings, scope, evidence, review count and any pause.
+1. **Resume or start.** Continue a matching run in `plans/<project>/.otto/runs/`, keeping its recorded versions, model settings, scope, evidence, review count and any pause. Otherwise start one there: copy the [run template](../astrid-dev-shared/templates/run.yaml) to `<run-id>/run.yaml` and fill each role with a model you have seen is available (and the advisor's session, if one already exists) before dispatching.
 2. **Dispatch.** Send each ready task to a subagent on its route, with its outcome, scope, dependencies, exact starting versions, acceptance check and authority. Tell an X or S task to delegate research, reading, mechanical edits and checks to N helpers. Keep independent tasks moving while one is blocked.
 3. **Keep scopes apart.** Never run tasks with overlapping scopes at once; start the later from what the earlier landed. Each task gets a fresh checkout from the latest head, deleted when it lands.
 4. **Land.** Check the changed files stay inside the scope; if not, stop and ask Advise. Keep one way into each integration branch; first bring in anything that arrived another way.

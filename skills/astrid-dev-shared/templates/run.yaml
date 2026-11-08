@@ -28,6 +28,7 @@ models:
     model_id: ""
     reasoning_effort: ""
     availability: unverified
+    session: ""   # an existing advisor session to consult, if any
   completion_reviewer:
     class: Astra/Opus/Fable-class
     model_id: ""
