@@ -33,7 +33,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
 3. **Keep scopes apart.** Never run tasks with overlapping scopes at once; start the later from what the earlier landed. Each task gets a fresh checkout from the latest head, deleted when it lands.
 4. **Land.** Check the changed files stay inside the scope; if not, stop and ask Advise. Keep one way into each integration branch; first bring in anything that arrived another way.
 5. **Escalate.**
-   - **Send** Advise one question with its evidence: the versions, the brief, the first failing command and its output, and what was tried. Use the run's advisor, or start one on its `advisor` setting.
+   - **Send** Advise only questions, never progress updates: progress goes in `tasks.md`, where check-ins read it. Send one question with its evidence: the versions, the brief, the first failing command and its output, and what was tried. Use the run's advisor, or start one on its `advisor` setting.
    - **Act** on the one next step it returns. Advice is never permission to run or publish.
    - **No advisor model available:** ask the owner.
    - **Owner asked for advisor check-ins:** answer them briefly; treat their next step like any other advice.
