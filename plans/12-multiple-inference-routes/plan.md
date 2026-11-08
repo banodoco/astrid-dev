@@ -1,6 +1,6 @@
 # Multiple inference routes (Wan2GP)
 
-**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 

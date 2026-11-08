@@ -1,6 +1,6 @@
 # VibeComfy plugins: document and prove the extension path
 
-**Vision gaps:** [Composable capabilities](../../vision/gaps/LS-003-full-stack-contributions.md) (primary).
+**Vision gaps:** [Composable capabilities](../../vision/gaps/LS-003-full-stack-contributions.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 

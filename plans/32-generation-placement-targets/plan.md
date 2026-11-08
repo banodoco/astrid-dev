@@ -2,7 +2,7 @@
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
-**Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
+**Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
 ## Outcome and scope
 
