@@ -6,7 +6,7 @@
 
 ## Outcome and scope
 
-Every generation, from any pack or slot, decides where it runs exactly once and then runs through one target lifecycle. That removes the inconsistent routing found while proving `astrid generate --target runpod` live on 7-8 Nov 2026: voice and music workflow entries created a pod and then preflighted a local ComfyUI, h3_av ignored `--target runpod`, and the dry run reported "ready" for both.
+Every generation, from any pack or slot, decides where it runs exactly once and then runs through one target lifecycle. That removes the inconsistent routing found while proving `astrid generate --target runpod` live on 7-8 Nov 2026: voice and music reached the pod but on the default `comfyui` engine, because the pipeline chose the engine without regard to the entry's models (their models are pinned only for `vibecomfy-h3`); h3_av through `generate` never reached the RunPod pod route (only the CLI `--placement runpod` does); and the dry run reported "ready" for both because its readiness check returns nothing without a client.
 
 The design has three pieces, each owned by one layer:
 
