@@ -10,7 +10,7 @@
 
 | Project | Goal | Status | Owner | Estimate | Waiting on | Plan |
 |---|---|---|---|---:|---|---|
-| One update path and release | One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes. | queued | Unassigned | 11–13 | — | [Plan 29](29-update-and-release/plan.md) |
+| One update path and release | One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes. | active | Plan 29 manager | 11–13 | — | [Plan 29](29-update-and-release/plan.md) |
 | Update everywhere: remaining setups | Finish Plan 29 for less common setups: Linux with systemd below 254, typed update contracts, refused cards, and update proof for Pinokio and fully local. | queued | Unassigned | 7–9 | Plan 29 | [Plan 30](30-update-everywhere/plan.md) |
 | Zero-to-first-image onboarding | Go from an existing inference setup to a generated image visible on the timeline through one simple command, with tested recovery and minimal agent effort. | queued | Unassigned | TBD | scope agreement | [Plan 20](20-zero-to-first-image/plan.md) |
 | Install and update confidence | Make installing and updating dependable on all three OSes: one update path, and a real hosted test for every install, update, rollback and removal route. | queued | Unassigned | TBD | — | [Plan 09](09-install-and-update-confidence/plan.md) |
