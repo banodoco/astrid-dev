@@ -63,7 +63,7 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 - **Tools:** `pin.mjs` stops writing `release`. The Agent's `regenerate_runtime_pins.py` already leaves it alone.
 - **Delete:** `update-manifest.mjs`, the release-0 and baseline files, and `check-public-updater-candidate.*`.
 - **Canary:** it also checks `release` and the bootstrap bytes.
-- **Conflict to settle first:** open App draft PR #194 edits the same manifest.
+- **App draft PR #194 doesn't block this.** It edits the same manifest but targets `pre-main`, not `main`, and has been idle since 7 Nov. Build UR-8 on `main`. If #194 is later retargeted to `main`, it must pass UR-8's check like any other change.
 
 ### UR-9 Fully local Update now
 - **Independent of the broken path.** The updater runs the installed Agent's `local_update` module and doesn't use the broken `reconcile` path, so it should work on existing installs (from source; to confirm).
