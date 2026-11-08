@@ -81,3 +81,9 @@ Record exact base and donor SHAs at task start. Known donor: Agent `b97c43db8` (
 ## References
 
 The maps and the review are working notes from the planning session. Their findings are summarised above, and each task card names the code it changes.
+
+## Reopened decisions 8 Nov 2026 (field failure)
+
+- **Withdrawn:** the completion claim in astrid-dev #137 is withdrawn. The owner's field report showed that `install --update` on a machine that completed the Release 1 storage handoff exits 0 and installs nothing (verified in the review on `advisor/plan29-field-failure-review`).
+- **Release 11 (0.0.11, patch) gate:** CI passes with the field state as a fixture and as the re-aimed journey leg; the owner publishes with her go; then she runs the standard App command and uses Update now. If that doesn't end "Astrid updated", the fix goes out forward at once.
+- **Pending owner decision:** rollback stays available only until the first successful update after a handoff. Pruning of retained R0 data waits for it.

@@ -8,7 +8,7 @@ On each declared supported operating system, device and deployment route, people
 
 ## Current state
 
-[Plan 29](../../plans/29-update-and-release/plan.md) is done: Release 10 (0.0.10) is published, so Update now works for normal installs on Linux, macOS and Windows. Less common setups remain in [Plan 30](../../plans/30-update-everywhere/plan.md).
+[Plan 29](../../plans/29-update-and-release/plan.md) is reopened: Release 10 (0.0.10) is published, but `install --update` on a machine that already completed the Release 1 storage handoff exits 0 and installs nothing. Less common setups remain in [Plan 30](../../plans/30-update-everywhere/plan.md).
 
 
 [Plan 08](../../plans/08-release1-install-update/plan.md) records a completed five-row hosted R1 installation/update gate, proving that *specific* paths worked on *specific* candidates. The [project queue](../../README.md) records Plan 07 as active with indicative Pinokio evidence and existing CI failures, while Plans 09/10 target broader routes and native qualification. This is **not** proof that all devices, browser variants or real engines are covered.
