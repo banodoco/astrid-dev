@@ -12,7 +12,7 @@ Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run cont
 | UR-17 Refusal rule | N | Plan 29 UR-1 | app `CopyRefusedInstructions.tsx`, `RuntimeConnectionPanel.tsx`, `RuntimeConnectionPill.tsx`, `copy.ts` | A separate `resolveRefusal`; refused cards show update wording only when the installed release is behind | [ ] |
 | UR-18a Pinokio update proof | N | — | agent `scripts/pinokio_row_driver.py` (coordinate with Plan 10) | The Pinokio row runs the launcher's own Update action (`update.js`), not a direct installer re-run | [ ] |
 | UR-18b Fully local update proof | X | Plan 29 UR-9 | app local-update control tests | A dev:local test drives the in-page updater (no new hosted row) | [ ] |
-| UR-R Up to two independent reviews before closing (recommended; owner to confirm) | S | UR-15–UR-18b | all Plan 30 scopes (read-only review) | Same review rounds as [Plan 29](../29-update-and-release/tasks.md#ur-r-review-rounds); findings become rows `UR-R<round>.<n>` directly below this one, done before the next round | [ ] |
+| UR-R Up to two independent reviews before closing | S | UR-15–UR-18b | all Plan 30 scopes (read-only review) | Same review rounds as [Plan 29](../29-update-and-release/tasks.md#ur-r-review-rounds); findings become rows `UR-R<round>.<n>` directly below this one, done before the next round | [ ] |
 
 ## Task details
 
