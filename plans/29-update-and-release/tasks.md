@@ -59,9 +59,9 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | UR-R2.2 Refusal reasons relabelled to `inputs-unavailable` | N | UR-R2 | runtime `update.py` (`_helper`) | Legacy reasons keep their label | [ ] deferred (owner decision 16) |
 | UR-R2.3 First Update now click after a dead worker only records it | N | UR-R2 | app `updateOperation.ts`; agent `update_job.py` (`reconcile`) | One click starts after a dead worker | [ ] deferred (owner decision 16) |
 | UR-R2.5 systemd check needs systemd 251 | N (Plan 30) | UR-R2 | agent `update_job_platform.py` (`finished_result`) | Fails safe below systemd 251 | [ ] deferred to Plan 30 (owner decision 16) |
-| UR-R2.6 Bring App `int/29` up to `main` after publish | N | UR-14 | App branch housekeeping | `release-guard origin/main int` passes after the merge | [ ] after publish (M-INT) |
+| UR-R2.6 Bring App `int/29` up to `main` after publish | N | UR-14 | App branch housekeeping | `release-guard origin/main int` passes after the merge | [x] fast-forwarded to `main` (`1db36e66`) by git push; likewise Agent (`72462b04`) and Runtime (`21df9bfb`) |
 | UR-R2.7 Linux Playwright browser under the run HOME (fix for UR-R2.1b) | N | UR-13n | agent `scripts/ci_journey.py` (`isolated_environment`) | Browser found under the run HOME; focused test | [x] Agent `88cc447a`; proven in run `42517305848` (fresh Linux pass) |
-| UR-14 Publish Release 10 | N | all, including UR-R | app `public/install-manifest.json`, `runtime.lock.json` | Owner names the tuple and says go; `public/install*` frozen; not required; canary passes | [ ] blocked: waits on UR-R |
+| UR-14 Publish Release 10 | N | all, including UR-R | app `public/install-manifest.json`, `runtime.lock.json`; astrid-dev `plans/releases.md` | Owner names the tuple and says go; `public/install*` frozen; not required; canary passes | [x] published 2026-11-08 (owner go, Hannah): Agent PR #318 → `72462b04`, Runtime PR #42 → `21df9bfb`, App PR #222 → `1db36e66`; served manifest release 10 (agent `6e9c4f9c`, runtime `52ec0578`); canary run `42527536657` success; log row added in `plans/releases.md`; completion PR astrid-dev #137 (`ee43d322`) |
 | **Owner** | | | | | |
 | Turn on branch protection on App `main`, requiring `release-guard`, up to date, including admins | owner | UR-8 | App repository settings | Settings show the required check | [ ] |
 
@@ -201,13 +201,7 @@ Reviewed on Runtime `3d19ba9a`, Agent `41170fdb`, App `73a8500d` (superseded; se
 
 ## Resume note (manager state, for compaction)
 
+- **Status: complete.** Release 10 (0.0.10) is published and the served manifest reads release 10 (agent `6e9c4f9c`, runtime `52ec0578`, not required). Completion PR astrid-dev #137 is merged.
+- **Published mains:** Agent `72462b04` (PR #318), Runtime `21df9bfb` (PR #42), App `1db36e66` (PR #222). `int/29-update-and-release` in each repo is fast-forwarded to its main.
+- **Deferred and unproven (see the completion assessment in #137):** composition-content seed (UR-R2.1d, 0.0.11); review items UR-R2.2, UR-R2.3, UR-R2.5 (Plan 30), UR-R2.8, UR-R2.11; Pinokio, fully local and older-Linux setups (Plan 30); the Windows discovery.json race (not yet filed as an issue).
 - **Advisor session:** session_011EzfVzreGCJJQnTuXpbib9 (M-INT).
-- **run.yaml:** /root/astrid-dev/plans/29-update-and-release/.otto/runs/plan29-2026-11-08/run.yaml (gitignored), with state.md beside it.
-- **Rulings on record:** Runtime #37 merged on verdict (a). Release0 seed: served-profile public-field seed (UR-R2.1c). Content seed deferred (UR-R2.1d, 0.0.11). Owner decision 16: fix R2.4 (PR #40, merged), R2.9 fixed (PR #41, merged), defer R2.2, R2.3, R2.5.
-- **Current candidate:** Runtime `52ec0578` (int); Agent `cand/29-r10` `6e9c4f9c`; App `cand/29-r10` `0f3149fb`; manifest sha256 `19094b9f…`; release 10, required unset.
-- **Current proof:** run `42523811014` (`row=direct`) on the final heads. Diagnostics still running: `42520643111` (seed on the older code) and `42523467819` (R2.9 on the older seed). Not proof.
-- **Next, in order:**
-  1. Read `42523811014`: five direct jobs, the evidence gate, and the release0 legs past the seed.
-  2. Reviewer's check of the seed commit: no blocking finding, or route and re-pin.
-  3. Publish per decision 15 only if all proofs pass and round 2 has no blocking finding. Owner go still needed.
-- **Open items outside Release 10:** Windows discovery.json race (a Runtime bug issue, not yet opened; needs owner go). Plan 31, Green mains, Plan 30 and catalog clean-up wait for owner go.

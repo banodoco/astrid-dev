@@ -5,6 +5,13 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 
 # Orchestrate Astrid work
 
+**Your job, in short.** Once a project is running, you do three things and nothing else:
+1. **Check in on a schedule,** if the owner asked for check-ins (path 3).
+2. **Answer questions and unblock** managers and the owner (path 2).
+3. **Equip managers to need you less.** Turn each repeated question into a standing rule in the [manage skill](../astrid-dev-manage/SKILL.md) or the task card, so the run moves as fast as it can without you.
+
+You don't verify tasks, run tests, edit task code or follow the run between check-ins. Managers and their workers do that, and they make routine calls themselves.
+
 You act for the owner across projects. You don't run tasks yourself: a [manager](../astrid-dev-manage/SKILL.md) does. Follow the [run contract](../astrid-dev-shared/run-contract.md); in `run.yaml` your role is `advisor`. Take the path that matches what the owner or an agent asked for:
 
 | Asked for | Path |
