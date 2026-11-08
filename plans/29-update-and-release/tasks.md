@@ -175,6 +175,19 @@ This plan sets its own review policy, as the [run contract](../../skills/astrid-
 
 The stage stops after a round with no blocking findings, or after three rounds. A blocking finding still open after three rounds goes to the owner, not to a fourth round. Non-blocking findings are recorded, and are done only if the owner asks.
 
+### Round 2 review (UR-R2)
+
+Reviewed on Runtime `3d19ba9a`, Agent `41170fdb`, App `73a8500d` (superseded; see below). Round 2 found one blocking item, fixed; the rest are recorded and not done unless the owner asks.
+
+- **UR-R2.1 BLOCKING (fixed).** The Release 9 legs of the release-candidate run failed with exit 2: `bootstrap_release9` called `journey.bootstrap` without the Agent checkout, so the consent probe never ran, `--yes` was not passed, and Release 9's plain install stopped for setup consent with no terminal. Fix: pass `agent=args.agent_checkout`, with three focused tests (`tests/test_journey_release9_consent.py`). Agent `cand/29-r10` `291b5cbd`; App `cand/29-r10` `26585ed9` (agent pin only). Kept on the candidate branch, not `int`, so promotion takes this exact commit (M-INT).
+- **UR-R2.2** Runtime `update.py` `_helper`: refusal reasons other than `busy`, `autostart-off` and `unsupported-service-manager` come back as `inputs-unavailable`. Not user-visible.
+- **UR-R2.3** App `updateOperation.ts` `refusalMessageOf`; Agent `update_job.py` `reconcile`: after a dead worker, the first Update now click records the failure (409 `kind: failed`) and a second click starts the update. User-visible: one extra click.
+- **UR-R2.4** Runtime `update.py` `UpdateAdmission.status`: every status poll now starts the helper on macOS and Windows; on Windows an unresolved job also starts PowerShell each poll. A cost, not correctness.
+- **UR-R2.5** Agent `update_job_platform.py` `finished_result` and `parse_systemd_result`: needs systemd 251+ (`--timestamp=unix`); below that the check fails safe and records nothing. Plan 30 item.
+- **UR-R2.6** App `int/29-update-and-release` still holds release 9 and the old tuple. After UR-14, merge `main` back into `int/29-update-and-release` so `release-guard` does not demand release 11.
+
+**Candidate identity (superseded runs are not evidence):** Runtime `3d19ba9a`; Agent `cand/29-r10` `291b5cbd`; App `cand/29-r10` `26585ed9`; manifest sha256 `4771c1e6…`. Earlier runs `42515380385` and `42515533405` are cancelled.
+
 ## Resume note (manager state, for compaction)
 
 - **Advisor session:** session_011EzfVzreGCJJQnTuXpbib9 (M-INT).
@@ -186,6 +199,7 @@ The stage stops after a round with no blocking findings, or after three rounds. 
   - App `cand/29-r10` `55a8f96f`: int `30538edb` plus the repin (agent `41170fdb`, runtime `3d19ba9a`). Release stays 9 until publish. `public/install*` unchanged.
   - Manifest sha256 `3162f384…`; `install.sh` `591c4c51…`; `install.ps1` `bba3f2ed…`; `install` `b5270a2d…`. Pinokio `d15c58b5` (astrid-pinokio int/r1, informational). `pin.mjs --check` passes.
   - Proof dispatched: journey.yml `row=direct` on `cand/29-r10`, run 42515380385. Round 2 review running read-only on the same SHAs.
+- **Round 2 (UR-R2):** done; see above. Run `42516001413` is the proof run for `291b5cbd`/`26585ed9`.
 - **Next steps, in order:**
   1. Read run 42515380385 and confirm which of UR-13m and UR-13n's proofs it covers. Dispatch any that it does not cover.
   2. Collect round 2 review findings. Any blocking finding goes to a UR-R2.n card before publish.
