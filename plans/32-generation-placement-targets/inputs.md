@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — Hannah agreed this scope on 8 Nov 2026 (recorded in https://github.com/banodoco/astrid-dev/pull/79), with two amendments: (1) a default placement that can be changed per generation (including which local GPU, attached server or RunPod), built towards from the first version; (2) pods and other sessions may outlive a job when warm or explicitly started, governed by a lease with a default idle timeout beyond the job. Owner @AstridPseudon. Sequenced before Plan 12. Estimate, after the 8 Nov extension: about 6–9 days of engineering plus the live proof.
+**Scope decision:** Accepted — Hannah agreed this scope on 8 Nov 2026 (recorded in https://github.com/banodoco/astrid-dev/pull/79), with two amendments: (1) a default placement that can be changed per generation (including which local GPU, attached server or RunPod), built towards from the first version; (2) pods and other sessions may outlive a job when warm or explicitly started, governed by a lease with a default idle timeout beyond the job. Owner @AstridPseudon. Sequenced before Plan 12. Estimate, after the 8 Nov extension: about 6–9 days of engineering, raised to about 8–11 days on 8 Nov for the `vibecomfy.workflows` hooks and T6b (`merge-run/path-review/H3-GENERALIZATION.md` section 4); the live proof is Plan 34's.
 
 **Prior art:** the merge run's routing map, `merge-run/review/generation-routing-map.md` in `banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`, written while proving `astrid generate --target runpod` live on 7-8 Nov 2026. It lists six placement decision points, two remote mechanisms, five dry-run divergences, three duplicated sfx/foley RunPod refusals and an h3_av-specific pod command in the runpod pack's `remote_placement.py`. About 43 test references are affected, and the routing map estimates 6-10 hours for the Placement half alone. [Plan 02](../02-consistent-generation/plan.md) lands the guard-rail tests and a targeted routing fix first. Next: re-check each cited line against current source before work starts.
 
@@ -47,9 +47,9 @@ Plan 32 consumes [Plan 33](../33-unblock-live-generation/plan.md)'s landed revis
 
 | Repository | Ref | SHA | Role |
 |---|---|---|---|
-| astrid-agent | Plan 33's landed head (`main` after its U9) | Pending — recorded at Plan 33 U9. Next: copy it here | base for T1–T6 |
+| astrid-agent | Plan 33's landed head (`main` after its U9) | Pending — recorded at Plan 33 U9. Next: copy it here | base for T1–T6b |
 | astrid-agent, Plan 33's base | `cand/plan06-agent-20261107-33` | `5eac07e3fcadf8a6cca7eb6cf77c0fe234590894` | where the cited lines and selectors were checked (8 Nov) |
-| VibeComfy | the pin in Plan 33's landed Agent | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` unless Plan 33 moved it | base for T4 and T6's VibeComfy changes |
+| VibeComfy | the pin in Plan 33's landed Agent | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` unless Plan 33 moved it | base for T4's and T6b's VibeComfy changes |
 | astrid-runtime | `runtime.lock.json` `source_commit` in Plan 33's landed Agent | `b983b0457dffbfd435e74a5c828e129e8ec46ba3` unless moved | fixed |
 | runpod-lifecycle | the pin in Plan 33's landed Agent | `f2948817eeb94af8dee76be21f6d673724f1606e` unless moved | fixed; `ship_and_run` (`src/runpod_lifecycle/runner.py:88`) |
 
@@ -66,8 +66,18 @@ Line numbers in [tasks.md](tasks.md) are at Agent `5eac07e3f` and must be re-che
 
 Recorded from the lead's relay of the owner's choices (Hannah, 8 Nov 2026, about 15:40Z):
 1. **CPU only for now.** Every task is provable on CPU, with no paid pods. The live proof (T7) leaves this plan and becomes a later pass of [Plan 34](../34-real-gpu-proof/plan.md). That plan comes right after Plan 33 completes on CPU, before this plan, because the priority is to get unblocked and running on GPU, then elegance.
-2. **Review rounds: owner-agreed 2, lead recommendation 3.** The row is set to at most 3. The reason for 3 is the run contract's case for a cross-repository contract change: an Agent plus VibeComfy integration, three new extension points, and the deletion of several routes (the bridge, the second `/view` client, `pip_embedded`, `checkout_server`, h3's route). Pending owner agreement of the third round.
+2. **Review rounds: at most 3, owner-agreed** (D3, M-79, on the lead's recommendation). The reason is the run contract's case for a cross-repository contract change: an Agent plus VibeComfy integration, three new extension points, and the deletion of several routes (the bridge, the second `/view` client, `pip_embedded`, `checkout_server`, h3's route).
 3. **The pack extension protocol is its own plan,** [Plan 17](../17-vibecomfy-extensibility/plan.md). This plan creates only the three points it needs (`generation.engine`, `generation.machine`, `vibecomfy.workflows`) and references Plan 17 for the rest.
+
+Decided by the owner at about 16:05Z (M-79, [ledger](https://github.com/banodoco/astrid-overnight-2026-11-05/blob/merge-run/2026-11-07/merge-run/DECISIONS-LEDGER.md)):
+
+4. **D1, the comfy packs:** delete the old `comfyui` pack and `comfy_wrap` in T2b, which also owns the engine merge. This supersedes M06-4's hold on Plan 06 PK-15B for these packs.
+5. **D2, the rename:** rename `--target` to `--placement` (and `target_policy` to `placement_policy`) in one change in T3, updating the App's callers, with no alias.
+6. **D3:** 3 review rounds (decision 2 above).
+
+The run shape is also set: one plan per manager at a time, Plan 33 first, then Plan 34, then this plan.
+
+The scope decision above covers the original scope; the 8 Nov extension is confirmed when this plan is next in line.
 
 ## Ambiguity pass (8 Nov 2026, from code)
 
@@ -79,12 +89,14 @@ Settled from code at Agent `5eac07e3f` and VibeComfy `e65f4941`:
 - **The `engines:` pack property is unused** (`schemas/v3/pack.json:195`), so T2 deletes it.
 - **Plan 33 U6's cache is keyed by lock row** (`model_downloader.py:173-177`), not in ComfyUI layout. T5 moves the entries into the models root by rename on the same volume, so nothing is downloaded again.
 - **The old T6 question about VibeComfy's `PluginAPI` growing a node-pack hook** is answered by the bullet above.
+- **`build`, not VibeComfy ops or the router.** The Agent never calls VibeComfy ops or the router (no `lookup_op`, `vibecomfy.ops` or `vibecomfy.router` use), so h3's graph builder becomes the point's `build` field instead of a second call path (`merge-run/path-review/H3-GENERALIZATION.md` section 2).
+- **h3's `comfy_commit` and model rows are an inverted dependency** (`compile.py:576,774,1115`, `generation.py:173-188,265`). T2 makes them literals in h3's templates.
+- **`license_notice` already exists** as a `ReadyMetadata` extra (VibeComfy `ready_templates/audio/hunyuan_video_foley.py:56`, Agent `entries.py:89,441`). No licence field is needed.
+- **T4 keeps `model_downloader.py`,** because RunPod installs through it until T5 (`TASKS-SENSE-CHECK.md` section 8). **T3 precedes T2b,** because both touch `sdk/generation.py`.
 
-### Genuine owner decisions
+### Open owner decisions
 
-- **D1, Plan 06 PK-15B (held, M06-4).** T2b merges `comfyui` and `vibecomfy-h3` into one base engine, which deletes the Linux `comfyui` recipe, and that is PK-15B's scope. Recommended: release PK-15B's engine half to T2b. Alternative: keep two engines through this plan, with two warm machines and two cache users.
-- **D2, renaming `--target` to `--placement`** (and `target_policy` to `placement_policy`) in T3. Recommended: rename in one change, updating the App's callers, with no alias. Alternative: keep `--target` as a deprecated alias for one release.
-- **D3, the third review round** (owner decision 2 above).
+None. D1–D3 were decided on 8 Nov (owner decisions 4–6 above).
 
 ## References
 

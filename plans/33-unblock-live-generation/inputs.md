@@ -33,7 +33,7 @@ Key facts the tasks rely on (Agent `5eac07e3f`, VibeComfy `e65f4941`):
 - `PLAN-SENSE-CHECK.md` rated the plan good with edits. Applied: U2 is interim, with the receipt rows and a non-circular check; `--align check|trust`; h3_av as one run per job; the corrected storage and `comfy_wrap` facts.
 - `TASKS-SENSE-CHECK.md` rated the task breakdown ready with edits. Applied:
   - `-m integration` and the full environment in `PYT_POD`;
-  - U5 shrunk to the dead binder, with the legacy route moved to Plan 32 T6;
+  - U5 shrunk to the dead binder, with the legacy route moved to Plan 32 T6b;
   - the uncovered-entry case pointed at an explicit entry;
   - the receipt check moved into the host;
   - a validating stand-in;
@@ -72,7 +72,7 @@ Recorded from the lead's relay of the owner's choices (Hannah, 8 Nov 2026, about
 
 Decided by the owner at about 16:05Z (M-79, [ledger](https://github.com/banodoco/astrid-overnight-2026-11-05/blob/merge-run/2026-11-07/merge-run/DECISIONS-LEDGER.md)):
 
-4. **D1, video with an image but no entry:** `generate video` refuses, with guidance to `--entry h3`, until Plan 32 T6 (U4).
+4. **D1, video with an image but no entry:** `generate video` refuses, with guidance to `--entry h3`, until Plan 32 T6b (U4).
 5. **D2, scope:** the amended scope is accepted (the Scope decision above).
 6. The `comfyui` and `comfy_wrap` packs are deleted by Plan 32 T2b, superseding the M06-4 hold for them. They stay in this plan.
 
@@ -83,7 +83,7 @@ Settled from code at Agent `5eac07e3f`, VibeComfy `e65f4941` and lifecycle `f294
 - **U3: the `source_video` rejections are not on the sfx path.** Foley's video is a media input that travels in `managed_assets` and `upload_media`. The host and child rejections cover only the separate `source_video` input, so they stay.
 - **U4: the Matrix request does not use `_refs`.** It has no reference images, so it uses `native_h3_continuation`, whose LoRA is locked. The Step 0 is resolved.
 - **U4: h3 through `generate` already uses the host bind.** Its own pod route is reached only with `--placement runpod`, so U4 is deletion.
-- **U5 is only the dead binder.** The rest of the legacy route is wired into `generic_host.py` (five `endpoint_checkout` imports) and h3's `legacy_prepared` route, so it moves to Plan 32 T6. `comfy_wrap` and `comfyui` stay here, because Plan 32 T2b deletes them (M-79).
+- **U5 is only the dead binder.** The rest of the legacy route is wired into `generic_host.py` (five `endpoint_checkout` imports) and h3's `legacy_prepared` route, so it moves to Plan 32 T6b. `comfy_wrap` and `comfyui` stay here, because Plan 32 T2b deletes them (M-79).
 - **U6 reuses the existing verified model cache** (`--model-cache-root`, keyed by the lock row). No `extra_model_paths.yaml` or receipt change is needed. The directory takes the engine contribution key `comfyui`.
 - **U7: an engine change with an idle retained pod is refused today** (`adapter.py:461`). Reuse would make that refusal common, so U7 releases the idle pod instead. This is the third change allowed before the stop rule.
 

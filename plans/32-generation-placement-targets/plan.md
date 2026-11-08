@@ -16,7 +16,7 @@ Every generation follows one path, whatever its modality (image, edit, video, vo
 4. **Run:** VibeComfy prepares the ComfyUI prompt, and it is posted to that place's ComfyUI. Readiness is judged against *that place's* inventory.
 5. **Retrieve:** outputs come back to a local destination over the same `/view` client for every place.
 
-Modality only changes the contents of the manifest and the entry's declared inputs and outputs. It never adds a branch to the path. **h3_av becomes a VibeComfy plugin entry**: one pack with one contribution to the `vibecomfy.workflows` extension point, which registers its templates, operation and route through VibeComfy's existing `PluginAPI`. No h3 code remains on Astrid's path.
+Modality only changes the contents of the manifest and the entry's declared inputs and outputs. It never adds a branch to the path. **h3_av becomes a VibeComfy plugin entry**: one pack with one `vibecomfy.workflows` contribution (ready root, entries, optional `build` and `finalize`). No h3 code remains on Astrid's path.
 
 The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reuse within a lease) is [Plan 33](../33-unblock-live-generation/plan.md). This plan replaces the mechanisms Plan 33 patches.
 
@@ -32,7 +32,7 @@ The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reus
   - h3_av as a VibeComfy plugin entry, with h3's existing pod route generalized into the RunPod machine route;
   - deleting every superseded route;
   - one meaning per term.
-- **Not included:** multi-pass h3 requests, prepared or qualified workers, resuming a parent job; new providers; Wan2GP ([Plan 12](../12-multiple-inference-routes/plan.md) consumes this plan); splitting `generic_host` ([Plan 13](../13-execution-host-refactor/plan.md)).
+- **Not included:** multi-pass h3 requests, prepared or qualified workers, resuming a parent job; VibeComfy ops and router as an Astrid call path; new providers; Wan2GP ([Plan 12](../12-multiple-inference-routes/plan.md) consumes this plan); splitting `generic_host` ([Plan 13](../13-execution-host-refactor/plan.md)).
 
 ## Design
 
@@ -51,7 +51,7 @@ There are four pieces, each the only one of its kind:
 
 **Leases stay minimal:** an owner and an idle timeout (by default beyond the job, overridable in the Placement policy). A warm machine is reusable by any later job with the same base environment, so the lease is keyed on the base id. An orphaned machine is a bug by construction.
 
-**Modality is data.** The entry declares its modes, inputs (including media such as a source video) and outputs, plus at most one optional `finalize` step. `finalize` is the only new piece: a typed field of the `vibecomfy.workflows` point for post-processing such as ffmpeg compose and verify, run on the same machine after the outputs come back, because VibeComfy has no hook for code that runs after ComfyUI. There is one `generate(entry, inputs, placement)`, with image, video and audio as thin aliases. Refusals come from entry data, in one place.
+**Modality is data.** The entry declares its modes, inputs (including media such as a source video) and outputs, plus an optional `build` (the graph built from the inputs, on CPU, also used by the dry run) and an optional `finalize` step. These are the only new pieces, both typed fields of the `vibecomfy.workflows` point. `finalize` is for post-processing such as ffmpeg compose and verify, run on the same machine after the outputs come back, because VibeComfy has no hook for code that runs after ComfyUI. There is one `generate(entry, inputs, placement)`, with image, video and audio as thin aliases. Refusals come from entry data, in one place.
 
 **Terms, one meaning each** (renamed as each task touches the code):
 - **engine:** a base environment recipe.
@@ -88,14 +88,14 @@ The full rename list is in [inputs.md](inputs.md#planning-evidence).
 Plan 33 lands first, then the first pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows it (owner, 8 Nov). Plan 33's CPU pod-path test is the characterization. Then:
 
 1. T1: characterize every capability.
-2. T2: the manifest and the engine point; T2b: one base engine (owner decision D1 on Plan 06 PK-15B).
-3. T3: Placement.
+2. T2: the manifest and the engine point.
+3. T3: Placement, then T2b: one base engine, with the `comfyui` and `comfy_wrap` packs deleted (owner, M-79).
 4. T4: the local run path, with `align`.
 5. T5: RunPod as a remote machine, through the machine point.
-6. T6: one `generate`, with h3_av as one workflow contribution.
+6. T6: one `generate`, with the `vibecomfy.workflows` point and its `build` and `finalize` hooks; then T6b: h3_av becomes one contribution.
 7. The review rounds, then T8: completion.
 
-All of it is CPU only. The live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md). T2 and T3 can run in parallel. T4 needs both, and T5 needs T4. Each task deletes what it replaces in the same change, so no task leaves two ways of doing one thing. See [tasks.md](tasks.md).
+All of it is CPU only. The live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md). T2 and T3 can run in parallel. T2b needs both, T4 needs T2b, and T5 needs T4. Each task deletes what it replaces in the same change, so no task leaves two ways of doing one thing. See [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 

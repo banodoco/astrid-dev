@@ -20,7 +20,7 @@ This is the short-term fix. It adds no new architecture. It finishes the missing
   - h3_av reaching the pod the same way as every other generation, with MiniMax H3 as the video default;
   - the engine's models kept on the storage volume, so the 95.8 GB downloads once rather than for every pod;
   - reusing a live pod for the next job (the checks that refuse it relaxed);
-  - deleting the dead RunPod preparation binder (the rest of the legacy second RunPod route moves to Plan 32 T6);
+  - deleting the dead RunPod preparation binder (the rest of the legacy second RunPod route moves to Plan 32 T6b);
   - the landing.
 
   Music has not yet produced an output live; its CPU result is recorded here, not assumed.

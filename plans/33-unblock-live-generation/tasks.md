@@ -136,7 +136,7 @@ If a CPU case shows another controller-versus-pod bug that needs more than the w
    - the monkeypatched names in `tests/packs/h3_av/test_planner.py::test_transform_dry_run_never_touches_runtime_or_worker_selection`.
    
    Record each in the commit body.
-3. **Video default.** With no `--entry` and no `--model`, `generate video` given an H3 `request` and `asset_map` resolves to `h3` on every placement. `ltx-2.3` becomes explicit-only (add it to `_EXPLICIT_ONLY_ENTRIES`, `sdk/generation.py:36`). Prompt-only video keeps its refusal (`_prompt_only_video`, line 247). `--image-ref` with no entry refuses with guidance to `--entry h3`, until Plan 32 T6 gives h3 declared media inputs. The owner decided this (M-79, Plan 33 D1 in [inputs.md](inputs.md#owner-decisions)). Step 0: `git grep -n "ltx-2.3" tests` and list each test that asserts ltx as the selected default. Change only those, and name them in the commit body. `test_registry.py` catalog listings are not defaults; leave them. Two tests change without naming ltx:
+3. **Video default.** With no `--entry` and no `--model`, `generate video` given an H3 `request` and `asset_map` resolves to `h3` on every placement. `ltx-2.3` becomes explicit-only (add it to `_EXPLICIT_ONLY_ENTRIES`, `sdk/generation.py:36`). Prompt-only video keeps its refusal (`_prompt_only_video`, line 247). `--image-ref` with no entry refuses with guidance to `--entry h3`, until Plan 32 T6b gives h3 declared media inputs. The owner decided this (M-79, Plan 33 D1 in [inputs.md](inputs.md#owner-decisions)). Step 0: `git grep -n "ltx-2.3" tests` and list each test that asserts ltx as the selected default. Change only those, and name them in the commit body. `test_registry.py` catalog listings are not defaults; leave them. Two tests change without naming ltx:
    - `test_runpod_engine_selection.py::SLOTS` includes `('video', 'i2v')` with an image. Add the new refusal's code (name it `video_entry_required`) to `REFUSALS` (line 25).
    - `test_uncovered_entry_refuses_before_any_task` (line 163) relies on i2v auto-resolving to ltx. Repoint it to an explicit `entry='ltx-2.3'`.
 4. Update the help text (`packs/generation/pack.yaml` ~1600, ~1697; `actions/generate_video/STAGE.md`). Note there that local H3 needs a source video or reference images.
@@ -153,7 +153,7 @@ If a CPU case shows another controller-versus-pod bug that needs more than the w
 
 **Input:** the U6 head. **Deliverable:** `_bind_runpod_preparation` (`sdk/generation.py:341`) deleted; it has no caller. **Authority:** CPU only.
 
-The rest of the legacy route moves to [Plan 32](../32-generation-placement-targets/plan.md) T6, which already deletes prepared workers. That covers `runpod_route` and `endpoint_checkout` in `run.py`, `endpoint_checkout.py`, the legacy branch of `resolve_workflow_descriptor` and the `placement` parameter of `workflow()`. On `5eac07e3f`:
+The rest of the legacy route moves to [Plan 32](../32-generation-placement-targets/plan.md) T6b, which deletes prepared workers and so the route's last caller. That covers `runpod_route` and `endpoint_checkout` in `run.py`, `endpoint_checkout.py`, the legacy branch of `resolve_workflow_descriptor` and the `placement` parameter of `workflow()`. On `5eac07e3f`:
 - `generic_host.py` imports `endpoint_checkout` at five sites (1400, 9412, 9795, 11697, 17156);
 - h3's `legacy_prepared` route (`transform/run.py:1947-1952`) still calls `workflow(placement="runpod")`.
 
