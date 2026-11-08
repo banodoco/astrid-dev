@@ -11,6 +11,7 @@ Read the [shared run contract](../astrid-dev-shared/run-contract.md), the assign
 
 - Confirm the actual repository, ref/SHA, dirty state, current base, donor identities, and custody before mutation. Preserve user changes; report mismatched or missing source identity to the manager.
 - Trace the assigned behavior from setup and inputs through the existing action/state path to its observable result and focused acceptance check. Reuse current code and fix demonstrated causes at their source. Make the smallest complete in-scope change.
+- On an `X` or `S` task, delegate bounded research, reading, mechanical edits and running checks to `N` helpers, as the run contract requires, and keep the judgment and the final change yourself.
 - Use the cheapest venue that can prove the stated claim. Local focused checks are the default; use a hosted runner only for a real OS/CI requirement, and GPU/remote infrastructure only when it is both explicitly authorized and required by live hardware or that environment. A higher venue alone does not make proof stronger.
 - Run only explicitly named, feature-focused checks. Never run broad, auto-discovered, repository-wide, or full affected suites, including opt-in suites. Planning work runs no checks unless requested. Do not invent selectors or commands: use documented narrow checks supported by the current repository and brief.
 
