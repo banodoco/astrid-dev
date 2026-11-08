@@ -1,10 +1,18 @@
-# VibeComfy extensibility with H3_AV
+# VibeComfy plugins: document and prove the extension path
 
 **Vision gaps:** [Composable capabilities](../../vision/gaps/LS-003-full-stack-contributions.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 Make it easier for people and their agents to build and share creative tools on VibeComfy. Use H3_AV, a user-provided abstraction over MiniMax H3 workflows, to improve existing extension primitives and demonstrate customization and composition without forking core. This remains a draft; queue status, owner, and estimate are in the [project queue](../../README.md).
+
+## Direction (8 Nov 2026)
+
+An independent review (merge-run desk, `merge-run/path-review/H3-AS-VIBECOMFY-EXTENSION.md`) found that VibeComfy's existing `vibecomfy.plugins` mechanism is the extension point. [Plan 32](../32-generation-placement-targets/plan.md) (T2, T6) moves h3_av onto it as a VibeComfy plugin entry, with no h3 code on Astrid's path. After Plan 32 T6, this plan documents the plugin contract (templates, operations, routes, the per-entry `finalize` step) and proves it with a **second, non-h3 plugin**. This direction is pending the owner's scope agreement.
+
+**Owner decisions needed:**
+- where the h3 plugin lives;
+- its licence: Agent code is Apache-2.0, VibeComfy is MIT, and the H3 weight licences are not recorded in source.
 
 ## Goal and scope
 

@@ -14,7 +14,7 @@ Every generation follows one path, whatever its modality (image, edit, video, vo
 4. **Run:** VibeComfy prepares the ComfyUI prompt, and it is posted to that place's ComfyUI. Readiness is judged against *that place's* inventory.
 5. **Retrieve:** outputs come back to a local destination over the same `/view` client for every place.
 
-Modality only changes the contents of the manifest and the entry's declared inputs and outputs. It never adds a branch to the path.
+Modality only changes the contents of the manifest and the entry's declared inputs and outputs. It never adds a branch to the path. **h3_av becomes a VibeComfy plugin entry**, using VibeComfy's existing `vibecomfy.plugins` mechanism (templates, operations, routes), so no h3 code remains on Astrid's path.
 
 The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reuse within a lease) is [Plan 33](../33-unblock-live-generation/plan.md). This plan replaces the mechanisms Plan 33 patches.
 
@@ -27,10 +27,10 @@ The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reus
   - per-request model sets and the storage volume as a model cache;
   - warm reuse under a minimal lease;
   - one `generate` entry point, with modality as data;
-  - h3_av as an ordinary job;
+  - h3_av as a VibeComfy plugin entry, with h3's existing pod route generalized into the RunPod machine route;
   - deleting every superseded route;
   - one meaning per term.
-- **Not included:** new providers; Wan2GP ([Plan 12](../12-multiple-inference-routes/plan.md) consumes this plan); splitting `generic_host` ([Plan 13](../13-execution-host-refactor/plan.md)).
+- **Not included:** multi-pass h3 requests, prepared or qualified workers, resuming a parent job; new providers; Wan2GP ([Plan 12](../12-multiple-inference-routes/plan.md) consumes this plan); splitting `generic_host` ([Plan 13](../13-execution-host-refactor/plan.md)).
 
 ## Design
 
@@ -49,7 +49,7 @@ There are four pieces, each the only one of its kind:
 
 **Leases stay minimal:** an owner and an idle timeout (by default beyond the job, overridable in the Placement policy). Because every slot shares one base environment, a warm machine is reusable by any later job. An orphaned machine is a bug by construction.
 
-**Modality is data.** The entry declares its modes, inputs (including media such as a source video) and outputs. There is one `generate(entry, inputs, placement)`, with image, video and audio as thin aliases. Refusals come from entry data, in one place.
+**Modality is data.** The entry declares its modes, inputs (including media such as a source video) and outputs, plus at most one optional `finalize` step. `finalize` is the only new piece: it is post-processing such as ffmpeg compose and verify, run on the same machine after the outputs come back, because VibeComfy has no hook for code that runs after ComfyUI. There is one `generate(entry, inputs, placement)`, with image, video and audio as thin aliases. Refusals come from entry data, in one place.
 
 **Terms, one meaning each** (renamed as each task touches the code):
 - **engine:** a base environment recipe.
@@ -108,6 +108,7 @@ T2 and T3 can run in parallel. T4 needs both, and T5 needs T4. Each task deletes
 - The controller never checks model files for a RunPod job (grep: no generation bridge, no inventory channel).
 - The dry run equals the live run.
 - No orphaned machine exists, and warm machines are reused within their lease.
+- `grep -ri h3 astrid/core astrid/sdk` returns nothing (about 156 lines today).
 - A live proof runs the same matrix on RunPod and locally (T7).
 
 The proof does not cover new providers, Wan2GP or the `generic_host` split. [F-003](../../vision/gaps/F-003-creative-execution.md) does not close automatically.

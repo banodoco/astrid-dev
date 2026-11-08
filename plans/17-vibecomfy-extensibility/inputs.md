@@ -8,8 +8,8 @@ Repository ownership, starting branch and SHA, retained dirty work, and candidat
 
 | Input | Why it matters | Identity / limits |
 |---|---|---|
-| Current VibeComfy implementation | Reveals existing workflow primitives and extension contracts to reuse. | Owning source and exact identity TBD at setup. |
-| H3_AV | User-provided abstraction over MiniMax H3 workflows in VibeComfy; example for customization and composition. | Owning pack/source and exact identity TBD at setup; do not infer APIs or gaps. |
+| Current VibeComfy implementation | Reveals existing workflow primitives and extension contracts to reuse (`vibecomfy.plugins`). | Reviewed at VibeComfy `e65f4941` (8 Nov 2026); re-freeze at setup. |
+| H3_AV | User-provided abstraction over MiniMax H3 workflows in VibeComfy; example for customization and composition. | Reviewed at astrid-agent `5eac07e3f`, `astrid/packs/h3_av` (8 Nov 2026); moves to a VibeComfy plugin in Plan 32. Re-freeze at setup. |
 
 ## References and evidence
 

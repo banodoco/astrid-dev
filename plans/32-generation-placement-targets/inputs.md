@@ -18,6 +18,14 @@
 
 So this plan now also owns the manifest, `align`, per-request model sets, the volume cache, a single submit and retrieve, RunPod as a remote machine, and modality as data. An independent sense check (`merge-run/path-review/PLAN-SENSE-CHECK.md`) recommended the remote-machine model for RunPod over carrying the pod's inventory to the controller. The short-term unblock moved to [Plan 33](../33-unblock-live-generation/plan.md).
 
+**h3_av as a VibeComfy plugin** (`merge-run/path-review/H3-AS-VIBECOMFY-EXTENSION.md`, adopted with one exception):
+- VibeComfy's `vibecomfy.plugins` mechanism already registers templates, operations and routes, and its templates carry the model and node rows.
+- h3's pod route already is the remote-machine model, so T5 generalizes it.
+- h3 currently reads its model URLs from the Agent's engine lock, which is the dependency upside down.
+- 20 h3 sites leave Astrid (the table is in the report).
+- The one exception is a new optional per-entry `finalize` step for post-ComfyUI work (ffmpeg compose and verify).
+- [Plan 17](../17-vibecomfy-extensibility/plan.md) then documents the plugin contract and proves it with a second plugin.
+
 **Glossary and renames** (HOLISTIC.md section 7):
 - `--target` → `--placement`, and `target_policy` → `placement_policy`.
 - Profiles: `pip_embedded` and `checkout_server` are deleted (T4), and `local_server` becomes the one local `run` path.
