@@ -62,6 +62,7 @@ From the owner, 7 Nov 2026 (session chat):
 3. **Review rounds:** at most three before publishing (owner, 7 Nov 2026). Recommended for cross-repository release work, including a protocol never run end to end.
 4. **Branch protection on App `main`:** the owner will turn it on later. UR-6's required check is ready before then.
 5. **Start and check-ins:** start now, run by a manager under the Manage skill, with advisor check-ins every two hours until this plan's completion PR merges (owner, 8 Nov 2026).
+6. **Which checks count:** only checks relevant to this project's scope, narrowly defined, that weren't already failing on the base. A check already red on `main` doesn't block a merge and isn't this project's to fix; full CI health is a separate project. Task work lands on each repository's `int/29-update-and-release` branch; moving the reviewed candidate to `main` follows the Release skill (owner, 8 Nov 2026). App `main` was red on Tests, E2E and Lanes, and Agent `main` on the Windows task-host journey, when this run started.
 
 ## Source identities
 
