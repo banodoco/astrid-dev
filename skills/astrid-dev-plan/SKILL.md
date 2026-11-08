@@ -51,6 +51,13 @@ In the [tasks template](../../templates/project/tasks.md), every task has a scop
 - **A route:** N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration).
 - **Dependencies,** including one between tasks with overlapping scopes, also across other active projects. If a shared surface needs one model first, consult Advise.
 - **Before implementation:** its actual base and donor revisions, exact focused checks and authority.
+- **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
+  - other repositories come from public git at pinned commits;
+  - no GitHub archive downloads;
+  - no private repositories;
+  - small fixtures go inline in the task card.
+
+  Add a missing script there, not in the plan folder.
 
 End with the review row, before any publishing task, which depends on it. Recommend its number of review rounds from risk and complexity (guide in the run contract), say why, and record the owner's agreed number in `inputs.md`. With 0, leave the row out.
 

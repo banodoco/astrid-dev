@@ -42,6 +42,10 @@ roles:
   plan_judgment: plan_judgment
   advisor: advisor
   completion_reviewer: completion_reviewer
+environment:
+  # The cloud environment workers are created in, and the smoke result per repository (env/smoke.sh).
+  cloud_environment_id: ""
+  smoke: {}   # e.g. astrid-agent: "ENV-PASS agent <selector> @ <sha>"
 checkin:
   # Only when the owner asks for advisor check-ins; leave empty otherwise.
   every: ""   # for example 60m
