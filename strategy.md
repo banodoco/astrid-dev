@@ -9,18 +9,18 @@ This page is the *why* and the sequence. Other facts each live in one place:
 
 When a project finishes, its completion PR updates this page (enforced by `scripts/check_completion.py`).
 
-**Last reviewed:** 2026-11-08, by the owner with the advisor.
+**Last reviewed:** 2026-11-08, by the owner with the advisor (Plan 29 completed; Release 10 published).
 
 ## Focus now
 
-1. **[F-001 Platform reliability](vision/gaps/F-001-platform-reliability.md).** Update now has never worked on a published install, so every other improvement reaches users only by reinstalling. Plan 29 makes updating work on Linux, macOS and Windows and publishes Release 10. Until that ships, it comes first.
+1. **[F-001 Platform reliability](vision/gaps/F-001-platform-reliability.md).** Release 10 (0.0.10) is published, so Update now works for normal installs on Linux, macOS and Windows. Less common setups (older Linux, Pinokio, fully local) remain, in [Plan 30](plans/30-update-everywhere/plan.md). The next releases are defined and published from astrid-dev, under [Plan 31](plans/31-releases-from-astrid-dev/plan.md).
 2. **[F-008 Portable generation](vision/gaps/F-008-portable-generation.md),** in parallel. Generation is what creators come for. It runs on its own track and follows [its route to closure](vision/gaps/F-008-portable-generation.md#route-to-closure).
 
 ## Sequence
 
 | Order | When | Gap | Plans | What creators get | Waiting on |
 |---|---|---|---|---|---|
-| 1 | Now | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 29](plans/29-update-and-release/plan.md) | Update now works on Linux, macOS and Windows; Release 10 | the owner's go on the release candidate |
+| 1 | Now | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 29](plans/29-update-and-release/plan.md) (done) | Done: Update now works on Linux, macOS and Windows for normal installs; Release 10 (0.0.10) published | — |
 | 1 | Now | [F-008](vision/gaps/F-008-portable-generation.md) | [Plan 33](plans/33-unblock-live-generation/plan.md) → [Plan 34](plans/34-real-gpu-proof/plan.md) | Every default slot and h3_av produce results on RunPod, proven on real GPUs | see the catalog |
 | 2 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 31](plans/31-releases-from-astrid-dev/plan.md) | Releases are defined, checked and published from astrid-dev, and users see versions such as 0.0.11 | the owner's go; Plan 29; astrid-dev `main` protection |
 | 3 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | Green mains (proposed): a Release rule plus a one-off fix batch, not a plan | Every product `main` passes its own checks, so a red check means a new regression | Release 10 ships |
