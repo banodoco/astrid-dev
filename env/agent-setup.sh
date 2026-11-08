@@ -4,7 +4,8 @@
 # Run from the root of an astrid-agent checkout. Builds <checkout>.env/ next to the checkout (never inside it):
 #   venv (Python 3.13, `-e .[dev]`, the Runtime + client pinned by runtime.lock.json, as CI's scripts/ci_install_runtime.py),
 #   runtime/   = banodoco/astrid-runtime at runtime.lock.json source_commit (ASTRID_RUNTIME_CHECKOUT),
-#   vibecomfy/ = VibeComfy at the checkout's own VIBECOMFY_ENGINE_REVISION (on PYTHONPATH and in VIBECOMFY_SOURCE).
+#   vibecomfy/ = VibeComfy at the checkout's own VIBECOMFY_ENGINE_REVISION (on PYTHONPATH and in VIBECOMFY_SOURCE),
+#   lifecycle/ = runpod-lifecycle at astrid/packs/runpod/pins.json (for agent-pytest-pod.sh).
 # Needs: uv, git, ffmpeg, network reads to PyPI and GitHub. Any failure here is an ENV error, never a test result.
 set -euo pipefail
 for t in uv git ffmpeg; do command -v "$t" >/dev/null || { echo "ENV: missing tool $t" >&2; exit 3; }; done
@@ -23,5 +24,7 @@ fetch_at https://github.com/banodoco/astrid-runtime "$E/runtime" "$RT"
 "$PY" -m pip install -q --disable-pip-version-check --no-input --no-deps "$E/runtime" "$E/runtime/packages/python"
 VC=$(cd "$E" && "$PY" -c 'from astrid.core.generation.vibecomfy_dependency import VIBECOMFY_ENGINE_REVISION as r; print(r)')
 fetch_at https://github.com/banodoco/VibeComfy "$E/vibecomfy" "$VC"
+LC=$("$PY" -c 'import json, sys; print(json.load(open(sys.argv[1]))["sources"]["lifecycle"]["revision"])' "$CO/astrid/packs/runpod/pins.json")
+fetch_at https://github.com/banodoco/runpod-lifecycle "$E/lifecycle" "$LC"
 dirname "$(command -v uv)" > "$E/uv-dir"
-printf 'python=%s\nruntime=%s\nvibecomfy=%s\n' "$("$PY" -c 'import sys; print(sys.version.split()[0])')" "$RT" "$VC" | tee "$E/setup.txt"
+printf 'python=%s\nruntime=%s\nvibecomfy=%s\nlifecycle=%s\n' "$("$PY" -c 'import sys; print(sys.version.split()[0])')" "$RT" "$VC" "$LC" | tee "$E/setup.txt"
