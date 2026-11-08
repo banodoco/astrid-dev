@@ -11,8 +11,10 @@ Every generation, from any pack or slot, decides where it runs exactly once and 
 The design has three pieces, each owned by one layer:
 
 1. **Job**, owned by packs: what to run (workflow, inputs, needs). Packs never choose placement or own pod commands.
-2. **Placement**, owned by the generation task pipeline (`GenerationFacade._generate_on_target`, astrid-agent `astrid/sdk/generation.py`): a frozen value `{kind: local|attached|managed|runpod, endpoint, policy (budget, consent, lifetime)}`. It is computed once, passed down and never re-inferred. The dry run computes the same Placement.
-3. **Target**, one implementation per kind: `prepare(placement)` returns a session, `run(session, job)` returns artifacts, `release(session)` always runs. Local ComfyUI, attached ComfyUI and RunPod implement it.
+2. **Placement**, owned by the generation task pipeline (`GenerationFacade._generate_on_target`, astrid-agent `astrid/sdk/generation.py`): a frozen value `{kind: local|attached|managed|runpod, device or endpoint, policy (budget, consent, lifetime)}`. It is computed once, passed down and never re-inferred. The dry run computes the same Placement.
+   - **Default and override:** the user (or project) sets a default placement, for example "local GPU 1", "attached server", or "RunPod 5090 in EUR-NO-1 on storage `storage`". Any single generation can override it. The producer resolves request override → project default → user default → built-in default, in that order and in one place. Choosing *which* local GPU is part of the Placement (`device`), so multi-GPU machines get the same default and override mechanism as remote targets. The first version may ship the default + override for target kinds already supported and build towards device selection; the Placement shape carries `device` from the start.
+3. **Target**, one implementation per kind: `prepare(placement)` returns a session, `run(session, job)` returns artifacts, `release(session)` is always called. Local ComfyUI, attached ComfyUI and RunPod implement it.
+   - **Sessions are leases, not job-scoped.** A session (for RunPod, a pod) may outlive the job that started it: a warm session can be reused by later jobs, and a session someone spun up explicitly lives until they release it. What it can never do is outlive its lease. Every session has an owner and an idle timeout (a default that extends beyond the job, overridable per Placement policy); when the lease expires with no job running, the Target releases it. "Release" after a job means "return to the lease", not necessarily "terminate". An orphan, meaning a running session with no owner or lease, is a bug by construction.
 
 - **Included:**
   - the Placement producer and its propagation through `workflow()`, the `vibecomfy.run` inputs schema (`pack.yaml`) and host parsing;
@@ -40,7 +42,7 @@ The source is the merge run's routing map, `merge-run/review/generation-routing-
 - **Duplicated sfx/foley RunPod refusals** in three places.
 - **The RunPod pack's `remote_placement.py` owns an h3_av-specific pod job command.**
 
-About 43 test references are affected. The routing map estimates 6-10 hours for the Placement half alone. The fix is to decide once and pass the result down, not to patch each site. Details and the choice are in [inputs.md](inputs.md#planning-evidence).
+About 43 test references are affected. The Placement half alone was estimated at 6-10 hours of engineering. The fix is to decide once and pass the result down, not to patch each site. Details and the choice are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
@@ -63,7 +65,8 @@ Hardware, budget and consent for the live proof are not yet decided; T5 needs an
 
 - Every default slot and h3_av, under {auto, local, runpod}, decides placement once; no re-inference site remains and there is one refusal site.
 - The dry run equals the live run for the same inputs.
-- No pod is created unless execution happens on it, and a pod or session is released on success, failure and cancellation.
+- No pod is created unless execution happens on it. Every session is held by a lease with an owner and an idle timeout, and is released when the lease ends; no orphaned session can exist, while warm and explicitly started sessions may outlive individual jobs.
+- A default placement can be set (user or project) and overridden per generation, resolved in one place; the Placement shape includes the local device.
 - The runpod pack holds no pack-specific pod command.
 - A live proof runs the same matrix (six default slots plus h3_av) on RunPod, plus local.
 
