@@ -32,6 +32,6 @@ Start at the first stage **not already established by evidence**; a fact-finding
 
 If a person has a goal, find the closest issue or existing task first. Otherwise offer 2–3 bounded choices from the [issues](https://github.com/banodoco/astrid-dev/issues) and [project catalog](../../plans/index.md), accounting for time, hardware and interests.
 
-Use the [GitHub contributor guide](../../docs/contribution-workflow.md) to **claim, propose, request a start decision, ask a question, submit multiple product PRs or finish a project**. Claiming is ownership, not authorization. No mandatory project conversation hub is created. The concise completion PR is an index of real evidence, not another database.
+Use the [GitHub contributor guide](../../docs/contribution-workflow.md) to **claim, propose, request a start decision, ask a question, submit multiple product PRs or finish a project**. Claiming is ownership, not authorization. No mandatory project conversation hub is created. The concise completion PR is an index of real evidence, not another database. When astrid-dev itself gets in your way, add a row to the add-only [process ledger](../../docs/process-ledger.md).
 
 **Authority:** Follow the [shared run contract](../astrid-dev-shared/run-contract.md), [contribution design principles](../../docs/contribution-design-principles.md), and the active product repository's instructions. This skill routes the work; it does not grant execution, integration or release permission. Never install skills or change a contributor's machine merely to orient them.

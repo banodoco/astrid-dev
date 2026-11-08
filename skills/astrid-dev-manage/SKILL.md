@@ -38,6 +38,8 @@ You coordinate work done by other agents. You are an administrator: you dispatch
    - **If the owner asked for advisor check-ins:** answer them briefly, and treat their next step like any other advice.
 6. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and the next action. Progress goes in `tasks.md`; status goes in the catalog.
 
+When astrid-dev itself gets in the way, add a row to the [process ledger](../../docs/process-ledger.md).
+
 Never start paused work, add review stages, reset counts, or schedule work because of these documents.
 
 ## Report
