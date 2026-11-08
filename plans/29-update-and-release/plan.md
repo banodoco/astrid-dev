@@ -81,6 +81,8 @@ Owner decisions are recorded in [inputs.md](inputs.md#decisions-recorded-7-nov-2
 
 ## Completion
 
+Before publishing, up to three independent review rounds turn findings into routed tasks and complete them ([UR-R](tasks.md#ur-r-review-rounds)).
+
 On the published release 10 tuple:
 - a hosted row on every OS, Linux included without the systemd floor, updates from the installed candidate to a stand-in 11 through the in-app request, for a normal install, a fully local install and Pinokio;
 - the decision table test passes for every install type × situation;

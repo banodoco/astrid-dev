@@ -21,13 +21,31 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | UR-11 Runtime reports `self_update` and a reason in every state | X | UR-10 | runtime `astrid_runtime/update.py`; agent `update_job.py` availability; contract update status | `self_update` comes from the helper reporting its actions, on every OS; unclassified causes are `needs-repair`, Pinokio and source are `managed-elsewhere` | [ ] |
 | UR-12 Hosted update can target a stand-in release | X | — (UR-11 if the fallback seam is chosen) | agent journey CI (`journey.yml`, `scripts/ci_*journey*.py`); runtime `update.py` only if the fallback seam is chosen, then after UR-11 | A probe on each OS runner chooses CI-level interception, or the owner-approved fallback seam | [ ] |
 | UR-13 Hosted button-path update on every OS | X | UR-10–UR-12 | agent `journey_fresh_update.py`, `windows_update_journey.py`, `ci_journey_keepgoing.py`, `journey.yml` | The update leg of the three direct fresh rows POSTs through the door to a stand-in release | [ ] |
-| UR-14 Publish Release 10 | N | all | app `public/install-manifest.json`, `runtime.lock.json` | Owner names the tuple and says go; `public/install*` frozen; not required; canary passes | [ ] |
+| **Review — before publishing** | | | | | |
+| UR-R Up to three independent reviews of the integrated candidate | S | UR-1–UR-13 | all Plan 29 scopes (read-only review) | Each round produces either no blocking findings, or new routed task cards that are done before the next round; see [review rounds](#ur-r-review-rounds) | [ ] |
+| UR-14 Publish Release 10 | N | all, including UR-R | app `public/install-manifest.json`, `runtime.lock.json` | Owner names the tuple and says go; `public/install*` frozen; not required; canary passes | [ ] |
 | **Owner** | | | | | |
 | Turn on branch protection on App `main`, requiring `release-guard`, up to date, including admins | owner | UR-8 | Settings show the required check | [ ] |
 
 **Overlap with other projects:** Plan 09 IU-1 and IU-8 change the same update helper and transaction as UR-10, UR-11 and Plan 30's UR-16, so they run after them. Plan 10's Pinokio row work shares `pinokio_row_driver.py` with Plan 30's UR-18a.
 
 ## Task details
+
+### UR-R Review rounds
+
+This plan sets its own review policy, as the [run contract](../../skills/astrid-dev-shared/run-contract.md) allows.
+
+1. **Run a round.** An independent S reviewer (Opus) reviews the integrated candidate across App, Agent, Runtime and launcher. It reviews against [the completion criteria and negative cases](plan.md#completion) and the recorded owner decisions. It returns each finding as a task card, with these fields:
+   - outcome;
+   - route (N, X or S, by the run contract);
+   - scope;
+   - dependencies;
+   - focused proof.
+2. **Do the findings.** The manager adds the cards here as `UR-R<round>.<n>`, orders any that overlap by dependency, and runs them like any other task.
+3. **Run the next round** on the new candidate.
+
+The stage stops after a round with no blocking findings, or after three rounds. A blocking finding still open after three rounds goes to the owner, not to a fourth round. Non-blocking findings are recorded, and are done only if the owner asks.
+
 
 ### UR-1 Update now only with `self_update`
 - **The new field.** `self_update` is a new boolean on `GET /v1/update/status`. The existing `available` doesn't serve this purpose, because it reports true on macOS and Windows even though the helper fails.
