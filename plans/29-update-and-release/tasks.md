@@ -7,22 +7,22 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
 | **Phase 1a — App (about 4 days)** | | | | | |
-| UR-1 Update now only when the installed Astrid reports `self_update`, and the real reason whenever it can't run | N | — | app `src/shared/lib/updates/{useInstallerUpdate,updateOperation,resolveUpdate}.ts`, `src/integrations/runtime/client.ts`, `UpdateResolutionActions.tsx`, `SettingsModal/sections/AstridUpdatesSection.tsx`; surface update UI | Without `self_update`, Update now is hidden and the one line plus the command show; busy shows it disabled. Each status `reason` and POST `details.reason` has its own line; an unknown reason reads as needs repair | [ ] PR #207 open into int; CI red only on checks already red on base; ready per the merge rule |
+| UR-1 Update now only when the installed Astrid reports `self_update`, and the real reason whenever it can't run | N | — | app `src/shared/lib/updates/{useInstallerUpdate,updateOperation,resolveUpdate}.ts`, `src/integrations/runtime/client.ts`, `UpdateResolutionActions.tsx`, `SettingsModal/sections/AstridUpdatesSection.tsx`; surface update UI | Without `self_update`, Update now is hidden and the one line plus the command show; busy shows it disabled. Each status `reason` and POST `details.reason` has its own line; an unknown reason reads as needs repair | [x] merged into int (App #207) |
 | UR-1b One accepted-digest list for the App, local launcher and dev workspace | N | — | app `src/integrations/runtime/{contract-metadata.ts,runtime-update-contract.mjs}`, `scripts/dev-local-workspace.mjs`, `package.json` | `resolveUpdate.source-contract.test.mjs` passes through `npm run test:node` | [x] merged into int (App #205) |
-| UR-3 Setup block off update surfaces; Updates gains a repair entry | N | UR-1 | app `UpdateResolutionActions.tsx`, `ChatUpdateNeeded.tsx`, `SettingsModal/sections/{AstridStatusSection,AstridUpdatesSection,astridStatusCopy}` | No SetupBlock on update surfaces or the status section; a degraded direct install finds the plain install line under Updates | [ ] blocked: waits on UR-1 landing |
-| UR-4 Chat update cards use the shared decision | N | UR-1, UR-3 | app `src/tools/video-editor/components/AgentChat/**` | One error renders one card; chat's action is "See updates" | [ ] blocked: waits on UR-1, UR-3 |
+| UR-3 Setup block off update surfaces; Updates gains a repair entry | N | UR-1 | app `UpdateResolutionActions.tsx`, `ChatUpdateNeeded.tsx`, `SettingsModal/sections/{AstridStatusSection,AstridUpdatesSection,astridStatusCopy}` | No SetupBlock on update surfaces or the status section; a degraded direct install finds the plain install line under Updates | [ ] PR #209 open into int; CI pending |
+| UR-4 Chat update cards use the shared decision | N | UR-1, UR-3 | app `src/tools/video-editor/components/AgentChat/**` | One error renders one card; chat's action is "See updates" | [ ] blocked: waits on UR-3 landing |
 | UR-5 Pinokio memory reads `identity.managed_by` | N | — | app `RuntimeConnectionProvider.tsx` | Through both the proxy and the door, Pinokio is recognised and never sees the installer command | [x] merged into int (App #203) |
 | UR-6 Pinokio fully local serves update status | N | UR-5 | app `config/vite/localUpdateStatus.ts` | Under `vite preview` the status answers instead of 501, and the 501 test is inverted | [x] merged into int (App #206) |
-| UR-7 Decision table test | N | UR-1–UR-4 | app update decision tests | Install type × situation, plus the negative cases in the plan | [ ] blocked: waits on UR-1–UR-4 |
+| UR-7 Decision table test | N | UR-1–UR-4 | app update decision tests | Install type × situation, plus the negative cases in the plan | [ ] blocked: waits on UR-3, UR-4 |
 | UR-8 `release-guard` job | N | — | app `scripts/installer/**`, `.github/workflows/{test,served-manifest-canary}.yml`, `config/qualification/**`; contract release number | Tuple or bootstrap change without +1 fails; any other `release` change fails; it runs on pull requests and on push | [x] merged into int (App #204) |
 | **Phase 1b — fully local (about 1.5 days)** | | | | | |
-| UR-9 Fully local Update now through the in-page updater | X | UR-1 | app `updateOperation.ts` (`LocalPageUpdate`), `config/vite/localUpdatePage.ts`, `scripts/local-update*.mjs` | Spike confirms why `f2eca0bd5` hid it; a dev:local test updates through the page | [ ] blocked: waits on UR-1 |
+| UR-9 Fully local Update now through the in-page updater | X | UR-1, UR-3 (shares `AstridUpdatesSection.tsx`) | app `updateOperation.ts` (`LocalPageUpdate`), `config/vite/localUpdatePage.ts`, `scripts/local-update*.mjs`, `resolveUpdate.ts`, `SettingsModal/sections/AstridUpdatesSection.tsx`, `scripts/dev-local-workspace.mjs` | Spike confirms why `f2eca0bd5` hid it; a dev:local test updates through the page | [ ] in progress: four local commits; UI step waits on UR-3 (PR #209) |
 | **Phase 1c — Release 10 (about 6.5–7.5 days)** | | | | | |
 | UR-10 Update now works end to end | S | — | agent `astrid/installer/update_job*.py`, new e2e test; contract update helper | Agent test: the Runtime's real request through the real helper, prepare → accept → launch and recovery-needed, with fake `systemctl`/`systemd-run` | [x] merged into int (Agent #301) |
-| UR-11 Runtime reports `self_update` and a reason in every state | X | UR-10 | runtime `astrid_runtime/update.py`; agent `update_job.py` availability; contract update status | `self_update` comes from the helper reporting its actions, on every OS; unclassified causes are `needs-repair`, Pinokio and source are `managed-elsewhere` | [ ] ready, not started |
-| UR-12 Hosted update can target a stand-in release | X | — (UR-11 if the fallback seam is chosen) | agent journey CI (`journey.yml`, `scripts/ci_*journey*.py`); runtime `update.py` only if the fallback seam is chosen, then after UR-11 | A probe on each OS runner chooses CI-level interception, or the owner-approved fallback seam | [ ] ready, not started; needs a pushed probe branch |
-| UR-13a Windows task-host journey: accept the recommended plan on install | N | — | agent `scripts/ci_windows_journey.py`, `tests/test_ci_windows_journey.py` | 61 focused tests pass; the Windows task-host jobs go green on the PR | [ ] PR #302 open into int; Windows jobs running |
-| UR-0 Investigate why App main is red (read-only) | N | — | none (read-only) | First red job, commit and cause for each failing job on App main | [ ] stopped before the table was returned; the base runs settled UR-5's failures |
+| UR-11 Runtime reports `self_update` and a reason in every state | X | UR-10 | runtime `astrid_runtime/update.py`; agent `update_job.py` availability; contract update status | `self_update` comes from the helper reporting its actions, on every OS; unclassified causes are `needs-repair`, source is `source` and Pinokio is `managed-elsewhere` | [ ] Agent #303 merged into int; Runtime #35 open into int |
+| UR-12 Hosted update can target a stand-in release | X | — (UR-11 if the fallback seam is chosen) | agent journey CI (`journey.yml`, `scripts/ci_*journey*.py`); runtime `update.py` only if the fallback seam is chosen, then after UR-11 | A probe on each OS runner chooses CI-level interception, or the owner-approved fallback seam | [ ] in progress: probe pushed to astrid-agent ur-12-stand-in-probe; CI running |
+| UR-13a Windows task-host journey: accept the recommended plan on install | N | — | agent `scripts/ci_windows_journey.py`, `tests/test_ci_windows_journey.py` | 61 focused tests pass; the Windows task-host jobs go green on the PR | [x] merged into int (Agent #302) |
+| UR-0 Investigate why App main is red (read-only) | N | — | none (read-only) | First red job, commit and cause for each failing job on App main | [ ] stopped before the table was returned; base runs settled UR-5's failures |
 | UR-13 Hosted button-path update on every OS | X | UR-10–UR-12 | agent `journey_fresh_update.py`, `windows_update_journey.py`, `ci_journey_keepgoing.py`, `journey.yml` | The update leg of the three direct fresh rows POSTs through the door to a stand-in release | [ ] blocked: waits on UR-11, UR-12 |
 | **Review — before publishing** | | | | | |
 | UR-R Up to three independent reviews of the integrated candidate | S | UR-1–UR-13 | all Plan 29 scopes (read-only review) | Each round produces either no blocking findings, or new routed task cards that are done before the next round; see [review rounds](#ur-r-review-rounds) | [ ] blocked: waits on all tasks |
@@ -67,6 +67,11 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 - **The Updates section** gains that repair entry: the plain install line, without `--update`.
 - **Check in Agent code** that the plain line repairs a degraded install and respects autostart off.
 - **Copy:** `astridStatusCopy.ts:9` promises instructions that will no longer appear, so it changes.
+- **When repair shows** (advisor, 8 Nov):
+  - Only while no update is available. The plain line also applies a newer release, so while one is available, Update now and its secondary command are the only path, with no separate repair row.
+  - Only for direct installs (`installType === 'installer'`). Fully local repair isn't defined in this plan.
+- **Autostart off:** the card shows the plain line, not `--update`. The plain line respects autostart, so its sentence says to run it and then start Astrid.
+- **Chat cards** are UR-4's: their action is "See updates", which opens Settings → Updates. Leave `copy.ts` alone in UR-3.
 
 ### UR-4 Chat cards
 - **Today:** one error renders at `AgentChat.tsx:1318, 1632, 719-722`, `AgentChatMenu.tsx:321` and `NewChatMenu.tsx:286`.
@@ -93,6 +98,9 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
 - **Paths:**
   - Primary: Update now.
   - Secondary: the normal install command (owner decision of 7 Nov).
+- **The 30 Oct hide is reversed.** `21fa6391` and `f2eca0bd5` came before the owner's 7 Nov decision 1 ("fully local: Update now through the existing in-page updater"), which supersedes them.
+- **Page notice:** `resolvePageUpdateStatus` keeps routing to Settings → Updates, the one place to act (owner decision of 7 Nov). It never offers Update now itself.
+- **When the button shows:** by UR-1's one rule, Update now appears only when the status reports `self_update`. The fully local status endpoint (UR-6) reports `self_update: false` with reason `source` when no installed backend exists, so a source-checkout Runtime gets UR-1's source line, never a button that fails. Don't add a new probe or a 503.
 
 ### UR-10 End to end
 - **Merge the whole lane** in order: `7c9438f55`, `548c8f93f`, `eaa9996de`, `b97c43db8`, `a721da65a`. All five merge cleanly onto Agent main.
@@ -104,10 +112,12 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
 
 ### UR-11 `self_update` and reasons
 - **Where `self_update` comes from:** the helper's `availability` action lists its supported actions, and old helpers can't, so they read false. Move the probe from Linux-only (`update.py:103`) to every OS.
+- **Which actions it requires:** exactly the ones the Runtime's request path calls: `availability`, `reconcile`, `accept`, `launch`, and prepare (sent with no action key). `reconcile` is the action whose absence broke Update now, so it must be included. The Runtime never calls `fail`. Keep one constant beside the calls, with a test that every action the request path sends is in it.
 - **Reasons:**
-  - Emit `reason` in every state, not only `none`.
+  - Emit `reason` in every state, including `none` when it can update.
   - Keep `busy`, `autostart-off` and `unsupported-service-manager`.
-  - Add `needs-repair` (anything unclassified) and `managed-elsewhere` (Pinokio, source).
+  - Add `needs-repair` (anything unclassified) and `managed-elsewhere` (Pinokio).
+  - Source installs keep `source`, the reason the POST refusal already uses (`update.py:163-164`) and the App already reads (`client.ts:200`), so status and refusal share one vocabulary.
 - **Compatibility:** older Apps ignore unknown keys (`client.ts:247-259`).
 - **Tests to update:** those asserting the old shape (`test_update_jobs.py` around :433-441 and :489-530).
 
