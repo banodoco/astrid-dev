@@ -5,27 +5,45 @@ description: Run an accepted Astrid project or multi-agent effort end to end: di
 
 # Manage an Astrid project
 
-Use this when you coordinate work done by other agents. The manager is an administrator: it dispatches, checks and keeps state, and escalates judgment to [Advise](../astrid-dev-advise/SKILL.md). It covers running an accepted project, a cross-repository effort, or a batch of tasks. [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change, and [Release](../astrid-dev-release/SKILL.md) integrates and publishes. The [run contract](../astrid-dev-shared/run-contract.md) owns routes, run state and review policy. A draft project or this skill is never authorization to execute.
+You coordinate work done by other agents. You are an administrator: you dispatch, check and keep state, and you send judgment calls to [Advise](../astrid-dev-advise/SKILL.md). [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change, and [Release](../astrid-dev-release/SKILL.md) publishes. The [run contract](../astrid-dev-shared/run-contract.md) owns routes, run state and review rules. Neither a draft project nor this skill authorizes execution.
 
 ## Principles
 
-1. **One model per shared surface.** When two pieces of work touch the same screens, contract or files, settle one model before dispatching either. Do the same with other active projects.
-2. **A report is a claim.** Trust agent output only as far as its evidence goes, and check the claims your next action depends on against code, logs or a run.
-3. **See it before you fix it.** When a failure's cause isn't visible, first make it visible: full errors, uploaded logs, a diagnostic. Then fix.
-4. **Prove what ships.** Evidence counts only for the exact candidate users will receive: every pinned version, on the path they will use.
-5. **Spend judgement where it pays.** Start on the cheapest route that can do the task. Escalate when cheaper attempts guess, repeat a failure, or the stakes are security, data or an untested protocol.
-6. **Decisions are durable.** Record owner decisions and enforce them with a test or check, so later work cannot quietly undo them. Ask the owner only what is genuinely theirs, with a recommendation. Decide the rest and record it.
+1. **One model per shared surface.** Work that touches the same screens, contract or files follows one agreed model. If the plan doesn't settle it, ask Advise before dispatching.
+2. **A report is a claim.** Check what your next step depends on against code, logs or a run.
+3. **See it before you fix it.** If a failure's cause isn't visible, make it visible first.
+4. **Prove what ships.** Evidence counts only for the exact versions users will get.
+5. **Spend judgment where it pays.** Use the cheapest route that can do the task. Escalate when attempts guess, repeat a failure, or touch security, data or an untested protocol.
+6. **Decisions are durable.** Record owner decisions and enforce them with a test, so later work can't undo them. Ask the owner only what is theirs, with a recommendation.
 
-## Run the work
+## Steps
 
-- Resume the matching run before starting a new one. Preserve source and donor identities, `run.yaml` bindings, accepted scope, evidence, review counters and pause/STOP state.
-- Dispatch only ready tasks, each to a subagent on its route. Every assignment states the outcome, the paths in scope, dependencies, frozen source identities, the route, the focused acceptance check, and the authority. Continue independent tasks while one is blocked.
-- Take each assignment's scope from its task card: the paths, and any shared surface or contract, it may change. Never run two tasks with overlapping scopes at once; start the later one from the earlier one's landed result. At landing, compare the changed files with the scope, and if anything falls outside it, stop and consult [Advise](../astrid-dev-advise/SKILL.md) before widening it. If a task needs its own checkout to run checks, make it from the latest head and delete it when the task lands; a long-lived branch on a stale base is what hides collisions.
-- Keep minimal state: the candidate, completed and blocked tasks, exact failures, evidence, review rounds used, and the next action. Keep task progress in the project's `tasks.md`, and status in the catalog.
-- Keep one way into each integration target. Bring in changes that arrived another way before moving the target, and say so.
-- When a cheaper attempt is stuck or the choice is consequential, consult [Advise](../astrid-dev-advise/SKILL.md). If the run already has an advisor, send it the question; otherwise start a subagent on the run's `advisor` binding with the Advise skill. Send one bounded question with the evidence it needs: the exact candidate and source identities, the brief, the first failing command and its output, and what has been tried. Act on the one next action it returns; advice never authorizes execution or publication. If no high-judgment model is available, say so and ask the owner rather than settling a consequential choice yourself.
-- Never start paused work, add review stages, reset counters, or schedule work on the strength of these documents.
+1. **Resume.** Continue the existing run if there is one. Keep its recorded versions, model settings, scope, evidence, review count and any pause.
+2. **Dispatch.** Send each ready task to a subagent on its route. Give it:
+   - the outcome;
+   - the scope from its task card;
+   - its dependencies;
+   - the exact versions to start from;
+   - the acceptance check;
+   - its authority.
+
+   Keep independent tasks moving while one is blocked.
+3. **Keep scopes apart.** Never run two tasks whose scopes overlap at once; start the later one from what the earlier one landed. A task's own checkout starts from the latest head and is deleted when the task lands.
+4. **Land.** Check that the changed files stay inside the scope; if not, stop and ask Advise. Keep one way into each integration branch, and bring in anything that arrived another way first.
+5. **Escalate.**
+   - **What to send:** one question to Advise, with its evidence: the versions, the brief, the first failing command and its output, and what was tried. Use the run's advisor if it has one; otherwise start one on its `advisor` setting.
+   - **What to do with the answer:** act on the one next step it returns. Advice is never permission to run or publish.
+   - **If no advisor model is available:** ask the owner.
+6. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and the next action. Progress goes in `tasks.md`; status goes in the catalog.
+
+Never start paused work, add review stages, reset counts, or schedule work because of these documents.
 
 ## Report
 
-Tell the owner what changed, what is proven and on which exact candidate, what failed and why, and each decision that needs them, with your recommendation. A blocker names its dependency, producer, the awaited event and any deadline.
+Tell the owner:
+- what changed;
+- what is proven, on which exact versions;
+- what failed and why;
+- each decision that needs them, with your recommendation.
+
+For a blocker, name what it waits on, who produces it, and any deadline.
