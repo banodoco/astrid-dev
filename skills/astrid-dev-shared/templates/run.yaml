@@ -55,12 +55,12 @@ review:
   # Copy the actual accepted policy and remaining counters; never reset them here.
   # This template is planning-only; it does not activate a review or execution.
   # For ordinary delivery, unless the owner or accepted plan selects another
-  # policy, configure one integrated final review after scoped checks (max 5
+  # policy, configure review rounds on the integrated candidate after scoped checks (max = the plan's agreed rounds;
   # total rounds; stop at uncontested PASS). Preserve existing runs' policy.
   # Example delivery stage:
   # - id: final
   #   role: completion_reviewer
   #   after: ALL_REQUIRED_WORK_AND_SCOPED_CHECKS
-  #   max_rounds: 5
+  #   max_rounds: 2   # copy the plan's agreed number
   stages: []
   consumed_rounds: {}

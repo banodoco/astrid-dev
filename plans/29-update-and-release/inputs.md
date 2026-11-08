@@ -59,7 +59,8 @@ From the owner, 7 Nov 2026 (session chat):
 
 1. **Fully local:** Update now through the existing in-page updater (owner: yes).
 2. **Pinokio fresh install:** asks Plan 01's setup questions, as it does today in Pinokio's terminal (owner: should ask). The hosted Pinokio row accepts the recommended choices because it has no terminal.
-3. **Branch protection on App `main`:** the owner will turn it on later. UR-6's required check is ready before then.
+3. **Review rounds:** at most three before publishing (owner, 7 Nov 2026). Recommended for cross-repository release work, including a protocol never run end to end.
+4. **Branch protection on App `main`:** the owner will turn it on later. UR-6's required check is ready before then.
 
 ## Source identities
 

@@ -32,7 +32,7 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 | Ambiguity pass by N helpers per task group, resolving from code and listing only real owner decisions | other agents will execute the tasks, or any task is X or S |
 | Record owner decisions in `inputs.md` and enforce them with a test | a later merge could silently undo the decision |
 
-Route each task by the [run contract](../astrid-dev-shared/run-contract.md): N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol that has never run end to end, security, data safety, migration). Give each task a scope: the paths, and any shared surface or contract, it may change. Tasks with overlapping scopes must be ordered by a dependency, including against other active projects; if a shared surface needs one model first, consult Advise.
+Route each task by the [run contract](../astrid-dev-shared/run-contract.md): N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol that has never run end to end, security, data safety, migration). Give each task a scope: the paths, and any shared surface or contract, it may change. Tasks with overlapping scopes must be ordered by a dependency, including against other active projects; if a shared surface needs one model first, consult Advise. End the task list with the review row from the [tasks template](../../templates/project/tasks.md), placed before any publishing task, which depends on it. Recommend how many review rounds from the project's risk and complexity (the run contract gives a guide), say why, and record the owner's agreed number in `inputs.md`. With 0 rounds, leave the review row out.
 
 ## Readiness
 
