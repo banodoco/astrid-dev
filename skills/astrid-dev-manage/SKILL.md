@@ -25,7 +25,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
 4. **Prove what ships.** Evidence counts only for the exact versions users will get.
 5. **Spend judgment where it pays.** Use the cheapest route that can do the task. Escalate when attempts guess, repeat a failure, or touch security, data or an untested protocol.
 6. **Decisions are durable.** Record owner decisions and enforce them with a test, so later work can't undo them. Ask the owner only what is theirs, with a recommendation.
-7. **Progress is always current.** This is a key responsibility. Whenever a task's state changes, update its row in the plan's `tasks.md`: started, PR open (with link), blocked (and why), or merged `[x]`. Add rows for tasks you create, and mark stopped ones. Keep at most one progress PR open, and merge it as soon as its docs check passes. A record that isn't on `main` doesn't count. It is the run's only progress record, and the owner and every check-in read it there.
+7. **Progress is always current.** This is a key responsibility. Update the plan's `tasks.md` when a task lands (`[x]`, with its merge), is blocked (and why), or is created or stopped. Batch the rest, such as which tasks started, into the next of those updates; don't send one per start. Keep at most one progress branch open. A change that touches only that plan's `tasks.md` is merged as soon as `python3 scripts/check_docs.py` passes locally, without waiting for CI. A record that isn't on `main` doesn't count. It is the run's only progress record, and the owner and every check-in read it there.
 
 ## Steps
 

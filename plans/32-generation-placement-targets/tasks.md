@@ -19,8 +19,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
-| [T1](#t1-characterize-every-capability) Characterize every capability that calls generation, under local, attached and RunPod | N | Plan 33 landed; Plan 34's first pass (owner's order) | `tests/integrations/test_runpod_slot_path_cpu.py` (from Plan 33 U1), `tests/core/generation/test_runpod_engine_selection.py` | Every capability is a case; current failures are recorded as strict `xfail` with the reason | [ ] |
-| [T2](#t2-one-requirements-manifest-and-the-engine-point) One requirements manifest; the `generation.engine` point with ComfyUI as its one contribution | X | T1 | `astrid/core/extensions/{model.py,schema/point.json}`, new `astrid/packs/generation/extensions/points/engine.yaml`, new `astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml`, `astrid/core/generation/{entries,asset_alignment,engine_readiness,engine_recipe}.py`, `astrid/core/pack/schemas/v3/pack.json`, `astrid/packs/h3_av/shared/generation.py`, and their tests | New `tests/core/generation/test_requirements_manifest.py`; `tests/core/extensions`; the readiness and alignment nodes below | [ ] |
+| [T1](#t1-characterize-every-capability) Characterize every capability that calls generation, under local, attached and RunPod | N | Plan 33's U3 and U4 landed (they edit the same `SLOTS` and `REFUSALS` symbols); supersedes Plan 34's first pass (owner, 8 Nov) | `tests/integrations/test_runpod_slot_path_cpu.py` (from Plan 33 U1), `tests/core/generation/test_runpod_engine_selection.py` | Every capability is a case; current failures are recorded as strict `xfail` with the reason | [ ] |
+| [T2](#t2-one-requirements-manifest-and-the-engine-point) One requirements manifest; the `generation.engine` point with ComfyUI as its one contribution | X | T1 | `astrid/core/extensions/{model.py,schema/point.json}`, new `astrid/packs/generation/extensions/points/engine.yaml`, new `astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml`, `astrid/core/generation/{entries,asset_alignment,engine_readiness,engine_recipe}.py`, `astrid/core/pack/schemas/v3/pack.json`, `astrid/packs/h3_av/shared/generation.py`, and their tests | New `tests/core/generation/test_requirements_manifest.py`; `tests/core/extensions`; the readiness and alignment nodes below | T2a started: X worker `session_011EzfW2DmXnu72Y984yPcSd`, branch `plan32/t2a-engine-point`; the manifest (T2 rest) waits on T1 |
 | [T2b](#t2b-one-base-engine-comfy-packs-deleted) One base engine; the `comfyui` and `comfy_wrap` packs deleted | X | T2, T3 (shared `sdk/generation.py`; T3 first) | `astrid/packs/{comfyui,comfy_wrap}` (deleted), `astrid/packs/{runpod,vibecomfy}` recipes and locks, `astrid/packs/engine-index.json`, the engine and pack names in core, sdk, registries, docs and tests, and the App's `comfy_wrap` references | One engine row per platform; the PK-15B absence and engine selectors below; no `vibecomfy-h3`, `comfy_wrap` or `packs/comfyui` literal outside history (grep) | [ ] |
 | [T3](#t3-one-placement-with-default-and-override) One Placement value, with default and override | X | T1; an independent review of the Placement and lease design (the advisor) | `astrid/core/generation/engine_contracts.py` (`Placement`), `astrid/sdk/{generation,invocation}.py`, `astrid/core/generation/{cli,targets}.py`, `astrid/core/generation/backends/registry.py`, `astrid/core/execution/generic_host.py` (target_policy), `astrid/packs/vibecomfy/actions/run/run.py`, `astrid/packs/h3_av/actions/transform/run.py`, and their tests | New `tests/core/generation/test_placement.py`; one decision site (grep); dry run equals live | [ ] |
 | [T4](#t4-the-local-run-path-with-one-align) The local run path, with one `align` | X | T2b | `astrid/packs/vibecomfy/{local_server_engine,production_engine}.py`, `astrid/packs/vibecomfy/actions/run/run.py`, `astrid/core/generation/backends/vibecomfy.py`, `astrid/core/generation/asset_alignment.py`, `astrid/core/engine_cli.py`; VibeComfy `vibecomfy/runtime/session.py` (`ensure_models`) | New `tests/core/generation/test_run_local.py`; one submit and one retrieve function (grep); the VibeComfy nodes below | [ ] |
@@ -31,6 +31,36 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | R Review rounds (at most 3, owner-agreed) | S | T1–T6b | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
+
+**Sequence (manager, 8 Nov; advisor-reviewed).** A dependency is a needed result or a shared symbol, not a shared file. T3's entry gate is done (see its card); T3 starts as soon as T1 lands.
+
+| Step | Tasks | Waits on | Parallel with |
+| --- | --- | --- | --- |
+| 0 | Environment smoke passes on `int/32-one-generation-path` | the astrid-agent wrapper fix | nothing |
+| 1 | **T2a**: `generation.engine` point, ComfyUI contribution, registry loading; no caller switched | step 0 | T1 |
+| 2 | **T1** | Plan 33's U3 and U4 landed | T2a |
+| 3 | **T2 manifest** (rest of T2): `requirements()` and the engine table | T1, T2a | T3 |
+| 4 | **T3**: one Placement value, default and override | T1 | T2 manifest |
+| 5 | **T2b**: one base engine, comfy packs deleted. Chained to T3 only if a symbol check finds a shared function, which is then named here. | T2 manifest (and T3 only if that check finds a shared function) | T3 |
+| 6 | **T4**: local run path with `align` | T2b | nothing |
+| 7 | **T5**: RunPod as a remote machine | T4 | T6, if their symbols are disjoint |
+| 8 | **T6**: one `generate`, `vibecomfy.workflows` point. Needs T4's single `run()`, not T5's result. | T4 | T5, if their symbols are disjoint |
+| 9 | **T6b**: h3_av as one contribution | T5 and T6 | nothing |
+| 10 | **R** review rounds, then **T8** completion | T1–T6b | nothing |
+
+**Critical path:** Plan 33 U3 and U4 → T1 → T3 → T4 → T5 → T6b → R → T8. T6 runs in parallel with T5 once T4 lands, if their symbols are disjoint, and T6b waits for both. T2a runs now, in parallel with the open Plan 33 work.
+
+**Manager state (run `plan32-2026-11-08-m1`, 8 Nov 2026, updated at T2a's dispatch).**
+- Access: astrid-agent push access **granted** by the owner. `int/32-one-generation-path` is **cut** at `8df5c09c2`, from the head of `int/33-unblock-live-generation`.
+- Environment: smoke **passed** (33 passed on `int/32` at `8df5c09c2`, via the `agent-setup.sh` then `agent-pytest.sh` path, because the `astrid-agent-pytest` wrapper is broken until the fix in astrid-dev #145 reaches the environment).
+- Dispatch: **T2a started** (X worker `session_011EzfW2DmXnu72Y984yPcSd`, branch `plan32/t2a-engine-point`, no caller switched).
+- Owner decisions, 8 Nov, relayed by the advisor:
+  - No GPU validation of Plan 33's route. Plan 34's first pass is dropped, and Plan 32 goes as fast as possible.
+  - Plan 33 U4 (h3_av) is stopped and U7 (reuse window) is cancelled; both are superseded by T6b and T5. Plan 33 finishes U2, U3 with U5, U6, one review round, then U9.
+  - T1 now waits on Plan 33's U3 only (not U4). Start T1 when U3 lands in `int/33`, merging `int/33` into `int/32` first.
+  - Once Plan 33's U9 lands, the Plan 33 overlap rule ends and Plan 32 runs at full parallelism under its sequence table.
+  - New Plan 32 work: make MiniMax H3 the default video entry. It was Plan 33 U4's data change, and it belongs with T6, where defaults move into contributions.
+- Overlap rule while Plan 33 is open: dispatch only tasks that touch no function an open Plan 33 task touches, and ask the advisor before anything in `sdk/generation.py`, `remote_placement.py`, `adapter.py`, `generic_host.py` or `local_server_engine.py`.
 
 ## T1 Characterize every capability
 
@@ -87,7 +117,16 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 ## T3 One Placement, with default and override
 
-**Entry gate:** an independent review (the advisor, [Orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md)) of the Placement shape (default and override, `device`) and the lease, against T1's head. **Outcome:** a frozen `Placement{kind, device or endpoint, policy}`, resolved request → user default → built-in at one site (`GenerationFacade._generate_on_target`, `sdk/generation.py:1052`) and passed down. **Authority:** CPU only.
+**Entry gate:** done. The advisor reviewed the Placement shape and the lease on 8 Nov, against the updated plan.md, so T3 starts as soon as T1 lands. The review's decisions:
+- **Shape:** `Placement{kind, device?, endpoint?, engine?, machine?, policy}`, frozen and validated.
+  - `device` is a local GPU index.
+  - `endpoint` and `engine` are for `attached`.
+  - `machine` is optional and names one live lease, so a task can ask for a specific rented machine and waits or refuses if that machine is gone.
+  - `policy` is typed and small: `idle_timeout_s` (default `warm_hold.DEFAULT_IDLE_SECONDS`, 1800) and `gpu_types` for rented machines. Unknown keys are refused. The `--align` mode stays its own flag.
+- **Where it lives:** in the task's input, as task data. The dry run, the host and retries all read the same value, and the Runtime target stays `default`. It is resolved once, in `_generate_on_target`.
+- **User default:** stored in the existing global target config read by `targets.resolve_target`, not in a new file.
+- **Lease:** no new lease object. Keep `RunPodLeaseOwner`, the warm hold and its idle timer, keyed on machine custody (account, GPU, image, volume, shipped source digest).
+- **Cross-repository:** the `--target` → `--placement` rename (D2) also changes the App. Its App callers are a second, separate worker and PR, in the App repository, landed together with T3's Agent change. **Outcome:** a frozen `Placement{kind, device or endpoint, policy}`, resolved request → user default → built-in at one site (`GenerationFacade._generate_on_target`, `sdk/generation.py:1052`) and passed down. **Authority:** CPU only.
 
 **Code facts:**
 - `Placement` is today a `Literal["local", "runpod"]` alias (`engine_contracts.py:9`), and `PlacementDescriptor` (~475) is pack-declared backend metadata. Replace the alias with the value and keep the descriptor until T6.
@@ -103,7 +142,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 **Proof:**
 - New `tests/core/generation/test_placement.py`:
-  - precedence of request, project, user and built-in;
+  - precedence of request, user default and built-in;
+  - a request naming a `machine` that has no live lease is refused, with the live leases listed;
   - a per-generation override of the device;
   - an unknown machine kind refused with the known kinds listed.
 - `PYT tests/core/generation/test_runpod_engine_selection.py::test_dry_run_target_and_engine_equal_live_policy tests/core/generation/test_runpod_engine_selection.py::test_runpod_request_never_selects_a_local_target tests/core/generation/test_runpod_engine_selection.py::test_local_request_never_reaches_runpod tests/core/generation/test_placement_descriptor.py tests/core/test_generation_backend_registry.py tests/core/generation/test_targets.py tests/sdk/test_generation_target.py`.
@@ -144,7 +184,7 @@ Delete, in the same change:
 1. Declare `astrid/packs/generation/extensions/points/machine.yaml`. Its protocol is `claim`, `start`, `poll`, `cancel`, `fetch` and `release` (mirroring the existing `PodOps`), under core consent and lease. `local` and `attached` are built in. RunPod contributes `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, and the test provider is a contribution under `tests/fixtures`.
 2. Generalize `RemotePlacement.run`, `_run_job`, `_download`, `_release`, `manifest_command` and `_MANIFEST_SCRIPT` (`remote_placement.py`, kept by Plan 33 U4). Replace `clip_command_argv` and `transform_command` with the one generic invocation.
 3. The lease is minimal: an owner and an idle timeout. Warm reuse covers any machine with the same base engine id (Plan 33 U7's key).
-4. The storage volume is mounted as the models root. Move Plan 33 U6's identity-keyed cache entries into that layout by rename on the same volume, so nothing is downloaded again.
+4. The storage volume is mounted as the models root. Pin the mount before any write: pass the cache device and mount id (from `scripts/pod_storage_probe.py`, as `scripts/pod_session.py` ~1056-1110 does), so an unmounted volume refuses instead of caching onto container disk. Plan 33 U6 deferred this pin here, and it is required before any real-pod run (Plan 34). Move Plan 33 U6's identity-keyed cache entries into that layout by rename on the same volume, so nothing is downloaded again.
 5. **Progress and cancel, the same as a local job.** Each `_run_job` poll copies the remote attempt's `.astrid-progress.json` into the local attempt's file, which the host already sends in its heartbeat (`generic_host.py:9945`, ~11076-11086). Cancel: the host already sees the task as cancelled; it calls the machine's `cancel` (RunPod: `job_cancel`, `remote_placement.py:111`), then `release`. No new event API, and runpod-lifecycle doesn't change. Verify that `astrid generate` starts its Runtime headless on the pod (`sdk/client.py` `ensure_runtime`); if not, the remote invocation is `astrid action run vibecomfy.run`.
 6. Delete:
    - `model_downloader.py` and the model steps of `engine_runner.py` (moved here from T4, because RunPod installs used them until now);
@@ -159,6 +199,7 @@ Delete, in the same change:
   - every default slot and h3_av through the RunPod contribution on a CPU fake;
   - a second job on a warm machine fetches nothing;
   - a volume-cached model fetches nothing;
+  - an install whose volume is not mounted (the device or mount id doesn't match) refuses before writing any model;
   - the test machine contribution runs a job;
   - a contribution pack missing from the shipped selection is refused before the claim;
   - the remote job's progress appears in the local attempt's progress file before the job ends;
