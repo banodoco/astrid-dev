@@ -41,7 +41,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
    - give the integrated candidate to the `completion_reviewer` for a round;
    - add each finding as a row directly below the review row (`R<round>.<n>`, or the plan's prefix), with its route, scope, dependencies and proof; ask Advise if one is unclear;
    - run those rows like any other task, then start the next round;
-   - stop after a clean round or the plan's agreed number of rounds; take any blocking finding left after the last one to the owner through Advise.
+   - stop after a round with no blocking findings or the plan's agreed number of rounds; take any blocking finding left after the last one to the owner through Advise.
 7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md`, status in the catalog. When astrid-dev itself gets in the way, add a row to the [process ledger](../../docs/process-ledger.md).
 
 Never start paused work, add review stages beyond the plan's, reset counts, or schedule work because of these documents.
