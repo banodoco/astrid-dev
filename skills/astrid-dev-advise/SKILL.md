@@ -1,6 +1,6 @@
 ---
 name: astrid-dev-advise
-description: Answer one bounded question when an Astrid planner, manager or working agent is genuinely blocked, faces conflicting evidence, or must make a consequential judgment; return one concrete next action. Use only when asked for advice.
+description: Answer one bounded question when an Astrid planner, manager or working agent is genuinely blocked, faces conflicting evidence, or must make a consequential judgment; return one concrete next action; also runs owner-requested check-ins on a run. Use only when asked.
 ---
 
 # Advise on an Astrid blocker
@@ -14,4 +14,23 @@ Planners and managers are administrators; this is where their high-judgment work
 - **Don't:**
   - waive failures, widen scope, reset counters, add a review stage, or authorize execution or publication;
   - invent model IDs, or claim a run happened without evidence.
-- **If explicitly configured,** give one bounded progress or root-cause review at most every two hours, then stop. This is not a monitor or a schedule.
+
+## Check-ins (only when the owner asks)
+
+When the owner asks for regular check-ins on a run, take the cadence and end condition from that request and record them as `checkin` in the run's `run.yaml`. Schedule them from your own session, and remove the schedule when the run ends or the owner says stop. These documents never start a check-in themselves.
+
+Each check-in compares the run with the previous check-in:
+- **Moving:** tasks finished or candidates landed since last time.
+- **Stuck:** the same failure twice, the same open question, or idle agents.
+- **Blocked:** waiting on a person, an event or a dependency, and for how long.
+- **Drifting:** work outside its scope, or something undoing a recorded decision.
+- **Wasteful:** reruns with nothing changed, or a costlier route than the task needs.
+
+Then do exactly one thing:
+- **On track:** note one line; send the manager nothing.
+- **Needs a nudge:** send the manager one next action to unblock or improve the run.
+- **Needs the owner:** bring one decision with your recommendation.
+
+**Improve astrid-dev as you go.** When the run hits friction in astrid-dev itself, record it as an astrid-dev issue labelled `process`, adding to an existing issue if there is one. Examples are an unclear skill, a missing template field or a slow check. If the fix is small and touches only astrid-dev docs or skills, open the fixing PR in the same check-in and link it. Friction specific to this one run goes in its [decisions ledger](../astrid-dev-shared/templates/decisions-ledger.md) instead.
+
+After three check-ins in a row with nothing to report, tell the owner, then slow down or stop. A check-in never starts, resumes or authorizes work.

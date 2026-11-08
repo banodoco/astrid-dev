@@ -41,6 +41,10 @@ roles:
   plan_judgment: plan_judgment
   advisor: advisor
   completion_reviewer: completion_reviewer
+checkin:
+  # Only when the owner asks for advisor check-ins; leave empty otherwise.
+  every: ""   # for example 60m
+  until: ""   # for example "Release 10 published"
 source:
   repository: ""
   ref: ""
