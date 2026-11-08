@@ -12,7 +12,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astri
 - **Owner:** the person who chooses a project's outcome and makes its decisions.
 - **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to [Advise](../astrid-dev-advise/SKILL.md).
 - **Route:** N, X or S; the [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy.
-- **Scope** (of a task): the paths, and any shared surface or contract, it may change.
+- **Scope** (of a task): the paths, and any shared surface or contract, it may change; a path includes its own tests.
 
 ## The answer
 
