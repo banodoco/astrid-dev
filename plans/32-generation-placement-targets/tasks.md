@@ -24,7 +24,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | [T2b](#t2b-one-base-engine-comfy-packs-deleted) One base engine; the `comfyui` and `comfy_wrap` packs deleted | X | T2, T3 (shared `sdk/generation.py`; T3 first) | `astrid/packs/{comfyui,comfy_wrap}` (deleted), `astrid/packs/{runpod,vibecomfy}` recipes and locks, `astrid/packs/engine-index.json`, the engine and pack names in core, sdk, registries, docs and tests, and the App's `comfy_wrap` references | One engine row per platform; the PK-15B absence and engine selectors below; no `vibecomfy-h3`, `comfy_wrap` or `packs/comfyui` literal outside history (grep) | [ ] |
 | [T3](#t3-one-placement-with-default-and-override) One Placement value, with default and override | X | T1; an independent review of the Placement and lease design (the advisor) | `astrid/core/generation/engine_contracts.py` (`Placement`), `astrid/sdk/{generation,invocation}.py`, `astrid/core/generation/{cli,targets}.py`, `astrid/core/generation/backends/registry.py`, `astrid/core/execution/generic_host.py` (target_policy), `astrid/packs/vibecomfy/actions/run/run.py`, `astrid/packs/h3_av/actions/transform/run.py`, and their tests | New `tests/core/generation/test_placement.py`; one decision site (grep); dry run equals live | [ ] |
 | [T4](#t4-the-local-run-path-with-one-align) The local run path, with one `align` | X | T2b | `astrid/packs/vibecomfy/{local_server_engine,production_engine}.py`, `astrid/packs/vibecomfy/actions/run/run.py`, `astrid/core/generation/backends/vibecomfy.py`, `astrid/core/generation/asset_alignment.py`, `astrid/core/engine_cli.py`; VibeComfy `vibecomfy/runtime/session.py` (`ensure_models`) | New `tests/core/generation/test_run_local.py`; one submit and one retrieve function (grep); the VibeComfy nodes below | [ ] |
-| [T5](#t5-runpod-as-a-remote-machine-the-generationmachine-point) RunPod as a remote machine: the `generation.machine` point | S | T4 | New `astrid/packs/generation/extensions/points/machine.yaml`, new `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, `astrid/packs/runpod/{adapter,generation,remote_placement,target_selection,installed_session}.py`, `astrid/packs/runpod/h3_release*.py`, `astrid/core/generation/{model_downloader,engine_runner}.py` (the downloader and model steps), `astrid/core/execution/generic_host.py` (bind), `astrid/packs/vibecomfy/local_server_engine.py` (inventory channel), and their tests | New `tests/integrations/test_remote_machine_cpu.py` (every slot and h3_av, warm reuse, volume, a test machine contribution); no controller-side model check for RunPod (grep); remote run events reach the local run while the job runs, and cancel stops the job and releases the machine | [ ] |
+| [T5](#t5-runpod-as-a-remote-machine-the-generationmachine-point) RunPod as a remote machine: the `generation.machine` point | S | T4 | New `astrid/packs/generation/extensions/points/machine.yaml`, new `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, `astrid/packs/runpod/{adapter,generation,remote_placement,target_selection,installed_session}.py`, `astrid/packs/runpod/h3_release*.py`, `astrid/core/generation/{model_downloader,engine_runner}.py` (the downloader and model steps), `astrid/core/execution/generic_host.py` (bind), `astrid/packs/vibecomfy/local_server_engine.py` (inventory channel), and their tests | New `tests/integrations/test_remote_machine_cpu.py` (every slot and h3_av, warm reuse, volume, a test machine contribution); no controller-side model check for RunPod (grep); remote progress reaches the local run while the job runs, and cancel stops the job and releases the machine | [ ] |
 | [T6](#t6-one-generate-and-the-vibecomfyworkflows-point) One `generate`; the `vibecomfy.workflows` point and its hooks | X | T5 | New `astrid/packs/vibecomfy/extensions/points/workflows.yaml`, `astrid/sdk/{generation,invocation}.py`, `astrid/core/generation/{entries,preflight,delivery}.py`, `astrid/core/generation/backends/{registry,vibecomfy_workflow}.py`, and their tests | One `run()` site calls `build` and `finalize`; the file-map input type; no modality branch (grep); `tests/core/extensions`; T5's harness green | [ ] |
 | [T6b](#t6b-h3_av-becomes-one-contribution) h3_av becomes one contribution; the legacy RunPod route deleted with its last caller | X | T6 | `astrid/packs/h3_av/**`, new `astrid/packs/h3_av/extensions/vibecomfy.workflows/h3.yaml`, `astrid/packs/runpod/{remote_placement,prepared_task}.py` (h3 parts), `astrid/core/execution/{worker_qualification,generic_host}.py`, `astrid/core/generation/{delivery,preflight}.py`, `astrid/sdk/invocation.py`, `astrid/packs/vibecomfy/{endpoint_checkout.py,actions/run/run.py}`, `astrid/core/generation/backends/registry.py`, `astrid/sdk/generation.py` (`workflow(placement=)`); VibeComfy `node_packs/_defs.py` (H3 row) | The Matrix request on the CPU fake; `grep -ri h3 astrid/core astrid/sdk` empty; no stage graph, journal, receipt, input bundle or legacy route left (grep) | [ ] |
 | [T8](#t8-completion) Completion | N | T1–T6b, R | astrid-dev completion PR | The PR links the implementation PRs, the integrated revision, the CPU evidence and a disposition for F-003 | [ ] |
@@ -44,20 +44,20 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 ## T2 One requirements manifest and the engine point
 
-**Outcome:** `requirements(entry, inputs) -> {engine, base, models[name, subdir, url, sha256, size], nodes[repo, commit]}`, one row shape, and the engine table built from `generation.engine` contributions. **Authority:** CPU only.
+**Outcome:** `requirements(entry, inputs) -> {engine, base, models[name, subdir, url, sha256, size], extra}` (`extra` owned by the engine; ComfyUI: `nodes[repo, commit]`), one row shape, and the engine table built from `generation.engine` contributions. **Authority:** CPU only.
 
 **Delegate to N helpers:** the census of requirement shapes, the schema and YAML files, the test nodes and the checks.
 
 1. **Switch the protocol on for the Agent.**
    - Allow `side: agent` in `astrid/core/extensions/schema/point.json:11` and `model.py:86,428`.
-   - Declare `astrid/packs/generation/extensions/points/engine.yaml` (cardinality `many`). Its data is `platforms -> recipe`, and its protocol is `align(manifest, mode)` and `execute(job) -> files in job.out`.
+   - Declare `astrid/packs/generation/extensions/points/engine.yaml` (cardinality `many`). Its data is `platforms -> recipe`, and its protocol is `requirements(entry, inputs)`, `align(manifest, mode)`, `execute(job) -> files in job.out`, `cancel(job)` and an optional `probe(endpoint)`.
    - Contribute `astrid/packs/vibecomfy/extensions/generation.engine/comfyui.yaml`.
    - `run()`'s engine table is the registry's contributions for this point. Only `vibecomfy.comfyui` exists in this plan, and `wan2gp` is Plan 12's.
    - Environment setup is the `align` half of this point, not a separate point.
 2. **One manifest.** Build `requirements()` from VibeComfy `ReadyMetadata` rows (`vibecomfy/templates.py` ~1307-1380), reusing `catalog_manifests` (`asset_alignment.py:192`) and `_lock_coverage` (`entries.py:817`). Include registered plugin roots: `_ready_entries_for` uses `include_dynamic=False` (`entries.py:38`), so also read VibeComfy's `registered_ready_roots()` (`vibecomfy/extras.py:62`).
 3. Delete name-only `requirements` and the duplicated row shapes (`entries.py:785-813` path strings, the lock row, the provider inventory). Model locks become caches of manifest rows. h3's model rows and its `comfy_commit` become literals in its own templates. Delete the read of the Agent lock (`h3_av/shared/generation.py:173-188`) and the uses of `engine_source_revision("vibecomfy-h3")` (`compile.py:576,774,1115`, `generation.py:265`), and the action-entry model scan (`entries.py` ~785-800).
 4. **Readiness and release identity stop binding the whole lock.** `engine_readiness.py:745-756` compares every lock row. It becomes "the manifest's rows are present", and an engine install no longer fetches models.
-5. Delete the unused `engines:` property of `astrid/core/pack/schemas/v3/pack.json` (~195). Step 0: `git grep -ln "schemas/v3/pack.json" -- tests` names the schema test to run. Record in the commit that `engine-index.json` becomes generated from contributions after Plan 06 PK-15B (T2b).
+5. Delete the unused `engines:` property of `astrid/core/pack/schemas/v3/pack.json` (~195). Step 0: `git grep -ln "schemas/v3/pack.json" -- tests` names the schema test to run. Record in the commit that `engine-index.json` is deleted in T2b, after Plan 06 PK-15B.
 
 **Proof:**
 - `PYT tests/core/extensions`, plus new nodes in `tests/core/extensions/test_model.py`: `test_agent_side_point_parses` and `test_client_and_agent_are_the_only_sides`.
@@ -78,16 +78,16 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 1. Follow [PK-15B](../06-packs/tasks.md#pk-15b-delete-the-comfy-packs) in full: its census, its delete list, its reference list (Agent and App) and its new node `test_comfyui_engine_has_no_recipe_after_comfy_pack_removal`. Re-run the census on this head, because line numbers have moved. Record in the completion PR that PK-15B's comfy-pack deletion was done here.
 2. Merge the remaining recipes into one engine keyed `comfyui` (the contribution key). Plan 33 U6's cache directory already uses that name, and its rows are keyed by identity, so the merge forces no re-fill.
-3. `engine-index.json` is generated from `generation.engine` contributions, with one shipped generator and a `--check`.
+3. `engine-index.json` is deleted; its readers (`engine_recipe`, `engine_runner`, `entries`, `engine_release`, `engine_bootstrap`, `validate_first_party`) use the `generation.engine` registry.
 
 **Proof:**
 - PK-15B's absence checks and selectors (its step 5), including the App grep.
-- `PYT tests/core/generation/test_engine_recipe.py tests/core/generation/test_engine_cli.py tests/core/generation/test_engine_release.py tests/core/generation/test_runpod_engine_selection.py tests/core/extensions`, plus the generator's `--check`.
+- `PYT tests/core/generation/test_engine_recipe.py tests/core/generation/test_engine_cli.py tests/core/generation/test_engine_release.py tests/core/generation/test_runpod_engine_selection.py tests/core/extensions`; `git grep -n engine-index.json` finds no reader.
 - A grep finds no `vibecomfy-h3` literal except history.
 
 ## T3 One Placement, with default and override
 
-**Entry gate:** an independent review (the advisor, [Orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md)) of the Placement shape (default and override, `device`) and the lease, against T1's head. **Outcome:** a frozen `Placement{kind, device or endpoint, policy}`, resolved request → project → user → built-in at one site (`GenerationFacade._generate_on_target`, `sdk/generation.py:1052`) and passed down. **Authority:** CPU only.
+**Entry gate:** an independent review (the advisor, [Orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md)) of the Placement shape (default and override, `device`) and the lease, against T1's head. **Outcome:** a frozen `Placement{kind, device or endpoint, policy}`, resolved request → user default → built-in at one site (`GenerationFacade._generate_on_target`, `sdk/generation.py:1052`) and passed down. **Authority:** CPU only.
 
 **Code facts:**
 - `Placement` is today a `Literal["local", "runpod"]` alias (`engine_contracts.py:9`), and `PlacementDescriptor` (~475) is pack-declared backend metadata. Replace the alias with the value and keep the descriptor until T6.
@@ -113,8 +113,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 **Outcome:**
 - `run(job, local)` starts or reuses a ComfyUI on this machine (the chosen GPU). It runs `align(manifest, align|check|trust)` against this disk, fetching only the missing rows. Then it compiles, submits to localhost and returns files in the job directory.
-- `run(job, attached)` runs `check` (object_info) or `trust`, then submit and `/view`.
-- `align` is VibeComfy's own commands: `doctor`, `prepare --deps sync`, `nodes restore`, `fetch`. The Agent keeps only the ComfyUI-core install.
+- `run(job, attached)` runs the engine's `probe` (ComfyUI: object_info) or `trust`, then the engine's `execute`; an engine without `probe` refuses attach.
+- The `comfyui` engine's `align` is VibeComfy's own commands: `doctor`, `prepare --deps sync`, `nodes restore`, `fetch`. The Agent keeps only the ComfyUI-core install.
 
 **Authority:** CPU only.
 
@@ -137,15 +137,15 @@ Delete, in the same change:
 
 ## T5 RunPod as a remote machine: the `generation.machine` point
 
-**Outcome:** `run(job, <machine>)` claims a machine under the existing paid-consent and lease owner (`target_selection`) and ships the job with its digest-pinned pack selection (Plan 06 `active_sources`). It runs `astrid generate <entry> --placement local` there, relays that run's events to the local run while it runs, fetches the outputs against a digest manifest, and always releases. Cancelling the local run stops the remote job and releases the machine (owner, 8 Nov). **Authority:** CPU only.
+**Outcome:** `run(job, <machine>)` claims a machine under the existing paid-consent and lease owner (`target_selection`) and ships the job with its digest-pinned pack selection (Plan 06 `active_sources`). It runs `astrid generate <entry> --placement local` there, copies its progress file back on each poll, fetches the outputs against a digest manifest, and always releases. Cancelling the local run stops the remote job and releases the machine (owner, 8 Nov). **Authority:** CPU only.
 
 **Delegate to N helpers:** the test provider, the census of bridge and inventory code, and the deletions. The lead keeps the consent, lease and digest-manifest reasoning: this route has never run end to end.
 
-1. Declare `astrid/packs/generation/extensions/points/machine.yaml`. Its protocol is `claim`, `ship_and_run`, `read_events`, `fetch`, `cancel` and `release`, under core consent and lease. `local` and `attached` are built in. RunPod contributes `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, and the test provider is a contribution under `tests/fixtures`.
+1. Declare `astrid/packs/generation/extensions/points/machine.yaml`. Its protocol is `claim`, `start`, `poll`, `cancel`, `fetch` and `release` (mirroring the existing `PodOps`), under core consent and lease. `local` and `attached` are built in. RunPod contributes `astrid/packs/runpod/extensions/generation.machine/runpod.yaml`, and the test provider is a contribution under `tests/fixtures`.
 2. Generalize `RemotePlacement.run`, `_run_job`, `_download`, `_release`, `manifest_command` and `_MANIFEST_SCRIPT` (`remote_placement.py`, kept by Plan 33 U4). Replace `clip_command_argv` and `transform_command` with the one generic invocation.
 3. The lease is minimal: an owner and an idle timeout. Warm reuse covers any machine with the same base engine id (Plan 33 U7's key).
 4. The storage volume is mounted as the models root. Move Plan 33 U6's identity-keyed cache entries into that layout by rename on the same volume, so nothing is downloaded again.
-5. **Progress and cancel, the same as a local job.** The remote run writes Astrid's normal run events, because Astrid runs the job there. While `ship_and_run` waits, core calls the machine's `read_events(offset)` on each poll and appends the new events to the local run's event log, tagged with the machine id and deduplicated by event id. Status and progress then come from the existing run-event vocabulary (`astrid/core/contracts/run_status.py`), with no remote-specific display. For RunPod, `read_events` reads the remote events file from a byte offset over the pod's `exec_ssh`, in a task that runs alongside `ship_and_run_detached`. That task runs inside the pack, so runpod-lifecycle doesn't change. `cancel` stops the remote process and then releases the machine; today a local cancel only stops the wait (`runner.py`, `CancelledError` returns 130).
+5. **Progress and cancel, the same as a local job.** Each `_run_job` poll copies the remote attempt's `.astrid-progress.json` into the local attempt's file, which the host already sends in its heartbeat (`generic_host.py:9945`, ~11076-11086). Cancel: the host already sees the task as cancelled; it calls the machine's `cancel` (RunPod: `job_cancel`, `remote_placement.py:111`), then `release`. No new event API, and runpod-lifecycle doesn't change. Verify that `astrid generate` starts its Runtime headless on the pod (`sdk/client.py` `ensure_runtime`); if not, the remote invocation is `astrid action run vibecomfy.run`.
 6. Delete:
    - `model_downloader.py` and the model steps of `engine_runner.py` (moved here from T4, because RunPod installs used them until now);
    - the generation bridge path in `adapter.bind_endpoint` and its binding record;
@@ -161,7 +161,7 @@ Delete, in the same change:
   - a volume-cached model fetches nothing;
   - the test machine contribution runs a job;
   - a contribution pack missing from the shipped selection is refused before the claim;
-  - run events from the remote job appear in the local run's event log before the job ends, in order, with no duplicates;
+  - the remote job's progress appears in the local attempt's progress file before the job ends;
   - cancelling the local run mid-job stops the remote job and releases the machine;
   - every machine is released.
 - `PYT tests/packs/runpod/test_remote_placement.py tests/packs/runpod/test_warm_session.py tests/packs/runpod/test_target_selection.py tests/core/extensions`.
@@ -184,7 +184,7 @@ Delete, in the same change:
    - `entries`: a list in VibeComfy's thin-entry shape `{id, kind, modes, bundle, needs, binds, defaults}` (VibeComfy `entries.py:45-70`), because plugin templates are absent from the static template index.
    - `build: file.py:fn` (optional): `build(inputs, files, out) -> {workflow, bindings, plan}`. It runs on the machine, on CPU and deterministically. `requirements()` reads the built graph's rows, and the dry run calls it and prints `plan`.
    - `finalize: file.py:fn` (optional): `finalize(job_dir, inputs, files, outputs) -> outputs`. It runs on the same machine after execute and before copy-back, and if it raises, the job fails. The docs must say this is not VibeComfy's template `finalize` (`templates.py:1381`).
-2. **The hooks.** `run()` calls `build` and `finalize` at one site. Add the entry input type for a map of files (`{id: path}`), shipped in the existing managed-assets archive, whose manifest already keys by binding name (`asset_manifest.py:111-125`). `entries._input_type` has no such type today (`entries.py:171-176`).
+2. **The hooks.** The `comfyui` engine's `execute` (and its dry run) calls `build` and `finalize` at one site; core `run()` never names them. Add the entry input type for a map of files (`{id: path}`), shipped in the existing managed-assets archive, whose manifest already keys by binding name (`asset_manifest.py:111-125`). `entries._input_type` has no such type today (`entries.py:171-176`).
 3. **Node packs need no hook (decided).** A template's own node pins win over the lock (VibeComfy `custom_node_refs.py:241-247`).
 4. **Delete:**
    - the hard-coded `vibecomfy-h3-workflow` backend (`backends/registry.py:28,240-250`, `backends/vibecomfy_workflow.py`);

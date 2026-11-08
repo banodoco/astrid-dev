@@ -10,7 +10,6 @@
 
 | Project | Goal | Status | Owner | Estimate | Waiting on | Plan |
 |---|---|---|---|---:|---|---|
-| One update path and release | One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes. | active | Plan 29 manager | 11–13 | — | [Plan 29](29-update-and-release/plan.md) |
 | Releases defined and published from astrid-dev | Each release is one owner-approved file in astrid-dev that CI checks against the pinned commits, and merging it publishes the release, with versions such as 0.0.10 shown to users. | queued | Unassigned | 6–7 | Plan 29; owner decisions; astrid-dev `main` protection | [Plan 31](31-releases-from-astrid-dev/plan.md) |
 | Update everywhere: remaining setups | Finish Plan 29 for less common setups: Linux with systemd below 254, typed update contracts, refused cards, and update proof for Pinokio and fully local. | queued | Unassigned | 7–9 | Plan 29 | [Plan 30](30-update-everywhere/plan.md) |
 | Unblock live generation | Every default slot and h3_av runs live on RunPod and locally through the existing path, so Plans 01, 02 and 06 land proven: an interim inventory wire, sfx and h3_av routed like everything else, MiniMax H3 as the video default, models on the storage volume, live-pod reuse, the legacy route deleted, and a CPU test of the pod path. | queued | @AstridPseudon | about 3–4 days plus the live proof | owner's go (CPU only; real-GPU proof follows in a separate GPU-tests plan) | [Plan 33](33-unblock-live-generation/plan.md) |
@@ -43,6 +42,7 @@
 | Pinokio basic (R1.1) | Prove users can install, start, stop (including while busy), update and remove Astrid through Pinokio on Linux, macOS and Windows, with a separate three-row hosted gate. Done 7 Nov on Linux, macOS and Windows (6/6 hosted on `main`); remaining gaps moved to Plan 10. | done | Release 1 merge coordinator | 0 | — | [Plan 07](07-pinokio/plan.md) |
 | Release 1: install and update | Ship R1: new users install and update on Linux, macOS and Windows; R0 users on Linux and macOS upgrade without data loss, proven by the five-row hosted gate. | done | Release 1 merge coordinator | 0 | — | [Plan 08](08-release1-install-update/plan.md) |
 | Installer consent | Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior. | done | @AstridPseudon | 0 | — | [Plan 01](01-installer-consent/plan.md) |
+| One update path and release | One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes. | done | Plan 29 manager | 11–13 | — | [Plan 29](29-update-and-release/plan.md) |
 
 ## Delivery context
 
