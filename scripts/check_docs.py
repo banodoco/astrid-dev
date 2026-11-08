@@ -137,6 +137,53 @@ def route_issues(name: str, gap_id: str, text: str, plans: dict[str, str]) -> li
     return issues
 
 
+LEDGER = Path('docs/ledger')
+LEDGER_NAME = re.compile(r'(\d{4}-\d{2}-\d{2})-[a-z0-9]+(?:-[a-z0-9]+)*\.md')
+LEDGER_KINDS = {'papercut', 'issue', 'idea', 'fix'}
+LEDGER_FIELDS = ('Date', 'Kind', 'Source', 'Resolved by')
+
+
+def ledger_entry_errors(name: str, text: str, entries: set[str]) -> list[str]:
+    """One ledger entry file: name, header fields, kind, date and references."""
+    match = LEDGER_NAME.fullmatch(name)
+    if not match:
+        return [f'docs/ledger/{name}: file name must be YYYY-MM-DD-<short-slug>.md']
+    label = f'docs/ledger/{name}'
+    header, _, body = text.partition('\n\n')
+    fields: dict[str, str] = {}
+    for line in header.splitlines():
+        key, sep, value = line.partition(':')
+        if not sep or key.strip() not in LEDGER_FIELDS or key.strip() in fields:
+            return [f'{label}: header must be exactly Date, Kind, Source and Resolved by lines, then a blank line']
+        fields[key.strip()] = value.strip()
+    errors = [f'{label}: missing header field {f}:' for f in LEDGER_FIELDS if not fields.get(f)]
+    if fields.get('Kind') and fields['Kind'] not in LEDGER_KINDS:
+        errors.append(f'{label}: Kind must be one of {", ".join(sorted(LEDGER_KINDS))}')
+    if fields.get('Date') and fields['Date'] != match.group(1):
+        errors.append(f'{label}: Date must match the file name prefix {match.group(1)}')
+    if not body.strip():
+        errors.append(f'{label}: needs entry text after the header')
+    refs = [(fields.get('Resolved by', '—'), 'Resolved by')]
+    refs += [(m.group(1).strip(), 'Follows') for m in re.finditer(r'^Follows:(.*)$', body, re.M)]
+    for ref, field in refs:
+        if ref in ('', '—'):
+            continue
+        target = ref[:-3] if ref.endswith('.md') else ref
+        if target + '.md' not in entries or target + '.md' == name:
+            errors.append(f'{label}: {field} names no existing entry: {ref}')
+    return errors
+
+
+def ledger_errors(root: Path) -> list[str]:
+    folder = root / LEDGER
+    files = sorted(p for p in folder.glob('*.md') if p.name != 'README.md')
+    entries = {p.name for p in files}
+    errors: list[str] = []
+    for file in files:
+        errors.extend(ledger_entry_errors(file.name, file.read_text(encoding='utf-8'), entries))
+    return errors
+
+
 STRATEGY = Path('strategy.md')
 STRATEGY_HEADER = '| Order | When | Gap | Plans | What creators get | Waiting on |'
 STRATEGY_WHEN = {'Now', 'Next', 'Later'}
@@ -262,6 +309,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     if actual_principles != expected_principles:
         errors.append(f'expected four canonical principle pages, got {sorted(actual_principles)}')
     errors.extend(obsolete_template_paths(root))
+    errors.extend(ledger_errors(root))
     # Every Markdown file must be current. No grandfathered dead references.
     # Product evidence and old task cards must either have valid local links
     # or be removed/replaced by their authoritative project source.

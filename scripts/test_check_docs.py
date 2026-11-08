@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_docs import (ROOT, strategy_errors, DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
+from check_docs import (ROOT, ledger_entry_errors, ledger_errors, strategy_errors, DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
                         route_issues, unnamed_active_owners)
 
 
@@ -104,6 +104,37 @@ class StrategyTests(unittest.TestCase):
         errors = strategy_errors(bad)
         self.assertTrue(any('When must be' in e for e in errors))
         self.assertTrue(any('## Not now' in e for e in errors))
+
+
+class LedgerTests(unittest.TestCase):
+    ENTRY = 'Date: 2026-11-08\nKind: fix\nSource: PR 1\nResolved by: —\n\nShort text.\n'
+    EXISTING = {'2026-11-07-old.md', '2026-11-08-new.md'}
+
+    def test_valid_entry_passes(self):
+        self.assertEqual(ledger_entry_errors('2026-11-08-new.md', self.ENTRY, self.EXISTING), [])
+
+    def test_bad_name_fails(self):
+        errors = ledger_entry_errors('Ledger_1.md', self.ENTRY, self.EXISTING)
+        self.assertTrue(any('file name' in e for e in errors))
+
+    def test_bad_kind_fails(self):
+        errors = ledger_entry_errors('2026-11-08-new.md', self.ENTRY.replace('fix', 'bug'), self.EXISTING)
+        self.assertTrue(any('Kind must be' in e for e in errors))
+
+    def test_date_must_match_name(self):
+        errors = ledger_entry_errors('2026-11-09-new.md', self.ENTRY, {'2026-11-09-new.md'})
+        self.assertTrue(any('Date must match' in e for e in errors))
+
+    def test_dangling_references_fail(self):
+        follows = self.ENTRY + '\nFollows: 2026-11-01-missing\n'
+        self.assertTrue(any('Follows' in e for e in ledger_entry_errors('2026-11-08-new.md', follows, self.EXISTING)))
+        resolved = self.ENTRY.replace('Resolved by: —', 'Resolved by: 2026-11-01-missing')
+        self.assertTrue(any('Resolved by' in e for e in ledger_entry_errors('2026-11-08-new.md', resolved, self.EXISTING)))
+        ok = self.ENTRY + '\nFollows: 2026-11-07-old\n'
+        self.assertEqual(ledger_entry_errors('2026-11-08-new.md', ok, self.EXISTING), [])
+
+    def test_real_ledger_passes(self):
+        self.assertEqual(ledger_errors(ROOT), [])
 
 
 if __name__ == '__main__':
