@@ -8,6 +8,7 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 | --- | --- | --- | --- | --- | --- |
 | **Phase 1a — App (about 4 days)** | | | | | |
 | UR-1 Update now only when the installed Astrid reports `self_update`, and the real reason whenever it can't run | N | — | app `src/shared/lib/updates/{useInstallerUpdate,updateOperation,resolveUpdate}.ts`, `src/integrations/runtime/client.ts`, `UpdateResolutionActions.tsx`, `SettingsModal/sections/AstridUpdatesSection.tsx`; surface update UI | Without `self_update`, Update now is hidden and the one line plus the command show; busy shows it disabled. Each status `reason` and POST `details.reason` has its own line; an unknown reason reads as needs repair | [ ] |
+| UR-1b One accepted-digest list for the App, local launcher and dev workspace | N | — | app `src/integrations/runtime/{contract-metadata.ts,runtime-update-contract.mjs}`, `scripts/dev-local-workspace.mjs`, `package.json` | `resolveUpdate.source-contract.test.mjs` passes through `npm run test:node` | [ ] |
 | UR-3 Setup block off update surfaces; Updates gains a repair entry | N | UR-1 | app `UpdateResolutionActions.tsx`, `ChatUpdateNeeded.tsx`, `SettingsModal/sections/{AstridStatusSection,AstridUpdatesSection,astridStatusCopy}` | No SetupBlock on update surfaces or the status section; a degraded direct install finds the plain install line under Updates | [ ] |
 | UR-4 Chat update cards use the shared decision | N | UR-1, UR-3 | app `src/tools/video-editor/components/AgentChat/**` | One error renders one card; chat's action is "See updates" | [ ] |
 | UR-5 Pinokio memory reads `identity.managed_by` | N | — | app `RuntimeConnectionProvider.tsx` | Through both the proxy and the door, Pinokio is recognised and never sees the installer command | [ ] |
@@ -41,6 +42,22 @@ Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = 
 - Read the POST refusal's `details.reason` (it's ignored today at `updateOperation.ts:134-141`).
 - Stop dropping unknown reasons (`:17-22`).
 - A 409 reconciliation has `kind`, not `reason`.
+- **What each answer shows** (advisor, 8 Nov):
+  - `self_update` true: Update now.
+  - `recovery-needed`: "Astrid needs repair before it can update." plus the repair entry from UR-3, never the old "Select Update…" copy.
+  - `source`: its own line saying this Astrid runs from source, with the source update command. Not needs-repair.
+  - Any other or unknown reason: "Astrid can't update itself on this computer. Run the command below to update it." Show the Runtime's message and keep the reason code for diagnostics. An unknown reason is never read as needs-repair.
+  - A 409 reconciliation `kind` reports how an earlier update ended. It is not a refusal reason, so show that result (updated, rolled back or failed) instead of mapping it to a reason.
+- **Contract drift found on `main`:** `resolveUpdate.source-contract.test.mjs` fails because `contract-metadata.ts` accepts digest `a36913ec…`, but the shared `LEGACY_RUNTIME_SCHEMA_DIGESTS` in `runtime-update-contract.mjs`, which the local launcher uses, does not. `scripts/dev-local-workspace.mjs` holds a third copy. No CI list runs the test. This is task UR-1b.
+
+### UR-1b One accepted-digest list
+- **Scope:** app `src/integrations/runtime/{contract-metadata.ts,runtime-update-contract.mjs}`, `scripts/dev-local-workspace.mjs`, `package.json` (`test:node`).
+- **Route and dependencies:** N, no dependencies; it lands before UR-1.
+- **Change:**
+  - Move the digest into the shared list so the App, the launcher and the dev workspace all read one source.
+  - Delete the copies.
+  - Add the test file to `test:node`.
+- **Proof:** `resolveUpdate.source-contract.test.mjs` passes, run through `npm run test:node`.
 
 ### UR-3 Setup block and repair
 - **Remove** the SetupBlock renders at `UpdateResolutionActions.tsx:47,51`, `ChatUpdateNeeded.tsx:24` and `AstridStatusSection.tsx:120-123`.
