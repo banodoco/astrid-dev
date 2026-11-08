@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from check_docs import (DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
-                        unnamed_active_owners)
+                        route_issues, unnamed_active_owners)
 
 
 def example(status='active', key='01-alpha'):
@@ -43,6 +43,38 @@ class CatalogTests(unittest.TestCase):
             (root / 'docs/guide.md').write_text('Use strategy/projects/01-alpha/plan.md.\n')
             errors = obsolete_template_paths(root)
             self.assertTrue(any('obsolete strategy/projects path' in error for error in errors))
+
+
+PLAN_OK = ('# Alpha\n\n**Vision gaps:** [Thing](../../vision/gaps/F-009-thing.md) (primary).\n\n'
+           '**Contributes to closure:** F-009: first evidence item.\n')
+ROUTE = ('## Closure approach\n\nThe idea and the order.\n\n## Route to closure\n\n'
+         '| Step | Plan | Contributes | Milestone |\n|---|---|---|---|\n'
+         '| 1 | [Plan 40](../../plans/40-alpha/plan.md) | first evidence item | A |\n\n'
+         '## Sources and reassessment\n\nLinks.\n')
+
+
+class RouteToClosureTests(unittest.TestCase):
+    def test_gap_without_route_needs_nothing(self):
+        self.assertEqual(route_issues('g.md', 'F-009', '## Gap\n\nText.\n', {}), [])
+
+    def test_valid_route_passes(self):
+        self.assertEqual(route_issues('g.md', 'F-009', ROUTE, {'40-alpha': PLAN_OK}), [])
+
+    def test_route_needs_closure_approach(self):
+        text = ROUTE.replace('## Closure approach\n\nThe idea and the order.\n\n', '')
+        self.assertTrue(any('Closure approach' in i for i in route_issues('g.md', 'F-009', text, {'40-alpha': PLAN_OK})))
+
+    def test_routed_plan_must_point_back(self):
+        plan = PLAN_OK.replace('F-009-thing', 'F-001-other').replace('F-009:', 'F-001:')
+        issues = route_issues('g.md', 'F-009', ROUTE, {'40-alpha': plan})
+        self.assertTrue(any('Vision gaps' in i for i in issues))
+        self.assertTrue(any('Contributes to closure' in i for i in issues))
+
+    def test_route_rejects_missing_plan_and_status_words(self):
+        text = ROUTE.replace('| A |', '| A (active) |')
+        issues = route_issues('g.md', 'F-009', text, {})
+        self.assertTrue(any('missing plan' in i for i in issues))
+        self.assertTrue(any("'active'" in i for i in issues))
 
 
 if __name__ == '__main__':

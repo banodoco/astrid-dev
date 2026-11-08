@@ -66,6 +66,7 @@ From the owner, 7 Nov 2026 (session chat):
 7. **Release versions:** a release is named `major.minor.patch`, worked out from the release number: patch by default, minor or major only when the owner declares it. Release 10 is `0.0.10`. astrid-dev keeps a log of every release, with its versions, kind, projects and owner go (owner, 8 Nov 2026).
 8. **Required is its own decision:** a required update is set per release with a reason, never implied by kind. Kind changes no behaviour for now (owner, 8 Nov 2026).
 9. **Source and history:** the log starts at a legacy Release 9 = 0.0.9 (owner, 8 Nov 2026). Superseded the same day: releases are defined and published from astrid-dev, and the App keeps one generated copy. That work moved to [Plan 31](../31-releases-from-astrid-dev/plan.md), with UR-8b–UR-8d, to start after this plan.
+10. **Reviews start early:** review round 1 starts while UR-13 is still finishing, on everything already integrated, and is told what's already known so it doesn't re-report it. Round 2 covers the full integrated candidate, including UR-13 (owner, 8 Nov 2026).
 
 ## Source identities
 
