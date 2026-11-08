@@ -10,7 +10,8 @@
 
 | Project | Goal | Status | Owner | Estimate | Waiting on | Plan |
 |---|---|---|---|---:|---|---|
-| One update path and release | One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes. | active | Plan 29 manager | 13.5–15.5 | — | [Plan 29](29-update-and-release/plan.md) |
+| One update path and release | One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes. | active | Plan 29 manager | 11–13 | — | [Plan 29](29-update-and-release/plan.md) |
+| Releases defined and published from astrid-dev | Each release is one owner-approved file in astrid-dev that CI checks against the pinned commits, and merging it publishes the release, with versions such as 0.0.10 shown to users. | queued | Unassigned | 6–7 | Plan 29; owner decisions; astrid-dev `main` protection | [Plan 31](31-releases-from-astrid-dev/plan.md) |
 | Update everywhere: remaining setups | Finish Plan 29 for less common setups: Linux with systemd below 254, typed update contracts, refused cards, and update proof for Pinokio and fully local. | queued | Unassigned | 7–9 | Plan 29 | [Plan 30](30-update-everywhere/plan.md) |
 | One generation placement and target lifecycle | Every generation, from any pack or slot, decides where it runs exactly once and runs through one target lifecycle, so routing is consistent and the dry run matches the live run. | queued | @AstridPseudon | about 2–4 days | Plan 02 landed | [Plan 31](31-generation-placement-targets/plan.md) |
 | Zero-to-first-image onboarding | Go from an existing inference setup to a generated image visible on the timeline through one simple command, with tested recovery and minimal agent effort. | queued | Unassigned | TBD | scope agreement | [Plan 20](20-zero-to-first-image/plan.md) |

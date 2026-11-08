@@ -45,9 +45,9 @@ The owner's decisions (7 Nov 2026) are recorded in [inputs.md](inputs.md#owner-d
 
 ## Sequence and readiness
 
-This plan (about 13.5–15.5 engineer-days) gives every normal install a working, honest Update now from Release 10, and a release number that only moves when a release is published, named as a version (`0.0.10` first) and recorded in an astrid-dev release log. The less common setups follow in [Plan 30](../30-update-everywhere/plan.md) (about 7–9 days), which is committed, not optional.
+This plan (about 11–13 engineer-days) gives every normal install a working, honest Update now from Release 10, and a release number that only moves when a release is published. After this plan, [Plan 31](../31-releases-from-astrid-dev/plan.md) defines and publishes releases from astrid-dev. The less common setups follow in [Plan 30](../30-update-everywhere/plan.md) (about 7–9 days), which is committed, not optional.
 
-**Phase 1a: App and release versions, deployable this week (about 5.5–6 days).**
+**Phase 1a: App only, deployable this week (about 3.5–4 days).**
 - Show Update now only when the installed Astrid's update status reports it can update itself. No Runtime reports it yet, so the button that has never worked disappears for everyone today, and turns on by itself with Release 10. Everyone else sees the reason and the command.
 - Show the real refusal reason.
 - Remove SetupBlock from the four update surfaces and from "Astrid on this computer".
