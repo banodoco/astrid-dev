@@ -130,6 +130,10 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
 - **What changes:** the update leg of `journey_fresh_update.py` (about :126) and `windows_update_journey.py` (about :225). It is a POST with Origin `https://astrid.haus`, `Content-Length: 0`, no Authorization or Cookie, and the server-side `installer:update` scope.
 - **Hard-coded release:** fix `release == 1` (`journey_fresh_update.py:24-25`, `windows_update_journey.py:185`, `ci_journey_keepgoing.py:238`).
 - **Probes first:** launchd (macOS) and the Windows interactive scheduled task on hosted runners.
+- **Running the hosted proof:** the journey workflow checks that the candidate's Agent and Runtime match what the App manifest pins. Proving unmerged Agent or Runtime work needs a composed candidate, following the Release skill's "Freeze and compose the candidate" step:
+  - Create `cand/29-<task>` branches in App and Agent from the frozen heads, then run the Agent's `scripts/regenerate_runtime_pins.py ... --apply` to repin the Agent's runtime lock and the App manifest together. Check with `pin.mjs --check`.
+  - Dispatch `journey.yml` (`workflow_dispatch`) with full SHAs, `manifest_sha256` and the three bootstrap hashes.
+  - `cand/*` branches are evidence only. They are never merged; the real pin happens in UR-14.
 
 ### UR-R Review rounds
 
