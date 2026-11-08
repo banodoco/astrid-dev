@@ -43,8 +43,8 @@ These are deliberately deferred, so they aren't re-argued:
   - Plan 31 follows Plan 29.
   - Green mains is not a project (owner's go). Once Release 10 ships:
     - the [Release skill](skills/astrid-dev-release/SKILL.md) gains the rule that a publish never turns a passing check red, and each publish PR into a product `main` passes that repo's own checks;
-    - Manage drops its "ignore checks that were already failing" rule;
-    - today's red checks on the App, Agent and Runtime mains are fixed in one short batch of fix tasks.
+    - today's red checks on the App, Agent and Runtime mains are fixed in one short batch of fix tasks;
+    - once that batch has made the mains green, Manage drops its "ignore checks that were already failing" rule. Dropping it earlier would block every task merge.
   - Generation continues on its own track.
 
 ## Keeping this page current
