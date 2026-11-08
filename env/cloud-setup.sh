@@ -8,7 +8,7 @@
 set -u
 test -d /opt/astrid-dev || git clone -q --depth 1 https://github.com/banodoco/astrid-dev /opt/astrid-dev || exit 0
 cmd() { # name setup-script test-script
-  printf '#!/bin/sh\nset -e\nCO=$(pwd -P)\ntest -x "$CO.env/venv/bin/python" || bash /opt/astrid-dev/env/%s >&2\nexec bash /opt/astrid-dev/env/%s "$@"\n' "$2" "$3" > "/usr/local/bin/$1"
+  printf '#!/bin/sh\nset -e\nCO=$(pwd -P)\ntest -f "$CO.env/setup.txt" || bash /opt/astrid-dev/env/%s >&2\nexec bash /opt/astrid-dev/env/%s "$@"\n' "$2" "$3" > "/usr/local/bin/$1"
   chmod 755 "/usr/local/bin/$1"
 }
 cmd astrid-agent-pytest agent-setup.sh agent-pytest.sh
