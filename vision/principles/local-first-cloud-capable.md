@@ -2,11 +2,11 @@
 
 ## Statement
 
-Creative work should remain yours, whether it runs locally or in the cloud.
+Everything should be designed to run fully locally, and cheaply and conveniently in the cloud.
 
 ## Explanation
 
-Astrid should work on your own machine, online or offline, with local projects and files under your control. Cloud models, agents, and rendering can extend that work when useful, but moving between local and remote execution must be a deliberate, understandable choice.
+Astrid should be built so that creative work can happen entirely on your machine, even offline, with your projects and files under your control. The same work should be convenient and inexpensive to run in the cloud when helpful. People and their agents should choose where work happens, what is shared, and what it costs.
 
 ## Characteristics
 

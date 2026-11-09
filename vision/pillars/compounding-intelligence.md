@@ -2,11 +2,11 @@
 
 ## Statement
 
-Creative agents should become more useful through what they and others learn.
+What anyone learns should become something everyone can build on.
 
 ## Explanation
 
-We want every meaningful creative discovery to strengthen future work. An agent should be able to find applicable experience, test it against the present task, and retain what was actually learned. This knowledge should compound across creators and communities without taking ownership or judgment away from them.
+We want every meaningful creative and technical discovery to strengthen future work. When knowledge is shared, an agent should be able to find relevant past experience, test it against the present task, use it to make progress, and share what it learns for others to build on. That knowledge should compound across creators and communities without taking ownership or judgment away from them.
 
 ## Characteristics
 
