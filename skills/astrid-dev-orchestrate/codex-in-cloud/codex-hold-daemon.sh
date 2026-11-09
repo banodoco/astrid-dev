@@ -15,6 +15,11 @@ LOCK=${CODEX_DAEMON_LOCK:-/tmp/codex-hold-daemon.lock}
 exec 9>"$LOCK"
 flock -n 9 || exit 0
 echo $$ > "$LOCK.pid"
+# Restart record: one line per daemon start, with the container's uptime and when the previous
+# container last beat, so the gap shows how long the machine was down.
+STATE=${CODEX_STATE:-$(dirname "$RUNS")}
+last=$(cat "$STATE/daemon.beat" 2>/dev/null || echo none)
+echo "$(date -u +%FT%TZ) daemon start pid=$$ uptime=$(cut -d' ' -f1 /proc/uptime)s last_beat=$last" >> "$STATE/restarts.log"
 declare -A restarts
 while :; do
   while IFS= read -r RUN; do
@@ -31,9 +36,10 @@ while :; do
       echo "$(date -u +%FT%TZ) daemon: runner ${pid:-?} gone; restarting (${restarts[$RUN]}/3)" >> "$RUN/hold.log"
       # runner.args and runner.env hold %q-quoted values that the runner wrote itself.
       ( eval "export $(cat "$RUN/runner.env" 2>/dev/null)"; eval "set -- $(cat "$RUN/runner.args")"
-        setsid nohup "$HERE/codex-runner.sh" "$@" > /dev/null 2>&1 < /dev/null & )
-      sleep 5
+        setsid nohup "$HERE/codex-runner.sh" "$@" > /dev/null 2>&1 < /dev/null 9>&- & )
+      sleep 5 9>&-
     fi
   done < <(cat "$RUNS" 2>/dev/null)
-  sleep "${HOLD_TICK:-30}"
+  date -u +%FT%TZ > "$STATE/daemon.beat"
+  sleep "${HOLD_TICK:-30}" 9>&-
 done
