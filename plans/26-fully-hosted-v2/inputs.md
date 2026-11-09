@@ -1,92 +1,77 @@
-# Inputs — Astrid Cloud workspace, phase 2
+# Inputs — Astrid Cloud, phase 2
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
 
-**Scope decision:** Pending — On 9 Nov the owner described the phase 2 direction in a planning session. The database moves to the cloud, the agent runs on a remote CPU workspace, the App runs off the same database, and files are reached as URLs. It uses the same key, tools and storage method as local. The owner asked how the live App and the agent stay on the same data. The answer recorded in [plan.md](plan.md#how-the-live-app-the-agent-and-the-data-stay-in-step) is one Runtime per user on the workspace, with Turso kept off the live path. In the same session the owner decided E5. The agent's LLM goes through Astrid's own pass-through router to OpenRouter, in the Astrid Cloud service, on the same Astrid Cloud key, for local and cloud use alike. There is no traceable written approval yet. Next: the owner reviews this scope PR, confirms the one-Runtime model, and answers E1–E4 and E6–E8 after spikes B1–B3.
+**Scope decision:** Pending — In the planning session on 9 Nov the owner set the direction and the decisions below. The one Runtime per user model, Astrid Connect for reaching any machine, and Astrid's own LLM router were agreed. There is no written approval yet. Next: the owner approves this scope PR, and the host is confirmed after B1.
 
-**Prior art:** The same 9 Nov read-only surveys as [Plan 25](../25-cloud-assist-v1/inputs.md#planning-evidence), at the SHAs below. The findings that shape this plan:
-
-- **Runtime storage:**
-  - one stdlib-sqlite3 file per realm, `realm.sqlite3`, with WAL required, `BEGIN IMMEDIATE`, an owner-lock flock and a refusal of network filesystems (`store.py:335-342, 1505-1536`);
-  - a content-addressed file store, with timelines only carrying `/v1/objects/<sha>` (`store.py:2500-2507`);
-  - authenticated backup and restore of SQLite plus the file store (`backup.py:1-8, 678, 816`).
-- **Concurrency:**
-  - one mutation at a time (`service.py:516-530`);
-  - document version checks that answer 409;
-  - timeline commits accepted, rebased or merged;
-  - no push channel and no timeline change feed. The App polls (`dataProvider.ts:95`).
+**Prior art:** The same 9 Nov surveys as [Plan 25](../25-cloud-assist-v1/inputs.md#planning-evidence), at the SHAs below. Findings:
+- **Runtime:**
+  - one stdlib-sqlite3 `realm.sqlite3` per realm, with WAL, `BEGIN IMMEDIATE`, an owner flock, and network filesystems refused (`store.py:335-342, 1505-1536`);
+  - content-addressed files, with timelines holding only `/v1/objects/<sha>` (`store.py:2500-2507`);
+  - authenticated backup and restore into a new inactive realm (`backup.py:1-8, 678, 816`);
+  - one mutation at a time (`service.py:516-530`), version checks, and timeline rebase or merge;
+  - no push channel; the App polls (`dataProvider.ts:95`).
 - **Network surface:**
   - the daemon and agent client are loopback-only (`daemon.py:63-67`, `generated.py:36-40`);
-  - the door accepts only Host `127.0.0.1`, the astrid.haus origin and no browser credentials (`door.py:594-608`);
+  - the door accepts only Host `127.0.0.1` and refuses browser credentials (`door.py:594-608`);
   - the App's origin is fixed at build time (`connection.ts:59-77`);
   - media loads through plain `<img>` and `<video>` URLs;
-  - the paired relay prototype exists (`astrid-app/config/vite/pairedRelay.ts`).
+  - the App's paired relay prototype (`config/vite/pairedRelay.ts`, `pairedRegistry.ts`) has an outbound WebSocket connector, a `__Host-` cookie and a closed route table, and is in-memory with invitation codes.
 - **Agent:**
-  - OMP behind the ACP bridge, forwarded through the door;
-  - render and media views need verified local paths (`media_views.py:15-45`, `project_render.py:875-890`);
-  - the installer assumes systemd but has a foreground mode (`installer/backend.py:389, 945`);
-  - RunPod claims are GPU-only, though `h3_release.py` has a CPU pod route.
-- **Outside research on 9 Nov:**
-  - Turso Sync is push and pull with last-push-wins and no change notifications; its status appears beta;
-  - pyturso maturity is unverified;
-  - E2B, Fly Machines and Modal pricing and suspend semantics.
-- **Agent LLM:**
-  - the Astrid agent is OMP, and OpenRouter is its recommended provider;
-  - `astrid agent key set openrouter` checks a key against `<base>/api/v1/auth/key` and imports it into OMP, with the base taken from `ASTRID_OPENROUTER_API_BASE` (`astrid/omp_agent.py:29, 490-530`);
-  - a router that speaks OpenRouter's API therefore slots in without a new agent provider. Whether OMP's own completion calls honour the same base is unverified, and B14 checks it.
+  - OMP behind the ACP bridge;
+  - render needs local paths (`media_views.py:15-45`);
+  - the installer has a foreground mode (`installer/backend.py:389, 945`);
+  - OpenRouter is OMP's recommended provider and the default model is DeepSeek V4.1 Flash (`omp_agent.py:29`);
+  - the key check uses `ASTRID_OPENROUTER_API_BASE` (`omp_agent.py:498`). Whether OMP's completions follow it is unverified, and B11 checks it.
+- **Outside research:** Turso Sync is push and pull with last-push-wins and appears to be in beta. E2B, Fly Machines and Modal pricing and suspend semantics were reviewed.
 
-**Approach:** Keep the Runtime as the single authority and move it, with the agent, onto one CPU machine per user. Durability comes from a persistent volume plus Runtime backups to a bucket. Access goes through the paired relay or a remote door with cookie-authorized media. Wake and idle are policed from inside the machine. Moves and exports use backup and restore.
+**Approach:** Move the one Runtime, with the agent, onto one cloud machine per user. Its live data sits on the volume, protected by frequent authenticated backups. Generalize the paired relay into Astrid Connect for every machine a user owns. Run the LLM through a router in the Astrid Cloud service. Bill everything per unit at cost × 1.6.
 
 Alternatives considered:
-- Turso as the Runtime engine;
-- Turso Sync between a local and a cloud copy (two writers, last-push-wins);
-- Litestream replication;
+- Turso as the engine;
+- Turso Sync between two copies;
+- Litestream;
 - a bucket-backed file store now;
-- per-conversation sandboxes (the 5 Oct design);
-- a browser that reads the database directly.
+- a remote door per machine;
+- per-conversation sandboxes.
 
-They are rejected for the reasons in [plan.md](plan.md#existing-work-and-decision).
+They are rejected in [plan.md](plan.md#existing-work-and-decision).
 
-**Challenge:** Reviewed — an independent advisor critique on 9 Nov checked the draft against code. It confirmed the one-Runtime model. It corrected:
-- the claim that only the door must change (the App origin and media authorization must change too);
-- Litestream, which clashes with upgrades;
-- the bucket-backed file store, which breaks the agent's local-path seam.
+**Challenge:** Reviewed — an independent advisor critique on 9 Nov confirmed the one-Runtime model. It corrected the App origin and media authorization, Litestream and the bucket-backed store, and added the idle, no-systemd and paired-relay points. All were accepted.
 
-It added the idle-watcher, no-systemd and paired-relay points. All were accepted.
-
-**Proof and limits:** The proof is the browser-only journey in [plan.md](plan.md#completion) on the B1 host for a small cohort. Limits:
+**Proof and limits:** The proof is the journey in [plan.md](plan.md#completion) for a small cohort on the B1 host. Limits:
 - one Runtime per user;
-- no high availability: a lost machine loses work since the last backup, inside E6;
-- latency and wake time are measured, not promised;
-- no claim about teams, offline cloud editing or very large media libraries.
+- no high availability;
+- data loss bounded by B2's measured backup cadence, not zero by proof;
+- latency and wake time are measured, not promised.
 
 ## Owner decisions
 
-| ID | Decision | Recommendation |
+| ID | Decision | State |
 |---|---|---|
-| E1 | Database durability: a volume plus Runtime backups, or Turso | Volume plus backups. Revisit Turso only to read a workspace while its machine is off, or for a local offline copy |
-| E2 | Workspace host (after B1): Fly Machines, RunPod CPU or E2B | Decide on B1's measurements of wake time, volume, cost and egress. Fly fits a volume with wake-on-request best; RunPod reuses our claim and lease code |
-| E3 | Remote access (after B3): the paired relay or a remote door on a subdomain, and the domain layout under astrid.haus | The paired relay, if B3 shows it carries media and chat at acceptable latency |
-| E4 | Workspace usage tariff: credits per active minute, idle free | Per active minute in the same ledger, at host cost plus the 60% markup the owner set for Plan 25 |
-| E5 | The agent's LLM | **Decided (owner, 9 Nov):** Astrid's own LLM service. It is a simple pass-through router to OpenRouter, using the team's OpenRouter key, inside the Astrid Cloud service (the trimmed worker orchestrator; there are no edge functions). The agent (OMP) reaches it with the user's same Astrid Cloud key, both locally and in the workspace. Billing is at cost plus 60%, the same markup as generation. Users who prefer their own OpenRouter key keep that option |
-| E6 | Acceptable data loss: backup frequency | On idle, before stop, and at most every 15 minutes while active |
-| E7 | Bytes in a bucket-backed file store now or later | Later, with its own reason such as volume size |
-| E8 | Unit of moving: the whole workspace (realm), or per project | The whole workspace. Per-project import later |
+| E1 | Database lives on the workspace volume, protected by Runtime backups to a bucket; no Turso on the live path | Decided 9 Nov |
+| E2 | Host: a Fly Machines-class CPU service; B1 checks Fly first against the requirements in plan.md | Decided 9 Nov, confirmed after B1 |
+| E3 | Access: Astrid Connect, the paired relay generalized to every machine a user owns (cloud workspace and local machines, from any browser including a phone) | Decided 9 Nov |
+| E4 | Billing per unit at cost × 1.6: generations per output, LLM per token, workspace per active minute; asleep is free | Decided 9 Nov |
+| E5 | LLM: Astrid's router (OpenRouter pass-through) in the Astrid Cloud service; a generic model chooser, defaulting to DeepSeek V4.1 Flash; the key reaches OMP through the Runtime, never pasted | Decided 9 Nov |
+| E6 | Data loss: never, or very little. Back up after every quiet moment and before every stop, at most a few minutes apart while active. B2 picks the exact cadence, or continuous log shipping if needed | Decided 9 Nov, cadence after B2 |
+| E7 | Bytes in a bucket-backed file store: later, with its own reason | Agreed 9 Nov |
+| E8 | The Local and Cloud switch moves the whole workspace, either way, at any time | Decided 9 Nov |
 
 ## Source identities
 
 | Repository | SHA | Use |
 |---|---|---|
 | [banodoco/astrid-runtime](https://github.com/banodoco/astrid-runtime) | `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f` | Base: backup and restore, door, daemon |
-| [banodoco/astrid-app](https://github.com/banodoco/astrid-app) | `a0f253ee62a1bb26c004add9822b0bae9e851fa5` | Base: Runtime connection, paired relay, Cloud entry |
-| [banodoco/astrid-agent](https://github.com/banodoco/astrid-agent) | `a105de3a4852cb61b9647dfe2c920118bd29f272` | Base: OMP, chat bridge, installer foreground mode, RunPod pack |
-| Plan 25 completion PR | (at its completion) | Account, key, credits and queue contracts |
+| [banodoco/astrid-app](https://github.com/banodoco/astrid-app) | `a0f253ee62a1bb26c004add9822b0bae9e851fa5` | Base: Runtime connection, paired relay, onboarding |
+| [banodoco/astrid-agent](https://github.com/banodoco/astrid-agent) | `a105de3a4852cb61b9647dfe2c920118bd29f272` | Base: OMP, chat bridge, installer foreground mode |
+| Plan 25 completion PR | at its completion | Account, key handoff, service, SQL and price contracts |
 
 Re-pin at dispatch.
 
 ## References
 
-- [App cloud-mode overview, 5 Oct](https://github.com/banodoco/astrid-app/blob/a0f253ee62a1bb26c004add9822b0bae9e851fa5/docs/design/cloud-mode-project-overview-2026-10-05.md) and [creative workspace Runtime vision](https://github.com/banodoco/astrid-app/blob/a0f253ee62a1bb26c004add9822b0bae9e851fa5/docs/creative-workspace-runtime-vision.md). Both agree on one coordinator per realm. This plan keeps that and drops their per-user Turso and per-conversation sandboxes.
-- Turso Sync: <https://docs.turso.tech/sync>. E2B billing: <https://e2b.dev/docs/billing>. Fly Machines: <https://fly.io/docs/machines/>.
+- [App cloud-mode overview, 5 Oct](https://github.com/banodoco/astrid-app/blob/a0f253ee62a1bb26c004add9822b0bae9e851fa5/docs/design/cloud-mode-project-overview-2026-10-05.md) and [creative workspace Runtime vision](https://github.com/banodoco/astrid-app/blob/a0f253ee62a1bb26c004add9822b0bae9e851fa5/docs/creative-workspace-runtime-vision.md). Both agree on one coordinator per realm.
+- Fly Machines: <https://fly.io/docs/machines/>. Turso Sync: <https://docs.turso.tech/sync>.

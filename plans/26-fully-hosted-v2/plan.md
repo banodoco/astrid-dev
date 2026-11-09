@@ -1,153 +1,112 @@
-# 26 — Astrid Cloud workspace, phase 2 (cloud database, agent and files)
+# 26 — Astrid Cloud, phase 2: cloud workspace (database, agent and files in the cloud)
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
-**Vision gaps:** [F-006 — Fully hosted workspace](../../vision/gaps/F-006-fully-hosted-workspace.md) (primary) · [F-005 — cloud execution for local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (supporting: the cloud agent session and remote rendering it lists) · [F-002 — safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). Completion does not automatically close any gap.
+**Vision gaps:** [F-006 — Fully hosted workspace](../../vision/gaps/F-006-fully-hosted-workspace.md) (primary) · [F-005 — cloud execution for local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (supporting: the cloud agent and remote rendering) · [F-002 — safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
 ## Outcome and scope
 
-A creator opens Astrid in a browser, signs in with Discord, and works in their **Astrid Cloud workspace**. Their project database, files, agent and renderer all live in the cloud, and nothing is installed locally. It is the same Astrid:
-- the same Runtime, with the same SQLite database format and the same file store;
-- the same agent and tools;
-- the same generation route and Astrid Cloud key as [Plan 25](../25-cloud-assist-v1/plan.md).
+**Run Astrid on: This computer | Astrid Cloud.** Onboarding asks this, and it can be switched back and forth at any time. Switching moves the whole workspace (projects, database, files) to the other side.
 
-They can close the browser while the agent keeps working, reopen on another device, and move their workspace to their own machine at any time, and back.
+In Astrid Cloud, the creator opens astrid.haus on any browser, including a phone, with nothing installed. Their database, files, agent and renders live on their own cloud machine. They can close the browser while the agent keeps working.
 
-**The agent's LLM is Astrid's own service, on the same key.** The Astrid agent (OMP) sends its model calls through an **Astrid LLM service**: an OpenRouter-compatible proxy holding the team's OpenRouter key. It authenticates the user's Astrid Cloud key, which gains the `llm` scope, and bills usage in credits at cost plus 60%. The agent uses it the same way locally and in the cloud workspace, so a local user can also run the agent on Astrid's LLM instead of their own provider account.
+It is the same Astrid: the same Runtime, SQLite database and file store, the same agent and tools, and the same Astrid Cloud account and key as [Plan 25](../25-cloud-assist-v1/plan.md).
 
-### How the live app, the agent and the data stay in step
+### How it works
 
-**Do not sync two databases. Move the one Runtime.**
+- **One Runtime per user, moved to a cloud machine.** The Runtime already decides every write itself:
+  - one mutation at a time (`service.py:516-530`);
+  - version-checked documents;
+  - timeline commits that are accepted, rebased or merged (`timeline_commit_store.py:742-747`).
 
-The Runtime already decides every write itself:
-- it takes one mutation at a time (`service.py:516-530`, `BEGIN IMMEDIATE`);
-- documents use version checks that answer 409 on a stale write;
-- timeline commits carry a base head and come back accepted, rebased or merged (`timeline_commit_store.py:742-747`);
-- the App already polls heads every 6 seconds and reconciles (`dataProvider.ts:95, 757-833`);
-- the agent and the App are both just HTTP clients, and media moves by digest, never by shared path.
+  So the agent (on the same machine, over loopback, unchanged) and the user's App (through Astrid Connect, below) both work on that one Runtime. There is no sync and no second copy to reconcile. The App's existing 6-second poll shows each side the other's edits.
+- **Where the database is stored.**
+  - The live `realm.sqlite3` and the file store sit on the machine's **persistent volume**: a disk attached to the machine that survives sleep and restarts.
+  - Nothing is pulled from elsewhere at start-up.
+  - The volume is protected by the Runtime's own authenticated backup (`backup.py`), copied to a private bucket. Because files are content-addressed, each backup only uploads new files plus the small database copy.
+  - If the machine or its host is lost, a new machine restores the latest backup.
+  - **Target: near-zero data loss.** Back up after every quiet moment and before every stop, and never let a backup be more than a few minutes old while the user is active. B2 measures this and decides whether continuous log shipping is needed to get closer to zero.
+- **Turso** is not on the live path. It would mean rewriting the Runtime's stdlib-sqlite3 store. It is a later option only, for reading a workspace while its machine is off, or for an offline local copy.
+- **Files are URLs.** The App reaches every file through `/v1/objects/<sha>` on the workspace. Plan 25 generations arrive through the normal publish path. A bucket-backed file store is deferred: the agent's render needs local paths (`media_views.py:15-45`).
+- **Astrid Connect: one way to reach any of your Astrid machines.** It generalizes the App's paired relay prototype (`config/vite/pairedRelay.ts`). Every Runtime a user owns, whether their laptop or their cloud workspace, dials out to the relay under their Discord identity. Any browser signed in as that user (desktop or phone) picks a machine and works on it:
+  - same-origin, with a `__Host-` cookie, so images and video load;
+  - a closed route table;
+  - the Runtime's credential never leaves its machine.
 
-So each user gets **one CPU machine** running their Runtime, the pack host, chat and the agent together:
-- **Agent:** it keeps talking to the Runtime over loopback, so its code is unchanged.
-- **App:** the browser App talks to that Runtime instead of `127.0.0.1:17340`, through the remote access chosen in B3.
-- **Edits:** a user's timeline edit and an agent's edit meet in the same Runtime and the same `realm.sqlite3`, under the existing conflict rules.
+  **The cloud workspace is just one more of the user's machines.** Reaching a home laptop from a phone comes from the same machinery.
+- **The host:** Fly Machines-class. B1 checks the requirements below on Fly first:
+  - a persistent volume;
+  - wake on request;
+  - no charge while asleep;
+  - about 2 vCPU and 4 GiB;
+  - an API to create one machine per user.
 
-There is no replication protocol, merge code or second authority. Neither the App nor the agent ever opens the database directly; that is the Runtime contract (`astrid-runtime/README.md:32`).
+  The service holds the host token.
+- **Sleep:** decided inside the machine. It stops only when there is no App connected, no running or queued task and no agent turn, and only after a backup. It wakes when the App connects. The platform's own auto-stop is not used.
+- **The agent's LLM: Astrid's own router.** It is a thin OpenRouter pass-through inside the Astrid Cloud service, using the team's OpenRouter key. Users pick from a **generic model chooser**; the default is **DeepSeek V4.1 Flash on OpenRouter**, already the Agent's default (`omp_agent.py:29`). The Astrid Cloud key gains the `llm` scope and reaches OMP through the Runtime, as in Plan 25. Nobody pastes a key. Local users get the same thing.
+- **Billing per unit**, at cost × 1.6, on the one balance:
+  - generations per output;
+  - the LLM per token: an estimate is reserved, the actual cost settled, and the rest refunded;
+  - the workspace per active minute; asleep is free.
 
-### Where the data lives
-
-- **Database:** `realm.sqlite3` on the workspace's **persistent volume**. Its durable copy is the Runtime's own authenticated backup (`backup.py` `create_backup`, `restore_backup`), pushed to a private bucket when the machine goes idle, before it stops, and nightly. A lost machine is restored on a fresh one.
-- **Turso (owner's first idea) is not on the live path.** As the Runtime's engine it would mean rewriting the stdlib-sqlite3 store: WAL and owner-lock assumptions, `PRAGMA data_version`, TEMP tables, the backup API and exact-schema checks. That buys multi-machine access a single-writer design doesn't need. It stays a later option for reading a workspace while its machine is off, or for a local offline copy (E1).
-- **Files:**
-  - the App already sees every file as a URL (`/v1/objects/<sha>`), served by the workspace;
-  - bytes stay in the Runtime's file store on the volume and travel in the backups;
-  - Plan 25 generations already arrive through the normal publish path.
-  - Moving bytes themselves into a bucket-backed store is deferred (E7). The agent's render and media views need a verified local path (`astrid/sdk/media_views.py:15-45`), so it is a cross-repository change and needs its own reason, such as volume size.
-
-### Included
-
-- **Workspace image:** Runtime in the foreground supervising its services, the agent (OMP), chat, ffmpeg, Bun and Node/Remotion. No systemd.
-- **Workspace host:** chosen by a spike, with the volume and wake-on-open.
-- **Control plane:** endpoints in Plan 25's **Astrid Cloud service**, with a table in Banodoco Postgres. There are no edge functions:
-  - a `cloud_workspaces` record;
-  - an `open-workspace` endpoint: Discord session in; workspace ensured running; a short-lived session for the App out. The service holds the host provider's token.
-  - provisioning with the user's Astrid Cloud key;
-  - stop and delete.
-- **Remote access:** the App picks its Runtime origin at run time, not build time (`connection.ts:59-77`, Dockerfile). Media authorized by cookie, so `<img>` and `<video>` work. Either the paired relay or a remote door (B3). A **Cloud** choice in the App.
-- **Idle policy inside the machine:** it stops only with no App heartbeat, no running or queued Runtime task and no active chat turn, after a backup. The platform's own auto-stop is not used, because it would kill an agent working with the browser closed.
-- **Move to cloud and back:** whole-workspace moves through backup and restore. "Export to local custody" is the same operation in reverse.
-- **Rendering on the workspace:** the existing FFmpeg and Remotion paths.
-- **Astrid LLM service:** a thin pass-through router inside Plan 25's **Astrid Cloud service**, the trimmed worker orchestrator. The owner decided this on 9 Nov, along with having no edge functions. It is not a new service. The service is already long-lived and holds the provider keys, so long streams have no time limit.
-  - an OpenRouter-compatible endpoint (chat completions with streaming, models, key check) in front of the team's OpenRouter key;
-  - it accepts Astrid Cloud keys with the `llm` scope;
-  - billing reserves an estimate from the request's token limit, settles the actual usage OpenRouter reports at cost × 1.6, and refunds the rest, using Plan 25's debit and refund SQL functions;
-  - it refuses requests at zero balance;
-  - it serves an allowlist of models.
-- **Agent on the Astrid LLM:** a sign-in choice beside "OpenRouter key", for example `astrid agent key set astrid`. It points OMP's OpenRouter provider at the Astrid LLM service with the Astrid Cloud key, through the existing `ASTRID_OPENROUTER_API_BASE` path. The same setting is applied when a workspace is provisioned.
-- **Workspace usage in credits** (E4).
-- **Delete my workspace.**
-
-### Not included
-
+**Not included:**
 - live local-and-cloud sync;
 - offline cloud editing;
-- several Runtimes per user;
 - teams and sharing;
 - per-conversation sandboxes;
-- LLM providers other than OpenRouter behind the service;
-- per-project import;
-- a bucket-backed file store (E7);
-- replacing the local-first mode, which stays the default.
+- LLM providers other than OpenRouter;
+- per-project moves;
+- a bucket-backed file store;
+- replacing local mode, which stays the default.
 
 ## Existing work and decision
 
-See [inputs.md](inputs.md#planning-evidence). Reused:
-- the Runtime, unchanged as the authority;
+The source trail is in [inputs.md](inputs.md#planning-evidence). Reused:
+- the Runtime as the single authority;
 - its backup and restore;
-- the App's existing Runtime client and polling;
-- the App's **paired relay prototype** (`config/vite/pairedRelay.ts`, `pairedRegistry.ts`, `scripts/astrid-local-connector.ts`). The Runtime machine dials out over WebSocket, the browser stays same-origin with a `__Host-` cookie, and a closed route table is enforced. It is in-memory today, with an 8-hour time-to-live and invitation codes;
-- the installer's foreground mode and the worker-environment setup scripts;
-- the RunPod pack's claim, lease and spend-cap pattern, if RunPod CPU wins B1;
-- Plan 25's account, key, credits and generation route;
-- OMP's existing OpenRouter path for the Astrid LLM:
-  - `astrid agent key set openrouter` imports a key into OMP after checking it against `<base>/api/v1/auth/key`, with `<base>` taken from `ASTRID_OPENROUTER_API_BASE` (`astrid/omp_agent.py:490-530`);
-  - the default model is an OpenRouter id (`omp_agent.py:29`).
-  - B14 confirms that OMP's own model calls follow the same base.
+- the App's Runtime client, polling and paired relay prototype;
+- the installer's foreground mode;
+- OMP's OpenRouter path (`astrid agent key set openrouter` with `ASTRID_OPENROUTER_API_BASE`, `omp_agent.py:490-530`);
+- Plan 25's account, key handoff, service, SQL and price table.
 
-**Rejected:**
-- **Turso or a replicated live database:** see above.
-- **Litestream:** the Runtime's offline upgrade truncates the WAL and swaps the file (`upgrade.py:1190-1196`), and its schema check is exact (`v33_manifest.py:118-130`).
-- **A bearer token per request:** media tags cannot carry it.
-- **The App reading the database directly.**
-- **The 5 Oct design's E2B sandbox per conversation and per-user Turso realm:** more machinery than one machine per user.
+Rejected:
+- Turso or a replicated live database;
+- Litestream, which clashes with the Runtime's file-swapping upgrade (`upgrade.py:1190-1196`);
+- a bearer token per request, which media tags can't carry;
+- a separate relay per use case;
+- the 5 Oct design's sandbox per conversation.
 
 ## Sequence and readiness
 
-0. **The Astrid LLM service** (B13, then B14) starts as soon as Plan 25's account and key contract (A2) lands. It does not wait for the workspace, and local users get it first.
-1. **Three spikes, independent of each other:**
-   - B1: host and image;
-   - B2: backup and restore across machines;
-   - B3: remote access.
-2. **RS1:** a review stop on the chosen architecture.
-3. **Build, which can run in parallel:** the image, the control plane, remote access, the idle and backup policy, and the moves.
-4. The agent in the workspace, then billing.
-5. **B11:** the end-to-end proof.
-6. **R:** review.
+1. **Start once Plan 25 lands:** B10 (the LLM router) and B11 (the agent on it). Local users get them first.
+2. **Spikes, in parallel:** B1 (host and image), B2 (durability and data loss) and B3 (Astrid Connect).
+3. **RS1:** the review stop.
+4. **Build:** B4–B9.
+5. **The agent in the workspace:** B12.
+6. **Proof:** B13.
+7. **Review:** R.
 
-**Readiness gates:**
-- Plan 25 has produced its account, key and queue contracts (A2, A4).
-- The owner has answered E1–E8 after the spikes.
-- The budget is approved.
-- Nothing is deployed for users before B11 passes.
+Details are in [tasks.md](tasks.md). Budget and the spike spend caps are set at dispatch. Nothing is deployed for users before B13.
 
 ## Interfaces and handoff
 
-**Consumes:**
-- Plan 25's account, key, credits and queue contracts, at its completion PR;
-- the Runtime backup and restore contract and its door, at the SHAs in [inputs.md](inputs.md#source-identities);
-- the App's Runtime client and paired relay.
+**Consumes:** Plan 25's account, key handoff, service, SQL and price contracts, at its completion PR; the Runtime backup, restore and door; the App's Runtime client and relay prototype.
 
 **Produces:**
-1. **The workspace contract:** one Runtime per user on a volume, the image, `open-workspace`, the idle and backup policy, and restore on a new machine.
-2. **The remote Runtime access contract:** session, cookie-authorized media, route table and origin chosen at run time.
-3. **The move contract:** local to cloud and cloud to local, by authenticated backup.
-4. **The Astrid LLM contract:** an OpenRouter-compatible endpoint, the `llm` key scope, reserve-and-settle billing at cost × 1.6, and the model allowlist.
-
-Later hosted features build on these. Turso, bucket-backed storage and teams each need their own scope.
+- the workspace contract: one Runtime per user on a volume, its backups, sleep and wake, and restore;
+- **Astrid Connect**: a user's machines reachable from any signed-in browser;
+- the move contract, for the Local and Cloud switch;
+- the Astrid LLM contract: an OpenRouter-compatible router, the `llm` scope, per-token billing and the model chooser.
 
 ## Completion
 
-In a browser with nothing installed, a new user signs in with Discord, opens a cloud workspace, creates a project and generates with credits. They edit the timeline while the agent edits it at the same time. Both see each other's changes within the poll interval, and conflicts resolve with the existing rebase and merge or a visible retry.
-
-The agent runs on the Astrid LLM with no provider account of the user's. A local Astrid agent signed in with the same key does the same, and both show up as LLM usage in the ledger at cost plus 60%.
-
-They close the browser mid-task, and the agent finishes. They reopen on another device, and the machine wakes with the work there. They render a video on the workspace, move the workspace to their local Astrid and back, and delete it.
+With nothing installed, a new user picks Astrid Cloud in onboarding, signs in with Discord and buys credits. They create a project and chat with the agent on the default model. They edit the timeline while the agent edits it too, and conflicts resolve visibly. They close the browser mid-render; the render finishes and the machine sleeps afterwards. They reopen on a phone, and the machine wakes with everything there. They switch to This computer, which moves the workspace down, then back to Astrid Cloud. A local user reaches their laptop from their phone through Astrid Connect.
 
 **Negative cases:**
-- an idle machine with a queued task does not stop;
-- a destroyed machine is restored from the last backup, with the data loss inside E6;
-- another user's session cannot reach this workspace or its media;
-- a revoked key or a zero balance stops generations and LLM calls, with a clear message in chat;
-- a key without the `llm` scope is refused by the LLM service;
-- the local-first mode is unchanged.
+- a machine with a queued task does not sleep;
+- a destroyed machine restores with loss inside B2's measured target;
+- another user cannot reach the workspace or its media;
+- a zero balance stops generations and LLM calls with a clear message;
+- local mode is unchanged.
 
-The evidence names the host, the SHAs, backup timings, wake latency and spend.
+The evidence names the host, the SHAs, backup and wake timings, and the spend.
