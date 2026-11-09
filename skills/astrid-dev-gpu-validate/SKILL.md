@@ -18,7 +18,7 @@ No schedule. Every run spends money, so it needs the owner's standing budget (be
 
 ## Budget
 
-- **Hard cap: $20 per run** (owner, 9 Nov 2026). The first run, Plan 34, has $25.
+- **Hard cap: $20 per run** (owner, 9 Nov 2026). The first run, Plan 34, has $24.
 - **Before:** read the RunPod account balance and write it in the record. If the balance is below the cap, stop and tell the owner.
 - **During:** after each cell, add the pod's elapsed cost to the running spend. When the next cell's worst-case cost would pass the cap, stop: release every pod, record the cells not run as `not run (budget)`, and end.
 - **After:** read the balance again; spend is the difference. If it disagrees with your running total by more than $1, say so in the record.
