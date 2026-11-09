@@ -13,7 +13,7 @@ This plan **builds a skill, `skills/astrid-dev-gpu-validate/SKILL.md` ("full GPU
   - a fixed matrix of every default slot and h3_av × RunPod, local-managed (where a GPU exists) and attached;
   - first a VibeComfy-only smoke on the same pod, so model or node failures are told apart from routing failures;
   - a pod census before and after every run, a hard budget per run, and every pod released;
-  - one dated evidence record per run in astrid-dev, `validation/gpu/<date>.md`, with pass or fail per cell, spend and pod ids;
+  - one dated evidence record per run in astrid-dev, `validation/gpu/<date>-<short-sha>.md` (the Agent revision under test), with pass or fail per cell, spend and pod ids;
   - each failure goes to astrid-dev-bugfix: reproduced on CPU where possible, fixed, re-run live.
 - **When it runs:**
   - when the owner asks ("run full GPU validation");
