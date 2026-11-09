@@ -93,12 +93,12 @@ If Codex can't continue without an answer, it writes its question and ends with 
 
 ## Oversight
 
-The orchestrator still owns the judgment. At each check-in:
-- read `codex.log`, the fixes Codex made and its notes;
-- check that it's heading the right way;
-- look for a shared, structural cause behind the separate failures it reports.
+The orchestrator is the advisor, not a second manager. At each check-in it reads the mailbox and `tasks.md` and does one thing ([orchestrate path 3](../SKILL.md#path-3-check-in-only-when-the-owner-asks)):
+- note that the run is on track;
+- send one next action through `to-codex.md`;
+- or bring the owner a decision.
 
-Steer through `to-codex.md`, and route structural fixes through the project's manager.
+It answers the questions Codex asks, and raises a structural cause only when Codex's reports show a pattern Codex hasn't named. It doesn't review Codex's fixes or relay its branches. Codex's own reviewer sub-agent reviews, and a Codex manager integrates its own work. That needs the authority in its starting brief ([`manager-brief.md`](manager-brief.md)); a mailbox note can't grant it.
 
 ## Known limits
 
