@@ -74,6 +74,11 @@ From the owner, 7 Nov 2026 (session chat):
 15. **Go for Release 10:** publish to `main` once the release candidate's three fresh rows, UR-13m and UR-13n pass with their receipts and review round 2 leaves no blocking finding. The release is the frozen candidate in `run.yaml`, patch and not required, and goes through a PR that `release-guard` checks. Any blocking finding or failing proof stops it, and it comes back to the owner (owner, 8 Nov 2026).
 16. **Fix R2.4 before Release 10, defer R2.2, R2.3 and R2.5** (owner, 8 Nov 2026: "YES PLEASE FIX IT"). R2.4 is status polls starting the update helper on every poll on macOS and Windows. R2.6 merges back into `int` at publish, as before.
 
+## Owner decision: Turn guard on (9 Nov 2026, Hannah, 08:19Z)
+
+- Release 12 enforces the autostart-off guard, with honest copy.
+- Preserving autostart-off in-app is a Plan 30 card (UR-20).
+
 ## Source identities
 
 Record exact base and donor SHAs at task start. Known donor: Agent `b97c43db8` (`reconcile` handler, unmerged).
