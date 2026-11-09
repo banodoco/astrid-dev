@@ -54,7 +54,26 @@ It keeps the session busy for about 55 minutes, then exits so the next check-in 
 
 `codex-watch.sh` still works as a watch-only version, and also reports a dead runner.
 
-**Restarts kill everything.** A restart of the Claude session's worker kills every process in the container: the runner, Codex and the keep-alive. Only a server-side scheduled check-in (`send_later` or a scheduled task) survives a restart. So while a run is live, keep a check-in at most 20 minutes away, and make each check-in start `codex-hold.sh` again. Restarting is safe: Codex rebuilds its state from the mailbox, `run.yaml`, `tasks.md`, and its branches and worktrees.
+**Restarts kill everything.** A restart of the Claude session's worker kills every process in the container: the runner, Codex and the keep-alive. Restarting is safe: Codex rebuilds its state from the mailbox, `run.yaml`, `tasks.md`, and its branches and worktrees. Three layers bring a run back, from fastest to most durable:
+
+| Layer | Survives a restart | What it does |
+| --- | --- | --- |
+| `codex-hold.sh` (background task) | No | Restarts a dead runner and wakes you on mailbox text or a finished run. Re-arm it at every check-in. |
+| `codex-hold-daemon.sh` (SessionStart hook) | Yes, when the session resumes | Restarts a dead runner within 30 seconds of the session starting again, without waiting for you. Wakes nobody. |
+| Scheduled check-in (`send_later` or a scheduled task) | Yes, server-side | The only thing that wakes you after a restart. Keep one at most 20 minutes away while a run is live. |
+
+**Set up the daemon once per container:**
+1. List each live run folder, one per line, in `~/codex/runs.txt`, or point `CODEX_RUNS` at another file. Remove a run's line when it finishes.
+2. Add this SessionStart hook to the user settings (`~/.claude/settings.json`). It starts the daemon detached, so session start isn't held up. A lock keeps a second copy from running:
+
+```json
+{"hooks": {"SessionStart": [{"hooks": [{"type": "command", "timeout": 10,
+  "command": "setsid nohup <workdir-parent>/bin/codex-hold-daemon.sh >/dev/null 2>&1 </dev/null & exit 0"}]}]}}
+```
+
+3. Start it once by hand with the same command; the hook covers later starts.
+
+Auto mode refuses Claude's own edits to its settings file ("Self-Modification"), so the owner adds the hook, or approves the edit. Until it's added, the scheduled check-in is what restarts the run, through `codex-hold.sh`.
 
 ## Mailbox
 
@@ -69,7 +88,7 @@ If Codex can't continue without an answer, it writes its question and ends with 
 
 - `status`: one of `running`, `waiting`, `done`, `blocked` or `gave-up`.
 - `heartbeat`, `codex.log` and `result.md` (Codex's last message).
-- `runner.pid`, `runner.args` and `runner.env`, which the keep-alive uses to restart the runner, and `hold.log`, the keep-alive's restarts.
+- `runner.pid`, `runner.args` and `runner.env`, which the keep-alive and the daemon use to restart the runner, and `hold.log`, the restarts both have made.
 - `money.log` and the mailbox files.
 
 ## Oversight
