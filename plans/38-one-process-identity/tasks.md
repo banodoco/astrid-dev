@@ -51,6 +51,10 @@ These run beside it:
 
 A1 and A2 change different functions, and A3 changes a different file, so they run in parallel. A1 and A3 both bump `runtime.lock.json`, so merge A1 first and rebase A3's lock change onto it. Phase 2 is C1 → C2 → R2, after Pub.
 
+## Run progress — 9 Nov 2026
+
+Agent `int/38` starts at `a105de3a`; Runtime `int/38` starts at `4f5477cb`. W0 is in progress. T0 and subsequent implementation wait for Release 12 publication and its exact heads; the starting-version environment and baseline checks are in progress. The integration branches will merge the published `main` heads with merge commits.
+
 ## Test inventory
 
 Status at the release-12 candidate, from Runtime run 42579496915 (Runtime `744cf248`), Runtime run 42586102206 (`fix/r12-autostart`), Agent run 42583740849 (Agent `ff40f2c`, cancelled, so its Linux shards are inconclusive) and the Runtime worker's diagnostic runs ([inputs](inputs.md#planning-evidence)). T0 reconfirms each row at the published heads.
