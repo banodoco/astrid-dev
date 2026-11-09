@@ -15,3 +15,9 @@
 ## Scoping boundary
 
 Before dispatch, inspect the source identities and work recorded in [inputs.md](inputs.md), agree the bounded cleanup inventory, then assign IDs and difficulty/routes, dependencies, focused selectors, acceptance evidence, and existing review/publication limits. Missing selectors must be identified during setup, not invented here.
+
+## Review follow-ups (Plan 32 review, 9 Nov, at 7209ffcc7)
+
+- **Prepared-worker island: audit, then delete (N, Medium).** `RunPodRemoteWorkerPreparer`, `PreparedRunPodHost`, `RunPodWarmSessionOwner` and `RunPodRemoteWorkerInspector` (`astrid/packs/runpod/worker_owner.py:538,915,937,2358`) appear referenced only inside `worker_owner.py` and `prepared_task.py`; with `worker_process.py`, `worker_staging.py`, `worker_session.py` and `installed_session.py` that is about 8,000 lines. Step 0 is a reachability audit (grep found no caller; not proven dead). The `generic_host.py` and `run.py` plumbing goes with [Plan 13](../13-execution-host-refactor/tasks.md).
+- **Unused RunPod release code (N, Medium).** Delete `astrid/packs/runpod/h3_release*.py` (934 lines), `gpu_sanity.py` and, if nothing live needs it, `model_downloader.py` (701 lines; kept mostly for the release code, per `tests/core/generation/test_run_local.py:131-140`), with their script and test users.
+- **Legacy generate flags (N, Low).** Remove the `--model` "legacy selector" and `--execution` flags (`astrid/core/generation/cli.py:177,183`) after checking callers. The TOML-import removal date is [Plan 35](../35-one-home-for-user-state/tasks.md)'s.

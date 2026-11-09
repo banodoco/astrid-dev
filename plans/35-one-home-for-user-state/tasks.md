@@ -19,3 +19,4 @@
 - An import from each old location, run once.
 - The check that flags new side stores.
 - Proof for each move: a test that the value survives a new browser or device profile and a Runtime backup and restore.
+- **Set a removal date for the VibeComfy TOML import** (`astrid/core/generation/settings.py:193-231`; a reasonable one-time migration, so keep it until then). Route N, Low. Source: Plan 32 review, 9 Nov, at 7209ffcc7.
