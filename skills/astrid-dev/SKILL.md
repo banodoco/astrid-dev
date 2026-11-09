@@ -19,6 +19,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Handing off a project, or overseeing several | [Orchestrate](../astrid-dev-orchestrate/SKILL.md): plan it, farm it out to a manager set up for cloud sessions, advise and check in |
 | Running one accepted project | [Manage](../astrid-dev-manage/SKILL.md); ask the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) for a genuine blocker or consequential choice |
 | Integration, release or publication | [Release](../astrid-dev-release/SKILL.md), with explicit current authorization |
+| Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
 
 ## One path, proportionate depth
 

@@ -35,6 +35,8 @@ The source release contract identifies these protected product invariants:
 - The App update guard resolves actions, flushes guarded persistence, then starts an update. Failed or delayed saves/flushes, recovery-needed state, edits during flush, pending identity, owner change, unmount, IndexedDB failure, stale markers, and restart replay mean no POST; a successful save means exactly one POST. Status GETs only observe. A local recovery snapshot is not a saved draft.
 - Timeline persistence is qualified on the integrated tuple. Advertised GPU capabilities require live evidence at RC; prepared-only output is not live evidence. Evidence must bind the actual candidate and inner command result, not a wrapper status or historical baseline.
 
+**GPU gate:** a release that touches generation (any slot, placement, engine, pack contribution, VibeComfy or runpod-lifecycle pin) needs a passing [full GPU validation](../astrid-dev-gpu-validate/SKILL.md) record on the exact candidate. Without one, the generation claim is unqualified.
+
 Apply change-directed invalidation: a changed input invalidates only proof that depends on it, while protected exact-head claims require proof for the exact integrated head. If a scoped check fails, hand the same failure to [Iterate](../astrid-dev-iterate/SKILL.md) as a concrete repair assignment, preserving its exact command, candidate identity, evidence, owner, and context. Keep unaffected passing evidence. Do not start a separate debug loop or ask an advisor for routine approval; consult the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md), advise path) only for a genuine blocker or consequential judgment.
 
 ## Promote or publish

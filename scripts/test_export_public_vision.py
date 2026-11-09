@@ -88,7 +88,10 @@ class PublicVisionProjectionTests(unittest.TestCase):
         lengths = [len(p["bodyMarkdown"].split()) for p in principles]
         self.assertEqual(len(lengths), 4)
         self.assertLessEqual(max(lengths), 48)
-        self.assertLessEqual(max(lengths) - min(lengths), 8)
+        self.assertLessEqual(max(lengths) - min(lengths), 10)
+        self.assertEqual(principles[3]["title"], "Eliminate technical wrangling")
+        self.assertLessEqual(len(principles[2]["bodyMarkdown"].split()), 40)
+        self.assertLessEqual(len(principles[3]["bodyMarkdown"].split()), 40)
         self.assertTrue(all("not a claim" not in p["bodyMarkdown"].lower() for p in principles))
 
     def test_open_projects_derive_from_catalog_in_priority_order(self):
