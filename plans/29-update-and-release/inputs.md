@@ -99,3 +99,17 @@ One independent UX pass over every install, update, update-failure and repair pa
 
 Its fixes ride in the Release 11 candidate. The pass is UR-15j, run after UR-15, UR-15a, UR-15b, UR-15c, UR-15f and the Runtime and App PRs are on int, and before Release 11 is composed.
 
+*Release 11 was published by Plan 33 without UR-15. Plan 29's next release is release 12; see the Release 12 record in [tasks.md](tasks.md).*
+
+## Owner decision 18 (9 Nov 2026, Hannah, given to M-INT at 07:44Z): "I give you go"
+
+- A locally run App's "Copy instructions for your agent" text and its manual line say `npm run update`, run in the Astrid folder, instead of `curl … --update`.
+- Hosted astrid.haus keeps the curl line.
+- Implemented on App `cand/29-r12` as one commit with a test. The pin and the release number are unchanged.
+
+## Owner decision 19 (9 Nov 2026, Hannah, given to M-INT at 07:44Z): "I give you go"
+
+- Rollback to R0 is offered only until the first successful update after a handoff. After that, the retained R0 copy, its plist and its version may be pruned.
+- Not in release 12. Recorded as a Plan 30 card (S) for the pruning and rollback-window change, with tests (Plan 30 UR-19).
+- Decision 19 resolves the pending owner decision UR-15e's question about pruning. It is not a publish go: publishing release 12 still needs Hannah's own words in the session.
+
