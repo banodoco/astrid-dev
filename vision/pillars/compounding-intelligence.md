@@ -10,9 +10,9 @@ We want every meaningful creative discovery to strengthen future work. An agent 
 
 ## Characteristics
 
-### Learn from actual work
+### An ecosystem of wisdom grounded in real work
 
-Agents should notice what succeeds and fails in real creative projects.
+Creative experience should become useful, testable knowledge that others can build on.
 
 Before acting, an agent can look for applicable prior experience. During work it distinguishes evidence from assumptions; afterward it retains reusable lessons with relevant conditions, source versions, failures, and counterexamples.
 
