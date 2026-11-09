@@ -21,7 +21,7 @@
   - storage policies require `execution == "cloud"` (`generate_image/run.py:479`);
   - `models.yaml` has 34 fal rows, 10 with a per-unit `price`;
   - `authority_lint` flags `supabase` identifiers.
-- **Runtime:** the Runtime contract has a `controlRemoteCredential` operation (`astrid_runtime_client/generated.py:21`), the credential path [Plan 36](../36-one-credential-path/plan.md) names.
+- **Runtime:** there is no record for an outbound secret. `controlRemoteCredential` is per remote task (see the ambiguity pass below), so the key's home is new work in A6.
 - **Supabase project:** Hivemind already uses `ujlwuvkrxlvoswwkerdf` (`astrid/core/hivemind/executors/_common.py:37`). The owner confirmed it is Banodoco.
 
 **Approach:** Restore the SQL subset from the tag and reigh-app onto Banodoco. Grow the orchestrator into the one Astrid Cloud service, with no edge functions. Give the fal backend an Astrid Cloud route. Hand the key over through the Runtime. Bill per unit, debited first.
