@@ -216,10 +216,63 @@ Reviewed on Runtime `3d19ba9a`, Agent `41170fdb`, App `73a8500d` (superseded; se
 
 **Candidate identity (superseded runs are not evidence):** Runtime `3d19ba9a`; Agent `cand/29-r10` `291b5cbd`; App `cand/29-r10` `26585ed9`; manifest sha256 `4771c1e6…`. Earlier runs `42515380385` and `42515533405` are cancelled.
 
+## Release 12 record (facts as of 2026-11-09 07:42Z)
+
+Release 11 was published by Plan 33. The next Plan 29 release is release 12, which is a candidate and is not published. The SHAs below were checked against the live refs where this record could read them: App, Agent and Runtime `main`, the three `cand/29-r12` heads, Agent `int/29-update-and-release` (`83e2c792`), Runtime merge commits `5eb35355` and `37454c1f`, and Runtime #47's head `3ef12688`.
+
+### Release 11 (Plan 33's publish, not Plan 29's)
+- Pinned and deployed at 01:48Z on 2026-11-09: App `main` `57e200b4`, manifest release 11, Agent `a105de3a`, Runtime `4f5477cb`. Pinokio `d15c58b5`, unchanged from release 10. astrid.haus serves it.
+- Release 11 contains none of UR-15. Plan 29's UR-15 field fix is not yet published.
+
+### Release 12 candidate (not published)
+- App `cand/29-r12` `8a2ef414`: manifest release 12, Agent `e2a7fad0`, Runtime `744cf248`, schema digest `sha256:9628bb5fd6e1dbbec392dd39f2e01031622dcf52d7ccff7cd1f0ad10743dcb1c`.
+- Agent `cand/29-r12` `e2a7fad0`. Runtime `cand/29-r12` `744cf248`. Pinokio `d15c58b5`.
+- The pins were verified with `pin.mjs --check` and `release-guard`.
+- Publishing release 12 to `main` needs Hannah's separate go.
+
+### Merged into `int/29-update-and-release` (merge commits, no force)
+- Agent: #319, #320, #322, #323, #328 (main into int, merge commit `83e2c792`).
+- App: #223, #224, #225, #226.
+- Runtime: #43, #44 (merge commit `5eb35355`), #45 (merge commit `37454c1f`).
+- Agent #328, Runtime #44 and Runtime #45 were merged on Hannah's go with red CI. Their reds are in Findings below.
+
+### Open PRs carried in the candidates (not yet in `int`)
+- Agent #321, #324, #325, #326, #327, #329: all merged into `cand/29-r12`.
+- App #227, #228, #229: merged into `cand/29-r12`.
+- Runtime #47 (head `3ef12688`): merged into `cand/29-r12`, not yet in `int`, waiting on its unit (ubuntu) test counts. It is Plan 33's Runtime fix.
+- Runtime #46: superseded by #47. It shows as merged, but its branch was reset, so it is not a real merge of its work.
+
+### Release11-then-update leg (harness)
+- The leg does not exist in the Agent harness at `e2a7fad0`. It is being built on `harness/29-r12` from `cand/29-r12` `e2a7fad0`. This is harness work only; the candidate pins and the release number do not change.
+- The journey matrix is to be dispatched from `harness/29-r12` with `candidate-r12.json` once it is pushed. It has not run, so it is not evidence yet.
+
+### Owner decision (Hannah's go, 07:xx UTC)
+- Merge into `int/29-update-and-release` despite red CI for Agent #328, Runtime #45 and Runtime #44, and further int merges whose only reds also fail on `main` or on the served release 11. The reds are recorded as findings below.
+- This go covers merging into `int` only. It does not cover publishing release 12 to `main`, which still needs Hannah's separate go.
+
+### Findings (red checks)
+- Plan 33 landing regressions. Each is attributed to Plan 33's landing, not pre-existing: all passed on Release 10 (`72462b04`). Plan 33's orchestrator owns the fix PRs.
+  - Pack-test collection errors: `tests/pack_builder/test_pack_build.py`, `tests/packs/test_b2_integrated_closure.py`, `tests/packs/test_pack_layout_contract.py`.
+  - 13 Windows remotion host tests: `tests/core/rendering/test_remotion_host_regressions.py`.
+  - Release wheel smoke, lane `console-generate-list`.
+  - `fcntl` imports in `astrid/core/pack/install.py` and `astrid/core/pack/transaction.py`.
+  - Runtime `windows-realm-publication`: fixed by Runtime #47 on Plan 33's side.
+- Agent #328, Runtime #44 and Runtime #45 (merged on Hannah's go with red CI): the failing check names and the attribution are not recorded here. To be filled from the PR check pages.
+- Further int merges whose only reds also fail on `main` or on release 11: not itemised here.
+
+### Cards for Plan 30 (to add; not implemented)
+- **M1 continuation:** continue to the target after a safe recovery in one run. Needs C2b ordering analysis first.
+- **Windows R0 task-only leg:** a journey card for a Windows R0 layout with a login task and no current pointer. Currently unit-tested on Linux only, and falls back to needs-repair.
+- **Pinokio launcher wording:** "did not finish". Lives outside this repo (astrid-pinokio).
+- **LA-4 extension:** one shared reason and predicate source; the Runtime mirrors the Agent's `login_service_exists`. Plan 30 already has an LA-4 row ("One reason table across the Agent and the App", not started), so the owner or manager should merge this or renumber it. It is not edited into Plan 30 here.
+
+### Unproven (for the completion assessment)
+- The Windows R0 task-only layout reason path is unit-tested on Linux only, and falls back to needs-repair. It is not proven on Windows.
+
 ## Resume note (manager state, for compaction)
 
 - **Reopened 2026-11-08 after a field failure on Hannah's Mac.** Release 10 is live, but `curl -fsSL https://astrid.haus/install | sh -s -- --update` exits 0 and installs nothing on a machine that completed the Release 1 storage handoff. The Completion assessment in astrid-dev #137 is withdrawn. Canary receipt for the publish: run `42527536657` (success). Review: `plans/29-update-and-release/reviews/field-failure-2026-11-08.md` on branch `advisor/plan29-field-failure-review`.
-- **Plan 29 is active again.** UR-15 to UR-15d are open. The next release is Release 11 (0.0.11, patch), and it publishes only after a field receipt from Hannah on her Mac.
+- **Plan 29 is active again.** UR-15 to UR-15d are open. Release 11 is no longer Plan 29's next release: Plan 33 published it at 01:48Z on 2026-11-09, and it does not contain UR-15. Plan 29's candidate is release 12 (see the Release 12 record above), and it is not published. The condition written earlier for Release 11, that it publishes only after a field receipt from Hannah on her Mac, is not recorded as applying to release 12. The rows above that say "Release 11" were written for Plan 29's next release; that is now release 12, and they are not renamed here.
 
 
 - **Status: complete.** Release 10 (0.0.10) is published and the served manifest reads release 10 (agent `6e9c4f9c`, runtime `52ec0578`, not required). Completion PR astrid-dev #137 is merged.
