@@ -52,6 +52,7 @@ What a permission stress test showed (three auto-mode workers, astrid-agent int/
 | `agent-setup.sh` | Builds a Python 3.13 venv with `-e .[dev]`, then git-fetches the Runtime (installed `--no-deps`, with its Python client) and VibeComfy at the checkout's pins. Needs `uv`, `git` and `ffmpeg`. |
 | `agent-pytest.sh` | Runs `pytest` in that environment with a wiped caller environment. Its arguments go to `pytest` verbatim. |
 | `vc-setup.sh`, `vc-pytest.sh` | The same pair for a VibeComfy checkout. |
+| `baseline-diff.py` | Sorts a candidate's test results against one or more baselines into regression, no-baseline, preexisting, fixed and missing. A **regression** ran and passed on at least one baseline and fails on the candidate. Feed it pytest logs run with `PYTEST_ADDOPTS=-rA`, for example `astrid-baseline-diff --baseline served-11=base.log --candidate cand.log --out <dir>`. It exits 1 when there are regressions. It writes `summary.md` and one id list per bucket, with one node id per line (the format of Plan 02's `shared-failure-exceptions.txt`). Stdlib only. Installed as `astrid-baseline-diff` by `cloud-setup.sh`, or copied to `scripts/worker-env/baseline-diff.py`. |
 | `smoke.sh` | Setup plus one named test. A manager runs it in one throwaway worker per repository before a run's first task, so environment problems surface once, in minutes. |
 
 Plan 02's original copies stay frozen in `plans/02-consistent-generation/env/` for its recorded proof. Use the copies here for new work.
