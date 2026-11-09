@@ -25,6 +25,24 @@ No pack declares a point yet, and no production code calls it. Meanwhile about n
 
 Environment setup is the `align` half of the engine point. It is generic in core and engine-specific in each contribution.
 
+## Direction (owner, 9 Nov 2026): generalise into VibeComfy; h3_av becomes a pack that depends on it
+
+What is general moves **into VibeComfy itself**, so standalone VibeComfy users get it too. What is specific to h3 becomes a VibeComfy plugin pack that depends on it. Astrid uses the same plugin, with no duplicate. This replaces "VibeComfy itself does not change" from the 8 Nov review (`merge-run/path-review/H3-GENERALIZATION.md`), and is done after Plan 32, which finishes on its current shape. The review's classification still holds: class **b** and **c** are general, and class **a** stays h3's.
+
+- **Into VibeComfy (general):**
+  - a workflow-family registration on its existing `PluginAPI` (`vibecomfy/extras.py:27-52`; plugins load from the `vibecomfy.plugins` entry points and `vibecomfy_extras/`): `register_workflows(ready_root, entries, build=None, finalize=None)`, with exactly the contract of Plan 32's `vibecomfy.workflows` point (entries in the thin-entry shape `{id, kind, modes, bundle, needs, binds, defaults}`; `build(inputs, files, out) -> {workflow, bindings, plan}`; `finalize(job_dir, inputs, files, outputs) -> outputs`);
+  - VibeComfy's own run path calls `build` before submit and `finalize` after outputs. It has no post-ComfyUI hook today. Name it so it is not confused with template assembly (`templates.py:1381`);
+  - the file-map input type (`{id: path}`) in VibeComfy's entry inputs;
+  - the media helpers in h3 that are not specific to h3, lifted out of `h3_av/shared/compose.py` (1,398 lines) and `verify/verify.py`: mux audio onto video, splice segments, and check coverage and preservation, plus one ffprobe wrapper instead of h3's own (Astrid has `core/media.py` `MediaProbe`). Sound-on-video and a lip-sync pack would use the same helpers.
+- **Astrid:** the `vibecomfy.workflows` point becomes a thin mirror of VibeComfy's registry. An Astrid pack can still contribute, and that is forwarded to `register_workflows`. A native VibeComfy plugin (an entry point) shows up in Astrid on its own. Its distribution name and version are pinned in the engine manifest's `extra`, so a RunPod machine installs exactly the same plugin. `astrid packs extensions` lists both kinds.
+- **h3_av (specific, a pack that depends on VibeComfy):** request schema v1 and v2, Character Swap, masks, static regions, the planner, continuation timing (5+17k grid, the 362→360 trim), the three workflow trios, and h3's use of the shared media helpers. It is installable for standalone VibeComfy (`pip install`, entry point) and through Astrid (a pack whose only content is that plugin and its pin).
+- **Proof:**
+  - standalone VibeComfy runs the h3 entry with `build` and `finalize` on a CPU fake;
+  - Astrid runs the same plugin through `generate` on local, attached and the RunPod CPU fake;
+  - the sound-on-video pack, written as a native VibeComfy plugin, uses the lifted mux helper;
+  - a grep finds no h3 code in Astrid outside the pinned plugin reference.
+- **Cross-repository:** VibeComfy changes land in VibeComfy first, then Astrid pins them. Releases follow the shared run contract.
+
 ## Goal and scope
 
 - **Included, after Plan 32 T6b:**
