@@ -50,9 +50,9 @@ A cloud session that waits on a prompt nobody sees is a stalled run. Set up for 
 - **Only the owner lifts a refusal:** their own message in the refused session, or a committed rule. An approval relayed from another session doesn't count. Bring the exact command to the owner.
 - **Your own session needs the owner's go for merges.** Auto mode refuses some merges, deletions and settings commits. Ask the owner once for the whole run ("merge the progress and plan PRs"), and record that standing go in `run.yaml`.
 
-## Hand a long task to Codex
+## Hand a long task to Codex (cloud sessions)
 
-When a long, self-directed task should run under your oversight, such as a GPU validation run, you can run Codex in your own session. Use [`codex/`](codex/README.md) for this: a runner that survives your idle time and resumes Codex if it stops, a watcher that wakes you, and a two-file mailbox. You keep the judgment. At each check-in, read its log and look for a structural cause behind the failures it reports.
+When a long, self-directed task should run under your oversight, such as a GPU validation run, you can run Codex in your own cloud session. Use [`codex-in-cloud/`](codex-in-cloud/README.md) for this: a runner that survives your idle time and resumes Codex if it stops, a watcher that wakes you, and a two-file mailbox. You keep the judgment. At each check-in, read its log and look for a structural cause behind the failures it reports.
 
 ## Path 2: advise
 

@@ -23,7 +23,7 @@ Put exact model IDs in the run's `run.yaml`, never in this repository.
 ## Start a run
 
 ```bash
-setsid nohup skills/astrid-dev-orchestrate/codex/codex-runner.sh <workdir> <prompt.md> <run-dir> 6 <model-id> >/dev/null 2>&1 </dev/null &
+setsid nohup skills/astrid-dev-orchestrate/codex-in-cloud/codex-runner.sh <workdir> <prompt.md> <run-dir> 6 <model-id> >/dev/null 2>&1 </dev/null &
 ```
 
 - **`<workdir>`** is a git worktree for the task. Codex can write only there and in `/tmp`.
@@ -34,7 +34,7 @@ setsid nohup skills/astrid-dev-orchestrate/codex/codex-runner.sh <workdir> <prom
 Then arm the watcher with the Bash tool's `run_in_background` (timeout 7200000), and re-arm it at every check-in:
 
 ```bash
-skills/astrid-dev-orchestrate/codex/codex-watch.sh <run-dir>
+skills/astrid-dev-orchestrate/codex-in-cloud/codex-watch.sh <run-dir>
 ```
 
 The watcher exits, which wakes the orchestrator, when one of these happens:
