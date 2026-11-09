@@ -25,9 +25,15 @@
   - the installer has a foreground mode (`installer/backend.py:389, 945`);
   - OpenRouter is OMP's recommended provider and the default model is DeepSeek V4.1 Flash (`omp_agent.py:29`);
   - the key check uses `ASTRID_OPENROUTER_API_BASE` (`omp_agent.py:498`). Whether OMP's completions follow it is unverified, and B11 checks it.
+- **Fly pricing** (<https://docs.fly.io/about/pricing>, 9 Nov):
+  - machines are billed per second while running; shared-cpu-2x with 2 GB is $13.39/month and RAM beyond the preset is $6/GB-month;
+  - volumes are $0.15/GB-month, billed even when stopped;
+  - snapshots are $0.08/GB-month after 10 GB free, kept 5 days by default;
+  - outbound data is $0.02/GB in North America and Europe;
+  - there is no platform fee.
 - **Outside research:** Turso Sync is push and pull with last-push-wins and appears to be in beta. E2B, Fly Machines and Modal pricing and suspend semantics were reviewed.
 
-**Approach:** Move the one Runtime, with the agent, onto one cloud machine per user. Its live data sits on the volume, protected by frequent authenticated backups. Generalize the paired relay into Astrid Connect for every machine a user owns. Run the LLM through a router in the Astrid Cloud service. Bill everything per unit at cost × 1.6.
+**Approach:** Move the one Runtime, with the agent, onto one cloud machine per user. The database sits on the machine's volume and files in object storage, protected by automatic and user-managed backups. Generalize the paired relay into Astrid Connect for every machine a user owns. Run the LLM through a router in the Astrid Cloud service. Bill everything as provider cost × a configurable markup per category, transparently.
 
 Alternatives considered:
 - Turso as the engine;
@@ -54,10 +60,11 @@ They are rejected in [plan.md](plan.md#existing-work-and-decision).
 | E1 | Database lives on the workspace volume, protected by Runtime backups to a bucket; no Turso on the live path | Decided 9 Nov |
 | E2 | Host: a Fly Machines-class CPU service; B1 checks Fly first against the requirements in plan.md | Decided 9 Nov, confirmed after B1 |
 | E3 | Access: Astrid Connect, the paired relay generalized to every machine a user owns (cloud workspace and local machines, from any browser including a phone) | Decided 9 Nov |
-| E4 | Billing per unit at cost × 1.6: generations per output, LLM per token, workspace per active minute; asleep is free | Decided 9 Nov |
+| E4 | Transparent pass-through billing: provider cost × a markup per category (generations, LLM, compute, storage). Markups are service settings, starting at 1.6, and compute and storage may be lower. Compute per running second, storage per GB-day including asleep, with the breakdown shown | Decided 9 Nov; the owner sets the markup values |
 | E5 | LLM: Astrid's router (OpenRouter pass-through) in the Astrid Cloud service; a generic model chooser, defaulting to DeepSeek V4.1 Flash; the key reaches OMP through the Runtime, never pasted | Decided 9 Nov |
-| E6 | Data loss: never, or very little. Back up after every quiet moment and before every stop, at most a few minutes apart while active. B2 picks the exact cadence, or continuous log shipping if needed | Decided 9 Nov, cadence after B2 |
-| E7 | Bytes in a bucket-backed file store: later, with its own reason | Agreed 9 Nov |
+| E6 | Data loss: never, or very little. Automatic safety backups after quiet moments and before stop, at most minutes apart, kept 7 days. User-managed backups on top: named, scheduled, retention, restore, download, delete. Backup bytes billed as storage | Decided 9 Nov; cadence after B2 |
+| E7 | Files in object storage (S3-class, for example Tigris) in phase 2, with a local cache on the machine; the database stays on the volume | Decided 9 Nov |
+| E9 | Unpaid workspaces: at zero balance new work stops and storage accrues as arrears; notices at day 0, 7, 21 and 28; everything (machine, volume, objects, backups) deleted after 30 days unpaid; the ledger is kept | Decided 9 Nov |
 | E8 | The Local and Cloud switch moves the whole workspace, either way, at any time | Decided 9 Nov |
 
 ## Source identities

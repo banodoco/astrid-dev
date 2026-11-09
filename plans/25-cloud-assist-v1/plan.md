@@ -25,7 +25,7 @@ The agent, the project database (local SQLite) and the files stay on the user's 
 - **The Astrid Cloud service (`astrid-cloud`):** the trimmed worker orchestrator, renamed. It is the one long-lived service and the only holder of provider and Stripe secrets. It runs:
   - the fal-shaped queue API (submit, status, result, cancel), signed uploads, and Stripe checkout and webhook;
   - the worker loop, which claims, completes and refunds tasks in Postgres.
-- **Billing per unit:** each model's provider cost per unit (image, second, audio) × 1.6. It is charged when the task is submitted, refunded on failure, and can never overdraw. One local task id is one cloud task, so a restart never charges twice.
+- **Billing per unit:** each model's provider cost per unit (image, second, audio) × the **generation markup**. The markup is a setting in the service, not a constant, and starts at 1.6. Every ledger row records the provider cost, the markup and the units, and the account page shows them. It is charged when the task is submitted, refunded on failure, and can never overdraw. One local task id is one cloud task, so a restart never charges twice.
 - **Key:** one per device, hashed at rest, with a scope list (`generate` now; Plan 26 adds `llm`). Revocable per device on the account page. It can't mint keys or buy credits. The App stores it in the Runtime's credential records (the [Plan 36](../36-one-credential-path/plan.md) path), and the Agent reads it from there.
 - **Agent:** the existing fal (`cloud`) backend gains an Astrid Cloud route, chosen by the user's setting in Runtime app-state ([Plan 35](../35-one-home-for-user-state/plan.md)). Existing model rows, storage policies and publication are unchanged.
 - **App:** Discord sign-in, the Local and Cloud choice in settings and onboarding, and an account page (balance, ledger, buy credits, devices).
@@ -77,7 +77,7 @@ All the owner's decisions are recorded in [inputs.md](inputs.md#owner-decisions)
 
 ## Completion
 
-On a clean install, onboarding offers "This computer" and "Astrid Cloud". The user picks Cloud, signs in with Discord, starts at zero, buys credits in Stripe test mode and never sees a key. They generate an image, an edit, an upscale and an image-to-video from the existing models, each landing in the local project. The ledger shows one charge each, at cost × 1.6. They switch to "This computer" and back.
+On a clean install, onboarding offers "This computer" and "Astrid Cloud". The user picks Cloud, signs in with Discord, starts at zero, buys credits in Stripe test mode and never sees a key. They generate an image, an edit, an upscale and an image-to-video from the existing models, each landing in the local project. The ledger shows one charge each, at provider cost × the generation markup, with both visible. They switch to "This computer" and back.
 
 **Negative cases:**
 - a failed task is refunded;

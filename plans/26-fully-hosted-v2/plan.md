@@ -27,7 +27,12 @@ It is the same Astrid: the same Runtime, SQLite database and file store, the sam
   - If the machine or its host is lost, a new machine restores the latest backup.
   - **Target: near-zero data loss.** Back up after every quiet moment and before every stop, and never let a backup be more than a few minutes old while the user is active. B2 measures this and decides whether continuous log shipping is needed to get closer to zero.
 - **Turso** is not on the live path. It would mean rewriting the Runtime's stdlib-sqlite3 store. It is a later option only, for reading a workspace while its machine is off, or for an offline local copy.
-- **Files are URLs.** The App reaches every file through `/v1/objects/<sha>` on the workspace. Plan 25 generations arrive through the normal publish path. A bucket-backed file store is deferred: the agent's render needs local paths (`media_views.py:15-45`).
+- **Files live in object storage; the database stays on the volume.** Images, video and audio go to an S3-class bucket (Tigris on Fly, or similar). The database refers to them by content hash, as it does now, so timelines need no migration. Only the Runtime's file store gains a bucket backend:
+  - put by digest;
+  - signed reads;
+  - a local cache on the machine, filled on demand for the agent's render and media views (`media_views.py:15-45`).
+
+  This keeps the volume small, so the volume is the database plus a cache. Files cost about $0.02/GB-month instead of $0.15 on a volume, they load from a CDN, and they can be viewed while the machine sleeps. A lost machine only needs the small database restored.
 - **Astrid Connect: one way to reach any of your Astrid machines.** It generalizes the App's paired relay prototype (`config/vite/pairedRelay.ts`). Every Runtime a user owns, whether their laptop or their cloud workspace, dials out to the relay under their Discord identity. Any browser signed in as that user (desktop or phone) picks a machine and works on it:
   - same-origin, with a `__Host-` cookie, so images and video load;
   - a closed route table;
@@ -44,10 +49,27 @@ It is the same Astrid: the same Runtime, SQLite database and file store, the sam
   The service holds the host token.
 - **Sleep:** decided inside the machine. It stops only when there is no App connected, no running or queued task and no agent turn, and only after a backup. It wakes when the App connects. The platform's own auto-stop is not used.
 - **The agent's LLM: Astrid's own router.** It is a thin OpenRouter pass-through inside the Astrid Cloud service, using the team's OpenRouter key. Users pick from a **generic model chooser**; the default is **DeepSeek V4.1 Flash on OpenRouter**, already the Agent's default (`omp_agent.py:29`). The Astrid Cloud key gains the `llm` scope and reaches OMP through the Runtime, as in Plan 25. Nobody pastes a key. Local users get the same thing.
-- **Billing per unit**, at cost × 1.6, on the one balance:
-  - generations per output;
-  - the LLM per token: an estimate is reserved, the actual cost settled, and the rest refunded;
-  - the workspace per active minute; asleep is free.
+- **Transparent pass-through billing.** Everything is charged at provider cost × a **markup per category**. Markups are settings in the service, not constants: generations and LLM start at 1.6, and compute and storage may be set lower. Every ledger row stores the units, the provider cost and the markup, and the account page shows a breakdown with a public price sheet.
+  - **Generations:** per output.
+  - **LLM:** per token. An estimate is reserved, the actual cost settled, and the rest refunded.
+  - **Compute:** per second the machine runs, at the host's rate for that machine size. The service owns start and stop, so it records each run interval. A metering job charges elapsed time every minute, once per interval and minute. Asleep costs no compute.
+  - **Storage:** per GB-day, for the volume's provisioned size, object-storage bytes (a running byte count kept in Postgres as files are added and deleted) and backup bytes. It is charged daily, including while the machine sleeps.
+  - A monthly check compares our meters with the host's invoice.
+- **Backups the user manages.** Automatic safety backups always run (after quiet moments, before stop, at most minutes apart) and are kept for 7 days. On top of that the user can:
+  - make a named backup at any time;
+  - choose a schedule and retention, for example daily for 30 days;
+  - restore any backup (the Runtime restores into a new realm and then switches over);
+  - download a backup to their own machine;
+  - delete backups.
+
+  Backup bytes are billed as storage.
+- **When the balance runs out:**
+  - New generations, LLM calls and machine wakes stop at zero, with a clear message.
+  - Storage keeps accruing as arrears, which are settled on the next top-up.
+  - The user is told at day 0, 7, 21 and 28, with a one-click "download my workspace" throughout.
+  - Topping up at any point restores everything.
+  - **After 30 days unpaid, everything is deleted:** the machine, the volume, the objects in storage and the backups. Only the ledger and account rows are kept, for accounting. Deletion is checked and recorded.
+
 
 **Not included:**
 - live local-and-cloud sync;
@@ -56,7 +78,6 @@ It is the same Astrid: the same Runtime, SQLite database and file store, the sam
 - per-conversation sandboxes;
 - LLM providers other than OpenRouter;
 - per-project moves;
-- a bucket-backed file store;
 - replacing local mode, which stays the default.
 
 ## Existing work and decision
@@ -96,17 +117,23 @@ Details are in [tasks.md](tasks.md). Budget and the spike spend caps are set at 
 - the workspace contract: one Runtime per user on a volume, its backups, sleep and wake, and restore;
 - **Astrid Connect**: a user's machines reachable from any signed-in browser;
 - the move contract, for the Local and Cloud switch;
-- the Astrid LLM contract: an OpenRouter-compatible router, the `llm` scope, per-token billing and the model chooser.
+- the Astrid LLM contract: an OpenRouter-compatible router, the `llm` scope, per-token billing and the model chooser;
+- the metering contract: compute and storage meters, per-category markups and a transparent ledger;
+- the backup contract: automatic and user-managed backups, restore and download;
+- the unpaid lifecycle: freeze, notices, arrears and deletion at 30 days.
 
 ## Completion
 
-With nothing installed, a new user picks Astrid Cloud in onboarding, signs in with Discord and buys credits. They create a project and chat with the agent on the default model. They edit the timeline while the agent edits it too, and conflicts resolve visibly. They close the browser mid-render; the render finishes and the machine sleeps afterwards. They reopen on a phone, and the machine wakes with everything there. They switch to This computer, which moves the workspace down, then back to Astrid Cloud. A local user reaches their laptop from their phone through Astrid Connect.
+With nothing installed, a new user picks Astrid Cloud in onboarding, signs in with Discord and buys credits. They create a project and chat with the agent on the default model. They edit the timeline while the agent edits it too, and conflicts resolve visibly. They close the browser mid-render; the render finishes and the machine sleeps afterwards. They reopen on a phone, and the machine wakes with everything there. They make a named backup and restore it. They switch to This computer, which moves the workspace down, then back to Astrid Cloud. A local user reaches their laptop from their phone through Astrid Connect.
 
 **Negative cases:**
 - a machine with a queued task does not sleep;
 - a destroyed machine restores with loss inside B2's measured target;
 - another user cannot reach the workspace or its media;
-- a zero balance stops generations and LLM calls with a clear message;
+- a zero balance stops generations, LLM calls and wakes with a clear message;
+- a workspace left unpaid for 30 days is fully deleted, objects and backups included, and a top-up on day 29 restores it;
+- the ledger's compute and storage charges match the host's own usage within a stated tolerance;
+- files still load while the machine sleeps;
 - local mode is unchanged.
 
 The evidence names the host, the SHAs, backup and wake timings, and the spend.

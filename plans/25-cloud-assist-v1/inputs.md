@@ -47,7 +47,7 @@ All decided by the owner on 9 Nov.
 |---|---|
 | D1 | Supabase project: Banodoco, `ujlwuvkrxlvoswwkerdf`, the only live project. Reigh's was deleted |
 | D2 | Service: `astrid-cloud`, the trimmed worker orchestrator renamed. It holds the Supabase migrations and deploys on Railway after A3 and A4 pass. No edge functions |
-| D3 | Models: the fal models already in the catalog. Each is billed per unit at provider cost × 1.6. The owner picks new models later. Pruna is deferred |
+| D3 | Models: the fal models already in the catalog. Each is billed per unit at provider cost × a markup. The markup is a setting per category, starting at 1.6 for generations; the owner may lower it. Each ledger row shows the cost and the markup. The owner picks new models later. Pruna is deferred |
 | D4 | No welcome or free credits |
 | D5 | Name: **Astrid Cloud**, with a "This computer / Astrid Cloud" choice in onboarding and settings that can be switched back and forth |
 | D6 | No pasted keys: Discord sign-in in the App mints a per-device key that goes into the Runtime |
