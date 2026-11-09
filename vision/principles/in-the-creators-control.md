@@ -30,4 +30,4 @@ Interfaces should show the meaningful consequences of decisions, support correct
 
 ## References
 
-Related work is tracked in the [vision gap catalog](../README.md#gaps--17-assessed-outcomes).
+Related work is tracked in the [vision gap catalog](../gaps/).
