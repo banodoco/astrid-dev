@@ -34,7 +34,7 @@ Creative work should remain yours, whether it runs locally or in the cloud.
 
 ### [Completely open by design](principles/open-by-design.md)
 
-Every layer of our tools should be open to inspect, adapt, fork, and share.
+Our code, decisions, methods, and discoveries should be open wherever they can be shared responsibly.
 
 ### [In the creator's control](principles/in-the-creators-control.md)
 
@@ -42,7 +42,7 @@ Creators should have the final say over every part of their creative environment
 
 ### [Eliminate technical wrangling](principles/eliminate-needless-technical-wrangling.md)
 
-Technical setup should get out of the way of creative work.
+Technical wrangling should become work your agents handle, not work that interrupts your art.
 
 ## Gaps — 17 assessed outcomes
 
