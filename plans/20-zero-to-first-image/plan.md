@@ -40,3 +40,7 @@ A new user can follow the short instruction from the declared starting state and
 
 - [tasks.md](tasks.md): intended work and draft proof requirements.
 - [inputs.md](inputs.md): source identities, related plans, and evidence limits.
+
+## Direction (owner, 9 Nov 2026)
+
+The route is **an attached ComfyUI** (the user's own), reached through [Plan 32](../32-generation-placement-targets/plan.md) S2's guided generation setup. Plan 32 S2 delivers the agent side, plus one line in the App's install brief (`agentInstructions`) pointing to "Set up my generation" by skill name and public URL. This plan adds the App side: after Connected, the welcome flow shows a **"Set up generation" card** with a "Copy for your agent" brief (a new `copy.ts` function next to `agentInstructions`). Its proof is a real first image from a saved workflow.
