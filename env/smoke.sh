@@ -11,7 +11,7 @@ case "$kind" in
   runtime) setup="$D/runtime-setup.sh"; run="$D/runtime-pytest.sh" ;;
   *) echo "usage: smoke.sh agent|vc|runtime <selector>" >&2; exit 2 ;;
 esac
-test -n "$sel" || { echo "usage: smoke.sh agent|vc <selector>" >&2; exit 2; }
+test -n "$sel" || { echo "usage: smoke.sh agent|vc|runtime <selector>" >&2; exit 2; }
 bash "$setup" || { echo "ENV-FAIL setup ($kind)"; exit 3; }
 bash "$run" -q "$sel" || { echo "ENV-FAIL test $sel"; exit 3; }
 echo "ENV-PASS $kind $sel"

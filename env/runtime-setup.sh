@@ -5,6 +5,7 @@
 # at tests/astrid-agent.pin and verifies the exact commit before installing it.
 # Needs uv, git, Python 3.13, and public reads from PyPI and GitHub.
 set -euo pipefail
+trap 'status=$?; echo "ENV: setup failed (exit $status): $BASH_COMMAND" >&2; exit 3' ERR
 for t in uv git; do command -v "$t" >/dev/null || { echo "ENV: missing tool $t" >&2; exit 3; }; done
 CO=$(pwd -P); E="$CO.env"
 test -f "$CO/pyproject.toml" -a -f "$CO/tests/astrid-agent.pin" -a -d "$CO/packages/python" || {
