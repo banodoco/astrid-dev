@@ -325,3 +325,29 @@ Delete, in the same change:
 ## T8 Completion
 
 The astrid-dev completion PR links the implementation PRs, the integrated revisions, T1–T6b's CPU evidence, the review rounds and a disposition for [F-003](../../vision/gaps/F-003-creative-execution.md). It states that the live proof is a later pass of [Plan 34](../34-real-gpu-proof/plan.md).
+
+## Run state: open list (progress 14, manager)
+
+Integration head: `banodoco/astrid-agent` `int/32-one-generation-path` = `041fb242b` (merged T6b-3 fix6 / fix6b from `f1031678f`). Reviewer and advisor session IDs are in the run log, not here.
+
+One line per item: owner session, branch/SHA, state, next step.
+
+- **D1 align gets workflow path** (must-fix, Codex): owner Codex run (advisor-owned); Claude D1 worker stopped; no branch on origin. State: not started. Next: Codex pushes `plan32/d1-*` with focused proof; reviewer; merge on OK.
+- **D2 dry-run submitted ⊆ built test** (must-fix, Codex): base `plan32/dry-run-invariant` `9ef4f3f`. State: base only. Next: Codex builds on 9ef4f3f; reviewer; merge on OK.
+- **D3 controller-to-pod seam test** (must-fix, Codex): no branch. State: not started. Next: Codex pushes `plan32/d3-*`.
+- **D4 RunPod models-lock gate decision** (must-fix, Codex): no branch. State: not started. Next: Codex decides (move to pod, remove with test, or waiver in tasks.md with evidence).
+- **D5 stale "T4 STUB" text; comfyui_engine cancel raises** (must-fix, Codex): not started.
+- **D6 re-tag _RED; --align trust cells for tts and sfx** (must-fix, Codex): not started.
+- **Batch R, real regressions** (X): session `session_011EzfW4GKspyvvH6PvDnGp7`, branch `plan32/r-regressions` from `041fb242b`. State: dispatched. Items: Runtime opened before validation (test_entry_cli_contract); engine_install deadline type drift (test_mcp_generation_parity); audio RunPod admission needs saved preferences (test_generation_target, check T6d defaults). Next: report branch and SHA; reviewer; merge on OK.
+- **Batch T, test drift** (N): session `session_011EzfW3eHhFLsHnoM3HKTRa`, branch `plan32/t-test-drift` from `041fb242b`. State: dispatched. Items: test_cli (12 facade shape), test_runpod_engine_selection (4, valid inputs), test_skills (4, generate(entry, inputs, placement)). Next: report branch and SHA; reviewer; merge on OK.
+- **T6b-3 should-fix: document-path shape checks** (should-fix): owner T6b-3 `session_011EzfW1TP4SN4pbR3BKtAzQ`; on `041fb242b`. State: requested. Next: shared shape-check helper for dict and document path; focused proof; SHA to manager.
+- **T6b-3 re-point of 7 test_orchestrator_manifest_schema h3 tests** (regression, not known failure): owner T6b-3 `session_011EzfW1TP4SN4pbR3BKtAzQ`. State: requested. Next: re-point to vibecomfy.run passthrough and live orchestrator, or delete; SHA to manager.
+- **test_sdk_entry_contract test_launch_rejects_invalid_controls_before_selection[kwargs1]** (pre-existing stale `target=` kwarg): stale-test follow-up. Not started. Next: update test to `placement=`.
+- **Registry leak** (test_registry_qualifying_discovery_refuses_corpus_change[new_manifest], shard D single-process): owner T6b-3 `session_011EzfW1TP4SN4pbR3BKtAzQ`. State: reproduction running on `e0df2459a`; leaking file not yet named. Next: T6b-3 sends the leaking file and one-line cause.
+- **managed_schema pin**: owner not recorded in this file. State: open. Next: confirm owner and status.
+- **census-lock check**: owner reviewer `session_011EzfW18G7mV91ATcEdxQeq`. State: open. Next: confirm the `approve` output diff is clean on a clean checkout.
+- **Shard delta re-runs** (A–E, touched files only, on final head): shard C `session_011EzfW3RWkUCtWTbhTqksTB` (alive; waits for batches R and T to merge). Shards A, B, D, E session IDs: in run log. State: waiting. Next: after R and T merge, send each shard its touched files on the final head.
+- **Final R** (review, must confirm the dry-run "submitted ⊆ built" check cannot hide dropped nodes): reviewer. State: waiting for all merges above. Next: request after delta re-runs are green.
+- **T8 Completion**: manager. State: waiting on everything above. Next: run only after final R is OK.
+
+Video-references: resolved on int/32 by `041fb242b` (T6b-3 fix6/fix6b); reviewer OK.
