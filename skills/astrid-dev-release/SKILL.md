@@ -43,6 +43,8 @@ After scoped checks and prescribed review pass, promote the **same reviewed head
 
 A publish never turns a passing check red. On each promotion PR into a product `main`, compare its checks by name with that `main`: any check that passes on `main` and fails on the PR blocks the publish. Report each `main`'s red checks by name; they are not this publish's work.
 
+**One publisher at a time.** Only one session publishes an installer release at a time, and only with the owner's go in that session. Before writing App `main`'s install manifest, check that no other project is mid-publish, and that the served release is the one your candidate starts from. If it isn't, re-base the candidate on the served tuple and renumber; never race another project for the same number.
+
 **Publishing an installer release** (Runtime, Agent and App to `main`):
 0. **Cover real install states.** Before publishing, list the install states real users are in (diagnostics received, past releases, migrations they went through) and have CI cover each one from that real starting state. A proof row is named after its literal starting state. After publishing, the owner checks the release through the normal App path on a real long-lived install, with no custom commands. Plan 29 is not done until that check passes.
 1. **Owner's go, in this session.** As soon as the candidate qualifies, ask the owner for the go here, naming the exact SHAs. A go recorded elsewhere, in a plan's `inputs.md` or another session, does not satisfy this session's permission check. If a merge is refused as a production action, stop and ask the owner; don't retry another way.
