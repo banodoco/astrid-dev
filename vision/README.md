@@ -8,47 +8,41 @@ Astrid aims to help individuals and the community as a whole pursue artistic wor
 
 ## Four pillars
 
+Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable characteristics.
+
 ### [A Tool for Artistic Ambition](pillars/artistic-ambition.md)
 
-We want to help artists push the limits of AI and their own creativity to make their most ambitious work possible.
-
-**Give people the creative power and control to make work beyond what they previously thought possible.**
+Astrid is designed to support serious, sustained artistic practice.
 
 ### [Agent-Powered Liquid Software](pillars/liquid-software.md)
 
-In the age of agents, every layer of our tools should adapt to the needs of artists and their work.
-
-**Tools should adapt to creative work as people and agents create, not force the work into fixed interfaces.**
+Tools should adapt to creative work as people and agents create together.
 
 ### [Intelligence That Compounds](pillars/compounding-intelligence.md)
 
-We want what artists and their agents discover to give others a stronger foundation for more ambitious work.
-
-**Creative agents should benefit from what they and others have learned—and help make that knowledge more useful over time.**
+Creative agents should become more useful through what they and others learn.
 
 ### [A Shared Creative Endeavor](pillars/shared-endeavour.md)
 
-We want to inspire and equip people to push themselves—and reward them for doing so.
-
-**Give people a reason, encouragement and a genuine stake in attempting more ambitious creative work.**
+Creative ambition should become something people pursue and advance together.
 
 ## Four driving principles
 
 ### [Local-first, cloud-capable](principles/local-first-cloud-capable.md)
 
-Create entirely on your own machine, online or offline, with your files and projects under your control. Use cloud models, agents or rendering when helpful. Move between local and cloud with clear, deliberate choices about where work runs, files stay, what gets shared, and what it costs.
+Creative work should remain yours, whether it runs locally or in the cloud.
 
 ### [Completely open by design](principles/open-by-design.md)
 
-Our tools, models and ideas should be completely open to inspect, adapt, fork and share. Build on open-source software and models so artists and developers can extend one another's work, contribute reusable tools and knowledge, and choose the services that suit their needs.
+Every layer of our tools should be open to inspect, adapt, fork, and share.
 
 ### [In the creator's control](principles/in-the-creators-control.md)
 
-Creators should control every part of Astrid, including its core workings. Choose features and services, set agent permissions, and decide what remains private or shared. These controls should be approachable, without requiring creators to master the underlying technology.
+Creators should have the final say over every part of their creative environment.
 
 ### [Eliminate technical wrangling](principles/eliminate-needless-technical-wrangling.md)
 
-Artists should focus on creating, not installing models or fixing environments. Agents find and set up tools, manage dependencies, run jobs and recover from errors. The important choices—permissions, costs and where work runs—remain visible and easy to understand.
+Technical setup should get out of the way of creative work.
 
 ## Gaps — 17 assessed outcomes
 
