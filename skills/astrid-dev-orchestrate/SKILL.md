@@ -53,7 +53,7 @@ A cloud session that waits on a prompt nobody sees is a stalled run. Set up for 
 ## Hand a long task to Codex (cloud sessions)
 
 When a long, self-directed task should run under your oversight, such as a GPU validation run, you can run Codex in your own cloud session. Use [`codex-in-cloud/`](codex-in-cloud/README.md) for this. It gives you a runner that resumes Codex if it stops, a keep-alive (`codex-hold.sh`) that restarts a dead runner and wakes you, and a two-file mailbox. A Codex manager can run a whole project this way, with its sub-agents doing the tasks.
-- **A worker restart kills every process,** the keep-alive included. While a run is live, keep a scheduled check-in at most 20 minutes away (`send_later`). Have every check-in re-arm `codex-hold.sh` with all live run folders.
+- **A worker restart kills every process,** the keep-alive included. While a run is live, keep a scheduled check-in at most 20 minutes away (`send_later`). Have every check-in re-arm `codex-hold.sh` with all live run folders. Also register each live run in `~/codex/runs.txt` for `codex-hold-daemon.sh`, which a SessionStart hook relaunches, so a dead runner restarts as soon as the session comes back ([README](codex-in-cloud/README.md#start-a-run)). Ask the owner once to add that hook, because auto mode refuses Claude's edits to its own settings.
 - **Install the astrid-dev skills** for Codex (`~/.agents/skills`), and give the manager its plan, its branches, the route-to-model table, and the rules that differ under Codex. The README lists those rules.
 - **You keep the judgment.** At each check-in, read its log and mailbox, and look for a structural cause behind the failures it reports.
 
