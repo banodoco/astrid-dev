@@ -45,6 +45,8 @@ Columns:
 
 Each cell is one `(slot, placement)` pair with pass, fail or not run.
 
+Also check what CPU cannot prove (fetch destination against the checked models root, volume reuse across pods, poll-after-start, transport under large outputs): see [Plan 34 G5](../../plans/34-real-gpu-proof/tasks.md) and record each in the evidence file.
+
 ## Step 1: VibeComfy smoke, one pod
 
 Make one pod in the storage volume's datacenter. For each slot, run that slot's workflow **directly with VibeComfy's own commands** (`prepare`, `fetch`, `run`), with no Astrid routing. A failure here is a model or node failure, not a routing failure. This step also fills the storage volume once; the models must not be downloaded again later. Record each slot's output or its first failing line.
