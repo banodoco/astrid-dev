@@ -214,6 +214,8 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Four pillars",
         "",
+        "Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable characteristics.",
+        "",
     ]
     for pillar in page["pillars"]:
         lines.extend([
