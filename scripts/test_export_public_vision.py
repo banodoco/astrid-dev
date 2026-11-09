@@ -25,8 +25,8 @@ class PublicVisionProjectionTests(unittest.TestCase):
             [
                 "Astrid is designed to support serious, sustained artistic practice.",
                 "Tools should adapt to creative work as people and agents create together.",
-                "Creative agents should become more useful through what they and others learn.",
-                "Creative ambition should become something people pursue and advance together.",
+                "What anyone learns should become something everyone can build on.",
+                "We want to create the conditions for the community to do more together.",
             ],
         )
 
@@ -87,7 +87,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
         self.assertEqual(
             self.page["principles"][0]["statement"],
-            "Creative work should remain yours, whether it runs locally or in the cloud.",
+            "Everything should be designed to run fully locally, and cheaply and conveniently in the cloud.",
         )
         all_subjects = self.page["pillars"] + self.page["principles"]
         self.assertEqual(len(all_subjects), 8)
@@ -102,7 +102,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
     def test_local_first_promise_is_balanced_without_losing_offline_control(self):
         first = self.page["principles"][0]
         full = first["bodyMarkdown"]
-        self.assertIn("online or offline", full)
+        self.assertIn("even offline", full)
         self.assertIn("local project should remain authoritative", full)
         self.assertIn("costs", full)
 
@@ -157,8 +157,28 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("With the creator's permission", open_design["bodyMarkdown"])
 
         wrangling = principles["eliminate-needless-technical-wrangling"]
-        self.assertIn("your agents handle", wrangling["statement"])
+        self.assertIn("work for your agents", wrangling["statement"])
         self.assertIn("The technical work remains real", wrangling["bodyMarkdown"])
+
+    def test_vision_communication_outcome_and_open_ownership_are_accurate(self):
+        pillars = {p["id"]: p for p in self.page["pillars"]}
+        principles = {p["id"]: p for p in self.page["principles"]}
+        gaps = {g["id"]: g for g in self.page["gaps"]}
+        self.assertIn("creative and technical discovery",
+                      pillars["compounding-intelligence"]["explanationMarkdown"])
+        self.assertIn("when knowledge is shared",
+                      pillars["compounding-intelligence"]["explanationMarkdown"].lower())
+        self.assertIn("core product and wider ecosystem",
+                      pillars["shared-endeavour"]["explanationMarkdown"])
+        self.assertIn("not yet settled",
+                      principles["open-by-design"]["explanationMarkdown"])
+        self.assertIn("our ownership", principles["open-by-design"]["statement"])
+        self.assertEqual(len(gaps), 18)
+        self.assertIn("CA-003", gaps)
+        self.assertEqual(gaps["CA-003"]["primaryAppliesTo"], "principle:open-by-design")
+        self.assertIn("pillar:shared-endeavour", gaps["CA-003"]["appliesTo"])
+        self.assertEqual(gaps["CA-003"]["assessment"], "partially evidenced")
+        self.assertIn("at least three substantive", gaps["CA-003"]["closureEvidenceMarkdown"])
 
     def test_open_projects_derive_from_catalog_in_priority_order(self):
         projects = self.page["projects"]
