@@ -20,37 +20,38 @@ Tools should adapt to creative work as people and agents create together.
 
 ### [Intelligence That Compounds](pillars/compounding-intelligence.md)
 
-Creative agents should become more useful through what they and others learn.
+What anyone learns should become something everyone can build on.
 
 ### [A Shared Creative Endeavor](pillars/shared-endeavour.md)
 
-Creative ambition should become something people pursue and advance together.
+We want to create the conditions for the community to do more together.
 
 ## Four driving principles
 
 ### [Local-first, cloud-capable](principles/local-first-cloud-capable.md)
 
-Creative work should remain yours, whether it runs locally or in the cloud.
+Everything should be designed to run fully locally, and cheaply and conveniently in the cloud.
 
 ### [Completely open by design](principles/open-by-design.md)
 
-Our code, decisions, methods, and discoveries should be open wherever they can be shared responsibly.
+We want to open not just our code, but our knowledge, ideas, and even our ownership.
 
 ### [In the creator's control](principles/in-the-creators-control.md)
 
-Creators should have the final say over every part of their creative environment.
+Creators should have final say over every part of their creative environments.
 
 ### [Eliminate technical wrangling](principles/eliminate-needless-technical-wrangling.md)
 
-Technical wrangling should become work your agents handle, not work that interrupts your art.
+Technical wrangling should be work for your agents, not work that interrupts your art.
 
-## Gaps — 17 assessed outcomes
+## Gaps — 18 assessed outcomes
 
 Each gap describes a result that remains independently verifiable even if its proposed implementation changes. Follow its link for the full current assessment, sources and closure evidence. Project completion never closes a gap automatically.
 
 - **[AA-001 — Artists can't yet sustain ambitious work end to end](gaps/AA-001-sustained-creative-work.md)** — Open. A real artist-led project is completed through repeated revision, with demonstrable continuity, editable results, preserved creative intent and serious creator/peer assessment.
 - **[CA-001 — Astrid lacks its own creative challenge culture](gaps/CA-001-creative-challenge-culture.md)** — Open. Run a bounded challenge with clear artistic intent and fair participation; document artists' goals, feedback, completed work and whether it enabled more ambitious efforts.
 - **[CA-002 — No implemented contributor-ownership model](gaps/CA-002-contributor-ownership.md)** — Open. An explicit owner decision and qualified legal/tax review of a concrete model covering eligible contributions, grants/allocations, governance, vesting, changes over time, financing and participant protections; then evidence of its authorized implementation.
+- **[CA-003 — Our vision, experiments and execution aren't yet clearly connected](gaps/CA-003-vision-experiments-progress.md)** — Partially evidenced. Publish a maintained public trail for at least three substantive decisions or experiments, each connecting the relevant vision and gap to the hypothesis, work attempted, evidence, outcome, resulting decision, and what remains unresolved.
 - **[CI-001 — Agents don't yet reliably learn from creative work](gaps/CI-001-agent-learning-loop.md)** — Open. Two real agent sessions: the first retrieves applicable knowledge and produces an observed, locally retained result; a subsequent session demonstrably uses that finding.
 - **[CI-002 — Independent Hiveminds don't yet work together](gaps/CI-002-federated-knowledge.md)** — Open. Two separately owned datasets can exchange a scoped, independently attributed reference or approved sanitized result, preserving revision identity, provenance and access decisions; denied, stale and revoked cases do not leak source content.
 - **[F-001 — Reliability isn't proven across supported setups](gaps/F-001-platform-reliability.md)** — Partially evidenced. A declared and version-pinned OS/device/deployment matrix demonstrates clean installation, launch, stop, update, interruption recovery, rollback and removal with preserved work and meaningful negative tests.
