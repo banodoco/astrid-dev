@@ -178,7 +178,10 @@ Delete, in the same change:
 - `checkout_server` and its `_EndpointArtifacts` `/view` client (`backends/vibecomfy.py:1432`);
 - the second HTTP submit (`VibeComfyEngine._post`, `backends/vibecomfy.py:1273`);
 - the `generate align` / `engines install` duplication;
-- VibeComfy's hidden `ensure_models` download (`runtime/session.py` ~1209-1210, ~1672).
+- VibeComfy's hidden `ensure_models` download (`runtime/session.py:1209-1210`, and ~1672). **The census (9 Nov) found that deleting only those lines is not enough.** Three more download paths remain: `run.py:698`, `session.py:2301`, and the prepare route. Delete all three, and the lines above.
+- **Downloads happen only through `align` (VibeComfy `fetch`).** No other code path may download a model.
+- **First step for the T4 worker:** check the Agent-side callers of each download path, and name every caller in the commit body, before any deletion.
+- **Proof for "no other download path":** a grep, and a test, showing that no code path outside `align` downloads a model. Name the grep pattern and the test in the commit body.
 
 `model_downloader.py` and the model steps of `engine_runner.py` stay until T5. RunPod still installs through `engines install --model-cache-root` (Plan 33 U6) until T5 replaces that route. Locally, the models root becomes VibeComfy `fetch`'s (`tests/test_fetch.py::test_models_root_accepts_directory_extra_model_paths_env`).
 
