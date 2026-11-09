@@ -60,7 +60,13 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 - Dispatched 8 Nov, 02:41Z, each cut from T1's head merged with `int/33`, so they have the harness, and each merges after T1:
   - T3 (X, Placement): `plan32/t3-placement`, worker `session_011EzfW2k9PnrwJ5yrqnVXnT`.
   - T2 manifest (X): `plan32/t2-manifest`, worker `session_011EzfW1odTqKuC8ycfPKmfq`. Builds on T2a's engine point already on `int/32`.
-  - App `--placement` rename (X): `plan32/t3-app-placement` cut from astrid-app `main`, worker `session_011EzfW15EYWoDKwCtDsn2Qj`.
+  - App `--placement` rename (X): `plan32/t3-app-placement` cut from astrid-app `main`, worker `session_011EzfW15EYWoDKwCtDsn2Qj`. **Result:** no `--target` or `target_policy` call sites in astrid-app. Nothing pushed; the session is archived. The App part is done as nothing.
+- Advisor check-in #7, 04:05Z:
+  - **T3** is ready to merge right after T1. Its "RunPod live-lease lookup still unwired" (`Placement.machine` naming a live lease) is **deferred to T5**, which owns machines and leases. Its other failures reproduce on the clean base, so they don't block.
+  - **T2 manifest** (`75e5531`): the 21 wide-run failures are being itemised against the base (`fb7944d`). Only failures new on `75e5531` block the merge.
+  - **T2b started** (X, worker `session_011EzfW4aHNr5E5dZ999yK7R`) on `plan32/t2b-engine-base` (`d4fcd5d68`, T2 manifest merged with T3). Work is on `plan32/t2b-one-engine`. T2b merges after T1, T2 and T3.
+  - Itemisation worker (read-only): `session_011EzfW1ZMEvnwymrMBGz278`.
+- T4 and T5 prep (read-only, push nothing): census `session_011EzfW1xEePB3dQiR72qR2C`, design `session_011EzfW3L3qwN5dvVk4zYGdj`.
 - Owner decisions, 8 Nov, relayed by the advisor:
   - No GPU validation of Plan 33's route. Plan 34's first pass is dropped, and Plan 32 goes as fast as possible.
   - Plan 33 U4 (h3_av) is stopped and U7 (reuse window) is cancelled; both are superseded by T6b and T5. Plan 33 finishes U2, U3 with U5, U6, one review round, then U9.
