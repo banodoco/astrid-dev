@@ -120,6 +120,7 @@ Routes used: Unknown — Historical run did not record routes.
         empty_unknown = RECEIPT.replace(line.strip(), "Routes used: Unknown — TBD")
         self.assertTrue(any("route provenance" in x for x in check(empty_unknown)))
         self.assertEqual(check(RECEIPT.replace(line.strip(), "Routes used: S review")), [])
+        self.assertEqual(check(RECEIPT.replace(line.strip(), "Routes used: T for the copy pass")), [])
         override = RECEIPT.replace(line.strip(),
             "Routes used: N for builds, X for UR-13n (override: <name>)")
         self.assertEqual(check(override), [])

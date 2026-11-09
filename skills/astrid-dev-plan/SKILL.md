@@ -11,7 +11,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astri
 
 - **Owner:** the person who chooses a project's outcome and makes its decisions.
 - **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md), advise path). An orchestrator may also plan a project itself before farming it out.
-- **Route:** N, X or S; the [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy.
+- **Route:** N, X, S or T; the [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy.
 - **Scope** (of a task): the paths, and any shared surface or contract, it may change; a path includes its own tests, wherever they live. Name the functions or classes too (`path:symbol`) when the task changes only part of a file.
 
 ## The answer
@@ -41,14 +41,14 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 | List each problem with its root cause and where it is fixed | the request starts from symptoms (bugs, confusing UI) rather than a new capability |
 | Consult the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) as the critic, briefed to build as little as possible and to verify claims in code | the plan touches a cross-repository contract, a user-visible flow, release, security or data, or exceeds about five days |
 | Phase it: a first phase with most of the value, later phases committed, estimates per phase | the estimate exceeds about ten days or value is uneven across tasks |
-| Ambiguity pass by N helpers per task group, resolving from code and listing only real owner decisions | other agents will execute the tasks, or any task is X or S |
+| Ambiguity pass by N helpers per task group, resolving from code and listing only real owner decisions | other agents will execute the tasks, or any task is X, S or T |
 | Record owner decisions in `inputs.md` and enforce them with a test | a later merge could silently undo the decision |
 
 ## Write the task list
 
 In the [tasks template](../../templates/project/tasks.md), every task has a scope and:
 
-- **A route:** N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration).
+- **A route:** N by default, X for coupled or non-obvious changes, S where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration), and T for taste: small, editorial refinement that needs a high level of polish, such as user-facing copy, refusal and error messages, naming, a screen's layout or a skill's voice. A T task refines something that exists against a stated intent; it is not creative and adds no scope. Split taste out of larger tasks, so the functional change is N, X or S and the wording or polish is its own small T task ([run contract](../astrid-dev-shared/run-contract.md#routing-and-bindings)).
 - **Dependencies,** only where one task needs another's result, or both change the same function, class or contract. Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. The same applies across other active projects. If a shared surface needs one model first, consult the advisor.
 - **The critical path:** state it in `tasks.md`, and keep it as short as the work allows. Chain tasks only where the rule above requires it.
 - **Before implementation:** its actual base and donor revisions, exact focused checks and authority.

@@ -51,6 +51,7 @@ class ModelUseTests(unittest.TestCase):
             make_record("Q", "research", "task", "self-reported")
         with self.assertRaises(ValueError):
             make_record("N", "research", "", "self-reported")
+        self.assertEqual(make_record("T", "implementation", "copy pass", "self-reported")["route"], "T")
 
     def test_override_is_summarized_only_when_present(self):
         summary = summarize([

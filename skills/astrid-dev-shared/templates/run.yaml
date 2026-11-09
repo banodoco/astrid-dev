@@ -18,6 +18,11 @@ models:
     model_id: ""
     reasoning_effort: ""
     availability: unverified
+  taste:
+    class: Astra/Opus-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
   plan_judgment:
     class: Astra/Opus/Fable-class
     model_id: ""
@@ -39,6 +44,7 @@ roles:
   worker_normal: normal
   worker_very_hard: very_hard
   worker_super_hard: super_hard
+  worker_taste: taste
   plan_judgment: plan_judgment
   advisor: advisor
   completion_reviewer: completion_reviewer
