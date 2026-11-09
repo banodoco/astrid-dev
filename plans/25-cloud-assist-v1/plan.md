@@ -11,18 +11,33 @@ A creator signs in to Astrid with Discord, buys credits with Stripe (there are n
 The agent, the project database (local SQLite) and the files stay on the user's machine, as now. Cloud work is limited to the generation and its billing. The same key is the one the cloud workspace uses in [Plan 26](../26-fully-hosted-v2/plan.md), and a local user keeps using it after Plan 26 ships.
 
 **Included:**
-- **Where it runs:** everything server-side goes on the team's one live Supabase project, **Banodoco**. Reigh's project was deleted. The restored tables and functions sit next to Hivemind's, which already use that project.
-- **Account:** Discord sign-in and the `users` row, restored from the tagged Astrid App source. An **account page** in astrid-app shows the balance and ledger, buying credits with Stripe Checkout, and creating and revoking keys. The rest of the App stays local and sessionless, so it never needs a login.
+- **One Astrid Cloud service, no edge functions** (owner, 9 Nov). The trimmed worker orchestrator grows into the single Astrid Cloud API, a long-lived Python service. It is the only place that holds the provider and Stripe secrets, and the only place that authenticates Astrid Cloud keys. It runs:
+  - the public HTTPS API: the queue, uploads, Stripe checkout and webhook, and in [Plan 26](../26-fully-hosted-v2/plan.md) the LLM router and `open-workspace`;
+  - the worker loop.
+- **Supabase does three things only,** on the team's one live project, **Banodoco** (Reigh's project was deleted):
+  - Auth, for Discord sign-in;
+  - Postgres, for the tables, row-level security and SQL functions;
+  - Storage, for the private bucket.
+  - Hivemind's existing edge functions there are untouched. Astrid Cloud adds none.
+- **Account:** Discord sign-in through Supabase Auth, and the `users` row, restored from the tagged Astrid App source. An **account page** in astrid-app:
+  - reads the balance, the ledger and the key list straight from Supabase, which row-level security limits to the user's own rows;
+  - creates and revokes keys through SQL functions;
+  - calls the service only to start a Stripe Checkout.
+  - The rest of the App stays local and sessionless, so it never needs a login.
 - **Credits:** the restored credits ledger, in integer cents. Billing is **debit first, refund on failure**, in one locked SQL function, with a unique spend and refund per task. A task can never overdraw the balance.
 - **Astrid Cloud key:** the old personal access token, hardened:
   - hashed at rest and shown once, with a prefix;
   - scope `generate` only, valid for the queue API and input uploads. Scopes are a list, so [Plan 26](../26-fully-hosted-v2/plan.md) adds `llm` to the same key;
   - last-used time and revoke.
-  - Account, billing and key-minting functions refuse it and need the Discord session.
-- **Astrid Cloud queue API**, shaped like fal's queue (submit, status, result, cancel):
-  - one edge function that authenticates the key, debits, and creates a Supabase task;
+  - Keys are minted and revoked only by SQL functions that require the signed-in Discord session, so a key can never mint keys or start checkouts.
+- **Astrid Cloud queue API** in the service, shaped like fal's queue (submit, status, result, cancel):
+  - submit authenticates the key, debits through the SQL function, and inserts a task row;
   - the task's idempotency key is the **local Runtime task id**, so a retried attempt never submits or charges twice.
-- **Worker:** the API half of [reigh-worker-orchestrator](https://github.com/banodoco/reigh-worker-orchestrator/tree/9d9df8cae6f6fd16168f416c8edaa848fa1f4ea0), trimmed to Astrid's task contract and its known bugs fixed. It is driven by **one model table**: family to provider, endpoint, provider cost and the price charged. The price is **provider cost plus a 60% markup**. It adds a Pruna handler next to fal. It refunds failed tasks and uploads outputs to a private bucket with signed URLs.
+- **Worker loop in the same service:** the API half of [reigh-worker-orchestrator](https://github.com/banodoco/reigh-worker-orchestrator/tree/9d9df8cae6f6fd16168f416c8edaa848fa1f4ea0), with its known bugs fixed. It no longer calls edge functions:
+  - it claims tasks straight from Postgres with `SKIP LOCKED`;
+  - it completes tasks, and refunds failed ones, through SQL functions;
+  - it uploads outputs to the private bucket and returns signed URLs.
+  - It is driven by **one model table**: family to provider, endpoint, provider cost and the price charged. The price is **provider cost plus a 60% markup**. It adds a Pruna handler next to fal.
 - **Agent:** the existing fal (`cloud`) backend gains an **Astrid Cloud route**: a queue origin, the Astrid key, and the upload switch. Existing model rows, storage policies, publication and the local Runtime task are unchanged. The first families' rows (fal and Pruna) are added to `models.yaml`. The rows a key can run are the **Astrid Cloud pack**.
 - **Docs and records:** an Astrid Cloud row in `where-things-run.md`, and consent and cost wording.
 
@@ -40,21 +55,28 @@ The agent, the project database (local SQLite) and the files stay on the user's 
 
 Almost everything exists already. See [inputs.md](inputs.md#planning-evidence) for the source trail and the alternatives considered.
 
-- **Account, credits, Stripe and keys:** the Astrid App at tag `pre-cloud-removal` ([5a3ddb1](https://github.com/banodoco/astrid-app/tree/5a3ddb1a1cdfac2a8e26132bccff6aeb95be9dec)) has the following. They all targeted Reigh's Supabase project, which has since been deleted, so they are applied fresh to Banodoco:
-  - `stripe-checkout` and `stripe-webhook` (`grant-credits` and its welcome bonus are not restored);
-  - `generate-pat` and `revoke-pat`;
-  - the credits ledger with balance triggers;
-  - Discord sign-in (`useDiscordSignIn`);
-  - `CreditsManagement`, `useCredits` and `useApiTokens`.
-  - Its `create-task` is retired (it returns 410), so **task functions come from [reigh-app](https://github.com/AstridPseudon/reigh-app/tree/06ccc462cd76a8ed425ec24728c541ebf60ab97f)**: `create-task` with `idempotency_key`, `claim-next-task`, `complete_task`, `update-task-status`, `get-task-output` and `generate-upload-url`. They are trimmed of Reigh's project, shot and generation side effects.
-- **Worker:** the orchestrator's API loop, handler registry and resilient fal submit/poll (it persists the request id for restart) are reused. Its dead weight is deleted:
+- **Account, credits, Stripe and keys:** the Astrid App at tag `pre-cloud-removal` ([5a3ddb1](https://github.com/banodoco/astrid-app/tree/5a3ddb1a1cdfac2a8e26132bccff6aeb95be9dec)) targeted Reigh's Supabase project, which has since been deleted, so these are applied fresh to Banodoco.
+  - **Reused as SQL:** the credits ledger with its balance and protection triggers, `user_api_tokens` (to be hashed and scoped), the `users` row created on first sign-in, and the row-level security patterns.
+  - **Reused as UI:** Discord sign-in (`useDiscordSignIn`), `CreditsManagement`, `useCredits` and `useApiTokens`.
+  - **Ported, not redeployed:** the Deno edge functions `stripe-checkout` and `stripe-webhook` become two service endpoints, keeping:
+    - the signature check, with a timestamp tolerance added;
+    - the unique-session-id rule;
+    - the rounded amount check.
+  - **Not restored:** `generate-pat` and `revoke-pat`, which become SQL functions, and `grant-credits`, since there is no welcome bonus.
+  - **Task schema:** the tagged `create-task` is retired (it returns 410), so the tasks table and its idempotency index come from [reigh-app](https://github.com/AstridPseudon/reigh-app/tree/06ccc462cd76a8ed425ec24728c541ebf60ab97f), trimmed of Reigh's project, shot and generation columns. Reigh's task edge functions are not carried over; their logic becomes SQL functions and service code.
+- **Worker:** the orchestrator's API loop, handler registry and resilient fal submit/poll (it persists the request id for restart) are reused, with its edge-function client replaced by direct Postgres calls. Its dead weight is deleted:
   - the GPU side;
   - banodoco handlers;
   - shadow mode;
   - the legacy fal call.
 - **Agent:** `FalBackend` (`astrid/core/generation/backends/fal.py`) and `fal_submit_and_poll` already talk to a fal-shaped queue. Giving them a second origin keeps every `cloud` model row, storage policy (`generate_image/run.py:479`) and publication path as is. Plan 32 already rules that providers stay a `--backend cloud` route for now.
 - **Rejected:**
-  - **A fal-only proxy edge function with no tasks and no orchestrator.** It is smaller, but the owner wants server-side tasks and a multi-provider worker (fal plus Pruna, later GPU), so the queue API keeps fal's shape over that worker instead.
+  - **A fal-only proxy with no tasks and no orchestrator.** It is smaller, but the owner wants server-side tasks and a multi-provider worker (fal plus Pruna, later GPU), so the queue API keeps fal's shape over that worker instead.
+  - **Supabase edge functions for the API (Reigh's way).** Rejected by the owner on 9 Nov. Edge functions would mean:
+    - a second runtime (Deno beside the Python worker);
+    - a second place for secrets and key checks;
+    - time limits that long LLM streams would hit.
+    - The worker is a long-lived service anyway.
   - **A separate backend id or pack.** It needs new model rows, storage policy edits and edits to the generation pack's network policy anyway.
   - **Post-hoc measured billing (Reigh's way).** It allows overdraft, and its spend insert is racy.
 
@@ -62,9 +84,9 @@ Almost everything exists already. See [inputs.md](inputs.md#planning-evidence) f
 
 The critical path is:
 1. A1, the source and live-project baseline;
-2. A2, the restored Supabase subset with key hardening and debit-first billing;
-3. A4, the queue API;
-4. A5, the worker;
+2. A2, the Supabase schema on Banodoco: ledger, keys, tasks, and the debit, refund and claim SQL;
+3. A4, the service's API: the queue, uploads, and Stripe checkout and webhook;
+4. A5, the service's worker loop;
 5. A7, the agent route;
 6. A9, the end-to-end proof;
 7. R, the review.
@@ -77,10 +99,9 @@ The account page (A3) and the model table and prices (A6) run alongside. See [ta
 - D4: no welcome credits.
 
 Still open before dispatch:
-- D2: where the restored Supabase code lives.
+- D2: the service's repository and deployment. It now covers D6 too: the trimmed orchestrator repository renamed, or a new one, on Railway or similar. The Supabase migrations live with the service.
 - D3: the list of fal (and Pruna) models. The owner picks these and need not lock them now; A6 only needs the table and the price rule.
 - D5: the "Astrid Cloud" label in the UI and consent.
-- D6: the worker's home repository and deployment.
 
 **Budget:** a capped live proof, roughly $10 of provider spend plus a Stripe test-mode run. Recording this plan authorizes no deployment, migration on the live project or spend.
 
@@ -88,7 +109,7 @@ Still open before dispatch:
 
 **Consumes:**
 - the tagged App source;
-- the reigh-app task functions;
+- the reigh-app tasks schema;
 - the orchestrator API half at the SHAs in [inputs.md](inputs.md#source-identities);
 - the Agent's fal backend and model catalog at the current Agent `main`;
 - the live Supabase project's actual migration ledger, recorded by A1 before anything is changed.
@@ -96,7 +117,7 @@ Still open before dispatch:
 **Produces** (contracts that [Plan 26](../26-fully-hosted-v2/plan.md) builds on):
 1. **The Astrid Cloud account:** a Discord identity, a `users` row and a credits balance in cents.
 2. **The Astrid Cloud key contract:** format, scope `generate`, hashed storage and revoke.
-3. **The queue API contract:** fal-shaped submit, status, result and cancel, the idempotency rule (one local task id is one cloud task), and the debit and refund rule.
+3. **The Astrid Cloud service:** one API origin; the queue contract (fal-shaped submit, status, result and cancel); the idempotency rule (one local task id is one cloud task); the debit and refund SQL functions; the key check. Plan 26 adds its LLM router and workspace endpoints to this service.
 4. **The model table:** family to provider, endpoint and price.
 
 Plan 26's cloud workspace calls the same API with the same key.
@@ -110,7 +131,7 @@ On a clean local install, a new user signs in with Discord, starting with a bala
 - killing the local Agent mid-generation and restarting produces no second charge or second provider request;
 - a zero balance is refused before any provider call;
 - a revoked key is refused at once;
-- the key is refused by checkout, key minting and worker functions;
+- the key cannot mint keys or start a checkout, and nothing outside the service can claim or complete tasks;
 - a Stripe test payment credits once, even when the webhook is replayed.
 
 Evidence names the exact SHAs, the Supabase migration list applied, the providers and models used, and the spend. It is not proof of a hosted workspace.

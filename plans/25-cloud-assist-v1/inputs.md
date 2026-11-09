@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — On 9 Nov the owner described in a planning session the two-phase direction recorded here. Phase 1 has Discord sign-in, Stripe credits and an API key. The local SQLite task is mirrored to Supabase and processed by the trimmed Reigh worker orchestrator across fal and Pruna. The agent, database and files stay local. The owner agreed the split into this plan and [Plan 26](../26-fully-hosted-v2/plan.md). The owner later decided D1, D3 (the markup) and D4 in the same session. There is no traceable written approval yet. Next: the owner reviews this scope PR and answers D2, D5 and D6, and picks the model list for D3 when ready.
+**Scope decision:** Pending — On 9 Nov the owner described in a planning session the two-phase direction recorded here. Phase 1 has Discord sign-in, Stripe credits and an API key. The local SQLite task is mirrored to Supabase and processed by the trimmed Reigh worker orchestrator across fal and Pruna. The agent, database and files stay local. The owner agreed the split into this plan and [Plan 26](../26-fully-hosted-v2/plan.md). The owner later decided D1, D3 (the markup) and D4 in the same session. There is no traceable written approval yet. The owner also decided against edge functions: one Astrid Cloud service, with Supabase used only for Auth, Postgres and Storage. Next: the owner reviews this scope PR and answers D2 and D5, and picks the model list for D3 when ready.
 
 **Prior art:** Ten read-only surveys on 9 Nov, at the SHAs under [Source identities](#source-identities), covered:
 - the Reigh billing, Stripe and personal-access-token code;
@@ -37,15 +37,15 @@ The findings that shape this plan:
 - **Runtime:** a crashed attempt is re-queued as a new attempt (`store.py:4093-4135`, `LEASE_SECONDS = 30`), so the idempotency key must be the task id, not the attempt id.
 
 **Approach:**
-- **Reuse:** restore the bounded Supabase subset from the tag (account, credits, Stripe, keys) and from reigh-app (tasks).
+- **Reuse:** restore the bounded SQL subset from the tag (account, credits, keys) and reigh-app (tasks). Port the Stripe checkout and webhook logic into the service. Add no edge functions.
 - **Queue API:** put a fal-shaped queue API in front of the tasks, so the Agent's existing `cloud` backend only gains an origin and a key.
-- **Worker:** keep the orchestrator's API half as the worker, trimmed and table-driven.
+- **Service:** grow the orchestrator's API half into the one Astrid Cloud service: the public API plus the worker loop, talking to Postgres directly, trimmed and table-driven.
 - **Billing:** debit first, refund on failure.
 
 Alternatives considered:
 - **A fal-only proxy with no tasks or worker:** smaller, but loses multiple providers and the owner's server-side task model.
 - **A separate `astrid_cloud` backend or pack:** needs new model rows, policy edits and edits to the generation pack anyway.
-- **A new hosted service:** new machinery for no gain.
+- **Supabase edge functions for the API and worker calls (Reigh's way):** rejected by the owner on 9 Nov. They add a second runtime and secret store, and time limits for long streams, when the worker is a long-lived service anyway.
 - **Doing nothing:** users keep needing their own fal key.
 
 **Challenge:** Reviewed — an independent advisor critique on 9 Nov checked the draft against code. It found:
@@ -66,11 +66,10 @@ It proposed the fal-shaped facade and debit-first billing. All of these were acc
 | ID | Decision | Recommendation |
 |---|---|---|
 | D1 | Supabase project | **Decided (owner, 9 Nov):** the live **Banodoco** project, the only one. Reigh's project was deleted. The restore subset must not collide with Hivemind's existing tables and functions there |
-| D2 | Home of the restored Supabase code | Recommendation: `astrid-app/supabase/`, where it lived before 18 Oct, next to the account page. Deployed to Banodoco together with whatever already deploys there (A1 finds out how) |
+| D2 | Home and deploy of the Astrid Cloud service (merged with the former D6) | Recommendation: rename `reigh-worker-orchestrator` to `astrid-cloud`, keep its API half, and hold the Supabase migrations in it. Deploy on Railway, where it already has config. Deploy only after A4 and A5 pass |
 | D3 | Markup, models and prices | **Decided (owner, 9 Nov):** price = provider cost × 1.6, a 60% markup. **Open:** the owner picks a set of fal models (and any Pruna ones) later; this is not locked now. A6 builds the table and the price rule, seeded with whatever list the owner gives at dispatch |
 | D4 | Welcome credits | **Decided (owner, 9 Nov):** none. New accounts start at zero and buy credits |
 | D5 | Label: a route under `cloud` ("fal via Astrid Cloud") or its own name in the UI and consent | Its own name, **Astrid Cloud**, in consent and cost text. In code, a route of the `cloud` backend |
-| D6 | Worker home and deploy | Keep `reigh-worker-orchestrator`'s API half as `astrid-worker`, on Railway. Deploy only after A5 passes |
 
 ## Source identities
 
@@ -78,7 +77,7 @@ It proposed the fal-shaped facade and debit-first billing. All of these were acc
 |---|---|---|
 | [banodoco/astrid-app](https://github.com/banodoco/astrid-app) | `a0f253ee62a1bb26c004add9822b0bae9e851fa5` (main, 9 Nov) | Base for the account page |
 | astrid-app tag `pre-cloud-removal` | `5a3ddb1a1cdfac2a8e26132bccff6aeb95be9dec` | Donor: Supabase account, credits, Stripe, keys, Discord, billing UI |
-| [AstridPseudon/reigh-app](https://github.com/AstridPseudon/reigh-app) | `06ccc462cd76a8ed425ec24728c541ebf60ab97f` | Donor: task edge functions and tasks migrations |
+| [AstridPseudon/reigh-app](https://github.com/AstridPseudon/reigh-app) | `06ccc462cd76a8ed425ec24728c541ebf60ab97f` | Donor: tasks table and idempotency index (its edge functions are not carried over) |
 | [banodoco/reigh-worker-orchestrator](https://github.com/banodoco/reigh-worker-orchestrator) | `9d9df8cae6f6fd16168f416c8edaa848fa1f4ea0` | Donor: API worker |
 | [banodoco/astrid-agent](https://github.com/banodoco/astrid-agent) | `a105de3a4852cb61b9647dfe2c920118bd29f272` | Base: fal backend, model catalog, credentials |
 | [banodoco/astrid-runtime](https://github.com/banodoco/astrid-runtime) | `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f` | Unchanged; task and publication semantics consumed |

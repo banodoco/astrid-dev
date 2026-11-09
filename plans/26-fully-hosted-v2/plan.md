@@ -47,19 +47,19 @@ There is no replication protocol, merge code or second authority. Neither the Ap
 
 - **Workspace image:** Runtime in the foreground supervising its services, the agent (OMP), chat, ffmpeg, Bun and Node/Remotion. No systemd.
 - **Workspace host:** chosen by a spike, with the volume and wake-on-open.
-- **Control plane:** in the same Supabase project as Plan 25:
+- **Control plane:** endpoints in Plan 25's **Astrid Cloud service**, with a table in Banodoco Postgres. There are no edge functions:
   - a `cloud_workspaces` record;
-  - one `open-workspace` function: Discord session in; workspace ensured running; a short-lived session for the App out.
+  - an `open-workspace` endpoint: Discord session in; workspace ensured running; a short-lived session for the App out. The service holds the host provider's token.
   - provisioning with the user's Astrid Cloud key;
   - stop and delete.
 - **Remote access:** the App picks its Runtime origin at run time, not build time (`connection.ts:59-77`, Dockerfile). Media authorized by cookie, so `<img>` and `<video>` work. Either the paired relay or a remote door (B3). A **Cloud** choice in the App.
 - **Idle policy inside the machine:** it stops only with no App heartbeat, no running or queued Runtime task and no active chat turn, after a backup. The platform's own auto-stop is not used, because it would kill an agent working with the browser closed.
 - **Move to cloud and back:** whole-workspace moves through backup and restore. "Export to local custody" is the same operation in reverse.
 - **Rendering on the workspace:** the existing FFmpeg and Remotion paths.
-- **Astrid LLM service:** a thin pass-through router inside the **worker orchestrator service** (Plan 25's `astrid-worker`, decided by the owner on 9 Nov), not a new service and not an edge function. Long streams outlast edge-function time limits, and the worker is already a long-lived service with the provider keys.
+- **Astrid LLM service:** a thin pass-through router inside Plan 25's **Astrid Cloud service**, the trimmed worker orchestrator. The owner decided this on 9 Nov, along with having no edge functions. It is not a new service. The service is already long-lived and holds the provider keys, so long streams have no time limit.
   - an OpenRouter-compatible endpoint (chat completions with streaming, models, key check) in front of the team's OpenRouter key;
   - it accepts Astrid Cloud keys with the `llm` scope;
-  - billing reserves an estimate from the request's token limit, settles the actual usage OpenRouter reports at cost × 1.6, and refunds the rest, using Plan 25's debit and refund function;
+  - billing reserves an estimate from the request's token limit, settles the actual usage OpenRouter reports at cost × 1.6, and refunds the rest, using Plan 25's debit and refund SQL functions;
   - it refuses requests at zero balance;
   - it serves an allowlist of models.
 - **Agent on the Astrid LLM:** a sign-in choice beside "OpenRouter key", for example `astrid agent key set astrid`. It points OMP's OpenRouter provider at the Astrid LLM service with the Astrid Cloud key, through the existing `ASTRID_OPENROUTER_API_BASE` path. The same setting is applied when a workspace is provisioned.
