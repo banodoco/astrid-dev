@@ -6,7 +6,7 @@
 
 ## Purpose
 
-While checking Release 12 (Plan 29), these test ids failed. They pass on Release 10, and they FAIL on served release 11 at commit `a105de3a4852cb61b9647dfe2c920118bd29f272`. They are therefore **not Release 12 regressions**. They are recorded here so none is lost.
+While checking Release 12 (Plan 29), these test ids failed. They fail on served release 11 (a105de3a), so they are not Release 12 regressions. Whether each passed on Release 10 is not measured here. They are recorded here so none is lost.
 
 ## Source
 
