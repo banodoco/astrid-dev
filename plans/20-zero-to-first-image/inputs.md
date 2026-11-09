@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — the owner's direction (9 Nov 2026), merged as a queued plan at her request with the recommended answers to D1–D9 standing until she changes one, then re-planned into three phases around a fast path she accepted the same day. Next: run the advisor critique below on the re-plan, then record D1–D9 as answered here.
+**Scope decision:** Accepted — Hannah asked for this direction on 9 Nov 2026, accepted the fast-path re-plan, and asked for the project to start running alongside release 12 ([orchestrator session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)). D1–D9 stand at their recommended answers until she changes one.
 
 - **Source.** Hannah gave it on 9 Nov 2026. It was relayed in planning session `session_011EzfVzreGCJJQnTuXpbib9`, in two messages:
   - the onboarding-skill direction (items 1-4 in the [plan](plan.md#direction-owner-9-nov-2026));
@@ -13,7 +13,7 @@
 - **The earlier direction the same day** (an attached ComfyUI through Plan 32 S2, and the App's "Set up generation" card) is kept.
 - **Next:** Hannah answers D1–D9 below. A scope PR then records her answers here.
 
-**Prior art:** Read at Agent `origin/cand/29-r12` `ff40f2c684` and App `cand/29-r12` `3274a9c07`; the fast-path rows below also at Agent `origin/main` `a105de3a48` and App `origin/main` `57e200b45`.
+**Prior art:** Read at Agent `origin/cand/29-r12` `ff40f2c684fc7ce22e42a5cacda5c63a0c8800a9` and App `cand/29-r12` `3274a9c07`; the fast-path rows below also at Agent `origin/main` `a105de3a48` and App `origin/main` `57e200b45`.
 
 | Area | Finding | Source |
 |---|---|---|
@@ -51,7 +51,7 @@
 | Fold the machine check into S2 | S2 is the existing-setup path. The machine check also decides the install and RunPod branches, and Plan 12 reuses it |
 | Wait for Plan 32 for everything | Phase 1 (consent, entry points, doctor and the machine report) is useful now and touches nothing in Plan 32 |
 
-**Challenge:** Pending — The plan touches a user-visible flow, consent and a cross-repo contract, so it needs the advisor's critique. That critique was not run, for the original plan or this re-plan, because both planning briefs excluded session tools. **Next:** the planner or orchestrator runs the advisor ([Orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md)) before dispatch, briefed on the re-plan's calls: the machine-check command deferred, the card moved to phase 2, the fixture `route` field dropped, the lighter proof, and whether phase 1 should wait for release 12 at all.
+**Challenge:** Reviewed — advisor critique, 9 Nov 2026, in the [orchestrator session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9), briefed to build as little as possible. Its three findings are applied: (1) one taste pass for all of phase 1's text (P1.3 now covers the README pointer; P1.4 is folded into it); (2) the skill's `## Set up generation` section must give a working next step before phase 3 (an existing ComfyUI through the vibecomfy skill, or RunPod through the runpod skill), never "coming soon", so phase 2's card is not a dead end; (3) landing on Agent `main` (P1.5) is a release-workflow merge that needs Hannah's go, recorded at the time.
 
 **Proof and limits:** See P3.5 in [tasks.md](tasks.md). Hosted macOS, Windows and Linux runners on CPU reach each branch's first command against a fake; real inference is proven once, through RunPod. The attached-ComfyUI and managed-engine branches are unproven with real inference unless D8 provides an NVIDIA machine. macOS has no managed engine. Wan2GP and providers are excluded.
 
