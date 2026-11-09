@@ -30,6 +30,21 @@ class PublicVisionProjectionTests(unittest.TestCase):
             ],
         )
 
+    def test_both_subject_types_derive_from_the_same_canonical_template(self):
+        from vision_subject import parse_subject
+        for kind, items in (("pillars", self.page["pillars"]),
+                            ("principles", self.page["principles"])):
+            for subject in items:
+                path = ROOT / "vision" / kind / (subject["id"] + ".md")
+                parsed = parse_subject(path.read_text(encoding="utf-8"), str(path))
+                self.assertEqual(subject["statement"], parsed["statement"])
+                self.assertEqual(subject["explanationMarkdown"], parsed["explanationMarkdown"])
+                self.assertEqual(
+                    [(c["id"], c["title"], c["summary"]) for c in subject["characteristics"]],
+                    [(c["id"], c["title"], c["summary"]) for c in parsed["characteristics"]],
+                )
+                self.assertIn(subject["statement"], subject["bodyMarkdown"])
+
     def test_vision_contribution_call_to_action(self):
         vision = self.page["vision"]
         self.assertEqual(vision["title"], "A tool to unlock the collective artistic ambition of the open-source AI community")
