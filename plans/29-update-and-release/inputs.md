@@ -87,3 +87,15 @@ The maps and the review are working notes from the planning session. Their findi
 - **Withdrawn:** the completion claim in astrid-dev #137 is withdrawn. The owner's field report showed that `install --update` on a machine that completed the Release 1 storage handoff exits 0 and installs nothing (verified in the review on `advisor/plan29-field-failure-review`).
 - **Release 11 (0.0.11, patch) gate:** CI passes with the field state as a fixture and as the re-aimed journey leg; the owner publishes with her go; then she runs the standard App command and uses Update now. If that doesn't end "Astrid updated", the fix goes out forward at once.
 - **Pending owner decision:** rollback stays available only until the first successful update after a handoff. Pruning of retained R0 data waits for it.
+
+## Owner decision 17 (9 Nov 2026, Hannah): UX pass before Release 11
+
+One independent UX pass over every install, update, update-failure and repair path, in the App (page and Settings), the installer terminal and the diagnostics file, on mac, Linux and Windows. Rules:
+1. Every path offers both "Copy instructions for your agent" and manual steps a person can follow themselves.
+2. Every failure is descriptive, says plainly what happened, and points to where the full story is (Download diagnostics, and the install log path), clear to both a human and an agent.
+3. Minimal and elegant. Never dump detail on the user; point to it.
+4. Never lie. Exit 0 and success copy only when it is true.
+5. Fix small things directly, as commits on int via PR. Propose anything big as a task card instead of doing it.
+
+Its fixes ride in the Release 11 candidate. The pass is UR-15j, run after UR-15, UR-15a, UR-15b, UR-15c, UR-15f and the Runtime and App PRs are on int, and before Release 11 is composed.
+
