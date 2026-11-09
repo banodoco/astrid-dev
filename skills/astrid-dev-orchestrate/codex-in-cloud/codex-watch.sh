@@ -9,6 +9,7 @@ while [ "$(date +%s)" -lt "$end" ]; do
   [ "$s" != running ] && { echo "STATUS=$s"; tail -n 5 "$RUN/money.log"; tail -n 40 "$RUN/result.md" 2>/dev/null; exit 0; }
   now=$(wc -c < "$RUN/to-orchestrator.md" 2>/dev/null || echo 0)
   [ "$now" -gt "$seen" ] && { echo "MESSAGE FROM CODEX:"; tail -c +$((seen+1)) "$RUN/to-orchestrator.md"; echo "STATUS=$s"; exit 0; }
+  pid=$(cat "$RUN/runner.pid" 2>/dev/null); [ -n "$pid" ] && ! kill -0 "$pid" 2>/dev/null && { echo "RUNNER DEAD (pid $pid gone, status=$s): restart it, or use codex-hold.sh"; exit 4; }
   hb=$(date -d "$(cat "$RUN/heartbeat" 2>/dev/null)" +%s 2>/dev/null || echo 0)
   [ $(( $(date +%s) - hb )) -gt 300 ] && { echo "STALE heartbeat"; exit 3; }
   sleep 30

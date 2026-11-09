@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Keep a Codex run alive while the orchestrator is idle.
 # Usage: codex-runner.sh <workdir> <prompt-file> <run-dir> [max-resumes] [model]
+# Optional env: CODEX_EFFORT (low|medium|high), CODEX_MAX_THREADS (sub-agent cap, Codex default 6),
+#   CODEX_PASS_ENV (see below). Restart-safe: run it again with the same args (codex-hold.sh does)
+#   and it resumes the same Codex session instead of starting over.
 # Start detached:  setsid nohup codex-runner.sh ... >/dev/null 2>&1 < /dev/null &
 # See README.md next to this file. CODEX_PASS_ENV adds env var names Codex may see
 # (comma-separated), e.g. CODEX_PASS_ENV=RUNPOD_API_KEY. Nothing else is passed.
@@ -12,11 +15,15 @@
 set -u
 WD=$1; PROMPT=$2; RUN=$3; MAX=${4:-6}; MODEL=${5:-}
 mkdir -p "$RUN"; cd "$WD" || exit 1
+[ -f "$PROMPT" ] || { echo blocked > "$RUN/status"; echo "RUN-STATUS: BLOCKED: prompt file $PROMPT is missing" > "$RUN/result.md"; exit 1; }
 echo running > "$RUN/status"; echo $$ > "$RUN/runner.pid"
+# So codex-hold.sh can restart this runner with the same settings after the container restarts it.
+printf '%q ' "$WD" "$PROMPT" "$RUN" "$MAX" "$MODEL" > "$RUN/runner.args"
+printf 'CODEX_EFFORT=%q CODEX_MAX_THREADS=%q CODEX_PASS_ENV=%q\n' "${CODEX_EFFORT:-}" "${CODEX_MAX_THREADS:-}" "${CODEX_PASS_ENV:-}" > "$RUN/runner.env"
 export PIP_CACHE_DIR=/tmp/codex-pip-cache XDG_CACHE_HOME=/tmp/codex-xdg-cache  # ~/.cache is read-only in the sandbox
 NAMES="PATH,HOME,HTTPS_PROXY,HTTP_PROXY,NO_PROXY,SSL_CERT_FILE,REQUESTS_CA_BUNDLE,NODE_EXTRA_CA_CERTS,PIP_CACHE_DIR,XDG_CACHE_HOME${CODEX_PASS_ENV:+,$CODEX_PASS_ENV}"
 PASS="[$(echo "$NAMES" | sed 's/[^,][^,]*/"&"/g')]"
-FLAGS=(-C "$WD" -s workspace-write
+FLAGS=(-C "$WD" -s workspace-write --skip-git-repo-check  # the workdir may hold several clones
   -c sandbox_workspace_write.network_access=true
   -c 'approval_policy="never"'
   -c "shell_environment_policy.include_only=$PASS"
@@ -25,6 +32,8 @@ FLAGS=(-C "$WD" -s workspace-write
 # resume takes no -C/-s: same settings through -c
 RFLAGS=(-c 'sandbox_mode="workspace-write"' "${FLAGS[@]:4}")
 [ -n "$MODEL" ] && { FLAGS+=(-m "$MODEL"); RFLAGS+=(-m "$MODEL"); }
+[ -n "${CODEX_EFFORT:-}" ] && { FLAGS+=(-c "model_reasoning_effort=\"$CODEX_EFFORT\""); RFLAGS+=(-c "model_reasoning_effort=\"$CODEX_EFFORT\""); }
+[ -n "${CODEX_MAX_THREADS:-}" ] && { FLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS"); RFLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS"); }
 
 money() {  # balance and pod ids only; the key never leaves memory
   [ -n "${RUNPOD_API_KEY:-}" ] && [[ ",${CODEX_PASS_ENV:-}," == *",RUNPOD_API_KEY,"* ]] || return 0
@@ -46,9 +55,16 @@ MAILBOX="
 - If you cannot continue without an answer, append the question to to-orchestrator.md, release or keep pods as is safe (say which), and end your final message with RUN-STATUS: WAITING. You will be resumed with the reply.
 - Otherwise end with RUN-STATUS: DONE or RUN-STATUS: BLOCKED: <reason>."
 money >> "$RUN/money.log"
-echo "=== start $(date -u +%FT%TZ)" >> "$RUN/codex.log"
-codex exec "${FLAGS[@]}" "$(cat "$PROMPT")$MAILBOX" >> "$RUN/codex.log" 2>&1
-SID=$(grep -m1 -oiE 'session id: [0-9a-f-]{36}' "$RUN/codex.log" | awk '{print $3}')
+SID=$(grep -m1 -oiE 'session id: [0-9a-f-]{36}' "$RUN/codex.log" 2>/dev/null | awk '{print $3}')
+if [ -n "$SID" ] && ! finished; then
+  # Restarted (container worker restart, or codex-hold.sh): continue the same session.
+  echo "=== restarted, resuming $SID $(date -u +%FT%TZ)" >> "$RUN/codex.log"
+  codex exec resume "${RFLAGS[@]}" "$SID" "Your process was killed by a container restart, not by you. Rebuild state from durable records first (the mailbox files, run.yaml, tasks.md, git branches and worktrees), check any half-done work before trusting it, then continue. End with RUN-STATUS: DONE, BLOCKED: <reason>, or WAITING." >> "$RUN/codex.log" 2>&1
+else
+  echo "=== start $(date -u +%FT%TZ)" >> "$RUN/codex.log"
+  codex exec "${FLAGS[@]}" "$(cat "$PROMPT")$MAILBOX" >> "$RUN/codex.log" 2>&1
+  SID=$(grep -m1 -oiE 'session id: [0-9a-f-]{36}' "$RUN/codex.log" | awk '{print $3}')
+fi
 n=0
 waiting() { grep -q '^RUN-STATUS: WAITING' "$RUN/result.md" 2>/dev/null; }
 while ! finished && [ "$n" -lt "$MAX" ]; do
