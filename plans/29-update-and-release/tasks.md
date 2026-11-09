@@ -178,6 +178,23 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
   - `cand/*` branches are evidence only. They are never merged; the real pin happens in UR-14.
 - **What UR-13 is judged on:** only its three fresh rows (direct-linux-fresh, direct-macos-fresh, direct-windows), each with its hosted receipt. The release0-to-release1 legs belong to the old Release 1 migration and are out of scope (owner decision 6). An aggregate gate failure caused only by those legs doesn't block UR-13.
 
+### UR-15c The handoff leg's start state: Release 1 and Release 9 hand off the same way
+- **Why this matters:** the journey leg `r0-handoff-then-update` (agent PR #320) runs the handoff with the published Release 9 installer, Agent 709492fa and Runtime f4c7a462. Hannah's machine was handed off by Release 1. Her version dir is `7247ea92-9fc53b77-…`, which is Agent 7247ea92 and Runtime 9fc53b77, pinned at App dc277284.
+- **Evidence:** `git diff 7247ea92 709492fa -- astrid/installer/` in the Agent, plus `git diff 9fc53b77 f4c7a462` in the Runtime. On macOS and Linux, everything the handoff writes has the same shape:
+
+  | Artifact | Same on macOS and Linux? | Notes |
+  |---|---|---|
+  | Handoff journal | Yes | `BoundaryHandoff.run`, `_load` and `_records` are unchanged. |
+  | Marker (`install.json`) and selection | Yes | Both are built by the unchanged `_records`, from R0's own records. Release 9 only tolerates later policy fields (`choices`, `command_shim`, `command_path`) in `validate_active`. That is validation, not shape. The handoff path writes no `choices`. |
+  | `current` pointer and `version.json` | Yes | `Version.document()` and `persist_install_identity` are unchanged on this path. |
+  | R1 service label, unit and plist (`astrid-r1.service`, `haus.astrid.runtime.r1`) and registration journal | Yes | `boundary_registration.py` only adds `set_autostart`. |
+  | R1 launcher (`bin/runtime`, `bin/runtime.py`) | Yes | `stage_runtime_launcher` and the launch preludes are unchanged. |
+  | R0 stop marker | Yes | `r0_stop.py` is unchanged. |
+  | Discovery file and adoption receipt (Runtime) | Yes | The Runtime diff touches only Windows paths (`paths.py` and `update.py`, where the installer lock and selection now sit in `Astrid Installer`). |
+
+- **Verdict:** identical on macOS and Linux, so the Release 9 handoff leg stands for both releases. Its runs on main 72462b04 reproduce the field no-op on both OSes (agent runs 42537492902 and 42537495439): "Candidate install --update exited 0 but installed nothing: the selected release is still 9, not the candidate release 10." Windows does not hand off, because it refuses the R0 upgrade.
+- **Hermetic fixture gap (UR-15):** `tests/fixtures/field_states.py` on `ur-15-installation` builds the journal, marker and selection with the same `_records` as Release 1. However, the installer under test normalises the handoff, and normalisation regenerates the R1 version's launcher (`stage_runtime_launcher(..., replace=True)`). The fixture then reverses only the marker, selection and journal. So the fixture's launcher accepts both record shapes, while Release 1's launcher on a real machine accepts only the handed-off shape. The fixture should restore a Release 1 launcher too, or the test cannot catch a normalisation that writes the records before it replaces the launcher.
+
 ### UR-R Review rounds
 
 This plan sets its own review policy, as the [run contract](../../skills/astrid-dev-shared/run-contract.md) allows.
