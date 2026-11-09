@@ -6,22 +6,23 @@
 
 ## Outcome and scope
 
-A creator signs in to Astrid with Discord, gets welcome credits or buys more with Stripe, and creates an **Astrid Cloud key**. They give that key to their local Astrid once, using the same credential path as the fal key. From then on, the agent or the user can run a set of basic generations (image, image edit, upscale, image-to-video) **without their own provider accounts**. The results arrive in the local project exactly as a fal generation does today.
+A creator signs in to Astrid with Discord, buys credits with Stripe (there are no free credits), and creates an **Astrid Cloud key**. They give that key to their local Astrid once, using the same credential path as the fal key. From then on, the agent or the user can run a set of basic generations (image, image edit, upscale, image-to-video) **without their own provider accounts**. The results arrive in the local project exactly as a fal generation does today.
 
 The agent, the project database (local SQLite) and the files stay on the user's machine, as now. Cloud work is limited to the generation and its billing. The same key is the one the cloud workspace uses in [Plan 26](../26-fully-hosted-v2/plan.md), and a local user keeps using it after Plan 26 ships.
 
 **Included:**
+- **Where it runs:** everything server-side goes on the team's one live Supabase project, **Banodoco**. Reigh's project was deleted. The restored tables and functions sit next to Hivemind's, which already use that project.
 - **Account:** Discord sign-in and the `users` row, restored from the tagged Astrid App source. An **account page** in astrid-app shows the balance and ledger, buying credits with Stripe Checkout, and creating and revoking keys. The rest of the App stays local and sessionless, so it never needs a login.
 - **Credits:** the restored credits ledger, in integer cents. Billing is **debit first, refund on failure**, in one locked SQL function, with a unique spend and refund per task. A task can never overdraw the balance.
 - **Astrid Cloud key:** the old personal access token, hardened:
   - hashed at rest and shown once, with a prefix;
-  - scope `generate` only, valid for the queue API and input uploads;
+  - scope `generate` only, valid for the queue API and input uploads. Scopes are a list, so [Plan 26](../26-fully-hosted-v2/plan.md) adds `llm` to the same key;
   - last-used time and revoke.
   - Account, billing and key-minting functions refuse it and need the Discord session.
 - **Astrid Cloud queue API**, shaped like fal's queue (submit, status, result, cancel):
   - one edge function that authenticates the key, debits, and creates a Supabase task;
   - the task's idempotency key is the **local Runtime task id**, so a retried attempt never submits or charges twice.
-- **Worker:** the API half of [reigh-worker-orchestrator](https://github.com/banodoco/reigh-worker-orchestrator/tree/9d9df8cae6f6fd16168f416c8edaa848fa1f4ea0), trimmed to Astrid's task contract and its known bugs fixed. It is driven by **one model table** (family to provider, endpoint and price), and adds a Pruna handler next to fal. It refunds failed tasks and uploads outputs to a private bucket with signed URLs.
+- **Worker:** the API half of [reigh-worker-orchestrator](https://github.com/banodoco/reigh-worker-orchestrator/tree/9d9df8cae6f6fd16168f416c8edaa848fa1f4ea0), trimmed to Astrid's task contract and its known bugs fixed. It is driven by **one model table**: family to provider, endpoint, provider cost and the price charged. The price is **provider cost plus a 60% markup**. It adds a Pruna handler next to fal. It refunds failed tasks and uploads outputs to a private bucket with signed URLs.
 - **Agent:** the existing fal (`cloud`) backend gains an **Astrid Cloud route**: a queue origin, the Astrid key, and the upload switch. Existing model rows, storage policies, publication and the local Runtime task are unchanged. The first families' rows (fal and Pruna) are added to `models.yaml`. The rows a key can run are the **Astrid Cloud pack**.
 - **Docs and records:** an Astrid Cloud row in `where-things-run.md`, and consent and cost wording.
 
@@ -39,8 +40,8 @@ The agent, the project database (local SQLite) and the files stay on the user's 
 
 Almost everything exists already. See [inputs.md](inputs.md#planning-evidence) for the source trail and the alternatives considered.
 
-- **Account, credits, Stripe and keys:** the Astrid App at tag `pre-cloud-removal` ([5a3ddb1](https://github.com/banodoco/astrid-app/tree/5a3ddb1a1cdfac2a8e26132bccff6aeb95be9dec)) has the following, all pointing at the Supabase project the team already runs:
-  - `stripe-checkout`, `stripe-webhook` and `grant-credits`;
+- **Account, credits, Stripe and keys:** the Astrid App at tag `pre-cloud-removal` ([5a3ddb1](https://github.com/banodoco/astrid-app/tree/5a3ddb1a1cdfac2a8e26132bccff6aeb95be9dec)) has the following. They all targeted Reigh's Supabase project, which has since been deleted, so they are applied fresh to Banodoco:
+  - `stripe-checkout` and `stripe-webhook` (`grant-credits` and its welcome bonus are not restored);
   - `generate-pat` and `revoke-pat`;
   - the credits ledger with balance triggers;
   - Discord sign-in (`useDiscordSignIn`);
@@ -70,12 +71,15 @@ The critical path is:
 
 The account page (A3) and the model table and prices (A6) run alongside. See [tasks.md](tasks.md).
 
-**Owner decisions before dispatch**, recorded in [inputs.md](inputs.md#owner-decisions):
-- D1: shared Reigh Supabase project or a new one.
+**Owner decisions** are recorded in [inputs.md](inputs.md#owner-decisions). Already decided on 9 Nov:
+- D1: the Banodoco Supabase project.
+- D3: a 60% markup.
+- D4: no welcome credits.
+
+Still open before dispatch:
 - D2: where the restored Supabase code lives.
-- D3: the first families and prices, and the markup.
-- D4: the welcome-credit amount.
-- D5: is "Astrid Cloud" labelled as a route under `cloud` or as its own backend in the UI and consent.
+- D3: the list of fal (and Pruna) models. The owner picks these and need not lock them now; A6 only needs the table and the price rule.
+- D5: the "Astrid Cloud" label in the UI and consent.
 - D6: the worker's home repository and deployment.
 
 **Budget:** a capped live proof, roughly $10 of provider spend plus a Stripe test-mode run. Recording this plan authorizes no deployment, migration on the live project or spend.
@@ -99,7 +103,7 @@ Plan 26's cloud workspace calls the same API with the same key.
 
 ## Completion
 
-On a clean local install, a new user signs in with Discord, receives welcome credits, creates a key and sets it with `run-astrid credential set`. They generate an image, an edit, an upscale and an image-to-video through the Astrid Cloud route, and each lands in the local project as a normal generation. The ledger shows one debit per task.
+On a clean local install, a new user signs in with Discord, starting with a balance of zero. They buy credits in Stripe test mode, create a key and set it with `run-astrid credential set`. They generate an image, an edit, an upscale and an image-to-video through the Astrid Cloud route, and each lands in the local project as a normal generation. The ledger shows one debit per task, at provider cost plus 60%.
 
 **Negative cases:**
 - a failed provider task is refunded;

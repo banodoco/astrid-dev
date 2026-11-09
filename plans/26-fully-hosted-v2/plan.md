@@ -13,6 +13,8 @@ A creator opens Astrid in a browser, signs in with Discord, and works in their *
 
 They can close the browser while the agent keeps working, reopen on another device, and move their workspace to their own machine at any time, and back.
 
+**The agent's LLM is Astrid's own service, on the same key.** The Astrid agent (OMP) sends its model calls through an **Astrid LLM service**: an OpenRouter-compatible proxy holding the team's OpenRouter key. It authenticates the user's Astrid Cloud key, which gains the `llm` scope, and bills usage in credits at cost plus 60%. The agent uses it the same way locally and in the cloud workspace, so a local user can also run the agent on Astrid's LLM instead of their own provider account.
+
 ### How the live app, the agent and the data stay in step
 
 **Do not sync two databases. Move the one Runtime.**
@@ -54,6 +56,13 @@ There is no replication protocol, merge code or second authority. Neither the Ap
 - **Idle policy inside the machine:** it stops only with no App heartbeat, no running or queued Runtime task and no active chat turn, after a backup. The platform's own auto-stop is not used, because it would kill an agent working with the browser closed.
 - **Move to cloud and back:** whole-workspace moves through backup and restore. "Export to local custody" is the same operation in reverse.
 - **Rendering on the workspace:** the existing FFmpeg and Remotion paths.
+- **Astrid LLM service:** a thin pass-through router inside the **worker orchestrator service** (Plan 25's `astrid-worker`, decided by the owner on 9 Nov), not a new service and not an edge function. Long streams outlast edge-function time limits, and the worker is already a long-lived service with the provider keys.
+  - an OpenRouter-compatible endpoint (chat completions with streaming, models, key check) in front of the team's OpenRouter key;
+  - it accepts Astrid Cloud keys with the `llm` scope;
+  - billing reserves an estimate from the request's token limit, settles the actual usage OpenRouter reports at cost × 1.6, and refunds the rest, using Plan 25's debit and refund function;
+  - it refuses requests at zero balance;
+  - it serves an allowlist of models.
+- **Agent on the Astrid LLM:** a sign-in choice beside "OpenRouter key", for example `astrid agent key set astrid`. It points OMP's OpenRouter provider at the Astrid LLM service with the Astrid Cloud key, through the existing `ASTRID_OPENROUTER_API_BASE` path. The same setting is applied when a workspace is provisioned.
 - **Workspace usage in credits** (E4).
 - **Delete my workspace.**
 
@@ -64,7 +73,7 @@ There is no replication protocol, merge code or second authority. Neither the Ap
 - several Runtimes per user;
 - teams and sharing;
 - per-conversation sandboxes;
-- brokered LLM inference (E5);
+- LLM providers other than OpenRouter behind the service;
 - per-project import;
 - a bucket-backed file store (E7);
 - replacing the local-first mode, which stays the default.
@@ -78,7 +87,11 @@ See [inputs.md](inputs.md#planning-evidence). Reused:
 - the App's **paired relay prototype** (`config/vite/pairedRelay.ts`, `pairedRegistry.ts`, `scripts/astrid-local-connector.ts`). The Runtime machine dials out over WebSocket, the browser stays same-origin with a `__Host-` cookie, and a closed route table is enforced. It is in-memory today, with an 8-hour time-to-live and invitation codes;
 - the installer's foreground mode and the worker-environment setup scripts;
 - the RunPod pack's claim, lease and spend-cap pattern, if RunPod CPU wins B1;
-- Plan 25's account, key, credits and generation route.
+- Plan 25's account, key, credits and generation route;
+- OMP's existing OpenRouter path for the Astrid LLM:
+  - `astrid agent key set openrouter` imports a key into OMP after checking it against `<base>/api/v1/auth/key`, with `<base>` taken from `ASTRID_OPENROUTER_API_BASE` (`astrid/omp_agent.py:490-530`);
+  - the default model is an OpenRouter id (`omp_agent.py:29`).
+  - B14 confirms that OMP's own model calls follow the same base.
 
 **Rejected:**
 - **Turso or a replicated live database:** see above.
@@ -89,6 +102,7 @@ See [inputs.md](inputs.md#planning-evidence). Reused:
 
 ## Sequence and readiness
 
+0. **The Astrid LLM service** (B13, then B14) starts as soon as Plan 25's account and key contract (A2) lands. It does not wait for the workspace, and local users get it first.
 1. **Three spikes, independent of each other:**
    - B1: host and image;
    - B2: backup and restore across machines;
@@ -116,6 +130,7 @@ See [inputs.md](inputs.md#planning-evidence). Reused:
 1. **The workspace contract:** one Runtime per user on a volume, the image, `open-workspace`, the idle and backup policy, and restore on a new machine.
 2. **The remote Runtime access contract:** session, cookie-authorized media, route table and origin chosen at run time.
 3. **The move contract:** local to cloud and cloud to local, by authenticated backup.
+4. **The Astrid LLM contract:** an OpenRouter-compatible endpoint, the `llm` key scope, reserve-and-settle billing at cost × 1.6, and the model allowlist.
 
 Later hosted features build on these. Turso, bucket-backed storage and teams each need their own scope.
 
@@ -123,13 +138,16 @@ Later hosted features build on these. Turso, bucket-backed storage and teams eac
 
 In a browser with nothing installed, a new user signs in with Discord, opens a cloud workspace, creates a project and generates with credits. They edit the timeline while the agent edits it at the same time. Both see each other's changes within the poll interval, and conflicts resolve with the existing rebase and merge or a visible retry.
 
+The agent runs on the Astrid LLM with no provider account of the user's. A local Astrid agent signed in with the same key does the same, and both show up as LLM usage in the ledger at cost plus 60%.
+
 They close the browser mid-task, and the agent finishes. They reopen on another device, and the machine wakes with the work there. They render a video on the workspace, move the workspace to their local Astrid and back, and delete it.
 
 **Negative cases:**
 - an idle machine with a queued task does not stop;
 - a destroyed machine is restored from the last backup, with the data loss inside E6;
 - another user's session cannot reach this workspace or its media;
-- a revoked key or a zero balance stops generations;
+- a revoked key or a zero balance stops generations and LLM calls, with a clear message in chat;
+- a key without the `llm` scope is refused by the LLM service;
 - the local-first mode is unchanged.
 
 The evidence names the host, the SHAs, backup timings, wake latency and spend.

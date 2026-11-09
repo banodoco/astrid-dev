@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — On 9 Nov the owner described the phase 2 direction in a planning session. The database moves to the cloud, the agent runs on a remote CPU workspace, the App runs off the same database, and files are reached as URLs. It uses the same key, tools and storage method as local. The owner asked how the live App and the agent stay on the same data. The answer recorded in [plan.md](plan.md#how-the-live-app-the-agent-and-the-data-stay-in-step) is one Runtime per user on the workspace, with Turso kept off the live path. There is no traceable written approval yet. Next: the owner reviews this scope PR, confirms the one-Runtime model, and answers E1–E8 after spikes B1–B3.
+**Scope decision:** Pending — On 9 Nov the owner described the phase 2 direction in a planning session. The database moves to the cloud, the agent runs on a remote CPU workspace, the App runs off the same database, and files are reached as URLs. It uses the same key, tools and storage method as local. The owner asked how the live App and the agent stay on the same data. The answer recorded in [plan.md](plan.md#how-the-live-app-the-agent-and-the-data-stay-in-step) is one Runtime per user on the workspace, with Turso kept off the live path. In the same session the owner decided E5. The agent's LLM goes through Astrid's own pass-through router to OpenRouter, in the worker orchestrator service, on the same Astrid Cloud key, for local and cloud use alike. There is no traceable written approval yet. Next: the owner reviews this scope PR, confirms the one-Runtime model, and answers E1–E4 and E6–E8 after spikes B1–B3.
 
 **Prior art:** The same 9 Nov read-only surveys as [Plan 25](../25-cloud-assist-v1/inputs.md#planning-evidence), at the SHAs below. The findings that shape this plan:
 
@@ -32,6 +32,10 @@
   - Turso Sync is push and pull with last-push-wins and no change notifications; its status appears beta;
   - pyturso maturity is unverified;
   - E2B, Fly Machines and Modal pricing and suspend semantics.
+- **Agent LLM:**
+  - the Astrid agent is OMP, and OpenRouter is its recommended provider;
+  - `astrid agent key set openrouter` checks a key against `<base>/api/v1/auth/key` and imports it into OMP, with the base taken from `ASTRID_OPENROUTER_API_BASE` (`astrid/omp_agent.py:29, 490-530`);
+  - a router that speaks OpenRouter's API therefore slots in without a new agent provider. Whether OMP's own completion calls honour the same base is unverified, and B14 checks it.
 
 **Approach:** Keep the Runtime as the single authority and move it, with the agent, onto one CPU machine per user. Durability comes from a persistent volume plus Runtime backups to a bucket. Access goes through the paired relay or a remote door with cookie-authorized media. Wake and idle are policed from inside the machine. Moves and exports use backup and restore.
 
@@ -65,8 +69,8 @@ It added the idle-watcher, no-systemd and paired-relay points. All were accepted
 | E1 | Database durability: a volume plus Runtime backups, or Turso | Volume plus backups. Revisit Turso only to read a workspace while its machine is off, or for a local offline copy |
 | E2 | Workspace host (after B1): Fly Machines, RunPod CPU or E2B | Decide on B1's measurements of wake time, volume, cost and egress. Fly fits a volume with wake-on-request best; RunPod reuses our claim and lease code |
 | E3 | Remote access (after B3): the paired relay or a remote door on a subdomain, and the domain layout under astrid.haus | The paired relay, if B3 shows it carries media and chat at acceptable latency |
-| E4 | Workspace usage tariff: credits per active minute, idle free | Per active minute in the same ledger, at cost plus the Plan 25 markup |
-| E5 | The agent's LLM key in the workspace | The user's own key (as locally), stored through the Runtime credential path ([Plan 36](../36-one-credential-path/plan.md)). Brokered inference later |
+| E4 | Workspace usage tariff: credits per active minute, idle free | Per active minute in the same ledger, at host cost plus the 60% markup the owner set for Plan 25 |
+| E5 | The agent's LLM | **Decided (owner, 9 Nov):** Astrid's own LLM service. It is a simple pass-through router to OpenRouter, using the team's OpenRouter key, inside the worker orchestrator service. The agent (OMP) reaches it with the user's same Astrid Cloud key, both locally and in the workspace. Billing is at cost plus 60%, the same markup as generation. Users who prefer their own OpenRouter key keep that option |
 | E6 | Acceptable data loss: backup frequency | On idle, before stop, and at most every 15 minutes while active |
 | E7 | Bytes in a bucket-backed file store now or later | Later, with its own reason such as volume size |
 | E8 | Unit of moving: the whole workspace (realm), or per project | The whole workspace. Per-project import later |

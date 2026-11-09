@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — On 9 Nov the owner described in a planning session the two-phase direction recorded here. Phase 1 has Discord sign-in, Stripe credits and an API key. The local SQLite task is mirrored to Supabase and processed by the trimmed Reigh worker orchestrator across fal and Pruna. The agent, database and files stay local. The owner agreed the split into this plan and [Plan 26](../26-fully-hosted-v2/plan.md). There is no traceable written approval yet. Next: the owner reviews this scope PR and answers D1–D6 below.
+**Scope decision:** Pending — On 9 Nov the owner described in a planning session the two-phase direction recorded here. Phase 1 has Discord sign-in, Stripe credits and an API key. The local SQLite task is mirrored to Supabase and processed by the trimmed Reigh worker orchestrator across fal and Pruna. The agent, database and files stay local. The owner agreed the split into this plan and [Plan 26](../26-fully-hosted-v2/plan.md). The owner later decided D1, D3 (the markup) and D4 in the same session. There is no traceable written approval yet. Next: the owner reviews this scope PR and answers D2, D5 and D6, and picks the model list for D3 when ready.
 
 **Prior art:** Ten read-only surveys on 9 Nov, at the SHAs under [Source identities](#source-identities), covered:
 - the Reigh billing, Stripe and personal-access-token code;
@@ -20,7 +20,10 @@
 The findings that shape this plan:
 - **Cloud side removed from the App:** the App's cloud side was removed on 18 Oct. Tag `pre-cloud-removal`, [5a3ddb1](https://github.com/banodoco/astrid-app/tree/5a3ddb1a1cdfac2a8e26132bccff6aeb95be9dec), keeps 476 migrations, Stripe, credits, personal access tokens and Discord sign-in, but its `create-task` returns 410 (retired).
 - **Task functions:** the working idempotent task functions are in [reigh-app 06ccc46](https://github.com/AstridPseudon/reigh-app/tree/06ccc462cd76a8ed425ec24728c541ebf60ab97f) (`supabase/functions/create-task/index.ts:230-262`).
-- **One Supabase project:** both point at the same Supabase project, `wczysqzxlwdndgxitrvc`.
+- **Supabase projects:**
+  - both point at Reigh's Supabase project, `wczysqzxlwdndgxitrvc`. The owner says that project has been deleted, so nothing is restored to it;
+  - the team's one live project is **Banodoco**;
+  - the Agent's Hivemind already uses project `ujlwuvkrxlvoswwkerdf` (`astrid/core/hivemind/executors/_common.py:37-41`). That is probably Banodoco, and A1 confirms it.
 - **Personal access tokens:** stored in plaintext, and every authenticated function falls back to accepting one (`_shared/auth.ts:136-157`).
 - **Billing:** debited after completion, with a racy spend insert and possible overdraft. Auto-top-up's trigger rate-limits itself.
 - **Orchestrator problems** ([9d9df8c](https://github.com/banodoco/reigh-worker-orchestrator/tree/9d9df8cae6f6fd16168f416c8edaa848fa1f4ea0)):
@@ -62,10 +65,10 @@ It proposed the fal-shaped facade and debit-first billing. All of these were acc
 
 | ID | Decision | Recommendation |
 |---|---|---|
-| D1 | Supabase project: share Reigh's live project `wczysqzxlwdndgxitrvc` (and so its ledger, its deploys and possibly one shared balance) or create a new Astrid project | A new project restored from the tag, if Reigh is still live. Share only if Reigh is retired |
-| D2 | Home of the restored Supabase code | `astrid-app/supabase/`, where it lived before 18 Oct, next to the account page |
-| D3 | First families, models and prices; markup over provider cost | Image text-to-image, image edit, upscale (fal) and image-to-video (fal or Pruna); a small published markup. Prices are mirrored from `models.yaml` `price` fields into the server model table |
-| D4 | Welcome credits | Keep the old $5 (500 cents) |
+| D1 | Supabase project | **Decided (owner, 9 Nov):** the live **Banodoco** project, the only one. Reigh's project was deleted. The restore subset must not collide with Hivemind's existing tables and functions there |
+| D2 | Home of the restored Supabase code | Recommendation: `astrid-app/supabase/`, where it lived before 18 Oct, next to the account page. Deployed to Banodoco together with whatever already deploys there (A1 finds out how) |
+| D3 | Markup, models and prices | **Decided (owner, 9 Nov):** price = provider cost × 1.6, a 60% markup. **Open:** the owner picks a set of fal models (and any Pruna ones) later; this is not locked now. A6 builds the table and the price rule, seeded with whatever list the owner gives at dispatch |
+| D4 | Welcome credits | **Decided (owner, 9 Nov):** none. New accounts start at zero and buy credits |
 | D5 | Label: a route under `cloud` ("fal via Astrid Cloud") or its own name in the UI and consent | Its own name, **Astrid Cloud**, in consent and cost text. In code, a route of the `cloud` backend |
 | D6 | Worker home and deploy | Keep `reigh-worker-orchestrator`'s API half as `astrid-worker`, on Railway. Deploy only after A5 passes |
 
