@@ -190,6 +190,15 @@ Delete, in the same change:
 
 ## T5 RunPod as a remote machine: the `generation.machine` point
 
+**Decisions, advisor, 9 Nov (answers to the T5 design's section 9):**
+1. **Where `generation.machine` comes from:** T5 declares it itself (step 1 below). `local` and `attached` are built in. The plan lives in astrid-dev, so the T5 worker gets a read-only clone of astrid-dev (`git clone --depth 1 https://github.com/banodoco/astrid-dev`) to read this card.
+2. **Progress writer:** T5 adds a minimal one. When `ASTRID_PROGRESS_PATH` is set, the pod-side run writes coarse phases to it: align, submit, `executing n/m` when known, then fetch. Take them from the pod host's own `terminal["progress"]` (`generic_host.py` ~11104). Do not build a new event system. The CPU fake proves a phase reaches the controller's file before the job ends.
+3. **Progress path mismatch** (`:9970` versus `:10953` and `:11106`): T5 checks it with a test first. If the directories differ, make them one, the attempt directory, in the same change.
+4. **`ensure_runtime` versus the 17340 door port:** not blocking. Once T6b removes H3's route, nothing on the pod needs the door. T5 lets `ensure_runtime` pick its own port, and the CPU fake asserts there is no port clash.
+5. **GraphQL shape for mounts:** the T5 worker clones `banodoco/runpod-lifecycle` read-only at `f2948817` and writes the fake's `mounts` stub from `discovery.observe_pod_mounts` itself.
+6. **Scope of "source_video upload":** the remote route only. Input files ship inside the job directory, so there is no controller-to-ComfyUI upload for remote jobs. The local attached-URL `upload_media` path stays, because an attached ComfyUI needs it.
+7. **GPU custody:** agreed. Key the lease on the observed `gpu_type` from the claim record, not on the preference list.
+
 **Outcome:** `run(job, <machine>)` claims a machine under the existing paid-consent and lease owner (`target_selection`) and ships the job with its digest-pinned pack selection (Plan 06 `active_sources`). It runs `astrid generate <entry> --placement local` there, copies its progress file back on each poll, fetches the outputs against a digest manifest, and always releases. Cancelling the local run stops the remote job and releases the machine (owner, 8 Nov). **Authority:** CPU only.
 
 **Delegate to N helpers:** the test provider, the census of bridge and inventory code, and the deletions. The lead keeps the consent, lease and digest-manifest reasoning: this route has never run end to end.
