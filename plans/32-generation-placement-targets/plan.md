@@ -33,6 +33,7 @@ The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reus
   - deleting every superseded route;
   - one meaning per term.
 - **Not included:** multi-pass h3 requests, prepared or qualified workers, resuming a parent job; VibeComfy ops and router as an Astrid call path; new providers; Wan2GP ([Plan 12](../12-multiple-inference-routes/plan.md) consumes this plan); splitting `generic_host` ([Plan 13](../13-execution-host-refactor/plan.md)).
+- **Follow-up (owner, 9 Nov): providers on the one path.** fal, OpenAI and Wavespeed (`astrid/core/generation/backends/{fal,openai,wavespeed}.py`) stay a separate `--backend cloud` route in this plan. The follow-up makes a provider a placement kind with only an `execute` step: nothing to align, no machine to rent, outputs in the job directory, and the same `generate(entry, inputs, placement)`. It is planned with astrid-dev-plan when this plan completes.
 
 ## Design
 
