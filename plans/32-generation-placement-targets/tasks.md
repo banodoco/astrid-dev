@@ -316,7 +316,7 @@ Delete, in the same change:
 **Proof:**
 - The Matrix request (Plan 33 U1's fixture) runs as an ordinary `generate` on the CPU fake: `PYT_POD tests/integrations/test_remote_machine_cpu.py`.
 - The h3_av status-poll case (the Input above) reproduces on the base, and it passes after T6b: its test is named in the commit body, with the poll failure as its recorded cause.
-- `grep -ri h3 astrid/core astrid/sdk` returns nothing (about 156 lines today).
+- `grep -ri h3 astrid/core astrid/sdk` returns no h3_av-specific line (about 156 lines today). Allowlisted, because they are not h3_av (owner, 9 Nov): the HTML `<h3>` tag in hivemind `ingest_article`, the hivemind SKILL channel name, and the `minimax-h3` vendor model id in `model_catalog`. Any other hit must go.
 - A grep finds no stage graph, journal, receipt or input bundle left in `astrid/packs/h3_av`, and `! git grep -n "pending38\|checkout_from_profile\|endpoint_checkout" -- astrid` finds no legacy route.
 - `PYT tests/packs/h3_av/test_compile.py tests/packs/h3_av/test_verify_fail_closed.py tests/packs/h3_av/test_compose_staged_104.py tests/packs/h3_av/test_workflow_model_urls.py`, with the deleted machinery's test files deleted and named in the commit body.
 
