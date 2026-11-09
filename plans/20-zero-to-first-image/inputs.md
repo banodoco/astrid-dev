@@ -75,7 +75,7 @@ Re-checked for the three-phase plan: all nine still apply. D2, D4, D8 and D9 are
 
 | Repository | Planning read | Base at start | Candidate branch | Destination |
 |---|---|---|---|---|
-| astrid-agent | `origin/cand/29-r12` `ff40f2c684` and `origin/main` `a105de3a48` (read-only) | the release 12 published revision, recorded in P1.5 | phase 1: one docs-and-tests branch; phase 3: one branch | Phase 1: Agent `main` by an ordinary reviewed PR, live on merge with no release (owner, 9 Nov). Phase 3: skill text the same way; the synced-view change (P3.3) through the release process |
+| astrid-agent | `origin/cand/29-r12` `ff40f2c684` and `origin/main` `a105de3a48` (read-only) | `int/20-zero-to-first-image` cut at `ff40f2c684` (smoke `ENV-PASS` on int/20); the release 12 published revision is recorded in P1.5 | phase 1: one docs-and-tests branch; phase 3: one branch | Phase 1: Agent `main` by an ordinary reviewed PR, live on merge with no release (owner, 9 Nov). Phase 3: skill text the same way; the synced-view change (P3.3) through the release process |
 | astrid-app | `cand/29-r12` `3274a9c07` and `origin/main` `57e200b45` (read-only) | App `main` at the start of P2.1, after Plan 29's orchestrator agrees | one App branch for phase 2 | the next ordinary App release, through the release process |
 | astrid-dev | `origin/main` `7e7f60d` | — | `plans/20-fast-path` | `main` through a scope PR |
 
