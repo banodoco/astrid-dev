@@ -2,25 +2,25 @@
 
 ## Statement
 
-Technical setup should get out of the way of creative work.
+Technical wrangling should become work your agents handle, not work that interrupts your art.
 
 ## Explanation
 
-Artists should be able to focus on making rather than configuring tools or repairing environments. Agents should help with setup, execution, dependencies, and recovery, while leaving consequential choices visible and understandable.
+Models still need installing, environments still break, and jobs still fail. The aim is not to pretend this work disappears, but to empower agents to handle it: setting up and maintaining tools, managing dependencies, running jobs, and recovering from problems. Artists should stay immersed in creating while retaining control over consequential decisions.
 
 ## Characteristics
 
-### Setup without needless friction
+### Agents handle the setup
 
-Getting a creative tool running should not become its own technical project.
+Your agent should make a tool ready to use, not hand you another setup guide.
 
-Agents can find, install, configure, and update supported tools and models, resolve dependencies, and explain what needs attention when automatic setup is not appropriate.
+Agents should find, install, configure, and update supported tools and models, resolve dependencies, and explain the decisions that genuinely require the creator's approval. The technical work remains real, but it should be streamlined through agents instead of transferred to the artist.
 
 ### Dependable execution and recovery
 
-Creative jobs should keep running predictably or fail in ways that can be repaired.
+Agents should operate and repair creative tools without losing the artist's work.
 
-Agents can monitor work, handle interruptions, offer useful errors, and assist with retry or recovery without losing the creator's project, output, or intent.
+Agents can monitor jobs, diagnose interruptions, handle recoverable failures, and arrange retries or rollback without losing the project, output, or creative intent. When they cannot safely repair something, they should surface a clear problem and options rather than leave the creator wrestling with an environment.
 
 ### Important decisions stay visible
 
