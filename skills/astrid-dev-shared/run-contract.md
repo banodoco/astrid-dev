@@ -4,7 +4,7 @@ This is the single policy owner for run identity, routing, focused proof, failur
 
 ## Routing and bindings
 
-Use `N` for everything below very hard, including ordinary hard work; `X` for very hard work with coupled or non-obvious reasoning; and `S` for super-hard work where deeper reasoning materially improves correctness. `N` is the default; tag a task `X` or `S` only when it clearly needs that depth. These labels describe capability bands, not exact model identities. Configure actual available model IDs, supported reasoning efforts, availability, and role bindings in that run's `run.yaml`. A role resolves through the binding in `run.yaml` to a model entry's exact `model_id` and `reasoning_effort`; do not infer availability from a class label, invent IDs, or silently substitute. Resolve unavailability explicitly. Plan/advisor/reviewer judgment bindings are configured separately from execution routes.
+Use `N` for everything below very hard, including ordinary hard work; `X` for very hard work with coupled or non-obvious reasoning; `S` for super-hard work where deeper reasoning materially improves correctness; and `T` for taste work: small, editorial refinement where the quality is a matter of judgment. `N` is the default; tag a task `X`, `S` or `T` only when it clearly needs that depth. These labels describe capability bands, not exact model identities. Configure actual available model IDs, supported reasoning efforts, availability, and role bindings in that run's `run.yaml`. A role resolves through the binding in `run.yaml` to a model entry's exact `model_id` and `reasoning_effort`; do not infer availability from a class label, invent IDs, or silently substitute. Resolve unavailability explicitly. Plan/advisor/reviewer judgment bindings are configured separately from execution routes.
 
 Default model for each route, using the newest available model of that family:
 
@@ -13,10 +13,13 @@ Default model for each route, using the newest available model of that family:
 | `N` | Everything below very hard, including ordinary hard work: research, reading, running checks, most changes and fixes | Haiku | Luna |
 | `X` | Very hard: intricate changes, subtle bugs, coupled or non-obvious reasoning | Sonnet | Terra |
 | `S` | Super hard: deep design, or correctness that needs the deepest reasoning | Opus | Sol |
+| `T` | Taste: small, editorial refinement of something that already exists, such as user-facing copy, error and refusal messages, names, a screen's layout or a doc's voice | Opus | Astra |
 
 Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
 
 Plans tag each task with its route, and execution uses that same tag. Normally **one accountable agent works on one project**. It can execute a scoped task directly; use a manager and bounded subagents when parallelism or genuinely separate research helps, not as mandatory ceremony for a small project. If delegating, the coordinating agent retains judgment, resolves each task's configured route model, checks returned evidence, and records actual model IDs and efforts in `run.yaml`.
+
+A `T` task is **editorial, not creative**: it refines an existing surface against a stated intent and never adds scope. Keep it small (one screen, one message family, one doc), and move anything structural or new into its own `N`, `X` or `S` task. The task card names the surface, its current text or a screenshot, the intent and the taste rules that apply (for example: minimal, plain words, never lies, always a next step). Its proof is the exact before and after, checked against those rules, plus the surface's own tests. Where the owner's taste decides, the owner sees that before and after. The `T` lead makes the edits itself and may delegate only mechanical checks.
 
 An `X` or `S` execution lead always delegates bounded research, reading, mechanical edits and running checks to `N` helpers, and keeps the judgment and the final change itself. Reviewers and leaf advisors do not inherit that requirement. A plan may name route labels but must not duplicate model bindings.
 

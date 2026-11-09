@@ -16,7 +16,7 @@ GAP_LINE = re.compile(
     r"^Gap\s+([A-Z]{1,3}-\d{3}):\s*"
     r"(Closed|Partially evidenced|Unchanged|Needs recheck)\s*[—:-]\s*(.+)$", re.I | re.M,
 )
-ROUTE_TOKEN = re.compile(r"(?<![\w/])[NXS](?![\w/])")
+ROUTE_TOKEN = re.compile(r"(?<![\w/])[NXST](?![\w/])")
 EVIDENCE_REF = re.compile(r"https?://[^\s)]+|(?<![\da-f])[0-9a-f]{40}(?![\da-f])", re.I)
 
 
@@ -91,14 +91,14 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
 
     routes = re.search(r"^Routes used:\s*(.+)$", section, re.I | re.M)
     if not routes:
-        issues.append(f"Plan {plan_id}: Routes used must name the route (N, X or S) or explain why unknown")
+        issues.append(f"Plan {plan_id}: Routes used must name the route (N, X, S or T) or explain why unknown")
     else:
         value = routes.group(1).strip()
         unknown = re.fullmatch(r"(?:Unknown|Not recorded)\s*[—:-]\s*(.+)", value, re.I)
         if unknown and not has_real_reason(unknown.group(1)):
             issues.append(f"Plan {plan_id}: missing reason for unknown route provenance")
         elif not unknown and not ROUTE_TOKEN.search(value) and not EVIDENCE_REF.search(value):
-            issues.append(f"Plan {plan_id}: Routes used needs a route (N, X or S), "
+            issues.append(f"Plan {plan_id}: Routes used needs a route (N, X, S or T), "
                           "'Unknown — <reason>' or a linked evidence reference")
 
     gaps = linked_gaps(plan_text)
