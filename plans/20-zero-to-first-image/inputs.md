@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** this is the owner's direction, not yet an agreed end state.
+**Scope decision:** Pending — the owner's direction (9 Nov 2026), merged as a queued plan at her request with the recommended answers to D1–D9 standing until she changes one. Next: run the advisor critique below, then record D1–D9 as answered here.
 
 - **Source.** Hannah gave it on 9 Nov 2026. It was relayed in planning session `session_011EzfVzreGCJJQnTuXpbib9`, in two messages:
   - the onboarding-skill direction (items 1-4 in the [plan](plan.md#direction-owner-9-nov-2026));
@@ -12,7 +12,7 @@
 - **The earlier direction the same day** (an attached ComfyUI through Plan 32 S2, and the App's "Set up generation" card) is kept.
 - **Next:** Hannah answers D1–D9 below. A scope PR then records her answers here.
 
-**Prior art.** Read at Agent `origin/cand/29-r12` `ff40f2c684` and App `cand/29-r12` `3274a9c07`.
+**Prior art:** Read at Agent `origin/cand/29-r12` `ff40f2c684` and App `cand/29-r12` `3274a9c07`.
 
 | Area | Finding | Source |
 |---|---|---|
@@ -31,7 +31,7 @@
 | RunPod | The key is read from `RUNPOD_API_KEY` (by reference). Paid consent applies per claim, with `runpod.setup` | `packs/runpod/docs/SKILL.md:38-45,70-108` |
 | Plan 32 S2 | Guided generation setup is read-only ("Never … download or install during setup"). Its scope includes the `docs/setup/SKILL.md` step and one `agentInstructions` line | [Plan 32 tasks](../32-generation-placement-targets/tasks.md) S2 row |
 
-**Approach.** Extend the existing setup skill in place. Make the choices rule a shared fixture with a test per route. Add one read-only machine-check command. Leave generation discovery to Plan 32 S2. Alternatives considered:
+**Approach:** Extend the existing setup skill in place. Make the choices rule a shared fixture with a test per route. Add one read-only machine-check command. Leave generation discovery to Plan 32 S2. Alternatives considered:
 
 | Alternative | Why not |
 |---|---|
@@ -42,9 +42,9 @@
 | Fold the machine check into S2 | S2 is the existing-setup path. The machine check also decides the install and RunPod branches, and Plan 12 reuses it |
 | Wait for Plan 32 for everything | Phase 1 (consent, entry points, doctor and the machine report) is useful now and touches nothing in Plan 32 |
 
-**Challenge.** Pending. The plan touches a user-visible flow, consent and a cross-repo contract, so it needs the advisor's critique. That critique was not run, because this planning brief excluded session tools. **Next:** the planner or orchestrator runs the advisor ([Orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md)) before dispatch. Brief it to cut O5 or O7 if S2 or the existing brief can carry them.
+**Challenge:** Pending — The plan touches a user-visible flow, consent and a cross-repo contract, so it needs the advisor's critique. That critique was not run, because this planning brief excluded session tools. **Next:** the planner or orchestrator runs the advisor ([Orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md)) before dispatch. Brief it to cut O5 or O7 if S2 or the existing brief can carry them.
 
-**Proof and limits.** See O8. Real inference is proven only on the hardware recorded there. macOS has no managed engine, so its proof is the pointer-and-RunPod branch. Wan2GP and providers are excluded.
+**Proof and limits:** See O8. Real inference is proven only on the hardware recorded there. macOS has no managed engine, so its proof is the pointer-and-RunPod branch. Wan2GP and providers are excluded.
 
 ## Owner decisions needed
 
