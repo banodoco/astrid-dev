@@ -11,21 +11,23 @@
 # restart, so that check-in must start this script again.
 HERE=$(cd "$(dirname "$0")" && pwd)
 end=$(( $(date +%s) + ${HOLD_SECONDS:-3300} ))
-declare -A seen restarts
-for RUN in "$@"; do seen[$RUN]=$(wc -c < "$RUN/to-orchestrator.md" 2>/dev/null || echo 0); done
+declare -A seen restarts first
+for RUN in "$@"; do seen[$RUN]=$(wc -c < "$RUN/to-orchestrator.md" 2>/dev/null || echo 0); first[$RUN]=$(cat "$RUN/status" 2>/dev/null); done
 while [ "$(date +%s)" -lt "$end" ]; do
   for RUN in "$@"; do
     s=$(cat "$RUN/status" 2>/dev/null)
-    case "$s" in
+    # Wake only on a change: a run that was already waiting when this started stays quiet until it moves.
+    if [ "$s" != "${first[$RUN]}" ]; then case "$s" in
       done|blocked|gave-up|waiting)
         echo "RUN $RUN STATUS=$s"; tail -n 40 "$RUN/result.md" 2>/dev/null; exit 0 ;;
-    esac
+    esac; fi
     now=$(wc -c < "$RUN/to-orchestrator.md" 2>/dev/null || echo 0)
     if [ "$now" -gt "${seen[$RUN]}" ]; then
       echo "MESSAGE FROM CODEX ($RUN):"; tail -c +$(( ${seen[$RUN]} + 1 )) "$RUN/to-orchestrator.md"; echo "STATUS=$s"; exit 0
     fi
     pid=$(cat "$RUN/runner.pid" 2>/dev/null)
-    if [ "$s" = running ] && [ -n "$pid" ] && ! kill -0 "$pid" 2>/dev/null && [ -f "$RUN/runner.args" ]; then
+    # A waiting runner must also be alive: it is what resumes Codex when to-codex.md gets a reply.
+    if { [ "$s" = running ] || [ "$s" = waiting ]; } && [ -n "$pid" ] && ! kill -0 "$pid" 2>/dev/null && [ -f "$RUN/runner.args" ]; then
       restarts[$RUN]=$(( ${restarts[$RUN]:-0} + 1 ))
       if [ "${restarts[$RUN]}" -gt 3 ]; then echo "RESTART FAILED ($RUN): runner keeps dying; see codex.log"; exit 4; fi
       echo "$(date -u +%FT%TZ) runner $pid gone; restarting (${restarts[$RUN]}/3)" | tee -a "$RUN/hold.log"
