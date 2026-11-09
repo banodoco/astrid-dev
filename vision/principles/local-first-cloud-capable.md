@@ -30,4 +30,4 @@ Choices about uploaded data, remote storage, permissions, services, and costs sh
 
 ## References
 
-Related work is tracked in the [vision gap catalog](../README.md#gaps--17-assessed-outcomes).
+Related work is tracked in the [vision gap catalog](../gaps/).
