@@ -60,7 +60,10 @@ In the [tasks template](../../templates/project/tasks.md), every task has a scop
 
   Add a missing script there, not in the plan folder.
 
-End with the review row, before any publishing task, which depends on it. Recommend its number of review rounds from risk and complexity (guide in the run contract), say why, and record the owner's agreed number in `inputs.md`. With 0, leave the row out.
+**Suggest the reviews.** Recommend them in every plan; don't wait to be asked.
+
+- **Bias towards one review at the end.** End with the review row, before any publishing task, which depends on it. Recommend its number of review rounds from risk and complexity (guide in the run contract), say why, and record the owner's agreed number in `inputs.md`. With 0, leave the row out.
+- **Add a review stop after a load-bearing part** of a significant project: a contract, data model, protocol, security boundary or shared interface that later tasks build on, where a mistake found only at the end would mean redoing those tasks or would reach users. Put it right after that part, as its own row (`RS<n>`, named for what it reviews), with the later tasks that build on it depending on it. It uses the same protocol as the final review: rounds at most _n_, findings as task cards, done before the stop clears. Use it sparingly, typically only on larger projects (above about five days, or cross-repository) and at most one or two per plan. Each stop needs a stated reason: which later tasks it protects and what a late finding would cost. Record each stop and its agreed rounds in `inputs.md`, alongside the final review.
 
 ## Readiness
 

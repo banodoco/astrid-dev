@@ -68,6 +68,11 @@ review:
   # For ordinary delivery, unless the owner or accepted plan selects another
   # policy, configure review rounds on the integrated candidate after scoped checks (max = the plan's agreed rounds;
   # total rounds; stop at uncontested PASS). Preserve existing runs' policy.
+  # Example review stop after a load-bearing part (only if the accepted plan sets one):
+  # - id: stop-contract
+  #   role: completion_reviewer
+  #   after: [T2, T3]   # the load-bearing tasks
+  #   max_rounds: 1
   # Example delivery stage:
   # - id: final
   #   role: completion_reviewer
