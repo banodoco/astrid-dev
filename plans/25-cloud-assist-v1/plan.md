@@ -1,40 +1,112 @@
-# 25 — Cloud-assisted Astrid V1 (local files)
+# 25 — Astrid Cloud generation, phase 1 (local agent, database and files)
 
-**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and review [tasks](tasks.md) and [inputs](inputs.md). Priority, owner, estimate and status live **only** in [plans/index.md](../index.md).
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
-**Vision gaps:** [F-005 — Local projects cannot yet use coherent cloud execution](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary); [F-003 — dependable creative execution](../../vision/gaps/F-003-creative-execution.md) and [F-002 — safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). Do not claim those cross-cutting gaps closed on V1 alone.
+**Vision gaps:** [F-005 — Local projects cannot yet use coherent cloud execution](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary) · [F-002 — safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting: spend, consent and key revocation). This plan covers F-005's cloud *generation* half. The cloud agent session and remote rendering move to [Plan 26](../26-fully-hosted-v2/plan.md), where the agent and renderer run on the cloud workspace. Do not claim F-005 closed on this plan alone.
 
-## Goal and boundaries
+## Outcome and scope
 
-Ship a **cloud-assisted local-first Astrid**: user's project database, timeline and durable files remain on their machine; optional cloud services carry out approved agent work, model generation and video rendering, with outputs returned into the same editable local project. This is **not** a fully hosted workspace or a cloud database.
+A creator signs in to Astrid with Discord, gets welcome credits or buys more with Stripe, and creates an **Astrid Cloud key**. They give that key to their local Astrid once, using the same credential path as the fal key. From then on, the agent or the user can run a set of basic generations (image, image edit, upscale, image-to-video) **without their own provider accounts**. The results arrive in the local project exactly as a fal generation does today.
 
-**Included:** a cloud-agent execution route supporting agent-family workflows under existing Astrid Runtime/Agent task authority; selected remote image generation via suitable APIs; a remote video-rendering service for a real timeline/project; explicit provider choice/consent, credentials and spend controls; scoped transfer of required inputs; local result reconciliation, provenance, cancellation and recovery. The first proof can be bounded to one provider/engine per capability with clear unsupported cases.
+The agent, the project database (local SQLite) and the files stay on the user's machine, as now. Cloud work is limited to the generation and its billing. The same key is the one the cloud workspace uses in [Plan 26](../26-fully-hosted-v2/plan.md), and a local user keeps using it after Plan 26 ships.
 
-**Not included:** relocating or syncing the canonical project database to the cloud, persistent cloud asset library, general hosted login/accounts, multi-user tenancy, unlimited provider compatibility, rewriting Astrid orchestration, or replacing FFmpeg/Remotion simply because rendering runs remotely. [Plan 26](../26-fully-hosted-v2/plan.md) owns hosted persistence and user accounts.
+**Included:**
+- **Account:** Discord sign-in and the `users` row, restored from the tagged Astrid App source. An **account page** in astrid-app shows the balance and ledger, buying credits with Stripe Checkout, and creating and revoking keys. The rest of the App stays local and sessionless, so it never needs a login.
+- **Credits:** the restored credits ledger, in integer cents. Billing is **debit first, refund on failure**, in one locked SQL function, with a unique spend and refund per task. A task can never overdraw the balance.
+- **Astrid Cloud key:** the old personal access token, hardened:
+  - hashed at rest and shown once, with a prefix;
+  - scope `generate` only, valid for the queue API and input uploads;
+  - last-used time and revoke.
+  - Account, billing and key-minting functions refuse it and need the Discord session.
+- **Astrid Cloud queue API**, shaped like fal's queue (submit, status, result, cancel):
+  - one edge function that authenticates the key, debits, and creates a Supabase task;
+  - the task's idempotency key is the **local Runtime task id**, so a retried attempt never submits or charges twice.
+- **Worker:** the API half of [reigh-worker-orchestrator](https://github.com/banodoco/reigh-worker-orchestrator/tree/9d9df8cae6f6fd16168f416c8edaa848fa1f4ea0), trimmed to Astrid's task contract and its known bugs fixed. It is driven by **one model table** (family to provider, endpoint and price), and adds a Pruna handler next to fal. It refunds failed tasks and uploads outputs to a private bucket with signed URLs.
+- **Agent:** the existing fal (`cloud`) backend gains an **Astrid Cloud route**: a queue origin, the Astrid key, and the upload switch. Existing model rows, storage policies, publication and the local Runtime task are unchanged. The first families' rows (fal and Pruna) are added to `models.yaml`. The rows a key can run are the **Astrid Cloud pack**.
+- **Docs and records:** an Astrid Cloud row in `where-things-run.md`, and consent and cost wording.
 
-## Existing work to build upon
+**Not included:**
+- cloud agent sessions, remote rendering, a cloud database or cloud files ([Plan 26](../26-fully-hosted-v2/plan.md));
+- auto-top-up: the current version is broken, so it stays off and becomes a follow-up issue;
+- Reigh shots, generations rows or timeline placement on completion;
+- the GPU half of the orchestrator;
+- TTS and other families beyond the first set;
+- teams;
+- a login inside the local App;
+- moving the key into Runtime credential records. That is [Plan 36](../36-one-credential-path/plan.md), which moves this key along with fal's.
 
-- [Reigh Worker Orchestrator](https://github.com/banodoco/reigh-worker-orchestrator) documents RunPod GPU pools, API orchestration for fal and Wavespeed, worker lifecycle and deployment tooling. It is a **source donor to evaluate, not an established production dependency**: [Astrid's rename/satellite dispositions](https://github.com/banodoco/astrid-agent/blob/main/tools/astrid-rename/satellites.md) mark it deprecated, and current deployment is unverified.
-- [Astrid Agent cloud/local execution routes](https://github.com/banodoco/astrid-agent/blob/main/docs/reference/where-things-run.md), existing agent orchestration and current Runtime task/artifact custody must be checked at their actual revisions before proposing new agents or provider adapters.
-- [Plan 12](../12-multiple-inference-routes/plan.md) and [Plan 20](../20-zero-to-first-image/plan.md) own other inference/onboarding foundations; don't duplicate their work. Reuse existing App timeline/editor, generation paths and media renderer as far as possible.
+## Existing work and decision
 
-## Proposed sequence (not authorized)
+Almost everything exists already. See [inputs.md](inputs.md#planning-evidence) for the source trail and the alternatives considered.
 
-1. **Audit first.** Record immutable source revisions, existing Reigh worker orchestrator capabilities, deprecation/current deployment status, Astrid Agent/Runtime cloud execution, render options and capability gaps. Decide what to retain/retire. Never create a parallel task authority.
-2. **Provider decision.** Compare a small set of cloud agent-runtime APIs, image-generation APIs and remote rendering strategies on security, task lifecycle, price, logs, cancellation, latency and implementation effort. Choose intentionally; no provider is implied by this plan.
-3. **Local-data custody contract.** Define input staging, content hashes, temporary remote retention, consent and spend, secure secrets, progress/cancel/retry and local project/artifact identity. Ensure agents have least authority and may not silently upload project files.
-4. **Agent family in cloud.** Run one approved family/multi-step agent workflow remotely using existing task semantics; ensure logs, tool permissions, cancellation and output return are verifiable.
-5. **Generation and render.** Demonstrate one remote image-generation route and one remote video-render route from a real Astrid project. Remote render may use existing FFmpeg/Remotion components behind a service; choosing a new engine requires separate evidence.
-6. **Integrate and qualify.** Return and reconcile artifacts locally, preserve edits and database authority; test failure, cancellation, budget limits and interrupted connections end to end.
+- **Account, credits, Stripe and keys:** the Astrid App at tag `pre-cloud-removal` ([5a3ddb1](https://github.com/banodoco/astrid-app/tree/5a3ddb1a1cdfac2a8e26132bccff6aeb95be9dec)) has the following, all pointing at the Supabase project the team already runs:
+  - `stripe-checkout`, `stripe-webhook` and `grant-credits`;
+  - `generate-pat` and `revoke-pat`;
+  - the credits ledger with balance triggers;
+  - Discord sign-in (`useDiscordSignIn`);
+  - `CreditsManagement`, `useCredits` and `useApiTokens`.
+  - Its `create-task` is retired (it returns 410), so **task functions come from [reigh-app](https://github.com/AstridPseudon/reigh-app/tree/06ccc462cd76a8ed425ec24728c541ebf60ab97f)**: `create-task` with `idempotency_key`, `claim-next-task`, `complete_task`, `update-task-status`, `get-task-output` and `generate-upload-url`. They are trimmed of Reigh's project, shot and generation side effects.
+- **Worker:** the orchestrator's API loop, handler registry and resilient fal submit/poll (it persists the request id for restart) are reused. Its dead weight is deleted:
+  - the GPU side;
+  - banodoco handlers;
+  - shadow mode;
+  - the legacy fal call.
+- **Agent:** `FalBackend` (`astrid/core/generation/backends/fal.py`) and `fal_submit_and_poll` already talk to a fal-shaped queue. Giving them a second origin keeps every `cloud` model row, storage policy (`generate_image/run.py:479`) and publication path as is. Plan 32 already rules that providers stay a `--backend cloud` route for now.
+- **Rejected:**
+  - **A fal-only proxy edge function with no tasks and no orchestrator.** It is smaller, but the owner wants server-side tasks and a multi-provider worker (fal plus Pruna, later GPU), so the queue API keeps fal's shape over that worker instead.
+  - **A separate backend id or pack.** It needs new model rows, storage policy edits and edits to the generation pack's network policy anyway.
+  - **Post-hoc measured billing (Reigh's way).** It allows overdraft, and its spend insert is racy.
 
-## Project interface and handoff
+## Sequence and readiness
 
-**Consumes:** current Runtime project/task/artifact custody, Agent execution contracts, existing generation/rendering paths and verified donor facts recorded in [inputs.md](inputs.md). These are starting points to inspect, not assumed-live cloud services.
+The critical path is:
+1. A1, the source and live-project baseline;
+2. A2, the restored Supabase subset with key hardening and debit-first billing;
+3. A4, the queue API;
+4. A5, the worker;
+5. A7, the agent route;
+6. A9, the end-to-end proof;
+7. R, the review.
 
-**Produces:** a qualified, versioned contract for approved remote agent/generation/render jobs, temporary input staging, progress/cancel/retry, spend/permissions and **reconciliation back into the authoritative local project**. Record the integrated candidate and exact evidence in the completion PR. [Hosted V2](../26-fully-hosted-v2/plan.md) may reuse those proven contracts, but must independently qualify cloud-owned persistent data and account boundaries.
+The account page (A3) and the model table and prices (A6) run alongside. See [tasks.md](tasks.md).
+
+**Owner decisions before dispatch**, recorded in [inputs.md](inputs.md#owner-decisions):
+- D1: shared Reigh Supabase project or a new one.
+- D2: where the restored Supabase code lives.
+- D3: the first families and prices, and the markup.
+- D4: the welcome-credit amount.
+- D5: is "Astrid Cloud" labelled as a route under `cloud` or as its own backend in the UI and consent.
+- D6: the worker's home repository and deployment.
+
+**Budget:** a capped live proof, roughly $10 of provider spend plus a Stripe test-mode run. Recording this plan authorizes no deployment, migration on the live project or spend.
+
+## Interfaces and handoff
+
+**Consumes:**
+- the tagged App source;
+- the reigh-app task functions;
+- the orchestrator API half at the SHAs in [inputs.md](inputs.md#source-identities);
+- the Agent's fal backend and model catalog at the current Agent `main`;
+- the live Supabase project's actual migration ledger, recorded by A1 before anything is changed.
+
+**Produces** (contracts that [Plan 26](../26-fully-hosted-v2/plan.md) builds on):
+1. **The Astrid Cloud account:** a Discord identity, a `users` row and a credits balance in cents.
+2. **The Astrid Cloud key contract:** format, scope `generate`, hashed storage and revoke.
+3. **The queue API contract:** fal-shaped submit, status, result and cancel, the idempotency rule (one local task id is one cloud task), and the debit and refund rule.
+4. **The model table:** family to provider, endpoint and price.
+
+Plan 26's cloud workspace calls the same API with the same key.
 
 ## Completion
 
-With local project files and database clearly retained, a creator can instruct their agent to complete approved cloud work, generate an image, render a video and recover editable results in the local workspace. Evidence names exact versions/providers, transfer/retention behavior, spend/cancel controls and non-success tests. This is not proof of fully hosted Astrid.
+On a clean local install, a new user signs in with Discord, receives welcome credits, creates a key and sets it with `run-astrid credential set`. They generate an image, an edit, an upscale and an image-to-video through the Astrid Cloud route, and each lands in the local project as a normal generation. The ledger shows one debit per task.
 
-**Authorization:** queued proposal only. Owner, provider and cost approvals, source identity, credentials, tests and integration destination require a later scoped decision. No deployment or spending authorized here.
+**Negative cases:**
+- a failed provider task is refunded;
+- killing the local Agent mid-generation and restarting produces no second charge or second provider request;
+- a zero balance is refused before any provider call;
+- a revoked key is refused at once;
+- the key is refused by checkout, key minting and worker functions;
+- a Stripe test payment credits once, even when the webhook is replayed.
+
+Evidence names the exact SHAs, the Supabase migration list applied, the providers and models used, and the spend. It is not proof of a hosted workspace.

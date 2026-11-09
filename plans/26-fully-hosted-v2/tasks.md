@@ -1,25 +1,32 @@
-# Plan 26 — tasks (draft planning cards)
+# Tasks — Astrid Cloud workspace, phase 2
 
-[Plan](plan.md) · [Inputs and unresolved choices](inputs.md) · [Status, priority and owner](../index.md)
+[Plan](plan.md) · [Inputs](inputs.md)
 
-**Scope boundary:** this is a distinct, **fully hosted** project, not authorization to relocate V1 users or launch cloud services. The V1 execution/artifact contract must be demonstrated and accepted before implementation here. No database, object store or identity provider has been selected. Apply the [shared run contract](../../skills/astrid-dev-shared/run-contract.md); route (`N`, `X`, `S`), estimate and accountable task owners remain TBD until scoped.
+**Critical path:**
+1. B1, B2 and B3, in parallel;
+2. RS1;
+3. B6, which is the longest of the build tasks;
+4. B10;
+5. B11;
+6. R.
 
-## Task index
+Spikes spend at most the budget the owner approves. No user-facing deployment happens before B11.
 
-| ID / outcome | Route | Depends on | Progress | Focused completion evidence |
-|---|---|---|---|---|
-| C26-01 — Map V1 contracts and current local project/media custody | TBD | Accepted Plan 25 deliverables | Draft | Version-pinned source map of local database, media paths, schema, access rules and verified V1 execution/artifact boundaries |
-| C26-02 — Choose hosted architecture and operating policy | TBD | C26-01 | Draft | Reviewed database, object store, identity, tenancy, residency, encryption, cost/quota and migration choices; explicit unsupported cases and owner approval |
-| C26-03 — Implement hosted project state and durable file custody | TBD | C26-02 | Draft | Authenticated persistence, correct project/media references across sessions, isolation, versioning and negative cross-account tests |
-| C26-04 — Connect hosted agents, generation and rendering | TBD | C26-03; accepted V1 execution contracts | Draft | Remote work uses cloud-owned artifacts without parallel task authority; job/artifact identity, consent, cancellation, recovery and cost proof |
-| C26-05 — Qualify browser-only creative journey | TBD | C26-03, C26-04 | Draft | New user signs in, creates and edits, generates, renders, reopens on another supported device and recovers from interrupted sessions |
-| C26-06 — Qualify operations, privacy and migration | TBD | C26-03, C26-05 | Draft | Repeatable backup/restore, export to local custody, revocation, deletion, limits, tenant isolation, incident recovery and evidence-backed F-006 assessment |
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| B1 Spike, host and image: run Runtime in the foreground, pack host, chat, OMP, ffmpeg and Remotion headless in one container on two candidate hosts. Measure wake-on-open, volume behaviour, cost per active hour and egress | X | Plan 25 A2 (account) | spike notes; a draft image definition | A recorded run on each host: workspace starts, a render completes, stop and wake keep the volume, and timings and costs are recorded | [ ] |
+| B2 Spike, durability: `create_backup` on a workspace, push to a private bucket, `restore_backup` plus activation on a fresh machine, including how the backup key travels. Time it for a realistic project | X | — | spike notes | A restored realm passes the Runtime's integrity checks and serves the same timeline and media; backup and restore times recorded | [ ] |
+| B3 Spike, remote access: the paired relay (workspace as connector, Discord session replacing invitation codes) against a remote door on a subdomain with a same-site cookie. Both need cookie-authorized media, chat through ACP, the App's origin chosen at run time, and the 6-second poll over the internet | S | — | spike notes; prototype branches only | For each: timeline edit round-trip time, media and video playback, a chat turn, another user's session refused, and a closed route table | [ ] |
+| RS1 Review stop on the chosen architecture: host, durability and access (rounds at most 2). A late mistake here would redo B4–B8 | S | B1, B2, B3 | read-only | Findings become rows `RS1.<n>`; the owner answers E1–E3 and E6–E8 before B4 | [ ] |
+| B4 Workspace image and supervisor: pinned image, the Runtime's own service supervision, no systemd, health endpoint | N | RS1 | an image definition (location set by the RS1 outcome) | Image builds from pinned SHAs; a cold start reaches health; services restart on crash | [ ] |
+| B5 Control plane: a `cloud_workspaces` record; `open-workspace` (Discord session in, ensures running, returns a short-lived App session); provisioning that injects the user's Astrid Cloud key; stop and delete | S | RS1, Plan 25 A2 | the Plan 25 Supabase location | Tests: one workspace per user under concurrent opens; other users refused; delete removes the machine, volume and backups; the key never reaches the browser | [ ] |
+| B6 Remote access build per E3, with a **Cloud** entry and a run-time origin in the App (`connection.ts:59-77`, Dockerfile), and the Runtime or relay side | S | RS1, B5 | `astrid-app/src/integrations/runtime/`, App config, and the door or relay per E3 | Playwright against a staging workspace: open, edit, play media, chat; local mode unchanged; another user's cookie refused | [ ] |
+| B7 Idle and backup policy inside the machine: stop only with no App heartbeat, no running or queued task and no active chat turn; back up on idle, before stop and on the E6 cadence; restore on a new machine | X | RS1, B4 | the workspace's supervisor and Runtime backup scheduling | Tests: a queued task blocks stop; a closed browser with a working agent does not stop; a killed machine is restored within E6 | [ ] |
+| B8 Move and export: local to cloud and cloud to local by authenticated backup, including the key, with a parity report | X | B2, B5 | Runtime CLI or App action, and control-plane upload and download | A local workspace moved up and back keeps the same projects, timelines and media digests | [ ] |
+| B9 Workspace usage billing per E4: per-active-minute debit into the Plan 25 ledger, refusal at zero balance with a clear message, visible on the account page | X | B5, B7 | the Plan 25 Supabase location and account page | Tests: minutes billed once; idle is free; a zero balance stops new turns without data loss | [ ] |
+| B10 Agent in the workspace: OMP with the E5 LLM key through the credential path; Astrid Cloud generation with the injected key; chat through the B6 access; renders on the workspace | X | B4, B6 | `astrid-agent` workspace profile and service configuration | A chat turn generates an image and edits the timeline while the user edits too; a render completes on the workspace | [ ] |
+| B11 End-to-end proof of the [completion journey](plan.md#completion) and its negative cases, for a small cohort | X | B7, B8, B9, B10 | read-only on product code; an evidence note | Evidence note with host, SHAs, round-trip and wake times, backup timings and spend | [ ] |
+| B12 Copy and docs: the Cloud choice, what lives where, cost, moving and deletion | T | B6, B9 | App copy and Agent and Runtime docs | Copy review against the principle that the user chooses where work runs, where files stay, what is shared and what it costs | [ ] |
+| R Review rounds (at most 3: cross-repository, security, data) | S | all other tasks | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md). Findings become rows `R<round>.<n>` below this one | [ ] |
 
-## Decisions and boundaries before dispatch
-
-- Cloud **database and durable files** must be authoritative for the hosted project, not a browser UI pointed at a user's local machine. Hosting agent execution alone is V1 and does not satisfy V2.
-- Build on the proven V1 agent, provider and rendering contracts; avoid a separate agent-family orchestration stack. Preserve local-first use for users who choose it.
-- Make data export/migration, tenant isolation, access control, provider costs and recovery demonstrable. Do not automatically upload existing local/private projects or imply multi-user collaboration before its permission model is approved.
-- Before execution, turn each proposed row into a bounded task card with `N/X/S` routing, dependency revisions, an owner, explicit checks and stop/rollback criteria. Decide provider credentials, spend and security/retention policy in a separate authorized scope.
-
-Task progress belongs in this file after authorization; **plan status, owner, priority and remaining estimate** stay only in the [catalog](../index.md).
+Checks use the [shared worker environment](../../env/README.md). Spike tasks carry literal commands and spend caps at dispatch.
