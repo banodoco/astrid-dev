@@ -55,7 +55,12 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 - `int/32-one-generation-path` is **cut** at `8df5c09c2` from the head of `int/33-unblock-live-generation`, and now at **`66e4777`** (T2a fast-forwarded in).
 - Environment: smoke **passed** (33 passed on `int/32` at `8df5c09c2`, via the `agent-setup.sh` then `agent-pytest.sh` path, because the `astrid-agent-pytest` wrapper is broken until the fix in astrid-dev #145 reaches the environment).
 - T2a: **merged** to `int/32` at `66e4777`. Its worker reported both proofs passing: `tests/core/extensions` and `tests/core/generation/test_runpod_engine_selection.py`.
-- Plan 33: U6 landed on `int/33` (`4cfbdac`). U3 has **not** landed, so T1 is still held, and T1 and T3 wait behind it.
+- Plan 33: U3+U5 and U2 landed on `int/33`. `int/33` is at `a105de3a` (main-merged, landing only). `int/33` is merged into `int/32`, now at `372f34fb1`. The overlap rule has ended.
+- T1: `plan32/t1-characterize` pushed at `af2ffae`. Per the advisor, the 17 red cells are **characterized, not xfailed**: each asserts today's actual refusal or error, with a `# T1 characterization: flips in T<n>` comment. (The repo's skip guard turns xfail into failures, `tests/lanes.py:246`.) T1 merges into `int/32` when it is green.
+- Dispatched 8 Nov, 02:41Z, each cut from T1's head merged with `int/33`, so they have the harness, and each merges after T1:
+  - T3 (X, Placement): `plan32/t3-placement`, worker `session_011EzfW2k9PnrwJ5yrqnVXnT`.
+  - T2 manifest (X): `plan32/t2-manifest`, worker `session_011EzfW1odTqKuC8ycfPKmfq`. Builds on T2a's engine point already on `int/32`.
+  - App `--placement` rename (X): `plan32/t3-app-placement` cut from astrid-app `main`, worker `session_011EzfW15EYWoDKwCtDsn2Qj`.
 - Owner decisions, 8 Nov, relayed by the advisor:
   - No GPU validation of Plan 33's route. Plan 34's first pass is dropped, and Plan 32 goes as fast as possible.
   - Plan 33 U4 (h3_av) is stopped and U7 (reuse window) is cancelled; both are superseded by T6b and T5. Plan 33 finishes U2, U3 with U5, U6, one review round, then U9.
