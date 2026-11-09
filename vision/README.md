@@ -44,11 +44,11 @@ Our tools, models and ideas should be completely open to inspect, adapt, fork an
 
 ### [In the creator's control](principles/in-the-creators-control.md)
 
-Creators should control every part of Astrid, including its core workings. Choose features and services, set agent permissions, and decide what remains private or gets shared. These controls should be clear and approachable, without requiring creators to become experts in the underlying technology.
+Creators should control every part of Astrid, including its core workings. Choose features and services, set agent permissions, and decide what remains private or shared. These controls should be approachable, without requiring creators to master the underlying technology.
 
-### [Eliminate needless technical wrangling](principles/eliminate-needless-technical-wrangling.md)
+### [Eliminate technical wrangling](principles/eliminate-needless-technical-wrangling.md)
 
-Artists should focus on creating, not installing models or fixing environments. Agents handle finding and setting up tools, managing dependencies, running jobs and recovering from errors. The choices that matter—permissions, costs and where work runs—remain visible and easy to understand.
+Artists should focus on creating, not installing models or fixing environments. Agents find and set up tools, manage dependencies, run jobs and recover from errors. The important choices—permissions, costs and where work runs—remain visible and easy to understand.
 
 ## Gaps — 17 assessed outcomes
 
