@@ -28,6 +28,12 @@ The creator should know where work runs and what leaves their machine.
 
 Choices about uploaded data, remote storage, permissions, services, and costs should be visible and revocable where possible, so convenience does not obscure control.
 
+### Cloud as frugal as possible
+
+Cloud tools should be inexpensive enough to encourage experimentation rather than ration it.
+
+Artists have always shared tips on where to find affordable materials—even cheap turpentine matters when you need the freedom to try things. We want the same spirit in cloud inference: use efficient models and infrastructure, make costs easy to compare, and seek the least expensive suitable route to a creative result. Frugality should broaden experimentation without sacrificing quality, privacy, or the creator's choices.
+
 ## References
 
 Related work is tracked in the [vision gap catalog](../gaps/).
