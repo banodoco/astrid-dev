@@ -226,3 +226,39 @@ Reviewed on Runtime `3d19ba9a`, Agent `41170fdb`, App `73a8500d` (superseded; se
 - **Published mains:** Agent `72462b04` (PR #318), Runtime `21df9bfb` (PR #42), App `1db36e66` (PR #222). `int/29-update-and-release` in each repo is fast-forwarded to its main.
 - **Deferred and unproven (see the completion assessment in #137):** composition-content seed (UR-R2.1d, 0.0.11); review items UR-R2.2, UR-R2.3, UR-R2.5 (Plan 30), UR-R2.8, UR-R2.11; Pinokio, fully local and older-Linux setups (Plan 30); the Windows discovery.json race (not yet filed as an issue).
 - **Advisor session:** session_011EzfVzreGCJJQnTuXpbib9 (M-INT).
+
+## Release 12 progress
+
+Status as of 20:42 UTC. Rows are recorded as reported; the bucket-A record is [PR #203](https://github.com/banodoco/astrid-dev/pull/203).
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| **Bucket-B fix rows** | | | | | |
+| Installer and diagnostics, 26 ids (includes the 6 candidate-only ids in `test_installer_app_update.py`) | — | — | `test_installer_app_update.py` | 26 ids | IN PROGRESS: 18 of 26 passing earlier; remaining work in progress on `fix/r12-autostart` |
+| H3 endpoint, 14 ids | — | — | — | 14 ids | OPEN: the worker reports they pass at `f12b35d3d`; cause not yet established (read-only investigation in progress) |
+| **Review rows** | | | | | |
+| R1 (installer): refusal after the old Runtime stopped reports exit 3, should be exit 1 | — | — | installer | — | OPEN |
+| R2 (installer): leftover journal after a rolled-back install may refuse forever | — | — | installer | — | OPEN, check first |
+| R3 (Agent tests): runtime-not-running test and scoped fixture | — | — | Agent tests | — | DONE at `96fc740`, accepted |
+| R4 (Agent): missing-input message names the wrong path | — | — | Agent | — | OPEN |
+| R5 (Runtime): POST reason for malformed choices | — | — | Runtime | — | DONE at `9b4d45d`, accepted (no contract change) |
+| R6 (Runtime): legacy `preferences.autostart` never written by a released Agent | — | — | Runtime | — | DONE at `40e41b2`, accepted |
+| R7 (Runtime): skip guard pins test ids and exception type | — | — | Runtime | — | DONE at `2ccaf31`, accepted |
+| R8 (App): release-guard checks pinned SHAs | — | — | App | — | DONE at `73685aa`, accepted |
+| R9 (App): autostart-off card uses `localBuild` | — | — | App | — | DONE at `0531948`, accepted |
+| R10 (App): pack re-poll key includes runtime release | — | — | App | — | DONE at `0ec81f1`, accepted |
+| R11 (App): vendor-lock check at `744cf248` | — | — | App | — | OPEN, not confirmed |
+| R12 (App): acknowledgement-unknown title agrees with body | — | — | App | — | DONE at `42f6fa9`, accepted |
+| R13 (App): plain policy refusal never shows recovery-needed | — | — | App | — | Checked: no. Recorded as a note |
+| R13b (Runtime and App): recovery-needed reads busy, or echoes the policy reason | — | — | Runtime, App | — | DONE: Runtime at `9ad827c` and `a23011f`, accepted; App recovery-card fix at `c134772`, accepted |
+| R14 (Runtime): Windows no-task-folder gap | — | — | Runtime | — | NO: not reachable from release 10 or 11. Goes to Plan 30 |
+| **Other rows** | | | | | |
+| Pinokio fully-local install-type guard | — | — | App | — | DONE at `e588909` and `1101e01`, accepted. Launcher derivation fix at `810e326`, accepted |
+| Hosted-origin setup in two tests | — | — | Agent tests | — | DONE at `84d8f4e`, accepted |
+| Windows PowerShell test and copy | — | — | Agent tests, App copy | — | DONE at `ca95aaf` and `87df2bc` (copy wording fix pending confirmation) |
+| 17 regressions from `871bb95` (`installCommand --yes`) | — | — | — | 17 regressions | OPEN: narrowed fix in progress on `cand/29-r12` |
+| Hang check (CI unit shards 1 and 8) | — | — | CI | — | Shard 1 cause found, `opt_in` at `e825657`. Shard 8 not confirmed. Hang check worker still running |
+| Shakedown run: `journey.yml` run `42694815514` on `harness/29-r12` (row=direct, head `bbdaca8e`) | — | — | `journey.yml` | run `42694815514` | IN PROGRESS |
+| Plan 39 bucket-A record: [PR #203](https://github.com/banodoco/astrid-dev/pull/203) | — | — | plans | — | OPEN, not merged |
+| **Plan 30 items (non-blocking)** | | | | | |
+| Windows refusal matched by message text; dead `except` clause; null choices; check order in status; transient 404 flag; remaining Windows-no-task-folder gap (R14) | — | — | Plan 30 | — | Recorded for Plan 30, non-blocking |
