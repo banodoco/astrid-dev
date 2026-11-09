@@ -352,3 +352,9 @@ One line per item: owner session, branch/SHA, state, next step.
 
 Video-references: resolved on int/32 by `041fb242b` (T6b-3 fix6/fix6b); reviewer OK.
 - **Follow-up (not a must-fix): prepared-worker island, RunPod account-ref refusal.** Evidence: `astrid/packs/runpod/prepared_task.py:608` (mismatch refusal) sits in `_ProductionPreparedTaskRuntime._components`, reached only via `PreparedRunPodGeneration.bind_client` (`astrid/packs/runpod/generation.py:201-214`); the machine route uses `prepare_retained_generation` (machine.py:469, adapter.py:18). Tests: `test_prepared_task.py`, `test_https_transport.py:236`. Filed under Plan 14's "prepared-worker island: audit, then delete" row. No worker in Plan 32.
+
+## Progress 15 (manager): shard IDs and follow-ups
+
+Shard sessions (for delta re-runs): A `session_011EzfW3CaNuPW9MVcLt8XUr`; B `session_011EzfVze1kQLDP2pHMBQfTa`; C `session_011EzfW3RWkUCtWTbhTqksTB`; D `session_011EzfW3pBGYXbnX2YtXneBT`; E `session_011EzfW2SrM1VTtVCnoePc4j`.
+
+Follow-up (not a T8 gate): unreproduced order-dependent flake, `tests/packs/rendering/test_render_export_task_adapter.py::test_registry_qualifying_discovery_refuses_corpus_change[new_manifest]`. Evidence: fails in shard D's single-process run on e0df2459a (registry_settle completes without noticing a new local pack; no "corpus changed" raised; astrid imports from its own worktree). T6b-3 reproduced the same 290-file order in one process on e0df2459a (20m12s) and it passed; shard D's run was 216 failed / 4913 passed / 78 errors with that file's only failure being `test_render_export_adapter_writes_real_mp4_and_is_callable`. Suspect env state (tar fixture warnings at test_render_export_task_adapter.py:77; leftover state under the worktree env). Owner: T6b-3; shard D single-test run pending.
