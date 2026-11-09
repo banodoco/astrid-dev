@@ -16,17 +16,17 @@ The shared core should stay understandable and reliable while creative tools evo
 
 Timelines, media, projects, identities, validated operations, and permissions are durable resources shared by human-facing interfaces and agents. Specialized behavior belongs in reusable components and packs; extend the core only for genuinely shared needs.
 
-### Live composition
+### Live tool composition
 
-Creators should be able to rearrange and reconfigure their tools without interrupting their work.
+Creators and agents should be able to reshape their tools without interrupting creative work.
 
-Dock, float, nest, or spatially arrange views while keeping the right timeline, selection, playback, and task bindings. Changing a component's position must not silently change the underlying project or discard its state.
+Every interface component should be dockable, floatable, nestable, or spatially arrangeable, while keeping its bindings to the right timeline, selection, playback, and task. Agents should be equally free to reorganize and extend their own tools to accomplish a creative goal, within the creator's permissions. Neither a human nor an agent should lose project state simply because a tool has been rearranged.
 
 ### Real-time functionality
 
 The capabilities of a tool should be adjustable while the creator is using it.
 
-People and agents should be able to connect components, change behavior, introduce new controls, and install trusted extensions as the creative problem changes. Each extension should expose useful extension points of its own rather than becoming another fixed interface.
+People and agents should be able to connect components, change behavior, introduce controls, and install trusted extensions as the creative problem changes. An agent should also be able to extend its own capabilities rather than remain trapped by a fixed initial toolset. Every extension should expose useful ways for others to build on it.
 
 ### Shared human–agent work
 

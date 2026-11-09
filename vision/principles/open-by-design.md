@@ -2,31 +2,37 @@
 
 ## Statement
 
-Every layer of our tools should be open to inspect, adapt, fork, and share.
+Our code, decisions, methods, and discoveries should be open wherever they can be shared responsibly.
 
 ## Explanation
 
-Our tools, models, and ideas should be open so that artists and developers can understand what they use and build on one another's work. Openness should make creative capabilities more adaptable and durable, not simply make source code visible.
+Openness should shape how we build and communicate, not merely the licenses attached to code. We want our reasoning, decisions, tradeoffs, failures, methods, and tools to be inspectable, so that people can challenge them and build on them. Creators still decide what personal information and working knowledge they share.
 
 ## Characteristics
 
 ### Inspectable foundations
 
-People should be able to understand and examine the systems behind their work.
+Anyone should be able to trace how the tools they depend on actually work.
 
-Open-source software, models, interfaces, and documented behavior make it possible to assess how tools operate and where their limitations come from, rather than relying on an opaque service.
+Source code, models, interfaces, tests, and documented behavior should make it possible to investigate how a tool works, where its limitations lie, and which decisions shaped it. Openness should extend to the reasoning behind our technical and strategic choices, not just the resulting artifacts.
 
-### Freedom to adapt and fork
+### Forking must be real
 
-Creators should be able to change the tools they depend on.
+The right to adapt a tool should be practical, not merely a line in a license.
 
-A component or system can be copied, modified, replaced, or independently maintained where its license permits, without tying the creative process to a single provider or product direction.
+Creators should be able to inspect, copy, modify, replace, and independently maintain the components they depend on, within the rights of their licenses. Portable projects, understandable interfaces, and replaceable providers make the freedom to fork a real option rather than a theoretical promise.
 
-### Reusable contributions
+### Built for reuse
 
-Useful tools and knowledge should be easy to share and build upon.
+Every useful component should make it easier for someone else to build the next thing.
 
-Clear extension points, open formats, and contributions that compose with existing capabilities let the community build a growing foundation rather than isolated, incompatible additions.
+Reusable contributions are a design requirement, not an afterthought. Clear extension points, open formats, and capabilities that compose with existing ones should turn individual inventions into a shared foundation rather than a collection of isolated tools.
+
+### Open decisions and working knowledge
+
+We should share how things really work, not only the code that implements them.
+
+With the creator's permission, useful workflows, agent discoveries, failures, model choices, and the knowledge gained from actual projects should be shareable with attribution and context. Our own strategy, reasoning, and decisions should be explained openly where possible, while private material and sensitive information remain under their owners' control.
 
 ## References
 
