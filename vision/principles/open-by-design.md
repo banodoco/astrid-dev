@@ -2,11 +2,11 @@
 
 ## Statement
 
-Our code, decisions, methods, and discoveries should be open wherever they can be shared responsibly.
+We want to open not just our code, but our knowledge, ideas, and even our ownership.
 
 ## Explanation
 
-Openness should shape how we build and communicate, not merely the licenses attached to code. We want our reasoning, decisions, tradeoffs, failures, methods, and tools to be inspectable, so that people can challenge them and build on them. Creators still decide what personal information and working knowledge they share.
+Our code is open, but openness should reach further: to our evolving vision, experiments, decisions, execution, and what remains unfinished. Knowledge and ideas should be reusable, with creators deciding what private work they share. We also aspire to share company ownership with meaningful contributors; the eligibility, allocation, and legal implementation of that commitment are not yet settled.
 
 ## Characteristics
 
@@ -32,8 +32,8 @@ Reusable contributions are a design requirement, not an afterthought. Clear exte
 
 We should share how things really work, not only the code that implements them.
 
-With the creator's permission, useful workflows, agent discoveries, failures, model choices, and the knowledge gained from actual projects should be shareable with attribution and context. Our own strategy, reasoning, and decisions should be explained openly where possible, while private material and sensitive information remain under their owners' control.
+With the creator's permission, useful workflows, agent discoveries, failures, model choices, and knowledge from actual projects should be shareable with attribution and context. We should openly explain the relationship between our vision, experiments, implementation, results, and remaining gaps; we have not made that relationship sufficiently clear yet. Private material and sensitive information stay under their owners' control.
 
 ## References
 
-Related work is tracked in the [vision gap catalog](../gaps/).
+Related work is tracked in the [vision gap catalog](../gaps/), including [CA-003 — Public vision and progress are not yet clearly connected](../gaps/CA-003-vision-experiments-progress.md) and [CA-002 — Contributor ownership](../gaps/CA-002-contributor-ownership.md).
