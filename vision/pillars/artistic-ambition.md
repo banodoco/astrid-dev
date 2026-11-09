@@ -6,27 +6,27 @@ Astrid is designed to support serious, sustained artistic practice.
 
 ## Explanation
 
-Everything should be built so that the artist can define, direct, and understand the work. From early experimentation through demanding projects to finished pieces, Astrid should increase artistic possibility while preserving the artist's intent and judgment.
+Everything should be built so that artists can define, direct, and understand their work. From early experimentation through sustained projects to finished pieces, Astrid should foster a deep, evolving partnership between the artist, their agents, and their tools—one that expands possibility while preserving the artist's intent and judgment.
 
 ## Characteristics
 
 ### Artistic agency
 
-The artist should be able to define and direct the work at every stage.
+Astrid should be designed so artists can define and direct their work at every stage.
 
-The creator chooses what to make, how to refine it, and which advice to accept. Agents should expand the available options without silently replacing the artist's judgment or making the work impossible to understand.
+The creator chooses what to make, how to refine it, and which advice to accept. Their agents and tools should become ever more capable collaborators without silently replacing artistic judgment or making decisions impossible to inspect and understand.
 
 ### Continuity and iteration
 
 Ambitious work should remain editable across many sessions and revisions.
 
-A project must preserve its materials, decisions, history, and working state so that artists can return, compare alternatives, refine difficult passages, and sustain a coherent direction over time.
+A project must preserve its materials, decisions, history, and working state so that artists can return, compare alternatives, refine difficult passages, and sustain a coherent direction over time. Continuity is what allows the artist's relationship with their tools and agents to deepen rather than reset with every session.
 
 ### Finished artistic work
 
 The tool should help creators carry their ideas through to meaningful completed work.
 
-We should assess whether artists can make original, demanding pieces that express their intentions and withstand serious personal or peer critique, rather than treating an isolated generation as the outcome.
+Every blocker that inhibits artists from making original, demanding pieces is worth tackling, whether it is a small irritation or a fundamental limit of the technology. No problem should be beneath our attention or beyond our ambition in that pursuit; we should judge success by the finished work artists can make and stand behind.
 
 ## References
 
