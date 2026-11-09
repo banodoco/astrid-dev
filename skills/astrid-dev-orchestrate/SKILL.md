@@ -12,6 +12,8 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 
 You don't verify tasks, run tests, edit task code or follow the run between check-ins. Managers and their workers do that, and they make routine calls themselves.
 
+**You orchestrate; the manager manages.** Sometimes you'll catch yourself writing a manager's dispatch plan for it: which tracks run in parallel, the per-worker steps, or when to escalate. That means the manage skill is missing a rule. Send the manager one line that names the goal, and point it to the rule. Then add the rule to the [manage skill](../astrid-dev-manage/SKILL.md) by PR, so the next manager doesn't need you.
+
 You act for the owner across projects. You don't run tasks yourself: a [manager](../astrid-dev-manage/SKILL.md) does. Follow the [run contract](../astrid-dev-shared/run-contract.md); in `run.yaml` your role is `advisor`. Take the path that matches what the owner or an agent asked for:
 
 | Asked for | Path |
@@ -25,13 +27,15 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
 
 ## Path 1: start a project
 
-1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../strategy.md) and the [catalog](../../plans/index.md). With no accepted plan, write one with [Plan](../astrid-dev-plan/SKILL.md) and get the owner's scope decision; you may do the planning yourself. A draft plan authorizes nothing.
+1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../strategy.md) and the [catalog](../../plans/index.md). With no accepted plan, write one with [Plan](../astrid-dev-plan/SKILL.md) and get the owner's scope decision; you may do the planning yourself. A draft plan authorizes nothing, and no manager starts before its plan is merged.
+   - **Fix the scope when the run starts.** When the owner adds scope to a running release, say what it reopens (tests, re-pins, review) and offer the next release instead. Add it only if the owner decides to.
 2. **Check the cloud setup** (next section) for each repository the plan changes, before anything runs.
 3. **Farm it out.** Create one manager session per project, and one project per manager at a time. Give it:
    - the plan's path;
    - the integration branch (`int/<project>`), and the exact starting versions;
    - the owner's limits (budget, CPU or GPU, what needs a go);
-   - your session id for questions.
+   - your session id for questions;
+   - its model. A release, a run across more than one repository, or a run with a deadline gets a manager from the strongest available class. An N-class manager suits only a one-repository run of N tasks. Record the choice under `roles.manager` in `run.yaml`. Don't swap managers mid-run, because the new one loses the run's context. Escalate its hard failures to stronger workers instead.
 
    Its first step is Manage step 1: a run file plus a smoke worker per repository.
 4. **Schedule check-ins** if the owner wants them (path 3).
@@ -62,7 +66,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 
 ## Path 3: check in (only when the owner asks)
 
-When the owner asks for regular check-ins on a run, take the cadence and end condition from that request and record them as `checkin` in the run's `run.yaml`. Schedule them from your own session as a durable scheduled task that survives restarts, never a session-only timer. These documents never start a check-in themselves.
+When the owner asks for regular check-ins on a run, take the cadence and end condition from that request and record them as `checkin` in the run's `run.yaml`. Schedule them from your own session as a durable scheduled task that survives restarts, never a session-only timer. A scheduled task fires at most hourly. For a faster cadence while a release's critical path runs, chain one-off `send_later` messages. Each one re-arms itself until the end condition is met, and the hourly task stays as a backstop. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, the nudge is to wake it with one next action.

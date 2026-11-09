@@ -52,6 +52,10 @@ environment:
   # The cloud environment workers are created in, and the smoke result per repository (env/smoke.sh).
   cloud_environment_id: ""
   smoke: {}   # e.g. astrid-agent: "ENV-PASS agent <selector> @ <sha>"
+# Failing test ids per repository and baseline, recorded before the first task
+# (Manage step 1). A regression ran and passed on a baseline and fails on the candidate.
+# e.g. astrid-agent: {served-release-11: {sha: "", failing: "<path to id list>"}}
+baseline: {}
 checkin:
   # Only when the owner asks for advisor check-ins; leave empty otherwise.
   every: ""   # for example 60m
