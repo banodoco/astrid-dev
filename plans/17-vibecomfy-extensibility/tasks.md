@@ -9,7 +9,7 @@ Routes: `N` is the default, `X` very hard, `S` super hard ([run contract](../../
 - Line numbers below are at Agent `5eac07e3f`; re-check them on the base.
 - **CPU only:** P4's live run is [Plan 34](../34-real-gpu-proof/plan.md)'s.
 - Run only the named selectors, using `PYT` and `PYT_POD` from [Plan 33's tasks](../33-unblock-live-generation/tasks.md).
-- Add no versions, priorities, point inheritance, per-contribution trust or entry-point discovery (see the plan's Deferred list).
+- Add no versions, priorities, point inheritance or per-contribution trust (see the plan's Deferred list). **Entry-point discovery is now in scope (owner, 9 Nov), but only for pinned distributions:** Astrid loads `load_plugins(only=<pinned dists>, drop_ins=False)` and lists unpinned entry points without loading them.
 - Start only on the owner's go.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
@@ -83,3 +83,30 @@ It must say that the `vibecomfy.workflows` field `finalize` is not VibeComfy's t
   - a generate on Plan 33's stand-in ComfyUI (local) and through Plan 32 T5's RunPod CPU fake;
   - the output is a video with the generated audio track (`ffprobe` shows one video and one audio stream), from a lavfi source clip.
 - `astrid packs extensions` lists the contribution.
+
+## Breakdown for the VibeComfy generalisation (Opus investigation, 9 Nov 2026; draft rows, not dispatched)
+
+Read at VibeComfy `e65f494` (the pin) and `e2905d0` (main), and Agent `origin/t6b1` `8c454ac07` and int/32 `7639a9569`. Estimate: about 9–12 days (inferred).
+
+| Row | Repo | Scope | Depends on | Route | CPU proof |
+|---|---|---|---|---|---|
+| V1 | VibeComfy | `PluginAPI.register_workflows(ready_root, entries, build=None, after_outputs=None, *, name)`, the family registry with origin (distribution and version, or drop-in path), entry `inputs: [{name, type, required}]` with `file` and `file_map` types (moved here from Astrid core), `needs` as objects, and `load_plugins(only=, drop_ins=)` | Plan 32 T6b-2's final shape | X | New `tests/test_workflow_families.py`: a fixture distribution's entry point registers; strict entry keys; drop-ins are not executed under `only` |
+| V2 | VibeComfy | `vibecomfy run --entry ID --input k=v --file k=path --files k=@map.json [--dry-run]`; `build` replaces the bundle path before `load_bundle` (`commands/run.py` ~374); media staging lifted from Astrid (`local_server_engine.py:341-355`), so uploads to a server and copies for embedded; `after_outputs` runs on `execute_once()`'s result | V1 | X | A fake ComfyUI runs a fake family; `after_outputs` rewrites the output; a raise exits 1 |
+| V3 | VibeComfy | `vibecomfy.media`: probe (promoted from `runtime/session.py` ~4630), stream coverage, mux, splice and sample digest, lifted from h3's `compose.py` and `verify.py` (about 350 of its 1,398 lines) | none | N | lavfi clips |
+| V4 | VibeComfy | Authoring docs and a release | V1–V3 | N | Docs check |
+| H1 | new repo `banodoco/vibecomfy-h3` | The h3-specific code (request v1 and v2, Character Swap, spec, planner, masks, static regions, timing, builders, trios, `measure_h3_source_av`, compose and verify) on `vibecomfy.media`, as distribution `vibecomfy-h3` with entry point `vibecomfy.plugins: h3 = vibecomfy_h3:register` | V1–V3, Plan 32 done | X | The four h3 test files pass; `vibecomfy run --entry h3` on the Matrix fixture with a fake ComfyUI |
+| A1 | Agent | The mirror: a thin pack's contribution carries `plugin: {distribution, version, sha256}` instead of `ready_root`; `astrid packs add` installs that exact wheel (install is the trust moment; a digest mismatch is quarantined); Astrid-pack contributions are forwarded to `register_workflows`; T6d's `default_for` moves into an Astrid-only sibling field; `prepare` and `finish` delegate to VibeComfy | V1, V2, P1 | S | Pinned plugins load; unpinned ones are listed with reason `unpinned` and not loaded; a digest mismatch is refused |
+| A2 | Agent | `requirements()` adds `extra.plugins[{dist, version, sha256}]` and `validate_extra` allows it; the machine's `claim` installs the wheel before the pod-side `generate`; `machine_custody` includes plugin digests; installed (non-built-in) packs ship to the pod | A1 | X | `PYT_POD test_remote_machine_cpu.py`: h3 through the plugin; a warm pod with a different plugin is not reused |
+| A3 | Agent | `h3_av` slimmed to its pin and SKILL; code deleted | H1, A2 | N | Generate on local, attached and the RunPod fake; the h3 grep finds only the pin |
+| S2-plugin | poms_packs | Sound on video as a native plugin plus a thin pack: the foley template plus `vibecomfy.media` mux (replaces P4's Astrid-only version) | V1–V3, A2 | N | Standalone and Astrid runs, local and the RunPod fake; ffprobe shows one video and one audio stream |
+
+**Owner questions (open):**
+1. The licence and home for h3: Apache-2.0 in a new repo (the advisor recommends this), or MIT inside VibeComfy. The H3 weights and the Character Swap LoRA licences are still unrecorded.
+2. How Astrid installs a wheel: into its shared venv, or a site directory per pack.
+3. Who reviews VibeComfy changes.
+4. Wan2GP (Plan 12) gets no `build` or `after_outputs`, since the hooks live in VibeComfy.
+
+**Notes:**
+- Standalone VibeComfy's own remote RunPod binding runs `after_outputs` on the client, not the pod. Document this.
+- Multi-pass requests stay out of scope.
+
