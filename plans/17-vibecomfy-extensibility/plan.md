@@ -2,11 +2,13 @@
 
 **Vision gaps:** [Composable capabilities](../../vision/gaps/LS-003-full-stack-contributions.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).
 
-**Contributes to closure:** F-008 step 3: the pack extension protocol switched on and proven with a second, non-h3 composite pack. Milestone C.
+**Contributes to closure:** F-008 step 3: the pack extension protocol switched on and proven with non-h3 workflow families (an image family and sound on video). Milestone C.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 A pack can extend another pack. A pack declares a named **extension point** with a versioned schema. Another pack **contributes** to it. A composite pack contributes to several points at once, for example a VibeComfy workflow, a generation engine, a timeline effect and a UI panel, and it all works together through one install, trust and discovery path. This remains a draft; queue status, owner and estimate are in the [project queue](../../README.md).
+
+Since the owner's later direction of 9 Nov (below), the main outcome is that **anyone can build one agent-facing tool over a family of workflows**, as h3_av does for MiniMax H3, with the variant chosen by intent. The extension protocol is how such a family installs into Astrid.
 
 ## Direction (8 Nov 2026)
 
@@ -46,38 +48,110 @@ What is general moves **into VibeComfy itself**, so standalone VibeComfy users g
   - a grep finds no h3 code in Astrid outside the pinned plugin reference.
 - **Cross-repository:** VibeComfy changes land in VibeComfy first, then Astrid pins them. Releases follow the shared run contract.
 
+## Direction (owner, 9 Nov 2026, later): one route over a family of workflows
+
+**Her framing** (spoken, paraphrased; source in [inputs.md](inputs.md#owner-direction-9-nov-later)):
+- h3_av is a tool for building workflows from what an agent needs. It gives an agent, in a form it can parse, one tool on top of a set of workflows, here MiniMax H3.
+- Generalise all the machinery that makes that work, so other people can build tools like it for other kinds of workflow.
+- Her example is an image tool. It is set up differently when the user wants inpainting or another variant, but it gives them a single route to all of them: one agent-facing tool over a family of workflows, with the variant chosen by intent.
+- Not building it yet: think it through, then update this plan.
+
+**What the earlier 9 Nov design leaves out.** It generalises how one entry is built and finished (`build`, `after_outputs`, file maps and media helpers). It does not generalise how a tool picks *which* workflow to run. Today that choice lives in three unrelated places, and an agent can read none of them:
+- h3's `branch_for`, in code;
+- Astrid's hard-coded `_infer_image_mode` and `_infer_video_mode`;
+- VibeComfy's router, whose predicates are opaque lambdas.
+
+A thin entry also has exactly one `bundle`. So today "one tool, variants by intent" can only be written by hiding the choice inside `build`, where neither `describe` nor a dry run can show it. The first-principles split, with file:line evidence, is in [inputs.md](inputs.md#what-the-h3_av-machinery-is).
+
+**Design: a workflow family is an entry with variants.** This is part of VibeComfy's `register_workflows` contract, and Astrid's `vibecomfy.workflows` point mirrors it.
+- An entry may carry an ordered `variants` list. Each variant is `{id, mode, bundle, when, summary, inputs, defaults}`; `bundle` and `inputs` are optional when the family has a `build`. An entry without `variants` is a one-variant family, so every existing entry and every version-1 contribution stays valid.
+- **`when`** is a small declarative test over named inputs: `present: [...]`, `absent: [...]` and `equals: {path: value}`. The first variant that matches wins, and the last may have no `when`, as the fallback. An explicit `variant` input overrides the test. If the inputs don't fit the chosen variant, the request is refused.
+- **`route: file.py:fn`** is optional, for rules `when` cannot express, such as h3's tests over its media list. It returns `{variant, reason}`, is pure and runs on CPU.
+- **`request`** is optional: a JSON Schema for one structured request document (h3's v1 and v2). Without it, inputs are flat typed ports.
+- `build(inputs, files, out, *, variant)` and `after_outputs` work as before. `after_outputs` may return `{outputs, evidence}`, for example a preservation check, so there is no separate verify hook.
+- Every refusal has one shape, `{code, field, fix}`, lifted from h3's `H3RequestError`.
+- A variant's `id` is the family's own name; its `mode` comes from the shared vocabulary (`t2i`, `inpaint`, `v2v` and so on), so Plan 32 T6d's default slots still key on `(kind, mode)`.
+
+**The agent contract, which every family gets for free:**
+- **Discover:** `vibecomfy entries --json` and `astrid generate list` show one row per family.
+- **Describe:** `describe --entry <id> --json` gives the request schema or inputs, then the variants in order, each with its mode, its `when` (or the route's summary), inputs, defaults and availability. One read tells an agent every route.
+- **Plan:** `--dry-run` returns one envelope: `{entry, variant, reason, inputs (defaults applied), bindings, needs, warnings, ignored_fields, details, submission: eligible | blocked, error}`. `details` is the family's own plan from `build`. h3's `plan.json` becomes this envelope with h3 details (timing, trim, mask previews).
+- **Run:** the same command without `--dry-run`, on any placement.
+
+**Burn down: three routers become one.**
+- VibeComfy's built-in router rules (`router/_rules.py:53-70`) become variants of built-in `image` and `video` families. `router.pick` reads those, and `register_route` leaves `PluginAPI` (owner decision 1 in [inputs.md](inputs.md#open-owner-decisions)).
+- Astrid deletes `_infer_image_mode`, `_infer_video_mode` and `_EXPLICIT_ONLY_IMAGE_MODES`. A `generate image` with no entry uses the kind's default family, which routes. A user's `(kind, mode)` pin from Plan 32 T6d still wins for the mode the family routes to.
+- h3's `branch_for` becomes its `route`. Its own CLI (`astrid h3 plan|run|compose|edit`) is deleted in favour of describe, `--dry-run` and run.
+
+**Where it lands:**
+- **VibeComfy:** variants, `when`, the route hook, selection, describe, the plan envelope, the refusal shape, and the router rules as built-in families, together with V1–V3 from the earlier direction.
+- **Astrid:** projects VibeComfy's describe and plan without reshaping them; raises the `vibecomfy.workflows` point to version 2 with `min_supported: 1`; deletes its mode inference; adds one section on families to the generation skill.
+- **h3:** its request schemas, its route (`branch_for`), builders, timing, Character Swap, masks, its plan details, and an `after_outputs` built on the media helpers.
+
+**Tested against two families:**
+- **Image:** txt2img, img2img, inpaint (with a mask) and outpaint, as a native plugin with no Python apart from an optional preservation check. The variant is chosen by which inputs are present. This proof is required, because sound on video has a single variant and does not test routing at all.
+- **Sound on video:** a one-variant family proving `after_outputs` and the mux helper.
+- **Lip-sync, considered:** audio-driven lip-sync fits. Text-driven lip-sync needs TTS and then lip-sync in sequence, a multi-pass request. That stays out of scope and is recorded as an extension need.
+
 ## Goal and scope
 
-- **Included, after Plan 32 T6b:**
-  - run the extension registry check inside the install transaction;
-  - add the owner-dependency rule;
-  - add `astrid packs extensions` to list points, contributions and problems;
-  - write the protocol docs;
-  - prove it with a **second, non-h3 composite pack**: **sound on video**, which reuses the existing sound-effects template and adds a `finalize` that muxes the generated audio onto the source video.
+**Goal:** anyone can build one agent-facing tool over a family of workflows, with variants chosen by intent and a describe and dry-run plan an agent can parse, first in standalone VibeComfy and then through Astrid. h3_av becomes one such family, a VibeComfy plugin. Astrid's extension protocol is switched on to install families.
+
+- **Included, phase 1 (VibeComfy, standalone):** workflow families in VibeComfy (V1, V5, V2, V3, V4) and the image family proved standalone (IMG, first half).
+- **Included, phase 2 (Astrid, after Plan 32 T6b; A4 after T6d):**
+  - run the extension registry check inside the install transaction, with the owner-dependency rule (P1);
+  - add `astrid packs extensions` to list points, contributions and problems (P2);
+  - the mirror and pinned plugins (A1, A2);
+  - h3 as a plugin (H1, A3);
+  - family routing through `generate`, deleting Astrid's mode inference (A4), and the image family through Astrid (IMG, second half);
+  - sound on video as a native plugin (S2, replacing the earlier Astrid-only P4);
+  - the protocol and family docs (P3).
 - **Deferred:**
   - folding the remaining `pack.extensions.generation.*` keys (`features`, `modes`) into a point (Plan 32 T6 deletes the hard-coded h3 backend; nothing else needs the rest yet);
-  - version ranges, priority fields or point inheritance;
-  - per-contribution trust;
+  - version ranges, priority fields or point inheritance (the point's existing integer `version` and `min_supported` are enough);
+  - per-contribution or per-variant trust;
+  - variants that chain workflows (multi-pass, such as text-driven lip-sync);
+  - routing by a language model: routing is deterministic from inputs, and the agent states its intent through inputs or `variant`;
   - hot reload of Agent-side points;
   - unifying the App manifest with the Agent registry;
   - migrating `actions`, `ui` or `rendering` into points.
-- **Undecided:** whether the App's closed contribution kinds join the protocol in this plan or a later one.
+- **Undecided:** whether the App's closed contribution kinds join the protocol in this plan or a later one. Also the open owner decisions in [inputs.md](inputs.md#open-owner-decisions).
 
 ## What we build on
 
-The protocol (`astrid/core/extensions`) and the three points Plan 32 creates. h3_av is the first contribution, made in Plan 32 T6b. The sound-on-video pack is the second: it exercises a ready root, entries, a media input and `finalize`, with no `build`, from a pack outside core (`merge-run/path-review/H3-GENERALIZATION.md` section 2). See the [Liquid Software vision](../../vision/pillars/liquid-software.md); exact starting identities are in [inputs.md](inputs.md).
+- The protocol (`astrid/core/extensions`) and the three points Plan 32 creates. h3_av is the first contribution, made in Plan 32 T6b.
+- VibeComfy's `PluginAPI`, thin entries, `InputSpec` and router.
+- h3_av's planner, refusal shape and media code, as the donor of the general pieces.
+- The image family exercises routing, a mask file input, numeric outpaint inputs and an explicit override. Sound on video exercises a ready root, a media input and `after_outputs`, with no `build`.
+
+See the [Liquid Software vision](../../vision/pillars/liquid-software.md); exact starting identities are in [inputs.md](inputs.md).
 
 ## Sequence
 
-After Plan 32 T6b: P1 (validation in the install transaction, plus the owner-dependency rule) and P2 (`astrid packs extensions`) in parallel, then P3 (docs) and P4 (the sound-on-video pack), then the review rounds. All of it is CPU only; P4's live run is [Plan 34](../34-real-gpu-proof/plan.md)'s. See [tasks.md](tasks.md).
+- **Phase 1:** V1, then V5, then V2, with V3 alongside; then V4 and IMG's standalone half. Phase 1 starts once Plan 32 T6b-2 fixes the point's shape.
+- **Phase 2, after Plan 32 T6b:**
+  - P1 and P2 in parallel;
+  - A1, then A2, then A3 (with H1);
+  - A4 once A1, V5 and Plan 32 T6d have landed, then IMG's Astrid half;
+  - S2 after A2;
+  - P3, then the review rounds.
+
+All of it is CPU only; the live runs are [Plan 34](../34-real-gpu-proof/plan.md)'s. See [tasks.md](tasks.md).
 
 ## Completion
 
+- **One route, variants by intent:**
+  - standalone, and through `astrid generate image --entry image`, an agent discovers, describes, dry-runs and runs the image family;
+  - each of its four variants is chosen from the inputs alone, and the dry run gives the reason;
+  - an explicit `variant` overrides the choice;
+  - a mask without an image is refused with `{code, field, fix}`.
+- `generate image` and `generate video` with no entry route through the built-in families. A grep finds no `_infer_image_mode` or `_infer_video_mode`, and no built-in rule in VibeComfy's `router/_rules.py`.
+- `describe --entry h3` lists h3's variants; its dry run is the generic envelope; `astrid h3` is gone.
 - A pack outside core installs through `astrid packs add`, and its contribution is validated before the swap. A broken contribution, or one without its owner dependency, is refused with a fix.
 - `astrid packs extensions` lists points, contributions and problems.
-- The sound-on-video pack produces a video with the generated audio, locally and through the RunPod CPU fake.
-- The protocol and its three points are documented.
-- **Not proven here:** real inference (Plan 34). Record any extension needs the sound-on-video pack does not cover. Destination and publication authority follow the shared [run contract](../../skills/astrid-dev-shared/run-contract.md); verify the intended `pre-main` destination at setup rather than assuming it.
+- The sound-on-video plugin produces a video with the generated audio, locally and through the RunPod CPU fake.
+- The protocol, its points and how to write a family are documented.
+- **Not proven here:** real inference (Plan 34), including inpaint and outpaint quality. Record any extension needs the two families do not cover. Destination and publication authority follow the shared [run contract](../../skills/astrid-dev-shared/run-contract.md); verify the intended `pre-main` destination at setup rather than assuming it.
 
 ## Read next
 
