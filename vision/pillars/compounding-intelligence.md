@@ -1,13 +1,37 @@
 # Pillar 3 — Intelligence That Compounds
 
-**Creative agents should benefit from what they and others have learned—and help make that knowledge more useful over time.**
+## Statement
 
-Before work, agents look for applicable previous experience. During work, they distinguish evidence from assumptions and notice what succeeds or fails. Afterward, they retain reusable lessons with conditions, source revisions and counterexamples. The creator chooses what stays private and what may be shared; local, team and community knowledge remain under their owners' authority.
+Creative agents should become more useful through what they and others learn.
 
-Shared knowledge is not automatically trustworthy or executable instruction. Agents must interpret it against the task, model, environment and actual source. Useful discoveries can flow back to others with consent, while disagreements and stale findings remain visible.
+## Explanation
 
-[Banodoco Hivemind](https://github.com/banodoco/hivemind) is a proving ground, not the whole vision or proof that federation already works.
+We want every meaningful creative discovery to strengthen future work. An agent should be able to find applicable experience, test it against the present task, and retain what was actually learned. This knowledge should compound across creators and communities without taking ownership or judgment away from them.
+
+## Characteristics
+
+### Learn from actual work
+
+Agents should notice what succeeds and fails in real creative projects.
+
+Before acting, an agent can look for applicable prior experience. During work it distinguishes evidence from assumptions; afterward it retains reusable lessons with relevant conditions, source versions, failures, and counterexamples.
+
+### Use knowledge with judgment
+
+Shared knowledge should be evaluated rather than treated as unquestionable instruction.
+
+A finding may depend on a particular model, creative task, environment, or source revision. Agents must check that it still applies and preserve disagreements, uncertainty, and stale evidence when making decisions.
+
+### Share without surrendering control
+
+Creators should decide which discoveries stay private and which can help others.
+
+Local, team, and community knowledge remain under their respective owners' authority. Useful findings can flow between them with attribution, permission, and the ability to withhold or revoke access.
+
+## References
+
+[Banodoco Hivemind](https://github.com/banodoco/hivemind) is a proving ground, not proof that federation is solved.
 
 **Gaps:** [CI-001 — Agent learning loop](../gaps/CI-001-agent-learning-loop.md) · [CI-002 — Federated knowledge](../gaps/CI-002-federated-knowledge.md).
 
-**Implementation exploration:** [Federation protocol](../../plans/22-hivemind-protocol/plan.md) and its [proposal](../../plans/22-hivemind-protocol/protocol-proposal.md) · [Agent learning](../../plans/23-agent-learning-integration/plan.md) and its [experience design](../../plans/23-agent-learning-integration/learning-loop.md). Proposals do not establish shipped behavior.
+**Implementation exploration:** [Federation protocol](../../plans/22-hivemind-protocol/plan.md) · [Protocol proposal](../../plans/22-hivemind-protocol/protocol-proposal.md) · [Agent learning](../../plans/23-agent-learning-integration/plan.md) · [Learning-loop design](../../plans/23-agent-learning-integration/learning-loop.md).
