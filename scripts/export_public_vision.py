@@ -12,6 +12,7 @@ from urllib.parse import quote
 from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
 from gap_relationships import parse_gap_relationships
 from project_contract import plan_gap_ids
+from vision_subject import parse_subject, render_subject_markdown
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"
 PILLAR = re.compile(r"^### \[([^\]]+)\]\((pillars/[^)]+\.md)\)\s*$", re.M)
@@ -64,6 +65,20 @@ def rewrite_links(text: str, source: Path, revision: str, root: Path) -> str:
     return MD_LINK.sub(replace, text)
 
 
+def project_subject(text: str, path: Path, revision: str, root: Path) -> dict:
+    """One canonical Markdown shape for pillars and principles alike."""
+    parsed = parse_subject(text, path.as_posix())
+    return {
+        "statement": parsed["statement"],
+        "explanationMarkdown": rewrite_links(parsed["explanationMarkdown"], path, revision, root),
+        "characteristics": [
+            {**c, "detailsMarkdown": rewrite_links(c["detailsMarkdown"], path, revision, root)}
+            for c in parsed["characteristics"]
+        ],
+        "bodyMarkdown": rewrite_links(render_subject_markdown(parsed), path, revision, root),
+    }
+
+
 def canonical_agent_prompt(root: Path) -> str:
     """Extract the exact copyable instruction block from the public root README."""
     contribution = section(read(root, Path("README.md")), "Want to contribute? Give this to your agent.")
@@ -86,16 +101,14 @@ def build(root: Path, revision: str) -> dict:
     pillars = []
     for m in PILLAR.finditer(pillar_index):
         name, relative_path = m.groups()
-        descriptor = next((line.strip() for line in pillar_index[m.end():].splitlines() if line.strip()), '')
         path = Path("vision") / relative_path
         body = read(root, path)
         if heading(body) != f"Pillar {len(pillars)+1} — {name}":
             raise ValueError(f"{path}: heading must match README and order")
-        details = body.split("\n", 1)[1].strip()
-        details = re.split(r"^\*\*(?:Gap|Gaps|References):\*\*", details, maxsplit=1, flags=re.M)[0].strip()
+        structured = project_subject(body, path, revision, root)
         pillars.append({
-            "id": path.stem, "title": name, "descriptor": descriptor,
-            "bodyMarkdown": rewrite_links(details, path, revision, root),
+            "id": path.stem, "title": name, "descriptor": structured["statement"],
+            **structured,
         })
     if len(pillars) != 4 or len({p["id"] for p in pillars}) != 4:
         raise ValueError("the vision must reference four distinct pillars")
@@ -107,10 +120,9 @@ def build(root: Path, revision: str) -> dict:
         source = read(root, path)
         if heading(source) != name:
             raise ValueError(f"{path}: principle heading must match README")
-        details = source.split("\n", 1)[1].strip()
         principles.append({
             "id": path.stem, "title": name,
-            "bodyMarkdown": rewrite_links(details, path, revision, root),
+            **project_subject(source, path, revision, root),
         })
     if len(principles) != 4 or len({p["id"] for p in principles}) != 4:
         raise ValueError("the vision must reference four distinct principles")
@@ -202,30 +214,23 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Four pillars",
         "",
+        "Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable characteristics.",
+        "",
     ]
     for pillar in page["pillars"]:
-        path = vision_root / "pillars" / (pillar["id"] + ".md")
-        body = read(root, path)
-        tagline = next((line for line in body.splitlines()
-                        if line.startswith("**") and line.endswith("**")), "")
         lines.extend([
             f"### [{pillar['title']}](pillars/{pillar['id']}.md)",
             "",
-            pillar["descriptor"],
-            "",
-            tagline,
+            pillar["statement"],
             "",
         ])
 
     lines.extend(["## Four driving principles", ""])
     for principle in page["principles"]:
-        title = principle["title"]
-        path = vision_root / "principles" / (principle["id"] + ".md")
-        body = read(root, path).split("\n", 1)[1].strip()
         lines.extend([
-            f"### [{title}](principles/{principle['id']}.md)",
+            f"### [{principle['title']}](principles/{principle['id']}.md)",
             "",
-            body,
+            principle["statement"],
             "",
         ])
 

@@ -1,15 +1,47 @@
 # Pillar 2 — Agent-Powered Liquid Software
 
-**Tools should adapt to creative work as people and agents create, not force the work into fixed interfaces.**
+## Statement
 
-Astrid is a shared foundation for open, composable creative tools. Its foundation should stay small, understandable and dependable: durable resources (timelines, media and projects), validated capabilities for changing them, and interfaces for people and agents to use the same underlying work. Specialized behavior belongs in packs and reusable components. Extend core only when a genuinely shared capability requires it.
+Tools should adapt to creative work as people and agents create together.
 
-An excellent tool is an **opinionated composition**, not a generic blank canvas. A creator can use it as-is or arrange, connect, adapt and extend its components while working. Every extension should expose useful extension points of its own: a timeline can support custom lanes, an inspector new sections, and a workspace new views. Packs can provide both agent actions and human-facing interfaces, sharing authoritative resource identities and permission checks.
+## Explanation
 
-**Composition has two distinct concerns:** where a component is placed (dock, float, nest, spatially arrange) and what it is bound to (timeline, selection, playback, media, task). Moving a view should not silently change the creator's data or lose its state. Both conventional 2D workspaces and spatial/3D experiences can use the same primitives; neither should be required for the other.
+“We shape our tools, and thereafter our tools shape us” is a philosophy we should leave in the twentieth century. Astrid is a shared foundation for open, composable creative tools. Their composition and functionality should be adjustable in real time, while people and agents are working. Removing the friction of reshaping software is essential to expanding what we can create, individually and together.
 
-Build on existing components before inventing new architecture. Let creators choose their degree of customization and where tools run. The result should be a responsive creative environment whose capabilities grow through contributions—not a new framework for its own sake.
+## Characteristics
+
+### A small, dependable foundation
+
+The shared core should stay understandable and reliable while creative tools evolve around it.
+
+Timelines, media, projects, identities, validated operations, and permissions are durable resources shared by human-facing interfaces and agents. Specialized behavior belongs in reusable components and packs; extend the core only for genuinely shared needs.
+
+### Live composition
+
+Creators should be able to rearrange and reconfigure their tools without interrupting their work.
+
+Dock, float, nest, or spatially arrange views while keeping the right timeline, selection, playback, and task bindings. Changing a component's position must not silently change the underlying project or discard its state.
+
+### Real-time functionality
+
+The capabilities of a tool should be adjustable while the creator is using it.
+
+People and agents should be able to connect components, change behavior, introduce new controls, and install trusted extensions as the creative problem changes. Each extension should expose useful extension points of its own rather than becoming another fixed interface.
+
+### Shared human–agent work
+
+People and agents should act on the same authoritative creative resources.
+
+A pack can provide agent actions and human-facing interfaces around the same timeline or project. Both should observe permissions, avoid overwriting one another's changes, and allow creators to understand and reverse consequential operations.
+
+### Opinionated tools, not extra scaffolding
+
+A good ready-made tool should remain useful without requiring its creator to customize it.
+
+Creators can work with a considered default composition or adapt every layer as needed. Existing components should be reused before inventing another framework; 2D workspaces and spatial experiences should share primitives without making either mandatory.
+
+## References
 
 **Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md).
 
-**Implementation exploration:** [Liquid workspace](../../plans/24-liquid-workspace/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals and projects, not proof that the capabilities already ship.
+**Implementation exploration:** [Liquid workspace](../../plans/24-liquid-workspace/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals, not proof of shipped capabilities.

@@ -23,12 +23,27 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(
             [p["descriptor"] for p in self.page["pillars"]],
             [
-                "We want to help artists push the limits of AI and their own creativity to make their most ambitious work possible.",
-                "In the age of agents, every layer of our tools should adapt to the needs of artists and their work.",
-                "We want what artists and their agents discover to give others a stronger foundation for more ambitious work.",
-                "We want to inspire and equip people to push themselves—and reward them for doing so.",
+                "Astrid is designed to support serious, sustained artistic practice.",
+                "Tools should adapt to creative work as people and agents create together.",
+                "Creative agents should become more useful through what they and others learn.",
+                "Creative ambition should become something people pursue and advance together.",
             ],
         )
+
+    def test_both_subject_types_derive_from_the_same_canonical_template(self):
+        from vision_subject import parse_subject
+        for kind, items in (("pillars", self.page["pillars"]),
+                            ("principles", self.page["principles"])):
+            for subject in items:
+                path = ROOT / "vision" / kind / (subject["id"] + ".md")
+                parsed = parse_subject(path.read_text(encoding="utf-8"), str(path))
+                self.assertEqual(subject["statement"], parsed["statement"])
+                self.assertEqual(subject["explanationMarkdown"], parsed["explanationMarkdown"])
+                self.assertEqual(
+                    [(c["id"], c["title"], c["summary"]) for c in subject["characteristics"]],
+                    [(c["id"], c["title"], c["summary"]) for c in parsed["characteristics"]],
+                )
+                self.assertIn(subject["statement"], subject["bodyMarkdown"])
 
     def test_vision_contribution_call_to_action(self):
         vision = self.page["vision"]
@@ -71,28 +86,46 @@ class PublicVisionProjectionTests(unittest.TestCase):
                             for g in self.page["gaps"]))
 
         self.assertEqual(
-            self.page["principles"][0]["bodyMarkdown"].split(". ", 1)[0] + ".",
-            "Create entirely on your own machine, online or offline, with your files and projects under your control.",
+            self.page["principles"][0]["statement"],
+            "Creative work should remain yours, whether it runs locally or in the cloud.",
         )
+        all_subjects = self.page["pillars"] + self.page["principles"]
+        self.assertEqual(len(all_subjects), 8)
+        for subject in all_subjects:
+            self.assertGreaterEqual(len(subject["characteristics"]), 2)
+            self.assertTrue(subject["explanationMarkdown"])
+            self.assertEqual(len({c["id"] for c in subject["characteristics"]}),
+                             len(subject["characteristics"]))
+            self.assertTrue(all(c["summary"].endswith(".") and c["detailsMarkdown"]
+                                for c in subject["characteristics"]))
 
     def test_local_first_promise_is_balanced_without_losing_offline_control(self):
-        first = self.page["principles"][0]["bodyMarkdown"]
-        self.assertEqual(len(first.split()), 47)
-        self.assertIn("what gets shared", first)
-        self.assertIn("online or offline", first)
-        self.assertIn("files and projects under your control", first)
+        first = self.page["principles"][0]
+        full = first["bodyMarkdown"]
+        self.assertIn("online or offline", full)
+        self.assertIn("local project should remain authoritative", full)
+        self.assertIn("costs", full)
 
-    def test_principles_are_concise_and_balanced(self):
+    def test_principles_have_concise_openings_and_detailed_characteristics(self):
         principles = self.page["principles"]
         self.assertEqual(principles[1]["title"], "Completely open by design")
-        lengths = [len(p["bodyMarkdown"].split()) for p in principles]
-        self.assertEqual(len(lengths), 4)
-        self.assertLessEqual(max(lengths), 48)
-        self.assertLessEqual(max(lengths) - min(lengths), 10)
         self.assertEqual(principles[3]["title"], "Eliminate technical wrangling")
-        self.assertLessEqual(len(principles[2]["bodyMarkdown"].split()), 40)
-        self.assertLessEqual(len(principles[3]["bodyMarkdown"].split()), 40)
-        self.assertTrue(all("not a claim" not in p["bodyMarkdown"].lower() for p in principles))
+        self.assertTrue(all(len(p["statement"].split()) <= 25 for p in principles))
+        self.assertTrue(all(20 <= len(p["explanationMarkdown"].split()) <= 105
+                            for p in principles))
+        self.assertTrue(all(2 <= len(p["characteristics"]) <= 6 for p in principles))
+        self.assertTrue(all("## Characteristics" in p["bodyMarkdown"] for p in principles))
+
+    def test_liquid_software_reframes_creative_friction_without_losing_core_constraints(self):
+        liquid = self.page["pillars"][1]
+        self.assertEqual(liquid["statement"],
+                         "Tools should adapt to creative work as people and agents create together.")
+        self.assertIn("twentieth century", liquid["explanationMarkdown"])
+        self.assertIn("real time", liquid["explanationMarkdown"])
+        self.assertIn("shared foundation", liquid["explanationMarkdown"])
+        self.assertIn("small, dependable foundation", liquid["bodyMarkdown"].lower())
+        self.assertNotIn("not just quick generations", self.page["pillars"][0]["bodyMarkdown"])
+        self.assertNotIn("throughput", self.page["pillars"][0]["bodyMarkdown"])
 
     def test_open_projects_derive_from_catalog_in_priority_order(self):
         projects = self.page["projects"]

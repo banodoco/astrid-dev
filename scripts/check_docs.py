@@ -9,6 +9,7 @@ from urllib.parse import unquote
 
 from gap_relationships import parse_gap_relationships
 from project_contract import PLAN_FOLDER, plan_gap_ids
+from vision_subject import parse_subject
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
@@ -295,7 +296,21 @@ def check(root: Path) -> tuple[list[str], list[str]]:
                     errors.append(f'{plan}: unknown vision gap {gap}')
         except ValueError as exc:
             errors.append(f'{plan}: {exc}')
+    # Do not let pillar and principle docs quietly drift into unrelated prose
+    # structures. Both are edited from one authoring template and parsed by
+    # the public Vision exporter.
+    for folder, prefix in (('pillars', 'Pillar'), ('principles', 'Principle')):
+        entries = sorted((root / 'vision' / folder).glob('*.md'))
+        if len(entries) != 4:
+            errors.append(f'vision/{folder}: expected exactly four canonical subjects')
+        for file in entries:
+            relative = file.relative_to(root)
+            try:
+                parse_subject(read(root, relative), relative.as_posix())
+            except ValueError as exc:
+                errors.append(str(exc))
     mandatory = [README, CATALOG, Path('vision/README.md'),
+                 Path('vision/templates/subject.md'),
                  Path('CONTRIBUTING.md'),
                  Path('templates/project/plan.md'), Path('docs/project-format.md'),
                  Path('docs/contribution-design-principles.md'),
