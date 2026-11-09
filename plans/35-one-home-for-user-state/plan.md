@@ -14,13 +14,22 @@
 - **Secrets** go to [Plan 36](../36-one-credential-path/plan.md).
 - **Files owned by another tool** stay where they are (`~/.claude`, `~/.codex`, `~/.hermes`, standalone VibeComfy's own `[library]` and ComfyUI address).
 - A check flags any new `Path.home()`, XDG or `localStorage` write that is not on the keep list.
+- **In the browser, one API.** The App already has one settings store (`src/shared/settings/settingsStore.ts`, `defineSetting`, `declarations.ts`). It keeps settings in Runtime app-state, with a localStorage snapshot for first paint and an unreachable Runtime, and has `user`, `timeline` and `device` scopes. Every browser key goes through it:
+  - add a `project` scope, backed by `project_documents`;
+  - add a `draft` scope: an IndexedDB recovery slot, cleared by a save receipt (today `timelineDraftIndexedDb.ts`);
+  - add a `boot` scope: a value needed before the Runtime connects, such as the boot theme, the entry routing (`astrid:prefers-app`) and the onboarding fallback;
+  - keep `device` for genuinely per-browser values, such as file-system handles and maybe preview volume.
+
+  Raw `localStorage`, `sessionStorage` and `indexedDB` use outside that layer fails a lint, except for an explicit allowlist (for example the layer itself and the handle store).
+- **Last-used generation settings are not stored at all.** They are the inputs of the latest generation in that scope (project, shot or tool), read from the Runtime's generation and task records (`generations.source_task_id`, `metadata_json`). Only explicit choices are stored, as settings: a project's defaults and a shot's "inherit project defaults" flag. Step 0 confirms that a generation's task keeps its full inputs; if not, the generation record gains them.
 
 ## Goal and scope
 
 - **Included (from the audit):**
   - **App duplicates:** the last-opened project is kept in localStorage and in app-state `ui.preferences`, although the Runtime has `project_selections` and `/v1/projects/selection`. Extension settings are in localStorage and IndexedDB, although the App's settings layer reserves app-state `ext.*`.
   - **Project work held only in one browser:** hidden shots, inpaint strokes, effect drafts and pending join clips.
-  - **Per-project last-used generation settings in localStorage** (shot, join-segment, lightbox edit and LoRA settings), joined with [Plan 12](../12-multiple-inference-routes/plan.md)'s per-project generation settings.
+  - **Per-project last-used generation settings in localStorage** (shot, join-segment, lightbox edit and LoRA settings): replaced by reading the latest generation's inputs (see the rule). The explicit project defaults join [Plan 12](../12-multiple-inference-routes/plan.md)'s per-project generation settings.
+  - **Browser keys that bypass the settings layer:** `usePersistentState`, `useEditorSettings` device keys, the extension service's own localStorage backing, the two extension stores, the media-import recovery record, and onboarding and connection flags. Each is either moved behind the layer with a scope, or deleted.
   - **Agent user choices in side files:** the skills opt-outs and setup selection (`~/.local/state/astrid/skills.json`), the pack `disabled` list (`pack-sources.json`), `~/.astrid/compute-profiles/`, and the `ASTRID_PREFERENCES_IN_PROMPT` toggle.
   - **RunPod lease state** (`<data_root>/runpod/<account>/claim.json`) moves to the Runtime's remote activation record. The file lock stays local.
   - One-time import from each old location, then the old copy is no longer read.
