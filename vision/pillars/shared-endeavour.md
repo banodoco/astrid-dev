@@ -1,9 +1,33 @@
 # Pillar 4 — A Shared Creative Endeavor
 
-**Give people a reason, encouragement and a genuine stake in attempting more ambitious creative work.**
+## Statement
 
-This collective can build on Banodoco's existing community and its experience with art competitions, but an Astrid-centred creative culture is not yet established. The ambition is to raise aspirations through challenges, competitions, collaboration, mentorship, thoughtful critique and recognition of exceptional work, measured by artistic growth and the work people make—not simply engagement.
+Creative ambition should become something people pursue and advance together.
 
-The stated aim is **100% ownership in the company behind the collective for the people who advance its mission**. That is part of the incentive to contribute, not just a competition prize. Eligibility, allocation, governance, financing and legal implementation remain unresolved; no equity is granted by this document.
+## Explanation
+
+We want a collective that inspires people to try more demanding artistic work, helps them grow through collaboration and critique, and rewards meaningful contributions. It can build on Banodoco's existing community and competitions, but an Astrid-centered creative culture still needs to be established.
+
+## Characteristics
+
+### Shared challenges and ambition
+
+Challenges and collaborations should encourage artists to attempt work beyond their previous limits.
+
+Competitions and collective projects should be designed around artistic intent, fair participation, completed work, and learning—not simply attention or participation metrics.
+
+### Critique and mutual growth
+
+Creators should be able to learn from one another's practice and judgment.
+
+Mentorship, thoughtful feedback, shared techniques, and recognition of exceptional work should build confidence and capability across the community, including for people approaching unfamiliar media or tools.
+
+### A meaningful stake in the collective
+
+Contributors should have a genuine opportunity to benefit from advancing the shared mission.
+
+The stated ambition includes ownership in the company behind the collective for people who advance its mission. Eligibility, allocation, governance, financing, and legal and tax implementation remain unresolved; this vision does not grant equity or promise a particular allocation.
+
+## References
 
 **Gaps:** [CA-001 — Artistic challenge culture](../gaps/CA-001-creative-challenge-culture.md) · [CA-002 — Contributor ownership](../gaps/CA-002-contributor-ownership.md).
