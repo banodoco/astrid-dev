@@ -201,6 +201,10 @@ tests/v10/test_release_reproducibility.py
 
 `tests/core/generation/test_closure_install_cpu.py::test_linux_x86_64_h3_environment_closure_before_model_stages` is marked `opt_in`. It is deselected in the selector above. It needs a wheelhouse or cache in the lanes-opt-in job. This is the **Plan 39 wheelhouse need**.
 
+## Caveats
+
+- Measured in a cloud worker, not CI. Some failures may be environment artefacts (the Agent checkout or runtime_protocol unavailable). Plan 39 G1 re-measures on CI.
+
 ## Scope: what this PR does not cover
 
 This PR covers **bucket A only**. A follow-up will add:
