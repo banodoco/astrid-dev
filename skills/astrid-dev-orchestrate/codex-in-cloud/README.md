@@ -17,9 +17,18 @@ Put exact model IDs in the run's `run.yaml`, never in this repository.
 
 1. **Install:** `npm i -g @openai/codex` if `codex` is missing.
 2. **Sign in with the owner's ChatGPT account:** run `codex login --device-auth` and give the owner the link and code it prints. Don't ask for an OpenAI API key.
-3. **Check which model IDs this sign-in accepts:** run `codex exec -m <id> -s read-only --skip-git-repo-check 'Reply ok.'`. A ChatGPT sign-in refuses some IDs that exist elsewhere.
+3. **Check which model IDs this sign-in accepts:** run `codex exec -m <id> -s read-only --skip-git-repo-check 'Reply ok.'`. A ChatGPT sign-in refuses some IDs that exist elsewhere. IDs can carry a minor version, such as `<family>-6.1-<tier>`, so check OpenAI's current Codex model list before you conclude a tier is unavailable.
 4. **Check which IDs subagents accept:** these can differ from the main model's list. Ask Codex to spawn a subagent with an unknown ID; the error lists the IDs it accepts.
 5. **Install the astrid-dev skills for Codex:** `mkdir -p ~/.agents && rm -rf ~/.agents/skills && cp -r <astrid-dev>/skills ~/.agents/skills`. Codex finds skills in `~/.agents/skills/` and in `.agents/skills/` under the directory it starts in. Re-copy them after astrid-dev's skills change. Leave `~/.codex` alone: it holds the sign-in.
+
+## Brief a manager
+
+To hand a whole project to a Codex manager, start from [`manager-brief.md`](manager-brief.md). It is the Plan 38 brief, with the project-specific parts as placeholders. It covers:
+- the workspace layout;
+- the route-to-model table;
+- timing and branches;
+- the rules that differ under Codex;
+- what to report.
 
 ## Start a run
 
@@ -28,7 +37,7 @@ CODEX_EFFORT=medium CODEX_MAX_THREADS=12 setsid nohup skills/astrid-dev-orchestr
 ```
 
 - **`<workdir>`** is where Codex works. For a manager, make it a folder of partial clones (`git clone --filter=blob:none`) of the repositories the plan touches, plus `run/`. Codex can write only there and in `/tmp`. The runner passes `--skip-git-repo-check`, because that folder isn't itself a repository.
-- **`CODEX_EFFORT`** sets the reasoning effort (`low`, `medium` or `high`). **`CODEX_MAX_THREADS`** raises the cap on open sub-agent threads, which defaults to 6. A finished sub-agent keeps its slot until it's closed, so tell the manager to close each one when its result is in.
+- **`CODEX_EFFORT`** sets the reasoning effort (`low`, `medium` or `high`). **`CODEX_MAX_THREADS`** raises the cap on open sub-agent threads, which defaults to 6. A finished sub-agent can keep its slot, and Codex may give the manager no tool to close it, so set the cap above the number of sub-agents you expect at once (12 works). Tell the manager to keep a slot free for its reviewer.
 - **Keys:** Codex sees only PATH, HOME and the proxy and certificate variables. Add a key it needs by name, for example `CODEX_PASS_ENV=RUNPOD_API_KEY`. With that key passed, the runner also logs the RunPod balance and pod list to `money.log` every 5 minutes, and never logs the key.
 - **Resumes:** `6` is the maximum number of times it resumes a Codex session that stopped before finishing.
 - **Finish line:** the prompt must tell Codex to end with `RUN-STATUS: DONE`, `RUN-STATUS: BLOCKED: <reason>`, or `RUN-STATUS: WAITING` (see the mailbox below).
@@ -83,4 +92,5 @@ Steer through `to-codex.md`, and route structural fixes through the project's ma
 - **GitHub through the proxy:** `git push`, the REST API (`POST /pulls`, workflow dispatch) and artifact downloads work with no token. The proxy appends a Claude Code attribution to PR bodies Codex creates, so mention in the PR body that Codex wrote it.
 - **One branch per PR:** never push to a branch whose PR is already merged. Open a fresh branch for each PR.
 - **Manage skill under Codex:** the cloud-session rules in the manage skill (one-repo sessions, allow lists, `list_sessions`, `send_message`) don't apply. Keep their intent: one repository's scope per brief, one worktree per task, commits added and never rewritten, and evidence for every claim. The mailbox stands in for `send_message`.
+- **bubblewrap:** Codex warns that `bubblewrap` isn't on PATH and uses its bundled copy. That works.
 - **On a local machine,** run Codex in a terminal instead. This runner and keep-alive exist for cloud sessions.

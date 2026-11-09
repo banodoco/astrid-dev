@@ -43,7 +43,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
    - **Run only scripts that live in the worker's own repository** (`scripts/worker-env/`, copied from [`env/`](../../env/README.md)). A script from another repository's clone is refused even when allow-listed. Other public repositories may still be cloned read-only to `/home/user/<repo>`, for reading.
    - **Managing under Codex** ([`codex-in-cloud`](../astrid-dev-orchestrate/codex-in-cloud/README.md)):
      - Your workers are sub-agents that share one filesystem. Every brief names its own `git worktree add` path and `<worktree>.env`, and only you touch the base clones.
-     - Close each sub-agent when its result is in, because finished ones hold thread slots.
+     - Finished sub-agents can hold thread slots, so keep fewer open than the cap, with one slot free for your reviewer.
      - The cloud-session rules below (one-repo sessions, allow lists, `list_sessions`) don't apply, but their intent does: one repository's scope per brief, commits added and never rewritten, evidence for every claim.
      - Questions go to the advisor through the run's mailbox.
      - Open each PR from a fresh branch, and never push to a branch whose PR has merged.
