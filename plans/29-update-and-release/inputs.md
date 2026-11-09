@@ -79,6 +79,12 @@ From the owner, 7 Nov 2026 (session chat):
 - Release 12 enforces the autostart-off guard, with honest copy.
 - Preserving autostart-off in-app is a Plan 30 card (UR-20).
 
+## Note: Plan 33 census verified (9 Nov 2026)
+
+- Plan 33's census and expectation changes were verified sound.
+- Agent commit `5d841e3055` ("Converge pack API 2.3 and retire verified migrated copies") deleted 19 `pack.yaml` files. The tree went from 45 to 26 `pack.yaml` files. The count comes from the full trees, because the commit's own file list is capped.
+- Every removed expectation names one of the 19 deleted files, as recorded in that verification. The mapping was not re-checked here.
+
 ## Source identities
 
 Record exact base and donor SHAs at task start. Known donor: Agent `b97c43db8` (`reconcile` handler, unmerged).
