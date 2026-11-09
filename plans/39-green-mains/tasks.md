@@ -1,0 +1,108 @@
+# Tasks — All three mains green
+
+[Plan](plan.md) · [Inputs](inputs.md)
+
+Routes, per the [run contract](../../skills/astrid-dev-shared/run-contract.md):
+- **N:** the default.
+- **X:** coupled work.
+- **S:** a product fix touching security or data.
+- **T:** wording only.
+
+X and S tasks delegate reading, mechanical edits and checks to N helpers. An N task that misses the same check twice re-routes to X.
+
+**Where work lands:** by PR to `int/39-green-mains` in each repository (decision D1). The branch is cut from `main` after release 12 is published, and each task records its base SHA when it starts.
+
+**Proof labels:**
+- *Local* runs in a worker with only that repository attached, through `scripts/worker-env/` (G0). Other repositories come from public git at pinned commits.
+- *Hosted* is the named job on the task PR, judged by its inner command.
+
+**Rules for every task:**
+- Fix the cause and never loosen an assertion to match a bug. If a test's expectation changes, the PR names the commit or contract that changed the behaviour on purpose.
+- A cause marked **verify** in the [triage](inputs.md#root-cause-triage) first proves that it is not a bug. If it is a bug, open an S card `<id>.bug`.
+- A test that can't be fixed in its task is quarantined only under the [rule](plan.md#quarantine-rule), with K1 in place.
+- Plan 38's tests ([inventory](../38-one-process-identity/tasks.md#test-inventory)) are out of scope. Leave them to Plan 38.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| **Phase 1: CI environment and wiring** | | | | | |
+| G0 Worker smoke for the Runtime and the App. It delivers Plan 38 W0 and Plan 31 RL-0 to their specs, whichever is not merged yet; a merged one is reused, not redone. The Runtime setup also puts `node` 22 and `tsc` (from `packages/typescript`'s lockfile) on `PATH`. Every later task depends on it | N | release 12 published | astrid-dev `env/runtime-setup.sh`, `env/runtime-pytest.sh`, `env/app-setup.sh`, `env/smoke.sh` (`runtime` and `app` modes), `env/README.md` table; copies in Runtime and App `scripts/worker-env/` | Local, Runtime worker: `bash scripts/worker-env/smoke.sh runtime tests/test_platform.py` exits 0 and prints ENV-PASS. With a wrong `tests/astrid-agent.pin` it exits 3. `tsc --version` runs inside the env. Local, App worker: `bash scripts/worker-env/smoke.sh app scripts/installer/manifest.test.mjs` exits 0, and with Node other than 20.19.x first on `PATH` it exits 3. `cmp` between each astrid-dev script and its copy is silent. `bash env/smoke.sh agent <selector>` and `vc` still behave as before | [ ] |
+| G1 Baseline on the release-12 heads (read-only) | N | release 12 published | run state only | For each workflow in [plan.md](plan.md#outcome-and-scope), on each published `main` head: each failing job's summary line and its distinct error messages with counts, mapped to a triage row, or "new". Confirms or refutes A-e (Ruff), A-f (Windows custody) and A-g (the wheel). Updates the counts in run state, not in inputs.md | [ ] |
+| AE1 Agent collection never aborts on a missing tool env var | N | G0, G1 | A: `tests/pack_builder/test_pack_build.py` (module-level `ESBUILD`), `tests/lanes.py` (a declared lane for the pack-build tools, if needed), `.github/workflows/ci.yml` (sets the var where the lane runs) | Hosted `unit-shard` 1–8 and `darwin-native`: 0 collection errors; each shard's summary shows tests collected. Local: `bash scripts/worker-env/agent-pytest.sh -q tests/pack_builder/test_pack_build.py` without the var reports a declared skip or deselect for that file only, and with the var set the file runs | [ ] |
+| AE2 Agent Lanes have the history they test, and one VibeComfy source | N | G0, G1 | A: `.github/workflows/lanes.yml` (historical-objects fetch list: add `d9e2a71e`; VibeComfy `repository:` at `:169`, `:280`) | Hosted Lanes `integration` 1–4: no "has no commit". The VibeComfy step summary shows `banodoco/VibeComfy` at the engine revision. If `d9e2a71e` is unreachable from public git, the two tests that pin it get an RT-style card instead of a skip | [ ] |
+| RE1 Runtime `unit`, `sandbox-process-control` and `boundary` install the Agent at `tests/astrid-agent.pin` and set `ASTRID_CHECKOUT`; so does `portability-lifecycle` (already installs) | N | G0, G1 | R: `.github/workflows/ci.yml` (the `unit`, `sandbox-process-control`, `boundary` and `portability-lifecycle` jobs only; `:31` and `:143` stay Plan 38 E1's), `tests/astrid-agent.pin` (only if G1 shows it is behind the release-12 Agent) | Hosted `unit` (ubuntu, macOS) and `sandbox-process-control`: 0 "Astrid checkout is unavailable" and 0 "No module named 'astrid'" outside Plan 38's rows; the step summary prints the Agent SHA equal to the pin | [ ] |
+| RE2 No scratchpad fallback for the Agent source | N | RE1 | R: `tests/test_timeline_clip_replacement.py` (`_PREPARED_AGENT`, `_native_agent_source`, to `astrid_checkout()`) and the one other file using it | Local: `bash scripts/worker-env/runtime-pytest.sh -q tests/test_timeline_clip_replacement.py` gives 0 "frozen ordinary Agent source"; `grep -rn scratchpad tests/` finds no path fallback | [ ] |
+| RE3 `git archive` tests have their commits | N | G0, G1 | R: `.github/workflows/ci.yml` (`actions/checkout` `fetch-depth: 0` in `unit` and sandbox; fetch the Agent's `321cef4b` by SHA), `tests/test_snapshot_legacy_certification.py` and `tests/test_v33_protected_acceptance.py` (a clear error naming the missing SHA, not a bare CalledProcessError) | Hosted `unit` ubuntu: 0 CalledProcessError from `git archive`. Local: in a depth-1 clone, the two files fail naming the missing SHA and the fetch to run | [ ] |
+| RE4 `tsc` available to `unit` | N | G0, G1 | R: `.github/workflows/ci.yml` (`unit`: setup-node 22 and `npm ci` in `packages/typescript`), the two contract tests (resolve `tsc` from `packages/typescript/node_modules/.bin`, as `test_second_client_e2e.py:50` does) | Local: `bash scripts/worker-env/runtime-pytest.sh -q tests/test_timeline_bundle2_contract.py tests/test_timeline_commit_contract.py` passes. Hosted `unit` ubuntu: 0 "tsc not found" | [ ] |
+| PE1 App Lanes use the App's pins, not `main` | N | G0, G1 | P: `.github/workflows/lanes.yml` (`checkout-lanes`, `quick-journey` checkout refs read `public/install-manifest.json`), `scripts/` check that `vendor.lock.json` and the install manifest name the same Agent, or a recorded reason (D7) | Hosted Lanes: both jobs' summaries print Agent and Runtime SHAs equal to the manifest; the pin check fails on a PR that changes one pin only (throwaway draft, closed) | [ ] |
+| K1a Agent quarantine guard and a real `unit` aggregate | N | G0 | A: `tests/test_skip_policy.py`, `tests/lanes.py` (xfail entries gain `issue`, `owner`, `expires`), `.github/workflows/ci.yml` (`unit`: `if: always()` and fail unless every shard succeeded) | Local: `bash scripts/worker-env/agent-pytest.sh -q tests/test_skip_policy.py` passes. New cases fail on: a missing issue, owner or expiry; an expiry in the past; a non-strict xfail; more than 10 entries; a bare `pytest.skip` outside the registry | [ ] |
+| K1b Runtime quarantine guard | N | G0 | R: `tests/lanes.py` (`DECLARED_XFAILS` entries gain `issue`, `owner`, `expires`), `tests/test_skip_registry.py` | Local: `bash scripts/worker-env/runtime-pytest.sh -q tests/test_skip_registry.py` passes with the same four failing cases as K1a. Plan 38's existing declared xfail gets its fields, not removed | [ ] |
+| K1c App quarantine guard; `vitest` on PRs | N | G0 | P: `config/testing/skipRegistry.mjs`, `scripts/quality/check-known-failures.mjs` (entries gain issue, owner, expiry; the three `useClipDrag` entries get them or are fixed), `.github/workflows/test.yml` (`vitest` also on `pull_request`) | Local: `bash scripts/worker-env/smoke.sh app src/test/skipGuard.test.ts` passes with cases for a missing field, an expired entry and more than 10 entries | [ ] |
+| G2 Re-measure after phase 1 (read-only) | N | AE1, AE2, RE1–RE4, PE1, K1a–K1c | run state only | The same table as G1, on each `int/39` head. Every remaining failure is mapped to a phase-2 row, or a new row `AT1.<n>`, `RT6.<n>` or `PT<n>.<n>` is added with its class | [ ] |
+| RS1 Review stop after the CI-environment fixes (at most 1 round) | S | G2 | read-only | Same protocol as R, on phase 1 merged into each `int/39`. It checks that no fix hides a failure (a skip, a deselect or a broadened marker), that the pins are single-sourced, and that G2's mapping is right. Findings become rows `RS1.<n>`. Every phase-2 task depends on it. After it clears, the Release skill promotes phase 1 to each `main` (D1) | [ ] |
+| **Phase 2: by cause, three repositories in parallel** | | | | | |
+| AT1 Agent failures that AE1 uncovered: triage, then one card per cause | X | RS1 | read-only, then rows `AT1.<n>` (each N unless security or data) | G2's Agent rows grouped by cause with counts and a class. Each `AT1.<n>` names its files and a focused selector, and passes on hosted `unit-shard` | [ ] |
+| AT2 mypy back to baseline or below, in 4 parallel cards by package (`astrid/core/execution`, `astrid/core/pack` and `generation`, `astrid/sdk`, the rest) | N | RS1 | A: the files with new findings in each package; `scripts/reshape/baselines/mypy_astrid.json` only lowered with `--write-baseline` | Local: `make mypy` reports current ≤ 2192 after all four. Each card's PR lowers the count, with no blanket `ignore_errors` and each `type: ignore[code]` with a reason. Hosted `fast checks` passes | [ ] |
+| AT3 Agent Windows custody and wheel smoke, only if G1 shows them still red | X | RS1 | A: `astrid/core/pack/transaction.py` (the group-custody refusal on Windows), `astrid/core/generation/entries.py` | Hosted `windows-native-and-installer`: 0 "Group custody requires a supported POSIX filesystem". Hosted `release` 3.11 and 3.12: the wheel smoke passes. The Windows refusal stays for real non-POSIX filesystems (case kept). This is **S** if the fix weakens custody | [ ] |
+| AT4 Windows task host journey, pwsh and powershell | N | RS1 | A: `scripts/ci_windows_journey.py`, `.github/workflows/windows-journey.yml`, the product file the first failing step names | Hosted `windows-journey` (both shells) passes; the PR quotes the first failing step before and after | [ ] |
+| RT1 v33 fence fixtures reach "ready" the real way | X | RS1 | R: a shared test helper (new, in `tests/`) that upgrades a realm and runs provider registration through `provider_ready()`; the fixtures in the 7 v33 files | Local: those 7 files pass. A new negative case proves a mutation before `provider_ready()` still raises the fence message (`v33_lifecycle.py:299`). `grep` finds no test writing `.v33-activation.json` as ready or patching `require_ready`. If any path leaves a user's realm fenced, open `RT1.bug` (S) | [ ] |
+| RT2 Migrated-realm restarts pass an authoring profile | N | RT1 | R: the fixtures raising `daemon.py:320`, using RT1's helper | Local: the G2-named files pass. A negative case keeps a neutral profile on a migrated realm refused with the same message. If the neutral default can be hit by a user's upgrade, open `RT2.bug` (S) | [ ] |
+| RT3 v28 fixtures match C28 | N | RS1 | R: `tests/test_realm_admission_hardening.py` (`:993` layout), `tests/test_spec_reference.py` (`:263`) | Local: both files pass. `runtime_protocol/v33_manifest.py` `_FINGERPRINTS` is unchanged (diff empty) | [ ] |
+| RT4 No test drives the retired timeline writer, except to assert 410 | N | RS1 | R: the G2-named tests among the 19 files | Local: those files pass. Each one that expects 410 still asserts it; a 200 becomes `RT4.bug` (S) | [ ] |
+| RT5 Stubs that match the real interfaces | N | RS1 | R: the G2-named `SimpleNamespace` stubs (e.g. `tests/test_platform.py:113-182`), replaced by `create_autospec` or a minimal real object | Local: those files pass, and a stub missing an attribute the code reads now fails loudly | [ ] |
+| RT6 Runtime long tail: triage, then one card per cause | X | RS1 | read-only, then rows `RT6.<n>` | Each of R-j's messages gets a class. DID NOT RAISE and realm integrity are checked as bugs first. Each `RT6.<n>` passes its named file on hosted `unit` | [ ] |
+| RT7 portability-lifecycle | N | RS1, RE1 | R: the files `ci.yml:264-283` names, or the product file the first error names | Hosted `portability-lifecycle` (ubuntu, macOS) passes | [ ] |
+| RT8 windows-realm-publication | N | RS1 | R: the file G2 names | Hosted `windows-realm-publication` passes, outside Plan 38's rows | [ ] |
+| PT1 App vitest | N | RS1 | P: the 16 files G2 names; if a test imports a module that `698bfbd` deleted on purpose, delete or port the test with that commit cited | Local: `bash scripts/worker-env/smoke.sh app <each file>` passes. Hosted `vitest` passes | [ ] |
+| PT2 App timeline E2E, one shared boot cause | X | RS1 | P: `tests/e2e/timeline/support.ts`, `playwright.config.ts` `webServer`, `tests/e2e/fake-runtime/`, or the product file the first error names | Hosted `playwright-timeline` (36) and `playwright-timeline-chrome-export` (3) pass. The PR names the one cause, with the first error before | [ ] |
+| PT3 App editor-with-extensions specs | N | RS1, PT2 if G2 shows the same boot cause | P: the product code under test at `production-widget-scope.spec.ts:64`, `extension-accessibility.spec.ts:114`, `extension-cross-browser.spec.ts:76` | Hosted `playwright-default`, `extension-accessibility` and `extension-cross-browser` pass, with no assertion loosened; a focus regression is fixed in product code | [ ] |
+| PT4 App visual baseline | N | RS1 | P: `tests/e2e/visual-snapshots/` (one PNG), or the product CSS | Hosted `extension-visual` passes. A re-baseline cites the commit that changed the UI on purpose, and Hannah sees the before and after images in the PR | [ ] |
+| **Phase 3: keep it green** | | | | | |
+| K2 Required checks, one file; PR triggers | N | RS1 | astrid-dev `ci/required-checks.json` (new: per repository, `merge` and `release` tiers, per [the list below](#required-checks)), `scripts/check_docs.py` (validates its shape); Agent `ci.yml`, `chat.yml`, App `test.yml` (`pull_request` to `main` where a merge-tier job lacks it) | Local: `python3 scripts/check_docs.py` passes and fails on an unknown tier. Hosted: one throwaway PR per repository shows every merge-tier check name reporting | [ ] |
+| K3 Nightly report of new red | N | K2 | astrid-dev `scripts/ci_red_report.py`, `scripts/test_ci_red_report.py` (new), `.github/workflows/ci-red-report.yml` (new, nightly) | Local: `python3 -m unittest discover -s scripts -p test_ci_red_report.py`, from recorded API JSON, reports: a check that turned red since the last green run (with its first failing run); a quarantine entry within 3 days of expiry; and a workflow that didn't run. Output is the job summary plus one comment on a rolling issue (D4) | [ ] |
+| K4 `release-contract`: every release-tier check is green on each pinned commit | X | K2, Plan 31 RL-1b | astrid-dev `scripts/release_record.py` (the `release-contract` checks), its test | Local: from recorded check-run JSON, a record pinning a commit with a failed, missing or skipped required check is refused, naming the check and repository; an all-green record passes. Hosted `release-contract` on the task PR: PASS for the current record | [ ] |
+| K5 Release skill rule text | T | K4 | astrid-dev `skills/astrid-dev-release/SKILL.md` (`:44`, "A publish never turns a passing check red…") | **Current:** "no new red against `main`; report `main`'s red checks; they are not this publish's work". **Intent:** a publish needs every required check green on each pinned commit (`release-contract`), and the only tolerated red is a quarantine entry within age. Plain words, one rule, pointing to `ci/required-checks.json`. **Proof:** before and after in the PR; `python3 scripts/check_docs.py` passes | [ ] |
+| Owner: turn on the merge-tier required checks for each `main` | owner | K2, the final promotion | Agent, Runtime and App repository settings | Settings show exactly the merge-tier names from `ci/required-checks.json`; K3's next run reports branch protection matching the file | [ ] |
+| R Final review (at most 3 rounds) | S | all other tasks | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md) on the integrated `int/39` heads. Findings become rows `R<round>.<n>`. Then the Release skill promotes to each `main`, and completion needs 3 green nights | [ ] |
+
+## Critical path
+
+G1 → AE1 → G2 → RS1 → AT1 → AT1.<n> → R. The Agent is the longest leg, because its real failure count is unknown until AE1 lets the shards collect. The Runtime leg is RE1 → G2 → RS1 → RT1 → RT2. The App leg is PE1 → G2 → RS1 → PT2 → PT3. K1a–K1c run beside phase 1, and K2 → K3 and K2 → K4 → K5 run beside phase 2. Plan 38 runs in parallel; its rows are excluded from every proof here.
+
+## Fan-out
+
+After G0 and G1, eleven phase-1 tasks are independent: AE1, AE2, RE1, RE3, RE4, PE1 and K1a–K1c, with RE2 after RE1. After RS1, AT1–AT4, RT1 and RT3–RT8, and PT1–PT4 are independent (RT2 after RT1, PT3 possibly after PT2). AT2 alone is 4 cards, and AT1, RT6 and RS1 spawn more. A manager can hold about 15 N workers at once. One worker per repository runs G0's smoke before that repository's first task.
+
+## Required checks
+
+Check names are as GitHub shows them. K2 writes them to `ci/required-checks.json`, and G1 corrects any name that differs.
+
+**Merge tier (branch protection, on every PR):**
+- **Agent:**
+  - `CI`: `fast checks`, `unit`, `windows-native-and-installer`, `darwin-native`, `release`, `boundary`;
+  - `Chat service`: `chat`, `windows-launchers`;
+  - `Windows task host journey`: `windows-journey`.
+- **Runtime:**
+  - `CI`: `unit (ubuntu-latest)`, `unit (macos-latest)`, `windows-realm-publication`, `darwin-native`, `typescript-client`, `boundary`, `sandbox-process-control`, `portability-lifecycle (ubuntu-latest)`, `portability-lifecycle (macos-latest)`;
+  - Plan 38's `host-spawn` once it lands.
+- **App:**
+  - `Tests`: `vitest`, `release-tooling-macos`, `boundary`. `release-guard` is excluded, because Plan 31 deletes it.
+
+**Release tier (green on the pinned commit; checked by K4 and K3):** everything in the merge tier, plus:
+- **Agent:** `Lanes` (`integration` 1–4, `opt-in`, `installed`);
+- **Runtime:** `Nightly` (`integration`);
+- **App:**
+  - `Lanes`: `checkout-lanes`, `installer-posix`, `installer-powershell`, `quick-journey`;
+  - `E2E`: all six jobs;
+  - `Direct Journey`.
+
+## Estimate
+
+About 22–31 worker-days in total, roughly 8–11 days elapsed with the fan-out above. Phased, because it is over 10 days.
+
+| | Agent | Runtime | App | Shared | Total |
+|---|---|---|---|---|---|
+| Phase 1: environment (G0–G2, RS1) | 1.5 | 2 | 1 | 2 (G0, G1, G2, RS1) | 6.5 |
+| Phase 2: by cause | 5–9 (AT1 unknown: 2–5; AT2 2–3; AT3–4 1) | 5–7 | 3–5 | — | 13–21 |
+| Phase 3: keep green, and R | — | — | — | 3.5 (K2–K5 2.5, R 1) | 3.5 |
+
+The largest uncertainty is AT1: no Agent unit test has run on `main` since about 19 Oct. If G2 shows more than 60 distinct Agent failures, the manager splits AT1 into a phase-2b and re-estimates before going on.
