@@ -6,6 +6,22 @@
 
 **Contributes to closure:** F-008 step 1b: every default slot and h3_av produce real outputs on RunPod, with models downloaded once to the storage volume and a warm pod reused. Milestone A, proven on hardware.
 
+## Owner direction (9 Nov 2026): a repeatable protocol, not a one-off
+
+This plan **builds a skill, `skills/astrid-dev-gpu-validate/SKILL.md` ("full GPU validation"), and does its first run.** After that, real-GPU proof is the skill, run again, not a new project.
+- **The protocol:**
+  - a fixed matrix of every default slot and h3_av × RunPod, local-managed (where a GPU exists) and attached;
+  - first a VibeComfy-only smoke on the same pod, so model or node failures are told apart from routing failures;
+  - a pod census before and after every run, a hard budget per run, and every pod released;
+  - one dated evidence record per run in astrid-dev, `validation/gpu/<date>.md`, with pass or fail per cell, spend and pod ids;
+  - each failure goes to astrid-dev-bugfix: reproduced on CPU where possible, fixed, re-run live.
+- **When it runs:**
+  - when the owner asks ("run full GPU validation");
+  - as a required gate in `astrid-dev-release` for any release that touches generation, for which this plan edits the release skill.
+  No schedule for now.
+- **Budget:** $20 per run of the skill (owner, 9 Nov). The first run, this plan, keeps its $25 budget with "fix every issue you find".
+- **The first run happens after Plan 32 completes,** on its integrated revision.
+
 ## Outcome and scope
 
 The CPU-proven generation path from [Plan 32](../32-generation-placement-targets/plan.md) produces real outputs on real GPUs. **Owner, 8 Nov:** the first pass, on Plan 33's route, is dropped, because Plan 32 replaces how a RunPod job runs. This plan now runs once, after Plan 32. The proof is image, edit, voice, music, sound effects, and h3_av on the Matrix clip (80.886–83.305 s), each sent to the owner. Plans 33 and 32 are CPU only, so this plan proves what CPU cannot: real inference, real model downloads, real custom-node installs, and RunPod capacity.
