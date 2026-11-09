@@ -147,3 +147,4 @@ G1 records the published release-12 heads. Every task starts from those heads, n
 - Plan 38's [test inventory](../38-one-process-identity/tasks.md#test-inventory), W0 and E1.
 - Plan 31's [RL-0 and RL-1b](../31-releases-from-astrid-dev/tasks.md).
 - The [Release skill](../../skills/astrid-dev-release/SKILL.md) line "A publish never turns a passing check red", which K4 replaces.
+- [Release 12 pre-existing test failures, bucket A (323 ids)](evidence/release-12-preexisting.md).
