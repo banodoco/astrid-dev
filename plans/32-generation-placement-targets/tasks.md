@@ -351,3 +351,4 @@ One line per item: owner session, branch/SHA, state, next step.
 - **T8 Completion**: manager. State: waiting on everything above. Next: run only after final R is OK.
 
 Video-references: resolved on int/32 by `041fb242b` (T6b-3 fix6/fix6b); reviewer OK.
+- **Follow-up (not a must-fix): prepared-worker island, RunPod account-ref refusal.** Evidence: `astrid/packs/runpod/prepared_task.py:608` (mismatch refusal) sits in `_ProductionPreparedTaskRuntime._components`, reached only via `PreparedRunPodGeneration.bind_client` (`astrid/packs/runpod/generation.py:201-214`); the machine route uses `prepare_retained_generation` (machine.py:469, adapter.py:18). Tests: `test_prepared_task.py`, `test_https_transport.py:236`. Filed under Plan 14's "prepared-worker island: audit, then delete" row. No worker in Plan 32.
