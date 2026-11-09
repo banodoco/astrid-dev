@@ -127,6 +127,39 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertNotIn("not just quick generations", self.page["pillars"][0]["bodyMarkdown"])
         self.assertNotIn("throughput", self.page["pillars"][0]["bodyMarkdown"])
 
+    def test_characteristics_reflect_artistic_agency_agent_tools_and_affordable_cloud(self):
+        pillars = {pillar["id"]: pillar for pillar in self.page["pillars"]}
+        principles = {p["id"]: p for p in self.page["principles"]}
+
+        ambition = pillars["artistic-ambition"]
+        self.assertIn("deep, evolving partnership", ambition["explanationMarkdown"])
+        self.assertIn("every session", ambition["bodyMarkdown"])
+        self.assertIn("Every blocker", ambition["bodyMarkdown"])
+        self.assertNotIn("throughput", ambition["bodyMarkdown"])
+
+        liquid = pillars["liquid-software"]
+        self.assertIn("live-tool-composition", {c["id"] for c in liquid["characteristics"]})
+        self.assertIn("Agents should be equally free", liquid["bodyMarkdown"])
+        self.assertIn("extend its own capabilities", liquid["bodyMarkdown"])
+
+        wisdom = pillars["compounding-intelligence"]
+        self.assertEqual(wisdom["characteristics"][0]["title"],
+                         "An ecosystem of wisdom grounded in real work")
+
+        local = principles["local-first-cloud-capable"]
+        self.assertIn("cloud-as-frugal-as-possible", {c["id"] for c in local["characteristics"]})
+        self.assertIn("cheap turpentine", local["bodyMarkdown"])
+        self.assertIn("privacy", local["bodyMarkdown"])
+
+        open_design = principles["open-by-design"]
+        self.assertEqual(len(open_design["characteristics"]), 4)
+        self.assertIn("Open decisions and working knowledge", open_design["bodyMarkdown"])
+        self.assertIn("With the creator's permission", open_design["bodyMarkdown"])
+
+        wrangling = principles["eliminate-needless-technical-wrangling"]
+        self.assertIn("your agents handle", wrangling["statement"])
+        self.assertIn("The technical work remains real", wrangling["bodyMarkdown"])
+
     def test_open_projects_derive_from_catalog_in_priority_order(self):
         projects = self.page["projects"]
         self.assertGreater(len(projects), 0)
