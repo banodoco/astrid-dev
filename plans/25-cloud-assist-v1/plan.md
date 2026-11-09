@@ -60,7 +60,9 @@ Rejected:
 
 ## Sequence and readiness
 
-**Critical path:** A1 → A2 → A3 → A4 → A7 → A10 → R. A5 and A6 run alongside. A8 follows [Plan 20](../20-zero-to-first-image/plan.md)'s onboarding work, so it adds one branch to it rather than competing with it. Details are in [tasks.md](tasks.md).
+**Three stages:** the account, billing and the service first (it produces what Plan 26 consumes), then the Agent, sign-in and the App, then the proof and review. A review stop (RS1) on the SQL, the queue contract and the Runtime key record comes before anything builds on them or reaches Banodoco.
+
+**Critical path** (about 12 elapsed days): A1 → A2 → RS1 → A14 → A16 → T2 → A10 → R. The service (A3 → A18) and the Agent route (A7) run alongside. A15 waits for [Plan 32](../32-generation-placement-targets/plan.md) T6d's generation settings document. A8 waits for [Plan 20](../20-zero-to-first-image/plan.md)'s "Set up generation" card (P2.3), so it adds one branch to it rather than competing with it. Details and the stage estimates are in [tasks.md](tasks.md).
 
 All the owner's decisions are recorded in [inputs.md](inputs.md#owner-decisions). The live proof spend is capped at **$10**, with Stripe in test mode. Recording this plan authorizes no deployment or spend.
 

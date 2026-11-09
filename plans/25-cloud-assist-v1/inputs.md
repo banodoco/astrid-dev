@@ -53,6 +53,49 @@ All decided by the owner on 9 Nov.
 | D6 | No pasted keys: Discord sign-in in the App mints a per-device key that goes into the Runtime |
 | D7 | Proof budget at most $10 provider spend; 3 review rounds |
 
+## Reviews
+
+- **Final review (R):** at most 3 rounds, agreed by the owner (D7). The plan spans four repositories plus a service, takes money and holds a credential, so the run contract's guide gives 3.
+- **Review stop RS1, after A2 and A6 (and A2's `docs/api.md`):** recommended at most 1 round. Pending — the owner has not yet agreed it. Next: the owner agrees or removes it in this scope PR. **Why:** A3, A4, A11, A7, A13, A14 and A16 all build on the SQL functions, the queue contract and the Runtime secret record, and Plan 26 B5, B10 and B11 consume them. A late finding (for example the idempotency scope, an overdraw path, or a key readable through the door) would mean redoing up to seven tasks, and after A18 it would be on a live project with real fal spend. RS1 clears before anything is applied to Banodoco.
+
+## Ambiguity pass (9 Nov, task cards)
+
+Done by reading the source at the SHAs below. Resolved from code or from the owner's decisions; each resolution is in the task card named.
+
+**Corrections to the first draft:**
+- **There is no Runtime record for an outbound key today.** `controlRemoteCredential` is per-task remote-worker credential control (Runtime `contract/openapi/workspace-v1.yaml:767-773`, actions `:1132-1140`). The `<data-root>/credentials/` store holds inbound bearer tokens for Runtime actors (`runtime_protocol/auth.py:16-17`, `server.py:725-739`). So A6 builds the first one, limited to the `astrid_cloud` name (Q2).
+- **9 `cloud` rows are priced, not 10.** The tenth `price` in `models.yaml` is `minimax-music-3.0` on WaveSpeed. No image-to-video row is priced, and the completion journey needs one (A5).
+- **One local task id can be more than one cloud task.** The Runtime's explicit retry re-queues the same task id (`runtime_protocol/service.py:8111-8149`). So the idempotency key is unique only among live cloud tasks: a crash restart reuses the task, and a deliberate retry after a refunded failure charges again (A2).
+- **reigh-app's idempotency index is global** (`supabase/migrations/20260213200001_task_idempotency_key.sql:12-14`). Here it is per account (A2).
+- **The orchestrator is not a trim.** It claims, completes and fails tasks only through edge functions (`api_orchestrator/task_utils.py:20-27`, `:208-343`) and has no HTTP API. Its handlers are per Reigh task type (`task_handlers.py:22-45`). Kept: the resilient fal tracking (`fal_utils.py:81-102`, `:438-483`). The API, the database layer and one generic handler are new (A12, A3, A4).
+- **No task id reaches the fal backend.** The host passes a `task_identity` input to actions that declare it (Agent `astrid/core/execution/generic_host.py:1551-1554`); the generation actions don't yet (A7).
+- **The fal path accepts only fal's queue origin** (`astrid/core/util/http.py:79-106`) and uploads with the user's fal key (`:369-460`), so the route needs an allowed-origin parameter and its own upload (A7).
+- **App `main` has no Supabase code in `src`;** only the dependency remains (`package.json:170`). Sign-in is restored from the tag (A14).
+
+**Resolved without the owner:**
+- **Tables live in their own `astrid_cloud` schema,** and accounts are created by the App's first call, not a trigger on `auth.users`. Banodoco is shared with Hivemind (`astrid/core/hivemind/executors/_common.py:37-41`), so nothing of ours touches its objects, and rollback is one `drop schema` (A2, A18).
+- **The Agent talks only to the service origin.** Uploads and results pass through it, because `authority_lint` flags `supabase` in product code and journey logs (`scripts/reshape/authority_lint.py:90`, `:1365-1367`) (A3, A7).
+- **The key is write-only from the App and the door;** only the pack-host actor reads it (Runtime `daemon.py:31`, `door.py:190`), and no backup or export carries it (A6). The host reads it only from the Runtime, with no file or environment fallback, so it is never pasted (A13).
+- **The setting lives in Plan 32 T6d's generation document** (`/v1/app-state/user/generation`), as the field `generate_with`. App-state is keyed by actor (`service.py:4797-4803`), so A15 first checks that the App and the CLI share one (A15).
+- **Choosing Astrid Cloud wins over a user's own `FAL_KEY`,** because the user chose it (D5). This computer keeps today's behaviour, including fal-direct with the user's key. Cloud never silently falls back to local (A15).
+- **Units come from the request,** and a price must be a ceiling for the parameters the service accepts, or the row stays unpriced (A3, A5).
+- **Cancel refunds only before the provider call.** Revocation refuses the next request at once, because each request checks the key with no cache (A2, A3).
+- **The $10 cap is enforced in the service:** a daily provider-spend cap and, while Stripe is in test mode, an allowlist of accounts. Otherwise anyone could buy test-mode credits and spend real fal money (A2, A18).
+- **Live mode is outside this plan.** Completion is in Stripe test mode. Switching to live mode and opening the allowlist is a later release decision.
+- **Missing worker scripts:** `env/` has nothing for `astrid-cloud` (Python plus Postgres), the Runtime, or the App. E1 adds them there, not in this folder.
+
+## Owner questions
+
+- **Q1 — Accounts and access for the live steps.** Pending — A1, A18 and A10 need them. Next: the owner provides, at dispatch:
+  - (a) how a worker reads (A1) and writes (A18) Banodoco: a Supabase access token saved as a network secret for `api.supabase.com`, or the owner runs those steps. The token also reaches Hivemind's objects;
+  - (b) the Stripe test-mode account and webhook secret;
+  - (c) the Railway project;
+  - (d) the fal account the service bills to;
+  - (e) the service's hostname (proposed `cloud.astrid.haus`), which the Agent pins in code and in the pack's network policy;
+  - (f) the Discord accounts on the test-mode allowlist.
+- **Q2 — A6 builds the first piece of Plan 36.** Pending — [Plan 36](../36-one-credential-path/plan.md) is a draft and hasn't mapped the Runtime's records. Next: the owner confirms that A6 builds the record for `astrid_cloud` only and Plan 36 widens it later, or orders Plan 36's mapping first (which adds its time to the critical path).
+- **Q3 — RS1.** Pending — see [Reviews](#reviews). Next: the owner agrees 1 round, or drops the stop.
+
 ## Source identities
 
 | Repository | SHA | Use |
@@ -68,5 +111,6 @@ Re-pin to current `main` at dispatch.
 
 ## References
 
+- The A1 baseline note, when A1 has run.
 - [App cloud-mode overview, 5 Oct](https://github.com/banodoco/astrid-app/blob/a0f253ee62a1bb26c004add9822b0bae9e851fa5/docs/design/cloud-mode-project-overview-2026-10-05.md), the earlier, heavier design.
 - fal queue API: <https://fal.ai/docs/model-apis/model-endpoints/queue>.
