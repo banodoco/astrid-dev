@@ -54,7 +54,8 @@ environment:
   smoke: {}   # e.g. astrid-agent: "ENV-PASS agent <selector> @ <sha>"
 # Failing test ids per repository and baseline, recorded before the first task
 # (Manage step 1). A regression ran and passed on a baseline and fails on the candidate.
-# e.g. astrid-agent: {served-release-11: {sha: "", failing: "<path to id list>"}}
+# Sorted by env/baseline-diff.py; each comparison is committed under plans/<project>/evidence/tests/<repo>/<candidate short SHA>/.
+# e.g. astrid-agent: {served-release-11: "a105de3a…", main: "<sha>", latest: "plans/<project>/evidence/tests/astrid-agent/<sha>/"}
 baseline: {}
 checkin:
   # Only when the owner asks for advisor check-ins; leave empty otherwise.
