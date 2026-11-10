@@ -81,7 +81,7 @@ CPU proof and review findings remain in [tasks.md](tasks.md); existing draft com
 
 ### Release 12 hold and separate rehearsal
 
-Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `26262feba69913f7e4dac6ee9d99f03a20ab866c`, including the reviewed H3 import repair, is separate from `int/32` and is not this candidate. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
+Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `3ebcb109a7f780cdd4492761aca1aab40d7e2ec7`, including the reviewed H3 import repair and Release 12 installer refresh, is separate from `int/32` and is not this candidate. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
 
 ## Owner decisions
 
