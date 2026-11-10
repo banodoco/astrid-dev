@@ -64,6 +64,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G16 Managed alignment failure diagnostics | X | Plan 34 live cell 8 on `21ab69ace` | managed preparation and tests | Report fixed failure reason and safe allowlisted doctor headings without leaking arbitrary output; preserve cleanup and record stream hashes | [x] `377c0431e` |
 | G17 Safe offer observation diagnostics | X | Plan 34 live cells 7–9 on `377c0431e` | RunPod offer adapter, target selection and tests | Distinguish no-stock and fixed safe transport/response/auth/rate-limit categories at catalogue and pricing stages without provider text; preserve consent and fallback | [x] `181537f04` |
 | G18 Owned-engine doctor schema | S | Plan 34 live cell 9 on `181537f04` | managed preparation, native preparation and tests | Doctor uses fresh bounded owned-engine loopback schema with custody rechecks and fail-closed exact cleanup; missing models still refuse | [ ] candidate `78fc292b` |
+| G18.1 Drain early owned engine on later preparation failure | S | G18 security review | managed preparation custody and tests | Every post-doctor failure or cancellation exact-stops and drains the newly started owned engine before lock release, or retains uncertain custody; never stop an unowned process | [ ] in progress |
+| G18.2 Revalidate mutated base before early start | S | G18 security review | managed preparation and tests | Re-attest recipe-owned runtime/base and required capsule/model evidence after mutation before first engine launch; prove corruption refuses before startup | [ ] in progress |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -729,3 +731,7 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 ## Progress 69 (Codex manager, 10 Nov)
 
 - **G18:** Plan 34 cell 9 exposed the native doctor reconciling against a stale local node index before the owned engine starts. Advisor supplied `plan34/fix-owned-doctor-schema` `78fc292b`, which starts and attests the owned engine before supplying its bounded schema to the original doctor. Independent security review and focused CPU proof are in progress; exact ownership, failure drainage and missing-model refusal are gates. CI on `181537f04` is a shakedown until this lands. No paid resources used by this run.
+
+## Progress 70 (Codex manager, 10 Nov)
+
+- **G18 security blockers:** review found that after the early doctor start succeeds, a later capsule, model, runtime or base verification failure or cancellation can leave the newly started engine running while preparation releases its install lock. G18.1 is repairing and testing exact stop/drain or uncertain-custody fencing across the whole preparation path. G18.2 addresses a separate ordering issue: post-mutation base/runtime verification happens after first launch, so invalid bytes could execute before refusal. The original candidate passed 36 focused tests, but those do not prove either missing property. G18 is not merged. No paid resources used by this run.
