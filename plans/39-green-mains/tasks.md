@@ -2,6 +2,8 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+**Release 12 B5 baseline follow-up:** The following Agent broad-suite failures also reproduce on P40 integration base [`d8931c281cf705273c3c7c01346b6f2722733cca`](https://github.com/banodoco/astrid-agent/commit/d8931c281cf705273c3c7c01346b6f2722733cca), with its matching test environment, and need cause and ownership triage against published `main` under G1. This comparison does not establish that they pass or fail on R10, R11 or `main`, or that the behavior is harmless. On candidate `79036b5a267dca28c295a5b44fc8eb6865114294`, `test_qwen_21_turbo.py::test_generate_and_h3_share_vibecomfy_pin` compares Windows and Linux source dictionaries that differ by Foley and QwenTTS bindings; `test_one_engine.py::test_no_removed_name_survives_in_astrid_or_tests` finds two retired `vibecomfy-h3` references; and `test_engine_release.py::test_plain_comfyui_release_handoff_requires_the_same_cli_engine` expected a `ReleaseError` that was not raised. On candidate `e857a106986e337491165305e103b78a304f8919`, two `test_compile_generalized.py` LanPaint legacy cases fail on an unsupported SPEC-MIN operation and missing `mask_keyframes`, and `test_managed_schema_models.py::test_managed_schema_choices_include_only_supplied_inventory_additions` fails the historical overlay hash assertion. Each corresponding failure was reproduced on the P40 base. Do not loosen these checks; investigate causes and any product impact in their owning tasks. Separate H3 declaration drift caused by B4 is an active Release 12 regression, not included in this baseline bucket.
+
 Routes, per the [run contract](../../skills/astrid-dev-shared/run-contract.md):
 - **N:** the default.
 - **X:** coupled work.
