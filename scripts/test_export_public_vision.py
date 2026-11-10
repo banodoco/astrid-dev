@@ -173,7 +173,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("not yet settled",
                       principles["open-by-design"]["explanationMarkdown"])
         self.assertIn("our ownership", principles["open-by-design"]["statement"])
-        self.assertEqual(len(gaps), 18)
+        self.assertEqual(len(gaps), 21)
         self.assertIn("CA-003", gaps)
         self.assertEqual(gaps["CA-003"]["primaryAppliesTo"], "principle:open-by-design")
         self.assertIn("pillar:shared-endeavour", gaps["CA-003"]["appliesTo"])
@@ -232,6 +232,13 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("Banodoco-website", inputs)
         self.assertIn("Equity Review", inputs)
         self.assertIn("Pending", inputs)
+
+    def test_each_gap_linked_project_has_one_primary_gap(self):
+        for project in self.page["projects"]:
+            self.assertEqual(
+                project["primaryGapId"],
+                project["gapIds"][0] if project["gapIds"] else None,
+            )
 
     def test_project_gap_ids_resolve(self):
         ids = {gap["id"] for gap in self.page["gaps"]}
