@@ -648,3 +648,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **G9 and G9.1 landed:** `3ab17b6f8bee5d32623679f5a7a4ff5cfa6dc3f0` merges `c75de011` with identical tree. Independent review cleared the combined batch after G9.1 fixed the lifecycle-import guard. On the exact candidate, 17 machine deadline/capacity cases, three changed-source/install cases and four shell guard cases passed (`run/premortem-combined-c75.log`, all inner exits 0). The guard test failed on `9c1a03f1` and passed after repair. The affected pod bootstrap, capacity and execution paths and merge SHA were announced to Plan 34; same-marker altered imports before reset remain unproven.
 - **End gate:** push-triggered CI `42775060447` on `3ab17b6f8` and exact integrated focused proof are pending; the prior run on `a2ccbde91` is a shakedown. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains a draft. No paid resources used by this run.
+
+## Progress 55 (Codex manager, 10 Nov)
+
+- **Exact integrated proof:** `3ab17b6f8bee5d32623679f5a7a4ff5cfa6dc3f0` passed 17 deadline/capacity cases and seven source-install/bootstrap guard cases, the latter serialized under the journey lock (`run/premortem-integrated-3ab.log`, both inner exits 0). The tested selectors are unmarked; the focused command did not filter them out with `-m integration`.
+- **End gate:** CI `42775060447` on this head is pending; the prior run on `a2ccbde91` is a shakedown. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft pending the comparison and any further live-run findings. No paid resources used by this run.
