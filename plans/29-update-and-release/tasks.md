@@ -268,3 +268,13 @@ Status as of 20:42 UTC. Rows are recorded as reported; the bucket-A record is [P
 | Agent journey matrix | — | — | Agent journey matrix | — | Any failure gets fixed, whether or not main has it |
 | Agent CI shard setup failures (run `42721392857`, Agent `0f792afb1`) | — | Plan 39 | Agent CI shards | run `42721392857` | Stays a Plan 39 record, with the evidence list. Plan 39 still waits. Record only |
 | Suspect-group baseline diff (`editorial.arrange`, `raw_command.renderer`, `external_pack.demo`) | — | — | Suspect groups | — | Still BLOCKS on any release-12 regression it finds |
+| **Release 12 later work (recorded 2026-11-10)** | | | | | |
+| Fix 3: the reference realm seeds through the guarded `commit_timeline` | — | — | Agent; branch `r12/quick-journey-realm`, commit `11030fde6` | Not recorded here | [x] landed in the Agent candidate at `90372f0ec` |
+| P1 follow-up: deliberate pack refresh | — | — | Pack-refresh ack, single worker; branch `r12/p1-deliberate-refresh` at `bc96e5f33` | Pending; not landed | [ ] Cause: the single-worker pack-refresh ack re-registered non-deliberately after `discover()`, so the epoch fence locked the host. Likely the cause of the matrix task-follow rows, and probably of the fresh and r11 "not registered" results (unproven) |
+| Windows installed git: `ASTRID_GIT_EXECUTABLE` recorded at install | — | — | Installer; branch `r12/windows-installed-git` at `bebb4a4` | Base `aa5bc442f`: 25 failed, 717 passed, 51 errors. `bebb4a4`: 25 failed, 729 passed, 51 errors. 77 pre-existing, per the record; 0 regressions | [ ] proof clean; not landed. Pending: (1) a recorded git without the exec bit falls back to PATH lookup; (2) a non-git candidate or a failing `git --version` at install records nothing and logs one line |
+| Harness `harness/29-r12` at `1b85aed841c5a16e6623e1a4495e0428efead73c` | — | — | Harness; (A) post-check ownership hook; (B) runtime-side registration gate plus R11 pack seeding | Not recorded here | [ ] recorded at this sha, including: existing-pack Runtime-current gate; full task, host and registration diagnostics; named R11 baseline gate skip |
+| Open: final Agent sha | — | — | Agent | — | [ ] open |
+| Open: final round on one tuple | — | — | — | — | [ ] open |
+| Open: Hannah's decisions on `:426` and `:444` | — | — | — | — | [ ] waiting on owner (Hannah) |
+| Open: default-floor test `test_the_default_floor_matches_the_runtime` | — | — | — | Check against Release 10 | [ ] open, to check against Release 10 |
+| Plan 39 and release notes: Windows git over ssh needs a follow-up (`ASTRID_SSH_EXECUTABLE`) | — | Windows installed git | Plan 39 record; release notes | — | [ ] open |
