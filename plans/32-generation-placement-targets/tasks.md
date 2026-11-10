@@ -60,6 +60,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G12 Pod job CLI gateway routing | X | Plan 34 live cell 6 on `3201204d9` | gateway dispatch and CLI tests | Literal `generate <entry> --placement local --job ...` reaches the existing job command; normal listing and validation remain correct; independent review and focused CPU proof | [x] `54940280b` |
 | G13 Audio gateway routing test regression | N | G12 focused wider check | `tests/test_pack_gateway_routes.py` | Restore the audio gateway test against the placement contract without weakening routing assertions; compare main and integrated head | [x] `8fff17211` |
 | G14 Accurate RunPod audio placement help | T | G13; Plan 34 prior art | `astrid/core/generation/cli.py` help and test | Remove the false music/tts-only restriction while keeping placement guidance clear; independent review and exact before/after plus focused proof | [x] `43ba77ccb` |
+| G15 Pod canonical action context | X | Plan 34 live cell 7 on `43ba77ccb` | VibeComfy local job and tests | Guarded import, preparation and invocation run within the existing exact-capability context; direct/wrong capability still refused; context restored on all outcomes | [ ] candidate `3bbfefb7` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -694,3 +695,7 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **G13 integrated proof:** exact `8fff172117d6c3f9dbe4606a1b9a6690e9185736` passed ten pod-job CLI and audio gateway cases (`run/gateway-final-8fff.log`, inner exit 0).
 - **G14 landed:** `43ba77ccb609e0a6b26ed1e3f36fccda3ec31ff9` merges reviewed `df86033`. Audio placement help changed from `runpod (music/tts only)` to `runpod`, removing a false exclusion of SFX. Independent review found the wording accurate and minimal; two focused help cases passed (`run/audio-help-proof.log`, exit 0). The help/test-only merge was announced to Plan 34.
 - **End gate:** exact integrated `43ba77ccb` passed 12 help, pod-job CLI and audio gateway cases (`run/help-integrated-43.log`, inner exit 0). Push-triggered CI `42781507282` is active. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+
+## Progress 63 (Codex manager, 10 Nov)
+
+- **G15:** Plan 34 live cell 7 passed reset, entry guard and gateway, then hit the canonical-entrypoint guard because pod `local_job` imported the guarded action outside its capability context. Advisor supplied `plan34/fix-pod-canonical-invocation` `3bbfefb7`; independent security review and focused CPU proof are in progress. CI on `43ba77ccb` is a shakedown until G15 lands. No paid resources used by this run.
