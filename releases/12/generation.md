@@ -6,7 +6,7 @@ Active P32, P40, P20 and P34 brief as of 10 Nov 2026. Follow the shared [operati
 
 ## START HERE — Track B manager
 
-One session owns all four role blocks below. Read each block and its linked task cards; delegate work by the existing routes and preserve each role's branch/evidence ownership. Start P40's B1 and P20's three independent preparation tasks while preparing P32 composition and P34's unpaid inputs. Consume completed internal dependencies directly, recording their handoff labels for the orchestrator. A role's waiting instruction does not stop the whole session while another assigned role has ready work. Track B ends `DONE` only after all four completion records are accepted and the orchestrator closes every role.
+One session owns all four role blocks below. Read each block and its linked task cards; delegate work by the existing routes and preserve each role's branch/evidence ownership. A bounded manager may own a substantial subproject when useful, while the track manager remains accountable. Start P40's B1 and P20's three independent preparation tasks while preparing P32 composition and P34's unpaid inputs. Consume completed internal dependencies directly, recording their handoff labels for the orchestrator. A role's waiting instruction does not stop the whole session while another assigned role has ready work. Track B ends `DONE` only after all four completion records are accepted and the orchestrator closes every role.
 
 Use the shared [issue mailbox and session mapping](../12.md#hand-offs-all-via-mailboxes) for the separate chats; local files in another chat are not an inbox.
 
@@ -96,7 +96,7 @@ The planned cell ceilings total $3.13 + $3 + $16 = $22.13, leaving at most $2.87
 | # | Task | Owner | Depends on |
 |---|---|---|---|
 | B1 | P40-R1.1–R1.4 | P40 | — |
-| B2 | staging + fix N into int/40 | P40 | B1 |
+| B2 | staging + fix N into `plan40/staging-int40` | P40 | B1 |
 | B3 | P40-T9 + focused review | P40 | B2 |
 | B4 | Pins: VibeComfy release (P20, B4a); ComfyUI and Runtime per the [pin rule](../12.md#pins-default-rule-b4) | P20 + orchestrator | — |
 | B3a | Early TTS diagnosis; route and repair any blocker | P34 + owning plan | B3; orchestrator names complete diagnostic inputs |

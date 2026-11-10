@@ -10,7 +10,7 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 2. **Answer questions and unblock** managers and the owner (path 2).
 3. **Equip managers to need you less.** Turn each repeated question into a standing rule in the [manage skill](../astrid-dev-manage/SKILL.md) or the task card, so the run moves as fast as it can without you.
 
-You don't verify tasks, run tests, edit task code or follow the run between check-ins. Managers and their workers do that, and they make routine calls themselves.
+Managers and their workers verify tasks, run tests, edit task code and make routine calls. Follow the accepted release brief for any coordination duties it assigns you, such as relaying cross-track dependencies, accepting frozen inputs, arranging review or publishing after the owner's go.
 
 **You orchestrate; the manager manages.** Sometimes you'll catch yourself writing a manager's dispatch plan for it: which tracks run in parallel, the per-worker steps, or when to escalate. That means the manage skill is missing a rule. Send the manager one line that names the goal, and point it to the rule. Then add the rule to the [manage skill](../astrid-dev-manage/SKILL.md) by PR, so the next manager doesn't need you.
 
@@ -23,7 +23,7 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
 | The owner wants regular updates on a run | 3. Check in |
 | The project's completion PR merged, or the owner says stop | 4. Close |
 
-**Between those, stay idle.** Don't follow the run, answer progress updates or relay them to the owner. Progress lives in the plan's `tasks.md`.
+**Between those, stay idle.** Progress lives in the plan's `tasks.md`; handle required dependency handoffs and urgent blockers when received, without taking over task supervision.
 
 ## Path 1: start a project
 
@@ -52,7 +52,7 @@ A cloud session that waits on a prompt nobody sees is a stalled run. Set up for 
 
 ## Choose the cloud workflow
 
-For agents in separate Codex Cloud chats, use [Codex Cloud agent coordination](codex-cloud/README.md). Give each session a unique session ID and each manager a role, then share the issue URL and run ID in their briefs. Agents leave GitHub comments with their session ID, sender, recipient and message ID; the guide gives the command, watcher and acknowledgment protocol. Their files and processes are isolated; do not assume an issue comment wakes an idle chat.
+For agents in separate Codex Cloud chats, use [Codex Cloud agent coordination](codex-cloud/README.md). Give each session a unique session ID and each manager a role, then share the issue URL and run ID in their briefs. Agents leave GitHub comments with their session ID, sender, recipient and message ID; the guide gives the command, watcher and acknowledgment protocol. Their files and processes are isolated; do not assume an issue comment wakes an idle chat. At the owner's requested strategic cadence, inspect both progress and blockers, help the managers make independent progress in parallel, and otherwise wait; handle urgent questions as they arrive. Verify an actual scheduler and session-resume mechanism before promising automatic check-ins. Live resource supervision remains the responsible manager's job and must not wait for a strategic check-in.
 
 For Codex running inside a Claude Code cloud session, use the Claude-hosted runner below. These are different environments.
 
@@ -80,7 +80,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 
 ## Path 3: check in (only when the owner asks)
 
-When the owner asks for regular check-ins on a run, take the cadence and end condition from that request and record them as `checkin` in the run's `run.yaml`. Schedule them from your own session as a durable scheduled task that survives restarts, never a session-only timer. A scheduled task fires at most hourly. For a faster cadence while a release's critical path runs, chain one-off `send_later` messages. Each one re-arms itself until the end condition is met, and the hourly task stays as a backstop. These documents never start a check-in themselves.
+When the owner asks for regular check-ins on a run, record the agreed cadence and end condition as `checkin` in the run's `run.yaml`. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. A timer or GitHub comment alone does not resume a separate Codex Cloud chat. Without a verified path, use bounded foreground polling while active and tell the owner when a manual nudge is needed. The Claude-hosted runner has its own liveness requirements above; those are separate from strategic check-ins. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, the nudge is to wake it with one next action.
@@ -91,15 +91,16 @@ Each check-in compares the run with the previous check-in. To gather the facts (
 - **Blocked:** waiting on a person, an event or a dependency, and for how long.
 - **Drifting:** work outside its scope, or something undoing a recorded decision.
 - **Wasteful:** reruns with nothing changed, or a costlier route than the task needs.
+- **Parallelism:** ready independent work left idle, or a dependency that could be unblocked. Give the manager the goal; let it choose and supervise its workers.
 
-Then do exactly one thing:
+For each manager or cross-track blocker, take the next useful action:
 - **On track:** note one line; send the manager nothing.
 - **Needs a nudge:** send the manager one next action to unblock or improve the run.
 - **Needs the owner:** bring one decision with your recommendation.
 
 **Improve astrid-dev as you go.** When the run hits friction in astrid-dev itself (an unclear skill, a missing template field, a slow check), add an entry file to the [process ledger](../../docs/ledger/README.md). If the fix is small and touches only astrid-dev docs or skills, open the fixing PR in the same check-in and add a `fix` entry in it that follows the entry it resolves. Friction specific to this one run goes in its [decisions ledger](../astrid-dev-shared/templates/decisions-ledger.md) instead.
 
-After three check-ins in a row with nothing to report, tell the owner, then slow down or stop. A check-in never starts, resumes or authorizes work.
+After three check-ins in a row with nothing to report, you may recommend a slower cadence; keep the agreed cadence until the owner changes it or its end condition is met. A check-in may nudge an existing manager to continue already authorized work through a verified resume mechanism; it grants no new scope, spend or publication authority.
 
 ## Path 4: close
 
