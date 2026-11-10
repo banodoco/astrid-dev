@@ -85,7 +85,7 @@ The remote candidate above remains `99724131d`; a reviewed TTS prompt fix has si
 
 ### Release 12 hold and separate rehearsal
 
-Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `c87cfa3bc8f0d96b790c3a41d6e6a4757af48692`, including the reviewed H3 import repair, Release 12 regression and installed-test reconciliation and locally integrated TTS fix, is separate from `int/32` and is not this candidate. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, explicitly port rehearsal repair `d70bed508` (the rehearsal merge was conflict-free), then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
+Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `1eb57326d10d2f62daacc8ea3e98dff86792cf3c`, including the reviewed H3 import repair, Release 12 regression and installed-test reconciliation and locally integrated TTS fix, is separate from `int/32` and is not this candidate. The incoming Release 12 Windows recovery data-loss bug is repaired and reviewed in the rehearsal only; upstream adoption and native Windows proof remain outstanding. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, explicitly port rehearsal repair `d70bed508` (the rehearsal merge was conflict-free), then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
 
 ## Owner decisions
 
