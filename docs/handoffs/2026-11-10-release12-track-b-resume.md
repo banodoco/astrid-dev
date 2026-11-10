@@ -129,9 +129,9 @@ open through publication and plan-specific hosted/completion work. No product
 ## Transfer update
 
 At handoff the T9 worker stopped tests, committed WIP and finished. A process
-check found no T9 pytest or spawned observer process. Track A had its own
-independent comparison running; its manager controls that process. No Track B
-test remains in flight. Local P32/P34 clones, P40 provisional merge and
+check found no T9 pytest or spawned observer process. Track A's independent
+comparison was subsequently stopped for the move. No Track B test remains in
+flight. Local P32/P34 clones, P40 provisional merge and
 environments are convenience copies only; pushed branches above are the
 transferable source of truth. Diagnose the failing paid-timer/drain test and
 apply the finite-budget cleanup advice with the orchestrator, then fix and prove on a new commit.
