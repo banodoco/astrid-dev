@@ -101,8 +101,12 @@ class StrategyTests(unittest.TestCase):
         self.assertEqual(strategy_errors(self.GOOD, {'13.md': self.RELEASE}), [])
 
     def test_real_strategy_passes(self):
-        self.assertEqual(strategy_errors((ROOT / 'strategy.md').read_text(encoding='utf-8'),
-                                         {'13.md': (ROOT / 'releases/13.md').read_text(encoding='utf-8')}), [])
+        docs = {p.name: p.read_text(encoding='utf-8')
+                for p in (ROOT / 'releases').glob('[0-9]*.md') if p.stem.isdigit()}
+        self.assertTrue(docs)
+        self.assertEqual(strategy_errors((ROOT / 'strategy.md').read_text(encoding='utf-8'), docs), [])
+        for name, body in docs.items():
+            self.assertEqual(release_errors(name, body), [])
 
     def test_valid_release_brief_passes(self):
         self.assertEqual(release_errors('13.md', self.RELEASE), [])

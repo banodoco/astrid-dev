@@ -8,13 +8,13 @@ The [plan catalog](plans/index.md) alone owns project status, priority, estimate
 
 ## Focus now
 
-Finish the Release 12 candidate and its update/reliability proof under [Plan 29](plans/29-update-and-release/plan.md); the [release 12 run note](docs/ledger/2026-11-09-release-12-slow-path.md) documents what slowed qualification. In parallel, maintain the generation path through [Plan 32](plans/32-generation-placement-targets/plan.md) and the onboarding work in [Plan 20](plans/20-zero-to-first-image/plan.md). None of this silently adds a plan to a future release.
+Finish [Release 12](releases/12.md) as two tracks that merge once: the update fixes under [Plan 29](plans/29-update-and-release/plan.md) ([Track A](releases/12/fixes.md)) and the generation work under Plans 32, 40, 20 and 34 ([Track B](releases/12/generation.md)). The [release 12 run note](docs/ledger/2026-11-09-release-12-slow-path.md) documents what slowed qualification so far.
 
 ## Sequence
 
 | Release | Highlight | Plans | Why this order |
 |---|---|---|---|
-| [Release 13 (draft)](releases/13.md) | Creators can see and control when their rented GPU machine stops and how much it can cost. | [Plan 40](plans/40-machine-lifetime-controls/plan.md) | Plan 40 is already targeted at Release 13 in the catalog; keep the rest of its scope open until the release is deliberately composed. |
+| [Release 12 (draft)](releases/12.md) | Updating Astrid works reliably on every platform, and creators generate media through one path, locally or on a rented GPU they control. | [Plan 29](plans/29-update-and-release/plan.md), [Plan 32](plans/32-generation-placement-targets/plan.md), [Plan 40](plans/40-machine-lifetime-controls/plan.md), [Plan 20](plans/20-zero-to-first-image/plan.md), [Plan 34](plans/34-real-gpu-proof/plan.md) | Both the update fixes and the generation work are near done; shipping them together means one candidate, one qualification and one publish. Two tracks merge once ([fixes](releases/12/fixes.md), [generation](releases/12/generation.md)). |
 
 The table is a summary, **not** a second definition of a release. Add a future row when its draft file is created; update the row whenever its highlight or included plans change. A published release's document remains as the historical ledger. [Plan 31](plans/31-releases-from-astrid-dev/plan.md) makes this workflow and its checks authoritative.
 
@@ -26,6 +26,7 @@ Past releases are documented in the [existing release log](plans/releases.md) an
 
 ## Decisions
 
+- **2026-11-10:** Hannah folded the generation work (Plans 32, 40, 20 P1.5 and staged work, and Plan 34's proof) into Release 12 instead of a Release 13. The draft `releases/13.md` is folded into [Release 12](releases/12.md); the next release brief starts fresh after publish.
 - **2026-11-10:** Strategy is release-led: each release file starts as a living strategy brief, with a highlight, intent, approach and linked plans. The overview here is mainly a summary of those release files.
 - **2026-11-10:** An unpinned draft can change on `main` without publishing; publication requires separate, explicit finalization and owner-approved, validated pins (Plan 31).
 - **2026-11-08:** Installed-release publication remains separately authorized. Plan 31 follows Plan 29; generation work continues on its own track.
