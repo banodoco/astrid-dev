@@ -44,7 +44,7 @@ Creators should have final say over every part of their creative environments.
 
 Technical wrangling should be work for your agents, not work that interrupts your art.
 
-## Gaps — 18 assessed outcomes
+## Gaps — 21 assessed outcomes
 
 Each gap describes a result that remains independently verifiable even if its proposed implementation changes. Follow its link for the full current assessment, sources and closure evidence. Project completion never closes a gap automatically.
 
@@ -52,8 +52,10 @@ Each gap describes a result that remains independently verifiable even if its pr
 - **[CA-001 — Astrid lacks its own creative challenge culture](gaps/CA-001-creative-challenge-culture.md)** — Open. Run a bounded challenge with clear artistic intent and fair participation; document artists' goals, feedback, completed work and whether it enabled more ambitious efforts.
 - **[CA-002 — No implemented contributor-ownership model](gaps/CA-002-contributor-ownership.md)** — Open. An explicit owner decision and qualified legal/tax review of a concrete model covering eligible contributions, grants/allocations, governance, vesting, changes over time, financing and participant protections; then evidence of its authorized implementation.
 - **[CA-003 — Our vision, experiments and execution aren't yet clearly connected](gaps/CA-003-vision-experiments-progress.md)** — Partially evidenced. Publish a maintained public trail for at least three substantive decisions or experiments, each connecting the relevant vision and gap to the hypothesis, work attempted, evidence, outcome, resulting decision, and what remains unresolved.
+- **[CA-004 — Creators and agents can't yet find one another's contributions](gaps/CA-004-sharing-and-discovery.md)** — Open. An independent contributor publishes a versioned contribution; a creator and an agent separately discover it through relevant search, inspect identity, source, compatibility and trust signals, then follow a supported reuse path.
 - **[CI-001 — Agents don't yet reliably learn from creative work](gaps/CI-001-agent-learning-loop.md)** — Open. Two real agent sessions: the first retrieves applicable knowledge and produces an observed, locally retained result; a subsequent session demonstrably uses that finding.
 - **[CI-002 — Independent Hiveminds don't yet work together](gaps/CI-002-federated-knowledge.md)** — Open. Two separately owned datasets can exchange a scoped, independently attributed reference or approved sanitized result, preserving revision identity, provenance and access decisions; denied, stale and revoked cases do not leak source content.
+- **[CI-003 — Hivemind doesn't yet learn from public internet resources](gaps/CI-003-public-source-ingestion.md)** — Open. Ingest an authorized sample of GitHub issues/discussions, Reddit posts and documentation with source identity and revisions.
 - **[F-001 — Reliability isn't proven across supported setups](gaps/F-001-platform-reliability.md)** — Partially evidenced. A declared and version-pinned OS/device/deployment matrix demonstrates clean installation, launch, stop, update, interruption recovery, rollback and removal with preserved work and meaningful negative tests.
 - **[F-002 — User control and recovery aren't fully proven](gaps/F-002-safe-user-control.md)** — Open. Representative real workflows show clear and enforceable grant/deny/revoke permissions, correctly scoped file/network/spend access, handling of concurrent edits, inspectable changes, refusal and undo/recovery after failed or conflicting operations.
 - **[F-003 — Creative execution isn't yet dependable end to end](gaps/F-003-creative-execution.md)** — Open. On a stated supported setup, run real creative generation or processing and inspect the resulting editable artifact for correct content, project identity, output settings and usable timeline/workspace integration.
@@ -66,6 +68,7 @@ Each gap describes a result that remains independently verifiable even if its pr
 - **[LS-002 — Agents can't yet reconfigure the workspace](gaps/LS-002-agent-workspace-control.md)** — Open. An agent arranges the same real components as a user, binds the correct timeline/selection/clock, offers reversible operations, does not clobber user edits, and restores a prior workspace from a saved representation.
 - **[LS-003 — Frontend and backend extensions don't yet compose](gaps/LS-003-full-stack-contributions.md)** — Open. An installed/trusted music capability yields a typed beat-grid result used in a real timeline view and music control surface.
 - **[LS-004 — A creative ecosystem across modalities isn't yet established](gaps/LS-004-cross-modal-foundations.md)** — Open. On documented supported setups, creators and agents successfully make real work using video plus at least two non-video modality foundations, with preserved files and project control.
+- **[LS-005 — Agents can't yet reliably create and maintain their own tools](gaps/LS-005-agent-managed-tools.md)** — Open. For a real creative task, an agent creates or adapts a narrow tool, tests it, shows its source and permissions, and requests approval to activate it.
 
 ## Projects and participation
 
