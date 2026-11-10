@@ -178,7 +178,7 @@ def build(root: Path, revision: str) -> dict:
             "id": plan.parent.name, "title": name, "goalMarkdown": goal,
             "status": status, "owner": owner, "estimate": estimate,
             "waitingOn": waiting, "priorityOrder": i + 1,
-            "gapIds": linked, "githubUrl": f"{REPO_URL}/blob/{revision}/{plan.as_posix()}",
+            "gapIds": linked, "primaryGapId": linked[0] if linked else None, "githubUrl": f"{REPO_URL}/blob/{revision}/{plan.as_posix()}",
         })
 
     return {
