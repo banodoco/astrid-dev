@@ -6,8 +6,8 @@ This record preserves static and CPU-side evidence for Agent candidate [`6a2351d
 
 - Agent candidate: `6a2351d95bb7eabc8b0ff6f988163fe420fcb3d7`
 - VibeComfy: [`8d065a8fef3dd602d5462e27d8eca088cf4e8262`](https://github.com/banodoco/vibecomfy/commit/8d065a8fef3dd602d5462e27d8eca088cf4e8262)
-- ComfyUI: [`ee71d5c4993f29086b27fde1629a945ae48425bf`](https://github.com/comfyanonymous/ComfyUI/commit/ee71d5c4993f29086b27fde1629a945ae48425bf)
-- H3 extension source: [`361624fb406b63eb6694442eac6c895fc1533a70`](https://github.com/banodoco/ComfyUI-Minimax-Hailuo-2.3/commit/361624fb406b63eb6694442eac6c895fc1533a70)
+- ComfyUI: [`ee71d5c4993f29086b27fde1629a945ae48425bf`](https://github.com/Comfy-Org/ComfyUI/commit/ee71d5c4993f29086b27fde1629a945ae48425bf)
+- H3 extension source: [`361624fb406b63eb6694442eac6c895fc1533a70`](https://github.com/seitanism/ComfyUI-H3-Motion-Context-MultiRef/commit/361624fb406b63eb6694442eac6c895fc1533a70)
 - VideoHelperSuite: [`4ee72c065db22c9d96c2427954dc69e7b908444b`](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite/commit/4ee72c065db22c9d96c2427954dc69e7b908444b)
 
 ## Preserved API graph samples
