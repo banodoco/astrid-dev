@@ -355,3 +355,4 @@ Rows below are recorded as reported at 13:45Z. A row marked `[ ]` is not yet pro
 | `r12/app-dj-round2`: `:708` test change; `:449` B's normalized transition; `:2893` non-visual preview-revision attributes | — | — | App | — | [ ] pending |
 | Full 11-row matrix on the final tuple | — | Final Agent sha, App re-pin | Matrix | — | [ ] pending |
 | Final round | — | Full 11-row matrix | — | — | [ ] pending |
+| Lanes: no install/update breakers (R11 parity); recorded on Plan 39 | — | — | Lanes | — | [x] recorded on Plan 39 |
