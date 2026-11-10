@@ -62,6 +62,19 @@ Plan 32 consumes [Plan 33](../33-unblock-live-generation/plan.md)'s landed revis
 
 Line numbers in [tasks.md](tasks.md) are at Agent `5eac07e3f` and must be re-checked on the landed head.
 
+### Integrated CPU candidate for completion review
+
+The candidate prepared for T8 on 10 Nov 2026 is Agent [`41da1ff86b428d1a9359044419f840d0b59d1356`](https://github.com/banodoco/astrid-agent/commit/41da1ff86b428d1a9359044419f840d0b59d1356), on `int/32-one-generation-path`. It is an integration-branch candidate, not a published release or a claim that T8 has passed. The table above records the historical planning inputs; the candidate's committed dependency files identify the versions below.
+
+| Source | Exact revision | Candidate source of identity |
+|---|---|---|
+| astrid-runtime | `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f` | `runtime.lock.json`, `source_commit` |
+| VibeComfy | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` | `astrid/packs/{vibecomfy,runpod}/pins.json`, `sources.vibecomfy.revision` |
+| ComfyUI | `423cbd20511becb1f16122ab518e92e58bfa03d9` | the same pins, `sources.comfyui.revision` |
+| runpod-lifecycle | `f2948817eeb94af8dee76be21f6d673724f1606e` | `astrid/packs/runpod/pins.json` and `pyproject.toml` |
+
+CPU proof and review findings remain in [tasks.md](tasks.md); the completion PR carries the final integrated assessment. The exact-head CI comparison is pending at preparation. Plan 34 owns real inference, real model and node downloads, real RunPod capacity and volume behavior; its live proof is not a T8 prerequisite. Any later product merge requires the completion assessment to name the new candidate and revalidate the evidence affected by that merge.
+
 ## Owner decisions
 
 Recorded from the lead's relay of the owner's choices (Hannah, 8 Nov 2026, about 15:40Z):

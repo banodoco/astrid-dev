@@ -1,6 +1,6 @@
 # F-003 — Creative execution isn't yet dependable end to end
 
-**Applies to:** [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (primary) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (supporting) · **Assessment:** Open / foundations exist (2026-11-06).
+**Applies to:** [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (primary) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (supporting) · **Assessment:** Partially evidenced; Plan 32 CPU evidence, with real creative results still required (2026-11-10).
 
 ## Desired state
 
@@ -9,6 +9,8 @@ From a declared supported, usable Astrid workspace, a creator and agent can choo
 ## Current state
 
 Astrid has Runtime execution/task primitives, packs, generation integrations and the video editor. [Plan 02](../../plans/02-consistent-generation/plan.md) aims to establish consistent defaults and pinned stack on fixtures and a fresh Linux CPU setup, **explicitly not real inference**. [Plan 12](../../plans/12-multiple-inference-routes/plan.md) targets real multiple inference routes. [Plan 20](../../plans/20-zero-to-first-image/plan.md) targets a real first generated image on a timeline; [Plan 16](../../plans/16-streamlined-agent-experience/plan.md) improves agent readiness.
+
+[Plan 32](../../plans/32-generation-placement-targets/plan.md)'s CPU evidence adds the common generation path, placement defaults and overrides, progress, cancellation and output retrieval on managed-local, attached and shipped-job RunPod stand-ins. Its [task record](../../plans/32-generation-placement-targets/tasks.md) names each tested revision and its limits; the [completion candidate](../../plans/32-generation-placement-targets/inputs.md#integrated-cpu-candidate-for-completion-review) is Agent `41da1ff86b428d1a9359044419f840d0b59d1356`, with exact-head CI comparison pending. These stand-ins do not establish the content, editability or timeline integration of a real generated artifact. [Plan 34](../../plans/34-real-gpu-proof/plan.md) supplies the separate real-GPU proof.
 
 ## Gap
 
@@ -20,4 +22,4 @@ On a stated supported setup, run real creative generation or processing and insp
 
 ## Sources and reassessment
 
-[Plan 02](../../plans/02-consistent-generation/plan.md) · [Plan 33](../../plans/33-unblock-live-generation/plan.md) · [Plan 12](../../plans/12-multiple-inference-routes/plan.md) · [Plan 16](../../plans/16-streamlined-agent-experience/plan.md) · [Plan 20](../../plans/20-zero-to-first-image/plan.md). Do not equate fixture checks with real GPU/inference qualification. Portability across machines and engines is [F-008](F-008-portable-generation.md).
+[Plan 02](../../plans/02-consistent-generation/plan.md) · [Plan 33](../../plans/33-unblock-live-generation/plan.md) · [Plan 32 CPU evidence](../../plans/32-generation-placement-targets/tasks.md) · [Plan 34](../../plans/34-real-gpu-proof/plan.md) · [Plan 12](../../plans/12-multiple-inference-routes/plan.md) · [Plan 16](../../plans/16-streamlined-agent-experience/plan.md) · [Plan 20](../../plans/20-zero-to-first-image/plan.md). Do not equate fixture checks with real GPU/inference qualification. Portability across machines and engines is [F-008](F-008-portable-generation.md).
