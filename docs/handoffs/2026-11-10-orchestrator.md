@@ -61,7 +61,9 @@ The orchestrator's clones held a few branches from 4–8 November that were neve
 - App: `cont-app`, `help-pk14`;
 - runpod-lifecycle: `help-p2-prepin`.
 
-One branch is NOT pushed: Runtime `cont-runtime`, a single commit "Combine retained stop ownership and pack admission sources". Runtime CI runs on every push, so it was left for after the freeze. Push it then if it's still wanted.
+One branch is NOT pushed: Runtime `cont-runtime`, a single commit "Combine retained stop ownership and pack admission sources". Runtime CI runs on every push, so it was left for after the freeze. Push it then if it's still wanted. The same applies to VibeComfy `claude/worker-permissions`, a single commit from 8 Nov, "Allow .claude in the root-clean allowlist". VibeComfy CI also runs on every push.
+
+Everything else is verified on GitHub. Every task branch in the managers' clones is contained in its pushed staging branch: `plan40/staging-int40`, `plan32/staging-int32`, and `plan20/staging-agent` / `plan20/staging-int20`.
 
 ## Open questions for Hannah
 
