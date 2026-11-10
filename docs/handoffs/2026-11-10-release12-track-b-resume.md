@@ -138,3 +138,51 @@ apply the finite-budget cleanup advice with the orchestrator, then fix and prove
 Merge accepted T9 work with `plan40/staging-int40` by merge commit, repeat
 appropriate exact-head proof and review-fix verification, then post `P40-T9`.
 Do not reset the focused-review budget.
+
+## Clean-transfer audit
+
+The final read-only remote-ref check confirmed all full SHAs above on GitHub:
+Agent `plan20/staging-agent` `e28a509b6bd8c352514d4b4cc14c95628a8302e7`,
+`plan32/staging-int32` `d28cac1902328836acce35230517a19c137ecd55`,
+`plan40/staging-int40` `1b93d2799364612374810b5b38f7ad1ee3eb61a0`, P40
+handoff `cc4ed06f78ae7dac3a90bc402cecdd4fe6841033`, and T9 WIP handoff
+`4a21520aad8b62d2db35e079647533ce5981e5ab`; App `plan20/staging-app`
+`ee9e0b9a6995a08c63040e031d049a7a320f7ef1`; VibeComfy
+`release12/vibecomfy` `8d065a8fef3dd602d5462e27d8eca088cf4e8262`; and
+astrid-dev P34 evidence branch `1874afa21f7ad9b9a5777c55daa0224b797831e4`.
+The T9 WIP branch contains `80bbf6904a7d9ed2204ac4f1635091aa964e8895` and
+`cc4ed06f78ae7dac3a90bc402cecdd4fe6841033` as ancestors. Runtime lock donor
+Agent handoff `ec48555d8298d155390ffbb37d1950c3e80b43a4` also exists remotely.
+
+Records PRs [#371](https://github.com/banodoco/astrid-dev/pull/371),
+[#373](https://github.com/banodoco/astrid-dev/pull/373) and
+[#374](https://github.com/banodoco/astrid-dev/pull/374) are merged at
+`71196eb0d1f9c07c44d1755536f8c4da64cde732`,
+`fdfe9081fdc960d94b16e8dfb12c5ce00238cb09` and
+`f51f4bc62311a4002214370711c1526aa6301f59`, respectively. The final WIP and
+failed drain proof are recorded in merged
+[PR #378](https://github.com/banodoco/astrid-dev/pull/378), head
+`092f08464b83adcea0716f55d9000335f8fa896c`, merged as `d140dac34efca32bcaf3c2f942b834413e3bf674`. Its task row stays unchecked. No relevant product work is
+uncommitted or unpushed. The local provisional P40 merge `95038ea681cc52da428eab2395ab621fe93984d7`
+is intentionally unpushed and superseded; reconstruct the final merge from
+the remote staging and corrected WIP branches. Earlier local Git remote-tracking
+refs may be stale, so compare with `git ls-remote` rather than their ahead counts.
+
+Detailed T9 logs such as `/tmp/p40-t9/drain-real.log`, `http-entered*.log`,
+`diagnostics-final.log` and `final-named.log` are local-only and will not travel
+to another machine. The recorded results above are a handoff transcription;
+rerun the exact checks on the replacement candidate and keep fresh logs. No
+Track B test, observer process or worker is active. The combined handoffs are published through astrid-dev PR #377; fetch its branch if it has not yet merged.
+
+## Ready-to-send kickoff
+
+> Resume Release 12 Track B from this handoff and the binding release brief.
+> Verify current remote refs and review the T9 progress record. Diagnose
+> the failed paid-timer/drain test on the pushed T9 WIP, apply Astra's finite
+> exact-cleanup guidance, run exact-head CPU proof, and obtain verification of
+> the four existing review findings. Continue independent B5/B6 preparation and
+> record progress without resetting review budgets. Send blockers and exact
+> handoffs to the orchestrator. Coordinate the read-only census and budget check
+> with the orchestrator; do not rent until reviewed T9, exact diagnostic inputs,
+> current census/budget and explicit orchestrator go are all available. No paid
+> resource may be left running on a pause.

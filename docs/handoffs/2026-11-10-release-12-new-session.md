@@ -27,6 +27,8 @@ Follow the current release pages for CI restrictions, exact frozen SHAs, handoff
 3. Resume the two tracks from their manager handoffs, delegate ready work and keep the plans' progress records current. Relay cross-track dependencies and obtain Astra advice when needed.
 4. Set up the check-in mechanism as above and tell the owner the actual status. Do not infer delivery from schedule creation alone.
 
-## Starter message for the new session
+## Starter messages
+
+Copy the three concise messages from [the session startup messages](2026-11-10-release12-start-messages.md). The orchestrator message is also reproduced here.
 
 > Take over Release 12 as orchestrator. Read this handoff, the release overview and both track pages, then the two transition handoffs. Check for live existing owners and reconstruct the exact pushed work. Run one manager per track, delegate work, unblock and escalate hard or high-stakes questions to Astra. Use Check-in Companion if this session has a real scheduler: test same-chat delivery first, then arrange hourly updates and a deeper Astra review every two hours. Follow the release gates and paid-work limits; report any missing access or unverified wake-up.
