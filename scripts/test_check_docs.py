@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_docs import (ROOT, ledger_entry_errors, ledger_errors, strategy_errors, DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
+from check_docs import (ROOT, ledger_entry_errors, ledger_errors, release_errors, strategy_errors, DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
                         route_issues, unnamed_active_owners)
 
 
@@ -78,31 +78,63 @@ class RouteToClosureTests(unittest.TestCase):
 
 
 class StrategyTests(unittest.TestCase):
+    RELEASE = (
+        "# Release 13 — GPU control\n\n**Release:** 13\n**State:** Draft\n\n"
+        "## Highlight\n\nCreators can control rented GPU machine lifetime.\n\n"
+        "## Intent\n\nMake cost and lifetime clear.\n\n"
+        "## Approach\n\nFollow existing machine controls.\n\n"
+        "## Included plans\n\n"
+        "- [Plan 40](../plans/40-machine-lifetime-controls/plan.md) — Include spend control.\n\n"
+        "## Publication\n\nNot pinned. No publication authority.\n"
+    )
     GOOD = (
-        "# Strategy\n\n**Last reviewed:** 2026-11-08, by the owner.\n\n## Focus now\n\nF-001.\n\n## Sequence\n\n"
-        "| Order | When | Gap | Plans | What creators get | Waiting on |\n|---|---|---|---|---|---|\n"
-        "| 1 | Now | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 29](plans/29-update-and-release/plan.md) | Update now | owner go |\n"
-        "| 2 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | Green mains (proposed) | Green checks | Plan 31 |\n"
-        "\n## Not now\n\n- Other gaps.\n\n## Decisions\n\n- 2026-11-08: Release 10 first.\n")
+        "# Strategy\n\n**Last reviewed:** 2026-11-10, by the owner.\n\n"
+        "## Focus now\n\nWork in progress.\n\n## Sequence\n\n"
+        "| Release | Highlight | Plans | Why this order |\n"
+        "|---|---|---|---|\n"
+        "| [Release 13 (draft)](releases/13.md) | Creators can control rented GPU machine lifetime. | "
+        "[Plan 40](plans/40-machine-lifetime-controls/plan.md) | Work on consent first. |\n\n"
+        "## Not now\n\nOther projects.\n\n## Decisions\n\n- 2026-11-10: Release first.\n"
+    )
 
     def test_valid_strategy_passes(self):
-        self.assertEqual(strategy_errors(self.GOOD), [])
+        self.assertEqual(strategy_errors(self.GOOD, {'13.md': self.RELEASE}), [])
 
     def test_real_strategy_passes(self):
-        self.assertEqual(strategy_errors((ROOT / 'strategy.md').read_text(encoding='utf-8')), [])
+        self.assertEqual(strategy_errors((ROOT / 'strategy.md').read_text(encoding='utf-8'),
+                                         {'13.md': (ROOT / 'releases/13.md').read_text(encoding='utf-8')}), [])
 
-    def test_row_without_gap_link_fails(self):
-        bad = self.GOOD.replace('[F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 29]', 'F-001 | [Plan 29]')
-        self.assertTrue(any('Gap must link' in e for e in strategy_errors(bad)))
+    def test_valid_release_brief_passes(self):
+        self.assertEqual(release_errors('13.md', self.RELEASE), [])
 
-    def test_row_without_plan_or_proposed_fails(self):
-        bad = self.GOOD.replace('Green mains (proposed)', 'Green mains')
-        self.assertTrue(any('Plans must link' in e for e in strategy_errors(bad)))
+    def test_release_requires_sections_and_plans(self):
+        bad = self.RELEASE.replace('## Approach', '## Notes').replace(
+            '[Plan 40](../plans/40-machine-lifetime-controls/plan.md)', 'Plan 40')
+        errors = release_errors('13.md', bad)
+        self.assertTrue(any('Approach' in e for e in errors))
+        self.assertTrue(any('Included plans' in e for e in errors))
 
-    def test_bad_when_and_missing_section_fail(self):
-        bad = self.GOOD.replace('| 1 | Now |', '| 1 | Soon |').replace('## Not now', '## Later stuff')
+    def test_draft_needs_no_pins_but_final_does(self):
+        self.assertEqual(release_errors('13.md', self.RELEASE), [])
+        final = self.RELEASE.replace('**State:** Draft', '**State:** Final')
+        self.assertTrue(any('JSON payload' in e for e in release_errors('13.md', final)))
+
+    def test_release_requires_matching_roadmap_row(self):
+        errors = strategy_errors(self.GOOD, {'13.md': self.RELEASE, '14.md': self.RELEASE})
+        self.assertTrue(any('14.md' in e for e in errors))
+
+    def test_summary_and_plans_must_match_document(self):
+        bad = self.GOOD.replace('Creators can control rented GPU machine lifetime.', 'A different summary.')
+        self.assertTrue(any('highlight differs' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
+        bad = self.GOOD.replace('[Plan 40](plans/40-machine-lifetime-controls/plan.md)',
+                                '[Plan 31](plans/31-releases-from-astrid-dev/plan.md)')
+        self.assertTrue(any('plan links differ' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
+
+    def test_bad_release_link_and_missing_section_fail(self):
+        bad = self.GOOD.replace('[Release 13 (draft)](releases/13.md)',
+                                '[Release 13 (draft)](releases/14.md)').replace('## Not now', '## Later stuff')
         errors = strategy_errors(bad)
-        self.assertTrue(any('When must be' in e for e in errors))
+        self.assertTrue(any('matching link' in e for e in errors))
         self.assertTrue(any('## Not now' in e for e in errors))
 
 
