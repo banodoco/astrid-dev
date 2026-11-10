@@ -56,6 +56,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G9 Execution deadline, catalog capacity, and pod source origin | S | Plan 34 cell-4 and pre-mortem on `a2ccbde91` | RunPod machine, pod bootstrap, remote placement and tests | Execution deadline starts after preparation and stays within paid expiry; catalog capacity uses complete hash-pinned workflow rows; verified transported Agent/Runtime install with strict source origins; independent review and focused CPU proof | [x] `3ab17b6f8` |
 | G9.1 Bootstrap repairs failed lifecycle import | X | G9 independent review on `9c1a03f1` | RunPod pod bootstrap and focused tests | A complete package list plus failed lifecycle import and successful source check enters repair; healthy and failed checks retain AND behavior | [x] `3ab17b6f8` |
 | G10 Local job focused test failures | X | Plan 34 test report on `3ab17b6f8` | `test_t4g_local_complete.py` and relevant fixtures | Restore two Plan 32-added local-job tests using valid installation receipt and regular frozen workflow members; preserve product checks and prove both exact nodes | [ ] in progress |
+| G11 Cold pod entry readiness | X | Plan 34 live cell 5 on `3ab17b6f8` | RunPod machine entry guard and tests | Select declared local entry/mode before managed alignment without requiring cold target inventory; refuse invalid or missing entries; independent review and focused CPU proof | [ ] candidate `b58a6ca7` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -659,3 +660,7 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **G10:** two `test_t4g_local_complete.py` local-job selectors fail on `3ab17b6f8` (missing managed install receipt; non-regular workflow bundle). Their test file is absent on main `a105de3a`, so no baseline pass/fail exists; because Plan 32 added them, they are being diagnosed and repaired without weakening product checks. Exact head/main commands and outputs: `run/local-job-head.log`, `run/local-job-main.log`.
 - **Remaining:** Plan 34 is preparing a separate cold entry-readiness guard. CI `42775060447` remains in progress but will be a shakedown if product changes land; completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+
+## Progress 57 (Codex manager, 10 Nov)
+
+- **G11:** Plan 34 cell 5 found a cold pod refused before managed alignment because the entry guard required attached target readiness. Advisor supplied `plan34/fix-entry-readiness` `b58a6ca7`; independent review and focused CPU proof are in progress. G10 fixture repair is proceeding separately. CI on `3ab17b6f8` is a shakedown until these land. No paid resources used by this run.
