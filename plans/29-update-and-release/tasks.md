@@ -2,6 +2,14 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+## Release 12 Track A current work
+
+The active task definitions and gates are in [Track A](../../releases/12/fixes.md).
+
+- **A0:** On Agent `91caa12ce` (starting candidate plus the Windows donor merge), the three collection errors from run 42799672641 no longer reproduce: 25 tests collected, with six default-off pack-build tools tests deselected. CI reporting change is prepared locally; integration and Checkpoint A proof remain open.
+- **A1:** The Windows donor merge has been resolved with the read-only cleanup retained, following independent advice. Focused recovery tests and the VibeComfy pin check are in progress. VibeComfy release branch is `8d065a8fef3dd602d5462e27d8eca088cf4e8262`.
+- **A4:** App candidate advanced to `20795070d1b2e44727fee1513789a235525e27fc`. Trace-backed seed and draft request repairs passed five focused save-session tests; early Direct Journey [run 42888887784](https://github.com/banodoco/astrid-app/actions/runs/42888887784) is in progress. The restart portion was not reached by the previous trace and still needs journey proof.
+
 Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = super hard (see the [run contract](../../skills/astrid-dev-shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. Start each task from the live heads, recorded when it starts. The SHAs here only locate the cited lines: App `915bfa84`, Agent `a2c4ab7d` (the same product code as `709492fa` in inputs.md, plus test-harness commits), Runtime `61e2c301`. Re-check those lines against the branch being built.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
