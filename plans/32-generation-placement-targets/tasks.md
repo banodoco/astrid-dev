@@ -510,3 +510,9 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **Host-managed preparation landed:** `7dbe4eec3` merges reviewed `eaec5b355`. The exact candidate passed 13 serialized real host/native cases, 27 preparation/custody checks and 11 native trust/evidence checks. The success path fetches an initially missing loopback artifact, validates HTTP readiness before the sandboxed worker, generates over HTTP, and denies worker supervisor-socket access. Failure/cancellation and trust cases are included. Independent host review found no remaining blocker on the host scope. Real Python 3.12.3 plus the 3.12.10 selector source were checked; the full 3.12.10 binary was unavailable locally.
 - **Still open:** D2 integration and real pod shared-helper caller, managed and RunPod composed invariant proof, cold-start completion on the unified path, i2v heartbeat disposition, CI comparison, final R and T8. This is not yet `GATE-READY`.
+
+## Progress 33 (Codex manager, 10 Nov)
+
+- **Pod shared preparation:** D2 `7edefd517` passed three real installed-engine CPU cases (align, trust and UI-JSON freeze); focused mutation and signal checks passed. Independent review cleared the staged workflow identity repair. Controller recovery regression `e681859e6` passed: unresolved exact-job cancellation fences new claims until the exact pod can be deleted.
+- **H3 pod seam:** real `run_job` reached preflight and exposed a dormant empty image input being synthesized as a public string. The fix preserves full graph and refuses blank loaders reachable from declared or target output roots; three focused compatibility checks passed and independent review found no blocker. The real H3 seam rerun and additional multi-root test remain open.
+- **Integration:** `7dbe4eec3`; D2 and pod shared-helper work remain unmerged, so no `GATE-READY` or full CI comparison yet. Managed host's separate exact-candidate proof is recorded in progress 32.
