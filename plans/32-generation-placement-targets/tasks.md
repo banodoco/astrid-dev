@@ -435,3 +435,10 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **D3 hook boundary:** a D2-focused guard found D3 added core naming of a `build` hook. The reviewer traced an older related inconsistency as well; the existing local-job adapter is moving into VibeComfy, with the structural guard strengthened. Branch `plan32/d3-hook-boundary` `fe066bdc9`: structural, H3 and T4i checks passed (5); serialized seam rerun pending.
 - **D2:** the real child spy works. The registered workflow output-prefix input can overwrite the run-scoped node value during compilation; a focused real-workflow regression passes with the proposed fix. The attached t2i cell passed; managed and remaining matrix cells pending.
 - **D4b:** `plan32/codex-manager-d4b` `78a10e3cf` has typed missing-input filtering and a facade-level rewording proof (4 focused cases passed). An earlier full-file run showed an initial failure before interruption; identifying that node before integration.
+
+## Progress 21 (Codex manager, 10 Nov)
+
+- **D4b landed:** `2513adbda` merges `f3b6c7d27`, replacing diagnostic-text matching with a typed missing-input signal and renaming the test. Four focused selection/fail-closed cases passed. The first full-file failure (`audio/tts-auto`, missing Qwen node in local fixture) reproduces on base `fb62a5058`; the interrupted run is not a full pass.
+- **D2:** the corrected t2i comparison passed attached and failed managed because the spy observed no actual align call; investigating the route without weakening the assertion. Branch must merge `2513adbda` before final proof.
+- **D3 boundary:** structural, H3 and T4i checks passed; serialized seam rerun is running. The repair must merge the current int/32 head before integration.
+- **Timing (owner, 10 Nov):** Plan 34 live GPU proof starts after Plan 32 completion, not in parallel. No intermediate GPU gate is needed.
