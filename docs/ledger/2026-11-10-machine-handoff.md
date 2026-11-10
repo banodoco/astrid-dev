@@ -1,7 +1,7 @@
 Date: 2026-11-10
 Kind: papercut
 Source: Orchestrator handoff of Plans 20, 32, 34 and 40 to another machine
-Resolved by: [2026-11-10 orchestrator handoff](../handoffs/2026-11-10-orchestrator.md) and each plan's `handoff.md` (manual)
+Resolved by: —
 
 Moving four live Codex managers to another machine showed that a run's recovery state lives only on the machine that ran it. `.otto/runs/` is gitignored, worktrees hold commits that are on no remote, and the owner's rules from the conversation exist only in the session.
 
