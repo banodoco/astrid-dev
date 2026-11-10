@@ -1,6 +1,6 @@
 # Release 12 — messages to start the new sessions
 
-These messages are for separate Codex Cloud sessions. The handoffs are in PR #377 on branch `handoff/release12-session-transition` until merged; fetch that branch if they are not yet on `main`. Read the linked handoffs and current release plan for details, exact SHAs, dependencies and limits.
+These messages are for separate Codex Cloud sessions. The handoffs and current progress records are on `astrid-dev` main. Read the linked handoffs and release plan for details, exact SHAs, dependencies and limits.
 
 ## Orchestrator
 

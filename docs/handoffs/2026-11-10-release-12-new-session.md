@@ -22,7 +22,7 @@ Follow the current release pages for CI restrictions, exact frozen SHAs, handoff
 
 ## Takeover sequence
 
-1. Fetch the transition branch containing this file, both manager handoffs and their referenced WIP refs. Confirm each full SHA on the remote; local worktrees, processes, logs and virtualenvs may not exist on the new machine.
+1. Fetch current `astrid-dev` main and the WIP refs in both manager handoffs. Confirm each full SHA on the remote; local worktrees, processes, logs and virtualenvs may not exist on the new machine.
 2. Verify which previous workers and tests actually stopped, and any CI still running. Treat interrupted tests as interrupted. If a needed artifact was not transferred, reconstruct or rerun the required proof under the plan's restrictions.
 3. Resume the two tracks from their manager handoffs, delegate ready work and keep the plans' progress records current. Relay cross-track dependencies and obtain Astra advice when needed.
 4. Set up the check-in mechanism as above and tell the owner the actual status. Do not infer delivery from schedule creation alone.
