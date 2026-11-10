@@ -114,7 +114,7 @@ All of it is CPU only. The live proof (T7) is a later pass of [Plan 34](../34-re
 - A remote job's progress reaches the local run while it runs, and cancelling it releases the machine.
 - Scale is the host's concurrency times its live leases. A pod-side Runtime worker is out of scope: the Runtime binds only to loopback (`runtime_protocol/daemon.py:64-66`).
 - A test machine contribution runs a job through the same `generation.machine` contract.
-- `grep -ri h3 astrid/core astrid/sdk` returns no h3_av-specific line (about 156 lines today). Allowlisted, because they are not h3_av (owner, 9 Nov): the HTML `<h3>` tag in hivemind `ingest_article`, the hivemind SKILL channel name, and the `minimax-h3` vendor model id in `model_catalog`. Any other hit must go.
+- `grep -ri h3 astrid/core astrid/sdk` returns no h3_av-specific line (about 156 lines today). Allowlisted, because they are not h3_av (owner, 9 Nov): the HTML `<h3>` tag in hivemind `ingest_article`, the hivemind SKILL channel name, and the `minimax-h3` vendor model entry in `model_catalog`, meaning its id and its own vendor endpoint paths (`minimax/h3/text-to-video`, `minimax/h3/reference-to-video`; clarified 10 Nov: these are the provider's API routes, not h3_av). Any other hit must go.
 - All of the above is CPU evidence (owner, 8 Nov). Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod. The live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows Plan 33.
 
 The proof does not cover new providers, Wan2GP or the `generic_host` split. [F-003](../../vision/gaps/F-003-creative-execution.md) does not close automatically.
