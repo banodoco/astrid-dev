@@ -1,5 +1,7 @@
 # Plan 40 handoff
 
+> **Superseded in part (10 Nov 2026, Hannah):** the generation work is now in **Release 12**, not a Release 13. Don't wait for Release 12 to publish, and don't treat the runner freeze as a stop: follow [releases/12.md](../../releases/12.md) and your tasks in [Track B](../../releases/12/generation.md)]. Where this file says "after release 12", "release 13" or "freeze", the release plan wins; everything else here stands.
+
 Updated: 2026-11-10. This hands Plan 40 to a new manager session using GitHub as its durable source. Continue with the `astrid-dev-manage` skill and the run contract.
 
 ## Goal and status
