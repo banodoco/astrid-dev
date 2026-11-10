@@ -7,6 +7,8 @@ Read it in this order:
 2. [astrid-dev-orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md);
 3. each running plan's `handoff.md` (linked in [State and next actions](#state-and-next-actions)).
 
+Release 12 (Plan 29) has its own takeover brief, [`plans/29-update-and-release/orchestrator-brief.md`](../../plans/29-update-and-release/orchestrator-brief.md). Read it too if you take over the release.
+
 The owner is **Hannah**.
 
 ## 1. Your job
@@ -36,13 +38,6 @@ Astrid has three repos: an **Agent** (Python, `banodoco/astrid-agent`), an **App
 
 | Plan | What it delivers | Why it matters now |
 |---|---|---|
-<<<<<<< Updated upstream
-| [32 Generation placement targets](../../plans/32-generation-placement-targets/handoff.md) | WAITING for release 12. Local int/32 is pushed as `plan32/staging-int32` d28cac190 (TTS + warm-reuse fixes). Handoff [#346](https://github.com/banodoco/astrid-dev/pull/346) | Merge `main` into int/32, re-prove, cut `cand/release-13` |
-| [40 Machine lifetime controls](../../plans/40-machine-lifetime-controls/handoff.md) | T1–T8, T5-R1, T7b and T4 merged; pushed as `plan40/staging-int40` b15e286b6. The review round found R1.1–R1.4 (blocking). T9 (keep the pod on failure, D12) has its card. Handoff [#349](https://github.com/banodoco/astrid-dev/pull/349) | R1.1–R1.4, then T9 (S, own review), then CI after the freeze |
-| [34 Real GPU proof](../../plans/34-real-gpu-proof/handoff.md) | **Passes:** image t2i, image edit, music, and the Plan 40 T6 wait and claim (live, twice). **TTS** fails on the pod with `input_rejected`; the cause is unknown until T9 keeps the pod. **SFX** is blocked by a VibeComfy model-reference bug, fixed in [#166](https://github.com/banodoco/VibeComfy/pull/166) but not yet GPU-proven: the re-run's install manifest pinned af5cb429 while the pod's engine recipe still pinned e65f4941. **Video** is not run; the fixtures are ready. $3.13 spent; all 18 pods released. Candidates pushed as `plan34/candidate-*`. Handoff [#350](https://github.com/banodoco/astrid-dev/pull/350), record [#260](https://github.com/banodoco/astrid-dev/pull/260) | Video on candidate 17acda421; SFX on a candidate with BOTH pins at af5; TTS after Plan 40 T9 |
-| [20 Zero to first image](../../plans/20-zero-to-first-image/handoff.md) | Agent and App work staged and pushed (`plan20/staging-*`). VibeComfy [#165](https://github.com/banodoco/VibeComfy/pull/165) (region text removed) and [#166](https://github.com/banodoco/VibeComfy/pull/166) (strict model references) are open. Handoff [#303](https://github.com/banodoco/astrid-dev/pull/303) | Wait for release 12, then merge App `main` into App int/20 |
-| [29 Update and release](../../plans/29-update-and-release/handoff.md) | Release 12 in progress. Next orchestrator: start at the [orchestrator brief](../../plans/29-update-and-release/orchestrator-brief.md) | Its owner announces the publish |
-=======
 | 29 Update and release | Releases. Release 12 is in its gate now; release 13 comes next | Every product change below reaches users through release 13 |
 | 32 Generation placement targets | One generation path: `astrid generate --placement local\|runpod` with paid consent, leases and warm reuse | The base the other plans build on. It ships in release 13 |
 | 40 Machine lifetime controls | `astrid machines`: when each machine stops and what it costs; `keep`, `setup`, `claim`, `release`; `--gpu`/`--datacenter`; waiting for capacity by default; keeping the machine after a failed job | Hannah's requests from today. It ships in release 13 |
@@ -144,8 +139,7 @@ Managers run on Luna and choose worker models by route.
 | [40 Machine lifetime controls](../../plans/40-machine-lifetime-controls/handoff.md) | T1–T8, T5-R1, T7b and T4 are merged; pushed as `plan40/staging-int40` b15e286b6. The review found R1.1–R1.4 (blocking). T9 has its card (D12, [#347](https://github.com/banodoco/astrid-dev/pull/347)). Handoff [#349](https://github.com/banodoco/astrid-dev/pull/349) | R1.1–R1.4, then T9, then CI after the freeze |
 | [34 Real GPU proof](../../plans/34-real-gpu-proof/handoff.md) | **Passed:** image t2i, image edit, music, and the T6 wait and claim. **TTS** fails on the pod with `input_rejected`; the cause is unknown until T9 keeps the pod. **SFX** is blocked by a VibeComfy model-reference bug, fixed in #166 but not yet GPU-proven, because the re-run's two VibeComfy pins disagreed. **Video** is ready, not yet run. 18 pods were rented and all released. Candidates are pushed as `plan34/candidate-*`. Handoff [#350](https://github.com/banodoco/astrid-dev/pull/350), record [#260](https://github.com/banodoco/astrid-dev/pull/260) | Video; SFX with both pins at af5; TTS after T9 |
 | [20 Zero to first image](../../plans/20-zero-to-first-image/handoff.md) | Agent and App work is staged and pushed: Agent `plan20/staging-agent` and `plan20/staging-int20`, App `plan20/staging-app`. VibeComfy #165 and #166 are open. Handoff [#303](https://github.com/banodoco/astrid-dev/pull/303) | After release 12: merge App `main` into App int/20 |
-| [29 Update and release](../../plans/29-update-and-release/plan.md) | Release 12 is in its gate, owned by session_011EzfVzreGCJJQnTuXpbib9 (its hourly check-in is disabled) | Its owner announces the publish |
->>>>>>> Stashed changes
+| [29 Update and release](../../plans/29-update-and-release/handoff.md) | Release 12 is in its gate, owned by session_011EzfVzreGCJJQnTuXpbib9 (its hourly check-in is disabled). Whoever takes it over starts at the [Release 12 orchestrator brief](../../plans/29-update-and-release/orchestrator-brief.md) | Its owner announces the publish |
 
 ## CI runner freeze
 
