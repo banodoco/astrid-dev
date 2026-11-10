@@ -442,3 +442,9 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **D2:** the corrected t2i comparison passed attached and failed managed because the spy observed no actual align call; investigating the route without weakening the assertion. Branch must merge `2513adbda` before final proof.
 - **D3 boundary:** structural, H3 and T4i checks passed; serialized seam rerun is running. The repair must merge the current int/32 head before integration.
 - **Timing (owner, 10 Nov):** Plan 34 live GPU proof starts after Plan 32 completion, not in parallel. No intermediate GPU gate is needed.
+
+## Progress 22 (Codex manager, 10 Nov)
+
+- **D3 boundary landed:** `3bab37e51` merges `fe066bdc9`. VibeComfy owns hook-specific local-job routing; the core ownership guard now catches membership as well as calls and subscriptions. Structural/delegation, H3/T4i and serialized seam checks passed; independent review found no blockers.
+- **D2 managed alignment:** the t2i attached cell passed but the managed cell recorded no align call. Trace shows the facade passes the managed target URL as `comfy_url`, causing the action to choose its attached path and skip managed alignment. Repair is underway with real supervised CPU setup and independent lifecycle review; proof remains open. Integration head must be merged into D2 before final checks.
+- **Remaining:** D2 and the i2v heartbeat disposition, integrated scoped proof, the one CI full-suite comparison, final R and T8. The owner moved live GPU proof to after Plan 32 completion.
