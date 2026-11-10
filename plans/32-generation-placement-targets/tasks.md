@@ -57,7 +57,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G9.1 Bootstrap repairs failed lifecycle import | X | G9 independent review on `9c1a03f1` | RunPod pod bootstrap and focused tests | A complete package list plus failed lifecycle import and successful source check enters repair; healthy and failed checks retain AND behavior | [x] `3ab17b6f8` |
 | G10 Local job focused test failures | X | Plan 34 test report on `3ab17b6f8` | `test_t4g_local_complete.py` and relevant fixtures | Restore two Plan 32-added local-job tests using a verified managed installation and an honest owned-action test boundary; preserve product checks and prove both exact nodes | [x] `3201204d9` |
 | G11 Cold pod entry readiness | X | Plan 34 live cell 5 on `3ab17b6f8` | RunPod machine entry guard and tests | Select declared local entry/mode before managed alignment without requiring cold target inventory; refuse invalid or missing entries; independent review and focused CPU proof | [x] `bac49d8ef` |
-| G12 Pod job CLI gateway routing | X | Plan 34 live cell 6 on `3201204d9` | gateway dispatch and CLI tests | Literal `generate <entry> --placement local --job ...` reaches the existing job command; normal listing and validation remain correct; independent review and focused CPU proof | [ ] candidate `920fdc6f` |
+| G12 Pod job CLI gateway routing | X | Plan 34 live cell 6 on `3201204d9` | gateway dispatch and CLI tests | Literal `generate <entry> --placement local --job ...` reaches the existing job command; normal listing and validation remain correct; independent review and focused CPU proof | [x] `54940280b` |
+| G13 Audio gateway routing test regression | N | G12 focused wider check | `tests/test_pack_gateway_routes.py` | Restore the audio gateway test against the placement contract without weakening routing assertions; compare main and integrated head | [ ] in progress |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -675,3 +676,9 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 ## Progress 59 (Codex manager, 10 Nov)
 
 - **G12:** Plan 34 live cell 6 passed reset and cold entry guard, then exposed gateway routing of `--job` to the listing parser. Advisor supplied `plan34/fix-pod-job-cli` `920fdc6f`, routing the literal job invocation to the existing job command. Independent review and focused CPU proof are in progress. CI on `3201204d9` is a shakedown until G12 lands; completion PR remains draft. No paid resources used by this run.
+
+## Progress 60 (Codex manager, 10 Nov)
+
+- **G12 landed:** `54940280b1827c521c91fe973ea70b1d519db065` merges independently reviewed `920fdc6f` with identical tree. New pod-job CLI tests passed in a wider run with 37 passes and two failures; both failures reproduced on the prior integration head. The affected pod CLI execution route and merge SHA were announced to Plan 34.
+- **G13:** of the wider-run failures, `test_qualified_fake_model_remains_available` also fails on main and is baseline. `test_public_generate_audio_uses_audio_parser_and_admits_runpod_sfx` passes main but fails integration with `KeyError: target`, so it is a Plan 32 regression under repair. Logs: `run/gateway-proof-920.log`, `run/gateway-proof-base.log`, `run/gateway-proof-main.log`.
+- **End gate:** exact integrated `54940280b` passed nine pod-job CLI cases (`run/gateway-integrated-549.log`, inner exit 0). Push-triggered CI `42780591187` is underway; G13 remains open. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
