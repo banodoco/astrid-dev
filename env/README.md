@@ -57,4 +57,6 @@ What a permission stress test showed (three auto-mode workers, astrid-agent int/
 | `cmp-run.sh` | Runs one Agent test set at one commit in its own worktree, with `-rA`, for a before/after comparison. Run one per commit in parallel, then compare the logs with `baseline-diff.py`. Falls back to these `env/` copies for commits without `scripts/worker-env/`. |
 | `smoke.sh` | Setup plus one named test. A manager runs it in one throwaway worker per repository before a run's first task, so environment problems surface once, in minutes. |
 
+`cmp-run.sh` recognizes selectors that include Runtime custody fixture tests (the D40 source and orchestrator custody tests, plus the stage1 external-orchestrator test that can reuse D40's fixture loader). For those selections only, it installs that checkout's already pinned Runtime source in editable mode and checks that `runtime_protocol` and both producer fixture modules import from that source tree before pytest starts. A failed or incomplete fixture setup exits 3 as an environment error. Older worktrees with no matching test file simply skip this preflight; the general Agent setup remains noneditable.
+
 Plan 02's original copies stay frozen in `plans/02-consistent-generation/env/` for its recorded proof. Use the copies here for new work.
