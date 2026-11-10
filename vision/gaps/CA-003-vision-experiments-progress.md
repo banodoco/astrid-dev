@@ -1,4 +1,4 @@
-# CA-003 — Our vision, experiments and execution aren't yet clearly connected
+# CA-003 — Our vision and execution aren't yet fully connected
 
 **Applies to:** [Completely open by design](../principles/open-by-design.md) (primary) · [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (supporting) · **Assessment:** Partially evidenced (2026-11-09; public vision, gaps and project summaries exist, but their relationship to experiments and execution has not been demonstrated end to end).
 
@@ -8,7 +8,7 @@ Someone outside the core team can understand what Astrid is trying to achieve, w
 
 ## Current state
 
-The [public Vision page](https://astrid.haus/vision) and [canonical Vision index](../README.md) now publish pillars, principles, assessed gaps, and a project catalog. Those are meaningful pieces of transparency, but they do not yet demonstrate a consistently maintained, readable chain from stated ambition through concrete experiments and execution to outcomes and changed plans. Existing public documents are a start, not proof that someone can reliably follow that reasoning.
+We've been revamping [astrid-dev](../../README.md) and the [public Astrid Vision page](https://astrid.haus/vision) to connect pillars and principles to real gaps and projects. Those are meaningful pieces of transparency, but they still don't demonstrate a consistently maintained, readable chain from ambition through experiments and implementation to evidence, outcomes and changed plans. Existing public documents are a start, not proof that someone can reliably follow that reasoning.
 
 ## Gap
 
@@ -22,4 +22,4 @@ Include at least one negative, abandoned, or changed approach without presenting
 
 ## Sources and reassessment
 
-[Vision and gaps](../README.md) · [Public Vision page](https://astrid.haus/vision) · [project catalog](../../plans/index.md) · [documentation contribution workflow](../../docs/contribution-workflow.md). Reassess when real experiments, decisions and implementation results are traceable and readers can follow them, not merely when a page or feature launches. No project has yet been accepted specifically to close this gap.
+[Vision and gaps](../README.md) · [Public Vision page](https://astrid.haus/vision) · [project catalog](../../plans/index.md) · [documentation contribution workflow](../../docs/contribution-workflow.md). Reassess when real experiments, decisions and implementation results are traceable and readers can follow them, not merely when a page or feature launches. [Plan 44](../../plans/44-vision-execution-trail/plan.md) now proposes a bounded evidence trail, but a documented plan or a published page is not itself proof of the connection.

@@ -8,7 +8,7 @@ Astrid grows into an open ecosystem of powerful, agent-native, deeply extensible
 
 ## Current state
 
-Astrid is primarily a video editor and timeline, with generation, packs, agent protocols and other supporting capabilities. Video is an exciting medium to establish a strong foundation, but the existing product and its interfaces remain video-centered. [Packs](../../plans/06-packs/plan.md), [VibeComfy extensibility](../../plans/17-vibecomfy-extensibility/plan.md), [timeline foundations](../../plans/18-timeline-editing/plan.md), [Three.js extraction](../../plans/11-threejs-pack/plan.md) and [liquid workspaces](../../plans/24-liquid-workspace/plan.md) are related implementation directions, not evidence of a flourishing cross-modal ecosystem.
+Astrid is primarily a video editor and timeline, with generation, packs, agent protocols and supporting capabilities. We do not yet offer comparably powerful, extensible image, 3D or writing editors as reusable foundations. Video is an exciting starting point, but not the limit of the ambition. [Packs](../../plans/06-packs/plan.md), [VibeComfy extensibility](../../plans/17-vibecomfy-extensibility/plan.md), [timeline foundations](../../plans/18-timeline-editing/plan.md), [Three.js extraction](../../plans/11-threejs-pack/plan.md) and [liquid workspaces](../../plans/24-liquid-workspace/plan.md) are related implementation directions, not evidence of a flourishing cross-modal ecosystem.
 
 ## Gap
 
@@ -20,4 +20,4 @@ On documented supported setups, creators and agents successfully make real work 
 
 ## Sources and reassessment
 
-[Liquid Software vision](../pillars/liquid-software.md) · [Full-stack extension boundary LS-003](LS-003-full-stack-contributions.md) · [Liquid workspace draft](../../plans/24-liquid-workspace/plan.md) · [VibeComfy extension draft](../../plans/17-vibecomfy-extensibility/plan.md) · [Three.js pack draft](../../plans/11-threejs-pack/plan.md). Refresh against real source revisions and independent contributor/creator evidence; a plan or manifest alone does not close this gap.
+[Liquid Software vision](../pillars/liquid-software.md) · [Full-stack extension boundary LS-003](LS-003-full-stack-contributions.md) · [Liquid workspace draft](../../plans/24-liquid-workspace/plan.md) · [VibeComfy extension draft](../../plans/17-vibecomfy-extensibility/plan.md) · [Three.js pack draft](../../plans/11-threejs-pack/plan.md) · [Plan 43 — editors beyond video](../../plans/43-nonvideo-editors/plan.md). Refresh against real source revisions and independent contributor/creator evidence; a plan or manifest alone does not close this gap.

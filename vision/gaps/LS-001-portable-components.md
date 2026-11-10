@@ -12,7 +12,7 @@ The [App source map](../../plans/24-liquid-workspace/inputs.md) identifies actua
 
 ## Gap
 
-Component definitions, instances, presentation/lifecycle and positioning are not yet proven independently composable across workspace layouts and domains.
+Component definitions, instances, presentation lifecycle, resizing and positioning are not yet proven independently portable across workspace layouts and creative domains. Responsive behavior and stable state during docking, nesting and container resizing are essential parts of this gap.
 
 ## Closure evidence
 

@@ -1,4 +1,4 @@
-# CA-001 — Astrid lacks its own creative challenge culture
+# CA-001 — Astrid doesn't yet have a culture where creatives thrive
 
 **Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · **Assessment:** Open; prior Banodoco competitions, but no established Astrid-specific program/outcome audit.
 
@@ -12,7 +12,7 @@ Astrid builds on the existing Banodoco community, which has run art competitions
 
 ## Gap
 
-The existing community experience has not yet become an Astrid-centred program of challenges, serious critique, recognition and feedback loops, judged by what people actually make rather than participation alone.
+Astrid doesn't yet have a thriving culture of creatives challenging, inspiring and helping one another reach beyond their current abilities. Challenges, critique, showcases and recognition should be judged by the creative work and growth they enable, not activity counts alone.
 
 ## Closure evidence
 

@@ -1,4 +1,4 @@
-# F-004 — Pack installation and upgrades aren't yet reliable
+# F-004 — Pack installation and upgrades aren't yet proven under demanding conditions
 
 **Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [Open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open / partial current mechanisms (2026-11-06).
 
@@ -12,12 +12,12 @@ Agent has manifest-defined packs with actions, skills, UI and rendering contribu
 
 ## Gap
 
-The practical lifecycle of reusable packs across Agent, Runtime and App still needs integrated, version-pinned proof of installation, runtime availability, use, safe upgrade/rollback, and handling of missing/broken contributions.
+We haven't tested a diverse set of demanding frontend, backend and combined packs far enough to expose the limits of the extension system. Installation, real use, upgrade, rollback and recovery need integrated, version-pinned proof across dependency, compatibility, trust, failure and project-state boundaries.
 
 ## Closure evidence
 
-Install a supported pack, discover its declared actions/UI, use it on project data, update and roll back safely with exact pinned source identity; show missing dependencies, rejected/untrusted cases, recovery and no loss of project references. Do not claim arbitrary dynamically generated third-party code can run safely without independent isolation evidence.
+Run meaningful frontend-only, backend-only and combined packs against real project data, including substantial interactive UI and long-running processing. Demonstrate install, use, update and rollback with pinned source identity; include dependency conflicts, rejected/untrusted contributions, incompatible versions, failed migrations, interruption and recovery without lost project references. Do not claim arbitrary dynamically generated third-party code can run safely without independent isolation evidence.
 
 ## Sources and reassessment
 
-[Plan 06](../../plans/06-packs/plan.md) · [Plan 11](../../plans/11-threejs-pack/plan.md) · [Liquid Software LS-003](LS-003-full-stack-contributions.md). F-004 covers **trusted pack lifecycle**, while LS-003 covers **creative composition of capabilities and views**; one need not prove the other.
+[Plan 06](../../plans/06-packs/plan.md) · [Plan 11](../../plans/11-threejs-pack/plan.md) · [Liquid Software LS-003](LS-003-full-stack-contributions.md) · [Plan 47 — demanding pack tests](../../plans/47-pack-stress-tests/plan.md). F-004 covers **trusted pack lifecycle**, while LS-003 covers **creative composition of capabilities and views**; one need not prove the other.

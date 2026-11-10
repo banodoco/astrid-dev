@@ -1,36 +1,32 @@
-# 24 — Agent-powered liquid workspace
+# 24 — Portable, resizable creative components
 
-**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). The [project queue](../../README.md) owns status, owner and estimate.
+**Start here:** [Astrid development skill](../../skills/astrid-dev/SKILL.md), [shared run contract](../../skills/astrid-dev-shared/run-contract.md), [tasks](tasks.md), [inputs](inputs.md). Status and priority live in the [catalog](../index.md).
 
-**Vision gaps:** [LS-001 — Portable creative components](../../vision/gaps/LS-001-portable-components.md) (primary); [LS-002 — Agent workspace control](../../vision/gaps/LS-002-agent-workspace-control.md) and [LS-003 — Full-stack contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (supporting). A proof of this plan does not automatically close all three.
+**Vision gaps:** [LS-001 — Portable creative components](../../vision/gaps/LS-001-portable-components.md) (primary).
 
 ## Goal and scope
 
-Prove that **real Astrid creative components can be composed, moved, bound and extended by both a user and an agent** using one authoritative project state and a declarative workspace model. Preserve the video editor as an excellent default, not an architectural restriction.
+Make the real Astrid UI **components portable and container-responsive**. Creators can move, dock, float, nest and resize the actual timeline, player, inspector and a different-domain view without losing functionality, project identity or editing state.
 
-**Included:** 2D workspace model and reversible layout operations; stable component definitions versus instances; instance-scoped resource/context binding; container-aware behavior; component-owned specialized extension points using existing contribution machinery; agent discover/open/place/attach/bind operations; a real music-editing composition reusing existing Music/Timeline capabilities.
+**Included:** component definitions versus instances; declarative 2D layout; size and adaptation protocol (minimum/ideal/maximum sizes and compact modes); lifecycle and input/focus boundaries; reversible placement/resizing; saved layouts with restoration against real components.
 
-**Deferred:** universal graph datastore, replacing Astrid Runtime, all components at once, automatic untrusted code execution, full immersive/VR experience or making Three.js the workspace's data authority. A 3D renderer may follow once 2D semantics have proven stable.
+**Separate work:** explicit typed component connections belong to [Plan 45](../45-component-connections/plan.md), and agent workspace actions to [Plan 46](../46-agent-workspace-operations/plan.md). Pack installation, domain-specific editing, universal graphs and native VR/3D workspace layouts are out of scope. This is a strong reusable foundation, not the entire liquid-software vision in one plan.
 
-## What this builds on
+## Existing foundation
 
-- App's real `PreviewPanel`, `TimelineEditor`, `PropertiesPanel`, example alternate shell, extension SDK and timeline state/patch operations.
-- Agent's `timeline` and `music` packs and skill/action discovery.
-- Runtime's authoritative project/task/artifact and revision semantics.
-- Existing [Plan 18](../18-timeline-editing/plan.md) **owns dependable timeline editing primitives**, [Plan 06](../06-packs/plan.md) pack loading, [Plan 04](../04-concurrent-edits/plan.md) concurrent safety, and [Plan 11](../11-threejs-pack/plan.md) current 3D feature extraction. **Do not re-implement their ownership.**
-- [Plan 23](../23-agent-learning-integration/plan.md) can later make contextual community learning available during the music workflow, but the base composition proof should not require a new Hivemind protocol.
+Reuse the App's real `TimelineEditor`, `PreviewPanel`, `PropertiesPanel`, gallery/transcript candidates and existing two-pane example in [inputs](inputs.md) and [component reference](components.md). Runtime remains the domain/project authority. Don't reimplement editing primitives from [Plan 18](../18-timeline-editing/plan.md).
 
 ## Proposed sequence
 
-1. Inspect the real components' size, gesture, focus and mounting assumptions; freeze source identities and choose a narrow pilot.
-2. Extract one declarative 2D workspace shell: layout/attach/focus/float/maximize with undo or restore. Prove that moving genuine editor components preserves playback and editing state.
-3. Define a portable component/instance/binding contract and test with one genuinely different surface (generation gallery or transcript editor), not only the video editor.
-4. Let component authors publish opinionated extension points that reuse manifest registration, lifecycle and validation; keep standalone versus host-only contributions explicit.
-5. Expose the same safe workspace actions to agents; **place/attach** must remain separate from semantic **bind**.
-6. Create a music-editing preset with beat grid, timeline, preview and controls, drawing backend beat analysis from existing packs and authoritative edit commands. Validate user's and agent's concurrent work without silent overwrites.
+1. Audit mounting/state assumptions, gesture/focus ownership, container dimensions and layout constraints of real views.
+2. Define a minimal versioned component definition/instance contract, container-aware sizing/adaptation, mount/unmount and stable identity.
+3. Prove dock, float, nest, resize, maximize and saved/restore layouts with real player, timeline and inspector.
+4. Qualify a distinct-domain view, mobile/compact sizing, permission boundaries, failures and restoration without corrupted creative work.
 
-## Completion
+## Handoff and completion
 
-A user can begin with the real video editor, request a music-aware editing layout, manipulate/dock/float views, collaborate with an agent and restore the default layout. The agent can inspect the workspace and use the same validated placement/binding operations. No duplicate timeline state, lost unsaved work, broken gestures or hidden background task cancellation. A second domain component confirms the contract extends beyond the original shell.
+**Produces:** versioned portable component and adaptive sizing contracts with tested reversible 2D layout operations. [Plan 45](../45-component-connections/plan.md) consumes instance identities to bind resources; [Plan 46](../46-agent-workspace-operations/plan.md) consumes safe layout operations. Freeze actual accepted revisions at execution.
 
-**Authorization:** Draft only. Base identities, sources/donor branches, ownership, dependency results, focused tests and integration approval are TBD; no implementation work authorized by this plan.
+On the existing editor, a user rearranges and resizes the real timeline/player/inspector and one other-domain component, preserving playback, edits, selection and project authority. Reopen the layout and recover from invalid sizes or failed mounts. Mock UIs alone are not acceptable proof.
+
+**Authorization:** Draft only. Owner approval, exact source identities, focused tests and dependencies are required before product implementation.
