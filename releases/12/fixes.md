@@ -6,6 +6,7 @@ This page gives the **P29 manager** its orders. It is binding, together with [re
 
 ## START HERE — P29 manager
 
+- **Read [the operating principles](../12.md#operating-principles-every-manager-reads-these-first) first.** Principle 1 (0 failures on the release's own checks; no regressions on broad suites) governs almost every call you make.
 - **Your tasks:** rows A1–A7 below, in order. A4 runs in parallel from the start.
 - **First:** push a test commit to `scratch/p29-push-test` ([how-to](../12.md#how-to-tools-every-manager-uses)); run `smoke.sh agent` once.
 - **Do now:** A0, A1 and A4 in parallel.
