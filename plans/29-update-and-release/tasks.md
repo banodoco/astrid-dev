@@ -270,7 +270,7 @@ Status as of 20:42 UTC. Rows are recorded as reported; the bucket-A record is [P
 | Suspect-group baseline diff (`editorial.arrange`, `raw_command.renderer`, `external_pack.demo`) | — | — | Suspect groups | — | Still BLOCKS on any release-12 regression it finds |
 | **Release 12 later work (recorded 2026-11-10; round 2 update)** | | | | | |
 | Fix 3: the reference realm seeds through the guarded `commit_timeline` | — | — | Agent; branch `r12/quick-journey-realm`, commit `11030fde6` | Not recorded here | [x] landed in the Agent candidate at `90372f0ec` |
-| Windows installed git: `ASTRID_GIT_EXECUTABLE` recorded at install | — | — | Installer; branch `r12/windows-installed-git` at `b1523f881` (hardening), merged into `cand/29-r12` with `--no-ff` at `c87b3c131` | Base `aa5bc442f`: 25 failed, 717 passed, 51 errors. `bebb4a4`: 25 failed, 729 passed, 51 errors. 77 pre-existing, per the record; 0 regressions. Re-run at `b1523f881`: pending | [x] landed. Hardening in `b1523f881`: (1) a recorded git without the exec bit falls back to PATH lookup; (2) a broken or non-git candidate, or a failing `git --version`, at install records nothing and logs one line |
+| Windows installed git: `ASTRID_GIT_EXECUTABLE` recorded at install | — | — | Installer; branch `r12/windows-installed-git` at `b1523f881` (hardening), merged into `cand/29-r12` with `--no-ff` at `c87b3c131` | Base `aa5bc442f`: 25 failed, 717 passed, 51 errors. `bebb4a4`: 25 failed, 729 passed, 51 errors. 77 pre-existing, per the record; 0 regressions. Re-run at `b1523f881`: done, 0 regressions (correction, 11:42Z round 3) | [x] landed. Hardening in `b1523f881`: (1) a recorded git without the exec bit falls back to PATH lookup; (2) a broken or non-git candidate, or a failing `git --version`, at install records nothing and logs one line |
 | P1 follow-up: deliberate pack refresh | — | — | Pack-refresh ack, single worker; branch `r12/p1-deliberate-refresh` at `882abbe305`, merged into `cand/29-r12` with `--no-ff` at `142f9a92f` | Real-Runtime repro `tests/integrations/test_generic_host_pack_refresh_runtime.py` fails at `90372f0ec` and passes at head | [x] landed. Cause: the single-worker pack-refresh ack re-registered non-deliberately after `discover()`, so the epoch fence locked the host. Likely the cause of the matrix task-follow rows, and probably of the fresh and r11 "not registered" results (unproven) |
 | Agent CI comparison: run `42760780918` (Agent `aa5bc442f`) vs R10 run `42602166253` | — | — | Agent CI | runs `42760780918`, `42602166253` | [x] measured: 398 regressions in 15 clusters (162 with no baseline). All traced to commits already in R11 `a105de3a`, with no environment change |
 | Agent CI product regressions on `r12/r10-regressions`: (a) element_schema fails open for moved am-* elements; (b) 15 shipped local effects unregistered; (c) comfy_wrap lost its GPU mapping | — | — | Agent; branch `r12/r10-regressions` | — | [ ] pending: being fixed on `r12/r10-regressions` |
@@ -279,7 +279,33 @@ Status as of 20:42 UTC. Rows are recorded as reported; the bucket-A record is [P
 | Harness `harness/29-r12` at `1b85aed841c5a16e6623e1a4495e0428efead73c` | — | — | Harness; (A) post-check ownership hook; (B) runtime-side registration gate plus R11 pack seeding | Not recorded here | [ ] recorded at this sha, including: existing-pack Runtime-current gate; full task, host and registration diagnostics; named R11 baseline gate skip |
 | Open: r12/r10-regressions, then final Agent sha | — | r12/r10-regressions | Agent | — | [ ] open |
 | Open: final round on one tuple: ci.yml plus lanes.yml, App Tests, Direct Journey, App lanes, full matrix on harness `1b85aed841c5a16e6623e1a4495e0428efead73c` | — | final Agent sha | — | — | [ ] open |
-| Open: Hannah's decisions on `:426` and `:444` | — | — | — | — | [ ] waiting on owner (Hannah) |
+| Hannah's decisions on `:426` and `:444` (11:10Z) | — | — | App Direct Journey; three-products | — | [x] decided. See the round 3 section below |
 | Open: default-floor test `test_the_default_floor_matches_the_runtime` | — | — | — | Integration-marked: it runs in the final `lanes.yml` integration lane, not in the unit shards. Check against Release 10 | [ ] open, to check against Release 10 |
 | Plan 39 and release notes: Windows git over ssh needs a follow-up (`ASTRID_SSH_EXECUTABLE`) | — | Windows installed git (landed) | Plan 39 record; release notes | — | [ ] open |
 | Owner decision (Hannah, 10 Nov 2026): Agent CI against Release 10 | — | Plan 39 D8 | Agent CI `42760780918` vs `42602166253` | [Plan 39 evidence](../39-green-mains/evidence/release-12-r10-diff.md) | [x] Release 12 fixes every product regression against Release 10 and the `ASTRID_TEST_LIFECYCLE_CHECKOUT` CI setting. About 306 stale or test-infra tests and the Mypy debt move to Plan 39 AT1.1–AT1.7 and AT2; for those, no-regression is judged against served release 11 and `main` |
+
+## Release 12 round 3 (state at 11:42Z, 2026-11-10)
+
+Rows below are recorded as reported at 11:42Z. A row marked `[ ]` is not yet proven.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| **Owner decisions (Hannah, 11:10Z)** | | | | | |
+| Direct Journey `:426` keeps the user's draft visible on a second-writer conflict | — | — | App Direct Journey | — | [x] landed in App `cand/29-r12` at `e3951859b` (merge of the keep-draft fix; no pin change) |
+| three-products `:444` (agent task output via `timelines publish`, unshipped) | — | — | App three-products | — | [x] test removed at `01b6b43c2` |
+| Stale Agent tests and Mypy debt | — | Plan 39 D8 | Agent CI | — | [x] stay on Plan 39 (D8). No R12 work on them |
+| **Landed** | | | | | |
+| CI lifecycle-checkout fix | — | — | CI; branch `r12/ci-lifecycle-checkout` at `b2e13e68b` | — | [x] merged into Agent `cand/29-r12` as `6e2e26d53` (`--no-ff`) |
+| Harness R11 baseline task | — | — | Harness; branch `r12/harness-r11-baseline-task` at `ecbed4af9` (fast-forward of `harness/29-r12`) | Harness tests 208 → 219 passed | [x] the R11 baseline on non-Linux expects the shipped refusal, named and visible in the receipt and the job log |
+| Windows installed git hardening re-run | — | — | Installer; `b1523f881` | 0 regressions | [x] done (corrects the earlier Windows row: the re-run is done, 0 regressions at `b1523f881`) |
+| **New product bugs from shakedown matrix run `42804452163`** (App `00c085c40`, Agent `142f9a92f`, harness `1b85aed84`) | | | | | |
+| (a) Every fresh install fails on every platform: the installer bootstrap imports `jsonschema` through the Windows-git change `b1523f881`. `astrid/installer/tools.py` imports `_git_executable` from `astrid.core.pack.install`, which pulls in `canonical.py` and `jsonschema` | — | — | Agent `astrid/installer/tools.py`, `astrid/core/pack/install` | — | [ ] pending. Fix in progress on `r12/installer-bootstrap-imports` |
+| (b) Selected-pack tasks are refused off Linux with "stable selected pack capture requires Linux file lease support" (`_unavailable_pack_capture` in `generic_host.py`, introduced in `2caeb813fa`, already in R11; R10 did not have it) | — | — | Agent `generic_host.py` | — | [ ] pending. Fix in progress on `r12/portable-pack-capture` |
+| **Test drift** | | | | | |
+| three-products `:2970` is test drift, not a product regression. Auto single-owner recovery replaced the "Recover saved edits" button (`02db9c360` added it, `7b33f8f50` deleted it, `4394b74a1` mounted auto recovery) | — | — | App three-products | — | [ ] pending. Test fix in progress on the App worker |
+| **In progress** | | | | | |
+| Agent product regressions on `r12/r10-regressions`: comfy_wrap GPU mapping, 15 hidden local effects, VibeComfy COMBO/CHOICE | — | — | Agent; branch `r12/r10-regressions` | — | [ ] pending |
+| Schema fail-closed | — | — | Agent; branch `r12/r10-schema-fail-closed` | — | [ ] pending |
+| Default-skills check | — | — | — | — | [ ] pending |
+| **Process** | | | | | |
+| The Windows-git proof missed `tests/test_installer_bootstrap_imports.py`. Installer proofs now run every `tests/test_installer_*.py` | — | — | Installer proof procedure | — | [x] process changed |
