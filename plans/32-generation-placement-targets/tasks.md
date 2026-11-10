@@ -61,7 +61,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G13 Audio gateway routing test regression | N | G12 focused wider check | `tests/test_pack_gateway_routes.py` | Restore the audio gateway test against the placement contract without weakening routing assertions; compare main and integrated head | [x] `8fff17211` |
 | G14 Accurate RunPod audio placement help | T | G13; Plan 34 prior art | `astrid/core/generation/cli.py` help and test | Remove the false music/tts-only restriction while keeping placement guidance clear; independent review and exact before/after plus focused proof | [x] `43ba77ccb` |
 | G15 Pod canonical action context | X | Plan 34 live cell 7 on `43ba77ccb` | VibeComfy local job and tests | Guarded import, preparation and invocation run within the existing exact-capability context; direct/wrong capability still refused; context restored on all outcomes | [x] `21ab69ace` |
-| G16 Managed alignment failure diagnostics | X | Plan 34 live cell 8 on `21ab69ace` | managed preparation and tests | Report fixed failure reason and safe allowlisted doctor headings without leaking arbitrary output; preserve cleanup and record stream hashes | [ ] candidate `6a70096c` |
+| G16 Managed alignment failure diagnostics | X | Plan 34 live cell 8 on `21ab69ace` | managed preparation and tests | Report fixed failure reason and safe allowlisted doctor headings without leaking arbitrary output; preserve cleanup and record stream hashes | [x] `377c0431e` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -709,3 +709,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 ## Progress 65 (Codex manager, 10 Nov)
 
 - **G16:** Plan 34 live cell 8 found a managed alignment failure whose doctor output was dropped because the subprocess wrote stdout with empty stderr. Advisor supplied `plan34/fix-alignment-diagnostics` `6a70096c`; independent security review and focused CPU proof are in progress. CI on `21ab69ace` is a shakedown until G16 lands. No paid resources used by this run.
+
+## Progress 66 (Codex manager, 10 Nov)
+
+- **G16 landed:** `377c0431e9fefff28afc8c5a9648438070be9ea0` merges `6a70096c` with identical tree. Independent security review cleared fixed allowlisted doctor headings, stream hashes, arbitrary-output suppression and unchanged timeout/cleanup; five focused CPU cases passed (`run/align-diag-proof-6a.log`, inner exit 0). The managed-alignment diagnostics path and merge SHA were announced to Plan 34. The real CLI fixture assumes an editable VibeComfy source layout, matching current CI, not wheel-only installs.
+- **End gate:** push-triggered CI `42788632328` and independent exact-head proof are pending; prior `21ab69ace` CI is a shakedown. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
