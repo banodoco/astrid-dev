@@ -421,3 +421,10 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **D6:** at `7efe5bb65`, the serialized trust selection failed after 6 passed: `audio/sfx-local-managed-trust` reached the fake Comfy queue, which rejected the Foley VAE and video input menu values. Investigating whether the fixture's inventory or product behavior owns the failure; no pass claimed.
 - **Shard A triage:** on `364f98e33`, `test_engine_execution.py` has 6 passed / 7 failed against the removed model-download method. One isolated claim-loop node fails because its fixture reads removed warmth fields; the full file was interrupted after three failures. Source-profile `test_installed_generation_journey.py` has 33 passed / 1 stale `target` failure; installed mode was not provisioned. Updating the obsolete test contracts while preserving current assertions.
 - **i2v:** the green t2i control does not establish why i2v's heartbeat timed out. Advisor asked for the gate disposition; retained diagnostics show one archive, 345 fake-provider PUTs, and a later Runtime heartbeat transport timeout.
+
+## Progress 19 (Codex manager, 10 Nov)
+
+- **Shard A test drift landed:** `fb62a5058` merges `plan32/shard-a-test-drift` `96812b2a9`. Engine execution 6 passed after retiring 7 tests solely of the removed model-download method; claim loop 14 passed with host/client/session/attempt/process isolation retained and obsolete warmth fields removed; generation journey 34 passed in source profile (installed profile still unproven).
+- **D2:** the real child align spy now fires. Exact graph comparison exposed an output-prefix mismatch; the worker is tracing the built graph and shared transform before deciding a fix. D3 is merged into its work branch.
+- **D6:** the failing CPU fake's Foley VAE menu uses the generic `vae` folder rather than custom `hunyuan_foley`, and its uploaded-file menus omit `LoadVideo.file`. Correcting those fake server menus before rerunning the same serialized test; real Comfy's queue validation remains in force.
+- **D4b:** typed missing-input filter and misleading test rename dispatched from `fb62a5058`, disjoint from D2's preparation functions.
