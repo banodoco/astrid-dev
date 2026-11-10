@@ -85,7 +85,7 @@ The remote candidate above remains `99724131d`; a reviewed TTS prompt fix has si
 
 ### Release 12 hold and separate rehearsal
 
-Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `54a45b453ebdb813d08196e6a81f2e1524b2a459`, including the reviewed H3 import repair, Release 12 regression reconciliation and locally integrated TTS fix, is separate from `int/32` and is not this candidate. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, explicitly port rehearsal repair `d70bed508` (the rehearsal merge was conflict-free), then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
+Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `6b1f353d49e022542465bd54bc4fbad9f3f0e5ec`, including the reviewed H3 import repair, Release 12 regression and installed-test reconciliation and locally integrated TTS fix, is separate from `int/32` and is not this candidate. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, explicitly port rehearsal repair `d70bed508` (the rehearsal merge was conflict-free), then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
 
 ## Owner decisions
 
