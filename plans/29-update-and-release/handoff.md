@@ -29,7 +29,7 @@ Publishing is under Hannah's **standing conditional go** once the gate holds. On
 | Harness | `harness/29-r12` (astrid-agent) | `b550ecadf` | Final-round harness |
 | App | `cand/29-r12` (astrid-app) | `e1d42be39` | Direct Journey rounds 3–5 merged; manifest sha256 `929c1a5e…1afab9`; Runtime `42ae24aff` |
 | App | `r12/app-vendor-lock-313bbd46` | `c6454fcdc` | Held, **do not merge**. Proved the CLI surface is unchanged; the final re-pin regenerates the lock |
-| App | `r12/app-dj-round6` | see [tasks.md](tasks.md#release-12-round-5-state-at-1700z-2026-11-10) | Round 6. If it isn't on GitHub, redo it from DJ run `42849600626` (section 4) |
+| App | `r12/app-dj-round6` | `daf30bd9b` | Round 6, one commit on `e1d42be39`, no product change ([evidence](evidence/r12/dj-round6.md)). Handed to the App worker to merge, run `tsc` and dispatch an early Direct Journey |
 
 Agent fix branches in `r12/cand-next`, each with regression tests that fail before and pass after:
 
@@ -46,7 +46,7 @@ Agent fix branches in `r12/cand-next`, each with regression tests that fail befo
 1. **Agent comparison** ([method](evidence/r12/agent-comparison.md)): base `313bbd46f` is done (205 failing ids). Run `733ac5a43`, R11 and R10 on the same set. New failures on `733ac5a43` block the push. Failures on `313bbd46f` that pass on R11 or R10 are release-12 regressions to fix; failures shared with R11 and R10 go on the Plan 39 record with their cause.
 2. **Push** `733ac5a43` to Agent `cand/29-r12` (check that `cand` is still `313bbd46f` first; push by full URL, never force).
 3. **Review round 4** (Astra-class reviewer) on `313bbd46f..cand` (the five fixes above). Blockers are fixed before the final round.
-4. **App round 6**: merge into App `cand/29-r12` (`--no-ff`), run `tsc` and vitest on the touched files, and dispatch one early Direct Journey. Repeat rounds until Direct Journey is 0 failures. 11 three-products tests are still skipped behind failures; [dj-round5.md](evidence/r12/dj-round5.md) names their likely exposure.
+4. **App round 6** (`r12/app-dj-round6` `daf30bd9b`): merge into App `cand/29-r12` (`--no-ff`), run `tsc`, and dispatch one early Direct Journey. Repeat rounds until Direct Journey is 0 failures. [dj-round6.md](evidence/r12/dj-round6.md) names nine still-skipped tests that share the round 6 causes.
 5. **Final re-pin**, as **one** App commit: `pin.mjs` to the final Agent SHA, plus `vendor-lock.mjs update` (`vendor.lock.json` and `cli-surface.json`). Then run `vendor-lock.mjs check`, the runtime lock check, `cliSurfaceVerbs.test.ts`, `pin.mjs --check` and `release-guard` before the push.
 6. **Final round on that one tuple:**
    - App Tests;
@@ -67,7 +67,7 @@ Agent fix branches in `r12/cand-next`, each with regression tests that fail befo
 
 | Item | State | Restart from |
 |---|---|---|
-| App Direct Journey round 6 | In progress at handoff: `:1189` (no workflow set `ASTRID_PACKS_AGENT`; fixed in `direct-journey.yml`), `:449` (test reads a nonexistent `show.head_revision_id`), `:2995` (waits for a removed retry button) | DJ run `42849600626`: download its artifacts (below) and brief a worker with the traces, the App at `e1d42be39` and the Agent at `313bbd46f` |
+| App Direct Journey after round 6 | Round 6 pushed (`daf30bd9b`): `:1189` env (`ASTRID_PACKS_AGENT` set in `direct-journey.yml`), `:449` and `:2995` test drift verified against the pinned Agent source. Its early Direct Journey result is the next input | The next early DJ run's artifacts (section 7); brief a worker with its traces, the App head and the Agent at `313bbd46f` |
 | Agent comparison of `733ac5a43`, R11, R10 | Running at handoff | [agent-comparison.md](evidence/r12/agent-comparison.md) |
 | Review round 4 | Not started | Brief on `313bbd46f..733ac5a43`, giving [review-round3.md](evidence/r12/review-round3.md) as context |
 | Matrix row `direct-linux-r11-update` | Harness fix `b550ecadf` is supported by evidence, not proven | The final matrix's receipt records the host's effective HOME |
@@ -126,7 +126,7 @@ Agent fix branches in `r12/cand-next`, each with regression tests that fail befo
 | [evidence/r12/review-round3.md](evidence/r12/review-round3.md) | Release review round 3: 3 blockers, all fixed in `r12/cand-next` |
 | [evidence/r12/chiptune-home.md](evidence/r12/chiptune-home.md) | The HOME-mismatch root cause, receipts and tests |
 | [evidence/r12/personal-pack-snapshots.md](evidence/r12/personal-pack-snapshots.md) | Snapshot fix test results |
-| [evidence/r12/dj-round4.md](evidence/r12/dj-round4.md), [dj-round5.md](evidence/r12/dj-round5.md) | Direct Journey trace analyses, including two product bugs in the conflict and recovery flow |
+| [evidence/r12/dj-round4.md](evidence/r12/dj-round4.md), [dj-round5.md](evidence/r12/dj-round5.md), [dj-round6.md](evidence/r12/dj-round6.md) | Direct Journey trace analyses, including two product bugs in the conflict and recovery flow |
 | [evidence/r12/agent-comparison.md](evidence/r12/agent-comparison.md) | The before/after method, script and results |
 | [Plan 39 Lanes triage](../39-green-mains/evidence/lanes-integration-triage.md) | No install/update breakers at R11 parity |
 | [Plan 38 Codex run state](../38-one-process-identity/evidence/codex-run-state-2026-11-10.md) | The Plan 38 run, WAITING for R12 SHAs: mailbox, task cards, and Codex-in-cloud lessons |
