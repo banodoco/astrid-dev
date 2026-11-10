@@ -1,5 +1,7 @@
 # Plan 34 handoff — first GPU run, 10 November 2026
 
+> **Superseded in part (10 Nov 2026, Hannah):** the generation work is now in **Release 12**, not a Release 13. Don't wait for Release 12 to publish, and don't treat the runner freeze as a stop: follow [releases/12.md](../../releases/12.md) and your tasks in [Track B](../../releases/12/generation.md)]. Where this file says "after release 12", "release 13" or "freeze", the release plan wins; everything else here stands.
+
 ## Goal and safe stopping point
 
 Complete the first [full GPU validation](../../skills/astrid-dev-gpu-validate/SKILL.md): every default generation slot and h3_av, including RunPod HTTPS, local-managed on a pod, and the GPU-only checks. This run is **partial, not release qualification**. The owner directed packaging for another machine; start no new rentals during packaging. All 18 rented pods have been released. Independent final census at 16:41:15 UTC was empty.

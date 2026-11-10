@@ -22,7 +22,7 @@ Everything needed is already in Plan 32's lease owner and journal; this plan add
 
 Four tasks, about 1.5–2 days. T1 (the display) and T2 (the owner's keep operation) start at once and in parallel. T3 (the `keep` CLI) needs T2. T4 (wording) follows T1 and T3. One review round ends the plan. See [tasks.md](tasks.md).
 
-The plan builds on Plan 32's integration branch, `int/32-one-generation-path`, because the lease owner it changes is there. It lands on Agent `main` after Plan 32 does, and ships in release 13 with it ([D3](inputs.md#owner-decisions)). There are no live GPU tests here: Plan 34 owns live runs.
+The plan builds on Plan 32's integration branch, `int/32-one-generation-path`, because the lease owner it changes is there. It lands on Agent `main` with Plan 32 and ships in [Release 12](../../releases/12.md) (Hannah, 10 Nov 2026, superseding [D3](inputs.md#owner-decisions)'s release 13). There are no live GPU tests here: Plan 34 owns live runs.
 
 ## Interfaces and handoff
 

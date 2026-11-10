@@ -1,5 +1,7 @@
 # Handoff — Plan 29, Release 12
 
+> **Release 12 now includes the generation work (10 Nov 2026, Hannah).** The overall plan is [releases/12.md](../../releases/12.md); this handoff is [Track A](../../releases/12/fixes.md). Track A also receives the generation merge (Track B) before the final round, so the final round in step 6 below runs on the merged tuple.
+
 [Plan](plan.md) · [Inputs](inputs.md) · [Tasks](tasks.md) · [Release 12 evidence](evidence/r12/)
 
 **Taking over as orchestrator?** Read the [orchestrator brief](orchestrator-brief.md) first.
@@ -29,7 +31,7 @@ Publishing is under Hannah's **standing conditional go** once the gate holds. On
 | Agent | `cand/29-r12` | `313bbd46f` | Pinned in the App today |
 | Agent | `r12/cand-next` | `733ac5a43` | **Next candidate, not yet on `cand`**: `313bbd46f` plus 5 `--no-ff` merges (below). Push to `cand/29-r12` after its comparison is clean |
 | Harness | `harness/29-r12` (astrid-agent) | `b550ecadf` | Final-round harness |
-| App | `cand/29-r12` (astrid-app) | `e1d42be39` | Direct Journey rounds 3–5 merged; manifest sha256 `929c1a5e…1afab9`; Runtime `42ae24aff` |
+| App | `cand/29-r12` (astrid-app) | `8cfe10ce7` | Direct Journey rounds 3–6 merged; manifest sha256 `929c1a5e…1afab9`; Runtime `42ae24aff` |
 | App | `r12/app-vendor-lock-313bbd46` | `c6454fcdc` | Held, **do not merge**. Proved the CLI surface is unchanged; the final re-pin regenerates the lock |
 | App | `r12/app-dj-round6` | `daf30bd9b` | Round 6, one commit on `e1d42be39`, no product change ([evidence](evidence/r12/dj-round6.md)). Handed to the App worker to merge, run `tsc` and dispatch an early Direct Journey |
 

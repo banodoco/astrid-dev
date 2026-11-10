@@ -1,5 +1,7 @@
 # Plan 20 handoff — 10 Nov 2026
 
+> **Superseded in part (10 Nov 2026, Hannah):** the generation work is now in **Release 12**, not a Release 13. Don't wait for Release 12 to publish, and don't treat the runner freeze as a stop: follow [releases/12.md](../../releases/12.md) and your tasks in [Track B](../../releases/12/generation.md)]. Where this file says "after release 12", "release 13" or "freeze", the release plan wins; everything else here stands.
+
 ## Goal and authority
 
 Take a person from a fresh Astrid install to their first image through the setup skill, App handoff and Plan 32 generation interfaces. [Plan](plan.md), [tasks and progress](tasks.md), [owner decisions](inputs.md), the [run contract](../../skills/astrid-dev-shared/run-contract.md), and the [manager skill](../../skills/astrid-dev-manage/SKILL.md) govern this handoff. Resume with `astrid-dev-manage`; read the plan and current upstream state first. The run is **waiting**, not complete. No worker or CI operation is in flight from this manager at handoff.
