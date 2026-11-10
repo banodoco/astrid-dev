@@ -119,6 +119,8 @@ The planner's own challenge, and the changes it made:
 - **One gate.** The "everything green" release rule is one more `release-contract` rule (Plan 31 RL-1b), reading the same `ci/required-checks.json` as the nightly report and the branch-protection list. It adds no workflow.
 - **Rejected:** a permanent per-repository baseline of known failures. That is the "no new red" rule under another name.
 
+Release 12 also recorded [VibeComfy CI first-failure comparisons](evidence/release-12-vibecomfy-ci.md). VibeComfy's own workflows are outside this plan's stated three-repository scope; the record requests an owner and scope decision and does not establish later checks passed.
+
 ## Owner decisions
 
 | # | Decision | Recommendation |
