@@ -53,6 +53,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G6 Pod reset Runtime credential | X | Plan 34 live finding, G5 | RunPod pod reset and tests | Parse Runtime credential envelope and supply required administrative scope; test actual envelope shape and backup/restore behavior | [x] `7bfb98e6f` |
 | G7 Preserve readiness timeout and exact cleanup | X | Plan 34 live finding on `dc307e1ec` | RunPod target selection and tests | Preserve timeout reason without exposing provider details; exact original-pod cleanup; independent review and focused CPU proof | [x] `7bfb98e6f` |
 | G8 Warm reuse canonical GPU identity and fixture drift | X | G4, `7bfb98e6f` | RunPod target selection and tests | Canonical-ID request reuses its warm pod despite a distinct display label; real GPU mismatch refuses; update stale confirmation and later-gate test doubles without weakening comparisons | [x] `a2ccbde91` |
+| G9 Execution deadline, catalog capacity, and pod source origin | S | Plan 34 cell-4 and pre-mortem on `a2ccbde91` | RunPod machine, pod bootstrap, remote placement and tests | Execution deadline starts after preparation and stays within paid expiry; catalog capacity uses complete hash-pinned workflow rows; verified transported Agent/Runtime install with strict source origins; independent review and focused CPU proof | [ ] candidate `9c1a03f1` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -632,3 +633,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **Independent integrated proof:** on exact `a2ccbde9192ec26c5a736c7894bc2ecda7bb9656`, two warm canonical-ID/display and mismatch cases passed, and five corrected fixture cases passed under the lock (`run/warm-integrated-a2.log`, both inner exits 0). An initial marker-filtered fixture command selected no tests and exited 5; the correct unfiltered command then passed. The candidate's prior three focused runs are in `run/warm-reset-proof-7aa.log`.
 - **CI:** `42771256778` is queued on the integrated head; the preceding `7bfb98e6f` run is incomplete and will be superseded. T8 remains open. No paid resources used by this run.
+
+## Progress 52 (Codex manager, 10 Nov)
+
+- **Plan 34 batch G9:** cell 4 and pre-mortem found early execution deadline expiry, missing catalog manifest rows in volume preflight, and pod-installed Agent origin differing from the verified transported checkout. The advisor supplied composed `plan34/validation-premortem-candidate` `9c1a03f1`, with focused proof from Plan 34; independent review and CPU proof are in progress before integration. Residual same-marker altered imports before reset are not claimed.
+- **End gate:** completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) is a draft with `Completion: No` and catalog unchanged. CI `42771256778` on `a2ccbde91` is a shakedown because G9 will change the candidate. No paid resources used by this run.
