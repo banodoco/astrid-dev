@@ -33,7 +33,7 @@ To hand a whole project to a Codex manager, start from [`manager-brief.md`](mana
 ## Start a run
 
 ```bash
-CODEX_EFFORT=medium CODEX_MAX_THREADS=12 setsid nohup skills/astrid-dev-orchestrate/codex-in-cloud/codex-runner.sh <workdir> <prompt.md> <run-dir> 6 <model-id> >/dev/null 2>&1 </dev/null &
+CODEX_EFFORT=medium CODEX_MAX_THREADS=12 setsid nohup skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-runner.sh <workdir> <prompt.md> <run-dir> 6 <model-id> >/dev/null 2>&1 </dev/null &
 ```
 
 - **`<workdir>`** is where Codex works. For a manager, make it a folder of partial clones (`git clone --filter=blob:none`) of the repositories the plan touches, plus `run/`. Codex can write only there and in `/tmp`. The runner passes `--skip-git-repo-check`, because that folder isn't itself a repository.
@@ -45,7 +45,7 @@ CODEX_EFFORT=medium CODEX_MAX_THREADS=12 setsid nohup skills/astrid-dev-orchestr
 Then arm the keep-alive with the Bash tool's `run_in_background` (timeout 7200000). Re-arm it at every check-in, with all live runs:
 
 ```bash
-skills/astrid-dev-orchestrate/codex-in-cloud/codex-hold.sh <run-dir> [<run-dir> ...]
+skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-hold.sh <run-dir> [<run-dir> ...]
 ```
 
 It keeps the session busy for about 55 minutes, then exits so the next check-in re-arms it. Every 30 seconds it checks each run:

@@ -40,7 +40,7 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
    Its first step is Manage step 1: a run file plus a smoke worker per repository.
 4. **Schedule check-ins** if the owner wants them (path 3).
 
-## Cloud setup: no permission prompts
+## Claude Cloud setup: no permission prompts
 
 A cloud session that waits on a prompt nobody sees is a stalled run. Set up for this before any work starts, mostly by pointing at what is already committed:
 
@@ -50,12 +50,18 @@ A cloud session that waits on a prompt nobody sees is a stalled run. Set up for 
 - **Only the owner lifts a refusal:** their own message in the refused session, or a committed rule. An approval relayed from another session doesn't count. Bring the exact command to the owner.
 - **Your own session needs the owner's go for merges.** Auto mode refuses some merges, deletions and settings commits. Ask the owner once for the whole run ("merge the progress and plan PRs"), and record that standing go in `run.yaml`.
 
-## Hand a long task to Codex (cloud sessions)
+## Choose the cloud workflow
 
-When a long, self-directed task should run under your oversight, such as a GPU validation run, you can run Codex in your own cloud session. Use [`codex-in-cloud/`](codex-in-cloud/README.md) for this. It gives you a runner that resumes Codex if it stops, a keep-alive (`codex-hold.sh`) that restarts a dead runner and wakes you, and a two-file mailbox. A Codex manager can run a whole project this way, with its sub-agents doing the tasks.
-- **A worker restart kills every process,** the keep-alive included. While a run is live, keep a scheduled check-in at most 20 minutes away (`send_later`). Have every check-in re-arm `codex-hold.sh` with all live run folders. Also register each live run in `~/codex/runs.txt` for `codex-hold-daemon.sh`, which a SessionStart hook relaunches, so a dead runner restarts as soon as the session comes back ([README](codex-in-cloud/README.md#start-a-run)). Ask the owner once to add that hook, because auto mode refuses Claude's edits to its own settings.
+For agents in separate Codex Cloud chats, use [Codex Cloud agent coordination](codex-cloud/README.md). Give each session a unique session ID and each manager a role, then share the issue URL and run ID in their briefs. Agents leave GitHub comments with their session ID, sender, recipient and message ID; the guide gives the command, watcher and acknowledgment protocol. Their files and processes are isolated; do not assume an issue comment wakes an idle chat.
+
+For Codex running inside a Claude Code cloud session, use the Claude-hosted runner below. These are different environments.
+
+## Hand a long task to Codex from Claude Cloud
+
+When a long, self-directed task should run under your oversight, such as a GPU validation run, you can run Codex in your own cloud session. Use [`codex-in-claude-cloud/`](codex-in-claude-cloud/README.md) for this. It gives you a runner that resumes Codex if it stops, a keep-alive (`codex-hold.sh`) that restarts a dead runner and wakes you, and a two-file mailbox. A Codex manager can run a whole project this way, with its sub-agents doing the tasks.
+- **A worker restart kills every process,** the keep-alive included. While a run is live, keep a scheduled check-in at most 20 minutes away (`send_later`). Have every check-in re-arm `codex-hold.sh` with all live run folders. Also register each live run in `~/codex/runs.txt` for `codex-hold-daemon.sh`, which a SessionStart hook relaunches, so a dead runner restarts as soon as the session comes back ([README](codex-in-claude-cloud/README.md#start-a-run)). Ask the owner once to add that hook, because auto mode refuses Claude's edits to its own settings.
 - **Install the astrid-dev skills** for Codex (`~/.agents/skills`), and give the manager its plan, its branches, the route-to-model table, and the rules that differ under Codex. The README lists those rules.
-- **Brief a manager as a manager.** Start every Codex manager from [`manager-brief.md`](codex-in-cloud/manager-brief.md), and re-read it before each new run, because it changes. Codex takes its authority only from its starting prompt. A mailbox note can't later grant it merge rights or change its role, and it rightly refuses to accept one. A prompt that forbids integrating ("never push to int/…") makes Codex a worker, and you end up relaying every branch between it and someone else. To change a running Codex's role, have it checkpoint (push work in progress, write a handover entry, end `DONE`) and start a fresh manager run that continues from the handover.
+- **Brief a manager as a manager.** Start every Codex manager from [`manager-brief.md`](codex-in-claude-cloud/manager-brief.md), and re-read it before each new run, because it changes. Codex takes its authority only from its starting prompt. A mailbox note can't later grant it merge rights or change its role, and it rightly refuses to accept one. A prompt that forbids integrating ("never push to int/…") makes Codex a worker, and you end up relaying every branch between it and someone else. To change a running Codex's role, have it checkpoint (push work in progress, write a handover entry, end `DONE`) and start a fresh manager run that continues from the handover.
 - **You stay the advisor.** At each check-in, read the mailbox and `tasks.md`, then do the one thing path 3 says. Don't review its fixes, steer its tasks or relay its branches: its reviewer and its own judgment do that. Raise a structural cause only when its reports show a pattern it hasn't named.
 
 ## Path 2: advise
