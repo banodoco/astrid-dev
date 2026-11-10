@@ -2,6 +2,8 @@
 
 [Plan](plan.md) · [Inputs](inputs.md) · [Tasks](tasks.md) · [Release 12 evidence](evidence/r12/)
 
+**Taking over as orchestrator?** Read the [orchestrator brief](orchestrator-brief.md) first.
+
 **Purpose:** everything a new advisor (M-INT) needs to continue Plan 29 on another machine without losing context. Read this file first, then `tasks.md` (Release 12 sections, newest last). State as of **2026-11-10 ~17:00Z**. Nothing important lives only on the old machine: every commit is on GitHub, and every result that matters is in this folder.
 
 ## 1. Goal and what "done" means
@@ -81,7 +83,7 @@ Agent fix branches in `r12/cand-next`, each with regression tests that fail befo
 | M-INT (this advisor) | `session_011EzfVzreGCJJQnTuXpbib9` | Orchestrator and advisor. Does the Agent merges, artifact downloads and worker briefs. The new advisor takes this role |
 | Manager | `session_011EzfW2KHv7X5sa7Y7reDNp` | Owns the run loop through two workers: the App worker (re-pins, App Tests, Direct Journey) and the harness worker (matrix). Its shell is dead (full disk), but messaging works. Reach it with `send_message`. It reports verdicts and "TUPLE GREEN" |
 | Plan 32 orchestrator | `session_011EzfVz8zzHLnUqSqMnGUCT` | Owns Plans 20 and 32. Holding its runners for R12 |
-| Hourly check-in | scheduled task `trig_01WLLdkKZ3qLPRZB4aXqAYJj` | Fires into the old advisor session. **Disable it** when the new advisor takes over, and create its own |
+| Hourly check-in | scheduled task `trig_01WLLdkKZ3qLPRZB4aXqAYJj` | **Disabled** 10 Nov 16:47Z. The new orchestrator creates its own |
 
 ## 6. Owner decisions (release 12), newest last
 
