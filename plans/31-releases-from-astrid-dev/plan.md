@@ -42,7 +42,7 @@ Phase 2, on screen: **RL-3**, users see versions. It ships with the next record 
 
 All work lands on `int/31-releases-from-astrid-dev` in astrid-dev and the App. Only the Release skill moves either branch to `main`.
 
-This plan starts after [Plan 29](../29-update-and-release/plan.md) publishes Release 10 and the owner gives the go (owner, 8 Nov 2026). Its first record is the release live at that point, expected to be Release 10 = `0.0.10`. The next release is the first one published through this path. The owner turns on astrid-dev `main` protection before the first publish. The details are in [tasks.md](tasks.md). Recording this plan does not authorize implementation.
+This plan was sequenced after [Plan 29](../29-update-and-release/plan.md) and the owner's go (decision recorded 8 Nov 2026). The initial legacy record must describe **whichever release is actually live when implementation starts**; the earlier estimate that it would be Release 10 is historical, not an instruction to overwrite the newer releases. The next new release is the first one published through this path. The owner turns on astrid-dev `main` protection before the first publish. The details are in [tasks.md](tasks.md). Recording this plan does not authorize implementation.
 
 ## Interfaces and handoff
 
