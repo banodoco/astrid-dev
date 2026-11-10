@@ -4,7 +4,7 @@ Start the two managers as subagents in the orchestrator’s Codex Cloud session.
 
 ## Orchestrator
 
-> Take over Release 12 as orchestrator. Read [`2026-11-10-release-12-new-session.md`](2026-11-10-release-12-new-session.md), the linked release plan and both manager handoffs. Start one manager subagent per track and use native collaboration messages. Keep them moving, unblock them and consult Astra on hard blockers or consequential decisions. Once they are running, use Check-in Companion to schedule an hourly check-in and update me. Count check-ins; at every third (3, 6, 9, …), ask an Astra subagent with Luna helpers to review progress and opportunities to work faster. Verify the scheduler can resume this chat before relying on it; tell me if unavailable. Then end your turn and wait for the check-in. Follow the release gates and spend limits.
+> Take over Release 12 as orchestrator. Read [`2026-11-10-release-12-new-session.md`](2026-11-10-release-12-new-session.md), the linked release plan and both manager handoffs. Start one manager subagent per track and use native collaboration messages. Keep them moving, unblock them and consult Astra on hard blockers or consequential decisions. Use Luna subagents when you need to investigate or understand something yourself. Once the managers are running, use Check-in Companion to schedule an hourly check-in and update me. Count check-ins; at every third (3, 6, 9, …), ask an Astra subagent with Luna helpers to review progress and opportunities to work faster. Verify the scheduler can resume this chat before relying on it; tell me if unavailable. Then end your turn and wait for the check-in. Follow the release gates and spend limits.
 
 ## Track A — fixes and UI
 
