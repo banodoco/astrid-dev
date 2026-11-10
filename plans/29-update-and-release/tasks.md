@@ -262,3 +262,9 @@ Status as of 20:42 UTC. Rows are recorded as reported; the bucket-A record is [P
 | Plan 39 bucket-A record: [PR #203](https://github.com/banodoco/astrid-dev/pull/203) | — | — | plans | — | OPEN, not merged |
 | **Plan 30 items (non-blocking)** | | | | | |
 | Windows refusal matched by message text; dead `except` clause; null choices; check order in status; transient 404 flag; remaining Windows-no-task-folder gap (R14) | — | — | Plan 30 | — | Recorded for Plan 30, non-blocking |
+| **Release 12 gate notes** | | | | | |
+| Inherited App vitest files and three-products expectations: "inherited, not blocking" is REVERSED | — | — | App vitest (17 inherited files); three-products expectations | — | Both are now release-12 gate items. The earlier "inherited, not blocking" call on the 17 inherited App vitest files and on the three-products expectations no longer holds |
+| App journey failures: App Direct Journey and three-products (run `42731095228`, App `c79bc16fb`) | — | Astra deep dive verdict | App journey tests | run `42731095228` | GATED on the Astra deep dive verdict. Verdict: test lag behind product changes; the fix is tests only. NOT waved through as "fails on main too" |
+| Agent journey matrix | — | — | Agent journey matrix | — | Any failure gets fixed, whether or not main has it |
+| Agent CI shard setup failures (run `42721392857`, Agent `0f792afb1`) | — | Plan 39 | Agent CI shards | run `42721392857` | Stays a Plan 39 record, with the evidence list. Plan 39 still waits. Record only |
+| Suspect-group baseline diff (`editorial.arrange`, `raw_command.renderer`, `external_pack.demo`) | — | — | Suspect groups | — | Still BLOCKS on any release-12 regression it finds |
