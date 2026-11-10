@@ -43,6 +43,7 @@ Rejected: an uncapped keep; a pod-side cap (it would need a credential on the po
 - A session-level keep: hold a machine across jobs and tools from one setting, with extend and release.
 - Better default output: `generate` writes to `./outputs/<task-id>/` under the current folder, named by the workflow. A per-project folder and readable names are a separate follow-up.
 - A provider-side or pod-side cap that holds when no host runs.
+- `runpod-lifecycle` `availability._query` (f294881, `availability.py:58-68`) drops the HTTP `Retry-After` header on 429; expose it as a typed field so Astrid can honour it. For this plan, Agent honours typed retry metadata when supplied and uses bounded exponential backoff when the pinned client cannot provide it.
 
 ## Source identities
 
