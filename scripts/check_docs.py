@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 from pathlib import Path
 from urllib.parse import unquote
@@ -186,15 +187,70 @@ def ledger_errors(root: Path) -> list[str]:
 
 
 STRATEGY = Path('strategy.md')
-STRATEGY_HEADER = '| Order | When | Gap | Plans | What creators get | Waiting on |'
-STRATEGY_WHEN = {'Now', 'Next', 'Later'}
+STRATEGY_HEADER = '| Release | Highlight | Plans | Why this order |'
 STRATEGY_SECTIONS = ('## Focus now', '## Sequence', '## Not now', '## Decisions')
-GAP_LINK = re.compile(r'\[[^\]]+\]\((?:\.\./)*vision/gaps/[A-Z]{1,3}-\d{3}-[a-z0-9-]+\.md\)')
-ANY_PLAN_LINK = re.compile(r'\[[^\]]+\]\((?:\.\./)*plans/[^)]+/plan\.md\)')
+RELEASE_ROW = re.compile(r'\[Release ([1-9]\d*) \((draft|final)\)\]\(releases/([1-9]\d*)\.md\)')
+RELEASE_PLAN = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
+STRATEGY_PLAN = re.compile(r'\[Plan (\d+)\]\(plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
+RELEASE_SECTIONS = ('Highlight', 'Intent', 'Approach', 'Included plans', 'Publication')
 
 
-def strategy_errors(text: str) -> list[str]:
-    """strategy.md has its sections, a review date and a structured sequence table."""
+def release_section(body: str, name: str) -> str:
+    match = re.search(r'^## ' + re.escape(name) + r'\s*$', body, re.M)
+    if not match:
+        return ''
+    rest = body[match.end():]
+    following = re.search(r'^## ', rest, re.M)
+    return (rest[:following.start()] if following else rest).strip()
+
+
+def release_errors(filename: str, body: str) -> list[str]:
+    """A release brief is valid as a draft, without publication pins."""
+    issues = []
+    stem = Path(filename).stem
+    match = re.search(r'^\*\*Release:\*\* ([1-9]\d*)$', body, re.M)
+    if not stem.isdigit() or not match or match.group(1) != stem:
+        issues.append(f'releases/{filename}: Release must equal the numeric filename')
+    if not re.search(r'^# Release ' + re.escape(stem) + r' — \S.+$', body, re.M):
+        issues.append(f'releases/{filename}: title must be # Release {stem} — <title>')
+    state = re.search(r'^\*\*State:\*\* (Draft|Final)$', body, re.M)
+    if not state:
+        issues.append(f'releases/{filename}: State must be Draft or Final')
+    sections = {name: release_section(body, name) for name in RELEASE_SECTIONS}
+    for name, content in sections.items():
+        if not content:
+            issues.append(f'releases/{filename}: missing or empty ## {name}')
+    highlight = sections['Highlight'].splitlines()
+    if highlight and (len(highlight) != 1 or len(highlight[0]) < 15):
+        issues.append(f'releases/{filename}: Highlight must be one substantive sentence on one line')
+    plans = RELEASE_PLAN.findall(sections['Included plans'])
+    if not plans:
+        issues.append(f'releases/{filename}: Included plans must link project plan.md files')
+    if len({folder for _, folder in plans}) != len(plans):
+        issues.append(f'releases/{filename}: duplicated included plan')
+    if any(number != folder[:2] for number, folder in plans):
+        issues.append(f'releases/{filename}: included plan number does not match its link')
+    if state:
+        if state.group(1) == 'Draft':
+            if 'Not pinned.' not in sections['Publication']:
+                issues.append(f'releases/{filename}: draft publication must say Not pinned.')
+        else:
+            payload = re.search(r'^\x60{3}json\s*\n(\{.*?\})\s*\n\x60{3}', sections['Publication'], re.S | re.M)
+            if not payload:
+                issues.append(f'releases/{filename}: final publication needs a JSON payload')
+            else:
+                try:
+                    record = json.loads(payload.group(1))
+                    required = {'version', 'kind', 'required', 'app', 'agent', 'runtime', 'runtime_schema_digest', 'tools'}
+                    if not isinstance(record, dict) or not required <= record.keys():
+                        issues.append(f'releases/{filename}: final payload missing manifest fields')
+                except json.JSONDecodeError:
+                    issues.append(f'releases/{filename}: invalid JSON publication payload')
+    return issues
+
+
+def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> list[str]:
+    """Validate a release-led strategy against its canonical release briefs."""
     errors = [f'strategy.md: missing section {name}' for name in STRATEGY_SECTIONS
               if not re.search(rf'^{re.escape(name)}\s*$', text, re.M)]
     if not re.search(r'^\*\*Last reviewed:\*\* \d{4}-\d{2}-\d{2}', text, re.M):
@@ -202,30 +258,54 @@ def strategy_errors(text: str) -> list[str]:
     lines = text.splitlines()
     heads = [i for i, line in enumerate(lines) if line.strip() == STRATEGY_HEADER]
     if len(heads) != 1:
-        return errors + ['strategy.md: needs one sequence table with the canonical header']
+        return errors + ['strategy.md: needs one release sequence table with the canonical header']
     rows = []
     for line in lines[heads[0] + 2:]:
         if not line.startswith('|'):
             break
         rows.append([cell.strip() for cell in line.strip().strip('|').split('|')])
     if not rows:
-        errors.append('strategy.md: the sequence table is empty')
+        errors.append('strategy.md: the release sequence table is empty')
+    referenced = set()
+    previous = -1
     for cells in rows:
-        if len(cells) != 6:
+        if len(cells) != 4:
             errors.append(f'strategy.md: malformed sequence row: {"|".join(cells)}')
             continue
-        order, when, gap, plans, gets, waiting = cells
-        label = f'strategy.md row {order}'
-        if not order.isdigit():
-            errors.append(f'{label}: Order must be a number')
-        if when not in STRATEGY_WHEN:
-            errors.append(f'{label}: When must be Now, Next or Later')
-        if not GAP_LINK.search(gap):
-            errors.append(f'{label}: Gap must link a vision/gaps file')
-        if not ANY_PLAN_LINK.search(plans) and '(proposed)' not in plans:
-            errors.append(f'{label}: Plans must link a plan.md, or say "(proposed)"')
-        if not gets or not waiting:
-            errors.append(f'{label}: What creators get and Waiting on must be filled')
+        release, highlight, plans, why = cells
+        match = RELEASE_ROW.fullmatch(release)
+        if not match or match.group(1) != match.group(3):
+            errors.append(f'strategy.md: release needs a matching link to releases/<N>.md: {release}')
+            continue
+        number, state, file_number = match.groups()
+        if int(number) <= previous:
+            errors.append(f'strategy.md: release {number} must follow ascending order')
+        previous = int(number)
+        key = f'{file_number}.md'
+        if key in referenced:
+            errors.append(f'strategy.md: duplicate release {number}')
+        referenced.add(key)
+        if not highlight or not why:
+            errors.append(f'strategy.md: release {number} needs Highlight and Why this order')
+        plan_refs = STRATEGY_PLAN.findall(plans)
+        if not plan_refs:
+            errors.append(f'strategy.md: release {number} needs at least one linked plan')
+        if release_docs is not None:
+            body = release_docs.get(key)
+            if body is None:
+                errors.append(f'strategy.md: no release document {key}')
+                continue
+            actual_state = re.search(r'^\*\*State:\*\* (Draft|Final)$', body, re.M)
+            if not actual_state or actual_state.group(1).lower() != state:
+                errors.append(f'strategy.md: release {number} state differs from its document')
+            if highlight != release_section(body, 'Highlight'):
+                errors.append(f'strategy.md: release {number} highlight differs from its document')
+            actual_plans = set(RELEASE_PLAN.findall(release_section(body, 'Included plans')))
+            if set(plan_refs) != actual_plans or len(plan_refs) != len(actual_plans):
+                errors.append(f'strategy.md: release {number} plan links differ from its document')
+    if release_docs is not None:
+        for missing in sorted(release_docs.keys() - referenced):
+            errors.append(f'strategy.md: releases/{missing} has no roadmap row')
     return errors
 
 
@@ -237,8 +317,15 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     except (OSError, ValueError, IndexError) as exc:
         return [f'plan catalog: {exc}'], []
 
+    release_folder = root / 'releases'
+    if not (release_folder / 'TEMPLATE.md').is_file():
+        errors.append('releases/TEMPLATE.md: missing canonical release template')
+    release_docs = {p.name: p.read_text(encoding='utf-8')
+                    for p in release_folder.glob('[0-9]*.md') if p.stem.isdigit()}
+    for filename, body in release_docs.items():
+        errors.extend(release_errors(filename, body))
     try:
-        errors.extend(strategy_errors(read(root, STRATEGY)))
+        errors.extend(strategy_errors(read(root, STRATEGY), release_docs))
     except OSError as exc:
         errors.append(f'strategy.md: {exc}')
     indexed: set[Path] = set()

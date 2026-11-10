@@ -4,6 +4,9 @@
 
 ## Planning evidence
 
+**Release-led strategy direction (10 Nov 2026):** The owner asked that each release be planned in advance as a living strategy document, showing a one-line highlight, fuller outcome, included plans with one-line reasons, and intended approach. The top-level strategy should mostly summarize those releases. This amends the earlier JSON-only record design: `releases/<N>.md` is the human-readable draft and the permanent final ledger entry, with a machine-readable pin block added only for final publication. The draft/strategy consistency check can land as an ordinary documentation improvement now; the publish gate, final-record migration and product integrations remain Plan 31's separately authorized work. A draft must never imply a go to ship, and old records must be imported from actual receipts only. No separate Markdown log or duplicate release plan.
+
+
 **Scope decision:** Pending — on 8 Nov 2026 the owner asked for releases to be defined and published from astrid-dev, with CI and protection, as a new project that starts after Plan 29 ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)). Next: the owner answers the open decisions below and confirms the scope.
 
 **Prior art:** read-only maps of the release number in the App, Agent, Runtime and Pinokio at App `915bfa84d87268038f396dc999dc2095683e5d8a`, plus two independent design reviews ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9)). Key findings:
@@ -42,7 +45,7 @@ Already decided (8 Nov 2026, recorded in [Plan 29's inputs](../29-update-and-rel
 - **Versions:** `major.minor.patch`, patch by default, minor or major only when the owner declares it. Release 10 is `0.0.10`.
 - **Wire ordering:** the integer `release` stays the ordering key.
 - **Required:** its own per-release decision with a reason, never implied by kind. Kind changes no behaviour for now.
-- **History:** it starts at a legacy record for the release live when this plan starts, expected to be Release 10 = 0.0.10.
+- **History:** it starts at a legacy record for the release *actually live when the work starts*. The 8 Nov prediction that this would be Release 10 is no longer reliable; check the served manifest and publication receipts at implementation time.
 - **Hosted App deploys** are not releases.
 - **Source:** astrid-dev defines and publishes each release. This replaces Plan 29 decision 9's "App manifest stays the source".
 

@@ -60,21 +60,17 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 ## Review the strategy
 
-[`strategy.md`](../strategy.md) is one page saying which gaps we're closing now, next and later, and why. Gaps say what success is and how each one closes. The catalog says the order, status and owner of each project. The strategy connects the two and restates neither.
+[**Strategy**](../strategy.md) is the short, ordered **release roadmap**. Each [release brief](../releases/TEMPLATE.md) owns the reasoning: a one-line highlight, longer intent, approach/trade-offs and the included plans with one-line reasons. Start a future release from the template and revise it as work evolves; it is not a publication request. On finalization, the **same file** becomes the immutable release ledger entry. The project catalog alone owns status, priority, owner and estimates; vision gaps still own outcomes and closure evidence.
 
-**It has four parts.** CI checks this structure (`scripts/check_docs.py`), not the strategy's merit:
-- **Focus now:** the one or two gaps that matter most, each with its reason.
-- **Sequence:** a table with columns `Order`, `When` (`Now`, `Next` or `Later`), `Gap`, `Plans`, `What creators get` and `Waiting on`. Every row links a gap file. Its Plans cell links each plan, or says `(proposed)` for work that has no plan yet. Put no statuses, estimates or tasks in it.
-- **Not now:** what is deliberately deferred and why, so it isn't re-argued.
-- **Decisions:** the owner's dated decisions that set the order, and a `**Last reviewed:**` date.
+**The strategy has four parts.** Documentation CI checks its shape and that the `Sequence` rows match their release files:
+- **Focus now:** short context on the currently qualifying release and concurrent work.
+- **Sequence:** one ordered row per release document with columns `Release` (link), `Highlight`, `Plans` (links) and `Why this order`. Its highlight and complete set of linked plans must match the source release document.
+- **Not now:** work not yet assigned to a release, without invented commitments.
+- **Decisions:** dated owner decisions affecting the release sequence, plus `**Last reviewed:**`.
 
-**When it changes:**
-- **Starting a project:** the plan names its row, and the scope PR adds the row or updates it.
-- **Finishing a project:** the completion PR must update it. `scripts/check_completion.py` refuses a PR that moves a plan to `done` and leaves `strategy.md` untouched.
-- **Changing a gap's route,** when that moves its place in the sequence.
-- **An owner decision about priority:** record it under Decisions with its date. Changing the focus or the order is the owner's decision; anyone else proposes it.
+**When it changes:** creating a release draft or changing its highlight/plans updates the strategy summary in the same PR. A project start/completion may change a release's scope or timing, so review the strategy and release files; the completion PR must touch `strategy.md` (`scripts/check_completion.py`). If the catalog's project information differs, fix the catalog, rather than copying status to the release brief. New priorities and scope require the owner's decision; listing work is not authorization to run or publish it.
 
-Keep it to one page, and if it and the catalog disagree, fix whichever is wrong in the same PR. The agent workflow is in [the gap skill](../skills/astrid-dev-gap/SKILL.md#revisit-the-strategy).
+**Safe publishing boundary:** drafts (including future numbered releases) can land on `main` with no complete pins; documentation CI validates their structure. Plan 31 implements a separate fail-closed owner-approved Draft→Final transition with pinned commits, manifest checks and immutable history. A strategy edit must never publish a release. Keep the overview short; the reasoning is in the release file and linked plan/gap documents.
 
 ## Claim a project without waiting for a maintainer
 
