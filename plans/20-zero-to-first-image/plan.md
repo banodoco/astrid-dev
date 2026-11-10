@@ -14,24 +14,20 @@ Hannah gave this direction on 9 Nov in two parts. The source is in [inputs.md](i
 
 1. Every place where a person can start installing Astrid points to the onboarding skill and tells them, or their agent, to use it. That means the Agent README and every App screen where they copy the install line or an agent brief. Installing the skill is optional.
 2. If they use it, the skill guides them through the whole process.
-3. The skill looks for an existing inference setup (ComfyUI, Wan2GP or similar). If it finds one, it uses it. If not, and the machine is capable (for example it has a suitable GPU), it points them to that engine's install. If the machine isn't capable, it points them to a remote machine: RunPod, through Plan 32's generation-machine route.
+3. The skill ends at Connected. Looking for an existing inference setup (ComfyUI, Wan2GP or similar) and the step after it live in Plan 32 S2's guided generation setup, in the same skill file: see the S2 row in [Plan 32's tasks](../32-generation-placement-targets/tasks.md) (D7, reversed by the owner on 9 Nov). Phase 3 adds an engine install on a capable machine and RunPod otherwise, on top of that step.
 4. On the agent path, the user still sees the setup choices (start at sign-in, the `astrid` command, coding-agent skills, skill copies) and can change them. An agent-led install never silently takes the recommended defaults.
 5. **This is part of this plan, not a new one** (owner, relayed 9 Nov). Some users will already have chosen setup choices in the App, so the skill handles each entry route by the [choices rule](#the-choices-rule).
 
 ## Outcome and scope
 
-A person on macOS, Linux or Windows starts at any install entry point: the Agent README, astrid.haus's setup screens, or the fully local setup. They, or their agent, follow one skill. It installs Astrid with choices they saw and could change, connects astrid.haus, finds or sets up a place to generate, and ends with a real generated image on a timeline.
+A person on macOS, Linux or Windows starts at any install entry point: the Agent README, astrid.haus's setup screens, or the fully local setup. They, or their agent, follow one skill. It installs Astrid with choices they saw and could change, connects astrid.haus, and goes on into generation setup (Plan 32 S2's step, see the S2 row in [Plan 32's tasks](../32-generation-placement-targets/tasks.md)) to a real generated image on a timeline.
 
 - **Included:**
   - **The onboarding skill** is `docs/setup/SKILL.md` (`astrid-setup`), extended end to end rather than replaced. Its public URL is already in the README banner (`scripts/render_readme.py:12-14`) and in every App install brief (`SETUP_GUIDE_URL`, App `copy.ts:294`, used at `:338`). Shipped App builds carry that URL, so the path stays.
   - **Distribution:** the skill works from its public URL without being installed. After Astrid is installed with skills on, the skill is also in the synced skill view (`astrid/skills/view.py`), so "set up my generation" and re-onboarding work offline. An optional pre-install puts the same file where `astrid skills sync` later adopts it, not beside it (owner decision D2).
   - **Every entry point names it** ([list](tasks.md#entry-points)): the README banner and its generator, the App's hosted and fully local install briefs, the install disclosure on the Connect card, the "stopped" card, and the welcome flow's setup screen.
   - **The setup choices on the agent path**, by the [choices rule](#the-choices-rule).
-  - **Finding a place to generate:**
-    - an existing setup through Plan 32 S2's read-only discovery;
-    - a read-only look at the machine in the skill itself (OS, CPU architecture, NVIDIA devices with memory through the `nvidia-smi` query the Agent already runs, Apple silicon, and whether Astrid has a managed engine for this platform), with no new command;
-    - the engine install where Astrid manages one, as its own step with its own yes;
-    - otherwise RunPod, through Plan 32's `generation.machine` route with paid consent.
+  - **Finding a place to generate:** Plan 32 S2's guided step (existing setup, read-only discovery), see the S2 row in [Plan 32's tasks](../32-generation-placement-targets/tasks.md). Phase 3 (P3.1) adds, around it, the engine install where Astrid manages one (its own yes) and RunPod through Plan 32's `generation.machine` route with paid consent.
   - **A step shape that a weaker agent can follow:** one command per step, an explicit success check, and one fallback: run the installer's `--doctor` and give the user the file path.
   - **The App side from the earlier direction:** the "Set up generation" card after Connected.
   - **Proof** of what a fresh user sees on each OS (hosted runners on CPU, plus one real GPU image), and the measured effort.
@@ -57,7 +53,7 @@ The rule is enforced by tests in both repositories. **Agent (phase 1):** the gui
 ## Existing work and decision
 
 - **Placement: this plan, not a new one** (owner). Plan 20 already owns the first-image journey, and its earlier direction already reaches into Plan 32 S2. A separate onboarding plan would split one journey across two plans that edit the same skill file and the same brief line.
-- **Coordinating with [Plan 32](../32-generation-placement-targets/plan.md) S2.** S2 keeps the generation side: the "Set up my generation" section of the generation skill, the Wan2GP folder probe and the `--as-entry` preview, all read-only. Two items in S2's scope, the `docs/setup/SKILL.md` step and the one line in the App's `agentInstructions`, move to this plan's P1.1 (phase 1) and P2.1 (phase 2). One pointer line in the brief then names the onboarding skill, and that skill routes to "Set up my generation". This avoids two pointers and two plans editing the same text. Hannah needs to confirm this move (D7); S2's row records the pointer.
+- **Coordinating with [Plan 32](../32-generation-placement-targets/plan.md) S2.** S2 keeps the generation side: the "Set up my generation" section of the generation skill, the `docs/setup/SKILL.md` generation step after Connected, the Wan2GP folder probe and the `--as-entry` preview (D7: the owner reversed the earlier move of that step to this plan, 9 Nov; see the S2 row in [Plan 32's tasks](../32-generation-placement-targets/tasks.md)). This plan's skill ends at Connected. Whether S2's App line in `agentInstructions` stays in S2 beside P2.1's pointer line is not settled by the reversal; the two edits merge in order (P2.1, then S2).
 - **Coordinating with [Plan 12](../12-multiple-inference-routes/plan.md).** Wan2GP rows come later and add no new step.
 - **Reused, not rebuilt:**
   - the installer's choice resolution and consent stop (`astrid/installer/choices.py`, `cli.py:793-800`), with its success and failure first lines (`outcome.py:137-159`);
@@ -75,20 +71,20 @@ The rule is enforced by tests in both repositories. **Agent (phase 1):** the gui
 
 | Phase | What lands | Goes live | Waiting on | Estimate |
 |---|---|---|---|---|
-| **1. Fast path** | The skill rewritten for the whole guided install, with the [choices rule](#the-choices-rule), the step shape and a read-only "what this machine can generate with" step that uses the GPU probe the Agent already runs (no new command). The README and Getting Started point at it and drop the "`--yes` without a prompt" advice. Agent docs, the README and its generator, and the guide tests only | When the PR merges to Agent `main` | Release 12 published: the skill quotes installer first lines that exist only in release 12 (`outcome.py:137-166` on `cand/29-r12`, absent on Agent `main` at `a105de3a48`) | 1 day |
-| **2. Next App release** | The App brief's yes/no consent line becomes "show these choices and offer a change", with the four flag spellings and a pointer to the skill, in both install briefs; the entry screens show the pointer; the "Set up generation" card after Connected links the skill's generation step | With the next ordinary App release; no release of its own | Phase 1 merged; Plan 29's orchestrator for the App branch | 1 day, plus the wait for the release |
-| **3. Generation half** | The skill's generation step does it rather than points: use an existing setup, install a managed engine (its own yes), or rent RunPod (paid consent and a cap). The skill reaches the synced skill view. Lighter per-OS proof with one real GPU image. Completion | Skill text on merge to Agent `main`; the synced-view change with the next Agent release | Plan 32 S2, T5d and T6d in a published release | 3–4 days |
+| **1. Fast path** | The skill rewritten for the whole guided install, with the [choices rule](#the-choices-rule), the step shape and a skill that ends at Connected. The README and Getting Started point at it and drop the "`--yes` without a prompt" advice. Agent docs, the README and its generator, and the guide tests only | When the PR merges to Agent `main` | Release 12 published: the skill quotes installer first lines that exist only in release 12 (`outcome.py:137-166` on `cand/29-r12`, absent on Agent `main` at `a105de3a48`) | 1 day |
+| **2. Next App release** | The App brief's yes/no consent line becomes "show these choices and offer a change", with the four flag spellings and a pointer to the skill, in both install briefs; the entry screens show the pointer; the "Set up generation" card after Connected links Plan 32 S2's "Set up my generation" section | With the next ordinary App release; no release of its own | Phase 1 merged; Plan 29's orchestrator for the App branch; for the card, Plan 32 S2's section on Agent `main` | 1 day, plus the wait for the release |
+| **3. Generation half** | On top of Plan 32 S2's generation step, the skill does it rather than points: use an existing setup, install a managed engine (its own yes), or rent RunPod (paid consent and a cap). The skill reaches the synced skill view. Lighter per-OS proof with one real GPU image. Completion | Skill text on merge to Agent `main`; the synced-view change with the next Agent release | Plan 32 S2, T5d and T6d in a published release | 3–4 days |
 
-Users get value after phase 1: an agent following the README or a shipped App brief gets one guided install with choices they saw, an honest report of what the machine can generate with, and the route that works today (attach a running ComfyUI, or RunPod).
+Users get value after phase 1: an agent following the README or a shipped App brief gets one guided install with choices they saw, ending at Connected.
 
 **Not built, and why** (the Challenge note asked whether to cut these):
 
-- **The machine-check command (earlier O5) is deferred out of this plan.** Its facts are one `nvidia-smi` query (the same fields the Agent's readiness probe reads, `engine_readiness.py:49`), `uname -m` and the engine index. A guide test pins the skill's managed-engine table to `astrid/packs/engine-index.json`, so the text cannot silently drift. A command adds an Agent release, a new CLI surface and a schema test for one consumer. Reopen it when Plan 32 T2's manifest declares per-entry requirements (then "capable" must compare against them), when Plan 12 needs it, or when phase 3's proof shows a weaker agent misreading the probe.
-- **The "Set up generation" card (earlier O7) is kept, and moved to phase 2.** On the agent path the install brief already leads to generation through the skill, but a person who installed by hand from the README, or stopped at Connected and came back, has no other way in, and the owner's earlier direction names it. Moving it to phase 2 lets it ride the same App release as the brief, so phase 3 needs no App release: the card links the skill's stable `#set-up-generation` heading, and the text behind it improves live when phase 3 merges. It shows in the post-Connected welcome flow only; knowing whether generation is already set up waits for Plan 32 T6d's settings document.
+- **The machine-check command (earlier O5) is deferred out of this plan, and the skill has no machine look in phase 1** (D7). Phase 3's capability read is one `nvidia-smi` query (P3.1). A command adds an Agent release, a new CLI surface and a schema test for one consumer. Reopen it when Plan 32 T2's manifest declares per-entry requirements, when Plan 12 needs it, or when phase 3's proof shows a weaker agent misreading the query.
+- **The "Set up generation" card (earlier O7) is kept, and moved to phase 2.** On the agent path the install brief already leads to generation through the skill, but a person who installed by hand from the README, or stopped at Connected and came back, has no other way in, and the owner's earlier direction names it. Moving it to phase 2 lets it ride the same App release as the brief, so phase 3 needs no App release: the card links Plan 32 S2's "Set up my generation" section (not a heading in this plan's skill, D7), and the text behind it improves live when that merges. It shows in the post-Connected welcome flow only; knowing whether generation is already set up waits for Plan 32 T6d's settings document.
 - **The per-OS proof (earlier O8) is lighter.** Hosted macOS, Windows and Linux runners on CPU cover install, choices, Connected and branch selection, ending at each branch's first command against a fake. One real GPU image comes through RunPod. The limits are stated in [Completion](#completion) and [tasks.md](tasks.md).
 - **The `route` field in the shared argv fixture is dropped.** The Agent's installer tests already cover each route's behaviour (`tests/test_installer_choices.py`: precedence, the unattended consent stop, saved policy on update), and the fixture's existing case ids (`untouched`, `edit-*`, `already-set-up`) name the App's routes. A new field would have to be mirrored in two repositories for no new check. The old O2 folds into phase 1's guide test.
 
-**Review rounds (D9):** 1 for phase 1 (text and tests, no product code), 1 for phase 2 (a few App strings and one card, against an unchanged fixture), and at most 2 for phase 3 (paid consent, an engine install consent and the per-OS proof). Copy and wording are their own small `T` tasks, separate from the functional `N` tasks that give each surface its structure and tests. Owner decisions D1–D9 are in [inputs.md](inputs.md#owner-decisions-needed), with the phase each applies to. See [tasks.md](tasks.md) for routes and the critical path. Recording this plan authorizes no product work.
+**Reviews:** R1, R2 and R3, one final review per phase ([tasks.md](tasks.md)); their round counts are the agreed D9 (1, 1 and 2). Copy and wording are their own small `T` tasks, separate from the functional `N` tasks that give each surface its structure and tests. Owner decisions D1–D9 are in [inputs.md](inputs.md#owner-decisions-needed): D3, D5, D6, D7 and D9 are decided; D1, D2, D4 and D8 are Pending: owner to confirm. See [tasks.md](tasks.md) for routes and the critical path. Recording this plan authorizes no product work.
 
 ## Interfaces and handoff
 
@@ -97,7 +93,7 @@ Users get value after phase 1: an agent following the README or a shipped App br
   - the next ordinary App release (phase 2);
   - Plan 32's S2 skill section, the `generation.machine` RunPod contribution (T5, T5d) and the generation settings document (T6d).
 - **Produces:**
-  - one onboarding skill at a stable public URL, with a stable `#set-up-generation` heading that the App card links;
+  - one onboarding skill at a stable public URL, ending at Connected;
   - the choices rule, tested per route in both repositories against the existing shared argv fixture;
   - an install brief and a README that point to the skill.
 - **No longer produced here:** the machine-check command (deferred; see [Sequence](#sequence-and-readiness)).
@@ -108,8 +104,7 @@ Users get value after phase 1: an agent following the README or a shipped App br
   - the four choices, which they can change;
   - one install command;
   - Connected;
-  - a generation route that fits their machine: their existing ComfyUI, a managed engine install, or RunPod;
-  - a real generated image on a timeline (once, through RunPod; the other branches end at their first command against a fake).
+  - a real generated image on a timeline (once, through RunPod; the other branches end at their first command against a fake). The route to it is Plan 32 S2's generation step, not a section of this plan's skill.
 - **The three routes.** Each choices route has a passing test: the guide test and installer tests in the Agent, and a `copy.test.ts` case per App route. An App brief with changed choices installs with exactly those choices, and an already-set-up install keeps its saved ones.
 - **Negative cases:**
   - the agent declines to change choices without asking;
