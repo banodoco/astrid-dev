@@ -6,7 +6,7 @@
 
 **Scope decision:** Accepted — Hannah chose this outcome on 10 Nov 2026 in session https://claude.ai/code/session_011EzfVz8zzHLnUqSqMnGUCT. She asked for "a simple version" now, a proper RunPod version later: a machine that "doesn't have an automatic kill time" and "a way to quickly check when it's going to die". The orchestrator proposed (1) a display of when each machine is released, (2) `keep --for` with fresh consent, and (3) `keep --until-release` still bounded by a spend cap, and recommended against an uncapped option (a forgotten pod costs about $24 a day at $0.99/hr). Hannah: "Yeah, let's do that. Can you give that to a Codex manager? Can you spec it out?"
 
-**Prior art:** read at Agent `origin/int/32-one-generation-path` 99724131d (nothing run).
+**Prior art:** read at Agent `origin/int/32-one-generation-path` 99724131d2c3eff11867a189986c4ba147e5a81b (nothing run), and [Plan 32](../32-generation-placement-targets/plan.md), which built the lease owner.
 - **Idle limit:** request, then `ASTRID_WARM_IDLE_SECONDS`, then 1800 s (`astrid/core/execution/warm_hold.py:27,30-44`; `astrid/packs/runpod/worker_owner.py:61-76`). The claim takes the smaller of the settings preference and the consented idle (`machine.py:551`); `acquire` refuses a larger idle (`worker_owner.py:300`); `settle` sets `idle_expires_at = min(now + idle, paid_expires_at)` (`worker_owner.py:351`).
 - **Paid limit and cap:** `PaidRunConsent.validate` turns the cap into time, expiry = min(deadline, now + cap ÷ hourly) (`target_selection.py:264-282`), stored as `paid_limits` (`:513-516`) and `lease.paid_expires_at` (`worker_owner.py:313`). There is no separate spend meter: the cap is enforced only through that expiry.
 - **Who releases:** only in-process timers in the host's `RunPodLeaseOwner` (`warm_hold.py:47-51`; `worker_owner.py:174-215`). If the host stops, the pod keeps billing until the next host's `recover()` releases it with reason `restart` (`worker_owner.py:217-231`, `adapter.py:291`). If the computer sleeps, release happens late, after it wakes (`worker_owner.py:201`).
@@ -15,7 +15,7 @@
 
 **Approach:** compared (a) all three as asked, with `--until-release` unbounded; (b) the display and `keep --for`, with `--until-release` as "keep up to the cap" (idle release off, expiry set by the cap); (c) the display only. Chose (b): (a) cannot be made safe, because the only enforcement is a timer in the host, which a crash or sleep stops; (c) does not give Hannah a way to keep a machine. (b) needs no new journal schema and no daemon: it reuses `lease_row`, `PaidRunConsent.validate`, the owner's `_arm` and the release task path, and drops the idle-only filter in `lease_row`.
 
-**Challenge:** money and paid consent are involved, so a read-only critic (orchestrator-delegated, 10 Nov) traced the code above and recommended (b). Accepted:
+**Challenge:** Reviewed — a read-only critic delegated by the orchestrator in https://claude.ai/code/session_011EzfVz8zzHLnUqSqMnGUCT, 10 Nov 2026, because money and paid consent are involved. It traced the code above and recommended (b). Accepted:
 - the keep operation lives on the owner, under its lock, needs the exact pod, a claimed record, an `idle` or `active` lease and the owner's current epoch, and refuses while a release is in flight;
 - fresh consent goes through the existing `validate()` at the recorded rate and offer digest;
 - cost is accrued to now before the new limit is written;
