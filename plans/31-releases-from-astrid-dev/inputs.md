@@ -45,7 +45,7 @@ Already decided (8 Nov 2026, recorded in [Plan 29's inputs](../29-update-and-rel
 - **Versions:** `major.minor.patch`, patch by default, minor or major only when the owner declares it. Release 10 is `0.0.10`.
 - **Wire ordering:** the integer `release` stays the ordering key.
 - **Required:** its own per-release decision with a reason, never implied by kind. Kind changes no behaviour for now.
-- **History:** it starts at a legacy record for the release live when this plan starts, expected to be Release 10 = 0.0.10.
+- **History:** it starts at a legacy record for the release *actually live when the work starts*. The 8 Nov prediction that this would be Release 10 is no longer reliable; check the served manifest and publication receipts at implementation time.
 - **Hosted App deploys** are not releases.
 - **Source:** astrid-dev defines and publishes each release. This replaces Plan 29 decision 9's "App manifest stays the source".
 
