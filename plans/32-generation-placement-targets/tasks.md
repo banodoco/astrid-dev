@@ -627,3 +627,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **G8 landed:** `a2ccbde9192ec26c5a736c7894bc2ecda7bb9656` merges independently reviewed `7aa62680e` with identical tree. Warm and cold acquisition now use the existing exact GraphQL/catalog confirmation for accepted GPU identity and record its display and datacenter; all other custody checks remain in place. The original warm reset test, canonical-ID/display warm reuse and real mismatch cases, and related warm/mismatch selectors passed. The two stale provider fixtures were corrected without weakening production comparisons. RunPod warm acquisition/custody paths and the merge SHA were announced to Plan 34.
 - **End gate:** push-triggered CI `42771256778` is pending on `a2ccbde91`; final integrated proof and completion PR remain open. No paid resources used by this run.
+
+## Progress 51 (Codex manager, 10 Nov)
+
+- **Independent integrated proof:** on exact `a2ccbde9192ec26c5a736c7894bc2ecda7bb9656`, two warm canonical-ID/display and mismatch cases passed, and five corrected fixture cases passed under the lock (`run/warm-integrated-a2.log`, both inner exits 0). An initial marker-filtered fixture command selected no tests and exited 5; the correct unfiltered command then passed. The candidate's prior three focused runs are in `run/warm-reset-proof-7aa.log`.
+- **CI:** `42771256778` is queued on the integrated head; the preceding `7bfb98e6f` run is incomplete and will be superseded. T8 remains open. No paid resources used by this run.
