@@ -2,6 +2,8 @@
 
 [Handoff](handoff.md) · [Plan](plan.md) · [Inputs](inputs.md) · [Tasks](tasks.md) · [Machine handoff, all plans](../../docs/handoffs/2026-11-10-orchestrator.md)
 
+**Release 12 now includes the generation work.** The overall plan is [releases/12.md](../../releases/12.md). This brief covers its Track A ([fixes](../../releases/12/fixes.md)); Track A also receives the generation merge and runs the final qualification.
+
 **Give this file to the orchestrator that takes over Release 12.** You run the release through managers; you don't write the code yourself. This brief gives you:
 - the role and the operating model;
 - the plan and the gate;

@@ -9,6 +9,8 @@ Read it in this order:
 
 Release 12 (Plan 29) has its own takeover brief, [`plans/29-update-and-release/orchestrator-brief.md`](../../plans/29-update-and-release/orchestrator-brief.md). Read it too if you take over the release.
 
+**Update, 10 Nov evening:** Hannah folded the generation work into **Release 12**. The plan for the whole release, and for its two tracks, is [releases/12.md](../../releases/12.md). Where this brief says "release 13" for Plans 32, 40 and 20, read Release 12 Track B.
+
 The owner is **Hannah**.
 
 ## 1. Your job
