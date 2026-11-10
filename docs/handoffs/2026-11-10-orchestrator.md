@@ -9,7 +9,7 @@ Read it in this order:
 
 Release 12 (Plan 29) has its own takeover brief, [`plans/29-update-and-release/orchestrator-brief.md`](../../plans/29-update-and-release/orchestrator-brief.md). Read it too if you take over the release.
 
-**Update, 10 Nov evening (Hannah):** the generation work is now in **Release 12**. The plan for the whole release and its two tracks is [releases/12.md](../../releases/12.md). This supersedes, in this brief: the release path in §2; "wait for release 12" in the per-manager list in §4; and the CI runner freeze, which becomes scheduling by the orchestrator. Plans 32, 40, 20 and 34 work now, as [Track B](../../releases/12/generation.md); "release 13" for those plans reads as Release 12 Track B.
+**Update, 10 Nov evening (Hannah):** the generation work is now in **Release 12**. The plan for the whole release and its two tracks is [releases/12.md](../../releases/12.md). This supersedes, in this brief: the release path in §2; "wait for release 12" in the per-manager list in §4; and the CI runner freeze, which becomes scheduling by the orchestrator. Plans 32, 40, 20 and 34 work now, as [Track B](../../releases/12/generation.md); "release 13" for those plans reads as Release 12 Track B. The GPU stop is now **$25** (§3's $20/$24 are superseded), and Hannah's go for the combined release is given.
 
 The owner is **Hannah**.
 
