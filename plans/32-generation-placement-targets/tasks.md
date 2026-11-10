@@ -740,3 +740,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **G18/G18.1/G18.2 landed:** `26eeaff4f90fc5b91e25e0769477a9081deee5d3` merges `80d30156f` with identical tree. Independent security re-review cleared post-mutation prelaunch integrity verification and exact stop/drain or retained uncertain-custody fencing through completion; original doctor/schema validation remains. The exact candidate passed 12 real managed-host integration cases and 38 schema/custody checks (`run/doctor-schema-fix.log`, both inner exits 0). The managed startup/alignment, doctor schema and custody paths and merge SHA were announced to Plan 34.
 - **End gate:** independent exact-head proof is running; push-triggered CI `42799672641` on `26eeaff4f` is active and boundary passed. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+
+## Progress 72 (Codex manager, 10 Nov)
+
+- **Independent integrated proof:** exact `26eeaff4f90fc5b91e25e0769477a9081deee5d3` passed 12 locked managed-host integration cases and 12 owned-doctor schema unit cases (`run/doctor-schema-integrated-26.log`, both inner exits 0). This includes prelaunch mutation refusal and post-start cleanup/fencing cases.
+- **End gate:** CI `42799672641` is active on the integrated head; boundary passed, and early Ruff, Windows and wheel failures match main. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft pending the CI comparison. No paid resources used by this run.
