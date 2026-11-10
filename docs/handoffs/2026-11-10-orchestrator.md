@@ -104,7 +104,7 @@ Follow [codex-in-cloud](../../skills/astrid-dev-orchestrate/codex-in-cloud/READM
    `CODEX_EFFORT=high CODEX_MAX_THREADS=8 setsid nohup <astrid-dev>/skills/astrid-dev-orchestrate/codex-in-cloud/codex-runner.sh <workdir> <workdir>/run/prompt.md <workdir>/run 6 gpt-6-luna >/dev/null 2>&1 </dev/null &`
 4. Add the run folder to `~/codex/runs.txt`.
 
-Managers run on Luna and choose worker models by route.
+Managers run on Luna and choose worker models by route, **except P29 and P32 for Release 12**: start those two on `gpt-6.1-sol` or `gpt-6-astra` at high effort (a multi-repo release and the conflict-heavy composition).
 
 **Kickoff for every manager:**
 
@@ -117,7 +117,7 @@ Managers run on Luna and choose worker models by route.
 - **The mailbox:** a manager writes to `run/to-orchestrator.md`. You answer by appending to `run/to-codex.md`. Always use a QUOTED heredoc (`<<'EOF'`), or backticks in your note will run as commands.
 - **Waking up waiting runs:** a run that is `waiting` resumes when you write to its mailbox. **Never relaunch a merely waiting runner.** A relaunch overwrites `runner.pid` and makes a duplicate.
 - **The keep-alive:** arm `codex-hold.sh <run-dir>...` over the RUNNING runs only, with the Bash tool's `run_in_background` (timeout 7200000). Never start it with `&`, and never send its output to `/dev/null`, or you lose the message that wakes you. It exits on each mailbox write; read the message, act, and re-arm it.
-- **Check-ins:** while a GPU run is live, schedule one at most 20 minutes away. Each one runs the census, checks spend, disk and statuses, does ONE thing, reports to Hannah in at most three lines, and schedules the next. When the work ends, disable them all (none is enabled now).
+- **Check-ins:** while **any** run is live, schedule one at most 20 minutes away. Each one runs the census, checks spend, disk and statuses, does ONE thing, reports to Hannah in at most three lines, and schedules the next. When the work ends, disable them all (none is enabled now).
 
 ### Merging
 
