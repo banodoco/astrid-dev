@@ -39,4 +39,4 @@ Set `SCRATCH` (work area holding the Agent clone at `merge/agent`) and `VENV`. C
 ## Results so far
 
 - **Base `313bbd46f`:** 158 failed, 4,741 passed, 21 skipped, 47 errors (205 failing ids). By file: `test_installer_busy_fence` 59, Runtime custody d40 tests 45, `test_installer_acl` 14, `test_r8_prod_refusals` 13, `test_installer_app_update` 10, about 30 files with 1–6 each.
-- **Batch `733ac5a43` (`r12/cand-next`), R11 and R10:** recorded in [tasks.md](../../tasks.md#release-12-round-5-state-at-1700z-2026-11-10) when they finish.
+- **Batch `733ac5a43` (`r12/cand-next`), R11 and R10: NOT DONE.** The batch run was invalidated (the script was edited while it ran, so it ran no tests), and the R11 and R10 runs were stopped at the machine handoff. Rerun all three with the script above. Until then, `733ac5a43` must not be pushed to `cand/29-r12`.

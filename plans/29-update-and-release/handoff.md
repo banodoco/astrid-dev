@@ -4,7 +4,7 @@
 
 **Taking over as orchestrator?** Read the [orchestrator brief](orchestrator-brief.md) first.
 
-**Purpose:** everything a new advisor (M-INT) needs to continue Plan 29 on another machine without losing context. Read this file first, then `tasks.md` (Release 12 sections, newest last). State as of **2026-11-10 ~17:00Z**. Nothing important lives only on the old machine: every commit is on GitHub, and every result that matters is in this folder.
+**Purpose:** everything a new advisor (M-INT) needs to continue Plan 29 on another machine without losing context. Read this file first, then `tasks.md` (Release 12 sections, newest last). State as of **2026-11-10 ~17:00Z**. At handoff, everything was stopped: no local processes, no scheduled check-ins, and the manager and its workers told to push and stop. Nothing important lives only on the old machine: every commit is on GitHub, and every result that matters is in this folder.
 
 ## 1. Goal and what "done" means
 
@@ -69,8 +69,8 @@ Agent fix branches in `r12/cand-next`, each with regression tests that fail befo
 
 | Item | State | Restart from |
 |---|---|---|
-| App Direct Journey after round 6 | Round 6 pushed (`daf30bd9b`): `:1189` env (`ASTRID_PACKS_AGENT` set in `direct-journey.yml`), `:449` and `:2995` test drift verified against the pinned Agent source. Its early Direct Journey result is the next input | The next early DJ run's artifacts (section 7); brief a worker with its traces, the App head and the Agent at `313bbd46f` |
-| Agent comparison of `733ac5a43`, R11, R10 | Running at handoff | [agent-comparison.md](evidence/r12/agent-comparison.md) |
+| App Direct Journey after round 6 | Early DJ `42857693131` on App `8cfe10ce7`: direct-journey 42 pass / 1 fail / 2 skipped; three-products 3 pass / 1 fail / 10 skipped. **`:449` now passes.** New failures: direct-journey `:1264` seeds its media timeline through the retired save route (`410 retired_route`, "Submit a timeline commit instead"), likely seed-helper drift; three-products `:649` (Runtime restart with the App open: the draft survives) fails a `toMatchObject` | Round 7: brief a Sol worker with run `42857693131`'s artifacts and traces, App `8cfe10ce7` and Agent `313bbd46f`. Prove drift from the trace; `:649` is in the restart and recovery flow where rounds 4 and 5 found product bugs |
+| Agent comparison of `733ac5a43`, R11, R10 | **Not done:** the batch run was invalidated and the R11/R10 runs were stopped at handoff. Base `313bbd46f` is done (205 failing ids) | Rerun all three with [agent-comparison.md](evidence/r12/agent-comparison.md) |
 | Review round 4 | Not started | Brief on `313bbd46f..733ac5a43`, giving [review-round3.md](evidence/r12/review-round3.md) as context |
 | Matrix row `direct-linux-r11-update` | Harness fix `b550ecadf` is supported by evidence, not proven | The final matrix's receipt records the host's effective HOME |
 | Off-Linux snapshot and Windows fixes | Proven locally in simulation only | The final matrix rows on macOS and Windows |
