@@ -414,3 +414,10 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **managed_schema:** active VibeComfy pin is `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` via the recipe and RunPod pins; the distinct historical H3 schema capture is `01f38461d633651c8857712b2331650aedaee461`. Reconcile with any remaining pin concern.
 - **i2v lease loss:** image/t2i RunPod CPU-fake control on `364f98e33` passed (1 passed, 120.63s) under the journey lock. The i2v upload heartbeat timeout remains unexplained; comparing retained diagnostics, not claiming the i2v journey passed.
 - **Shard A:** triaging seven `test_engine_execution.py` failures and the claim-loop and installed-lane candidates from progress 16; no disposition yet.
+
+## Progress 18 (Codex manager, 10 Nov)
+
+- **D3 landed:** `f61663ebf` merges `plan32/codex-manager-d3` `66e4636db`. The controller's shipped job runs through real `local_job.run_job` on the CPU fake: serialized seam 1 passed; archive/H3/seed focused checks 12 passed. Independent review cleared the file-map document-parent fix and custody checks. D2 will merge this head and reconcile its shared seed preparation.
+- **D6:** at `7efe5bb65`, the serialized trust selection failed after 6 passed: `audio/sfx-local-managed-trust` reached the fake Comfy queue, which rejected the Foley VAE and video input menu values. Investigating whether the fixture's inventory or product behavior owns the failure; no pass claimed.
+- **Shard A triage:** on `364f98e33`, `test_engine_execution.py` has 6 passed / 7 failed against the removed model-download method. One isolated claim-loop node fails because its fixture reads removed warmth fields; the full file was interrupted after three failures. Source-profile `test_installed_generation_journey.py` has 33 passed / 1 stale `target` failure; installed mode was not provisioned. Updating the obsolete test contracts while preserving current assertions.
+- **i2v:** the green t2i control does not establish why i2v's heartbeat timed out. Advisor asked for the gate disposition; retained diagnostics show one archive, 345 fake-provider PUTs, and a later Runtime heartbeat transport timeout.
