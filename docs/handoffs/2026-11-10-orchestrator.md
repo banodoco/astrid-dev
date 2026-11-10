@@ -192,7 +192,7 @@ These were pushed under `archive/2026-11-10/<name>`, which starts no CI:
 - App: `cont-app`, `help-pk14`;
 - runpod-lifecycle: `help-p2-prepin`.
 
-**Not pushed,** because CI runs on every push to these repos: Runtime `cont-runtime` (1 commit, 5 Nov) and VibeComfy `claude/worker-permissions` (1 commit, 8 Nov). Push them after the freeze if they're wanted.
+**Not pushed:** Runtime `cont-runtime` (1 commit, 5 Nov, "Combine retained stop ownership and pack admission sources"). Runtime CI runs on every push, so push it after the freeze if it's wanted. (VibeComfy `claude/worker-permissions` is already contained in its GitHub branch.)
 
 Everything else is verified on GitHub. Every task branch in the managers' clones is contained in its pushed staging branch.
 
