@@ -1,56 +1,35 @@
 # Strategy
 
-What we're doing now, next and later, which [gaps](vision/README.md#gaps--17-assessed-outcomes) that closes, and why that order.
+Astrid's execution strategy is a sequence of **releases**, each a coherent step toward our [vision](vision/README.md). Each release document holds the living rationale, intended outcome, approach and included plans; this page is their short, ordered map.
 
-This page is the *why* and the sequence. Other facts each live in one place:
-- the [plan catalog](plans/index.md): each project's order, status and owner;
-- each gap's **Route to closure**: how that gap closes;
-- each project's pack: its tasks and proof.
+The [plan catalog](plans/index.md) alone owns project status, priority, estimate and owner. [Vision gaps](vision/README.md) and their routes still define what needs to improve and how success will be assessed. A plan may be worked on before it is assigned to a release; an unassigned plan is not a release commitment.
 
-When a project finishes, its completion PR updates this page (enforced by `scripts/check_completion.py`).
-
-**Last reviewed:** 2026-11-08, by the owner with the advisor (Plan 29 reopened after a field failure on Release 10).
+**Last reviewed:** 2026-11-10, following the decision to make strategy release-led. Future assignments are provisional until explicitly finalized.
 
 ## Focus now
 
-1. **[F-001 Platform reliability](vision/gaps/F-001-platform-reliability.md).** Release 10 (0.0.10) is published, but on a machine that already completed the Release 1 storage handoff, `install --update` exits 0 and installs nothing. Plan 29 is reopened to fix this (UR-15 and its follow-ups) and to publish Release 11 with a field receipt. Less common setups remain in [Plan 30](plans/30-update-everywhere/plan.md).
-2. **[F-008 Portable generation](vision/gaps/F-008-portable-generation.md),** in parallel. Generation is what creators come for. It runs on its own track and follows [its route to closure](vision/gaps/F-008-portable-generation.md#route-to-closure).
+Finish the Release 12 candidate and its update/reliability proof under [Plan 29](plans/29-update-and-release/plan.md); the [release 12 run note](docs/ledger/2026-11-09-release-12-slow-path.md) documents what slowed qualification. In parallel, maintain the generation path through [Plan 32](plans/32-generation-placement-targets/plan.md) and the onboarding work in [Plan 20](plans/20-zero-to-first-image/plan.md). None of this silently adds a plan to a future release.
 
 ## Sequence
 
-| Order | When | Gap | Plans | What creators get | Waiting on |
-|---|---|---|---|---|---|
-| 1 | Now | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 29](plans/29-update-and-release/plan.md) (reopened) | Update works after the storage handoff; Release 11 published with a field receipt | Fix UR-15 and UR-15b; the owner's go on Release 11 |
-| 1 | Now | [F-008](vision/gaps/F-008-portable-generation.md) | [Plan 33](plans/33-unblock-live-generation/plan.md) (done) | Done: Plans 01, 02 and 06 landed on `main`, proven on CPU (9 Nov). Every default slot except h3_av passes the CPU test of the pod path. h3_av moves to Plan 32 T6b, and the real-GPU proof to Plan 34, after Plan 32 | — |
-| 1 | Now | [F-003](vision/gaps/F-003-creative-execution.md) | [Plan 20](plans/20-zero-to-first-image/plan.md) | One onboarding skill takes a person or their agent from the install line to Connected with choices they saw and could change, on the way to a first generated image | Runs alongside release 12 by the owner's go on 9 Nov; its Agent `main` merge waits for release 12 published and the owner's go |
-| 2 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 31](plans/31-releases-from-astrid-dev/plan.md) | Releases are defined, checked and published from astrid-dev, and users see versions such as 0.0.11 | the owner's go; Plan 29; astrid-dev `main` protection |
-| 3 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 39](plans/39-green-mains/plan.md) | Every product `main` passes its own checks and stays green, so a red check means a new regression, and releases need everything green | release 12 published |
-| 4 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 30](plans/30-update-everywhere/plan.md) | Updating also works on older Linux, and through Pinokio and fully local | the owner's go; Plan 29 |
-| 5 | Now | [F-008](vision/gaps/F-008-portable-generation.md) | [Plan 32](plans/32-generation-placement-targets/plan.md) → [Plan 34](plans/34-real-gpu-proof/plan.md) | The same generation request runs the same way on any machine, then proven on real GPUs | Plan 33 landed (9 Nov); runs at full speed |
-| 6 | Later | [F-008](vision/gaps/F-008-portable-generation.md) | [Plan 12](plans/12-multiple-inference-routes/plan.md) ∥ [Plan 17](plans/17-vibecomfy-extensibility/plan.md) | A second engine, and packs that extend generation without changing core | Plan 32 |
-| 7 | Later | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 10](plans/10-pinokio-qualification/plan.md), [Plan 09](plans/09-install-and-update-confidence/plan.md) | Pinokio qualified natively; rollback, migrating updates and removal qualified | the owner's go; Plan 30 |
+| Release | Highlight | Plans | Why this order |
+|---|---|---|---|
+| [Release 13 (draft)](releases/13.md) | Creators can see and control when their rented GPU machine stops and how much it can cost. | [Plan 40](plans/40-machine-lifetime-controls/plan.md) | Plan 40 is already targeted at Release 13 in the catalog; keep the rest of its scope open until the release is deliberately composed. |
+
+The table is a summary, **not** a second definition of a release. Add a future row when its draft file is created; update the row whenever its highlight or included plans change. A published release's document remains as the historical ledger. [Plan 31](plans/31-releases-from-astrid-dev/plan.md) makes this workflow and its checks authoritative.
 
 ## Not now
 
-These are deliberately deferred, so they aren't re-argued:
-- Reshaping the catalog: cutting Plan 09 down to lifecycle qualification, retitling Plan 05, and fixing the gap links. All of these wait until Release 10 ships.
-- Writing routes to closure for the other gaps, starting with F-001. Waits until Release 10 ships.
-- Gaps with no planned work this quarter: AA, CA, CI, LS and F-002 to F-007. Their plans keep their catalog order.
+Release assignments for [Plan 31](plans/31-releases-from-astrid-dev/plan.md), [Plan 30](plans/30-update-everywhere/plan.md), [Plan 38](plans/38-one-process-identity/plan.md) and other catalog work are not yet settled. Keep their sequencing and dependencies in the catalog and individual plan packs until a real release brief is created. Do not invent release numbers or force plans into a release for the sake of a tidy table.
+
+Past releases are documented in the [existing release log](plans/releases.md) and actual receipts. Plan 31 migrates that history into canonical release records only where it can be grounded in publication evidence; Release 11's publication race is recorded in the [ledger](docs/ledger/2026-11-09-two-projects-published-release-11.md).
 
 ## Decisions
 
-- **2026-11-08:**
-  - Release 10 first. Every follow-on project on this page waits for the owner's explicit go, even after Plan 29 ships; none starts automatically.
-  - Plan 31 follows Plan 29.
-  - Green mains is not a project (owner's go). Once Release 10 ships:
-    - the [Release skill](skills/astrid-dev-release/SKILL.md) gains the rule that a publish never turns a passing check red, and each publish PR into a product `main` passes that repo's own checks;
-    - today's red checks on the App, Agent and Runtime mains are fixed in one short batch of fix tasks;
-    - once that batch has made the mains green, Manage drops its "ignore checks that were already failing" rule. Dropping it earlier would block every task merge.
-  - Generation continues on its own track.
+- **2026-11-10:** Strategy is release-led: each release file starts as a living strategy brief, with a highlight, intent, approach and linked plans. The overview here is mainly a summary of those release files.
+- **2026-11-10:** An unpinned draft can change on `main` without publishing; publication requires separate, explicit finalization and owner-approved, validated pins (Plan 31).
+- **2026-11-08:** Installed-release publication remains separately authorized. Plan 31 follows Plan 29; generation work continues on its own track.
 
 ## Keeping this page current
 
-- **Starting a project:** the planner reads this page first, and the plan names its row here.
-- **Finishing a project:** its completion PR updates this page (the row, and focus or sequence if they changed) and its gap's route to closure.
-- **Check-ins:** the advisor flags it when the catalog order and this page disagree.
-- **Size:** keep it to one page. Detail belongs in gap routes and project packs.
+When a draft release is added or changes its headline or included plans, update the matching sequence row in the same PR. When a release is published, keep its final document immutable and retain its summary in release history. CI checks the draft's basic structure and consistency with the overview; the Plan 31 release gate separately protects publication. Keep this page short: deeper reasoning belongs in the release document, gap route or plan.
