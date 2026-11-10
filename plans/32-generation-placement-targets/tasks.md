@@ -42,8 +42,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | R Review rounds (at most 3, owner-agreed) | S | T1–T6b, T5c, T5d, T6d | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md). **Scope freeze (owner, 9 Nov):** a finding is must-fix only if it is (a) a bug or regression, (b) a break of a Completion bullet in plan.md, or (c) in scope and leads to poor structure (a second path or decision site, a leftover legacy route or shim, or a forbidden modality or engine branch). Everything else becomes a follow-up row after T8. findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
 | D7 Final R: carry local Placement.device through the owned managed launch and attempt | X | R on `cc084ebd9` | `astrid/sdk/generation.py`, managed host/custody and their tests | Public facade CPU fake proves request/default precedence, device reaches launch and receipt, and a differently bound server is not silently reused | [ ] |
 | D8 Final R: carry resolved RunPod Placement.policy | X | R on `cc084ebd9`; D7 shared SDK route | `astrid/sdk/generation.py`, RunPod admission/lease and their tests | CPU fake proves request policy overrides defaults through task serialization, offer consent and lease settlement | [ ] |
-| D9 Final R: remove non-allowlisted H3 core comment | N | R on `cc084ebd9` | `astrid/core/generation/entries.py` | prescribed h3 grep returns only plan allowlist | [ ] |
-| D10 CI: restore pinned VibeComfy setup before pytest | X | CI on `cc084ebd9` | CI setup / engine catalog and focused tests | exact CI pin-resolution command succeeds; restore a comparable full-suite CI run | [ ] |
+| D9 Final R: remove non-allowlisted H3 core comment | N | R on `cc084ebd9` | `astrid/core/generation/entries.py` | prescribed h3 grep returns only plan allowlist | [x] `632326bbd` |
+| D10 CI: restore pinned VibeComfy setup before pytest | X | CI on `cc084ebd9` | CI setup / engine catalog and focused tests | exact CI pin-resolution command succeeds; restore a comparable full-suite CI run | [x] `d81b3edf2`; pin test passed |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -546,3 +546,9 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **Independent integrated proof:** exact head `cc084ebd9` passed 29 scoped core checks and 4 serialized owned-pod checks; CI run `42754272616` is still the separate full-suite gate.
 
 - **CI setup failure:** all eight unit shards of run `42754272616` fail before pytest resolving the VibeComfy pin (`UnknownEngine`); fast checks also report lint delta and release-wheel Python 3.12 smoke fails. Scope and causes are being triaged. The baseline lacks `-rA` passed IDs, so `baseline-diff.py` cannot yet classify results; advisor asked how to obtain a valid comparison within the one-dispatch brief.
+
+## Progress 38 (Codex manager, 10 Nov)
+
+- **D9 landed:** `632326bbd` is comment-only; prescribed h3 grep has five lines, all covered by the clarified owner allowlist (HTML tag, hivemind channel, minimax-h3 id and its two vendor endpoints).
+- **D10 landed:** `d81b3edf2` fixes CI pin resolution; existing standalone pin-reader test passed (1). `85a3aaa67` adds `-rA`. Authorized CI rerun `42755164624` is in progress; all unit shards reached pytest. Both installed-wheel smoke lanes are pre-existing, matching main baseline run `42553788480`; Windows 13 failures also match that baseline. Ruff gate fails on the clean baseline as well.
+- **D7/D8:** candidate device/policy work is under independent review; fixes for warm override lifecycle and inherited device identity are being checked through real readiness and CPU supervisor tests. Idle timeout versus disclosed bound remains an advisor question.
