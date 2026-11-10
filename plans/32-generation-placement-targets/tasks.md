@@ -358,3 +358,49 @@ Video-references: resolved on int/32 by `041fb242b` (T6b-3 fix6/fix6b); reviewer
 Shard sessions (for delta re-runs): A `session_011EzfW3CaNuPW9MVcLt8XUr`; B `session_011EzfVze1kQLDP2pHMBQfTa`; C `session_011EzfW3RWkUCtWTbhTqksTB`; D `session_011EzfW3pBGYXbnX2YtXneBT`; E `session_011EzfW2SrM1VTtVCnoePc4j`.
 
 Follow-up (not a T8 gate): unreproduced order-dependent flake, `tests/packs/rendering/test_render_export_task_adapter.py::test_registry_qualifying_discovery_refuses_corpus_change[new_manifest]`. Evidence: fails in shard D's single-process run on e0df2459a (registry_settle completes without noticing a new local pack; no "corpus changed" raised; astrid imports from its own worktree). T6b-3 reproduced the same 290-file order in one process on e0df2459a (20m12s) and it passed; shard D's run was 216 failed / 4913 passed / 78 errors with that file's only failure being `test_render_export_adapter_writes_real_mp4_and_is_callable`. Suspect env state (tar fixture warnings at test_render_export_task_adapter.py:77; leftover state under the worktree env). Owner: T6b-3; shard D single-test run pending.
+
+## Run state: handover progress 16 (manager to manager)
+
+Integration head: `banodoco/astrid-agent` `int/32-one-generation-path` = `364f98e33` (batch T merged). Merged in this run, in order: T6b-3 fix6 `041fb242b`, fix7 `29607985d`, D1 `31487f181`, D5 `6483407b8` and docstring `68e930d60`, D4 `0b070ff06`, batch R `95ae37ac8`, batch T `364f98e33`.
+
+Rule for the next manager: Codex never pushes to int/32. Fetch before every merge; on a rejected push, re-fetch and redo; never force. Never reuse a merged branch; fresh progress branches from `origin/main`.
+
+### Open items (owner session, branch/SHA, state, next step)
+
+- **Codex Terra run: D2, D3, D6, D4b typed filter, isolated i2v journey**: owner Codex Terra manager (it reviews and merges its own branches into int/32 with its own reviewer). State: in progress; not in int/32 yet. Next: Codex merges, reports each merge SHA for the GPU-run gate.
+- **GPU run gate**: D4 is in; D2, D3, D6 and the D4b filter are pending on Codex. The GPU run pushes only `plan34/fix-*`.
+- **Batch T**: merged `364f98e33`. Done. Note for the card: the old skill claim that the facade rejects `execution="openai"` no longer holds; the new text is compatible.
+- **Batch R**: merged `95ae37ac8`. Done. Restore of the action-source refusal kept ahead of any Runtime launch; engine_install tests follow `models_root`; audio RunPod tests save preferences through the real client.
+- **Shard A net-new (fail on head `e0df2459a`, pass on base `65037c218`)**, reported at 00:01 by session `session_011EzfW3CaNuPW9MVcLt8XUr`:
+  - `tests/core/generation/test_engine_execution.py` (7): real regression candidate. `AttributeError: 'LocalLinuxExecutionContext' object has no attribute 'download_model'`; the context class lacks the method the tests expect. Next: a product owner decides fix in the context class or test re-point; not dispatched by this handover.
+  - `tests/core/execution/test_generic_host_claim_loop.py` (9): likely timing under load. Next: re-run in isolation on head before treating as a regression.
+  - `tests/test_installed_generation_journey.py` (3): likely environment (`has_installed_astrid()` False in the head worktree). Next: re-run with the installed lane provisioned.
+- **Shard delta re-runs** (touched files only, on the final head): shards A–E. Not yet run on `364f98e33`. Next: after the merges above land, send each shard its touched files.
+- **Final R** (review, must confirm the dry-run "submitted ⊆ built" check cannot hide dropped nodes): reviewer `session_011EzfW18G7mV91ATcEdxQeq`. State: waiting for D2 and the shard re-runs. Next: request after those.
+- **T8 Completion**: owner new manager. State: waiting on the items above.
+- **Managed_schema pin**: owner not recorded. State: open. Next: confirm owner and status.
+- **Census-lock check**: owner reviewer `session_011EzfW18G7mV91ATcEdxQeq`. State: open. Next: confirm the `approve` output diff is clean on a clean checkout.
+- **Registry leak** (`tests/packs/rendering/test_render_export_task_adapter.py::test_registry_qualifying_discovery_refuses_corpus_change[new_manifest]`): closed as an unreproduced, order- or state-dependent flake. Shard D's test passes alone on `e0df2459a`; T6b-3's 290-file single-process run passed. Not a T8 gate. Evidence on the follow-up list.
+- **Prepared-worker island (RunPod account-ref refusal, `prepared_task.py:608`)**: follow-up, not a must-fix. Owner Plan 14 "prepared-worker island: audit, then delete" row. Evidence: `runpod/generation.py:201-214`, `test_prepared_task.py`, `test_https_transport.py:236`.
+- **Follow-ups (post-T8)**: the stale `target=` test in `test_sdk_entry_contract.py` (`test_launch_rejects_invalid_controls_before_selection[kwargs1]`); the controller-side refusal test for a mismatched `ASTRID_RUNPOD_ACCOUNT_REF`; the D4 review nits (key the candidate filter on a typed error, and rename `test_audio_runpod_uses_h3_engine_and_image_keeps_comfyui`); the card note for the h3 static-vs-built bundle; the registry scope of entry hooks; exact per-artifact sizes for the disk floor; and the upgrade-transition note.
+
+### Known pre-existing failures (fail on base `65037c218` too)
+
+- Shard A: 405 ids across ~25 files (e.g. `scripts/test_pod_jobs` 36, `test_sdk_public_surface` 27, `sdk/test_timeline_editing_acceptance_runtime` 27, `scripts/test_pod_bootstrap` 26, `test_ci_journey` 21). Full lists are in shard A's scratchpad.
+- Shard C: 365 ids fail on both head and base (environmental: `test_installer_busy_fence` 59, `test_engine_custody` 39, `test_pinokio_platform_adapter` 25, `test_failure_receipts` 25, etc.).
+- `test_mcp_generation_parity` and `test_entry_cli_contract`: 6 tests fail on base too (`test_phase_one_tools_list_and_parser_registration`, `test_generate_schema_and_argv_for_all_leaves`, `test_target_launch_cli_and_mcp_envelope`, `test_runpod_generation_follow_and_release_cli_and_mcp_envelopes`, `test_public_sfx_route_receives_declared_inputs`, `test_json_and_convenience_values_use_shared_resolver`). Worker env was head's pins on base source; not verified in a base-pinned env.
+- `test_t4g_local_complete`: `the_real_runner_start_probe_reuses_then_restarts_a_cpu_standin_server` fails on base `7209ffcc7` (the `_Runner` fixture lacks `plan`).
+
+### Live sessions and what they hold
+
+- Reviewer: `session_011EzfW18G7mV91ATcEdxQeq` (census-lock check, final R).
+- Advisor/orchestrator (handed over): `session_011EzfVz8zzHLnUqSqMnGUCT`.
+- T6b-3: `session_011EzfW1TP4SN4pbR3BKtAzQ` (fix6 and fix7 merged; leak closed; stop work).
+- Batch R: `session_011EzfW4GKspyvvH6PvDnGp7` (merged; done).
+- Batch T: `session_011EzfW3eHhFLsHnoM3HKTRa` (merged; done).
+- Shard A: `session_011EzfW3CaNuPW9MVcLt8XUr` (alive; delta re-run pending; holds the net-new list above).
+- Shard B: `session_011EzfVze1kQLDP2pHMBQfTa` (alive; delta re-run pending).
+- Shard C: `session_011EzfW3RWkUCtWTbhTqksTB` (alive; holds the 25-item triage; delta re-run pending on `364f98e33`).
+- Shard D: `session_011EzfW3pBGYXbnX2YtXneBT` (alive; holds the registry-leak evidence; delta re-run pending).
+- Shard E: `session_011EzfW2SrM1VTtVCnoePc4j` (alive; delta re-run pending).
+- Codex D4 and D5 workers and the Codex Terra run: their merged branches are on int/32; their session IDs are not recorded here.
