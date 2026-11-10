@@ -1,6 +1,6 @@
 # Plan 34 handoff — first GPU run, 10 November 2026
 
-> **Superseded in part (10 Nov 2026, Hannah):** the generation work is now in **Release 12**, not a Release 13. Don't wait for Release 12 to publish, and don't treat the runner freeze as a stop: follow [releases/12.md](../../releases/12.md) and your tasks in [Track B](../../releases/12/generation.md)]. Where this file says "after release 12", "release 13" or "freeze", the release plan wins; everything else here stands. **Budget:** the stop is now **$25** for this release (Hannah, 10 Nov), replacing the $20 stop and $24 cap below; same-pod warm reuse is in scope.
+> **START HERE — this file is reference only (10 Nov 2026).** Release 12 now includes this plan's work. Your orders are in [generation.md](../../releases/12/generation.md#start-here--p34-manager), with the overall plan in [releases/12.md](../../releases/12.md). Use this handoff only for SHAs, evidence and history. **Do not follow its gate, next-action, resume, freeze, budget or "release 13" text**: where they differ, the release pages win.
 
 ## Goal and safe stopping point
 

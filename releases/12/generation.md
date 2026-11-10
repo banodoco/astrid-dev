@@ -1,64 +1,101 @@
 # Release 12, Track B — Generation
 
-[Release 12](../12.md) · [Track A: Fixes](fixes.md) · Handoffs: [Plan 32](../../plans/32-generation-placement-targets/handoff.md), [Plan 40](../../plans/40-machine-lifetime-controls/handoff.md), [Plan 20](../../plans/20-zero-to-first-image/handoff.md), [Plan 34](../../plans/34-real-gpu-proof/handoff.md) · [All-plans orchestrator brief](../../docs/handoffs/2026-11-10-orchestrator.md)
+[Release 12](../12.md) · [Track A: Fixes](fixes.md) · Reference only: handoffs for [P32](../../plans/32-generation-placement-targets/handoff.md), [P40](../../plans/40-machine-lifetime-controls/handoff.md), [P20](../../plans/20-zero-to-first-image/handoff.md), [P34](../../plans/34-real-gpu-proof/handoff.md)
 
-**Purpose:** finish the generation work and hand Track A **one** generation candidate that is composed, rehearsal-merged with Track A's candidate, CI-compared, reviewed and GPU-proven. One manager runs each plan, all reporting to the orchestrator. Plan 32's manager composes the candidate. Exact SHAs, evidence and restart points are in each plan's handoff. This is a working brief, frozen when [Release 12](../12.md) becomes Final. State as of 10 Nov 2026.
+This page gives the **P32, P40, P20 and P34 managers** their orders. It is binding, together with [releases/12.md](../12.md). The plan handoffs are reference only, for SHAs, evidence and history. **Don't follow their "next action", "resume", "pick up", gate, freeze or budget text.** In particular, nobody pushes `int/**` or dispatches CI except B8. This is a working brief, frozen when Release 12 becomes Final. State as of 10 Nov 2026.
 
-## What this track delivers
+## Rules for every Track B manager
 
-| Plan | Delivers | State |
-|---|---|---|
-| [32](../../plans/32-generation-placement-targets/plan.md) | One generation path, `astrid generate --placement local\|runpod`, with paid consent, leases and warm reuse | Tasks done; 3 of 3 review rounds used. `plan32/staging-int32` `d28cac190` includes Plan 34's TTS-prompt and warm-receipt fixes. Its last CI and its baseline stopped at three collection errors, so no test-level comparison exists yet. Open: CI comparison, completion (T8, draft [#276](https://github.com/banodoco/astrid-dev/pull/276)) |
-| [40](../../plans/40-machine-lifetime-controls/plan.md) | `astrid machines`: when a machine stops and what it costs; keep, setup, claim, release; `--gpu` and `--datacenter`; waiting for capacity | T1–T8 on `plan40/staging-int40` `b15e286b6`, built on int/32 `99724131d`, not on staging `d28cac190`. 1 of 1 review round used. Open: blockers R1.1–R1.4, then **T9**, which keeps a machine after a failed job |
-| [20](../../plans/20-zero-to-first-image/plan.md) | From the install line to a first image: setup skill, App handoff, default skills | Agent `plan20/staging-agent` `d2a84370f`, on an older int/32 (`26eeaff4`), with Plan 29's donor `bc5aa747` cherry-picked. App `plan20/staging-app` `e61607a1a`. Review rounds used: R1 1/1, R2 1/1, R3 1 of 2 |
-| [34](../../plans/34-real-gpu-proof/plan.md) | Live GPU proof of the in-scope slots through the product | Passed: image t2i and edit on `26eeaff4`, music on `e9cb9e6b9`, capacity wait and claim. These ran **before** T4, T5-R1, R1.x, T9 and the warm-receipt fix, so they need a second pass (G4). TTS fails (`input_rejected`, cause unknown until T9). SFX needs one VibeComfy release SHA. Video is ready on `plan34/candidate-17acda421`. $3.13 of the $25 stop spent (H2); 0 pods |
+- **Never:**
+  - push `int/**` or any `main`;
+  - merge to VibeComfy `main`;
+  - land `plan32/release*-ci-prep`;
+  - rent a pod (only P34 rents);
+  - weaken, skip or delete a test;
+  - call anything done on CPU proof that needs GPU proof;
+  - rerun CI, a review or a GPU cell without the orchestrator's OK.
+- **Push:** only the branches named for you below. Merge commits only; never force.
+- **Messages:** only to the orchestrator, using the labels in [hand-offs](../12.md#hand-offs-all-via-mailboxes).
+- **While waiting:** `RUN-STATUS: WAITING <label> from <sender>`.
+- **Review budgets already used stay used:** P32 3/3, P40 1/1, P20 R1 1/1 and R2 1/1. P20 R3 has 1 round left. New merge changes are covered by the single merge-delta review (B9).
 
-## The hierarchy
+## START HERE — P40 manager
 
-```text
-Plan 32  int/32 (one generation path)          ← the base
-  ├─ Plan 40  int/40 (machine controls, T9)    ← on int/32; must take staging + fix N
-  └─ Plan 20  int/20 (onboarding)              ← on an older int/32; App side too
-        ↓ Plan 32's manager composes ONE generation candidate (Agent)
-        ↓ + one VibeComfy release SHA, reconciled ComfyUI and Runtime pins
-        ↓ rehearsal-merged into Track A's cand/29-r12  → CI comparison + merge-delta review
-Plan 34  GPU proof on that rehearsal head      ← tests, doesn't change the code
-        ↓ checkpoint B → Track A performs the merge
-```
+- **Do now:** B1, P40-R1.1–R1.4, on `plan40/staging-int40` (`b15e286b6`).
+- **Then:** B2, merging `plan32/staging-int32` `d28cac190` and Plan 34 fix N `e0d95d7b8` (branch `plan34/fix-failure-diagnostics`). Then B3, **P40-T9** per its card in Plan 40's `tasks.md`, with its focused review.
+- **Push:** `plan40/staging-int40` only.
+- **Done when:** you have posted `P40-T9 sha=<sha>` (reviewed). Then answer P32's questions during composition.
 
-Product bugs Plan 34 finds go to the plan that owns the code (32, 40 or 20). Plan 34 reproduces them and reports; it doesn't patch other plans' code.
+## START HERE — P20 manager
 
-## Tasks, in order
+- **Do now, in parallel:**
+  1. Merge `plan32/staging-int32` `d28cac190` into `plan20/staging-agent` (`d2a84370f`). Plan 29's donor `bc5aa747` is also in Track A's candidate; when the two copies meet at B5, keep one, and prove it with P20-P3.3b's selection and opt-out tests.
+  2. B6: merge App `cand/29-r12` into `plan20/staging-app` (`e61607a1a`), then re-prove P20-P2.3, P20-P2.4 and the R2 repairs.
+  3. B4a: create VibeComfy `release12/vibecomfy` from VibeComfy `main` (`e65f4941`), merging #165 (`38969618`) and #166 (`af5cb429`) `--no-ff`. Run their focused tests, push once, and post `VIBECOMFY-RELEASE sha=<sha>`. This is the one pin change Plan 20 makes; it overrides your handoff's hard limit for this release only.
+- **The S2 rule** ("P2.3's link not live before S2 is on Agent `main`") is satisfied by shipping P2.3 and S2 in the same Release 12 tuple. Don't strip the link.
+- **Push:** `plan20/staging-agent`, `plan20/staging-app` and VibeComfy `release12/vibecomfy`.
+- **Done when:** all three are posted and B5 has your branch merged cleanly.
 
-| # | Task | Owner | Depends on | Done when |
-|---|---|---|---|---|
-| B1 | Plan 40 R1.1–R1.4, the review's blocking findings | 40 | — | Focused proof per card |
-| B2 | Merge staging `d28cac190` and Plan 34 fix N `e0d95d7b8` (`plan34/fix-failure-diagnostics`) into int/40. Both are prerequisites of T9 | 40 | B1 | Focused proof on the merged head |
-| B3 | Plan 40 **T9**: keep a failed job's machine within consented limits, with a bounded safe failure summary; then its own focused review | 40 | B2 | Reviewed T9 SHA posted |
-| B4 | **Pins:** one VibeComfy release SHA combining [#165](https://github.com/banodoco/VibeComfy/pull/165) (`38969618`) and [#166](https://github.com/banodoco/VibeComfy/pull/166) (`af5cb429`) on a release branch, not merged to VibeComfy `main`; set in the Agent's engine recipe (via Track A's A1b) and the App manifest. Reconcile ComfyUI (`423cbd20` in Plan 32 vs `ee71d5c4` in R12) and the Runtime (`4f5477cb` under the earlier proof vs `42ae24aff` in the candidate). One value each, recorded | 32 + orchestrator | — | Pins agreed; VibeComfy SHA pushed |
-| B5 | **Compose the generation candidate**, all `--no-ff`: int/32 staging, then int/40 (after B3), then Plan 20 Agent staging. Plan 20's manager resolves its old int/32 base and the duplicate Plan 29 donor. Run focused proof of each plan on the composed head | 32 (20 and 40 assist) | B3, B4 | One pushed generation candidate |
-| B6 | Plan 20 App: merge App `cand/29-r12` into `plan20/staging-app`; re-prove P2.3, P2.4 and the R2 repairs. P2.3's generation link must not go live before S2 is on Agent `main` | 20 | — | Merges cleanly with Track A's App candidate |
-| B7 | **Rehearsal merge** of the candidate into Track A's latest `cand/29-r12`; repeat whenever either side moves. Port the `d70bed508` repair explicitly | 32 | B5; Track A's A3 | Clean merge, focused proof |
-| B8 | Fix the three CI collection errors, then run **one** Agent CI comparison on the B7 rehearsal head, with Track A's candidate as the baseline | 32 | B7 | Test-level comparison, no regressions. It stands in for Plans 32 and 40's CI gates |
-| B9 | **Merge-delta release review**, one round, on the B7 head | Review | B7 | No open blocker |
-| B10 | **GPU proof (Plan 34)** on the B7 rehearsal head: the in-scope slots, including same-pod warm reuse (H3), plus G4's second pass. Video can start now on `plan34/candidate-17acda421`, as a first look. SFX runs after B4, verifying the pod's VibeComfy HEAD. TTS runs after B3, so a failure leaves the pod up to diagnose. One waiting product command per cell, with a census around every rental | 34 | B4, B3, B7; $25 stop (H2) | Each in-scope slot passed, receipts in [#260](https://github.com/banodoco/astrid-dev/pull/260); then Plan 34's final review |
-| B11 | Completion records: Plan 32 T8, Plan 40's phase, Plan 20 P1.5 proof on the exact head | Each plan | B8–B10 | Completion PRs ready, linked from the release |
-| **Checkpoint B** | B7 merge clean; B8, B9 and B10 passed | — | — | Hand to Track A; the merge is a repeat of B7 |
+## START HERE — P32 manager
 
-**Parallelism:**
-- B1, B4, B6 and the first-look video run start at once. B2 → B3 is the critical path, because TTS waits for T9.
-- B7 can start on an interim composition, before T9, to surface merge conflicts early. The final B7 → B10 run on the full candidate.
-- Every new candidate SHA is posted to Plan 34, which reruns a passed cell if its code path or pins moved.
+- **Do now:** keep `plan32/staging-int32` current, and B8-prep: find the three collection errors in CI [42799672641](https://github.com/banodoco/astrid-agent/actions/runs/42799672641) (they also appear in baseline 42768047490). Fix the ones caused by generation code on your staging branch; report the rest to the orchestrator.
+- **When `P40-T9` arrives:** B5. Create `release12/gen-candidate` from `plan32/staging-int32`, then merge `--no-ff` `plan40/staging-int40` and then `plan20/staging-agent`. Run each plan's focused proof on the head and post `B-CANDIDATE sha=<sha>`.
+- **When `A-FROZEN` and `B-CANDIDATE` both exist:** B7. Create `release12/gen-rehearsal` from `A-FROZEN`'s Agent SHA, merge `release12/gen-candidate` `--no-ff`, port the `d70bed508` repair explicitly, run focused proof of all four plans, and post `FINAL-B7 sha=<sha>`. **Build it once.** If anything moves after that, ask the orchestrator.
+- **Then, once each, on `FINAL-B7`:**
+  - B8: dispatch Agent CI. Either `POST https://api.github.com/repos/banodoco/astrid-agent/actions/workflows/ci.yml/dispatches` with body `{"ref":"release12/gen-rehearsal"}`, or ask the orchestrator to dispatch it. Compare against `A-FROZEN`'s `ci-run`.
+  - B9: the orchestrator runs the merge-delta review, which covers all of `A-FROZEN..FINAL-B7`.
+- **Push:** `plan32/staging-int32`, `release12/gen-candidate` and `release12/gen-rehearsal`.
+- **Done when:** B8 shows no regressions and B9 has no open blocker. Then refresh the P32-T8 completion draft [#276](https://github.com/banodoco/astrid-dev/pull/276) against `FINAL-B7`.
+- **An early rehearsal on `A-CAND`,** to surface conflicts, is allowed once, on a scratch branch. It never replaces B7.
 
-## Rules for this track
+## START HERE — P34 manager
 
-- **GPU (Hannah's rules):**
-  - one waiting product command per test, with no time window;
+- **You learn SHAs only from your `run/to-codex.md`.** Don't watch `int/32`, which won't move.
+- **Do now:** nothing paid. Prepare the cell inputs from the committed fixtures, and write `RUN-STATUS: WAITING P40-T9 from P40`.
+- **When `P40-T9` arrives:** one **TTS diagnosis** run on a candidate the orchestrator names (the first-look pool). If it fails, the pod stays up, and you inspect it within T9's limits. Report the cause.
+- **When `FINAL-B7` arrives:** install from `release12/candidate-manifest` with `FINAL-B7`'s Agent, verify the pod's VibeComfy HEAD equals `VIBECOMFY-RELEASE`, then run the in-scope cells below, **each once**, one at a time. Post each result.
+- **Rules:**
+  - one waiting product command per cell, with no time window;
   - no geographic filters;
   - the cheapest adequate GPU;
-  - one test at a time unless isolated;
   - a census before and after every rental, and every pod released;
-  - stop at $25 (H2).
-- **Pins:** VibeComfy changes reach users only through the release pin, never as a merge to VibeComfy `main`.
-- **Reviews:** budgets already used stay used. New merge changes get the scoped merge-delta review (B9) and focused independent reviews.
-- **General:** never weaken a check; merge commits only; no force-push; no pushes to product `main`.
+  - **at $25 total, stop, release everything, and report `BLOCKED: budget`.**
+- **A failed final cell:** report it. Rerun it once only after the owning plan's fix lands on a re-frozen `FINAL-B7`, and only with the orchestrator's OK.
+- **Done when:** every in-scope cell has passed on `FINAL-B7`, and the record PR [#260](https://github.com/banodoco/astrid-dev/pull/260) is updated. Then run Plan 34's final review (H3: it runs, but doesn't gate).
+
+## GPU cells
+
+$3.13 is already spent. The caps below are ceilings, not targets.
+
+| Cell | In scope? | Runs on | Max runs | Cap |
+|---|---|---|---|---|
+| TTS diagnosis | in | candidate with T9 | 1 | $3 (first-look pool) |
+| image t2i | in | `FINAL-B7` | 1 | $1 |
+| image edit | in | `FINAL-B7` | 1 | $1 |
+| music | in | `FINAL-B7` | 1 | $1 |
+| TTS | in | `FINAL-B7` | 1 | $3 |
+| SFX | in | `FINAL-B7` | 1 | $3 |
+| video i2v, v2v, edit | in | `FINAL-B7` | 1 each | $2 each ($6) |
+| same-pod warm reuse (second job, same pod) | in (H3) | `FINAL-B7` | 1 | $1 |
+| reruns after a fix | — | re-frozen `FINAL-B7` | orchestrator's OK | from what's left of the $25 |
+| local-managed, attached, h3_av | **out** until Hannah decides (H3) | — | 0 | — |
+
+The planned total is $3.13 + $3 + $16 = $22.13, leaving about $2.87 for reruns.
+
+## Task index (for the orchestrator)
+
+| # | Task | Owner | Depends on |
+|---|---|---|---|
+| B1 | P40-R1.1–R1.4 | P40 | — |
+| B2 | staging + fix N into int/40 | P40 | B1 |
+| B3 | P40-T9 + focused review | P40 | B2 |
+| B4 | Pins: VibeComfy release (P20, B4a); ComfyUI and Runtime per the [pin rule](../12.md#pins-default-rule-b4) | P20 + orchestrator | — |
+| B5 | Compose `release12/gen-candidate` | P32 | B3, P20's merge |
+| B6 | P20 App branch merges App `cand/29-r12` | P20 | — |
+| B7 | `release12/gen-rehearsal` → `FINAL-B7` | P32 | `A-FROZEN`, B5 |
+| B8 | One Agent CI on `FINAL-B7` vs `A-FROZEN` | P32 | B7 |
+| B9 | One merge-delta review | Orchestrator | B7 |
+| B10 | GPU cells | P34 | B7, B4 |
+| B11 | Completion records (P32-T8, P40 phase, P20-P1.5 proof) | Each plan | B8–B10 |
+
+`CHECKPOINT-B` is posted by the orchestrator when B8, B9 and B10 are clean.

@@ -1,6 +1,6 @@
 # Plan 32: machine-independent handoff
 
-> **Superseded in part (10 Nov 2026, Hannah):** the generation work is now in **Release 12**, not a Release 13. Don't wait for Release 12 to publish, and don't treat the runner freeze as a stop: follow [releases/12.md](../../releases/12.md) and your tasks in [Track B](../../releases/12/generation.md)]. Where this file says "after release 12", "release 13" or "freeze", the release plan wins; everything else here stands.
+> **START HERE — this file is reference only (10 Nov 2026).** Release 12 now includes this plan's work. Your orders are in [generation.md](../../releases/12/generation.md#start-here--p32-manager), with the overall plan in [releases/12.md](../../releases/12.md). Use this handoff only for SHAs, evidence and history. **Do not follow its gate, next-action, resume, freeze, budget or "release 13" text**: where they differ, the release pages win.
 
 Snapshot: 10 November 2026, after progress [#329](https://github.com/banodoco/astrid-dev/pull/329). This is a recovery record, not a completion or release approval. Read [the plan](plan.md), [tasks and progress](tasks.md), [inputs](inputs.md), the `astrid-dev-manage` skill and its shared run contract before acting. The objective is one generation path, completed and integrated with its CPU evidence, review, CI comparison and completion PR. Do not restart landed work.
 
