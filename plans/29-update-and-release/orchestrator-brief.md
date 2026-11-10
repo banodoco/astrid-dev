@@ -2,7 +2,9 @@
 
 [Handoff](handoff.md) · [Plan](plan.md) · [Inputs](inputs.md) · [Tasks](tasks.md) · [Machine handoff, all plans](../../docs/handoffs/2026-11-10-orchestrator.md)
 
-**Release 12 now includes the generation work.** The overall plan is [releases/12.md](../../releases/12.md). This brief covers its Track A ([fixes](../../releases/12/fixes.md)); Track A also receives the generation merge and runs the final qualification.
+> **START HERE — this file is reference only (10 Nov 2026).** Release 12 now includes this plan's work. Your orders are in [fixes.md](../../releases/12/fixes.md#start-here--p29-manager), with the overall plan in [releases/12.md](../../releases/12.md). Use this handoff only for SHAs, evidence and history. **Do not follow its gate, next-action, resume, freeze, budget or "release 13" text**: where they differ, the release pages win.
+
+There is **one orchestrator** for all of Release 12, started from the [all-plans brief](../../docs/handoffs/2026-11-10-orchestrator.md). Plan 29 is run by the **P29 manager** under it. Read the "role" and "lanes" sections below as background; [releases/12.md](../../releases/12.md#roles-one-orchestrator-one-manager-per-plan) defines the roles.
 
 **Give this file to the orchestrator that takes over Release 12.** You run the release through managers; you don't write the code yourself. This brief gives you:
 - the role and the operating model;

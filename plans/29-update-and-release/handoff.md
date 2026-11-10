@@ -1,6 +1,6 @@
 # Handoff — Plan 29, Release 12
 
-> **Release 12 now includes the generation work (10 Nov 2026, Hannah).** The overall plan is [releases/12.md](../../releases/12.md); this handoff is [Track A](../../releases/12/fixes.md). Track A also receives the generation merge (Track B) before the final round, so the final round in step 6 below runs on the merged tuple.
+> **START HERE — this file is reference only (10 Nov 2026).** Release 12 now includes this plan's work. Your orders are in [fixes.md](../../releases/12/fixes.md#start-here--p29-manager), with the overall plan in [releases/12.md](../../releases/12.md). Use this handoff only for SHAs, evidence and history. **Do not follow its gate, next-action, resume, freeze, budget or "release 13" text**: where they differ, the release pages win.
 
 [Plan](plan.md) · [Inputs](inputs.md) · [Tasks](tasks.md) · [Release 12 evidence](evidence/r12/)
 

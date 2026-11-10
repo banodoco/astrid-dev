@@ -9,7 +9,7 @@ Read it in this order:
 
 Release 12 (Plan 29) has its own takeover brief, [`plans/29-update-and-release/orchestrator-brief.md`](../../plans/29-update-and-release/orchestrator-brief.md). Read it too if you take over the release.
 
-**Update, 10 Nov evening (Hannah):** the generation work is now in **Release 12**. The plan for the whole release and its two tracks is [releases/12.md](../../releases/12.md). This supersedes, in this brief: the release path in §2; "wait for release 12" in the per-manager list in §4; and the CI runner freeze, which becomes scheduling by the orchestrator. Plans 32, 40, 20 and 34 work now, as [Track B](../../releases/12/generation.md); "release 13" for those plans reads as Release 12 Track B. The GPU stop is now **$25** (§3's $20/$24 are superseded), and Hannah's go for the combined release is given.
+> **Release 12 is the work now (10 Nov 2026, Hannah).** The generation plans are in Release 12. Its plan is binding: [releases/12.md](../../releases/12.md) (roles, hand-off labels, branches, pins, gate, decisions H1–H4), [fixes.md](../../releases/12/fixes.md) and [generation.md](../../releases/12/generation.md), with one START HERE block per manager. Hannah's go for the combined release is given, and the GPU stop is **$25**. Below, the release path (§2), the money line (§3), the manager list (§4), the state table and the CI runner freeze are **superseded** by those pages; everything else (owner rules, machine setup, mailbox, merging, lessons) stands.
 
 The owner is **Hannah**.
 
@@ -26,7 +26,7 @@ How Hannah wants you to work:
 - **"KEEP IT MOVING NO MATTER WHAT, think your way around any obstacles. Accept no excuses."** When something blocks, find the way round it, today.
 - **Farm out.** No Claude Agent-tool sub-agents; every agent runs on Codex (Luna for normal tasks; Terra, Sol or Astra by route). To research something, hand it to the manager that owns the area. If no manager fits, run read-only Codex Luna explorers.
 - **When you're stuck or want a second opinion,** ask Astra: `codex exec -m gpt-6-astra -s read-only --skip-git-repo-check "<question>" </dev/null`. stdin must be `/dev/null`, or it hangs.
-- **Talk plainly and briefly.** Answer what she asked first. Say money as "spent $X of the $20 cap", not as an account balance.
+- **Talk plainly and briefly.** Answer what she asked first. Say money as "spent $X of the $25 cap", not as an account balance.
 - **Never add constraints she didn't ask for.** Today's mistakes, each of which she had to correct:
   - geographic filters;
   - 45–60 minute retry windows;
@@ -66,7 +66,7 @@ Release path:
 - Preferences (GPUs, storage, datacenter, budget) are stored durably, per user, in the Runtime's `generation` settings document. `astrid machines setup` sets them.
 - The RunPod pack has ONE skill covering all machine use: `astrid/packs/runpod/docs/SKILL.md`.
 
-**Money:** the current GPU validation run may spend up to $24 and stops at $20; $3.13 is spent. Take a census before and after every rental, and release every pod.
+**Money:** Release 12's GPU proof stops at **$25** (Hannah, 10 Nov); $3.13 is spent. Per-cell caps are in [generation.md](../../releases/12/generation.md#gpu-cells). Take a census before and after every rental, and release every pod.
 
 **Disk:** clear it aggressively and do it yourself; don't ask managers.
 - Safe: named caches; clean worktrees whose commits are on a remote; `*.env` folders whose worktree is gone.
@@ -108,17 +108,9 @@ Managers run on Luna and choose worker models by route.
 
 **Kickoff for every manager:**
 
-> You are the Codex manager for Plan <NN>. Load /astrid-dev-manage. Resume from `plans/<plan>/handoff.md` and `tasks.md` on astrid-dev `main`; they hold your exact branches, SHAs, task states, decisions and next action. Re-create your worktrees from the pushed branches named there. Hannah's standing rules are in `docs/handoffs/2026-11-10-orchestrator.md`, section 3; follow them. Talk to the orchestrator only through `run/to-orchestrator.md`, and read `run/to-codex.md` for its answers. Ask the orchestrator for any decision the plan doesn't settle, rather than guessing. Record task progress through small tasks-only astrid-dev PRs (the orchestrator merges `inputs.md` PRs). End each turn with `RUN-STATUS: DONE`, `RUN-STATUS: BLOCKED: <reason>` or `RUN-STATUS: WAITING`.
+> You are the Codex manager for Plan <NN> in Release 12. Load /astrid-dev-manage. **Your orders are the START HERE block for P<NN> in `releases/12/fixes.md` (P29) or `releases/12/generation.md` (P32, P40, P20, P34) on astrid-dev `main`, plus `releases/12.md`.** Your plan's `handoff.md` and `tasks.md` are reference for SHAs, evidence and history only; don't follow their next steps, freeze or budget text. Hannah's standing rules are in `docs/handoffs/2026-11-10-orchestrator.md` §3. Talk to the orchestrator only through `run/to-orchestrator.md`, using the hand-off labels in `releases/12.md`, and read `run/to-codex.md` for its answers. Ask the orchestrator for any decision the pages don't settle, rather than guessing. End each turn with `RUN-STATUS: DONE`, `RUN-STATUS: BLOCKED: <reason>` or `RUN-STATUS: WAITING <label> from <sender>`.
 
-**Per manager:**
-- **Plan 40:** do R1.1–R1.4 (the review's blocking findings), then T9 (S, keep the machine after a failed job, with its own focused review). Start from `plan40/staging-int40`. Post each new integration SHA, because Plan 34 tests on it. Push to `int/40-machine-lifetime` only after the freeze lifts, then run the CI comparison.
-- **Plan 34** (GPU; pass `RUNPOD_API_KEY`; spend limit $20 total, $3.13 used):
-  - **Video:** i2v, then v2v, then edit, on candidate `plan34/candidate-17acda421`.
-  - **SFX:** re-run on a candidate where BOTH the install manifest AND the engine recipe pin VibeComfy af5cb429. Verify the pod's VibeComfy SHA before generating.
-  - **TTS:** re-run after Plan 40 T9 lands, so a failure leaves the pod up to diagnose.
-  - **Rules:** run each test as ONE waiting `generate --gpu <type>`; take a census around every rental; keep the record in PR [#260](https://github.com/banodoco/astrid-dev/pull/260).
-- **Plan 32:** wait for release 12, then carry out its handoff's release-13 steps.
-- **Plan 20:** wait for release 12. Then merge App `main` into App int/20, and complete its staged work per its handoff.
+**Per manager:** see each START HERE block in [fixes.md](../../releases/12/fixes.md) and [generation.md](../../releases/12/generation.md). Start five managers: P29, P32, P40, P20, and P34 (the only one given `RUNPOD_API_KEY`).
 
 ### The mailbox and the keep-alive
 
@@ -145,15 +137,7 @@ Managers run on Luna and choose worker models by route.
 
 ## CI runner freeze
 
-The freeze has been on since 11:16 UTC, 10 Nov, for release 12. Until it lifts: no CI dispatches or reruns, and no pushes to `int/**`.
-- **Agent and App:** every push to an `int/**` branch starts full CI, and every App PR starts Tests. Share work on non-int branches, which start no Agent CI.
-- **Runtime and VibeComfy:** CI runs on EVERY push, so don't push to them during the freeze.
-
-**When release 12 publishes:**
-1. Lift the freeze.
-2. Plan 32 does its release-13 steps.
-3. Plan 20 merges App `main` into App int/20.
-4. Plan 40 pushes int/40 and runs its CI comparison.
+**Superseded for Release 12.** The freeze is replaced by the run list in [releases/12.md](../../releases/12.md#ci): only Track A's runs, one Agent CI on `A-FROZEN` and one on `FINAL-B7`. Nobody pushes `int/**`. Runtime and VibeComfy run CI on every push, so push to them only when the release pages say to.
 
 ## What you decide, and what Hannah decides
 
