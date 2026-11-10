@@ -57,6 +57,9 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G9.1 Bootstrap repairs failed lifecycle import | X | G9 independent review on `9c1a03f1` | RunPod pod bootstrap and focused tests | A complete package list plus failed lifecycle import and successful source check enters repair; healthy and failed checks retain AND behavior | [x] `3ab17b6f8` |
 | G10 Local job focused test failures | X | Plan 34 test report on `3ab17b6f8` | `test_t4g_local_complete.py` and relevant fixtures | Restore two Plan 32-added local-job tests using a verified managed installation and an honest owned-action test boundary; preserve product checks and prove both exact nodes | [x] `3201204d9` |
 | G11 Cold pod entry readiness | X | Plan 34 live cell 5 on `3ab17b6f8` | RunPod machine entry guard and tests | Select declared local entry/mode before managed alignment without requiring cold target inventory; refuse invalid or missing entries; independent review and focused CPU proof | [x] `bac49d8ef` |
+| G12 Pod job CLI gateway routing | X | Plan 34 live cell 6 on `3201204d9` | gateway dispatch and CLI tests | Literal `generate <entry> --placement local --job ...` reaches the existing job command; normal listing and validation remain correct; independent review and focused CPU proof | [x] `54940280b` |
+| G13 Audio gateway routing test regression | N | G12 focused wider check | `tests/test_pack_gateway_routes.py` | Restore the audio gateway test against the placement contract without weakening routing assertions; compare main and integrated head | [x] `8fff17211` |
+| G14 Accurate RunPod audio placement help | T | G13; Plan 34 prior art | `astrid/core/generation/cli.py` help and test | Remove the false music/tts-only restriction while keeping placement guidance clear; independent review and exact before/after plus focused proof | [x] `43ba77ccb` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -670,3 +673,24 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **G11 landed:** `bac49d8ef49575d9528be51116287420cd4d7ca2` merges reviewed `b58a6ca7` with identical tree. Eighteen focused CPU guard/listing/command cases passed (`run/entry-proof-b58.log`, exit 0); managed alignment remains responsible for target validation. The cold RunPod startup/entry-selection paths and merge SHA were announced to Plan 34.
 - **G10 landed:** test-only `3201204d9db67245b930fc1681605587a92628d8` merges reviewed `f74cba127`. Both formerly failing Plan 32-added nodes passed with the integration lane enabled, as did two nearby checks; the test uses the verified managed-install fixture and tests public-input validation at the owned-action boundary. Logs: `run/local-job-fix-managed-explicit.log`, `run/local-job-fix-nearby.log`. The GPU run was notified of the test-only merge.
 - **Integrated proof and end gate:** exact `3201204d9db67245b930fc1681605587a92628d8` passed 18 cold entry and both formerly failing local-job cases together under the lock (`run/entry-integrated-320.log`, inner exit 0). Push-triggered CI `42778203770` is pending; earlier runs are shakedowns. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+
+## Progress 59 (Codex manager, 10 Nov)
+
+- **G12:** Plan 34 live cell 6 passed reset and cold entry guard, then exposed gateway routing of `--job` to the listing parser. Advisor supplied `plan34/fix-pod-job-cli` `920fdc6f`, routing the literal job invocation to the existing job command. Independent review and focused CPU proof are in progress. CI on `3201204d9` is a shakedown until G12 lands; completion PR remains draft. No paid resources used by this run.
+
+## Progress 60 (Codex manager, 10 Nov)
+
+- **G12 landed:** `54940280b1827c521c91fe973ea70b1d519db065` merges independently reviewed `920fdc6f` with identical tree. New pod-job CLI tests passed in a wider run with 37 passes and two failures; both failures reproduced on the prior integration head. The affected pod CLI execution route and merge SHA were announced to Plan 34.
+- **G13:** of the wider-run failures, `test_qualified_fake_model_remains_available` also fails on main and is baseline. `test_public_generate_audio_uses_audio_parser_and_admits_runpod_sfx` passes main but fails integration with `KeyError: target`, so it is a Plan 32 regression under repair. Logs: `run/gateway-proof-920.log`, `run/gateway-proof-base.log`, `run/gateway-proof-main.log`.
+- **End gate:** exact integrated `54940280b` passed nine pod-job CLI cases (`run/gateway-integrated-549.log`, inner exit 0). Push-triggered CI `42780591187` is underway; G13 remains open. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+
+## Progress 61 (Codex manager, 10 Nov)
+
+- **G13 landed:** test-only `8fff172117d6c3f9dbe4606a1b9a6690e9185736` merges `d5c0b2dc` with identical tree, correcting the audio gateway assertion from the removed `target` argument to `placement` while retaining mode and RunPod checks. The formerly failing selector plus adjacent audio CLI cases passed seven checks (`run/gateway-test-fix.log`, inner exit 0). Main passed the original test; the prior integration base failed, so this fixes a Plan 32 regression. The test-only merge was announced to Plan 34.
+- **End gate:** push-triggered CI `42780952465` on `8fff17211` is pending; exact-head focused proof is next. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+
+## Progress 62 (Codex manager, 10 Nov)
+
+- **G13 integrated proof:** exact `8fff172117d6c3f9dbe4606a1b9a6690e9185736` passed ten pod-job CLI and audio gateway cases (`run/gateway-final-8fff.log`, inner exit 0).
+- **G14 landed:** `43ba77ccb609e0a6b26ed1e3f36fccda3ec31ff9` merges reviewed `df86033`. Audio placement help changed from `runpod (music/tts only)` to `runpod`, removing a false exclusion of SFX. Independent review found the wording accurate and minimal; two focused help cases passed (`run/audio-help-proof.log`, exit 0). The help/test-only merge was announced to Plan 34.
+- **End gate:** exact integrated `43ba77ccb` passed 12 help, pod-job CLI and audio gateway cases (`run/help-integrated-43.log`, inner exit 0). Push-triggered CI `42781507282` is active. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
