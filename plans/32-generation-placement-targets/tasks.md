@@ -428,3 +428,10 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **D2:** the real child align spy now fires. Exact graph comparison exposed an output-prefix mismatch; the worker is tracing the built graph and shared transform before deciding a fix. D3 is merged into its work branch.
 - **D6:** the failing CPU fake's Foley VAE menu uses the generic `vae` folder rather than custom `hunyuan_foley`, and its uploaded-file menus omit `LoadVideo.file`. Correcting those fake server menus before rerunning the same serialized test; real Comfy's queue validation remains in force.
 - **D4b:** typed missing-input filter and misleading test rename dispatched from `fb62a5058`, disjoint from D2's preparation functions.
+
+## Progress 20 (Codex manager, 10 Nov)
+
+- **D6 landed:** `376d27f08` merges `86778e332`. The serialized local/attached TTS/SFX trust and native custody selection passed 10 tests; native-attempt symlink refusal passed alone. Independent review cleared the original trust overlay and the fixture/cleanup follow-up. Trust remains unverified and the fake queue still validates its menus.
+- **D3 hook boundary:** a D2-focused guard found D3 added core naming of a `build` hook. The reviewer traced an older related inconsistency as well; the existing local-job adapter is moving into VibeComfy, with the structural guard strengthened. Branch `plan32/d3-hook-boundary` `fe066bdc9`: structural, H3 and T4i checks passed (5); serialized seam rerun pending.
+- **D2:** the real child spy works. The registered workflow output-prefix input can overwrite the run-scoped node value during compilation; a focused real-workflow regression passes with the proposed fix. The attached t2i cell passed; managed and remaining matrix cells pending.
+- **D4b:** `plan32/codex-manager-d4b` `78a10e3cf` has typed missing-input filtering and a facade-level rewording proof (4 focused cases passed). An earlier full-file run showed an initial failure before interruption; identifying that node before integration.
