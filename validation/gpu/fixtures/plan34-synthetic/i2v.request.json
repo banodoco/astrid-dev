@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "duration": 5,
+  "prompt": "A small orange subject from <Picture 1> moves calmly through a blue studio.",
+  "media": [
+    {
+      "id": "picture-1",
+      "asset": "synthetic-reference.png",
+      "role": "reference",
+      "modality": "image"
+    }
+  ],
+  "settings": {}
+}
