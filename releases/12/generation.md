@@ -18,6 +18,7 @@ This page gives the **P32, P40, P20 and P34 managers** their orders. It is bindi
 - **Messages:** only to the orchestrator, using the labels in [hand-offs](../12.md#hand-offs-all-via-mailboxes).
 - **While waiting:** `RUN-STATUS: WAITING <label> from <sender>` as the last line of your reply. Re-read `run/to-codex.md` first. If others may still need you, end `WAITING`, never `DONE`.
 - **First action, every manager:** push a test commit to `scratch/<plan>-push-test`, and run `smoke.sh` once. Use the [How-to](../12.md#how-to-tools-every-manager-uses) for tests, dispatch, artifacts (`NEED-ARTIFACTS`) and disk.
+- **Read [the operating principles](../12.md#operating-principles-every-manager-reads-these-first) first.** They explain the rules below and decide cases the rules don't cover.
 - **Precedence:** these pages override your skills' and `manager-brief.md`'s `int/<NN>`, CI and GPU-flow rules.
 - **Review budgets already used stay used:** P32 3/3, P40 1/1, P20 R1 1/1 and R2 1/1. P20 R3 has 1 round left. New merge changes are covered by the single merge-delta review (B9).
 
@@ -56,12 +57,12 @@ This page gives the **P32, P40, P20 and P34 managers** their orders. It is bindi
 - **Do now:** nothing paid. Prepare the cell inputs from the committed fixtures, and get `RUNPOD_API_KEY` from your environment (never print it). End `WAITING P40-T9 from P40`.
 - **Installing a candidate:** follow [astrid-dev-gpu-validate](../../skills/astrid-dev-gpu-validate/SKILL.md) for the install and census mechanics only. The cell table below replaces its flow, its budget and its release-on-failure rule. For the TTS diagnosis, build a manifest override for the named candidate the way the [SFX audit](https://github.com/banodoco/astrid-dev/blob/plan34/gpu-validation-2026-11-10/validation/gpu/2026-11-10-sfx-candidate.md) did, and install with `run-astrid install --manifest <file>`. For the final cells, use `release12/candidate-manifest`, which P29 pushes at Checkpoint A, with the Agent SHA set to `FINAL-B7`.
 - **When `P40-T9` arrives:** one **TTS diagnosis** run on a candidate the orchestrator names (the first-look pool). If it fails, the pod stays up, and you inspect it within T9's limits. Report the cause.
-- **When `FINAL-B7` arrives:** install from `release12/candidate-manifest` with `FINAL-B7`'s Agent, verify the pod's VibeComfy HEAD equals `VIBECOMFY-RELEASE`, then run the in-scope cells below, **each once**. Up to **two at a time**, each in its own isolated install and data root, as Hannah's rules allow. Post each result.
+- **When `FINAL-B7` arrives:** install from `release12/candidate-manifest` with `FINAL-B7`'s Agent, verify the pod's VibeComfy HEAD equals `VIBECOMFY-RELEASE`, then run the in-scope cells below, **each once**, in **warm batches**: group the cells by GPU type, and run each group back to back on one pod ([principle 8](../12.md#operating-principles-every-manager-reads-these-first)). The same-pod warm-reuse cell is the second job of a batch. Up to **two batches at a time**, each in its own isolated install and data root. Post each result.
 - **Rules:**
   - one waiting product command per cell, with no time window;
   - no geographic filters;
   - the cheapest adequate GPU;
-  - a census before and after every rental, and every pod released;
+  - a census before each rental and after each release. Keep the pod idle between cells of the same batch, within its consented idle and spend limits. Release it when the batch ends, at the idle limit, or at once if reuse is unsafe. Never leave a pod up after a batch is done;
   - **at $25 total, stop, release everything, and report `BLOCKED: budget`.**
 - **A failed final cell:** report it. Rerun it once only after the owning plan's fix lands on a re-frozen `FINAL-B7`, and only with the orchestrator's OK.
 - **Push:** the evidence branch `plan34/gpu-validation-2026-11-10` only, which updates record PR [#260](https://github.com/banodoco/astrid-dev/pull/260).

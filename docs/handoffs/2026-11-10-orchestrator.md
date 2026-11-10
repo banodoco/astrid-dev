@@ -66,7 +66,7 @@ Release path:
 - Preferences (GPUs, storage, datacenter, budget) are stored durably, per user, in the Runtime's `generation` settings document. `astrid machines setup` sets them.
 - The RunPod pack has ONE skill covering all machine use: `astrid/packs/runpod/docs/SKILL.md`.
 
-**Money:** Release 12's GPU proof stops at **$25** (Hannah, 10 Nov); $3.13 is spent. Per-cell caps are in [generation.md](../../releases/12/generation.md#gpu-cells). Take a census before and after every rental, and release every pod.
+**Money:** Release 12's GPU proof stops at **$25** (Hannah, 10 Nov); $3.13 is spent. Per-cell caps are in [generation.md](../../releases/12/generation.md#gpu-cells). Take a census before each rental and after each release. Keep a pod warm between closely bundled tasks on the same GPU type, within its consented limits, and release it when the batch ends, at the idle limit, or at once if reuse is unsafe (Hannah, 10 Nov; [releases/12.md](../../releases/12.md#operating-principles-every-manager-reads-these-first) principle 8).
 
 **Disk:** clear it aggressively and do it yourself; don't ask managers.
 - Safe: named caches; clean worktrees whose commits are on a remote; `*.env` folders whose worktree is gone.
