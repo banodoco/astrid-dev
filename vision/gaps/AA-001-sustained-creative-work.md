@@ -1,4 +1,4 @@
-# AA-001 — Artists can't yet sustain ambitious work end to end
+# AA-001 — Astrid hasn't yet proven it can sustain ambitious work end to end
 
 **Applies to:** [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (primary) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open, initial source assessment (2026-11-06); not a live product qualification.
 
@@ -8,7 +8,7 @@ A person can pursue a substantial, distinctive creative vision from early explor
 
 ## Current state
 
-Astrid provides a video editor, generation capabilities, agent-led timeline editing and creative packs. These are substantial foundations, but a coherent, demanding creator-led journey has **not been demonstrated by the evidence reviewed for this vision**.
+Astrid provides a video editor, generation capabilities, agent-led timeline editing and creative packs. These are substantial foundations, but **we haven't yet demonstrated that Astrid can sustain a demanding, creator-led artistic project from exploration through deep revisions to a finished work**. The limits of artistic control, continuity and quality over a long project remain unproven.
 
 ## Gap
 

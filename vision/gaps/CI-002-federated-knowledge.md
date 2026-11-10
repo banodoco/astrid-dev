@@ -1,4 +1,4 @@
-# CI-002 — Independent Hiveminds don't yet work together
+# CI-002 — Hivemind functionality isn't yet refined and interoperable
 
 **Applies to:** [Intelligence That Compounds](../pillars/compounding-intelligence.md) (primary) · [Open by design](../principles/open-by-design.md) (supporting) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open, proposal compared with source (2026-11-06).
 
@@ -12,7 +12,7 @@ Independent personal, team and community knowledge datasets can preserve attribu
 
 ## Gap
 
-Versioned interoperable record/identity/reference and permission semantics, a local/private dataset implementation and one real cross-dataset boundary need a reconciled specification and evidence.
+Hivemind's existing functionality and proposed protocol still need refinement and real proof: stable versioned identities, useful references, access decisions and scoped exchange between independently owned datasets. Public-source ingestion belongs to [CI-003](CI-003-public-source-ingestion.md), rather than being rolled into this gap.
 
 ## Closure evidence
 

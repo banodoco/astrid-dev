@@ -2,7 +2,7 @@
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
-**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (supporting). This plan proves one timeline-specific foundation, not the entire workspace/component contract.
+**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (primary). This plan proves one timeline-specific foundation, not the entire workspace/component contract.
 
 Draft: provide dependable timeline editing primitives as a pack, so people and agents can build their own ways to understand, view, and edit the same creative material. Current status, owner, and estimate live in the [project queue](../../README.md).
 

@@ -1,0 +1,23 @@
+# CA-004 — Creators and agents can't yet find one another's contributions
+
+**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · [Intelligence That Compounds](../pillars/compounding-intelligence.md) (supporting) · **Assessment:** Open; initial assessment (2026-11-10); not implementation proof.
+
+## Desired state
+
+Creators and agents can discover other people's packs, creative components, skills and reusable work in one coherent place, evaluate relevance, provenance, licensing, maintenance and compatibility, and reuse what is appropriate.
+
+## Current state
+
+Astrid has agent pack manifests and an emerging [Hivemind](../../plans/22-hivemind-protocol/plan.md), but there is no proven streamlined discovery experience across contributors. Community search and individual links are not the same as a reliable, task-aware index for both people and agents.
+
+## Gap
+
+No dependable discovery, indexing, provenance and compatibility path for published creative contributions exists yet. This is distinct from [F-004](F-004-pack-lifecycle.md), which concerns installing/updating a known pack, and [CI-003](CI-003-public-source-ingestion.md), which concerns intake of external public knowledge.
+
+## Closure evidence
+
+An independent contributor publishes a versioned contribution; a creator and an agent separately discover it through relevant search, inspect identity, source, compatibility and trust signals, then follow a supported reuse path. Demonstrate stale, removed, incompatible and untrusted results without automatic install or unauthorized sharing.
+
+## Sources and reassessment
+
+[Hivemind protocol](../../plans/22-hivemind-protocol/plan.md) · [Pack lifecycle](../../plans/06-packs/plan.md) · [Plan 40 — contribution discovery](../../plans/40-contribution-discovery/plan.md). Reassess against actual creator/agent work and negative cases.
