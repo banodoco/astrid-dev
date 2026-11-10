@@ -43,15 +43,15 @@ So this plan now also owns the manifest, `align`, per-request model sets, the vo
 
 ## Source identities
 
-Plan 32 consumes [Plan 33](../33-unblock-live-generation/plan.md)'s landed revisions, not the merge-run candidates directly. Record the exact SHAs here at Plan 33's U9, before T1.
+Plan 32 began alongside [Plan 33](../33-unblock-live-generation/plan.md) and incorporated its work by merge. Plan 33's [U9 record](../33-unblock-live-generation/tasks.md#u9-land) identifies the tuple landed on 9 Nov below; its Agent head is an ancestor of the Plan 32 completion candidate. The earlier base row preserves the source on which the original selectors were checked.
 
 | Repository | Ref | SHA | Role |
 |---|---|---|---|
-| astrid-agent | Plan 33's landed head (`main` after its U9) | Pending — recorded at Plan 33 U9. Next: copy it here | base for T1–T6b |
+| astrid-agent | Plan 33's landed head (`main` after its U9) | `a105de3a4852cb61b9647dfe2c920118bd29f272` | consumed Plan 33 landing; ancestor of the completion candidate |
 | astrid-agent, Plan 33's base | `cand/plan06-agent-20261107-33` | `5eac07e3fcadf8a6cca7eb6cf77c0fe234590894` | where the cited lines and selectors were checked (8 Nov) |
-| VibeComfy | the pin in Plan 33's landed Agent | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` unless Plan 33 moved it | base for T4's and T6b's VibeComfy changes |
-| astrid-runtime | `runtime.lock.json` `source_commit` in Plan 33's landed Agent | `b983b0457dffbfd435e74a5c828e129e8ec46ba3` unless moved | fixed |
-| runpod-lifecycle | the pin in Plan 33's landed Agent | `f2948817eeb94af8dee76be21f6d673724f1606e` unless moved | fixed; `ship_and_run` (`src/runpod_lifecycle/runner.py:88`) |
+| VibeComfy | the pin in Plan 33's landed Agent | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` | base for T4's and T6b's VibeComfy changes |
+| astrid-runtime | `runtime.lock.json` `source_commit` in Plan 33's landed Agent | `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f` | landed Runtime dependency; supersedes the planning pin `b983b04` |
+| runpod-lifecycle | the pin in Plan 33's landed Agent | `f2948817eeb94af8dee76be21f6d673724f1606e` | fixed; `ship_and_run` (`src/runpod_lifecycle/runner.py:88`) |
 
 **What it takes from Plan 33:**
 - the CPU pod-path test `tests/integrations/test_runpod_slot_path_cpu.py` (U1), which T1 extends;
@@ -64,7 +64,7 @@ Line numbers in [tasks.md](tasks.md) are at Agent `5eac07e3f` and must be re-che
 
 ### Integrated CPU candidate for completion review
 
-The candidate prepared for T8 on 10 Nov 2026 is Agent [`41da1ff86b428d1a9359044419f840d0b59d1356`](https://github.com/banodoco/astrid-agent/commit/41da1ff86b428d1a9359044419f840d0b59d1356), on `int/32-one-generation-path`. It is an integration-branch candidate, not a published release or a claim that T8 has passed. The table above records the historical planning inputs; the candidate's committed dependency files identify the versions below.
+The preparation snapshot for T8 on 10 Nov 2026 is Agent [`41da1ff86b428d1a9359044419f840d0b59d1356`](https://github.com/banodoco/astrid-agent/commit/41da1ff86b428d1a9359044419f840d0b59d1356), on `int/32-one-generation-path`. A machine-liveness repair and exact i2v CPU journey rerun are in progress and will change the final candidate and CI run. This snapshot is not a published release or a claim that T8 has passed. The table above records the historical planning inputs; the snapshot's committed dependency files identify the versions below.
 
 | Source | Exact revision | Candidate source of identity |
 |---|---|---|
@@ -73,7 +73,7 @@ The candidate prepared for T8 on 10 Nov 2026 is Agent [`41da1ff86b428d1a93590444
 | ComfyUI | `423cbd20511becb1f16122ab518e92e58bfa03d9` | the same pins, `sources.comfyui.revision` |
 | runpod-lifecycle | `f2948817eeb94af8dee76be21f6d673724f1606e` | `astrid/packs/runpod/pins.json` and `pyproject.toml` |
 
-CPU proof and review findings remain in [tasks.md](tasks.md); the completion PR carries the final integrated assessment. The exact-head CI comparison is pending at preparation. Plan 34 owns real inference, real model and node downloads, real RunPod capacity and volume behavior; its live proof is not a T8 prerequisite. Any later product merge requires the completion assessment to name the new candidate and revalidate the evidence affected by that merge.
+CPU proof and review findings remain in [tasks.md](tasks.md); the completion PR carries the final integrated assessment. The liveness repair's independent review/proof, i2v journey result and final exact-head CI comparison are pending at preparation. Plan 34 owns real inference, real model and node downloads, real RunPod capacity and volume behavior; its live proof is not a T8 prerequisite. Any later product merge requires the completion assessment to name the new candidate and revalidate the evidence affected by that merge.
 
 ## Owner decisions
 
