@@ -44,6 +44,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | D8 Final R: carry resolved RunPod Placement.policy | X | R on `cc084ebd9`; D7 shared SDK route | `astrid/sdk/generation.py`, RunPod admission/lease and their tests | CPU fake proves request policy overrides defaults through task serialization, offer consent and lease settlement | [x] `e1d06fa97` |
 | D9 Final R: remove non-allowlisted H3 core comment | N | R on `cc084ebd9` | `astrid/core/generation/entries.py` | prescribed h3 grep returns only plan allowlist | [x] `632326bbd` |
 | D10 CI: restore pinned VibeComfy setup before pytest | X | CI on `cc084ebd9` | CI setup / engine catalog and focused tests | exact CI pin-resolution command succeeds; restore a comparable full-suite CI run | [x] `d81b3edf2`; pin test passed |
+| R2.1 Device override refreshes authoritative launch evidence | X | R2 on `e1d06fa97`; D7 | managed preparation, engine status/readiness and tests | Install under one visibility, generate on another, then real canonical status and readiness identify the new owned launch; preserve receipt custody | [ ] |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -564,3 +565,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **D7/D8 landed:** `e1d06fa97` merges reviewed `34c552241`. Local request/default/ambient device binding reaches owned launch and receipt; differing visibility refuses reuse. RunPod resolved GPU policy reaches quote/claim and lifecycle operations retain the owning provider; effective idle is capped at the disclosed paid bound and reported. CPU focused and full-path cases passed; no real GPU or paid pod proof is claimed. Independent review cleared the final candidate.
 - **GPU overlap:** post-gate merge `e1d06fa97` and its affected managed launch/custody/readiness and RunPod policy paths were announced to the orchestrator.
 - **CI:** authorized rerun `42755164624` is on `85a3aaa67` and predates D7/D8. Advisor asked whether another exact-head CI dispatch is authorized after fixes; baseline comparison continues for the current run. Final review of the fix diff and any GPU findings remains.
+
+## Progress 41 (Codex manager, 10 Nov)
+
+- **R2 on `e1d06fa97`:** one blocker, R2.1: a successful device override starts the new owned server but leaves the installation receipt bound to the previous launch, so subsequent canonical status/readiness refuses it. The worker is reproducing and repairing under install custody. No blocker found in the reviewed RunPod policy, CI or grep fixes. The owner agreed at most three rounds; the next review covers the fix diff.
+- **CI:** rerun `42755164624` remains in progress on `85a3aaa67`; completed unit/Darwin collection errors match main CI and the targeted local base check. Advisor asked whether a final-head CI run is authorized after product fixes.
