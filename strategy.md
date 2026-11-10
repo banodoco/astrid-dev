@@ -9,7 +9,7 @@ This page is the *why* and the sequence. Other facts each live in one place:
 
 When a project finishes, its completion PR updates this page (enforced by `scripts/check_completion.py`).
 
-**Last reviewed:** 2026-11-10, for Plan 32 completion preparation; the owner's priority order is unchanged. Reviewed repairs through cold entry readiness and the formerly failing local-job tests have scoped CPU proof; final-head CI comparison remains pending.
+**Last reviewed:** 2026-11-10, for Plan 32 completion preparation; the owner's priority order is unchanged. Reviewed repairs through the literal pod-job gateway and accurate audio placement help have scoped CPU proof; final-head CI comparison remains pending.
 
 ## Focus now
 
@@ -26,7 +26,7 @@ When a project finishes, its completion PR updates this page (enforced by `scrip
 | 2 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 31](plans/31-releases-from-astrid-dev/plan.md) | Releases are defined, checked and published from astrid-dev, and users see versions such as 0.0.11 | the owner's go; Plan 29; astrid-dev `main` protection |
 | 3 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 39](plans/39-green-mains/plan.md) | Every product `main` passes its own checks and stays green, so a red check means a new regression, and releases need everything green | release 12 published |
 | 4 | Next | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 30](plans/30-update-everywhere/plan.md) | Updating also works on older Linux, and through Pinokio and fully local | the owner's go; Plan 29 |
-| 5 | Now | [F-008](vision/gaps/F-008-portable-generation.md) | [Plan 32](plans/32-generation-placement-targets/plan.md) → [Plan 34](plans/34-real-gpu-proof/plan.md) | One generation path on managed local, attached and RunPod CPU stand-ins, with reviewed lifecycle, execution, bootstrap and cold entry-readiness repairs. See the gap's reassessment for versions and limits | Final-head CI comparison and any further live-run findings; Plan 34 owns hardware proof and the earlier heartbeat failure's unknown cause |
+| 5 | Now | [F-008](vision/gaps/F-008-portable-generation.md) | [Plan 32](plans/32-generation-placement-targets/plan.md) → [Plan 34](plans/34-real-gpu-proof/plan.md) | One generation path on managed local, attached and RunPod CPU stand-ins, with reviewed lifecycle and pod-job routing repairs. See the gap's reassessment for versions and limits | Final-head CI comparison and any further live-run findings; Plan 34 owns hardware proof and the earlier heartbeat failure's unknown cause |
 | 6 | Later | [F-008](vision/gaps/F-008-portable-generation.md) | [Plan 12](plans/12-multiple-inference-routes/plan.md) ∥ [Plan 17](plans/17-vibecomfy-extensibility/plan.md) | A second engine, and packs that extend generation without changing core | Plan 32 |
 | 7 | Later | [F-001](vision/gaps/F-001-platform-reliability.md) | [Plan 10](plans/10-pinokio-qualification/plan.md), [Plan 09](plans/09-install-and-update-confidence/plan.md) | Pinokio qualified natively; rollback, migrating updates and removal qualified | the owner's go; Plan 30 |
 
