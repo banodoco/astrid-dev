@@ -54,6 +54,15 @@ The freeze has been on since 11:16 UTC, 10 Nov, for release 12. It means no disp
 2. Plan 32: merge `main` into int/32, re-prove, then cut `cand/release-13` through the [Release skill](../../skills/astrid-dev-release/SKILL.md). The candidate takes int/32, Plan 20 P1.5, Plan 40, the CI-trigger prep, and VibeComfy #165 and #166 via the pin.
 3. Plan 20: merge App `main` into App int/20.
 
+## Old local branches (archived)
+
+The orchestrator's clones held a few branches from 4–8 November that were never pushed. They're probably superseded. They were pushed unchanged under `archive/2026-11-10/<name>`, which starts no CI:
+- Agent: `claude/worker-permissions`, `help-p02`, `help-pk06`;
+- App: `cont-app`, `help-pk14`;
+- runpod-lifecycle: `help-p2-prepin`.
+
+One branch is NOT pushed: Runtime `cont-runtime`, a single commit "Combine retained stop ownership and pack admission sources". Runtime CI runs on every push, so it was left for after the freeze. Push it then if it's still wanted.
+
 ## Open questions for Hannah
 
 - `generate` writes outputs to `./outputs/<task-id>/` in the current folder, not the project. Recommendation: a small separate follow-up after Plan 40.
