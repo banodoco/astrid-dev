@@ -23,6 +23,31 @@ SETUP=scripts/worker-env/agent-setup.sh; PYT=scripts/worker-env/agent-pytest.sh
 bash "$SETUP" || exit 3
 # Existing test paths only: older commits may not have every selector.
 PATHS=(); for p in "${SEL[@]}" $(ls tests/test_installer_*.py 2>/dev/null); do [ -e "${p%%::*}" ] && PATHS+=("$p"); done
+# D40 and the external-orchestrator custody test load Runtime's producer fixtures
+# from next to runtime_protocol. Install the pinned checkout editably only for
+# selectors that include those fixtures, then prove imports resolve to that pin.
+NEEDS_RUNTIME_FIXTURES=0
+for p in "${PATHS[@]}"; do
+  selected=${p%%::*}
+  for fixture_test in \
+    tests/core/execution/test_runtime_source_custody_d40.py \
+    tests/core/execution/test_runtime_orchestrator_custody_d40.py \
+    tests/stage1/test_zero_shim_execution_pack_deletion.py; do
+    if [ -f "$fixture_test" ] && { [ "$selected" = "$fixture_test" ] || [[ "$fixture_test" == "$selected/"* ]]; }; then
+      NEEDS_RUNTIME_FIXTURES=1
+      break 2
+    fi
+  done
+done
+if [ "$NEEDS_RUNTIME_FIXTURES" -eq 1 ]; then
+  E="$WT.env"
+  PY="$E/venv/bin/python"
+  uv pip install -q --python "$PY" --no-deps -e "$E/runtime" || {
+    echo "ENV: could not install the pinned Runtime checkout editable for fixture tests" >&2
+    exit 3
+  }
+  "$PY" "$HERE/runtime-fixture-preflight.py" "$WT" "$E/runtime" || exit 3
+fi
 TMPDIR="$OUT/tmp-$LABEL" PYTEST_ADDOPTS=-rA bash "$PYT" -q -p no:cacheprovider --basetemp="$OUT/tmp-$LABEL/run" \
   --ignore=tests/core/pack/test_build_hook_contract.py -k 'not browser' "${PATHS[@]}" > "$OUT/$LABEL.log" 2>&1
 rc=$?
