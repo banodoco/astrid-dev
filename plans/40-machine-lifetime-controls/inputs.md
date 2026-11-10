@@ -32,6 +32,7 @@ Rejected: an uncapped keep; a pod-side cap (it would need a credential on the po
 - **D2.** Release needs a running host. `keep` refuses when no host owns the machine, and the CLI says that release happens only while a host is running. (A consequence of D1 and the current design; the provider-side cap is deferred.)
 - **D3.** Ships with release 13, after Plan 32 lands on Agent `main` (Hannah put Plan 32 in release 13, 10 Nov).
 - **D5.** A per-job GPU choice (`--gpu`) was requested by Hannah on 10 Nov ("we should be able to specify the specific GPU that we want"). Research found `astrid generate` never had one; the GPU flag people remember was in the Blender pack's deploy tool, removed with that pack's move out of the repo (5d841e305, 5 Nov), and `runpod.provision`/`runpod.session` still take `--gpu-type`. The SDK's `PlacementPolicy.gpu_types` override (cef4da11e, 1ae020677) exists but the CLI can't reach it. Decision (orchestrator, reversible): `--gpu` REPLACES the saved list for that job, matching the existing policy semantics, rather than narrowing it.
+- **D6.** Hannah, 10 Nov: "we should just keep on retrying until we get the pod". Generation waits for capacity instead of failing on the first out-of-stock quote, within a wait limit, with no pod and no spend while it waits.
 - **D4.** One review round at the end, S route: the plan changes paid consent. No review stop: the plan is under five days and has one load-bearing task (T2), which the final review covers.
 
 ## Deferred
