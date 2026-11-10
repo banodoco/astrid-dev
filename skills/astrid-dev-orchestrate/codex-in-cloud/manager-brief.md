@@ -39,7 +39,7 @@ You run on <model> at <effort> effort. Send X and S work to sub-agents, and run 
 - **Tests:**
   - A worker runs only its task's focused proof.
   - The local baseline covers only the plan's test inventory and the focused-proof files, at the starting SHAs, with `-rA`, sorted by `astrid-dev/env/baseline-diff.py`.
-  - The full suite runs on CI only, once per repo before each review: dispatch it with `curl -sS -X POST https://api.github.com/repos/banodoco/<repo>/actions/workflows/ci.yml/dispatches -d '{"ref":"int/<NN>"}'`.
+  - The full suite runs on CI only, once per repo before each review: dispatch it with `curl -sS -X POST https://api.github.com/repos/banodoco/<repo>/actions/workflows/ci.yml/dispatches -d '{"ref":"int/<NN>"}'`. Pushes to `int/**` also start full CI in Agent and App, so batch task merges (several per push) and cancel your own superseded `int/<NN>` runs; during a release gate, push only when the orchestrator says runners are free.
   - A regression is a test that ran and passed on a baseline and fails at head. Known pre-existing failures are in `astrid-dev/plans/39-green-mains/evidence/`.
 - **Spending:** <CPU only / budget>. <No RunPod, no GPU, no paid APIs — or the allowed spend.>
 - **Questions:** never ask the owner directly. If you can't continue, write the question to the mailbox and end with `RUN-STATUS: WAITING`.
