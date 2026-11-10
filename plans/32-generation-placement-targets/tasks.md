@@ -63,6 +63,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G15 Pod canonical action context | X | Plan 34 live cell 7 on `43ba77ccb` | VibeComfy local job and tests | Guarded import, preparation and invocation run within the existing exact-capability context; direct/wrong capability still refused; context restored on all outcomes | [x] `21ab69ace` |
 | G16 Managed alignment failure diagnostics | X | Plan 34 live cell 8 on `21ab69ace` | managed preparation and tests | Report fixed failure reason and safe allowlisted doctor headings without leaking arbitrary output; preserve cleanup and record stream hashes | [x] `377c0431e` |
 | G17 Safe offer observation diagnostics | X | Plan 34 live cells 7–9 on `377c0431e` | RunPod offer adapter, target selection and tests | Distinguish no-stock and fixed safe transport/response/auth/rate-limit categories at catalogue and pricing stages without provider text; preserve consent and fallback | [x] `181537f04` |
+| G18 Owned-engine doctor schema | S | Plan 34 live cell 9 on `181537f04` | managed preparation, native preparation and tests | Doctor uses fresh bounded owned-engine loopback schema with custody rechecks and fail-closed exact cleanup; missing models still refuse | [ ] candidate `78fc292b` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -724,3 +725,7 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **G17 landed:** `181537f0436057db10cbcb9c83e6c0f8a6737783` merges `ffcdc15d` with identical tree. Independent security review cleared the pricing-stage repair, safe category precedence, mixed-offer fallback and consent behavior. The combined candidate passed 100 focused CPU HTTP-boundary, selection and provider-gate cases (`run/offer-combined-proof-ffc.log`, inner exit 0). Offer-observation diagnostics and merge SHA were announced to Plan 34.
 - **Integrated proof and end gate:** exact `181537f0436057db10cbcb9c83e6c0f8a6737783` passed 14 focused offer category, pricing, fallback, redaction and consent cases (`run/offer-integrated-181.log`, inner exit 0). Push-triggered CI `42791670766` is pending; the prior `377c0431e` CI was cancelled as superseded. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+
+## Progress 69 (Codex manager, 10 Nov)
+
+- **G18:** Plan 34 cell 9 exposed the native doctor reconciling against a stale local node index before the owned engine starts. Advisor supplied `plan34/fix-owned-doctor-schema` `78fc292b`, which starts and attests the owned engine before supplying its bounded schema to the original doctor. Independent security review and focused CPU proof are in progress; exact ownership, failure drainage and missing-model refusal are gates. CI on `181537f04` is a shakedown until this lands. No paid resources used by this run.
