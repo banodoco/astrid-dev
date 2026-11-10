@@ -309,3 +309,49 @@ Rows below are recorded as reported at 11:42Z. A row marked `[ ]` is not yet pro
 | Default-skills check | — | — | — | — | [ ] pending |
 | **Process** | | | | | |
 | The Windows-git proof missed `tests/test_installer_bootstrap_imports.py`. Installer proofs now run every `tests/test_installer_*.py` | — | — | Installer proof procedure | — | [x] process changed |
+
+## Release 12 round 4 (state at 13:45Z, 2026-11-10)
+
+Rows below are recorded as reported at 13:45Z. A row marked `[ ]` is not yet proven. Candidate SHAs are the `cand/29-r12` heads named in each row.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| **Agent merges since `6e2e26d53` (all `--no-ff` into `cand/29-r12`; candidate `35c170e39`)** | | | | | |
+| Installer bootstrap imports (`946b92d33`): the git lookup helpers move to a dependency-free module | — | Windows installed git (landed) | Agent `astrid/installer/tools.py`, `astrid/core/pack/install` | — | [x] merged. [ ] install proof pending the next matrix run |
+| r12/r10-regressions (`comfy_wrap` GPU mapping, 15 hidden local effects, VibeComfy binding) | — | — | Agent; branch `r12/r10-regressions` | — | [x] merged. [ ] proof pending the next Agent CI run |
+| r12/lanes-collection: stale `FOLEY_REFUSAL_CODE` import removed; `lanes.yml` fetches pinned Runtime commits | — | — | Agent `lanes.yml` | — | [x] merged. [ ] proof pending |
+| r12/r10-schema-fail-closed: moved motion elements fail closed with a named dependency | — | — | Agent element schema | 377 previously failing tests now pass, none new | [x] merged. [x] measured: 377 fixed, 0 new failures |
+| r12/git-lookup-hardening (review blockers 2 and 3) | — | Review round 1 | Agent git lookup | — | [x] merged. [ ] proof pending the review round 2 run |
+| r12/portable-pack-capture: selected packs run from a verified, owner-only private snapshot off Linux; Linux lease path unchanged | — | — | Agent `generic_host.py` | — | [x] merged. [ ] proof pending (off-Linux pack capture not yet run in a keep-going job) |
+| r12/linux-service-home | — | — | Agent Linux service | — | [x] merged. [ ] proof pending |
+| r12/host-registration-marker: ready marker republished after every re-registration; SDK attach uses validated owner credential | — | — | Agent host registration; SDK attach | — | [x] merged. [ ] proof pending |
+| r12/windows-pack-publish: journaled Windows collection exchange; POSIX unchanged | — | — | Agent Windows pack publish | — | [x] merged. [ ] Windows pack add not yet proven in a keep-going run (keep-going #3 failed Windows at pack add, before this sha) |
+| **Harness** | | | | | |
+| Harness `harness/29-r12` at `0e3c456ee`: R11 ready-wait (`eaafa56cd`); probe owner fix; probe scopes fix (`1a1892245`); keep-going sub-step reporting (`0e3c456ee`) | — | — | Harness | — | [x] recorded at `0e3c456ee`. [ ] probe fixes proof pending the next keep-going run |
+| **App** | | | | | |
+| Direct Journey `:426` keep-draft (cand `e3951859b`) | — | — | App Direct Journey | — | [x] in cand `e3951859b`. [ ] proof pending the App lanes |
+| `:444` test removed (`01b6b43c2`) | — | — | App three-products | — | [x] removed. No pinned Agent ships the capability |
+| `:2970` / `:2886` recover-retry (`4e94b5a93`) | — | — | App three-products | — | [x] committed at `4e94b5a93`. [ ] proof pending |
+| r12/app-conflict-tests, including the `:449` product fix (cand `31e40152b`) | — | — | App conflict tests | — | [x] in cand `31e40152b`. [ ] proof pending |
+| App re-pins through the then-current Agent sha | — | Agent `35c170e39` | App pins | — | [ ] currently pinned to `35c170e39`. Pending the next re-pin |
+| **Owner decisions (Hannah)** | | | | | |
+| `:426` keeps the user's draft visible | — | — | App Direct Journey | — | [x] decided |
+| `:444` test removed (no pinned Agent ships the capability) | — | — | App three-products | — | [x] decided |
+| D8: stale tests stay on Plan 39 | — | Plan 39 D8 | Agent CI | — | [x] decided |
+| `:708` keeps the product's auto-reload after a restart; the test is changed to prove it | — | — | App | — | [x] decided. [ ] test change pending (`r12/app-dj-round2`) |
+| **Review rounds** | | | | | |
+| Review round 1: 3 blockers. Blockers 2 and 3 fixed in `r12/git-lookup-hardening`; the refresh binding is in flight | — | — | Agent; App | — | [ ] open. Blocker fix for the refresh binding in flight |
+| Review round 2: 1 blocker, the bundled/personal snapshot collision | — | Review round 1 | Agent snapshot | — | [ ] in flight (`r12/snapshot-bundled-packs`) |
+| **Keep-going results** | | | | | |
+| Keep-going #2 (run `42824167156`), fresh install: direct-linux passed end to end, the first green journey row of R12 | — | — | Keep-going journey | — | [x] direct-linux green. [ ] macOS failed on the chiptune snapshot collision (open). [ ] Windows packs add fixed in `35c170e39`, not yet re-run |
+| Keep-going #3 (run `42825563080`, Agent `306c7b065`): Linux, every sub-step | — | — | Keep-going journey | — | [x] every Linux sub-step passes |
+| Keep-going #3, macOS: pack add, readiness, submit and hot refresh | — | — | Keep-going journey | — | [x] pass |
+| Keep-going #3, macOS: follow and settled outputs | — | Snapshot collision | Keep-going journey | — | [ ] fail on the snapshot collision (open) |
+| Keep-going #3, Windows: pack add | — | — | Keep-going journey | — | [ ] fail at pack add. Fixed in `35c170e39`, after this pin; not yet re-run |
+| **Open items** | | | | | |
+| `r12/snapshot-bundled-packs` (snapshot collision) | — | — | Agent | — | [ ] open. Blocks macOS follow and settled, and review round 2 |
+| `p1-refresh-binding` | — | Review round 1 | Agent; App | — | [ ] in flight |
+| Schema cache (Luna) | — | — | — | — | [ ] open. Non-blocking |
+| `r12/app-dj-round2`: `:708` test change; `:449` B's normalized transition; `:2893` non-visual preview-revision attributes | — | — | App | — | [ ] pending |
+| Full 11-row matrix on the final tuple | — | Final Agent sha, App re-pin | Matrix | — | [ ] pending |
+| Final round | — | Full 11-row matrix | — | — | [ ] pending |
