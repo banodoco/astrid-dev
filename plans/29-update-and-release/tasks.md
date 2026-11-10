@@ -218,6 +218,8 @@ Reviewed on Runtime `3d19ba9a`, Agent `41170fdb`, App `73a8500d` (superseded; se
 
 ## Resume note (manager state, for compaction)
 
+- **Start here on a new machine:** [handoff.md](handoff.md) holds the goal, the gate, the current tuple, the next steps, who's who and the evidence index (2026-11-10).
+
 - **Reopened 2026-11-08 after a field failure on Hannah's Mac.** Release 10 is live, but `curl -fsSL https://astrid.haus/install | sh -s -- --update` exits 0 and installs nothing on a machine that completed the Release 1 storage handoff. The Completion assessment in astrid-dev #137 is withdrawn. Canary receipt for the publish: run `42527536657` (success). Review: `plans/29-update-and-release/reviews/field-failure-2026-11-08.md` on branch `advisor/plan29-field-failure-review`.
 - **Plan 29 is active again.** UR-15 to UR-15d are open. The next release is Release 11 (0.0.11, patch), and it publishes only after a field receipt from Hannah on her Mac.
 
@@ -356,3 +358,27 @@ Rows below are recorded as reported at 13:45Z. A row marked `[ ]` is not yet pro
 | Full 11-row matrix on the final tuple | — | Final Agent sha, App re-pin | Matrix | — | [ ] pending |
 | Final round | — | Full 11-row matrix | — | — | [ ] pending |
 | Lanes: no install/update breakers (R11 parity); recorded on Plan 39 | — | — | Lanes | — | [x] recorded on Plan 39 |
+
+## Release 12 round 5 (state at 17:00Z, 2026-11-10)
+
+Rows below are recorded as reported at 17:00Z. A row marked `[ ]` is not yet proven. The full picture and the next steps are in [handoff.md](handoff.md).
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| **Agent (all `--no-ff`)** | | | | | |
+| `r12/snapshot-bundled-packs` (review round 2 blocker) | — | — | Agent snapshots | Pack and provenance tests: same 17 local failures as `29fbd08c0`, 16 more passing | [x] on `cand/29-r12` at `313bbd46f` |
+| Review round 3 on `87d1fbbc4..313bbd46f` | — | — | Agent | [review-round3.md](evidence/r12/review-round3.md) | [x] done: 3 blockers (2×P1 personal snapshots, P2 stale marker) |
+| `r12/personal-pack-snapshots` `cbf7b4240`, `r12/marker-fence` `bcb5ac48f`, `r12/schema-cache-invalidation` `7d637370a`, `r12/windows-readonly-cleanup` `989cd0f6c`, `r12/pack-home-update-handoff` `b2dc24ddb` | — | Review round 3; matrix `42835188782` | Agent | Each has regression tests that fail before and pass after | [x] merged on `r12/cand-next` `733ac5a43`. [ ] before/after comparison ([method](evidence/r12/agent-comparison.md)); [ ] push to `cand/29-r12`; [ ] review round 4 |
+| **Harness** | | | | | |
+| `harness/29-r12` `b550ecadf`: autostart-off reads the Runtime's `details.reason`; HOME bound and recorded for the R11 baseline | — | Matrix `42835188782` | Harness | Harness tests: the 2 remaining failures also fail at `0e3c456ee` | [x] pushed. [ ] proof in the final matrix |
+| **Matrix** | | | | | |
+| Full matrix `42835188782` (Agent `313bbd46f`, App `ecd0b0cf1`) | — | — | Matrix | [verdicts](evidence/r12/matrix-42835188782.md) | [x] 4 of 11 green; every failing row has a root cause and a fix or rerun. Not a final-tuple proof |
+| **App** | | | | | |
+| Direct Journey rounds 3–5 (`723025f60`, `26819d552`, `212cf22c9`), merged up to App `e1d42be39` | — | — | App | [dj-round4.md](evidence/r12/dj-round4.md), [dj-round5.md](evidence/r12/dj-round5.md) | [x] merged; tsc clean, touched vitest 117/117. Two product bugs fixed: Keep my changes overwrote the durable draft; Save them did not reopen the retained conflict |
+| Early Direct Journey `42849600626` on `e1d42be39` | — | Rounds 3–5 | App | direct-journey 40 pass / 1 fail; three-products 1 pass / 2 fail / 11 skipped | [ ] round 6 in progress: `:1189` workflow sets `ASTRID_PACKS_AGENT`; `:449` `show.head_revision_id`; `:2995` removed retry button |
+| App Tests `42836156052` | — | — | App | vendor-lock check: lock pinned `aa5bc442f` | [x] root cause found: the vendor lock is not re-synced on re-pins; CLI surface byte-identical (dry run `c6454fcdc`, held). [ ] the final re-pin commit regenerates it |
+| **Lanes and Plan 39** | | | | | |
+| Lanes integration, 659 failures | — | — | Agent lanes | [Plan 39 record](../39-green-mains/evidence/lanes-integration-triage.md) | [x] no install/update breakers at R11 parity; recorded on Plan 39 ([PR #336](https://github.com/banodoco/astrid-dev/pull/336)) |
+| **Final round** | | | | | |
+| One re-pin commit (pin, vendor lock, checks), then App Tests, Direct Journey, App lanes, full matrix on `b550ecadf`, Agent `ci.yml`/`lanes.yml` vs R10 | — | Final Agent sha; Direct Journey 0 failures | All | — | [ ] pending |
+
