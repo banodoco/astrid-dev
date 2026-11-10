@@ -49,6 +49,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G2 Check idle policy test regression | N | D8, G1 | RunPod pack-actions test | Compare exact reported test on main and current head; repair a stale expectation if it is a regression | [x] `db8356adb` |
 | G3 Earlier i2v heartbeat timeout | N | `41da1ff86` | existing CPU RunPod journey | Rerun exact earlier journey once under journey lock; if green record earlier timeout as Plan 34 follow-up, otherwise diagnose/fix Plan 32 bootstrap | [x] `41da1ff86` |
 | G4 Canonical GPU catalog ID at acquisition | X | Plan 34 live finding on `666886fa0` | RunPod worker preparation, target selection and tests | Fresh acquisition and reconciliation use the accepted canonical catalog ID; expose only allowlisted failure gates. Independent review and focused CPU proof | [x] `dc307e1ec` |
+| G5 Pod reset diagnostics and exact historical release | X | Plan 34 live finding on `dc307e1ec` | RunPod reset, controller and machine CLI plus tests | Fixed allowlisted reset stage on both controller paths; no raw exception leakage; historical release cannot target replacement; independent review and focused CPU proof | [ ] candidate `9ff8eb902` |
+| G6 Pod reset Runtime credential | X | Plan 34 live finding, G5 | RunPod pod reset and tests | Parse Runtime credential envelope and supply required administrative scope; test actual envelope shape and backup/restore behavior | [ ] branch pending |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -607,3 +609,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 ## Progress 47 (Codex manager, 10 Nov)
 
 - **Task table reconciled:** the original task rows now cite landed implementation commits already contained in `dc307e1ec`; later progress entries record the integrated proof and review. In particular, T6b-5's earlier h3 deferral is superseded by the exact `6f63b4563` managed and attached six-cell CPU stand-in matrices, including h3, recorded in progress 35–36; real GPU inference and dependencies remain Plan 34. F1–F4 remain follow-ups and T8 remains open.
+
+## Progress 48 (Codex manager, 10 Nov)
+
+- **Plan 34 reset findings:** a real pod reset failed but its stdout reason was lost on the controller's nonzero-exit path. G5 `plan34/fix-reset-diagnostics` `9ff8eb902` is under independent review and focused CPU proof. G6, a separate likely credential-envelope/admin-scope root-cause repair, is being prepared by Plan 34 and must land before T8.
+- **CI setup:** same-time main run `42768047490` reproduced multi-minute delays in the unchanged apt setup; advisor classified these as intermittent infrastructure and directed waiting up to 45 minutes per setup step on final-head CI. Main's Windows 13 failures and wheel smoke failures match the candidate. `42766142718` on `dc307e1ec` is a shakedown because G5/G6 will move the integrated head. No paid resources used by this run.
