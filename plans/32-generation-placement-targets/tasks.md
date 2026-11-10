@@ -693,4 +693,4 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **G13 integrated proof:** exact `8fff172117d6c3f9dbe4606a1b9a6690e9185736` passed ten pod-job CLI and audio gateway cases (`run/gateway-final-8fff.log`, inner exit 0).
 - **G14 landed:** `43ba77ccb609e0a6b26ed1e3f36fccda3ec31ff9` merges reviewed `df86033`. Audio placement help changed from `runpod (music/tts only)` to `runpod`, removing a false exclusion of SFX. Independent review found the wording accurate and minimal; two focused help cases passed (`run/audio-help-proof.log`, exit 0). The help/test-only merge was announced to Plan 34.
-- **End gate:** push-triggered CI `42781507282` on `43ba77ccb` is queued; exact integrated proof is underway. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
+- **End gate:** exact integrated `43ba77ccb` passed 12 help, pod-job CLI and audio gateway cases (`run/help-integrated-43.log`, inner exit 0). Push-triggered CI `42781507282` is active. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
