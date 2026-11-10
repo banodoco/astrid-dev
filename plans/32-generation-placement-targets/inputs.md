@@ -79,13 +79,13 @@ CPU proof and review findings remain in [tasks.md](tasks.md); existing draft com
 
 [Plan 34's changed evidence record in PR #260](https://github.com/banodoco/astrid-dev/pull/260/files) records Qwen image 2.1 on RTX 6000 Ada at exact `26eeaff4f90fc5b91e25e0769477a9081deee5d3`: task `5d8bfbb2260e4b9490e29f19cc76d48e`, exit 0, 512×512 PNG SHA-256 `f9e2cca64472518c0153040d90ac3f1c8afc988971a42e78b7a0182fcbcf4c89`, exact pod release and empty census. That single image result carries to `99724131d` for unchanged runtime paths because its sole diff is the test file named above. This is separate Plan 34 paid-work evidence; this Plan 32 run used no paid resources. It does not qualify every slot, placement, model download or warm/cache path.
 
-### Local TTS merge pending push
+### Local TTS and warm receipt merges pending integration push
 
-The remote candidate above remains `99724131d`; a reviewed TTS prompt fix has since been merged locally at `37fb20008d49bb3402f82f02f727e03f60dc5101`, with 11 exact-head focused tests passing. It is not pushed while the Release 12 runner freeze is active. The earlier image and CI evidence remains identified by its original source head, and must not be treated as final-head CI.
+The remote candidate above remains `99724131d`; a reviewed TTS prompt fix has since been merged locally at `37fb20008d49bb3402f82f02f727e03f60dc5101`, with 11 exact-head focused tests passing. A reviewed warm receipt fix was subsequently merged locally at `d28cac1902328836acce35230517a19c137ecd55`, with 116 exact-head machine and warm-session tests passing. That head is available on `plan32/staging-int32` but has not been pushed to `int/32` while the Release 12 runner freeze is active. The earlier image and CI evidence remains identified by its original source head, and must not be treated as final-head CI.
 
 ### Release 12 hold and separate rehearsal
 
-Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `6b1f353d49e022542465bd54bc4fbad9f3f0e5ec`, including the reviewed H3 import repair, Release 12 regression and installed-test reconciliation and locally integrated TTS fix, is separate from `int/32` and is not this candidate. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, explicitly port rehearsal repair `d70bed508` (the rehearsal merge was conflict-free), then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
+Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `81e97713b6367dc4f1500c0370ea8c059a88f118`, including the reviewed H3 import repair, Release 12 regression and installed-test reconciliation and locally integrated TTS fix, is separate from `int/32` and is not this candidate. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, explicitly port rehearsal repair `d70bed508` (the rehearsal merge was conflict-free), then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
 
 ## Owner decisions
 
