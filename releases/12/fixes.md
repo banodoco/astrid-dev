@@ -9,8 +9,8 @@ Active P29 brief as of 10 Nov 2026. Follow the shared [operating principles](../
 - **First:** push `scratch/p29-push-test` and run `smoke.sh agent` once, per How-to. Then start **A0, A1 and A4 in parallel**, and follow A2–A7 in dependency order.
 - **Push:** Agent `r12/cand-next`, `cand/29-r12`, `harness/29-r12`; App `cand/29-r12`, `release12/candidate-manifest`. Add commits; use full GitHub URLs.
 - **Dispatch:** early Direct Journey, Checkpoint A and final-round runs only. Commands are below.
-- **Escalation:** use Astra for tricky or nefarious bugs, or when a previous agent struggled. Review round 4 uses an independent Astra worker.
-- **Handoff:** post `GATE-GREEN` with the full tuple, then end `RUN-STATUS: WAITING PUBLISHED from orchestrator` and fix any publication findings. The orchestrator publishes.
+- **Escalation:** consult Astra for high-stakes major decisions and whenever blocked, as required by the shared [role and authority rules](../12.md#roles-one-orchestrator-two-track-managers). Use Astra for tricky or nefarious bugs, or when a previous agent struggled. Post the blocker and recommendation to the orchestrator; Hannah retains her decisions. Review round 4 uses an independent Astra worker. Normal task routes remain Luna / Terra / Sol by difficulty.
+- **Handoff:** post `GATE-GREEN` with the full tuple, then end `RUN-STATUS: WAITING PUBLISHED from orchestrator` and fix any publication findings. The orchestrator publishes. After `PUBLISHED`, complete the [P29 post-publish work](../12.md#after-publish), record Hannah's successful Mac update check, post `COMPLETION-READY plan=29`, and wait for `MANAGER-CLOSED` before ending `DONE`.
 
 ## Where it stands
 
