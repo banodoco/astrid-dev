@@ -2,6 +2,8 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+**Release 12 B5 in progress:** The composed Agent work is preserved on [`release12/gen-candidate`](https://github.com/banodoco/astrid-agent/tree/release12/gen-candidate) at `e857a106986e337491165305e103b78a304f8919`; it is not an accepted `B-CANDIDATE`. It merges P40-T9 `d8931c281cf705273c3c7c01346b6f2722733cca` first and P20-AGENT `e28a509b6bd8c352514d4b4cc14c95628a8302e7` second, applies the B4 pins and repairs the setup-guide merge. On the earlier `d0e4443077f264ded436a144c54b630471d94700`, P20 focused proof passed 52 tests and P40 plus diagnostics passed 328; on `79036b5a267dca28c295a5b44fc8eb6865114294`, pin-focused proof passed 72 and selection/SDK proof passed 161. These results are not exact-head final proof. B4's ComfyUI pin exposed an enforced H3 declaration/version mismatch; alignment and current-tuple CPU compatibility checks remain in progress. H3 live acceptance remains pending and its Release 12 GPU cell is excluded. Three other expanded-suite failures reproduce on the P40 base; eight wheel cases had setup errors. Record their causes separately; do not call this candidate green until the regression and focused proof are resolved.
+
 Routes: `N` is the default, `X` very hard, `S` super hard ([run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings)). An `X` or `S` lead delegates reading, mechanical edits and running checks to `N` helpers and keeps the judgment and the final change.
 
 **Rules for every task:**
