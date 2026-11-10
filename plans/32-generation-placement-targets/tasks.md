@@ -48,6 +48,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G1 Machine liveness and exact owner release | X | Plan 34 finding on `41da1ff86` | machine CLI, RunPod owner and tests | Preserve live unfinished custody, restrict reuse to eligible leases, bind exact release through retained and cold owner; independent review and focused CPU proof | [x] `666886fa0` |
 | G2 Check idle policy test regression | N | D8, G1 | RunPod pack-actions test | Compare exact reported test on main and current head; repair a stale expectation if it is a regression | [x] `db8356adb` |
 | G3 Earlier i2v heartbeat timeout | N | `41da1ff86` | existing CPU RunPod journey | Rerun exact earlier journey once under journey lock; if green record earlier timeout as Plan 34 follow-up, otherwise diagnose/fix Plan 32 bootstrap | [x] `41da1ff86` |
+| G4 Canonical GPU catalog ID at acquisition | X | Plan 34 live finding on `666886fa0` | RunPod worker preparation, target selection and tests | Fresh acquisition and reconciliation use the accepted canonical catalog ID; expose only allowlisted failure gates. Independent review and focused CPU proof | [ ] candidate `080b797b4` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -592,3 +593,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **G2 landed:** `db8356adb` merges test-only `06b8aaabc`; the lease-listing test passed on main and failed on `41da1ff86` after D8, then passed with the fixture and effective-timeout expectation corrected. GPU run notified that this merge changes only a test.
 - **G3 passed:** the exact earlier `video/i2v-runpod` CPU journey passed once on `41da1ff86` under the lock (1 passed, 175.58s, inner exit 0; `run/i2v-retry-41da.log`). The earlier lease loss after heartbeat timeout during a 345-PUT bootstrap upload was not reproduced and its cause is unknown; advisor assigned this liveness-family follow-up to Plan 34.
 - **Census and pin:** `capability_ledger approve` on an archive of `41da1ff86` reported no changes and its regenerated lock matched committed bytes (both exits 0, `run/census-41da.log`; SHA-256 `93d926bf15009e83ad7b4547dc0a0e1d67a3937738ceea51d42f09c5a0f66fec`). Active VibeComfy revision is `e65f4941d09b1cb4d1dd5aae6171c73e648706f4`; the separate historical H3 schema capture is `01f38461d633651c8857712b2331650aedaee461`.
+
+## Progress 45 (Codex manager, 10 Nov)
+
+- **G4:** Plan 34 live validation found a ready A40 pod rejected because acquisition sent the display label to an exact catalog-ID lookup. Advisor classified the bug in scope; `plan34/fix-gpu-catalog-id` `080b797b4` is under independent review and focused CPU proof. A readiness-timeout fix is expected separately.
+- **CI:** run `42763453555` on `666886fa0` had a shard 5 apt setup hang (baseline 15 seconds). Advisor directed letting other jobs finish before cancelling and rerunning that job alone. Because G4 and another product fix are pending, that run is a shakedown and a later push will trigger CI on the integrated candidate. No paid pods used by this run.
