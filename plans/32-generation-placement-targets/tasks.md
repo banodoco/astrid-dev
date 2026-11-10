@@ -55,6 +55,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G8 Warm reuse canonical GPU identity and fixture drift | X | G4, `7bfb98e6f` | RunPod target selection and tests | Canonical-ID request reuses its warm pod despite a distinct display label; real GPU mismatch refuses; update stale confirmation and later-gate test doubles without weakening comparisons | [x] `a2ccbde91` |
 | G9 Execution deadline, catalog capacity, and pod source origin | S | Plan 34 cell-4 and pre-mortem on `a2ccbde91` | RunPod machine, pod bootstrap, remote placement and tests | Execution deadline starts after preparation and stays within paid expiry; catalog capacity uses complete hash-pinned workflow rows; verified transported Agent/Runtime install with strict source origins; independent review and focused CPU proof | [x] `3ab17b6f8` |
 | G9.1 Bootstrap repairs failed lifecycle import | X | G9 independent review on `9c1a03f1` | RunPod pod bootstrap and focused tests | A complete package list plus failed lifecycle import and successful source check enters repair; healthy and failed checks retain AND behavior | [x] `3ab17b6f8` |
+| G10 Local job focused test failures | X | Plan 34 test report on `3ab17b6f8` | `test_t4g_local_complete.py` and relevant fixtures | Restore two Plan 32-added local-job tests using valid installation receipt and regular frozen workflow members; preserve product checks and prove both exact nodes | [ ] in progress |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -653,3 +654,8 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **Exact integrated proof:** `3ab17b6f8bee5d32623679f5a7a4ff5cfa6dc3f0` passed 17 deadline/capacity cases and seven source-install/bootstrap guard cases, the latter serialized under the journey lock (`run/premortem-integrated-3ab.log`, both inner exits 0). The tested selectors are unmarked; the focused command did not filter them out with `-m integration`.
 - **End gate:** CI `42775060447` on this head is pending; the prior run on `a2ccbde91` is a shakedown. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft pending the comparison and any further live-run findings. No paid resources used by this run.
+
+## Progress 56 (Codex manager, 10 Nov)
+
+- **G10:** two `test_t4g_local_complete.py` local-job selectors fail on `3ab17b6f8` (missing managed install receipt; non-regular workflow bundle). Their test file is absent on main `a105de3a`, so no baseline pass/fail exists; because Plan 32 added them, they are being diagnosed and repaired without weakening product checks. Exact head/main commands and outputs: `run/local-job-head.log`, `run/local-job-main.log`.
+- **Remaining:** Plan 34 is preparing a separate cold entry-readiness guard. CI `42775060447` remains in progress but will be a shakedown if product changes land; completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft. No paid resources used by this run.
