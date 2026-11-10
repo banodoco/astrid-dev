@@ -11,7 +11,7 @@
 | [32](../../plans/32-generation-placement-targets/plan.md) | One generation path, `astrid generate --placement local\|runpod`, with paid consent, leases and warm reuse | Tasks done; 3 of 3 review rounds used. `plan32/staging-int32` `d28cac190` includes Plan 34's TTS-prompt and warm-receipt fixes. Its last CI and its baseline stopped at three collection errors, so no test-level comparison exists yet. Open: CI comparison, completion (T8, draft [#276](https://github.com/banodoco/astrid-dev/pull/276)) |
 | [40](../../plans/40-machine-lifetime-controls/plan.md) | `astrid machines`: when a machine stops and what it costs; keep, setup, claim, release; `--gpu` and `--datacenter`; waiting for capacity | T1–T8 on `plan40/staging-int40` `b15e286b6`, built on int/32 `99724131d`, not on staging `d28cac190`. 1 of 1 review round used. Open: blockers R1.1–R1.4, then **T9**, which keeps a machine after a failed job |
 | [20](../../plans/20-zero-to-first-image/plan.md) | From the install line to a first image: setup skill, App handoff, default skills | Agent `plan20/staging-agent` `d2a84370f`, on an older int/32 (`26eeaff4`), with Plan 29's donor `bc5aa747` cherry-picked. App `plan20/staging-app` `e61607a1a`. Review rounds used: R1 1/1, R2 1/1, R3 1 of 2 |
-| [34](../../plans/34-real-gpu-proof/plan.md) | Live GPU proof of the in-scope slots through the product | Passed: image t2i and edit on `26eeaff4`, music on `e9cb9e6b9`, capacity wait and claim. These ran **before** T4, T5-R1, R1.x, T9 and the warm-receipt fix, so they need a second pass (G4). TTS fails (`input_rejected`, cause unknown until T9). SFX needs one VibeComfy release SHA. Video is ready on `plan34/candidate-17acda421`. $3.13 of the $20 stop spent; 0 pods |
+| [34](../../plans/34-real-gpu-proof/plan.md) | Live GPU proof of the in-scope slots through the product | Passed: image t2i and edit on `26eeaff4`, music on `e9cb9e6b9`, capacity wait and claim. These ran **before** T4, T5-R1, R1.x, T9 and the warm-receipt fix, so they need a second pass (G4). TTS fails (`input_rejected`, cause unknown until T9). SFX needs one VibeComfy release SHA. Video is ready on `plan34/candidate-17acda421`. $3.13 of the $25 stop spent (H2); 0 pods |
 
 ## The hierarchy
 
@@ -41,7 +41,7 @@ Product bugs Plan 34 finds go to the plan that owns the code (32, 40 or 20). Pla
 | B7 | **Rehearsal merge** of the candidate into Track A's latest `cand/29-r12`; repeat whenever either side moves. Port the `d70bed508` repair explicitly | 32 | B5; Track A's A3 | Clean merge, focused proof |
 | B8 | Fix the three CI collection errors, then run **one** Agent CI comparison on the B7 rehearsal head, with Track A's candidate as the baseline | 32 | B7 | Test-level comparison, no regressions. It stands in for Plans 32 and 40's CI gates |
 | B9 | **Merge-delta release review**, one round, on the B7 head | Review | B7 | No open blocker |
-| B10 | **GPU proof (Plan 34)** on the B7 rehearsal head: the in-scope slots from Hannah's H3 decision, plus G4's second pass. Video can start now on `plan34/candidate-17acda421`, as a first look. SFX runs after B4, verifying the pod's VibeComfy HEAD. TTS runs after B3, so a failure leaves the pod up to diagnose. One waiting product command per cell, with a census around every rental | 34 | B4, B3, B7; budget per H2 | Each in-scope slot passed, receipts in [#260](https://github.com/banodoco/astrid-dev/pull/260); then Plan 34's final review |
+| B10 | **GPU proof (Plan 34)** on the B7 rehearsal head: the in-scope slots, including same-pod warm reuse (H3), plus G4's second pass. Video can start now on `plan34/candidate-17acda421`, as a first look. SFX runs after B4, verifying the pod's VibeComfy HEAD. TTS runs after B3, so a failure leaves the pod up to diagnose. One waiting product command per cell, with a census around every rental | 34 | B4, B3, B7; $25 stop (H2) | Each in-scope slot passed, receipts in [#260](https://github.com/banodoco/astrid-dev/pull/260); then Plan 34's final review |
 | B11 | Completion records: Plan 32 T8, Plan 40's phase, Plan 20 P1.5 proof on the exact head | Each plan | B8–B10 | Completion PRs ready, linked from the release |
 | **Checkpoint B** | B7 merge clean; B8, B9 and B10 passed | — | — | Hand to Track A; the merge is a repeat of B7 |
 
@@ -58,7 +58,7 @@ Product bugs Plan 34 finds go to the plan that owns the code (32, 40 or 20). Pla
   - the cheapest adequate GPU;
   - one test at a time unless isolated;
   - a census before and after every rental, and every pod released;
-  - stop at the agreed cap (H2).
+  - stop at $25 (H2).
 - **Pins:** VibeComfy changes reach users only through the release pin, never as a merge to VibeComfy `main`.
 - **Reviews:** budgets already used stay used. New merge changes get the scoped merge-delta review (B9) and focused independent reviews.
 - **General:** never weaken a check; merge commits only; no force-push; no pushes to product `main`.

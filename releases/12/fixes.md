@@ -30,7 +30,7 @@ The Release 11 field-failure follow-ups, the review-round fixes, and every produ
 | **Checkpoint A** | Re-pin commit #1 (fixes-only tuple), then App Tests, Direct Journey and the full matrix | A3, A4 | Green, **including the Windows rows**, which are the donor's native proof. This separates fixes failures from generation failures before the merge |
 | A5 | **Receive the merge** (see below) | Checkpoints A and B | Merged heads pushed |
 | A6 | Re-pin commit #2 (final tuple), then the final round ([gate](../12.md#gate-merged-tuple)) | A5 | Gate holds |
-| A7 | Publish with the Release skill, after Hannah's go (H1); post-publish work; Hannah's Mac confirmation | A6 | Published and confirmed |
+| A7 | Publish with the Release skill (Hannah's go is given, H1); post-publish work; Hannah's Mac confirmation | A6 | Published and confirmed |
 
 ## Receiving the merge
 
