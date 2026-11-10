@@ -53,6 +53,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G6 Pod reset Runtime credential | X | Plan 34 live finding, G5 | RunPod pod reset and tests | Parse Runtime credential envelope and supply required administrative scope; test actual envelope shape and backup/restore behavior | [x] `7bfb98e6f` |
 | G7 Preserve readiness timeout and exact cleanup | X | Plan 34 live finding on `dc307e1ec` | RunPod target selection and tests | Preserve timeout reason without exposing provider details; exact original-pod cleanup; independent review and focused CPU proof | [x] `7bfb98e6f` |
 | G8 Warm reuse canonical GPU identity and fixture drift | X | G4, `7bfb98e6f` | RunPod target selection and tests | Canonical-ID request reuses its warm pod despite a distinct display label; real GPU mismatch refuses; update stale confirmation and later-gate test doubles without weakening comparisons | [x] `a2ccbde91` |
+| G9 Execution deadline, catalog capacity, and pod source origin | S | Plan 34 cell-4 and pre-mortem on `a2ccbde91` | RunPod machine, pod bootstrap, remote placement and tests | Execution deadline starts after preparation and stays within paid expiry; catalog capacity uses complete hash-pinned workflow rows; verified transported Agent/Runtime install with strict source origins; independent review and focused CPU proof | [x] `3ab17b6f8` |
+| G9.1 Bootstrap repairs failed lifecycle import | X | G9 independent review on `9c1a03f1` | RunPod pod bootstrap and focused tests | A complete package list plus failed lifecycle import and successful source check enters repair; healthy and failed checks retain AND behavior | [x] `3ab17b6f8` |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -632,3 +634,22 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **Independent integrated proof:** on exact `a2ccbde9192ec26c5a736c7894bc2ecda7bb9656`, two warm canonical-ID/display and mismatch cases passed, and five corrected fixture cases passed under the lock (`run/warm-integrated-a2.log`, both inner exits 0). An initial marker-filtered fixture command selected no tests and exited 5; the correct unfiltered command then passed. The candidate's prior three focused runs are in `run/warm-reset-proof-7aa.log`.
 - **CI:** `42771256778` is queued on the integrated head; the preceding `7bfb98e6f` run is incomplete and will be superseded. T8 remains open. No paid resources used by this run.
+
+## Progress 52 (Codex manager, 10 Nov)
+
+- **Plan 34 batch G9:** cell 4 and pre-mortem found early execution deadline expiry, missing catalog manifest rows in volume preflight, and pod-installed Agent origin differing from the verified transported checkout. The advisor supplied composed `plan34/validation-premortem-candidate` `9c1a03f1`, with focused proof from Plan 34; independent review and CPU proof are in progress before integration. Residual same-marker altered imports before reset are not claimed.
+- **End gate:** completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) is a draft with `Completion: No` and catalog unchanged. CI `42771256778` on `a2ccbde91` is a shakedown because G9 will change the candidate. No paid resources used by this run.
+
+## Progress 53 (Codex manager, 10 Nov)
+
+- **G9 review blocker:** `have_all` in candidate `9c1a03f1` runs as a shell `if` condition; a failed lifecycle import can be masked by the succeeding source-origin check, skipping repair. G9.1 is repairing and proving the fail-closed recovery path before the batch can land. Independent review found no second blocker in deadline, capacity, source verification or the CPU fixture. No paid resources used by this run.
+
+## Progress 54 (Codex manager, 10 Nov)
+
+- **G9 and G9.1 landed:** `3ab17b6f8bee5d32623679f5a7a4ff5cfa6dc3f0` merges `c75de011` with identical tree. Independent review cleared the combined batch after G9.1 fixed the lifecycle-import guard. On the exact candidate, 17 machine deadline/capacity cases, three changed-source/install cases and four shell guard cases passed (`run/premortem-combined-c75.log`, all inner exits 0). The guard test failed on `9c1a03f1` and passed after repair. The affected pod bootstrap, capacity and execution paths and merge SHA were announced to Plan 34; same-marker altered imports before reset remain unproven.
+- **End gate:** push-triggered CI `42775060447` on `3ab17b6f8` and exact integrated focused proof are pending; the prior run on `a2ccbde91` is a shakedown. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains a draft. No paid resources used by this run.
+
+## Progress 55 (Codex manager, 10 Nov)
+
+- **Exact integrated proof:** `3ab17b6f8bee5d32623679f5a7a4ff5cfa6dc3f0` passed 17 deadline/capacity cases and seven source-install/bootstrap guard cases, the latter serialized under the journey lock (`run/premortem-integrated-3ab.log`, both inner exits 0). The tested selectors are unmarked; the focused command did not filter them out with `-m integration`.
+- **End gate:** CI `42775060447` on this head is pending; the prior run on `a2ccbde91` is a shakedown. Completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains draft pending the comparison and any further live-run findings. No paid resources used by this run.
