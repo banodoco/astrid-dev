@@ -2,6 +2,20 @@
 
 Use this for managers in **separate Codex Cloud chats**. Each task has its own workspace: local files, processes and the Claude-hosted runner's mailboxes are not shared. Prefer built-in subagent messaging when both agents are in the same task. A published environment supplies a common setup, not a shared live filesystem.
 
+## Skills
+
+In each chat, check that `/workspace/astrid-dev` contains the intended current revision and that `~/.agents/skills/astrid-dev-orchestrate/SKILL.md` or `~/.agents/skills/astrid-dev-manage/SKILL.md` is readable for the assigned role. If a link is missing, create it without replacing existing skills:
+
+```sh
+mkdir -p "$HOME/.agents/skills"
+for source in /workspace/astrid-dev/skills/astrid-dev*; do
+  target="$HOME/.agents/skills/${source##*/}"
+  if [ ! -e "$target" ] && [ ! -L "$target" ]; then ln -s "$source" "$target"; fi
+done
+```
+
+Read the relevant `SKILL.md` directly when a session's skill catalog does not list a readable filesystem skill. Do not remove existing skills or change credentials. Verify each new task independently; a link in another machine does not establish installation here.
+
 ## What works, and what does not
 
 - Use an agreed GitHub issue as an append-only mailbox; each session reads comments directly, including comments from the same GitHub account. This path does **not** depend on GitHub creating a self-notification. The issue is durable; delivery is at least once, not exactly once.
