@@ -175,6 +175,8 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 
 ## T4 The local run path, with one `align`
 
+Prepare via the `prepare_workflow` API (CLI wrapper bug; Plan 17 C3).
+
 **Outcome:**
 - `run(job, local)` starts or reuses a ComfyUI on this machine (the chosen GPU). It runs `align(manifest, align|check|trust)` against this disk, fetching only the missing rows. Then it compiles, submits to localhost and returns files in the job directory.
 - `run(job, attached)` runs the engine's `probe` (ComfyUI: object_info) or `trust`, then the engine's `execute`; an engine without `probe` refuses attach.
@@ -485,3 +487,9 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - **Explicit auxiliary trust (advisor decision):** under `--align trust`, Astrid must record declaration-supplied auxiliary rows as declared and unverified in dry output, readiness, attempts and durable producer receipts, without checking bytes or refusing absent files. Align/check require digest-verified rows. The pinned native runtime's unconditional `verified_target_provisioning` label must be translated at the Astrid boundary; a supported native unverified-auxiliary mode and repin are deferred to Plan 17. Proof must include an absent declared auxiliary model and all Astrid records.
 - **Host candidate:** `744585fa6` is a review checkpoint, not approved or integrated. Focused native attempt/symlink/trust tests passed (6), and preparation/alignment-order checks passed (20). The real pinned CLI fixture reached native prepare and failed; diagnosing the exact failure before retry. Independent review and the real host/supervisor success, failure and cancellation checks remain gates.
 - **D2 RunPod gap:** the existing CPU provider simulates pod output; it does not establish dry/live graph, bindings and align-manifest equality through real `local_job.run_job` for every default slot and h3. D2 is extending the shipped-job seam using the facade's actual uploaded files and real machine serialization. Attached CPU-fake cells have passed, with explicit trust for TTS/SFX; no real inference is claimed.
+
+## Progress 29 (Codex manager, 10 Nov)
+
+- **Native preparation (advisor decision):** one shared VibeComfy `prepare_workflow` helper is accepted for managed host and pod-side execution, using the exact frozen canonical path, verified root, native sync report and fresh observation. Keep real doctor, nodes restore, fetch and strict final checks; prove missing-dependency refusal. The CLI wrapper's `OutputSpec` reconciliation bug is Plan 17 C3; no Plan 32 repin.
+- **Trust:** independent review found no blocking issue in instance-local trust diagnostic normalization at `606712a8e`; it preserves native authority, schema and non-trust behavior. Additional managed, failure/in-flight, JSONL and exact unverified-row evidence remains to be proven.
+- **RunPod seam:** t2i passed through actual facade uploads, `RunPodMachine.start`, real `local_job.run_job`, actual align and full graph/bindings/manifest comparison. TTS exposed a pod-side explicit-trust propagation gap; repair is in progress, using the shared trust normalization rather than a duplicate.
