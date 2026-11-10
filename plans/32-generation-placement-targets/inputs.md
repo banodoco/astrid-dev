@@ -43,15 +43,15 @@ So this plan now also owns the manifest, `align`, per-request model sets, the vo
 
 ## Source identities
 
-Plan 32 consumes [Plan 33](../33-unblock-live-generation/plan.md)'s landed revisions, not the merge-run candidates directly. Record the exact SHAs here at Plan 33's U9, before T1.
+Plan 32 began alongside [Plan 33](../33-unblock-live-generation/plan.md) and incorporated its work by merge. Plan 33's [U9 record](../33-unblock-live-generation/tasks.md#u9-land) identifies the tuple landed on 9 Nov below; its Agent head is an ancestor of the Plan 32 completion candidate. The earlier base row preserves the source on which the original selectors were checked.
 
 | Repository | Ref | SHA | Role |
 |---|---|---|---|
-| astrid-agent | Plan 33's landed head (`main` after its U9) | Pending — recorded at Plan 33 U9. Next: copy it here | base for T1–T6b |
+| astrid-agent | Plan 33's landed head (`main` after its U9) | `a105de3a4852cb61b9647dfe2c920118bd29f272` | consumed Plan 33 landing; ancestor of the completion candidate |
 | astrid-agent, Plan 33's base | `cand/plan06-agent-20261107-33` | `5eac07e3fcadf8a6cca7eb6cf77c0fe234590894` | where the cited lines and selectors were checked (8 Nov) |
-| VibeComfy | the pin in Plan 33's landed Agent | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` unless Plan 33 moved it | base for T4's and T6b's VibeComfy changes |
-| astrid-runtime | `runtime.lock.json` `source_commit` in Plan 33's landed Agent | `b983b0457dffbfd435e74a5c828e129e8ec46ba3` unless moved | fixed |
-| runpod-lifecycle | the pin in Plan 33's landed Agent | `f2948817eeb94af8dee76be21f6d673724f1606e` unless moved | fixed; `ship_and_run` (`src/runpod_lifecycle/runner.py:88`) |
+| VibeComfy | the pin in Plan 33's landed Agent | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` | base for T4's and T6b's VibeComfy changes |
+| astrid-runtime | `runtime.lock.json` `source_commit` in Plan 33's landed Agent | `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f` | landed Runtime dependency; supersedes the planning pin `b983b04` |
+| runpod-lifecycle | the pin in Plan 33's landed Agent | `f2948817eeb94af8dee76be21f6d673724f1606e` | fixed; `ship_and_run` (`src/runpod_lifecycle/runner.py:88`) |
 
 **What it takes from Plan 33:**
 - the CPU pod-path test `tests/integrations/test_runpod_slot_path_cpu.py` (U1), which T1 extends;
@@ -61,6 +61,31 @@ Plan 32 consumes [Plan 33](../33-unblock-live-generation/plan.md)'s landed revis
 - the reuse key with the engine id (U7), which T5 keeps.
 
 Line numbers in [tasks.md](tasks.md) are at Agent `5eac07e3f` and must be re-checked on the landed head.
+
+### Integrated CPU candidate for completion review
+
+The current integrated candidate for T8 on 10 Nov 2026 is Agent [`99724131d2c3eff11867a189986c4ba147e5a81b`](https://github.com/banodoco/astrid-agent/commit/99724131d2c3eff11867a189986c4ba147e5a81b), on `int/32-one-generation-path`. G20 changes only `tests/test_generic_host.py`, forwarding the new `preparation` keyword in a progress-path spy; the previously failing Plan 32-added test passed independently on this exact head. Product runtime and dependency bytes are unchanged from `26eeaff4f`. Reviewed implementation is ready for completion review, but the assessment remains No: final-head CI is deferred by the owner's Release 12 runner freeze, and Agent main landing is held until Release 12 publishes. This run does not push main. Earlier repairs retain their own recorded CPU proof. The candidate's committed dependency files identify the versions below, unchanged from `41da1ff86`.
+
+| Source | Exact revision | Candidate source of identity |
+|---|---|---|
+| astrid-runtime | `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f` | `runtime.lock.json`, `source_commit` |
+| VibeComfy | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` | `astrid/packs/{vibecomfy,runpod}/pins.json`, `sources.vibecomfy.revision` |
+| ComfyUI | `423cbd20511becb1f16122ab518e92e58bfa03d9` | the same pins, `sources.comfyui.revision` |
+| runpod-lifecycle | `f2948817eeb94af8dee76be21f6d673724f1606e` | `astrid/packs/runpod/pins.json` and `pyproject.toml` |
+
+CPU proof and review findings remain in [tasks.md](tasks.md); existing draft completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) remains incomplete. The [26ee CI comparison](evidence/tests/astrid-agent/26eeaff4f/summary.md) records completed failed run `42799672641` against main `a105de3a`: matching collection/Windows/wheel failures, Ruff +119 against main +89, and no unit test-level pass/fail IDs because collection stopped. `baseline-diff.py` exited 2, so no comparator id lists or unrestricted no-regression claim are supplied. Final-head run [`42806140448`](https://github.com/banodoco/astrid-agent/actions/runs/42806140448) was cancelled for the owner's runner freeze; final CI must run after that freeze is lifted. The earlier i2v bootstrap heartbeat failure's cause remains unknown under Plan 34's liveness follow-up. Same-marker altered imports before reset and wheel-only doctor installs remain unproven. Any later product merge requires refreshed identity and affected proof.
+
+### Separate Plan 34 image receipt
+
+[Plan 34's changed evidence record in PR #260](https://github.com/banodoco/astrid-dev/pull/260/files) records Qwen image 2.1 on RTX 6000 Ada at exact `26eeaff4f90fc5b91e25e0769477a9081deee5d3`: task `5d8bfbb2260e4b9490e29f19cc76d48e`, exit 0, 512×512 PNG SHA-256 `f9e2cca64472518c0153040d90ac3f1c8afc988971a42e78b7a0182fcbcf4c89`, exact pod release and empty census. That single image result carries to `99724131d` for unchanged runtime paths because its sole diff is the test file named above. This is separate Plan 34 paid-work evidence; this Plan 32 run used no paid resources. It does not qualify every slot, placement, model download or warm/cache path.
+
+### Local TTS and warm receipt merges pending integration push
+
+The remote candidate above remains `99724131d`; a reviewed TTS prompt fix has since been merged locally at `37fb20008d49bb3402f82f02f727e03f60dc5101`, with 11 exact-head focused tests passing. A reviewed warm receipt fix was subsequently merged locally at `d28cac1902328836acce35230517a19c137ecd55`, with 116 exact-head machine and warm-session tests passing. That head is available on `plan32/staging-int32` but has not been pushed to `int/32` while the Release 12 runner freeze is active. The earlier image and CI evidence remains identified by its original source head, and must not be treated as final-head CI.
+
+### Release 12 hold and separate rehearsal
+
+Main landing waits for Release 12 and the authorized release workflow. Rehearsal `plan32/r12-reconcile` at `da0ef09cdc3741a4c13948a769852f8bffa2bc16`, including the reviewed H3 import repair, Release 12 regression and installed-test reconciliation and locally integrated TTS fix, is separate from `int/32` and is not this candidate. The incoming Release 12 Windows recovery data-loss bug is repaired and reviewed in the rehearsal only; upstream adoption and native Windows proof remain outstanding. It awaits further Release 12 changes. When main moves, merge it into the integration branch without rebasing, explicitly port rehearsal repair `d70bed508` (the rehearsal merge was conflict-free), then repeat affected proof and CI; rehearsal results do not pre-approve that future integration.
 
 ## Owner decisions
 
