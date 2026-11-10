@@ -54,6 +54,7 @@ Selectors below exist at Agent `5eac07e3f` or VibeComfy `e65f4941`, or are new f
 | G7 Preserve readiness timeout and exact cleanup | X | Plan 34 live finding on `dc307e1ec` | RunPod target selection and tests | Preserve timeout reason without exposing provider details; exact original-pod cleanup; independent review and focused CPU proof | [x] `7bfb98e6f` |
 | G8 Warm reuse canonical GPU identity and fixture drift | X | G4, `7bfb98e6f` | RunPod target selection and tests | Canonical-ID request reuses its warm pod despite a distinct display label; real GPU mismatch refuses; update stale confirmation and later-gate test doubles without weakening comparisons | [x] `a2ccbde91` |
 | G9 Execution deadline, catalog capacity, and pod source origin | S | Plan 34 cell-4 and pre-mortem on `a2ccbde91` | RunPod machine, pod bootstrap, remote placement and tests | Execution deadline starts after preparation and stays within paid expiry; catalog capacity uses complete hash-pinned workflow rows; verified transported Agent/Runtime install with strict source origins; independent review and focused CPU proof | [ ] candidate `9c1a03f1` |
+| G9.1 Bootstrap repairs failed lifecycle import | X | G9 independent review on `9c1a03f1` | RunPod pod bootstrap and focused tests | A complete package list plus failed lifecycle import and successful source check enters repair; healthy and failed checks retain AND behavior | [ ] in progress |
 
 **T7 (live proof). Deferred:** the live proof of this plan is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows [Plan 33](../33-unblock-live-generation/plan.md). The owner decided on 8 Nov that Plans 33 and 32 are CPU only; see [inputs.md](inputs.md#owner-decisions). T8 does not wait for it.
 
@@ -638,3 +639,7 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 
 - **Plan 34 batch G9:** cell 4 and pre-mortem found early execution deadline expiry, missing catalog manifest rows in volume preflight, and pod-installed Agent origin differing from the verified transported checkout. The advisor supplied composed `plan34/validation-premortem-candidate` `9c1a03f1`, with focused proof from Plan 34; independent review and CPU proof are in progress before integration. Residual same-marker altered imports before reset are not claimed.
 - **End gate:** completion PR [#276](https://github.com/banodoco/astrid-dev/pull/276) is a draft with `Completion: No` and catalog unchanged. CI `42771256778` on `a2ccbde91` is a shakedown because G9 will change the candidate. No paid resources used by this run.
+
+## Progress 53 (Codex manager, 10 Nov)
+
+- **G9 review blocker:** `have_all` in candidate `9c1a03f1` runs as a shell `if` condition; a failed lifecycle import can be masked by the succeeding source-origin check, skipping repair. G9.1 is repairing and proving the fail-closed recovery path before the batch can land. Independent review found no second blocker in deadline, capacity, source verification or the CPU fixture. No paid resources used by this run.
