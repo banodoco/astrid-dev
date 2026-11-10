@@ -64,7 +64,10 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
      - verify once, independently, on the integrated head before each review round, not once per task;
      - a test that can't run on CPU by nature (real weights, a GPU) gets the repository's `gpu` marker and its reason;
      - fix a test-setup artifact in the test setup, never by injecting what product code should supply;
-     - when a card requirement on code that a later accepted plan replaces can't be met cheaply, defer it to the task that owns that code, and record the deferral in the merge commit and `tasks.md`.
+     - when a card requirement on code that a later accepted plan replaces can't be met cheaply, defer it to the task that owns that code, and record the deferral in the merge commit and `tasks.md`;
+     - re-run a gate (CI, a journey, the matrix) on a fix commit as soon as the fix lands, and paste the run ids. Re-runs need no go. Start each run as soon as its own inputs are ready, not when every fix is done;
+     - when a gate fails, first make the failure visible: read the first error, and if the evidence isn't uploaded, reproduce the exact command. Then sort the failing tests against the main branch's latest run by the regression rule, before you ask. A failure already on the baseline doesn't block; record it once for its own project;
+     - when a gate's test drives the product differently from users (a different entry point, flags or pinned versions), fix the test so it drives the product as users do, and record the cause.
    - **Send** the advisor only questions, never progress updates: progress goes in `tasks.md`, where check-ins read it. Send one question with its evidence: the versions, the brief, the first failing command and its output, and what was tried. Use the run's advisor, or start one on its `advisor` setting.
    - **Act** on the one next step it returns. Advice is never permission to run or publish.
    - **No advisor model available:** ask the owner.
