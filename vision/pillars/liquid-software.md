@@ -42,6 +42,6 @@ Creators can work with a considered default composition or adapt every layer as 
 
 ## References
 
-**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md).
+**Gaps:** [LS-001 — Portable components](../gaps/LS-001-portable-components.md) · [LS-002 — Agent workspace control](../gaps/LS-002-agent-workspace-control.md) · [LS-003 — Full-stack contributions](../gaps/LS-003-full-stack-contributions.md) · [LS-004 — Cross-modal creative foundations](../gaps/LS-004-cross-modal-foundations.md) · [LS-005 — Agent-managed tools](../gaps/LS-005-agent-managed-tools.md).
 
-**Implementation exploration:** [Liquid workspace](../../plans/24-liquid-workspace/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals, not proof of shipped capabilities.
+**Implementation exploration:** [Portable/resizable components](../../plans/24-liquid-workspace/plan.md) · [Composable connections](../../plans/45-component-connections/plan.md) · [Agent workspace operations](../../plans/46-agent-workspace-operations/plan.md) · [Component design input](../../plans/24-liquid-workspace/components.md) · [Pack lifecycle](../../plans/06-packs/plan.md). These are proposals, not proof of shipped capabilities.

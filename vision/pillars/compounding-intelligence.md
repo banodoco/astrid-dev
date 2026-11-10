@@ -30,6 +30,8 @@ Local, team, and community knowledge remain under their respective owners' autho
 
 ## References
 
+[CI-003 — Public source ingestion](../gaps/CI-003-public-source-ingestion.md) is a separate gap from Hivemind federation and agent learning.
+
 [Banodoco Hivemind](https://github.com/banodoco/hivemind) is a proving ground, not proof that federation is solved.
 
 **Gaps:** [CI-001 — Agent learning loop](../gaps/CI-001-agent-learning-loop.md) · [CI-002 — Federated knowledge](../gaps/CI-002-federated-knowledge.md).
