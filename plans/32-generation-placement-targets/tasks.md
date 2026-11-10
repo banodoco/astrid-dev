@@ -404,3 +404,13 @@ Rule for the next manager: Codex never pushes to int/32. Fetch before every merg
 - Shard D: `session_011EzfW3pBGYXbnX2YtXneBT` (alive; holds the registry-leak evidence; delta re-run pending).
 - Shard E: `session_011EzfW2SrM1VTtVCnoePc4j` (alive; delta re-run pending).
 - Codex D4 and D5 workers and the Codex Terra run: their merged branches are on int/32; their session IDs are not recorded here.
+
+## Progress 17 (Codex manager, 10 Nov)
+
+- **Integration:** `364f98e33`; batch T and R landed as recorded above. The direct run brief authorizes this manager to merge into int/32 after the outgoing manager's mailbox handover.
+- **D2:** `plan32/codex-manager-d2` merges WIP `8594ce1a` onto `364f98e33` at `4a365af8`; focused local tests 24 passed. The t2i integration reached matching graphs and bindings but failed because its align spy produced no record; diagnosing before retry. D3 and D6 await the overlapping contract work.
+- **D3:** independent review of `13130089b` found file-map document members resolve against the controller cwd rather than the document directory, potentially shipping the wrong file. Fix in D3 with a document-relative regression; seam proof remains pending.
+- **Census lock:** at `364f98e33`, `capability_ledger approve` on an archived clean checkout produced byte-identical lock (SHA-256 `93d926bf15009e83ad7b4547dc0a0e1d67a3937738ceea51d42f09c5a0f66fec`); command reported no census changes. Optional packs were quarantined with compatibility warnings in that archive environment.
+- **managed_schema:** active VibeComfy pin is `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` via the recipe and RunPod pins; the distinct historical H3 schema capture is `01f38461d633651c8857712b2331650aedaee461`. Reconcile with any remaining pin concern.
+- **i2v lease loss:** image/t2i RunPod CPU-fake control on `364f98e33` passed (1 passed, 120.63s) under the journey lock. The i2v upload heartbeat timeout remains unexplained; comparing retained diagnostics, not claiming the i2v journey passed.
+- **Shard A:** triaging seven `test_engine_execution.py` failures and the claim-loop and installed-lane candidates from progress 16; no disposition yet.
