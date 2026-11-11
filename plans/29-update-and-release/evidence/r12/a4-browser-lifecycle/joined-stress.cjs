@@ -1,0 +1,7 @@
+const {createServer}=require('http');const {chromium}=require(process.env.TASK_PROBE_CORE);
+(async()=>{
+ const server=createServer((req,res)=>{res.writeHead(200,{'content-type':req.url.startsWith('/api/')?'application/json':'text/html'});res.end(req.url.startsWith('/api/')?'{}':'<html><script>setInterval(()=>fetch("/api/background").catch(()=>{}),1)</script></html>')});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const url=`http://127.0.0.1:${server.address().port}`;
+ const browser=await chromium.launch({headless:true,executablePath:process.env.TASK_PROBE_BROWSER});
+ try{const page=await browser.newPage(); for(const event of ['request','requestfailed','requestfinished']) page.on(event, req=>{if(req.url().includes('/api/')) console.error('CLIENT '+JSON.stringify({event,guid:parseInt(require('crypto').createHash('sha256').update(req._guid).digest('hex').slice(0,12),16)}))});page.on('framenavigated',frame=>{if(frame===page.mainFrame())console.error('COMMIT '+Date.now())});await page.route('**/api/**',route=>route.abort());await page.goto(url);let failures=0;for(let i=0;i<35;i++){try{await page.reload({waitUntil:'commit'})}catch{failures++}}await page.close();console.log('LOOPS',35,'NAVIGATION_ERRORS',failures)}finally{await browser.close();server.close()}
+})().catch(error=>{console.log('OUTER',String(error?.message).includes('net::ERR_ABORTED')?'ERR_ABORTED':String(error?.message).includes('closed')?'CLOSED':'OTHER');process.exitCode=1});
