@@ -18,9 +18,9 @@ Status as of 11 Nov; Track A owns the next actions. Detailed evidence and task h
 
 | Area | Current state and next action |
 |---|---|
-| **Agent** | `cand/29-r12` remains `313bbd46f1e24bfe635655d78b27ab0b321145d5`. Working handoff `ec48555d8298d155390ffbb37d1950c3e80b43a4` includes A0/A1 work and needs comparison and required release proof before A3. |
-| **A2 comparison** | Grouped four-side receipts 001–018 are recorded; candidate findings in 005, 015 and 017 remain unresolved. Prepare the bounded runner for 019–052 and retain all existing receipts and environment differences. |
-| **App / A4** | `cand/29-r12` is `e72d541de1d65bee74707ca1ae9c2d429ee2f721`. Early Direct Journey remains failing under the credential-capture gate. A wire-level feasibility spike is in progress; it has no gate credit and must preserve the existing checks. |
+| **Agent** | `cand/29-r12` remains `313bbd46f1e24bfe635655d78b27ab0b321145d5`. A0/A1 handoff `ec48555d8298d155390ffbb37d1950c3e80b43a4` and reviewed Windows Git-source repair `53908e553f9aa58c032ed4faae3ea2e660cb25f0` need integration, affected comparison and release proof before A3. |
+| **A2 comparison** | Groups 001–018 and completed hosted receipts are recorded; 66 side/group pairs remain after the stopped 080 run. Candidate findings in 005, 015, 017 and 028 remain unresolved; preserve all receipts and assess hosted/local and failure-message limits. |
+| **App / A4** | `cand/29-r12` is `e72d541de1d65bee74707ca1ae9c2d429ee2f721`. Direct Journey remains blocked by missing genuine terminal/full-body evidence across navigation. The completed wire spike did not establish equivalent coverage; retain the fail-closed check. Reviewed test-only handoff `1d5a1d6937c394c3d6c4a0bb9bfc46b8a8d8a058` still needs integration and affected CI. |
 | **Harness** | `harness/29-r12` is `b550ecadf07d7a4b377be1b7af1d6252642f1b48`. |
 | **Release gates** | A3 and Checkpoint A have not been reached. No `A-CAND`, `A-FROZEN` or `GATE-GREEN` has been posted; the exact-tuple checks and native Windows proof remain required. |
 
