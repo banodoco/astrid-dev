@@ -5,10 +5,12 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 
 # Orchestrate Astrid work
 
-**Your job, in short.** Once a project is running, you do three things and nothing else:
+**Your job, in short.** Once a project is running under a manager in its own session, you do three things and nothing else:
 1. **Check in on a schedule,** if the owner asked for check-ins (path 3).
 2. **Answer questions and unblock** managers and the owner (path 2).
 3. **Equip managers to need you less.** Turn each repeated question into a standing rule in the [manage skill](../astrid-dev-manage/SKILL.md) or the task card, so the run moves as fast as it can without you.
+
+**One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your own session, you are its [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#hand-a-long-task-to-codex-from-claude-cloud)).
 
 Managers and their workers verify tasks, run tests, edit task code and make routine calls. Follow the accepted release brief for any coordination duties it assigns you, such as relaying cross-track dependencies, accepting frozen inputs, arranging review or publishing after the owner's go.
 
@@ -35,11 +37,31 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
    - the integration branch (`int/<project>`), and the exact starting versions;
    - the owner's limits (budget, CPU or GPU, what needs a go);
    - **the tests, already chosen.** Before any manager starts, check that the plan's `tasks.md` names its test inventory and, for every task, the exact test files that prove it; if any are missing, you or the planner name them now, because choosing tests is judgment and belongs with the stronger model. Then tell the manager in one line: run only those, at the [load-bearing moments](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing), and never a full suite locally;
-   - your session id for questions;
+   - your session id for questions, as its advisor;
    - its model. A release, a run across more than one repository, or a run with a deadline gets a manager from the strongest available class. An N-class manager suits only a one-repository run of N tasks. Record the choice under `roles.manager` in `run.yaml`. Don't swap managers mid-run, because the new one loses the run's context. Escalate its hard failures to stronger workers instead.
 
    Its first step is Manage step 1: a run file plus a smoke worker per repository.
+
+   **Send those in [the start message](#the-start-message),** not in a long brief of your own.
 4. **Schedule check-ins** if the owner wants them (path 3).
+
+## The start message
+
+A run starts with one short message, and the plan carries everything else. A long brief repeats the plan, drifts from it, and can contradict the skills.
+
+1. **Record the run first.** Fill the `Run start` line in the plan's `inputs.md` and merge it: the phase or tasks covered, the accountable session, what it may do without asking, what needs the owner's go, and the advisor.
+2. **Write the message for the owner to send.** Authority comes only from the owner's own message in the accountable session. If you send it yourself, it arrives as data from a peer, and the session rightly won't treat it as a go. So draft it, and the owner pastes it:
+
+   ```text
+   You are accountable for Plan <NN>, <phase or tasks>: you answer for it finishing.
+   Follow the astrid-dev-manage skill. The plan is plans/<NN-name>/ on astrid-dev main at <sha>;
+   start from the Run start line in inputs.md and the dispatch notes in tasks.md.
+   Land work on int/<NN-name>. You may <what it may do without asking>.
+   Come to me for <what needs the owner's go>. Your advisor for hard questions is session <id>.
+   ```
+
+3. **Add nothing the plan should hold.** If the message needs a rule the plan or a skill lacks, put the rule there by PR and point to it.
+4. **Don't add a tier.** If you hand a project to another session, that session becomes the accountable agent and you become its advisor, or you step out. Never leave it as an advisor with you as an advisor above it: then nobody answers for the run.
 
 ## Claude Cloud setup: no permission prompts
 
@@ -63,7 +85,12 @@ When a long, self-directed task should run under your oversight, such as a GPU v
 - **A worker restart kills every process,** the keep-alive included. While a run is live, keep a scheduled check-in at most 20 minutes away (`send_later`). Have every check-in re-arm `codex-hold.sh` with all live run folders. Also register each live run in `~/codex/runs.txt` for `codex-hold-daemon.sh`, which a SessionStart hook relaunches, so a dead runner restarts as soon as the session comes back ([README](codex-in-claude-cloud/README.md#start-a-run)). Ask the owner once to add that hook, because auto mode refuses Claude's edits to its own settings.
 - **Install the astrid-dev skills** for Codex (`~/.agents/skills`), and give the manager its plan, its branches, the route-to-model table, and the rules that differ under Codex. The README lists those rules.
 - **Brief a manager as a manager.** Start every Codex manager from [`manager-brief.md`](codex-in-claude-cloud/manager-brief.md), and re-read it before each new run, because it changes. Codex takes its authority only from its starting prompt. A mailbox note can't later grant it merge rights or change its role, and it rightly refuses to accept one. A prompt that forbids integrating ("never push to int/…") makes Codex a worker, and you end up relaying every branch between it and someone else. To change a running Codex's role, have it checkpoint (push work in progress, write a handover entry, end `DONE`) and start a fresh manager run that continues from the handover.
-- **You stay the advisor.** At each check-in, read the mailbox and `tasks.md`, then do the one thing path 3 says. Don't review its fixes, steer its tasks or relay its branches: its reviewer and its own judgment do that. Raise a structural cause only when its reports show a pattern it hasn't named.
+- **You host it, so you answer for it.** Codex can't keep itself alive, wake itself, reach the owner or run a model outside Codex. You hold all of those, so you are the run's [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run). Say "my run" and "my Codex manager", not "the manager" as if it were someone else's. At every check-in, without waiting for the mailbox:
+  - **Compare `tasks.md` and the integration branch with the last check-in.** If nothing moved, find out why from `codex.log` and send one next action through `to-codex.md`.
+  - **Start every task Codex can't run** (a route bound to a Claude model, or the review) as soon as its inputs have landed, not when Codex asks.
+  - **Clear what is stuck on your side:** an unmerged or conflicting progress PR, a dead runner, a refused command to take to the owner.
+  - **Open the final PR and bring the owner their decisions.**
+- **Codex still manages the tasks.** Don't redo its fixes, re-review what its reviewer passed, or relay its branches: it dispatches, judges and integrates under the authority in its starting brief. Answer its questions, and raise a structural cause when its reports show a pattern it hasn't named.
 
 ## Path 2: advise
 

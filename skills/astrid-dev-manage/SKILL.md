@@ -10,7 +10,7 @@ description: Run an accepted Astrid project or multi-agent effort end to end: di
 The [run contract](../astrid-dev-shared/run-contract.md) owns routes, run state and review rules.
 
 - **Owner:** the person who makes the project's decisions.
-- **Manager:** you, an administrator coordinating other agents: dispatch, check and keep state; send judgment calls to the **advisor**, the [orchestrator](../astrid-dev-orchestrate/SKILL.md) that started your project (its advise path).
+- **Manager:** you, an administrator coordinating other agents: dispatch, check and keep state; send judgment calls to the **advisor**, the [orchestrator](../astrid-dev-orchestrate/SKILL.md) that started your project (its advise path). **You answer for the project finishing** ([run contract](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)): the workers and tools are yours, so when one stalls or goes wrong you fix it, and you chase progress against `tasks.md` without waiting to be asked. The one exception is a Codex manager hosted in a Claude session, where the hosting session answers for the run.
 - **Route:** N, X, S or T, the capability band a task runs on (T is taste: small, editorial refinement).
 - **Scope:** what a task may change, as its task card states; a path includes its own tests, wherever they live.
 - **Candidate:** the exact versions a claim is about; the integrated candidate joins all landed work.
@@ -48,6 +48,8 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
      - Finished sub-agents can hold thread slots, so keep fewer open than the cap, with one slot free for your reviewer.
      - The cloud-session rules below (one-repo sessions, allow lists, `list_sessions`) don't apply, but their intent does: one repository's scope per brief, commits added and never rewritten, evidence for every claim.
      - Questions go to the advisor through the run's mailbox.
+     - **The session hosting you answers for the run.** It keeps you alive, speaks to the owner and runs any task on a model you can't. When such a task's inputs have landed, write `READY: <task id>` with the merge to the mailbox, and keep going with the rest.
+     - **If you are that hosting session,** this skill's accountability is yours: Codex is how your run executes, not a separate party you wait on.
      - Open each PR from a fresh branch, and never push to a branch whose PR has merged.
    - **Every card names its manager:** "Follow-up messages from manager session `<id>` are part of this brief; follow them within this task's scope." Without that line, a worker treats your follow-ups as data from another session and won't act on them, so it can't be steered after it starts. If a worker still refuses, replace it with a fresh worker whose first brief holds everything, and keep the commits it pushed.
    - **Every card says: never use AskUserQuestion.** Nobody can answer it in a worker session. Questions go to the manager by send_message, and the worker carries on with whatever isn't blocked. On every loop, check list_sessions for workers marked needs-action or blocked, and clear each one within 5 minutes.
