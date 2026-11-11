@@ -98,3 +98,15 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
 - 2026-11-11 23:20Z — **App main merged:** `6545f130` (the cut-off, one CSS file, `PublicAstridShell.css`) is in as `54a362e2a` on `scratch/r12-app-int`. Path item (c) is done.
 - 2026-11-11 23:25Z — **Gate 5 drift fixed** as `e2d48f428` on `scratch/r12-app-int` (Codex Luna, one line, which I reviewed). `:1787` now reads the transition from gate 5's own `startingHead` (`:1697`) rather than `seed3.headRevisionId`. Strict equality is unchanged, and the only steps between that head and A are position moves. The sweep of the other 10 serial tests found no further stale-seed comparisons: each one captures its own head or uses a fresh project. tsc is clean. Direct Journey is dispatched on `e2d48f428`, the first run expected to reach the four expected-failure tests.
 - 2026-11-11 23:25Z — **Matrix shakedown redispatched.** Run 601 failed at config because my dispatch left out `old_launcher_ref`, which must be the constant `bbba620e…` (journey.yml:332), and `stopped_path_agent_ref`, which must equal the candidate Agent `c5370a86`. Redispatched on `harness/29-r12` `b550ecad` with candidate App `8f1a19086` (shakedown re-pin), Agent `c5370a86`, Runtime `42ae24aff`, Pinokio `d15c58b5`, `direct_only=true` (the same shape as run 600).
+- 2026-11-11 23:16Z — **Review fixes integrated on `scratch/r12-app-int`** (Codex Luna; I reviewed the diffs).
+  - `452f6b2f0` (rv1):
+    - The VIDEO-DROP marker moves after the import, selection and verified checks, and the DUP-SHOT marker moves to just before the click. Both now assert more steps than before. The registry check gives 4 authorized, 0 forbidden.
+    - Mixed editing: the 1.5 s sleep is replaced by waiting for the visible refusal and the settled counts.
+    - M1 now asserts that the declared move makes a new revision.
+    - Codex's new documentNavigation title was still wrong (it said "byte body"); I wrote an accurate one.
+  - `ed9327947` (rv2): restores the bootstrap identity and receipt assertions that `805b87a7d` dropped. tsc is clean and it passed locally.
+  - Still unproven locally: the video-drop journey (timed out at `:2189` after a port clash) and the documentNavigation unit test (EROFS in `.vite-temp`). CI will decide both.
+- 2026-11-11 23:16Z — **rv3 (Undo edge cases, Codex Terra) made no change and reported two findings. REVIEW.**
+  - (a) If the Agent has already published the inverse of the user's publication, Undo still targets the user's original, which Codex expects the Runtime to refuse visibly ("Could not undo timeline").
+  - (b) Legacy entries with no publisher clear the Undo stacks.
+  - Neither is a silent loss on Codex's reading. I am not ruling on (a) from that alone: I've put it to an independent Astra reviewer as question 6 of the follow-up review (ranges `2dc109bcc..ed9327947` and `6d69442dc`). If any write other than a visible refusal is possible, it's a blocker for the Undo change. Otherwise both go to Plan 39 as follow-ups.
