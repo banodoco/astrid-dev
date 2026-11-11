@@ -7,6 +7,7 @@ timing source=24 output=48 new=24 workflow=3.04166666667 node102=73 trim=10
 timing source=24 output=120 new=96 workflow=5.875 node102=141 trim=6
 timing source=24 output=240 new=216 workflow=10.8333333333 node102=260 trim=5
 timing source=24 output=362 new=338 workflow=15.7916666667 node102=379 trim=2
+exhaustive source=24 output=25..362: 338 frame-aligned cases passed; max raw=379
 resolution node1024 960 544
 [H3 Motion Context] Source crop /32: 1024x576 -> 1024x576 (left=0, top=0)
 canvas source=1024x576 crop=1024x576 selected=1024x576

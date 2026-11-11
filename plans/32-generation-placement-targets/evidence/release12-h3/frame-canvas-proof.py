@@ -40,6 +40,10 @@ for output_frames in (25,26,41,42,48,120,240,362):
  plan=plan_continuation(source_end=1,output_duration=output_frames/24); result=math_method(None,expression,{'a':plan.workflow_duration}); n=result[1]
  assert n==plan.raw_extension_frames and 5<=n<=3600 and (n-5)%17==0
  print('timing',f'source=24 output={output_frames} new={plan.requested_new_frames} workflow={plan.workflow_duration:.12g} node102={n} trim={plan.trim_tail_frames}')
+for output_frames in range(25,363):
+ plan=plan_continuation(source_end=1,output_duration=output_frames/24); value=math_method(None,expression,{'a':plan.workflow_duration})[1]
+ assert value==plan.raw_extension_frames and 5<=value<=3600 and (value-5)%17==0
+print('exhaustive source=24 output=25..362:',338,'frame-aligned cases passed; max raw=379')
 width,height=resolve(None,'16:9 (Widescreen)',0.5,32); print('resolution node1024',width,height); assert (width,height)==(960,544)
 for w,h in ((1024,576),(1920,1080),(641,479),(32,32),(16385,8193)):
  _,cw,ch=crop(None,Image(w,h)); selected=select(None,'existing_video',width,height,cw,ch); assert selected==(cw,ch) and all(32<=x<=16384 and x%32==0 for x in selected); print('canvas',f'source={w}x{h} crop={cw}x{ch} selected={selected[0]}x{selected[1]}')
