@@ -263,6 +263,23 @@ def _public_vision(context):
     return []
 
 
+def _generated_views(context):
+    import views
+    errors = views.check(context.root)
+    # The legacy public-vision rule owns these two targets. Keep its established
+    # diagnostic as the sole line when either target is stale.
+    legacy_errors = _public_vision(context)
+    owned = set()
+    if any('vision/README.md' in message for message in legacy_errors):
+        owned.add('view public-vision ')
+    if any('README.md vision summary' in message for message in legacy_errors):
+        owned.add('view root-vision-summary ')
+    if owned:
+        errors = [message for message in errors
+                  if not message.startswith(tuple(owned))]
+    return errors
+
+
 def _body(context):
     if context.body_file:
         return context.body_file.read_text(encoding='utf-8')
@@ -379,6 +396,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
     Check('public-vision-content', 'always', 'Validate generated public vision summaries', _public_vision),
+    Check('generated-views', 'always', 'Validate registered generated views', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
     Check('project-planning-evidence', 'pr', 'Validate planning evidence for new or opted-in projects', _planning),
