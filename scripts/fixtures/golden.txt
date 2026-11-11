@@ -1,0 +1,41 @@
+bad-status: plan catalog: invalid status 'maybe' in One update path and release
+bad-status: public vision content: invalid status 'maybe' in One update path and release
+broken-local-link: README.md: missing link target vision/missing-page.md
+broken-local-link: public vision content: README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme
+final-release-without-payload: releases/12.md: final publication needs a JSON payload
+final-release-without-payload: strategy.md: release 12 state differs from its document
+ledger-dangling-reference: docs/ledger/2026-11-08-ledger-entry-files.md: Follows names no existing entry: 1900-01-01-missing
+ledger-dangling-resolved-by: docs/ledger/2026-11-08-ledger-entry-files.md: Resolved by names no existing entry: 1900-01-01-missing
+ledger-date-mismatch: docs/ledger/2026-11-08-ledger-entry-files.md: Date must match the file name prefix 2026-11-08
+ledger-invalid-kind: docs/ledger/2026-11-08-ledger-entry-files.md: Kind must be one of fix, idea, issue, papercut
+ledger-invalid-name: docs/ledger/Bad_Name.md: file name must be YYYY-MM-DD-<short-slug>.md
+malformed-ledger-entry: docs/ledger/2026-11-08-ledger-entry-files.md: header must be exactly Date, Kind, Source and Resolved by lines, then a blank line
+missing-catalog-row: plan folder absent from catalog: plans/29-update-and-release/plan.md
+missing-catalog-row: public vision content: README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme
+missing-gap-section: AA-001-sustained-creative-work.md: missing ## Sources and reassessment
+obsolete-project-path: docs/project-format.md: obsolete strategy/projects path; use plans/
+release-included-plans-unlinked: strategy.md: release 12 plan links differ from its document
+release-missing-sections-and-plans: releases/12.md: missing or empty ## Approach
+release-no-plan-links: releases/12.md: Included plans must link project plan.md files
+release-no-plan-links: strategy.md: release 12 plan links differ from its document
+route-missing-closure-approach: F-008-portable-generation.md: Route to closure needs a non-empty Closure approach section before it
+route-missing-plan: F-008-portable-generation.md: route names missing plan 99-missing-plan
+route-missing-plan: vision/gaps/F-008-portable-generation.md: missing link target ../../plans/99-missing-plan/plan.md
+route-plan-backlink-mismatch: F-008-portable-generation.md: routed plan 32-generation-placement-targets does not name F-008 in its Vision gaps line
+route-plan-backlink-mismatch: plans/32-generation-placement-targets/plan.md: duplicate gap IDs in plan declaration
+route-plan-backlink-mismatch: public vision content: duplicate gap IDs in plan declaration
+route-status-word: F-008-portable-generation.md: route row carries status/ownership word 'active'; the catalog owns it
+stale-vision-readme: public vision content: vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme
+strategy-highlight-mismatch: strategy.md: release 12 highlight differs from its document
+strategy-missing-release-document: strategy.md: missing link target releases/99.md
+strategy-missing-release-document: strategy.md: no release document 99.md
+strategy-missing-release-document: strategy.md: releases/12.md has no roadmap row
+strategy-missing-section-and-bad-release-link: strategy.md: missing link target releases/999.md12.md
+strategy-missing-section-and-bad-release-link: strategy.md: missing section ## Not now
+strategy-missing-section-and-bad-release-link: strategy.md: release needs a matching link to releases/<N>.md: [Release 12 (draft)](releases/999.md12.md)
+strategy-missing-section-and-bad-release-link: strategy.md: releases/12.md has no roadmap row
+strategy-plan-links-mismatch: strategy.md: release 12 plan links differ from its document
+strategy-release-mismatch: strategy.md: release 12 state differs from its document
+terminal-catalog-order: plan catalog: done/cancelled rows must follow prioritized nonterminal rows
+terminal-catalog-order: public vision content: done/cancelled rows must follow prioritized nonterminal rows
+unnamed-active-owner: active project needs a named accountable owner: One update path and release

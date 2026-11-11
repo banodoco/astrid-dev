@@ -1,0 +1,3 @@
+{
+  "docs/ledger/2026-11-08-ledger-entry-files.md": "Date: 2000-01-01\nKind: fix\nSource: owner decision (Hannah)\nResolved by: —\n\nThe shared table caused repeated merge conflicts and duplicate numbers across concurrent sessions. Entries are now one file each in docs/ledger/, and the existing rows of process-ledger.md are archived as they are.\n"
+}
