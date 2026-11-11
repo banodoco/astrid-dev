@@ -88,3 +88,11 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - It is not an R12 regression: `source_identity.py` is byte-identical in R10 `72462b04`, R11 `a105de3a` and the candidate `c5370a86`, and the Runtime's `_COMPONENTS` is identical on main `4f5477cb` and `42ae24aff`. R12 only adds the strict xfail that pins it.
 
   Decision: no pin move. Plan 38 owns the fix (the xfail reason says so). Added to the gate record's known issues so the gate doesn't read it as test-only.
+- 2026-11-11 23:20Z — **Timestamp correction:** the two entries above stamped "2026-11-12 00:50Z" and "01:05Z" were actually written at about 23:00Z and 23:10Z on 11 Nov. The log is append-only, so they are left as they are.
+- 2026-11-11 23:20Z — **App `2dc109bcc` results.**
+  - Direct Journey `43115743810`: the `direct-journey` job is green. `three-products` failed: 5 passed, 1 unexpected, 8 not run.
+  - The unexpected failure is "M2 real gate 5" at `:1790`, and it is test drift. The serial test at `:417` publishes the transition `{cross-fade, 36}` on the worker-scoped `seed3` (`:525`). Gate 5 then compares against the original seed head's `{crossfade, 0.5}`. This is the next layer of the shared-seed drift the 5→0 reset fixed; the old failure stopped the test before reaching this line.
+  - Fix: compare against the head gate 5 itself started from, keeping the assertion's intent. It's with Codex Luna (`cx-g5b`), together with a sweep of the 8 not-run serial tests for the same pattern.
+  - The four expected-failure tests didn't run, so their marker placement is still unproven.
+  - App Tests `43115748120`: vitest and release-tooling-macos are green. `boundary` is red at the Agent vendor-lock check (lock `aa5bc442` vs pin `313bbd46`), which was already ruled as pre-existing and is cleared by the re-pin (shakedown `8f1a19086` re-pins it).
+- 2026-11-11 23:20Z — **App main merged:** `6545f130` (the cut-off, one CSS file, `PublicAstridShell.css`) is in as `54a362e2a` on `scratch/r12-app-int`. Path item (c) is done.
