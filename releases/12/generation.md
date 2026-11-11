@@ -1,5 +1,18 @@
 # Release 12, Track B — Generation
 
+## Current state — 11 Nov, 10:43 UTC
+
+This is a progress snapshot, not a gate or freeze. Full history and acceptance criteria remain below and in the plan task records.
+
+| Label | Exact ref or evidence | State and next action |
+|---|---|---|
+| P40-T9 | Agent `plan40/staging-int40` `d8931c281cf705273c3c7c01346b6f2722733cca` | Accepted focused handoff. |
+| B5 | Agent `release12/gen-candidate` `6a2351d95bb7eabc8b0ff6f988163fe420fcb3d7` | Pushed WIP, **not B-CANDIDATE**. The older `e857a106` record is not the current remote branch head. H3 disposition and required proof remain open. |
+| R12-F2 | Agent `plan32/r12-f2-ready-registration` `d7a38b941cf629f8aef12e7ebe480c4d9e7dfa71`; Runtime `handoff/r12-self-observe` `8b312c4b29bbb4fef5ac0849188678fe356b9e84` | Provisional repair; independent security review complete and focused exact-pair tests passed. Fresh installed no-claim attachment and custody proof remain open. |
+| Diagnostic App | App `handoff/r12-provisional-runtime-schema-d7` `43bad29fc7ed2145fb518911b80697ba2e6effb3` | Provisional only. Its diagnostic VibeComfy override was independently reproduced; installed proof and a new named authorization precede any rental. |
+| B6 / final tuple | No `A-FROZEN`, `FINAL-B7`, or `FINAL-TUPLE` | Final integration, B8, B9 and final cells await their named inputs. |
+| P34 | Latest recorded census: zero pods; no diagnostic cell completed | Only the orchestrator-authorized TTS diagnostic may be proposed after installed proof, fresh census and spend check. RTX 4090 or RTX 5090 only; retain the shared $25 stop and $1 reserve. |
+
 [Release 12](../12.md) · [Track A: Fixes](fixes.md) · Reference only: handoffs for [P32](../../plans/32-generation-placement-targets/handoff.md), [P40](../../plans/40-machine-lifetime-controls/handoff.md), [P20](../../plans/20-zero-to-first-image/handoff.md), [P34](../../plans/34-real-gpu-proof/handoff.md)
 
 Active P32, P40, P20 and P34 brief as of 10 Nov 2026. Follow the shared [operating principles](../12.md#operating-principles-every-manager-reads-these-first), [How-to](../12.md#how-to-tools-every-manager-uses), branch rules and [mailbox protocol](../12.md#hand-offs-all-via-mailboxes). Handoff next steps, gates, freezes and budgets are superseded.
