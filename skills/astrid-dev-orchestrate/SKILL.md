@@ -34,6 +34,7 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
    - the plan's path;
    - the integration branch (`int/<project>`), and the exact starting versions;
    - the owner's limits (budget, CPU or GPU, what needs a go);
+   - **the tests, already chosen.** Before any manager starts, check that the plan's `tasks.md` names its test inventory and, for every task, the exact test files that prove it; if any are missing, you or the planner name them now, because choosing tests is judgment and belongs with the stronger model. Then tell the manager in one line: run only those, at the [load-bearing moments](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing), and never a full suite locally;
    - your session id for questions;
    - its model. A release, a run across more than one repository, or a run with a deadline gets a manager from the strongest available class. An N-class manager suits only a one-repository run of N tasks. Record the choice under `roles.manager` in `run.yaml`. Don't swap managers mid-run, because the new one loses the run's context. Escalate its hard failures to stronger workers instead.
 

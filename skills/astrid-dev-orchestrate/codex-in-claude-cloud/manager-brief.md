@@ -36,7 +36,7 @@ You run on <model> at <effort> effort. Send X and S work to sub-agents, and run 
 - **Branches and PRs:** task branches land in `int/<NN>` through merge commits. For astrid-dev, push a fresh branch and open a PR with `POST /repos/banodoco/astrid-dev/pulls`. Never push to a branch whose PR has merged.
 - **Add commits only.** Never force-push or rebase.
 - **Worktrees:** every worker brief names its own `git worktree add` path and `<worktree>.env` under this directory. Delete them once the task lands.
-- **Tests:**
+- **Tests** (the [run contract's table](../../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing) says when; the plan says which):
   - A worker runs only its task's focused proof.
   - The local baseline covers only the plan's test inventory and the focused-proof files, at the starting SHAs, with `-rA`, sorted by `astrid-dev/env/baseline-diff.py`.
   - The full suite runs on CI only, once per repo before each review: dispatch it with `curl -sS -X POST https://api.github.com/repos/banodoco/<repo>/actions/workflows/ci.yml/dispatches -d '{"ref":"int/<NN>"}'`. Pushes to `int/**` also start full CI in Agent and App, so batch task merges (several per push) and cancel your own superseded `int/<NN>` runs; during a release gate, push only when the orchestrator says runners are free.
