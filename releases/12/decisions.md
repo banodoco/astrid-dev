@@ -119,3 +119,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
 - 2026-11-11 23:20Z — **rv3 Undo findings ruled.** The reviewer traced the case where the Agent has undone the user's edit and the user then presses Undo (`timelineLocalSaveHandoff.ts:739`, `:186`; Agent `inverse.py:692`, `:1117`; `_recording.py:286`; `commit.py:1331-1457`): no publication of any kind, partial or empty-effect, is accepted. The App keeps the outbox, enters conflict and shows "Could not undo timeline". Legacy entries with no publisher: Undo is unavailable and sends nothing.
 
   Neither loses work silently, so both are not R12 blockers. They go to Plan 39 as follow-ups: (a) Undo should follow other actors' `undo_of` so an already-inverted edit isn't offered; (b) a verified ownership migration for legacy history. **REVIEW**: (a) is a confusing refusal in a real flow (the Agent undoes, then the user undoes).
+- 2026-11-11 23:23Z — **Blocker fixes are in as `9afd4aaa6`** on `scratch/r12-app-int` (Codex Luna, which I reviewed).
+  - Mixed editing now has an explicit retained-outbox assertion (the refused request, a rejected outcome, each intent's conflict equal to the error) and a 1.5 s window sampled every 100 ms that fails on the first change.
+  - The DUP-SHOT marker sits after the click.
+  - The bootstrap capture is bound to the project. I corrected Codex's regex: it was anchored at `^/v1`, but App requests go through `/api/runtime/v1/…` (`:1713`), so it would never have matched. It now accepts an optional prefix.
+  - I checked the outbox path format: no prefix (`commitSession.ts:227`).
+  - tsc is clean, and the registry gives 4 authorized, 0 forbidden.
+  - The independent Astra re-review (`ed9327947..9afd4aaa6`) is running. The candidate stays held until it reads the fix.
