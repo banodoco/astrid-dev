@@ -4,13 +4,13 @@
 
 Each gap-linked project declares **exactly one primary gap**, with optional secondary references. The public vision lists the project under its primary gap only, avoiding repetitive project cards across pillars and principles. Secondary links explain dependencies; they are not extra homes for the project. Foundational enablers may have no gap.
 
-Each project uses one folder with three complementary files:
+Each project uses one folder with three complementary files. **The templates are the one definition of each file's sections and fields;** this page and the skills say what each file is for and do not restate its sections.
 
-| File | Owns |
+| File | Answers |
 | --- | --- |
-| [`plan.md`](../templates/project/plan.md) | What useful result, scope, existing foundation, sequence and completion proof |
-| [`inputs.md`](../templates/project/inputs.md) | Why this approach: prior art, reuse/placement decision, any needed independent challenge, owner choice, source identities and limits |
-| [`tasks.md`](../templates/project/tasks.md) | Bounded work, dependencies, scope, focused checks, route and task progress |
+| [`plan.md`](../templates/project/plan.md) | What will be true when this is finished, and how we will know |
+| [`inputs.md`](../templates/project/inputs.md) | Why this approach, on what evidence, and what the owner decided |
+| [`tasks.md`](../templates/project/tasks.md) | Who does what, in what order, and what proves each piece |
 
 The **handoff between projects** is a contract, not an extra file: name the actual prior output consumed, the artifact or behavior produced, and the exact proof that would let another agent use it. An unqualified dependency or a plan being marked done isn't sufficient evidence; link the accepted candidate and its receipt when available.
 

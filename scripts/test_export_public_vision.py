@@ -173,7 +173,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("not yet settled",
                       principles["open-by-design"]["explanationMarkdown"])
         self.assertIn("our ownership", principles["open-by-design"]["statement"])
-        self.assertEqual(len(gaps), 21)
+        self.assertEqual(len(gaps), 22)
         self.assertIn("CA-003", gaps)
         self.assertEqual(gaps["CA-003"]["primaryAppliesTo"], "principle:open-by-design")
         self.assertIn("pillar:shared-endeavour", gaps["CA-003"]["appliesTo"])

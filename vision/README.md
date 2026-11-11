@@ -44,7 +44,7 @@ Creators should have final say over every part of their creative environments.
 
 Technical wrangling should be work for your agents, not work that interrupts your art.
 
-## Gaps — 21 assessed outcomes
+## Gaps — 22 assessed outcomes
 
 Each gap describes a result that remains independently verifiable even if its proposed implementation changes. Follow its link for the full current assessment, sources and closure evidence. Project completion never closes a gap automatically.
 
@@ -53,6 +53,7 @@ Each gap describes a result that remains independently verifiable even if its pr
 - **[CA-002 — No implemented contributor-ownership model](gaps/CA-002-contributor-ownership.md)** — Open. An explicit owner decision and qualified legal/tax review of a concrete model covering eligible contributions, grants/allocations, governance, vesting, changes over time, financing and participant protections; then evidence of its authorized implementation.
 - **[CA-003 — Our vision and execution aren't yet fully connected](gaps/CA-003-vision-experiments-progress.md)** — Partially evidenced. Publish a maintained public trail for at least three substantive decisions or experiments, each connecting the relevant vision and gap to the hypothesis, work attempted, evidence, outcome, resulting decision, and what remains unresolved.
 - **[CA-004 — Creators and agents can't yet find one another's contributions](gaps/CA-004-sharing-and-discovery.md)** — Open. An independent contributor publishes a versioned contribution; a creator and an agent separately discover it through relevant search, inspect identity, source, compatibility and trust signals, then follow a supported reuse path.
+- **[CA-005 — Many contributors and agents can't yet work in parallel through one clear process](gaps/CA-005-parallel-contribution.md)** — Open. - One command lists every check and every generated page, and gives the same result locally and in CI.
 - **[CI-001 — Agents don't yet reliably learn from creative work](gaps/CI-001-agent-learning-loop.md)** — Open. Two real agent sessions: the first retrieves applicable knowledge and produces an observed, locally retained result; a subsequent session demonstrably uses that finding.
 - **[CI-002 — Hivemind functionality isn't yet refined and interoperable](gaps/CI-002-federated-knowledge.md)** — Open. Two separately owned datasets can exchange a scoped, independently attributed reference or approved sanitized result, preserving revision identity, provenance and access decisions; denied, stale and revoked cases do not leak source content.
 - **[CI-003 — Hivemind doesn't yet learn from public internet resources](gaps/CI-003-public-source-ingestion.md)** — Open. Ingest an authorized sample of GitHub issues/discussions, Reddit posts and documentation with source identity and revisions.

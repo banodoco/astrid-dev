@@ -14,7 +14,7 @@
 
 **Proof and limits:** see [plan.md](plan.md#completion). The proof is structural: same verdicts and a byte-identical public feed across the refactor, conflict-free parallel plan PRs, and one-file extension examples. It does not show that contributors find the result clearer beyond one fresh-agent trial.
 
-**Review rounds:** Pending — recommend one review stop of one round after Phase 1's model (every later task builds on it) and at most two final rounds. PM-7 changes privileged automation, which is why two and not one. Next: the owner confirms the numbers.
+**Review rounds:** Pending — recommend one round at the end and no review stop. On 11 Nov 2026 the owner asked for reviews to be minimal and only where complexity is meaningful; one round is kept because PM-6 and PM-7 move the source of truth for status and change privileged automation. Next: the owner confirms.
 
 **Ambiguity pass:** Pending. Other agents will run these tasks and several are X or S, so N helpers run one pass per phase before dispatch.
 
@@ -27,9 +27,9 @@ All open. Each has a recommendation.
 - **D3. When are generated files refreshed?** Today the author runs the generator and CI fails if the file is stale. With many open PRs each adding a plan, every one of them edits the same generated catalog and the same count line in the root README, and they conflict. *Recommend:* refresh on `main` by a bot, so PRs never contain generated output. Cost: a bot commits to `main` (needs O-1) and the page lags a merge by about a minute. Alternative: keep the stale check and accept rebases; drop PM-8.
 - **D4. Do existing packs get reshaped?** Only 10 of 47 `plan.md` files use the template's headings. *Recommend:* reshape queued drafts by script, leave packs with a live run and finished packs alone, and report the drift. Alternative: check new packs only.
 - **D5. Order against Plan 31.** *Recommend:* Phase 1 before Plan 31's RL-1a to RL-1c, so Plan 31 registers its checks and its manifest as a view. Both wait for Release 12. Alternative: Plan 31 first, then fold its scripts in (more rework, no delay to releases).
-- **D6. Where does this sit in the catalog's order?** The scope PR places it directly above Plan 31 because of D5. That placement is the owner's to change.
+- **D6. Where does this sit in the catalog's order?** The row is last among the open rows, as the plan skill now says for any new plan. *Recommend:* the owner moves it directly above Plan 31 if D5 is accepted.
 - **D7. Do Phases 3 and 4 happen?** The owner agreed with the direction in the planning session. The critique says no recorded failure asks for a declared lifecycle, generated forms or an evidence envelope, and that their only named consumer (Plan 44) is an unscoped draft; by [principle 8](../../docs/contribution-design-principles.md) they should wait. *Recommend:* commit Phases 1 and 2 now, and decide Phases 3 and 4 after Phase 2 lands, taking PM-11 (pack shape) first because its evidence is strongest (ten of 47 plans match the template). The catalog estimate covers the committed phases, with the proposed ones stated separately.
-- **D8. Gap link or enabler?** The owner asked for this to be linked to the vision-communication gap, so the plan names CA-003 as primary. The critique disagrees: the plan does not deliver CA-003's closure evidence, Plan 44 already holds CA-003, and Plans 14 and 19 set the precedent of `Vision role: Foundational enabler` for internal tooling. *Recommend:* the owner confirms CA-003 or switches to the enabler line; either passes CI.
+- **D8. Which gap?** Decided in part, 11 Nov 2026: the owner said the plan need not close a gap but should connect to a relevant one, and that a new one may be needed. The first draft named CA-003; the critique showed the plan delivers none of CA-003's closure evidence and Plan 44 already holds it. No existing gap covers contributing in parallel through one clear process, so this PR drafts [CA-005](../../vision/gaps/CA-005-parallel-contribution.md) and routes this plan in it. *Still open:* the owner accepts CA-005's wording and boundary in the scope PR's boundary review, or asks for the enabler line instead.
 
 ## Ten statements for the owner
 
@@ -94,13 +94,17 @@ Written while planning this project with the installed skills. Each is evidence 
 5. **Project numbers are picked by looking.** Nothing reserves one, and two folders are already numbered 40. (PM-9)
 6. **Every new plan edits the root README.** The generated summary counts projects, so a scope PR changes that line and any two scope PRs conflict on it. (D3, PM-8)
 7. **"Planning runs no checks", but a scope PR must pass them,** and the planning check reads commits only, so it reports "OK for 0 projects" until the pack is committed. (PM-2)
-8. **Gap or enabler is a judgment with no guide.** This project serves CA-003 indirectly. CA-003 has no route to closure, so nothing asks which closure evidence the plan delivers, and Plan 44 is already primary on the same gap with nothing surfacing the overlap.
+8. **Gap or enabler is a judgment with no guide.** The first draft named CA-003, which this project serves only indirectly. CA-003 has no route to closure, so nothing asked which closure evidence the plan delivers, and Plan 44 was already primary on it with nothing surfacing the overlap. Resolved here by drafting CA-005.
 9. **"Consult the advisor" assumes a run.** A planner working alone has no advisor session; the skill does not say that an independent critic in the same session is acceptable. It was used here.
 10. **An owner's decision made in conversation has no durable link.** The check wants a URL or SHA; the only one available is a private session link, as Plan 31 also uses.
 11. **Three step lists, no map.** The main skill's six stages, the plan skill's six steps and the catalog's six statuses describe the same journey in three vocabularies. (PM-12)
 14. **The critique changed the plan more than any other step,** and the skill makes it conditional. It caught a gate that would have failed open. For a plan that changes checks or automation, it should not be optional.
 12. **Task ids and the test inventory have no home in the template.** Each plan invents a prefix; the skill requires a test inventory that the template never mentions. (PM-11)
 13. **The strategy has no place for work on astrid-dev itself.** It lists releases; a process project fits only under "Not now".
+
+## Fixed alongside this plan
+
+At the owner's request on 11 Nov 2026, the small process fixes that needed no new machinery were made in this branch: the templates are stated as the one definition of a pack's sections (findings 1, 2 and 12); a new plan's row goes last among open rows (finding 4); the advisor may be a fresh subagent (finding 9); an independent critique is required for the listed cases, including changes to astrid-dev's own checks (finding 14); and review rounds are proportional, with none for a simple project.
 
 ## Critique
 
@@ -117,8 +121,8 @@ One independent review of the first draft (plan and tasks), read-only, verifying
 | A views framework for one consumer is premature; keep the exporter as is | should-fix | **Partly accepted.** PM-3 is cut down to making the exporter's existing marker and stale check reusable, and it has three consumers in Phase 1 and the catalog in Phase 2. The owner asked for one standard way to generate pages |
 | Defer Phase 2 until conflicts are measured. Measured in the review: `main` took about 150 commits a day on 10 and 11 Nov and `plans/index.md` 14 to 18 a day on 7 to 9 Nov; edits to non-adjacent rows merge cleanly today; "author regenerates plus a stale check" would be worse than today at this rate; a bot on `main` needs settings that are still unset; cheaper options are to leave the table and move only the most-edited cell | should-fix | **Left to the owner (D3).** Phase 2 stays committed because the owner asked for plans to define the list, with these costs recorded. No conflict count was measured, only edit rates |
 | Cut Phases 3 and 4: no recorded failure asks for them | blocking, in the reviewer's view | **Left to the owner (D7).** Marked proposed, not committed, and left out of the committed estimate |
-| The CA-003 link is not honest; use the enabler line | should-fix | **Left to the owner (D8).** The owner asked for the gap link |
-| Hard to reverse: a bot bypass on `main`, a renamed plan folder, and status split across every plan file. All are in Phase 2 | consider | Recorded. Phase 1 has none of these, which is why RS1 sits before Phase 2 |
+| The CA-003 link is not honest; use the enabler line | should-fix | **Accepted.** The plan now links a new gap, CA-005, drafted for the owner's boundary review (D8) |
+| Hard to reverse: a bot bypass on `main`, a renamed plan folder, and status split across every plan file. All are in Phase 2 | consider | Recorded. Phase 1 has none of these |
 
 The reviewer's own minimal scope is Phase 1 without the view mechanism, plus the duplicate-number check.
 

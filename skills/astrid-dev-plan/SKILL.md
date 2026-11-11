@@ -10,7 +10,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md) and its [domain map](../astri
 ## Terms
 
 - **Owner:** the person who chooses a project's outcome and makes its decisions.
-- **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md), advise path). An orchestrator may also plan a project itself before farming it out.
+- **Planner:** you, an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor. **The advisor** is a standing advisor session if you have one ([Orchestrate](../astrid-dev-orchestrate/SKILL.md), advise path); otherwise spin up a fresh subagent on the high-judgment role, with no stake in your draft. An orchestrator may also plan a project itself before farming it out.
 - **Route:** N, X, S or T; the [run contract](../astrid-dev-shared/run-contract.md) alone owns routing, execution state and review policy.
 - **Scope** (of a task): the paths, and any shared surface or contract, it may change; a path includes its own tests, wherever they live. Name the functions or classes too (`path:symbol`) when the task changes only part of a file.
 
@@ -26,10 +26,10 @@ You produce an agreed, testable end state and tasks another agent can run.
 
 1. **Start from [`strategy.md`](../../strategy.md),** so the project fits the current sequence, then **find prior art** in affected source, issues, [plans](../../plans/index.md), [gaps](../../vision/README.md) and, where relevant, outside approaches. Trace input → actual implementation → user-visible result, noting useful source revisions, reuse, negative findings and uncertainties. Delegate bounded research when helpful, but no broad audit without a decision it could change.
 2. **Pick the smallest complete result.** Compare reusing or extending a pack, adding one, changing core and, when relevant, doing less or nothing. Prefer an existing plan or gap to a new entry. Justify placement and tradeoffs from evidence, not architectural preference. When the gap has a route to closure, place the plan in it with the [Gap](../astrid-dev-gap/SKILL.md) skill, and add the plan's `Contributes to closure:` line.
-3. **Challenge in proportion to consequence.** For material architecture, an expensive or hard-to-reverse decision, or a table case below, have the advisor critique the plan for real removals, consolidation and reuse; record its findings and what you accepted or rejected. A simple bounded project needs only a concise alternatives review and a reason to skip the advisor.
+3. **Challenge in proportion to consequence.** For material architecture, an expensive or hard-to-reverse decision, or a table case below, an independent critique is **required before you seek greenlight**: have the advisor critique the written plan and tasks for real removals, consolidation and reuse, checking your claims against the code, not against your summary. Record its findings and what you accepted, rejected or left to the owner. A simple bounded project needs only a concise alternatives review and a reason to skip the critique.
 4. **Agree the outcome.** Present the real options (as many as the owner needs; ten is a useful technique, not a quota), their user-facing tradeoffs and a testable end state. When the change is complex, or the owner has to picture it to decide, [offer ten vivid statements](#ten-vivid-statements).
-5. **Write a compact handoff,** one home per fact: [`inputs.md`](../../templates/project/inputs.md) for source evidence, alternatives, challenge decision, approval and uncertainty; [`plan.md`](../../templates/project/plan.md) for outcome, scope, sequence and completion; [`tasks.md`](../../templates/project/tasks.md) for assignments and focused proof ([rules below](#write-the-task-list)). Link detailed work only for a distinct use.
-6. **Seek greenlight.** A contributor may [open a proposal issue](../../docs/contribution-workflow.md#propose-and-greenlight-new-work) without permission. A maintainer-reviewed **scope PR** greenlights new scope by recording the owner's actual decision in `inputs.md` and adding one queued catalog entry.
+5. **Write a compact handoff,** one home per fact: [`inputs.md`](../../templates/project/inputs.md) for source evidence, alternatives, challenge decision, approval and uncertainty; [`plan.md`](../../templates/project/plan.md) for outcome, scope, sequence and completion; [`tasks.md`](../../templates/project/tasks.md) for assignments and focused proof ([rules below](#write-the-task-list)). **The three templates are the one definition of each file's sections and fields:** copy their headings exactly, and do not take the shape from another plan, this skill or any other document. Link detailed work only for a distinct use.
+6. **Seek greenlight.** A contributor may [open a proposal issue](../../docs/contribution-workflow.md#propose-and-greenlight-new-work) without permission. A maintainer-reviewed **scope PR** greenlights new scope by recording the owner's actual decision in `inputs.md` and adding one queued catalog entry. Add the row **last among the open rows**: row order is priority, and moving a project up is the owner's decision, which you may recommend in `inputs.md`.
 
 ## Ten vivid statements
 
@@ -51,7 +51,7 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 |---|---|
 | Map current behaviour with parallel N helpers, one read-only area each | the behaviour spans several repositories or areas, or no one planning knows it |
 | List each problem with its root cause and where it is fixed | the request starts from symptoms (bugs, confusing UI) rather than a new capability |
-| Consult the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) as the critic, briefed to build as little as possible and to verify claims in code | the plan touches a cross-repository contract, a user-visible flow, release, security or data, or exceeds about five days |
+| Consult the advisor as the critic (required in these cases), briefed to build as little as possible and to verify claims in code | the plan touches a cross-repository contract, a user-visible flow, release, security or data, changes astrid-dev's own checks, bots or workflows, or exceeds about five days |
 | Phase it: a first phase with most of the value, later phases committed, estimates per phase | the estimate exceeds about ten days or value is uneven across tasks |
 | Ambiguity pass by N helpers per task group, resolving from code and listing only real owner decisions | other agents will execute the tasks, or any task is X, S or T |
 | Record owner decisions in `inputs.md` and enforce them with a test | a later merge could silently undo the decision |
@@ -73,9 +73,9 @@ In the [tasks template](../../templates/project/tasks.md), every task has a scop
 
   Add a missing script there, not in the plan folder.
 
-**Suggest the reviews.** Recommend them in every plan; don't wait to be asked.
+**Suggest reviews only where they earn their cost.** State your recommendation in every plan, including when it is none; don't wait to be asked.
 
-- **Bias towards one review at the end.** End with the review row, before any publishing task, which depends on it. Recommend its number of review rounds from risk and complexity (guide in the run contract), say why, and record the owner's agreed number in `inputs.md`. With 0, leave the row out.
+- **A simple, bounded project needs no review rounds:** ordinary PR review is enough, so leave the review row out. For meaningful complexity, recommend one round at the end, before any publishing task, which depends on it. Recommend more only as the [run contract](../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries)'s guide says, say why, and record the recommendation and the owner's agreed number on the `Review rounds` line in `inputs.md`.
 - **Add a review stop after a load-bearing part** of a significant project: a contract, data model, protocol, security boundary or shared interface that later tasks build on, where a mistake found only at the end would mean redoing those tasks or would reach users. Put it right after that part, as its own row (`RS<n>`, named for what it reviews), with the later tasks that build on it depending on it. It uses the same protocol as the final review: rounds at most _n_, findings as task cards, done before the stop clears. Use it sparingly, typically only on larger projects (above about five days, or cross-repository) and at most one or two per plan. Each stop needs a stated reason: which later tasks it protects and what a late finding would cost. Record each stop and its agreed rounds in `inputs.md`, alongside the final review.
 
 ## Readiness

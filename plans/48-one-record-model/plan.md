@@ -2,7 +2,9 @@
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
-**Vision gaps:** [CA-003 — Our vision and execution aren't yet fully connected](../../vision/gaps/CA-003-vision-experiments-progress.md) (primary).
+**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary).
+
+**Contributes to closure:** CA-005: one command lists every check and generated page; a project lands by adding only its own folder; one source per fact; a fresh agent extends it from the guide; refusals work.
 
 ## Outcome and scope
 
@@ -50,9 +52,9 @@ The smallest sound approach is to finish the shared layer those three imply, the
 
 Phases run in order; each leaves the repository working and is useful if later phases never start. Phase 1 carries most of the value for contributors adding checks or pages; Phase 2 removes the shared file every plan change edits today.
 
-1. **Phase 1** (PM-1 to PM-5, then review stop RS1).
+1. **Phase 1** (PM-1 to PM-5).
 2. **Phase 2** (PM-6 to PM-9, PM-10t). Changes how a project is claimed and where status is edited, so the migration, the gates that read status and the docs land together.
-3. **Review rounds** (R) close the committed scope.
+3. **One review round** (R) closes the committed scope.
 4. **Phases 3 and 4** (PM-11 to PM-15) only if D7 accepts them.
 
 **Readiness and constraints:**
@@ -91,4 +93,4 @@ Shown on the integrated astrid-dev candidate, with exact SHAs:
 - **Negative cases:** a hand edit to a generated file fails; a duplicate project number fails; a claim for another person's handle, or one that changes any other line, is refused.
 - **Unchanged:** the public feed is byte-identical before and after Phase 1, and after Phase 2 differs only by the one renumbered project's id; the App's parser accepts it.
 
-**Limits of this proof:** it shows structure, not that contributors find it clearer. One fresh agent adding a check and a view from `docs/extending.md` alone, with its confusions recorded, is the only readability evidence. Completion does not close CA-003: that gap needs a maintained public trail for three decisions, which this project enables and does not deliver.
+**Limits of this proof:** it shows structure, not that contributors find it clearer. One fresh agent adding a check and a view from `docs/extending.md` alone, with its confusions recorded, is the only readability evidence. Completion does not close CA-005: that also needs reassessment after a real period of many contributors working at once.

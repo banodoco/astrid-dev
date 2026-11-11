@@ -16,6 +16,12 @@ A compact record for a **new project's** decision. Bugs and small fixes use thei
 
 **Proof and limits:** Pending — Acceptance evidence and supported contexts are not yet known. Next: specify observable results, meaningful failure cases and unresolved assumptions.
 
+**Review rounds:** Pending — None for a simple, bounded project; otherwise recommend a number and say why ([guide](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries)). Next: the owner confirms.
+
+## Owner decisions
+
+Number each decision the owner must make (`D1`, `D2`, …) with the options and your recommendation; when decided, add the date and the choice. Remove this section if there are none.
+
 ## Source identities
 
 Before code work, record the actual repository/ref/SHA, retained changes, base versus donors, and intended integration destination. Never guess or confuse historical snapshots with the current source.
