@@ -14,7 +14,7 @@
 - On App `main`, `pin.mjs` added 1 on every pin run, which is how release went from 1 to 9 on 7 Nov.
 - At least six consumers read the manifest from an App checkout or image, not from astrid.haus.
 - The vision feed already publishes from astrid-dev to a generated-only branch, after testing with the App's parser.
-- astrid-dev `main` and App `main` are unprotected, and every product repository is public.
+- astrid-dev `main` and App `main` are unprotected, and every product repository is public. *(Since 11 Nov 2026, astrid-dev `main` requires a pull request and two status checks, but no approval or code-owner review.)*
 
 **Approach:** astrid-dev release records, checked by CI with the App's existing manifest check, published like the vision feed. The App syncs one generated copy, so nothing in the Agent, Runtime or Pinokio changes. This replaces Plan 29's UR-8b (version helper, App PR #208), UR-8c (markdown log, astrid-dev PR #82) and UR-8d, and UR-8's tuple guard.
 
