@@ -18,6 +18,8 @@ A compact record for a **new project's** decision. Bugs and small fixes use thei
 
 **Review rounds:** Pending — None for a simple, bounded project; otherwise recommend a number and say why ([guide](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries)). Next: the owner confirms.
 
+**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../skills/astrid-dev-shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one.
+
 ## Owner decisions
 
 Number each decision the owner must make (`D1`, `D2`, …) with the options and your recommendation; when decided, add the date and the choice. Remove this section if there are none.

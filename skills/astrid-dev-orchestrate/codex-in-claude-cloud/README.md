@@ -93,12 +93,13 @@ If Codex can't continue without an answer, it writes its question and ends with 
 
 ## Oversight
 
-The orchestrator is the advisor, not a second manager. At each check-in it reads the mailbox and `tasks.md` and does one thing ([orchestrate path 3](../SKILL.md#path-3-check-in-only-when-the-owner-asks)):
-- note that the run is on track;
-- send one next action through `to-codex.md`;
-- or bring the owner a decision.
+The hosting session answers for the run ([who answers for a run](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Codex manages the tasks; the host does everything Codex can't. At each check-in it reads the mailbox, `tasks.md` and the integration branch, and ([orchestrate skill](../SKILL.md#hand-a-long-task-to-codex-from-claude-cloud)):
+- sends one next action through `to-codex.md` if nothing has moved since the last check-in;
+- starts any task Codex can't run, once Codex has written `READY` for it or its inputs have landed;
+- clears what is stuck on its own side, such as a progress PR that can't merge or a dead runner;
+- brings the owner a decision when one is theirs.
 
-It answers the questions Codex asks, and raises a structural cause only when Codex's reports show a pattern Codex hasn't named. It doesn't review Codex's fixes or relay its branches. Codex's own reviewer sub-agent reviews, and a Codex manager integrates its own work. That needs the authority in its starting brief ([`manager-brief.md`](manager-brief.md)); a mailbox note can't grant it.
+It doesn't review Codex's fixes or relay its branches. Codex's own reviewer sub-agent reviews, and a Codex manager integrates its own work. That needs the authority in its starting brief ([`manager-brief.md`](manager-brief.md)); a mailbox note can't grant it.
 
 ## Known limits
 

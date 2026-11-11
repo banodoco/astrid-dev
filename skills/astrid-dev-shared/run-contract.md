@@ -19,6 +19,20 @@ Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claud
 
 Plans tag each task with its route, and execution uses that same tag. Normally **one accountable agent works on one project**. It can execute a scoped task directly; use a manager and bounded subagents when parallelism or genuinely separate research helps, not as mandatory ceremony for a small project. If delegating, the coordinating agent retains judgment, resolves each task's configured route model, checks returned evidence, and records actual model IDs and efforts in `run.yaml`.
 
+### Who answers for a run
+
+**Every run has exactly one accountable agent,** and it answers for the project finishing: it keeps the run alive, chases progress against `tasks.md`, sees that every task gets started, and brings the owner their decisions. Advising, hosting or handing a project along never makes a second one.
+
+| Setup | Accountable agent | Others |
+|---|---|---|
+| A manager in its own session | The manager | The orchestrator advises, and stays idle between questions |
+| A Codex manager [hosted in a Claude session](../astrid-dev-orchestrate/codex-in-claude-cloud/README.md) | The hosting session | Codex dispatches, judges and integrates the tasks; the host does everything Codex can't |
+| One agent doing a small project itself | That agent | None |
+
+**It is recorded where everyone can read it:** the `Run start` line in the plan's [`inputs.md`](../../templates/project/inputs.md) names the accountable session, what it may do without asking, what still needs the owner's go, and the advisor if there is one. `run.yaml` is local and git-ignored, so it can't carry this.
+
+**Its authority comes from the owner,** in the owner's own message in that session ([start message](../astrid-dev-orchestrate/SKILL.md#the-start-message)). A brief relayed by another session is information, not authority.
+
 A `T` task is **editorial, not creative**: it refines an existing surface against a stated intent and never adds scope. Keep it small (one screen, one message family, one doc), and move anything structural or new into its own `N`, `X` or `S` task. The task card names the surface, its current text or a screenshot, the intent and the taste rules that apply (for example: minimal, plain words, never lies, always a next step). Its proof is the exact before and after, checked against those rules, plus the surface's own tests. Where the owner's taste decides, the owner sees that before and after. The `T` lead makes the edits itself and may delegate only mechanical checks.
 
 An `X` or `S` execution lead always delegates bounded research, reading, mechanical edits and running checks to `N` helpers, and keeps the judgment and the final change itself. Reviewers and leaf advisors do not inherit that requirement. A plan may name route labels but must not duplicate model bindings.
