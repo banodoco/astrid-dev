@@ -2,16 +2,24 @@
 
 Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIEW** marks user-visible changes, scope-vs-time trades, named exceptions and anything touching Release 13.
 
-## NOW (updated 2026-11-11 23:35Z)
+## NOW (updated 2026-11-11 23:36Z, from `date -u`)
 
-- **Scope (owner, 23:10Z):** ship the update fixes as soon as possible. The editor data-loss fixes move to Plan 39: [#252](https://github.com/banodoco/astrid-app/issues/252) video drop, [#253](https://github.com/banodoco/astrid-app/issues/253) a refusal blocks later edits, [#254](https://github.com/banodoco/astrid-app/issues/254) "Save them", [#255](https://github.com/banodoco/astrid-app/issues/255) upload lost at reload. Their workers are stopped and the WIP branches pushed (`scratch/r12-drop-fix`, `scratch/r12-audio-drop`).
-- **Agent candidate** `cand/29-r12` = `c5370a862d0b374afa412dd071418070e76f834c`. The qualifying ci.yml run 43085262585 attempt 2 is done or finishing; the R10 baseline is finishing; the R11 attempt-2 re-run is in progress.
-- **App candidate** `cand/29-r12` = `657773e669d83d67cbc3c9ff067524c5d1e0423c`. Integration `scratch/r12-app-int` = `726655c5f`, with the next round in preparation: + authoring test-double fix `04226223`, + a gate-5 serial-chain precondition fix (Codex), + named exception P39-R12-VIDEO-DROP (Codex). On 726655c5, Direct Journey's direct job passed 45/45. three-products failed only at "M2 real gate 5" (precondition commit never sent in the chain); 8 tests were not run behind it.
-- **Path and honest estimates:** (a) App Tests + Direct Journey green on the integration head: 1.5–3 h (each round is ~25 min of CI plus queue; the 8 not-yet-run tests have only been proven solo). (b) Agent CI comparison and rulings: ~1–1.5 h, waiting on the R11 re-run. (c) merge App main: 10 min. (d) re-pin (release 12, Agent c5370a86, Runtime 42ae24aff, VibeComfy e65f4941, OMP repo banodoco): 30 min plus App Tests/Direct Journey on the pinned head. (e) 11-row matrix: 1–2 h. (f) A-FROZEN: after (e). Total about 4–7 h.
-- **Named exceptions:** P39-R12-DUP-SHOT #249, P39-R12-EXT-BATCH #250, P39-R12-TASK-SWAP #251, P39-R12-VIDEO-DROP #252 (pending), all expiring 2026-11-25. 7 of the 10-entry ceiling with the three older useClipDrag entries. None yet shown failing at its marked step on a real run.
-- **Blocked:** nothing.
-
-- **Workers (from 23:15Z):** new non-taste tasks run on Codex via `codex exec`, one call per task, each in its own git worktree, launched from a thin Claude wrapper. Tiers verified with a trivial read-only call each on the owner's ChatGPT sign-in: N = `gpt-6-luna`, X = `gpt-6.1-terra`, S = `gpt-6.1-sol`, reviews = `gpt-6-astra` (read-only). There is no `gpt-6.1-luna` in the catalog. Taste tasks stay on Opus sub-agents. Workers already running finish on Claude. Fallback used so far: none.
+- **Scope (owner, 11 Nov):** ship the update fixes as soon as possible. The editor data-loss fixes go to Plan 39: [#252](https://github.com/banodoco/astrid-app/issues/252) video drop, [#253](https://github.com/banodoco/astrid-app/issues/253) a refusal blocks later edits, [#254](https://github.com/banodoco/astrid-app/issues/254) "Save them", [#255](https://github.com/banodoco/astrid-app/issues/255) upload lost at reload.
+- **Tuple under test:** Agent `cand/29-r12` = `c5370a862d0b374afa412dd071418070e76f834c`. Runtime `cand/29-r12` = `42ae24aff8d2cb854f874ce134161077a3ba3641`. App integration `scratch/r12-app-int` = `ebfc9a1b7`: 2dc109bcc, then App main `6545f130` (merged, `54a362e2a`), gate 5 fix `e2d48f428`, review fixes `452f6b2f0` and `ed9327947`, blocker fixes `9afd4aaa6`, and the VIDEO-DROP marker correction `48ec9bb70` and `ebfc9a1b7`. App `cand/29-r12` (`657773e6`) moves to the re-pinned head of this branch at freeze. The provisional re-pin is shakedown `scratch/r12-shakedown` = `8f1a19086`.
+- **Path:**
+  - (a) App Tests + Direct Journey green on the integration head: OPEN. On `e2d48f428`: `direct-journey` green; three-products 7 passed (gate 5 and EXT-BATCH expected-failed), 1 unexpected (video drop at `:2187`, before its marker), 6 not run. Direct Journey on `48ec9bb70` is running; it is the first run to reach the 6. App Tests on `9afd4aaa6` is running. The `boundary` job is red only on the lock-vs-pin mismatch, which the re-pin clears.
+  - (b) CI comparisons: Runtime DONE, 0 regressions (recounted from the raw logs; gate record item 5 is filled). Agent OPEN: the comparison worker hasn't reported.
+  - (c) merge App main: DONE (`6545f130`, cut-off).
+  - (d) re-pin: provisional on the shakedown, final after (a).
+  - (e) matrix: shakedown run 602 is in progress. Green: linux fresh, r0-handoff, r9-install, r11-update; macos fresh. Red: linux autostart-off (card never appears; Codex Terra diagnosing). macOS and Windows rows are still running.
+  - (f) A-FROZEN: after (a), (b), (e) and the re-pin round.
+  - Honest estimate: 3–5 h, with (a)'s video-drop test and the autostart-off row the long poles.
+- **Gate reviews (Astra, independent, read-only):**
+  - `2dc109bcc..ed9327947`: BLOCKER ×2. Fixed in `9afd4aaa6`; re-review NO BLOCKER.
+  - VIDEO-DROP marker `48ec9bb70`: BLOCKER (wrong attribution). Corrected in `ebfc9a1b7`; second review running. The App candidate holds on it.
+- **Named exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252, all expiring 2026-11-25. That is 7 of the 10-entry ceiling with the three older useClipDrag entries. EXT-BATCH is now shown failing at its marked step on a real run. VIDEO-DROP and DUP-SHOT are pending the 48ec9bb70 run; TASK-SWAP is not yet reached.
+- **Blocked:** nothing needs the owner.
+- **Workers:** non-taste tasks run on Codex via `codex exec`, one per task, each in its own clone, from a thin Claude wrapper. Tiers: N = `gpt-6-luna`, X = `gpt-6.1-terra`, S = `gpt-6.1-sol`, reviews = `gpt-6-astra` (read-only). Codex can't use the GitHub tools, so log downloads go to Haiku sub-agents. Fallback used: none. Timestamps come from `date -u`. Entries stamped "2026-11-12 00:50Z/01:05Z" are mis-stamped; see the correction entry.
 
 ## Decisions
 - 11 Nov (before 22:20Z) — **R12 T3 015/017 ruling (11 Nov):** closed, pre-existing host-load timeouts, not regressions. On clean GitHub runners, `tests/core/execution/test_process_group.py` (91 passed, 5 darwin deselected) and the three native render-scope selectors in `test_render_scope_launch.py` passed on base `313bbd46` ([run 43075148232](https://github.com/banodoco/astrid-agent/actions/runs/43075148232)) and candidate `53908e55` ([run 43075158431](https://github.com/banodoco/astrid-agent/actions/runs/43075158431)). The other modules in old group 017 are covered by the T5 `ci.yml` run.
