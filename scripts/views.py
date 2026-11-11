@@ -74,9 +74,12 @@ def check_view(view: View, root: Path) -> list[str]:
         actual = (root / view.target).read_text(encoding="utf-8")
         wanted = expected(view, root)
         if actual != wanted:
-            return [f"view {view.name} is stale or hand-edited; run python3 scripts/astrid_dev.py sync (sources: {', '.join(view.sources)})"]
+            return [f"view {view.name} is stale or hand-edited: {view.target} does not match its sources; "
+                    f"edit {', '.join(view.sources)} instead, then run python3 scripts/astrid_dev.py sync"]
     except (OSError, ValueError) as exc:
-        return [f"view {view.name}: {exc} (sources: {', '.join(view.sources)})"]
+        return [f"view {view.name}: cannot check {view.target}: {exc}; "
+                f"{view.target} is generated from {', '.join(view.sources)}, so fix any error there, "
+                f"then run python3 scripts/astrid_dev.py sync"]
     return []
 
 
