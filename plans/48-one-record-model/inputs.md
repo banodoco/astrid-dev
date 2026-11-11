@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — on 11 Nov 2026 the owner asked for a review of astrid-dev's overall structure before it scales, agreed with the direction and asked for it to be specified as a project linked to the vision-communication gap ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). The scope itself and decisions D1 to D8 below are not yet chosen. Next: the owner answers D1 to D8 and confirms or cuts the phases.
+**Scope decision:** Accepted — Phase 1 only. On 11 Nov 2026 the owner asked for the first phase to be handed to a manager and driven to completion, with normal, very hard and super hard tasks on Codex and taste and review on Claude ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). Phase 2 stays unaccepted until D1 to D4 are answered; Phases 3 and 4 stay proposed (D7).
 
 **Prior art:** a read of every script, workflow, skill and template at astrid-dev `e27e30a`, plus two read-only surveys of all 47 packs and all 227 evidence files ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)); findings are under [What exists today](#what-exists-today). Reused: [`project_contract.py`](../../scripts/project_contract.py), [`vision_subject.py`](../../scripts/vision_subject.py), [`export_public_vision.py`](../../scripts/export_public_vision.py) and the `publish-vision` job. Overlapping plans: [Plan 31](../31-releases-from-astrid-dev/plan.md) and [Plan 44](../44-vision-execution-trail/plan.md).
 
@@ -14,18 +14,19 @@
 
 **Proof and limits:** see [plan.md](plan.md#completion). The proof is structural: same verdicts and a byte-identical public feed across the refactor, conflict-free parallel plan PRs, and one-file extension examples. It does not show that contributors find the result clearer beyond one fresh-agent trial.
 
-**Review rounds:** Pending — recommend one round at the end and no review stop. On 11 Nov 2026 the owner asked for reviews to be minimal and only where complexity is meaningful; one round is kept because PM-6 and PM-7 move the source of truth for status and change privileged automation. Next: the owner confirms.
+**Review rounds:** one round on Phase 1's integrated head (row R1), under the owner's policy of 11 Nov 2026 that reviews are minimal and only for meaningful complexity; Phase 1 qualifies because every later phase and Plan 31 build on it. Pending for Phase 2 — recommend one round. Next: the owner confirms with Phase 2's scope.
 
-**Ambiguity pass:** Pending. Other agents will run these tasks and several are X or S, so N helpers run one pass per phase before dispatch.
+**Ambiguity pass:** done for Phase 1 by the planner; the choices are in [tasks.md](tasks.md#phase-1-dispatch-notes). Pending for Phase 2.
 
 ## Owner decisions
 
-All open. Each has a recommendation.
+Open unless marked decided. Each has a recommendation.
 
 - **D1. Where does priority live once the catalog is generated?** Row order is the priority today and it is the one fact that belongs to no single project. *Recommend:* a small ordered file of project ids (`plans/priority.md`), edited only to reprioritize; a project missing from it sorts last among open work. Alternative: a numeric priority field in each plan, which makes reordering touch many files.
 - **D2. Which field syntax do project facts use?** The repository already has two: bold lines (`**Vision gaps:** …`) in plans, gaps and releases, and plain header lines (`Date: …`) in ledger entries and PR forms. *Recommend:* bold lines at the top of `plan.md`, next to `**Vision gaps:**`, and no third syntax. Alternative: YAML front matter, which GitHub renders as a table but needs a parser the standard library does not have.
 - **D3. When are generated files refreshed?** Today the author runs the generator and CI fails if the file is stale. With many open PRs each adding a plan, every one of them edits the same generated catalog and the same count line in the root README, and they conflict. *Recommend:* refresh on `main` by a bot, so PRs never contain generated output. Cost: a bot commits to `main` (needs O-1) and the page lags a merge by about a minute. Alternative: keep the stale check and accept rebases; drop PM-8.
 - **D4. Do existing packs get reshaped?** Only 10 of 47 `plan.md` files use the template's headings. *Recommend:* reshape queued drafts by script, leave packs with a live run and finished packs alone, and report the drift. Alternative: check new packs only.
+- **Run start (decided, 11 Nov 2026).** The owner's go covers starting Phase 1 now, not after Release 12 publishes. To keep that release safe, Phase 1 lands on `int/48-one-record-model`, the old check commands keep working, and the one PR to `main` waits for the owner's go.
 - **D5. Order against Plan 31.** *Recommend:* Phase 1 before Plan 31's RL-1a to RL-1c, so Plan 31 registers its checks and its manifest as a view. Both wait for Release 12. Alternative: Plan 31 first, then fold its scripts in (more rework, no delay to releases).
 - **D6. Where does this sit in the catalog's order?** The row is last among the open rows, as the plan skill now says for any new plan. *Recommend:* the owner moves it directly above Plan 31 if D5 is accepted.
 - **D7. Do Phases 3 and 4 happen?** The owner agreed with the direction in the planning session. The critique says no recorded failure asks for a declared lifecycle, generated forms or an evidence envelope, and that their only named consumer (Plan 44) is an unscoped draft; by [principle 8](../../docs/contribution-design-principles.md) they should wait. *Recommend:* commit Phases 1 and 2 now, and decide Phases 3 and 4 after Phase 2 lands, taking PM-11 (pack shape) first because its evidence is strongest (ten of 47 plans match the template). The catalog estimate covers the committed phases, with the proposed ones stated separately.
