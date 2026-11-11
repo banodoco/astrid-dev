@@ -80,6 +80,9 @@ def canonical_agent_prompt(root: Path) -> str:
     return blocks[0].strip()
 
 
+INTRO_FILE = Path("vision/intro.md")  # hand-written Ambition and "Build Astrid with us" text
+
+
 def build(root: Path, revision: str) -> dict:
     if not REVISION.fullmatch(revision):
         raise ValueError("revision must be an immutable 40-character commit SHA")
@@ -90,7 +93,8 @@ def build(root: Path, revision: str) -> dict:
     if not vision.startswith("# Astrid — "):
         raise ValueError("vision README must have '# Astrid — <headline>'")
     title = heading(vision).removeprefix("Astrid — ")
-    intro = section(vision, "Ambition")
+    intro_text = read(root, INTRO_FILE)
+    intro = section(intro_text, "Ambition")
     pillar_index = section(vision, "Four pillars")
     pillars = []
     for m in PILLAR.finditer(pillar_index):
@@ -178,8 +182,8 @@ def build(root: Path, revision: str) -> dict:
     return {
         "schemaVersion": 1,
         "source": {"repository": "banodoco/astrid-dev", "revision": revision},
-        "vision": {"title": title, "introMarkdown": rewrite_links(intro, vision_file, revision, root),
-                   "contributeMarkdown": rewrite_links(section(vision, "Build Astrid with us"), vision_file, revision, root),
+        "vision": {"title": title, "introMarkdown": rewrite_links(intro, INTRO_FILE, revision, root),
+                   "contributeMarkdown": rewrite_links(section(intro_text, "Build Astrid with us"), INTRO_FILE, revision, root),
                    "agentPrompt": canonical_agent_prompt(root)},
         "pillars": pillars, "principles": principles, "gaps": gaps, "projects": projects,
     }
@@ -194,9 +198,9 @@ def render_readme(root: Path, page: dict) -> str:
     maintained by an author.
     """
     vision_root = Path("vision")
-    vision_text = read(root, vision_root / "README.md")
-    intro = section(vision_text, "Ambition")
-    contribution = section(vision_text, "Build Astrid with us")
+    intro_text = read(root, INTRO_FILE)
+    intro = section(intro_text, "Ambition")
+    contribution = section(intro_text, "Build Astrid with us")
     from views import VIEWS
     marker = next(view.marker for view in VIEWS if view.name == "public-vision")
     lines = [
@@ -204,7 +208,7 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "# Astrid — " + page["vision"]["title"],
         "",
-        "<!-- Ambition and participation live here; pillar, principle and gap summaries are derived from their own documents. -->",
+        "<!-- Ambition and participation come from intro.md; pillar, principle and gap summaries are derived from their own documents. -->",
         "",
         "## Ambition",
         "",
