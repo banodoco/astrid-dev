@@ -27,9 +27,21 @@ You produce an agreed, testable end state and tasks another agent can run.
 1. **Start from [`strategy.md`](../../strategy.md),** so the project fits the current sequence, then **find prior art** in affected source, issues, [plans](../../plans/index.md), [gaps](../../vision/README.md) and, where relevant, outside approaches. Trace input → actual implementation → user-visible result, noting useful source revisions, reuse, negative findings and uncertainties. Delegate bounded research when helpful, but no broad audit without a decision it could change.
 2. **Pick the smallest complete result.** Compare reusing or extending a pack, adding one, changing core and, when relevant, doing less or nothing. Prefer an existing plan or gap to a new entry. Justify placement and tradeoffs from evidence, not architectural preference. When the gap has a route to closure, place the plan in it with the [Gap](../astrid-dev-gap/SKILL.md) skill, and add the plan's `Contributes to closure:` line.
 3. **Challenge in proportion to consequence.** For material architecture, an expensive or hard-to-reverse decision, or a table case below, have the advisor critique the plan for real removals, consolidation and reuse; record its findings and what you accepted or rejected. A simple bounded project needs only a concise alternatives review and a reason to skip the advisor.
-4. **Agree the outcome.** Present the real options (as many as the owner needs; ten is a useful technique, not a quota), their user-facing tradeoffs and a testable end state.
+4. **Agree the outcome.** Present the real options (as many as the owner needs; ten is a useful technique, not a quota), their user-facing tradeoffs and a testable end state. When the change is complex, or the owner has to picture it to decide, [offer ten vivid statements](#ten-vivid-statements).
 5. **Write a compact handoff,** one home per fact: [`inputs.md`](../../templates/project/inputs.md) for source evidence, alternatives, challenge decision, approval and uncertainty; [`plan.md`](../../templates/project/plan.md) for outcome, scope, sequence and completion; [`tasks.md`](../../templates/project/tasks.md) for assignments and focused proof ([rules below](#write-the-task-list)). Link detailed work only for a distinct use.
 6. **Seek greenlight.** A contributor may [open a proposal issue](../../docs/contribution-workflow.md#propose-and-greenlight-new-work) without permission. A maintainer-reviewed **scope PR** greenlights new scope by recording the owner's actual decision in `inputs.md` and adding one queued catalog entry.
+
+## Ten vivid statements
+
+A long plan hides its biggest decisions. When the work is meaningfully complex (a hard fix, a change to how people work, several decisions the owner must make), ask the owner whether they want about ten statements before they read the plan, and write them if they do. Skip the offer for a simple, bounded project.
+
+- **What they are for:** the owner scans them in a minute, sees the anchor decisions and the edges of the change, and can say "no, not that" before any task is written.
+- **Each statement is one sentence about what changes,** phrased boldly enough to disagree with. Contrast works well: "Now, the list defines the plans. After, the plans define the list."
+- **Cover the edges, not only the benefits:** what stops being possible, who has to change a habit, what is deliberately left out, and the choice most likely to be controversial.
+- **Every statement must be true of the plan as written.** If one overstates it, change the statement or change the plan. Do not write a slogan the tasks don't deliver.
+- **Record the owner's reaction** to each contested statement as a decision in `inputs.md`, and revise the plan before seeking greenlight.
+
+Ten is a guide: use fewer when there are fewer real anchors.
 
 ## Scale the method
 
