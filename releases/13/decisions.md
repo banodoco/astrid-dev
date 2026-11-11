@@ -2,7 +2,7 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-11 22:35 UTC)
+## NOW (2026-11-11 23:00 UTC)
 
 - **Rehearsal head:** Agent `scratch/r13-rehearsal` `0560e34d06269d058056e6ee4087c5ec9d544bd7`, which is Release 12 candidate `c5370a86` + generation candidate `1439ccc6` (G5 ruling) + g1-wait-wording + g2-launchers + g3-graph-facts + tool-catalog + g4-pins-2 + g3-receipt + the staged-recipe read fix + the removed-name cleanup.
 - **Running:**
@@ -28,6 +28,7 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Review (2), pins and installer: no blocker. Clears once `test_pod_install_route` is fixed (in `r13/g4-followups`).
   - Five receipt-swallow (c) fixes plus the `EXCEPTIONS` allowlist addition: queued, stacked on `r13/g3-bundle`.
   - Isolated install of the tuple: works, to be redone on the final head.
+- **Workers:** Codex signed in (ChatGPT). Tiers confirmed by a trivial read-only call: Luna `gpt-6-luna`, Terra `gpt-6.1-terra`, Sol `gpt-6.1-sol`, Astra `gpt-6-astra`. New tasks run on Codex; Claude workers already running finish where they are. Fallbacks used: none.
 - **Money:** spent $3.41 of $40 at the last Release 12 record (11 Nov 06:41 UTC), plus about $0.46 a day of storage. No rental this release. To be reconciled against the account before the first rental.
 
 ## Entries
@@ -62,3 +63,5 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 - **2026-11-11 22:40** `test_generation_preparation[datacenter|stock]` hang ruled TEST DRIFT. `16ffaa60` made capacity waiting the default, and the fixture never opted out, so it waited until pytest's 600 s timeout. Product behaviour is correct: the wait is disclosed, bounded by the deadline and cancellable, and `--no-wait-for-capacity` refuses at once. Release 12 `c5370a86` passes because it lacks `16ffaa60`. Fix: the fixture opts out, as `test_target_selection.py:643` already does. No timeout or assertion was changed. Agent `r13/prep-hang` `53823a99`, merge 5 in the queue.
 - **2026-11-11 22:50** Merge queue ruling: the rehearsal's Ruff total sat at 2212 before any merge. Since `r13/ruff-debt` was measured (on `9630bb84`), the rehearsal had moved 7 findings. The exact-2128 rule applies only from the ruff-debt merge onwards. After that merge, a lint-only commit (I001, F401, E701; never BLE001, never noqa, never baseline edits) closes the remaining gap exactly.
 - **2026-11-11 22:50** Worker model change, approved by Hannah: new tasks run on Codex from the next task boundary (N Luna, X Terra, S Sol, reviews Astra read-only; taste tasks stay on Opus). Codex CLI 0.167.1 is installed, and the skills are copied from astrid-dev `c2b5435` to `~/.agents/skills`. Waiting on Hannah's device sign-in.
+- **2026-11-11 23:00** Switched new tasks to Codex workers (Hannah's instruction). All four tier IDs answer; skills copied from astrid-dev `c2b5435`.
+- **2026-11-11 23:00** **REVIEW** Generated-output swap-then-commit fixed for generation outputs: Agent `r13/task-handle-swap` `8ae4f91a`. It attaches the Runtime's own `generationId`/`variantId` through the output-selection read, so commit admits the media through the unchanged verified-media check. Task and run handle CLI tests pass; unverified media is still refused; the fix applies to `c5370a86`. The option that built a verified row for raw pins was rejected: it let unverified media through. Introduced by `8a66b1ac8`. Release 12's exception P39-R12-TASK-SWAP stays: generic outputs have no catalog variant, so fixing it needs a Runtime change; recommendation sent. Unverified integrity finding sent to the orchestrator: the Runtime accepts a raw pin for any managed project object, so the refusal is client-side only.
