@@ -10,6 +10,9 @@ The orchestrator stopped implementation and all new paid work for this handoff. 
 |---|---|---|
 | Agent `release12/gen-candidate` | `1439ccc63bf8d9ed5422ac1f95ffdd6158560e1e` | Pushed B5 WIP, not `B-CANDIDATE`; merge parents are `6a2351d95bb7eabc8b0ff6f988163fe420fcb3d7` and `e1731b9e4e86638e6425cf5601160e32be683a72`. |
 | Agent `plan32/r12-error-contract` | `e1731b9e4e86638e6425cf5601160e32be683a72` | Reviewed handoff integrated into B5 WIP. |
+| Agent `plan20/staging-agent` | `e28a509b6bd8c352514d4b4cc14c95628a8302e7` | Prepared P20 Agent handoff, incorporated into B5; final release acceptance remains separate. |
+| App `plan20/staging-app` | `ee9e0b9a6995a08c63040e031d049a7a320f7ef1` | Prepared P20 App work; final refresh and proof still require exact `A-FROZEN`. |
+| VibeComfy `release12/vibecomfy` | `8d065a8fef3dd602d5462e27d8eca088cf4e8262` | Prepared release branch exists; verify acceptance and final tuple rather than recreating it. |
 | Agent `handoff/r12-retention-fingerprint` | `6dbe7f9aefc7d2ee6004787c5fe269644fcf9a49` | Divergent, unaccepted WIP; safety controls and independent final review remain incomplete. Do not silently integrate it. |
 | Agent `handoff/r12-tts-cpu-assert-stages` | `adfe6904dd7e4d2030d4d94768c59e53fd9ff466` | Synthetic diagnostic tests only, not candidate code or live proof. |
 | Runtime `handoff/r12-self-observe` | `8b312c4b29bbb4fef5ac0849188678fe356b9e84` | Reviewed provisional Runtime handoff; final pin requires freeze coordination. |
