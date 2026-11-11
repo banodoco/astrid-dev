@@ -1,17 +1,18 @@
 """Focused checks for a public-page projection with no duplicated editorial copy."""
 import unittest
 
-from check_docs import ROOT
+from pathlib import Path
 from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary, canonical_agent_prompt
 
 
 SHA = "a" * 40
+FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "vision"
 
 
 class PublicVisionProjectionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.page = build(ROOT, SHA)
+        cls.page = build(FIXTURE_ROOT, SHA)
 
     def test_pillars_come_from_vision_in_declared_order(self):
         self.assertEqual(
@@ -35,7 +36,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         for kind, items in (("pillars", self.page["pillars"]),
                             ("principles", self.page["principles"])):
             for subject in items:
-                path = ROOT / "vision" / kind / (subject["id"] + ".md")
+                path = FIXTURE_ROOT / "vision" / kind / (subject["id"] + ".md")
                 parsed = parse_subject(path.read_text(encoding="utf-8"), str(path))
                 self.assertEqual(subject["statement"], parsed["statement"])
                 self.assertEqual(subject["explanationMarkdown"], parsed["explanationMarkdown"])
@@ -49,7 +50,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         vision = self.page["vision"]
         self.assertEqual(vision["title"], "A tool to unlock the collective artistic ambition of the open-source AI community")
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
-        self.assertEqual(vision["agentPrompt"], canonical_agent_prompt(ROOT))
+        self.assertEqual(vision["agentPrompt"], canonical_agent_prompt(FIXTURE_ROOT))
         self.assertIn("skills/astrid-dev/SKILL.md", vision["agentPrompt"])
         self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
@@ -227,7 +228,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(plan["gapIds"], ["CA-002"])
         self.assertEqual(plan["status"], "queued")
         self.assertIn("earlier commitments", plan["goalMarkdown"].lower())
-        path = ROOT / "plans/28-contributor-ownership/inputs.md"
+        path = FIXTURE_ROOT / "plans/28-contributor-ownership/inputs.md"
         inputs = path.read_text(encoding="utf-8")
         self.assertIn("Banodoco-website", inputs)
         self.assertIn("Equity Review", inputs)
@@ -247,13 +248,13 @@ class PublicVisionProjectionTests(unittest.TestCase):
     def test_relative_markdown_links_point_at_pinned_source(self):
         text = rewrite_links("[source](../pillars/artistic-ambition.md)",
                              __import__("pathlib").Path("vision/gaps/AA-001-sustained-creative-work.md"),
-                             SHA, ROOT)
+                             SHA, FIXTURE_ROOT)
         self.assertEqual(text,
                          f"[source](https://github.com/banodoco/astrid-dev/blob/{SHA}"
                          "/vision/pillars/artistic-ambition.md)")
 
     def test_root_vision_counts_follow_source_data(self):
-        actual = (ROOT / "README.md").read_text(encoding="utf-8")
+        actual = (FIXTURE_ROOT / "README.md").read_text(encoding="utf-8")
         self.assertEqual(render_root_readme(actual, self.page), actual)
         self.assertIn("Our vision has four main pillars and four guiding principles.", actual)
         self.assertIn(f"We've identified {len(self.page['gaps'])} gaps", actual)
@@ -275,7 +276,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
     def test_immutable_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "40-character"):
-            build(ROOT, "main")
+            build(FIXTURE_ROOT, "main")
 
 
 if __name__ == "__main__":
