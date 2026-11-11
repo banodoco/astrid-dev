@@ -199,3 +199,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - Confirmed: the release fields are consistent with the intercept.
   - LOW (follow-up, not R12): the unit test checks source strings, not capture behaviour. The live matrix capture is the proof.
   - The qualifying matrix uses `harness/29-r12` at `fbd7e7e71` or later. A validation run on the shakedown tuple is in flight.
+- 2026-11-11 23:56Z — **App Tests 633 on `9afd4aaa6`:** vitest (including the renamed documentNavigation test) and release-tooling-macos are green. `boundary` is red only on the Agent vendor lock against the pin, which the re-pin clears.
+- 2026-11-11 23:56Z — **Direct Journey 172 on `48ec9bb70`:** `direct-journey` green. three-products: 9 passed, 1 unexpected, 4 not run.
+  - Gate 5 and the restored bootstrap test pass.
+  - EXT-BATCH and VIDEO-DROP now fail as expected at their marked steps: 2 of the 4 exceptions proven on a real run.
+  - Unexpected: "M1 real dependency conflict" (`:2522`) at `openSeededTimeline` (`app.ts:257`). The project selector showed "Bootstrap actual …", the project the bootstrap test (test 7) creates and opens. This is a serial-state leak: test 7 had never run before this round.
+  - Fix: test 7 restores the selected project it found, without weakening any assertion. With Codex Luna (`cx-g8`).
+  - In parallel, following the orchestrator's advice, the four never-reached tests (DUP-SHOT, mixed editing, TASK-SWAP "render R", empty bootstrap) run in isolation on `scratch/r12-iso` `516f21bd4`. That's `d31b976e1` plus a scratch-only `--grep` in the workflow, which never ships.
