@@ -302,10 +302,7 @@ def _boundary_impl(context):
             raise ValueError(f'{gap_id}: duplicate gap files')
         if paths:
             meta = next((line for line in read_text(context.root, paths[0].relative_to(context.root)).splitlines() if line.startswith('**Applies to:**')), '')
-            try:
-                expected[gap_id] = parse_gap_relationships(meta)
-            except ValueError:
-                expected[gap_id] = None
+            expected[gap_id] = parse_gap_relationships(meta)
         else:
             expected[gap_id] = None
     return gate.check_pr(required, body, expected)

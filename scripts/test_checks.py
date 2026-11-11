@@ -110,7 +110,8 @@ class RegisteredRuleTests(unittest.TestCase):
             (root / "plans/index.md").write_text(catalog("active"))
             gap = root / "vision/gaps/F-005-local-files-cloud-assist.md"
             gap.parent.mkdir(parents=True, exist_ok=True)
-            gap.write_text(ORIGINAL)
+            gap_text = ORIGINAL.replace("[Local-first](../principles/local-first-cloud-capable.md)", "[Local-first](../principles/local-first-cloud-capable.md) (primary)")
+            gap.write_text(gap_text)
             git("add", ".")
             git("commit", "-qm", "base")
             base = git("rev-parse", "HEAD")
@@ -118,13 +119,19 @@ class RegisteredRuleTests(unittest.TestCase):
             body.write_text("")
             # All three rules must inspect current content, including unstaged edits.
             (root / "plans/index.md").write_text(catalog("done"))
-            gap.write_text(ORIGINAL.replace("An outcome is not yet available", "A changed outcome"))
+            gap_text = gap_text.replace("An outcome is not yet available", "A changed outcome")
+            gap.write_text(gap_text)
             (project / "inputs.md").write_text(DRAFT.replace("**Approach:**", "**Missing approach:**"))
             code, output = invoke(["check", "--base", base, "--body-file", str(body)], root=root)
             for expected in ("Plan 20: missing '## Completion assessment", "F-005: missing '## Gap boundary assessment", "20-zero-to-first-image: missing 'Approach' planning evidence"):
                 with self.subTest(expected=expected):
                     self.assertEqual(code, 1, output)
                     self.assertIn(expected, output)
+            malformed = ORIGINAL.replace("An outcome is not yet available", "A changed outcome")
+            gap.write_text(malformed)
+            code, output = invoke(["check", "--base", base, "--body-file", str(body)], root=root)
+            self.assertEqual(code, 1, output)
+            self.assertRegex(output, r"ERROR [^:]+: gap boundary gate: invalid gap relationship or role:")
 
 
 if __name__ == "__main__":
