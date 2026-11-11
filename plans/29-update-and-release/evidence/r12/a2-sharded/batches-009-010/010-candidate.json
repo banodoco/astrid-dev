@@ -1,0 +1,408 @@
+{
+  "batch": "010",
+  "side": "candidate",
+  "modules": [
+    "tests/core/execution/test_generic_host_claim_loop.py",
+    "tests/core/execution/test_generic_host_contract.py",
+    "tests/core/execution/test_generic_host_handoff.py"
+  ],
+  "pins_and_python": [
+    "ec48555d8298d155390ffbb37d1950c3e80b43a4",
+    "42ae24aff8d2cb854f874ce134161077a3ba3641",
+    "8d065a8fef3dd602d5462e27d8eca088cf4e8262",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T05:43:35Z",
+  "end_utc": "2026-11-11T05:44:35Z",
+  "exit": 0,
+  "summary": "============================= 92 passed in 59.21s ==============================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_capacity_and_finite_claim_allowance_isolate_session_and_attempt_owners[2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_capacity_and_finite_claim_allowance_isolate_session_and_attempt_owners[3]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_single_slot_and_once_keep_synchronous_compatibility[True-None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_single_slot_and_once_keep_synchronous_compatibility[False-2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_failed_claims_back_off_per_slot_without_losing_the_other_slot",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_registration_renews_in_coordinator_while_slots_are_running",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_shutdown_fences_each_slot_and_cleans_only_its_owned_processes",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_shutdown_during_claim_fails_exact_acquired_attempt_before_execution",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_finally_fences_sibling_claim_before_delayed_first_slot_cleanup",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_unresponsive_claim_owner_has_bounded_join_and_is_retained_fenced",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_failed_registration_refresh_backs_off_and_blocks_new_claims",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_parallel_caller_owned_attempt_root_is_rejected_before_claim",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_runtime_slot_fork_does_not_share_transport_or_attempt_heartbeat_state",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_claim_loop.py::test_slot_discovery_refresh_failure_retries_before_claim",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_mismatch_fails_before_child[<lambda>-workflow contract digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_mismatch_fails_before_child[<lambda>-target binding target_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_mismatch_fails_before_child[<lambda>-input_object_ids]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_mismatch_fails_before_child[<lambda>-observed task binding]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_mismatch_fails_before_child[<lambda>-session_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[task_id-other-task-task_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[run_id-other-run-run_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[attempt_id-other-attempt-attempt_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[lease_id-other-lease-lease_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[fence-9-fence]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[executor_id-other-executor-executor_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[runtime_epoch-9-runtime_epoch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_attempt_identity_is_fenced[capability_id-other-capability-capability_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_exact_target_identity_is_fenced[pod_id-pod-other-pod_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_exact_target_identity_is_fenced[provider_account_ref-account-other-provider_account_ref]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_runtime_binding_exact_target_identity_is_fenced[release_digest-release-other-release_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_input_descriptor_must_match_manifest_and_spec",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_target_storage_and_mounts_are_checked",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_requires_credential_verified_placement_projection[actual_target]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_requires_credential_verified_placement_projection[verification]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_requires_credential_verified_placement_projection[executor_incarnation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_rejects_actual_target_mismatch",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_rejects_resolved_target_mismatch",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_rejects_forged_placement_verification[<lambda>0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_rejects_forged_placement_verification[<lambda>1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_rejects_forged_placement_verification[<lambda>2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_queue_deadline_fails_before_child",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_runtime_limit_and_session_identity_are_settled",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_collection_deadline_fences_settlement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_contract.py::test_contract_runtime_deadline_cancels_slow_child",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_review_session_reads_do_not_require_o_nofollow",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_handoff_journal_keeps_file_fsync_and_only_posix_directory_fsync[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_handoff_journal_keeps_file_fsync_and_only_posix_directory_fsync[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_pause_serializes_with_real_claim_rpc_and_settlement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_active_attempt_cannot_acknowledge_pause",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_rebind_refuses_registration_without_durable_runtime_fence",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_resume_finalize_replay_and_changed_binding",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_unknown_control_and_cleanup_leave_claims_closed",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_missing_runtime_fence_or_successor_authentication_refuses_resume[handoff_export_sealed-payload0-fence_unresolved]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_missing_runtime_fence_or_successor_authentication_refuses_resume[handoff_adopt-payload1-identity_unresolved]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_missing_runtime_fence_or_successor_authentication_refuses_resume[resume_prepare-payload2-fence_unresolved]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_missing_runtime_fence_or_successor_authentication_refuses_resume[handoff_finalize-payload3-fence_unresolved]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_duplicate_keys_and_unknown_quiescence_cannot_ack_pause",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_expired_pause_preserves_cached_success_and_closed_gate",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_expired_unseen_binding_does_not_pin_and_valid_retry_succeeds",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_excessively_future_binding_does_not_pin",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_changed_binding_conflicts_even_after_expiry",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_pause_and_export_preserve_actual_registered_state",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_successor_evidence_rejects_forged_stale_or_changed_binding",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_rebind_registers_once_while_claim_gate_remains_closed",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_resume_rechecks_fence_registration_and_current_roles",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_committed_handoff_replay_does_not_repeat_registration",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_publishes_complete_validated_roles",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[missing-host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[missing-relay]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[generation-host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[generation-relay]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[target-host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[target-relay]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[actor-host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[actor-relay]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[epoch-host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_missing_or_stale_retained_roles[epoch-relay]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_inconsistent_delegated_role[engine]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_refuses_inconsistent_delegated_role[engine_listener]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_pause_persistence_failure_keeps_gate_closed",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_native_graph_cleanup_retains_two_role_contract",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_sealed_registration_after_health_moves_to_successor",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_refuses_local_or_sealed_registration_drift[registration]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_refuses_local_or_sealed_registration_drift[source]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_refuses_local_or_sealed_registration_drift[capability]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_refuses_local_or_sealed_registration_drift[runtime]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_refuses_local_or_sealed_registration_drift[sealed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_refuses_local_or_sealed_registration_drift[endpoint]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_rechecks_local_registration_before_publication[source]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_rechecks_local_registration_before_publication[registration]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_rechecks_local_registration_before_publication[client]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_handoff.py::test_adopt_rechecks_local_registration_before_publication[activation]",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [],
+  "source_log_sha256": "848f105963148d492e6cdb11e0f23067c0871c86bd56fdfc1644c40c7e2edd90",
+  "source_receipt_sha256": {
+    "start.txt": "05fd2f86efdfe23996661e9736bf2affcc520385500fc6b35a0c37d5d6f57aa0",
+    "end.txt": "47b165a6defc993c8c6f21958159036bf12d11820ab9bab7cae96682239af640",
+    "module.txt": "0edba15fef42ef1fd128a41ce4d615e316eb534d763a85912776c493567aed8b",
+    "pins.txt": "2cb64dbf19eb77cca05df65a74d46bf0f9f9be4a76f3705e50e8e41ab85932cf",
+    "exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "eba39b048406fc0e432cebd0dcc9aa9c1b651acf3e14126786b6274597815acb",
+    "SHA256SUMS": "47c197b50f68dddbc9d9efa4c654ea6d4bfc2656f8774b4853357c5d9b020e3a"
+  }
+}

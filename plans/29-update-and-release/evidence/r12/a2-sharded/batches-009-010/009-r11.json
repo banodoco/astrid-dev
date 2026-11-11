@@ -1,0 +1,949 @@
+{
+  "batch": "009",
+  "side": "r11",
+  "modules": [
+    "tests/core/execution/test_generic_host_child_bridge_d18.py"
+  ],
+  "pins_and_python": [
+    "a105de3a4852cb61b9647dfe2c920118bd29f272",
+    "4f5477cb0f5b03d28bec991a1fe34edcd8fc309f",
+    "e65f4941d09b1cb4d1dd5aae6171c73e648706f4",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T05:39:29Z",
+  "end_utc": "2026-11-11T05:39:39Z",
+  "exit": 1,
+  "summary": "================ 6 failed, 220 passed, 442 deselected in 8.41s =================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_exact_historical_identity_and_private_meter",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-1-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-1-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-1-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-1-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-1-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-1-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-7-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-7-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-7-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-7-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-7-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-7-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-65536-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-65536-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-65536-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-65536-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-65536-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[-1-65536-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-1-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-1-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-1-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-1-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-1-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-1-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-7-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-7-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-7-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-7-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-7-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-7-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-65536-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-65536-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-65536-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-65536-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-65536-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[0-65536-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-1-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-1-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-1-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-1-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-1-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-1-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-7-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-7-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-7-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-7-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-7-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-7-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-65536-head0-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-65536-head0-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-65536-head1-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-65536-head1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-65536-head2-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_production_cap_and_error_identity[5-65536-head2-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_truncated_json_is_terminal_before_error_decode[{\"code\":\"private-prefix\"-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_truncated_json_is_terminal_before_error_decode[{\"code\":\"private-prefix\"-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_truncated_json_is_terminal_before_error_decode[{\"message\":\"\\xc3-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_truncated_json_is_terminal_before_error_decode[{\"message\":\"\\xc3-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_truncated_json_is_terminal_before_error_decode[[]-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_truncated_json_is_terminal_before_error_decode[[]-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_invalid_or_exhausted_cap_precedes_transport[0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_invalid_or_exhausted_cap_precedes_transport[-1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_invalid_or_exhausted_cap_precedes_transport[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_invalid_or_exhausted_cap_precedes_transport[1.5]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_invalid_or_exhausted_cap_precedes_transport[None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_invalid_or_exhausted_cap_precedes_transport[8]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_invalid_or_exhausted_cap_precedes_transport[exhausted]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_acquisition_remaining_budget_error_shared_client_and_binary_isolation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_unknown_raw_fields_count_before_typed_projection",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_every_managed_output_continuation[next]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_every_managed_output_continuation[]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_every_managed_output_continuation[42]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_every_managed_output_continuation[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_foreign_association[project_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_foreign_association[run_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_foreign_association[task_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_wrong_root_grant_identity[project_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_wrong_root_grant_identity[capability_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_wrong_root_grant_identity[capability_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_parent_authority_loss[fence]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_parent_authority_loss[epoch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_parent_authority_loss[spec]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_parent_authority_loss[binding]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_parent_authority_loss[cancelled]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_allows_only_runtime_owned_registry_mutation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_rejects_row_budget_and_changed_readback",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_requires_strict_persisted_grant[missing_limit]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_requires_strict_persisted_grant[boolean_limit]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_requires_strict_persisted_grant[over_limit]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_requires_strict_persisted_grant[unknown]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_requires_strict_persisted_grant[wildcard]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_invalid_raw_json[{\"project_id\":\"P\",\"project_id\":\"other\"}]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_invalid_raw_json[{\"project_id\":\"P\",\"unknown\":NaN}]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_collection_latches_invalid_raw_json[[]]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_deduplicates_cas_preserving_associations",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rejects_invalid_descriptors_before_acquisition[digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rejects_invalid_descriptors_before_acquisition[size]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rejects_invalid_descriptors_before_acquisition[boolean_size]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rejects_invalid_descriptors_before_acquisition[temporary]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rejects_invalid_descriptors_before_acquisition[deleted]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rejects_invalid_descriptors_before_acquisition[role]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_checks_selected_caps_before_acquisition[count]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_checks_selected_caps_before_acquisition[bytes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_verifies_cas_size_and_digest[short]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_verifies_cas_size_and_digest[XXXXXXXXXXXXXXXX]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rechecks_after_acquisition[association]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rechecks_after_acquisition[cancelled]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rechecks_after_acquisition[lease]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_preparation_rechecks_after_acquisition[binding]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_rejects_confinement_attacks[namespace_symlink]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_rejects_confinement_attacks[digest_symlink]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_rejects_confinement_attacks[output_replaced]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_rejects_confinement_attacks[collision]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_replay_revalidates_file_identity[replace]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_replay_revalidates_file_identity[symlink]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_replay_revalidates_file_identity[hardlink]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_replay_revalidates_file_identity[corrupt]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_requires_current_attempt_and_collection",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_authority_loss_cleans_unpublished_file[cancelled]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_authority_loss_cleans_unpublished_file[lease]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_object_staging_authority_loss_cleans_unpublished_file[bridge_revoked]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_uses_current_attempt_receipts_and_private_provenance",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rejects_replacements_and_forged_selection[replacement]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rejects_replacements_and_forged_selection[between_snapshot_and_upload]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rejects_replacements_and_forged_selection[forged_selection]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rejects_replacements_and_forged_selection[forged_input]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_caps_precede_any_mutation[media_count]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_caps_precede_any_mutation[media_bytes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_caps_precede_any_mutation[child_inputs]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_caps_precede_any_mutation[child_bytes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_caps_precede_any_mutation[derived_objects]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_caps_precede_any_mutation[derived_bytes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[cancelled]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[lease]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[source]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_preserves_receipt_order_and_lineage_validation[order]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_preserves_receipt_order_and_lineage_validation[digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_preserves_receipt_order_and_lineage_validation[parent]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_preserves_receipt_order_and_lineage_validation[lineage]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_wiring_retains_exact_media_and_normal_submission",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_logical_key_preserved_at_wire_boundary",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[missing-cas]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[unauthorized-cas]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[cas-alias]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[changed-document]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[foreign-project]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[foreign-target]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[foreign-task]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[foreign-association]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[wrong-artifact]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[binding-size]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_rejects_unadmitted_or_foreign_frozen_identity[two-bindings]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[tampered-media]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[wrong-mime]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[object-binding]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[missing-media]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[changed-frozen]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[source-changed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[cancelled]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_render_intercept_cannot_bypass_retained_custody[lease-lost]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_dispatch_intercepts_only_rendering_submit",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_selected_association_filter_rejects_unretained_identity[selection0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_selected_association_filter_rejects_unretained_identity[selection1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_selected_association_filter_rejects_unretained_identity[selection2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_selected_association_filter_rejects_unretained_identity[association]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_discovery_selected_association_filter_acquires_only_selected_object",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_changed_bytes_during_snapshot_fail",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_child_wire_idempotency_canonical_version_and_scope",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[missing-digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[missing-nonce]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[missing-token]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[wrong-digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[wrong-nonce]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[wrong-token]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[malformed-digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[malformed-nonce]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_rejects_invalid_bounded_handshake[malformed-token]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_broker_cross_attempt_replay_rejected",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[-admission_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[-network_nonce]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[-token]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[bad value-admission_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[bad value-network_nonce]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[bad value-token]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[\\u2603-admission_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[\\u2603-network_nonce]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[\\u2603-token]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-admission_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-network_nonce]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_network_hook_rejects_malformed_material[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-token]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_host_evidence_verification_rejects_tampering[signature]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_host_evidence_verification_rejects_tampering[admission]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_host_evidence_verification_rejects_tampering[route]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_network_startup_preserves_utf8_pair_before_isolation_flags",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_d18_same_admission_repeated_handshake_preserves_contract",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_names_aliases_templates_and_caller_precedence",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_rejects_path_escape[relative]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_rejects_path_escape[absolute]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_rejects_path_escape[symlink]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_rejects_path_escape[input]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_rejects_host_placeholder_override",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_input_aliases_defaults_and_template_seed",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_declared_command_output_input_alias_does_not_replace_another_canonical_input",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_output_over_retention_limit_rejects_before_cas_read",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_projects_only_bounded_lease_evidence",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic3]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic4]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic5]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic6]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic7]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic8]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic9]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic10]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic11]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic12]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic13]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic14]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic15]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic16]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic17]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic18]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_public_task_omits_invalid_lease_evidence[diagnostic19]",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_uses_current_attempt_receipts_and_private_provenance - astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+    "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[cancelled] - AssertionError: assert [] == ['upload']",
+    "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[lease] - AssertionError: assert [] == ['upload']",
+    "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[source] - AssertionError: assert [] == ['upload']",
+    "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_wiring_retains_exact_media_and_normal_submission - astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+    "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_logical_key_preserved_at_wire_boundary - astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch"
+  ],
+  "source_log_sha256": "bf886b335b896bfde93d46fc125e2fd832a2e04ebd70541919ef110bf9833adb",
+  "source_receipt_sha256": {
+    "start.txt": "48606e70ad82f6eaa5550e548c12dff471a9face36af710a545fd748feb2ffc6",
+    "end.txt": "f8a136f9b6cca96129e10f7076745bf7d197af4d32fbdb67016b1d4de870e4c2",
+    "module.txt": "80e7c40dcd1fd2d137ae0ec53ab98f76717617ad82e461f4173135a7f04036e6",
+    "pins.txt": "e719eecfc1d208291853f687fcd3ab348897aded4a80c14cde0b2d46925b2136",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "ef267c0900011389d2644b4b6baff86e3a1abc69850b79a2e48d524cd0aeeafc",
+    "SHA256SUMS": "e29264f2816dfd919b5296537c6ca9f8da2c04ce03ec8ef7d9b26bad32087ad2"
+  }
+}
