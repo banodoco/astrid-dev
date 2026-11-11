@@ -88,3 +88,15 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - (i) The TTS and SFX commands against the G1 skill. This gates the first rental.
   - (ii) The G4 follow-ups, range `git show 821956162`.
   - (iii) The bundle and redactor, range `09724310a..49516887d`, plus `machine.py` `_active_sources` and `unshipped_entry_reason`. This gates every run after the first diagnostic.
+- **2026-11-11 23:53** Review (ii), G4 follow-ups `821956162` (Astra): REQUEST CHANGES. My rulings:
+  - BLOCKER, accepted: refusal messages can print manifest URL userinfo or `?token=` values. It is not in the installed build `bf3b6ba7`; G4's original messages print no values. It blocks the follow-ups merge.
+  - FIX, accepted: a trailing-slash lifecycle URL is refused.
+  - FIX, accepted: a wrong comment in `tools.py`.
+  - NOTE, test added: the legacy-manifest test.
+  - FIX, declined, ruled a NOTE: the two-lock journaled transaction. The script is a developer script whose output is committed, and the equality test catches any divergence.
+  Fixes run on Codex Luna, `r13/g4-followups-2`.
+- **2026-11-11 23:53** Review (iii), bundle and redactor `09724310a..49516887d` (Astra): BLOCK, with 10 blockers and 2 fixes. Full report: `/home/user/wt/briefs/review-g3bundle-findings.md`.
+  - Blockers: prompt fragments, multiline and encoded prompts survive; missing prompt context still exports text; short secrets and JSON credential values survive; pod truncation defeats the controller pass; workflow edges and IDs carry values; IPv6 `::` and escaped URLs survive; late registration lets collection beat release; the deadline does not cover controller redaction; intermediate symlinks escape the root.
+  - Fixes: caps are enforced after download; pre-claim discovery fails open.
+  - Accepted in full. `49516887d` must not ship. Fixes run on Codex Sol, `r13/g3-bundle-2`, then re-review. This gates every paid run after the first diagnostic. The first TTS diagnostic on `bf3b6ba7` (no bundle) is unaffected.
+- **2026-11-11 23:53** `install-r13b` reinstalled from this namespace (exit 0). The host is up at `http://127.0.0.1:35197`. `generate defaults` is OK; the TTS default is `audio/qwen3_tts_custom_voice` and the SFX default is `audio/hunyuan_video_foley`. Census `[]`. `generate failure` gives "no receipt" as expected.
