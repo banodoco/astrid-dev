@@ -74,6 +74,17 @@ From the owner, 7 Nov 2026 (session chat):
 15. **Go for Release 10:** publish to `main` once the release candidate's three fresh rows, UR-13m and UR-13n pass with their receipts and review round 2 leaves no blocking finding. The release is the frozen candidate in `run.yaml`, patch and not required, and goes through a PR that `release-guard` checks. Any blocking finding or failing proof stops it, and it comes back to the owner (owner, 8 Nov 2026).
 16. **Fix R2.4 before Release 10, defer R2.2, R2.3 and R2.5** (owner, 8 Nov 2026: "YES PLEASE FIX IT"). R2.4 is status polls starting the update helper on every poll on macOS and Windows. R2.6 merges back into `int` at publish, as before.
 
+## Owner decision: Turn guard on (9 Nov 2026, Hannah, 08:19Z)
+
+- Release 12 enforces the autostart-off guard, with honest copy.
+- Preserving autostart-off in-app is a Plan 30 card (UR-20).
+
+## Note: Plan 33 census verified (9 Nov 2026)
+
+- Plan 33's census and expectation changes were verified sound.
+- Agent commit `5d841e3055` ("Converge pack API 2.3 and retire verified migrated copies") deleted 19 `pack.yaml` files. The tree went from 45 to 26 `pack.yaml` files. The count comes from the full trees, because the commit's own file list is capped.
+- Every removed expectation names one of the 19 deleted files, as recorded in that verification. The mapping was not re-checked here.
+
 ## Source identities
 
 Record exact base and donor SHAs at task start. Known donor: Agent `b97c43db8` (`reconcile` handler, unmerged).
@@ -98,4 +109,18 @@ One independent UX pass over every install, update, update-failure and repair pa
 5. Fix small things directly, as commits on int via PR. Propose anything big as a task card instead of doing it.
 
 Its fixes ride in the Release 11 candidate. The pass is UR-15j, run after UR-15, UR-15a, UR-15b, UR-15c, UR-15f and the Runtime and App PRs are on int, and before Release 11 is composed.
+
+*Release 11 was published by Plan 33 without UR-15. Plan 29's next release is release 12; see the Release 12 record in [tasks.md](tasks.md).*
+
+## Owner decision 18 (9 Nov 2026, Hannah, given to M-INT at 07:44Z): "I give you go"
+
+- A locally run App's "Copy instructions for your agent" text and its manual line say `npm run update`, run in the Astrid folder, instead of `curl … --update`.
+- Hosted astrid.haus keeps the curl line.
+- Implemented on App `cand/29-r12` as one commit with a test. The pin and the release number are unchanged.
+
+## Owner decision 19 (9 Nov 2026, Hannah, given to M-INT at 07:44Z): "I give you go"
+
+- Rollback to R0 is offered only until the first successful update after a handoff. After that, the retained R0 copy, its plist and its version may be pruned.
+- Not in release 12. Recorded as a Plan 30 card (S) for the pruning and rollback-window change, with tests (Plan 30 UR-19).
+- Decision 19 resolves the pending owner decision UR-15e's question about pruning. It is not a publish go: publishing release 12 still needs Hannah's own words in the session.
 
