@@ -126,3 +126,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - I checked the outbox path format: no prefix (`commitSession.ts:227`).
   - tsc is clean, and the registry gives 4 authorized, 0 forbidden.
   - The independent Astra re-review (`ed9327947..9afd4aaa6`) is running. The candidate stays held until it reads the fix.
+- 2026-11-11 23:26Z — **Re-review of the blocker fix (Astra, `ed9327947..9afd4aaa6`): NO BLOCKER.** The observation window, the outbox shape (no `/api/runtime` prefix; string body), the DUP-SHOT placement and the bootstrap regex were all confirmed against the code. The hold on the App candidate is lifted. App Tests and Direct Journey are dispatched on `9afd4aaa6`.
+- 2026-11-11 23:26Z — **Direct Journey `43118115615` on `e2d48f428`.**
+  - `direct-journey` is green.
+  - `three-products`: 7 passed, including gate 5 and EXT-BATCH as an expected failure; 1 unexpected; 6 not run.
+  - The unexpected one is the video drop: a 90 s timeout at `:2187`, waiting for the "wrong verified selection" GET. That step comes before the VIDEO-DROP marker, so the #252 exception doesn't cover it. rv1's local run stopped at the same place.
+  - It's also the first time this test has run after EXT-BATCH stopped early under its marker, so leaked seed state is a candidate.
+  - Codex Luna is diagnosing it from the trace (`cx-vd`). It may fix the test only if this is drift or leaked state; if it's a product defect or #252, it changes nothing and I rule.
