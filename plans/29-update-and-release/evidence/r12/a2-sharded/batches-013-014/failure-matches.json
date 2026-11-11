@@ -1,0 +1,41 @@
+[
+  {
+    "batch": "013",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_platform_boundary.py::test_agent_native_process_and_lock_boundary - AssertionError: {'astrid/core/execution/generic_host.py': ['4863: import fcntl', '4887: signal.SIGURG', '4903: signal.SIGURG'], 'astrid/core/generation/engine_custody.py': ['124: os.getuid', '301: raw subprocess process control'], 'astrid/core/generation/engine_endpoint.py': ['282: os.getuid', '289: os.getuid'], 'astrid/core/generation/engine_readiness.py': ['381: os.getuid', '390: os.getuid'], ...}",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "014",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[None--m] - astrid.core.execution.generic_host.HostError: external command module is outside selected pack namespace",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "014",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_policy--m] - AssertionError: Regex pattern did not match.",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "014",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_hook--m] - AssertionError: Regex pattern did not match.",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "014",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[changed_hook--m] - AssertionError: Regex pattern did not match.",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  }
+]
