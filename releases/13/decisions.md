@@ -78,3 +78,8 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 - **2026-11-11 23:20** INCIDENT, owned: I tried to load the guard globally through a `.pth` file in the shared venv. Venv Python startup hung, and hung `cpuinfo` children ran out of memory, for about 3 minutes. Both were removed and the hung processes killed. Rule: never install interpreter-wide hooks into the shared venv.
 - **2026-11-11 23:05** Codex launch flagged by the permission check as possibly "creating unsafe agents". It warned and did not block. The launch (`codex exec` with workspace-write and network) is what Hannah approved, and the flag is recorded here.
 - **2026-11-11 23:00** Sequencing change from the orchestrator: the first TTS diagnosis needs the receipt, graph-checked names, the five swallow fixes and the `EXCEPTIONS` addition, but not the H10 bundle. With no bundle, no log leaves the pod. The bundle still gates every later run. The swallow fixes are now on their own branch, `r13/receipt-swallows`, on the rehearsal (Codex Luna).
+- **2026-11-11 23:30** New working rules (brief `d285c34`):
+  - Message the orchestrator almost never; the log is the channel.
+  - I commission the pre-paid reviews myself, on Astra (`gpt-6-astra`), read-only, on the exact range, with no conclusions in the brief: (1) the bundle and redactor, when `r13/g3-bundle` lands, with `machine.py:1167` and `1217` in range; (2) the pins and installer follow-ups, when `r13/g4-followups` lands; and later the merge review. A blocker stops its step until the fix has been read.
+  - Alarms are verified independently before I escalate them.
+  - Anything about Release 12 goes to its manager directly, `session_011EzfVzCLu2vv52JWNRiDJM`.
