@@ -4,17 +4,18 @@ Astrid's execution strategy is a sequence of **releases**, each a coherent step 
 
 The [plan catalog](plans/index.md) alone owns project status, priority, estimate and owner. [Vision gaps](vision/README.md) and their routes still define what needs to improve and how success will be assessed. A plan may be worked on before it is assigned to a release; an unassigned plan is not a release commitment.
 
-**Last reviewed:** 2026-11-10, following the decision to make strategy release-led. Future assignments are provisional until explicitly finalized.
+**Last reviewed:** 2026-11-11, following the split of Release 12 into Releases 12 and 13. Future assignments are provisional until explicitly finalized.
 
 ## Focus now
 
-Finish [Release 12](releases/12.md) as two tracks that merge once: the update fixes under [Plan 29](plans/29-update-and-release/plan.md) ([Track A](releases/12/fixes.md)) and the generation work under Plans 32, 40, 20 and 34 ([Track B](releases/12/generation.md)). The [release 12 run note](docs/ledger/2026-11-09-release-12-slow-path.md) documents what slowed qualification so far.
+Ship [Release 12](releases/12.md), the update fixes under [Plan 29](plans/29-update-and-release/plan.md) plus the onboarding tour, as a fixes-only release ([task list](releases/12/fixes.md)). In parallel, make the generation path runnable and explainable without paid work, then rebuild it on published Release 12 as [Release 13](releases/13.md). The [release 12 run note](docs/ledger/2026-11-09-release-12-slow-path.md) documents what slowed qualification so far.
 
 ## Sequence
 
 | Release | Highlight | Plans | Why this order |
 |---|---|---|---|
-| [Release 12 (draft)](releases/12.md) | Updating Astrid works reliably on every platform, and creators generate media through one path, locally or on a rented GPU they control. | [Plan 29](plans/29-update-and-release/plan.md), [Plan 32](plans/32-generation-placement-targets/plan.md), [Plan 40](plans/40-machine-lifetime-controls/plan.md), [Plan 20](plans/20-zero-to-first-image/plan.md), [Plan 34](plans/34-real-gpu-proof/plan.md) | Both the update fixes and the generation work are near done; shipping them together means one candidate, one qualification and one publish. Two tracks merge once ([fixes](releases/12/fixes.md), [generation](releases/12/generation.md)). |
+| [Release 12 (draft)](releases/12.md) | Updating Astrid works reliably on every platform, and the new onboarding tour ships with it. | [Plan 29](plans/29-update-and-release/plan.md) | The fixes are close and field users need them; shipping them alone removes the generation merge, GPU proof and budget risk from their path ([task list](releases/12/fixes.md)). |
+| [Release 13 (draft)](releases/13.md) | Creators generate media through one path, locally or on a rented GPU they control, and a failed generation comes back with a receipt that says why. | [Plan 32](plans/32-generation-placement-targets/plan.md), [Plan 40](plans/40-machine-lifetime-controls/plan.md), [Plan 20](plans/20-zero-to-first-image/plan.md), [Plan 34](plans/34-real-gpu-proof/plan.md) | Generation has an undiagnosed live TTS failure and needs a failure receipt and one clear launch path before paid proof; it rebuilds on published Release 12 ([task detail](releases/13/generation.md)). |
 
 The table is a summary, **not** a second definition of a release. Add a future row when its draft file is created; update the row whenever its highlight or included plans change. A published release's document remains as the historical ledger. [Plan 31](plans/31-releases-from-astrid-dev/plan.md) makes this workflow and its checks authoritative.
 
@@ -26,6 +27,7 @@ Past releases are documented in the [existing release log](plans/releases.md) an
 
 ## Decisions
 
+- **2026-11-11:** Hannah split the combined release. Release 12 is fixes-only and includes the onboarding-tour commits on App `main`; generation (Plans 32, 40, 20 and 34) is [Release 13](releases/13.md), built on published Release 12. This reverses the 10 Nov fold-in below.
 - **2026-11-10:** Hannah folded the generation work (Plans 32, 40, 20 P1.5 and staged work, and Plan 34's proof) into Release 12 instead of a Release 13. The draft `releases/13.md` is folded into [Release 12](releases/12.md); the next release brief starts fresh after publish.
 - **2026-11-10:** Strategy is release-led: each release file starts as a living strategy brief, with a highlight, intent, approach and linked plans. The overview here is mainly a summary of those release files.
 - **2026-11-10:** An unpinned draft can change on `main` without publishing; publication requires separate, explicit finalization and owner-approved, validated pins (Plan 31).
