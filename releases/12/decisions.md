@@ -162,3 +162,18 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - `ebfc9a1b7`: the marker stays before the verified read, which is the first step needing native video placement. The comment now attributes it to `7b33f8f50` and says the #252 fix must restore native video placement, verified read included. The wrong-selection import is asserted as 201 before the marker. Registry: 4 authorized, 0 forbidden. tsc is clean.
   - A second independent Astra review (`9afd4aaa6..ebfc9a1b7`) is running. The marker isn't final until it clears.
   - **REVIEW, Plan 39 follow-up:** there is no unmarked e2e test of the Runtime refusing a wrong verified selection. The only negative case is inside this marked test, and has been unreachable since `7b33f8f50`. The #252 fix must bring it back, or an independent test must be added on the native placement path.
+- 2026-11-11 23:38Z — **Second VIDEO-DROP review (Astra, `9afd4aaa6..ebfc9a1b7`): NO BLOCKER. The marker is final.**
+  - The reviewer confirmed from `7b33f8f50^` (`useAssetManagement.ts:285-317`, `useTimelineCommandsService.ts:543-547`) that native video placement, verified read included, was removed by that commit. The marker sits at the first dependent await.
+  - The MEDIUM coverage gap (no unmarked test of the wrong-selection refusal) is pre-existing and goes to Plan 39 with #252.
+  - LOW (the reason text) fixed in `d31b976e1`: text only, registry 4/0.
+- 2026-11-11 23:38Z — **Matrix autostart-off rows: harness defect, fixed as Agent `harness/29-r12` `d92ea0ee6`** (Codex Terra; I checked it against the App code).
+  - The candidate App deliberately shows no autostart-off card on a current install (`resolveUpdate.ts`, `silentWhenCurrent`, CONTRACTS K6), and the row served the candidate's own release 12 to a Release 12 install. The capture also lacked the local-network permission it needs to reach the loopback Runtime.
+  - The fix serves a copy of the candidate manifest with release 13, so a newer release is on offer. It grants local-network access, waits for the connected indicator (`RuntimeConnectionPill.tsx:78`), then opens Settings as the App's Direct Journey does (`:1378`). The exact sentence is still required, and the pre-capture refusal checks are unchanged.
+  - Unit tests: 24 passed. I ran them myself in a scratch environment, since Codex had no pytest.
+  - **REVIEW**: the next-release offer is simulated. It's the smallest stand-in for "R13 served", which can't exist before publication.
+  - The independent Astra review of `b550ecad..d92ea0ee6` is running. The fix qualifies in the next matrix run; run 602 continues on `b550ecad` for the other rows.
+- 2026-11-11 23:38Z — Orchestrator check-in 4 noted:
+  - Runtime: already ruled, 0 regressions.
+  - The NOW block is refreshed, and timestamps come from `date -u`.
+  - The six not-run tests run in Direct Journey 172 on `48ec9bb70`, which has the corrected marker position, so they're known when it lands.
+  - The video-drop marker sits at the first save-dependent step with everything before it asserted, not at the top.
