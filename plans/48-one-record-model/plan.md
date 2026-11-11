@@ -22,10 +22,13 @@ A contributor or agent can answer four questions about astrid-dev from one place
 
 **Proposed, not committed (owner decision D7):**
 
-- **Phase 3: one pack shape, a declared lifecycle, generated forms.** The plan, inputs and tasks shapes declared and checked for new and changed packs; statuses, transitions and what each requires declared once; PR templates generated from the definitions the checks read.
-- **Phase 4: one evidence shape.** One envelope (claim, exact candidate, command, environment, result, receipt, limits, route) for the implementation and completion forms and the GPU validation record.
+- **Phase 3: one pack shape, a declared lifecycle, generated review forms.** Three tracks that do not depend on each other:
+  - **A, pack shape.** The three templates are the declaration. A new pack must match them. Existing packs are never checked.
+  - **B, lifecycle.** The six statuses and what entering each requires are declared in one file that every reader uses. As a separate, droppable step, the allowed moves between them are declared too and any other move fails.
+  - **C, the completion form.** It is generated from a definition, and the completion gate takes its labels from the same definition. The gate's rules stay as they are.
+- **Phase 4: one evidence shape.** One envelope (claim, exact candidate, command, environment, result, receipt, limits, routes) in the implementation review form and in the GPU validation record. CI confirms it is complete, never that it is true. The completion assessment keeps its own lines.
 
-The independent critique recommends cutting Phases 3 and 4 until a recorded failure asks for them; see [inputs.md](inputs.md#critique).
+Both phases are specified to task level in [tasks.md](tasks.md) at the owner's request of 11 Nov 2026; that request is not acceptance. Two independent critiques recommend cutting most of this until a recorded failure asks for it, keeping at most a one-line fix to the completion form and the pack-shape check; see [the first](inputs.md#critique) and [the second](inputs.md#second-critique).
 
 **Boundaries:**
 
@@ -55,7 +58,7 @@ Phases run in order; each leaves the repository working and is useful if later p
 1. **Phase 1** (PM-0 to PM-5t, then one review round, R1). Accepted and authorized.
 2. **Phase 2** (PM-6 to PM-10). Not yet accepted. Changes how a project is claimed and where status is edited, so the migration, the gates that read status and the docs land together.
 3. **One review round** (R) closes the committed scope.
-4. **Phases 3 and 4** (PM-11 to PM-15) only if D7 accepts them.
+4. **Phases 3 and 4** (PM-11a to R4) only if D7 accepts them, each closed by its own review round (R3, R4). Only Phase 3's lifecycle track needs Phase 2; the pack-shape and form tracks need only Phase 1 on `main`, so the owner may take either earlier (D9). Phase 4 needs the form track. The one-line form fix (PM-13h) needs nothing.
 
 **Readiness and constraints:**
 
@@ -75,7 +78,8 @@ Tasks, routes, scopes and proofs are in [tasks.md](tasks.md). Recording this pla
 - `python3 scripts/astrid_dev.py check | list | sync`: the one entry point CI and contributors run.
 - A record helper other scripts import (sections, fields, tables, project records).
 - A view mechanism Plan 31 can use for its release manifest and strategy table, and Plan 44 for its trail.
-- If Phase 4 is accepted, an evidence envelope Plan 44 and the GPU validation skill can cite.
+- If Phase 3 is accepted: `scripts/pack_shape.py` (the shape read from the templates), `scripts/lifecycle.py` (statuses, what each requires and, if kept, the allowed moves) and `scripts/forms.py` (the completion form).
+- If Phase 4 is accepted: `scripts/evidence.py`, whose `parse` returns the envelopes in a text, for Plan 44 and the GPU validation skill to cite.
 - `docs/checks.md` and `docs/extending.md`: the generated list of every check and view, and the one page on adding a check, view or field.
 
 **Limits:** the public feed (`vision.json`) keeps `schemaVersion: 1` and its exact shape; any change there is out of scope and would need the App's agreement.
@@ -92,5 +96,13 @@ Shown on the integrated astrid-dev candidate, with exact SHAs:
 - **Extensible in one place:** adding a new check, a new view and a new project field are each demonstrated as a change to one file plus its test, following `docs/extending.md`.
 - **Negative cases:** a hand edit to a generated file fails; a duplicate project number fails; a claim for another person's handle, or one that changes any other line, is refused.
 - **Unchanged:** the public feed is byte-identical before and after Phase 1, and after Phase 2 differs only by the one renumbered project's id; the App's parser accepts it.
+
+**If Phases 3 and 4 are accepted,** also shown on their integrated candidates:
+
+- **Shape:** a new pack copied from the templates passes; the same pack with one template heading removed fails, naming the file and the heading; a changed or renamed old pack is never failed.
+- **Lifecycle:** adding a status is one entry in `scripts/lifecycle.py`, shown by a test that adds one; a move to `done` without a completion assessment still fails; if PM-12c is kept, a status change the declaration does not allow fails.
+- **Form:** editing the generated completion form by hand fails; it holds every label its gate asks for; with only its plan number filled in, it fails on every field whose rule can tell an answer from a hint.
+- **Envelope:** an incomplete envelope fails in an implementation review request and in a new GPU record; a complete envelope that is false passes, and the form and the skill say so.
+- **Unchanged:** no verdict that existed before either phase changes. For the completion gate that is shown by exact output over a pinned set of descriptions, before and after.
 
 **Limits of this proof:** it shows structure, not that contributors find it clearer. One fresh agent adding a check and a view from `docs/extending.md` alone, with its confusions recorded, is the only readability evidence. Completion does not close CA-005: that also needs reassessment after a real period of many contributors working at once.
