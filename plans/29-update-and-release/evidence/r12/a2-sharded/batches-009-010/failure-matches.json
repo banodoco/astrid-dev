@@ -1,0 +1,50 @@
+[
+  {
+    "batch": "009",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_uses_current_attempt_receipts_and_private_provenance - astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "009",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[cancelled] - AssertionError: assert [] == ['upload']",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "009",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[lease] - AssertionError: assert [] == ['upload']",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "009",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[source] - AssertionError: assert [] == ['upload']",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "009",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_wiring_retains_exact_media_and_normal_submission - astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "009",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_logical_key_preserved_at_wire_boundary - astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  }
+]
