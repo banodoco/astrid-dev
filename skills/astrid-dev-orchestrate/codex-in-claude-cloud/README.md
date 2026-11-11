@@ -25,7 +25,7 @@ Put exact model IDs in the run's `run.yaml`, never in this repository.
 
 Use this when a Claude manager session keeps managing (briefing, checking diffs, ruling, integrating) and its workers run on Codex. It needs no runner, keep-alive or mailbox: each task is one `codex exec` call that returns when the task is done.
 
-- **Routes.** `N` tasks go to Luna, `X` to Terra, `S` to Sol. `T` (taste) tasks and reviews stay on Claude sub-agents at the high-judgment tier. The manager judges the difficulty first, as the [run contract](../../astrid-dev-shared/run-contract.md#cheapest-model-first) says, and escalates one step only on evidence.
+- **Routes.** `N` tasks go to Luna, `X` to Terra, `S` to Sol. Reviews go to Astra, run read-only (`-s read-only`) on the exact commit range and given the previous round's report. `T` (taste) tasks stay on Claude sub-agents at the high-judgment tier. The manager judges the difficulty first, as the [run contract](../../astrid-dev-shared/run-contract.md#cheapest-model-first) says, and escalates one step only on evidence.
 - **Sign-in first, once per session.** Do the [one-time setup](#one-time-setup-in-the-session): install, then `codex login --device-auth`. Post the link and the code it prints in your own reply, where the owner can see them, and tell the orchestrator they are waiting. The code expires in minutes, so ask for it when the owner is present, and ask again if it lapses. Each manager session is its own container and needs its own sign-in. Never read or copy `~/.codex`.
 - **One task, one call, one worktree.** From a Claude sub-agent, so the output stays out of the manager's context:
 
@@ -38,6 +38,7 @@ Use this when a Claude manager session keeps managing (briefing, checking diffs,
 - **The brief is the same four things** as for any worker: one outcome, the exact repository, branch and files or selectors, what done looks like, and what to return. Add the run's rules that Codex cannot infer: commits are added and never rewritten, no model names in commit messages, never weaken a check, and stop after three attempts.
 - **What stays with the manager.** Pushing to candidate branches, dispatching CI, messages to the orchestrator, anything paid, and anything that needs a credential. A Codex worker inherits the session's network, so a credential the proxy injects reaches it too: do not give Codex workers tasks that call a paid provider.
 - **Switch at a task boundary.** Let running Claude workers finish; start new tasks on Codex. If a model ID is refused or the sign-in is lost, fall back to the Claude route for that task and say so; do not wait.
+- **A review is independent of the work it reviews.** The reviewer is never the worker that wrote the change and is not briefed with the author's conclusions, only the commit range, the rules that apply and the questions to press on. Whoever owns the gate (the orchestrator, where the release brief says so) commissions the review and rules on its findings.
 
 ## Brief a manager
 
