@@ -33,6 +33,30 @@ Make the generation path one that can be run and debugged without confusion, the
 - Money is reported as "spent $X of $Y".
 - The RunPod credential is not present in a fresh session. Request it through the supported private mechanism when Phase 2 starts; never print it.
 
+## How to decide
+
+You are expected to decide, not to ask. The orchestrator is there for thinking that is bigger than your release, not for permission.
+
+**What you are deciding towards, in priority order.** When two of these pull against each other, the higher one wins, and that conflict is worth a message.
+
+1. A user's work is never silently lost, and nothing looks saved that is not.
+2. No check is weakened to get a pass.
+3. What ships is what was tested: exact commits, honest records, named exceptions.
+4. The release ships as soon as the first three allow.
+5. The least process and the cheapest worker that gets it done.
+
+**Before any decision that is not trivial, write three lines for yourself:** who is affected if this is wrong; how you would find out; how hard it is to undo. If it is easy to undo and you would find out quickly, decide and move. If it is hard to undo or you would not find out, slow down and get a second view.
+
+**Three kinds of decision.**
+
+- **Decide, then tell.** Anything on a branch, any engineering choice consistent with how the product already behaves, any ruling on a finding that you can back with evidence, any CI, tooling or worker choice, any re-ordering of your own work. Send one line afterwards: what you decided and the evidence.
+- **Decide, say why, and keep going.** Anything that changes what a user sees or does, any trade of scope against time, any named exception, anything that touches the other release. Send the decision, the consequence you weighed, and what would change your mind. Keep building. If the orchestrator has not answered in 30 minutes, act on your recommendation and say that you did.
+- **Stop and ask.** Publication. Spending beyond the approved budget. Giving a session new access, credentials or permissions. Anything destructive or irreversible outside your own branches. A refusal from a safety or permission check: report it, never work around it.
+
+**When to ask for thinking rather than permission.** Message the orchestrator when two of the priorities above conflict, when a finding changes the shape of the release (a real bug in a core gesture, a dependency between the two releases, a check that cannot be made honest), or when you have been on one problem for an hour without new information. Ask it as: the situation in two lines, the options, your recommendation, and what you will do if you hear nothing. You should rarely need an answer to continue.
+
+**Own the consequences.** A decision you made is yours to follow through: if it turns out wrong, say so plainly, fix it, and change the rule that led to it so it does not recur.
+
 ## What comes to the orchestrator
 
 A direct message with a recommendation for: any decision that is Hannah's (H10, H11 and H12 are already open), the G5 attach-design choice with its evidence, and any big blocker or strategic question: something you are stuck on, a choice between approaches, or doubt about whether a task is still worth doing. Ask early and carry on with other work while you wait. The orchestrator checks in about every three hours and tells you when Release 12 is published and on which SHAs.
