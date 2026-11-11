@@ -1,11 +1,39 @@
 import tempfile
 import unittest
+import contextlib
+import io
+import shutil
 from pathlib import Path
 
 from views import View, _with_marker, check, check_view, sync
 
 
 class ViewTests(unittest.TestCase):
+    def test_view_check_is_registered(self):
+        import checks
+        registered = [entry for entry in checks.REGISTRY if entry.id == "generated-views"]
+        self.assertEqual(len(registered), 1)
+        self.assertEqual(registered[0].trigger, "always")
+        self.assertTrue(registered[0].description)
+        self.assertTrue(callable(registered[0].run))
+
+    def test_legacy_vision_failure_is_the_only_error_line(self):
+        import astrid_dev
+        source = Path(__file__).resolve().parent.parent
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "repo"
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            target = root / "README.md"
+            content = target.read_text(encoding="utf-8")
+            target.write_text(content.replace("<!-- vision-summary:end -->", "hand edit\n<!-- vision-summary:end -->"), encoding="utf-8")
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                code = astrid_dev.main(["check"], root=root)
+            error_lines = [line for line in output.getvalue().splitlines() if line.startswith("ERROR ")]
+            self.assertEqual(code, 1)
+            self.assertEqual(len(error_lines), 1)
+            self.assertIn("public-vision-content", error_lines[0])
+
     def test_file_view_adds_standard_marker(self):
         view = View("sample", ("source.md",), "target.md", lambda root: "# Generated\n")
         self.assertEqual(

@@ -14,6 +14,7 @@
 - `ledger always Validate ledger`
 - `markdown-links always Validate markdown links`
 - `public-vision-content always Validate generated public vision summaries`
+- `generated-views always Validate registered generated views`
 - `completion-assessment pr Require evidence for plans newly marked done`
 - `gap-boundary-assessment pr Require a first-principles assessment for redefined gaps`
 - `project-planning-evidence pr Validate planning evidence for new or opted-in projects`
