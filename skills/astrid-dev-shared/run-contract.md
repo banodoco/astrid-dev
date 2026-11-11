@@ -13,9 +13,9 @@ Default model for each route, using the newest available model of that family:
 | `N` | Everything below very hard, including ordinary hard work: research, reading, running checks, most changes and fixes | Haiku | Luna |
 | `X` | Very hard: intricate changes, subtle bugs, coupled or non-obvious reasoning | Sonnet | Terra |
 | `S` | Super hard: deep design, or correctness that needs the deepest reasoning | Opus | Sol |
-| `T` | Taste: small, editorial refinement of something that already exists, such as user-facing copy, error and refusal messages, names, a screen's layout or a doc's voice | Opus | Astra |
+| `T` | Taste: small, editorial refinement of something that already exists, such as user-facing copy, error and refusal messages, names, a screen's layout or a doc's voice | Opus | Opus (Claude session) |
 
-Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
+Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude), configured in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`. Codex runs do not take this role; their judgment and taste work goes to a Claude Opus session.
 
 Plans tag each task with its route, and execution uses that same tag. Normally **one accountable agent works on one project**. It can execute a scoped task directly; use a manager and bounded subagents when parallelism or genuinely separate research helps, not as mandatory ceremony for a small project. If delegating, the coordinating agent retains judgment, resolves each task's configured route model, checks returned evidence, and records actual model IDs and efforts in `run.yaml`.
 

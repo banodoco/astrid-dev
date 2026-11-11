@@ -9,7 +9,7 @@ Codex routes use the run contract's [Codex column](../../astrid-dev-shared/run-c
 | N | Luna |
 | X | Terra |
 | S | Sol |
-| T and judgment | Astra |
+| T and judgment | Opus (Claude session, not Codex) |
 
 Put exact model IDs in the run's `run.yaml`, never in this repository.
 

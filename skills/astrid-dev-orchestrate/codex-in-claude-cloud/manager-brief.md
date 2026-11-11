@@ -23,7 +23,7 @@ Record the IDs in `plans/<NN-name>/.otto/runs/<run-id>/run.yaml`, which is git-i
 | N | <Luna id> |
 | X | <Terra id> |
 | S | <Sol id> |
-| T, and review or judgment | <Astra id> |
+| T, and review or judgment | Opus: hand these to the Claude orchestrator; do not run them under Codex |
 
 You run on <model> at <effort> effort. Send X and S work to sub-agents, and run independent tasks at the same time. Keep fewer sub-agents open than the thread cap, with one slot free for your reviewer.
 
