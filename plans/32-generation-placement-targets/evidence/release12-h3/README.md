@@ -39,3 +39,17 @@ Other open checks:
 - The exact managed install/doctor selector was not validated in its intended installed environment; supplementary Python checks do not replace that proof.
 
 Release 12 explicitly excludes H3 GPU qualification. No provider call, GPU run, target compatibility claim, or H3 pass is asserted here. Separately observed baseline test failures remain routed to Plan 39; this record does not suppress or reinterpret them.
+
+## Bounded frame and canvas CPU probe
+
+The archived [`frame-canvas-proof.py`](frame-canvas-proof.py) and its [`captured output`](frame-canvas-proof.log) record a bounded CPU probe. The source methods were read from these exact pins:
+
+- Agent `6a2351d95bb7eabc8b0ff6f988163fe420fcb3d7`: [`plan_continuation`](https://github.com/banodoco/astrid-agent/blob/6a2351d95bb7eabc8b0ff6f988163fe420fcb3d7/astrid/packs/h3_av/shared/timing.py#L92).
+- ComfyUI `ee71d5c4993f29086b27fde1629a945ae48425bf`: [`MathExpressionNode.execute`](https://github.com/Comfy-Org/ComfyUI/blob/ee71d5c4993f29086b27fde1629a945ae48425bf/comfy_extras/nodes_math.py#L86), and [`ResolutionSelector.execute` plus aspect-ratio table](https://github.com/Comfy-Org/ComfyUI/blob/ee71d5c4993f29086b27fde1629a945ae48425bf/comfy_extras/nodes_resolution.py#L18).
+- H3 extension `361624fb406b63eb6694442eac6c895fc1533a70`: [`MiniMaxH3CropTo32.crop_to_32` and `MiniMaxH3StartCanvasSelector.select`](https://github.com/seitanism/ComfyUI-H3-Motion-Context-MultiRef/blob/361624fb406b63eb6694442eac6c895fc1533a70/h3_auto_crop32.py#L26).
+
+Eight requests used a 24-frame source and total requested output lengths of 25, 26, 41, 42, 48, 120, 240, and 362 frames. The planner/evaluated node values were respectively `(requested new, workflow seconds, raw extension, trim tail)`: `(1, 2.33333333333, 56, 16)`, `(2, 2.33333333333, 56, 15)`, `(17, 2.33333333333, 56, 0)`, `(18, 3.04166666667, 73, 16)`, `(24, 3.04166666667, 73, 10)`, `(96, 5.875, 141, 6)`, `(216, 10.8333333333, 260, 5)`, and `(338, 15.7916666667, 379, 2)`. Each raw extension met the probe's `5 + 17k` rule and its explicit `5..3600` assertion.
+
+Five fake image shapes exercised the crop and existing-video canvas methods: `1024×576 → 1024×576`, `1920×1080 → 1920×1056`, `641×479 → 640×448`, `32×32 → 32×32`, and `16385×8193 → 16384×8192`. A separate `ResolutionSelector` sample (`16:9`, `0.5` megapixels, multiple `32`) returned `960×544`. Edge checks showed `31×100` refused as too small, while `16416×8192` remained `16416×8192`, above the `generated_width` input declaration's 16384 maximum. The existing-video source dimension inputs have no corresponding maximum in the inspected schema, and the selector itself does not enforce a returned-canvas bound.
+
+This is deliberately a bounded source-method probe, not node execution: the expression evaluator accepts only the arithmetic/name/call AST subset used by the captured expression, rather than exercising the installed `simpleeval`; `io.NodeOutput` is inert, and the fake image reports dimensions while its slice operation returns a marker instead of slicing real pixels. The probe does not test installed registration, all inputs, actual media, actual model files, or GPU/runtime behavior. The UI/source numeric bounds checked here do not define the model's trained resolution range; treat sizes as advisory and consult target/model guidance for quality-sensitive use. The archived script retains the execution-time checkout paths, so rerunning it requires those exact source revisions and the candidate package that provides `plan_continuation`.
