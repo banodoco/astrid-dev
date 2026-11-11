@@ -22,6 +22,8 @@ A contributor or agent can answer four questions about astrid-dev from one place
 
 **Proposed, not committed (owner decision D7):**
 
+*Owner decision, 11 Nov 2026 (D7, D9):* queued to run after Phase 2: the one-line form fix (PM-13h), Phase 3's pack-shape track and its lifecycle track without the status gate, and one review round. Phase 3's form track and all of Phase 4 stay proposed and unscheduled. No run is authorized yet.
+
 - **Phase 3: one pack shape, a declared lifecycle, generated review forms.** Three tracks that do not depend on each other:
   - **A, pack shape.** The three templates are the declaration. A new pack must match them. Existing packs are never checked.
   - **B, lifecycle.** The six statuses and what entering each requires are declared in one file that every reader uses. As a separate, droppable step, the allowed moves between them are declared too and any other move fails.
