@@ -1,6 +1,6 @@
 # G5: choose one attach design
 
-**Status: Recommended, awaiting orchestrator.** This record recommends a choice. It is not a merge and not acceptance. The orchestrator makes the final choice.
+**Status:** Decided by the orchestrator, 11 Nov 2026: keep Release 12's fix `3639d63d`, drop `1edb88a0` and the identity envelope from `992dbde1`, Runtime `42ae24aff` everywhere.
 
 **Recommendation:** keep Release 12's owner-credential attach (`3639d63d`) and drop the Runtime-side variant. The Runtime pin becomes `42ae24aff8d2cb854f874ce134161077a3ba3641` in both Agent lock files. Keep the generation error contract (`e724eb50`..`e1731b9e`) and the lifecycle probe fix (`fa2dcaa1`). Neither depends on Runtime `8b312c4b`.
 
