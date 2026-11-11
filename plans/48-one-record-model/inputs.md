@@ -4,13 +4,13 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — on 11 Nov 2026 the owner asked for a review of astrid-dev's overall structure before it scales, agreed with the direction and asked for it to be specified as a project linked to the vision-communication gap ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). The scope itself and decisions D1 to D6 below are not yet chosen. Next: the owner answers D1 to D6 and confirms or cuts the phases.
+**Scope decision:** Pending — on 11 Nov 2026 the owner asked for a review of astrid-dev's overall structure before it scales, agreed with the direction and asked for it to be specified as a project linked to the vision-communication gap ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). The scope itself and decisions D1 to D8 below are not yet chosen. Next: the owner answers D1 to D8 and confirms or cuts the phases.
 
 **Prior art:** a read of every script, workflow, skill and template at astrid-dev `e27e30a`, plus two read-only surveys of all 47 packs and all 227 evidence files ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)); findings are under [What exists today](#what-exists-today). Reused: [`project_contract.py`](../../scripts/project_contract.py), [`vision_subject.py`](../../scripts/vision_subject.py), [`export_public_vision.py`](../../scripts/export_public_vision.py) and the `publish-vision` job. Overlapping plans: [Plan 31](../31-releases-from-astrid-dev/plan.md) and [Plan 44](../44-vision-execution-trail/plan.md).
 
-**Approach:** finish the shared layer the existing scripts already imply (one parser, a check registry, a view mechanism), then move the catalog onto it, then declare the pack shape, lifecycle, forms and evidence. Alternatives compared under [Alternatives](#alternatives): do nothing; fix only the catalog; adopt a documentation framework or a database; this plan.
+**Approach:** finish the shared layer the existing scripts already imply (one helper, a check registry, a view mechanism), then move the catalog onto it. Declaring the pack shape, lifecycle, forms and evidence is proposed, not committed (D7). Alternatives compared under [Alternatives](#alternatives): do nothing; fix only the catalog; adopt a documentation framework or a database; this plan.
 
-**Challenge:** Pending — an independent high-judgment critique, briefed to build as little as possible and to verify claims in code, was requested in the [planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF). Next: record its findings and what was accepted or rejected under [Critique](#critique).
+**Challenge:** Reviewed — one independent high-judgment critique, briefed to build as little as possible and to verify claims in code ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). It found three blocking errors in the first draft, all fixed, and recommends a scope about a third the size; what was accepted, and what is left to the owner, is under [Critique](#critique).
 
 **Proof and limits:** see [plan.md](plan.md#completion). The proof is structural: same verdicts and a byte-identical public feed across the refactor, conflict-free parallel plan PRs, and one-file extension examples. It does not show that contributors find the result clearer beyond one fresh-agent trial.
 
@@ -28,6 +28,8 @@ All open. Each has a recommendation.
 - **D4. Do existing packs get reshaped?** Only 10 of 47 `plan.md` files use the template's headings. *Recommend:* reshape queued drafts by script, leave packs with a live run and finished packs alone, and report the drift. Alternative: check new packs only.
 - **D5. Order against Plan 31.** *Recommend:* Phase 1 before Plan 31's RL-1a to RL-1c, so Plan 31 registers its checks and its manifest as a view. Both wait for Release 12. Alternative: Plan 31 first, then fold its scripts in (more rework, no delay to releases).
 - **D6. Where does this sit in the catalog's order?** The scope PR places it directly above Plan 31 because of D5. That placement is the owner's to change.
+- **D7. Do Phases 3 and 4 happen?** The owner agreed with the direction in the planning session. The critique says no recorded failure asks for a declared lifecycle, generated forms or an evidence envelope, and that their only named consumer (Plan 44) is an unscoped draft; by [principle 8](../../docs/contribution-design-principles.md) they should wait. *Recommend:* commit Phases 1 and 2 now, and decide Phases 3 and 4 after Phase 2 lands, taking PM-11 (pack shape) first because its evidence is strongest (ten of 47 plans match the template). The catalog estimate covers the committed phases, with the proposed ones stated separately.
+- **D8. Gap link or enabler?** The owner asked for this to be linked to the vision-communication gap, so the plan names CA-003 as primary. The critique disagrees: the plan does not deliver CA-003's closure evidence, Plan 44 already holds CA-003, and Plans 14 and 19 set the precedent of `Vision role: Foundational enabler` for internal tooling. *Recommend:* the owner confirms CA-003 or switches to the enabler line; either passes CI.
 
 ## Ten statements for the owner
 
@@ -39,9 +41,9 @@ Offered to the owner in the planning session to show the anchors and edges; each
 4. Now, a fact shown twice is sometimes generated and sometimes hand-copied and compared. After, every repeated fact is generated, with no exceptions.
 5. Now, you learn what is checked by reading five scripts. After, one command prints every check, and that printout is the documentation.
 6. Now, checks can pass locally and fail in CI. After, it is the same command in both places.
-7. Now, adding a stage means editing a template, a skill, a PR form and a pattern. After, it is one entry in one file.
-8. Now, the template is a suggestion ten of 47 plans follow. After, a new plan that does not match the shape does not land.
-9. Now, evidence is eleven shapes only a person can read. After, it is one shape, so a machine can confirm it names the exact version, the command and the result, and still not whether it proves the claim.
+7. Now, adding a stage means editing a template, a skill, a PR form and a pattern. After, it is one entry in one file. (Phase 3, proposed only.)
+8. Now, the template is a suggestion ten of 47 plans follow. After, a new plan that does not match the shape does not land. (Phase 3, proposed only.)
+9. Now, evidence is eleven shapes only a person can read. After, it is one shape, so a machine can confirm it names the exact version, the command and the result, and still not whether it proves the claim. (Phase 4, proposed only.)
 10. Nobody will be able to fix the catalog by hand any more: a wrong row is fixed in the plan it came from, and a bot, not a person, writes the page.
 
 ## What exists today
@@ -79,7 +81,7 @@ Counts are at astrid-dev `e27e30a`.
 - **Do nothing.** Works at today's size. The costs already recorded (local and CI disagreeing, progress PRs waiting on a shared file, a duplicated project number) grow with each plan and contributor, and Plan 31 adds a fourth one-off checker and a second publisher.
 - **Fix only the catalog** (Phase 2 alone). Removes the shared file, but needs a parser and a generator anyway, so it would add a second generator beside the vision one. Phase 1 is the smaller way to get there.
 - **Adopt a framework or a store** (a static-site generator, a schema library, GitHub Projects or a database for status). Each adds a dependency or a second home for facts and breaks "stdlib only, Markdown is the source". Rejected.
-- **This plan, cut after any phase.** Each phase stands alone. Phases 3 and 4 are the first to drop if the owner wants less.
+- **This plan, cut after any phase.** Each phase stands alone. Phases 3 and 4 are proposed only (D7).
 
 ## What following the planning process showed
 
@@ -96,12 +98,29 @@ Written while planning this project with the installed skills. Each is evidence 
 9. **"Consult the advisor" assumes a run.** A planner working alone has no advisor session; the skill does not say that an independent critic in the same session is acceptable. It was used here.
 10. **An owner's decision made in conversation has no durable link.** The check wants a URL or SHA; the only one available is a private session link, as Plan 31 also uses.
 11. **Three step lists, no map.** The main skill's six stages, the plan skill's six steps and the catalog's six statuses describe the same journey in three vocabularies. (PM-12)
+14. **The critique changed the plan more than any other step,** and the skill makes it conditional. It caught a gate that would have failed open. For a plan that changes checks or automation, it should not be optional.
 12. **Task ids and the test inventory have no home in the template.** Each plan invents a prefix; the skill requires a test inventory that the template never mentions. (PM-11)
 13. **The strategy has no place for work on astrid-dev itself.** It lists releases; a process project fits only under "Not now".
 
 ## Critique
 
-Pending; see **Challenge** above.
+One independent review of the first draft (plan and tasks), read-only, verifying claims in code. Findings and what was done:
+
+| Finding | Severity | Decision |
+| --- | --- | --- |
+| Moving status out of `plans/index.md` silently disables the completion gate: `check_completion.py` detects a move to `done` by comparing the index at base and head, and review intake requires the index to be modified. Once nobody edits the index, the gate passes everything | blocking | **Accepted.** PM-6 now moves the gate and review intake to the project's own status in the same PR, with a negative test; it is routed S |
+| "No check's result changes" was false. The section helpers differ on a missing section (nothing, empty string, or an error), the two placeholder lists differ by one word, and PM-2 changes behaviour on purpose | blocking | **Accepted.** PM-1 keeps each caller's behaviour as a parameter and lists the differences; the working-tree fix is a stated change |
+| Ordering hazards: the strategy-table task overlapped Plan 31's RL-1a and contradicted its design; PM-6 touched live-run packs the plan said were off-limits; renaming a Plan 40 folder could break Release 12's citation | blocking | **Accepted.** The strategy task is dropped and left to Plan 31; the boundary now says exactly which lines move in every pack; only `40-contribution-discovery` is renumbered |
+| The "same verdicts" proof could not be run: the broken cases are inline strings in unit tests, and removing the old modules breaks imports from trusted workflows | should-fix | **Accepted.** Fixture trees are built first; old modules stay as shims through Phase 1 |
+| The claim bot needs new rules in a project file (duplicate field lines, one path shape, status read at base, head and live `main`), a claim would trigger the planning check, and a not-found reply becomes a failure | should-fix | **Accepted** into PM-7. Noted: the bot is disabled today because `main` is unprotected |
+| Routes, dependencies and proofs: PM-6 should be S; PM-5 needs no dependency; the test inventory was wrong; rows named no test files; PM-8's stand-in branch proved nothing about the real rules; the docs grep missed the "only in the catalog" Start line | should-fix | **Accepted.** All corrected in `tasks.md` |
+| A views framework for one consumer is premature; keep the exporter as is | should-fix | **Partly accepted.** PM-3 is cut down to making the exporter's existing marker and stale check reusable, and it has three consumers in Phase 1 and the catalog in Phase 2. The owner asked for one standard way to generate pages |
+| Defer Phase 2 until conflicts are measured. Measured in the review: `main` took about 150 commits a day on 10 and 11 Nov and `plans/index.md` 14 to 18 a day on 7 to 9 Nov; edits to non-adjacent rows merge cleanly today; "author regenerates plus a stale check" would be worse than today at this rate; a bot on `main` needs settings that are still unset; cheaper options are to leave the table and move only the most-edited cell | should-fix | **Left to the owner (D3).** Phase 2 stays committed because the owner asked for plans to define the list, with these costs recorded. No conflict count was measured, only edit rates |
+| Cut Phases 3 and 4: no recorded failure asks for them | blocking, in the reviewer's view | **Left to the owner (D7).** Marked proposed, not committed, and left out of the committed estimate |
+| The CA-003 link is not honest; use the enabler line | should-fix | **Left to the owner (D8).** The owner asked for the gap link |
+| Hard to reverse: a bot bypass on `main`, a renamed plan folder, and status split across every plan file. All are in Phase 2 | consider | Recorded. Phase 1 has none of these, which is why RS1 sits before Phase 2 |
+
+The reviewer's own minimal scope is Phase 1 without the view mechanism, plus the duplicate-number check.
 
 ## Source identities
 
