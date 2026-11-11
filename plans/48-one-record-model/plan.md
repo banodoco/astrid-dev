@@ -46,20 +46,20 @@ This grows from three things already in the repository, not from a new design:
 - **One generated-page pipeline.** `scripts/export_public_vision.py` generates `vision/README.md`, the root README summary and the public feed, with a stale check in CI and a publish step on `main`. It is specific to the vision and cannot be reused for a second page.
 - **[Plan 31](../31-releases-from-astrid-dev/plan.md)** designs a typed release record, a draft-to-final gate and a second generated-only branch. That is this project's lifecycle and view ideas for one record type.
 
-The smallest sound approach is to finish the shared layer those three imply, then move the catalog onto it. The findings, alternatives, critique and open owner decisions are in [inputs.md](inputs.md#planning-evidence). This is a draft: the scope is not accepted.
+The smallest sound approach is to finish the shared layer those three imply, then move the catalog onto it. The findings, alternatives, critique and open owner decisions are in [inputs.md](inputs.md#planning-evidence). Phase 1's scope is accepted; the rest is not.
 
 ## Sequence and readiness
 
 Phases run in order; each leaves the repository working and is useful if later phases never start. Phase 1 carries most of the value for contributors adding checks or pages; Phase 2 removes the shared file every plan change edits today.
 
-1. **Phase 1** (PM-1 to PM-5).
-2. **Phase 2** (PM-6 to PM-9, PM-10t). Changes how a project is claimed and where status is edited, so the migration, the gates that read status and the docs land together.
+1. **Phase 1** (PM-0 to PM-5t, then one review round, R1). Accepted and authorized.
+2. **Phase 2** (PM-6 to PM-10). Not yet accepted. Changes how a project is claimed and where status is edited, so the migration, the gates that read status and the docs land together.
 3. **One review round** (R) closes the committed scope.
 4. **Phases 3 and 4** (PM-11 to PM-15) only if D7 accepts them.
 
 **Readiness and constraints:**
 
-- **Release 12** managers depend on the current checks daily. Nothing here starts before Release 12 is published, and Phase 1 must not change any check's result.
+- **Release 12** managers depend on the current checks daily. Phase 1 starts now on the owner's go, lands on its integration branch, keeps the old check commands working, and reaches `main` in one PR on the owner's go. Phase 2 waits for Release 12 to publish.
 - **Plan 31** adds its own checker and publisher to the same scripts. Sequence Phase 1 before Plan 31's RL-1a to RL-1c so Plan 31 registers checks and views instead of adding a fourth one-off (owner decision D5). Whichever lands second re-plans its task cards against the other's result.
 - **Phase 2's refresh on `main`** needs `main` protected and a bot identity allowed to commit generated files, the same owner settings Plan 31 and the claim bot already wait on (D3).
 - Open owner decisions D1 to D8 are in [inputs.md](inputs.md#owner-decisions).
