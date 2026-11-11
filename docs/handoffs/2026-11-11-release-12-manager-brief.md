@@ -33,9 +33,13 @@ You are expected to decide, not to ask. The orchestrator is there for thinking t
 
 **Three kinds of decision.**
 
-- **Decide, then tell.** Anything on a branch, any engineering choice consistent with how the product already behaves, any ruling on a finding that you can back with evidence, any CI, tooling or worker choice, any re-ordering of your own work. Send one line afterwards: what you decided and the evidence.
-- **Decide, say why, and keep going.** Anything that changes what a user sees or does, any trade of scope against time, any named exception, anything that touches the other release. Send the decision, the consequence you weighed, and what would change your mind. Keep building. If the orchestrator has not answered in 30 minutes, act on your recommendation and say that you did.
+- **Decide, then log.** Anything on a branch, any engineering choice consistent with how the product already behaves, any ruling on a finding that you can back with evidence, any CI, tooling or worker choice, any re-ordering of your own work. Write one entry in your decision log. Do not message the orchestrator.
+- **Decide, log with a flag, and keep going.** Anything that changes what a user sees or does, any trade of scope against time, any named exception, anything that touches the other release. Log the decision, the consequence you weighed and what would change your mind, and mark the entry `REVIEW`. Keep building. The orchestrator reads flagged entries at its next check-in and writes back only if it disagrees.
 - **Stop and ask.** Publication. Spending beyond the approved budget. Giving a session new access, credentials or permissions. Anything destructive or irreversible outside your own branches. A refusal from a safety or permission check: report it, never work around it.
+
+**The decision log.** Keep `releases/12/decisions.md` on the astrid-dev branch `r12-progress/decision-log`, append-only, pushed whenever it changes. One entry per decision: time (UTC), what you decided, the evidence or commit, and `REVIEW` if it is flagged. Keep a short **Now** block at the top: current head SHAs, what is running, what is blocked, spend if any. This log, not messages, is how the orchestrator follows your work.
+
+**When to message.** Only for: something on the stop-and-ask list; a blocker you cannot clear; anything that risks a user's work or real money; a finding that changes the shape of the release or the other release; a gate label; or a review you need commissioned. Everything else goes in the log. If in doubt, log it.
 
 **When to ask for thinking rather than permission.** Message the orchestrator when two of the priorities above conflict, when a finding changes the shape of the release (a real bug in a core gesture, a dependency between the two releases, a check that cannot be made honest), or when you have been on one problem for an hour without new information. Ask it as: the situation in two lines, the options, your recommendation, and what you will do if you hear nothing. You should rarely need an answer to continue.
 
