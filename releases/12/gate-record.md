@@ -89,6 +89,7 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 - [#253](https://github.com/banodoco/astrid-app/issues/253): after a refused edit, later edits in the same session are refused too.
 - [#254](https://github.com/banodoco/astrid-app/issues/254): the recovery “Save them” action is a Plan 39 issue.
 - [#255](https://github.com/banodoco/astrid-app/issues/255): an upload in progress is lost at reload.
+- Installed-pair source closure (Plan 38, already shipped in R10 and R11): on a shipped install, the Agent and Runtime measure different source-closure digests, so a host-only custody spawn of an installed pack is refused as “differs from original launch”. R12 pins it with the strict Runtime xfail `installed-pair-source-closure` (darwin lane) and leaves the code unchanged.
 
 ## Publication steps (prepared, not run)
 
