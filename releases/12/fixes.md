@@ -14,14 +14,15 @@ Active P29 brief as of 10 Nov 2026. Follow the shared [operating principles](../
 
 ## Where it stands
 
-| Area | State |
+Status as of 11 Nov; Track A owns the next actions. Detailed evidence and task history are in the [task record](../../plans/29-update-and-release/tasks.md).
+
+| Area | Current state and next action |
 |---|---|
-| **Agent** | `cand/29-r12` = `313bbd46f`. `r12/cand-next` = `733ac5a43` adds five fixes (personal-pack snapshots, ready-marker fence, schema cache, Windows read-only cleanup, HOME in the update job and handoff launcher), **not yet proven**. Base failures are recorded in [agent-comparison.md](../../plans/29-update-and-release/evidence/r12/agent-comparison.md) |
-| **App** | `cand/29-r12` = `8cfe10ce7` (Direct Journey rounds 3–6). The last early Direct Journey had 2 failures open: `:1264` (a seed helper uses the retired save route) and `:649` (Runtime restart, the draft survives) |
-| **Harness** | `harness/29-r12` = `b550ecadf` |
-| **Matrix** | The last full run was 4 of 11 green; each failing row has a root cause and a fix or a rerun ([verdicts](../../plans/29-update-and-release/evidence/r12/matrix-42835188782.md)) |
-| **Reviews** | Rounds 1–3 done; round 3's blockers are fixed in `733ac5a43` |
-| **Not yet adopted** | The Windows pack-exchange recovery fix: donor `plan32/r12-windows-recovery-donor` `26380e3a` repairs a bug from `35c170e39`, where crash recovery can delete the previous generation |
+| **Agent** | `cand/29-r12` remains `313bbd46f1e24bfe635655d78b27ab0b321145d5`. Working handoff `ec48555d8298d155390ffbb37d1950c3e80b43a4` includes A0/A1 work and needs comparison and required release proof before A3. |
+| **A2 comparison** | Grouped four-side receipts 001–018 are recorded; candidate findings in 005, 015 and 017 remain unresolved. Prepare the bounded runner for 019–052 and retain all existing receipts and environment differences. |
+| **App / A4** | `cand/29-r12` is `e72d541de1d65bee74707ca1ae9c2d429ee2f721`. Early Direct Journey remains failing under the credential-capture gate. A wire-level feasibility spike is in progress; it has no gate credit and must preserve the existing checks. |
+| **Harness** | `harness/29-r12` is `b550ecadf07d7a4b377be1b7af1d6252642f1b48`. |
+| **Release gates** | A3 and Checkpoint A have not been reached. No `A-CAND`, `A-FROZEN` or `GATE-GREEN` has been posted; the exact-tuple checks and native Windows proof remain required. |
 
 ## Tasks
 
