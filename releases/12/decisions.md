@@ -206,3 +206,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - Unexpected: "M1 real dependency conflict" (`:2522`) at `openSeededTimeline` (`app.ts:257`). The project selector showed "Bootstrap actual …", the project the bootstrap test (test 7) creates and opens. This is a serial-state leak: test 7 had never run before this round.
   - Fix: test 7 restores the selected project it found, without weakening any assertion. With Codex Luna (`cx-g8`).
   - In parallel, following the orchestrator's advice, the four never-reached tests (DUP-SHOT, mixed editing, TASK-SWAP "render R", empty bootstrap) run in isolation on `scratch/r12-iso` `516f21bd4`. That's `d31b976e1` plus a scratch-only `--grep` in the workflow, which never ships.
+- 2026-11-11 23:59Z — **Project leak fixed by test order, `7a971cea5`. Codex's fix rejected.**
+  - Codex Luna (`cx-g8`) proposed a `finally` that restores the Runtime's project selection. That can't work, and I checked why. Each test gets a fresh browser context (`support/app.ts:170`). With no project in the URL, the editor uses the last-opened project from local storage, which is empty, and otherwise `mostRecentlyCreatedProject` (`VideoEditorPage.tsx:279-290`). It never reads the Runtime's selection.
+  - Instead, the bootstrap actual consumer test moves, unchanged, to just before "empty bootstrap", the other project-creating test. Every serial test that expects the seeded project now runs before any second project exists.
+  - I verified it as a pure move: the line multiset is identical apart from three comment lines. Registry 4/0, tsc clean.
+  - Direct Journey is dispatched on `7a971cea5`.
+  - **REVIEW**: this documents an ordering dependency; it doesn't remove it. Making the suite order-independent is a Plan 39 follow-up.
+  - The full R12 test-change range gets one more independent review before A-FROZEN.
