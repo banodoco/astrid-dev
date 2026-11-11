@@ -83,3 +83,4 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - I commission the pre-paid reviews myself, on Astra (`gpt-6-astra`), read-only, on the exact range, with no conclusions in the brief: (1) the bundle and redactor, when `r13/g3-bundle` lands, with `machine.py:1167` and `1217` in range; (2) the pins and installer follow-ups, when `r13/g4-followups` lands; and later the merge review. A blocker stops its step until the fix has been read.
   - Alarms are verified independently before I escalate them.
   - Anything about Release 12 goes to its manager directly, `session_011EzfVzCLu2vv52JWNRiDJM`.
+- **2026-11-11 23:35** Hannah, in this session, authorized renting RTX 4090/5090 RunPod pods for Release 13 diagnostics and GPU validation tonight, up to $40 total, and releasing them.
