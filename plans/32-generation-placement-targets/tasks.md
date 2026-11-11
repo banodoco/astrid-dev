@@ -8,6 +8,8 @@
 
 **R12-F2 authority investigation:** Runtime's existing trusted-local host verifier measures an owner-selected installed release but is specific to host launch and retains its selection privately; it is not an Agent-readable authority to execute an observer. The neutral launcher and daemon may use different interpreters, and discovery/health identifies the Runtime but does not independently authorize an executable path. Bounded independent advice recommends specifying an observer-only owner-selection handoff with a fixed operation and explicit interpreter/import selection, authorized by an existing trusted owner origin and separately checked against live endpoint/instance/session/epoch. Discovery data, a self-advertised path or a hash supplied alongside it is not that authority. Preserve configured, installed, source and separate-environment layouts deliberately; do not create a broad arbitrary execution service or weaken owner/worker authorization. This is an unresolved design proposal, not an accepted contract or installed-pair proof.
 
+The unapproved concrete authority contract and targeted test matrix are in [draft PR #439](https://github.com/banodoco/astrid-dev/pull/439) at `b8774873c4da7233e2f3dc8dd289b4a3e61e2f9a`. Independent design follow-up found its identified wording blockers addressed; this is not implementation or security acceptance. The orchestrator must review the proposal before any implementation or Runtime pin change.
+
 Routes: `N` is the default, `X` very hard, `S` super hard ([run contract](../../skills/astrid-dev-shared/run-contract.md#routing-and-bindings)). An `X` or `S` lead delegates reading, mechanical edits and running checks to `N` helpers and keeps the judgment and the final change.
 
 **Rules for every task:**
