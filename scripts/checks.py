@@ -266,17 +266,12 @@ def _public_vision(context):
 def _generated_views(context):
     import views
     errors = views.check(context.root)
-    # The legacy public-vision rule owns these two targets. Keep its established
-    # diagnostic as the sole line when either target is stale.
+    # The legacy public-vision rule owns diagnostics for these two targets.
     legacy_errors = _public_vision(context)
-    owned = set()
-    if any('vision/README.md' in message for message in legacy_errors):
-        owned.add('view public-vision ')
-    if any('README.md vision summary' in message for message in legacy_errors):
-        owned.add('view root-vision-summary ')
-    if owned:
+    if legacy_errors:
         errors = [message for message in errors
-                  if not message.startswith(tuple(owned))]
+                  if not message.startswith(('view public-vision ', 'view public-vision:',
+                                             'view root-vision-summary ', 'view root-vision-summary:'))]
     return errors
 
 
