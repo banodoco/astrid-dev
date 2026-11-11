@@ -9,6 +9,36 @@ from views import View, _with_marker, check, check_view, sync
 
 
 class ViewTests(unittest.TestCase):
+    def test_hand_edited_vision_title_fails_check(self):
+        import astrid_dev
+        source = Path(__file__).resolve().parent.parent
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "repo"
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            target = root / "vision/README.md"
+            content = target.read_text(encoding="utf-8")
+            target.write_text(content.replace("# Astrid — ", "# Astrid — Hand edited ", 1), encoding="utf-8")
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                code = astrid_dev.main(["check"], root=root)
+            self.assertEqual(code, 1)
+            self.assertIn("ERROR public-vision-content:", output.getvalue())
+
+    def test_list_failure_is_reported_as_generated_views_error(self):
+        import astrid_dev
+        import checks
+        import subprocess
+        from unittest.mock import patch
+
+        registry = [entry for entry in checks.REGISTRY if entry.id == "generated-views"]
+        output = io.StringIO()
+        with patch("views.subprocess.run", side_effect=subprocess.CalledProcessError(1, ["astrid_dev.py", "list"])):
+            with contextlib.redirect_stdout(output):
+                code = astrid_dev.main(["check"], registry=registry)
+        self.assertEqual(code, 1)
+        self.assertIn("ERROR generated-views: view check-catalog:", output.getvalue())
+        self.assertNotIn("Traceback", output.getvalue())
+
     def test_legacy_source_error_hides_both_owned_view_errors(self):
         import checks
         import golden
