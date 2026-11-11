@@ -193,3 +193,9 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - I fixed one ordering race myself: the exactly-once count is now taken after the sentence is visible, not before the card renders.
   - Tests: 24 passed.
   - The independent Astra review of `d92ea0ee6..fbd7e7e71` is running. A validation matrix run on `fbd7e7e71` (same tuple) is dispatched in parallel. The qualifying matrix waits for the review.
+- 2026-11-11 23:44Z — **Astra review of harness `d92ea0ee6..fbd7e7e71`: NO BLOCKER. The harness hold is lifted.**
+  - Confirmed: Playwright 1.60.0 maps `local-network-access` to Chromium's permissions, and its CLI install step is unchanged.
+  - Confirmed: the scoped sequence is strict (`waitFor` is strict, so a duplicate throws), and the quiet notice can't satisfy it.
+  - Confirmed: the release fields are consistent with the intercept.
+  - LOW (follow-up, not R12): the unit test checks source strings, not capture behaviour. The live matrix capture is the proof.
+  - The qualifying matrix uses `harness/29-r12` at `fbd7e7e71` or later. A validation run on the shakedown tuple is in flight.
