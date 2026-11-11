@@ -8,7 +8,7 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 **Your job, in short.** Once a project is running under a manager in its own session, you do three things and nothing else:
 1. **Check in on a schedule,** if the owner asked for check-ins (path 3).
 2. **Answer questions and unblock** managers and the owner (path 2).
-3. **Equip managers to need you less.** Turn each repeated question into a standing rule in the [manage skill](../astrid-dev-manage/SKILL.md) or the task card, so the run moves as fast as it can without you.
+3. **Equip managers to need you less.** Treat every question as a symptom: find why it reached you and fix that cause in the [manage skill](../astrid-dev-manage/SKILL.md), the plan or the task card, so it isn't asked twice and the run moves as fast as it can without you.
 
 **One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your own session, you are its [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#hand-a-long-task-to-codex-from-claude-cloud)).
 
@@ -26,6 +26,12 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
 | The project's completion PR merged, or the owner says stop | 4. Close |
 
 **Between those, stay idle.** Progress lives in the plan's `tasks.md`; handle required dependency handoffs and urgent blockers when received, without taking over task supervision.
+
+**A queue is yours to keep moving.** When the owner gives you an ordered queue (phases of a plan, or several projects), you see that it never stops for want of preparation:
+- **Prepare the next item before the current one ends:** its cards re-planned against what just landed, its `Run start` line, and its start message.
+- **Get the go once.** Ask the owner for one standing go that covers the queue in order, given in the manager's session and recorded on each `Run start` line. Without it, every item waits for her.
+- **At each check-in, confirm the manager has moved on.** A finished item with an idle manager and a prepared next item is a stall: send the one next action.
+- **An item gated on an outside event** (a release publishing, an owner setting) still gets built where it can't hurt: on its integration branch, with only the merge to `main` waiting. Say what is gated and on whom in every report.
 
 ## Path 1: start a project
 
@@ -116,7 +122,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 - **Refresh the facts first:** the exact candidate, source and donor identities, dirty state, the brief, the first failing command, the repair history, and the review budget.
 - **Diagnose from evidence.** A claim in the request is a claim until code, logs or a run supports it. If the cause isn't visible, the next action is to make it visible.
 - **Question the question.** Ask why it reached you: missing evidence, an unclear task card, or a gap in a skill or the plan. Sometimes the right answer is a different question.
-- **Leave the asker better equipped.** Say how they could have settled it themselves (which file, check or evidence), and fix that gap at its source: the task card, the plan, or a skill (through a PR). If you can't fix it now, add an entry file to the [process ledger](../../docs/ledger/README.md). The aim is to be asked less over time.
+- **Unblock it once and for all.** Every message from a manager has a cause behind the question: a rule that is missing, a card that is thin, a tool that misled it, or authority it wasn't given. Answer the question, then name that cause and fix it at its source in the same turn: the task card, the plan, or a skill (through a PR). Say how they could have settled it themselves (which file, check or evidence). If you can't fix it now, add an entry file to the [process ledger](../../docs/ledger/README.md). A question you have answered twice is a fix you still owe.
 - **Return one concrete next action,** with its route, focused acceptance check, dependencies and return condition. For a high-judgment choice, give the simplest viable option, its trade-off, and a concrete challenge against over-engineering.
 - **Require the previously failing check** to run on the repaired candidate.
 - **Don't:**
@@ -125,7 +131,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 
 ## Path 3: check in (only when the owner asks)
 
-When the owner asks for regular check-ins on a run, record the agreed cadence and end condition as `checkin` in the run's `run.yaml`. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. A timer or GitHub comment alone does not resume a separate Codex Cloud chat. Without a verified path, use bounded foreground polling while active and tell the owner when a manual nudge is needed. The Claude-hosted runner has its own liveness requirements above; those are separate from strategic check-ins. These documents never start a check-in themselves.
+When the owner asks for regular check-ins on a run, record the agreed cadence and end condition on the plan's `Run start` line, where everyone can read it, and as `checkin` in the run's `run.yaml` once a run exists. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. A timer or GitHub comment alone does not resume a separate Codex Cloud chat. Without a verified path, use bounded foreground polling while active and tell the owner when a manual nudge is needed. The Claude-hosted runner has its own liveness requirements above; those are separate from strategic check-ins. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, the nudge is to wake it with one next action.
