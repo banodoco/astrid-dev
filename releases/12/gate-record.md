@@ -64,6 +64,13 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 - Agent candidate review range and verdict (no open blocker): `{{FILL}}`
 - App candidate review range and verdict (no open blocker): `{{FILL}}`
 
+### 5. Runtime
+
+- `ci.yml` run on exactly `42ae24aff8d2cb854f874ce134161077a3ba3641`: {{run link}}, {{conclusion}}
+- By-test-ID comparison against Runtime main `4f5477cb0`: {{result}}
+- Orchestrator's independent review of `origin/main..42ae24aff8d2cb854f874ce134161077a3ba3641`: {{verdict}}
+- Runtime main moves onto `42ae24aff8d2cb854f874ce134161077a3ba3641` at publish (33 commits; autostart update guard, Windows R0 handoff, windows-upgrade-unsupported, diagnostics).
+
 ## Not run / limits
 
 - No GPU proof is part of this gate; generation, machine controls and GPU proof are outside Release 12.
@@ -82,3 +89,34 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 - [#253](https://github.com/banodoco/astrid-app/issues/253): after a refused edit, later edits in the same session are refused too.
 - [#254](https://github.com/banodoco/astrid-app/issues/254): the recovery “Save them” action is a Plan 39 issue.
 - [#255](https://github.com/banodoco/astrid-app/issues/255): an upload in progress is lost at reload.
+
+## Publication steps (prepared, not run)
+
+Publishing follows the legacy path: Agent main, then Runtime main, then App main. The App merge triggers the Railway production deploy.
+
+### Agent
+
+- Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main c5370a862d0b374afa412dd071418070e76f834c && echo ok`
+- Publish (fast-forward push only; never `--force`): `git push https://github.com/banodoco/astrid-agent.git c5370a862d0b374afa412dd071418070e76f834c:refs/heads/main`
+- Expected `main` SHA afterwards: `c5370a862d0b374afa412dd071418070e76f834c`.
+
+### Runtime
+
+- Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main 42ae24aff8d2cb854f874ce134161077a3ba3641 && echo ok`
+- Publish (fast-forward push only; never `--force`): `git push https://github.com/banodoco/astrid-runtime.git 42ae24aff8d2cb854f874ce134161077a3ba3641:refs/heads/main`
+- Expected `main` SHA afterwards: `42ae24aff8d2cb854f874ce134161077a3ba3641`.
+
+### App
+
+- Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main {{APP_FROZEN_SHA}} && echo ok`
+- Confirm the re-pinned manifest raises release 11 to 12 in the same change as the tuple with `node scripts/installer/release-guard.mjs origin/main HEAD --pins`.
+- Publish (fast-forward push only; never `--force`): `git push https://github.com/banodoco/astrid-app.git {{APP_FROZEN_SHA}}:refs/heads/main`
+- Expected `main` SHA afterwards: `{{APP_FROZEN_SHA}}`.
+
+### Post-check
+
+- Check the served release and tuple: `curl -sS https://astrid.haus/install-manifest.json | jq '{release, agent: .agent.sha, runtime: .runtime.sha}'`. Expect release `12`, Agent `c5370a862d0b374afa412dd071418070e76f834c`, and Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`.
+- Check the served body hash: `curl -sS https://astrid.haus/install-manifest.json | sha256sum`; expect `{{manifest sha256}}`.
+- Check the served-manifest canary; it is being diagnosed.
+
+If an agent session cannot merge to production because of permission or classifier refusal, Hannah runs the same three pushes, or merges the equivalent fast-forward PRs (`cand/29-r12` → `main`) in the GitHub UI, in the same order, then runs the post-check.
