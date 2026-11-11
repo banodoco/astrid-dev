@@ -39,6 +39,7 @@ There are no unpushed commits in either base clone. `int/40-machine-lifetime` is
 - T8 integrated composed proof: 377 passed, 18 deselected, with the same one baseline-confirmed optional-pack import failure; comparison was 0 regressions / 1 pre-existing. Generation CLI proof: 64 passed; two approved claim integration selectors passed. T4 parser audit: 19 cases passed; T4 focused proof: 142 passed, one existing pending-deprecation warning. Full details and exact logs were local/ignored in `.otto`; durable focused results and merge SHAs are summarized in [`tasks.md`](tasks.md), and the source/tests are in the pushed candidate branch.
 - No full-suite/CI result, live-provider result, or live GPU result is claimed.
 - The required process-ledger entry was merged in astrid-dev PR #344 (`0cbd70acd5688e96f0380e5771ea9e82ee21cc3d`): baseline-diff initially misread application `ERROR` log lines as pytest node results; prefer a node-result-only or structured result parser.
+- **Keep-after-failure keeps the machine, not the evidence.** The reset that runs before a kept machine goes idle deletes the job's run and job folders and truncates every log (`astrid/packs/runpod/pod_reset.py:213-233` at Agent `1439ccc6`), so nothing is left to inspect. Release 13's G3 collects the failure folder before the reset.
 
 ## Decisions and evidence
 

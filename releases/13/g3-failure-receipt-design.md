@@ -192,3 +192,12 @@ Slices 1 and 2 do not depend on H10 and can start before it is answered.
   - **(c)** A pod-side classifier maps a few fixed log signatures (CUDA out of memory, a node pack that failed to import, a missing node class, a refused download) to new `CODES` entries. Only the enum crosses.
 - The pod folder moves out of the run folder to `/root/astrid/failures/<run_id>/` (newest 5 kept), so it survives the reset on a kept machine for private operator inspection. The receipt names that pod path.
 - Causes that live only in log text (a custom node's traceback) stay unnamed.
+
+## Rulings (orchestrator, 11 Nov 2026)
+
+- **Collection runs before the reset.** This is a hard requirement: the reset before a machine goes idle deletes the run and job folders and truncates every log (`pod_reset.py:213-233`), so collection after it finds nothing.
+- **Releases outside the job path win.** A paid-expiry timer, `astrid machines release` or host shutdown aborts collection; the receipt records collection as aborted.
+- **A failure-bundle digest mismatch is treated like an output mismatch:** the machine is marked unsafe and released.
+- **Retention:** 20 local receipts and 5 pod folders.
+- **Redaction rule** goes to Hannah with H10, as written above.
+- **Graph-checked field and node names** are built now under either H10 answer; the orchestrator confirms with Hannah before merge.
