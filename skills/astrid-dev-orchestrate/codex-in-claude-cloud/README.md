@@ -21,6 +21,24 @@ Put exact model IDs in the run's `run.yaml`, never in this repository.
 4. **Check which IDs subagents accept:** these can differ from the main model's list. Ask Codex to spawn a subagent with an unknown ID; the error lists the IDs it accepts.
 5. **Install the astrid-dev skills for Codex:** `mkdir -p ~/.agents && rm -rf ~/.agents/skills && cp -r <astrid-dev>/skills ~/.agents/skills`. Codex finds skills in `~/.agents/skills/` and in `.agents/skills/` under the directory it starts in. Re-copy them after astrid-dev's skills change. Leave `~/.codex` alone: it holds the sign-in.
 
+## Use Codex for the workers under a Claude manager
+
+Use this when a Claude manager session keeps managing (briefing, checking diffs, ruling, integrating) and its workers run on Codex. It needs no runner, keep-alive or mailbox: each task is one `codex exec` call that returns when the task is done.
+
+- **Routes.** `N` tasks go to Luna, `X` to Terra, `S` to Sol. `T` (taste) tasks and reviews stay on Claude sub-agents at the high-judgment tier. The manager judges the difficulty first, as the [run contract](../../astrid-dev-shared/run-contract.md#cheapest-model-first) says, and escalates one step only on evidence.
+- **Sign-in first, once per session.** Do the [one-time setup](#one-time-setup-in-the-session): install, then `codex login --device-auth`. Post the link and the code it prints in your own reply, where the owner can see them, and tell the orchestrator they are waiting. The code expires in minutes, so ask for it when the owner is present, and ask again if it lapses. Each manager session is its own container and needs its own sign-in. Never read or copy `~/.codex`.
+- **One task, one call, one worktree.** From a Claude sub-agent, so the output stays out of the manager's context:
+
+  ```bash
+  codex exec -m <model-id> -s workspace-write -c sandbox_workspace_write.network_access=true \
+    --skip-git-repo-check -C <worktree> "$(cat <brief.md>)" </dev/null
+  ```
+
+  The wrapping sub-agent writes the brief to a file, runs the call, and returns Codex's last message plus the commit SHA and the test tail. It does not do the task itself. Give every task its own `git worktree add` path; Codex can write only there and in `/tmp`.
+- **The brief is the same four things** as for any worker: one outcome, the exact repository, branch and files or selectors, what done looks like, and what to return. Add the run's rules that Codex cannot infer: commits are added and never rewritten, no model names in commit messages, never weaken a check, and stop after three attempts.
+- **What stays with the manager.** Pushing to candidate branches, dispatching CI, messages to the orchestrator, anything paid, and anything that needs a credential. A Codex worker inherits the session's network, so a credential the proxy injects reaches it too: do not give Codex workers tasks that call a paid provider.
+- **Switch at a task boundary.** Let running Claude workers finish; start new tasks on Codex. If a model ID is refused or the sign-in is lost, fall back to the Claude route for that task and say so; do not wait.
+
 ## Brief a manager
 
 To hand a whole project to a Codex manager, start from [`manager-brief.md`](manager-brief.md). It is the Plan 38 brief, with the project-specific parts as placeholders. It covers:
