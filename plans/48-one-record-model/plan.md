@@ -22,10 +22,13 @@ A contributor or agent can answer four questions about astrid-dev from one place
 
 **Proposed, not committed (owner decision D7):**
 
-- **Phase 3: one pack shape, a declared lifecycle, generated forms.** The plan, inputs and tasks shapes declared and checked for new and changed packs; statuses, transitions and what each requires declared once; PR templates generated from the definitions the checks read.
-- **Phase 4: one evidence shape.** One envelope (claim, exact candidate, command, environment, result, receipt, limits, route) for the implementation and completion forms and the GPU validation record.
+- **Phase 3: one pack shape, a declared lifecycle, generated review forms.** Three tracks that do not depend on each other:
+  - **A, pack shape.** The three templates are the declaration. A new pack must match them, and a file that already matches must keep matching; packs that never matched are left alone and listed by a report.
+  - **B, lifecycle.** The six statuses, what entering each requires and the allowed moves between them are declared in one file that every reader uses; a move that is not declared fails.
+  - **C, review forms.** The scope, implementation and completion forms are generated from the definitions the completion gate reads.
+- **Phase 4: one evidence shape.** One envelope (claim, exact candidate, command, environment, result, receipt, limits, route) in the implementation and completion forms and at the top of the GPU validation record. CI confirms it is complete, never that it is true.
 
-The independent critique recommends cutting Phases 3 and 4 until a recorded failure asks for them; see [inputs.md](inputs.md#critique).
+Both phases are specified to task level in [tasks.md](tasks.md) at the owner's request of 11 Nov 2026; that request is not acceptance. The first independent critique recommends cutting them until a recorded failure asks for them, and taking the pack shape first if anything; see [inputs.md](inputs.md#critique) and [the second critique](inputs.md#phases-3-and-4-specification).
 
 **Boundaries:**
 
@@ -55,7 +58,7 @@ Phases run in order; each leaves the repository working and is useful if later p
 1. **Phase 1** (PM-0 to PM-5t, then one review round, R1). Accepted and authorized.
 2. **Phase 2** (PM-6 to PM-10). Not yet accepted. Changes how a project is claimed and where status is edited, so the migration, the gates that read status and the docs land together.
 3. **One review round** (R) closes the committed scope.
-4. **Phases 3 and 4** (PM-11 to PM-15) only if D7 accepts them.
+4. **Phases 3 and 4** (PM-11a to R4) only if D7 accepts them, each closed by its own review round (R3, R4). Only Phase 3's lifecycle track needs Phase 2; the pack-shape and form tracks need only Phase 1 on `main`, so the owner may take either earlier (D9). Phase 4 needs the form track.
 
 **Readiness and constraints:**
 
@@ -75,7 +78,8 @@ Tasks, routes, scopes and proofs are in [tasks.md](tasks.md). Recording this pla
 - `python3 scripts/astrid_dev.py check | list | sync`: the one entry point CI and contributors run.
 - A record helper other scripts import (sections, fields, tables, project records).
 - A view mechanism Plan 31 can use for its release manifest and strategy table, and Plan 44 for its trail.
-- If Phase 4 is accepted, an evidence envelope Plan 44 and the GPU validation skill can cite.
+- If Phase 3 is accepted: `scripts/pack_shape.py` (the shape read from the templates, and the report), `scripts/lifecycle.py` (statuses, requirements and transitions) and `scripts/forms.py` (the three review forms).
+- If Phase 4 is accepted: `scripts/evidence.py`, whose `parse` returns the envelopes in a text, for Plan 44 and the GPU validation skill to cite.
 - `docs/checks.md` and `docs/extending.md`: the generated list of every check and view, and the one page on adding a check, view or field.
 
 **Limits:** the public feed (`vision.json`) keeps `schemaVersion: 1` and its exact shape; any change there is out of scope and would need the App's agreement.
@@ -92,5 +96,13 @@ Shown on the integrated astrid-dev candidate, with exact SHAs:
 - **Extensible in one place:** adding a new check, a new view and a new project field are each demonstrated as a change to one file plus its test, following `docs/extending.md`.
 - **Negative cases:** a hand edit to a generated file fails; a duplicate project number fails; a claim for another person's handle, or one that changes any other line, is refused.
 - **Unchanged:** the public feed is byte-identical before and after Phase 1, and after Phase 2 differs only by the one renumbered project's id; the App's parser accepts it.
+
+**If Phases 3 and 4 are accepted,** also shown on their integrated candidates:
+
+- **Shape:** a pack copied from the templates passes; the same pack with one template heading removed fails, naming the file and the heading; an old pack that never matched is not failed when it changes.
+- **Lifecycle:** adding a status is one entry in `scripts/lifecycle.py`, shown by a test that adds one; a status change the declaration does not allow fails; a move to `done` without a completion assessment still fails.
+- **Forms:** editing a generated form by hand fails; the completion form holds every field its gate asks for; submitted unfilled, it fails once per required field.
+- **Envelope:** an incomplete envelope fails in an implementation review request, in a completion assessment and in a new GPU record; a complete envelope that is false passes, and the forms say so.
+- **Unchanged:** no verdict that existed before either phase changes, except the completion form's renamed fields (D11).
 
 **Limits of this proof:** it shows structure, not that contributors find it clearer. One fresh agent adding a check and a view from `docs/extending.md` alone, with its confusions recorded, is the only readability evidence. Completion does not close CA-005: that also needs reassessment after a real period of many contributors working at once.

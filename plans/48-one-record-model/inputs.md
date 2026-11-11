@@ -4,19 +4,19 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — Phase 1 only. On 11 Nov 2026 the owner asked for the first phase to be handed to a manager and driven to completion, with normal, very hard and super hard tasks on Codex and taste and review on Claude ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). Phase 2 stays unaccepted until D1 to D4 are answered; Phases 3 and 4 stay proposed (D7).
+**Scope decision:** Accepted — Phase 1 only. On 11 Nov 2026 the owner asked for the first phase to be handed to a manager and driven to completion, with normal, very hard and super hard tasks on Codex and taste and review on Claude ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). Phase 2 stays unaccepted until D1 to D4 are answered; Phases 3 and 4 stay proposed (D7). On 11 Nov 2026 the owner also asked for Phases 3 and 4 to be specified to task level; that is a go to specify, not acceptance and not a go to run them ([specification](#phases-3-and-4-specification)).
 
 **Prior art:** a read of every script, workflow, skill and template at astrid-dev `e27e30a`, plus two read-only surveys of all 47 packs and all 227 evidence files ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)); findings are under [What exists today](#what-exists-today). Reused: [`project_contract.py`](../../scripts/project_contract.py), [`vision_subject.py`](../../scripts/vision_subject.py), [`export_public_vision.py`](../../scripts/export_public_vision.py) and the `publish-vision` job. Overlapping plans: [Plan 31](../31-releases-from-astrid-dev/plan.md) and [Plan 44](../44-vision-execution-trail/plan.md).
 
 **Approach:** finish the shared layer the existing scripts already imply (one helper, a check registry, a view mechanism), then move the catalog onto it. Declaring the pack shape, lifecycle, forms and evidence is proposed, not committed (D7). Alternatives compared under [Alternatives](#alternatives): do nothing; fix only the catalog; adopt a documentation framework or a database; this plan.
 
-**Challenge:** Reviewed — one independent high-judgment critique, briefed to build as little as possible and to verify claims in code ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). It found three blocking errors in the first draft, all fixed, and recommends a scope about a third the size; what was accepted, and what is left to the owner, is under [Critique](#critique).
+**Challenge:** Reviewed — one independent high-judgment critique, briefed to build as little as possible and to verify claims in code ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). It found three blocking errors in the first draft, all fixed, and recommends a scope about a third the size; what was accepted, and what is left to the owner, is under [Critique](#critique). The Phase 3 and 4 task cards change astrid-dev's own checks, so they need their own critique before any greenlight; its state is under [Second critique](#second-critique).
 
 **Proof and limits:** see [plan.md](plan.md#completion). The proof is structural: same verdicts and a byte-identical public feed across the refactor, conflict-free parallel plan PRs, and one-file extension examples. It does not show that contributors find the result clearer beyond one fresh-agent trial.
 
-**Review rounds:** one round on Phase 1's integrated head (row R1), under the owner's policy of 11 Nov 2026 that reviews are minimal and only for meaningful complexity; Phase 1 qualifies because every later phase and Plan 31 build on it. Pending for Phase 2 — recommend one round. Next: the owner confirms with Phase 2's scope.
+**Review rounds:** one round on Phase 1's integrated head (row R1), under the owner's policy of 11 Nov 2026 that reviews are minimal and only for meaningful complexity; Phase 1 qualifies because every later phase and Plan 31 build on it. Pending for Phase 2 — recommend one round. Next: the owner confirms with Phase 2's scope. For Phases 3 and 4, recommend one round each (R3, R4), pending with D7 ([why](#review-rounds)).
 
-**Ambiguity pass:** done for Phase 1 by the planner; the choices are in [tasks.md](tasks.md#phase-1-dispatch-notes). Pending for Phase 2.
+**Ambiguity pass:** done for Phase 1 by the planner; the choices are in [tasks.md](tasks.md#phase-1-dispatch-notes). Pending for Phase 2. Done for Phases 3 and 4 by the planner from the code at `ee69971` ([what it resolved](#ambiguity-pass)); it must be repeated against Phase 2's result before dispatch.
 
 ## Owner decisions
 
@@ -29,8 +29,12 @@ Open unless marked decided. Each has a recommendation.
 - **Run start (decided, 11 Nov 2026).** The owner's go covers starting Phase 1 now, not after Release 12 publishes. To keep that release safe, Phase 1 lands on `int/48-one-record-model`, the old check commands keep working, and the one PR to `main` waits for the owner's go. **Accountable session:** `session_011EzfW3FH6dvD1UHyzGnajf`, the Claude session hosting the Codex manager ([who answers for a run](../../skills/astrid-dev-shared/run-contract.md#who-answers-for-a-run)). **Without asking:** everything in Phase 1 up to opening that PR, per the owner's instruction to drive every Phase 1 task to completion. **Needs the owner's go:** merging that PR, and anything in Phase 2. **Advisor:** `session_011EzfW38XJUpUFewfUM9MxF`, for hard blocks and choices that would change scope, a check's verdict or the public feed.
 - **D5. Order against Plan 31.** *Recommend:* Phase 1 before Plan 31's RL-1a to RL-1c, so Plan 31 registers its checks and its manifest as a view. Both wait for Release 12. Alternative: Plan 31 first, then fold its scripts in (more rework, no delay to releases).
 - **D6. Where does this sit in the catalog's order?** The row is last among the open rows, as the plan skill now says for any new plan. *Recommend:* the owner moves it directly above Plan 31 if D5 is accepted.
-- **D7. Do Phases 3 and 4 happen?** The owner agreed with the direction in the planning session. The critique says no recorded failure asks for a declared lifecycle, generated forms or an evidence envelope, and that their only named consumer (Plan 44) is an unscoped draft; by [principle 8](../../docs/contribution-design-principles.md) they should wait. *Recommend:* commit Phases 1 and 2 now, and decide Phases 3 and 4 after Phase 2 lands, taking PM-11 (pack shape) first because its evidence is strongest (ten of 47 plans match the template). The catalog estimate covers the committed phases, with the proposed ones stated separately.
+- **D7. Do Phases 3 and 4 happen?** The owner agreed with the direction in the planning session. The critique says no recorded failure asks for a declared lifecycle, generated forms or an evidence envelope, and that their only named consumer (Plan 44) is an unscoped draft; by [principle 8](../../docs/contribution-design-principles.md) they should wait. *Recommend:* commit Phases 1 and 2 now, and decide Phases 3 and 4 after Phase 2 lands, taking PM-11 (pack shape) first because its evidence is strongest (ten of 47 plans match the template). The catalog estimate covers the committed phases, with the proposed ones stated separately. *11 Nov 2026:* the owner asked for both phases to be specified to task level, which is now done; D7 is still open, and D9 offers a smaller first step than either phase.
 - **D8. Which gap?** Decided in part, 11 Nov 2026: the owner said the plan need not close a gap but should connect to a relevant one, and that a new one may be needed. The first draft named CA-003; the critique showed the plan delivers none of CA-003's closure evidence and Plan 44 already holds it. No existing gap covers contributing in parallel through one clear process, so this PR drafts [CA-005](../../vision/gaps/CA-005-parallel-contribution.md) and routes this plan in it. *Still open:* the owner accepts CA-005's wording and boundary in the scope PR's boundary review, or asks for the enabler line instead.
+- **D9. If anything in Phases 3 and 4 is taken, what goes first, and may it start before Phase 2?** Only the lifecycle track needs Phase 2; the pack-shape and form tracks need only Phase 1 on `main`. Options: (a) nothing, until a recorded failure asks (the first critique); (b) track A alone (PM-11a, PM-11b, its words and one review), about two days, as soon as Phase 1 is on `main`; (c) all of Phase 3 after Phase 2, then Phase 4; (d) everything now except track B. *Recommend:* (b), then decide the rest on what it shows. Under (b) or (d), Phase 2's cards are re-planned against what landed, since PM-6 edits the same template and PM-10 moves the gate that track C changes.
+- **D10. Which status changes are allowed?** Nothing defines this today, so it cannot be read from the code. *Recommend:* a new project starts `queued`; `queued` to `active`, `paused` or `cancelled`; `active` to `blocked`, `paused`, `done`, `cancelled` or back to `queued`; `blocked` to `active`, `paused`, `queued` or `cancelled`; `paused` to `active`, `queued` or `cancelled`; nothing leaves `done` or `cancelled` (reopening is a new project). Alternatives: allow `cancelled` back to `queued`; allow `queued` straight to `done` for work finished without a run. Planning could not check this table against history (its clone was shallow); an N helper does so before PM-12a starts.
+- **D11. May the completion form's fields be renamed, and may an implementation review request fail CI?** The envelope replaces `Evidence`, `Completion`, `Integrated candidate`, `Unproven` and `Routes used` with its eight lines, so a completion PR open at the switch must be refilled; and `evidence-envelope` is a new way for a PR that asks for implementation review to fail. *Recommend:* rename in one step with no alias, and gate only PRs that carry `Review request: implementation`. Alternatives: keep the old names as aliases (two vocabularies, which is what the envelope removes); leave implementation requests unchecked (the envelope is then checked only at completion and on GPU records).
+- **D12. When does the GPU record change shape?** Plan 34 has run evidence on a branch in the current shape, and `validation/gpu/` holds no record on `main` yet. *Recommend:* PM-14c lands after Plan 34's first record is merged, or with its owner's agreement to add the block to it. Alternative: change the template now and have Plan 34 convert before merging.
 
 ## Ten statements for the owner
 
@@ -127,9 +131,89 @@ One independent review of the first draft (plan and tasks), read-only, verifying
 
 The reviewer's own minimal scope is Phase 1 without the view mechanism, plus the duplicate-number check.
 
+## Phases 3 and 4: specification
+
+Written on 11 Nov 2026 after the owner asked for Phases 3 and 4 to be specified to task level ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). **That request is a go to specify. It is not acceptance of D7 and not a go to run anything.** The tension from the first critique stands: no recorded failure asks for a declared lifecycle, generated forms or an evidence envelope, and the pack shape has the strongest evidence. This section is the evidence for the cards in [tasks.md](tasks.md); it read the code on `int/48-one-record-model` at `ee69971`.
+
+### What already exists that each track reuses
+
+| Track | Already there | So the track adds only |
+| --- | --- | --- |
+| A, pack shape | The plan skill and `docs/project-format.md` already name `templates/project/*.md` as "the one definition of each file's sections and fields". `scripts/records.py` reads headings, bold labels and table rows. `check_project_planning.py:changed_projects` already selects "new packs, and packs that opted in", reading the working tree | A reader of the templates, one `pr` check, a report. No second declaration and no generated template |
+| B, lifecycle | `check_docs.py:STATUSES` and `VISIBLE` are the status set and the open/terminal split; `ROUTE_STATUS` repeats the six names as a pattern; `unnamed_active_owners` is "active needs a named owner"; `check_completion.py:transitions_to_done` is "done needs an assessment"; the catalog's preamble defines each status in a sentence. PM-6 will add a status reader at base and head | One declaration those five read, and one `pr` check for the moves nothing checks today |
+| C, review forms | `scripts/views.py` already writes a marked file, and `generated-views` already fails a stale or hand-edited one. `check_completion.py:assess_completion` already holds every rule and message | Three form definitions, three view entries, and the gate reading its field list from the definition |
+| Phase 4, envelope | The run contract already lists the fields in prose ("exact command, candidate SHA/tree, relevant inputs/environment, actual inner command status … result, and limitations") and the result words `PASS`, `FAIL`, `RETRYING`, `NO-RESULT`. The completion gate already has the reference, placeholder and route rules. The GPU skill already has a record template | One declaration of eight lines, moved rules, two checks, and a block in the GPU template |
+
+### What the code shows today
+
+Each was checked in the code at `ee69971`, not taken from the earlier survey.
+
+- **Shape.** Of 48 `plan.md` files, 11 have the template's five headings in order and 7 have exactly those five. (The earlier "ten of 47" was at `e27e30a`, before this pack existed.) 13 `tasks.md` files have the template's table header; there are 16 different headers and four files with no table. 21 of 48 `inputs.md` files have `## Planning evidence`.
+- **The template and its check disagree.** `templates/project/inputs.md` has seven labels; `check_project_planning.py:LABELS` knows five (`Review rounds` and `Run start` are unchecked).
+- **`docs/project-format.md` no longer restates the sections.** That was fixed alongside this plan on 11 Nov. What still restates the shape is the check's label list and 37 packs.
+- **The completion form and its gate disagree.** `assess_completion` requires `Gap impact: None — <reason>` for a project with no gap; `project-completion.md` has no such line. The form has a `Strategy:` line the gate never reads (it checks that `strategy.md` changed, by path).
+- **The completion form nearly passes its own gate unfilled.** Its `Evidence`, `Completion`, `Implementation PRs`, `Unproven` and `Routes used` hints each satisfy their rule as printed; only `Integrated candidate` and the gap line fail. (Read from the patterns; not run.)
+- **Statuses.** The six names are written in `check_docs.py` three times, as literals in `check_completion.py` and `claim_project.py`, and in the catalog's preamble. Outside the catalog they are used, not defined, in two skills, three docs and the claim form. No template names them. Two moves are checked: a claim needs `queued`, and a move to `done` needs an assessment.
+- **Views.** `scripts/views.py:_with_marker` supports whole files generally, but its region support is hard-coded to the `vision-summary` markers; `scripts/test_views.py` pins the marker's exact text.
+- **PR templates.** There are five: the default `.github/pull_request_template.md` and four under `PULL_REQUEST_TEMPLATE/`. Checks or review intake read three of them (scope, implementation, completion). `claim.md` is read by nothing; the claim bot reads the diff.
+- **Evidence.** 168 JSON files sit under `plans/*/evidence/` (137 at the earlier survey). `validation/gpu/` holds its README and no record. The release skill's GPU gate reads that record.
+- **The oracle.** `scripts/golden.py` runs `check` with no base on a copy of the real tree, so a new `pr` check cannot change `golden.txt`, and a new `always` check must be clean on the real tree.
+
+### Alternatives, including doing less
+
+- **Do nothing (the first critique's position).** Costs nothing. The two disagreements above stay: a project with no gap is told about `Gap impact` only by a failed check, and two template labels are unchecked. Each is a one-line fix by hand. This is a real option and D7 is where it is chosen.
+- **Fix the two disagreements by hand, and stop.** Add the `Gap impact` line to the form and the two labels to `LABELS`: an hour, no new code. It repairs today's drift and does nothing to stop the next.
+- **Track A only (recommended if anything is taken).** About a day and a quarter. It has the strongest evidence and no owner decision of its own beyond D4, and it does not need Phase 2.
+- **A separate declaration file for the pack shape, with the templates generated from it.** Rejected: the templates were named the one definition on 11 Nov; a second declaration would undo that, and generating them would move guidance prose into code.
+- **Reshape old packs widely.** Rejected: 11 packs share a heading set with no `Interfaces and handoff` section, so matching them would mean writing one; no `tasks.md` outside the 13 can gain Route and Scope columns without inventing their contents. Only eight drafts can be reshaped honestly, in `plan.md` alone (PM-11c), and that buys little: D4.
+- **Generate every PR and issue template.** Rejected: `claim.md`, the default template and the issue templates are prose no check reads; a definition for them would be the same prose in a Python string.
+- **Convert the existing evidence files to the envelope.** Rejected: they are historical receipts under packs with live or finished runs.
+- **Cut from the outline, as nothing reads them:** task progress states, a Phase field, and one definition for the six-step path and "phase".
+
+### Ambiguity pass
+
+Done by the planner from the code; the choices are in [tasks.md](tasks.md#phases-3-and-4-dispatch-notes). Resolved without the owner: the templates are the declaration; extra headings are allowed; a file is held to the shape only if new or already matching; `plan.md` header lines are outside the shape; the declarations for statuses, forms and the envelope are Python data; review intake and the claim bot are not touched; the envelope uses plain `Key: value` lines; the GPU check reads only added files. What only the owner can decide is D9 to D12 above. D4 and D7 stay open.
+
+### Ten statements for Phases 3 and 4
+
+Shown to the owner in the planning session. Seven were changed here so that each is true of the tasks as written; the owner has not yet seen the changed wording.
+
+1. Now, the template is a suggestion that eleven of 48 plans follow. After, a new plan that doesn't match the shape does not land. *(Changed: the count, at `ee69971`; was "ten of 47".)*
+2. Now, the template lists seven planning-evidence fields, its check knows five, and 37 plans use other headings. After, the template is the one declaration and the check reads it; the docs point to it and list nothing. *(Changed: the docs stopped restating the sections on 11 Nov, and no fourth file is added for "the template, the docs and the check" to be read from.)*
+3. Old plans stay messy. Live and finished packs are left as they are; eight queued drafts get their `plan.md` headings renamed by one command, and nothing else is reshaped because it would mean inventing content. *(Changed: was "only queued drafts are reshaped, by script". True only if D4 keeps PM-11c.)*
+4. Now, the six statuses are written three times in one script, twice more as literals, and defined again in the catalog's prose. After, adding a stage is one entry in one file. *(Changed: no template and no skill defines them; the claim bot keeps its own `queued` test.)*
+5. Now, a status can jump from anywhere to anywhere unless a script happens to catch it. After, only declared transitions pass. *(Unchanged. Which transitions are declared is D10.)*
+6. Now, a PR form and the check that reads it are written separately and drift apart. After, the completion form is generated from the definition its gate reads; the scope and implementation forms are generated too, and a test proves review intake still reads them. *(Changed: review intake keeps its own two patterns.)*
+7. Nobody edits a review form by hand again: a hand edit fails the check. The claim note and the default PR template, which no check reads, stay hand-written. *(Changed: was "a PR template".)*
+8. Now, evidence comes in eleven shapes that only a person can read. After, new evidence in the two review forms and the GPU record is one envelope: claim, exact version, command, environment, result, receipt, limits and route. The files already in the repository are not converted. *(Changed: the last sentence and "new".)*
+9. A machine will confirm the envelope is complete, and will still not know whether the evidence proves the claim. *(Unchanged; PM-14a pins it with a test.)*
+10. The GPU validation record changes shape to fit the envelope, so its skill and its readers change with it. *(Unchanged: the skill, the README and the release skill's gate sentence change; Plan 34's pack is not edited and its owner is told.)*
+
+### Estimates
+
+Remaining engineering days, not in the catalog's committed figure.
+
+| | Days | Note |
+| --- | --- | --- |
+| Phase 3, track A | 1–1.5 | PM-11c adds a quarter |
+| Phase 3, track B | 1.25–2 | plus half a day if assumption A3 fails |
+| Phase 3, track C | 1.25–2 | |
+| Phase 3 words and review | 0.75–1 | PM-13t, R3 |
+| **Phase 3** | **4.5–6.5** | about 2.5 elapsed with three tracks in parallel |
+| **Phase 4** | **2.5–3.5** | PM-14a to R4, one chain |
+| Track A alone, with its words and a review | about 2 | the slice recommended under D9 |
+
+### Review rounds
+
+Recommend one round per phase (R3, R4), each on the phase's integrated head before its PR to `main`. Each phase changes a gate, so ordinary PR review is not enough; neither crosses a repository, a release or user data, so one round is. No separate review stop: R3 already stands between the form definitions and Phase 4, the only later tasks built on them. If track A is taken alone, one round on it. Pending — the owner's agreed number.
+
+### Second critique
+
+Pending — required by the plan skill, because the cards change astrid-dev's own checks. Next: a fresh critic with no stake in this draft reads the pushed branch, briefed to build as little as possible and to verify claims in code, not in the summary; its findings and what was accepted or rejected are recorded here.
+
 ## Source identities
 
-Planning read astrid-dev `e27e30a6` and wrote this pack on `b43f4e8936e668d4735bfae4f6d409251b311062`. Only astrid-dev changes. The App is consumed read-only through the existing `vision-consumer-contract` job at its `main`. Record each task's actual base SHA when it starts.
+Planning read astrid-dev `e27e30a6` and wrote this pack on `b43f4e8936e668d4735bfae4f6d409251b311062`. Only astrid-dev changes. The App is consumed read-only through the existing `vision-consumer-contract` job at its `main`. Record each task's actual base SHA when it starts. The Phase 3 and 4 specification read `int/48-one-record-model` at `ee69971f` (Phase 1 integrated, not yet on `main`) and changes only this pack.
 
 ## References
 
