@@ -1,4 +1,6 @@
 """Focused checks for a public-page projection with no duplicated editorial copy."""
+import shutil
+import tempfile
 import unittest
 
 from pathlib import Path
@@ -6,13 +8,23 @@ from export_public_vision import build, rewrite_links, render_root_readme, rende
 
 
 SHA = "a" * 40
-FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "vision"
+FIXTURE_FILES = Path(__file__).parent / "fixtures" / "vision"
 
 
 class PublicVisionProjectionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.page = build(FIXTURE_ROOT, SHA)
+        cls._fixture_temp = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls._fixture_temp.cleanup)
+        cls.fixture_root = Path(cls._fixture_temp.name)
+        for source in FIXTURE_FILES.rglob("*.fixture"):
+            relative = source.relative_to(FIXTURE_FILES)
+            if relative.name.endswith(".md.fixture"):
+                relative = relative.with_name(relative.name[:-len(".fixture")])
+            destination = cls.fixture_root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+        cls.page = build(cls.fixture_root, SHA)
 
     def test_pillars_come_from_vision_in_declared_order(self):
         self.assertEqual(
@@ -36,7 +48,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         for kind, items in (("pillars", self.page["pillars"]),
                             ("principles", self.page["principles"])):
             for subject in items:
-                path = FIXTURE_ROOT / "vision" / kind / (subject["id"] + ".md")
+                path = self.fixture_root / "vision" / kind / (subject["id"] + ".md")
                 parsed = parse_subject(path.read_text(encoding="utf-8"), str(path))
                 self.assertEqual(subject["statement"], parsed["statement"])
                 self.assertEqual(subject["explanationMarkdown"], parsed["explanationMarkdown"])
@@ -50,7 +62,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         vision = self.page["vision"]
         self.assertEqual(vision["title"], "A tool to unlock the collective artistic ambition of the open-source AI community")
         self.assertIn("Astrid aims to help individuals and the community as a whole", vision["introMarkdown"])
-        self.assertEqual(vision["agentPrompt"], canonical_agent_prompt(FIXTURE_ROOT))
+        self.assertEqual(vision["agentPrompt"], canonical_agent_prompt(self.fixture_root))
         self.assertIn("skills/astrid-dev/SKILL.md", vision["agentPrompt"])
         self.assertNotIn("100% of the ownership", vision["introMarkdown"])
         self.assertNotIn("actual allocation and legal structure", vision["introMarkdown"].lower())
@@ -228,7 +240,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(plan["gapIds"], ["CA-002"])
         self.assertEqual(plan["status"], "queued")
         self.assertIn("earlier commitments", plan["goalMarkdown"].lower())
-        path = FIXTURE_ROOT / "plans/28-contributor-ownership/inputs.md"
+        path = self.fixture_root / "plans/28-contributor-ownership/inputs.md"
         inputs = path.read_text(encoding="utf-8")
         self.assertIn("Banodoco-website", inputs)
         self.assertIn("Equity Review", inputs)
@@ -248,13 +260,13 @@ class PublicVisionProjectionTests(unittest.TestCase):
     def test_relative_markdown_links_point_at_pinned_source(self):
         text = rewrite_links("[source](../pillars/artistic-ambition.md)",
                              __import__("pathlib").Path("vision/gaps/AA-001-sustained-creative-work.md"),
-                             SHA, FIXTURE_ROOT)
+                             SHA, self.fixture_root)
         self.assertEqual(text,
                          f"[source](https://github.com/banodoco/astrid-dev/blob/{SHA}"
                          "/vision/pillars/artistic-ambition.md)")
 
     def test_root_vision_counts_follow_source_data(self):
-        actual = (FIXTURE_ROOT / "README.md").read_text(encoding="utf-8")
+        actual = (self.fixture_root / "README.md").read_text(encoding="utf-8")
         self.assertEqual(render_root_readme(actual, self.page), actual)
         self.assertIn("Our vision has four main pillars and four guiding principles.", actual)
         self.assertIn(f"We've identified {len(self.page['gaps'])} gaps", actual)
@@ -276,7 +288,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
 
     def test_immutable_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "40-character"):
-            build(FIXTURE_ROOT, "main")
+            build(self.fixture_root, "main")
 
 
 if __name__ == "__main__":
