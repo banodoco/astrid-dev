@@ -64,6 +64,7 @@ In the [tasks template](../../templates/project/tasks.md), every task has a scop
 - **Dependencies,** only where one task needs another's result, or both change the same function, class or contract. Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. The same applies across other active projects. If a shared surface needs one model first, consult the advisor.
 - **The critical path:** state it in `tasks.md`, and keep it as short as the work allows. Chain tasks only where the rule above requires it.
 - **Before implementation:** its actual base and donor revisions, exact focused checks and authority.
+- **Tests only at load-bearing moments,** per the [run contract's table](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing): before the first task, after each task (its own proof only), before others build on a shared part, and once before review.
 - **A test inventory and focused proofs.** `tasks.md` names the existing tests the plan affects (its test inventory) and, for each task, the exact test files that prove it. The manager's local baseline runs only these. The full suite runs on CI once per review, not per task.
 - **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
   - other repositories come from public git at pinned commits;

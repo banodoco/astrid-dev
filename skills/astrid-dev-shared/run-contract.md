@@ -57,6 +57,23 @@ Preserve the initial failure and its exact command/candidate. If a check fails, 
 
 Carry proof forward only when its relevant inputs and product/dependency/generated/installed bytes are evidenced unchanged. A changed candidate invalidates only evidence dependent on the change; preserve unaffected passing proof. Protected surfaces and changed relevant inputs require proof for the exact candidate. Accepted scoped checks do not support a claim that an entire repository or suite passed.
 
+### When a test run is load-bearing
+
+Run tests at the moments where the result changes a decision, and at no others. A run is load-bearing when someone is about to rely on it:
+
+| Moment | Run | Why it bears load |
+| --- | --- | --- |
+| **Before the first task** | The plan's test inventory, once, on the starting versions | Without it, a later failure can't be told from one that was already there |
+| **After each task** | Only that task's focused proof: the tests that would fail if this task were wrong | It decides whether the task is done |
+| **Before others build on it** (a contract, data model, shared interface or security boundary lands, or a chain hands over to a different worker) | The tests that cover that shared part | A mistake found later means redoing every task built on it |
+| **Before review, and before anything reaches `main` or users** | The full relevant suite, once, on the integrated head, on CI | It is the last point where a failure is cheap |
+
+Not load-bearing, so skip it: a broad suite after every task; re-running a proof whose inputs have not changed (carry it forward); a test with no baseline to compare against; a run whose result nobody will act on. After each load-bearing run, compare with the baseline by the regression rule and fix only what is new.
+
+**One exception, by cost:** when the whole inventory runs in seconds, run all of it at every moment above. The table exists to ration expensive runs, not to justify skipping cheap ones.
+
+A plan names its load-bearing moments in `tasks.md`: the test inventory, each task's focused proof, and any join that needs the shared part re-proven.
+
 ## Review and promotion boundaries
 
 Review rounds are proportional, not a default ritual: where the accepted plan sets any, end with them on the integrated candidate. An accepted plan may also set a review stop after a load-bearing part (see the [plan skill](../astrid-dev-plan/SKILL.md#write-the-task-list)); a stop follows this same protocol on that part's integrated result, with its own agreed rounds, and the tasks built on it wait for it. The final review always runs after required scoped checks and before publishing or closing, by the `completion_reviewer`. The plan records how many rounds at most: the planner recommends a number from risk and complexity (as a guide, 0 for a simple, bounded project where ordinary PR review is enough; 1 for meaningful complexity; 2 or 3 only for cross-repository, release, security or data work) and the owner agrees. Each finding comes back as a task card (outcome, route, scope, dependencies, focused proof) and is done before the next round. Stop after a round with no blocking findings; a blocking finding still open after the last agreed round goes to the owner. Do not pass with an unresolved blocking finding. Preserve an existing run's exact accepted review scope, stage, candidate, remaining rounds, and consumed count; never add stages, reset counts, silently change the reviewed candidate, or ask for sign-off after every task. Planning-only runs have no active review stage by default.
