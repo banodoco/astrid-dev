@@ -4,19 +4,19 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — Phase 1 only. On 11 Nov 2026 the owner asked for the first phase to be handed to a manager and driven to completion, with normal, very hard and super hard tasks on Codex and taste and review on Claude ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). Phase 2 stays unaccepted until D1 to D4 are answered; Phases 3 and 4 stay proposed (D7). On 11 Nov 2026 the owner also asked for Phases 3 and 4 to be specified to task level; that is a go to specify, not acceptance and not a go to run them ([specification](#phases-3-and-4-specification)).
+**Scope decision:** Accepted — Phase 1 only. On 11 Nov 2026 the owner asked for the first phase to be handed to a manager and driven to completion, with normal, very hard and super hard tasks on Codex and taste and review on Claude ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). Phase 2 stays unaccepted until D1 to D4 are answered; Phases 3 and 4 stay proposed (D7). On 11 Nov 2026 the owner also asked for Phases 3 and 4 to be specified to task level; that is a go to specify, not acceptance and not a go to run them ([specification](#phases-3-and-4-specification)). Also on 11 Nov 2026, with D1 to D3 decided, the owner asked for Phase 2 to be made ready to execute with Codex doing the bulk of the work; that too is a go to specify and not a go to run ([re-plan](#phase-2-re-plan-against-phase-1)).
 
 **Prior art:** a read of every script, workflow, skill and template at astrid-dev `e27e30a`, plus two read-only surveys of all 47 packs and all 227 evidence files ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)); findings are under [What exists today](#what-exists-today). Reused: [`project_contract.py`](../../scripts/project_contract.py), [`vision_subject.py`](../../scripts/vision_subject.py), [`export_public_vision.py`](../../scripts/export_public_vision.py) and the `publish-vision` job. Overlapping plans: [Plan 31](../31-releases-from-astrid-dev/plan.md) and [Plan 44](../44-vision-execution-trail/plan.md).
 
 **Approach:** finish the shared layer the existing scripts already imply (one helper, a check registry, a view mechanism), then move the catalog onto it. Declaring the pack shape, lifecycle, forms and evidence is proposed, not committed (D7). Alternatives compared under [Alternatives](#alternatives): do nothing; fix only the catalog; adopt a documentation framework or a database; this plan.
 
-**Challenge:** Reviewed — one independent high-judgment critique, briefed to build as little as possible and to verify claims in code ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). It found three blocking errors in the first draft, all fixed, and recommends a scope about a third the size; what was accepted, and what is left to the owner, is under [Critique](#critique). The Phase 3 and 4 task cards change astrid-dev's own checks, so they need their own critique before any greenlight; that second critique was done on 11 Nov 2026 by a fresh session (`session_011EzfW2YVR3oTr7E9efK4ar`) on commit `ee47263`: five blocking findings, all accepted, and a recommendation to cut most of both phases, left to the owner ([Second critique](#second-critique)).
+**Challenge:** Reviewed — one independent high-judgment critique, briefed to build as little as possible and to verify claims in code ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). It found three blocking errors in the first draft, all fixed, and recommends a scope about a third the size; what was accepted, and what is left to the owner, is under [Critique](#critique). The Phase 3 and 4 task cards change astrid-dev's own checks, so they need their own critique before any greenlight; that second critique was done on 11 Nov 2026 by a fresh session (`session_011EzfW2YVR3oTr7E9efK4ar`) on commit `ee47263`: five blocking findings, all accepted, and a recommendation to cut most of both phases, left to the owner ([Second critique](#second-critique)). The re-planned Phase 2 cards change the completion gate, review intake, the claim bot and a workflow that pushes to `main`, so they need a third critique before any go to run: Pending — see [Third critique](#third-critique).
 
 **Proof and limits:** see [plan.md](plan.md#completion). The proof is structural: same verdicts and a byte-identical public feed across the refactor, conflict-free parallel plan PRs, and one-file extension examples. It does not show that contributors find the result clearer beyond one fresh-agent trial.
 
-**Review rounds:** one round on Phase 1's integrated head (row R1), under the owner's policy of 11 Nov 2026 that reviews are minimal and only for meaningful complexity; Phase 1 qualifies because every later phase and Plan 31 build on it. Pending for Phase 2 — recommend one round. Next: the owner confirms with Phase 2's scope. For Phases 3 and 4, recommend one round each (R3, R4), pending with D7 ([why](#review-rounds)).
+**Review rounds:** one round on Phase 1's integrated head (row R1), under the owner's policy of 11 Nov 2026 that reviews are minimal and only for meaningful complexity; Phase 1 qualifies because every later phase and Plan 31 build on it. Pending for Phase 2 — recommend one review stop on the two contracts (RS1) and one final round (R2), with one more round on the refresh job only if it lands separately ([why](#review-rounds-1)). Next: the owner confirms with Phase 2's run start. For Phases 3 and 4, recommend one round each (R3, R4), pending with D7 ([why](#review-rounds)).
 
-**Ambiguity pass:** done for Phase 1 by the planner; the choices are in [tasks.md](tasks.md#phase-1-dispatch-notes). Pending for Phase 2. Done for Phases 3 and 4 by the planner from the code at `ee69971` ([what it resolved](#ambiguity-pass)); it must be repeated against Phase 2's result before dispatch.
+**Ambiguity pass:** done for Phase 1 by the planner; the choices are in [tasks.md](tasks.md#phase-1-dispatch-notes). Done for Phase 2 by the planner on 11 Nov 2026 from the code on `main` at `12a54b6` ([what it resolved](#ambiguity-pass-1)); four decisions are left to the owner, D14 to D17. Done for Phases 3 and 4 by the planner from the code at `ee69971` ([what it resolved](#ambiguity-pass)); it must be repeated against Phase 2's result before dispatch.
 
 ## Owner decisions
 
@@ -36,6 +36,10 @@ Open unless marked decided. Each has a recommendation.
 - **D11. Two questions about the envelope.** First, may a PR that asks for implementation review fail CI for an incomplete envelope? Nothing checks those PRs today. *Recommend:* yes, for PRs carrying `Review request: implementation` only. Alternative: print the block in the form and check nothing. Second, does the completion assessment take the envelope's labels? Options: (a) no: it keeps `Evidence`, `Completion`, `Integrated candidate`, `Unproven` and `Routes used`, and the envelope lives in the implementation form and the GPU record; (b) yes: rename them in one step, which also changes `scripts/model_usage.py` and its test, the run contract, `docs/contribution-workflow.md` and `templates/product-pr/review.md`, rewrites seven tests of the gate, and needs every open completion PR refilled. *Recommend:* (a). The cards are written for (a). **Decided, 11 Nov 2026:** the owner agreed to both recommendations: CI may fail an implementation review request for an incomplete envelope, and the completion assessment keeps its own labels, option (a).
 - **D12. When does the GPU record change shape?** Plan 34 has run evidence on a branch in the current shape, and `validation/gpu/` holds no record on `main` yet. *Recommend:* PM-14c lands after Plan 34's first record is merged, or with its owner's agreement to add the block to it. Alternative: change the template now and have Plan 34 convert before merging. **Decided, 11 Nov 2026:** the owner agreed: PM-14c lands after Plan 34's first record is merged, or with its owner's agreement.
 - **D13. What must every new pack contain?** With the templates as the declaration, a new pack needs all seven planning-evidence labels, including `Review rounds` and `Run start`, and the `## Owner decisions` section even when empty. This pack itself would not pass: its run start is a bullet under its decisions. Options: (a) everything in the template, each label with the template's own `Pending —` text until known, and `None` under Owner decisions; (b) the headings and only the five labels the older check already requires, which keeps a second list in code. *Recommend:* (a), because a draft copies the template's pending lines at no cost; but it changes what a draft must hold, so it is the owner's call before PM-11a. **Decided, 11 Nov 2026:** the owner agreed to (a), everything in the template.
+- **D14. Where does a project's catalog name come from?** The catalog's project name and the plan's own title differ in 26 of 48 packs, and the public vision feed carries the catalog's name. Options: (a) a `**Project:**` line in every pack, written by the migration from today's catalog name; titles are not touched and the feed stays byte-identical; (b) the title becomes the name: the migration rewrites 26 titles to the catalog's names, including in packs with a live run, which the plan's boundary rules out; (c) the title as it stands becomes the name: 26 names change in the catalog and on the public vision page, and someone has to review them. *Recommend:* (a). It leaves one fact in two places for now (title and name), which is today's state, and a pack's owner can later make them equal. The cards are written for (a); (b) or (c) changes one function and the migration script.
+- **D15. How is a stale PR that still edits the catalog made to fail?** `main`'s ruleset does not require a branch to be up to date, so a PR that passed its checks before the cut-over could merge after it and hand-edit a generated file, and the edit would then be lost without a word. Options: (a) the generated table keeps today's seven cells and moves the Plan link to the first column, so every row line differs from the hand-written one and any open PR that edits or adds a row conflicts in git and cannot merge; the host also comments on each such PR; (b) the owner turns on "require branches to be up to date" for the cut-over, which stops every stale PR in the repository until it is updated, at about 150 commits a day; (c) the host's comments only, which leaves a few seconds in which a PR with auto-merge on can slip through. *Recommend:* (a): it needs no setting and cannot be missed. Its cost is a visible change to the catalog page's column order. The cards are written for (a).
+- **D16. Does the cut-over wait for the bot?** The refresh job (PM-8) needs O-1, which only the owner can do, and a hosted proof in a scratch repository. Options: (a) do not wait: if O-1 and the proof are done when the final review starts, PM-8 rides in the one cut-over PR; if not, the cut-over goes without it, authors run `sync` for the days between, and PM-8 follows as a second PR after one review round of its own; (b) wait: one PR, and Phase 2 does not land until O-1 is done. *Recommend:* (a). The claim bot has waited on the same kind of setting since it was written; the cut-over should not.
+- **D17. Which identity pushes generated files, and where is it proven?** D3 chose a bot that commits to `main`; `main` now requires a pull request, so a direct push needs a bypass, and GitHub cannot limit a bypass to certain files. Options: (a) a new GitHub App used for nothing else, with Contents: write only, on the ruleset's bypass list, installed also on a scratch repository with the same ruleset so the job is proven there first; (b) the claim bot's App for both jobs: one thing to set up, but one identity that can then both merge claims and push to `main`; (c) no bypass: the App opens a pull request with the refreshed files and merges it when the two checks pass, which keeps `main`'s rules whole but takes several minutes per refresh, opens a bot PR for most plan changes, and changes D3's "commits to `main`". *Recommend:* (a). What limits the App to generated files is the job's own steps (it commits only what `sync` reports and fails on anything else), which PM-8h and the review check; the owner should know that is the only limit. O-1 lists the settings.
 
 ## Ten statements for the owner
 
@@ -239,9 +243,69 @@ Reviewed on 11 Nov 2026 by a fresh session with no stake in the draft (`session_
 
 **The critic's own minimal scope:** PM-13h and PM-11c's command in one hand-made PR; track A for new packs only if the owner wants a gate, with `Run start` settled first; cut tracks B and C and all of Phase 4 until a recorded failure asks, and if Phase 4 returns, add fields without renaming. The planner agrees with the first two lines and has kept the rest specified because the owner asked for it; D7 and D9 are where it is cut.
 
+## Phase 2: re-plan against Phase 1
+
+Written on 11 Nov 2026. **The owner asked that day for Phase 2 to be made ready to execute, with Codex doing the bulk of the work** ([planning session](https://claude.ai/code/session_011EzfW38XJUpUFewfUM9MxF)). That is a go to specify. It is not a go to run: no Run start is written for Phase 2, and it still waits for Release 12 to publish. The cards are in [tasks.md](tasks.md); this section is their evidence. It read astrid-dev `main` at `12a54b6`.
+
+### What the code showed
+
+Each was read in the code or in the repository's settings, not taken from the earlier cards.
+
+- **`main`'s rules** (ruleset `main`, read through the API): no deletion, no force-push, a pull request with zero approvals, the checks `documentation` and `vision-consumer-contract`, branches need not be up to date, and no bypass actor. `branches/main` now reports `protected: true`, so the claim bot's own refusal on an unprotected `main` no longer holds it off; only the unset `CLAIM_AUTO_MERGE_ENABLED` variable does.
+- **Who reads `plans/index.md`:** `check_docs.py:catalog_rows` and, through it, eleven guards and two rules in `checks.py`; the completion gate (`check_completion.py:plan_statuses`, `transitions_to_done`, `catalog_at_revision`); `export_public_vision.py:build`; `claim_project.py`; `review_intake.py:classify`; and `contribution_api.py:catalog`, which fetches it from GitHub. The two bots run `main`'s copy of their scripts, so they switch at the moment the cut-over merges.
+- **Who else assumes the table:** six test files build one from `check_docs.HEADER`, and four oracle fixtures overlay the whole file.
+- **The catalog against the packs:** 48 rows and 48 folders. In 26 the row's project name differs from the plan's title. One cell holds a relative link. One row's link label is not `Plan NN`. Every `plan.md` has its title on line 1 and a blank line 2. No `plan.md` has a `**Status:**`, `**Owner:**`, `**Estimate:**` or `**Waiting on:**` line; Plan 17 has a `**Goal:**` line in its body. Twelve packs carry the template's sentence that these facts live only in the catalog, and more say it in other words.
+- **Planning evidence:** 21 packs have the section and all 21 pass today.
+- **Generated pages:** three views exist. `vision/README.md` is still read as the source of the principle list. `export_public_vision.py`'s own command fails on an out-of-date page, and two CI jobs run it.
+- **The old commands** hold the rule functions; only their `main` functions are shims. Five documents outside `plans/` name them.
+- **The Phase 1 integration branch** has merged and been deleted, so its name is free.
+
+### Ambiguity pass
+
+Done by the planner from the code. Resolved without the owner, each written into a card or the dispatch notes:
+
+- **Field syntax and place:** six bold lines directly under the title, each its own paragraph, read from the header block only.
+- **Field values** are written relative to the plan and re-based for the catalog and the feed, so the feed stays byte-identical.
+- **`plans/priority.md`** lists folder ids, one per line, under `## Order`. It starts as today's row order, terminal projects included, so the generated order equals today's. A project it omits sorts last among open ones, so a new pack edits no shared file.
+- **The catalog's hand-written "Delivery context" text** moves word for word to `plans/catalog-notes.md`, which the view prints; its "How to edit safely" text becomes part of the generated preamble. Nothing is deleted by a script.
+- **Existing packs get the six lines and nothing else,** live run or not. The old sentence in their Start lines stays until each run ends. This keeps the plan's boundary and D4.
+- **A status change does not start the planning-evidence check,** as an index edit never did.
+- **The completion gate can read a base from before the cut-over,** so the cut-over PR itself is not asked for six completion assessments, and a status it cannot read counts as not done.
+- **The oracle:** fixtures add a synthetic pack; `golden.txt` is always the script's output; each card names the only lines that may differ.
+- **PM-10** removes entry points, not modules.
+- **The renumbered project** takes the lowest free number when PM-9 starts.
+- **Review intake and the claim bot** move in the same PR as the gate, because both run `main`'s code.
+- **Two refresh modes:** authors regenerate until PM-8 lands; afterwards a PR may omit a generated file, may include a correct one and fails on a hand edit. One instruction, "run `sync` and commit", is right in both.
+- **In CI the base of a PR check** becomes the first parent of the merge commit (PM-8a). Whether the event's own base SHA can lag behind it was not verified; the card does not depend on the answer.
+
+What only the owner can decide is D14 to D17 above.
+
+### Estimates
+
+Engineering days for Phase 2, by card, are in [tasks.md](tasks.md#phase-2-dispatch-notes).
+
+| | Days | Note |
+| --- | --- | --- |
+| Codex, N route | 4.1 | nine cards |
+| Codex, S route | 2.25 | the three tests-first contracts |
+| Hosting session, taste | 0.85 | three cards |
+| Hosting session, review | 0.75 | RS1 and R2 |
+| Hosting session, hosted proof and the two landings | 1.0 | PM-8h, C-1, C-2 |
+| **Phase 2, all of it** | **about 9** | about 5.5 elapsed, three chains side by side; 71% of it is Codex's |
+
+The catalog row says "phase 2 5–6". That figure predates the tests-first split, the review stop and the hosted proof; it matches the elapsed time, not the work. The row is outside this pack and was not edited here.
+
+### Review rounds
+
+**Recommend one review stop and one final round.** RS1, one round, on the two contracts (PM-6a, PM-7a) before PM-6b and PM-7b build on them: they decide what the completion gate and the claim bot refuse, a hole found at the end would mean redoing both implementations, and it puts a second model's eyes on tests a Codex route wrote. R2, one round, on the integrated head before the cut-over. If the refresh job lands separately (D16), it gets one round on its own diff, because it is a job that pushes to `main` past the ruleset. Nothing here crosses a repository or touches user data, so no more than that. Pending — the owner's agreed number.
+
+### Third critique
+
+Pending — the plan skill requires an independent critique of these cards, because they change astrid-dev's own checks and bots. Next: a fresh session reads the written cards, briefed to build as little as possible, to verify claims in the code, and to find any way a gate fails open or a claim is wrongly merged; its findings and what was accepted are recorded here.
+
 ## Source identities
 
-Planning read astrid-dev `e27e30a6` and wrote this pack on `b43f4e8936e668d4735bfae4f6d409251b311062`. Only astrid-dev changes. The App is consumed read-only through the existing `vision-consumer-contract` job at its `main`. Record each task's actual base SHA when it starts. The Phase 3 and 4 specification read `int/48-one-record-model` at `ee69971f` (Phase 1 integrated, not yet on `main`) and changes only this pack.
+Planning read astrid-dev `e27e30a6` and wrote this pack on `b43f4e8936e668d4735bfae4f6d409251b311062`. Only astrid-dev changes. The App is consumed read-only through the existing `vision-consumer-contract` job at its `main`. Record each task's actual base SHA when it starts. The Phase 3 and 4 specification read `int/48-one-record-model` at `ee69971f` (Phase 1 integrated, not yet on `main`) and changes only this pack. The Phase 2 re-plan read `main` at `12a54b6` (Phase 1 merged) and changes only this pack.
 
 ## References
 
