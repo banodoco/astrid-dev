@@ -9,6 +9,28 @@ from views import View, _with_marker, check, check_view, sync
 
 
 class ViewTests(unittest.TestCase):
+    def test_legacy_source_error_hides_both_owned_view_errors(self):
+        import checks
+        import golden
+        import json
+        import views
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "repo"
+            golden._copy_tree(root)
+            overlay = json.loads((golden.FIXTURES / "bad-status/overlay.json").read_text(encoding="utf-8"))
+            for relative, contents in overlay.items():
+                target = root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(contents, encoding="utf-8")
+            context = checks.Context(root)
+            self.assertTrue(checks._public_vision(context))
+            raw_errors = views.check(root)
+            self.assertTrue(any(line.startswith("view public-vision:") for line in raw_errors))
+            self.assertTrue(any(line.startswith("view root-vision-summary:") for line in raw_errors))
+            self.assertEqual(checks._generated_views(context),
+                             [line for line in raw_errors if line.startswith("view check-catalog")])
+
     def test_view_check_is_registered(self):
         import checks
         registered = [entry for entry in checks.REGISTRY if entry.id == "generated-views"]
