@@ -1,0 +1,35 @@
+{
+  "side": "r10",
+  "selector": "tests/core/execution/test_process_group.py::test_instantly_exiting_launches_are_a_known_outcome_not_a_custody_error",
+  "start_utc": "2026-11-11T08:39:49Z",
+  "end_utc": "2026-11-11T08:39:54Z",
+  "exit": 1,
+  "pytest_summary": "============================== 1 failed in 3.68s ===============================",
+  "failure_summary": "FAILED tests/core/execution/test_process_group.py::test_instantly_exiting_launches_are_a_known_outcome_not_a_custody_error - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+  "pytest_timeout": "600.0s signal",
+  "faulthandler_timeout_seconds": 300,
+  "pins_and_python": [
+    "72462b04fa036736eb7fc9cb654def5f4ea2158c",
+    "52ec0578963847693a0df758d9bc1d55325f518f",
+    "e2905d068d5851b9c32856d32b8251852a01d6dd",
+    "96360a27a53c4608f780f7b370f747a2aa3c7ca8",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "source_log_sha256": "054d7fd2af3879f345c6117d3eee55ae78cf3bd56e142df30c85e9982479b26f",
+  "source_receipt_sha256": {
+    "start.txt": "2249a5c4647ae0d333786d2b5e3f7f09d4b757ae51e3dc3deaff223b80f65f26",
+    "end.txt": "3f11dd983cac0706805d3bda9ec1d079f993dcde925ee65fad9935bdbf34f733",
+    "module.txt": "07213d9c605cef9056519a41f1366ca58b590b4963be26cd3f0763b677a4202d",
+    "pins.txt": "99e5957b6c4308a5af009b44fe97f92335fbf916c03847b98cd0199e5174006e",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "8a8ae815d35e5c2edbecb0117baed81b5d0916c50204de0d1b6448e1bbc63953",
+    "SHA256SUMS": "052077ada8f21973b36bb9c1744ca6b07646cf206de1f2fea1b0829ffdde42c0"
+  }
+}
