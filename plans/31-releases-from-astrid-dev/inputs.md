@@ -10,66 +10,34 @@
 
 **Approach:** a release is one file in astrid-dev, `releases/<N>.md`, which turns Final in a pull request the owner approves. The App carries a byte-exact copy of what that record renders, written by one command and accepted only by a required check that re-derives it and verifies the approval. The code that reads, renders and verifies lives in the App, where the last write happens; astrid-dev holds the records and a job that runs the App's checker on a proposed record, as it already does for the vision feed. Nothing in the Agent, Runtime or Pinokio changes. This keeps the 8 Nov source-of-truth decision and replaces its transport (a generated branch and a scheduled job with write access to App `main`), which the re-read showed could be written by anyone with push access ([D2](#owner-decisions), [alternatives](#alternatives)). It takes over Plan 29's UR-8b, UR-8c and UR-8d and replaces UR-8's tuple guard.
 
-**Challenge:** Pending — three independent high-judgment reviews on 8 Nov 2026 shaped the earlier design ([planning session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9); [summary](#earlier-reviews)). The plan skill requires a fresh critique of this re-plan, because it touches a cross-repository contract, release, security and astrid-dev's own workflows. Next: see [Critique](#critique).
+**Challenge:** Reviewed — an independent critique of this re-plan on 11 Nov 2026 by a fresh session with no part in the draft ([critic session](https://claude.ai/code/session_011EzfVz82Cg6zQqZNP5RSwX)), briefed to build as little as possible, verify claims in code and find what would let an unapproved installer publish. It found four ways through and about a day and a half to cut; [what was accepted and rejected](#critique). Three earlier reviews on 8 Nov 2026 shaped the first design ([summary](#earlier-reviews)).
 
-**Proof and limits:** see [plan.md](plan.md#completion). The approval can be verified only if the owner approves from an account no agent can act as (D1). The plan does not defend against someone who can change the hosted App's serving code or its deployment.
+**Proof and limits:** see [plan.md](plan.md#completion). The approval can be verified only if the owner approves from an account no agent can act as, and the agents' account cannot bypass App `main` (D1). The plan does not defend against someone who controls the hosted App's deployment, or who changes what it serves by a route other than the files the plan names.
 
 **Review rounds:** Pending — recommend one review stop of one round after the trust root's contracts (RS1) and at most two rounds on the integrated pipeline (R); none for phase 2 beyond pull-request review. [Why](#review-rounds). Next: the owner confirms the numbers (D7).
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record here the date; the phase covered (recommend phase 1, RL-0 to RL-G); the accountable session, which is the Claude session that hosts Codex and manages the run on route S ([dispatch notes](tasks.md#dispatch-notes)); what it may do without asking (create `int/31-releases-from-astrid-dev` in astrid-dev and the App, open and merge task and progress pull requests into those branches, open and close the throwaway pull requests the hosted proofs name); what still needs the owner's go (anything reaching either `main`, every step of RL-G, O-1 and O-2, and RL-14t's wording); and the advisor session if there is one.
+**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record here the date; the phase covered (recommend phase 1, RL-0 to RL-G); the accountable session, which is the Claude session that hosts Codex and manages the run on route S ([dispatch notes](tasks.md#dispatch-notes)); what it may do without asking (create `int/31-releases-from-astrid-dev` in astrid-dev and the App, open and merge task and progress pull requests into those branches, open and close the throwaway pull requests the hosted proofs name); what still needs the owner's go (anything reaching either `main`, every step of RL-G, O-1, and RL-14t's wording); and the advisor session if there is one.
 
-## Owner decisions
-
-Already decided (8 Nov 2026, recorded in [Plan 29's inputs](../29-update-and-release/inputs.md#owner-decisions), decisions 7 and 8):
-- **Versions:** `major.minor.patch`, patch by default, minor or major only when the owner declares it. Release 10 is `0.0.10`.
-- **Wire ordering:** the integer `release` stays the ordering key.
-- **Required:** its own per-release decision with a reason, never implied by kind. Kind changes no behaviour for now.
-- **History:** it starts at a legacy record for the release actually live when the work starts.
-- **Hosted App deploys** are not releases.
-- **Source:** astrid-dev defines each release. This replaced Plan 29 decision 9's "App manifest stays the source".
-
-Decided or settled since:
-- **Order** (owner, 11 Nov 2026, recorded as [Plan 48's D6](../48-one-record-model/inputs.md#owner-decisions)): this plan is queued after Plan 48's Phase 2.
-- **Protection timing** (8 Nov open decision 3): astrid-dev `main` has required a pull request and the `documentation` and `vision-consumer-contract` checks since 11 Nov 2026, with no approval and no code-owner review (ruleset 27040267, read through the API on 11 Nov). What this plan still needs is owner rows O-1 and O-2, at go-live.
-
-Open, each with a recommendation:
-
-- **D1. Which GitHub account approves a release?** Every pull request in astrid-dev, including #521, is opened and merged by one account, `AstridPseudon`, which agent sessions act as. GitHub does not let an account approve its own pull request, so with one account there is no approval to verify.
-  - a. The owner approves from an account that no agent session can act as, and that account is the code owner of the App's installer code. *Recommended.*
-  - b. Keep one account. The plan then delivers records, checks and a byte-exact copy, and does not control who publishes.
-- **D2. How does a decided release reach the App?**
-  - a. One generated pull request per release: `install-copy.mjs write` produces it, the required `install-copy-guard` check proves its bytes equal the approved record, any session merges it. No new credential, no generated branch, no scheduled job. *Recommended.* It gives up "no App pull request per release".
-  - b. The 8 Nov design: astrid-dev writes a `release-published` branch and a scheduled App job pushes the copy to `main`. Today anyone with push access can write that branch directly, and a workflow token can be used by any branch's workflow, so this needs a branch ruleset, a write credential for App `main` held as an environment secret that only `main` can use, and a ruleset bypass for it. Two to three more days, and a new credential for the owner to create and keep.
-- **D3. How far does protection of App `main` go?**
-  - a. Require the guard, and require code-owner review for `/.github/` and `/scripts/installer/` in the App. The owner then approves App changes to workflows and installer code from the approving account. *Recommended:* without it an agent can change the guard, or the list of approvers, in an ordinary pull request.
-  - b. Require the guard only. That stops mistakes, races and hand edits, not a deliberate change to the guard.
-- **D4. Who may approve a release** (8 Nov open decision 2): only the owner, or any maintainer she lists as a code owner of the App's installer code. *Recommend* only the owner.
-- **D5. Versions for past releases** (8 Nov open decision 4): the live record maps releases 1 to N as `0.0.<n>`, so every install that exists has a version to show. *Recommend* yes.
-- **D6. Phasing** (8 Nov open decision 5): phase 1 is the record and the checked copy; phase 2 is versions on screen and the clean-up, about a day and a quarter. *Recommend* these phases. RL-14 could join phase 1 at the cost of a longer final review.
-- **D7. Review rounds:** one round at RS1 and at most two at R. *Recommend* these; the 8 Nov recommendation was at most three at the end, with no stop.
-
-The 8 Nov open decision 1 (sync trigger and push identity) is replaced by D2: under D2 a there is no sync job and no push identity.
-
-## Ten statements for the owner
+### Ten statements for the owner
 
 Each is true of the plan as written, under the recommended answers.
 
 1. **Now, a release is whatever the App's manifest says after someone's pull request merges. After, a release is a file in astrid-dev, and the App may only carry a byte-exact copy of it.**
-2. **Your go stops being a sentence in a session and becomes one approval on one pull request,** from an account no agent can use. Without that account the plan cannot verify anything (D1).
+2. **Your go gains a half that machines can check.** You still say go in the publishing session; you also approve one pull request, from an account no agent can use, and only that approval lets the copy land. Without that account the plan cannot verify anything (D1).
 3. **A Final record nobody approved can sit on `main` and still publish nothing:** the App's check refuses its bytes.
-4. **astrid-dev stays as free as today.** No code-owner review arrives there; managers keep editing draft briefs and merging their own progress. Once a record is Final, changing it un-approves it.
-5. **You approve more in the App instead:** every change to its workflows and installer code waits for you (D3).
-6. **Nobody edits `public/install*` by hand again.** `pin.mjs` stops writing the manifest and `release-guard` is deleted.
+4. **astrid-dev stays as free as today.** No code-owner review and no new required check arrive there; managers keep editing draft briefs and merging their own progress. Once a record is Final, changing it un-approves it.
+5. **You approve more in the App instead:** every change to its workflows, its installer code and the two files that serve the installer waits for you (D3).
+6. **Nobody edits `public/install*` by hand again.** `pin.mjs` stops writing the manifest and `release-guard` is deleted; its one rule, a different installer always has a higher number, is kept.
 7. **There is still one App pull request per release,** written by one command and proven by CI. The generated branch, the scheduled job and the new credential are cut, because anyone who can push to astrid-dev could write that branch, and no robot gets write access to App `main` (D2).
-8. **This does not stop someone who can change what astrid.haus serves.** App `main` deploys the page that hands out the installer; the plan protects the installer files and their workflows, not the whole App.
-9. **Users see "Astrid 0.0.13", never "Release 13".** The integer stays on the wire and on disk, and no Agent, Runtime or Pinokio code changes.
-10. **The first thing published this way changes nothing users install.** The live release is re-published as a record first, as the rehearsal; the first real release through the path is the plan's completion.
+8. **The hosted App's code goes live before its installer does,** by however long your approval takes: code merges first, then the record, then the copy. Today they land together.
+9. **This does not stop someone who can change what astrid.haus serves** by another route than the files the plan names, or who controls its deployment. The canary would notice a different manifest or bootstrap within a day; it cannot prevent one.
+10. **Users see "Astrid 0.0.13", never "Release 13",** and the first thing published this way changes nothing they install: the live release is re-published from its record as the rehearsal. The integer stays on the wire and on disk, and no Agent, Runtime or Pinokio code changes.
 
 Also true, and about the run, not the product: Codex writes about seven tenths of it; the hosting Claude session commits, reviews, does the wording and runs go-live with the owner.
 
 Her reaction to any contested statement is recorded above as a decision before greenlight.
 
-## What exists today
+### What exists today
 
 Read at the revisions in **Prior art**.
 
@@ -86,7 +54,7 @@ Read at the revisions in **Prior art**.
 
 **Not built anywhere:** a reader of a Final record's payload, a render, any approval check, `CODEOWNERS` in either repository, an App worker setup script.
 
-## Ambiguity pass
+### Ambiguity pass
 
 Done on 11 Nov 2026 by reading the code at the revisions above; it replaces the pass the 8 Nov plan deferred to the start. Each line is a choice the cards would otherwise have left to a worker, and what the code or the record settles. The decisions that are really the owner's are D1 to D7.
 
@@ -97,7 +65,7 @@ Done on 11 Nov 2026 by reading the code at the revisions above; it replaces the 
 | Do new checks register in `scripts/checks.py`? | The reader is in the App | No new check and no Python; the landed draft checks are untouched |
 | Does a Final record need more than the 8 Nov payload? | `pin.mjs:checkManifest` at App `6545f13` refuses a manifest without `vibecomfy` and `lifecycle` | Yes, both blocks |
 | Do the added manifest keys break an installed Agent's update? | `tools.py:validate_manifest` at Agent `a105de3`, `6e9c4f9c`, `709492fa` has no closed key set; the update job hashes its own downloaded copy, not the served file | No |
-| Do they break the deployed App? | `updateStatus.ts:readManifest`, `localUpdateStatus.ts`, `appBuild.ts` read `release` and `required` and ignore the rest | No, so the shared typed schema is not needed |
+| Do they break the deployed App? | `src/shared/lib/updates/updateStatus.ts:readManifest`, `config/vite/localUpdateStatus.ts` and `config/vite/appBuild.ts` read `release` and `required` and ignore the rest | No, so the shared typed schema is not needed |
 | Who are the approvers? | Nothing names them today | The code owners of the App's `/scripts/installer/`, read before the change |
 | Does `release-published` carry trust? | astrid-dev's ruleset covers only `main`; every agent session can push other branches | No; whatever reads it must re-derive from `main`, so the branch is cut (D2) |
 | Can the workflow token be the App's writer? | A push to any branch runs that branch's workflow with the same token | No (D2 b needs a credential scoped to `main`) |
@@ -105,7 +73,8 @@ Done on 11 Nov 2026 by reading the code at the revisions above; it replaces the 
 | How is a candidate qualified once `pin.mjs` stops writing? | The Agent's `journey.yml` reads `public/install*` from the App checkout | `install-copy.mjs write --candidate` writes the same bytes on the candidate branch |
 | Where do `runtime`, the digest and the pack pins come from? | `pin.mjs` already computes them from an Agent commit | `pin.mjs --print` |
 | Does a required floor persist? | `release-guard.mjs` leaves an unchanged floor in place today | Yes: the render carries the highest floor at or below N |
-| How does astrid-dev CI import the Agent's validator? | `tools.py` imports `runtime_protocol`; Agent `ci.yml` installs with `pip install -e '.[dev]'` and `scripts/ci_install_runtime.py` | Those two steps, after ancestry |
+| Does astrid-dev CI need to run the Agent's validator, or a required release check? | The Agent's `journey.yml` qualifies a candidate on `public/install*` from the App checkout, the same bytes that ship; draft briefs change many times a day | No to both: `release-contract` runs the App's `check-record` only, and is not required |
+| Can the job named by the required check share a workflow with other triggers? | `test.yml` also runs on push to `int/**` and by hand, where a job gated by `if` is skipped | No; the guard gets its own workflow with one trigger |
 | Which Node? | App `.nvmrc` 20.19.4; `validate_manifest` requires Node 20.19.4 in the manifest | 20.19.x for the worker |
 | Which App tests assert "Release n"? | `git grep` at App `6545f13` | The seven files in the test inventory |
 | What does a release with no version show? | No versions exist in today's manifest | No name at all; wording is RL-14t's |
@@ -113,9 +82,9 @@ Done on 11 Nov 2026 by reading the code at the revisions above; it replaces the 
 | Do the golden fixtures survive the live record turning Final? | Each overlays a whole `releases/12.md` or `strategy.md` | Only if RL-11 refreshes them; `golden.txt` must not change |
 | Can a Codex sub-agent commit? | [Plan 48 run note](../../docs/ledger/2026-11-11-plan48-phase1-run.md) | Assume not; the run's first step tests it |
 
-**Could not be verified from the planning session:** the App's branch rules and the state of App pull request #208 (the session had no API access to the App repository); whether `AstridPseudon` is the owner's own account or a shared one, and which account the owner would approve from; whether `raw.githubusercontent.com` answers inside a Codex sandbox (it answered from the planning session); whether a workflow token from the App can read astrid-dev's pull-request reviews at the rate the guard needs; whether the GitHub Actions app can be listed as a ruleset bypass actor (it no longer matters under D2 a).
+**Could not be verified from the planning session:** the App's branch rules and the state of App pull request #208 (the session had no API access to the App repository); whether `AstridPseudon` is the owner's own account or a shared one, what role it has on the App, and which account the owner would approve from; how GitHub resolves two check runs of one name on a commit, or a commit status against a required check (the plan avoids both rather than relying on either); whether `raw.githubusercontent.com` answers inside a Codex sandbox (it answered from the planning session); whether a workflow token from the App can read astrid-dev's pull-request reviews at the rate the guard needs; whether the GitHub Actions app can be listed as a ruleset bypass actor (it no longer matters under D2 a).
 
-## Alternatives
+### Alternatives
 
 - **Do nothing.** Release 11 was published by two projects racing for one number ([ledger](../../docs/ledger/2026-11-09-two-projects-published-release-11.md)); the release log already misses it; and any session can change what users install by merging to App `main`.
 - **Do less: records and the contract check only.** Keep `pin.mjs` and `release-guard`, and add Final records with `release-contract`. About four days. The record and the manifest are then two hand-kept copies with nothing forcing them to agree; rejected for that.
@@ -127,23 +96,75 @@ Done on 11 Nov 2026 by reading the code at the revisions above; it replaces the 
 - **A shared Zod schema for every App reader** (accepted on 8 Nov, cut here): the readers already ignore unknown keys, the trusted scripts must run without installed dependencies, and RL-14 touches the two readers anyway for two fields.
 - **Still not built:** signatures, a separate go-check bot, version arithmetic in the App, a second release log.
 
-## Estimates
+### Estimates
 
-Per task in [tasks.md](tasks.md#size). Phase 1 is 11 days of agent work (range 9 to 14), phase 2 is 1.25; elapsed time for phase 1 is about six working days on the critical path if the owner's steps are prompt. The total is about what the 8 Nov plan estimated (12.5): the transport got smaller, and the tests-first tasks, the wording tasks and the review stop were added. Owner time: the decisions; creating the approving account; two settings changes; her go in the publishing session for the two `main` merges; one approval, of the live record; and RL-14t's wording.
+Per task in [tasks.md](tasks.md#size). Phase 1 is 11 days of agent work (range 9 to 14), phase 2 is 1.25; elapsed time for phase 1 is about seven working days on the critical path if the owner's steps are prompt. The total is about what the 8 Nov plan estimated (12.5): the transport got smaller, and the tests-first tasks, the wording tasks and the review stop were added. Owner time: the decisions; creating the approving account and checking the agents' account's role; one settings change on the App; two approvals (the `Run start` pull request, then the live record); her go in the publishing session for the two `main` merges; and RL-14t's wording.
 
-## Review rounds
+### Review rounds
 
 - **RS1, one round, after RL-3 and RL-4.** Those two are tests that define what a record is, when it counts as approved, and when the App accepts a copy. RL-5, RL-6 and RL-7 are built to pass them. A hole found at the end would mean rewriting them; a hole found after go-live would have been open to every user. Reviewing the contracts costs half a day before any implementation exists.
 - **R, at most two rounds,** on both integrated heads before anything reaches `main`. The run contract's guide gives two or three for release and security work across repositories; two is enough with RS1 in front.
 - **Phase 2, none.** RL-14 changes three lines of text behind tests, and RL-14t's wording goes to the owner.
 
-## Critique
+### Critique
 
-Pending — see **Challenge**. Findings, and what was accepted or rejected, are recorded here.
+An independent critique on 11 Nov 2026 ([critic session](https://claude.ai/code/session_011EzfVz82Cg6zQqZNP5RSwX)) read the pack at `4fdaad0` and the code at App `6545f13` and Agent `a105de3`. It did not call GitHub's API, so its statements about GitHub's own behaviour are marked as not verified live; the plan was changed so that it does not depend on them. Its verdict: the shape is right (records in astrid-dev, trusted code in the App, a byte-exact copy by pull request, approval read from GitHub) and it would not go back to the generated branch; as drafted it was neither sound nor smallest.
 
-### Earlier reviews
+| Finding | Severity | Decision |
+| --- | --- | --- |
+| The guard's job sat in `test.yml`, which also runs on push to `int/**` and by hand; there the job is skipped, and a skipped run of the same name on the same commit could stand in for the failing one | blocking | **Accepted.** The guard is alone in its own workflow with one trigger and no job-level `if`; a test fails if another workflow defines a job of that name (RL-7) |
+| The required check was named but not tied to its source, so a commit status of the same name could satisfy it | blocking | **Accepted.** O-1 requires the check from GitHub Actions and its proof shows the `integration_id` |
+| The gate bound the approval to the pull request's head but compared the record only with the merge commit, so a second pull request merged in between could add to the record | blocking | **Accepted.** Refusal 6 compares the record at the finalizing commit with the approved head, and the reader refuses a second Publication section or `json` block (RL-3, RL-4) |
+| Nothing said the agents' account must not be able to bypass App `main`; and a code owner without write access is silently ignored | blocking | **Accepted.** O-0, O-1 and D1 a state both, with `codeowners/errors` empty as proof |
+| Two proofs could not run: the guard runs only on pull requests to `main` but the cards opened them into `int/31`; RL-6's live run needed a file a later card creates | blocking | **Accepted.** RL-7's hosted proof uses draft pull requests into `main`, closed unmerged; RL-6's live run names its approver list explicitly |
+| The files that decide which bytes are served were unowned, and the canary compared four fields | should fix | **Accepted.** `CODEOWNERS` adds `installerAssets.ts` and the `Dockerfile`; RL-8 compares the whole served manifest and bootstraps with the approved record |
+| Deleting `release-guard` dropped "a different installer always has a higher number" | should fix | **Accepted.** Rule G13 |
+| A green copy pull request survives its record being withdrawn; an unapproved Final record above the newest blocks publishing | should fix | **Accepted** as a Release skill step (close the copy first). The block is left as it is: it fails closed, and turning the record back to Draft clears it |
+| About a day and a half to remove: the Agent validator step and the required check on astrid-dev; one of the two alarms; the fallback for old App commits; two refusals; `npm ci` as a dependency of the installer cards | should fix | **Accepted,** all of it. O-2 is gone, `release-contract` is not required, the guard's push run is cut in favour of the canary, the live record names the commit that lands RL-2, and RL-0 is off the critical path. The days saved went to the stronger canary and the extra proofs, so the total did not move |
+| The gate's passing path was tested only on invented API responses | should fix | **Accepted.** O-0 has the owner approve the `Run start` pull request; RL-4's fixtures are recorded from it and RL-6 runs it live |
+| Collisions and judgment calls: three cards edited one line of `package.json`; a proof needed a branch its card did not depend on; a test case to keep was not named; the skill's step numbers; two messages that still say "run pin.mjs" | should fix | **Accepted,** each in its card |
+| Wrong claims: "your go stops being a sentence in a session"; a smoke test "with no network" beside `npm ci`; a critical path that left out RL-1, RL-8 and RL-12t; "history starts at the live release" listed as decided; that hosted App code now deploys before its installer was nowhere stated | should fix | **Accepted.** Statements 2 and 8, the critical path (about seven days), D5 and the RL-0 wording are corrected |
+| `inputs.md` has second-level sections the template lacks | minor | **Accepted.** They are third-level sections under the template's own headings |
+| Totals repeated in `plan.md` | minor | **Accepted.** Removed |
+| `tasks.md` restates the Codex family for each route | minor | **Rejected.** The owner asked which Codex model does each card; the table links the run contract and repeats only names |
+| The T rows stay with the hosting session though Codex has a T route | minor | **Rejected.** The same session reviews those strings, and Plan 48's run showed wording needs a named high-judgment agent |
+
+Left to the owner: D1 to D7. The critique confirmed that no decision is claimed that she has not made, once D5 was moved back to open.
+
+#### Earlier reviews
 
 Two reviews on 8 Nov 2026 chose between the App manifest and astrid-dev as the source, and between a generated copy and serving at request time; they cut signatures, a go-check bot, version arithmetic and the markdown log. A third, after Plan 29's lessons, split four tasks into twelve and resized the plan to about 12.5 days. Its findings that still stand: work lands on `int/31` with a go-live task; the fail-closed gate is its own S task; each commit must be an ancestor of its repository's `main`, because GitHub serves fork and pull-request commits through the parent; `CODEOWNERS` covers the publishing code; `release-contract` checks against the App branch the pull request targets; deleting `release-guard` needs an owner row; a worker setup script for the App; phasing. Its findings this re-plan changes: the publishing code and its `CODEOWNERS` are in the App, not astrid-dev; `releases/` is not code-owned; the typed shared schema is cut; the sync job is replaced (D2).
+
+## Owner decisions
+
+Already decided (8 Nov 2026, recorded in [Plan 29's inputs](../29-update-and-release/inputs.md#owner-decisions), decisions 7 and 8):
+- **Versions:** `major.minor.patch`, patch by default, minor or major only when the owner declares it. Release 10 is `0.0.10`.
+- **Wire ordering:** the integer `release` stays the ordering key.
+- **Required:** its own per-release decision with a reason, never implied by kind. Kind changes no behaviour for now.
+- **Hosted App deploys** are not releases.
+- **Source:** astrid-dev defines each release. This replaced Plan 29 decision 9's "App manifest stays the source".
+
+Decided or settled since:
+- **Order** (owner, 11 Nov 2026, recorded as [Plan 48's D6](../48-one-record-model/inputs.md#owner-decisions)): this plan is queued after Plan 48's Phase 2.
+- **Protection timing** (8 Nov open decision 3): astrid-dev `main` has required a pull request and the `documentation` and `vision-consumer-contract` checks since 11 Nov 2026, with no approval and no code-owner review (ruleset 27040267, read through the API on 11 Nov). This plan asks for nothing more on astrid-dev; what it needs is on the App (owner row O-1, at go-live).
+
+Open, each with a recommendation:
+
+- **D1. Which GitHub account approves a release?** Every pull request in astrid-dev, including #521, is opened and merged by one account, `AstridPseudon`, which agent sessions act as. GitHub does not let an account approve its own pull request, so with one account there is no approval to verify.
+  - a. The owner approves from an account that no agent session can act as. That account has write access to both repositories and is the code owner of the App's installer code; the agents' account is not an admin of the App and is on no bypass list there, or every rule below is advisory. *Recommended.*
+  - b. Keep one account. The plan then delivers records, checks and a byte-exact copy, and does not control who publishes.
+- **D2. How does a decided release reach the App?**
+  - a. One generated pull request per release: `install-copy.mjs write` produces it, the required `install-copy-guard` check proves its bytes equal the approved record, any session merges it. No new credential, no generated branch, no scheduled job. *Recommended.* It gives up "no App pull request per release".
+  - b. The 8 Nov design: astrid-dev writes a `release-published` branch and a scheduled App job pushes the copy to `main`. Today anyone with push access can write that branch directly, and a workflow token can be used by any branch's workflow, so this needs a branch ruleset, a write credential for App `main` held as an environment secret that only `main` can use, and a ruleset bypass for it. Two to three more days, and a new credential for the owner to create and keep.
+- **D3. How far does protection of App `main` go?**
+  - a. Require the guard, and require code-owner review for `/.github/` and `/scripts/installer/` in the App. The owner then approves App changes to workflows and installer code from the approving account. *Recommended:* without it an agent can change the guard, or the list of approvers, in an ordinary pull request.
+  - b. Require the guard only. That stops mistakes, races and hand edits, not a deliberate change to the guard.
+- **D4. Who may approve a release** (8 Nov open decision 2): only the owner, or any maintainer she lists as a code owner of the App's installer code. *Recommend* only the owner.
+- **D5. Where history starts, and versions for past releases** (8 Nov open decision 4). Plan 29's decision 9 put the start of the log at a legacy Release 9, and was superseded the same day without a new starting point being recorded. *Recommend:* the first record is the release live when the run starts, and it maps releases 1 to N as `0.0.<n>`, so every install that exists has a version to show. Earlier releases get no record of their own; `plans/releases.md` keeps its two rows.
+- **D6. Phasing** (8 Nov open decision 5): phase 1 is the record and the checked copy; phase 2 is versions on screen and the clean-up, about a day and a quarter. *Recommend* these phases. RL-14 could join phase 1 at the cost of a longer final review.
+- **D7. Review rounds:** one round at RS1 and at most two at R. *Recommend* these; the 8 Nov recommendation was at most three at the end, with no stop.
+
+The 8 Nov open decision 1 (sync trigger and push identity) is replaced by D2: under D2 a there is no sync job and no push identity.
 
 ## Source identities
 
