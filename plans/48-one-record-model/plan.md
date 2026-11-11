@@ -58,8 +58,8 @@ The smallest sound approach is to finish the shared layer those three imply, the
 Phases run in order; each leaves the repository working and is useful if later phases never start. Phase 1 carries most of the value for contributors adding checks or pages; Phase 2 removes the shared file every plan change edits today.
 
 1. **Phase 1** (PM-0 to PM-5t, then one review round, R1). Accepted and authorized.
-2. **Phase 2** (PM-6a to C-2). Re-planned on 11 Nov 2026 against the code Phase 1 built and specified ready to dispatch, with Codex doing most of it inside a hosting Claude session; not authorized to run. It changes how a project is claimed and where status is edited, so the migration, the gates and bots that read status, and the docs reach `main` in one PR, following a written [cut-over order](tasks.md#phase-2-cut-over-order). The refresh job rides in that PR if the owner's settings are ready, and follows as a second PR if not (D16).
-3. **One review stop and one review round** close the committed scope: RS1 on the two tests-first contracts before anything is built on them, and R2 on the integrated head before the cut-over.
+2. **Phase 2** (PM-10 to C-2). Re-planned on 11 Nov 2026 against the code Phase 1 built and specified ready to dispatch, with Codex doing most of it inside a hosting Claude session; not authorized to run. It changes how a project is claimed and where status is edited, so the migration, the gates and bots that read status, and the docs reach `main` in one PR (C-1), following a written [cut-over order](tasks.md#phase-2-cut-over-order). The renumbering, the extension guide and the refresh job follow as their own small PRs; the refresh job waits for the owner's settings and goes live in C-2 (D16).
+3. **One review stop and two review rounds** close the committed scope: RS1 on the two tests-first contracts before anything is built on them, R2 on the integrated head before the cut-over, and R8 on the refresh job before it goes live.
 4. **Phases 3 and 4** (PM-11a to R4) only if D7 accepts them, each closed by its own review round (R3, R4). Only Phase 3's lifecycle track needs Phase 2; the pack-shape and form tracks need only Phase 1 on `main`, so the owner may take either earlier (D9). Phase 4 needs the form track. The one-line form fix (PM-13h) needs nothing.
 
 **Readiness and constraints:**
@@ -99,7 +99,7 @@ Shown on the integrated astrid-dev candidate, with exact SHAs:
 - **Extensible in one place:** adding a new check, a new view and a new project field are each demonstrated as a change to one file plus its test, following `docs/extending.md`.
 - **Negative cases:** a hand edit to a generated file fails; a PR opened before the cut-over that edits a catalog row cannot merge; a duplicate project number fails; a claim for another person's handle, or one that changes any other line, is refused.
 - **Refreshed on `main`:** shown in a scratch repository with the same rules, then once on astrid-dev: the job's commit touches only declared generated files, and the feed is published for it.
-- **Unchanged:** the public feed is byte-identical before and after Phase 1, and after Phase 2 differs only by the one renumbered project's id and link; the App's parser accepts it.
+- **Unchanged:** the public feed is byte-identical before and after Phase 1, and is byte-identical across Phase 2's cut-over, and afterwards differs only by the one renumbered project's id and link; the App's parser accepts it.
 
 **If Phases 3 and 4 are accepted,** also shown on their integrated candidates:
 
