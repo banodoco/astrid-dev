@@ -18,6 +18,18 @@ Name the outcome, destination, and authorized actions before acting:
 
 Carry out actions already authorized in the conversation. A merge, green check, or authorization to prepare does not authorize a different destination, deployment, tag, registry publication, or public release. Do not ask again for authority already given.
 
+## Take stock of open pull requests
+
+When a release is being specified, and again before its candidate is frozen, look at every open pull request in every repository the release touches (Runtime, Agent, App, Pinokio and any pack or engine repository it pins), including those from outside contributors. A release that ignores them either ships without work that was ready or collides with it afterwards.
+
+1. **List them** per repository with author, age, what each changes and whether CI is green. `N` helpers do the listing.
+2. **Sort each one:** *in this release* (it is ready or nearly, and fits the release's intent), *after this release* (sound, but it would reopen qualification or widen scope), or *not as it stands* (say why on the PR).
+3. **Work out how the "in" set fits together:** which PRs touch the same function, contract or screen; which depend on a plan in the release; the order they must land in; and what each one reopens (tests, pins, review). Two PRs that change the same surface need one agreed model before either lands.
+4. **Review and land each "in" PR** with [Merge](../astrid-dev-merge/SKILL.md), into the release's integration destination, not straight to `main` during the gate.
+5. **Record them in the release brief** under `## Included pull requests`, one line each with its reason, beside the included plans. Adding a PR after the candidate is frozen is added scope: say what it reopens and offer the next release instead.
+
+A contributor whose PR is deferred is told which release it is considered for, on the PR.
+
 ## Freeze and compose the candidate
 
 Freeze the named base and each donor: canonical repository, actual ref, HEAD SHA, dirty state, and role. Preserve existing project plans, user changes, and their candidate/review scope. For a paired product artifact, record the exact Runtime, Agent, and App SHAs and intended compatibility tuple. Do not infer missing targets, tuple values, or publication authority.

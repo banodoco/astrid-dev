@@ -21,6 +21,10 @@ Describe the intended sequence, key trade-offs, dependencies, qualification, and
 
 Only list plans actually intended for this release. Replace the example link with each real `plans/<id>/plan.md` link. The plan catalog remains the source for ownership, priority, status and estimates.
 
+## Included pull requests
+
+Optional. Open pull requests brought into this release that belong to no listed plan, usually from outside contributors: one line each with the link and what it contributes. The [Release skill](../skills/astrid-dev-release/SKILL.md#take-stock-of-open-pull-requests) says how they are chosen and ordered. Remove this section if there are none.
+
 ## Publication
 
 Not pinned. A Draft is a strategy document, never an instruction to publish.
