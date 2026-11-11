@@ -4,7 +4,7 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 
 ## NOW (2026-11-11 23:25 UTC)
 
-- **Rehearsal head:** Agent `scratch/r13-rehearsal` `0560e34d06269d058056e6ee4087c5ec9d544bd7`, which is Release 12 candidate `c5370a86` + generation candidate `1439ccc6` (G5 ruling) + g1-wait-wording + g2-launchers + g3-graph-facts + tool-catalog + g4-pins-2 + g3-receipt + the staged-recipe read fix + the removed-name cleanup.
+- **Rehearsal head:** Agent `scratch/r13-rehearsal` `e329efd16e9d006897d14843d02f82bf313c6de0`, which is Release 12 candidate `c5370a86` + generation candidate `1439ccc6` (G5 ruling) + g1-wait-wording + g2-launchers + g3-graph-facts + tool-catalog + g4-pins-2 + g3-receipt + the staged-recipe read fix + the removed-name cleanup + placement-overrename/routing + update-inputs + RunPod test guard + ruff-debt + a lint-only I001 commit + prep-hang. Ruff total exactly 2128.
 - **Running:**
   - G3 slice 3, the bundle, redactor and collect-before-reset (`r13/g3-bundle`).
   - Generated-output swap-then-commit (`r13/task-handle-swap`).
@@ -84,3 +84,4 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Alarms are verified independently before I escalate them.
   - Anything about Release 12 goes to its manager directly, `session_011EzfVzCLu2vv52JWNRiDJM`.
 - **2026-11-11 23:35** Hannah, in this session, authorized renting RTX 4090/5090 RunPod pods for Release 13 diagnostics and GPU validation tonight, up to $40 total, and releasing them.
+- **2026-11-11 23:40** Merge queue done: rehearsal `e329efd1`. Merges `6ea94e00`, `501d7a9e`, `a935c968`, `fbdd8a5b`, then lint-only `cdc1774a` (I001 import order only, 2136 to 2128), then `e329efd1`. No conflicts. Gate selectors are green except the known `test_pod_install_route::test_pins_resolve_without_a_checkout`, whose fix is in `r13/g4-followups`. `test_generation_preparation.py`: 36 passed. Catalog and CLI surface are current.
