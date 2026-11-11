@@ -38,12 +38,29 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
    - the owner's limits (budget, CPU or GPU, what needs a go);
    - **the tests, already chosen.** Before any manager starts, check that the plan's `tasks.md` names its test inventory and, for every task, the exact test files that prove it; if any are missing, you or the planner name them now, because choosing tests is judgment and belongs with the stronger model. Then tell the manager in one line: run only those, at the [load-bearing moments](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing), and never a full suite locally;
    - your session id for questions, as its advisor;
-   - its model. A release, a run across more than one repository, or a run with a deadline gets a manager from the strongest available class. An N-class manager suits only a one-repository run of N tasks. Record the choice under `roles.manager` in `run.yaml`. Don't swap managers mid-run, because the new one loses the run's context. Escalate its hard failures to stronger workers instead.
+   - its route, [chosen below](#choose-the-managers-route).
 
    Its first step is Manage step 1: a run file plus a smoke worker per repository.
 
    **Send those in [the start message](#the-start-message),** not in a long brief of your own.
 4. **Schedule check-ins** if the owner wants them (path 3).
+
+## Choose the manager's route
+
+How capable the manager must be is a decision, made once per run and separate from the routes of its tasks. Judge it by what the manager itself will have to do, not by how hard the tasks are: a manager can send an S task to an S worker, but nobody can lend it judgment about when to escalate.
+
+| Route | The manager's own work | Typical run |
+|---|---|---|
+| **N** | Works through a task list: dispatch, run the named proof, land, record. Every decision is already in the plan. | One repository, tasks with stated proofs, nothing to discover |
+| **X** | Iterates and wrangles: gets failing tests or a broken environment working, re-plans a task that failed, tells its own mistake from a real blocker, and knows when to escalate. | Proofs that won't pass first time, several tracks to keep moving, findings to triage |
+| **S** | Holds a correctness problem across the whole run, where one wrong call is expensive or hard to undo. | A release, a run across repositories, a deadline, security, data or a migration |
+| **T** | Judges refinement: the result is right only when it reads or looks right. | A project whose outcome is copy, a screen's polish or a skill's voice |
+
+- **Pick the lowest route that fits,** and say why in one line. If two rows fit, take the higher.
+- **An N manager needs a complete plan.** Every card names its scope, its proof files and every file its acceptance text touches. If the plan can't be made that complete, the run needs an X manager.
+- **A manager below the route of a task still dispatches it,** to a worker on that task's route. It doesn't do or judge that task itself: name the sub-agent or session for each T task and each review in the plan.
+- **Record the choice** on the plan's `Run start` line, and the model under `roles.manager` in `run.yaml`.
+- **Don't swap managers mid-run,** because the new one loses the run's context. Escalate its hard failures to stronger workers or to you instead. If its questions show the route was too low, raise it for the next run or phase.
 
 ## The start message
 
