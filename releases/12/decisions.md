@@ -81,3 +81,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   (2)–(4) LOW (status vs POST reason mismatch, hand-repair-only malformed saved choices, a 60 s status block on a Windows cache miss): follow-ups, not R12.
   (5) The darwin `installed-pair-source-closure` strict xfail: whether shipped macOS installs ever import from site-packages is being checked against the Agent installer (Codex Luna). If they do, it's a product defect and gets re-ruled.
   The Runtime gate item still needs its CI comparison (runs dispatched at 00:25Z).
+- 2026-11-12 01:05Z — **Runtime finding (5) re-ruled: the darwin `installed-pair-source-closure` xfail is a PRE-EXISTING PRODUCT DEFECT, not test-only. REVIEW.** I checked it myself (the Codex Luna report's verdict line said "test-only", but its own evidence said the opposite):
+  - Shipped installs run the Agent and Runtime from the venv's site-packages, `versions/<id>/py` (Agent `astrid/installer/backend.py:1281-1373`, `launcher.py:322-363`), so they are exactly the "installed pair" case.
+  - For an installed pair, the Agent's `astrid/core/source_identity.py` adds `runtime_protocol` and `astrid_runtime` to the closure. The Runtime's parity `_COMPONENTS` (`runtime_protocol/verified_host_launch.py:34-40`) never does.
+  - So the digests differ, and a host-only custody spawn is refused with "differs from original launch" (`local_worker_composition.py:449`). The test runs only on the darwin lane, but nothing in the logic is darwin-specific.
+  - It is not an R12 regression: `source_identity.py` is byte-identical in R10 `72462b04`, R11 `a105de3a` and the candidate `c5370a86`, and the Runtime's `_COMPONENTS` is identical on main `4f5477cb` and `42ae24aff`. R12 only adds the strict xfail that pins it.
+
+  Decision: no pin move. Plan 38 owns the fix (the xfail reason says so). Added to the gate record's known issues so the gate doesn't read it as test-only.
