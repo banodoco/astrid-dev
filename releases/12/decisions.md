@@ -133,3 +133,19 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - The unexpected one is the video drop: a 90 s timeout at `:2187`, waiting for the "wrong verified selection" GET. That step comes before the VIDEO-DROP marker, so the #252 exception doesn't cover it. rv1's local run stopped at the same place.
   - It's also the first time this test has run after EXT-BATCH stopped early under its marker, so leaked seed state is a candidate.
   - Codex Luna is diagnosing it from the trace (`cx-vd`). It may fix the test only if this is drift or leaked state; if it's a product defect or #252, it changes nothing and I rule.
+- 2026-11-11 23:33Z — **Runtime gate item: 0 regressions.** Path item (b) is done for the Runtime.
+  - Codex Luna compared base `3e59cf6b` against candidate `5cdedc01` (both `-rA`) and the exact SHA `42ae24aff`. I recounted from the raw logs myself and got the same result: no candidate-only failing ID in any job.
+  - The candidate's failures match the exact-SHA run ID for ID.
+  - windows-realm-publication and darwin-native go green. The darwin custody spawn goes FAILED → strict XFAIL.
+  - Gate record item 5 is filled in (`r12-progress/gate-record`).
+- 2026-11-11 23:33Z — **Video-drop timeout ruled: #252 itself. The marker was misplaced.**
+  - Codex Luna (`cx-vd`) found, from the trace (which I checked myself), that the wrong-selection video drop makes the import (201) and the ordinary selection read (200), and no verified-selection request at all.
+  - `timelineLocalSaveHandoff.ts:437` refuses prepared video before native placement reads its verified media. So the first #252-dependent step is that verified read. This is earlier than both the original position and rv1's position. The first Astra review had judged rv1's position correct; the trace shows it wasn't.
+  - `48ec9bb70` moves the marker to just after the wrong-selection import, with the reason in a comment. Registry check: 4 authorized, 0 forbidden.
+  - **REVIEW**: this exception now covers most of that test, including the Runtime's wrong-selection refusal, because #252 blocks the whole video path.
+  - An independent Astra review of `48ec9bb70` is running. One question it has: does the wrong-selection refusal have coverage without a video?
+  - Direct Journey 171 on `9afd4aaa6` was cancelled, since it would have hit the same step. It was redispatched on `48ec9bb70`. App Tests on `9afd4aaa6` is still running.
+- 2026-11-11 23:33Z — **Matrix shakedown 602** (App `8f1a19086`, Agent `c5370a86`, Runtime `42ae24aff`, harness `b550ecad`). So far:
+  - Green: linux-fresh, linux r0-handoff, linux-r9-install, linux-r11-update (the HOME fix works) and macos-fresh.
+  - Red: **direct-linux-autostart-off**. The card capture timed out (`journey_autostart_capture.mjs:23`) waiting for the approved sentence. The App's copy matches it exactly (`installerUpdateReasons.ts:15`), so the card never appeared. This is the follow-up `fixes.md` T6 asked for. Codex Terra (`cx-aso`) is diagnosing it from the row's receipts, and may fix only harness defects.
+  - The macOS and Windows rows are still running.
