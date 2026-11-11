@@ -2,7 +2,7 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-11 23:00 UTC)
+## NOW (2026-11-11 23:25 UTC)
 
 - **Rehearsal head:** Agent `scratch/r13-rehearsal` `0560e34d06269d058056e6ee4087c5ec9d544bd7`, which is Release 12 candidate `c5370a86` + generation candidate `1439ccc6` (G5 ruling) + g1-wait-wording + g2-launchers + g3-graph-facts + tool-catalog + g4-pins-2 + g3-receipt + the staged-recipe read fix + the removed-name cleanup.
 - **Running:**
@@ -22,13 +22,14 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 - **Preconditions for paid work:**
   - (a) Receipt, bundle and collect-before-reset in the build: building.
   - (b) Tests cannot reach RunPod: guard accepted, not yet merged.
-  - (c) Credential via the private form: not requested.
-  - (d) Dedicated environment "Astrid Release 13 GPU": not created. Design agreed: unrestricted network, credential on `api.runpod.io` and `rest.runpod.io` only.
+  - (c) Credential: SAVED for `api.runpod.io` and `rest.runpod.io` (Bearer) on environment "Astrid Release 13 GPU" `env_014epUvWZZ4BNYGztDKDb4oR` only; an authenticated census read works.
+  - (d) Dedicated environment "Astrid Release 13 GPU": CREATED, this session moved onto it, network unrestricted (Hannah approved both prompts). Design agreed: unrestricted network, credential on `api.runpod.io` and `rest.runpod.io` only.
   - Review (1), bundle and redactor: not sent.
   - Review (2), pins and installer: no blocker. Clears once `test_pod_install_route` is fixed (in `r13/g4-followups`).
   - Five receipt-swallow (c) fixes plus the `EXCEPTIONS` allowlist addition: queued, stacked on `r13/g3-bundle`.
   - Isolated install of the tuple: works, to be redone on the final head.
 - **Workers:** Codex signed in (ChatGPT). Tiers confirmed by a trivial read-only call: Luna `gpt-6-luna`, Terra `gpt-6.1-terra`, Sol `gpt-6.1-sol`, Astra `gpt-6-astra`. New tasks run on Codex; Claude workers already running finish where they are. Fallbacks used: none.
+- **Ledger:** account balance $101.68 at 23:25 UTC, census 0 pods, storage volume `storage` (200 GB, EUR-NO-1) at $0.019/h. Release ledger: $3.41 at the last Release 12 record plus about $0.32 of storage since, so about $3.73 of $40. The hard stop for new rentals is a balance of $67.41 or below ($40 stop minus the $1 margin, measured from this baseline).
 - **Money:** spent $3.41 of $40 at the last Release 12 record (11 Nov 06:41 UTC), plus about $0.46 a day of storage. No rental this release. To be reconciled against the account before the first rental.
 
 ## Entries
@@ -72,3 +73,8 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - `raw_media_info` requires a same-project managed object with matching size and digest (`timeline_commit_port.py:396-414, 1077-1098`). `validate` requires port capture (`:548-603`). The store re-hashes pins and rejects unaccounted media (`timeline_commit_store.py:1431-1459`).
   - What remains is a consistency point: a raw pin can name any same-project managed object, whatever its type. Hardening note for a later Runtime plan: filter `media_type` to image, video or audio, and add Runtime tests for unaccounted media and media not captured through the port. The Runtime is unchanged.
   - My error: the worker's "client-side only" claim came from a trace that stopped at the local preview. I forwarded it flagged as unverified, which was right; next time I'll have the worker check the server path before reporting a boundary claim.
+- **2026-11-11 23:25** Environment `env_014epUvWZZ4BNYGztDKDb4oR` "Astrid Release 13 GPU" was created with network unrestricted, and this session moved onto it. Both RunPod credentials are saved there only. Census: 0 pods. Ledger baseline: balance $101.68 at 23:25.
+- **2026-11-11 23:25** Guard coverage before saving the credential: the rehearsal (`a935c968` onwards) and the Codex worktree include the guard; 20 idle unguarded worktrees were removed; the two running workers were told to merge the guard before any further test run. Residual risk until they do: an authenticated read only, no spend.
+- **2026-11-11 23:20** INCIDENT, owned: I tried to load the guard globally through a `.pth` file in the shared venv. Venv Python startup hung, and hung `cpuinfo` children ran out of memory, for about 3 minutes. Both were removed and the hung processes killed. Rule: never install interpreter-wide hooks into the shared venv.
+- **2026-11-11 23:05** Codex launch flagged by the permission check as possibly "creating unsafe agents". It warned and did not block. The launch (`codex exec` with workspace-write and network) is what Hannah approved, and the flag is recorded here.
+- **2026-11-11 23:00** Sequencing change from the orchestrator: the first TTS diagnosis needs the receipt, graph-checked names, the five swallow fixes and the `EXCEPTIONS` addition, but not the H10 bundle. With no bundle, no log leaves the pod. The bundle still gates every later run. The swallow fixes are now on their own branch, `r13/receipt-swallows`, on the rehearsal (Codex Luna).
