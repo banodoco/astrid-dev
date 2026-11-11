@@ -2,6 +2,8 @@
 
 This is a transition snapshot, not a freeze or acceptance. Read [Release 12](../../releases/12.md), [Track B](../../releases/12/generation.md), the owning plans' task records, and the applicable skills before acting. The orchestrator owns cross-track coordination and named paid authorization. Confirm every remote ref before use; do not depend on a previous worker or local process surviving a handoff.
 
+The orchestrator stopped implementation and all new paid work for this handoff. The prior check-in schedule is paused; no automatic wake-up or paid-resource supervision should be assumed. A successor must re-establish active ownership and obtain the required authorization before resuming paid work.
+
 ## Verified work-in-progress refs
 
 | Repository and branch | Full SHA | Status |
@@ -20,7 +22,7 @@ P40-T9's accepted focused handoff is Agent `plan40/staging-int40` `d8931c281cf70
 - No `B-CANDIDATE`, `FINAL-B7` or `FINAL-TUPLE` has been accepted. Finish the remaining B5 proof and dispositions; final App integration waits for the exact accepted `A-FROZEN` input. B8, B9 and final qualification retain their recorded dependencies and release rules.
 - The retention WIP models verified current receipt compatibility under the existing custody boundary; it has not established the cause of a previous live release. Review and prove remaining candidate-bearing fencing, raw receipt validation, reset, and legacy controls before considering integration. Never accept unknown custody or weaken expiry, idle or explicit release.
 - Synthetic shipped/direct TTS checks use fake transport and a historical pinned schema. They do not establish live schema or engine behavior. Do not label a generic failure as a specific cause without evidence.
-- Before any paid operation, obtain the orchestrator's named authorization and the owner's applicable consent; verify exact inputs, current provider census, budget and custody. Follow the release's GPU-model restriction and shared spend/idle rules. P34 must supervise continuously and confirm exact release and a post-run census. No scheduler or chat wake-up is a paid-resource safety mechanism.
+- Before any paid operation, obtain the orchestrator's named authorization and the owner's applicable consent; verify exact inputs, current provider census, budget and custody. The owner restricts GPU selection to **RTX 4090 or RTX 5090 only**, with no more expensive substitute. Follow the shared spend/idle rules. P34 must supervise continuously and confirm exact release and a post-run census. No scheduler or chat wake-up is a paid-resource safety mechanism.
 - A previous attempt to publish a separate GPU evidence record was rejected by automatic approval review. Do not retry, route around the rejection, or reproduce its rejected content elsewhere; the orchestrator owns the disclosure decision.
 
 ## Portable setup and evidence limits

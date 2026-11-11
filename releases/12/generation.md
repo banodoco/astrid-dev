@@ -1,5 +1,7 @@
 # Release 12, Track B — Generation
 
+[Current manager transition](../../docs/handoffs/2026-11-11-release12-track-b-transition.md) · Confirm its refs and operating state before resuming.
+
 ## Current state — 11 Nov, 16:45 UTC
 
 This is a progress snapshot, not a gate or freeze. Full history and acceptance criteria remain below and in the plan task records.
