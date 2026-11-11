@@ -184,3 +184,12 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - MEDIUM, pre-existing, **REVIEW**: a macOS capture failure is recorded as `unverified` but the row still passes (`:1716-1739`), so a green macOS row doesn't prove the card. That's a Plan 39/harness follow-up and not changed for R12.
   - LOW: the capture receipt doesn't record the simulated release.
   - Codex Luna (`cx-aso`) is applying: the pin to `playwright@1.60.0`; scoping to `#settings-updates` with the "Copy instructions for your agent" action and a section screenshot, as App `direct-journey.spec.ts:1376-1386` does; and recording the real and advertised releases. A reviewer reads it before the matrix uses it.
+- 2026-11-11 23:43Z — **Matrix shakedown 602 done** (harness `b550ecad`; App `8f1a19086`, Agent `c5370a86`, Runtime `42ae24aff`, Pinokio `d15c58b5`): 10 of 11 rows green.
+  - Linux: fresh, r0-handoff, r9-install, r11-update. macOS: fresh, r0-handoff, r9-install, r11-update, autostart-off. Windows: fresh.
+  - Red: linux autostart-off, the harness defect.
+  - The aggregate "Journey evidence" job fails only because a dependency failed.
+  - The macOS autostart-off green does not prove the card: a macOS capture failure is recorded as `unverified` and the row still passes. That's the pre-existing follow-up already flagged.
+- 2026-11-11 23:43Z — **Harness fix `fbd7e7e71`** on Agent `harness/29-r12` (Codex Luna, which I reviewed): Playwright pinned to 1.60.0; the capture scoped to `#settings-updates` with the agent action and a section screenshot; the receipt records `served_release_real` and `served_release_advertised`.
+  - I fixed one ordering race myself: the exactly-once count is now taken after the sentence is visible, not before the card renders.
+  - Tests: 24 passed.
+  - The independent Astra review of `d92ea0ee6..fbd7e7e71` is running. A validation matrix run on `fbd7e7e71` (same tuple) is dispatched in parallel. The qualifying matrix waits for the review.
