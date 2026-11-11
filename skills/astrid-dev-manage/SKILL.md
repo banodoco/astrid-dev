@@ -27,7 +27,7 @@ You take an accepted project to a reviewed, integrated candidate. [Plan](../astr
 6. **Decisions are durable.** Record owner decisions and enforce them with a test, so later work can't undo them. Ask the owner only what is theirs, with a recommendation. Log every ruling in one line with its evidence (see [Decide](#decide)); a ruling that lives only in a message is lost.
 7. **Progress is always current.** This is a key responsibility. Update the plan's `tasks.md` when a task lands (`[x]`, with its merge), is blocked (and why), or is created or stopped. Batch the rest, such as which tasks started, into the next of those updates; don't send one per start. Keep at most one progress branch open. A change that touches only that plan's `tasks.md` is merged as soon as `python3 scripts/check_docs.py` passes locally, without waiting for CI. A record that isn't on `main` doesn't count. It is the run's only progress record, and the owner and every check-in read it there.
 8. **Run it the way a user does, once, early.** Passing tests are not a working product. Before a gate or any paid run, install the candidate through the real install path and drive each new command through its real entry point. Every new command gets one entry-point test as part of done.
-9. **Reading your workers' diffs is required, and it is not a review.** A review is independent of the author, on an exact commit range, and is commissioned by whoever owns the gate.
+9. **Reading your workers' diffs is required, and it is not a review.** A review is independent of the author, read-only, on an exact commit range, and briefed with the range, the rules and the questions to press on, never your conclusions. You commission it (step 6), log the range, the verdict and what you did about each finding, and a blocker stops the step it guards until its fix has been read by a reviewer.
 
 ## Decide
 
@@ -39,7 +39,9 @@ You are expected to decide. The advisor is for thinking that is bigger than your
 - **Decide, log with a `REVIEW` flag, and keep going:** anything that changes what a user sees or does, a trade of scope against time, a quarantined test, anything touching another project.
 - **Stop and ask:** publication, spend beyond the approved budget, new access, credentials or permissions for a session, anything destructive or irreversible outside your branches, and any safety or permission refusal.
 - **The decision log** is a short file the plan or release brief names (otherwise a "Rulings" section at the top of `tasks.md`), append-only, with a **Now** block first: current heads, what is running, what is blocked, spend. The advisor reads it at check-ins and writes back only on disagreement.
-- **Message the advisor only for** the stop-and-ask list, a blocker you cannot clear, a risk to a user's work or to real money, a finding that changes the shape of the project, a gate label, or a review to commission. Not for progress.
+- **Message the advisor almost never:** only when work cannot continue without it. That is a hard blocker you have tried and cannot clear, something only the owner can do that is ready for her now, a paid machine or money you cannot account for, or a gate label. Findings, rulings, scope trades, contained incidents and progress go in the log. Before sending, ask what you would need in order not to send it; if that is a rule or permission you could reasonably assume, assume it, log it with `REVIEW`, and carry on.
+- **Verify an alarm before you escalate it.** When a worker reports something that sounds serious, have an independent reviewer confirm or refute it from the code first.
+- **Deal with a sibling project directly.** Message its manager yourself for a hand-off or a question; don't route it through the advisor.
 - **A wrong decision is yours to follow through:** say so, fix it, and change the rule that led to it.
 
 ## Steps
