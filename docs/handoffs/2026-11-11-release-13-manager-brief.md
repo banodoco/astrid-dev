@@ -33,7 +33,7 @@ Make the generation path one that can be run and debugged without confusion, the
 
 ## What comes to the orchestrator
 
-A direct message with a recommendation for: any decision that is Hannah's (H10, H11 and H12 are already open), the G5 attach-design choice with its evidence, and any blocker you cannot clear in half a day. The orchestrator checks in about every six hours and tells you when Release 12 is published and on which SHAs.
+A direct message with a recommendation for: any decision that is Hannah's (H10, H11 and H12 are already open), the G5 attach-design choice with its evidence, and any blocker you cannot clear in half a day. The orchestrator checks in about every three hours and tells you when Release 12 is published and on which SHAs.
 
 ## Limits
 

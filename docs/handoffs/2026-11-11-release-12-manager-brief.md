@@ -24,7 +24,7 @@ Send a direct message, with a recommendation, for exactly these:
 2. `A-FROZEN` and `GATE-GREEN`, with full SHAs and run links.
 3. A blocker you cannot clear in half a day. Say what you tried and what you would do next.
 
-The orchestrator checks in about every six hours and runs the candidate review itself when you announce the candidate (T5). Do not wait on it for anything else.
+The orchestrator checks in about every three hours and runs the candidate review itself when you announce the candidate (T5). Do not wait on it for anything else.
 
 ## First hour
 
