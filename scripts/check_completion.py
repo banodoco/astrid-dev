@@ -10,6 +10,8 @@ from pathlib import Path
 
 from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
 from project_contract import plan_gap_ids, project_number
+from records import (PLACEHOLDERS_COMPLETION, field_match, git_result, git_show,
+                     is_placeholder, matching_sections, section_after_match)
 
 SECTION = re.compile(r"^#{2,3}\s+Completion assessment\s*[—:-]\s*Plan\s+(\d{2,})\s*$", re.I | re.M)
 GAP_LINE = re.compile(
@@ -22,8 +24,7 @@ EVIDENCE_REF = re.compile(r"https?://[^\s)]+|(?<![\da-f])[0-9a-f]{40}(?![\da-f])
 
 def has_real_reason(value: str) -> bool:
     """Reject missing/placeholder decisions; review determines their quality."""
-    normalized = value.strip().lower().strip(" .-")
-    return bool(normalized) and normalized not in {"tbd", "todo", "none", "unknown", "n/a", "pending"}
+    return not is_placeholder(value, PLACEHOLDERS_COMPLETION)
 
 
 def plan_statuses(catalog: str) -> dict[str, str]:
@@ -40,16 +41,13 @@ def linked_gaps(plan_text: str) -> set[str]:
 
 
 def assessment_section(body: str, plan_id: str) -> tuple[str | None, bool]:
-    matches = list(SECTION.finditer(body))
+    matches = matching_sections(body, SECTION)
     relevant = [i for i, match in enumerate(matches) if match.group(1) == plan_id]
     if len(relevant) != 1:
         return None, len(relevant) > 1
     i = relevant[0]
     # Stop before the next Markdown heading, not just the next completion receipt.
-    start = matches[i].end()
-    tail = body[start:]
-    end = re.search(r"^#{1,3}\s+\S", tail, re.M)
-    return tail[:end.start()] if end else tail, False
+    return section_after_match(body, matches[i], boundary=r"^#{1,3}\s+\S", strip=False), False
 
 
 def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
@@ -62,17 +60,17 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
         return [f"Plan {plan_id}: missing '## Completion assessment — Plan {plan_id}' in PR description"]
 
     issues = []
-    evidence = re.search(r"^Evidence:\s*(.+)$", section, re.I | re.M)
+    evidence = field_match(section, "Evidence", flags=re.I | re.M)
     if not evidence or not EVIDENCE_REF.search(evidence.group(1)):
         issues.append(f"Plan {plan_id}: Evidence needs a concrete URL or full 40-character commit SHA")
-    conclusion = re.search(r"^Completion:\s*(Yes|Met)\s*[—:-]\s*(.+)$", section, re.I | re.M)
+    conclusion = field_match(section, "Completion", value_pattern=r"(Yes|Met)\s*[—:-]\s*(.+)", flags=re.I | re.M)
     if not conclusion or not has_real_reason(conclusion.group(2)):
         issues.append(f"Plan {plan_id}: Completion needs 'Yes —' and a specific reason")
 
     # Final review summary is kept in this PR, not a parallel evidence-pack file.
     # CI checks references and explicit limits, not whether a linked test proves the claim.
     def has_reference_or_none(field: str) -> bool:
-        hit = re.search(r"^" + re.escape(field) + r":\s*(.+)$", section, re.I | re.M)
+        hit = field_match(section, field, flags=re.I | re.M)
         if not hit:
             return False
         value = hit.group(1).strip()
@@ -85,11 +83,11 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
         issues.append(f"Plan {plan_id}: Implementation PRs needs linked PRs or 'None — <reason>'")
     if not has_reference_or_none("Integrated candidate"):
         issues.append(f"Plan {plan_id}: Integrated candidate needs exact source links/SHAs or 'None — <reason>'")
-    limitations = re.search(r"^Unproven:\s*(.+)$", section, re.I | re.M)
+    limitations = field_match(section, "Unproven", flags=re.I | re.M)
     if not limitations or not has_real_reason(limitations.group(1)):
         issues.append(f"Plan {plan_id}: Unproven must state remaining limits or 'None within stated scope'")
 
-    routes = re.search(r"^Routes used:\s*(.+)$", section, re.I | re.M)
+    routes = field_match(section, "Routes used", flags=re.I | re.M)
     if not routes:
         issues.append(f"Plan {plan_id}: Routes used must name the route (N, X, S or T) or explain why unknown")
     else:
@@ -115,7 +113,7 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
     for gap in sorted(found.keys() - gaps):
         issues.append(f"Plan {plan_id}: {gap} is not linked from its plan")
     if not gaps:
-        impact = re.search(r"^Gap impact:\s*None\s*[—:-]\s*(.+)$", section, re.I | re.M)
+        impact = field_match(section, "Gap impact", value_pattern=r"None\s*[—:-]\s*(.+)", flags=re.I | re.M)
         if not impact or not has_real_reason(impact.group(1)):
             issues.append(f"Plan {plan_id}: enabler needs 'Gap impact: None — <reason>'")
     return issues
@@ -124,15 +122,15 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
 def catalog_at_revision(base: str, root: Path) -> str | None:
     """None means the catalog did not exist in the PR base (initial migration)."""
     def git(*args: str) -> subprocess.CompletedProcess[str]:
-        return subprocess.run(["git", *args], cwd=root, text=True, capture_output=True, check=False)
+        return git_result(root, *args)
     if git("cat-file", "-e", f"{base}^{{commit}}").returncode:
         raise ValueError(f"base revision {base!r} is not available; fetch the PR base")
     if git("cat-file", "-e", f"{base}:{CATALOG}").returncode:
         return None
-    result = git("show", f"{base}:{CATALOG}")
-    if result.returncode:
-        raise ValueError(f"cannot read base catalog: {result.stderr.strip()}")
-    return result.stdout
+    try:
+        return git_show(root, base, str(CATALOG))
+    except ValueError as exc:
+        raise ValueError(f"cannot read base catalog: {exc}") from exc
 
 
 def check_pr(before: str | None, after: str, body: str, root: Path) -> list[str]:
@@ -161,8 +159,7 @@ def strategy_errors(changed_paths: set[str]) -> list[str]:
 
 
 def changed_paths(base: str, root: Path) -> set[str]:
-    result = subprocess.run(["git", "diff", "--name-only", base, "HEAD"], cwd=root, text=True,
-                            capture_output=True, check=False)
+    result = git_result(root, "diff", "--name-only", base, "HEAD")
     if result.returncode:
         raise ValueError(f"cannot list changed files: {result.stderr.strip()}")
     return set(result.stdout.split())
