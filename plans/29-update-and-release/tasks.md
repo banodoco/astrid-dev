@@ -6,6 +6,8 @@
 
 The active task definitions and gates are in [Track A](../../releases/12/fixes.md).
 
+- **Provisional dispatch inputs:** The exact no-credit App Tests, original failed matrix configuration and corrected matrix dispatch payloads are preserved in [provisional-app evidence](evidence/r12/provisional-app/). They name the provisional release-13 scratch tuple and are historical evidence, not authorization to dispatch or final release inputs.
+
 - **A2 group 028 ACL reproduction (11 Nov):** The exact frozen `test_windows_staged_version_folder_is_a_protected_record_parent` selector passed on base `313bbd46f1e24bfe635655d78b27ab0b321145d5` and failed on candidate `ec48555d8298d155390ffbb37d1950c3e80b43a4`. On candidate the folder protection assertion passed, but the mocked first source call raised before `manifest.json` was written; its required private read then failed. The changed A1b staging order explains this observed difference. Whether to restore earlier staged-manifest behavior or adjust the test while retaining the security contract remains a release disposition; no fix or parity finding is implied.
 
 - **A2 group 005 wording handoff (11 Nov):** [Agent handoff `bd411e46d8db0c348accb6f9010170671abda181`](https://github.com/banodoco/astrid-agent/tree/handoff/r12-a2-personal-reserved-message) is preserved on GitHub. Its product wording change remains unintegrated pending focused proof and release disposition; it does not resolve the recorded comparison finding.
