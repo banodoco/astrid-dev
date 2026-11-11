@@ -2,35 +2,29 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-11 23:25 UTC)
+## NOW (2026-11-11 23:31 UTC, from `date -u`)
 
-- **Rehearsal head:** Agent `scratch/r13-rehearsal` `bf3b6ba77` (adds receipt-swallow fixes), which is Release 12 candidate `c5370a86` + generation candidate `1439ccc6` (G5 ruling) + g1-wait-wording + g2-launchers + g3-graph-facts + tool-catalog + g4-pins-2 + g3-receipt + the staged-recipe read fix + the removed-name cleanup + placement-overrename/routing + update-inputs + RunPod test guard + ruff-debt + a lint-only I001 commit + prep-hang. Ruff total exactly 2128.
-- **Running:**
-  - G3 slice 3, the bundle, redactor and collect-before-reset (`r13/g3-bundle`).
-  - Generated-output swap-then-commit (`r13/task-handle-swap`).
-  - Merging the four ready branches into the rehearsal, one at a time, with ruff and focused proof after each.
-  - G4 review follow-ups (`r13/g4-followups`).
-  - The `test_generation_preparation[datacenter]` hang diagnosis (`r13/prep-hang`).
-  - Rehearsal CI run 43102625660 on `246cad0f`.
-- **Ready to merge into the rehearsal:**
-  - `r13/placement-overrename` `1206322a`, which contains `r13/generate-routing` `08a2f038`.
-  - `r13/update-inputs` `86889894`.
-  - `r13/test-runpod-guard` `a9e1f2c0`.
-  - `r13/ruff-debt` `1702f244`.
-  - Being merged now. After every merge: `make ruff` (exact count 2128) and focused proof against `c5370a86`.
-- **Blocked:** nothing outside the preconditions below.
-- **Preconditions for paid work:**
-  - (a) Receipt, bundle and collect-before-reset in the build: building.
-  - (b) Tests cannot reach RunPod: guard accepted, not yet merged.
-  - (c) Credential: SAVED for `api.runpod.io` and `rest.runpod.io` (Bearer) on environment "Astrid Release 13 GPU" `env_014epUvWZZ4BNYGztDKDb4oR` only; an authenticated census read works.
-  - (d) Dedicated environment "Astrid Release 13 GPU": CREATED, this session moved onto it, network unrestricted (Hannah approved both prompts). Design agreed: unrestricted network, credential on `api.runpod.io` and `rest.runpod.io` only.
-  - Review (1), bundle and redactor: not sent.
-  - Review (2), pins and installer: no blocker. Clears once `test_pod_install_route` is fixed (in `r13/g4-followups`).
-  - Five receipt-swallow (c) fixes plus the `EXCEPTIONS` allowlist addition: queued, stacked on `r13/g3-bundle`.
-  - Isolated install of the tuple: works, to be redone on the final head.
-- **Workers:** Codex signed in (ChatGPT). Tiers confirmed by a trivial read-only call: Luna `gpt-6-luna`, Terra `gpt-6.1-terra`, Sol `gpt-6.1-sol`, Astra `gpt-6-astra`. New tasks run on Codex; Claude workers already running finish where they are. Fallbacks used: none.
-- **Ledger:** account balance $101.68 at 23:25 UTC, census 0 pods, storage volume `storage` (200 GB, EUR-NO-1) at $0.019/h. Release ledger: $3.41 at the last Release 12 record plus about $0.32 of storage since, so about $3.73 of $40. The hard stop for new rentals is a balance of $67.41 or below ($40 stop minus the $1 margin, measured from this baseline).
-- **Money:** spent $3.41 of $40 at the last Release 12 record (11 Nov 06:41 UTC), plus about $0.46 a day of storage. No rental this release. To be reconciled against the account before the first rental.
+- **Money:** RunPod balance $101.68 at 23:31 UTC. Spent ≈ $3.73 of $40 (the $3.41 Release 12 record plus about $0.32 of storage since). STOP new rentals at a balance of $67.41 or below. Census: 0 pods.
+- **Critical path to the first rental (TTS diagnosis), estimate about 00:30 UTC:**
+  1. Isolated install of rehearsal `bf3b6ba7` into `/home/user/wt/install-r13b`. RUNNING (Codex Luna), about 20 min.
+  2. Exact TTS and SFX commands in the runbook. RUNNING (Codex Luna). Then an Astra read-only check against the G1 skill, about 15 min.
+  3. The pins and installer review clears once `test_pod_install_route::test_pins_resolve_without_a_checkout` is green, in `r13/g4-followups`. RUNNING (Claude worker, started earlier). If it isn't pushed when 1 and 2 are done, I write the fixture fix directly. It is a test-only fixture, so it does not change the installed build.
+  4. Census, then the rental (TTS), then the SFX first-look on the same pod if it is warm and custody is clean, then release, then census.
+- **Rehearsal head:** Agent `scratch/r13-rehearsal` `bf3b6ba7`. Contents:
+  - Release 12 candidate `c5370a86`, plus generation `1439ccc6` (G5 ruling).
+  - G1 wait wording and `availability.message`; G2 launchers; graph-checked failure facts; tool catalog.
+  - G4 pins; G3 receipt; the staged-recipe read fix; the removed-name cleanup.
+  - The placement over-rename fixes and routing; update-inputs; the RunPod test guard; ruff-debt plus a lint-only commit (Ruff exactly 2128); prep-hang; the receipt-swallow fixes plus the `EXCEPTIONS` allowlist.
+- **First-diagnostic preconditions** (relaxed by the orchestrator: the bundle is NOT required for this run):
+  - Receipt, graph names, swallow fixes and allowlist in the build: MET (`bf3b6ba7`).
+  - Tests cannot reach RunPod: MET. The guard is in the rehearsal and the Codex trees, 20 unguarded worktrees were removed, and both running Claude workers were told to merge the guard.
+  - Credential: MET. Saved on "Astrid Release 13 GPU" only; an authenticated census works.
+  - Separate environment: MET.
+  - Pins and installer review: no blocker. Clears with the `test_pod_install_route` fix (step 3).
+  - Hannah's in-session authorization (23:35): given.
+- **Later runs and final cells also need:** the H10 bundle (`r13/g3-bundle`, Opus, running) and Astra review (1) of it, plus the G4 follow-ups merged.
+- **Running:** the two Codex tasks above; the G4 follow-ups (Claude); the G3 bundle (Opus); rehearsal CI on `bf3b6ba7` (dispatched 23:30; replaces stale run `43102625660`, which failed on `246cad0f`).
+- **Workers:** Codex signed in. Luna `gpt-6-luna`, Terra `gpt-6.1-terra`, Sol `gpt-6.1-sol`, Astra `gpt-6-astra`. Fallbacks: none. Codex commits need a standalone clone, not a worktree.
 
 ## Entries
 
@@ -86,3 +80,4 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 - **2026-11-11 23:35** Hannah, in this session, authorized renting RTX 4090/5090 RunPod pods for Release 13 diagnostics and GPU validation tonight, up to $40 total, and releasing them.
 - **2026-11-11 23:40** Merge queue done: rehearsal `e329efd1`. Merges `6ea94e00`, `501d7a9e`, `a935c968`, `fbdd8a5b`, then lint-only `cdc1774a` (I001 import order only, 2136 to 2128), then `e329efd1`. No conflicts. Gate selectors are green except the known `test_pod_install_route::test_pins_resolve_without_a_checkout`, whose fix is in `r13/g4-followups`. `test_generation_preparation.py`: 36 passed. Catalog and CLI surface are current.
 - **2026-11-11 23:55** Receipt-swallow fixes: Codex Luna wrote them; I reviewed the diff and committed them myself as `r13/receipt-swallows` `14155ab3`. Codex's sandbox could not write the git index, because a worktree's index lives in the main clone's `.git`; future Codex tasks get a standalone local clone. Contents: the five (c) fixes, plus `EXCEPTIONS` gains `PaidSelectionError`, `RunPodSetupRequiredError`, `OfferObservationError`, `CapacityExhaustedError` and `CapacityWaitTimeout`. The `.cause` marker cannot collide with `AstridError.cause`: both classes are `RuntimeError` subclasses, and the receipt is the only generic reader. Merged into the rehearsal as `bf3b6ba7`. Receipt 40 passed, target selection 90, diagnostics 84, Ruff 2128. Gap: no explicit test that `worker_owner.acquire` behaviour is unchanged; it is not at risk because no `gate` is set.
+- **2026-11-11 23:31** Rehearsal CI `43102625660` (on `246cad0f`) completed with failure. It is stale, so a new run was dispatched on `bf3b6ba7`; no runs were queued. Correction: entries 23:40–23:55 above used estimated times; actual times were about 23:10–23:28. From now on every entry takes its time from `date -u`.
