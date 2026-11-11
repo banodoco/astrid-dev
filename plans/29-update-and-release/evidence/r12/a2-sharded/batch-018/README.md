@@ -1,0 +1,7 @@
+# A2 comparison: completed group 018
+
+Four JSON receipts contain exact outcome IDs and statuses, Agent/Runtime/VibeComfy/lifecycle SHAs, Python and Node/esbuild versions and executable SHA-256 values, start/end times, exit and terminal summaries, failure-summary lines, and hashes of original receipts and full logs. Raw logs, environment and credentials are excluded; test IDs can contain literal synthetic parameters. `failure-matches.json` compares exact summary lines; unequal strings alone do not establish different causes. Full details remain in original local receipts.
+
+R10 ran 20 IDs (17 passed, 3 failed); R11 ran 25 (22 passed, 3 failed); base ran 25 (21 passed, 4 failed); candidate ran 25 (22 passed, 3 failed). The three candidate failure summary lines exactly match all three baselines; base has one additional failure. Group boundaries restart session fixtures and may miss cross-group ordering effects; this is not full-suite equivalent. The host's unusually large process census is an environment limitation, not a proven explanation of any outcome. Group 018 is partial evidence, not an overall A2 verdict.
+
+Source manifest SHA-256: `885b264862a0e6e90698ed8a76a6b5b30e2dbeb1f3846ea96b356913b1a9e771`. Exact absent IDs, manifest and source receipts are under `/workspace/r12-a2-resume/sharded/`. Targeted scan found no common GitHub token, OpenAI key, JWT or long bearer-token patterns; this does not prove all possible secrets absent.

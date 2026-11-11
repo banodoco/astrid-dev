@@ -1,0 +1,432 @@
+{
+  "batch": "017",
+  "side": "r10",
+  "modules": [
+    "tests/core/execution/test_remotion_host_session.py",
+    "tests/core/execution/test_render_scope_cleanup.py",
+    "tests/core/execution/test_render_scope_launch.py",
+    "tests/core/execution/test_render_storage.py",
+    "tests/core/execution/test_runpod_destination_scheme.py",
+    "tests/core/execution/test_runtime_epoch_fence.py",
+    "tests/core/execution/test_runtime_orchestrator_custody_d40.py",
+    "tests/core/execution/test_runtime_source_custody_d40.py"
+  ],
+  "pins_and_python": [
+    "72462b04fa036736eb7fc9cb654def5f4ea2158c",
+    "52ec0578963847693a0df758d9bc1d55325f518f",
+    "e2905d068d5851b9c32856d32b8251852a01d6dd",
+    "96360a27a53c4608f780f7b370f747a2aa3c7ca8",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T09:57:33Z",
+  "end_utc": "2026-11-11T10:08:45Z",
+  "exit": 1,
+  "summary": "============ 2 failed, 94 passed, 1 deselected in 668.90s (0:11:08) ============",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_two_task_leases_reuse_original_then_host_shutdown_waits_and_proves",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_userprofile_supplies_worker_home_and_separates_warm_lease_identity",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_explicit_home_precedes_userprofile_without_mutating_caller_environment",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_original_census_failure_is_sticky_and_forbids_replacement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_child_cannot_select_a_different_native_executable_or_project[projectDir]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_child_cannot_select_a_different_native_executable_or_project[nodeExecutable]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_idle_expiration_uses_original_shutdown_proof",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_idle_window_keeps_its_defaults_and_a_new_lease_cancels_expiry",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_failed_idle_release_keeps_the_child_and_reports_it",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_uncertain_child_is_not_kept_warm",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_closed_child_channel_is_not_native_cleanup_proof",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_raw_primary_and_cleanup_fields_cross_inherited_channel",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_two_public_command_workers_settle_task_leases_then_host_drains_original",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_actual_frame_session_uses_inherited_host_lease",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_failed_acquisition_retains_exception_original_process",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_uncertain_session_is_retired_and_next_lease_starts_fresh",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_retire_records_group_that_cannot_be_confirmed_gone",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_task_cannot_modify_host_scope_inputs_or_escape_attempt[cli]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_task_cannot_modify_host_scope_inputs_or_escape_attempt[environment]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_task_cannot_modify_host_scope_inputs_or_escape_attempt[props]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_task_cannot_modify_host_scope_inputs_or_escape_attempt[temp]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_child_start_environment_does_not_include_runtime_credentials",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_pipe_write_deadline_does_not_change_descriptor_mode",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_unacknowledged_shutdown_retains_original_and_scratch",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_scratch_cleanup_failure_never_forgets_original",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_unexpected_render_fields_refused_before_native_allocation[unexpected]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_remotion_host_session.py::test_same_caller_identity_cannot_reuse_changed_host_selected_helper",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_cleanup.py::test_unresolved_command_scope_retains_attempt_and_records_receipt",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_cleanup.py::test_shutdown_signal_logs_reason_and_redacts_exception_text",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_cleanup.py::test_cli_exit_failure_log_omits_exception_text",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_cleanup.py::test_cli_exit_failure_log_includes_only_explicit_safe_host_context",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_render_command_keeps_inherited_group_and_observes_until_cleanup[command-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_render_command_keeps_inherited_group_and_observes_until_cleanup[command-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_render_command_keeps_inherited_group_and_observes_until_cleanup[capability-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_render_command_keeps_inherited_group_and_observes_until_cleanup[capability-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_native_render_scope_collects_completed_child[command]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_native_render_scope_collects_completed_child[capability]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_render_cleanup_failure_keeps_original_execution_reason",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_scope_launch.py::test_native_render_scope_cancels_detached_renderer_tree",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_render_exceeds_both_estimates_and_settles_while_volume_has_room[1073741824]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_render_exceeds_both_estimates_and_settles_while_volume_has_room[8589934592]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_render_stops_when_actual_free_volume_crosses_floor",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_render_settlement_checks_free_space_without_an_estimate",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_render_media_does_not_consume_diagnostic_evidence_budget",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_render_evidence_exclusions_handle_a_symlinked_parent",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_render_estimate_does_not_disable_output_path_validation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_render_storage.py::test_non_render_pack_retains_its_bounded_storage_contract",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_epoch_fence.py::test_claim_epoch_is_reused_and_not_replaced_after_runtime_restart",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_epoch_fence.py::test_successful_settlement_keeps_claim_epoch_after_health_refresh",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_existing_orchestrator_invocation_uses_owner_capture",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[custody_scope]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[owner_epoch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[channel_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[operation_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[profile]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[revision]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[definition]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[path]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[inventory]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[revoked]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_capture_survives_last_check_to_import_mutation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_ungranted_orchestrator_never_reaches_dynamic_discovery",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_owner_grant_for_wrong_definition_is_refused_before_execution",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_selected_module_cannot_fall_back_to_installed_source[json]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_real_producer_calls_consumer_before_cli_and_requires_retained_preparation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[scope]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[profile]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[definition]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[revision]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[root]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[bytes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[ancestor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[symlink]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_selection_rejects_caller_handles_and_duplicate_consumption",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_owner_grants_cannot_authorize_package_collisions[astrid.py]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_owner_grants_cannot_authorize_package_collisions[runtime_protocol.py]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_owner_grants_cannot_authorize_package_collisions[astrid_runtime_client.py]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_capture_after_bind_mutation_is_rejected_before_execution",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_command_loader_executes_captured_descendants_after_last_check",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_python_action_loader_executes_captured_descendants_after_last_check",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_production_python_action_uses_private_descriptor[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_production_python_action_uses_private_descriptor[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_production_command_executes_only_capture_after_last_check[False-command]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_production_command_executes_only_capture_after_last_check[True-command]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_revoked_owner_custody_never_becomes_a_source_grant",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_source_mutation_before_consumer_is_rejected",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[{}]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[null]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[[]]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[{broken]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[42]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_wrong_source_root_cannot_fall_back_to_live_execution",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_task_claims_cannot_write_runtime_owner_grants",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_package_main_uses_captured_loader",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_captured_command_refuses_installed_namespace_collision",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_runtime_source_custody_d40.py::test_standalone_runtime_launcher_keeps_its_own_private_handle_class",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_remotion_host_session.py::test_two_public_command_workers_settle_task_leases_then_host_drains_original - astrid.core.execution.custody_broker.CustodyError: host graph cleanup remains unresolved",
+    "FAILED tests/core/execution/test_render_scope_launch.py::test_native_render_scope_cancels_detached_renderer_tree - astrid.core.execution.generic_host.CommandCleanupUnresolved: render launch custody unresolved: CustodyError"
+  ],
+  "source_log_sha256": "f94b6e41aa76a0c9c2ab0136f977dd6b543af3bd2e9524140d1b4c36ccbd1c33",
+  "source_receipt_sha256": {
+    "start.txt": "7b551d3795d8e12bc3adf1c03c29f1638d251d4cc45cb5ff99940451311fc262",
+    "end.txt": "04b30f9ce77382ea11e7bb62a963fa1e9cd92d348d54ce13b393f7a707591d00",
+    "module.txt": "2ad6ed26ae4e28ad6772f52b3266686017732a00856980a502d78936c1f07cab",
+    "pins.txt": "99e5957b6c4308a5af009b44fe97f92335fbf916c03847b98cd0199e5174006e",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "ba1994e87ca42f773795d01a152f1d9197366966c013d2ffaea27f7e068a8294",
+    "SHA256SUMS": "0fdbfd3fabb69962bf4816d55fb9f0f4165ae36be9ac2f7699aa4a5f4e84809a"
+  }
+}
