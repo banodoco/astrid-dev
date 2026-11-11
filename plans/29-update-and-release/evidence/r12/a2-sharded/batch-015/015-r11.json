@@ -1,0 +1,409 @@
+{
+  "batch": "015",
+  "side": "r11",
+  "modules": [
+    "tests/core/execution/test_process_group.py"
+  ],
+  "pins_and_python": [
+    "a105de3a4852cb61b9647dfe2c920118bd29f272",
+    "4f5477cb0f5b03d28bec991a1fe34edcd8fc309f",
+    "e65f4941d09b1cb4d1dd5aae6171c73e648706f4",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T09:37:12Z",
+  "end_utc": "2026-11-11T09:40:40Z",
+  "exit": 1,
+  "summary": "============ 6 failed, 85 passed, 5 deselected in 204.31s (0:03:24) ============",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_process_group.py::test_unadmitted_disappearance_reconciles_and_cleanup_waits_only_retained_root",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_unadmitted_fresh_census_contradictions_block_tree_cleanup[reappeared]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_unadmitted_fresh_census_contradictions_block_tree_cleanup[reused]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_unadmitted_fresh_census_contradictions_block_tree_cleanup[missing-parent-child]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_unadmitted_fresh_census_contradictions_block_tree_cleanup[fresh-census-error]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_concurrent_census_reconciliation_is_serial_and_tombstone_is_not_erased",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_final_census_cannot_bypass_retained_obligations_outside_owned_group[reappearance]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_final_census_cannot_bypass_retained_obligations_outside_owned_group[reuse]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_final_census_cannot_bypass_retained_obligations_outside_owned_group[missing-parent-child]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_final_census_cannot_bypass_retained_obligations_outside_owned_group[admitted-detached]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_fresh_only_child_enters_tree_bookkeeping_before_reparenting",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_observation_uncertainty_persists_without_adopting_unknown_children[first-census]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_observation_uncertainty_persists_without_adopting_unknown_children[leader-missing]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_observation_uncertainty_persists_without_adopting_unknown_children[pid-reuse]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_observation_uncertainty_persists_without_adopting_unknown_children[parent-missing]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_reaped_root_pid_reuse_does_not_poison_final_tree_observation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_keyboard_interrupt_during_first_census_fails_closed",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_termination_uncertainty_is_persistent[signal-census]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_termination_uncertainty_is_persistent[signal-permission]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_termination_uncertainty_is_persistent[survivor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_first_signal_callee_metadata_survives_task_wrapper_without_clearing_uncertainty[kernel]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_first_signal_callee_metadata_survives_task_wrapper_without_clearing_uncertainty[registration]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_verified_detached_tree_stops_leaves_before_ancestors_and_leader",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_previously_observed_detached_child_remains_owned_after_leader_exit",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_final_verification_uncertainty_cannot_be_cleared_by_a_later_census[group-census]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_final_verification_uncertainty_cannot_be_cleared_by_a_later_census[group-survivor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_darwin_snapshot_has_no_spawned_observer_and_keeps_all_public_rows",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_native_census_error_latches_existing_tree_uncertainty",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_terminal_candidate_is_not_actionable_but_present_group_cannot_be_clean",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_terminal_observation_disappears_without_manufactured_descendant_wait",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_terminal_census_concurrent_observers_retain_one_non_authority_record",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_native_census_preserves_terminal_status_and_precise_birth",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_original_root_term_wait_precedes_kill_and_preserves_escalation_budget[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_original_root_term_wait_precedes_kill_and_preserves_escalation_budget[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_terminal_member_birth_mismatch_cannot_be_filtered_away",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_failed_launch_preserves_admission_error_and_original_custody[suspended]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_failed_launch_preserves_admission_error_and_original_custody[reap-timeout]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_failed_launch_preserves_admission_error_and_original_custody[unvalidated]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_failed_launch_preserves_admission_error_and_original_custody[authority-failure]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_failed_launch_preserves_admission_error_and_original_custody[released]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_sticky_cleanup_contains_only_frozen_retained_handles_and_keeps_first_error[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_sticky_cleanup_contains_only_frozen_retained_handles_and_keeps_first_error[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_retained_cleanup_uses_one_deadline_and_never_starts_late_signal",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_tree_parent_deadline_includes_first_census_and_remains_sticky",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_renderer_expiry_during_census_finishes_custody_then_cleans_owned_tree",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_termination_passes_existing_total_deadline_without_extension",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_reconciliation_local_cap_is_only_for_actual_ordinary_command[None-command]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_reconciliation_local_cap_is_only_for_actual_ordinary_command[None-renderer]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_reconciliation_local_cap_is_only_for_actual_ordinary_command[None-lookalike-command]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_reconciliation_local_cap_is_only_for_actual_ordinary_command[10.1-command]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_reconciliation_local_cap_is_only_for_actual_ordinary_command[10.1-renderer]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_reconciliation_local_cap_is_only_for_actual_ordinary_command[10.1-lookalike-command]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_expired_parent_deadline_preserves_first_process_uncertainty[observe_tree]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_expired_parent_deadline_preserves_first_process_uncertainty[verify_tree_absent]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_observe_tree_lock_busy_is_retryable_and_not_sticky",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_final_verification_still_fails_closed_when_lock_stays_busy",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_zombie_leader_with_live_thread_is_killed_and_reaped",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_real_original_root_term_and_kill_controls[False--15]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_real_original_root_term_and_kill_controls[True--9]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_real_cleanup_deadline_exhaustion_still_raises",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_retained_pidfd_exit_proof_rejects_lost_or_substituted_descriptor",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_retained_pidfd_exit_proof_accepts_genuine_exit_and_terminal_release",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[live-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[live-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[closed-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[closed-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[ordinary-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[ordinary-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[other-live-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[other-live-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[other-exited-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_kernel_watch_refuses_descriptor_faults_with_shared_metadata[other-exited-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_rejects_substitution_even_when_original_watch_is_ready[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_rejects_substitution_even_when_original_watch_is_ready[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_unavailable_cannot_prove_exit",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_refuses_errors_and_malformed_events[8]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_refuses_errors_and_malformed_events[16]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_refuses_errors_and_malformed_events[9]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_refuses_errors_and_malformed_events[wrong-fd]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_refuses_errors_and_malformed_events[duplicate]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_refuses_errors_and_malformed_events[empty]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_refuses_errors_and_malformed_events[error]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_pidfd_watch_closes_with_custody_and_on_failed_capture",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_exact_exited_descendant_allows_reused_pid_cleanup_without_adoption[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_exact_exited_descendant_allows_reused_pid_cleanup_without_adoption[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_census_witnesses_an_unreaped_zombie_without_listing_it_live",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_first_observer_census_accepts_a_launch_with_zombie_witness",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_first_observer_census_still_fails_closed_without_witness",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_zombie_witness_requires_the_exact_bound_incarnation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_instantly_exiting_launches_are_a_known_outcome_not_a_custody_error",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_process_group.py::test_held_child_birth_identity_names_an_exited_unreaped_child",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_process_group.py::test_zombie_leader_with_live_thread_is_killed_and_reaped - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+    "FAILED tests/core/execution/test_process_group.py::test_real_original_root_term_and_kill_controls[False--15] - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+    "FAILED tests/core/execution/test_process_group.py::test_real_original_root_term_and_kill_controls[True--9] - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+    "FAILED tests/core/execution/test_process_group.py::test_real_cleanup_deadline_exhaustion_still_raises - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+    "FAILED tests/core/execution/test_process_group.py::test_first_observer_census_accepts_a_launch_with_zombie_witness - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+    "FAILED tests/core/execution/test_process_group.py::test_instantly_exiting_launches_are_a_known_outcome_not_a_custody_error - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out"
+  ],
+  "source_log_sha256": "717d3238de86a54ad2b3c1f3cf65e35ee1e8207030fe2afb2419550400491a64",
+  "source_receipt_sha256": {
+    "start.txt": "f399fb7ad91212ecb61388baea51428296d04d144b99aa127bdcd398071b26be",
+    "end.txt": "039742d08dd56c0bf4aa435fe57f364516a705e3f82b044d8fd9d4a07b3a91a3",
+    "module.txt": "3b16fb05bb0ddb72f3e9a2c861c586d765c3ee23f86854b3d4fed25576b95aee",
+    "pins.txt": "e719eecfc1d208291853f687fcd3ab348897aded4a80c14cde0b2d46925b2136",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "c6f95abed69d016653801daf9f98c3b7853db344fe90686ea2e44a025a727a35",
+    "SHA256SUMS": "7e4331536447c3332de229b384b5bd164818e61b986e827731b5a2f9e1155b99"
+  }
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "batch": "015",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_process_group.py::test_zombie_leader_with_live_thread_is_killed_and_reaped - astrid.core.execution.custody_broker.CustodyError: owned process signal failed (stage=custody-signal, candidate_pid=576754, root_pid=576754, observer_pid=576628, signal=15, error_type=CustodyError, kernel_result=unknown, errno=unknown): retained cleanup deadline expired acquiring custody lock",
+    "exact_matching_baselines": []
+  },
+  {
+    "batch": "015",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_process_group.py::test_real_original_root_term_and_kill_controls[False--15] - astrid.core.execution.custody_broker.CustodyError: owned process signal failed (stage=custody-signal, candidate_pid=577127, root_pid=577127, observer_pid=576628, signal=15, error_type=CustodyError, kernel_result=unknown, errno=unknown): retained cleanup deadline expired acquiring custody lock",
+    "exact_matching_baselines": []
+  },
+  {
+    "batch": "015",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_process_group.py::test_real_original_root_term_and_kill_controls[True--9] - astrid.core.execution.custody_broker.CustodyError: owned process signal failed (stage=custody-signal, candidate_pid=577414, root_pid=577414, observer_pid=576628, signal=15, error_type=CustodyError, kernel_result=unknown, errno=unknown): retained cleanup deadline expired acquiring custody lock",
+    "exact_matching_baselines": []
+  },
+  {
+    "batch": "015",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_process_group.py::test_real_cleanup_deadline_exhaustion_still_raises - AssertionError: Regex pattern did not match.",
+    "exact_matching_baselines": []
+  },
+  {
+    "batch": "015",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_process_group.py::test_first_observer_census_accepts_a_launch_with_zombie_witness - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+    "exact_matching_baselines": [
+      "r11"
+    ]
+  },
+  {
+    "batch": "015",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_process_group.py::test_first_observer_census_still_fails_closed_without_witness - AssertionError: Regex pattern did not match.",
+    "exact_matching_baselines": []
+  },
+  {
+    "batch": "015",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_process_group.py::test_instantly_exiting_launches_are_a_known_outcome_not_a_custody_error - astrid.core.execution.custody_broker.CustodyError: initial custody observer census timed out",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  }
+]
