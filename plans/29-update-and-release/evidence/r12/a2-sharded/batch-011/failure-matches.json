@@ -1,0 +1,29 @@
+[
+  {
+    "batch": "011",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_host_cleanup_ack_barrier.py::test_native_exec_changes_token_without_changing_process_lifetime - tests/core/execution/test_host_cleanup_ack_barrier.py::test_native_exec_changes_token_without_changing_process_lifetime: undeclared skip (Skipped: Darwin native audit-token lifecycle).",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "011",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_dispatch_freezes_real_installed_producer_recipe - astrid.core.generation.backends.comfy_target.ComfyModelMissing: missing_model: qwen-image-2.1-turbo/t2i: unresolved roles {'diffusion': [], 'text_encoder': [], 'vae': []}; expected filenames: {'diffusion': ['qwen_image_2.1_turbo_int8_convrot.safetensors'], 'text_encoder': ['qwen3vl_8b_int8_convrot.safetensors'], 'vae': ['qwen_image_2.1_vae_bf16.safetensors']}; compatible catalog entries: z-image; run: astrid generate align --apply --consent user_env --entry qwen-image-2.1-turbo",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "011",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_host_cleanup_ack_barrier.py::test_real_private_peer_delayed_cleanup_ack_before_exit - astrid.core.execution.custody_broker.CustodyError: Darwin audit-token custody is unavailable",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  }
+]
