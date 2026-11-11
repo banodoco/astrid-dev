@@ -1,0 +1,351 @@
+{
+  "batch": "002",
+  "side": "r10",
+  "modules": [
+    "tests/core/execution/test_child_import_receipt.py",
+    "tests/core/execution/test_child_request_transport_264.py",
+    "tests/core/execution/test_claim_head_of_line.py",
+    "tests/core/execution/test_comfy_hooks_f07.py"
+  ],
+  "pins_and_python": [
+    "72462b04fa036736eb7fc9cb654def5f4ea2158c",
+    "52ec0578963847693a0df758d9bc1d55325f518f",
+    "e2905d068d5851b9c32856d32b8251852a01d6dd",
+    "96360a27a53c4608f780f7b370f747a2aa3c7ca8",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T04:50:30Z",
+  "end_utc": "2026-11-11T04:51:16Z",
+  "exit": 1,
+  "summary": "======================== 1 failed, 76 passed in 44.89s =========================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_direct_validator_subprocess_records_action_entry_and_host_binding",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_bridge_wrapped_validator_records_worker_and_action_entry",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_h3_transform_dry_run_subprocess_records_runpy_action_entry",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_action_entry_snapshot_uses_only_current_modules_and_hashes_loaded_files",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_host_binds_receipt_to_owned_child_and_persists_private_bounded_record",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_receipt_does_not_accept_child_supplied_host_or_task_identity",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_receipt_marks_missing_child_observation_and_persistence_failure",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_child_receipt_rejects_oversized_packet",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_actual_local_h3_launcher_observes_child_without_inventing_runtime_identity",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_loaded_module_with_unavailable_file_is_explicit[None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_loaded_module_with_unavailable_file_is_explicit[/missing/module.py]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_loaded_module_with_unavailable_file_is_explicit[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_launcher_configuration_and_host_hashes_cannot_replace_child_observation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_receipt_write_failure_preserves_actual_child_outcome[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_import_receipt.py::test_receipt_write_failure_preserves_actual_child_outcome[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_host_preserves_selected_child_request_through_generated_wire[managed-inputs-explicit]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_host_preserves_selected_child_request_through_generated_wire[managed-inputs-explicit-default]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_host_preserves_selected_child_request_through_generated_wire[managed-inputs-inherited]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_host_preserves_selected_child_request_through_generated_wire[scalar-only-explicit]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_host_preserves_selected_child_request_through_generated_wire[scalar-only-explicit-default]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_host_preserves_selected_child_request_through_generated_wire[scalar-only-inherited]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_no_controls_local_child_keeps_canonical_request_semantics[managed-inputs]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_no_controls_local_child_keeps_canonical_request_semantics[scalar-only]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_matching_request_inputs_keep_canonical_receipt_descriptors[optional-digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_matching_request_inputs_keep_canonical_receipt_descriptors[digest-witness]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_forged_request_inputs_cannot_replace_canonical_descriptors[object_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_forged_request_inputs_cannot_replace_canonical_descriptors[filename]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_forged_request_inputs_cannot_replace_canonical_descriptors[required]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_forged_request_inputs_cannot_replace_canonical_descriptors[name]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_forged_request_inputs_cannot_replace_canonical_descriptors[order]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_invalid_or_forged_target_request_rejected_before_transport[child_request0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_invalid_or_forged_target_request_rejected_before_transport[child_request1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_invalid_or_forged_target_request_rejected_before_transport[child_request2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_stale_parent_epoch_still_fences_child_transport",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_observed_child_binding_is_required_and_mismatch_rejected[None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_observed_child_binding_is_required_and_mismatch_rejected[actual_target]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_observed_child_binding_is_required_and_mismatch_rejected[resolved_target]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_observed_child_binding_is_required_and_mismatch_rejected[fence]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_observed_child_binding_is_required_and_mismatch_rejected[verification]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[explicit-tasks]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[explicit-client]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[explicit-default-tasks]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[explicit-default-client]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[inherited-tasks]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[inherited-client]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[no-controls-local-tasks]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_admission_preserves_placement_and_managed_input_assembly[no-controls-local-client]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_rejects_caller_binding_before_admission[tasks]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_child_request_transport_264.py::test_sdk_rejects_caller_binding_before_admission[client]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_claim_head_of_line.py::test_stale_digest_task_blocks_only_its_own_capability",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_claim_head_of_line.py::test_capacity_waits_are_not_skipped",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_claim_head_of_line.py::test_skips_are_bounded_when_every_capability_is_blocked",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_claim_head_of_line.py::test_admission_with_large_retained_attempt_roots_stays_in_milliseconds",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_claim_head_of_line.py::test_live_evidence_sample_hashes_unchanged_inputs_once",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_claim_head_of_line.py::test_live_guard_interval_is_bounded[0.5]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_binding_uses_birth_and_residency_evidence_without_launch_token[managed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_binding_uses_birth_and_residency_evidence_without_launch_token[attached]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_attached_binding_refuses_missing_hc03_residency_digest",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_managed_binding_refuses_missing_attested_environment_digest",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_open_passes_complete_binding_to_owner_hook",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_hook_owner_without_fence_does_not_use_legacy_containment",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_warm_reuse_refreshes_context_and_keeps_pid",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[session_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[runtime_instance_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[process_birth_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[endpoint]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[source_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[config_digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[execution_identity]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[runtime_epoch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[launch_generation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[engine_birth_id]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_observe_refuses_every_changed_or_missing_binding_field[missing]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_attached_cancel_is_prompt_specific_and_pre_dispatch_never_cancels_old_prompt",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_uncertain_cancel_keeps_slot_fenced_until_quiescence_is_proven",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_release_quiesces_exact_owned_work_and_preserves_process",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_hooks_f07.py::test_invocation_refuses_mismatched_child_context",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_child_import_receipt.py::test_h3_transform_dry_run_subprocess_records_runpy_action_entry - AssertionError: assert 'invalid' == 'recorded'"
+  ],
+  "source_log_sha256": "8e8701afa011d968f2a3575628ff7150c9ea491451011b14a205e22ccabcc561",
+  "source_receipt_sha256": {
+    "start.txt": "5bf8ade6559a9c035794943c7372fe22642bee85e194f8b381fc5c71ed0eaa4a",
+    "end.txt": "69f4e22883b222bf6f2c2265c4d9cb6de360347443d19c198ef82410d7b7fdc4",
+    "module.txt": "98ea7bd4a595efc8752725b93ceaa34ce60f6164fc9a5cd465dfc5431bd2dd2d",
+    "pins.txt": "99e5957b6c4308a5af009b44fe97f92335fbf916c03847b98cd0199e5174006e",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "acd173aaffb3704b4dc8d0b44ef10e336756b21b0e90f7aa5c05a48d1d47f75a",
+    "SHA256SUMS": "b64f7e9d264df85a87eddc3293e3bba9124c5fb3d821f40e5bf188f91d4a0c61"
+  }
+}

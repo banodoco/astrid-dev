@@ -1,0 +1,386 @@
+{
+  "batch": "005",
+  "side": "r11",
+  "modules": [
+    "tests/core/execution/test_declared_action_secrets.py",
+    "tests/core/execution/test_delegated_publication_transport_g31.py",
+    "tests/core/execution/test_execution_guards.py",
+    "tests/core/execution/test_execution_reconciler.py",
+    "tests/core/execution/test_external_pack_loading_m1_03.py"
+  ],
+  "pins_and_python": [
+    "a105de3a4852cb61b9647dfe2c920118bd29f272",
+    "4f5477cb0f5b03d28bec991a1fe34edcd8fc309f",
+    "e65f4941d09b1cb4d1dd5aae6171c73e648706f4",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T05:06:01Z",
+  "end_utc": "2026-11-11T05:06:52Z",
+  "exit": 0,
+  "summary": "============================= 86 passed in 49.85s ==============================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_declared_action_secrets.py::test_declaring_action_receives_only_its_declared_secret",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_declared_action_secrets.py::test_undeclaring_sibling_action_receives_no_secret",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_declared_action_secrets.py::test_matrix_required_env_cannot_widen_action_secrets",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_declared_action_secrets.py::test_ambient_process_secret_is_not_inherited",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_declared_action_secrets.py::test_undeclared_secret_value_is_refused",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_declared_action_secrets.py::test_secret_in_explicit_child_env_is_refused",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_staged_transport_uses_parent_authority_and_runtime_owned_descriptors",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_producer_association_ref_is_forwarded_for_runtime_resolution",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_staged_producer_data_and_idempotency_are_snapshotted_before_authority_io",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change3]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change4]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change5]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change6]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change7]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change8]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change9]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change10]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change11]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change12]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change13]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_mixed_or_unmanaged_stage_requests_fail_before_runtime_mutation[change14]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_staged_transport_rejects_foreign_or_derived_authority_receipt[changes0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_staged_transport_rejects_foreign_or_derived_authority_receipt[changes1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_staged_transport_rejects_foreign_or_derived_authority_receipt[changes2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_staged_transport_rejects_foreign_or_derived_authority_receipt[changes3]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_staged_transport_rejects_foreign_or_derived_authority_receipt[changes4]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_unknown_admission_outcome_is_propagated_without_fallback_or_retry",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_lost_parent_authority_prevents_child_authority_or_admission[epoch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_lost_parent_authority_prevents_child_authority_or_admission[heartbeat]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_unstaged_transport_retains_exact_child_grant_and_opaque_generation_intent",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_delegated_publication_transport_g31.py::test_stage_replay_keeps_explicit_attempt_scoped_key_and_refs",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generated_evidence_cap_is_enforced",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generated_evidence_scan_tolerates_a_file_vanishing_during_render",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generated_evidence_scan_tolerates_outer_walk_directory_vanishing",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generated_evidence_scan_tolerates_a_file_vanishing_during_input_hash",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generated_evidence_scan_still_fails_closed_on_other_os_errors",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generated_evidence_scan_error_has_distinct_diagnostic",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generated_budget_accumulates_and_excludes_immutable_inputs",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_live_budget_blocks_retained_roots_and_recovers_after_cleanup",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_modified_or_managed_input_is_not_exempt",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_running_writer_is_detected_while_still_alive",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_deadline_gate_rejects_expired_attempt",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_warm_expectation_is_not_derived_from_a_listener_port",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_warm_expectation_requires_a_boolean",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_generic_host_carries_the_guard_policy_without_a_listener_port",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_cleanup_helper_does_not_claim_absence_after_recursive_delete_error",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_cleanup_helper_fails_closed_on_root_observation_error",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_cleanup_failure_is_recorded_and_does_not_block_admissions",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_host_live_evidence_publication_uses_measured_charge_and_private_atomic_snapshot",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_guards.py::test_cleanup_doubt_record_is_written_for_doctor_and_never_gates",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_local_reconciler_settles_only_after_fenced_delivery",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_uncertain_execution_is_not_replayed_or_settled",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_nonterminal_replay_is_undetermined_without_duplicate_claim_or_execute",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_runtime_deadline_returns_without_waiting_for_a_hung_callback",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_terminal_replay_recovers_without_claim_or_execute",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_settlement_timeout_recovers_terminal_runtime_result",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_claim_for_different_task_is_never_executed_or_settled",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_reconciler_rejects_adapter_for_different_request_target",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_delivery_hash_failure_is_fenced_and_cannot_settle",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_runtime_deadline_fences_claim_before_settlement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_incarnation_change_returns_undetermined",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_existing_runpod_adapter_never_provisions_when_not_ready",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_existing_runpod_adapter_attaches_only_exact_live_pod",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_runpod_adapter_rejects_wrong_provider_account",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_runpod_adapter_rejects_wrong_requested_storage",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_output_custody_rejects_escape",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_output_custody_rejects_declared_decode_from_unverified_bytes",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_output_custody_rejects_unsupported_requirement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_execution_reconciler.py::test_output_custody_accepts_injectable_byte_verifier",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_real_host_python_action_uses_canonical_selected_namespace",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_worker_uses_host_runtime_origin_without_ambient_pythonpath",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_raw_selected_loader_preserves_real_in_tree_pack_imports",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_real_host_python_command_routes_use_same_selected_namespace_and_settle_bytes[module]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_real_host_python_command_routes_use_same_selected_namespace_and_settle_bytes[inline]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_real_host_python_command_routes_use_same_selected_namespace_and_settle_bytes[script]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_real_host_python_command_routes_use_same_selected_namespace_and_settle_bytes[package]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_fresh_admission_observes_raw_edit_and_old_admission_refuses",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_unselected_visible_sibling_is_not_imported_by_selected_action",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_unsupported_bare_module_command_refuses_before_child_execution",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_selected_import_reuses_reserved_and_core_namespace_policy[personal]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_selected_import_reuses_reserved_and_core_namespace_policy[generation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_selected_personal_import_uses_canonical_foundation_root",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_external_pack_loading_m1_03.py::test_changed_import_epoch_requires_fresh_process_without_module_eviction",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [],
+  "source_log_sha256": "3aa1b5214a829c23ee698e7734605ce815af9e20b5b3b872c0562695e0c4bbbd",
+  "source_receipt_sha256": {
+    "start.txt": "985981550ba8f874effaef77b74f8d320735d4219bdb15426ab162536ef51f49",
+    "end.txt": "95b8dd0f189903069ecccaafea271b0b0330142d8c19825519ddcc1ebb671abe",
+    "module.txt": "90f93f08b6c893846ce297d8af864341f0d2a5ac7b43668baf32c0c1538dea8b",
+    "pins.txt": "e719eecfc1d208291853f687fcd3ab348897aded4a80c14cde0b2d46925b2136",
+    "exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "8ada6e1961a8f5c968e8aaa3469543798b155edfcb7b58513d931a31393a5761",
+    "SHA256SUMS": "72231942b02afe7abdb38a699cad8fdec0f48b8bffe8aec945d32d73694fe24a"
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "batch": "001",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_bug14_settlement_liveness.py::test_conflict_fails_exact_owner_without_conflicting_evidence - Failed: DID NOT RAISE <class 'RuntimeError'>",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "002",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_claim_head_of_line.py::test_admission_with_large_retained_attempt_roots_stays_in_milliseconds - AssertionError: admission must not walk attempt roots",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "002",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_child_import_receipt.py::test_h3_transform_dry_run_subprocess_records_runpy_action_entry - AssertionError: assert 'invalid' == 'recorded'",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "003",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_comfy_session_f07.py::test_default_hold_reuses_engine_then_unloads_and_reloads - AssertionError: assert (1 == 2)",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "005",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_external_pack_loading_m1_03.py::test_selected_import_reuses_reserved_and_core_namespace_policy[personal] - AssertionError: Regex pattern did not match.",
+    "exact_matching_baselines": []
+  },
+  {
+    "batch": "006",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[settlement] - AssertionError: assert 'running' == 'failed'",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  }
+]

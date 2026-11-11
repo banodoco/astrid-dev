@@ -1,0 +1,144 @@
+{
+  "batch": "003",
+  "side": "candidate",
+  "modules": [
+    "tests/core/execution/test_comfy_session_f07.py"
+  ],
+  "pins_and_python": [
+    "ec48555d8298d155390ffbb37d1950c3e80b43a4",
+    "42ae24aff8d2cb854f874ce134161077a3ba3641",
+    "8d065a8fef3dd602d5462e27d8eca088cf4e8262",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T04:58:06Z",
+  "end_utc": "2026-11-11T04:58:41Z",
+  "exit": 1,
+  "summary": "======================== 1 failed, 25 passed in 34.17s =========================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_failed_fence_retains_slot_without_releasing_or_allocating[false]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_failed_fence_retains_slot_without_releasing_or_allocating[raise]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_observation_exception_fences_late_results_and_preserves_custody",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_owner_release_refuses_stale_authorization_without_native_control[binding]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_owner_release_refuses_stale_authorization_without_native_control[generation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_owner_release_refuses_stale_authorization_without_native_control[boolean]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_owner_release_refuses_stale_authorization_without_native_control[float]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_owner_release_refuses_stale_authorization_without_native_control[fenced]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_owner_release_refuses_stale_authorization_without_native_control[absent]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_release_waits_for_exact_admission_then_preserves_native_evidence",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_host_release_never_falls_back_to_unchecked_owner_control[None-None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_host_release_never_falls_back_to_unchecked_owner_control[binding1-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_host_release_never_falls_back_to_unchecked_owner_control[binding2-1.0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_same_pid_reuse_and_stale_timer_after_owner_release",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_host_serializes_comfy_setup_and_release_cannot_race_it",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_failed_release_retains_poisoned_comfy_slot[false-owner]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_failed_release_retains_poisoned_comfy_slot[false-idle]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_failed_release_retains_poisoned_comfy_slot[raise-owner]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_failed_release_retains_poisoned_comfy_slot[raise-idle]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_cancelled_session_wait_never_fences_the_running_comfy_task",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_invalid_idle_request_never_arms_a_timer[-1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_invalid_idle_request_never_arms_a_timer[nan]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_invalid_idle_request_never_arms_a_timer[inf]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_invalid_idle_request_never_arms_a_timer[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_zero_idle_request_overrides_environment_and_expires",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_comfy_session_f07.py::test_default_hold_reuses_engine_then_unloads_and_reloads",
+      "outcome": "FAILED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_comfy_session_f07.py::test_default_hold_reuses_engine_then_unloads_and_reloads - AssertionError: assert (1 == 2)"
+  ],
+  "source_log_sha256": "573296a1bb394b043982138ff12b8c422c6b3a6e1a9c7d624d71853a002b90ac",
+  "source_receipt_sha256": {
+    "start.txt": "8b10f689952c86bfe735566e71aca3420c73a6f2a5a75a43440d175a9f97dea8",
+    "end.txt": "c618b876cfd7b65b4277d87f19662471370901cf42357c3c1389757d1c8764ce",
+    "module.txt": "582b2163f46e9963715c2286966414b2bd5ea4aa468ce2445becf73a89989245",
+    "pins.txt": "2cb64dbf19eb77cca05df65a74d46bf0f9f9be4a76f3705e50e8e41ab85932cf",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "cecfe518fbeb1ea87058e2805c7fc242d61a917a296331d7575fd4d7fb81bbbb",
+    "SHA256SUMS": "e5afc78d2112ad125fe7aeccfb32b0e47e01c7e48affa19ae98510aefc89a6c0"
+  }
+}
