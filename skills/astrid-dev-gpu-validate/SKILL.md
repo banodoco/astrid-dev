@@ -31,6 +31,34 @@ No schedule. Every run spends money, so it needs the owner's standing budget (be
 - Release every pod this run made, whatever happened, including on an error or an interrupted session. The run is not over until the "after" census holds no pod of yours.
 - Never store, print or paste a credential. Use the credential reference the environment provides; redact any key that appears in a log before it goes in the record.
 
+## Renting a machine and waiting for it
+
+**GPU rule (owner, 11 Nov 2026):** RTX 4090 or RTX 5090 only, never a more expensive substitute. Give `--gpu` once per card, in preference order, with the display names `"RTX 4090"` and `"RTX 5090"` (the catalogue also accepts the ids `"NVIDIA GeForce RTX 4090"` and `"NVIDIA GeForce RTX 5090"`; case does not matter). **Video needs 32 GB: a video cell names `--gpu "RTX 5090"` alone.** Do not list the 4090 for video; it would wait for a machine that then fails the job.
+
+**The one command.** Rent and wait in a single call:
+
+```sh
+astrid generate <image|video|audio> --entry <entry> --placement runpod \
+  --gpu "RTX 4090" --gpu "RTX 5090" \
+  --max-hourly-usd <ceiling> --max-usd <cap> \
+  --preparation-seconds <P> --execution-seconds <E> --idle-seconds <I> \
+  --consent paid
+```
+
+- The word after `generate` is the kind: `image`, `video` or `audio` (audio also needs `--mode music|tts|sfx`). The entry is `--entry` (a slot from `astrid generate defaults --json`), plus its inputs (`--inputs-json FILE`, a prompt, or `--input NAME=VALUE`). For a video cell, use `--gpu "RTX 5090"` alone in place of the two `--gpu` flags above.
+- `--gpu` is repeatable, one card per flag, not a comma list. The same card twice is refused.
+- `--max-hourly-usd` (number) is the waiting policy. `--max-usd` (number) is the spend cap and must fit the saved RunPod budget. `--consent paid` is required.
+- `--preparation-seconds`, `--execution-seconds` and `--idle-seconds` (numbers) are **required**, with no defaults. The cap must cover all three at the hourly rate.
+- Saved RunPod setup (`astrid machines setup`) and a running Astrid host must exist. If either is missing, stop and tell the owner; don't start a pod another way.
+- Do **not** pass `--offer-digest`, `--deadline`, `--capacity-timeout`, `--no-wait-for-capacity` or `--no-wait`. The command waits by itself; `--no-wait` does not stop the capacity wait, it only returns a task to follow.
+- One waiting command per cell, in the foreground until it returns. No time window, no `--datacenter`, no retry loop of your own.
+
+**Waiting is normal.** The command waits until a machine is claimed or you cancel it. While it waits, a preview (`astrid generate describe --placement runpod --max-hourly-usd …`) or a per-attempt progress line on stderr (`RunPod capacity attempt N: GPU …: stock_unavailable`) says `stock_unavailable`. That is not an error and needs no action: it polls again about five seconds later, backing off on rate limits, and polling costs nothing. Only a `claimed` line, or an exit with an error, ends the wait. If an interrupt leaves it unclear whether a pod was made, run `astrid machines` and take the census before anything else.
+
+**Never leave `--max-hourly-usd` out.** With `--gpu` and no `--max-hourly-usd`, the CLI refuses and steers you to the exact-offer path: `describe`, then `--offer-digest` with an absolute `--deadline`. That path accepts one priced snapshot, fails when the offer or rate changes, and cannot wait for stock. Don't use it.
+
+**Other launchers are not the generation path.** For Step 1 you may keep a machine with `astrid machines claim --gpu "RTX 5090" --max-hourly-usd <ceiling> --max-usd <cap> --consent paid`; it waits the same way. Don't rent with `astrid runpod provision`, `scripts/pod_session.py` or `scripts/claim_runpod_5090_backup.py`.
+
 ## The matrix
 
 Rows: every slot from `astrid generate defaults --json` on the Agent revision under test, read at run time (never a hard-coded list), plus h3_av on the Matrix clip (80.886–83.305 s).
@@ -49,11 +77,11 @@ Also check what CPU cannot prove (fetch destination against the checked models r
 
 ## Step 1: VibeComfy smoke, one pod
 
-Make one pod in the storage volume's datacenter. For each slot, run that slot's workflow **directly with VibeComfy's own commands** (`prepare`, `fetch`, `run`), with no Astrid routing. A failure here is a model or node failure, not a routing failure. This step also fills the storage volume once; the models must not be downloaded again later. Record each slot's output or its first failing line.
+Rent one machine as above (a saved volume fixes the datacenter; don't name one). For each slot, run that slot's workflow **directly with VibeComfy's own commands** (`prepare`, `fetch`, `run`), with no Astrid routing. A failure here is a model or node failure, not a routing failure. This step also fills the storage volume once; the models must not be downloaded again later. Record each slot's output or its first failing line.
 
 ## Step 2: the Astrid route
 
-On the same volume, run `astrid generate <entry> … --placement runpod` per slot, then `--placement local` and `--placement attached`. Use warm reuse and the volume cache. Record:
+On the same volume, run the command above per slot, then `--placement local` and `--placement <loopback ComfyUI URL>` (attached). Use warm reuse and the volume cache. Record:
 
 - the **cold** timing (first job on a fresh pod) and **warm** timings (later jobs);
 - the **per-job overhead** (total time minus the ComfyUI execution time);
