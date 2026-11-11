@@ -57,6 +57,17 @@ astrid generate <image|video|audio> --entry <entry> --placement runpod \
 
 **Never leave `--max-hourly-usd` out.** With `--gpu` and no `--max-hourly-usd`, the CLI refuses and steers you to the exact-offer path: `describe`, then `--offer-digest` with an absolute `--deadline`. That path accepts one priced snapshot, fails when the offer or rate changes, and cannot wait for stock. Don't use it.
 
+**Limits per cell (proposed, 11 Nov 2026).** No earlier run recorded phase timings, so these come from the cell caps and the code's rule that `--max-usd` must cover preparation, execution and idle at the observed hourly rate (`target_selection.py:361`). That cap also ends the machine's life at `max-usd ÷ rate` hours. Record each cell's actual preparation and execution time, and tighten these after the first batch.
+
+| Cell | `--gpu` | `--max-hourly-usd` | `--max-usd` | `--preparation-seconds` | `--execution-seconds` | `--idle-seconds` |
+|---|---|---|---|---|---|---|
+| image t2i, image edit, music | `"RTX 4090"`, `"RTX 5090"` | 1.0 | 1 | 1500 | 600 | 600 |
+| TTS, SFX | `"RTX 4090"`, `"RTX 5090"` | 1.0 | 3 | 1800 | 900 | 1800 |
+| video i2v, v2v, edit | `"RTX 5090"` alone | 1.2 | 2 | 1800 | 1800 | 1200 |
+| warm reuse (second job, same machine) | same as the batch | same as the batch | 1 | 300 | 600 | 600 |
+
+At the hourly ceiling each row's limits fit its cap: 2700 s at $1.00/h is $0.75; 4500 s at $1.00/h is $1.25; 4800 s at $1.20/h is $1.60; 1500 s at $1.00/h is about $0.42. If the market rate is above the ceiling the command keeps waiting; don't raise the ceiling without the owner's go.
+
 **Other launchers are not the generation path.** For Step 1 you may keep a machine with `astrid machines claim --gpu "RTX 5090" --max-hourly-usd <ceiling> --max-usd <cap> --consent paid`; it waits the same way. Don't rent with `astrid runpod provision`, `scripts/pod_session.py` or `scripts/claim_runpod_5090_backup.py`.
 
 ## The matrix
