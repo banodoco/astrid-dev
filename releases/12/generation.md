@@ -1,17 +1,20 @@
 # Release 12, Track B — Generation
 
-## Current state — 11 Nov, 10:43 UTC
+[Current manager transition](../../docs/handoffs/2026-11-11-release12-track-b-transition.md) · Confirm its refs and operating state before resuming.
+
+## Current state — 11 Nov, 16:45 UTC
 
 This is a progress snapshot, not a gate or freeze. Full history and acceptance criteria remain below and in the plan task records.
 
 | Label | Exact ref or evidence | State and next action |
 |---|---|---|
 | P40-T9 | Agent `plan40/staging-int40` `d8931c281cf705273c3c7c01346b6f2722733cca` | Accepted focused handoff. |
-| B5 | Agent `release12/gen-candidate` `6a2351d95bb7eabc8b0ff6f988163fe420fcb3d7` | Pushed WIP, **not B-CANDIDATE**. The older `e857a106` record is not the current remote branch head. H3 disposition and required proof remain open. |
-| R12-F2 | Agent `plan32/r12-f2-ready-registration` `d7a38b941cf629f8aef12e7ebe480c4d9e7dfa71`; Runtime `handoff/r12-self-observe` `8b312c4b29bbb4fef5ac0849188678fe356b9e84` | Provisional repair; independent security review complete and focused exact-pair tests passed. Fresh installed no-claim attachment and custody proof remain open. |
-| Diagnostic App | App `handoff/r12-provisional-runtime-schema-d7` `43bad29fc7ed2145fb518911b80697ba2e6effb3` | Provisional only. Its diagnostic VibeComfy override was independently reproduced; installed proof and a new named authorization precede any rental. |
+| B5 | Agent `release12/gen-candidate` `1439ccc63bf8d9ed5422ac1f95ffdd6158560e1e` | Pushed WIP, **not B-CANDIDATE**. Reviewed error-contract handoff integrated; [focused merge-head receipt](../../plans/32-generation-placement-targets/evidence/release12-b5-focused-cpu.md) records the checks and Runtime-import rerun. H3 disposition and remaining required proof remain open. |
+| R12-F2 | Agent handoff `plan32/r12-error-contract` `e1731b9e4e86638e6425cf5601160e32be683a72`; Runtime `handoff/r12-self-observe` `8b312c4b29bbb4fef5ac0849188678fe356b9e84` | Provisional pair; reviewed, focused checks and installed no-claim attachment/refusal checks passed. Runtime pin remains subject to freeze coordination. |
+| Diagnostic App | App `handoff/r12-provisional-tts-e173` `c1dd6104df78f2849404ab1261d1ff628872aa54` | Provisional diagnostic handoff only; not a final App or release tuple. |
+| Retention repair | Agent `handoff/r12-retention-fingerprint` `6dbe7f9aefc7d2ee6004787c5fe269644fcf9a49` | Pushed, divergent and unaccepted WIP; focused safety controls remain incomplete. |
 | B6 / final tuple | No `A-FROZEN`, `FINAL-B7`, or `FINAL-TUPLE` | Final integration, B8, B9 and final cells await their named inputs. |
-| P34 | Latest recorded census: zero pods; no diagnostic cell completed | Only the orchestrator-authorized TTS diagnostic may be proposed after installed proof, fresh census and spend check. RTX 4090 or RTX 5090 only; retain the shared $25 stop and $1 reserve. |
+| P34 | Final qualification remains open | Follow the named tuple, consent, custody, census and budget rules below. |
 
 [Release 12](../12.md) · [Track A: Fixes](fixes.md) · Reference only: handoffs for [P32](../../plans/32-generation-placement-targets/handoff.md), [P40](../../plans/40-machine-lifetime-controls/handoff.md), [P20](../../plans/20-zero-to-first-image/handoff.md), [P34](../../plans/34-real-gpu-proof/handoff.md)
 
@@ -34,12 +37,16 @@ Use the shared [issue mailbox and session mapping](../12.md#hand-offs-all-via-ma
 
 ## START HERE — P40 manager
 
+**Transition:** P40-T9 is already accepted at `d8931c281cf705273c3c7c01346b6f2722733cca`; see the [current handoff](../../docs/handoffs/2026-11-11-release12-track-b-transition.md). The following original sequence is retained for context and is not an instruction to redo it. Other P40 acceptance rows remain governed by their task records.
+
 - **Do now:** B1, P40-R1.1–R1.4, on `plan40/staging-int40` (`b15e286b6`).
 - **Then:** B2, merging `plan32/staging-int32` `d28cac190` and Plan 34 fix N `e0d95d7b8` (branch `plan34/fix-failure-diagnostics`). Then B3, **P40-T9** per its card in Plan 40's `tasks.md`, with its focused review.
 - **Push:** `plan40/staging-int40` only.
 - **Done when:** you have posted `P40-T9 sha=<sha>` (reviewed). Then end `RUN-STATUS: WAITING CHECKPOINT-B from orchestrator`, not `DONE`, so you can answer P32's questions during composition.
 
 ## START HERE — P20 manager
+
+**Transition:** P20 Agent preparation is pushed at `e28a509b6bd8c352514d4b4cc14c95628a8302e7` and incorporated into B5 WIP. P20 App preparation is pushed at `ee9e0b9a6995a08c63040e031d049a7a320f7ef1`; its final refresh still waits for exact `A-FROZEN`. VibeComfy `release12/vibecomfy` already exists at `8d065a8fef3dd602d5462e27d8eca088cf4e8262`. These are preparation handoffs, not final release acceptance; use the [current handoff](../../docs/handoffs/2026-11-11-release12-track-b-transition.md) and task records before resuming. The original sequence below is historical, not a request to recreate those branches.
 
 - **Do now, in parallel:**
   1. Merge `plan32/staging-int32` `d28cac190` into `plan20/staging-agent` (`d2a84370f`), re-prove it, and post `P20-AGENT sha=<sha>`. Confirm the reviewed P1.5 phase-1 changes (`6fb1d5861`, draft Agent #341) are present; reconcile any missing change with P32 rather than merging an old release base wholesale. Run the maintained-guide, setup-pack and setup-branch selectors, mirror check and README render check; verify installer quotations against this candidate. Cover the changed P20 integration with its one remaining independent Astra R3 round before `P20-AGENT`; [R3's task card](../../plans/20-zero-to-first-image/tasks.md) requires later integration changes to have review coverage before P3.5. Review the exact staged head and changes since its prior report, resolve blockers and record the receipt; do not restart R1/R2 or exceed R3's two-round total. B9 still covers subsequent final merge changes. Plan 29's donor `bc5aa747` is also in Track A's candidate; P32 checks for duplicate behavior during B5 and again when Track A joins at B7; keep one implementation and prove P20-P3.3b's selection and opt-out tests.
