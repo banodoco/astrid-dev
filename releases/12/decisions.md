@@ -177,3 +177,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - The NOW block is refreshed, and timestamps come from `date -u`.
   - The six not-run tests run in Direct Journey 172 on `48ec9bb70`, which has the corrected marker position, so they're known when it lands.
   - The video-drop marker sits at the first save-dependent step with everything before it asserted, not at the top.
+- 2026-11-11 23:40Z — **Astra review of harness `b550ecad..d92ea0ee6`: BLOCKER, verified and accepted.**
+  - The diagnosis is confirmed: `resolveUpdate.test.ts:404-414` pins "no card when current, card when behind".
+  - BLOCKER: the capture installs `playwright@1.47.2` (`journey_version_jumps.py:1552`), which has no `local-network-access` permission. I checked the 1.47.2 package myself: there are 0 occurrences in its `crBrowser.js`. The App's 1.60.0 has it.
+  - MEDIUM: the page-wide text wait could match the quiet update notice outside Settings.
+  - MEDIUM, pre-existing, **REVIEW**: a macOS capture failure is recorded as `unverified` but the row still passes (`:1716-1739`), so a green macOS row doesn't prove the card. That's a Plan 39/harness follow-up and not changed for R12.
+  - LOW: the capture receipt doesn't record the simulated release.
+  - Codex Luna (`cx-aso`) is applying: the pin to `playwright@1.60.0`; scoping to `#settings-updates` with the "Copy instructions for your agent" action and a section screenshot, as App `direct-journey.spec.ts:1376-1386` does; and recording the real and advertised releases. A reviewer reads it before the matrix uses it.
