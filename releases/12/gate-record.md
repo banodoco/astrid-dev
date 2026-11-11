@@ -66,9 +66,9 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 
 ### 5. Runtime
 
-- `ci.yml` run on exactly `42ae24aff8d2cb854f874ce134161077a3ba3641`: {{run link}}, {{conclusion}}
-- By-test-ID comparison against Runtime main `4f5477cb0`: {{result}}
-- Orchestrator's independent review of `origin/main..42ae24aff8d2cb854f874ce134161077a3ba3641`: {{verdict}}
+- `ci.yml` run on exactly `42ae24aff8d2cb854f874ce134161077a3ba3641`: [run 43116478710](https://github.com/banodoco/astrid-runtime/actions/runs/43116478710), failure. Its red jobs (unit ×2, portability-lifecycle ×2, sandbox-process-control) are red on Runtime main too; see the next line.
+- By-test-ID comparison against Runtime main `4f5477cb0`, both with `-rA` ([base run 43116556369](https://github.com/banodoco/astrid-runtime/actions/runs/43116556369), [candidate run 43116561116](https://github.com/banodoco/astrid-runtime/actions/runs/43116561116)): **0 regressions**. No test that passed on main fails or errors on the candidate, in any of the 9 jobs. Recounted independently from the raw logs. Candidate failures (sandbox-process-control 1096, unit macOS 1083 and Linux 1087, portability-lifecycle 8 and 7) all fail on main too, and match the exact-SHA run ID for ID. Fixed by the candidate: windows-realm-publication and darwin-native go green; the darwin custody-spawn test goes FAILED → strict XFAIL (see Known issues).
+- Orchestrator's independent review of `origin/main..42ae24aff8d2cb854f874ce134161077a3ba3641`: NO BLOCKER. Findings 1-4 are follow-ups and finding 5 is a pre-existing defect (see Known issues); rulings are in the decision log.
 - Runtime main moves onto `42ae24aff8d2cb854f874ce134161077a3ba3641` at publish (33 commits; autostart update guard, Windows R0 handoff, windows-upgrade-unsupported, diagnostics).
 
 ## Not run / limits
