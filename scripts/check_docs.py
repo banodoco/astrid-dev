@@ -10,6 +10,9 @@ from urllib.parse import unquote
 
 from gap_relationships import parse_gap_relationships
 from project_contract import PLAN_FOLDER, plan_gap_ids
+from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
+                     is_placeholder, key_value_lines, read_text, section as record_section,
+                     split_table_row)
 from vision_subject import parse_subject
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,7 +28,7 @@ GAP_NAME = re.compile(r'([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md')
 
 
 def read(root: Path, path: Path) -> str:
-    return (root / path).read_text(encoding='utf-8')
+    return read_text(root, path)
 
 
 def catalog_rows(text: str) -> list[list[str]]:
@@ -38,7 +41,7 @@ def catalog_rows(text: str) -> list[list[str]]:
     for line in lines[heads[0] + 2:]:
         if not line.startswith('|'):
             break
-        cells = [cell.strip() for cell in line.strip().strip('|').split('|')]
+        cells = split_table_row(line)
         if len(cells) != 7 or not all(cells):
             raise ValueError(f'malformed plan row: {line}')
         if cells[2] not in STATUSES:
@@ -73,7 +76,7 @@ def unnamed_active_owners(rows: list[list[str]]) -> list[str]:
     return [
         f"active project needs a named accountable owner: {row[0]}"
         for row in rows
-        if row[2] == 'active' and row[3].strip().lower() in {'unassigned', 'tbd', 'none', '—', '-'}
+        if row[2] == 'active' and is_placeholder(row[3], PLACEHOLDERS_ACTIVE_OWNER, trim=None)
     ]
 
 
@@ -82,7 +85,7 @@ def obsolete_template_paths(root: Path) -> list[str]:
     """Reject stale project paths in Markdown, including GitHub's absolute form links."""
     issues: list[str] = []
     for path in root.rglob("*.md"):
-        if ".git" not in path.relative_to(root).parts and "strategy/projects/" in path.read_text(encoding="utf-8"):
+        if ".git" not in path.relative_to(root).parts and "strategy/projects/" in read(root, path.relative_to(root)):
             issues.append(f"{path.relative_to(root)}: obsolete strategy/projects path; use plans/")
     for obsolete in ("templates/bug-issue.md", "templates/bug-pr.md", "templates/review-submission.md"):
         if (root / obsolete).exists():
@@ -94,12 +97,7 @@ ROUTE_STATUS = re.compile(r"\b(active|queued|blocked|paused|done|cancelled)\b", 
 
 
 def gap_section(text: str, title: str) -> str | None:
-    match = re.search(r"^## " + re.escape(title) + r"\s*$", text, re.M)
-    if not match:
-        return None
-    tail = text[match.end():]
-    end = re.search(r"^## ", tail, re.M)
-    return (tail[:end.start()] if end else tail).strip()
+    return record_section(text, title, missing='none', boundary=r'^## ', strip=True)
 
 
 def route_issues(name: str, gap_id: str, text: str, plans: dict[str, str]) -> list[str]:
@@ -153,11 +151,10 @@ def ledger_entry_errors(name: str, text: str, entries: set[str]) -> list[str]:
     label = f'docs/ledger/{name}'
     header, _, body = text.partition('\n\n')
     fields: dict[str, str] = {}
-    for line in header.splitlines():
-        key, sep, value = line.partition(':')
+    for key, sep, value in key_value_lines(header):
         if not sep or key.strip() not in LEDGER_FIELDS or key.strip() in fields:
             return [f'{label}: header must be exactly Date, Kind, Source and Resolved by lines, then a blank line']
-        fields[key.strip()] = value.strip()
+        fields[key.strip()] = value
     errors = [f'{label}: missing header field {f}:' for f in LEDGER_FIELDS if not fields.get(f)]
     if fields.get('Kind') and fields['Kind'] not in LEDGER_KINDS:
         errors.append(f'{label}: Kind must be one of {", ".join(sorted(LEDGER_KINDS))}')
@@ -182,7 +179,7 @@ def ledger_errors(root: Path) -> list[str]:
     entries = {p.name for p in files}
     errors: list[str] = []
     for file in files:
-        errors.extend(ledger_entry_errors(file.name, file.read_text(encoding='utf-8'), entries))
+        errors.extend(ledger_entry_errors(file.name, read(root, file.relative_to(root)), entries))
     return errors
 
 
@@ -196,12 +193,7 @@ RELEASE_SECTIONS = ('Highlight', 'Intent', 'Approach', 'Included plans', 'Public
 
 
 def release_section(body: str, name: str) -> str:
-    match = re.search(r'^## ' + re.escape(name) + r'\s*$', body, re.M)
-    if not match:
-        return ''
-    rest = body[match.end():]
-    following = re.search(r'^## ', rest, re.M)
-    return (rest[:following.start()] if following else rest).strip()
+    return record_section(body, name, missing='empty', boundary=r'^## ', strip=True) or ''
 
 
 def release_errors(filename: str, body: str) -> list[str]:
@@ -252,7 +244,7 @@ def release_errors(filename: str, body: str) -> list[str]:
 def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> list[str]:
     """Validate a release-led strategy against its canonical release briefs."""
     errors = [f'strategy.md: missing section {name}' for name in STRATEGY_SECTIONS
-              if not re.search(rf'^{re.escape(name)}\s*$', text, re.M)]
+              if not heading_present(text, rf'^{re.escape(name)}\s*$')]
     if not re.search(r'^\*\*Last reviewed:\*\* \d{4}-\d{2}-\d{2}', text, re.M):
         errors.append('strategy.md: needs a "**Last reviewed:** YYYY-MM-DD" line')
     lines = text.splitlines()
@@ -263,7 +255,7 @@ def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> li
     for line in lines[heads[0] + 2:]:
         if not line.startswith('|'):
             break
-        rows.append([cell.strip() for cell in line.strip().strip('|').split('|')])
+        rows.append(split_table_row(line))
     if not rows:
         errors.append('strategy.md: the release sequence table is empty')
     referenced = set()
@@ -320,7 +312,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
     release_folder = root / 'releases'
     if not (release_folder / 'TEMPLATE.md').is_file():
         errors.append('releases/TEMPLATE.md: missing canonical release template')
-    release_docs = {p.name: p.read_text(encoding='utf-8')
+    release_docs = {p.name: read(root, p.relative_to(root))
                     for p in release_folder.glob('[0-9]*.md') if p.stem.isdigit()}
     for filename, body in release_docs.items():
         errors.extend(release_errors(filename, body))
@@ -357,7 +349,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
         if gap_id in gap_ids:
             errors.append(f'duplicate gap ID: {gap_id}')
         gap_ids.add(gap_id)
-        text = file.read_text(encoding='utf-8')
+        text = read(root, file.relative_to(root))
         if not text.startswith(f'# {gap_id} —'):
             errors.append(f'{file.name}: title must start with gap ID')
         for field in ['**Applies to:**', '**Assessment:**', '## Desired state', '## Current state', '## Gap', '## Closure evidence', '## Sources and reassessment']:
@@ -368,7 +360,7 @@ def check(root: Path) -> tuple[list[str], list[str]]:
             parse_gap_relationships(applies)
         except ValueError as exc:
             errors.append(f'{file.name}: {exc}')
-        plan_texts = {p.parent.name: p.read_text(encoding='utf-8') for p in (root / 'plans').glob('*/plan.md')}
+        plan_texts = {p.parent.name: read(root, p.relative_to(root)) for p in (root / 'plans').glob('*/plan.md')}
         errors.extend(route_issues(file.name, gap_id, text, plan_texts))
 
     for plan in sorted(actual):

@@ -5,13 +5,13 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
 from pathlib import Path
 from urllib.parse import quote
 
 from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
 from gap_relationships import parse_gap_relationships
 from project_contract import plan_gap_ids
+from records import git_output, heading as record_heading, section as record_section
 from vision_subject import parse_subject, render_subject_markdown
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"
@@ -24,19 +24,11 @@ REVISION = re.compile(r"^[a-f0-9]{40}$", re.I)
 
 
 def heading(text: str, prefix: str = "# ") -> str:
-    match = re.search(rf"^{re.escape(prefix)}(.+)$", text, re.M)
-    if not match:
-        raise ValueError(f"missing heading: {prefix}")
-    return match.group(1).strip()
+    return record_heading(text, prefix, missing="error") or ""
 
 
 def section(text: str, title: str) -> str:
-    match = re.search(rf"^## {re.escape(title)}\s*$", text, re.M)
-    if not match:
-        raise ValueError(f"missing section: {title}")
-    tail = text[match.end():]
-    next_section = re.search(r"^## ", tail, re.M)
-    return tail[:next_section.start()].strip() if next_section else tail.strip()
+    return record_section(text, title, missing="error", boundary=r"^## ", strip=True) or ""
 
 
 def slug(text: str) -> str:
@@ -305,22 +297,20 @@ def main() -> int:
     parser.add_argument("--output", type=Path, help="optional JSON output; omit for validation only")
     parser.add_argument("--sync-readme", action="store_true", help="regenerate vision/README.md from canonical sources")
     args = parser.parse_args()
-    revision = args.revision or subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
-    ).strip()
+    revision = args.revision or git_output(ROOT, "rev-parse", "HEAD").strip()
     try:
         result = build(ROOT, revision)
         expected_readme = render_readme(ROOT, result)
         readme = ROOT / "vision/README.md"
         root_readme = ROOT / "README.md"
-        root_text = root_readme.read_text(encoding="utf-8")
+        root_text = read(ROOT, Path("README.md"))
         expected_root_text = render_root_readme(root_text, result)
         if args.sync_readme:
             readme.write_text(expected_readme, encoding="utf-8")
             if root_text != expected_root_text:
                 root_readme.write_text(expected_root_text, encoding="utf-8")
         else:
-            if readme.read_text(encoding="utf-8") != expected_readme:
+            if read(ROOT, Path("vision/README.md")) != expected_readme:
                 raise ValueError("vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme")
             if root_text != expected_root_text:
                 raise ValueError("README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme")
