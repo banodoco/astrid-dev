@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parent.parent
 def main(argv=None, *, root=ROOT, registry=None):
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser("list", help="List checks and their triggers")
+    commands.add_parser("list", help="List each check's id, trigger and description")
     commands.add_parser("sync", help="Regenerate every declared view")
     check = commands.add_parser("check", help="Run applicable checks")
     check.add_argument("--base")
