@@ -2,13 +2,13 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-11 22:25 UTC)
+## NOW (2026-11-11 22:35 UTC)
 
-- **Rehearsal head:** Agent `scratch/r13-rehearsal` `4ca9cdbf8c16017063de2cad83533cbef812f0d3`, which is Release 12 candidate `c5370a86` + generation candidate `1439ccc6` (G5 ruling) + g1-wait-wording + g2-launchers + g3-graph-facts + tool-catalog + g4-pins-2 + g3-receipt + the staged-recipe read fix.
+- **Rehearsal head:** Agent `scratch/r13-rehearsal` `0560e34d06269d058056e6ee4087c5ec9d544bd7`, which is Release 12 candidate `c5370a86` + generation candidate `1439ccc6` (G5 ruling) + g1-wait-wording + g2-launchers + g3-graph-facts + tool-catalog + g4-pins-2 + g3-receipt + the staged-recipe read fix + the removed-name cleanup.
 - **Running:**
   - G3 slice 3, the bundle, redactor and collect-before-reset (`r13/g3-bundle`).
   - Generated-output swap-then-commit (`r13/task-handle-swap`).
-  - Removed-name cleanup, on the rehearsal.
+  - Merging the four ready branches into the rehearsal, one at a time, with ruff and focused proof after each.
   - G4 review follow-ups (`r13/g4-followups`).
   - The `test_generation_preparation[datacenter]` hang diagnosis (`r13/prep-hang`).
   - Rehearsal CI run 43102625660 on `246cad0f`.
@@ -17,7 +17,7 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - `r13/update-inputs` `86889894`.
   - `r13/test-runpod-guard` `a9e1f2c0`.
   - `r13/ruff-debt` `1702f244`.
-  - Waiting on the removed-name cleanup to land first. After every merge: `make ruff` (exact count 2128) and focused proof against `c5370a86`.
+  - Being merged now. After every merge: `make ruff` (exact count 2128) and focused proof against `c5370a86`.
 - **Blocked:** nothing outside the preconditions below.
 - **Preconditions for paid work:**
   - (a) Receipt, bundle and collect-before-reset in the build: building.
@@ -58,3 +58,4 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 - **2026-11-11 22:13** Ruff gate: exact total 2128 met by `r13/ruff-debt` `1702f244`. The net-new BLE001 sites were left as they are because changing them would change behaviour. Re-run `make ruff` after every merge.
 - **2026-11-11 22:20** Broad-except sort: 59 net-new sites (a 12, b 42, c 5). The five (c) sites (`machine_run.py:148`, `machine.py:608`, `target_selection.py:674`, `720`, `795`) and adding `PaidSelectionError`, `OfferObservationError`, `CapacityExhaustedError` and `CapacityWaitTimeout` to `failure_diagnostics.EXCEPTIONS` block the first paid run. Use receipt-only cause markers, not `gate=`. The 54 (a)/(b) sites go to a Plan 39 review. `machine.py:1167` and `1217` join the bundle review range.
 - **2026-11-11 22:22** Generated-output swap-then-commit (handed over from Release 12) is in Release 13's done criteria. On completion, notify Release 12 so their named exception (expires 2026-11-25) comes out.
+- **2026-11-11 22:35** Removed-name cleanup on the rehearsal (`0560e34d`): seven hits renamed or removed with no behaviour change. Five were Release 12 leftovers (`comfy_wrap`, deleted by Plan 32 `a45dd06c`); two were missed generation renames. `test_one_engine` passes. Thirteen other failures in the eight focused files are unchanged; ruling them against Release 12 waits for the rehearsal CI comparison.
