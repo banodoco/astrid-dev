@@ -7,7 +7,7 @@ This is a progress snapshot, not a gate or freeze. Full history and acceptance c
 | Label | Exact ref or evidence | State and next action |
 |---|---|---|
 | P40-T9 | Agent `plan40/staging-int40` `d8931c281cf705273c3c7c01346b6f2722733cca` | Accepted focused handoff. |
-| B5 | Agent `release12/gen-candidate` `1439ccc63bf8d9ed5422ac1f95ffdd6158560e1e` | Pushed WIP, **not B-CANDIDATE**. Reviewed error-contract handoff integrated; focused merge-head checks passed. H3 disposition and remaining required proof remain open. |
+| B5 | Agent `release12/gen-candidate` `1439ccc63bf8d9ed5422ac1f95ffdd6158560e1e` | Pushed WIP, **not B-CANDIDATE**. Reviewed error-contract handoff integrated; [focused merge-head receipt](../../plans/32-generation-placement-targets/evidence/release12-b5-focused-cpu.md) records the checks and Runtime-import rerun. H3 disposition and remaining required proof remain open. |
 | R12-F2 | Agent handoff `plan32/r12-error-contract` `e1731b9e4e86638e6425cf5601160e32be683a72`; Runtime `handoff/r12-self-observe` `8b312c4b29bbb4fef5ac0849188678fe356b9e84` | Provisional pair; reviewed, focused checks and installed no-claim attachment/refusal checks passed. Runtime pin remains subject to freeze coordination. |
 | Diagnostic App | App `handoff/r12-provisional-tts-e173` `c1dd6104df78f2849404ab1261d1ff628872aa54` | Provisional diagnostic handoff only; not a final App or release tuple. |
 | Retention repair | Agent `handoff/r12-retention-fingerprint` `6dbe7f9aefc7d2ee6004787c5fe269644fcf9a49` | Pushed, divergent and unaccepted WIP; focused safety controls remain incomplete. |
