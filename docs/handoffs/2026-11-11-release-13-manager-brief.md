@@ -16,7 +16,9 @@ Make the generation path one that can be run and debugged without confusion, the
 
 ## How to work
 
-- **You manage; sub-agents do.** Start each task on the cheapest model that could plausibly do it and escalate one step only on evidence. A worker brief names one outcome, the exact repository, branch and files, what "done" looks like, and what to return.
+- **You manage; sub-agents do.** Give every task to a sub-agent.
+- **Judge difficulty first, then pick the model.** Before delegating, decide how hard the task is. Plain fact-finding, reading and running a named check go to Haiku. Everything else starts on Sonnet unless it is clearly very hard (deep design, a subtle cross-cutting bug), which starts on Opus. Escalate one step only when the work comes back wrong for a reason a better brief would not fix, and hand the next model the previous attempt's diff, raw output and best guess.
+- A worker brief names one outcome, the exact repository, branch and files, what "done" looks like, and what to return.
 - **Verify before you document.** G1's commands, flags and GPU display names must be read from the code at the candidate, not copied from a handoff. The handoffs' example commands use GPUs the owner has since ruled out.
 - **Check diffs and output, not summaries.** Rule on every finding within the hour.
 - **Iterate freely** on CPU. Keep raw logs. Never weaken a check.
@@ -33,7 +35,7 @@ Make the generation path one that can be run and debugged without confusion, the
 
 ## What comes to the orchestrator
 
-A direct message with a recommendation for: any decision that is Hannah's (H10, H11 and H12 are already open), the G5 attach-design choice with its evidence, and any blocker you cannot clear in half a day. The orchestrator checks in about every three hours and tells you when Release 12 is published and on which SHAs.
+A direct message with a recommendation for: any decision that is Hannah's (H10, H11 and H12 are already open), the G5 attach-design choice with its evidence, and any big blocker or strategic question: something you are stuck on, a choice between approaches, or doubt about whether a task is still worth doing. Ask early and carry on with other work while you wait. The orchestrator checks in about every three hours and tells you when Release 12 is published and on which SHAs.
 
 ## Limits
 

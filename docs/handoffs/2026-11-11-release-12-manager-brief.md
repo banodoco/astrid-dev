@@ -8,7 +8,8 @@ Get the fixes-only release green and frozen as fast as honest work allows. Read,
 
 ## How to work
 
-- **You manage; sub-agents do.** Give every task to a sub-agent. Start on the cheapest model that could plausibly do it and escalate one step only when the work comes back wrong for a reason a better brief would not fix. Hand the next model the previous attempt's diff, raw output and best guess.
+- **You manage; sub-agents do.** Give every task to a sub-agent.
+- **Judge difficulty first, then pick the model.** Before delegating, decide how hard the task is. Plain fact-finding, reading and running a named check go to Haiku. Everything else starts on Sonnet unless it is clearly very hard (deep design, a subtle cross-cutting bug), which starts on Opus. Escalate one step only when the work comes back wrong for a reason a better brief would not fix, and hand the next model the previous attempt's diff, raw output and best guess.
 - **A good worker brief has four things:** one outcome, the exact repository, branch and files or test selectors, what "done" looks like (the command and its expected result), and what to return (commit SHA, command, pass or fail tail). A worker starts with no context: say what is already known and what is ruled out.
 - **Run T1, T2, T3 and T4 in parallel from the start.** T4 (Direct Journey) is the longest pole and the least understood; put your best attention there.
 - **Check diffs and output, not summaries.** A worker's "fixed" is a claim until you have seen the test pass on its commit.
@@ -22,7 +23,7 @@ Send a direct message, with a recommendation, for exactly these:
 
 1. A decision that changes what a user sees or does. One is already open: **H9**, whether the App may settle its in-flight requests before navigating. Design T4 on the assumption it is approved, but do not merge that change until the orchestrator confirms.
 2. `A-FROZEN` and `GATE-GREEN`, with full SHAs and run links.
-3. A blocker you cannot clear in half a day. Say what you tried and what you would do next.
+3. Any big blocker or strategic question: something you are stuck on, a choice between approaches, or doubt about whether a task is still worth doing. Ask early, say what you tried and what you would do next, and carry on with other work while you wait.
 
 The orchestrator checks in about every three hours and runs the candidate review itself when you announce the candidate (T5). Do not wait on it for anything else.
 

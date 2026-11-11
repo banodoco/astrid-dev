@@ -19,7 +19,7 @@ Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claud
 
 ### Cheapest model first
 
-Start every delegated task on the cheapest model that could plausibly do it, and move up only on evidence. A task with no route tag is `N`.
+Judge a task's difficulty before delegating it, start it on the cheapest model that can plausibly do it at that difficulty, and move up only on evidence. A task with no route tag is `N`. A release brief may set a different starting model for its run (for example, a mid-tier default for everything that is not plain fact-finding); follow the brief.
 
 - **Start at `N`.** Fact-finding, reading, running checks, mechanical edits, and most fixes whose failing test and likely cause are already named go to `N`. Give the worker one bounded outcome, the exact files or selectors, and the proof you expect back.
 - **Escalate one step at a time, on a stated reason.** Move `N` to `X` after two misses or 20 minutes without progress, or when the returned work is wrong in a way a better brief would not fix. Move `X` to `S` on the same test. Before escalating, ask whether the brief was the problem: a vague brief fails on every model.
