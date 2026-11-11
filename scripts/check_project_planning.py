@@ -87,11 +87,13 @@ def changed_projects(base: str, root: Path) -> set[str]:
 
     if git("cat-file", "-e", f"{base}^{{commit}}").returncode:
         raise ValueError(f"base revision {base!r} is unavailable")
-    changed = git("diff", "--name-only", base, "HEAD", "--", "plans/")
+    changed = git("diff", "--name-only", base, "--", "plans/")
     if changed.returncode:
         raise ValueError(f"can't compare project changes: {changed.stderr.strip()}")
+    untracked = git("ls-files", "--others", "--exclude-standard", "--", "plans/")
+    paths = set(changed.stdout.splitlines()) | set(untracked.stdout.splitlines())
     selected = set()
-    for name in set(path for path in changed.stdout.splitlines() if PLAN.fullmatch(path)):
+    for name in set(path for path in paths if PLAN.fullmatch(path)):
         match = PLAN.fullmatch(name)
         project = match.group(1)
         path = root / "plans" / project / "inputs.md"
@@ -108,24 +110,8 @@ def changed_projects(base: str, root: Path) -> set[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True, help="Fetched PR base commit SHA")
-    args = parser.parse_args()
-    try:
-        names = changed_projects(args.base, ROOT)
-        errors = []
-        for name in sorted(names):
-            errors.extend(validate_pack(name, read_text(ROOT, Path("plans") / name / "inputs.md")))
-    except (ValueError, OSError) as exc:
-        print(f"ERROR project evidence: {exc}")
-        return 1
-    for error in errors:
-        print(f"ERROR {error}")
-    if errors:
-        print("Fix the project decision record in inputs.md; see the Astrid project template.")
-        return 1
-    print(f"Project evidence OK for {len(names)} new or opted-in project(s)")
-    return 0
+    from checks import planning_main
+    return planning_main()
 
 
 if __name__ == "__main__":

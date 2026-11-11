@@ -184,44 +184,8 @@ def check_pr(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True, help="PR base commit SHA or fetched base ref")
-    parser.add_argument("--event", type=Path, help="GitHub pull request event JSON")
-    parser.add_argument("--body-file", type=Path, help="Local PR description")
-    args = parser.parse_args()
-    try:
-        required = affected_gaps(args.base, ROOT)
-        if not required:
-            print("No new or materially redefined gaps; boundary review not required")
-            return 0
-        if args.body_file:
-            body = args.body_file.read_text(encoding="utf-8")
-        elif args.event:
-            body = json.loads(args.event.read_text(encoding="utf-8")).get("pull_request", {}).get("body") or ""
-        else:
-            raise ValueError("gap boundary changes require --event or --body-file")
-        expected_by_gap = {}
-        for gap_id in sorted(required):
-            paths = list((ROOT / "vision/gaps").glob(gap_id + "-*.md"))
-            if len(paths) > 1:
-                raise ValueError(f"{gap_id}: duplicate gap files")
-            if paths:
-                metadata = next((line for line in read_text(ROOT, paths[0].relative_to(ROOT)).splitlines()
-                                 if line.startswith("**Applies to:**")), "")
-                expected_by_gap[gap_id] = parse_gap_relationships(metadata)
-            else:
-                expected_by_gap[gap_id] = None  # a retired gap has no current source mapping
-        issues = check_pr(required, body, expected_by_gap)
-    except (OSError, ValueError) as exc:
-        print(f"ERROR gap boundary gate: {exc}")
-        return 1
-    for issue in issues:
-        print(f"ERROR {issue}")
-    if issues:
-        print("Add a first-principles gap boundary assessment to the PR description; see vision/README.md#assessing-and-changing-gaps")
-        return 1
-    print(f"Gap boundary gate passed for {len(required)} gap(s): {', '.join(sorted(required))}")
-    return 0
+    from checks import boundary_main
+    return boundary_main()
 
 
 if __name__ == "__main__":

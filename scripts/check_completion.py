@@ -166,39 +166,8 @@ def changed_paths(base: str, root: Path) -> set[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True, help="PR base commit SHA (or local base ref)")
-    parser.add_argument("--event", type=Path, help="GitHub PR event JSON")
-    parser.add_argument("--body-file", type=Path, help="PR description Markdown (local test)")
-    args = parser.parse_args()
-    try:
-        before = catalog_at_revision(args.base, ROOT)
-        if before is None:
-            print("SKIP completion transition gate: initial catalog migration")
-            return 0
-        after = read(ROOT, CATALOG)
-        changes = transitions_to_done(before, after)
-        if not changes:
-            print("No new plan completions; completion gate not required")
-            return 0
-        if args.body_file:
-            body = args.body_file.read_text(encoding="utf-8")
-        elif args.event:
-            body = json.loads(args.event.read_text(encoding="utf-8")).get("pull_request", {}).get("body") or ""
-        else:
-            raise ValueError("completion requires --event or --body-file")
-        issues = check_pr(before, after, body, ROOT)
-        issues.extend(strategy_errors(changed_paths(args.base, ROOT)))
-    except (OSError, ValueError) as exc:
-        print(f"ERROR completion gate: {exc}")
-        return 1
-    for issue in issues:
-        print(f"ERROR {issue}")
-    if issues:
-        print("Add a completion assessment to the PR description; see skills/astrid-dev/SKILL.md")
-        return 1
-    print(f"Completion gate passed for {len(changes)} plan(s): {', '.join(changes)}")
-    return 0
+    from checks import completion_main
+    return completion_main()
 
 
 if __name__ == "__main__":
