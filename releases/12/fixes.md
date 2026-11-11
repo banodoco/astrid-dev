@@ -14,7 +14,7 @@ Active P29 brief as of 10 Nov 2026. Follow the shared [operating principles](../
 
 ## Where it stands
 
-Status as of 11 Nov; Track A owns the next actions. Detailed evidence and task history are in the [task record](../../plans/29-update-and-release/tasks.md).
+Status as of 11 Nov; Track A owns the next actions. Detailed evidence and task history are in the [task record](../../plans/29-update-and-release/tasks.md); a [machine takeover note](../../docs/handoffs/2026-11-11-track-a-machine-takeover.md) lists pushed refs and evidence limits.
 
 | Area | Current state and next action |
 |---|---|
