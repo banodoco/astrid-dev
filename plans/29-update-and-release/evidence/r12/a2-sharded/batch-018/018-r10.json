@@ -1,0 +1,126 @@
+{
+  "batch": "018",
+  "side": "r10",
+  "modules": [
+    "tests/core/execution/test_selected_root_map_composition.py",
+    "tests/core/execution/test_target_adapter.py",
+    "tests/core/execution/test_task_scope.py",
+    "tests/core/execution/test_terminal_evidence_transport_f05.py",
+    "tests/core/execution/test_terminal_result.py"
+  ],
+  "pins_and_python": [
+    "72462b04fa036736eb7fc9cb654def5f4ea2158c",
+    "52ec0578963847693a0df758d9bc1d55325f518f",
+    "e2905d068d5851b9c32856d32b8251852a01d6dd",
+    "96360a27a53c4608f780f7b370f747a2aa3c7ca8",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T10:29:18Z",
+  "end_utc": "2026-11-11T10:30:37Z",
+  "exit": 1,
+  "summary": "=================== 3 failed, 17 passed in 75.47s (0:01:15) ====================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_target_adapter.py::test_local_adapter_fences_profile_revision_identity",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_group_with_grandchildren_is_killed_at_teardown",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_kill_escalation_for_term_ignorers",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_cancel_midrun_leaves_nothing",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_leader_exits_before_helper",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_setsid_escapee_is_reported_unresolved_and_not_signalled",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_journal_records_scope_owner_only_and_clears_on_settle",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_startup_kills_recorded_live_group_from_a_crashed_host",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_managed_stdin_eof_waits_for_host_task_tree_cleanup",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_startup_never_signals_a_recorded_pid_now_owned_by_an_unrelated_process",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_failure_forwards_outputs_and_flat_result_and_checks_readback",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_cancel_evidence_carries_complete_fence_and_unknown_stop",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_cancel_replay_reads_durable_result_after_observed_stop_clears_attempt",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_failure_lost_ack_uses_durable_readback_without_replaying",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_failure_retries_same_idempotent_write_if_readback_is_not_yet_visible",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_published_generated_signature_preserves_failure_and_cancellation_wire_evidence",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_receipt_has_explicit_stable_wire_fields[succeeded-True-0-True-settlement0-effect0-None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_receipt_has_explicit_stable_wire_fields[partial-False-cost1-False-None-effect1-error1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_receipt_has_explicit_stable_wire_fields[failed-False-None-False-settlement2-None-error2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_serializer_accepts_standalone_orchestrator_result",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_task_scope.py::test_leader_exits_before_helper - AssertionError: assert 'unresolved' == 'settled'",
+    "FAILED tests/core/execution/test_task_scope.py::test_startup_kills_recorded_live_group_from_a_crashed_host - assert False",
+    "FAILED tests/core/execution/test_task_scope.py::test_managed_stdin_eof_waits_for_host_task_tree_cleanup - assert False"
+  ],
+  "source_log_sha256": "9186a81e3e388623ac93387777d40f5a06fa6129d6a383df9991faaa3ac84475",
+  "source_receipt_sha256": {
+    "start.txt": "587c92606aa2a67ae937f2f2485d954b8481cb73582668e633934becfb63b495",
+    "end.txt": "3ca672229e94bf77a00a097aa9daa3659c5395beb952142330538f5c1c33dc3c",
+    "module.txt": "fee077fc99fbc44a0dcbc6d5e4f22f40b6bcc809e0584dd3b045baef5fa995b5",
+    "pins.txt": "99e5957b6c4308a5af009b44fe97f92335fbf916c03847b98cd0199e5174006e",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "e6a46de2d88ab95145e30849d894c0778fd2890de7b4a3e743ca64f94b5c51fc",
+    "SHA256SUMS": "003ccb2d99c2eb116a26485bd66a988bfaea6015be0dd90cbe74925dfe9eccfa"
+  }
+}
