@@ -18,7 +18,7 @@ A contributor or agent can answer four questions about astrid-dev from one place
 **Committed, in two phases:**
 
 - **Phase 1: one model, one command.** One shared record helper, a registry of checks behind one command, and one standard way to generate a page or a marked region. The existing vision README and root summary move onto it. One rule changes on purpose (PR checks read the working tree, so local and CI agree); every other verdict stays the same and the public feed is byte-identical.
-- **Phase 2: plans define the list.** Status, owner, estimate and waiting-on move into each project's own `plan.md`, and `plans/index.md` becomes a generated view. Priority gets its own small ordered file. The completion gate, review intake and the claim bot read the project file. Project numbers are checked unique.
+- **Phase 2: plans define the list.** Status, owner, estimate and waiting-on move into each project's own `plan.md`, with its catalog name and one-line goal, and `plans/index.md` becomes a generated view. Priority gets its own small ordered file. The completion gate, review intake and the claim bot read the project file. A job on `main` refreshes generated pages, so a PR need not contain them. Project numbers are checked unique.
 
 **Proposed, not committed (owner decision D7):**
 
@@ -38,7 +38,7 @@ Both phases are specified to task level in [tasks.md](tasks.md) at the owner's r
 - No dependencies beyond the Python standard library, and no new file format: fields stay in the two syntaxes the repository already uses.
 - CI still checks structure, links and transitions only. Whether evidence proves a claim stays a reviewer's judgment ([principle 7](../../docs/contribution-design-principles.md)).
 - Product repositories are not changed. The public feed's shape is not changed.
-- Phase 2 moves four header fields in every pack in one change. Nothing else in a pack with a live run (Plans 20, 29, 32 and 40-machine-lifetime-controls today) is touched until its run ends.
+- Phase 2 adds six header lines to every pack in one change (the four moved fields, the catalog name and the goal). Nothing else in any existing pack is touched, and nothing else in a pack with a live run (Plans 20, 29, 32 and 40-machine-lifetime-controls today) until its run ends.
 - The strategy release table stays with [Plan 31](../31-releases-from-astrid-dev/plan.md), which already owns `strategy.md` and the release template.
 
 **Deferred:** generating the strategy release table (Plan 31); a public evidence trail on the vision page ([Plan 44](../44-vision-execution-trail/plan.md) owns it and can consume Phase 4's envelope); moving raw logs out of the repository; allocating project numbers automatically.
@@ -58,16 +58,17 @@ The smallest sound approach is to finish the shared layer those three imply, the
 Phases run in order; each leaves the repository working and is useful if later phases never start. Phase 1 carries most of the value for contributors adding checks or pages; Phase 2 removes the shared file every plan change edits today.
 
 1. **Phase 1** (PM-0 to PM-5t, then one review round, R1). Accepted and authorized.
-2. **Phase 2** (PM-6 to PM-10). Not yet accepted. Changes how a project is claimed and where status is edited, so the migration, the gates that read status and the docs land together.
-3. **One review round** (R) closes the committed scope.
+2. **Phase 2** (PM-10 to C-2). Re-planned on 11 Nov 2026 against the code Phase 1 built and specified ready to dispatch, with Codex doing most of it inside a hosting Claude session; not authorized to run. It changes how a project is claimed and where status is edited, so the migration, the gates and bots that read status, and the docs reach `main` in one PR (C-1), following a written [cut-over order](tasks.md#phase-2-cut-over-order). The renumbering, the extension guide and the refresh job follow as their own small PRs; the refresh job waits for the owner's settings and goes live in C-2 (D16).
+3. **One review stop and two review rounds** close the committed scope: RS1 on the two tests-first contracts before anything is built on them, R2 on the integrated head before the cut-over, and R8 on the refresh job before it goes live.
 4. **Phases 3 and 4** (PM-11a to R4) only if D7 accepts them, each closed by its own review round (R3, R4). Only Phase 3's lifecycle track needs Phase 2; the pack-shape and form tracks need only Phase 1 on `main`, so the owner may take either earlier (D9). Phase 4 needs the form track. The one-line form fix (PM-13h) needs nothing.
 
 **Readiness and constraints:**
 
 - **Release 12** managers depend on the current checks daily. Phase 1 starts now on the owner's go, lands on its integration branch, keeps the old check commands working, and reaches `main` in one PR on the owner's go. Phase 2 waits for Release 12 to publish.
 - **Plan 31** adds its own checker and publisher to the same scripts. Sequence Phase 1 before Plan 31's RL-1a to RL-1c so Plan 31 registers checks and views instead of adding a fourth one-off (owner decision D5). Whichever lands second re-plans its task cards against the other's result.
-- **Phase 2's refresh on `main`** needs `main` protected and a bot identity allowed to commit generated files, the same owner settings Plan 31 and the claim bot already wait on (D3).
-- Open owner decisions D1 to D8 are in [inputs.md](inputs.md#owner-decisions).
+- **Phase 2's refresh on `main`** needs a bot identity allowed to push generated files past `main`'s pull-request rule (owner row O-1, D17). `main` itself is now protected by a ruleset.
+- **A stale PR must fail loudly at the cut-over.** `main` does not require branches to be up to date, so the generated table is laid out so that any open PR still editing a catalog row conflicts and cannot merge (D15).
+- Open owner decisions for Phase 2 are D14 to D17 in [inputs.md](inputs.md#owner-decisions); D8 is open in part.
 
 Tasks, routes, scopes and proofs are in [tasks.md](tasks.md). Recording this plan does not authorize implementation.
 
@@ -96,8 +97,9 @@ Shown on the integrated astrid-dev candidate, with exact SHAs:
 - **Plans define the list:** a PR adding only a valid `plans/NN-name/` folder appears in the generated catalog with no edit to any shared file; two such PRs opened from the same base both merge without conflict.
 - **Gates still bite:** a PR that changes a project's status to `done` in its `plan.md` without a completion assessment fails, exactly as an index edit does today.
 - **Extensible in one place:** adding a new check, a new view and a new project field are each demonstrated as a change to one file plus its test, following `docs/extending.md`.
-- **Negative cases:** a hand edit to a generated file fails; a duplicate project number fails; a claim for another person's handle, or one that changes any other line, is refused.
-- **Unchanged:** the public feed is byte-identical before and after Phase 1, and after Phase 2 differs only by the one renumbered project's id; the App's parser accepts it.
+- **Negative cases:** a hand edit to a generated file fails; a PR opened before the cut-over that edits a catalog row cannot merge; a duplicate project number fails; a claim for another person's handle, or one that changes any other line, is refused.
+- **Refreshed on `main`:** shown in a scratch repository with the same rules, then once on astrid-dev: the job's commit touches only declared generated files, and the feed is published for it.
+- **Unchanged:** the public feed is byte-identical before and after Phase 1, and is byte-identical across Phase 2's cut-over, and afterwards differs only by the one renumbered project's id and link; the App's parser accepts it.
 
 **If Phases 3 and 4 are accepted,** also shown on their integrated candidates:
 
