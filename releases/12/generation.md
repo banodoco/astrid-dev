@@ -1,17 +1,18 @@
 # Release 12, Track B — Generation
 
-## Current state — 11 Nov, 10:43 UTC
+## Current state — 11 Nov, 16:45 UTC
 
 This is a progress snapshot, not a gate or freeze. Full history and acceptance criteria remain below and in the plan task records.
 
 | Label | Exact ref or evidence | State and next action |
 |---|---|---|
 | P40-T9 | Agent `plan40/staging-int40` `d8931c281cf705273c3c7c01346b6f2722733cca` | Accepted focused handoff. |
-| B5 | Agent `release12/gen-candidate` `6a2351d95bb7eabc8b0ff6f988163fe420fcb3d7` | Pushed WIP, **not B-CANDIDATE**. The older `e857a106` record is not the current remote branch head. H3 disposition and required proof remain open. |
-| R12-F2 | Agent `plan32/r12-f2-ready-registration` `d7a38b941cf629f8aef12e7ebe480c4d9e7dfa71`; Runtime `handoff/r12-self-observe` `8b312c4b29bbb4fef5ac0849188678fe356b9e84` | Provisional repair; independent security review complete and focused exact-pair tests passed. Fresh installed no-claim attachment and custody proof remain open. |
-| Diagnostic App | App `handoff/r12-provisional-runtime-schema-d7` `43bad29fc7ed2145fb518911b80697ba2e6effb3` | Provisional only. Its diagnostic VibeComfy override was independently reproduced; installed proof and a new named authorization precede any rental. |
+| B5 | Agent `release12/gen-candidate` `1439ccc63bf8d9ed5422ac1f95ffdd6158560e1e` | Pushed WIP, **not B-CANDIDATE**. Reviewed error-contract handoff integrated; focused merge-head checks passed. H3 disposition and remaining required proof remain open. |
+| R12-F2 | Agent handoff `plan32/r12-error-contract` `e1731b9e4e86638e6425cf5601160e32be683a72`; Runtime `handoff/r12-self-observe` `8b312c4b29bbb4fef5ac0849188678fe356b9e84` | Provisional pair; reviewed, focused checks and installed no-claim attachment/refusal checks passed. Runtime pin remains subject to freeze coordination. |
+| Diagnostic App | App `handoff/r12-provisional-tts-e173` `c1dd6104df78f2849404ab1261d1ff628872aa54` | Provisional diagnostic handoff only; not a final App or release tuple. |
+| Retention repair | Agent `handoff/r12-retention-fingerprint` `6dbe7f9aefc7d2ee6004787c5fe269644fcf9a49` | Pushed, divergent and unaccepted WIP; focused safety controls remain incomplete. |
 | B6 / final tuple | No `A-FROZEN`, `FINAL-B7`, or `FINAL-TUPLE` | Final integration, B8, B9 and final cells await their named inputs. |
-| P34 | Latest recorded census: zero pods; no diagnostic cell completed | Only the orchestrator-authorized TTS diagnostic may be proposed after installed proof, fresh census and spend check. RTX 4090 or RTX 5090 only; retain the shared $25 stop and $1 reserve. |
+| P34 | Final qualification remains open | Follow the named tuple, consent, custody, census and budget rules below. |
 
 [Release 12](../12.md) · [Track A: Fixes](fixes.md) · Reference only: handoffs for [P32](../../plans/32-generation-placement-targets/handoff.md), [P40](../../plans/40-machine-lifetime-controls/handoff.md), [P20](../../plans/20-zero-to-first-image/handoff.md), [P34](../../plans/34-real-gpu-proof/handoff.md)
 
