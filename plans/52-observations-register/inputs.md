@@ -15,7 +15,7 @@
 - **Plan 48** names the record kinds (project, gap, release, ledger entry, review form) and gives one registry for checks and one for generated views ([extending.md](../../docs/extending.md)). A new kind is one reader, one `Check` and one `View`.
 - **Negative finding:** Plans 44, 49 and 51 propose no intake or observation mechanism (read of their plan headers and task indexes only; their full text was not read).
 
-**Approach:** Pending — recommended, not chosen. A second entry-file folder, `observations/`, reusing the ledger's shape and parser, with two fields the ledger lacks: `About` (gaps and plans) and `Outcome` (open, folded, fixed, issue, dropped). Alternatives:
+**Approach:** Pending — recommended, not chosen. A second entry-file folder, `observations/`, reusing the ledger's shape and parser, with two fields the ledger lacks: `About` (gaps and plans) and `Outcome` (open, folded, fixed, issue, dropped). Next: the owner chooses (D1–D6); the advisor critiques. Alternatives:
 
 | Alternative | Why not |
 |---|---|
@@ -24,8 +24,6 @@
 | An observations section in each gap | Many observations bear on no gap or on two. Twenty-two hand-edited public files would conflict in PRs, and a gap would stop reading as an outcome. |
 | Widen the process ledger to product findings | Smallest change, but it mixes two readers: Plan 51 and the orchestrator read the ledger to fix astrid-dev; planners would read observations to scope product work. The ledger is also add-only with `fix` entries, where an observation needs a link forward to a plan task. Kept as D2. |
 | Do nothing; keep run notes | The 12 Nov findings were in three files outside the repository. That is the failure this plan answers. |
-
-Next: the owner chooses; the advisor critiques.
 
 **Challenge:** Pending — Required before greenlight, because the plan changes astrid-dev's own checks ([plan skill](../../skills/astrid-dev-plan/SKILL.md#scale-the-method)). No independent critique has been made. Next: the advisor critiques this draft for what can be removed. The first question to put to it: is the generated page needed, or is `grep "^Outcome: open"` enough until the folder has a hundred files?
 
