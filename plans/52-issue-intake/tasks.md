@@ -21,6 +21,7 @@ Run started 12 Nov 2026 (the `Run start` line in [inputs.md](inputs.md#planning-
 | II-10 The open issues in the product repositories are moved here | owner | II-2, II-8; D1 | GitHub, in the browser | No open issue remains in the four repositories except the ones the owner chose to leave; each moved issue is open on astrid-dev | [ ] |
 | II-11 Both doors proven, with the redirect | N | II-5, II-8; a person for two minutes | astrid-dev's issues on GitHub; `plans/52-issue-intake/evidence/two-doors.md` (new) | The four observations in [details](#ii-11), compared field by field | [ ] |
 | II-12 The first triage, after a planted issue fails to steer it | N, judged by the manager | R; II-5; D7; the owner's go | the scratch repository's issues; astrid-dev's issue labels and comments; `plans/52-issue-intake/evidence/triage-first-run.md` (new) | The planted case and the first real pass in [details](#ii-12) | [ ] |
+| II-13 Every issue has one of six states, each found by one search: labels `backlog` and `planned`, the rules in the Issues section | X | D14; II-2 (labels); II-5 (the section) | the labels on GitHub; the Issues section of `docs/contribution-workflow.md`; one test in `scripts/test_issue_intake.py`; D14 in `inputs.md`; no bot change, no `triaged` label, no timer, no board | `python3 scripts/test_issue_intake.py` passes with the new case; each of the six searches in the section returns a list on GitHub; the word count stays within Plan 52's +200 | [ ] |
 
 No review-stop row: the plan is under five days and the one load-bearing part is covered by R.
 
@@ -43,8 +44,9 @@ Engineering days. A "cheap worker" is a sub-agent on the N route; an "X worker" 
 | II-10 | the owner | all of it, about 20 minutes | — | — |
 | II-11 | a fresh cheap worker, and a person | two minutes | yes | 0.1 |
 | II-12 | the orchestrator, at a check-in; the manager judges | her go | yes | 0.1 |
+| II-13 | the manager, directly (small) | — | yes | 0.1 |
 
-Total 2.45: N 1.2, X 0.95, S 0.2, T 0.1.
+Total 2.55: N 1.2, X 0.95, S 0.2, T 0.1, the manager 0.1.
 
 ## Dispatch notes
 
