@@ -92,9 +92,6 @@ class TitleTests(unittest.TestCase):
 
     def test_type_words_match_the_four_forms(self):
         forms = {t: ROOT / ".github" / "ISSUE_TEMPLATE" / f"{t}.yml" for t in TYPES}
-        missing = [str(p.relative_to(ROOT)) for p in forms.values() if not p.is_file()]
-        if missing:
-            self.skipTest("the forms are not on this branch yet: " + ", ".join(missing))
         for word, path in forms.items():
             text = path.read_text(encoding="utf-8")
             with self.subTest(form=word):
@@ -102,6 +99,29 @@ class TitleTests(unittest.TestCase):
                 labels = re.search(r"^labels:[ \t]*(?:\[([^\]\n]*)\]|\n((?:[ \t]*-[^\n]*\n?)+))", text, re.M)
                 self.assertIsNotNone(labels)
                 self.assertEqual(re.findall(r"[A-Za-z][\w-]*", labels.group(1) or labels.group(2)), [word])
+
+
+class IssuesSectionTests(unittest.TestCase):
+    """The workflow guide's Issues section shows only headings the forms have, and links forms that exist."""
+    def section(self):
+        text = (ROOT / "docs" / "contribution-workflow.md").read_text(encoding="utf-8")
+        match = re.search(r"^## Issues\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+        self.assertIsNotNone(match, "docs/contribution-workflow.md has no '## Issues' section")
+        return match.group(1)
+
+    def test_headings_shown_are_field_labels_of_the_forms_and_links_name_real_forms(self):
+        section = self.section()
+        labels = set()
+        for word in TYPES:
+            labels.update(re.findall(r"^\s+label:[ \t]*(.+?)[ \t]*$",
+                                     (ROOT / ".github" / "ISSUE_TEMPLATE" / f"{word}.yml").read_text(encoding="utf-8"), re.M))
+        shown = re.findall(r"^### (.+?)[ \t]*$", section, re.M)
+        self.assertTrue(shown)
+        self.assertEqual([h for h in shown if h not in labels], [])
+        linked = re.findall(r"\]\(\.\./\.github/ISSUE_TEMPLATE/([\w.-]+)\)", section)
+        self.assertEqual(sorted(linked), sorted(f"{word}.yml" for word in TYPES))
+        for name in linked:
+            self.assertTrue((ROOT / ".github" / "ISSUE_TEMPLATE" / name).is_file(), name)
 
 
 class AboutTests(unittest.TestCase):

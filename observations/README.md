@@ -29,7 +29,7 @@ New evidence is a dated line added under the paragraph. Nothing else is edited o
 |---|---|
 | Something seen in the product, not planned, maybe not certain | here |
 | Friction in astrid-dev itself (a skill, template, check) | the [process ledger](../docs/ledger/README.md) |
-| A failure a user needs recovering from | a [bug issue](../.github/ISSUE_TEMPLATE/bug.md) |
+| A failure a user needs recovering from | a [bug issue](../.github/ISSUE_TEMPLATE/bug.yml) |
 | A finding inside a running project's own scope | a row in that plan's `tasks.md` |
 | A missing outcome that would still matter if today's projects were replaced | a [gap](../vision/README.md) |
 
