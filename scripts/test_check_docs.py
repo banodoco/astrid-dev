@@ -31,7 +31,7 @@ class CatalogTests(unittest.TestCase):
         errors, _ = self.record_errors(status="maybe")
         self.assertEqual(errors, ["plans/01-alpha/plan.md: invalid status 'maybe'; use queued, active, blocked, paused, done or cancelled"])
 
-    def test_terminal_not_before_active(self):
+    def test_terminal_order_is_the_views_job(self):
         errors, paths = self.record_errors(folders={"01-alpha": "done", "02-beta": "queued"},
                                            priority="- 01-alpha\n- 02-beta\n")
         # Terminal grouping is now a view's responsibility, not a refusal.

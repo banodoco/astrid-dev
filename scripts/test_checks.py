@@ -187,6 +187,20 @@ class ProjectCatalogContractTests(unittest.TestCase):
                     self.assertTrue(any(all(part in line for part in fragments) for line in errors), errors)
             self.assertTrue(all("\n" not in line for line in errors))
 
+    def test_catalog_reports_each_malformed_priority_line(self):
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "30-update-everywhere", Records.plan())
+            Records.write(root, "38-one-process-identity", Records.plan())
+            (root / "plans/priority.md").write_text(
+                "# Priority\n## Order\n* 30-update-everywhere\n"
+                "- 38-one-process-identity  (owner: keep high)\n", encoding="utf-8")
+            self.assertEqual(self.errors(root, "plan-catalog"), [
+                "plans/priority.md: invalid line 3 under ## Order; fix it to - <folder-id>",
+                "plans/priority.md: invalid line 4 under ## Order; fix it to - <folder-id>",
+            ])
+
     def test_every_other_documentation_rule_skips_a_bad_record(self):
         from test_records import ProjectRecordTests as Records
         with tempfile.TemporaryDirectory() as directory:
