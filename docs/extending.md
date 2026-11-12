@@ -19,13 +19,17 @@ self.assertEqual(len(registered), 1)
 self.assertEqual(registered[0].trigger, "pr")
 ```
 
-Put the tests for a new check in [`test_checks.py`](../scripts/test_checks.py): a registration test like the one above, one case where the rule passes and one where it fails (build a small temporary tree for each; the neighbouring tests show how), and `python3 scripts/astrid_dev.py list` must show the id. Run:
+Put the tests for a new check in [`test_checks.py`](../scripts/test_checks.py): a registration test like the one above, one case where the rule passes and one where it fails (build a small temporary tree for each and call the registered rule with `checks.Context(root=tree)`; `ProjectCatalogContractTests` in `test_checks.py` is a model), and `python3 scripts/astrid_dev.py list` must show the id. Start the rule with `if not _catalog_ready(context): return []` when it reads plans, so it stays quiet while the catalog itself is broken (a rule that only reads Markdown files needs no gate). Run:
 
 ```sh
 python3 -m unittest discover -s scripts -p "test_checks.py"
 python3 scripts/astrid_dev.py list
 python3 scripts/astrid_dev.py check
+python3 scripts/astrid_dev.py check --base <base commit> --body-file /dev/null
+python3 -m unittest discover -s scripts -p "test_golden.py"
 ```
+
+The oracle `scripts/fixtures/golden.txt` pins what the check list says about every fixture tree. A new check runs on all of them: `git diff --stat <base commit> -- scripts/fixtures/golden.txt` must print nothing unless your card lists the lines it changes.
 
 Registering a check changes a generated page: `docs/checks.md` lists every check with its description. Edit the check's registry entry and description, not the page. Run `python3 scripts/astrid_dev.py sync` and commit the page it writes with your change; `main` also refreshes the page after merge. `sync` shows what it will write, and a generated file in your PR must equal that output. The description is copied into that page word for word, so do not put in it text that your own rule forbids. If your rule lists files, take the list from `git ls-files` run in the repository root, and make it return no error rather than raise when the tree has no `.git`: some tests copy the repository without it. Use the trigger that matches when the rule has enough context: `always` for repository-wide checks; `pr` for checks that need a base, event, or PR body. Return one concise string per problem; the command formats it with the check id.
 
