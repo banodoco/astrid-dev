@@ -21,8 +21,8 @@ TYPE_TITLE = re.compile(r"^\s*(?:(" + "|".join(TYPES) + r")\s*:|\[(bug)\])", re.
 # The section ends at the next heading, a line that is only "---" (the footer a session's
 # GitHub access appends), or the end of the body.
 ABOUT = re.compile(r"^###[ \t]+About[ \t]*\n(.*?)(?=^#{1,6}[ \t]|^---[ \t]*$|\Z)", re.I | re.M | re.S)
-PLAN_ID = re.compile(r"\bPlan\s+(\d{2,})\b", re.I)
-GAP_ID = re.compile(r"\b([A-Z]{1,3}-\d{3})\b")
+PLAN_ID = re.compile(r"\bPlan\s+(\d{2,})\b", re.I | re.A)
+GAP_ID = re.compile(r"\b([A-Z]{1,3}-\d{3})\b", re.A)
 MAX_ABOUT_LABELS = 5
 
 
