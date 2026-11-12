@@ -372,3 +372,7 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
   - LOW: two duplicate alias implementations remain (`_effect_registry.py:319`, `storage.py:231`).
   - Confirmed sound: resolution order for effects matches rendering; an alias never names an absent provider; every schema entry point delegates to the resolver; `{content}` satisfies the full text-card JSON schema.
   - All four go to Codex **Terra** (`cx-afa2`). The recovery command must be proven by a real install into a scratch packs root, and checked by test ID before and after. The fix round's product code is held until a reviewer has read the fix.
+- 2026-11-12 01:01Z — **Boundary fix review (Astra, `abd1886ee`): NO BLOCKER.**
+  - Confirmed: the ratchet's scanner exempts VibeComfy as a core pack, so reading its declaration is a permitted coupling. Discovery's AST is identical to the parent's. `packs/**/*.json` ships in the wheel.
+  - MEDIUM, fixed as `dc87e6230` (my edit, small, product code): a malformed or missing `gpu-capabilities.json` now means no aliases instead of aborting preflight for every capability. Five fault tests and a shipped-file test; 73 passed. It joins the next Astra round together with Terra's `afa2` follow-ups.
+  - LOWs, follow-up: the missing-declaration case is silent; the repo-shape doc describes `local` as ordinary, which predates this.
