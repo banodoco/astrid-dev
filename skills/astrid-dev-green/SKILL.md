@@ -18,7 +18,7 @@ Each single fix is one [Iterate](../astrid-dev-iterate/SKILL.md) card.
 ## Page one
 
 - **Measure before you judge.** A comparison is only as good as its least complete side.
-- **No result is not a pass.** A test job that was cancelled, timed out, stopped in setup, or ran zero tests has **NO-RESULT**. Never count it as green, and never count its tests as missing. A log that omits passes (pytest `-ra`) can show failures but can never show a regression.
+- **No result is not a pass.** A required job that was cancelled, timed out, skipped when it should have run, or stopped in setup has **NO-RESULT**, as does a test job that ran zero tests. Never count it as green, and never count its tests as missing. A log that omits passes (pytest `-ra`) shows its failures, but can never support a complete comparison or a claim of zero regressions.
 - **Diagnose freely; qualify once.** A NON-PROOF run tells you what is there, and never counts for a gate. Only an ordinary run of the exact candidate, with complete reporting, qualifies ([Iterate](../astrid-dev-iterate/SKILL.md#iterate-freely-qualify-once)).
 - **Full suites run on hosted CI** ([where local runs stop](../astrid-dev-shared/run-contract.md#checks-and-failure-repair)).
 
@@ -39,14 +39,14 @@ For each side, and each workflow in scope:
    - an **aggregate** (for example, the Agent's `unit` job only echoes, and reads "skipped" when a shard is cancelled);
    - a **non-test check** (lint, mypy, a build), compared by its own output;
    - an **expected omission**, a job that is meant to be skipped on this trigger.
-   Only test jobs can be NO-RESULT.
+   The kind says what a usable result is: per-test lines for a test job, its own output for a non-test check, and its dependencies' results for an aggregate. Every required job needs one. A required job that is unexpectedly cancelled, skipped or absent is NO-RESULT, and blocks qualification; only an omission the workflow defines for this trigger is exempt, with the reason recorded.
 2. **Fetch the logs** (see [Using GitHub Actions](#using-github-actions)), strip the timestamp prefix, and keep the raw copies.
 3. **Count each test job's tests.** A count far below that job's usual count means a setup break, a collection abort or a hang, even when the job reads "success".
 4. **Find out what is behind each NO-RESULT** with a NON-PROOF run. Change only what stops the run, and keep every marker, selector and lane option:
 
 | Stop | NON-PROOF way through |
 | --- | --- |
-| A step runs past one and a half times its usual time (a hang) | Cancel it; don't wait. Name the test: collect the shard exactly as CI does (the same command, `--splits`, `--group` and `--durations-path`), map the last progress line's characters onto that order, and read the pytest-timeout dumps. Run that test alone on both sides with `-o faulthandler_timeout=300`. A scratch run that leaves out the hanging file changes coverage, and the shards' membership with it. So compare by test id, account for every id of the original inventory, and keep the left-out ids unsorted |
+| A hang ([manage's threshold](../astrid-dev-manage/SKILL.md#steps)) | Cancel it; don't wait. Name the test: collect the shard exactly as CI does (the same command, `--splits`, `--group` and `--durations-path`), map the last progress line's characters onto that order, and read the pytest-timeout dumps. Run that test alone on both sides with `-o faulthandler_timeout=300`. A scratch run that leaves out the hanging file changes coverage, and the shards' membership with it. So compare by test id, account for every id of the original inventory, and keep the left-out ids unsorted |
 | A setup step fails, so no tests run | Fix the setup; it is usually one card. Then run again |
 | A suite stops at its first failure (`-x`, `--maxfail`, a serial chain) | Override only the stop. Append `--maxfail=0` after the job's own options, or run a serial chain one test at a time with an isolating filter |
 | A failing gate skips the job's later steps | Run the skipped steps once on a scratch ref |
@@ -57,7 +57,7 @@ For each side, and each workflow in scope:
    - A commit that leaves tests out is diagnostic, and its left-out tests stay unsorted.
    - The gate's owner rules on any other case, and the ruling is recorded on the row.
 
-**What the sorter reads.** [`env/baseline-diff.py`](../../env/README.md) reads pytest `-rA` summary lines only. App results (Vitest, Playwright) have no adapter yet, so compare them by check name ([release](../astrid-dev-release/SKILL.md)) until one exists.
+**What the sorter reads.** [`env/baseline-diff.py`](../../env/README.md) reads pytest `-rA` summary lines only. App test runners (Vitest, Playwright) report per test, but nothing compares them yet. Until an adapter exists, App per-test qualification is unresolved: say so on the gate, and never stand in a by-name comparison for it.
 
 ## 3A. No new failures
 
@@ -69,7 +69,7 @@ For each side, and each workflow in scope:
    - **Preexisting:** listed only.
    - **Missing:** cleared only by a recorded ruling, either a behaviour removed on purpose, or a rename that keeps the coverage ([the contract's ruling](../astrid-dev-shared/run-contract.md#checks-and-failure-repair)). A deleting commit alone doesn't clear it.
 4. **Find the introducing commit** by bisecting across the candidate's merges, which are named lanes. A failure in files an active lane owns goes to that lane: the test id, the commit, the first error and your best guess.
-5. Re-sort at each load-bearing run. The gate stands on the frozen candidate's qualifying run, with no blocking row left and no test job without a result.
+5. Re-sort at each load-bearing run. The gate stands on the frozen candidate's qualifying run, with no blocking row left and no required job without a usable result.
 
 ## 3B. Retire old red
 
@@ -82,7 +82,7 @@ For each side, and each workflow in scope:
 2. **Cluster by cause, not by file.** The key is the exception type plus the first frame in product code. Rank clusters by the tests a fix would unblock.
 3. **Batch.**
    - One cause is one Iterate card. Run every card whose scope doesn't overlap another's at the same time ([scopes](../astrid-dev-manage/SKILL.md#steps)).
-   - Land several cards per push, and re-sort once per batch.
+   - Land them in batches ([pushes start CI](../astrid-dev-manage/SKILL.md#steps)), and re-sort once per batch.
 4. **Stop patching and spec a project** ([Plan](../astrid-dev-plan/SKILL.md)) when any of these holds:
    - a cause needs a contract or schema decision;
    - a cause spans about ten files or more;
