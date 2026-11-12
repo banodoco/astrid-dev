@@ -31,7 +31,7 @@ Help me choose the smallest useful contribution,
 verify it, and follow the repository's review process.
 ```
 
-Contributing without an agent? See [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributing without an agent? See [CONTRIBUTING.md](CONTRIBUTING.md). Noticed something? [File an issue](docs/contribution-workflow.md#issues).
 
 **Want to use Astrid, rather than develop it?** Start at **[astrid.haus](https://astrid.haus)** (recommended). For manual installation of the local Runtime and agent, follow [Set up Astrid](https://github.com/banodoco/astrid-agent/blob/main/docs/getting-started.md). You don't need to clone `astrid-app` to use the editor.
 

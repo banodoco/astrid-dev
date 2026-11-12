@@ -1,6 +1,0 @@
-Date: 2026-11-12
-Source: Release 13 live and offline runs, 11–12 Nov (smell 9; usability 8; task T10)
-About: F-008; Plan 32
-Outcome: open
-
-On a warm machine the models are unloaded at every job end (Agent `engine_custody.py:1054`, `/api/free`, `_cold_free`), deliberately. The machine stays warm but the engine goes cold: a text-to-image job with no downloads took 6m38s, 4m17s of it on the pod reloading at least 7.3 GB from the volume. F-008's closure evidence says a second job reuses a warm machine; this shows reuse of the machine is not reuse of the loaded engine. Fits Plan 32 T5f.
