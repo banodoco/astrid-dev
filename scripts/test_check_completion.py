@@ -241,6 +241,20 @@ class NoneWithPlaceholderTests(unittest.TestCase):
             with self.subTest(field=field):
                 self.assertEqual(self.issues_for(field, "None — Communication-only project."), [])
 
+    def test_none_with_any_separator_then_a_placeholder_fails(self):
+        for field, _ in self.FIELDS:
+            for separator in ("—", ":", "-"):
+                for word in ("TBD", "todo"):
+                    with self.subTest(field=field, separator=separator, word=word):
+                        self.assertTrue(self.issues_for(field, f"None{separator} {word}"))
+
+    def test_none_with_any_separator_then_a_reason_passes(self):
+        for field, _ in self.FIELDS:
+            for separator in ("—", ":", "-"):
+                with self.subTest(field=field, separator=separator):
+                    self.assertEqual(
+                        self.issues_for(field, f"None{separator} Communication-only project."), [])
+
 
 
 
