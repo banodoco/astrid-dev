@@ -16,6 +16,6 @@ The **handoff between projects** is a contract, not an extra file: name the actu
 
 These are not three long forms. Drafts can state genuine unknowns; a defined scope must cite findings and the decision. The [planning skill](../skills/astrid-dev-plan/SKILL.md) scales scrutiny to actual risk. Existing accepted plans do not require another planning exercise because a different agent joins.
 
-The [catalog](../plans/index.md) is the one authority for project status, priority, owner and estimate. Issues own small fixes and incidents; PRs contain the exact candidate and proof. Completing a project is not automatic evidence that its [vision gap](../vision/README.md) closed.
+A project's status, owner and estimate live in the six lines at the top of its `plan.md`, and its priority in [priority.md](../plans/priority.md); the [catalog](../plans/index.md) is generated from them. Issues own small fixes and incidents; PRs contain the exact candidate and proof. Completing a project is not automatic evidence that its [vision gap](../vision/README.md) closed.
 
 Add supporting designs, evidence or task cards only when several readers or tasks need them independently; [the website project](../plans/21-astrid-website/plan.md) is one example. Do not create empty parallel folder structures or duplicate status ledgers. For source ownership use the [domain map](../skills/astrid-dev/references/domains.md); for run identity, security, checks and reviews use the [shared contract](../skills/astrid-dev-shared/run-contract.md).

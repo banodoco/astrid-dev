@@ -1,5 +1,17 @@
 # Zero-to-first-image onboarding
 
+**Project:** Zero-to-first-image onboarding
+
+**Goal:** One onboarding skill, named at every install entry point (the Agent README and the App's install briefs), takes a person or their agent from the install line to a generated image on the timeline. Setup choices stay visible and changeable on the agent path. The skill uses an existing ComfyUI, installs an engine on a capable machine, or rents RunPod otherwise.
+
+**Status:** active
+
+**Owner:** Plan 20 manager
+
+**Estimate:** 5–6: phase 1 (fast path, live on merge) 1, phase 2 (next App release) 1, phase 3 3–4
+
+**Waiting on:** release 12 published, then the owner's go to merge the Agent `main` group; the App group rides the next App release; the generation group waits on Plan 32 S2, T5d and T6d
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).

@@ -20,19 +20,25 @@ jobs:
           fetch-depth: 0
       - name: Test documentation validators
         run: python3 -m unittest discover -s scripts -p "test_*.py"
-      - name: Validate canonical Markdown and all internal references
-        run: python3 scripts/check_docs.py
-      - name: Validate derived public vision content
-        run: python3 scripts/export_public_vision.py
-      - name: Validate PR contribution evidence
-        if: github.event_name == 'pull_request'
+      - name: Run repository checks
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        if: github.event_name == 'pull_request'
         run: |
           set -e
-          python3 scripts/check_completion.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
-          python3 scripts/check_gap_boundaries.py --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
-          python3 scripts/check_project_planning.py --base "$PR_BASE_SHA"
+          base_sha="$PR_BASE_SHA"
+          if merge_head="$(git rev-parse --verify HEAD^2 2>/dev/null)"; then
+            if [ "$merge_head" != "$PR_HEAD_SHA" ]; then
+              echo "Checked-out merge commit does not match the pull request head." >&2
+              exit 1
+            fi
+            base_sha="$(git rev-parse HEAD^1)"
+          fi
+          PYTHONDONTWRITEBYTECODE=1 python3 scripts/astrid_dev.py check --base "$base_sha" --event "$GITHUB_EVENT_PATH"
+      - name: Run repository checks
+        if: github.event_name != 'pull_request'
+        run: python3 scripts/astrid_dev.py check
 
   vision-consumer-contract:
     # The Dev exporter alone cannot prove Astrid App can render the feed.

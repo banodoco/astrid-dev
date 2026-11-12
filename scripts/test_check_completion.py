@@ -22,9 +22,9 @@ Gap F-003: Partially evidenced — One complete route works, but not all inferen
 """
 
 
-def catalog(status: str) -> str:
-    row = f"| First image | Build a flow | {status} | Owner | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |"
-    return HEADER + "\n" + DIVIDER + "\n" + row + "\n"
+def catalog(status: str) -> dict[str, str]:
+    """The completion gate receives folder-to-status maps, never page text."""
+    return {"20-zero-to-first-image": status}
 
 
 class CompletionGateTests(unittest.TestCase):
@@ -43,7 +43,7 @@ class CompletionGateTests(unittest.TestCase):
         self.assertEqual(transitions_to_done(catalog("queued"), catalog("active")), [])
 
     def test_missing_receipt_fails(self):
-        issues = check_pr(catalog("active"), catalog("done"), "", self.root)
+        issues = check_pr(["20-zero-to-first-image/plan.md"], "", self.root)
         self.assertEqual(len(issues), 1)
         self.assertIn("missing", issues[0])
 
@@ -52,18 +52,18 @@ class CompletionGateTests(unittest.TestCase):
 Evidence: https://github.com/example/repo/actions/runs/123
 Completion: Yes — The plan completion criteria were tested on the reviewed source.
 """
-        issues = check_pr(catalog("active"), catalog("done"), body, self.root)
+        issues = check_pr(["20-zero-to-first-image/plan.md"], body, self.root)
         self.assertTrue(any("F-003" in issue for issue in issues))
 
     def test_valid_assessment_passes(self):
-        self.assertEqual(check_pr(catalog("active"), catalog("done"), RECEIPT, self.root), [])
+        self.assertEqual(check_pr(["20-zero-to-first-image/plan.md"], RECEIPT, self.root), [])
 
     def test_placeholder_evidence_fails(self):
         body = RECEIPT.replace(
             "[real task run](https://github.com/banodoco/astrid-agent/actions/runs/123)",
             "a run happened")
         self.assertTrue(any("Evidence" in error for error in
-                            check_pr(catalog("active"), catalog("done"), body, self.root)))
+                            check_pr(["20-zero-to-first-image/plan.md"], body, self.root)))
 
     def test_future_project_ids_and_concise_reasons(self):
         future = RECEIPT.replace("Plan 20", "Plan 100").replace(
@@ -106,8 +106,11 @@ Routes used: Unknown — Historical run did not record routes.
         self.assertTrue(any("Integrated candidate" in x for x in
                             assess_completion("20-zero-to-first-image/plan.md", PLAN, bad)))
 
-    def test_new_catalog_during_migration_is_not_transition(self):
-        self.assertEqual(check_pr(None, catalog("done"), "", self.root), [])
+    def test_new_done_folder_requires_assessment_without_old_catalog(self):
+        # A new done folder requires an assessment, even without an old catalog.
+        required = transitions_to_done({}, catalog("done"))
+        self.assertEqual(required, ["20-zero-to-first-image/plan.md"])
+        self.assertTrue(any("missing" in error for error in check_pr(required, "", self.root)))
 
     def test_route_use_is_explicit_but_unknown_is_honest(self):
         line = "Routes used: N for the build tasks, S for review.\n"
@@ -131,7 +134,7 @@ Routes used: Unknown — Historical run did not record routes.
         self.assertTrue(any("needs a route" in x for x in check(vague)))
 
     def test_existing_done_is_not_rechecked(self):
-        self.assertEqual(check_pr(catalog("done"), catalog("done"), "", self.root), [])
+        self.assertEqual(check_pr(transitions_to_done(catalog("done"), catalog("done")), "", self.root), [])
 
 
 
@@ -142,6 +145,144 @@ class StrategyGateTests(unittest.TestCase):
 
     def test_completion_with_strategy_update_passes(self):
         self.assertEqual(strategy_errors({"plans/index.md", "strategy.md"}), [])
+
+
+class ProjectStatusTests(unittest.TestCase):
+    def test_working_tree_always_uses_fields_even_with_a_hand_written_catalog(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "20-zero-to-first-image", Records.plan(Status="done"))
+            (root / "plans/index.md").write_text(
+                HEADER + "\n" + DIVIDER + "\n"
+                "| Image | Goal | active | Ada | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n",
+                encoding="utf-8")
+            self.assertEqual(project_statuses(root), {"20-zero-to-first-image": "done"})
+            (root / "plans/index.md").write_text("hand-edited page\n", encoding="utf-8")
+            self.assertEqual(project_statuses(root), {"20-zero-to-first-image": "done"})
+
+    def test_historical_catalog_fallback_only_before_catalog_region_marker(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        for status in ("active", "done"):
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                Records.git(root, "init", "-q")
+                Records.git(root, "config", "user.name", "Contract test")
+                Records.git(root, "config", "user.email", "contract@example.invalid")
+                Records.write(root, "20-zero-to-first-image", PLAN)
+                index = root / "plans/index.md"
+                index.write_text(HEADER + "\n" + DIVIDER + "\n"
+                                 f"| Image | Goal | {status} | Ada | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n",
+                                 encoding="utf-8")
+                Records.git(root, "add", ".")
+                Records.git(root, "commit", "-qm", "old catalog")
+                old = Records.git(root, "rev-parse", "HEAD")
+                # The current generated page is deliberately stale: fields win.
+                Records.write(root, "20-zero-to-first-image", Records.plan(Status="done"))
+                index.write_text("# Hand-written title\n\nDefinitions and edit guidance.\n\n"
+                                 "<!-- plan-catalog:start -->\n"
+                                 "<!-- Generated by Astrid Dev view: plan-catalog; sources: plans/*/plan.md, plans/priority.md. Do not edit. -->\n"
+                                 + HEADER + "\n" + DIVIDER + "\n"
+                                 "| Stale row | Goal | active | Ada | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n"
+                                 "<!-- plan-catalog:end -->\n\nHand-written notes.\n", encoding="utf-8")
+                Records.git(root, "add", ".")
+                Records.git(root, "commit", "-qm", "record catalog")
+                generated = Records.git(root, "rev-parse", "HEAD")
+                before = project_statuses(root, old)
+                self.assertEqual(before, {"20-zero-to-first-image": status})
+                self.assertEqual(transitions_to_done(before, project_statuses(root)),
+                                 [] if status == "done" else ["20-zero-to-first-image/plan.md"])
+                Records.write(root, "20-zero-to-first-image", Records.plan(Status="queued"))
+                self.assertEqual(project_statuses(root, generated), {"20-zero-to-first-image": "done"})
+
+    def test_unreadable_base_status_counts_as_not_done(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.git(root, "init", "-q")
+            Records.git(root, "config", "user.name", "Contract test")
+            Records.git(root, "config", "user.email", "contract@example.invalid")
+            Records.write(root, "20-zero-to-first-image", Records.plan().replace("**Status:** queued\n", ""))
+            # One unreadable record must not discard another project's done status.
+            Records.write(root, "21-existing", Records.plan(Status="done"))
+            (root / "plans/index.md").write_text(
+                "# Hand-written title\n\n<!-- plan-catalog:start -->\n"
+                "<!-- Generated by Astrid Dev view: plan-catalog; sources: plans/*/plan.md, plans/priority.md. Do not edit. -->\n"
+                "<!-- plan-catalog:end -->\n", encoding="utf-8")
+            Records.git(root, "add", ".")
+            Records.git(root, "commit", "-qm", "missing base status")
+            base = Records.git(root, "rev-parse", "HEAD")
+            Records.write(root, "20-zero-to-first-image", Records.plan(Status="done"))
+            self.assertEqual(transitions_to_done(project_statuses(root, base), project_statuses(root)),
+                             ["20-zero-to-first-image/plan.md"])
+
+    def test_unreadable_revision_fails_closed_and_requests_fetch_of_pr_base(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.git(root, "init", "-q")
+            with self.assertRaisesRegex(ValueError, r"(?i)fetch the PR base"):
+                project_statuses(root, "unavailable-base")
+
+    def test_pre_cutover_revision_without_catalog_is_empty_so_done_is_new(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.git(root, "init", "-q")
+            Records.git(root, "config", "user.name", "Contract test")
+            Records.git(root, "config", "user.email", "contract@example.invalid")
+            Records.write(root, "20-zero-to-first-image", Records.plan(Status="done") + PLAN.split("\n\n", 1)[1])
+            # A readable commit without index.md is distinct from a bad revision.
+            Records.git(root, "add", ".")
+            Records.git(root, "commit", "-qm", "before catalog existed")
+            base = Records.git(root, "rev-parse", "HEAD")
+            self.assertFalse((root / "plans/index.md").exists())
+            before = project_statuses(root, base)
+            self.assertEqual(before, {})
+            required = transitions_to_done(before, project_statuses(root))
+            self.assertEqual(required, ["20-zero-to-first-image/plan.md"])
+            self.assertTrue(any("missing '## Completion assessment" in error
+                                for error in check_pr(required, "", root)))
+
+
+class CompletionRecordIntegrationTests(unittest.TestCase):
+    def test_catalog_page_alone_cannot_skip_or_satisfy_completion(self):
+        from unittest.mock import patch
+        import check_completion as gate
+        import checks
+        for before, after, completes in (({"20-zero-to-first-image": "active"}, {"20-zero-to-first-image": "done"}, True),
+                                         ({"20-zero-to-first-image": "done"}, {"20-zero-to-first-image": "done"}, False),
+                                         ({}, {"20-zero-to-first-image": "done"}, True),
+                                         ({"20-zero-to-first-image": "active"}, {"20-zero-to-first-image": "active"}, False)):
+            with self.subTest(before=before, after=after), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                project = root / "plans/20-zero-to-first-image"
+                project.mkdir(parents=True)
+                (project / "plan.md").write_text(PLAN, encoding="utf-8")
+                (root / "plans/index.md").write_text("arbitrary hand edit\n", encoding="utf-8")
+                body = root / "body.txt"
+                body.write_text("", encoding="utf-8")
+                revisions = []
+                def statuses(actual_root, revision=None):
+                    self.assertEqual(actual_root, root)
+                    self.assertIn(revision, (None, "base"))
+                    revisions.append(revision)
+                    return before if revision else after
+                with patch.object(gate, "project_statuses", side_effect=statuses) as reader, \
+                     patch.object(gate, "changed_paths", return_value={"plans/index.md"}):
+                    errors = checks._completion_impl(checks.Context(root, "base", body_file=body))
+                self.assertEqual(reader.call_count, 2)
+                self.assertCountEqual(revisions, ["base", None])
+                if completes:
+                    self.assertTrue(any("missing '## Completion assessment" in error for error in errors), errors)
+                    self.assertIn(gate.strategy_errors({"plans/index.md"})[0], errors)
+                else:
+                    self.assertEqual(errors, [])
 
 
 if __name__ == "__main__":

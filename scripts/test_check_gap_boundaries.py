@@ -51,6 +51,13 @@ Evidence: https://github.com/banodoco/astrid-dev/blob/main/plans/25-cloud-assist
 
 
 class GapBoundaryGateTests(unittest.TestCase):
+    def test_empty_applies_to_does_not_swallow_next_line(self):
+        text = ORIGINAL.replace(
+            "**Applies to:** [Local-first](../principles/local-first-cloud-capable.md) · **Assessment:** Open (evidence under review).",
+            "**Applies to:**\nThe next line must not become the value. **Assessment:** Open (evidence under review).",
+        )
+        self.assertEqual(boundary_signature(text)[1], "")
+
     def test_evidence_only_changes_do_not_require_new_boundary_review(self):
         revised = ORIGINAL.replace("Open (evidence under review)", "Partially evidenced (new tests)")
         revised = revised.replace("No integrated end-to-end remote workflow has been qualified.",

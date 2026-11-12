@@ -1,5 +1,7 @@
 # Codex manager brief (template)
 
+**Not the default.** A Claude session normally manages the run itself and sends each card to a Codex worker ([README](README.md#use-codex-for-the-workers-under-a-claude-manager)). Use this brief only when a Codex manager was chosen, for a reason recorded on the plan's `Run start` line.
+
 Copy this to `<workdir>/run/prompt.md`, fill in every `<…>`, and start the runner with it ([README](README.md)). It is the brief that ran Plan 38's manager, with the project-specific parts taken out. Put model IDs only in the copy, never in this repository.
 
 ---
@@ -27,7 +29,7 @@ Record the IDs in `plans/<NN-name>/.otto/runs/<run-id>/run.yaml`, which is git-i
 | S | <Sol id> |
 | T, and review or judgment | <Astra id> |
 
-You run on <model> at <effort> effort. Send X and S work to sub-agents, and run independent tasks at the same time. Keep fewer sub-agents open than the thread cap, with one slot free for your reviewer.
+You run on <model> at <effort> effort. Send X and S work to sub-agents, and run independent tasks at the same time. **Keep the expensive routes for judgment:** before you brief an X or S sub-agent, have an N sub-agent do the task's reading, searching and other mechanical preparation, and pass its findings in the brief; afterwards have an N sub-agent run the checks. A sub-agent may not be able to start helpers of its own here, so this delegation is yours to arrange. Keep fewer sub-agents open than the thread cap, with one slot free for your reviewer.
 
 ## Timing and branches
 - <What can start now, and what waits for which event. The orchestrator posts that event in `run/to-codex.md`.>
@@ -50,6 +52,6 @@ You run on <model> at <effort> effort. Send X and S work to sub-agents, and run 
 If you're resumed after a restart, rebuild your state from durable records first: the mailbox, `run.yaml`, `tasks.md`, the branches and the worktrees. Check any half-done work before you trust it.
 
 ## Report
-- Keep `tasks.md` current. Push it as an astrid-dev PR that touches only the plan's `tasks.md`, and merge it yourself once `python3 scripts/check_docs.py` passes (manage skill, principle 7): `curl -sS -X PUT https://api.github.com/repos/banodoco/astrid-dev/pulls/<n>/merge -d '{"merge_method":"squash"}'`. Don't post it to the orchestrator. Any astrid-dev PR that touches more than that one file goes to the orchestrator.
+- Keep `tasks.md` current. Push it as an astrid-dev PR that touches only the plan's `tasks.md`, and merge it yourself once `python3 scripts/astrid_dev.py check` passes (manage skill, principle 7): `curl -sS -X PUT https://api.github.com/repos/banodoco/astrid-dev/pulls/<n>/merge -d '{"merge_method":"squash"}'`. Don't post it to the orchestrator. Any astrid-dev PR that touches more than that one file goes to the orchestrator.
 - At each milestone, append a short dated note to the mailbox: what landed and its SHA, what's next, and what's blocked.
 - End with `RUN-STATUS: DONE` (the plan's phase is complete and reviewed), `RUN-STATUS: BLOCKED: <reason>`, or `RUN-STATUS: WAITING`. Before you end, add one astrid-dev process-ledger entry on how the run went and what to change in the skills or the runner.

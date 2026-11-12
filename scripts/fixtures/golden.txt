@@ -1,0 +1,62 @@
+bad-status: plans/99-fixture/plan.md: invalid status 'maybe'; use queued, active, blocked, paused, done or cancelled
+bad-status: public vision content: plans/99-fixture/plan.md: invalid status 'maybe'; use queued, active, blocked, paused, done or cancelled
+broken-local-link: README.md: missing link target vision/missing-page.md
+broken-local-link: public vision content: README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme
+duplicate-project-field: plans/99-fixture/plan.md: Status duplicated; keep one **Status:** line before the first ## heading
+duplicate-project-field: public vision content: plans/99-fixture/plan.md: Status duplicated; keep one **Status:** line before the first ## heading
+final-release-without-payload: releases/12.md: final publication needs a JSON payload
+final-release-without-payload: strategy.md: release 12 highlight differs from its document
+final-release-without-payload: strategy.md: release 12 plan links differ from its document
+final-release-without-payload: strategy.md: release 12 state differs from its document
+ledger-dangling-reference: docs/ledger/2026-11-08-ledger-entry-files.md: Follows names no existing entry: 1900-01-01-missing
+ledger-dangling-resolved-by: docs/ledger/2026-11-08-ledger-entry-files.md: Resolved by names no existing entry: 1900-01-01-missing
+ledger-date-mismatch: docs/ledger/2026-11-08-ledger-entry-files.md: Date must match the file name prefix 2026-11-08
+ledger-invalid-kind: docs/ledger/2026-11-08-ledger-entry-files.md: Kind must be one of fix, idea, issue, papercut
+ledger-invalid-name: docs/ledger/Bad_Name.md: file name must be YYYY-MM-DD-<short-slug>.md
+malformed-ledger-entry: docs/ledger/2026-11-08-ledger-entry-files.md: header must be exactly Date, Kind, Source and Resolved by lines, then a blank line
+missing-gap-section: AA-001-sustained-creative-work.md: missing ## Sources and reassessment
+missing-project-field: plans/99-fixture/plan.md: Status missing; add a **Status:** line before the first ## heading
+missing-project-field: public vision content: plans/99-fixture/plan.md: Status missing; add a **Status:** line before the first ## heading
+obsolete-project-path: docs/project-format.md: obsolete strategy/projects path; use plans/
+priority-unknown-id: plans/priority.md: unknown 98-no-such-folder under ## Order (there is no plans/98-no-such-folder/plan.md); fix the name or delete the line
+priority-unknown-id: public vision content: README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme
+release-included-plans-unlinked: strategy.md: release 12 highlight differs from its document
+release-included-plans-unlinked: strategy.md: release 12 plan links differ from its document
+release-missing-sections-and-plans: releases/12.md: missing or empty ## Approach
+release-missing-sections-and-plans: strategy.md: release 12 highlight differs from its document
+release-missing-sections-and-plans: strategy.md: release 12 plan links differ from its document
+release-no-plan-links: releases/12.md: Included plans must link project plan.md files
+release-no-plan-links: strategy.md: release 12 highlight differs from its document
+release-no-plan-links: strategy.md: release 12 plan links differ from its document
+route-missing-closure-approach: F-008-portable-generation.md: Route to closure needs a non-empty Closure approach section before it
+route-missing-plan: F-008-portable-generation.md: route names missing plan 99-missing-plan
+route-missing-plan: vision/gaps/F-008-portable-generation.md: missing link target ../../plans/99-missing-plan/plan.md
+route-plan-backlink-mismatch: F-008-portable-generation.md: routed plan 32-generation-placement-targets does not name F-008 in its Vision gaps line
+route-plan-backlink-mismatch: plans/32-generation-placement-targets/plan.md: duplicate gap IDs in plan declaration
+route-plan-backlink-mismatch: public vision content: duplicate gap IDs in plan declaration
+route-status-word: F-008-portable-generation.md: route row carries status/ownership word 'active'; the catalog owns it
+stale-plan-catalog: public vision content: README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme
+stale-plan-catalog: view plan-catalog is stale or hand-edited: plans/index.md does not match its sources; edit plans/*/plan.md, plans/priority.md instead, then run python3 scripts/astrid_dev.py sync
+stale-vision-readme: public vision content: vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme
+strategy-highlight-mismatch: strategy.md: release 12 highlight differs from its document
+strategy-highlight-mismatch: strategy.md: release 12 plan links differ from its document
+strategy-highlight-mismatch: strategy.md: releases/13.md has no roadmap row
+strategy-missing-release-document: strategy.md: missing link target releases/99.md
+strategy-missing-release-document: strategy.md: no release document 99.md
+strategy-missing-release-document: strategy.md: releases/12.md has no roadmap row
+strategy-missing-release-document: strategy.md: releases/13.md has no roadmap row
+strategy-missing-section-and-bad-release-link: strategy.md: missing link target releases/999.md12.md
+strategy-missing-section-and-bad-release-link: strategy.md: missing section ## Not now
+strategy-missing-section-and-bad-release-link: strategy.md: release needs a matching link to releases/<N>.md: [Release 12 (draft)](releases/999.md12.md)
+strategy-missing-section-and-bad-release-link: strategy.md: releases/12.md has no roadmap row
+strategy-missing-section-and-bad-release-link: strategy.md: releases/13.md has no roadmap row
+strategy-plan-links-mismatch: strategy.md: release 12 highlight differs from its document
+strategy-plan-links-mismatch: strategy.md: release 12 plan links differ from its document
+strategy-plan-links-mismatch: strategy.md: releases/13.md has no roadmap row
+strategy-release-mismatch: strategy.md: release 12 highlight differs from its document
+strategy-release-mismatch: strategy.md: release 12 plan links differ from its document
+strategy-release-mismatch: strategy.md: release 12 state differs from its document
+strategy-release-mismatch: strategy.md: releases/13.md has no roadmap row
+unnamed-active-owner: active project needs a named accountable owner: Synthetic fixture
+unnamed-active-owner: public vision content: README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme
+unnamed-active-owner: view plan-catalog is stale or hand-edited: plans/index.md does not match its sources; edit plans/*/plan.md, plans/priority.md instead, then run python3 scripts/astrid_dev.py sync
