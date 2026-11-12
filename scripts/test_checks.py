@@ -138,10 +138,6 @@ class RegisteredRuleTests(unittest.TestCase):
             self.assertRegex(output, r"ERROR [^:]+: gap boundary gate: invalid gap relationship or role:")
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ProjectCatalogContractTests(unittest.TestCase):
     def errors(self, root, rule):
         entry = next(entry for entry in checks.REGISTRY if entry.id == rule)
@@ -209,3 +205,5 @@ class ProjectCatalogContractTests(unittest.TestCase):
                     with self.subTest(rule=entry.id):
                         self.assertEqual(entry.run(context), [])
 
+if __name__ == "__main__":
+    unittest.main()

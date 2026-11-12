@@ -164,5 +164,9 @@ def changed_paths(base: str, root: Path) -> set[str]:
 
 
 def project_statuses(root: Path, revision: str | None = None) -> dict[str, str]:
-    """Read folder-to-status records, with the pre-cut-over revision fallback."""
+    """Read statuses, with the historical fallback before catalog regions.
+
+    A missing old catalog yields {}; an unreadable revision raises ValueError
+    telling the caller to fetch the PR base.
+    """
     raise NotImplementedError("PM-6b: project status reader")

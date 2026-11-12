@@ -129,10 +129,6 @@ class GitRecordTests(unittest.TestCase):
                 git_output(Path("."), "rev-parse", "HEAD")
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ProjectRecordTests(unittest.TestCase):
     """Project rows retain the legacy seven-cell shape for existing consumers."""
     FIELDS = ("Project", "Goal", "Status", "Owner", "Estimate", "Waiting on")
@@ -250,3 +246,15 @@ class ProjectRecordTests(unittest.TestCase):
             (root / "plans/priority.md").write_text("## Order\n- 03-gamma\n", encoding="utf-8")
             self.assertEqual([row[0] for row in records.projects(root, revision)], ["Old beta", "Old alpha"])
             self.assertEqual([row[0] for row in records.projects(root)], ["New gamma", "New alpha"])
+
+    def test_projects_invalid_record_raises_value_error_naming_folder(self):
+        import records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write(root, "01-alpha", self.plan().replace("**Status:** queued\n", ""))
+            with self.assertRaisesRegex(ValueError, r"(?is)(?=.*01-alpha)(?=.*Status)(?=.*missing)"):
+                records.projects(root)
+
+
+if __name__ == "__main__":
+    unittest.main()
