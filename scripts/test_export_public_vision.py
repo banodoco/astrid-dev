@@ -5,6 +5,7 @@ import tempfile
 import unittest
 
 from pathlib import Path
+from views import VIEWS, expected
 from export_public_vision import build, rewrite_links, render_root_readme, render_root_summary, canonical_agent_prompt
 
 
@@ -288,26 +289,38 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertNotEqual(actual, render_root_readme(actual, hypothetical))
 
     @staticmethod
-    def root_region(readme):
-        return readme.split("<!-- vision-summary:start -->", 1)[1].split("<!-- vision-summary:end -->", 1)[0]
+    def region(readme, name):
+        return readme.split(f"<!-- {name}:start -->", 1)[1].split(f"<!-- {name}:end -->", 1)[0]
+
+    SENTENCE = ("Astrid pairs an adaptable front end at [astrid.haus](https://astrid.haus) "
+                "with an agent equipped with tools for creative work and open-source AI.")
 
     def test_root_statement_comes_from_the_vision_title(self):
         root = self.fixture_copy()
         intro = root / "vision/intro.md"
         intro.write_text(intro.read_text(encoding="utf-8").replace(
             "collective artistic ambition", "artistic potential", 1), encoding="utf-8")
-        readme = (root / "README.md").read_text(encoding="utf-8")
-        rendered = render_root_readme(readme, build(root, SHA))
+        before = (root / "README.md").read_text(encoding="utf-8")
+        view = next(v for v in VIEWS if v.name == "root-vision-statement")
+        after = expected(view, root)
         statement = "**A tool to unlock the artistic potential of the open-source AI community.**"
-        self.assertIn(statement, self.root_region(rendered))
-        self.assertEqual(rendered.count("A tool to unlock"), 1)
-        self.assertNotIn("collective artistic ambition", rendered)
+        self.assertIn(statement, self.region(after, "vision-statement"))
+        self.assertEqual(after.count("A tool to unlock"), 1)
+        self.assertNotIn("collective artistic ambition", after)
+        outside = lambda text: text.split("<!-- vision-statement:start -->", 1)[0] + text.split("<!-- vision-statement:end -->", 1)[1]
+        self.assertEqual(outside(after), outside(before))
+        self.assertEqual(render_root_readme(after, build(root, SHA)), after)
 
-    def test_root_statement_has_one_home_inside_the_region(self):
+    def test_root_statement_is_its_own_region_and_the_sentence_is_hand_written(self):
         readme = (self.fixture_root / "README.md").read_text(encoding="utf-8")
         statement = f"**{self.page['vision']['title']}.**"
         self.assertEqual(readme.count(statement), 1)
-        self.assertIn(statement, self.root_region(readme))
+        self.assertEqual(self.region(readme, "vision-statement").strip(), statement)
+        self.assertNotIn(statement, self.region(readme, "vision-summary"))
+        self.assertIn(f"<!-- vision-statement:end -->\n\n{self.SENTENCE}\n\n<!-- vision-summary:start -->", readme)
+        self.assertNotIn(self.SENTENCE, self.region(readme, "vision-statement") + self.region(readme, "vision-summary"))
+        view = next(v for v in VIEWS if v.name == "root-vision-statement")
+        self.assertEqual(expected(view, self.fixture_root).count(self.SENTENCE), 1)
 
     def fixture_copy(self):
         """A private copy of the fixture tree that a test may damage."""
