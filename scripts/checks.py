@@ -406,7 +406,7 @@ def _pack_shape(context):
     try:
         return _pack_shape_impl(context)
     except (OSError, ValueError) as exc:
-        return [f"pack shape: {exc}"]
+        return [f"can't check new packs against the templates: {exc}; fix that, then run the check again"]
 
 
 @dataclass(frozen=True)
@@ -453,5 +453,5 @@ REGISTRY: tuple[Check, ...] = (
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
     Check('project-planning-evidence', 'pr', 'Validate planning evidence for new or opted-in projects', _planning),
-    Check('pack-shape', 'pr', 'Validate the shape of new project packs', _pack_shape),
+    Check('pack-shape', 'pr', 'Check that new project packs follow the templates', _pack_shape),
 )

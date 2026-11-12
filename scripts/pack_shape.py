@@ -50,8 +50,8 @@ def _ordered_error(actual: list[str], expected: list[str]) -> str | None:
             cursor = actual.index(item, cursor) + 1
         except ValueError:
             if item in actual:
-                return "template headings out of order"
-            return f"missing template heading '{item}'"
+                return f"heading '## {item}' is out of order; move it to where the template puts it"
+            return f"missing heading '## {item}'; add it where the template puts it"
     return None
 
 
@@ -77,7 +77,7 @@ def shape_errors(folder: str, shape: dict[str, object], root: Path) -> list[str]
         actual = _headings(text)
         message = _ordered_error(actual, required)
         if message:
-            errors.append(f"plans/{folder}/{name}: {message}")
+            errors.append(f"plans/{folder}/{name}: {message}. templates/project/{name} declares the shape of a new pack.")
 
     inputs_path = pack / "inputs.md"
     if inputs_path.is_file():
@@ -92,10 +92,10 @@ def shape_errors(folder: str, shape: dict[str, object], root: Path) -> list[str]
                     cursor = actual_labels.index(label, cursor) + 1
                 except ValueError:
                     if label in actual_labels:
-                        message = "template labels out of order"
+                        message = f"label '**{label}:**' under '## Planning evidence' is out of order; move it to where the template puts it"
                     else:
-                        message = f"template labels not in LABELS: missing '{label}'"
-                    errors.append(f"plans/{folder}/inputs.md: {message}")
+                        message = f"missing label '**{label}:**' under '## Planning evidence'; add it where the template puts it"
+                    errors.append(f"plans/{folder}/inputs.md: {message}. templates/project/inputs.md declares the shape of a new pack.")
                     break
 
     tasks_path = pack / "tasks.md"
@@ -103,9 +103,9 @@ def shape_errors(folder: str, shape: dict[str, object], root: Path) -> list[str]
         header = _first_table_header(read_text(root, Path("plans") / folder / "tasks.md"))
         expected_header = shape["task_header"]
         if header is None:
-            errors.append(f"plans/{folder}/tasks.md: missing first table header")
+            errors.append(f"plans/{folder}/tasks.md: no task table; start the file's first table with the template's header row. templates/project/tasks.md declares the shape of a new pack.")
         elif header != expected_header:
-            errors.append(f"plans/{folder}/tasks.md: first table header differs from template")
+            errors.append(f"plans/{folder}/tasks.md: the first table's header row differs from the template's; copy it exactly. templates/project/tasks.md declares the shape of a new pack.")
 
     return errors
 
