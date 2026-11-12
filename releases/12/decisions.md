@@ -478,3 +478,11 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
     - Agent `a105de3a4`: CI, Lanes and Windows task host journey failed; Chat service passed.
     - Runtime `4f5477cb0`: CI failed.
     - App `3e53462f4`: Tests, E2E and Lanes failed; Dockerfile Check passed.
+- 2026-11-12 05:07Z — **Post-publish runs, partial** (ruled by failing job name against the pre-publish run of the same workflow):
+  - The served-manifest canary [43155773142](https://github.com/banodoco/astrid-app/actions/runs/43155773142) passed.
+  - Passed: App Tests (it failed on old main `3e53462f4`, so this is an improvement), Dockerfile Check, Windows installer, and Agent Chat service.
+  - Same failing jobs as before the push, so nothing new:
+    - App Lanes: `checkout-lanes` and `quick-journey`.
+    - App E2E: the same 6 extension and playwright jobs.
+    - Agent Windows task host journey: both shells.
+  - Still running: Agent CI, Agent Lanes and Runtime CI.
