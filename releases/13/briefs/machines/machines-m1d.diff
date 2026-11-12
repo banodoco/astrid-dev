@@ -1,0 +1,303 @@
+diff --git a/astrid/packs/runpod/adapter.py b/astrid/packs/runpod/adapter.py
+index 9c364615b..206f8af57 100644
+--- a/astrid/packs/runpod/adapter.py
++++ b/astrid/packs/runpod/adapter.py
+@@ -467,7 +467,7 @@ def _claimed_preferences():
+     selection = RunPodSelectionOwner.__new__(RunPodSelectionOwner)
+     selection.path = canonical_claim_path(saved["provider_account_ref"])
+     record = selection._read()
+-    if record is None or record.get("state") != "claimed":
++    if record is None:
+         raise PaidSelectionError("no machine: run `astrid machines claim`")
+     preferences = record.get("claim_preferences")
+     if preferences is None:
+diff --git a/astrid/packs/runpod/generation.py b/astrid/packs/runpod/generation.py
+index e04b78558..51c5cc3d2 100644
+--- a/astrid/packs/runpod/generation.py
++++ b/astrid/packs/runpod/generation.py
+@@ -176,13 +176,15 @@ def prepare_retained_generation(
+         except BaseException as exc:
+             current = lease_owner._read()
+             jobs = (preparation.get("job"), current.get("lease", {}).get("job"))
+-            safe = (not isinstance(exc, CustodyChanged) and "claim" in locals()
++            safe = (lease_owner.clock() < claimed["lease"]["paid_expires_at"]
++                    and not isinstance(exc, CustodyChanged) and "claim" in locals()
+                     and "custody" in preparation and current.get("state") == "claimed"
+                     and current.get("pod_id") == claimed.get("pod_id") == claim.pod_id
+                     and all(job is None or job.get("state") in {"exited", "cancelled"} for job in jobs))
+             if safe:
+                 try:
+-                    safe = claim.ops.exec("true", timeout=10)[0] == 0
++                    safe = (claim.ops.exec("true", timeout=10)[0] == 0
++                            and lease_owner.clock() < claimed["lease"]["paid_expires_at"])
+                 except Exception:  # noqa: BLE001 (unknown transport cannot prove reachability)
+                     safe = False
+             if safe:
+diff --git a/astrid/packs/runpod/worker_owner.py b/astrid/packs/runpod/worker_owner.py
+index 0dc18f4ac..095697aab 100644
+--- a/astrid/packs/runpod/worker_owner.py
++++ b/astrid/packs/runpod/worker_owner.py
+@@ -294,13 +294,25 @@ class RunPodLeaseOwner:
+             if (record is not None and record.get("state") == "claimed"
+                     and lease.get("state") == "idle"
+                     and now < lease["idle_expires_at"] and now < lease["paid_expires_at"]):
+-                self.selection._owned(record, self.selection._recorded_offer(record))
+-                record = self._save(record, {**lease, "owner_epoch": self.epoch})
+-                self._machine_identity = (record["operation_id"], record["pod_id"])
+-                self.started = True
+-                self._arm(record)
+-                return
+-        self.recover()
++                try:
++                    self.selection._owned(record, self.selection._recorded_offer(record))
++                except AcquisitionUnresolvedError:
++                    # Incompatible custody cannot be adopted, but still needs
++                    # the same exact recovery as an interrupted invocation.
++                    pass
++                else:
++                    record = self._save(record, {**lease, "owner_epoch": self.epoch})
++                    self._machine_identity = (record["operation_id"], record["pod_id"])
++                    self.started = True
++                    self._arm(record)
++                    return
++        try:
++            self.recover()
++        except Exception:
++            # release() retains exact custody and arms a retry on failure.
++            # Keep that owner alive in the host instead of cancelling its timer.
++            if self.deadline_timer is None:
++                raise
+ 
+     def _discard_stale_capacity_intent(self, raw: Mapping[str, Any] | None) -> bool:
+         if (raw is not None and raw.get("state") in {"capacity_retry_ready", "capacity_exhausted"}
+@@ -396,12 +408,22 @@ class RunPodLeaseOwner:
+             record = self._read()
+             lease = record.get("lease", {}) if record else {}
+             now = self.clock()
++            if record is not None and record["state"] not in {"claimed", "cleanup_complete"}:
++                machine_id = record.get("pod_id") or record["operation_id"]
++                if record["state"] == "cleanup_pending":
++                    raise PaidSelectionError(
++                        f"machine {machine_id} has an unresolved preparation: "
++                        f"run `astrid machines release {machine_id}`, then claim again"
++                    )
++                raise PaidSelectionError(f"machine {machine_id} is {record['state']}: recovery is pending")
+             if (self.closed or not self.started or record is None or record["state"] != "claimed"
+                     or lease.get("owner_epoch") != self.epoch
+                     or lease.get("state") not in {"idle", "active"}
+                     or now >= lease["paid_expires_at"]
+                     or (lease["state"] == "idle" and now >= lease["idle_expires_at"])):
+-                raise PaidSelectionError("no machine: run `astrid machines claim`")
++                state = (f" (machine {record.get('pod_id')} is {record['state']})"
++                         if record is not None and record["state"] == "cleanup_complete" else "")
++                raise PaidSelectionError("no machine: run `astrid machines claim`" + state)
+             paid = record["paid_limits"]
+             expires = min(lease["paid_expires_at"], _utc(paid["expires_at"]).timestamp())
+             rate = lease["hourly_usd"]
+diff --git a/tests/packs/runpod/test_generation_preparation.py b/tests/packs/runpod/test_generation_preparation.py
+index b44f8df83..02225004e 100644
+--- a/tests/packs/runpod/test_generation_preparation.py
++++ b/tests/packs/runpod/test_generation_preparation.py
+@@ -371,7 +371,7 @@ def test_retained_unknown_detached_start_retains_exact_job_and_a3_reconciles_bef
+     job = record["lease"]["preparation"]["job"]
+     assert record["state"] == "cleanup_pending" and job["state"] == "starting"
+     assert c.pod.cancelled == [job["id"]]
+-    with pytest.raises(Exception, match="no machine: run `astrid machines claim`"):
++    with pytest.raises(Exception, match=r"machine pod-1 has an unresolved preparation: run `astrid machines release pod-1`, then claim again"):
+         request, consent = _request_for_job(c, "retry")
+         c.adapter.prepare(request, consent)
+     assert c.creates == 1 and len(c.pod.job_log) == 1
+@@ -384,6 +384,46 @@ def test_retained_unknown_detached_start_retains_exact_job_and_a3_reconciles_bef
+     assert c.read()["lease"]["preparation"]["job"] == {"id": job["id"], "state": "cancelled"}
+ 
+ 
++def test_claimed_preparation_expiring_during_install_refuses_and_releases_exact_pod(retained):
++    c = retained
++    _claim(c)
++    operation_id = c.read()["operation_id"]
++    pod_id = c.read()["pod_id"]
++    paid_expires_at = c.read()["lease"]["paid_expires_at"]
++    paid_limits = c.read()["paid_limits"]
++    request, consent = _request_for_job(c)
++    original = c.placement.prepare_claimed
++
++    def expires_during_install(*args, **kwargs):
++        assert c.clock() < paid_expires_at
++        result = original(*args, **kwargs)
++        # Change the clock directly so the deadline check runs without firing
++        # the fake timer that would independently start release.
++        c.clock.now = paid_expires_at + 1
++        return result
++
++    c.placement.prepare_claimed = expires_during_install
++    with pytest.raises(PreparedWorkerError, match="preparation consumed its paid lifetime"):
++        c.adapter.prepare(request, consent)
++
++    record = c.read()
++    assert record["operation_id"] == operation_id and record["pod_id"] == pod_id == "pod-1"
++    assert record["state"] == "cleanup_pending"
++    assert record["lease"]["preparation"]["state"] == "unresolved"
++    assert record["paid_limits"] == paid_limits
++    assert len(c.pod.job_log) == 2
++    assert "pod_bootstrap.sh" in c.pod.job_log[0]
++    assert "engines install" in c.pod.job_log[1]
++    assert not any("generate " in command for command in c.pod.job_log)
++    assert c.creates == 1 and c.deletes == []
++
++    c.host.release()
++    assert c.deletes == [pod_id]
++    assert c.read()["operation_id"] == operation_id
++    assert c.read()["pod_id"] == pod_id
++    assert c.read()["state"] == "cleanup_complete"
++
++
+ def test_retained_install_failure_stays_with_a3_and_does_not_replay(retained):
+     c = retained
+     _claim(c)
+diff --git a/tests/packs/runpod/test_job_on_claimed_machine.py b/tests/packs/runpod/test_job_on_claimed_machine.py
+index 6bd20c636..d41da4840 100644
+--- a/tests/packs/runpod/test_job_on_claimed_machine.py
++++ b/tests/packs/runpod/test_job_on_claimed_machine.py
+@@ -253,7 +253,23 @@ def test_missing_claim_preferences_refuses_and_release_reconciles(machine_case,
+     bindings.close()
+ 
+ 
+-def test_restart_reconciles_active_journal_without_adopting_job(machine_case, monkeypatch):
++@pytest.mark.parametrize(
++    ("state", "lease_state", "missing_pod"),
++    [
++        ("claimed", "active", False),
++        ("claimed", "preparing", False),
++        ("release_pending", "releasing", False),
++        ("cleanup_pending", "releasing", False),
++        ("allocated_unverified", "preparing", False),
++        ("allocation_pending", "preparing", False),
++        ("allocation_unknown", "preparing", False),
++        ("allocation_pending", "preparing", True),
++        ("allocation_unknown", "preparing", True),
++        ("allocation_ready", "preparing", True),
++    ],
++)
++def test_restart_reconciles_interrupted_journal_without_adopting_job(
++        machine_case, monkeypatch, state, lease_state, missing_pod):
+     from astrid.core.generation import settings
+     from astrid.packs.runpod import target_selection
+     from astrid.packs.runpod.worker_preparation import write_target_record
+@@ -262,11 +278,16 @@ def test_restart_reconciles_active_journal_without_adopting_job(machine_case, mo
+     claim(c)
+     monkeypatch.setattr(settings, "machine_policy", lambda *args, **kwargs: c.prefs.as_mapping())
+     record = c.read()
+-    record["lease"]["state"] = "active"
++    record["state"] = state
++    record["lease"]["state"] = lease_state
++    if missing_pod:
++        # The original provider pod remains discoverable by exact reconciliation.
++        record["pod_id"] = None
+     write_target_record(c.owner.path, record)
+     monkeypatch.setattr(target_selection, "canonical_claim_path", lambda *args, **kwargs: c.owner.path)
+     c.host.close()
+     bindings, _ = restart_bindings(c, monkeypatch)
++    forbid_allocation(c, monkeypatch)
+     provider = bindings.get(kind="runpod", engine="comfyui",
+                             preferences=c.prefs.as_mapping(), job=True)
+     assert provider.lease_owner.started
+@@ -274,4 +295,99 @@ def test_restart_reconciles_active_journal_without_adopting_job(machine_case, mo
+     assert c.read()["state"] == "cleanup_complete"
+     assert c.read()["pod_id"] == "pod-1"
+     assert c.creates == 1
++    request = job(c)
++    with pytest.raises(Exception) as caught:
++        provider.lease_owner.job_limits(request.invocation_id, request.policy)
++    assert len(str(caught.value).splitlines()) == 1
++    assert "cleanup_complete" in str(caught.value)
++    assert "astrid machines claim" in str(caught.value)
++    bindings.close()
++
++
++@pytest.mark.parametrize("compatibility_field", [
++    "recipe_digest", "model_lock_digest", "runtime_commit", "vibecomfy_commit",
++])
++def test_restart_reconciles_incompatible_idle_claim_without_adopting(
++        machine_case, monkeypatch, compatibility_field):
++    from astrid.core.generation import settings
++    from astrid.packs.runpod import target_selection
++
++    c = machine_case
++    claim(c)
++    original_record = c.read()
++    paid = original_record["paid_limits"]
++    compatibility = dict(c.owner.compatibility)
++    value = compatibility[compatibility_field]
++    compatibility[compatibility_field] = ("sha256:" + "f" * 64 if value.startswith("sha256:") else "f" * 40)
++    c.owner.compatibility = compatibility
++    monkeypatch.setattr(settings, "machine_policy", lambda *args, **kwargs: c.prefs.as_mapping())
++    monkeypatch.setattr(target_selection, "canonical_claim_path", lambda *args, **kwargs: c.owner.path)
++    c.host.close()
++    bindings, _ = restart_bindings(c, monkeypatch)
++    forbid_allocation(c, monkeypatch)
++
++    provider = bindings.get(kind="runpod", engine="comfyui",
++                            preferences=c.prefs.as_mapping(), job=True)
++    request = job(c)
++    with pytest.raises(Exception) as caught:
++        provider.lease_owner.job_limits(request.invocation_id, request.policy)
++    assert len(str(caught.value).splitlines()) == 1
++    assert "cleanup_complete" in str(caught.value)
++    assert "astrid machines claim" in str(caught.value)
++    assert c.read()["paid_limits"] == paid
++    assert c.read()["state"] == "cleanup_complete"
++    assert c.read()["pod_id"] == "pod-1"
++    assert c.creates == 1 and c.deletes == ["pod-1"]
++    bindings.close()
++
++
++def test_restart_recovery_failure_keeps_retry_timer_and_exact_custody(machine_case, monkeypatch):
++    from astrid.core.generation import settings
++    from runpod_lifecycle import api
++    from astrid.packs.runpod import target_selection
++    from astrid.packs.runpod.worker_preparation import write_target_record
++
++    c = machine_case
++    claim(c)
++    original_record = c.read()
++    paid = original_record["paid_limits"]
++    paid_expiry = original_record["lease"]["paid_expires_at"]
++    record = dict(original_record)
++    record["lease"] = {**record["lease"], "state": "active"}
++    write_target_record(c.owner.path, record)
++    monkeypatch.setattr(settings, "machine_policy", lambda *args, **kwargs: c.prefs.as_mapping())
++    monkeypatch.setattr(target_selection, "canonical_claim_path", lambda *args, **kwargs: c.owner.path)
++    c.host.close()
++    terminate = api.terminate_pod
++
++    def fail_before_delete(pod_id, key):
++        raise TimeoutError("fake exact delete unavailable")
++
++    monkeypatch.setattr(api, "terminate_pod", fail_before_delete)
++    bindings, _ = restart_bindings(c, monkeypatch)
++    forbid_allocation(c, monkeypatch)
++    provider = bindings.get(kind="runpod", engine="comfyui",
++                            preferences=c.prefs.as_mapping(), job=True)
++    retry = provider.lease_owner.deadline_timer
++    assert retry is not None
++    assert c.read()["state"] == "cleanup_pending"
++    assert c.deletes == [] and c.creates == 1
++    request = job(c)
++    with pytest.raises(Exception) as caught:
++        provider.lease_owner.job_limits(request.invocation_id, request.policy)
++    assert len(str(caught.value).splitlines()) == 1
++    assert str(caught.value) == (
++        "machine pod-1 has an unresolved preparation: "
++        "run `astrid machines release pod-1`, then claim again"
++    )
++    assert c.read()["paid_limits"] == paid
++    assert c.read()["lease"]["paid_expires_at"] == paid_expiry
++
++    monkeypatch.setattr(api, "terminate_pod", terminate)
++    retry.callback()
++    assert c.read()["state"] == "cleanup_complete"
++    assert c.read()["pod_id"] == "pod-1"
++    assert c.deletes == ["pod-1"] and c.creates == 1
++    assert c.read()["paid_limits"] == paid
++    assert c.read()["lease"]["paid_expires_at"] == paid_expiry
+     bindings.close()
