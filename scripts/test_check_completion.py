@@ -1,4 +1,5 @@
 """Focused, synthetic tests for the plan-completion decision gate."""
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -94,6 +95,48 @@ Unproven: None within the recorded communication deliverable.
 Gap impact: None — It is a communication deliverable, not proof that a gap was closed.
 Routes used: Unknown — Historical run did not record routes.
 """), [])
+
+    def test_completion_form_examples_pass_for_gap_and_enabler(self):
+        form_path = (
+            Path(__file__).resolve().parent.parent
+            / ".github/PULL_REQUEST_TEMPLATE/project-completion.md"
+        )
+        form = form_path.read_text(encoding="utf-8")
+        filled = form.replace("plans/<NN-project-name>/plan.md", "plans/20-zero-to-first-image/plan.md")
+        filled = filled.replace("Plan NN", "Plan 20")
+        examples = {
+            "Evidence": "https://github.com/example/repo/actions/runs/123",
+            "Completion": "Yes — The project meets its stated completion criteria.",
+            "Implementation PRs": "None — No implementation PRs were needed.",
+            "Integrated candidate": "None — The project has no code candidate.",
+            "Routes used": "Unknown — The historical run did not record routes.",
+            "Unproven": "None within the stated project scope.",
+            "Gap impact": "None — This project does not change a vision gap.",
+            "Strategy": "Updated — The project changes its strategy row and sequence.",
+        }
+        for label, example in examples.items():
+            filled, count = re.subn(
+                rf"(?m)^({re.escape(label)}: ).+$",
+                lambda match: match.group(1) + example,
+                filled,
+            )
+            self.assertEqual(count, 1, f"form should contain one {label} label")
+
+        gap_form = re.sub(
+            r"(?m)^Gap F-XXX:.*$",
+            "Gap F-003: Partially evidenced — One route is proven; other routes remain untested.",
+            filled,
+        )
+        self.assertEqual(assess_completion("20-zero-to-first-image/plan.md", PLAN, gap_form), [])
+
+        enabler_form = filled.replace("Plan 20", "Plan 21")
+        enabler_form = re.sub(r"(?m)^Gap F-XXX:.*\n?", "", enabler_form)
+        enabler_form = re.sub(
+            r"(?m)^Gap impact:.*$",
+            "Gap impact: None — This documentation project does not change a vision gap.",
+            enabler_form,
+        )
+        self.assertEqual(assess_completion("21-site/plan.md", ENABLER, enabler_form), [])
 
     def test_completion_requires_cross_repo_review_context(self):
         bad = RECEIPT.replace(
