@@ -148,3 +148,4 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - A permission refusal is logged and routed around within the rules, never worked around.
   - The $40 cap and RTX 4090/5090 only still apply. A pod that isn't ours is noted and never touched.
   - The morning note goes at the top of this file.
+- **2026-11-12 00:40** RULE (from the user). On bugs, issues and strategy, the manager's own judgement wins over a Codex worker's or reviewer's. Codex output is evidence, not a verdict. Each diff and finding is read and judged on its merits before it is committed or acted on. For a genuinely contested call, ask the orchestrator for a second opinion; with no answer in 15 minutes, decide, tag REVIEW, and carry on.
