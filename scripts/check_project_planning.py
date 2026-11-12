@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Mechanically validate decision evidence in new or opted-in project packs.
 
 A PR issue or small fix is NOT a project. Draft project evidence may be pending;
@@ -7,7 +6,6 @@ Human reviewers judge quality, research completeness and proportional challenge.
 """
 from __future__ import annotations
 
-import argparse
 import re
 import subprocess
 from pathlib import Path
@@ -107,12 +105,3 @@ def changed_projects(base: str, root: Path) -> set[str]:
         if previous_plan.returncode != 0 or opted_in:
             selected.add(project)
     return selected
-
-
-def main() -> int:
-    from checks import planning_main
-    return planning_main()
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

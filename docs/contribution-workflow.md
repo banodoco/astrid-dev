@@ -52,7 +52,7 @@ Supporting connections: principle:in-the-creators-control — reason
 Evidence: source URL or exact source SHA
 ```
 
-Use `Supporting connections: None — reason` when appropriate. [CI checks structure and linkage](../scripts/check_gap_boundaries.py), not philosophical merit or actual proof. A reviewer judges overlap, source claims, chosen relationships, and meaningful independent closure. When evidence changes, reassess honestly; don't fabricate a new approval process.
+Use `Supporting connections: None — reason` when appropriate. [CI checks structure and linkage](../scripts/astrid_dev.py), not philosophical merit or actual proof. A reviewer judges overlap, source claims, chosen relationships, and meaningful independent closure. When evidence changes, reassess honestly; don't fabricate a new approval process.
 
 **Each gap file must include** `Applies to` (one primary and only justified supporting relationships), `Assessment` (with dated evidence), **Desired state**, **Current state**, **Gap**, **Closure evidence**, and **Sources and reassessment**. The plan catalog remains the only home for project statuses and ownership.
 
@@ -68,7 +68,7 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 - **Not now:** work not yet assigned to a release, without invented commitments.
 - **Decisions:** dated owner decisions affecting the release sequence, plus `**Last reviewed:**`.
 
-**When it changes:** creating a release draft or changing its highlight/plans updates the strategy summary in the same PR. A project start/completion may change a release's scope or timing, so review the strategy and release files; the completion PR must touch `strategy.md` (`scripts/check_completion.py`). If the catalog's project information differs, fix the catalog, rather than copying status to the release brief. New priorities and scope require the owner's decision; listing work is not authorization to run or publish it.
+**When it changes:** creating a release draft or changing its highlight/plans updates the strategy summary in the same PR. A project start/completion may change a release's scope or timing, so review the strategy and release files; the completion PR must touch `strategy.md` (`python3 scripts/astrid_dev.py check`). If the catalog's project information differs, fix the catalog, rather than copying status to the release brief. New priorities and scope require the owner's decision; listing work is not authorization to run or publish it.
 
 **Safe publishing boundary:** drafts (including future numbered releases) can land on `main` with no complete pins; documentation CI validates their structure. Plan 31 implements a separate fail-closed owner-approved Draft→Final transition with pinned commits, manifest checks and immutable history. A strategy edit must never publish a release. Keep the overview short; the reasoning is in the release file and linked plan/gap documents.
 
