@@ -5,11 +5,12 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 ## NOW (2026-11-11 23:31 UTC, from `date -u`)
 
 - **Money:** RunPod balance $101.68 at 23:31 UTC. Spent ≈ $3.73 of $40 (the $3.41 Release 12 record plus about $0.32 of storage since). STOP new rentals at a balance of $67.41 or below. Census: 0 pods.
-- **Critical path to the first rental (TTS diagnosis), estimate about 00:30 UTC:**
-  1. Isolated install of rehearsal `bf3b6ba7` into `/home/user/wt/install-r13b`. RUNNING (Codex Luna), about 20 min.
-  2. Exact TTS and SFX commands in the runbook. RUNNING (Codex Luna). Then an Astra read-only check against the G1 skill, about 15 min.
-  3. Pins and installer review: CLEARED. `test_pod_install_route.py` gives 15 passed on `r13/g4-followups` `82195616` (local, unpushed). This is a fixture fix and does not change the installed build. Astra will read the follow-ups once the worker pushes.
-  4. Census, then the rental (TTS), then the SFX first-look on the same pod if it is warm and custody is clean, then release, then census.
+- **Critical path to the first rental (TTS diagnosis), as of 00:00 UTC; new estimate about 02:00 UTC:**
+  1. BLOCKER found on the install: the host QUARANTINES the `runpod` and `setup` packs ("Pack does not declare pack_api compatibility"). It loads them from the install's Agent source tree `a/astrid/packs`, outside the bundled root. The capability ledger also lacks `runpod.claim` and `runpod.keep`. No RunPod generation can run on `bf3b6ba7` as installed. Codex Terra is diagnosing and fixing it on `r13/runpod-pack-load`.
+  2. After the fix: merge it into the rehearsal, reinstall install-r13b, start the host from this session with `RUNPOD_API_KEY=proxy-injected`, then `machines setup`.
+  3. Setup choice: the `storage` volume (EUR-NO-1) supports the RTX 5090 only, at $1.19/h secure. The setup call with the volume was refused ("no GPU types offered"), although the same availability probe called directly returns RTX 5090. That needs investigating after the fix. Fallback: ephemeral disk with datacenter any and 4090/5090 (models download on the pod).
+  4. The commands review (Astra) is done. Applied: install-r13b paths, a 5 s SFX fixture, no `keep --for`, a strengthened census (REST and GraphQL, fail on error), and a balance check before each rental.
+  5. Census, then TTS, then SFX on the same pod only if it is the same pod ID, idle, and has 4500 s or more of paid lifetime left; otherwise release, verify, and run SFX cold.
 - **Rehearsal head:** Agent `scratch/r13-rehearsal` `bf3b6ba7`. Contents:
   - Release 12 candidate `c5370a86`, plus generation `1439ccc6` (G5 ruling).
   - G1 wait wording and `availability.message`; G2 launchers; graph-checked failure facts; tool catalog.
@@ -100,3 +101,12 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Fixes: caps are enforced after download; pre-claim discovery fails open.
   - Accepted in full. `49516887d` must not ship. Fixes run on Codex Sol, `r13/g3-bundle-2`, then re-review. This gates every paid run after the first diagnostic. The first TTS diagnostic on `bf3b6ba7` (no bundle) is unaffected.
 - **2026-11-11 23:53** `install-r13b` reinstalled from this namespace (exit 0). The host is up at `http://127.0.0.1:35197`. `generate defaults` is OK; the TTS default is `audio/qwen3_tts_custom_voice` and the SFX default is `audio/hunyuan_video_foley`. Census `[]`. `generate failure` gives "no receipt" as expected.
+- **2026-11-12 00:00** Commands review (i) (Astra): 2 BLOCKERs and 3 FIXes, all accepted.
+  - Missing saved setup, and the host needs the key placeholder. The host was restarted with `RUNPOD_API_KEY=proxy-injected` (verified in its environment).
+  - The census is strengthened: provider REST and GraphQL, failing on error.
+  - The 18 s SFX fixture was cut to 5 s (`inputs/sfx-first-look.mp4`).
+  - `keep --for 30m` was removed, because it would cut the paid lifetime below SFX's 4500 s.
+  - A balance check runs before each rental.
+- **2026-11-12 00:00** **REVIEW** GPU choice for the first diagnostic: with the `storage` volume (EUR-NO-1), only the RTX 5090 is offered, at $1.19/h. I decided on the 5090 alone with `--max-hourly-usd 1.25` (the skill's 5090 row is 1.2). TTS limits come to 4500 s × $1.25/h = $1.56, which is at most $3. If volume setup can't be saved, the fallback is ephemeral disk, datacenter any, 4090/5090 at 1.0/h.
+- **2026-11-12 00:00** BLOCKER: on the bf3b6ba7 install, the pack host quarantines `runpod` and `setup` as external packs without `pack_api`. They are loaded from `versions/*/a/astrid/packs`; the wheel also has them. The capability ledger is missing `runpod.claim` and `runpod.keep`. As a result `machines setup` fails ("could not save preferences": the `runpod.setup` action is unavailable). Codex Terra is diagnosing it on `r13/runpod-pack-load`.
+- **2026-11-12 00:00** G4 follow-up fixes: Codex Luna wrote them; I reviewed and committed them as `r13/g4-followups-2` `54556c6f`. Refusals render only a validated public `https` host and path plus valid revision and version strings, and show `<invalid>` otherwise. Identities are compared after normalising host case and a trailing slash. A legacy-manifest test was added. Tests match baseline. Codex cannot commit: its sandbox makes `.git` read-only even in a standalone clone, so the manager always commits.
