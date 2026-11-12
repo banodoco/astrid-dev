@@ -2,17 +2,17 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (19:10 UTC, hourly check-in)
+## NOW (20:10 UTC, hourly check-in)
 
 | Item | State | Next |
 |---|---|---|
-| 1. Judge fixes | Done: SFX and music in `r13/cells-vc`; TTS `fae4b09b` merged by the orchestrator; follow-up `r13/ttsfix-4` `5123240b` pushed | Hand `r13/ttsfix-4` with the next hand-over |
-| 2. `r13/cells-vc` + pin | VibeComfy `r13/cells-vc` `1463cb8e` (pushed): music, SFX and identity, defaults, preflight marker, recapture, POSIX paths, `--pack-identity-commits`, wan_animate to drafts. Final proof (Luna) running. Agent `r13/cells-vc-pin` `e6c4c811` (to `6aede014`) accepted; bump to `1463cb8e` (Luna) running | Hand both SHAs by 21:30 UTC |
-| 3. Log gaps | Done (orchestrator, `90ae9c31`) | — |
-| 4. Offline preflight gate | `r13/preflight` (Sol, high): gate plus per-cell evidence, CPU environment setup; merged the intermediate pin | Merge the final pin and catalog fix; real run; judge |
-| Catalog inputs | `r13/catalog-inputs` (Sol): 6 commits, final run in progress | Judge; unlist candidates as REVIEW |
+| 1. Judge fixes | Done; TTS follow-up `r13/ttsfix-4` `5123240b` pushed, not yet handed over | With the 21:30 hand-over |
+| 2. `r13/cells-vc` + pin | `1463cb8e` final proof: 0 regressions in the preflight runs, but two failures misfiled by the worker (preflight sync test; four `test_schemas_ensure.py` with no baseline). Fix card (Terra) has 2 commits, proof running. Pin `r13/cells-vc-pin` `9c558ba5` (to `1463cb8e`) accepted, not pushed | Judge the fix; re-pin if `r13/cells-vc` moves; hand over by 21:30 |
+| 3. Log gaps | Done (orchestrator) | — |
+| 4. Gate `r13/preflight` | Sol: gate, per-cell evidence, CPU env, merged both pins and `r13/catalog-fixes`, shared dry-run admission | Real run; judge; hand over by 21:30 |
+| Catalog | `r13/catalog-fixes` `1cca5aab` handed over. Contracts #342 to #344: causes fixed (Agent 0 regressions); VibeComfy LTX finishing card running. #607 with the engine lane | By the cut line, Fri 13 Nov 18:00 UTC |
 
-Heads: Agent `r13/compose` `e489a207`; deadline: hand-over 21:30 UTC tonight if right (publication Sat 14 Nov midday). Spend: none.
+Heads: Agent `r13/compose` `aef8647a`. Spend: none. Cut line Fri 13 Nov 18:00 UTC; publication Sat 14 Nov midday.
 
 ## Entries
 
