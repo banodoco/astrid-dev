@@ -286,3 +286,17 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Likely suspects: the custom node loading models from `ComfyUI/models/TTS` rather than the volume's `extra_model_paths`, or a missing pip dependency (`qwen-tts`).
   - TTS attempt 7 waits for the failure-logs slice (`r13/failure-logs`), so the engine's own error text comes back through the product.
 - **2026-11-12 02:45** GPU t2i diagnostic launched (standard ComfyUI nodes, default entry `qwen-image-2.1-turbo`, 768×768, seed 7; RTX 5090; P1800/E600/I600; cap $1.25). Purpose: prove whether the pipeline works end to end with non-custom nodes. Before-census 0 pods; balance $100.60.
+- **2026-11-12 03:10** GPU t2i diagnostic (`qwen-image-2.1-turbo`): FAIL in execution after 289 s, `integrity_failed`, $0.35 (released `unsafe_job_state`; census 0 pods; balance $100.33; spent ≈ $5.06 of $40). A different error from TTS, and equally undiagnosable from the product. NO further paid cells until declared logs land.
+- **2026-11-12 03:12** DECLARED RUN LOGS (the owner: "should be really simple"; "a generalisable elegant way to declare or segment logs … location/params feeding into task records and tooling"; "you can change vibecomfy too").
+  - I hadn't given Fable that framing before, and my `43993b6f` was a RunPod-specific scrape. That was the wrong shape.
+  - Two Luna explorers mapped VibeComfy and Astrid/Runtime. Fable designed it: `briefs/declared-logs-design.md`.
+    - One `LogDecl(name, role, path, start, end)`, written when a run STARTS; byte offsets slice a shared session log to one run.
+    - The parent assigns the run root, so nothing searches the filesystem.
+    - One stdlib collector.
+    - Logs are ordinary outputs with role `log`. The Runtime already associates outputs on failed tasks and lists them, so there's no schema change.
+    - One command: `astrid tasks logs <task>`.
+  - Explorer finding: VibeComfy itself drops ComfyUI's full `execution_error` message and traceback (an allowlist at `session.py` ~3977-4031). With no redaction, it now keeps them in `attempt.json`.
+  - Dispatched with network ON (sockets, so tests don't hang) and the push URL disabled in both clones:
+    - VibeComfy half (Luna, `c-vc-logs` `r13/declared-logs`);
+    - Astrid half (Terra, `c-logs` `r13/declared-logs`, which replaces my scrape).
+  - The VibeComfy change needs a pin bump in Astrid's `pins.json` and the installer manifest; that's my integration step.
