@@ -317,3 +317,14 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - The four factual claims (engine ring buffer, several `attempt.json` writers, `*.log` truncation at reset, the declaration paths) were all confirmed.
   - Wave 1 dispatched: a1, a6, a7, a9 and vc1 (Luna); a2 (Terra). Wave 2 (a3, a4, a5 Luna; a8 and vc2 Terra) follows the wave-1 merge.
 - **2026-11-12 03:45** Owner: one more Astra check, with Luna helpers, that the declared-logs plan captures all four cases: normal ComfyUI server runs and the pip-installed, embedded or in-process ComfyUI mode, each on RunPod and locally. Two Luna traces (local placement; other ComfyUI modes) feed Astra; any gap becomes a task change or a new task with a difficulty mark. Then the farm-out continues by tier, and finally the live test on the FAILED TTS task (`audio/qwen3_tts_custom_voice`, node 1 `comfy_execution_error`).
+- **2026-11-12 03:58** Four-case coverage check (Astra plus 2 Lunas), with my rulings:
+  - (1) RunPod, normal server, PARTLY: a4 also declares `result.json` (the generation's stdout) as `generation.stdout`.
+  - (2) Local, normal server, PARTLY:
+    - a3 also declares the engine slice before LOCAL preparation;
+    - NEW task `local-streams` (terra) keeps the local job's complete stdout and stderr, where today the host keeps only scrubbed tails;
+    - a6 writes a local failure receipt too.
+  - (3, 4) Embedded / in-process / "pip" ComfyUI: OUT OF SCOPE, with evidence. Astrid has no route to it (`production_engine.py:680` allows only `local_server`; the pod always uses its HTTP endpoint), and no pip-installed ComfyUI recipe exists. If the owner wants it, it's a separate Sol task.
+  - e2e extended for both.
+  - Also: `plan_from_receipt` (`993fd926`; engine_runner 143 passed plus the 2 pre-existing packaged-lock failures; Ruff improved to 2117) and C1 task 2 (`77ebb920`; 4 new tests plus remote_placement and install-verify green) were committed.
+  - The provider gate (Terra) is again NOT implemented: lifecycle's post-delete absence polling also needs gating and drops `Retry-After`. It moves to Sol after the live test; it isn't on the live-TTS path, since the product has released every pod since the first.
+  - The smoke test (Sol) was blocked by my own file exclusions (it needs `failure_receipt.py` and `target_selection.py`). It's deferred; the declared-logs e2e covers the key path.
