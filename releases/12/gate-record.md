@@ -26,19 +26,21 @@ State: DRAFT. Qualifying window started 12 Nov ~01:25Z on the tuple below; resul
 
 Full `journey.yml` matrix, row=direct. All 11 rows must be green, including native Windows.
 
+Run [43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) on harness `harness/29-r12` `1940a2fe11d8b131320dcf1c32dcfb69af288aef` with exactly the frozen tuple. All 11 rows are green, and "Journey evidence (exact tuple)": PASS ("All required scenarios and candidate identity verified"). In the earlier shakedown on `8f1a19086`, direct-linux-fresh once showed only the generic "Astrid updated. Reload to continue." rather than the release-transition line (see Known issues).
+
 | # | Row | Run / result |
 |---:|---|---|
-| 1 | `{{FILL}}` | {{run link}} / {{result}} |
-| 2 | `{{FILL}}` | {{run link}} / {{result}} |
-| 3 | `{{FILL}}` | {{run link}} / {{result}} |
-| 4 | `{{FILL}}` | {{run link}} / {{result}} |
-| 5 | `{{FILL}}` | {{run link}} / {{result}} |
-| 6 | `{{FILL}}` | {{run link}} / {{result}} |
-| 7 | `{{FILL}}` | {{run link}} / {{result}} |
-| 8 | `{{FILL}}` | {{run link}} / {{result}} |
-| 9 | `{{FILL}}` | {{run link}} / {{result}} |
-| 10 | `{{FILL}}` | {{run link}} / {{result}} |
-| 11 | `{{FILL}}` | {{run link}} / {{result}} |
+| 1 | `direct-linux (r0-handoff-then-update)` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 2 | `direct-macos (r0-handoff-then-update)` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 3 | `direct-windows (fresh-install, native)` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 4 | `direct-linux-fresh` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 5 | `direct-macos-fresh` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 6 | `direct-linux-r9-install` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 7 | `direct-macos-r9-install` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 8 | `direct-linux-r11-update` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 9 | `direct-macos-r11-update` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 10 | `direct-linux-autostart-off` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
+| 11 | `direct-macos-autostart-off` | [run 43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) / success |
 
 ### 2. Agent CI
 
@@ -49,8 +51,8 @@ Frozen Agent run: [attempt 2](https://github.com/banodoco/astrid-agent/actions/r
 
 ### 3. App Tests and Direct Journey
 
-- App Tests run link and result/counts: `{{FILL}}`
-- Direct Journey run link and result/counts (0 failures and no skipped tests, except listed expected failures): `{{FILL}}`
+- App Tests: [run 43134514508](https://github.com/banodoco/astrid-app/actions/runs/43134514508) on `237b28be9`: success. vitest (npm test and sdk-boundary), boundary (vendor locks against the pinned Agent and Runtime) and release-tooling-macos all pass.
+- Direct Journey: [run 43134521115](https://github.com/banodoco/astrid-app/actions/runs/43134521115) on `237b28be9`: success. `direct-journey` 45 passed, 0 skipped. `three-products` 14 tests: 10 passed and exactly the 4 listed expected failures failed (P39-R12-EXT-BATCH, P39-R12-VIDEO-DROP, P39-R12-DUP-SHOT, P39-R12-TASK-SWAP); 0 unexpected, 0 flaky, 0 skipped, 0 not run.
 
 Named expected failures (approved by the orchestrator, registry `config/testing/direct-journey-expected-failures.json`):
 
