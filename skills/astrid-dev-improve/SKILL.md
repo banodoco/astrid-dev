@@ -29,7 +29,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Words follow the [glossary](
 
 ## Steps
 
-1. Start from a recorded failure: a process ledger entry or an issue. No failure, no change.
+1. Start from a recorded failure: a process ledger entry, an issue or an accepted card. No failure, no change.
 2. Find the home in the table. Change it and nothing else; replace any copy with a link to the home's heading.
 3. If you add words, cut as many.
 4. Change what a check accepts, or add a check, in a separate, announced change: list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract [bars editing one to get a pass](../astrid-dev-shared/run-contract.md#checks-and-failure-repair).
