@@ -26,8 +26,10 @@ def has_real_reason(value: str) -> bool:
 
 
 def transitions_to_done(before: dict[str, str], after: dict[str, str]) -> list[str]:
+    from lifecycle import requiring
+    completion_statuses = requiring("completion-assessment")
     return sorted(f"{folder}/plan.md" for folder, status in after.items()
-                  if status == "done" and before.get(folder) != "done")
+                  if status in completion_statuses and before.get(folder) != status)
 
 
 def linked_gaps(plan_text: str) -> set[str]:

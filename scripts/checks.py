@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Documentation rules retain the legacy order and skip after a bad catalog.
 def _catalog(context):
-    from check_docs import STATUSES
+    import lifecycle
     from project_contract import PLAN_FOLDER
     from records import project_fields, priority_order, section
     root = context.root
@@ -27,8 +27,8 @@ def _catalog(context):
         folders.add(folder)
         try:
             fields = project_fields(path.read_text(encoding="utf-8"))
-            if fields["Status"] not in STATUSES:
-                errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use queued, active, blocked, paused, done or cancelled")
+            if fields["Status"] not in lifecycle.names():
+                errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use {lifecycle.phrase()}")
         except (ValueError, OSError) as exc:
             errors.append(f"plans/{folder}/plan.md: {exc}")
     priority = root / "plans/priority.md"
