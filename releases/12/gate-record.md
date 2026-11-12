@@ -95,6 +95,11 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 
 Publishing follows the legacy path: Agent main, then Runtime main, then App main. The App merge triggers the Railway production deploy.
 
+**Branch protection and preconditions** (checked 12 Nov ~00:20Z; raw: decision log):
+- `main` on astrid-agent, astrid-runtime and astrid-app reports `protected: false`, with required status checks off and no contexts (unauthenticated `/branches/main`). `/branches/main/protection` returns 404 without admin access, so rulesets could not be read. No CODEOWNERS or settings files exist in any of the three repos.
+- Each push is a fast-forward, which requires the current `main` to be an ancestor of the pushed SHA. Main heads when checked: Agent `a105de3a4852cb61b9647dfe2c920118bd29f272` (R11), Runtime `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f`, App `acfe70e7b56e0efe14ef2bbb977cb8aaa08d1e1a`. App main moved past the `6545f130` cut-off (acfe70e7b, an onboarding tour change at 23:25Z on 11 Nov). It is merged into the candidate, and the orchestrator is asked to hold App main still until publication.
+- Before each push, check: `git merge-base --is-ancestor origin/main <SHA>`. If it fails, stop: main moved again, and the candidate must merge it and requalify.
+
 ### Agent
 
 - Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main c5370a862d0b374afa412dd071418070e76f834c && echo ok`
