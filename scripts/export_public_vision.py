@@ -165,9 +165,13 @@ def build(root: Path, revision: str) -> dict:
         gaps.append(gap)
 
     projects = []
-    for i, row in enumerate(catalog_rows(read(root, CATALOG))):
+    from records import projects as project_records
+    from views import rebase_links
+    for i, row in enumerate(project_records(root)):
         name, goal, status, owner, estimate, waiting, link = row
         plan = Path("plans") / PLAN_LINK.fullmatch(link).group(1)
+        goal = rebase_links(goal, plan.parent, Path("plans"))
+        waiting = rebase_links(waiting, plan.parent, Path("plans"))
         plan_text = read(root, plan)
         linked = plan_gap_ids(plan_text)
         if any(gap not in seen for gap in linked):

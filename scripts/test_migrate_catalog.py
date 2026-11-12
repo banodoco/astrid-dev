@@ -106,6 +106,27 @@ class MigrateCatalogTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'outside migration block'):
             self.migrate()
 
+    def test_verify_rejects_swapped_priority(self):
+        second = self.root / 'plans/02-beta/plan.md'
+        second.parent.mkdir()
+        second.write_text('# Beta\n\n## Goal\n', encoding='utf-8')
+        self.rows.append(['Beta', 'Goal', 'queued', 'Ada', '2', '—', '[Plan 02](02-beta/plan.md)'])
+        for rel, text in self.migrate().items():
+            (self.root / rel).write_text(text, encoding='utf-8')
+        catalog = ('# Catalog\n\n| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |\n'
+                   '|---|---|---|---|---:|---|---|\n' +
+                   ''.join('| ' + ' | '.join(row) + ' |\n' for row in self.rows))
+        (self.root / 'plans/index.md.fixture').write_text(catalog, encoding='utf-8')
+        for folder in ('01-alpha', '02-beta'):
+            path = self.root / 'plans' / folder / 'plan.md'
+            path.with_name('plan.md.fixture').write_text(path.read_text(encoding='utf-8'), encoding='utf-8')
+        priority = self.root / 'plans/priority.md.fixture'
+        priority.write_text('## Order\n- 01-alpha\n- 02-beta\n', encoding='utf-8')
+        args = ['--root', str(self.root), '--from-ref', 'unused', '--suffix', '.fixture', '--verify']
+        self.assertEqual(migrate_catalog.main(args), 0)
+        priority.write_text('## Order\n- 02-beta\n- 01-alpha\n', encoding='utf-8')
+        self.assertEqual(migrate_catalog.main(args), 1)
+
 
 if __name__ == '__main__':
     unittest.main()

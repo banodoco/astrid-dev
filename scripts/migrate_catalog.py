@@ -99,27 +99,40 @@ def migrate(root: Path, rows: list[list[str]], suffix: str | None = None) -> dic
 
 
 def verify(root: Path, rows: list[list[str]], suffix: str | None = None) -> None:
-    """Check that record headers reproduce the source table in its row order."""
-    extension = suffix or ''
+    """Compare the ordered project records with the original catalog."""
+    import tempfile
+    from records import projects
+    from views import rebase_links
+    def read_records(source):
+        actual = projects(source)
+        rebased = []
+        for row in actual:
+            folder = Path(PLAN_LINK.fullmatch(row[6]).group(1)).parent.name
+            rebased.append([rebase_links(value, Path('plans') / folder, Path('plans')) for value in row[:6]] + [row[6]])
+        return rebased
+    if suffix:
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)
+            for path in (root / 'plans').glob('*/plan.md' + suffix):
+                destination = target / 'plans' / path.parent.name / 'plan.md'
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes(path.read_bytes())
+            priority = root / ('plans/priority.md' + suffix)
+            if priority.exists():
+                (target / 'plans/priority.md').write_bytes(priority.read_bytes())
+            actual = read_records(target)
+    else:
+        actual = read_records(root)
+    # The migrated reader normalizes the Plan label to its folder number.
+    expected = []
     for row in rows:
         match = PLAN_LINK.fullmatch(row[6])
         if not match:
             raise ValueError(f'plan cell must be a single plan.md link: {row[6]}')
         folder = Path(match.group(1)).parent.name
-        path = root / 'plans' / folder / ('plan.md' + extension)
-        if not path.is_file():
-            raise ValueError(f'missing plan: {path.relative_to(root).as_posix()}')
-        text = path.read_text(encoding='utf-8')
-        header = text.split('## ', 1)[0]
-        actual: dict[str, str] = {}
-        for line in header.splitlines():
-            found = FIELD_LINE.match(line)
-            if found:
-                name = found.group(1)
-                actual[name] = line[found.end():].strip()
-        for field, catalog_value in zip(FIELDS, row[:6]):
-            if actual.get(field) != _relative(catalog_value, folder):
-                raise ValueError(f'{path.relative_to(root).as_posix()}: {field} does not match catalog')
+        expected.append(row[:6] + [f"[Plan {folder.split('-')[0]}]({folder}/plan.md)"])
+    if actual != expected:
+        raise ValueError('project records or priority order do not match catalog')
 
 
 def main(argv: list[str] | None = None) -> int:
