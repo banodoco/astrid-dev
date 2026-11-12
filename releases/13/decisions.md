@@ -836,3 +836,16 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The issue's 4m17s was a **first** load from the network volume, at about 28 MB/s for 7.3 GB.
   - **Actions:** (1) an engine-lane guard test that a settled task never calls `/free` and `_cold_free` fires only when poisoned; (2) a live check: Stage 2 runs a second t2i straight after the first, and T9's logs should show no reload; (3) a new design item for F-008 / Plan 32, after R13: first-load speed from the network volume (a faster tier, or warming the pod's local NVMe once per pod). Re-scope #595 with this evidence (the owner's call whether to comment on GitHub).
 - **Release docs split** (owner's question about the name): `releases/13/run.md` is the live board (streams, sessions, timeline, status); `decisions.md` is the append-only log; the brief `releases/13.md` Approach now states the current plan and timeline. A release-skill PR making this the standard for every release is drafted for the owner's approval.
+
+## 12 Nov ~19:20 UTC: #595 closed; lint ratchet; catalog D1 and D2
+
+- **#595 closed** as not planned. Nothing unloads models between compatible jobs, and the guard `r13/engine-nofree` `c859bf574` is merged (`r13/compose` `e489a207f`). The real cost is the first load on a fresh pod (7.3 GB at about 28 MB/s), now tracked in astrid-dev#601. The Stage 2 back-to-back t2i is still owed; reopen #595 if it reloads.
+- **Release-skill PR astrid-dev#602,** with the owner's go: brief, run board, decisions log and tests table for multi-lane releases.
+- **Lint gate:** per (file, code) against R12 `0e1543e0`, in CI's gate scope, seeded from R12's own counts. Red until the lanes clear their rows:
+  - machines: 39 ruff + 110 mypy, inside M2, LT and M4;
+  - engine: about 16 ruff + 41–46 mypy, as `r13/engine-lint` after U2;
+  - test lane: 4 + 28.
+  - Evidence: `evidence/tests/lint-per-code/`.
+- **Catalog D1 (paid consent in the dry-run):** the dry run sends exactly the paid stage's command plus `--dry-run`, from one builder shared with the paid stage. The SDK still validates paid controls under dry-run. Tests check that every built command carries `--dry-run` and that a dry run with paid consent makes no provider call.
+- **Catalog D2:** unlist nothing before Stage 2. The 3 failing ratchet cases (`ltx-2.3` t2v and flf, `lava-sr`/`deepfilternet3` `audio_ref`) become strict expected-failures, each with an issue and an expiry at the Fri 18:00 cut line. By then each is fixed or its mode unlisted.
+- **Ownership:** the cells catalog card's 5 lines in `core/generation` are accepted. They land before `r13/engine-lint`.
