@@ -261,6 +261,34 @@ def _markdown_links(context):
     return errors
 
 
+def _link_anchors(context):
+    """A #fragment into a skill, template or top-level doc must name a heading there."""
+    import posixpath
+    from check_docs import LINK, read
+    root, fence = context.root, r"(?ms)^\s*```.*?^\s*```[^\n]*$"
+
+    def anchors(relative):
+        seen, found = {}, set()
+        for title in re.findall(r"(?m)^ {0,3}#{1,6}[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", re.sub(fence, "", read(root, relative))):
+            title = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
+            slug = "".join(c for c in title if c.isalnum() or c in " -_").replace(" ", "-")
+            seen[slug] = seen.get(slug, -1) + 1
+            found.add(slug if seen[slug] == 0 else f"{slug}-{seen[slug]}")
+        return found
+
+    errors = []
+    for path in sorted(p.relative_to(root) for p in root.rglob("*.md") if ".git" not in p.relative_to(root).parts):
+        for hit in LINK.finditer(re.sub(fence, "", read(root, path))):
+            address, _, fragment = hit.group(1).strip().split(' "', 1)[0].strip("<>").partition("#")
+            if not fragment or re.match(r"^([a-z][\w+.-]*:|/)", address, re.I):
+                continue
+            target = posixpath.normpath((path.parent / (address or path.name)).as_posix())
+            if (re.fullmatch(r"(?:skills|templates)/.+\.md|docs/[^/]+\.md", target) and (root / target).is_file()
+                    and fragment not in anchors(Path(target))):
+                errors.append(f"{path.as_posix()}: link to {target}#{fragment} names no heading there; fix the link or restore the heading")
+    return errors
+
+
 def _public_vision(context):
     import export_public_vision
     try:
@@ -422,6 +450,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('obsolete-templates', 'always', 'Validate obsolete templates', _obsolete_templates),
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
+    Check('link-anchors', 'always', 'Validate link fragments into skills, templates and top-level docs', _link_anchors),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
