@@ -1046,3 +1046,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - U2's reason strings land first, plus the host bringing back the pod's engine and supervisor logs on failure. Only one line came back tonight.
   - A CPU reproduction of claim-prepare followed by job-prepare.
   - Then a live rerun, about $0.35.
+
+## 12 Nov ~21:35 UTC: the kept-pod live loop, and how to read its results (advisor)
+
+- **The bisect is narrowed:** the fresh-pod engine-start break is in f9214240..5cca0bca, with the engine-layout merge `913c6b8f` the prime suspect. The engine lane starts its CPU repro there.
+- **Once setup works:** claim one 5090 with `--for 2h` (within the $5 cap) and keep it. Install successive builds with `--update` on the same install, so the claim's journal survives. Release once start is green.
+- **How to read the results:** every attempt after the first runs over a root left by the previous build.
+  - A green on the kept pod is progress, but it must be repeated once on a fresh claim before start counts as fixed.
+  - A red on the kept pod is not evidence against a fix until it also fails on a fresh claim.
+- **After release:** Astrid gives no shell on a rented machine, which is a diagnosis gap (owner O8, "see what a machine is doing").
