@@ -2,16 +2,16 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (18:15 UTC)
+## NOW (18:25 UTC)
 
 | Item | State | Next |
 |---|---|---|
-| 1. Judge fixes | TTS: `eb594e09` short; its rework found the deeper cause (lock drift to transformers 5). Direction changed (owner): stay on transformers 5; forward card `r13/ttsfix-3` (Sol, high) running. SFX `324f653f` judged: socket types accepted, identity reworked on `r13/sfxfix-2`; recapture `r13/oi-recapture` running; music still with the orchestrator | Hand `r13/ttsfix-3`; judge SFX and music on arrival |
-| 2. Pin | Merged: `r13/cells-pin` `f23dabb` in `r13/compose` `5f31797` (VibeComfy `a8a7be7c`) | Re-pin to `r13/cells-vc` when it exists (one command) |
+| 1. Judge fixes | TTS: `eb594e09` short; its rework found the deeper cause (lock drift to transformers 5). Direction changed (owner): stay on transformers 5; forward card `r13/ttsfix-3` (Sol, high) running. SFX `324f653f` judged: socket types accepted, identity reworked on `r13/sfxfix-2`; recapture `r13/oi-recapture` running; music `6c780a72` accepted | Hand `r13/ttsfix-3`; judge SFX and music on arrival |
+| 2. Pin + `r13/cells-vc` | First pin merged (`f23dabb` in `r13/compose`). `r13/cells-vc` combine (Terra) running | Re-pin from `r13/compose` `913c6b8f` once `r13/cells-vc` is green |
 | 3. Log gaps | Done (orchestrator, `90ae9c31`) | — |
 | 4. Offline preflight | TTS leg exists (meta-device constructors, `engine_deps` lane); SFX and music legs pending | Design once they land |
 
-Heads: Agent `r13/compose` `5f31797` (my branches are cut from `fc4b36d`); VibeComfy base `a8a7be7c`. Spend: none.
+Heads: Agent `r13/compose` `913c6b8f` (my branches are cut from `fc4b36d`); VibeComfy base `a8a7be7c`. Spend: none.
 
 ## Entries
 
@@ -37,3 +37,8 @@ Heads: Agent `r13/compose` `5f31797` (my branches are cut from `fc4b36d`); VibeC
 ### 18:15 UTC — SFX judged; recapture card
 - **SFX `324f653f`:** socket types accepted (`vibecomfy/socket_types.py` owns names and the only alias table, comparison only; AST ratchet). Commit identity **sent back**: `normalize_cache_identity` translates a 40-hex `pack_version` into `git_commit` on every read, and the writer builds `pack_version` then normalizes, so two fields hold one fact behind a permanent shim. Only one committed cache file stores a commit in `pack_version` (11 use `git_commit`, 36 have none). Rework `r13/sfxfix-2` (Terra, medium): migrate that file with VibeComfy's tools, delete the translation, writer emits `git_commit` only, ratchets; also check `pack`/`pack_slug`.
 - **Recapture** (orchestrator's card) `r13/oi-recapture` from `324f653f` (Terra, medium): the 32 quarantined templates' packs, captured through VibeComfy's own capture code from a CPU ComfyUI boot at Astrid's recipe pins, no weights; reports where Astrid's pins and VibeComfy's `custom_nodes.lock` disagree. The quarantine covers three live cells' templates (`audio/qwen3_tts_*`, `image/qwen_image_2_1_turbo`, `edit/qwen_image_2_1_turbo_edit`).
+
+### 18:25 UTC — Music judged; `r13/cells-vc` started
+- **Music `6c780a72`: accepted.** The expected digest already has one source (computed from the admitted copy, `workflow_bundle.py:1695`); the cause was an omitted `sha256`/`size_bytes` meaning something different from an explicit null. One `canonical_model_requirement()` feeds the semantic projection; the CPU check rebuilds every ready template in declared and sparse forms. One fact-twice remains (the optional-field defaults are declared in `canonical_model_requirement()` and in `_normalise_model_entry()`, `model_assets.py:540`); it goes into the combine as its own commit, with a semantic-digest equality proof, rather than a rework round.
+- **`r13/cells-vc`** from `a8a7be7c` (Terra, medium): merge musicfix then sfxfix; the defaults fix; a `preflight` pytest marker and `make preflight` on exactly the SFX offline schema/type check and music's first-build check (the VibeComfy leg of the offline preflight). Proof: the union of both branches' focused files, baseline-diffed against `a8a7be7c`, musicfix and sfxfix. `r13/sfxfix-2` and `r13/oi-recapture` merge in when they land.
+- `r13/compose` is `913c6b8f` (engine layout merged); the re-pin is cut from it, and `r13/ttsfix-3` merges it in.
