@@ -21,26 +21,25 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
 - **Need from you:** nothing blocking yet.
 - **Release 13:** not this session's scope; no spend, no pods.
 
-## NOW (updated 2026-11-12 00:33Z, from `date -u`)
+## NOW (updated 2026-11-12 01:13Z, from `date -u`)
 
-- **Scope (owner, 11 Nov):** ship the update fixes as soon as possible. The editor data-loss fixes go to Plan 39: [#252](https://github.com/banodoco/astrid-app/issues/252) video drop, [#253](https://github.com/banodoco/astrid-app/issues/253) a refusal blocks later edits, [#254](https://github.com/banodoco/astrid-app/issues/254) "Save them", [#255](https://github.com/banodoco/astrid-app/issues/255) upload lost at reload.
-- **Tuple under test:** Agent `cand/29-r12` = `c5370a862d0b374afa412dd071418070e76f834c`. Runtime `cand/29-r12` = `42ae24aff8d2cb854f874ce134161077a3ba3641`. App integration `scratch/r12-app-int` = `ebfc9a1b7`: 2dc109bcc, then App main `6545f130` (merged, `54a362e2a`), gate 5 fix `e2d48f428`, review fixes `452f6b2f0` and `ed9327947`, blocker fixes `9afd4aaa6`, and the VIDEO-DROP marker correction `48ec9bb70` and `ebfc9a1b7`. App `cand/29-r12` (`657773e6`) moves to the re-pinned head of this branch at freeze. The provisional re-pin is shakedown `scratch/r12-shakedown` = `8f1a19086`.
-- **Path:**
-  - (a) App Tests + Direct Journey green on the integration head: OPEN. On `e2d48f428`: `direct-journey` green; three-products 7 passed (gate 5 and EXT-BATCH expected-failed), 1 unexpected (video drop at `:2187`, before its marker), 6 not run. Direct Journey on `48ec9bb70` is running; it is the first run to reach the 6. App Tests on `9afd4aaa6` is running. The `boundary` job is red only on the lock-vs-pin mismatch, which the re-pin clears.
-  - (b) CI comparisons: Runtime DONE, 0 regressions (recounted from the raw logs; gate record item 5 is filled). Agent OPEN: the comparison worker hasn't reported.
-  - (c) merge App main: DONE (`6545f130`, cut-off).
-  - (d) re-pin: provisional on the shakedown, final after (a).
-  - (e) matrix: shakedown run 602 is in progress. Green: linux fresh, r0-handoff, r9-install, r11-update; macos fresh. Red: linux autostart-off (card never appears; Codex Terra diagnosing). macOS and Windows rows are still running.
-  - (f) A-FROZEN: after (a), (b), (e) and the re-pin round.
-  - Honest estimate: 3–5 h, with (a)'s video-drop test and the autostart-off row the long poles.
-- **Gate reviews (Astra, independent, read-only):**
-  - `2dc109bcc..ed9327947`: BLOCKER ×2. Fixed in `9afd4aaa6`; re-review NO BLOCKER.
-  - VIDEO-DROP marker `48ec9bb70`: BLOCKER (wrong attribution). Corrected in `ebfc9a1b7`; second review running. The App candidate holds on it.
-- **Named exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252, all expiring 2026-11-25. That is 7 of the 10-entry ceiling with the three older useClipDrag entries. EXT-BATCH is now shown failing at its marked step on a real run. VIDEO-DROP and DUP-SHOT are pending the 48ec9bb70 run; TASK-SWAP is not yet reached.
-- **Working rules (owner, 2026-11-12 00:20Z):** lean toward speed; see the entry of that time for the seven loosenings and what is not loosened. Before the re-pin, wait for the one last App main push from the tour session and merge it.
-- **Critical path (2026-11-12 00:33Z): an Agent fix round.** The Agent comparison found R12-introduced product regressions (the `text` alias refused, the add_text default needing an optional pack, a broken recovery command, the core boundary ratchet). Four Codex fixes are running, then a new Agent candidate, Agent CI (about 2 h), re-pin and the final round. Honest estimate to A-FROZEN: 4–6 h. The App main last push is also awaited before the re-pin.
-- **Blocked:** nothing needs the owner.
-- **Workers:** non-taste tasks run on Codex via `codex exec`, one per task, each in its own clone, from a thin Claude wrapper. Tiers: N = `gpt-6-luna`, X = `gpt-6.1-terra`, S = `gpt-6.1-sol`, reviews = `gpt-6-astra` (read-only). Codex can't use the GitHub tools, so log downloads go to Haiku sub-agents. Fallback used: none. Timestamps come from `date -u`. Entries stamped "2026-11-12 00:50Z/01:05Z" are mis-stamped; see the correction entry.
+**On the critical path:** Codex Terra `afa2`, the review follow-ups to the R12 regression fix: a recovery command proven by a real install, alias precedence, and caption readers. Time-box: done by 02:05Z. Otherwise the smaller of a minimal revert of the offending hunk or a narrower fix.
+
+**Path to shipping** (owner via orchestrator, 01:12Z; times are targets):
+1. ~02:10Z: **cut the Agent candidate.** Merge `r12/fix-round` (afa2 + `dc87e6230`) into Agent `cand/29-r12`, after an Astra read of the afa2 and `dc87e6230` delta.
+2. ~02:20Z: **re-pin** on the App integration head (`d3e81f98e`, which already contains App main `3e53462f4`): release 12, the new Agent SHA, Runtime `42ae24aff`, vendor lock regenerated, pin and lock checks.
+3. ~02:25Z → ~04:30Z: **one qualifying window, all at once on that tuple:** Agent ci.yml, App Tests, Direct Journey and the 11-row matrix, plus the Astra read of the fix-round range.
+4. Agent comparison as a **delta** against `c5370a86`: the 64 gone or named and ruled, and nothing that passed on `c5370a86` now fails.
+5. One red → fix exactly that, re-run only what it can affect, and carry over the rest, stated in the gate record.
+6. ~04:45Z: **A-FROZEN** and **GATE-GREEN** (three publish commands, expected SHAs) to the orchestrator; it publishes. Then the post-publish checks, then stop.
+
+**Scope is closed at the cut.** The drop side track isn't merged, so it goes to Plan 39. No further additions.
+**Deviation (logged):** the fix round also carries five test-only commits for tests among the 64, plus the `dc87e6230` hardening the boundary review asked for. They don't change product behaviour, are integrated and tested, and avoid 49 separate rulings.
+
+- **Tuple so far:** Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641` (gate item done, 0 regressions). Agent `c5370a86` + fix-round, pending. App integration `scratch/r12-app-int` = `d3e81f98e` (main `3e53462f4` merged, held).
+- **Gate reviews:** all App test-range reviews clear. Agent `a17e0555a` BLOCKER (recovery command), fix pending. `abd1886ee` NO BLOCKER.
+- **Exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252. All four proven failing at their markers on real runs.
+- **Workers:** Codex tiers N `gpt-6-luna`, X `gpt-6.1-terra`, S `gpt-6.1-sol`, reviews `gpt-6-astra`. Log downloads go to Haiku. Fallback used: none.
 
 ## Decisions
 - 11 Nov (before 22:20Z) — **R12 T3 015/017 ruling (11 Nov):** closed, pre-existing host-load timeouts, not regressions. On clean GitHub runners, `tests/core/execution/test_process_group.py` (91 passed, 5 darwin deselected) and the three native render-scope selectors in `test_render_scope_launch.py` passed on base `313bbd46` ([run 43075148232](https://github.com/banodoco/astrid-agent/actions/runs/43075148232)) and candidate `53908e55` ([run 43075158431](https://github.com/banodoco/astrid-agent/actions/runs/43075158431)). The other modules in old group 017 are covered by the T5 `ci.yml` run.
@@ -376,3 +375,4 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
   - Confirmed: the ratchet's scanner exempts VibeComfy as a core pack, so reading its declaration is a permitted coupling. Discovery's AST is identical to the parent's. `packs/**/*.json` ships in the wheel.
   - MEDIUM, fixed as `dc87e6230` (my edit, small, product code): a malformed or missing `gpu-capabilities.json` now means no aliases instead of aborting preflight for every capability. Five fault tests and a shipped-file test; 73 passed. It joins the next Astra round together with Terra's `afa2` follow-ups.
   - LOWs, follow-up: the missing-declaration case is silent; the repo-shape doc describes `local` as ordinary, which predates this.
+- 2026-11-12 01:13Z — **Owner path to shipping received** (orchestrator, 01:12Z). Recorded in NOW with target times. Deviation: the fix round keeps its test-only commits and the `dc87e6230` hardening (reason in NOW). The drop side track isn't merged at the cut, so it goes to Plan 39. The Plan 39 structural-fix update (owner request, 01:00Z) is a doc on the plan branch and doesn't touch either candidate.
