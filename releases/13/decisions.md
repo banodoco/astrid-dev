@@ -542,3 +542,10 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
   - Fix in `runs/batch2.sh`: stop every process from the install root before replacing it, and tail the right install log.
   - Lesson: stop a batch by stopping the host and every process from the install root, not just the script.
   - Batch 2 restarted at `72fbdf65`.
+- **2026-11-12 10:15** The old install state is blocked by the orphaned SFX task (`0d7f7e41`, lease expired at 10:07:35, reservation unreleased).
+  - The installer correctly refuses every install while it's there ("Astrid is busy").
+  - `astrid-runtime tasks clear` needs a live Runtime owner. A scratch venv with the exact pinned Runtime `42ae24af` refused to start on this state ("Requested Runtime identity could not be verified"), which is correct, and I did not force it.
+  - Decision: leave the old state untouched for later reconciliation (it also holds tonight's failure receipts as evidence), and run the batch on a fresh isolated state (`env-b3.sh`: HOME and XDG under `home-b3`, data root `data-b3`).
+  - The RunPod preferences were read from a copy of the old realm store (not the original). They were saved by `runpod.setup`: volume `2z2dlu1v8g` (`storage`, 200 GB, `/workspace`), EUR-NO-1, RTX 5090, pinned image, $3 budget cap. The fresh state gets them again through the documented `astrid machines setup --volume 2z2dlu1v8g --gpu "RTX 5090" --budget-usd 3 --json`, so no new volume is created.
+  - **Follow-up for the owner:** reconcile `0d7f7e41` in the old state; an install of the same Runtime identity plus `astrid-runtime tasks clear`, or let a future same-identity host sweep it.
+  - Batch 3 started at `72fbdf65`.
