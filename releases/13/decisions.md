@@ -947,3 +947,19 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **LT dates:** design reviewed by Fri 08:00, merged by Fri 15:00. If the review isn't clean by Fri 10:00, that's escalated then.
 - **Stage 2a, corrected again:** t2i, SFX and music failed at placement admission ("preferences missing") and never reached the pod. Edit was the only job to reach preparation, so no earlier warm server existed. The check that fired is unknown. Stage 2 on a U2 build (`9bbd06e35`, reason strings, in Astra's review) will name it.
 - **#607:** the same on R12 and the candidate (evidence commented on the issue). It's still fixed in R13, by owner ruling.
+
+## 12 Nov ~20:05 UTC: merges; provider gate in
+
+- **Merged into `r13/compose`:**
+  - `r13/engine-fakescope` `a0e0fe6b5`: the test fixture passes the declared `models_root`; the scope check is unchanged.
+  - `r13/catalog-fixes` `1cca5aab4`: aliases come from `param_map`, `--video-ref` works for video, and one shared argv builder (D1).
+  - `r13/tests/provider-gate-state` `ece1436d`: durable gate state, gated entry points, account binding, and the create-after-cancel fix.
+  - Head: `d5d659d46`. Boundary ratchet: 101, passing.
+- **Handed to LT-a:**
+  - R2-1: a late create's result must reach the journal without waiting on the lifetime `lease_owner.lock`. Acceptance test T5.
+  - R2-2: a cancel or timeout during admission needs an explicit "no POST sent" journal state.
+- **Re-run on the merged head:** 203 passed, 9 failed, all of them already failing on the base:
+  - 6 in `test_acquisition_catalog_id`;
+  - 3 release-after-failure tests ("custody could not be verified").
+
+  Attribution against R12 is due first from the test lane, because these are money paths.
