@@ -841,3 +841,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **06:00–10:00:** freeze, the binding CI comparison, the final live proof, the App re-pin and the R1-update proof.
   - **About 11:00:** publish.
 - **Owner:** the authorization was pasted into the machines session. On "a RunPod pack this should go in": yes. The 36 crossings are RunPod code written in core; moving it through the existing `generation.machine` seam is M11 (about 2–3 h). Ruling: land the one-time baseline update now (the owner's question read as a yes); M11 is the first card after R13, in Plan 40.
+- **18:45 UTC CORRECTION: the deadline is Saturday 14 Nov at midday** (assumed 12:00 UTC), not 13 Nov. Revised checkpoints:
+  - **Tonight:** U2 plus dead-owner handover, K1, the cells-vc pin and the preflight; a live five-cell run on the candidate.
+  - **Friday:** the machines core (K1, M1, M2, LT, M4, M3), M5–M7 if they fit, then a live claim-path proof by Friday about 18:00.
+  - **Cut-line check Friday 18:00 UTC:** if the machines core isn't merged and reviewed, ship without the new command line.
+  - **M11** (RunPod code into the pack through the existing seam) is a stretch for Friday, if machines is green early; otherwise the first card after R13.
+  - **Saturday about 06:00:** freeze; the binding CI comparison, the final live proof, the App re-pin and the R1-update proof; publish by about 11:00.
