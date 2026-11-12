@@ -18,6 +18,7 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - `2dc109bcc..ed9327947`: BLOCKER ×2. Fixed in `9afd4aaa6`; re-review NO BLOCKER.
   - VIDEO-DROP marker `48ec9bb70`: BLOCKER (wrong attribution). Corrected in `ebfc9a1b7`; second review running. The App candidate holds on it.
 - **Named exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252, all expiring 2026-11-25. That is 7 of the 10-entry ceiling with the three older useClipDrag entries. EXT-BATCH is now shown failing at its marked step on a real run. VIDEO-DROP and DUP-SHOT are pending the 48ec9bb70 run; TASK-SWAP is not yet reached.
+- **Working rules (owner, 2026-11-12 00:20Z):** lean toward speed; see the entry of that time for the seven loosenings and what is not loosened. Before the re-pin, wait for the one last App main push from the tour session and merge it.
 - **Blocked:** nothing needs the owner.
 - **Workers:** non-taste tasks run on Codex via `codex exec`, one per task, each in its own clone, from a thin Claude wrapper. Tiers: N = `gpt-6-luna`, X = `gpt-6.1-terra`, S = `gpt-6.1-sol`, reviews = `gpt-6-astra` (read-only). Codex can't use the GitHub tools, so log downloads go to Haiku sub-agents. Fallback used: none. Timestamps come from `date -u`. Entries stamped "2026-11-12 00:50Z/01:05Z" are mis-stamped; see the correction entry.
 
@@ -272,3 +273,16 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - Fixed in `d9e2798d4`: the no-undo check covers exactly this test's three new entries. App Tests and Direct Journey are dispatched.
   - Isolation run 173 (`scratch/r12-iso`): DUP-SHOT and TASK-SWAP fail as expected, and mixed editing and empty bootstrap pass. **All four named exceptions are now shown failing at their marked steps on real runs.**
 - 2026-11-12 00:19Z — **Side track `scratch/r12-drop-side` = `e4df8e0dc`:** the restated VIDEO-DROP (#253, `55949d1e9`); the restored audio unit test checks and pinned e2e command, media, track and span (`ed07f027a`, Codex Luna, which I reviewed); and the merged integration head `d9e2798d4`. Registry 4/0, tsc clean. App Tests and Direct Journey are dispatched. It still needs a reviewer read of `05ac65ca5..e4df8e0dc`.
+- 2026-11-12 00:20Z — **Owner (via orchestrator): one more push to App main, then main is held.** The tour session (`…W1zBiskaEWc4tZST1r`) will push once more. No re-pin and no final round until that push has landed and is merged into the integration head. If I'm otherwise ready and it hasn't appeared within about 30 minutes, I message the orchestrator once. Any further commit on main after that gets reported.
+- 2026-11-12 00:20Z — **Owner: lean toward speed. Effective now:**
+  1. A green early run on the exact frozen tuple (same SHAs, same manifest sha256) counts as qualifying.
+  2. The Agent comparison is ruled against R10 once that side is complete; an incomplete R11 side is recorded as an outage.
+  3. Astra is required only for product-code changes. Test-only and marker fixes get my own read.
+  4. Never-run three-products tests still red for stale harness may become named exceptions on my authority, up to 10.
+  5. The drop side track is taken only if it's already green at re-pin.
+  6. Runtime CI red that is also red on main's latest run: record and move on.
+  7. Post GATE-GREEN without a pre-audit.
+
+  **Not loosened:** no weakened checks outside the registry; no exception for an R12-introduced bug; what's published is exactly what was tested; a truthful list of known issues; the 11-row matrix green on the frozen tuple, native Windows included. A red matrix on a real install or update failure is the one thing to stop for.
+
+  Consequence for the Agent comparison: the 64 IDs that passed on R11 and fail on the candidate still need a ruling, because "no exception for an R12-introduced bug" stands. Sol and Terra continue.
