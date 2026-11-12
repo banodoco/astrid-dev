@@ -156,3 +156,24 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Severity: I rate the first a FIX, not a BLOCKER. It isn't a usable credential URL, but it breaks the "print only a validated identity" rule, so it gets fixed anyway.
   - Astra's test runs were blocked by its read-only sandbox (no writable /tmp), so I'll run the suites myself after the fix.
   - Round 3 dispatched to Codex Luna (`r13/g4-followups-2`): one strict stdlib validator used at all three boundaries.
+- **2026-11-12 00:58** Provider-contract fix landed: `e6d85766` (rehearsal fast-forward from `5f531504`).
+  - Codex Terra's accessor (`pod_fields.py`) reads `networkVolumeId` or `networkVolume.id`, `imageName` or `image`, and so on; malformed or contradictory evidence refuses. Every contract refusal carries a fixed gate, which is logged and kept in the receipt.
+  - I made three changes on top:
+    (1) `read_exact_pod` now asks for `includeNetworkVolume=true`. RunPod's OpenAPI defaults it to false, so the post-claim exact check would have refused every volume pod one step later. Codex's tests faked `read_exact_pod`, so they couldn't see it.
+    (2) I reverted Codex's switch of post-claim refusal detail to fixed text. It erased our own "GPU mismatch" and "datacenter mismatch" messages and broke 4 existing tests that Codex never ran.
+    (3) A missing volume key reads as None again, keeping no-volume semantics; volume contracts still fail closed.
+  - Tests: pod_fields 10, worker_preparation 41, target_selection 91, provider_fields 33, receipt 41, guard 19 all passed. Two failures in `test_acquisition_graphql_confirmation` and `test_release_after_acquisition_failure` are pre-existing at `5f531504`; they go on the release-fix task. Ruff 2128.
+- **2026-11-12 00:58** Install. Pinokio's in-place `--update` needs Pinokio's `app/astrid` layout (harness-only, not a product bug), so I did a fresh install of the root at `e6d85766` with the same data and home. The old root was removed. The workspace, saved policy (RTX 5090, storage, $3) and project were kept. The host is up at `127.0.0.1:43199`.
+  - The disk was full: 11 GB of stale `/tmp/pytest-of-root` left by workers. Deleting it also explains the earlier "no usable temporary directory" failures in Codex reviews.
+- **2026-11-12 00:55** TTS attempt 2: FAIL, no pod, $0.
+  - About 3.5 min of genuine RTX 5090 stock-out in EUR-NO-1, then a single `provider_observation_unavailable` observation (all HTTP 200) ended the run.
+  - Root cause: the pre-create wait in `target_selection.py:622` retries only `stock_unavailable` and `provider_rate_limited`; any unclear observation is final, although no pod exists.
+  - Fix dispatched: `r13/capacity-wait-retry` (Codex Luna), with bounded backoff for unclear observations and auth still terminal.
+  - TTS attempt 3 launched at 00:56:35. After-census: 0 pods (REST, GraphQL); balance $101.57.
+- **2026-11-12 00:58** G4 follow-ups round 3, `0f584c92` (pushed). Codex Luna wrote one strict repository identity used at validation, staging, managed resolution and rendering. I reviewed it and ran all 7 suites myself: same failing IDs as baseline (17 pre-existing VibeComfy-URL failures in `test_installer_sources`, plus the known `custody.py:43`). I briefly restored a local-path lifecycle override, then reverted it, per the G4 ruling "no developer override".
+- **2026-11-12 00:58** Setup bug A: `644f1a28` (pushed). `runpod.setup` declares `project_scope: optional` and the CLI reports the action's error code. The ledger stores executor IDs only, so the metadata change causes no census drift; ledger and pack-action tests 38 passed, setup tests 21 passed. Bug B was re-dispatched to Luna; it had wrongly treated `adapter.py` as reserved.
+- **2026-11-12 00:58** Bundle re-review (Astra) of `a648a1df`: BLOCK. My ruling:
+  - Fixed and kept: 1, 5, 8, 11, 12. Finding 6 is a NOTE per the design ruling.
+  - 2, 3, 4 and 7 share one root cause: decode-and-match is a denylist that every new encoding defeats.
+  - Round 3 dispatched to Codex Sol, network off so it cannot push: mask encoded-looking spans whole without decoding, mask whole values for any key in a credential vocabulary, and export the workflow as opaque ids when context is incomplete. It also fixes 9 (cleanup outside the observer's lifetime) and 10.
+  - Process note: Sol's round 2 pushed `a648a1df` itself, using temporary git metadata. I verified the tree, trailer and tests afterwards (bundle 72, receipt 31, preparation 35, guard 19 passed). The bundle is not in the paid build.
