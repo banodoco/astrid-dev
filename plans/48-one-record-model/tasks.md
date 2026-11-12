@@ -253,13 +253,15 @@ Phase 2 was built to its cut-over in under two hours and then waited for Release
 | Branch | Cut from | Carries | Merges to `main` |
 | --- | --- | --- | --- |
 | `int/48-one-record-model` | `main` | Phase 2 up to C-1 | first, at the cut-over, when Release 12 has published |
-| `int/48-after` | the Phase 2 candidate head | PM-6z, PM-8a, PM-8b, PM-8t, PM-10e | second |
+| `int/48-after` | the Phase 2 candidate head | PM-6z, PM-10e | second, after PM-9's own PR |
+| `int/48-refresh` | the same head | PM-8a, PM-8b, PM-8t | last, as C-2, only after O-1 and PM-8h: PM-8a moves `generated-views` from `always` to `pr`, which is safe only once the refresh job is live |
 | `int/48-phase3` | the Phase 2 candidate head | PM-13h, track A, track B, R3 | third |
 
 - **Still after the cut-over:** PM-9, because the re-migration reads the old folder name; and PM-8h, R8 and C-2, which need the owner's bot identity (O-1).
 - **R3 runs once, now,** on `int/48-phase3` against its base. After C-1, `main` is merged in and the inventory, `check` and the same-feed proof are re-run; the reviewer looks again only if that merge conflicts or changes one of the queue's files.
 - **A proof that needs C-1 on `main`** is named as deferred in the card's progress cell and run after the cut-over, before that branch merges.
-- **The orchestrator makes the three merges, in that order,** each after its review has no blocking finding and the required checks pass on a head that contains current `main`.
+- **C-1 merged on 12 Nov 2026** (`096aa6b`), on the owner's go to cut over before Release 12 published.
+- **The orchestrator makes the merges, in that order,** each after its review has no blocking finding and the required checks pass on a head that contains current `main`.
 
 ## Phase 3 queue dispatch notes
 
