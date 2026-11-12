@@ -287,6 +287,28 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn(f"gaps--{len(self.page['gaps']) + 1}-assessed-outcomes", changed)
         self.assertNotEqual(actual, render_root_readme(actual, hypothetical))
 
+    @staticmethod
+    def root_region(readme):
+        return readme.split("<!-- vision-summary:start -->", 1)[1].split("<!-- vision-summary:end -->", 1)[0]
+
+    def test_root_statement_comes_from_the_vision_title(self):
+        root = self.fixture_copy()
+        intro = root / "vision/intro.md"
+        intro.write_text(intro.read_text(encoding="utf-8").replace(
+            "collective artistic ambition", "artistic potential", 1), encoding="utf-8")
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        rendered = render_root_readme(readme, build(root, SHA))
+        statement = "**A tool to unlock the artistic potential of the open-source AI community.**"
+        self.assertIn(statement, self.root_region(rendered))
+        self.assertEqual(rendered.count("A tool to unlock"), 1)
+        self.assertNotIn("collective artistic ambition", rendered)
+
+    def test_root_statement_has_one_home_inside_the_region(self):
+        readme = (self.fixture_root / "README.md").read_text(encoding="utf-8")
+        statement = f"**{self.page['vision']['title']}.**"
+        self.assertEqual(readme.count(statement), 1)
+        self.assertIn(statement, self.root_region(readme))
+
     def fixture_copy(self):
         """A private copy of the fixture tree that a test may damage."""
         temporary = tempfile.TemporaryDirectory()
