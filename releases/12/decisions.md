@@ -2,23 +2,30 @@
 
 Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIEW** marks user-visible changes, scope-vs-time trades, named exceptions and anything touching Release 13.
 
-## MORNING NOTE (for Hannah; updated 2026-11-12 00:33Z)
+## MORNING NOTE (for Hannah; updated 2026-11-12 01:16Z)
 
-Overnight mode from 00:33Z on the owner's instruction: work through without the owner or the orchestrator. I decide unanswered questions by the brief's priorities and mark them REVIEW. Release 13 items in that instruction don't apply to this session: the R12 manager touches nothing from Release 13, so there is no spend and no pods here.
+Overnight mode from 00:33Z: I'm working through without you or the orchestrator, and deciding unanswered questions by the brief's priorities (marked REVIEW). Release 13 isn't this session's scope, so no spend and no pods here.
 
 - **Done:**
-  - App journey: every three-products test passes or fails exactly at its named exception's marker (4 exceptions, each proven on a real run).
   - Runtime: 0 regressions; gate item filled.
-  - 11-row matrix shakedown: 10/11 green. The autostart-off harness defect is fixed and reviewed.
-  - App main merged twice: 6545f130, then acfe70e7b.
-- **Not done:** Agent fix round (R12-introduced: `text` alias refused, add_text needing an optional pack, broken recovery command, core boundary ratchet) → new Agent candidate → Agent CI → re-pin → final round → GATE-GREEN.
+  - App journey: every three-products test passes or fails exactly at its named exception's marker. All 4 exceptions are proven on real runs.
+  - App main merged (3e53462f4, the last tour push; held since).
+  - Your copy change: the phone home callout now reads "Leverage open source tools".
+  - Agent comparison fully ruled. 89 R11-shipped (recorded, untouched); ~815 pre-existing; no-baseline bucket ruled from a local baseline; 64 R12-introduced. The 64 are being fixed in Agent `r12/fix-round`: the text alias, the add_text default, the recovery command, the core boundary ratchet, test fixtures and teardown leaks.
+  - Plan 39: structural fixes requested by you, being drafted on the plan branch.
+- **Not done:**
+  - Agent fix-round follow-ups from review: a recovery command proven by a real install, alias precedence, caption readers. Time-box 02:05Z.
+  - Then cut, re-pin and one qualifying window (Agent CI, App Tests, Direct Journey, matrix together). Then GATE-GREEN, the orchestrator publishes, and the post-publish checks.
+  - Open risk: matrix row `direct-linux-fresh` red twice on the new harness; diagnosis running. If it's a real update failure, that stops the release.
 - **Decided for you (REVIEW):**
-  - add_text default becomes bundled text-card.
-  - The 89 R11-introduced Agent failures are recorded as shipped-in-R11.
-  - The video-drop exception stays (#252 on the main track).
-  - Test-order fix for the bootstrap test.
-  - Matrix harness simulates "newer release served" for the autostart-off card.
-- **Need from you:** nothing blocking yet.
+  - add_text's default element becomes bundled text-card.
+  - The recovery command points at banodoco/poms_packs.
+  - The fix round carries five test-only commits beyond the strict regression list (reason in NOW).
+  - The drop data-loss fix goes to Plan 39: not in at the cut.
+  - The VIDEO-DROP exception stays (#252).
+  - The bootstrap test runs later in the suite to avoid a state leak.
+  - The matrix harness simulates "a newer release is served" for the autostart-off card.
+- **Need from you:** nothing blocking.
 - **Release 13:** not this session's scope; no spend, no pods.
 
 ## NOW (updated 2026-11-12 01:13Z, from `date -u`)
