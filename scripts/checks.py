@@ -261,6 +261,61 @@ def _markdown_links(context):
     return errors
 
 
+def _link_anchors(context):
+    """A #fragment into a skill, template or top-level doc must name a heading there."""
+    import posixpath
+    from urllib.parse import unquote
+    from check_docs import LINK
+    from records import read_text
+    root = context.root
+    checked = re.compile(r"(?:skills|templates)/.+\.md|docs/[^/]+\.md")
+    headings = {}
+
+    def anchors(relative):
+        if relative not in headings:
+            text = read_text(root, Path(relative))
+            text = re.sub(r"(?ms)^\s*```.*?^\s*```[^\n]*$", "", text)
+            lines = text.splitlines()
+            titles = []
+            for index, line in enumerate(lines):
+                atx = re.match(r"^ {0,3}#{1,6}(?:[ \t]+(.*?))?[ \t]*$", line)
+                if atx:
+                    titles.append(re.sub(r"(?:^|[ \t]+)#+[ \t]*$", "", atx.group(1) or ""))
+                elif (line.strip() and index + 1 < len(lines)
+                      and re.fullmatch(r" {0,3}(?:=+|-+)[ \t]*", lines[index + 1])):
+                    titles.append(line)
+            found = set()
+            for title in titles:
+                title = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
+                slug = "".join(c for c in title if c.isalnum() or c in " -_").replace(" ", "-")
+                candidate, number = slug, 0
+                while candidate in found:
+                    number += 1
+                    candidate = f"{slug}-{number}"
+                found.add(candidate)
+            headings[relative] = found
+        return headings[relative]
+
+    errors = []
+    for path in sorted(p.relative_to(root) for p in root.rglob("*.md")
+                       if ".git" not in p.relative_to(root).parts):
+        text = read_text(root, path)
+        text = re.sub(r"(?ms)^\s*```.*?^\s*```[^\n]*$", "", text)
+        for hit in LINK.finditer(text):
+            target = hit.group(1).strip().split(' "', 1)[0].strip("<>")
+            if "#" not in target or target.startswith(("/", "//")) or re.match(r"^[a-z][\w+.-]*:", target, re.I):
+                continue
+            address, fragment = target.split("#", 1)
+            if not fragment:
+                continue
+            resolved = posixpath.normpath((path.parent / (unquote(address.split("?", 1)[0]) or path.name)).as_posix())
+            if not checked.fullmatch(resolved) or not (root / resolved).is_file():
+                continue
+            if unquote(fragment) not in anchors(resolved):
+                errors.append(f"{path.as_posix()}: link to {resolved}#{fragment} names no heading there; fix the link or restore the heading")
+    return errors
+
+
 def _public_vision(context):
     import export_public_vision
     try:
@@ -422,6 +477,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('obsolete-templates', 'always', 'Validate obsolete templates', _obsolete_templates),
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
+    Check('link-anchors', 'always', 'Validate link fragments into skills, templates and top-level docs', _link_anchors),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
