@@ -345,3 +345,4 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
   - `test_windows_publish` is new and failing; fixed as `bec57f416` on `r12/fix-round`.
   - One R12-introduced test-hygiene failure: `test_claim_head_of_line::…stays_in_milliseconds`. The body passes, then teardown errors every time, because the test's no-walk patch is still active when an R12 conftest teardown walks the filesystem. R11 is clean. Fix with Codex Luna (`cx-afg`).
   - Not CI-equivalent (local, single process), but it's the only baseline available for shard 1. **REVIEW.**
+- 2026-11-12 00:52Z — **Owner request: phone home-page callout copy.** "Integrated into open-source tools" becomes "Leverage open source tools" (`src/pages/Home/PublicAstridCallouts.tsx:103`, `phoneTitle`; the desktop title is unchanged). Committed on the R12 integration, so it ships with R12. No test pins the string; the Home vitest run passes 188/188 and tsc is clean. Covered by the final round.
