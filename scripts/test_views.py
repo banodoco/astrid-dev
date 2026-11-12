@@ -1,3 +1,4 @@
+import re
 import tempfile
 import unittest
 import contextlib
@@ -98,7 +99,7 @@ class ViewTests(unittest.TestCase):
             base_readme.write_text(original_readme, encoding="utf-8")
             plan = root / "plans/48-one-record-model/plan.md"
             text = plan.read_text(encoding="utf-8")
-            plan.write_text(text.replace("**Status:** active", "**Status:** maybe", 1), encoding="utf-8")
+            plan.write_text(re.sub(r"(?m)^\*\*Status:\*\* \w+", "**Status:** maybe", text, count=1), encoding="utf-8")
             target = root / "vision/README.md"
             text = target.read_text(encoding="utf-8")
             target.write_text(text.replace("# Astrid — ", "# Astrid — Hand edited ", 1), encoding="utf-8")
