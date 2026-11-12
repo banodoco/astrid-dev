@@ -571,3 +571,18 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
     - Astrid: `_native` passes the variable from the recipe's `source_patches`.
   - Keep-warm fix: Terra was re-dispatched with an authorised narrow change to `generation.py:92` (one distinct "kept, preparation stale" state; other non-prepared states still rejected).
   - Also seen: `astrid tasks logs` on that TTS task said "no logs recorded" because the Runtime still showed the task `running` with an empty result after the CLI had exited. To investigate after the batch.
+
+### 12:17 UTC — Declared patches ON BY DEFAULT; keep-warm scope 2; gap reviews launched
+- **Owner (Hannah):** declared patches must be on by default, documented in VibeComfy's skill docs, and not hidden behind a setting.
+  - The opt-in env-var design is withdrawn (brief kept as `declared-patches-v1-optin.md`), and the stopped worker's partial diff was discarded.
+  - **v2:** a node lock entry carries `patches = [{path, sha256}]`, and VibeComfy honours it natively wherever it judges a pack dirty. It is accepted only at the locked commit, and only for a tracked modification at the declared digest; anything else refuses as today. It shows as "declared patches verified", and it is documented in vibecomfy-setup SKILL.md and REFERENCE.md. Astrid writes the declarations into managed-custom-nodes.lock from the recipe's `source_patches`. Terra is building it in c-vc-patch and c-patchenv.
+- **Keep-warm run 3:**
+  - Done so far: the refreshed-receipt path passes, with 6 focused tests green and ruff at 2117.
+  - Blocked: the stale-after-failure state is rejected by the custody validator in `worker_preparation.py:829`.
+  - **Ruling:** scope extension 2 is authorised, admitting the stale state there with every existing custody check kept. Terra run 4 continues from the diff and runs the full suites.
+- **Owner-requested gap reviews**, one Astra reviewer plus a Luna inventory for EACH problem, all read-only on snapshot worktrees `ro-agent` (b306b2be) and `ro-vc` (fe92ac78):
+  - review-keep-warm, which asks for every automatic termination path, first-preparation failure, re-prepare loop bounds, and visibility;
+  - review-declared-patches, which asks for coverage, spoofing, ordering, and other writers.
+- **Batch 5:**
+  - TTS failed at fetch, integrity_failed (the expected patch refusal), and the pod was KEPT (v7l7yk2u75kkie).
+  - SFX is running on the same warm pod.
