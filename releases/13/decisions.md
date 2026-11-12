@@ -493,3 +493,19 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
     - Sol: the installed-entry-point smoke test (ruling: first slice covers provider drift → named claim refusal, and a pod job failure → declared logs).
   - Disk: deleted 17 clones whose HEAD is on origin (3.7 → 11 GB free).
 - **2026-11-12 08:55** A safety classifier flagged one launcher (the ComfyUI-bump worker) as "Create Unsafe Agents". I checked the process list: only the briefed Codex workers are running (Astra read-only; the others `workspace-write` with network on for sockets and registries, pushes disabled in every clone, the manager commits). This is the same launch pattern as all night. Noted for the owner; no change.
+- **2026-11-12 10:20** Wave 3 progress. On origin `scratch/r13-rehearsal` = `e9f16189`.
+  - **models-folders** `43b69032`, merged. Astra found one real BLOCKER: the link check compared the link's text, so a destination that was itself a symlink passed. Fixed by refusing a redirected or file destination, with tests. Astra's recheck: NO BLOCKER (30 cases through the real helper and both callers).
+  - **TTS patch** `687a0ed9` (`r13/tts-patch`), merged.
+    - The recipe now has `source_patches`: a whole-file replacement bound by sha256 before and after, applied right after the pinned checkout is verified, failing closed.
+    - The clean-source check has one shared "declared modifications" path (verified model links plus patched files at their after-digest).
+    - I verified the replacement against the pinned upstream file: the only change is a signature-based choice between the two decorator forms.
+    - Tests: 412 passed. The two packaged-lock failures and `test_no_other_tracked_file_copies_the_pin` all fail at `878d13f4` too.
+  - **Credential scrub and describe** `e798df2b`, merged. I added environment-style UPPERCASE `*_KEY` names (for example `RUNPOD_KEY`) to the dict scrub, matching the free-text pattern. The four remaining failures in those files fail identically at `e7f00181`.
+  - **Music lock** `634a2608`, merged: four ACE-Step 1.5 files from `Comfy-Org/ACE-Step-1.5` at `371bb168` (14.7 GB; one digest spot-checked against HF). The lock is 110.4 GB on the 200 GB volume (`2z2dlu1v8g`, EUR-NO-1), so the cell stays. The model-count literal moved from 32 to 36. The recipe-digest merge conflict with the TTS patch was resolved by recomputing the chain with `scripts/vibecomfy_pin.py`.
+  - **ComfyUI bump (Sol), five tries.**
+    - Tries 1–3 stopped on pin-derived test literals; I ruled them a class that moves with the pin.
+    - At 09:45 I switched the target to `2fb8cabd` (ComfyUI 0.42.0), because the shipped lock already carries late-October requirements. The worker then found that the H3 pack declares `comfy_version ==0.36.0`. `6bfaacc6` is still 0.36.0 (I checked `comfyui_version.py`); `2fb8cabd` isn't.
+    - **I withdrew my override: the orchestrator's "earliest" (`6bfaacc6`) was right.** Running now with the final target.
+    - Recorded finding: the existing Linux lock carries NEWER ComfyUI requirements (frontend 1.57.4) than the installed ComfyUI source (`ee71d5c4` declares 1.52.7). No master commit matches the lock exactly. The re-lock makes the source and the lock agree.
+  - **Provider gate (Sol):** the first try stopped on a resume test, because Codex wanted to redesign resume. Ruling: no redesign; the gate only paces calls. Running.
+  - **Installed smoke (Sol):** partial. The recorded-replay endpoint plus 21 replay tests pass, but both installed-entry cases fail before task creation (the installed CLI in the harness doesn't see saved preferences). Not merged, since it would add a failing test. Parked as a follow-up in `c-smoke2`.
