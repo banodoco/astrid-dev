@@ -2,23 +2,22 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-12 05:25 UTC)
+## NOW (2026-11-12 06:37 UTC)
 
-- **Release 12 is published** (Agent main `0e1543e0`, Runtime `42ae24aff`, App `237b28be`, VibeComfy `e65f4941`, lifecycle `f2948817`). It is now the Phase 1 base; the next release number is 13.
-- **Rehearsal:** local clone `/home/user/wt/c-reh` = `a6f38902`, made of:
-  - `878d13f4`;
-  - the ratchet, receiptplan, C1 core, C1 task 2, setup fixes and G4 follow-ups;
-  - declared logs `c05e5e31`;
-  - published main `0e1543e0`.
-  The gate is running against `0e1543e0`. Not pushed, because the auto-mode classifier refuses astrid-agent pushes (see the 04:48 entry); the install takes Agent from the local clone instead.
-- **Installed:** still `878d13f4` at `install-r13b`.
-- **Declared logs:** a1, a2, a4–a9, local-streams, vc1 and vc2 are integrated, and VibeComfy is pinned to `88cff6d5` (on origin; it descends from R12's `e65f4941`). a3 (Luna) and e2e (Terra) are running. The cleanup task follows.
-- **Pods:** none. Balance $100.22 (stop at $67.41); about $4.5 of $40 spent.
-- **Next:** merge a3 and e2e → reinstall from the rehearsal → ONE live TTS on `audio/qwen3_tts_custom_voice`. Pass means `astrid tasks logs <task> --name engine-error` prints ComfyUI's real exception. Then the SFX, t2i, edit and music cells.
-- **Parked:** C1 task 1 (needs its allowlist removed), C1 task 3 (regressed), the provider gate (to Sol), and the smoke test.
+- **Headline:** declared run logs work live on RunPod. On the failed TTS task, `astrid tasks logs 9269498d --project setup --name engine-error` prints ComfyUI's real exception and traceback from the installed product. The TTS root cause is found: the QwenTTS pack's `@check_model_inputs()` is incompatible with locked transformers 5.22.1, and the pack swallows the error (06:40 entry).
+- **Installed:** Release 13 rehearsal `cffffe05` at `install-r13b`, host up.
+- **On origin:**
+  - `scratch/r13-rehearsal` = `77632da9` (published Release 12 main `0e1543e0`, the structural branches, declared logs, the `tasks logs` fix and the receipt-plan test fix);
+  - `r13/declared-logs` = `62800d35`;
+  - `r13/dl-cleanup` = `30795fec`. The legacy scrape is removed, and the full RunPod suite comparison against `62800d35` is running before the merge.
+- **Gate:** classified (06:45). Two real merge regressions, both fixed; the rest predate the merges.
+- **Running:** the SFX first-look (≤ $3) on pod `d9mi0dtqdgtwqy`, then a t2i re-run with P/E/I bounds that fit $1.
+- **Money:** balance $99.69 (stop at $67.41). About $5 of $40 spent.
 - **For the owner (REVIEW):**
-  - allow pushes to `r13/*` on astrid-agent, or push them yourself;
-  - H10, whether the free-text failure bundle should be opt-in (bundle round 3 is parked at `04dd5f15`).
+  1. The TTS fix route: (a) a banodoco fork of ComfyUI-QwenTTS with a one-line decorator fix (recommended; needs a new repository), or (b) a recipe source-patch step.
+  2. `_CREDENTIAL_KEY` blanks every `*_key` field (for example `variant_key`) in error snapshots, against the no-redaction ruling. Proposal: match only credential names.
+  3. H10, whether to make the free-text failure bundle opt-in (bundle round 3 is parked at `04dd5f15`); the cleanup supersedes most of it.
+- **Next:** merge the cleanup, record the SFX and t2i evidence, the engine-startup log-slice follow-up, rework C1 task 1 without its allowlist, the provider gate (Sol), then the Release 13 candidate.
 
 ## Entries
 
