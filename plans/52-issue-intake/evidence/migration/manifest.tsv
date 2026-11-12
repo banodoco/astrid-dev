@@ -1,0 +1,23 @@
+NN	source file	labels	outcome
+01	2026-11-12-agent-reads-field-pinned-runtime-omits.md	observation,plan:50,gap:F-003	open
+02	2026-11-12-catalog-promises-inputs-entries-refuse.md	observation,plan:50,gap:F-003	open
+03	2026-11-12-cpu-journey-remaining-failures.md	observation,plan:50	open
+04	2026-11-12-cpu-journey-takes-57-minutes.md	observation,plan:50,plan:39	open
+05	2026-11-12-engine-cannot-upgrade-in-place.md	observation,plan:09,gap:F-001	open
+06	2026-11-12-four-deep-causes-of-generation-failures.md	observation,gap:F-008,gap:F-003	open
+07	2026-11-12-fresh-install-has-no-project.md	observation,plan:20,plan:37	open
+08	2026-11-12-generate-heartbeat-says-nothing.md	observation,plan:40,gap:F-005	open
+09	2026-11-12-inputs-json-replaces-cli-inputs.md	observation,gap:F-003	open
+10	2026-11-12-install-receipt-is-authority-not-cache.md	observation,plan:09,gap:F-001	open
+11	2026-11-12-integration-lane-dependencies-unprovisioned.md	observation,plan:50,plan:39	folded: plans/50-recorded-boundaries/tasks.md RB-1
+12	2026-11-12-model-declarations-five-shapes.md	observation,plan:17,gap:F-008	open
+13	2026-11-12-no-account-balance-in-product.md	observation,plan:40,gap:F-005	open
+14	2026-11-12-output-collection-takes-54-seconds.md	observation,plan:32,gap:F-008	open
+15	2026-11-12-paid-settings-redeclared-every-generate.md	observation,plan:40,gap:F-002	open
+16	2026-11-12-plan-50-over-built.md	observation,plan:50	open
+17	2026-11-12-runtime-reports-first-blocker-only.md	observation,gap:F-003	open
+18	2026-11-12-successful-runs-capture-no-engine-logs.md	observation,gap:F-003	open
+19	2026-11-12-two-names-for-runpod-setup.md	observation,plan:40,plan:32	open
+20	2026-11-12-volume-pins-empty-datacenter.md	observation,plan:40,gap:F-008	open
+21	2026-11-12-warm-machine-cold-engine.md	observation,plan:32,gap:F-008	open
+22	2026-11-12-warm-session-paid-expiry-tests-failing.md	observation,plan:40,gap:F-002	open

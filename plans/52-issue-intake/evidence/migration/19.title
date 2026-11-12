@@ -1,0 +1,1 @@
+observation: `astrid machines setup` configures RunPod only, while the generate path says `--placement runpod`: two names for one thing.
