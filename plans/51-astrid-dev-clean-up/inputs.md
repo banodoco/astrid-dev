@@ -225,6 +225,8 @@ Options for each: take it or leave it. Recommendation: take (1), because the com
 
 **D11. Taste work when a run's workers are on Codex.** Options: (a) it stays on Claude sub-agents at the high-judgment tier, as CCR:28 says and as Plan 48's runs did; the Codex column for T in the run contract's table then applies only when a Codex manager runs the project, and the table says so; (b) it goes to the Codex family the table names, and CCR:28 is removed. Recommendation: (a). **Decided, 12 Nov 2026 (the owner, in the orchestrator's session):** taste work may run on the Codex taste family, and Claude is recommended.
 
+**Added by the owner, 12 Nov 2026, after the run started:** the root README should lead with what Astrid is, a tool to unlock the collective ambition of the open-source community, made of an adaptable front end that links to the website and an agent with tools for creative work and open-source AI, placed below the opening line and above how to contribute; "just refactoring it a little bit and rewriting a little bit". Recorded as card CU-20 in Part 1 (0.15 days).
+
 ## Source identities
 
 - **Repository:** `banodoco/astrid-dev`. Only this repository changes.

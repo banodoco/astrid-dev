@@ -22,7 +22,8 @@ Routes are **N**, **X**, **S** and **T** per the [run contract](../../skills/ast
 | CU-7 The orchestrate skill and its three guides, cut, with one model table and one statement of the default | X | RS1; D6, D11 | `skills/astrid-dev-orchestrate/SKILL.md`; `codex-in-claude-cloud/README.md` and `manager-brief.md`; `codex-cloud/README.md`. No `.sh` file | As CU-6, with the orchestrate skill toward 2,900 words and the three guides together below 4,578; [details](#cu-7) | [ ] |
 | CU-8 The wording of the three new or rewritten documents | T | CU-3, CU-4, RS1 | `docs/contribution-design-principles.md`; `skills/astrid-dev-shared/glossary.md`; `skills/astrid-dev-improve/SKILL.md` | Before and after for each sentence; no rule, definition or home changes; the word count is not higher than before the card; `check` and the anchor proof pass; [details](#cu-8) | [ ] |
 | CU-9 Four stale sentences and the template's misleading example | N | — | `strategy.md` (line 5); `releases/TEMPLATE.md` (line 22); `vision/gaps/F-001-platform-reliability.md` (line 26); `env/README.md` (line 20 and the script table); `templates/project/plan.md` (the `**Vision gaps:**` line) | `check --base` passes; the whole inventory passes; the template's two example lines are accepted by `plan_gap_ids`; [details](#cu-9) | [x] 12 Nov: merged on `int/51-astrid-dev-clean-up` (de55dd7); the Vision role form has the colon inside the bold, as the check requires |
-| RS2 Review stop on the whole of Part 1 before it lands (rounds at most 1). It protects every later run that reads these skills, and CU-14 and CU-15, which build on the table of homes and the new skill | S | CU-0 to CU-9 | read-only | Same protocol as R, on the integrated head of `int/51-astrid-dev-clean-up` after `main` is merged in and the inventory, `check` and the anchor proof pass; findings become rows `RS2.<n>`; then one pull request to `main`, merged on the owner's go; [what it looks for](#review-rows) | [ ] |
+| CU-20 The root README leads with what Astrid is, in the owner's words | T | — | `README.md` (hand-written text only: the title, the opening line, the order of the sections and the sentences of "What we're building"; not the `vision-summary` region, not the agent prompt block or its heading) | Before and after shown to the owner; the fenced agent prompt and the heading `## Want to contribute? Give this to your agent.` are byte-identical; `check` passes; the public feed is byte-identical; `sync` reports the views current; the word count of `README.md` outside the generated region is not higher; [details](#cu-20) | [ ] |
+| RS2 Review stop on the whole of Part 1 before it lands (rounds at most 1). It protects every later run that reads these skills, and CU-14 and CU-15, which build on the table of homes and the new skill | S | CU-0 to CU-9, CU-20 | read-only | Same protocol as R, on the integrated head of `int/51-astrid-dev-clean-up` after `main` is merged in and the inventory, `check` and the anchor proof pass; findings become rows `RS2.<n>`; then one pull request to `main`, merged on the owner's go; [what it looks for](#review-rows) | [ ] |
 | **Part 2: scripts and one check. Starts only when Plan 48's C-2 is on `main`** | | | | | |
 | CU-11 Bytecode is no longer tracked | N | C-2 | `scripts/__pycache__/` (three files leave the index); `.gitignore` | `git ls-files "*.pyc"` prints nothing; the inventory run without `PYTHONDONTWRITEBYTECODE` leaves `git status --porcelain` empty; [details](#cu-11) | [x] 12 Nov: merged on `int/51-part2` (d73b71e) |
 | CU-12 Dead code goes, and the guard that eleven checks repeat is written once | N | C-2 | `scripts/checks.py` (the eleven guarded checks and one new helper); `scripts/records.py:field_matches`; `scripts/check_docs.py:STATUSES`; the unused imports in `scripts/check_completion.py` and `scripts/check_gap_boundaries.py` | The inventory passes with no test edited; `golden.txt` unchanged; `list` prints the same lines as the base; fewer non-test lines than the base; [details](#cu-12) | [x] 12 Nov: merged on `int/51-part2` (9d3d5d5); non-test script lines 3005 to 2954 |
@@ -58,6 +59,7 @@ Engineering days. A "cheap worker" is a Claude sub-agent on the N route; an "X w
 | CU-7 | X worker with N helpers | no | 0.75 |
 | CU-8 | high-judgment sub-agent | no | 0.25 |
 | CU-9 | cheap worker | no | 0.15 |
+| CU-20 | high-judgment sub-agent | no | 0.15 |
 | RS2 | high-judgment sub-agent | no | 0.4 |
 | CU-11 | cheap worker | yes | 0.1 |
 | CU-12 | cheap worker | yes | 0.4 |
@@ -279,6 +281,16 @@ Proof: `check --base` passes; the whole inventory passes (some tests read the li
 ```text
 python3 -c "import sys; sys.path.insert(0,'scripts'); import project_contract as p; print(p.plan_gap_ids('''<line>'''))"
 ```
+
+### CU-20
+
+The owner asked for this on 12 Nov 2026, after reading the page: lead with what Astrid is, then how to contribute. It is a small edit and a little rewriting, not a new page.
+
+- **Order.** The title; the opening line that says what Astrid Dev is for (today's "Astrid Dev connects our creative ambition to practical contributions"); then `## What we're building`; then `## Want to contribute? Give this to your agent.`; then the rest as it is.
+- **What we're building, in her words.** Keep the line "A tool to unlock the collective artistic ambition of the open-source AI community." Follow it with one sentence saying what Astrid consists of: an adaptable front end, linked to [astrid.haus](https://astrid.haus), alongside an agent equipped with tools for creative work and open-source AI. The generated `vision-summary` region stays directly below, untouched.
+- **The title.** She called the page "Astrid Dev Workspace"; offer that beside today's "Astrid development workspace" in the before and after and let her choose.
+- **What must not change.** `scripts/export_public_vision.py` finds the agent prompt by the exact heading `Want to contribute? Give this to your agent.` and requires exactly one fenced block under it, and it publishes that block in the public feed. So the heading and the block are moved as a unit and not edited. The marker pair of the `vision-summary` region is not edited either.
+- **Taste rules.** Plain words, short sentences, no claim the product does not yet meet, every link resolves, and nothing a newcomer would have to look up.
 
 ### CU-11
 
