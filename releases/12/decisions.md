@@ -431,3 +431,11 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
 - 2026-11-12 01:28Z — **Astra read of `cafa71487`: NO BLOCKER.** Every Agent product commit in the fix round is now reviewed with no open blocker; recorded in the gate record.
   - The reviewer confirmed the route behaves identically to console's and that the conversational collision matches what console already does.
   - LOW (Plan 39, scope closed): the runner test checks the source text rather than running the runner.
+- 2026-11-12 01:53Z — **Qualifying window on the frozen tuple (App `237b28be9`, Agent `0e1543e0`, Runtime `42ae24aff`): App and matrix are GREEN.**
+  - App Tests [43134514508](https://github.com/banodoco/astrid-app/actions/runs/43134514508): all jobs pass, including `boundary` now that the locks match the pin.
+  - Direct Journey [43134521115](https://github.com/banodoco/astrid-app/actions/runs/43134521115): `direct-journey` 45/45; `three-products` 10 passed plus exactly the 4 listed expected failures, 0 unexpected, 0 skipped, 0 not run.
+  - Matrix [43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) (harness `1940a2fe1`): **11/11 green**, native Windows included; Journey evidence PASS.
+  - Agent CI [43134432721](https://github.com/banodoco/astrid-agent/actions/runs/43134432721) is still running (unit shards and darwin).
+    - So far boundary, both wheels and windows-native-and-installer are green.
+    - `fast checks` is red at the Mypy baseline gate. I ran the same gate on both: `c5370a86` and `0e1543e0` give identical counts, current 2338 against baseline 2192, so the fix round adds 0 findings. Pre-existing and already ruled (stale baseline; Plan 39 AT2).
+  - The gate record is filled except the Agent delta comparison.
