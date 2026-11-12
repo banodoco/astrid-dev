@@ -110,7 +110,7 @@ Publishing follows the legacy path: Agent main, then Runtime main, then App main
 
 **Branch protection and preconditions** (checked 12 Nov ~00:20Z; raw: decision log):
 - `main` on astrid-agent, astrid-runtime and astrid-app reports `protected: false`, with required status checks off and no contexts (unauthenticated `/branches/main`). `/branches/main/protection` returns 404 without admin access, so rulesets could not be read. No CODEOWNERS or settings files exist in any of the three repos.
-- Each push is a fast-forward, which requires the current `main` to be an ancestor of the pushed SHA. Main heads when checked: Agent `a105de3a4852cb61b9647dfe2c920118bd29f272` (R11), Runtime `4f5477cb0f5b03d28bec991a1fe34edcd8fc309f`, App `acfe70e7b56e0efe14ef2bbb977cb8aaa08d1e1a`. App main moved past the `6545f130` cut-off (acfe70e7b, an onboarding tour change at 23:25Z on 11 Nov). It is merged into the candidate, and the orchestrator is asked to hold App main still until publication.
+- Each push is a fast-forward, which requires the current `main` to be an ancestor of the pushed SHA. Main heads re-checked 12 Nov ~03:55Z: Agent `a105de3a4` (R11), Runtime `4f5477cb0`, App `3e53462f4`. All three fast-forward to the frozen SHAs (`merge-base --is-ancestor` ok). App main moved past the `6545f130` cut-off twice (acfe70e7b at 23:25Z, then the last tour push 3e53462f4). Both are merged into the candidate, and App main has been held since 3e53462f4 (orchestrator, 00:33Z).
 - Before each push, check: `git merge-base --is-ancestor origin/main <SHA>`. If it fails, stop: main moved again, and the candidate must merge it and requalify.
 
 ### Agent
@@ -136,6 +136,6 @@ Publishing follows the legacy path: Agent main, then Runtime main, then App main
 
 - Check the served release and tuple: `curl -sS https://astrid.haus/install-manifest.json | jq '{release, agent: .agent.sha, runtime: .runtime.sha}'`. Expect release `12`, Agent `0e1543e0da2215db9cb3320cfd1083174c3c62a9`, and Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`.
 - Check the served body hash: `curl -sS https://astrid.haus/install-manifest.json | sha256sum`; expect `1f3cd5b0b06579a035adf42e62e953edca07042554fd7e8af6f357a3e0bc69f1`.
-- Check the served-manifest canary; it is being diagnosed.
+- Check the served-manifest canary. An earlier ruling found it fine; the vision job's Chromium install is a follow-up.
 
 If an agent session cannot merge to production because of permission or classifier refusal, Hannah runs the same three pushes, or merges the equivalent fast-forward PRs (`cand/29-r12` → `main`) in the GitHub UI, in the same order, then runs the post-check.
