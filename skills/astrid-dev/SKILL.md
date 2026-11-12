@@ -21,6 +21,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Someone else's pull request, usually an outside contributor's | [Merge](../astrid-dev-merge/SKILL.md): a lead critic and a few cheap helpers review it, then merge it, send it back or bring it to the owner |
 | Integration, release or publication | [Release](../astrid-dev-release/SKILL.md), with explicit current authorization |
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
+| Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](../astrid-dev-improve/SKILL.md): find the rule's one home, change only that, prove it |
 
 ## One path, proportionate depth
 
