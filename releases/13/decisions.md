@@ -2,30 +2,29 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-11 23:31 UTC, from `date -u`)
+## NOW (2026-11-12 02:36 UTC)
 
-- **Money:** balance $101.595 at 00:27 UTC; spent ≈ $3.82 of $40. No pod running (GraphQL census `[]`, spend $0.019/h storage only). Stop new rentals at a balance of $67.41 or below.
-- **Critical path to the first rental (TTS diagnosis), as of 00:00 UTC; new estimate about 02:00 UTC:**
-  1. BLOCKER found on the install: the host QUARANTINES the `runpod` and `setup` packs ("Pack does not declare pack_api compatibility"). It loads them from the install's Agent source tree `a/astrid/packs`, outside the bundled root. The capability ledger also lacks `runpod.claim` and `runpod.keep`. No RunPod generation can run on `bf3b6ba7` as installed. Codex Terra is diagnosing and fixing it on `r13/runpod-pack-load`.
-  2. After the fix: merge it into the rehearsal, reinstall install-r13b, start the host from this session with `RUNPOD_API_KEY=proxy-injected`, then `machines setup`.
-  3. Setup choice: the `storage` volume (EUR-NO-1) supports the RTX 5090 only, at $1.19/h secure. The setup call with the volume was refused ("no GPU types offered"), although the same availability probe called directly returns RTX 5090. That needs investigating after the fix. Fallback: ephemeral disk with datacenter any and 4090/5090 (models download on the pod).
-  4. The commands review (Astra) is done. Applied: install-r13b paths, a 5 s SFX fixture, no `keep --for`, a strengthened census (REST and GraphQL, fail on error), and a balance check before each rental.
-  5. Census, then TTS, then SFX on the same pod only if it is the same pod ID, idle, and has 4500 s or more of paid lifetime left; otherwise release, verify, and run SFX cold.
-- **Rehearsal head:** Agent `scratch/r13-rehearsal` `bf3b6ba7`. Contents:
-  - Release 12 candidate `c5370a86`, plus generation `1439ccc6` (G5 ruling).
-  - G1 wait wording and `availability.message`; G2 launchers; graph-checked failure facts; tool catalog.
-  - G4 pins; G3 receipt; the staged-recipe read fix; the removed-name cleanup.
-  - The placement over-rename fixes and routing; update-inputs; the RunPod test guard; ruff-debt plus a lint-only commit (Ruff exactly 2128); prep-hang; the receipt-swallow fixes plus the `EXCEPTIONS` allowlist.
-- **First-diagnostic preconditions** (relaxed by the orchestrator: the bundle is NOT required for this run):
-  - Receipt, graph names, swallow fixes and allowlist in the build: MET (`bf3b6ba7`).
-  - Tests cannot reach RunPod: MET. The guard is in the rehearsal and the Codex trees, 20 unguarded worktrees were removed, and both running Claude workers were told to merge the guard.
-  - Credential: MET. Saved on "Astrid Release 13 GPU" only; an authenticated census works.
-  - Separate environment: MET.
-  - Pins and installer review: no blocker. Clears with the `test_pod_install_route` fix (step 3).
-  - Hannah's in-session authorization (23:35): given.
-- **Later runs and final cells also need:** the H10 bundle (`r13/g3-bundle`, Opus, running) and Astra review (1) of it, plus the G4 follow-ups merged.
-- **Running:** the two Codex tasks above; the G4 follow-ups (Claude); the G3 bundle (Opus); rehearsal CI on `bf3b6ba7` (dispatched 23:30; replaces stale run `43102625660`, which failed on `246cad0f`).
-- **Workers:** Codex signed in. Luna `gpt-6-luna`, Terra `gpt-6.1-terra`, Sol `gpt-6.1-sol`, Astra `gpt-6-astra`. Fallbacks: none. Codex commits need a standalone clone, not a worktree.
+- **Rehearsal head:** `scratch/r13-rehearsal` = `878d13f4`, installed at `install-r13b`; host up.
+- **Pods:** 1 of ours running. TTS attempt 6 is on an RTX 5090 in EUR-NO-1, claimed at 02:30 after 50 capacity attempts; it's under the product's paid limits ($3 cap, 1800 s idle). No pod not of ours seen.
+- **Money:** balance $100.88 before attempt 6; spent ≈ $4.51 of $40 (stop at a balance of $67.41).
+- **TTS progress:** each attempt has moved one stage further.
+  - 1: provider contract (`networkVolumeId` drift; fixed `e6d85766`).
+  - 2: a stock-wait abort (fixed `f1a487c9`).
+  - 3: install verify, blind (labels `61eafd53`).
+  - 4: install verify, `integrity_failed@start`, the models-root bug (fixed `c627edba`).
+  - 5: install OK, the job failed with `generation_failed`, blind (execution diagnostic `eeeee9ef`/`878d13f4`).
+  - 6: running, with the receipt now naming the failing node and exception type.
+  - If 6 is still blind: keep or operator-rent a pod and read the engine error directly (orchestrator 02:31).
+- **Structural slices landed in the rehearsal:**
+  - S1 provider record and recorded fixtures (`ad7723a8`);
+  - S2 one refusal type with the gate required (`0a7de39c`);
+  - S3 host-owned failure evidence, per-engine allowlists and the core neutrality ratchet (`ebdc2504`);
+  - the execution diagnostic with an engine-neutral name;
+  - the C1 reason-channel core (`dd20b74b`, branch `r13/struct-c1b`, not yet in the rehearsal).
+- **Running now (Codex):** the provider gate with 429 backoff (Terra); the installed-entry-point smoke test (Sol); list and import ratchets (Luna); C1 tasks 1 and 3 (Luna).
+- **Next:** `plan_from_receipt` (Luna), C1 task 2, then the merges; SFX and the cheap image and music cells once TTS works. Per the orchestrator, the gate, ratchets and smoke test come before paid cells that exercise release or warm reuse.
+- **Then:** merge with the Release 12 work and get Release 13 release-ready.
+- **For the owner (REVIEW):** H10, whether to make the free-text failure bundle opt-in (bundle round 3 parked at WIP `04dd5f15`).
 
 ## Entries
 
