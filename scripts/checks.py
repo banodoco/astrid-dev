@@ -51,7 +51,7 @@ def _catalog(context):
 
 
 def _release_documents(context):
-    from check_docs import catalog_rows, read, CATALOG, release_errors
+    from check_docs import read, release_errors
     root = context.root
     try:
         if _catalog(context):
@@ -72,7 +72,7 @@ def _release_documents(context):
 
 
 def _strategy_consistency(context):
-    from check_docs import catalog_rows, read, CATALOG, STRATEGY, strategy_errors
+    from check_docs import read, STRATEGY, strategy_errors
     root = context.root
     try:
         if _catalog(context):
@@ -92,7 +92,7 @@ def _strategy_consistency(context):
 
 
 def _catalog_paths(context):
-    from check_docs import catalog_rows, read, CATALOG, PLAN_LINK, PLAN_FOLDER, unnamed_active_owners
+    from check_docs import read, PLAN_FOLDER, unnamed_active_owners
     root = context.root
     try:
         if _catalog(context):
@@ -105,7 +105,7 @@ def _catalog_paths(context):
 
 
 def _gap_structure(context):
-    from check_docs import catalog_rows, read, CATALOG, GAP_NAME, parse_gap_relationships, route_issues
+    from check_docs import read, GAP_NAME, parse_gap_relationships, route_issues
     root = context.root
     try:
         if _catalog(context):
@@ -144,7 +144,7 @@ def _gap_structure(context):
 
 
 def _plan_files(context):
-    from check_docs import catalog_rows, read, CATALOG, GAP_NAME, plan_gap_ids
+    from check_docs import read, GAP_NAME, plan_gap_ids
     root = context.root
     try:
         if _catalog(context):
@@ -172,7 +172,7 @@ def _plan_files(context):
 
 
 def _subjects(context):
-    from check_docs import catalog_rows, read, CATALOG, parse_subject
+    from check_docs import read, parse_subject
     root = context.root
     try:
         if _catalog(context):
@@ -199,7 +199,7 @@ def _subjects(context):
 
 
 def _obsolete_sources(context):
-    from check_docs import catalog_rows, read, CATALOG
+    from check_docs import read
     root = context.root
     try:
         if _catalog(context):
@@ -216,7 +216,7 @@ def _obsolete_sources(context):
 
 
 def _canonical_principles(context):
-    from check_docs import catalog_rows, read, CATALOG
+    from check_docs import read
     root = context.root
     try:
         if _catalog(context):
@@ -234,7 +234,7 @@ def _canonical_principles(context):
 
 
 def _obsolete_templates(context):
-    from check_docs import catalog_rows, read, CATALOG, obsolete_template_paths
+    from check_docs import read, obsolete_template_paths
     root = context.root
     try:
         if _catalog(context):
@@ -249,7 +249,7 @@ def _obsolete_templates(context):
 
 
 def _ledger(context):
-    from check_docs import catalog_rows, read, CATALOG, ledger_errors
+    from check_docs import read, ledger_errors
     root = context.root
     try:
         if _catalog(context):
@@ -264,7 +264,7 @@ def _ledger(context):
 
 
 def _markdown_links(context):
-    from check_docs import catalog_rows, read, CATALOG, README, local_links
+    from check_docs import read, CATALOG, README, local_links
     root = context.root
     try:
         if _catalog(context):
