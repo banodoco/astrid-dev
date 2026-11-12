@@ -1170,3 +1170,18 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Also ruled:**
   - A Fable spec lead is writing up the offline "dry pod" check: Codex exploration, then an Astra sense-check using Luna helpers. It delivers `briefs/dry-pod/plan.md` for cells.
   - Merged `r13/engine-failreason` `8b1e42e79` and `r13/fetch-stack` `300103c3d`. Compose is `11cf5544b`.
+
+## 13 Nov ~00:00 UTC: CI collection break; how the orchestrator works; stale PRs
+
+- **CI:** every unit shard on `int/r13-e51cfee3` and `58442e7a` failed at collection. `1a3a26d25` (cells preflight) added `tests/scripts/test_preflight.py`, which shares its basename with `tests/core/generation/test_preflight.py`, and neither directory has an `__init__.py`.
+  - The test lane renamed it (`71cdcb066`). Merged.
+  - **Head of record:** `int/r13-05346e9f`. CI 43332432526 was cancelled.
+  - A guard against duplicate basenames goes to the test lane.
+- **Owner (23:58), how the orchestrator works:**
+  - Farm work out, and check in once an hour (trigger "R13 hourly orchestrator check-in", :58).
+  - Lanes message only merge-ready SHAs or blockers, and settle test rows directly with each other.
+  - The advisor's dives move to every 6 hours.
+- **Owner, stale PRs:** bias toward keeping them.
+  - Close only the 13 whose heads are already in `main`.
+  - Keep the rest open with a deferral note.
+  - The auto-mode classifier refused the GitHub writes, so they wait on the owner's explicit go for these exact actions.
