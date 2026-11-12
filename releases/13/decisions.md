@@ -2,23 +2,20 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (16:16 UTC): read this first
+## NOW (17:09 UTC): read this first
 
-### Workstreams (orchestrator view; owner asked for every stream tracked here)
+### Workstreams
 | Stream | State | Owner | Next |
 |---|---|---|---|
-| **Stage 1 live proof** (`f9214240`): DONE, 1 of 5 | t2i PASS; TTS, SFX, edit and music failed, each with a fix in flight (rows below). Pod released; balance $95.86 (floor $67.41) | me | Stage 2 retest on a new build once the fixes merge |
-| Edit fix (keep-warm checkpoint rejects a success) | card with the machines manager | machines manager | merge, then Stage 2 |
-| Music fix (stale admitted digest), plus a CPU check over every template | Sol at high, `c-musicfix` | Sol, then me | review, commit, pin |
-| **Cells manager** (fork, started 16:42 at the owner's go) | Owns SFX (pass 2, structural), TTS, music, the combined VibeComfy branch `r13/cells-vc` and its pin, the log gaps (`tasks logs` default project; skill text), and Stage 2 preparation. Brief `briefs/wave3/cells-manager.md` | cells manager | Hands branches to me; I run Stage 2 (paid) |
-| SFX fix | pass 2, structural: one owner for the type vocabulary; offline identity for every pack (pass 1 found the lookup fails on 48 of 49 cache files) | cells manager | — |
-| TTS fix | Sol at high effort, `c-ttsfix-ag` plus `c-ttsfix-vc`; brief `live-s1-tts.md`; an upstream pin is preferred over the declared patch | Sol, then me | Review, commit, pin |
-| Machines redesign M1–M10 (IN the candidate) | M1 part b done (`bf3dd2f09`), in Astra review; M4 card 3 (paid expiry, plus the five `test_warm_session` failures R13 caused) on Sol | machines manager | Merge M1 into `r13/machines`, then M2 |
-| Engine layout and in-place upgrade (IN the candidate), plus T9 | A1–A3 final run; U1+U4 `8ac844bdc` in Astra review; U2 being reworked (one lock, fail fast); T9 (success runs return logs) added 16:15 | engine manager | Merge A1–A3, U1, U2 into `r13/engine-layout` |
-| VibeComfy declarations (T3) | DONE: `r13/music-declaration` `a8a7be7c`; 17 templates moved to drafts, none used by Astrid | me | Pin into the candidate together with the SFX and TTS fixes |
-| Test lane | Separate session `session_011EzfW2sWuWu9cBBoQkf385` (Opus), brief `releases/13/test-manager-brief.md`. CI on `int/r13` `f9214240` running; Lanes run failed (being compared) | test manager | First comparison; skills rule PR |
-| Candidate composition | Pending the lanes: VibeComfy pin (declarations, SFX, TTS), the machines and engine merges, App re-pin (`release` 13, `pin.mjs`), the R1-update proof row | me | After the lane merges |
-| astrid-dev | Plan 52 and the observations register on main (#566); Plan 50 revision and Plan 52 D1–D6 wait for the owner in another session | owner | — |
+| **Candidate** `r13/compose` `fc4b36d4` (also on `int/r13-next`) | f9214240 plus: Lanes pin fix, run-logs skip, T9, T9b (success logs, one merge path), G3 skips, TTS v1 (`pad_token_id` patch), log gaps (tasks default project, skill lines) | me | Fold in each lane merge; one push per CI run |
+| CI | `int/r13` f9214240: CI `43254543283` running (66 min; Lanes failed, fix merged). `int/r13-next` fc4b36d4: CI `43264364443` running. R12 shard-5 scratch baseline `43264595988` queued | test lane | First comparison when they land |
+| **Machines** (fork) | M1 part c (third run); K1 (the edit warm-checkpoint fix, Sol at high); M4 committed, five Astra findings including money (the paid expiry at create time) → card 4 queued. Nothing merged yet: the critical path | machines manager | Merge M1 the moment its final Astra check passes |
+| **Engine** (fork) | A1–A3 plus U1 merged locally `ba8f5ee5c` (not pushed; 56 old-layout test failures from an effort-none worker, being fixed by Sol at high in `c-lfix`). U2 round-2 rework (the lock file records the holder kind) | engine manager | Push `r13/engine-layout`; U2 as a second merge |
+| **Cells (fork here)** | SFX pass 3 (keep stored spellings; canonicalize comparisons through one owner) and music, both running at lower CPU priority | cells fork | Push `r13/sfxfix`, `r13/musicfix` |
+| **Cells session** `session_011EzfVzW8yjKXMxq4Drye89` (Opus, own CPU) | Pin card (VibeComfy `a8a7be7c` into Astrid from fc4b36d4, `r13/cells-pin`); TTS rework `r13/ttsfix-2` (table of dropped attributes; a meta-device model build under locked torch and transformers); preflight design | cells session | `r13/cells-vc` plus the pin |
+| **Test lane** `session_011EzfW2sWuWu9cBBoQkf385` | Rule PR #567 merged; skill PR #572 (`astrid-dev-green`) approved, merge on green; five R13 hand skips resolved | test manager | First comparison |
+| Stage 2 (paid) | After TTS, SFX, music and edit merge | me | Fresh 5090, new root `root-s2` |
+| astrid-dev | Plan 52 and the observations register on main; Plan 50 revision (recommend the CPU preflight as its core) and Plan 52 D1–D6 wait for the owner | owner | — |
 
 ### Rules in force
 - **Tests:** no worse than R12 `main`, test by test, on hosted `int/r13` CI. No local full suites. Managers run focused proofs only.
