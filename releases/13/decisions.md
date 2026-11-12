@@ -586,3 +586,29 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 - **Batch 5:**
   - TTS failed at fetch, integrity_failed (the expected patch refusal), and the pod was KEPT (v7l7yk2u75kkie).
   - SFX is running on the same warm pod.
+
+### 12:23 UTC — Gap reviews in; rulings
+**Keep-warm (Astra review-keep-warm.log, Luna inventory .md.out).** Ruled IN for pass 5 (brief `keep-warm5.md`, runs after pass 4):
+- a first-preparation failure on a reachable, exactly-owned pod with verified-stopped jobs → keep it `stale_after_failure`, re-prepare on the same pod;
+- the same on the 2nd..Nth failure; the validator requires stopped jobs for the stale state;
+- a source-digest-only difference → re-prepare, not release;
+- the 120 s verification limit → `verification_timeout` and keep, distinct from `paid_limit_exhausted`;
+- receipts name the acquired pod on preparation failure and show expiry, cost and preparation state when kept; recovery keeps the original cause; the `machines` row shows preparation state and a pending release cause.
+
+Ruled OUT for now: account/GPU/image/volume incompatibility, settlement-exception classification, retry ceiling, lifecycle utility pods.
+
+**REVIEW (owner):** host shutdown or restart releases every retained pod (`adapter.py:659` host_shutdown, `worker_owner.py:270` restart). By the letter of the owner rule that is an automatic termination. But nothing enforces idle or paid limits while the host is down, so keeping pods would let them bill unbounded.
+- **Recommendation:** a separate slice. Restart adopts a healthy pod with its saved deadlines (and releases it if they lapsed while the host was down). Graceful shutdown keeps releasing unless the owner prefers "keep and warn".
+
+**Declared patches (Astra review-declared-patches.log).** MISSING items to check against the v2 diff once the worker finishes:
+- declared vs realized (a clean upstream file must never print "verified");
+- `patches` carried only when name, url and commit are unchanged (upsert, `nodes lock`, finalize);
+- the workflow-ref path must not drop or transfer the declaration;
+- the witness cache keyed on the patch set;
+- doctor gets the same lock;
+- the asset_alignment path;
+- only unstaged ` M`, a regular tracked file, no symlinks, strict path forms;
+- the Astrid writer matches repo and commit and fails on ambiguity;
+- a successful restore's output is kept as a declared log.
+
+LATER: schema-evidence identity for schema-changing patches, `sha256_before` diagnostics, the attached release-attestation path, concurrent-writer atomicity, and the engine_runner base-bump hazard.
