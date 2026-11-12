@@ -2,17 +2,17 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (18:20 UTC, hourly check-in)
+## NOW (19:10 UTC, hourly check-in)
 
 | Item | State | Next |
 |---|---|---|
-| 1. Judge fixes | SFX `324f653f` + `r13/sfxfix-2` `6dda5ed5` (pushed) accepted; music `6c780a72` accepted; TTS `r13/ttsfix-3` review round 1 FAIL (2 blockers), fix card (Sol) running | Round 2 review on the fix diff, then hand over |
-| 2. `r13/cells-vc` + pin | Combined (music, SFX, identity rework, defaults, preflight marker), `cda0e248` local; proof rerun and narrower `make preflight` (Luna) running | Push, then re-pin from `r13/compose` |
+| 1. Judge fixes | Done: SFX and music in `r13/cells-vc`; TTS `fae4b09b` merged by the orchestrator; follow-up `r13/ttsfix-4` `5123240b` pushed | Hand `r13/ttsfix-4` with the next hand-over |
+| 2. `r13/cells-vc` + pin | VibeComfy `r13/cells-vc` `1463cb8e` (pushed): music, SFX and identity, defaults, preflight marker, recapture, POSIX paths, `--pack-identity-commits`, wan_animate to drafts. Final proof (Luna) running. Agent `r13/cells-vc-pin` `e6c4c811` (to `6aede014`) accepted; bump to `1463cb8e` (Luna) running | Hand both SHAs by 21:30 UTC |
 | 3. Log gaps | Done (orchestrator, `90ae9c31`) | — |
-| 4. Offline preflight | VibeComfy leg named (`preflight` marker); TTS leg in Agent `engine_deps`; Agent-side check of recipe core and pins waits for the recapture's selection input | Design note to the orchestrator once the recapture lands |
-| Recapture | `r13/oi-recapture` escalated to Sol, running | Merge into `r13/cells-vc` |
+| 4. Offline preflight gate | `r13/preflight` (Sol, high): gate plus per-cell evidence, CPU environment setup; merged the intermediate pin | Merge the final pin and catalog fix; real run; judge |
+| Catalog inputs | `r13/catalog-inputs` (Sol): 6 commits, final run in progress | Judge; unlist candidates as REVIEW |
 
-Heads: Agent `r13/compose` `5dae0cfe` (my branches are cut from `fc4b36d`); VibeComfy base `a8a7be7c`. Spend: none.
+Heads: Agent `r13/compose` `e489a207`; deadline: hand-over 21:30 UTC tonight if right (publication Sat 14 Nov midday). Spend: none.
 
 ## Entries
 
