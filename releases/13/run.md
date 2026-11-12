@@ -2,7 +2,7 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (21:35 UTC Thu 12 Nov): read this first
+## Now (22:45 UTC Thu 12 Nov): read this first
 
 ### Timeline to release: publish Saturday 14 Nov by 12:00 UTC (assumed UTC)
 | When (UTC) | Milestone | Owner | Status |
@@ -23,12 +23,12 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
 ### Streams
 | Stream | State |
 |---|---|
-| Candidate `r13/compose` `060a7555e` (comparison CI on frozen `int/r13-1f69f754`, running) | Since 20:45: SFX route repointed (`hunyuan-foley-local` → the template we proved), preflight gate plus `live_cells.json`, release-after-failure fix (truthful error, retry kept), exit-stall fix, **U2** (reason strings, network-mount rule, dead-owner handover), pod-log collection on failure, two catalog fixes. Boundary 101 passing |
-| Live | **BLOCKED.** Stage 2b (`3c111cbed`): the claim works live (5090, $1.39/h, 25 min stock wait), but the first engine start on every fresh pod fails with `endpoint_ownership`. The break is in f9214240..5cca0bca; suspect the engine-layout merge `913c6b8f` (engine lane bisecting on CPU). The rerun on U2 (`cc8bc0b8c`) is blocked: `machines setup` now returns `conflict` (new, 3c111cbed..cc8bc0b8c; machines and engine lanes on it). Spent tonight: $0.33. Balance $95.19 |
-| Machines (own session `…2mhfLHKp…`) | M1 merged. K1 fix round 2 (money bug). LT-a design round 2 (3 money holes), cut to 6 rows by the owner. M2a re-proof. Pod-side watchdog card (owner approved). Cut decision Fri 10:00: K1, M1 and M2 green on compose |
-| Cells (own session `…VzW8yjKX…`) | cells-vc frozen `b3f20f33`, pin merged. Preflight: fixing it to read one declared `scripts/live_cells.json`. Catalog contracts #342–#344 by the cut line, or unlisted |
-| Engine (fork, here) | U2 final round (Astra REWORK: 3 start/install fixes; no more rounds). #607 placement fix, then one Astra pass. Lint merged |
-| Test lane (own session `…sWuWu9cB…`) | W48 (stale tests + truthful release error + W33 reorder). Exit-stall fix (unbuffered output + hard exit with pytest's own status). Per-shard auto-attribution. Comparison head: the next freeze, which will carry the exit fix |
+| Candidate `r13/compose` `520803167` (comparison CI on `int/r13-1f69f754`; shards 1/6 near the limit) | Since 21:35: the **fresh-pod engine-start fix** (`8a425ee6b`), the pod watchdog, claim stock-wait fix + bound, setup error details, BLE comments, Lanes `-rA` + lifecycle env, urllib/fallback-hash/h3-helper test fixes, dry-run traceback fix, uncertain-stop custody fix, bridge logs (logs are outputs; selectors pick product outputs), objinfo via the VibeComfy API. Boundary 101 passing |
+| Live | Stage 2c confirmed the start failure live (`request_mismatch`). Stage 2e on the fix build: setup ok, but the claim was refused by the watchdog (`termination_denied`: the pod key can't terminate). Failed closed, 0 pods. **Waiting on PW-soft** (denied/unknown means host custody plus a warning; owner-aligned ruling), due about 23:10. Tonight $0.94; balance $94.83 |
+| Machines | M1 in. Pod watchdog in, with PW-soft due. Claim wait fixed and bounded. Ctrl-C cancel fixed (re-proving). M2b committed `0b2398a1f`, held: 16 test_generation_target failures being compared by id. K1 reconcile with compose reasons, due about 23:45. LT-a design done. Cut decision Fri 10:00 |
+| Cells | Preflight plus live_cells.json merged; SFX route repointed. VibeComfy fix for model placement (about 40 Lanes rows plus 3 windows_gpu) running, then one re-pin |
+| Engine (fork, here) | #607 review fix done (`daf973229`); journey card, then it lands ahead of M2. Fail-safe injection tests plus the doctor-schema env-var fix on `r13/engine-stopfix` |
+| Test lane | Shard-by-shard sorting of 1f69f754. Installer HOME isolation (test infra, owned). VIBECOMFY_SOURCE removed from the wrapper. Group D (R12 flake) to Plan 39. test_generation_target run locally on R12 and compose |
 | Advisor (own session `…4KxQbf3m…`) | Report in (18:21); actions taken |
 | Investigation | #595 warm machine, cold engine (models unloaded each job): Opus fork running |
 
