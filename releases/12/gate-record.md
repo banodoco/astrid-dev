@@ -135,7 +135,7 @@ Publishing follows the legacy path: Agent main, then Runtime main, then App main
 ### Post-check
 
 - Check the served release and tuple: `curl -sS https://astrid.haus/install-manifest.json | jq '{release, agent: .agent.sha, runtime: .runtime.sha}'`. Expect release `12`, Agent `0e1543e0da2215db9cb3320cfd1083174c3c62a9`, and Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`.
-- Check the served body hash: `curl -sS https://astrid.haus/install-manifest.json | sha256sum`; expect `{{manifest sha256}}`.
+- Check the served body hash: `curl -sS https://astrid.haus/install-manifest.json | sha256sum`; expect `1f3cd5b0b06579a035adf42e62e953edca07042554fd7e8af6f357a3e0bc69f1`.
 - Check the served-manifest canary; it is being diagnosed.
 
 If an agent session cannot merge to production because of permission or classifier refusal, Hannah runs the same three pushes, or merges the equivalent fast-forward PRs (`cand/29-r12` → `main`) in the GitHub UI, in the same order, then runs the post-check.
