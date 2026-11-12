@@ -1,6 +1,6 @@
 # Release 12 gate record
 
-State: DRAFT. Qualifying window started 12 Nov ~01:25Z on the tuple below; results pending.
+State: **GATE-GREEN** (12 Nov 04:31Z). Every gate item below is green or ruled on the frozen tuple; A-FROZEN at the same time.
 
 ## Tuple
 
@@ -52,13 +52,17 @@ Frozen Agent run: [43134432721](https://github.com/banodoco/astrid-agent/actions
   - **64 passed on R11 and failed on `c5370a86`.** The R12-introduced product regressions among them were fixed in `0e1543e0`: the `text` alias refused by schema lookup, add_text needing an optional pack, the pack recovery command (including `astrid packs` on the installed command), and the core pack-boundary ratchet. Also fixed: the test fixtures and teardown leaks those changes exposed.
   - **Delta `0e1543e0` against `c5370a86`:**
     - **60 of the 64 now pass.** Of the 4 left, 3 (`test_installer_platforms` no-systemd cases) also fail on R10, so they're pre-existing against R10. The fourth, `test_parent_clips::test_edit_on_a_mixed_timeline_edits_whichever_matched`, is test drift. It edits an `am-sprite` clip without the motion pack in that test's inventory, and the intended fail-closed refusal fires, printing the working install command. The fixture scope missed this file. Known issue; Plan 39.
-    - **New failing IDs (passed on `c5370a86`): 1.** `tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream` (darwin/Remotion lane): "candidate reconciliation deadline expired acquiring custody lock". The fix round touches no render or custody code. Attempt 2 result: {{AUDIO}}.
+    - **New failing IDs (passed on `c5370a86`): 1.** `tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream` (darwin/Remotion lane): "candidate reconciliation deadline expired acquiring custody lock". The fix round changes no execution or custody code. Its render edits (`remotion/run.py`, `storage.py`, `managed_timeline.py`, `_effect_registry.py`) only route alias maps through `clip_type_aliases`. **Attempt 2: PASSED.** In the same attempt `tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke`, which passed in attempt 1, failed with the identical custody-lock error. **Ruling: an intermittent pre-existing timing flake, not a regression.**
+      - The raising code, `_observation_guard` in `astrid/core/execution/custody_broker.py`, is darwin-only and deadline-based. It shipped in R11 (`62dbe56ea`) and is byte-identical in R11 `a105de3a4`, `c5370a86` and `0e1543e0`.
+      - Of 22 darwin jobs scanned since 9 Nov, 4 hit this error, each on exactly one test: `87d1fbbc4` (R12 lineage, before the fix round; the same `test_text_card_render_smoke`), an R13 rehearsal `bf3b6ba77` (a `test_process_group` test), and `0e1543e0` attempts 1 and 2 (a different render test each time).
+      - Every affected ID passes on another attempt on the same SHA.
+      - Recorded as a known issue; Plan 39.
     - **Coverage:** unit shard 5 was cancelled at the 2 h job limit, so 90 of `c5370a86`'s IDs have no CI result. They were run locally on both commits, with identical results (56 passed, 13 failed, 21 skipped) and no ID passing on the old candidate and failing on the new one. A local run is not CI-equivalent; recorded as such.
   - **No-baseline (131):** 115 are in shard 1, which has no baseline on any side. A local R11-against-candidate baseline showed them failing identically on R11, apart from one R12 teardown leak (fixed) and the new `test_windows_publish` (fixed).
   - **Non-pytest jobs:**
     - boundary, both release wheels and windows-native-and-installer pass.
     - `fast checks` is red at the mypy baseline gate. The count is identical on `c5370a86` and `0e1543e0` (current 2338 against baseline 2192), so the fix round adds 0 findings. The baseline is stale (Plan 39 AT2).
-    - darwin native: the same failures as R11, plus the audio-render ID above.
+    - darwin native: the same failures as R11, plus one custody-lock flake per attempt (above). Attempt 2 also re-ran unit shard 7: 93 failing IDs, all failing in attempt 1 too, so 0 new. The other attempt-2 shard reruns are re-checks of IDs already ruled in attempt 1; any result arriving after the gate goes in the decision log.
 
 ### 3. App Tests and Direct Journey
 
@@ -103,6 +107,9 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 - [#254](https://github.com/banodoco/astrid-app/issues/254): the recovery “Save them” action is a Plan 39 issue.
 - [#255](https://github.com/banodoco/astrid-app/issues/255): an upload in progress is lost at reload.
 - Installed-pair source closure (Plan 38, already shipped in R10 and R11): on a shipped install, the Agent and Runtime measure different source-closure digests, so a host-only custody spawn of an installed pack is refused as “differs from original launch”. R12 pins it with the strict Runtime xfail `installed-pair-source-closure` (darwin lane) and leaves the code unchanged.
+- Darwin custody-lock flake (pre-existing since R11 code `62dbe56ea`): on macOS, about 1 in 5 CI darwin jobs loses one render or process-group test to "candidate reconciliation deadline expired acquiring custody lock". It passes on rerun. Plan 39.
+- `tests/packs/timeline/test_parent_clips.py::test_edit_on_a_mixed_timeline_edits_whichever_matched` fails: test drift. The motion-fixture scope missed this file; the product's fail-closed refusal is correct. Plan 39.
+- Matrix `direct-linux-fresh` once showed the generic "Astrid updated. Reload to continue." in place of the release-transition line (shakedown on `8f1a19086`; green on the frozen tuple). Intermittent wording; Plan 39.
 
 ## Publication steps (prepared, not run)
 
