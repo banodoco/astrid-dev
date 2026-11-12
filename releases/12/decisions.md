@@ -213,3 +213,23 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - Direct Journey is dispatched on `7a971cea5`.
   - **REVIEW**: this documents an ordering dependency; it doesn't remove it. Making the suite order-independent is a Plan 39 follow-up.
   - The full R12 test-change range gets one more independent review before A-FROZEN.
+- 2026-11-12 00:08Z — **three-products table** (for the owner's scope view; this replaces the time-boxed message under the d285c34 rules). Integration head `7a971cea5`; latest full run 43120357069 on `48ec9bb70`.
+
+  | # | Test | State | Cause / ruling |
+  |---|---|---|---|
+  | 1 | concurrent edit (`:417`) | pass | test drift fixed |
+  | 2 | Runtime restart (`:611`) | pass | test drift fixed |
+  | 3 | M1 real gesture (`:1558`) | pass | |
+  | 4 | M2 real gate 5 (`:1691`) | pass | serial-seed drift fixed (5→0 reset, `e2d48f428` baseline) |
+  | 5 | M2 ordinary extension batch | expected failure, proven at marker | P39-R12-EXT-BATCH #250 (stale harness) |
+  | 6 | M2 manual video drop | expected failure, proven at marker | P39-R12-VIDEO-DROP #252, product: native video placement removed in `7b33f8f50` (in R10/R11). The fix is a candidate side track (below) |
+  | 7 | bootstrap actual consumer | pass | assertions restored; moved to run last (`7a971cea5`) |
+  | 8 | M1 real dependency conflict | failed on a project leak from 7 | fixed by order `7a971cea5`; DJ running |
+  | 9 | M2 native occurrence duplicate | not yet reached | P39-R12-DUP-SHOT #249; isolation run on `scratch/r12-iso` |
+  | 10 | M2 mixed editing | not yet reached | isolation run |
+  | 11 | render R, publish R+1 | not yet reached | P39-R12-TASK-SWAP #251; isolation run |
+  | 12 | empty bootstrap | not yet reached | isolation run |
+  | 13 | M2 native None single | pass | |
+  | 14 | M2 native None bulk | pass | |
+
+  Product bugs open in R12: none beyond the four named exceptions (#249 shared with R10/R11; #250 harness; #251 Agent gap shared with R10/R11; #252 owner-deferred).
