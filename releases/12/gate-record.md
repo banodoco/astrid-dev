@@ -64,7 +64,7 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 ### 4. Review
 
 - Agent candidate review range and verdict (no open blocker): the R12 fix round `c5370a86..0e1543e0` (merge of `r12/fix-round`) was reviewed commit by commit by independent read-only Astra reviewers: `a17e0555a` BLOCKER (recovery command) → fixed `cef4c2850`; `abd1886ee` NO BLOCKER (MEDIUM fixed `dc87e6230`); `abd1886ee..cef4c2850` BLOCKER (installed `astrid` lacked `packs`) → fixed `cafa71487`; `cafa71487` NO BLOCKER. Test-only commits were read by the manager. No blocker is open. The candidate's earlier range (`origin/main..c5370a86`) was reviewed before this round (see the decision log).
-- App candidate review range and verdict (no open blocker): `{{FILL}}`
+- App candidate review range and verdict (no open blocker): the R12 App delta was reviewed earlier (orchestrator-commissioned review of the App delta; see the decision log). Follow-ups after it were reviewed by independent read-only Astra reviewers: `2dc109bcc..ed9327947` BLOCKER ×2 → fixed `9afd4aaa6`, re-review NO BLOCKER; the VIDEO-DROP marker `48ec9bb70` BLOCKER → corrected `ebfc9a1b7`, second review NO BLOCKER. Later commits are test-only or mechanical, read by the manager under the owner's speed rule 3: `d31b976e1`, `7a971cea5`, `d9e2798d4`. Also the two App main merges (`acfe70e7b` and `3e53462f4`, already on main), the owner-requested copy change `d3e81f98e`, and the re-pin `237b28be9`. No blocker is open.
 
 ### 5. Runtime
 
