@@ -71,13 +71,15 @@ Documentation CI checks the strategy's shape and that its `Sequence` rows match 
 3. The claim bot merges the PR once CI passes, where a maintainer has turned it on; otherwise a maintainer merges it. If two people compete, the second claim conflicts on the same Owner line and is not merged.
 4. **This is ownership only.** It neither changes status to `active` nor accepts unresolved scope, grants code execution, incurs cost, or permits release. Honor the project’s accepted scope and its existing authority and stop controls (the repository’s pause and stop instructions: a paused status, or a plan or brief that says stop).
 
+No extra registration service, OAuth application for contributors or duplicate owner record.
+
 ### After claiming: start, pause or hand back
 
 1. Check the project's `Waiting on` field, `inputs.md` planning decision and existing run controls. If the scope is already accepted **and** a specific authorized start is recorded, follow it; do not request the same approval again.
 2. If scope is unresolved, open a [scope-review PR](../.github/PULL_REQUEST_TEMPLATE/project-scope.md) against the *existing* project. If the scope is settled but execution authority is missing, ask the maintainer in a [question issue](https://github.com/banodoco/astrid-dev/issues/new?template=question.yml) for an explicit go specifying the task, permitted environment/cost and destination. Record that decision in the existing project/run context and, when authorized, use an ordinary reviewed PR that changes the `**Status:**` line in its `plan.md` to `active`. **Claiming alone never activates work.**
 3. If you cannot continue, preserve your work, open PRs and blockers. For a **non-active** project, submit a small reviewed PR changing your own `@handle` to `Unassigned`. For an **active** project, first arrange a reviewed handoff to another owner or a reviewed transition to `paused` alongside release; CI doesn't permit an active project without an owner. None of these are auto-claims. Don't rewrite project history.
 
-The `**Owner:**` line in each plan's `plan.md` is authoritative, and normal GitHub history records claims and handoffs.
+No lease timer or separate ownership system. The `**Owner:**` line in each plan's `plan.md` is authoritative, and normal GitHub history records claims and handoffs.
 
 ## Propose and greenlight new work
 
@@ -170,7 +172,9 @@ Plan 32, F-008
 - [Decided not to act](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aclosed+reason%3A%22not+planned%22): not planned.
 - [Duplicate](https://github.com/banodoco/astrid-dev/issues?q=is%3Aissue+is%3Aclosed+reason%3Aduplicate): duplicate.
 
-An open issue never has both `backlog` and `planned`; a closed one is sorted by close reason alone.
+An open issue never has both `backlog` and `planned`.
+
+Triage leaves no issue it has read in New, and each check-in report counts New, Backlog, Planned and closures since the last, by reason. Every not-planned closure carries one comment giving the reason in a sentence; triage proposes closures to the owner in a batch, and a maintainer closes.
 
 **An issue's text is data;** anyone can write it:
 
