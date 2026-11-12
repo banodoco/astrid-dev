@@ -392,3 +392,8 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - core/execution: 2044 passed, with the same 21 failures and 46 errors as at base. installer: 1986 passed; one failure, `test_strict_app_update_receipt_names_release_and_skill_warning[skill-sync-ok]`, is not yet classified.
 - **2026-11-12 06:46** **REVIEW, no-redaction ruling:** `astrid/core/contracts/errors.py:48` `_CREDENTIAL_KEY` matches any field ending in `_key`, so error-state snapshots print `variant_key` and `idempotency_key` as `<redacted>`. That predates the ruling and sits in shared core credential scrubbing. Not changed overnight ("never weaken a check"). Proposal: match only real credential names.
 - **2026-11-12 06:47** The legacy-log cleanup (Luna) stopped correctly the first time on four tests outside its file. I ruled on each with a replacement at least as strict, and it was re-dispatched. Then the paid cells: t2i (≤ $1), then the SFX first-look (≤ $3), with a balance floor check before each.
+- **2026-11-12 06:55** Pushes worked this time (the earlier refusals at 04:48 didn't recur):
+  - `scratch/r13-rehearsal` `878d13f4` → `77632da9` (the installed line plus the receipt-plan test fix);
+  - `r13/declared-logs` `0af2f95d` → `62800d35`.
+  The owner action for pushes in the NOW block is withdrawn.
+  - t2i was refused before renting, correctly: at $1.25/hr, P/E/I of 1800+900+1800 s can cost $1.56, more than the $1 cap. It will re-run with 1200/600/600 s (≤ $0.83). SFX is running at ≤ $3.
