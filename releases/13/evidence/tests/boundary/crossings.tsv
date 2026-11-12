@@ -1,0 +1,74 @@
+owner	file:line	kind	token	introducing_commit	subject	fix_class	neutral_interface_group
+machines lane	astrid/core/execution/generic_host.py:2912	pack_name_literal	setup	e862934c	Merge PR #330 (fix/r12-n3) into fix/r12-autostart	(b)	neutral setup phase/reserved command vocabulary
+machines lane	astrid/core/execution/generic_host.py:2920	pack_name_literal	setup	e862934c	Merge PR #330 (fix/r12-n3) into fix/r12-autostart	(b)	neutral setup phase/reserved command vocabulary
+machines lane	astrid/core/execution/generic_host.py:6439	pack_name_literal	local	e75a5a8ee	Plan 32 T5c+T5d: which machine ran a job; warm reuse cleared when the pod dies	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/execution/generic_host.py:6439	pack_name_literal	local	e75a5a8ee	Plan 32 T5c+T5d: which machine ran a job; warm reuse cleared when the pod dies	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/execution/generic_host.py:12549	pack_name_literal	local	1ae020677	Carry resolved placement into managed generation	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/execution/generic_host.py:12847	pack_name_literal	local	2ac650593	Prepare managed engines on the trusted host before worker launch	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/execution/generic_host.py:7210	pack_import	astrid.packs.runpod.failure_receipt	09724310a	Receipt: not_collected marker, RunPod-only wiring, stage-forcing journeys	(b)	neutral execution failure receipt hook
+machines lane	astrid/core/execution/machine_run.py:23	pack_name_literal	local	b6c17c8fc	Plan 32 T5: RunPod as a remote machine through generation.machine	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/asset_alignment.py:272	pack_name_literal	local	593b33283	Engine receipts: one freshness check at every admission boundary; old custody handles kept	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/asset_alignment.py:105	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/canonical_pins.py:1	repo_pack_path	The one declaration of the engine pins: ``astrid/packs/runpod/pins.json``.\n\nVibeComfy, ComfyUI and runpod-lifecycle are declared there and nowhere else\nthat the Agent can read at runtime. The RunPod recipe binds the file by digest,\nso reading it through that binding is the single point where a pin is resolved.\nFiles that must stay literal (``pyproject.toml``, the second pin file, the App\ninstall manifest) are checked against it by\n``tests/core/generation/test_pin_single_source.py``; the App checks the manifest\nwith ``scripts/installer/pin.mjs --check``, which reads this same file.\n	c4ee7ff13	Pins: one canonical declaration (runpod/pins.json) with a check against every literal copy	(b)	neutral engine pin/resource registry
+engine lane	astrid/core/generation/canonical_pins.py:18	repo_pack_path	astrid/packs/runpod/pins.json	c4ee7ff13	Pins: one canonical declaration (runpod/pins.json) with a check against every literal copy	(b)	neutral engine pin/resource registry
+engine lane	astrid/core/generation/cli.py:739	pack_import	astrid.packs.runpod	3bcd524e3	Add machine phase timing, shared verified fetch, and local failure receipt	(b)	neutral machine operation/capability dispatch API
+engine lane	astrid/core/generation/cli.py:777	pack_import	astrid.packs.runpod.machine	a284d16a6	Fix generation-side F401 and I001 lint findings	(b)	neutral machine operation/capability dispatch API
+engine lane	astrid/core/generation/cli.py:810	pack_import	astrid.packs.runpod.machine	80bbf6904	Keep verified RunPod machines after failed jobs	(b)	neutral machine operation/capability dispatch API
+engine lane	astrid/core/generation/cli.py:504	pack_name_literal	local	edf9b5928	Plan 32 T4g: the local run path is complete (align modes, --job form, progress)	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/engine_bootstrap.py:36	repo_pack_path	astrid/packs/wan2gp/extensions/generation.engine/wan2gp.yaml	a45dd06c4	Plan 32 T2b: one base engine keyed comfyui	(b)	engine contribution/resource discovery API
+engine lane	astrid/core/generation/engine_endpoint.py:367	pack_name_literal	local	593b33283	Engine receipts: one freshness check at every admission boundary; old custody handles kept	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/engine_local_server.py:49	pack_name_literal	local	39fa9ed23	Plan 32 T4g: move the server start-or-reuse out of the bootstrap closure	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/engine_local_server.py:53	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/engine_local_server.py:55	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/engine_readiness.py:747	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/engine_startup.py:180	pack_name_literal	local	593b33283	Engine receipts: one freshness check at every admission boundary; old custody handles kept	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/managed_preparation.py:156	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/managed_preparation.py:158	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/managed_preparation.py:267	pack_name_literal	local	2ac650593	Prepare managed engines on the trusted host before worker launch	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/managed_preparation.py:354	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/managed_preparation.py:356	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:227	pack_import	astrid.packs.runpod.machine	e75a5a8ee	Plan 32 T5c+T5d: which machine ran a job; warm reuse cleared when the pod dies	(b)	neutral machine operation/capability dispatch API
+engine lane	astrid/core/generation/placement.py:23	pack_name_literal	local	cef4da11e	Plan 32 T3: add frozen Placement and its resolution tests	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:67	pack_name_literal	local	cef4da11e	Plan 32 T3: add frozen Placement and its resolution tests	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:80	pack_name_literal	local	cef4da11e	Plan 32 T3: add frozen Placement and its resolution tests	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:135	pack_name_literal	local	cd27ed9d7	Plan 32 T3b: one placement decision site; explicit local never reaches attached ComfyUI	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:150	pack_name_literal	local	cef4da11e	Plan 32 T3: add frozen Placement and its resolution tests	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:151	pack_name_literal	local	cef4da11e	Plan 32 T3: add frozen Placement and its resolution tests	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:166	pack_name_literal	local	cd27ed9d7	Plan 32 T3b: one placement decision site; explicit local never reaches attached ComfyUI	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:244	pack_name_literal	local	cef4da11e	Plan 32 T3: add frozen Placement and its resolution tests	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:26	pack_name_literal	runpod	cef4da11e	Plan 32 T3: add frozen Placement and its resolution tests	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:101	pack_name_literal	runpod	e26c4bd09	fix(generation): recognize mapped RunPod placement for recovery	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:103	pack_name_literal	runpod	e26c4bd09	fix(generation): recognize mapped RunPod placement for recovery	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:103	pack_name_literal	runpod	e26c4bd09	fix(generation): recognize mapped RunPod placement for recovery	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/placement.py:225	pack_name_literal	runpod	e75a5a8ee	Plan 32 T5c+T5d: which machine ran a job; warm reuse cleared when the pod dies	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/settings.py:204	pack_name_literal	runpod	ee3015a5a	Plan 32 T6d: default entries are data; generation settings document in the Runtime	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/settings.py:204	pack_name_literal	runpod	ee3015a5a	Plan 32 T6d: default entries are data; generation settings document in the Runtime	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/settings.py:205	pack_name_literal	runpod	ee3015a5a	Plan 32 T6d: default entries are data; generation settings document in the Runtime	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/settings.py:205	pack_name_literal	runpod	ee3015a5a	Plan 32 T6d: default entries are data; generation settings document in the Runtime	(b)	neutral placement vocabulary/API
+engine lane	astrid/core/generation/targets.py:301	pack_name_literal	local	993fd926e	Readers of an installed engine build their plan from its receipt	(b)	neutral placement vocabulary/API
+test manager	astrid/core/hivemind/executors/search/run.py:178	pack_name_literal	setup	3e551fde	worker-env setup also fetches runpod-lifecycle at its pin	(b)	neutral setup phase/reserved command vocabulary
+machines lane	astrid/core/machines_cli.py:23	pack_import	astrid.packs.runpod.machine	e75a5a8ee	Plan 32 T5c+T5d: which machine ran a job; warm reuse cleared when the pod dies	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:96	pack_import	astrid.packs.runpod.target_selection	7d8239a64	Add machine keep CLI with paid cap	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:134	pack_import	astrid.packs.runpod.target_selection	7d8239a64	Add machine keep CLI with paid cap	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:212	pack_import	astrid.packs.runpod.target_selection	c0f505d4d	Add paid manual RunPod machine claims	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:244	pack_import	astrid.packs.runpod.target_selection	c0f505d4d	Add paid manual RunPod machine claims	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:329	pack_import	astrid.packs.runpod.target_selection	4960d98d2	Complete fresh RunPod machine setup	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:348	pack_import	astrid.packs.runpod	748625413	Add guided RunPod machine setup	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:349	pack_import	astrid.packs.runpod.worker_owner	a284d16a6	Fix generation-side F401 and I001 lint findings	(b)	neutral machine operation/capability dispatch API
+machines lane	astrid/core/machines_cli.py:520	pack_name_literal	setup	748625413	Add guided RunPod machine setup	(b)	neutral setup phase/reserved command vocabulary
+machines lane	astrid/core/machines_cli.py:553	pack_name_literal	setup	748625413	Add guided RunPod machine setup	(b)	neutral setup phase/reserved command vocabulary
+machines lane	astrid/core/machines_cli.py:71	pack_name_literal	runpod	8f2a12303	Bind machine release to requested pod through retained owner	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/machines_cli.py:217	pack_name_literal	runpod	c0f505d4d	Add paid manual RunPod machine claims	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/machines_cli.py:295	pack_name_literal	runpod	4960d98d2	Complete fresh RunPod machine setup	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/machines_cli.py:335	pack_name_literal	runpod	748625413	Add guided RunPod machine setup	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/machines_cli.py:353	pack_name_literal	runpod	748625413	Add guided RunPod machine setup	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/machines_cli.py:457	pack_name_literal	runpod	3ce1c9709	Preserve unrestricted setup and protect provider errors	(b)	neutral placement vocabulary/API
+machines lane	astrid/core/machines_cli.py:455	capability_id	runpod.setup	3ce1c9709	Preserve unrestricted setup and protect provider errors	(b)	neutral machine operation/capability dispatch API
+test manager	astrid/omp_agent.py:39	pack_name_literal	setup	3e551fde	worker-env setup also fetches runpod-lifecycle at its pin	(b)	neutral setup phase/reserved command vocabulary
+test manager	astrid/sdk/generation.py:313	pack_import	astrid.packs.runpod.target_selection	16ffaa601	Wait for RunPod capacity within explicit paid policy	(b)	neutral machine operation/capability dispatch API
+test manager	astrid/sdk/generation.py:377	pack_import	astrid.packs.runpod.target_selection	d3c440236	Add explicit paid keep for owned RunPod leases	(b)	neutral machine operation/capability dispatch API
+test manager	astrid/sdk/generation.py:389	pack_import	astrid.packs.runpod.target_selection	c0f505d4d	Add paid manual RunPod machine claims	(b)	neutral machine operation/capability dispatch API
+test manager	astrid/sdk/generation.py:1140	pack_import	astrid.packs.runpod.target_selection	16ffaa601	Wait for RunPod capacity within explicit paid policy	(b)	neutral machine operation/capability dispatch API
+test manager	astrid/sdk/generation.py:356	capability_id	runpod.claim	c0f505d4d	Add paid manual RunPod machine claims	(b)	neutral machine operation/capability dispatch API
+test manager	astrid/sdk/invocation.py:3415	capability_id	runpod.claim	c0f505d4d	Add paid manual RunPod machine claims	(b)	neutral machine operation/capability dispatch API
+test manager	astrid/sdk/invocation.py:3413	pack_name_literal	runpod	c0f505d4d	Add paid manual RunPod machine claims	(b)	neutral placement vocabulary/API

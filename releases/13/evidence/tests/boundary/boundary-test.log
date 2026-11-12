@@ -1,0 +1,61 @@
+$ timeout 900 bash /home/user/astrid-dev/env/agent-pytest.sh -q -rA -o faulthandler_timeout=300 tests/test_core_pack_boundary_guard.py::test_core_pack_boundary_ratchet_holds
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________ test_core_pack_boundary_ratchet_holds _____________________
+
+    def test_core_pack_boundary_ratchet_holds() -> None:
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "scripts" / "check_core_pack_boundary.py"), "--check"],
+            cwd=ROOT, capture_output=True, text=True, timeout=300,
+        )
+>       assert result.returncode == 0, result.stdout + result.stderr
+E       AssertionError: core pack-boundary ratchet grew:
+E           astrid/core/execution/generic_host.py: pack_import 'astrid.packs.runpod.failure_receipt' x1
+E           astrid/core/execution/generic_host.py: pack_name_literal 'local' x4
+E           astrid/core/execution/generic_host.py: pack_name_literal 'setup' x2
+E           astrid/core/execution/machine_run.py: pack_name_literal 'local' x1
+E           astrid/core/generation/asset_alignment.py: pack_name_literal 'local' x2
+E           astrid/core/generation/canonical_pins.py: repo_pack_path 'The one declaration of the engine pins: ``astrid/packs/runpod/pins.json``.
+
+VibeComfy, ComfyUI and runpod-lifecycle are declared there and nowhere else
+that the Agent can read at runtime. The RunPod recipe binds the file by digest,
+so reading it through that binding is the single point where a pin is resolved.
+Files that must stay literal (``pyproject.toml``, the second pin file, the App
+install manifest) are checked against it by
+``tests/core/generation/test_pin_single_source.py``; the App checks the manifest
+with ``scripts/installer/pin.mjs --check``, which reads this same file.
+' x1
+E           astrid/core/generation/canonical_pins.py: repo_pack_path 'astrid/packs/runpod/pins.json' x1
+E           astrid/core/generation/cli.py: pack_import 'astrid.packs.runpod' x1
+E           astrid/core/generation/cli.py: pack_import 'astrid.packs.runpod.machine' x2
+E           astrid/core/generation/cli.py: pack_name_literal 'local' x1
+E           astrid/core/generation/engine_bootstrap.py: repo_pack_path 'astrid/packs/wan2gp/extensions/generation.engine/wan2gp.yaml' x1
+E           astrid/core/generation/engine_endpoint.py: pack_name_literal 'local' x1
+E           astrid/core/generation/engine_local_server.py: pack_name_literal 'local' x3
+E           astrid/core/generation/engine_readiness.py: pack_name_literal 'local' x1
+E           astrid/core/generation/engine_startup.py: pack_name_literal 'local' x1
+E           astrid/core/generation/managed_preparation.py: pack_name_literal 'local' x5
+E           astrid/core/generation/placement.py: pack_import 'astrid.packs.runpod.machine' x1
+E           astrid/core/generation/placement.py: pack_name_literal 'local' x8
+E           astrid/core/generation/placement.py: pack_name_literal 'runpod' x5
+E           astrid/core/generation/settings.py: pack_name_literal 'runpod' x4
+E           astrid/core/generation/targets.py: pack_name_literal 'local' x1
+E           astrid/core/hivemind/executors/search/run.py: pack_name_literal 'setup' x1
+E           astrid/core/machines_cli.py: capability_id 'runpod.setup' x1
+E           astrid/core/machines_cli.py: pack_import 'astrid.packs.runpod' x1
+E           astrid/core/machines_cli.py: pack_import 'astrid.packs.runpod.machine' x1
+E           astrid/core/machines_cli.py: pack_import 'astrid.packs.runpod.target_selection' x5
+E           astrid/core/machines_cli.py: pack_import 'astrid.packs.runpod.worker_owner' x1
+E           astrid/core/machines_cli.py: pack_name_literal 'runpod' x6
+E           astrid/core/machines_cli.py: pack_name_literal 'setup' x2
+E           astrid/omp_agent.py: pack_name_literal 'setup' x1
+E           astrid/sdk/generation.py: capability_id 'runpod.claim' x1
+E           astrid/sdk/generation.py: pack_import 'astrid.packs.runpod.target_selection' x4
+E           astrid/sdk/invocation.py: capability_id 'runpod.claim' x1
+E           astrid/sdk/invocation.py: pack_name_literal 'runpod' x1
+E       assert 1 == 0
+
+ tests/test_core_pack_boundary_guard.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_core_pack_boundary_guard.py::test_core_pack_boundary_ratchet_holds
+1 failed in 4.54s

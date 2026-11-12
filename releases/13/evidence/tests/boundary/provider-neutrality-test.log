@@ -1,0 +1,22 @@
+$ timeout 900 bash /home/user/astrid-dev/env/agent-pytest.sh -q -rA -o faulthandler_timeout=300 tests/test_core_provider_neutrality.py::test_provider_and_engine_mentions_in_core_do_not_grow
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_provider_and_engine_mentions_in_core_do_not_grow _____________
+
+    def test_provider_and_engine_mentions_in_core_do_not_grow():
+        counts = {term: 0 for term in BASELINE}
+        for path in CORE.rglob("*.py"):
+            source = path.read_text(encoding="utf-8")
+            for term in counts:
+                counts[term] += len(re.findall(re.escape(term), source, flags=re.IGNORECASE))
+        print(f"core provider/engine mention counts: {counts}")
+>       assert all(counts[term] <= baseline for term, baseline in BASELINE.items())
+E       assert False
+E        +  where False = all(<generator object test_provider_and_engine_mentions_in_core_do_not_grow.<locals>.<genexpr> at 0x7f58c5212f80>)
+
+tests/test_core_provider_neutrality.py:18: AssertionError
+----------------------------- Captured stdout call -----------------------------
+core provider/engine mention counts: {'runpod': 306, 'comfy': 1206}
+=========================== short test summary info ============================
+FAILED tests/test_core_provider_neutrality.py::test_provider_and_engine_mentions_in_core_do_not_grow
+1 failed in 0.39s
