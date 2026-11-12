@@ -847,3 +847,5 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Cut-line check Friday 18:00 UTC:** if the machines core isn't merged and reviewed, ship without the new command line.
   - **M11** (RunPod code into the pack through the existing seam) is a stretch for Friday, if machines is green early; otherwise the first card after R13.
   - **Saturday about 06:00:** freeze; the binding CI comparison, the final live proof, the App re-pin and the R1-update proof; publish by about 11:00.
+- **18:46 UTC Core neutrality green:** merged the vocabulary scanner fix (`2e47f694`) and the owner-ruled one-time RunPod baseline (`66840ea4`; each entry notes the ruling and M11). With bootstrap `4c6d52482` removing the wan2gp path, `check_core_pack_boundary.py --check` passes (101 findings; the baseline only shrinks) and provider neutrality passes. Direction to record on astrid-dev main at release close: M11, RunPod operator code into the pack through `generation.machine`, as the first card after R13 in Plan 40.
+- Also merged: engine bootstrap (the closure derived from recipe seams; limit 96 KiB, with its reason recorded). New frozen CI head pushed.
