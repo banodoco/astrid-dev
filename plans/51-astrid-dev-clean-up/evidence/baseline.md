@@ -2,6 +2,8 @@
 
 [Plan](../plan.md) · [Card](../tasks.md#cu-1) · [Inputs](../inputs.md)
 
+The third part of the baseline, the rules written in more than one place, is in [baseline-rules.md](baseline-rules.md).
+
 Base commit: `195586cc009fa79d2e18ada4c9b14ec165ad9b8d` (`main`, "chore(generated): refresh views for b739875"). Line numbers below are at this commit, not at `1826336`, which the plan's cards cite.
 
 ## 1. The count
