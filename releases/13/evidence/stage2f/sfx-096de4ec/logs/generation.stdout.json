@@ -1,0 +1,15 @@
+{
+  "entry": null,
+  "fixes": [],
+  "issues": [
+    {
+      "code": "generation_failed",
+      "details": {},
+      "message": "cannot resolve bare ready model requirement by exact name: 'hunyuan_foley/vae_128d_48k.pth'",
+      "severity": "error"
+    }
+  ],
+  "status": "blocked",
+  "target": null,
+  "task_id": null
+}

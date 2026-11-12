@@ -1,0 +1,150 @@
+{
+  "cause": {
+    "category": "execution",
+    "code": "generation_failed",
+    "exception": "MachineError",
+    "exit_code": 2
+  },
+  "collection": {
+    "bytes": 8036,
+    "cap_bytes": 268435456,
+    "reason": null,
+    "state": "collected"
+  },
+  "files": [],
+  "identity": {
+    "attempt_id": "5cd13ad1a08b454ba8389f78994f3cf5",
+    "generation": 4,
+    "gpu": "RTX 5090",
+    "invocation_id": "096de4ecd80b48fa8ceb50abf71f3c03:5cd13ad1a08b454ba8389f78994f3cf5:1",
+    "lease": "7cf2a2bdeb2649879b5f925162d3fdea",
+    "machine_id": "nk9ukqpoy7zwme",
+    "placement": "runpod",
+    "pod_source_digest": null,
+    "remote_job_id": "87b7ea095dbe407ca5b387950617433a",
+    "run_id": "57f2741de83b4587a36979cac5e46442",
+    "task_id": "096de4ecd80b48fa8ceb50abf71f3c03",
+    "warm": true
+  },
+  "logs": [
+    {
+      "bytes": 0,
+      "file": "engine.log",
+      "missing": false,
+      "name": "engine",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/096de4ecd80b48fa8ceb50abf71f3c03/logs/engine.log",
+      "role": "engine",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/root/astrid/engines/comfyui/runtime/out/sessions/comfyui-logs/engine.log",
+      "truncated": false
+    },
+    {
+      "bytes": 7716,
+      "file": "engine.startup.log",
+      "missing": false,
+      "name": "engine.startup",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/096de4ecd80b48fa8ceb50abf71f3c03/logs/engine.startup.log",
+      "role": "engine",
+      "sha256": "2e7ec0ccda6256271e9bdbcc1a81ffc6b0342009a4ecd7767946406cd84e7923",
+      "source": "/root/astrid/engines/comfyui/runtime/out/sessions/comfyui-logs/engine.log",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "job.stdout.log",
+      "missing": false,
+      "name": "job.stdout",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/096de4ecd80b48fa8ceb50abf71f3c03/logs/job.stdout.log",
+      "role": "stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/workspace/.astrid-jobs/87b7ea095dbe407ca5b387950617433a/stdout",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "job.stderr.log",
+      "missing": false,
+      "name": "job.stderr",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/096de4ecd80b48fa8ceb50abf71f3c03/logs/job.stderr.log",
+      "role": "stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/workspace/.astrid-jobs/87b7ea095dbe407ca5b387950617433a/stderr",
+      "truncated": false
+    },
+    {
+      "bytes": 320,
+      "file": "generation.stdout.json",
+      "missing": false,
+      "name": "generation.stdout",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/096de4ecd80b48fa8ceb50abf71f3c03/logs/generation.stdout.json",
+      "role": "stdout",
+      "sha256": "5ae49133d58ceaf6a24d154a9489659c0bd2051b6349dd5fecb5eb63dff67c11",
+      "source": "/root/astrid/runs/57f2741de83b4587a36979cac5e46442/result.json",
+      "truncated": false
+    }
+  ],
+  "machine": {
+    "after": "kept",
+    "cost_usd": 0.6995336379985013,
+    "expires_at": 1794528299.8754995,
+    "preparation_state": "prepared",
+    "release_at": 1794526501.45543,
+    "release_reason": null
+  },
+  "message": "The generation failed while running on the machine.",
+  "outcome": "failed",
+  "phase": "fetch",
+  "receipt_id": "de83973e0814472bbfd1ebbce6d0cb70",
+  "schema": "astrid.generation.failure-receipt.v1",
+  "stage": "execution",
+  "stage_basis": "controller_step",
+  "timing": {
+    "phases": {
+      "capacity_wait": null,
+      "collection": {
+        "end": 1794526468.2549987,
+        "seconds": 4.723,
+        "start": 1794526463.5316505
+      },
+      "execution": {
+        "end": 1794526462.166897,
+        "seconds": 103.047,
+        "start": 1794526359.1195645
+      },
+      "idle": null,
+      "paid_clock": {
+        "end": 1794526501.45543,
+        "seconds": 1811.742,
+        "start": 1794524689.713484
+      },
+      "preparation": {
+        "end": 1794526336.5108905,
+        "seconds": 15.941,
+        "start": 1794526320.5697207
+      },
+      "release": {
+        "end": 1794526501.45543,
+        "seconds": 33.2,
+        "start": 1794526468.2551131
+      }
+    },
+    "pod_phases": [
+      {
+        "at": 1794526411.503077,
+        "phase": "prepare"
+      }
+    ],
+    "schema": "astrid.generation.phase-timing.v1",
+    "stamps": {
+      "claimed_at": 1794526320.5697176,
+      "collection_ended_at": 1794526468.2549987,
+      "collection_started_at": 1794526463.5316505,
+      "job_ended_at": 1794526462.166897,
+      "job_started_at": 1794526359.1195645,
+      "preparation_ended_at": 1794526336.5108905,
+      "preparation_started_at": 1794526320.5697207,
+      "release_started_at": 1794526468.2551131,
+      "released_at": 1794526501.45543
+    }
+  }
+}
