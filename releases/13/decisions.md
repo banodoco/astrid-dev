@@ -1133,3 +1133,5 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Then tts, sfx, music and edit on the same pod (`stage2g.sh`, which releases the pod on exit).
   - Balance $94.44.
 - **Open PRs:** the IN set is done. #293 is ported, #602 and #604 are merged, and VibeComfy #165/#166 and Agent #341 are already in the candidate. Owner calls pending: #346 (recommend AFTER), closing the 17 stale PRs, and telling the deferred contributors.
+- **23:31 REVIEW (test scope), LT wiring fixtures:** I uphold the machines ruling. Three tests (`test_acquisition_catalog_id::test_catalog_id_survives_display_label_in_acquisition_and_reconciliation`, and `test_provider_gate_review`'s `_fresh_acquisition` cases) built an `allocation_ready` attempt with no paid limits and no deadline. No product path does that after M2, because every create comes through a claim with `--max-usd`. So the fixtures may carry realistic limits and a deadline, setup only, with every assertion unchanged.
+  - **Condition:** LT names, or adds, a test that an attempt without paid limits or a deadline can't reach `allocation_ready` or create, and is refused with a reason.
