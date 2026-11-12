@@ -345,3 +345,17 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - `tests/packs/runpod`: 989 passed against 978 at `0af2f95d`, with no new failures. The remaining failures and errors come from this venv (no `vibecomfy`) and exist at the base. Ruff 2127.
   - **REVIEW / permission:** the push of `r13/declared-logs` was refused by the auto-mode classifier (external system write) twice, including the plain-URL form. Logged; continuing locally (the integration, reinstall and live test can all run from local branches). The owner needs to allow pushes to `r13/*` or push `r13/declared-logs` (`80a437c2`) themselves.
   - a2 (third try, Terra) returned with the live engine log. I replaced its thread-local side channel with an explicit `CommandRequest.output_log`, so the launch request says where its output goes, and the launch test now exercises that handoff through the real `_command`. Engine-neutral path `<root>/runtime/out/sessions/<engine>-logs/engine.log`.
+- **2026-11-12 05:10** Integration, continued.
+  - a2 committed as `378f7eea` on local `r13/dl-a2`, after two manager fixes:
+    - I first put the log path on `CommandRequest`, but that broke `test_protocol_shapes_exactly_match_v1`, because `CommandRequest` is a wire contract. The path is now passed explicitly instead, `spawn(request, output_log=path)` → `_Owned` → `_Output`, with no thread-local and no protocol change.
+    - Fixed two flaky tests: with `-u`, `print` writes the text and the newline separately, so two streams sharing one log interleave mid-line. Each test child now writes a line in one call. 15 of 15 runs pass. Custody 76 passed, ruff 2127.
+  - VibeComfy pinned to `88cff6d5` (vc1 and vc2, already on origin) with `scripts/vibecomfy_pin.py`, which also updates the pin and recipe digests, plus the three test literals: `7ac360a9`. The pin suites match the base exactly (541 passed on both).
+  - `r13/declared-logs` is at `c05e5e31` locally (a2 merged). a3 (Luna) and e2e (Terra) are running.
+  - e2e stopped the first time, overzealously, on the legacy `test_failure_logs.py`. Ruling: e2e adds one new file and doesn't replace that behaviour; the cleanup task owns retiring it.
+  - New rehearsal, local clone `c-reh`: `878d13f4` plus ratchet, receiptplan, C1 core, C1 task 2, setup fixes, G4 follow-ups and declared logs.
+    - The only conflicts were additive (installer `backend.py`, `tools.py` and `test_installer_sources.py`), and both sides were kept. At install, the lifecycle pin check runs before the VibeComfy pin check.
+    - The broad suites are running against base `878d13f4`.
+  - **REVIEW** C1 task 1 is parked (`/home/user/wt/briefs/parked-c1t1.diff`) and not merged.
+    - Its per-step install-unverified labels are good, but it narrows `_safe_label` to an allowlist that turns any other label into "withheld". That is redaction, against the owner's ruling, and would hide a novel engine error code.
+    - Rework later: keep the labels and drop the allowlist.
+  - The reinstall will use a manifest with the Agent `repo` pointing at the local rehearsal clone; the product supports it, and the controller ships that source to the pod. So the refused push does not block the live test.
