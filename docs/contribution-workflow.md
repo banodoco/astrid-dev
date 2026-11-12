@@ -7,7 +7,7 @@
 | You want to… | Action | Approval boundary |
 | --- | --- | --- |
 | Fix a bug or small issue | Search/open an [Astrid-dev issue](https://github.com/banodoco/astrid-dev/issues) and submit a focused product PR | Reproduction, actual proof and appropriate product PR review; no project pack |
-| Take on an existing project | Claim one `queued` and `Unassigned` project through a PR that changes only the `**Owner:**` line in its `plan.md` | **Claim may auto-merge.** It gives ownership, not execution authority |
+| Take on an existing project | Claim one `queued` and `Unassigned` project through a PR that changes the `**Owner:**` line in its `plan.md` and carries the regenerated `plans/index.md` | **A maintainer merges the claim.** It gives ownership, not execution authority |
 | Propose new substantial work | Open a [project proposal issue](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), then a reviewed scope PR | Maintainer accepts the new scope and project pack |
 | Submit project work | Open product PRs; optionally open an Astrid-dev implementation review PR | An owner’s PR is **queued for review**, not auto-approved |
 | Finish a project | Open an Astrid-dev completion PR linking integrated evidence | Independent completion review and authorized merge |
@@ -72,14 +72,14 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 **Safe publishing boundary:** drafts (including future numbered releases) can land on `main` with no complete pins; documentation CI validates their structure. Plan 31 implements a separate fail-closed owner-approved Draft→Final transition with pinned commits, manifest checks and immutable history. A strategy edit must never publish a release. Keep the overview short; the reasoning is in the release file and linked plan/gap documents.
 
-## Claim a project without waiting for a maintainer
+## Claim a project
 
 1. Find an existing `queued`, `Unassigned` [catalog project](../plans/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.
-2. On GitHub, open that project's `plans/<id>/plan.md` and edit it (fork if needed): change **only its Owner line** from `**Owner:** Unassigned` to `**Owner:** @GitHubUsername`, with your own username, and no other line or file. Open a PR using [the claim template](../.github/PULL_REQUEST_TEMPLATE/claim.md).
-3. When configured, the protected claim bot verifies the authenticated PR author, one-line change, permitted status, successful documentation CI and that the project's `plan.md` on live `main` has not changed since the PR's base. It then automatically squash-merges and replies with next steps. If two people compete, the second claim fails closed.
+2. In a clone (fork if needed), open that project's `plans/<id>/plan.md` and change **only its Owner line** from `**Owner:** Unassigned` to `**Owner:** @GitHubUsername`, with your own username. Then run `python3 scripts/astrid_dev.py sync` and commit the regenerated `plans/index.md` with it; documentation CI fails a claim without it. Change nothing else by hand. Open a PR using [the claim template](../.github/PULL_REQUEST_TEMPLATE/claim.md).
+3. A maintainer merges the PR. The claim bot is not on for this form yet, because it merges only one-file changes; that changes when the generated-file refresh job lands. If two people compete, the second claim conflicts on the same Owner line and is not merged.
 4. **This is ownership only.** It neither changes status to `active` nor accepts unresolved scope, grants code execution, incurs cost, or permits release. Honor the project’s accepted scope and existing authority/STOP controls.
 
-If the safe claim bot is not enabled, the **same PR** can be merged by a maintainer. No extra registration service, OAuth application for contributors or duplicate owner record.
+No extra registration service, OAuth application for contributors or duplicate owner record.
 
 ### After claiming: start, pause or hand back
 
