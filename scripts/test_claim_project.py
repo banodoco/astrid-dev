@@ -130,10 +130,13 @@ class ClaimTests(unittest.TestCase):
     def test_duplicate_header_owner_at_base_or_head_is_refused(self):
         # Cover an invalid base, an invalid head, and duplicate fields shared by
         # both versions whose only differing line is the apparent owner claim.
-        duplicate_base = BASE.replace("## Scope", "**Owner:** Unassigned\n## Scope")
-        duplicate_head = CLAIMED.replace("## Scope", "**Owner:** @casey\n## Scope")
+        duplicate_base = BASE.replace("**Owner:** Unassigned\n\n",
+                                      "**Owner:** Unassigned\n**Owner:** Unassigned\n")
+        duplicate_head = CLAIMED.replace("**Owner:** @casey\n\n",
+                                         "**Owner:** @casey\n**Owner:** @casey\n")
         for before, after in ((duplicate_base, CLAIMED), (BASE, duplicate_head)):
-            with self.subTest(before=before, after=after), self.assertRaises(ValueError):
+            with self.subTest(before=before, after=after), \
+                    self.assertRaisesRegex(ValueError, r"(?i)(owner.*duplicat|duplicat.*owner)"):
                 verify_claim(before, after, "casey")
         for owner in ("Unassigned", "@casey"):
             duplicate = "**Owner:** " + owner + "\n"
@@ -286,6 +289,16 @@ class ClaimRunTests(unittest.TestCase):
             comment = next(c.args[2]["body"] for c in api.call_args_list if c.args[0] == "POST")
             self.assertIn(f"/blob/main/{PATH}", comment)
             self.assertIn("@casey", comment)
+
+    def test_pr_author_cannot_claim_as_fork_owner(self):
+        pr = pull()
+        pr["user"]["login"] = "mallory"
+        pr["head"]["repo"]["owner"] = {"login": "casey", "type": "User"}
+        with patch(f"{__name__}.pull", return_value=pr), self.remote() as (api, reader):
+            with self.assertRaises(ValueError):
+                self.run_claim()
+            reader.assert_any_call("casey/astrid-dev", HEAD, FOLDER)
+            self.assert_no_merge(api)
 
     def test_missing_base_head_or_live_plan_skips_without_failing(self):
         for location in ((REPO, BASE_REF, FOLDER), ("casey/astrid-dev", HEAD, FOLDER),
