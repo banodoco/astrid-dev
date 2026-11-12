@@ -1,5 +1,17 @@
 # 18 — Extensible timeline editing
 
+**Project:** Extensible timeline editing
+
+**Goal:** Provide reliable timeline editing primitives as a pack that people and agents can extend with their own views, tools, and creative workflows.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
 
 **Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (primary). This plan proves one timeline-specific foundation, not the entire workspace/component contract.

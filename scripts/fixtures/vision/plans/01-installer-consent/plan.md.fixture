@@ -1,5 +1,17 @@
 # 1 — Merge completed installer consent
 
+**Project:** Installer consent
+
+**Goal:** Let users choose what Astrid installs and enables, with clear consent, saved preferences, and predictable behavior.
+
+**Status:** done
+
+**Owner:** @AstridPseudon
+
+**Estimate:** 0
+
+**Waiting on:** —
+
 **Vision gaps:** [Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

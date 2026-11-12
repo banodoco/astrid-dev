@@ -10,7 +10,7 @@ from pathlib import Path
 import astrid_dev
 import checks
 import golden
-from test_check_completion import PLAN, catalog
+from test_check_completion import PLAN
 from test_check_gap_boundaries import ORIGINAL
 from test_check_project_planning import DRAFT
 
@@ -105,9 +105,13 @@ class RegisteredRuleTests(unittest.TestCase):
             git("config", "user.email", "test@example.com")
             project = root / "plans/20-zero-to-first-image"
             project.mkdir(parents=True, exist_ok=True)
-            (project / "plan.md").write_text(PLAN)
+            from test_records import ProjectRecordTests as Records
+            active = Records.plan(Project="First image", Status="active") + PLAN.split("\n\n", 1)[1]
+            (project / "plan.md").write_text(active)
             (project / "inputs.md").write_text(DRAFT)
-            (root / "plans/index.md").write_text(catalog("active"))
+            from check_docs import HEADER, DIVIDER
+            (root / "plans/index.md").write_text(HEADER + "\n" + DIVIDER + "\n"
+                "| First image | Build a flow | active | Owner | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n")
             gap = root / "vision/gaps/F-005-local-files-cloud-assist.md"
             gap.parent.mkdir(parents=True, exist_ok=True)
             gap_text = ORIGINAL.replace("[Local-first](../principles/local-first-cloud-capable.md)", "[Local-first](../principles/local-first-cloud-capable.md) (primary)")
@@ -118,7 +122,7 @@ class RegisteredRuleTests(unittest.TestCase):
             body = root / "body.txt"
             body.write_text("")
             # All three rules must inspect current content, including unstaged edits.
-            (root / "plans/index.md").write_text(catalog("done"))
+            (project / "plan.md").write_text(active.replace("**Status:** active", "**Status:** done"))
             gap_text = gap_text.replace("An outcome is not yet available", "A changed outcome")
             gap.write_text(gap_text)
             (project / "inputs.md").write_text(DRAFT.replace("**Approach:**", "**Missing approach:**"))
@@ -133,6 +137,87 @@ class RegisteredRuleTests(unittest.TestCase):
             self.assertEqual(code, 1, output)
             self.assertRegex(output, r"ERROR [^:]+: gap boundary gate: invalid gap relationship or role:")
 
+
+class ProjectCatalogContractTests(unittest.TestCase):
+    def errors(self, root, rule):
+        entry = next(entry for entry in checks.REGISTRY if entry.id == rule)
+        self.assertEqual(entry.trigger, "always")
+        return entry.run(checks.Context(root))
+
+    def test_synthetic_fixture_essential_errors(self):
+        expected = {
+            "bad-status": ("plan-catalog", ("plans/99-fixture/plan.md: invalid status 'maybe'",)),
+            "unnamed-active-owner": ("catalog-paths", ("active project needs a named accountable owner: Synthetic fixture",)),
+            "missing-project-field": ("plan-catalog", ("plans/99-fixture/plan.md:", "Status", "missing")),
+            "duplicate-project-field": ("plan-catalog", ("plans/99-fixture/plan.md:", "Status", "duplicat")),
+            "priority-unknown-id": ("plan-catalog", ("plans/priority.md", "98-no-such-folder")),
+            "stale-plan-catalog": ("generated-views", ("view plan-catalog", "plans/index.md")),
+        }
+        for name, (rule, fragments) in expected.items():
+            with self.subTest(fixture=name), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory) / "repo"
+                golden._copy_tree(root)
+                overlay = json.loads((golden.FIXTURES / name / "overlay.json").read_text(encoding="utf-8"))
+                self.assertIn("plans/99-fixture/plan.md", overlay)
+                self.assertFalse(any(path.startswith("plans/") and path.endswith("/plan.md")
+                                     and path != "plans/99-fixture/plan.md" for path in overlay))
+                for relative, text in overlay.items():
+                    target = root / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_text(text, encoding="utf-8")
+                errors = self.errors(root, rule)
+                self.assertTrue(any(all(part in line for part in fragments) for line in errors), errors)
+
+    def test_catalog_aggregates_bad_folder_fields_and_priority_errors(self):
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "bad-folder", Records.plan())
+            Records.write(root, "01-alpha", Records.plan().replace("**Goal:** Build **one** thing\n", ""))
+            Records.write(root, "02-beta", Records.plan(Status="maybe"))
+            (root / "plans/priority.md").write_text(
+                "## Order\n- 02-beta\n- 02-beta\n- 98-unknown\n", encoding="utf-8")
+            errors = self.errors(root, "plan-catalog")
+            self.assertEqual(len(errors), 5, errors)
+            for fragments in (("bad-folder",), ("plans/01-alpha/plan.md:", "Goal", "missing"),
+                              ("plans/02-beta/plan.md: invalid status 'maybe'",),
+                              ("plans/priority.md", "02-beta", "duplicat"),
+                              ("plans/priority.md", "98-unknown")):
+                with self.subTest(fragments=fragments):
+                    self.assertTrue(any(all(part in line for part in fragments) for line in errors), errors)
+            self.assertTrue(all("\n" not in line for line in errors))
+
+    def test_catalog_reports_each_malformed_priority_line(self):
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "30-update-everywhere", Records.plan())
+            Records.write(root, "38-one-process-identity", Records.plan())
+            (root / "plans/priority.md").write_text(
+                "# Priority\n## Order\n* 30-update-everywhere\n"
+                "- 38-one-process-identity  (owner: keep high)\n", encoding="utf-8")
+            self.assertEqual(self.errors(root, "plan-catalog"), [
+                "plans/priority.md: invalid line 3 under ## Order; fix it to - <folder-id>",
+                "plans/priority.md: invalid line 4 under ## Order; fix it to - <folder-id>",
+            ])
+
+    def test_every_other_documentation_rule_skips_a_bad_record(self):
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "01-alpha", Records.plan().replace("**Status:** queued\n", ""))
+            context = checks.Context(root)
+            self.assertTrue(self.errors(root, "plan-catalog"))
+            # These are the eleven legacy documentation guards named by PM-6b.
+            # Public-vision and generated-view diagnostics have separate ownership.
+            documentation = {"release-documents", "strategy-consistency", "catalog-paths",
+                             "gap-structure", "plan-files", "subjects", "obsolete-sources",
+                             "canonical-principles", "obsolete-templates", "ledger", "markdown-links"}
+            self.assertEqual({entry.id for entry in checks.REGISTRY} & documentation, documentation)
+            for entry in checks.REGISTRY:
+                if entry.id in documentation:
+                    with self.subTest(rule=entry.id):
+                        self.assertEqual(entry.run(context), [])
 
 if __name__ == "__main__":
     unittest.main()

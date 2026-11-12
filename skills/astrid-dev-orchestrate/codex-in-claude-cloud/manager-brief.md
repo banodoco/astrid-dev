@@ -52,6 +52,6 @@ You run on <model> at <effort> effort. Send X and S work to sub-agents, and run 
 If you're resumed after a restart, rebuild your state from durable records first: the mailbox, `run.yaml`, `tasks.md`, the branches and the worktrees. Check any half-done work before you trust it.
 
 ## Report
-- Keep `tasks.md` current. Push it as an astrid-dev PR that touches only the plan's `tasks.md`, and merge it yourself once `python3 scripts/check_docs.py` passes (manage skill, principle 7): `curl -sS -X PUT https://api.github.com/repos/banodoco/astrid-dev/pulls/<n>/merge -d '{"merge_method":"squash"}'`. Don't post it to the orchestrator. Any astrid-dev PR that touches more than that one file goes to the orchestrator.
+- Keep `tasks.md` current. Push it as an astrid-dev PR that touches only the plan's `tasks.md`, and merge it yourself once `python3 scripts/astrid_dev.py check` passes (manage skill, principle 7): `curl -sS -X PUT https://api.github.com/repos/banodoco/astrid-dev/pulls/<n>/merge -d '{"merge_method":"squash"}'`. Don't post it to the orchestrator. Any astrid-dev PR that touches more than that one file goes to the orchestrator.
 - At each milestone, append a short dated note to the mailbox: what landed and its SHA, what's next, and what's blocked.
 - End with `RUN-STATUS: DONE` (the plan's phase is complete and reviewed), `RUN-STATUS: BLOCKED: <reason>`, or `RUN-STATUS: WAITING`. Before you end, add one astrid-dev process-ledger entry on how the run went and what to change in the skills or the runner.

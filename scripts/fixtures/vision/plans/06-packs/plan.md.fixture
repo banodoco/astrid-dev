@@ -1,5 +1,17 @@
 # Packs v1.3
 
+**Project:** Packs v1.3
+
+**Goal:** Simplify and standardize how packs work, moving pack-specific features out of core while preserving supported workflows.
+
+**Status:** done
+
+**Owner:** @AstridPseudon
+
+**Estimate:** TBD
+
+**Waiting on:** —
+
 **Vision gaps:** [Dependable pack lifecycle](../../vision/gaps/F-004-pack-lifecycle.md) (primary). [Supporting gap](../../vision/gaps/LS-003-full-stack-contributions.md).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

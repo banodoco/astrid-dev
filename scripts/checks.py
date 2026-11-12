@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Literal
 import json
+import re
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -12,19 +13,51 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Documentation rules retain the legacy order and skip after a bad catalog.
 def _catalog(context):
-    from check_docs import catalog_rows, read, CATALOG
-    try:
-        catalog_rows(read(context.root, CATALOG))
-    except (OSError, ValueError, IndexError) as exc:
-        return [f"plan catalog: {exc}"]
-    return []
+    from check_docs import STATUSES
+    from project_contract import PLAN_FOLDER
+    from records import project_fields, priority_order, section
+    root = context.root
+    errors = []
+    folders = set()
+    for path in sorted((root / "plans").glob("*/plan.md")):
+        folder = path.parent.name
+        if not PLAN_FOLDER.fullmatch(folder):
+            errors.append(f"plans/{folder}: invalid plan folder name; rename it to the NN-short-name form, like 48-one-record-model")
+            continue
+        folders.add(folder)
+        try:
+            fields = project_fields(path.read_text(encoding="utf-8"))
+            if fields["Status"] not in STATUSES:
+                errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use queued, active, blocked, paused, done or cancelled")
+        except (ValueError, OSError) as exc:
+            errors.append(f"plans/{folder}/plan.md: {exc}")
+    priority = root / "plans/priority.md"
+    priority_text = priority.read_text(encoding="utf-8") if priority.exists() else None
+    order = priority_order(priority_text)
+    order_section = section(priority_text or "", "Order")
+    order_heading = re.search(r"^## Order\s*$", priority_text or "", re.M)
+    first_order_line = (priority_text[:order_heading.start()].count("\n") + 2) if order_heading else 1
+    for line_number, line in enumerate(order_section.splitlines(), first_order_line):
+        if line.strip() and not re.fullmatch(r"- \d{2,}-[a-z0-9-]+", line):
+            errors.append(f"plans/priority.md: invalid line {line_number} under ## Order; fix it to - <folder-id>")
+    seen = set()
+    for folder in order:
+        if folder in seen:
+            errors.append(f"plans/priority.md: duplicate {folder} under ## Order; delete one of its lines")
+        if folder not in folders:
+            errors.append(f"plans/priority.md: unknown {folder} under ## Order (there is no plans/{folder}/plan.md); fix the name or delete the line")
+        seen.add(folder)
+    return errors
 
 
 def _release_documents(context):
     from check_docs import catalog_rows, read, CATALOG, release_errors
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -42,7 +75,10 @@ def _strategy_consistency(context):
     from check_docs import catalog_rows, read, CATALOG, STRATEGY, strategy_errors
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -59,36 +95,23 @@ def _catalog_paths(context):
     from check_docs import catalog_rows, read, CATALOG, PLAN_LINK, PLAN_FOLDER, unnamed_active_owners
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
-    errors = []
-    indexed: set[Path] = set()
-    for row in rows:
-        dest = PLAN_LINK.fullmatch(row[6]).group(1)
-        plan = Path('plans') / dest
-        if plan in indexed:
-            errors.append(f'duplicate plan catalog entry: {plan}')
-        indexed.add(plan)
-        if len(plan.parts) != 3 or plan.parts[2] != 'plan.md' or not PLAN_FOLDER.fullmatch(plan.parts[1]):
-            errors.append(f'invalid catalog plan path: {plan}')
-        if not (root / plan).is_file():
-            errors.append(f'catalog plan missing: {plan}')
-    errors.extend(unnamed_active_owners(rows))
-    actual = set(Path('plans') / p.parent.name / 'plan.md' for p in (root / 'plans').glob('*/plan.md'))
-    for missing in sorted(actual - indexed):
-        errors.append(f'plan folder absent from catalog: {missing}')
-    for extra in sorted(indexed - actual):
-        errors.append(f'catalog references non-plan: {extra}')
-
-    return errors
+    return unnamed_active_owners(rows)
 
 
 def _gap_structure(context):
     from check_docs import catalog_rows, read, CATALOG, GAP_NAME, parse_gap_relationships, route_issues
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -124,7 +147,10 @@ def _plan_files(context):
     from check_docs import catalog_rows, read, CATALOG, GAP_NAME, plan_gap_ids
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -149,7 +175,10 @@ def _subjects(context):
     from check_docs import catalog_rows, read, CATALOG, parse_subject
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -173,7 +202,10 @@ def _obsolete_sources(context):
     from check_docs import catalog_rows, read, CATALOG
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -187,7 +219,10 @@ def _canonical_principles(context):
     from check_docs import catalog_rows, read, CATALOG
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -202,7 +237,10 @@ def _obsolete_templates(context):
     from check_docs import catalog_rows, read, CATALOG, obsolete_template_paths
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -214,7 +252,10 @@ def _ledger(context):
     from check_docs import catalog_rows, read, CATALOG, ledger_errors
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -226,7 +267,10 @@ def _markdown_links(context):
     from check_docs import catalog_rows, read, CATALOG, README, local_links
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -266,6 +310,8 @@ def _public_vision(context):
 def _generated_views(context):
     import views
     errors = views.check(context.root)
+    if _catalog(context):
+        errors = [message for message in errors if not message.startswith(("view plan-catalog ", "view plan-catalog:"))]
     # The legacy public-vision rule owns diagnostics for these two targets.
     legacy_errors = _public_vision(context)
     if legacy_errors:
@@ -285,19 +331,14 @@ def _body(context):
 
 def _completion_impl(context):
     import check_completion as gate
-    from check_docs import CATALOG, read
-    before = gate.catalog_at_revision(context.base, context.root)
-    if before is None:
-        return []
-    after = read(context.root, CATALOG)
+    before = gate.project_statuses(context.root, context.base)
+    after = gate.project_statuses(context.root)
     changes = gate.transitions_to_done(before, after)
     if not changes:
         return []
-    body = _body(context)
-    errors = gate.check_pr(before, after, body, context.root)
+    errors = gate.check_pr(changes, _body(context), context.root)
     errors.extend(gate.strategy_errors(gate.changed_paths(context.base, context.root)))
     return errors
-
 
 def _boundary_impl(context):
     import check_gap_boundaries as gate
@@ -396,119 +437,3 @@ REGISTRY: tuple[Check, ...] = (
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
     Check('project-planning-evidence', 'pr', 'Validate planning evidence for new or opted-in projects', _planning),
 )
-
-
-def run_documentation(context: Context) -> tuple[list[str], list[str]]:
-    """Run the documentation rules for the legacy check_docs API."""
-    errors: list[str] = []
-    warnings: list[str] = []
-    for entry in REGISTRY:
-        if entry.run in DOCUMENTATION_RULES:
-            errors.extend(entry.run(context))
-    return errors, warnings
-
-
-DOCUMENTATION_RULES = (_catalog, _release_documents, _strategy_consistency, _catalog_paths, _gap_structure, _plan_files, _subjects, _obsolete_sources, _canonical_principles, _obsolete_templates, _ledger, _markdown_links,)
-
-
-def completion_main() -> int:
-    from check_completion import argparse, json, Path, CATALOG, ROOT, read, transitions_to_done, catalog_at_revision, check_pr, strategy_errors, changed_paths
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True, help="PR base commit SHA (or local base ref)")
-    parser.add_argument("--event", type=Path, help="GitHub PR event JSON")
-    parser.add_argument("--body-file", type=Path, help="PR description Markdown (local test)")
-    args = parser.parse_args()
-    try:
-        before = catalog_at_revision(args.base, ROOT)
-        if before is None:
-            print("SKIP completion transition gate: initial catalog migration")
-            return 0
-        after = read(ROOT, CATALOG)
-        changes = transitions_to_done(before, after)
-        if not changes:
-            print("No new plan completions; completion gate not required")
-            return 0
-        if args.body_file:
-            body = args.body_file.read_text(encoding="utf-8")
-        elif args.event:
-            body = json.loads(args.event.read_text(encoding="utf-8")).get("pull_request", {}).get("body") or ""
-        else:
-            raise ValueError("completion requires --event or --body-file")
-        issues = check_pr(before, after, body, ROOT)
-        issues.extend(strategy_errors(changed_paths(args.base, ROOT)))
-    except (OSError, ValueError) as exc:
-        print(f"ERROR completion gate: {exc}")
-        return 1
-    for issue in issues:
-        print(f"ERROR {issue}")
-    if issues:
-        print("Add a completion assessment to the PR description; see skills/astrid-dev/SKILL.md")
-        return 1
-    print(f"Completion gate passed for {len(changes)} plan(s): {', '.join(changes)}")
-    return 0
-
-
-
-def boundary_main() -> int:
-    from check_gap_boundaries import argparse, json, Path, ROOT, parse_gap_relationships, read_text, affected_gaps, check_pr
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True, help="PR base commit SHA or fetched base ref")
-    parser.add_argument("--event", type=Path, help="GitHub pull request event JSON")
-    parser.add_argument("--body-file", type=Path, help="Local PR description")
-    args = parser.parse_args()
-    try:
-        required = affected_gaps(args.base, ROOT)
-        if not required:
-            print("No new or materially redefined gaps; boundary review not required")
-            return 0
-        if args.body_file:
-            body = args.body_file.read_text(encoding="utf-8")
-        elif args.event:
-            body = json.loads(args.event.read_text(encoding="utf-8")).get("pull_request", {}).get("body") or ""
-        else:
-            raise ValueError("gap boundary changes require --event or --body-file")
-        expected_by_gap = {}
-        for gap_id in sorted(required):
-            paths = list((ROOT / "vision/gaps").glob(gap_id + "-*.md"))
-            if len(paths) > 1:
-                raise ValueError(f"{gap_id}: duplicate gap files")
-            if paths:
-                metadata = next((line for line in read_text(ROOT, paths[0].relative_to(ROOT)).splitlines()
-                                 if line.startswith("**Applies to:**")), "")
-                expected_by_gap[gap_id] = parse_gap_relationships(metadata)
-            else:
-                expected_by_gap[gap_id] = None  # a retired gap has no current source mapping
-        issues = check_pr(required, body, expected_by_gap)
-    except (OSError, ValueError) as exc:
-        print(f"ERROR gap boundary gate: {exc}")
-        return 1
-    for issue in issues:
-        print(f"ERROR {issue}")
-    if issues:
-        print("Add a first-principles gap boundary assessment to the PR description; see vision/README.md#assessing-and-changing-gaps")
-        return 1
-    print(f"Gap boundary gate passed for {len(required)} gap(s): {', '.join(sorted(required))}")
-    return 0
-
-
-
-def planning_main() -> int:
-    from check_project_planning import argparse, Path, ROOT, read_text, validate_pack, changed_projects
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True, help="Fetched PR base commit SHA")
-    args = parser.parse_args()
-    try:
-        names = changed_projects(args.base, ROOT)
-        errors = []
-        for name in sorted(names):
-            errors.extend(validate_pack(name, read_text(ROOT, Path("plans") / name / "inputs.md")))
-    except (ValueError, OSError) as exc:
-        print(f"ERROR project evidence: {exc}")
-        return 1
-    for error in errors:
-        print(f"ERROR {error}")
-    if errors:
-        print("Fix the project decision record in inputs.md; see the Astrid project template.")
-        return 1
-    print(f"Project evidence OK for {len(names)} new or opted-in project(s)")
-    return 0

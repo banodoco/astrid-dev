@@ -1,5 +1,17 @@
 # 41 — Agent-created tools that stay maintained
 
+**Project:** Agent-created tools that stay maintained
+
+**Goal:** Let an agent add a creative tool using established pack/extension contracts, test it on real work and maintain it through changes without overriding the creator's control.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** owner/scope agreement; source and dependency checks
+
 **Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md) and [shared run contract](../../skills/astrid-dev-shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
 
 **Vision gaps:** [LS-005 — Agent-created tools that stay maintained](../../vision/gaps/LS-005-agent-managed-tools.md) (primary).

@@ -1,5 +1,17 @@
 # One model for astrid-dev's records, checks and generated pages
 
+**Project:** One model for astrid-dev's records, checks and generated pages
+
+**Goal:** Anyone can see, in one place each, what kinds of record exist, what is checked and when, and which files are generated; plans define the catalog instead of the catalog defining plans, and adding a check, page or field is one entry in one file.
+
+**Status:** active
+
+**Owner:** Plan 48 manager
+
+**Estimate:** 14–15: phase 2 about 11 (7 to its cut-over, 4 after); then the queued part of phase 3 (form fix, pack shape, lifecycle, one review) about 3–4. Phase 3's form track and phase 4 are not scheduled
+
+**Waiting on:** Phase 2's cut-over to `main`: release 12 published. Its refresh job: a bot identity that may bypass the pull-request rule on `main` (owner)
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary).

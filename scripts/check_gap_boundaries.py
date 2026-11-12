@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Require a first-principles PR decision when a gap is added, retired, or redefined.
 
 CI verifies that reasoning is supplied and refers to a concrete source.
@@ -7,7 +6,6 @@ Ordinary current-state/assessment/source refreshes don't redefine a gap.
 """
 from __future__ import annotations
 
-import argparse
 import json
 import re
 import subprocess
@@ -39,7 +37,7 @@ def boundary_signature(text: str) -> tuple[str, ...]:
     the outcome does not require a second architecture review.
     """
     title = re.search(r"^# (.+)$", text, re.M)
-    applies = field_match(text, "Applies to", style="bold")
+    applies = re.search(r"^\*\*Applies to:\*\*[ \t]*(.*)$", text, re.M)
     return (
         title.group(1).strip() if title else "",
         re.sub(r"\.\./principles\.md#([a-z0-9-]+)", r"../principles/\1.md", applies.group(1).split("**Assessment:**", 1)[0].strip()) if applies else "",
@@ -181,12 +179,3 @@ def check_pr(
         expected = expected_by_gap.get(gap_id) if expected_by_gap else None
         issues.extend(assess_boundary(gap_id, body, expected=expected))
     return issues
-
-
-def main() -> int:
-    from checks import boundary_main
-    return boundary_main()
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

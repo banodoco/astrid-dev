@@ -1,5 +1,17 @@
 # 46 — Agents can reshape the creative workspace
 
+**Project:** Agents can reshape the creative workspace
+
+**Goal:** Give agents the same safe, inspectable place, attach, resize, bind and restore operations as creators, allowing them to adapt an active workspace without disrupting the work.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** owner/scope agreement; source and dependency checks
+
 **Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md) and [shared run contract](../../skills/astrid-dev-shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
 
 **Vision gaps:** [LS-002 — Agents can reshape the creative workspace](../../vision/gaps/LS-002-agent-workspace-control.md) (primary).

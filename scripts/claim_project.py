@@ -10,72 +10,55 @@ import re
 import sys
 from pathlib import Path
 
-from check_docs import PLAN_LINK, catalog_rows
-from contribution_api import CATALOG, request as api, catalog, changed_files as files_in_pr
+from contribution_api import plan_text, request as api, changed_files as files_in_pr
+from project_contract import PLAN_FOLDER
+from records import project_fields
 
 LOGIN = re.compile(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37})")
 
 
-def verify_claim(before: str, after: str, actor: str) -> str:
-    """Return claimed folder only if exactly one owner cell changed to @actor."""
+def verify_claim(before: str, after: str, actor: str, folder: str | None = None) -> str | None:
+    """Validate a one-line self-claim in the plan's project record."""
     if not LOGIN.fullmatch(actor):
         raise ValueError("invalid author login")
+    old_fields, new_fields = project_fields(before), project_fields(after)
+    if old_fields["Status"] != "queued":
+        raise ValueError("only queued projects may be claimed")
+    if old_fields["Owner"] != "Unassigned":
+        raise ValueError("project is not unassigned")
+    if new_fields["Owner"] != "@" + actor:
+        raise ValueError("claimed owner does not match authenticated PR author")
+    if any(old_fields[key] != new_fields[key] for key in old_fields if key != "Owner"):
+        raise ValueError("claim changed another project field")
     old_lines, new_lines = before.splitlines(keepends=True), after.splitlines(keepends=True)
     if len(old_lines) != len(new_lines):
-        raise ValueError("catalog line count changed")
+        raise ValueError("plan line count changed")
     changes = [(a, b) for a, b in zip(old_lines, new_lines) if a != b]
     if len(changes) != 1:
-        raise ValueError("only one owner cell may change")
-    a, b = changes[0]
-    old, new = a.rstrip("\r\n").split("|"), b.rstrip("\r\n").split("|")
-    if len(old) != 9 or len(new) != 9 or any(old[i] != new[i] for i in range(9) if i != 4):
-        raise ValueError("claim changed another column or non-project text")
-    if old[4].strip() != "Unassigned":
-        raise ValueError("project is not unassigned")
-    expected = old[4].replace("Unassigned", "@" + actor)
-    if new[4] != expected or a[len(a.rstrip("\r\n")):] != b[len(b.rstrip("\r\n")):]:
-        raise ValueError("claimed owner does not match authenticated PR author")
-    orig, changed = catalog_rows(before), catalog_rows(after)
-    diffs = [(x, y) for x, y in zip(orig, changed) if x != y]
-    if len(orig) != len(changed) or len(diffs) != 1:
-        raise ValueError("claim must modify precisely one indexed project")
-    row, updated = diffs[0]
-    if row != [v.strip() for v in old[1:8]]:
-        raise ValueError("edited row is not in the catalog")
-    if row[2] != "queued":
-        raise ValueError("only queued projects may be claimed")
-    if row[3] != "Unassigned" or updated[3] != "@" + actor:
-        raise ValueError("catalog owner mismatch")
-    if any(row[i] != updated[i] for i in range(7) if i != 3):
-        raise ValueError("other catalog cells changed")
-    return PLAN_LINK.fullmatch(row[6]).group(1).split("/")[0]
+        raise ValueError("only the owner line may change")
+    old_raw, new_raw = changes[0]
+    old_line, new_line = old_raw.rstrip("\r\n"), new_raw.rstrip("\r\n")
+    if (old_line != "**Owner:** Unassigned" or new_line != "**Owner:** @" + actor
+            or old_raw[len(old_line):] != new_raw[len(new_line):]):
+        raise ValueError("only the owner line may change to the authenticated PR author")
+    return folder
 
 
 
 
-def verify_live_claim(base: str, proposed: str, live: str, actor: str) -> str:
+def verify_live_claim(base: str, proposed: str, live: str, actor: str,
+                      folder: str | None = None) -> str | None:
     """An unrelated main edit must not block a valid claim.
 
     The candidate must be a one-cell self-claim relative to its PR base.
-    For that *same project*, current main must still have the original
-    unassigned, queued row, including its unchanged scope/metadata.
-    GitHub's normal merge handles unrelated catalog changes.
+    For that project, current main must still have the exact original plan.
+    GitHub's normal merge handles unrelated project changes.
     """
-    project = verify_claim(base, proposed, actor)
-    old_rows, current_rows = catalog_rows(base), catalog_rows(live)
-
-    def selected(rows: list[list[str]]) -> list[str]:
-        matching = [
-            row for row in rows
-            if PLAN_LINK.fullmatch(row[6]).group(1).split("/", 1)[0] == project
-        ]
-        if len(matching) != 1:
-            raise ValueError("claimed project is missing or duplicated on main")
-        return matching[0]
-
-    if selected(old_rows) != selected(current_rows):
-        raise ValueError("claimed project's live row changed; rebase or choose another project")
-    return project
+    verify_claim(base, proposed, actor, folder)
+    if base != live:
+        raise ValueError("claimed project's live plan changed; rebase or choose another project")
+    project_fields(live)
+    return folder
 
 def open_pulls(repo: str):
     for page in range(1, 11):
@@ -97,8 +80,10 @@ def eligible(pr: dict, repo: str, sha: str, files: list[dict]) -> bool:
         and base.get("ref") == "main"
         and (base.get("repo") or {}).get("full_name") == repo
         and user.get("type") == "User" and LOGIN.fullmatch(user.get("login", ""))
-        and len(files) == 1 and files[0].get("filename") == str(CATALOG)
-        and files[0].get("status") == "modified"
+        and len(files) == 1 and files[0].get("status") == "modified"
+        and files[0].get("additions") == 1 and files[0].get("deletions") == 1
+        and re.fullmatch(r"plans/(" + PLAN_FOLDER.pattern + r")/plan\.md",
+                         files[0].get("filename", "")) is not None
     )
 
 
@@ -123,15 +108,26 @@ def handle_run(repo: str, run: dict) -> list[str]:
             continue
         number = summary["number"]
         pr = api("GET", f"/repos/{repo}/pulls/{number}")
-        if not eligible(pr, repo, sha, files_in_pr(repo, number)):
+        changed = files_in_pr(repo, number)
+        if not eligible(pr, repo, sha, changed):
             continue
         login = pr["user"]["login"]
         from_repo, from_ref = pr["head"]["repo"]["full_name"], pr["head"]["sha"]
         base_repo, base_ref = pr["base"]["repo"]["full_name"], pr["base"]["sha"]
-        candidate = catalog(from_repo, from_ref)
-        original = catalog(base_repo, base_ref)
+        match = re.fullmatch(r"plans/(" + PLAN_FOLDER.pattern + r")/plan\.md",
+                             changed[0].get("filename", ""))
+        if not match:
+            continue
+        folder = match.group(1)
+        candidate = plan_text(from_repo, from_ref, folder)
+        original = plan_text(base_repo, base_ref, folder)
+        if candidate is None or original is None:
+            continue
         main_ref = api("GET", f"/repos/{repo}/git/ref/heads/main")["object"]["sha"]
-        project = verify_live_claim(original, candidate, catalog(repo, main_ref), login)
+        live = plan_text(repo, main_ref, folder)
+        if live is None:
+            continue
+        project = verify_live_claim(original, candidate, live, login, folder)
         if api("GET", f"/repos/{repo}/git/ref/heads/main")["object"]["sha"] != main_ref:
             raise ValueError("main moved during claim validation; rebase the PR")
         fresh = api("GET", f"/repos/{repo}/pulls/{number}")
@@ -140,12 +136,12 @@ def handle_run(repo: str, run: dict) -> list[str]:
         api("PUT", f"/repos/{repo}/pulls/{number}/merge",
             {"sha": sha, "merge_method": "squash",
              "commit_title": f"claim(project): {project} by @{login}"})
-        merged.append(project)
+        merged.append(project or folder)
         # A failed optional message must not undo a valid merge.
         try:
             api("POST", f"/repos/{repo}/issues/{number}/comments", {"body":
-                f"Project **{project}** is claimed by @{login}. "
-                f"[Start from its plan](https://github.com/{repo}/blob/main/plans/{project}/plan.md) "
+                f"Project **{folder}** is claimed by @{login}. "
+                f"[Start from its plan](https://github.com/{repo}/blob/main/plans/{folder}/plan.md) "
                 f"and [contribution guide](https://github.com/{repo}/blob/main/docs/contribution-workflow.md). "
                 "Ownership does not imply scope acceptance, authorization to run, or permission to merge."})
         except Exception as exc:

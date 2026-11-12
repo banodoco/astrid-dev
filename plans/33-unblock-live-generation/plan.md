@@ -1,5 +1,17 @@
 # Unblock live generation on RunPod and locally
 
+**Project:** Unblock live generation
+
+**Goal:** Every default slot and h3_av runs live on RunPod and locally through the existing path, so Plans 01, 02 and 06 land proven: an interim inventory wire, sfx and h3_av routed like everything else, MiniMax H3 as the video default, models on the storage volume, live-pod reuse, the legacy route deleted, and a CPU test of the pod path.
+
+**Status:** done
+
+**Owner:** @AstridPseudon
+
+**Estimate:** about 3–4 days plus the live proof
+
+**Waiting on:** —
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).

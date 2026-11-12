@@ -1,5 +1,17 @@
 # Releases defined and published from astrid-dev
 
+**Project:** Releases defined and published from astrid-dev
+
+**Goal:** Each release starts as a living strategy brief linked from the release-led roadmap, then becomes one owner-approved immutable record whose finalization publishes the checked product tuple, with versions shown to users.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** 12.5 (9.5–18): phase 1 11.5, phase 2 1
+
+**Waiting on:** Plan 29; the owner's go; owner decisions; astrid-dev `main` protection
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
