@@ -486,3 +486,4 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
     - App E2E: the same 6 extension and playwright jobs.
     - Agent Windows task host journey: both shells.
   - Still running: Agent CI, Agent Lanes and Runtime CI.
+- 2026-11-12 05:42Z — **Attempt 2 of 43134432721, the remaining shards** (by ID against attempt 1): shards 1, 2, 3, 4, 6 and 8 have **0 new failing IDs**, with 123, 152, 40, 338, 202 and 60 bad respectively, all also bad in attempt 1. Shard 5 has no results again (the 2 h limit; its 90 IDs were covered locally earlier). This confirms the gate ruling after the fact.
