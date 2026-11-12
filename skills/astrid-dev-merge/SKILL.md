@@ -39,5 +39,5 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
 - Execute a contributor's code with credentials, or approve a workflow run that would.
 - Merge on a helper's summary without reading the diff yourself.
 - Merge something the suspicious-content pass flagged, however small.
-- Weaken or skip a failing check to get a PR in.
+- [Weaken or skip a failing check](../astrid-dev-shared/run-contract.md#checks-and-failure-repair) to get a PR in.
 - Rewrite a contributor's branch ([commits only](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
