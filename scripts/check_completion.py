@@ -1,9 +1,7 @@
 """One decision gate: a PR moving a plan to done needs a reviewable completion assessment."""
 from __future__ import annotations
 
-import json
 import re
-import subprocess
 from pathlib import Path
 
 from check_docs import read
