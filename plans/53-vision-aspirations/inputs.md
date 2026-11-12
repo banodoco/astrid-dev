@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Partly accepted — 12 Nov 2026. The owner chose the name "aspirations", the "We should / We should never" shape, that every gap is tied to an aspiration, that the existing characteristics are converted, that the vision page shows them, that Packs and Generation exist, and that everything should be able to run locally without having to ([what she said](#what-the-owner-said); D1, D2 and the first half of D3, D6 and D16). She has not seen this pack. Next: she answers D3, D6, D7, D8, D9 and D16 and marks up five aspirations, and a maintainer-reviewed scope pull request records the answers.
+**Scope decision:** Partly accepted — 12 Nov 2026. The owner chose the name "aspirations", the "We should / We should never" shape, that every gap is tied to an aspiration, that the existing characteristics are converted, that the vision page shows them, that Packs and Generation exist, and that everything should be able to run locally without having to ([what she said](#what-the-owner-said); D1 to D3, D6, D8, D9, D16). She then answered the open decisions the same day (D3, D6, D8, D9, D16; D7 in substance). Still hers: the wording of the five new or reworded aspirations and the proposed supporting aspirations, both marked up inside the run. Next: a maintainer-reviewed scope pull request ([astrid-dev#629](https://github.com/banodoco/astrid-dev/pull/629)) records this.
 
 **Prior art:** Read on astrid-dev `main` at `0ed58f99d1543ac87c1c5759549aba7edcd13320` and the App's `main` at `237b28be935af49c23464fa6ca1cf30db67ebaa0`, on 12 Nov 2026, by three read-only helpers; the planner re-read the code each task scope depends on, and the critic re-read it again. One parser already serves pillars and principles; the App rejects a feed without `characteristics`; 18 of 22 gaps fit an existing characteristic under the element they already name as primary. [What was read](#prior-art-what-was-read).
 
@@ -29,7 +29,9 @@ In the [orchestrator's session](https://claude.ai/code/session_011EzfW38XJUpUFew
 - On gaps: "whatever gaps are always associated … they should always be associated with kind of aims or aspirations."
 - On the existing ones: "the bullet points should be converted into these, and then see how they're currently displayed on the … vision page. That these should be explained instead of them."
 - On generation: "one generation path, and then you can choose the engine, which could be like either Cloud, ComfyUI, Wan2GP, other inference engines, then choose the machine … built in an almost neutral way so that you can plug in any inference engine plus any machine."
-- On local and cloud: "everything should be ABLE to run locally but shouldn't have to".
+- On local and cloud: "everything should be ABLE to run locally but shouldn't have to"; and, for its title, "everything can be local or cloud by choice".
+- On how many aspirations a gap has: "one main one" and "as many as need be supporting".
+- On the recommendations: "I agree with where you say for positioning", "I agree with what you mean for the gap placement", "and the desired state".
 - On packs: "the packs should basically render live. They should render instantly. They should be able to be live vibe coded. They should be … completely portable. They should … interoperate … You should be able to extend other packs inside one pack … there should be a defined way for creating an extension, that across the front end and Python back end that generalizes." And: "they should be able to run on the web app."
 
 ### Prior art: what was read
@@ -58,7 +60,7 @@ In the [orchestrator's session](https://claude.ai/code/session_011EzfW38XJUpUFew
 
 - `parsePublicVisionContent` (`src/pages/Home/publicVisionContent.ts`) is hand-written and keeps unknown keys. If any element has `statement`, `explanationMarkdown` or `characteristics`, every element must have all three, with two to six characteristics (lines 118 to 129). Each gap's `appliesTo` must resolve to a pillar or principle.
 - `VisionDetailDialog.tsx` shows each characteristic as a closed disclosure: title and summary, then `detailsMarkdown` rendered as CommonMark. A bullet list inside it becomes list elements, but the page's base styling removes list markers and indents (`src/index.css:1`), and the stylesheet has no list rule for that body (`PublicAstridVision.css:1526-1534`). So a list shows today as plain lines, one per bullet.
-- The page says "characteristic" in one place: a screen-reader label at `VisionDetailDialog.tsx:140`. The visible heading is "What defines this", and other copy already says "aspirations".
+- The page says "characteristic" in one place: a screen-reader label at `VisionDetailDialog.tsx:140`. The visible heading is "What defines this", and the page's own copy already says "aspirations" (`PublicAstridVision.tsx:544`, "How we plan to reach our aspirations"), so the name matches what visitors read.
 - A pillar or principle's dialog lists the gaps whose `primaryAppliesTo` is that element (`visionHierarchy.ts:27`). Supporting entries in `appliesTo` are never shown. Nothing reads a link from a gap to a characteristic.
 - `npm run vision:check` runs `publicVisionContent.test.ts`; with `PUBLIC_VISION_FEED_FILE` set it asserts the candidate feed parses, with four pillars and four principles.
 
@@ -68,43 +70,44 @@ In the [orchestrator's session](https://claude.ai/code/session_011EzfW38XJUpUFew
 
 ### The proposed mapping
 
-A helper read each gap's Desired state and Gap sections against the 28 section headings. This is a proposal for the owner (D8), not a finding of fact. The last column is what each gap names as supporting today, which leaves under D3 (a).
+A helper read each gap's Desired state and Gap sections against the 28 section headings. This is a proposal for the owner (D8), not a finding of fact. The primary column is accepted (D8). The last column takes each supporting pillar or principle a gap names today and proposes the aspiration inside it that fits; those are proposals for her mark-up inside VA-5.
 
-| Gap | Primary element today | Proposed aspiration | Confidence | Supporting elements today |
+| Gap | Primary element today | Primary aspiration | Confidence | Supporting today → proposed supporting aspiration |
 |---|---|---|---|---|
-| AA-001 Sustained creative work | Artistic Ambition | Finished artistic work | medium: "Continuity and iteration" is close | Creator's control |
+| AA-001 Sustained creative work | Artistic Ambition | Finished artistic work | medium: "Continuity and iteration" is close | Creator's control → Approachable, reversible choices |
 | CA-001 Creative challenge culture | Shared Endeavor | Shared challenges and ambition | high | none |
 | CA-002 Contributor ownership | Shared Endeavor | A meaningful stake in the collective | high | none |
-| CA-003 Vision, experiments, progress | Open by design | Open decisions and working knowledge | high | Shared Endeavor |
-| CA-004 Sharing and discovery | Shared Endeavor | "Built for reuse" under Open by design, widened to "Built to be found and reused" | reworded, and the gap changes element (D7) | Compounding |
-| CA-005 Parallel contribution | Shared Endeavor | new "Many hands, one clear way in" under Shared Endeavor | new aspiration (D7) | Open by design |
-| CI-001 Agent learning loop | Compounding | An ecosystem of wisdom grounded in real work | high | Creator's control |
-| CI-002 Federated knowledge | Compounding | Share without surrendering control | high | Open by design; Creator's control |
-| CI-003 Public source ingestion | Compounding | Use knowledge with judgment | medium: ingestion itself is not covered | Open by design |
-| F-001 Platform reliability | Technical wrangling | Dependable execution and recovery | high | Creator's control |
+| CA-003 Vision, experiments, progress | Open by design | Open decisions and working knowledge | high | Shared Endeavor → none fits, drop |
+| CA-004 Sharing and discovery | Shared Endeavor | "Built for reuse" under Open by design, widened to "Built to be found and reused" | reworded, and the gap changes element (D7) | Compounding → An ecosystem of wisdom grounded in real work |
+| CA-005 Parallel contribution | Shared Endeavor | new "Many hands, one clear way in" under Shared Endeavor | new aspiration (D7) | Open by design → Open decisions and working knowledge |
+| CI-001 Agent learning loop | Compounding | An ecosystem of wisdom grounded in real work | high | Creator's control → Explicit permissions and privacy |
+| CI-002 Federated knowledge | Compounding | Share without surrendering control | high | Open by design → Built to be found and reused; Creator's control → Explicit permissions and privacy |
+| CI-003 Public source ingestion | Compounding | Use knowledge with judgment | medium: ingestion itself is not covered | Open by design → Open decisions and working knowledge |
+| F-001 Platform reliability | Technical wrangling | Dependable execution and recovery | high | Creator's control → Approachable, reversible choices |
 | F-002 Safe user control | Creator's control | Explicit permissions and privacy | high | none |
-| F-003 Creative execution | Technical wrangling | Dependable execution and recovery | high | Artistic Ambition |
-| F-004 Pack lifecycle | Liquid Software | new Packs (D6) | new aspiration | Open by design |
-| F-005 Local files, cloud assist | Local-first | Optional cloud capabilities, reworded "Local or cloud, by choice" | high | Technical wrangling; Creator's control |
-| F-006 Fully hosted workspace | Local-first | Optional cloud capabilities, reworded "Local or cloud, by choice" | low as it stands; high once reworded (D16) | Technical wrangling; Creator's control |
-| F-007 First-class sandbox | Creator's control | Explicit permissions and privacy | high | Technical wrangling |
-| F-008 Portable generation | Technical wrangling | new Generation (D6) | new aspiration | Local-first; Open by design; Liquid Software |
-| LS-001 Portable components | Liquid Software | Live tool composition | high | Creator's control |
-| LS-002 Agent workspace control | Liquid Software | Live tool composition | high | Creator's control |
-| LS-003 Full-stack contributions | Liquid Software | Shared human–agent work | medium: Packs may fit better once written | Open by design |
-| LS-004 Cross-modal foundations | Liquid Software | A small, dependable foundation | medium | Artistic Ambition; Open by design |
-| LS-005 Agent-managed tools | Liquid Software | Real-time functionality | high | Creator's control |
+| F-003 Creative execution | Technical wrangling | Dependable execution and recovery | high | Artistic Ambition → Finished artistic work |
+| F-004 Pack lifecycle | Liquid Software | new Packs (D6) | new aspiration | Open by design → Built to be found and reused |
+| F-005 Local files, cloud assist | Local-first | Optional cloud capabilities, reworded "Everything local or cloud, by choice" | high | Technical wrangling → Important decisions stay visible; Creator's control → Explicit permissions and privacy |
+| F-006 Fully hosted workspace | Local-first | Optional cloud capabilities, reworded "Everything local or cloud, by choice" | low as it stands; high once reworded (D16) | Technical wrangling → Agents handle the setup; Creator's control → Control at every layer |
+| F-007 First-class sandbox | Creator's control | Explicit permissions and privacy | high | Technical wrangling → Important decisions stay visible |
+| F-008 Portable generation | Technical wrangling | new Generation (D6) | new aspiration | Local-first → Everything local or cloud, by choice; Open by design → Built to be found and reused; Liquid Software → A small, dependable foundation |
+| LS-001 Portable components | Liquid Software | Live tool composition | high | Creator's control → Control at every layer |
+| LS-002 Agent workspace control | Liquid Software | Live tool composition | high | Creator's control → Explicit permissions and privacy |
+| LS-003 Full-stack contributions | Liquid Software | Shared human–agent work | medium: Packs may fit better once written | Open by design → Built to be found and reused |
+| LS-004 Cross-modal foundations | Liquid Software | A small, dependable foundation | medium | Artistic Ambition → Artistic agency; Open by design → Built to be found and reused |
+| LS-005 Agent-managed tools | Liquid Software | Real-time functionality | high | Creator's control → Explicit permissions and privacy |
 
 **What the table shows.** As the pages stand, thirteen fit with high confidence, four with medium, one with low, and four fit nothing. In all 18 that fit, the aspiration sits under the element the gap already names as primary. With the recommendations in D6, D7 and D16, every gap has a home: three aspirations are new (Packs, Generation, "Many hands, one clear way in") and two are reworded, so 28 become 31. The fullest page, Liquid Software, reaches six, the most a page allows; Shared Endeavor and technical wrangling reach four. Only CA-004 changes element, from Shared Endeavor to Open by design, so it alone moves on the vision page. Fourteen of the 28 existing aspirations have no gap at all: either Astrid is already there, or nobody has measured. That is recorded here as a finding; this plan writes no gaps for them.
 
-### What one aspiration per gap changes
+### Supporting aspirations
 
-Under D3 (a), each gap names one aspiration and no supporting ones. Nineteen of the 22 gaps name supporting pillars or principles today (the last column above); those entries are removed and nothing replaces them.
+The owner decided each gap has "one main one" and "as many as need be supporting" (D3). So nothing a gap says today is lost by default: each supporting pillar or principle becomes a supporting aspiration inside that element.
 
-- **On the page:** nothing. The App lists a gap only under its primary element and never shows supporting entries.
-- **In the feed:** each gap's `appliesTo` shrinks to one entry, its aspiration's element. `primaryAppliesTo` is unchanged except for CA-004.
-- **As a record:** dropping a supporting connection is a change to what a gap says it bears on. It is made once, for all 19, under the owner's decision D3, which the pull request cites in place of 19 separate records. A gap whose primary element moves still needs its own record, and a test proves that one without it is refused.
-- **Under D3 (b)** instead, a gap may keep up to two supporting aspirations. Someone must then choose an aspiration for each supporting element in the last column, and F-008's three are cut to two.
+- **The proposals** are the last column of the table above. They were made from each aspiration's title and each gap's summary, not from a close reading of every gap, so they are a starting point. VA-5 puts them in front of her as one table.
+- **One is proposed for dropping:** CA-003's supporting link to A Shared Creative Endeavor, where no aspiration is about a public trail of decisions. A dropped supporting element is a boundary change and gets a record.
+- **On the page:** nothing changes. The App lists a gap only under its primary element and never shows supporting entries.
+- **In the feed:** `appliesTo` is the primary aspiration's element, then the supporting aspirations' elements, without repeats. With the proposals as written it is unchanged for 20 gaps; it changes for CA-003 (one dropped) and CA-004 (primary moved).
+- **In the boundary check:** the one-time move needs no record where the primary element and the set of supporting elements are the same as before. Anything else needs one.
 
 ### The drafts
 
@@ -149,11 +152,11 @@ We should never:
 
 One difference to settle while marking up: she named a cloud service as an engine; F-008 lists only ComfyUI and Wan2GP as engines and treats rented machines as machines.
 
-**Local or cloud, by choice** (under Local-first, cloud-capable; today's "Optional cloud capabilities", reworded)
+**Everything local or cloud, by choice** (under Local-first, cloud-capable; today's "Optional cloud capabilities", reworded)
 
 Everything should be able to run locally, and nothing should have to.
 
-The sentence is hers. The bullets are the orchestrator's proposal to her, not yet read by her.
+The sentence is hers, and the title is drafted from her words, "everything can be local or cloud by choice"; it is 36 characters, inside the parser's limit of 3 to 65. The bullets are the orchestrator's proposal to her, not yet read by her.
 
 We should:
 
@@ -193,14 +196,14 @@ VA-4 widens the title, sentence and paragraph so that finding a contribution is 
 
 Offered to the owner before she reads the tasks. Each is true of the plan as written.
 
-1. Now, a gap can point at four pillars and principles. After, it points at exactly one aspiration and nothing else.
-2. Nineteen gaps lose their "supporting" pillars and principles, and the vision page looks the same, because it never showed them.
+1. Now, a gap points at pillars and principles. After, it points at one main aspiration and whichever others support it, and never at a pillar or principle.
+2. Every supporting pillar or principle a gap names today is turned into a named aspiration or dropped on the record; none disappears quietly.
 3. The word "characteristic" disappears from everything a person reads, and stays in the feed and the code, where nobody reads it.
 4. Pillars and principles stay in two folders. No file moves or is renamed.
 5. F-008 stops being where the generation philosophy lives. The philosophy moves up; the gap keeps only the distance.
 6. The "We should never" lists are on the live vision page the day they merge, as plain unmarked lines; they look like lists only after the next App release.
 7. An aspiration with a "We should" list and no "We should never" list is refused by a check, and no list may have a sixth bullet.
-8. Twenty-eight aspirations become thirty-one. Only Packs, Generation and "Local or cloud, by choice" get lists in this plan.
+8. Twenty-eight aspirations become thirty-one. Only Packs, Generation and "Everything local or cloud, by choice" get lists in this plan.
 9. Renaming an aspiration breaks every gap that names it until they are fixed in the same pull request.
 10. Plans still link gaps, never aspirations. Each level links one level up.
 
@@ -212,7 +215,7 @@ One round, 12 Nov 2026, by a fresh session with no stake in the draft, on commit
 
 | Finding | What was done |
 |---|---|
-| B1. The mapping gave no supporting aspirations, though the gap line allowed two; F-008 has three supporting elements; the task that moves the gaps could not be executed, and the boundary rule compared only the primary. | Accepted, as a simpler rule: each gap names exactly one aspiration (D3 (a), recommended, awaiting the owner). The mapping now lists today's supporting elements, and [what the change costs](#what-one-aspiration-per-gap-changes) is stated. |
+| B1. The mapping gave no supporting aspirations, though the gap line allowed two; F-008 has three supporting elements; the task that moves the gaps could not be executed, and the boundary rule compared only the primary. | Accepted. The owner then decided D3: one primary and any number of supporting. The mapping now proposes a supporting aspiration for each supporting element, for her mark-up ([how](#supporting-aspirations)). |
 | B2. The gap-line task missed `checks.py:_boundary_impl`, the parser's return contract for its three callers, and a record-field pattern that cannot hold `/`. | Accepted. All three are in VA-2's scope and details. |
 | B3. The drafts for Packs, Generation and "Local or cloud" had no paragraph, but the 15-word minimum counts prose only. | Accepted; the rule stays. VA-3 and VA-4 write a short paragraph for each new or reworded aspiration from the owner's words, for her mark-up. |
 
@@ -220,7 +223,7 @@ One round, 12 Nov 2026, by a fresh session with no stake in the draft, on commit
 
 | Finding | What was done |
 |---|---|
-| S1. The one-time exemption in the boundary check was too loose and had no negative test. | Accepted, fitted to D3 (a): a move to an aspiration under the same primary element needs no record, the dropped supporting elements are covered by D3, and a move to another element without a record fails, by test. |
+| S1. The one-time exemption in the boundary check was too loose and had no negative test. | Accepted as written: the move needs no record only if the primary element and the set of supporting elements are the same after projecting each aspiration to its element; a moved primary or a dropped supporting element without a record fails, by test. |
 | S2. `should` and `shouldNever` in the feed have no reader. | Accepted. Phase 1 adds no feed field. |
 | S3. Never rename the feed key: no reader sees it, and App builds already installed reject a feed without `characteristics`. | Accepted. The two rename tasks are cut; the key stays for good. |
 | S4. Cut the generated gap lists in the overview: an emptied References section fails the parser, and four pages mention gaps in prose. | Accepted. The task is cut; only the one line about CA-004 changes, if that gap moves. |
@@ -238,24 +241,24 @@ One round, 12 Nov 2026, by a fresh session with no stake in the draft, on commit
 
 ## Owner decisions
 
-For the owner: D3, D6, D7, D8, D9 and D16, and the wording of the five new or reworded aspirations. The rest were the planner's to make and are recorded with their reasons; she may overrule any of them.
+Still for the owner: her confirmation of D7 with its wording, the wording of the five new or reworded aspirations, and the proposed supporting aspirations. The rest are decided: by her where it says so, otherwise by the planner, with reasons; she may overrule any of them. Her words are quoted in [What the owner said](#what-the-owner-said).
 
 - **D1. What is the third level called?** *Decided by the owner, 12 Nov 2026: "aspirations".* The top two are the vision and its elements (pillars and principles).
 - **D2. What is an aspiration made of?** *Decided by the owner, 12 Nov 2026:* a title, one sentence, a short paragraph, and "We should" and "We should never". *Decided by the planner:* the lists are optional but come as a pair; each has one to five bullets; each bullet is one sentence. Reason: her instruction that it must not become overburdened.
-- **D3. What does a gap attach to?** *Decided by the owner, 12 Nov 2026:* always an aspiration, never a pillar or principle directly. Still open: (a) exactly one aspiration and no supporting ones; (b) one primary and up to two supporting. *Recommended: (a).* She asked for gaps to be "more grounded as opposed to them being connected to lots of other stuff". (a) removes the supporting pillars and principles that 19 gaps name today; the page does not change ([what it changes](#what-one-aspiration-per-gap-changes)). Awaiting the owner.
+- **D3. What does a gap attach to?** *Decided by the owner, 12 Nov 2026:* always aspirations, never a pillar or principle directly; "one main one" and "as many as need be supporting". So: exactly one primary aspiration, any number of supporting, no cap. Each supporting element a gap names today gets a proposed aspiration for her mark-up, or is dropped on the record where none fits ([proposals](#supporting-aspirations)).
 - **D4. Where do aspirations live?** *Decided by the planner:* inside the element's page, as today's `###` sections, with `## Characteristics` renamed `## Aspirations`; the two folders stay as the kind. Reason: a file each would be about 31 files and a new record kind.
 - **D5. Is the feed's key renamed?** *Decided by the planner, after the critique:* never. It stays `characteristics`, with `appliesTo` and `schemaVersion` 1. Reason: no reader sees it, and installed App builds reject a feed without it.
-- **D6. Where do Packs and Generation sit, and does Packs absorb anything?** That they exist is *decided by the owner, 12 Nov 2026.* (a) Packs is a sixth aspiration under Agent-Powered Liquid Software, the most a page allows; Generation is a fourth under Eliminate technical wrangling. (b) Packs replaces "Live tool composition" and "Real-time functionality", which overlap with it. *Recommended: (a).* Under (b), LS-001, LS-002 and LS-005 lose the aspirations they fit with high confidence and would all hang on Packs. Awaiting the owner.
-- **D7. What do CA-004 (sharing and discovery) and CA-005 (parallel contribution) attach to?** (a) CA-005 gets a new aspiration under A Shared Creative Endeavor, working title "Many hands, one clear way in"; CA-004 gets none: "Built for reuse" under Open by design is widened to "Built to be found and reused". (b) One new aspiration under Shared Endeavor for both. (c) Two new aspirations, one each. *Recommended: (a), the orchestrator's proposal.* Its cost: CA-004 changes element, so it moves on the vision page and needs a boundary record. Awaiting the owner.
-- **D8. Is the [proposed mapping](#the-proposed-mapping) right?** *Recommended:* accept the high rows as they are and rule on the four medium rows: AA-001, CI-003, LS-003, LS-004. Awaiting the owner.
-- **D9. Which gaps have their Desired state trimmed?** (a) Only F-008 and F-004, whose philosophy moves into Generation and Packs. (b) All eight that a helper judged to state philosophy. *Recommended: (a).* Each gap keeps a Desired state, which the feed requires. Awaiting the owner.
-- **D10. How does the one-time move of 22 gaps pass the boundary check?** *Decided by the planner, after the critique:* a move to an aspiration under the same primary element needs no record; the supporting elements that drop are covered by D3, cited in the pull request; a gap whose element moves, or whose Desired state is trimmed, needs its record; after the move, any change to a gap's aspiration needs one. Reason: the owner's decisions D3 and D8 are the review, and 22 seven-field records would repeat them.
+- **D6. Where do Packs and Generation sit, and does Packs absorb anything?** *Decided by the owner, 12 Nov 2026, as recommended* ("I agree with where you say for positioning"): Packs is a sixth aspiration under Agent-Powered Liquid Software, the most a page allows, and absorbs nothing; Generation is a fourth under Eliminate technical wrangling.
+- **D7. What do CA-004 (sharing and discovery) and CA-005 (parallel contribution) attach to?** CA-005 gets a new aspiration under A Shared Creative Endeavor, working title "Many hands, one clear way in"; CA-004 gets none: "Built for reuse" under Open by design is widened to "Built to be found and reused", so CA-004 changes element, moves on the vision page and needs a boundary record. *Agreed with the positioning, 12 Nov 2026* (the orchestrator reads "I agree with where you say for positioning" as covering it); *the owner to confirm with the wording* in VA-4.
+- **D8. Is the [proposed mapping](#the-proposed-mapping) right?** *Decided by the owner, 12 Nov 2026, as recommended* ("I agree with what you mean for the gap placement"): the primary column stands, including the four medium rows. The supporting column is still hers to mark up (D3).
+- **D9. Which gaps have their Desired state trimmed?** *Decided by the owner, 12 Nov 2026, as recommended* ("and the desired state"): only F-008 and F-004, whose philosophy moves into Generation and Packs. Each keeps a Desired state, which the feed requires.
+- **D10. How does the one-time move of 22 gaps pass the boundary check?** *Decided by the planner, after the critique:* no record where the primary element and the set of supporting elements are the same after projecting each aspiration to its element; a record where the primary element moves, a supporting element is dropped or added, or the Desired state is trimmed; after the move, any change to a gap's aspirations needs one. Reason: her decisions D3 and D8 are the review for a like-for-like move, and 22 seven-field records would repeat them.
 - **D11. Does the generated overview list gaps under their aspiration?** *Decided by the planner, after the critique:* no. Reason: the App shows it in Phase 2, and the hand-kept lists cannot be emptied without failing the parser.
 - **D12. Where is the one rule about using aspirations?** The rule: a planner reads the aspirations of the plan's gaps; work that would break a "We should never" changes the aspiration first, in a pull request the owner approves; wording under `vision/` is the owner's. *Decided by the planner:* in the contribution workflow's section on vision gaps, with one link each from the plan skill and the gap skill. Reason: it binds reviewers and gap assessors as well as planners. Plans keep linking gaps only.
 - **D13. What do the files and the code call an element?** *Decided by the planner, after the critique:* what people read says "element" and "aspiration"; the template file and the Python names keep "subject". Reason: renaming them helps no reader.
 - **D14. Is Phase 2 committed?** *Decided by the planner:* yes, as one feed field and one App task, in the first release after Release 13. Reason: until then the lists show as plain lines.
 - **D15. How many review rounds?** *Decided by the planner, after the critique:* one final round, no review stop.
-- **D16. How does the vision say "local or cloud"?** *Decided by the owner, 12 Nov 2026, in her words:* "everything should be ABLE to run locally but shouldn't have to". *Recommended, awaiting the owner:* (a) the existing aspiration "Optional cloud capabilities" under Local-first, cloud-capable is reworded to carry it, with the title "Local or cloud, by choice", her sentence, and the lists in [The drafts](#the-drafts); F-005 and F-006 then fit it. (b) Add a new aspiration and leave the old one, which would make two aspirations say nearly the same thing.
+- **D16. How does the vision say "local or cloud"?** *Decided by the owner, 12 Nov 2026, in her words:* "everything should be ABLE to run locally but shouldn't have to", titled "everything can be local or cloud by choice". The existing aspiration "Optional cloud capabilities" under Local-first, cloud-capable is reworded to carry it, with the draft title "Everything local or cloud, by choice", her sentence, and the lists in [The drafts](#the-drafts); F-005 and F-006 then fit it. The wording is hers to mark up in VA-4.
 
 ## Source identities
 
