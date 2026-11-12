@@ -249,3 +249,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - MEDIUM: the fresh-project e2e tests don't assert the exact command, object, track or span. MEDIUM: the adversarial case is covered only by the marked test (the Sol conversion is in progress).
   - Rated LOW by the reviewer and treated by me as a weakened check that must be restored: `191863ca9` dropped the audio unit test's negative assertions and its exact target track.
   - Codex Luna (`cx-drop2`) is restoring and strengthening those. The side track enters R12 only with all of this done and reviewed.
+- 2026-11-12 00:15Z — **Video-drop test conversion (Codex Sol): not possible in R12. The exception stays, restated.**
+  - Sol traced the fixed path at Runtime `42ae24aff`. A tampered selection is refused at commit with 404 `not_found` (`timeline_commit_port.py:983-988`; `errors.py:57`).
+  - But a real commit refusal persists a rejected outbox chain (`localSaveSession.ts:125, :224`), and further edits are refused until it is resolved (`:292`). The test's later correct drop in the same mounted owner can't proceed. That is #253, owner-deferred to Plan 39.
+  - Sol changed nothing (per D). Its local journey run hit a Node heap limit during the hosted build; CI is the venue.
+  - Decision: the side track keeps the marker where it is, with every assertion unchanged, and restates the exception honestly. Reason, comment and registry issue now point at #253 (side branch `scratch/r12-drop-side`, new head after `05ac65ca5`). Registry 4/0.
+  - On the main track (no #252 fix), the #252 wording stays as it is.
+  - **REVIEW**: if the side track is taken, the VIDEO-DROP exception's issue changes from #252 (fixed) to #253.
