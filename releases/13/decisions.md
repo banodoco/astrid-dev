@@ -849,3 +849,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Catalog D1 (paid consent in the dry-run):** the dry run sends exactly the paid stage's command plus `--dry-run`, from one builder shared with the paid stage. The SDK still validates paid controls under dry-run. Tests check that every built command carries `--dry-run` and that a dry run with paid consent makes no provider call.
 - **Catalog D2:** unlist nothing before Stage 2. The 3 failing ratchet cases (`ltx-2.3` t2v and flf, `lava-sr`/`deepfilternet3` `audio_ref`) become strict expected-failures, each with an issue and an expiry at the Fri 18:00 cut line. By then each is fixed or its mode unlisted.
 - **Ownership:** the cells catalog card's 5 lines in `core/generation` are accepted. They land before `r13/engine-lint`.
+
+## 12 Nov ~19:20 UTC: correction to catalog D2 (the entry above)
+
+- **The expected-failure ruling was wrong.** Agent has no expected-failure list, by design: `docs/development/testing-plan.md` R-6 has none since 18 Oct, and `tests/lanes.py:249` turns any xfail into a failure. The cells manager caught it.
+- **Instead:** the three contracts are **fixed** by the Fri 13 Nov 18:00 cut line, or their mode is unlisted, with evidence:
+  - fixes on Agent `r13/catalog-contracts`, plus VibeComfy `r13/ltx-flf` if needed;
+  - issues astrid-agent#342, #343 and #344.
+- **The new ratchet** lands green with those fixes, not before.
+- **Date:** the cut line is Fri 13 Nov, not "Fri 14 Nov" as my message said.
