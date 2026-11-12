@@ -902,3 +902,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **App, Runtime and Pinokio:** `r13/plan52-app` `7d54484bc`, `r13/plan52-runtime` `3996e41f3` and `r13/plan52-pinokio` `d3279bd9a` merge at publish.
 - **Held for the owner's reading:** the six reporting rules, `r13/plan52-agent-skill` `0206435eb`, in `packs/_core/docs/SKILL.md`, the file the profile names. See astrid-dev#606 for the second root skill file. Not read by the cut line means the next release. Open point: the version command prints the package version (`astrid/0.1.0`), not the release.
 - The four earlier PRs (astrid-app#256, astrid-agent#345, astrid-runtime#49, astrid-pinokio#16) are closed unmerged. Their branch `claude/relaxed-ptolemy-tih6dn` is unused.
+
+## 12 Nov ~19:50 UTC: owner, astrid-dev#607 is fixed in R13
+
+- **Owner (Hannah):** "we need to fix that bug". `astrid generate` always passes `--placement auto`, which takes the ComfyUI path and turns away all 34 provider-only catalog modes. That's in scope for R13, whether or not R12 has it.
+- **Fix:** engine lane `r13/engine-placement` (Sol high, then Astra high), starting now in parallel with U2.
+  - `auto` resolves from the entry's own declared execution, with one resolver in the SDK.
+  - A conflicting explicit placement refuses with a clear message.
+  - Proof: a CPU dry run of every catalog entry through the CLI, against provider fakes.
+  - Target: merged by Fri 13 Nov 12:00 UTC.
+- **Live proof of a provider path** needs that provider's key. The RunPod spend authorization doesn't cover it, so it's for the owner.
