@@ -5,32 +5,32 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
 ## MORNING NOTE (for Hannah; final, 2026-11-12 06:50Z)
 
 **Release 12 is published and verified.** The orchestrator pushed it at ~04:33Z, by fast-forward with no force:
-- Agent \`0e1543e0\`
-- Runtime \`42ae24aff\`
-- App \`237b28be9\`
+- Agent `0e1543e0`
+- Runtime `42ae24aff`
+- App `237b28be9`
 
-The gate record is \`r12-progress/gate-record\` (\`releases/12/gate-record.md\`); it is GATE-GREEN and has no placeholders.
+The gate record is `r12-progress/gate-record` (`releases/12/gate-record.md`); it is GATE-GREEN and has no placeholders.
 
-- **Served:** the install manifest has sha256 \`1f3cd5b0…69f1\` (release 12, matching SHAs), and install, install.sh and install.ps1 are unchanged. The served-manifest canary is green. Your phone copy "Leverage open source tools" is live, on the Agent tab (\`/?experience=agent\`).
+- **Served:** the install manifest has sha256 `1f3cd5b0…69f1` (release 12, matching SHAs), and install, install.sh and install.ps1 are unchanged. The served-manifest canary is green. Your phone copy "Leverage open source tools" is live, on the Agent tab (`/?experience=agent`).
 - **Main after the push:** nothing new red.
   - App Tests is now green; it was red before. Runtime's darwin-native and windows-realm-publication are now green too.
   - Everything else is red on the same jobs or IDs as before the push.
 - **Decided for you (REVIEW):**
   - add_text defaults to the bundled text-card.
-  - The recovery command is \`astrid packs add https://github.com/banodoco/poms_packs --revision main …\`.
+  - The recovery command is `astrid packs add https://github.com/banodoco/poms_packs --revision main …`.
   - Five test-only commits came in with the fix round.
   - The drop data-loss fix goes to Plan 39.
   - The VIDEO-DROP exception stays (#252).
   - The bootstrap test runs later in the suite.
   - The matrix harness simulates "newer release served".
   - Known issues added to the gate record:
-    - \`test_parent_clips\` mixed-timeline: test drift.
+    - `test_parent_clips` mixed-timeline: test drift.
     - A darwin custody-lock flake: R11 code, one test about 1 run in 5.
     - linux-fresh: once showed the generic update wording.
   - A Pinokio listener-race test fails intermittently; it is pre-existing since R10. Plan 39.
 - **Left for you (needs a person):** merge the R12 record branches into astrid-dev main.
-  - The branches are \`r12-progress/decision-log\`, \`r12-progress/gate-record\` and \`r12-progress/plan39-handoffs\`.
-  - Merging main into them conflicted in other people's docs after the Plan 48 cut-over, so I stopped. Merge against the new model: edit plan.md, then run \`python3 scripts/astrid_dev.py sync\`.
+  - The branches are `r12-progress/decision-log`, `r12-progress/gate-record` and `r12-progress/plan39-handoffs`.
+  - Merging main into them conflicted in other people's docs after the Plan 48 cut-over, so I stopped. Merge against the new model: edit plan.md, then run `python3 scripts/astrid_dev.py sync`.
 - **Release 13:** not this session's scope. No spend and no pods here.
 
 ## NOW (updated 2026-11-12 01:27Z, from `date -u`)
