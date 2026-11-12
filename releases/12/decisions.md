@@ -428,3 +428,6 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - **Re-pin `237b28be9`** on `scratch/r12-app-int`: agent.sha 0e1543e0, OMP source → banodoco/oh-my-pi at the same sha, vendor lock regenerated against the cut. `pin.mjs --check`, both vendor-lock checks and release-guard `origin/main HEAD --pins` (11 → 12) all pass. App main is an ancestor.
   - **Qualifying window dispatched together:** Agent ci.yml, App Tests, Direct Journey, matrix (harness `1940a2fe1`).
   - Gate record tuple and publication SHAs filled in.
+- 2026-11-12 01:28Z — **Astra read of `cafa71487`: NO BLOCKER.** Every Agent product commit in the fix round is now reviewed with no open blocker; recorded in the gate record.
+  - The reviewer confirmed the route behaves identically to console's and that the conversational collision matches what console already does.
+  - LOW (Plan 39, scope closed): the runner test checks the source text rather than running the runner.
