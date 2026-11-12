@@ -18,6 +18,23 @@ Name the outcome, destination, and authorized actions before acting:
 
 Carry out actions already authorized in the conversation. A merge, green check, or authorization to prepare does not authorize a different destination, deployment, tag, registry publication, or public release. Do not ask again for authority already given.
 
+## Keep the release's records
+
+Every release has its brief, `releases/<N>.md`, from [`releases/TEMPLATE.md`](../../releases/TEMPLATE.md). It holds intent and approach, and the approach opens with the current plan. Earlier plans stay below it, dated, as history.
+
+A release with more than one lane, or with a deadline, also keeps a folder, `releases/<N>/`, from its first day. Each fact has one home, and the other files link to it instead of repeating it:
+
+| File | Holds | How it changes |
+|---|---|---|
+| `run.md` ([template](../../templates/release/run.md)) | The live board: the timeline to publish, the cut line, each lane's state, and who runs it in which session | Rewritten at every check-in, so it's always current |
+| `decisions.md` | Dated rulings, each with its reason and evidence, plus the owned slips | Append-only. A correction is a new entry that names the one it corrects |
+| `tests.md` | The test gate: the per-test comparison against the previous `main` ([measure](../astrid-dev-green/SKILL.md#2-measure)), and the rows still blocking with their owners | Updated by the test lane at each comparison |
+| `briefs/`, `evidence/` | Each lane's brief, and the evidence files the claims cite | Added to; the board links each lane's brief |
+
+**The timeline and the cut line go in on day one.** The timeline runs from now to publish, with an owner for each milestone. The cut line names what ships without, and by when, if a lane isn't done. Decide that early, so the deadline doesn't decide it for you.
+
+**Give each lane its own session,** with a manager and its brief in `briefs/`. The release manager orchestrates and runs the paid and live steps itself.
+
 ## Take stock of open pull requests
 
 When a release is being specified, and again before its candidate is frozen, look at every open pull request in every repository the release touches (Runtime, Agent, App, Pinokio and any pack or engine repository it pins), including those from outside contributors. A release that ignores them either ships without work that was ready or collides with it afterwards.
