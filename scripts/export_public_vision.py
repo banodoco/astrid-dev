@@ -168,10 +168,10 @@ def build(root: Path, revision: str) -> dict:
     from records import projects as project_records
     from views import rebase_links
     for i, row in enumerate(project_records(root)):
-        name, goal, status, owner, estimate, waiting, link = row
+        link = row[6]
         plan = Path("plans") / PLAN_LINK.fullmatch(link).group(1)
-        goal = rebase_links(goal, plan.parent, Path("plans"))
-        waiting = rebase_links(waiting, plan.parent, Path("plans"))
+        row = [rebase_links(value, plan.parent, Path("plans")) for value in row[:6]] + [link]
+        name, goal, status, owner, estimate, waiting, link = row
         plan_text = read(root, plan)
         linked = plan_gap_ids(plan_text)
         if any(gap not in seen for gap in linked):

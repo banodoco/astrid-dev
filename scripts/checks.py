@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Literal
 import json
+import re
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -14,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 def _catalog(context):
     from check_docs import STATUSES
     from project_contract import PLAN_FOLDER
-    from records import project_fields, priority_order
+    from records import project_fields, priority_order, section
     root = context.root
     errors = []
     folders = set()
@@ -31,7 +32,14 @@ def _catalog(context):
         except (ValueError, OSError) as exc:
             errors.append(f"plans/{folder}/plan.md: {exc}")
     priority = root / "plans/priority.md"
-    order = priority_order(priority.read_text(encoding="utf-8") if priority.exists() else None)
+    priority_text = priority.read_text(encoding="utf-8") if priority.exists() else None
+    order = priority_order(priority_text)
+    order_section = section(priority_text or "", "Order")
+    order_heading = re.search(r"^## Order\s*$", priority_text or "", re.M)
+    first_order_line = (priority_text[:order_heading.start()].count("\n") + 2) if order_heading else 1
+    for line_number, line in enumerate(order_section.splitlines(), first_order_line):
+        if line.strip() and not re.fullmatch(r"- \d{2,}-[a-z0-9-]+", line):
+            errors.append(f"plans/priority.md: invalid line {line_number} under ## Order; fix it to - <folder-id>")
     seen = set()
     for folder in order:
         if folder in seen:
