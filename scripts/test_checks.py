@@ -109,8 +109,8 @@ class RegisteredRuleTests(unittest.TestCase):
             active = Records.plan(Project="First image", Status="active") + PLAN.split("\n\n", 1)[1]
             (project / "plan.md").write_text(active)
             (project / "inputs.md").write_text(DRAFT)
-            from check_docs import HEADER, DIVIDER
-            (root / "plans/index.md").write_text(HEADER + "\n" + DIVIDER + "\n"
+            (root / "plans/index.md").write_text("| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |\n"
+                "|---|---|---|---|---:|---|---|\n"
                 "| First image | Build a flow | active | Owner | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n")
             gap = root / "vision/gaps/F-005-local-files-cloud-assist.md"
             gap.parent.mkdir(parents=True, exist_ok=True)

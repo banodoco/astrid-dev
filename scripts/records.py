@@ -7,6 +7,9 @@ from pathlib import Path
 from typing import Pattern
 
 
+PLAN_CELL = re.compile(r'\[[^\]]+\]\(([^)]+/plan\.md)\)')
+
+
 PLACEHOLDERS_COMPLETION = frozenset({"tbd", "todo", "none", "unknown", "n/a", "pending"})
 PLACEHOLDERS_GAP = PLACEHOLDERS_COMPLETION | {"because"}
 PLACEHOLDERS_PLANNING = frozenset({"tbd", "todo", "n/a", "none", "unknown"})
