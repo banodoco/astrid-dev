@@ -2,49 +2,39 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (12:42 UTC): read this first; it is enough to carry on from
+## NOW (15:10 UTC): read this first
 
-**Rehearsal:** `scratch/r13-rehearsal` = `dd5bc822` on origin, local clone `/home/user/wt/c-bis`. It contains:
-- everything in `b306b2be`: R12 main `0e1543e0`, the structural slices, declared logs `603b6728`, models-folders `43b69032`, the TTS source patch `687a0ed9`, music lock `634a2608`, misc `e798df2b`, gate `f0535fef`, ComfyUI bump `43b44c1e`, engine command output `72fbdf65`, lock fix `6eacb077`;
-- PLUS declared patches: Astrid `r13/declared-patches` `dd5bc822`, pinning VibeComfy `r13/declared-patches` `c7a47e36`.
-  - The node lock declares a pack's source patches, and VibeComfy honours them by default (restore, doctor, drift, witness). It is documented in VibeComfy's setup SKILL.md and REFERENCE.md.
-  - A successful preparation step's output is now kept as declared run logs.
+### The candidate line (orchestrator 14:49: new findings go in group B by default)
+**A. Needed for the five cells to pass and be released safely**
 
-**Running now:**
-1. **Keep-warm, Terra pass 4,** in `/home/user/wt/c-warm` (log `briefs/wave3/keep-warm4.log`). It finishes `stale_after_failure` admission (scope extension 2: `worker_preparation.py`) and runs the full suites.
-   - Then **pass 5** (`briefs/wave3/keep-warm5.md`, ready, NOT yet launched): keep the pod on a first or repeated preparation failure; a source-digest-only difference re-prepares; `verification_timeout`; receipts name the pod and show expiry, cost and preparation state; recovery keeps the original cause.
-2. **Root-cause subagent** for two live bugs (evidence `install-r13b/runs/stuck-task/`; the old host PID 28173 is kept alive for it):
-   - **BUG 1 (release-blocker candidate):** failed TTS task 25b59510 stays `running`. Failure publication was rejected with "output object is outside the task project"; the reconcile loop (`generic_host.py` about 11540-11640) retries the `fail` forever and never cedes.
-   - **BUG 2:** a queued task waits on `insufficient_storage` with the generate CLI printing nothing; disk was at 787 MB, now about 6 GB free.
+| Item | State | Owner | Estimate |
+|---|---|---|---|
+| BUG 1: a stuck failed task (Runtime \`6855dfa8\` inline proof plus Agent terminal-reconcile \`56284e6c\`) | DONE, in the rehearsal | — | — |
+| TTS declared patch (VibeComfy \`c7a47e36\`, Astrid \`dd5bc822\`) | DONE; node restore passed live | — | — |
+| Keep-warm: a failed job or failed preparation keeps a healthy pod | DONE (\`9e7b2a48\`; 326 passed); passed live | — | — |
+| BUG 3: one models-root resolver (VibeComfy \`e4118ccf\`) | DONE; in Stage 1 | — | — |
+| T1: edit admission (\`3ea7381d\`) | DONE; in Stage 1 | — | — |
+| Music template declaration (VibeComfy \`87d5e825\`) | DONE; in Stage 1 | — | — |
+| **Stage 1 live proof:** five cells on candidate \`r13/stage1\` \`f9214240\` | RUNNING (started 15:09) | me | about 1 h |
+| Installer progress (IU-20) plus the R1 update fix (IU-14) | DONE, in the rehearsal \`2eceb0b0\` | — | — |
+| T3: the 37 legacy template declarations (the SFX template is among them) | IN FLIGHT (Sol, \`c-vcmusic\`) | Sol | about 1–2 h |
+| Success-run engine logs (T9; owner rule "logs for every generation") | QUEUED | Terra | about 1 h |
+| Model layout A1–A3 plus in-place engine upgrade U1–U5 (owner: no shims, so no symlinks shipped) | DESIGNED; reviewed (Astra SOUND WITH CHANGES); next a manager | manager | about 4–6 h. **Owner call: in the candidate, or ship V1 plus symlinks?** |
+| Candidate compose: Agent plus Runtime \`6855dfa8\` plus VibeComfy, App re-pin (\`release\` 13, \`pin.mjs\`), R1-update proof row (\`target_app_sha\`) | after Stage 1 | me | about 2 h |
 
-**Batch 6 (ready, NOT started):**
-- Fresh install `install-r13b/root-b4`, data `data-b4`, env `. ./env-b4.sh` (uv cache shared with home-b3), build `dd5bc822-42ae24af-52afeb20`.
-- Needs: a copy of `runs/batch5.sh` with root-b4/env-b4/data-b4, the setup step, then the five cells.
-- **Hold it until BUG 1 is understood:** any failure carrying declared logs may block the queue.
+**B. After the candidate (default for new findings)**
+- Machines redesign M1–M10 (delegated; manager running): the claim owns spend, named machines, the idle timer. **Owner call: is any of it needed in the candidate?**
+- T6 (fold into M1), T7 (the wait reason reaching the CLI), T8 (Runtime blocker list, a schema change), T10 (models stay loaded between jobs), T11 (default project), T13 (CPU journey), T14 (catalog dry-run corpus; it finds catalog drift such as \`z-image/i2i\`).
+- Plan 50 revision (over-built per Fable); pre-existing \`test_warm_session\` paid-expiry failures (task 18).
 
-**Money:** balance $97.66 at 12:42, no pods. About $8 of $40 spent. Floor $67.41.
-
-**Per cell:**
-- **TTS:** the patch was refused by VibeComfy restore → declared patches `dd5bc822` → merged → re-run in batch 6.
-- **SFX, t2i, edit, music:** not yet run (batch 5 blocked by BUG 1 and BUG 2); their root-cause fixes are in the rehearsal.
-
-**How to check or release:**
-- `. ./env-bN.sh; ./root(-b4)/run-astrid machines --json`; REST census `curl -fsS https://rest.runpod.io/v1/pods -H "Authorization: Bearer proxy-injected"`.
-- To stop a batch: SIGINT the generate CLI, stop the script, then `tasks cancel` any queued task.
-
-**Disk:** the session allowance is tight. Batch 5 hit 787 MB free; I deleted the old state's uv cache and /tmp baseline trees. Check `df -h /` before each batch.
-
-**Owner REVIEW items open:**
-- host shutdown or restart releases retained pods (recommendation: a restart-adoption slice; see 12:23);
-- the TTS fork as the durable form;
-- the four templates without a qualified id;
-- lifecycle `Retry-After`;
-- the old state's orphan `0d7f7e41` (likely the same mechanism as BUG 1; the subagent checks).
-
-**Next three steps:**
-1. Read the BUG 1 and BUG 2 root causes, then brief or fix them structurally.
-2. Run batch 6 on root-b4.
-3. Keep-warm pass 5, then compose the candidate.
+### State
+- **Rehearsal:** \`scratch/r13-rehearsal\` \`2eceb0b0\`.
+- **Stage 1:** \`r13/stage1\` \`f9214240\`, installed in \`install-r13b/root-s1\`, \`env-s1.sh\`, \`data-s1\`; script \`runs/stage1.sh\`, log \`runs/stage1.log\`, cell outputs \`runs-s1/<cell>/\`.
+- **Batch 6 result:** t2i PASSED live (6m38s, first green). TTS, SFX and music failed at preparation (BUG 3 and the declarations); edit was refused (T1). All are now fixed in Stage 1.
+- **Money:** balance \$96.65 at 15:10; about \$10 of \$40 spent; floor \$67.41.
+- **Codex safety (orchestrator 14:49):** full access means a worker could reach RunPod through the proxy. Every brief must forbid calls to \`api.runpod.io\` and \`rest.runpod.io\` and any \`astrid generate\` or \`machines\` command. Paid steps stay with me.
+- **Reviews (owner):** Astra for rigour and robustness; Opus for structure, taste and feel. Both after a design and before a build; after an S or SS build, before merge.
+- **Disk:** 3.7 GB free; check before each install.
 
 ## Entries
 
