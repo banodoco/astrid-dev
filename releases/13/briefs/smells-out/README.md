@@ -18,7 +18,7 @@ One short paragraph: what was seen, how sure you are, where in the code if known
 - `open`: nobody has placed it yet.
 - `folded: plans/NN-name/tasks.md <task id>`: a plan's task now covers it. The plan owns it from here.
 - `fixed: <repository>#<PR>` or a commit: it was small and someone fixed it.
-- `issue: #<number>`: it became an incident with a user to recover ([bug skill](../../skills/astrid-dev-bugfix/SKILL.md)).
+- `issue: #<number>`: it became an incident with a user to recover ([bug skill](../../../../skills/astrid-dev-bugfix/SKILL.md)).
 - `dropped: <reason>`: looked at and not worth doing, or no longer true.
 
 New evidence is a dated line added under the paragraph. Nothing else is edited or deleted. Keep credentials, private logs and machine-specific data out, as in any project pack.
@@ -28,10 +28,10 @@ New evidence is a dated line added under the paragraph. Nothing else is edited o
 | You have | It goes |
 |---|---|
 | Something seen in the product, not planned, maybe not certain | here |
-| Friction in astrid-dev itself (a skill, template, check) | the [process ledger](../../docs/ledger/README.md) |
-| A failure a user needs recovering from | a [bug issue](../../.github/ISSUE_TEMPLATE/bug.md) |
+| Friction in astrid-dev itself (a skill, template, check) | the [process ledger](../../../../docs/ledger/README.md) |
+| A failure a user needs recovering from | a bug issue ([bug skill](../../../../skills/astrid-dev-bugfix/SKILL.md)) |
 | A finding inside a running project's own scope | a row in that plan's `tasks.md` |
-| A missing outcome that would still matter if today's projects were replaced | a [gap](../../vision/README.md) |
+| A missing outcome that would still matter if today's projects were replaced | a [gap](../../../../vision/README.md) |
 
 ## How it feeds plans and gaps
 
