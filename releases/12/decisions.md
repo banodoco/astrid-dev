@@ -2,6 +2,25 @@
 
 Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIEW** marks user-visible changes, scope-vs-time trades, named exceptions and anything touching Release 13.
 
+## MORNING NOTE (for Hannah; updated 2026-11-12 00:33Z)
+
+Overnight mode from 00:33Z on the owner's instruction: work through without the owner or the orchestrator. I decide unanswered questions by the brief's priorities and mark them REVIEW. Release 13 items in that instruction don't apply to this session: the R12 manager touches nothing from Release 13, so there is no spend and no pods here.
+
+- **Done:**
+  - App journey: every three-products test passes or fails exactly at its named exception's marker (4 exceptions, each proven on a real run).
+  - Runtime: 0 regressions; gate item filled.
+  - 11-row matrix shakedown: 10/11 green. The autostart-off harness defect is fixed and reviewed.
+  - App main merged twice: 6545f130, then acfe70e7b.
+- **Not done:** Agent fix round (R12-introduced: `text` alias refused, add_text needing an optional pack, broken recovery command, core boundary ratchet) → new Agent candidate → Agent CI → re-pin → final round → GATE-GREEN.
+- **Decided for you (REVIEW):**
+  - add_text default becomes bundled text-card.
+  - The 89 R11-introduced Agent failures are recorded as shipped-in-R11.
+  - The video-drop exception stays (#252 on the main track).
+  - Test-order fix for the bootstrap test.
+  - Matrix harness simulates "newer release served" for the autostart-off card.
+- **Need from you:** nothing blocking yet.
+- **Release 13:** not this session's scope; no spend, no pods.
+
 ## NOW (updated 2026-11-12 00:33Z, from `date -u`)
 
 - **Scope (owner, 11 Nov):** ship the update fixes as soon as possible. The editor data-loss fixes go to Plan 39: [#252](https://github.com/banodoco/astrid-app/issues/252) video drop, [#253](https://github.com/banodoco/astrid-app/issues/253) a refusal blocks later edits, [#254](https://github.com/banodoco/astrid-app/issues/254) "Save them", [#255](https://github.com/banodoco/astrid-app/issues/255) upload lost at reload.
