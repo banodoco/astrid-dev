@@ -54,7 +54,7 @@ MAILBOX="
 ## Mailbox (talking to the Claude orchestrator)
 - To tell or ask the orchestrator something, APPEND a dated note to $RUN/to-orchestrator.md. It is woken within a minute.
 - Read $RUN/to-codex.md after every major step and before renting any pod; follow new notes from the orchestrator there.
-- If you cannot continue without an answer, append the question to to-orchestrator.md, release or keep pods as is safe (say which), and end your final message with RUN-STATUS: WAITING. You will be resumed with the reply.
+- If you cannot continue without an answer, append the question to to-orchestrator.md, release every pod this run made and say which, and end your final message with RUN-STATUS: WAITING. You will be resumed with the reply.
 - Otherwise end with RUN-STATUS: DONE or RUN-STATUS: BLOCKED: <reason>."
 money >> "$RUN/money.log"
 SID=$(grep -m1 -oiE 'session id: [0-9a-f-]{36}' "$RUN/codex.log" 2>/dev/null | awk '{print $3}')
