@@ -746,5 +746,17 @@ class PullRequestBaseTests(unittest.TestCase):
                                      ["scripts/astrid_dev.py", "check", "--base", wanted_base, "--event", "event.json"])
 
 
+class RootStatementTests(unittest.TestCase):
+    def test_root_readme_statement_is_generated_once_from_the_intro(self):
+        root = Path(__file__).resolve().parent.parent
+        intro = (root / "vision/intro.md").read_text(encoding="utf-8")
+        title = intro.splitlines()[0].removeprefix("# Astrid — ")
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        statement = f"**{title}.**"
+        self.assertEqual(readme.count(statement), 1)
+        region = readme.split("<!-- vision-summary:start -->", 1)[1].split("<!-- vision-summary:end -->", 1)[0]
+        self.assertIn(statement, region)
+
+
 if __name__ == "__main__":
     unittest.main()
