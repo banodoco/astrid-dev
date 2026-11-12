@@ -8,9 +8,9 @@
 
 **Owner:** Plan 48 manager
 
-**Estimate:** 14–15: phase 2 about 11 (7 to its cut-over, 4 after); then the queued part of phase 3 (form fix, pack shape, lifecycle, one review) about 3–4. Phase 3's form track and phase 4 are not scheduled
+**Estimate:** about 1.5 remaining: the refresh job (hosted proof PM-8h, review R8, go-live C-2). Phase 3's form track and phase 4 are not scheduled
 
-**Waiting on:** Phase 2's cut-over to `main`: release 12 published. Its refresh job: a bot identity that may bypass the pull-request rule on `main` (owner)
+**Waiting on:** The owner's bot identity and scratch repository (O-1) for the refresh job
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
