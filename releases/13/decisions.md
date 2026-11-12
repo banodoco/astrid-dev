@@ -423,3 +423,8 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
     - one exact, verified exemption in the clean-source check: an untracked `models/<folder>` is allowed only if it is a lock folder, is a symlink, and resolves to `<models base>/<folder>`. Everything else still fails.
   - This narrows an integrity check, even though the exemption is exact and verified, so it's built on a branch and NOT merged into the rehearsal until the owner has looked.
   - The alternatives were worse: `--base-directory` would also move `custom_nodes`, input and output, and writing to `.git/info/exclude` would hide entries silently.
+- **2026-11-12 07:55** **t2i root cause, read from the product** (`runs/t2i-dl2`, task `e0509aeb`, pod `i21oljm73brosw` released, ≈ $0.27). The prior t2i run of the night was blind on the same failure; this time the declared logs show the cause.
+  - `preparation.doctor.stdout` shows "Schema reconciliation: workflow contains unresolved class types: QwenImage21Cache, TextEncodeQwenImage21", and the error names those logs.
+  - Checked read-only: both nodes are ComfyUI core (`comfy_extras/nodes_qwen.py`) on ComfyUI master `c5751c8`, and absent at our pin `ee71d5c4`. The `qwen-image-2.1-turbo` entries need a newer ComfyUI than the recipe pins.
+  - **REVIEW:** the fix is a ComfyUI pin bump to the first revision with those nodes, plus a re-lock of the engine requirements, whose inputs include ComfyUI's `requirements.txt`. That's a recipe-level change, and the lock was compiled from inputs on another machine.
+  - Running now: first looks at music (`audio/ace_step_1_5_t2a_song`) and edit (`edit/qwen_image_2_1_turbo_edit`, expected to hit the same nodes), each ≤ $1 with P/E/I 1200/600/600.
