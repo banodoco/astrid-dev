@@ -1,5 +1,5 @@
 name: Idea
-description: Something missing that should become possible. It may feed a gap later. No keys, tokens or private paths.
+description: Something Astrid cannot do yet but should (no keys, tokens or private paths).
 title: "idea: "
 labels: ["idea"]
 body:
@@ -14,7 +14,7 @@ body:
     id: today
     attributes:
       label: What exists today
-      description: How it works now, or what gets in the way, if you know.
+      description: "Optional: how it works now, or what gets in the way."
   - type: input
     id: about
     attributes:

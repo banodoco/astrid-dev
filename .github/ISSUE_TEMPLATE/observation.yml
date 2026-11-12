@@ -1,5 +1,5 @@
 name: Observation
-description: Something you saw, such as a papercut, a smell, a slow path or a suspected bug. No keys, tokens or private paths.
+description: Something in Astrid that looked wrong, slow or awkward (no keys, tokens or private paths).
 title: "observation: "
 labels: ["observation"]
 body:
@@ -7,7 +7,7 @@ body:
     id: what
     attributes:
       label: What I saw
-      description: One sentence is enough.
+      description: What you saw; one sentence is enough.
     validations:
       required: true
   - type: input
@@ -19,4 +19,4 @@ body:
     id: version
     attributes:
       label: Astrid version
-      description: The Astrid version you run, if you know it.
+      description: "Optional: the Astrid version you run."
