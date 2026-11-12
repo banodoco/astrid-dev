@@ -1,5 +1,7 @@
 # Codex manager brief (template)
 
+**Not the default.** A Claude session normally manages the run itself and sends each card to a Codex worker ([README](README.md#use-codex-for-the-workers-under-a-claude-manager)). Use this brief only when a Codex manager was chosen, for a reason recorded on the plan's `Run start` line.
+
 Copy this to `<workdir>/run/prompt.md`, fill in every `<…>`, and start the runner with it ([README](README.md)). It is the brief that ran Plan 38's manager, with the project-specific parts taken out. Put model IDs only in the copy, never in this repository.
 
 ---

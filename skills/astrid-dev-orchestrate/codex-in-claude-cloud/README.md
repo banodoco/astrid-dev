@@ -1,6 +1,6 @@
 # Run Codex from a Claude Code cloud session
 
-Use this when the orchestrator should hand a long, self-directed task to Codex, such as a GPU validation run, and keep overseeing it from its own session. Codex runs in the background inside the orchestrator's container. It keeps running while the orchestrator is idle, is resumed if it stops early, and talks to the orchestrator through two files.
+A Claude cloud session can use Codex in two ways. **The default is [Codex workers under a Claude manager](#use-codex-for-the-workers-under-a-claude-manager):** the Claude session manages, and each card is one `codex exec` call. The other is a **Codex manager**: a long-running Codex process that manages its own sub-agents in the background, is resumed if it stops early, and talks to the hosting session through two files. Use a Codex manager only for one long, self-directed job with few decisions along the way (such as a GPU validation run), for more parallel tracks than the session can supervise, or when the owner asks; the sections from [Brief a manager](#brief-a-manager) on are for that case.
 
 Codex routes use the run contract's [Codex column](../../astrid-dev-shared/run-contract.md#routing-and-bindings):
 
@@ -34,7 +34,7 @@ Use this when a Claude manager session keeps managing (briefing, checking diffs,
     --skip-git-repo-check -C <worktree> "$(cat <brief.md>)" </dev/null
   ```
 
-  The wrapping sub-agent writes the brief to a file, runs the call, and returns Codex's last message plus the commit SHA and the test tail. It does not do the task itself. Give every task its own `git worktree add` path; Codex can write only there and in `/tmp`.
+  The wrapping sub-agent writes the brief to a file, runs the call, and returns Codex's last message plus the commit SHA and the test tail. Where the sandbox can't write the repository's `.git` (a worktree whose metadata lives outside it), say so in the brief: the worker leaves its change uncommitted, and the manager checks it is inside the card's scope, re-runs every proof the card names, and commits it. It does not do the task itself. Give every task its own `git worktree add` path; Codex can write only there and in `/tmp`.
 - **The brief is the same four things** as for any worker: one outcome, the exact repository, branch and files or selectors, what done looks like, and what to return. Add the run's rules that Codex cannot infer: commits are added and never rewritten, no model names in commit messages, never weaken a check, and stop after three attempts.
 - **What stays with the manager.** Pushing to candidate branches, dispatching CI, messages to the orchestrator, anything paid, and anything that needs a credential. A Codex worker inherits the session's network, so a credential the proxy injects reaches it too: do not give Codex workers tasks that call a paid provider.
 - **Switch at a task boundary.** Let running Claude workers finish; start new tasks on Codex. If a model ID is refused or the sign-in is lost, fall back to the Claude route for that task and say so; do not wait.
@@ -42,7 +42,7 @@ Use this when a Claude manager session keeps managing (briefing, checking diffs,
 
 ## Brief a manager
 
-To hand a whole project to a Codex manager, start from [`manager-brief.md`](manager-brief.md). It is the Plan 38 brief, with the project-specific parts as placeholders. It covers:
+Only when you have chosen a Codex manager over the default above. To hand a whole project to one, start from [`manager-brief.md`](manager-brief.md). It is the Plan 38 brief, with the project-specific parts as placeholders. It covers:
 - the workspace layout;
 - the route-to-model table;
 - timing and branches;
@@ -112,7 +112,7 @@ If Codex can't continue without an answer, it writes its question and ends with 
 
 ## Oversight
 
-The hosting session answers for the run ([who answers for a run](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Codex manages the tasks; the host does everything Codex can't. At each check-in it reads the mailbox, `tasks.md` and the integration branch, and ([orchestrate skill](../SKILL.md#hand-a-long-task-to-codex-from-claude-cloud)):
+The hosting session answers for the run ([who answers for a run](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Codex manages the tasks; the host does everything Codex can't. At each check-in it reads the mailbox, `tasks.md` and the integration branch, and ([orchestrate skill](../SKILL.md#use-codex-from-claude-cloud)):
 - sends one next action through `to-codex.md` if nothing has moved since the last check-in;
 - starts any task Codex can't run, once Codex has written `READY` for it or its inputs have landed;
 - clears what is stuck on its own side, such as a progress PR that can't merge or a dead runner;
