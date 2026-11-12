@@ -72,4 +72,4 @@ The App's `extension-visual` screenshot baseline and scheduled installer/Direct 
 
 Change status, owner, estimate or waiting-on **once**, in the plan's own six lines, and priority in [priority.md](priority.md); every `plans/<id>/plan.md` gets its row from `sync`. Never copy status into a second table.
 
-Run `python3 scripts/check_docs.py` and `python3 scripts/export_public_vision.py` from the repository root. CI validates on every PR and `main` push; the public vision feed is published only after a validated `main` push. **Moving a plan to `done` also requires the [completion assessment](../.github/PULL_REQUEST_TEMPLATE/project-completion.md)** with actual acceptance evidence and an assessment of every linked gap.
+Run `python3 scripts/astrid_dev.py check` and `python3 scripts/export_public_vision.py` from the repository root. CI validates on every PR and `main` push; the public vision feed is published only after a validated `main` push. **Moving a plan to `done` also requires the [completion assessment](../.github/PULL_REQUEST_TEMPLATE/project-completion.md)** with actual acceptance evidence and an assessment of every linked gap.

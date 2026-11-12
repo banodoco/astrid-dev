@@ -8,8 +8,8 @@ There are two deliberately separate GitHub workflows:
 
 | Workflow | Runs when | Permission | May do |
 | --- | --- | --- | --- |
-| [Review intake](../.github/workflows/review-intake.yml) | A PR opens or changes | `contents:read`, `pull-requests:read`, `issues:write` | Check an owner against the live catalog; label a valid request `needs-review`; comment. **Never merge, approve or deploy.** |
-| [Claim merger](../.github/workflows/claim-project.yml) | Unprivileged documentation CI succeeds on a PR | Dedicated repository-scoped GitHub App | Auto-merge **only** a validated owner-cell change for a queued, unassigned project. Never checkout or execute fork code. |
+| [Review intake](../.github/workflows/review-intake.yml) | A PR opens or changes | `contents:read`, `pull-requests:read`, `issues:write` | Check an owner against the project's `plan.md` on live `main`; label a valid request `needs-review`; comment. **Never merge, approve or deploy.** |
+| [Claim merger](../.github/workflows/claim-project.yml) | Unprivileged documentation CI succeeds on a PR | Dedicated repository-scoped GitHub App | Auto-merge **only** a validated change to the Owner line of a queued, unassigned project's `plan.md`. Never checkout or execute fork code. |
 
 The claim bot is disabled by default; if GitHub refuses to run a first-time contributor's CI until approved, claiming cannot skip that platform safeguard. Both workflows use trusted `main` code. Proposed code and PR metadata are untrusted input.
 
@@ -24,11 +24,11 @@ These settings cannot be created merely by merging workflow files. GitHub reposi
 
 ## Adversarial smoke test before enabling claim merges
 
-From a second GitHub account, submit one owner-only claim PR from a fork against a queued unassigned project. Confirm that the merged catalog owner is the PR author, the source revision is correct, and the bot's reply links to the real plan. Then verify that *none* of the following can auto-merge:
+From a second GitHub account, submit one owner-only claim PR from a fork against a queued unassigned project. Confirm that the merged `**Owner:**` line in the project's `plan.md` names the PR author, the source revision is correct, and the bot's reply links to the real plan. Then verify that *none* of the following can auto-merge:
 
 - A claim for somebody else's `@handle`, or a blocked/active/already-owned project
 - Two projects in one PR, an edited goal/status, any changed workflow/code or an extra file
-- A stale PR after somebody else claims the **same project** or changes that project's scope/status. An unrelated project's catalog edit should **not** invalidate the claim; GitHub's normal merge must preserve both changes.
+- A stale PR after somebody else claims the **same project** or changes that project's `plan.md`. An edit to another project's `plan.md` should **not** invalidate the claim; GitHub's normal merge must preserve both changes.
 - A PR whose CI failed or did not run, or a PR with changing head SHA
 - A PR while `main` protection is absent
 
