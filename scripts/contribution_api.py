@@ -5,13 +5,28 @@ import json
 import os
 import urllib.parse
 import urllib.request
-
-CATALOG = "plans/index.md"
+import urllib.error
 
 
 def plan_text(repository: str, ref: str, folder: str) -> str | None:
     """Read a plain project plan at ref, returning None only for a 404."""
-    raise NotImplementedError("PM-7b: project plan reader")
+    owner, name = repository.split("/", 1)
+    query = urllib.parse.quote(ref, safe="")
+    path = f"/repos/{owner}/{name}/contents/plans/{folder}/plan.md?ref={query}"
+    try:
+        result = request("GET", path)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            return None
+        raise
+    if (not isinstance(result, dict) or result.get("type") != "file"
+            or result.get("encoding") != "base64" or not isinstance(result.get("content"), str)
+            or "target" in result):
+        raise ValueError("expected a plain project plan file")
+    try:
+        return base64.b64decode(result["content"], validate=True).decode("utf-8")
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise ValueError("project plan is not valid base64 UTF-8 text") from exc
 
 
 def request(method: str, path: str, payload=None):
@@ -29,15 +44,6 @@ def request(method: str, path: str, payload=None):
     )
     with urllib.request.urlopen(req, timeout=20) as response:
         return json.loads(response.read())
-
-
-def catalog(repository: str, ref: str) -> str:
-    owner, name = repository.split("/", 1)
-    query = urllib.parse.quote(ref, safe="")
-    result = request("GET", f"/repos/{owner}/{name}/contents/{CATALOG}?ref={query}")
-    if result.get("type") != "file" or result.get("encoding") != "base64":
-        raise ValueError("expected a plain catalog file")
-    return base64.b64decode(result["content"]).decode("utf-8")
 
 
 def changed_files(repo: str, number: int) -> list[dict]:
