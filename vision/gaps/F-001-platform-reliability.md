@@ -23,4 +23,4 @@ A declared and version-pinned OS/device/deployment matrix demonstrates clean ins
 
 ## Sources and reassessment
 
-[Plan 08](../../plans/08-release1-install-update/plan.md) · [Current queue](../../README.md) · [Vision gaps](../README.md#gaps--15-assessed-outcomes). Reassess on shipped versions, new supported platforms, incident reports or finished evidence—not solely when a CI job turns green.
+[Plan 08](../../plans/08-release1-install-update/plan.md) · [Current queue](../../README.md) · [Vision gaps](../README.md). Reassess on shipped versions, new supported platforms, incident reports or finished evidence—not solely when a CI job turns green.
