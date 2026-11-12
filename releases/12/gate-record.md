@@ -44,10 +44,21 @@ Run [43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528
 
 ### 2. Agent CI
 
-Frozen Agent run: [attempt 2](https://github.com/banodoco/astrid-agent/actions/runs/43085262585). Compare complete test IDs with [Release 10](https://github.com/banodoco/astrid-agent/actions/runs/43081197187) and [Release 11, attempt 2](https://github.com/banodoco/astrid-agent/actions/runs/43082578330), using `env/baseline-diff.py`. Check non-pytest jobs by name too.
+Frozen Agent run: [43134432721](https://github.com/banodoco/astrid-agent/actions/runs/43134432721) on `0e1543e0` (attempt 1; attempt 2 re-ran the failed jobs for one ID, see below). The full by-ID comparison was done on the previous candidate `c5370a86` ([43085262585](https://github.com/banodoco/astrid-agent/actions/runs/43085262585) attempt 2) against [Release 10](https://github.com/banodoco/astrid-agent/actions/runs/43081197187) and [Release 11, attempt 2](https://github.com/banodoco/astrid-agent/actions/runs/43082578330) (`env/baseline-diff.py`, -rA). The final candidate is ruled as a **delta** against `c5370a86` (owner's path, 12 Nov).
 
-- Bucket counts (regression, no-baseline, missing): `{{FILL}}`
-- Rulings and unaddressed regressions: `{{FILL}}`
+- Bucket counts on `c5370a86` (regression, no-baseline, missing): 153 / 131 real (143 raw) / 315. Pre-existing 815, fixed 45.
+- Rulings:
+  - **89 of the 153** passed only on R10 and **all also fail on R11**. They were introduced by R11, which is shipped, so they are not R12-caused and are left untouched (recorded).
+  - **64 passed on R11 and failed on `c5370a86`.** The R12-introduced product regressions among them were fixed in `0e1543e0`: the `text` alias refused by schema lookup, add_text needing an optional pack, the pack recovery command (including `astrid packs` on the installed command), and the core pack-boundary ratchet. Also fixed: the test fixtures and teardown leaks those changes exposed.
+  - **Delta `0e1543e0` against `c5370a86`:**
+    - **60 of the 64 now pass.** Of the 4 left, 3 (`test_installer_platforms` no-systemd cases) also fail on R10, so they're pre-existing against R10. The fourth, `test_parent_clips::test_edit_on_a_mixed_timeline_edits_whichever_matched`, is test drift. It edits an `am-sprite` clip without the motion pack in that test's inventory, and the intended fail-closed refusal fires, printing the working install command. The fixture scope missed this file. Known issue; Plan 39.
+    - **New failing IDs (passed on `c5370a86`): 1.** `tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream` (darwin/Remotion lane): "candidate reconciliation deadline expired acquiring custody lock". The fix round touches no render or custody code. Attempt 2 result: {{AUDIO}}.
+    - **Coverage:** unit shard 5 was cancelled at the 2 h job limit, so 90 of `c5370a86`'s IDs have no CI result. They were run locally on both commits, with identical results (56 passed, 13 failed, 21 skipped) and no ID passing on the old candidate and failing on the new one. A local run is not CI-equivalent; recorded as such.
+  - **No-baseline (131):** 115 are in shard 1, which has no baseline on any side. A local R11-against-candidate baseline showed them failing identically on R11, apart from one R12 teardown leak (fixed) and the new `test_windows_publish` (fixed).
+  - **Non-pytest jobs:**
+    - boundary, both release wheels and windows-native-and-installer pass.
+    - `fast checks` is red at the mypy baseline gate. The count is identical on `c5370a86` and `0e1543e0` (current 2338 against baseline 2192), so the fix round adds 0 findings. The baseline is stale (Plan 39 AT2).
+    - darwin native: the same failures as R11, plus the audio-render ID above.
 
 ### 3. App Tests and Direct Journey
 
