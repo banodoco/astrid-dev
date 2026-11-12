@@ -406,7 +406,7 @@ def _pack_shape(context):
     try:
         return _pack_shape_impl(context)
     except (OSError, ValueError) as exc:
-        return [f"can't check new packs against the templates: {exc}; fix that, then run the check again"]
+        return [f"can't check new packs against the templates: {exc}; if the base revision is missing, fetch the PR base, then run the check again"]
 
 
 @dataclass(frozen=True)
