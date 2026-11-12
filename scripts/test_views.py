@@ -1,3 +1,4 @@
+import re
 import tempfile
 import unittest
 import contextlib
@@ -98,7 +99,7 @@ class ViewTests(unittest.TestCase):
             base_readme.write_text(original_readme, encoding="utf-8")
             plan = root / "plans/48-one-record-model/plan.md"
             text = plan.read_text(encoding="utf-8")
-            plan.write_text(text.replace("**Status:** active", "**Status:** maybe", 1), encoding="utf-8")
+            plan.write_text(re.sub(r"(?m)^\*\*Status:\*\* \w+", "**Status:** maybe", text, count=1), encoding="utf-8")
             target = root / "vision/README.md"
             text = target.read_text(encoding="utf-8")
             target.write_text(text.replace("# Astrid — ", "# Astrid — Hand edited ", 1), encoding="utf-8")
@@ -744,6 +745,23 @@ class PullRequestBaseTests(unittest.TestCase):
                 else:
                     self.assertEqual(capture.read_text().splitlines(),
                                      ["scripts/astrid_dev.py", "check", "--base", wanted_base, "--event", "event.json"])
+
+
+class RootStatementTests(unittest.TestCase):
+    def test_root_readme_statement_is_generated_once_from_the_intro(self):
+        root = Path(__file__).resolve().parent.parent
+        intro = (root / "vision/intro.md").read_text(encoding="utf-8")
+        title = intro.splitlines()[0].removeprefix("# Astrid — ")
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        statement = f"**{title}.**"
+        sentence = ("Astrid pairs an adaptable front end at [astrid.haus](https://astrid.haus) "
+                    "with an agent equipped with tools for creative work and open-source AI.")
+        self.assertEqual(readme.count(statement), 1)
+        region = readme.split("<!-- vision-statement:start -->", 1)[1].split("<!-- vision-statement:end -->", 1)[0]
+        self.assertIn(statement, region)
+        self.assertNotIn(sentence, region)
+        self.assertIn(f"## What we're building\n\n<!-- vision-statement:start -->", readme)
+        self.assertIn(f"<!-- vision-statement:end -->\n\n{sentence}\n\n<!-- vision-summary:start -->", readme)
 
 
 if __name__ == "__main__":

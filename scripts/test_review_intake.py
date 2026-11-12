@@ -1,6 +1,10 @@
 """Review routing reads project records on main and grants no merge authority."""
 from contextlib import contextmanager
+from pathlib import Path
+import io
+import os
 import unittest
+import urllib.error
 from unittest.mock import call, patch
 
 from review_intake import classify, parse_intent, route_event
@@ -153,6 +157,25 @@ class ReviewIntakeTests(unittest.TestCase):
                      "Review request: implementation\n", f"Project: {PATH}\n"):
             with self.subTest(body=body), self.assertRaises(ValueError):
                 parse_intent(body)
+
+
+class ReviewIntakeTokenTests(unittest.TestCase):
+    def test_workflow_can_label_a_pull_request(self):
+        # Adding a label to a pull request is refused with 403 "Resource not
+        # accessible by integration" unless the token has pull-requests: write.
+        text = (Path(__file__).resolve().parents[1] / ".github/workflows/review-intake.yml").read_text(encoding="utf-8")
+        self.assertIn("  pull-requests: write\n", text)
+        self.assertIn("  issues: write\n", text)
+
+    def test_a_refused_call_names_the_method_and_path(self):
+        import contribution_api
+        error = urllib.error.HTTPError("https://api.github.com/x", 403, "Forbidden", {}, io.BytesIO(b"{}"))
+        with patch.dict(os.environ, {"GH_TOKEN": "t"}), \
+                patch("urllib.request.urlopen", side_effect=error), \
+                self.assertRaises(urllib.error.HTTPError) as caught:
+            contribution_api.request("POST", "/repos/o/r/issues/7/labels", {"labels": ["x"]})
+        self.assertEqual(caught.exception.code, 403)
+        self.assertIn("POST /repos/o/r/issues/7/labels", str(caught.exception))
 
 
 class ReviewEventTests(unittest.TestCase):

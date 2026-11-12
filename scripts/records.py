@@ -106,11 +106,6 @@ def field_match(
     return re.search(prefix + value_pattern + r"$", text, flags)
 
 
-def field_matches(text: str, pattern: str | Pattern[str], *, flags: int = re.M) -> list[re.Match[str]]:
-    """Return all field matches so callers can retain their duplicate policy."""
-    return _finditer(pattern, text, flags)
-
-
 def named_field_matches(
     text: str,
     keys: tuple[str, ...] | list[str],

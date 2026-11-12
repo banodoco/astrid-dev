@@ -10,7 +10,7 @@ Use this concise summary in a **product repository PR**. A small bug can use its
 
 ## Evidence and model provenance
 - **Claim → check → actual result:** Named command/visual comparison, environment, exit/result and exact receipt; what a failed case does
-- **Routes used:** Route (N, X, S or T) for each piece of research, planning, implementation and review, with a specific model name only where the run used one other than its route's. Or `Unknown — reason`. See [route recording](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#record-routes-as-work-happens).
+- **Routes used:** Route (N, X, S or T) for each piece of research, planning, implementation and review, with a family name, never an exact ID, only where the run used one other than its route's. Or `Unknown — reason`. See [route recording](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#record-routes-as-work-happens).
 - **Remaining uncertainty:** Unrun scenarios, first failure/regression, recovery and source provenance limits
 
 ## Review decision

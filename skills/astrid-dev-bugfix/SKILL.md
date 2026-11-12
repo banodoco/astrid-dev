@@ -45,7 +45,7 @@ Give the user the pack and a practical recovery recommendation; invite them to s
 
 ## One issue for every incident, not a project
 
-Search for duplicates, then **create/update one issue in [banodoco/astrid-dev](https://github.com/banodoco/astrid-dev/issues)** using the [issue template](../../.github/ISSUE_TEMPLATE/bug.md), whether the result is fact-finding, a one-machine workaround or an upstream fix. Include redacted evidence, recovery advice and outcome, and links to **every related product PR** with its repository, purpose and status. Every PR must link back to this issue. If public sharing isn't authorized or the evidence cannot be sanitized, prepare a ready-to-post issue and obtain approval instead of publishing.
+Search for duplicates, then **file or update one [bug issue](../../docs/contribution-workflow.md#issues) in banodoco/astrid-dev**, whether the result is fact-finding, a one-machine workaround or an upstream fix. Post the incident record (the five-part pack above, redacted) as a comment on it, with links to **every related product PR** with its repository, purpose and status. Every PR must link back to this issue. If public sharing isn't authorized or the evidence cannot be sanitized, prepare a ready-to-post issue and obtain approval instead of publishing.
 
 ## Upstream only when justified
 

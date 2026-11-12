@@ -1,5 +1,9 @@
-# Megado control state is local to each run and never belongs in the planning repo.
+# Control state for each run is local and never belongs in the repository.
 .otto/
+
+# Python bytecode.
+__pycache__/
+*.pyc
 
 # Common local/editor noise.
 .DS_Store

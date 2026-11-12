@@ -1,6 +1,7 @@
 name: Route contributor review requests
 
-# pull_request_target runs only trusted main code with issues:write.
+# pull_request_target runs only trusted main code with issues:write and pull-requests:write
+# (adding a label to a pull request is refused with a 403 without pull-requests:write).
 # The contributed PR is inspected only through API metadata, never checked out.
 on:
   pull_request_target:
@@ -8,7 +9,7 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
   issues: write
 
 jobs:

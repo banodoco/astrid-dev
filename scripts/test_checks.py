@@ -237,5 +237,51 @@ class ProjectCatalogContractTests(unittest.TestCase):
             _, listing = invoke(["list"])
             self.assertIn("unique-project-numbers always", listing)
 
+
+class LinkAnchorTests(unittest.TestCase):
+    def run_rule(self, files):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for relative, text in files.items():
+                (root / relative).parent.mkdir(parents=True, exist_ok=True)
+                (root / relative).write_text(text, encoding="utf-8")
+            entry = next(entry for entry in checks.REGISTRY if entry.id == "link-anchors")
+            self.assertEqual(entry.trigger, "always")
+            return entry.run(checks.Context(root))
+
+    def test_good_link_passes_and_missing_heading_fails(self):
+        self.assertEqual(self.run_rule({
+            "docs/guide.md": "# Guide\n\n## Set up\n",
+            "skills/a/SKILL.md": "See [setup](../../docs/guide.md#set-up).\n"}), [])
+        self.assertEqual(self.run_rule({
+            "docs/guide.md": "## Set up\n",
+            "skills/a/SKILL.md": "See [setup](../../docs/guide.md#install).\n"}), [
+            "skills/a/SKILL.md: link to docs/guide.md#install matches no heading in that file; point the link at a heading that exists"])
+        self.assertEqual(self.run_rule({
+            "templates/t.md": "## Set up\n\n[bad](#install)\n"}), [
+            "templates/t.md: link to templates/t.md#install matches no heading in that file; point the link at a heading that exists"])
+
+    def test_repeated_heading_resolves_with_numeric_suffix(self):
+        self.assertEqual(self.run_rule({
+            "docs/guide.md": "## Step\n\n## Step\n\n## Step\n",
+            "skills/a/SKILL.md": "[a](../../docs/guide.md#step) [b](../../docs/guide.md#step-1) "
+                                 "[c](../../docs/guide.md#step-2)\n"}), [])
+        self.assertEqual(self.run_rule({
+            "docs/guide.md": "## Step\n",
+            "skills/a/SKILL.md": "[d](../../docs/guide.md#step-1)\n"}), [
+            "skills/a/SKILL.md: link to docs/guide.md#step-1 matches no heading in that file; point the link at a heading that exists"])
+
+    def test_heading_with_link_or_backticks_resolves(self):
+        self.assertEqual(self.run_rule({
+            "docs/guide.md": "## Use `check` and [sync](sync.md)\n",
+            "skills/a/SKILL.md": "[x](../../docs/guide.md#use-check-and-sync)\n"}), [])
+
+    def test_fragment_into_plans_is_not_reported(self):
+        self.assertEqual(self.run_rule({
+            "plans/20-x/plan.md": "## Real\n",
+            "docs/guide.md": "[p](../plans/20-x/plan.md#missing)\n",
+            "skills/a/SKILL.md": "[p](../../plans/20-x/plan.md#missing)\n"}), [])
+
+
 if __name__ == "__main__":
     unittest.main()

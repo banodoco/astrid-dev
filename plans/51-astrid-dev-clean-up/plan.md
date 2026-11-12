@@ -4,19 +4,19 @@
 
 **Goal:** Contributors and their agents meet one word for each thing, one home for each rule and one skill for changing astrid-dev itself, in fewer words and fewer script lines than today.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Plan 51 manager
 
-**Estimate:** about 8.5
+**Estimate:** 0
 
-**Waiting on:** Nothing; the orchestrator merges each part after its review
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary).
 
-**Contributes to closure:** CA-005: each rule and each term has one source, and a fresh agent changes astrid-dev from one skill and the guide it links, with its confusions recorded and resolved. The gap's route does not name this plan yet; task CU-0 adds the row when the scope is accepted.
+**Contributes to closure:** CA-005: each rule and each term has one source, and a fresh agent changes astrid-dev from one skill and the guide it links, with its confusions recorded and resolved. The gap's route names this plan as step 2 (task CU-0).
 
 ## Outcome and scope
 
@@ -63,7 +63,7 @@ This builds on what is already here:
 
 Seven fact-finders read the repository on 12 Nov 2026. The planner checked each finding in the code. Fourteen were wrong, weaker than reported or already handled, and were dropped. An independent critic then read this pack against the code; one design was dropped and most of its seventeen findings changed a card or a claim. The smallest sound approach is to fix what has caused a real failure and cut the rest. The findings, the alternatives, the critique and the open decisions are in [inputs.md](inputs.md#planning-evidence).
 
-The owner asked for this project on 12 Nov 2026. She has not seen or accepted this scope. This draft is not accepted.
+The owner asked for this project on 12 Nov 2026 and accepted its scope the same day (decision D1 in [inputs.md](inputs.md#owner-decisions)).
 
 ## Sequence and readiness
 

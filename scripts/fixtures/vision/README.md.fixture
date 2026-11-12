@@ -21,7 +21,11 @@ Contributing without an agent? See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## What we're building
 
+<!-- vision-statement:start -->
 **A tool to unlock the collective artistic ambition of the open-source AI community.**
+<!-- vision-statement:end -->
+
+Astrid pairs an adaptable front end at [astrid.haus](https://astrid.haus) with an agent equipped with tools for creative work and open-source AI.
 
 <!-- vision-summary:start -->
 Our vision has four main pillars and four guiding principles. We've identified 22 gaps between us and that end state, informing 48 projects.

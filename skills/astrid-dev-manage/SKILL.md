@@ -103,7 +103,7 @@ You are expected to decide. The advisor is for thinking that is bigger than your
 6. **Review,** once every task before the review row is done:
    - give the integrated candidate to the `completion_reviewer` for a round;
    - add each finding as a row directly below the review row (`R<round>.<n>`, or the plan's prefix); rounds, stopping and a blocking finding left after the last round follow the [run contract](../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries).
-7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md`, kept current as "Progress is always current" says (see [The answer](#the-answer)), and status in the plan's `**Status:**` line. When astrid-dev itself gets in the way, add an entry file to the [process ledger](../../docs/ledger/README.md).
+7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md`, kept current as "Progress is always current" says (see [The answer](#the-answer)), and status in the plan's `**Status:**` line. When astrid-dev itself gets in the way, add an entry file to the [process ledger](../../docs/ledger/README.md). A finding about the product is an [issue](../../docs/contribution-workflow.md#issues) you file; a worker hands you the text.
 
 ## Report
 

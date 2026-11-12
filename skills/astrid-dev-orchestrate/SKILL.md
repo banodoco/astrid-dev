@@ -136,6 +136,7 @@ Record the agreed cadence and end condition on the plan's `Run start` line, and 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, wake it with one next action.
 - **Strategy:** if the priority order ([`plans/priority.md`](../../plans/priority.md)) or a plan's state no longer matches [`strategy.md`](../../strategy.md), report the mismatch to the owner. Don't edit it yourself.
+- **Issues:** triage the issues opened or updated since the last check-in under the [issue rules](../../docs/contribution-workflow.md#issues).
 - **Progress record (every check-in):** `tasks.md` must match reality (merged PRs ticked, open and blocked tasks showing their state; [the manager's rule](../astrid-dev-manage/SKILL.md#the-answer)). If it lags, the nudge is to bring it up to date. Report progress from it, not from memory.
 - **Moving:** tasks finished or candidates landed since last time. **Stuck:** the same failure twice, the same open question, or idle agents. **Blocked:** waiting on a person, an event or a dependency, and for how long.
 - **Drifting:** work outside its scope, or undoing a recorded decision. **Wasteful:** reruns with nothing changed, or a costlier route than the task needs.
