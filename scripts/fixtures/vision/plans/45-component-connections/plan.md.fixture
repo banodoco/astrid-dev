@@ -1,5 +1,17 @@
 # 45 — Compose and connect creative components
 
+**Project:** Compose and connect creative components
+
+**Goal:** Make components composable through explicit, typed connections between their views, creative resources and backend capabilities, rather than just moving them around.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** owner/scope agreement; source and dependency checks
+
 **Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md) and [shared run contract](../../skills/astrid-dev-shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
 
 **Vision gaps:** [LS-003 — Compose and connect creative components](../../vision/gaps/LS-003-full-stack-contributions.md) (primary).

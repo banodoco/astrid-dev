@@ -12,19 +12,44 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Documentation rules retain the legacy order and skip after a bad catalog.
 def _catalog(context):
-    from check_docs import catalog_rows, read, CATALOG
-    try:
-        catalog_rows(read(context.root, CATALOG))
-    except (OSError, ValueError, IndexError) as exc:
-        return [f"plan catalog: {exc}"]
-    return []
+    from check_docs import STATUSES
+    from project_contract import PLAN_FOLDER
+    from records import project_fields, priority_order
+    root = context.root
+    errors = []
+    folders = set()
+    for path in sorted((root / "plans").glob("*/plan.md")):
+        folder = path.parent.name
+        if not PLAN_FOLDER.fullmatch(folder):
+            errors.append(f"plans/{folder}: invalid plan folder name; rename it to the NN-short-name form, like 48-one-record-model")
+            continue
+        folders.add(folder)
+        try:
+            fields = project_fields(path.read_text(encoding="utf-8"))
+            if fields["Status"] not in STATUSES:
+                errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use queued, active, blocked, paused, done or cancelled")
+        except (ValueError, OSError) as exc:
+            errors.append(f"plans/{folder}/plan.md: {exc}")
+    priority = root / "plans/priority.md"
+    order = priority_order(priority.read_text(encoding="utf-8") if priority.exists() else None)
+    seen = set()
+    for folder in order:
+        if folder in seen:
+            errors.append(f"plans/priority.md: duplicate {folder} under ## Order; delete one of its lines")
+        if folder not in folders:
+            errors.append(f"plans/priority.md: unknown {folder} under ## Order (there is no plans/{folder}/plan.md); fix the name or delete the line")
+        seen.add(folder)
+    return errors
 
 
 def _release_documents(context):
     from check_docs import catalog_rows, read, CATALOG, release_errors
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -42,7 +67,10 @@ def _strategy_consistency(context):
     from check_docs import catalog_rows, read, CATALOG, STRATEGY, strategy_errors
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -59,36 +87,23 @@ def _catalog_paths(context):
     from check_docs import catalog_rows, read, CATALOG, PLAN_LINK, PLAN_FOLDER, unnamed_active_owners
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
-    errors = []
-    indexed: set[Path] = set()
-    for row in rows:
-        dest = PLAN_LINK.fullmatch(row[6]).group(1)
-        plan = Path('plans') / dest
-        if plan in indexed:
-            errors.append(f'duplicate plan catalog entry: {plan}')
-        indexed.add(plan)
-        if len(plan.parts) != 3 or plan.parts[2] != 'plan.md' or not PLAN_FOLDER.fullmatch(plan.parts[1]):
-            errors.append(f'invalid catalog plan path: {plan}')
-        if not (root / plan).is_file():
-            errors.append(f'catalog plan missing: {plan}')
-    errors.extend(unnamed_active_owners(rows))
-    actual = set(Path('plans') / p.parent.name / 'plan.md' for p in (root / 'plans').glob('*/plan.md'))
-    for missing in sorted(actual - indexed):
-        errors.append(f'plan folder absent from catalog: {missing}')
-    for extra in sorted(indexed - actual):
-        errors.append(f'catalog references non-plan: {extra}')
-
-    return errors
+    return unnamed_active_owners(rows)
 
 
 def _gap_structure(context):
     from check_docs import catalog_rows, read, CATALOG, GAP_NAME, parse_gap_relationships, route_issues
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -124,7 +139,10 @@ def _plan_files(context):
     from check_docs import catalog_rows, read, CATALOG, GAP_NAME, plan_gap_ids
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -149,7 +167,10 @@ def _subjects(context):
     from check_docs import catalog_rows, read, CATALOG, parse_subject
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -173,7 +194,10 @@ def _obsolete_sources(context):
     from check_docs import catalog_rows, read, CATALOG
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -187,7 +211,10 @@ def _canonical_principles(context):
     from check_docs import catalog_rows, read, CATALOG
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -202,7 +229,10 @@ def _obsolete_templates(context):
     from check_docs import catalog_rows, read, CATALOG, obsolete_template_paths
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -214,7 +244,10 @@ def _ledger(context):
     from check_docs import catalog_rows, read, CATALOG, ledger_errors
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -226,7 +259,10 @@ def _markdown_links(context):
     from check_docs import catalog_rows, read, CATALOG, README, local_links
     root = context.root
     try:
-        rows = catalog_rows(read(root, CATALOG))
+        if _catalog(context):
+            return []
+        from records import projects
+        rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
     errors = []
@@ -266,6 +302,8 @@ def _public_vision(context):
 def _generated_views(context):
     import views
     errors = views.check(context.root)
+    if _catalog(context):
+        errors = [message for message in errors if not message.startswith(("view plan-catalog ", "view plan-catalog:"))]
     # The legacy public-vision rule owns diagnostics for these two targets.
     legacy_errors = _public_vision(context)
     if legacy_errors:
@@ -285,19 +323,14 @@ def _body(context):
 
 def _completion_impl(context):
     import check_completion as gate
-    from check_docs import CATALOG, read
-    before = gate.catalog_at_revision(context.base, context.root)
-    if before is None:
-        return []
-    after = read(context.root, CATALOG)
+    before = gate.project_statuses(context.root, context.base)
+    after = gate.project_statuses(context.root)
     changes = gate.transitions_to_done(before, after)
     if not changes:
         return []
-    body = _body(context)
-    errors = gate.check_pr(before, after, body, context.root)
+    errors = gate.check_pr(changes, _body(context), context.root)
     errors.extend(gate.strategy_errors(gate.changed_paths(context.base, context.root)))
     return errors
-
 
 def _boundary_impl(context):
     import check_gap_boundaries as gate

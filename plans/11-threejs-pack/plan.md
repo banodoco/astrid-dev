@@ -1,5 +1,17 @@
 # Three.js as a pack
 
+**Project:** Three.js as a pack
+
+**Goal:** Move the existing built-in Three.js functionality into a native pack that remains included by default, with current behavior preserved through conversion.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Vision gaps:** [Dependable pack lifecycle](../../vision/gaps/F-004-pack-lifecycle.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

@@ -1,5 +1,17 @@
 # All three mains green
 
+**Project:** All three mains green
+
+**Goal:** Every CI workflow on Agent, Runtime and App `main` is green and stays green: root causes fixed (never a loosened test), one strict-xfail quarantine rule with an owner and an expiry, a nightly report of new red, and releases that need every required check green on each pinned commit (through Plan 31's `release-contract`).
+
+**Status:** paused
+
+**Owner:** Unassigned
+
+**Estimate:** 22–31 (8–11 elapsed): phase 1 6.5, phase 2 13–21, phase 3 3.5
+
+**Waiting on:** the owner's go to queue it (ready, held by the owner on 9 Nov); release 12 published; Plan 38 for the custody tests; Plan 31 RL-1b for K4
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). A red check on `main` should mean a new regression. Today it means nothing, because every full CI workflow on Agent, Runtime and App `main` has been red for weeks.

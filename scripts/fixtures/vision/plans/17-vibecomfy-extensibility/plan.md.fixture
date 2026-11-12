@@ -1,5 +1,17 @@
 # Pack extension points: switch on the protocol and prove it
 
+**Project:** Pack extension points: switch on the protocol and prove it
+
+**Goal:** Anyone can build one agent-facing tool over a family of workflows, as h3_av does for MiniMax H3: generalise its machinery into VibeComfy (entries with variants chosen by intent from their inputs; a describe and dry-run plan an agent can parse; build and after_outputs hooks; file maps; media helpers), so h3_av becomes a VibeComfy plugin pack and Astrid mirrors VibeComfy's registry and deletes its own mode inference; switch on Astrid's extension-point protocol to install families; prove it with an image family (txt2img, img2img, inpaint, outpaint) and sound on video, after Plan 32 creates the first points.
+
+**Status:** paused
+
+**Owner:** Unassigned
+
+**Estimate:** about 15–18 (inferred): phase 1 about 7, phase 2 about 9
+
+**Waiting on:** the owner's go to queue it (ready, held by the owner on 9 Nov); scope agreement; Plan 32 T6b (T6d for A4)
+
 **Vision gaps:** [Composable capabilities](../../vision/gaps/LS-003-full-stack-contributions.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).
 
 **Contributes to closure:** F-008 step 3: the pack extension protocol switched on and proven with non-h3 workflow families (an image family and sound on video). Milestone C.

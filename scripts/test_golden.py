@@ -12,17 +12,19 @@ class GoldenTests(unittest.TestCase):
         expected = (golden.FIXTURES / "golden.txt").read_text(encoding="utf-8").splitlines()
         self.assertEqual(golden.collect(), expected)
 
-    def test_deleting_a_catalog_row_in_a_scratch_copy_fails_the_oracle(self):
+    def test_deleting_a_status_field_in_a_scratch_copy_fails_the_oracle(self):
         with tempfile.TemporaryDirectory(prefix="astrid-golden-negative-") as directory:
             root = Path(directory) / "repo"
             golden._copy_tree(root)
-            catalog = root / "plans/index.md"
-            text = catalog.read_text(encoding="utf-8")
-            row = next(line for line in text.splitlines()
-                       if line.startswith("|") and re.search(r"\[Plan \d+\]\(", line))
-            catalog.write_text(text.replace(row + "\n", "", 1), encoding="utf-8")
+            plan = root / "plans/20-zero-to-first-image/plan.md"
+            text = plan.read_text(encoding="utf-8")
+            self.assertRegex(text, r"(?m)^\*\*Status:\*\*")
+            plan.write_text(re.sub(r"(?m)^\*\*Status:\*\*[^\n]*\n", "", text, count=1),
+                            encoding="utf-8")
             errors = golden._errors(root)
-            self.assertTrue(any("plan folder absent from catalog" in error for error in errors), errors)
+            self.assertTrue(any("plans/20-zero-to-first-image/plan.md:" in error
+                                and "Status" in error and "missing" in error.lower()
+                                for error in errors), errors)
 
 
 

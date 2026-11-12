@@ -1,5 +1,17 @@
 # First-principles documentation
 
+**Project:** First-principles documentation
+
+**Goal:** Make Astrid understandable to humans and agents through a clear path from its purpose and central skill to workflows, pack design, and precise references.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Vision role:** Foundational enabler — makes existing tools and contracts discoverable without claiming new capabilities.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

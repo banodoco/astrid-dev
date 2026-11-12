@@ -1,5 +1,17 @@
 # Release 1: install and update
 
+**Project:** Release 1: install and update
+
+**Goal:** Ship R1: new users install and update on Linux, macOS and Windows; R0 users on Linux and macOS upgrade without data loss, proven by the five-row hosted gate.
+
+**Status:** done
+
+**Owner:** Release 1 merge coordinator
+
+**Estimate:** 0
+
+**Waiting on:** —
+
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

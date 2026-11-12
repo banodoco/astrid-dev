@@ -1,5 +1,17 @@
 # Real-GPU proof of generation
 
+**Project:** Real-GPU proof of generation
+
+**Goal:** Build the repeatable "full GPU validation" skill (astrid-dev-gpu-validate: every slot and h3_av across placements, VibeComfy smoke first, pod census, $20 per run, evidence record, a release gate for generation changes) and do its first run after Plan 32 ($24, fixing every issue found).
+
+**Status:** queued
+
+**Owner:** @AstridPseudon
+
+**Estimate:** about 1 day plus RunPod spend
+
+**Waiting on:** Plan 33 review passed; owner's go and budget
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary) · [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting).

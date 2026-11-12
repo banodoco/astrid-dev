@@ -1,5 +1,17 @@
 # Astrid Homepage Journey — Plan
 
+**Project:** Astrid website
+
+**Goal:** Build the scroll journey below the Astrid homepage hero: three sections and a vision finale that re-explain the hero's notes, with the sky following the visitor's time of day. The rest of the website is not yet scoped.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** —
+
 **Vision role:** Communication enabler — explains the creative vision without itself proving artistic or community outcomes.
 
 ## Goal

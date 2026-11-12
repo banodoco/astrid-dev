@@ -12,9 +12,9 @@ import re
 import sys
 from pathlib import Path
 
-from check_docs import PLAN_LINK, catalog_rows
-from contribution_api import catalog, changed_files, ensure_review_label, request
+from contribution_api import plan_text, changed_files, ensure_review_label, request
 from project_contract import PLAN_FOLDER
+from records import project_fields
 
 LABEL = "needs-review"
 PROJECT = re.compile(r"^Project:\s*plans/(" + PLAN_FOLDER.pattern + r")/plan\.md\s*$", re.I | re.M)
@@ -31,7 +31,7 @@ def parse_intent(body: str) -> tuple[str, str] | None:
     return projects[0], routes[0].lower()
 
 
-def classify(pr: dict, repo: str, main_catalog: str, files: list[dict]) -> str | None:
+def classify(pr: dict, repo: str, main_plan: str | None, files: list[dict]) -> str | None:
     """Determine a review queue lane, never an approval or scope acceptance."""
     intent = parse_intent(pr.get("body") or "")
     if intent is None:
@@ -43,23 +43,20 @@ def classify(pr: dict, repo: str, main_catalog: str, files: list[dict]) -> str |
             (base.get("repo") or {}).get("full_name") != repo or
             user.get("type") != "User"):
         return None
+    fields = project_fields(main_plan) if main_plan is not None else None
     changes = {f.get("filename"): f.get("status") for f in files}
-    found = [row for row in catalog_rows(main_catalog)
-             if PLAN_LINK.fullmatch(row[6]).group(1) == folder + "/plan.md"]
     if route == "scope":
-        if not found:
+        if fields is None:
             necessary = {f"plans/{folder}/{filename}" for filename in ("plan.md", "inputs.md", "tasks.md")}
             if not all(changes.get(p) == "added" for p in necessary):
                 return None
-            if changes.get("plans/index.md") not in ("modified", "added"):
-                return None
-        elif f"plans/{folder}/plan.md" not in changes and "plans/index.md" not in changes:
+        elif f"plans/{folder}/plan.md" not in changes:
             return None
         return "scope"
-    if len(found) != 1 or found[0][3].casefold() != ("@" + user.get("login", "")).casefold():
+    if fields is None or fields["Owner"].casefold() != ("@" + user.get("login", "")).casefold():
         return None
     if route == "completion":
-        if changes.get("plans/index.md") != "modified":
+        if changes.get(f"plans/{folder}/plan.md") != "modified":
             return None
         if COMPLETION.findall(pr.get("body") or "") != [folder.split("-", 1)[0]]:
             return None
@@ -72,7 +69,9 @@ def route_event(event: dict, repo: str) -> str:
         raise ValueError("no PR number")
     pr = request("GET", f"/repos/{repo}/pulls/{number}")
     main = request("GET", f"/repos/{repo}/git/ref/heads/main")["object"]["sha"]
-    lane = classify(pr, repo, catalog(repo, main), changed_files(repo, number))
+    intent = parse_intent(pr.get("body") or "")
+    main_plan = plan_text(repo, main, intent[0]) if intent is not None else None
+    lane = classify(pr, repo, main_plan, changed_files(repo, number))
     labeled = LABEL in {label.get("name") for label in pr.get("labels", [])}
     if not lane:
         if labeled:

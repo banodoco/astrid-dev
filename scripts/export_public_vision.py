@@ -165,9 +165,13 @@ def build(root: Path, revision: str) -> dict:
         gaps.append(gap)
 
     projects = []
-    for i, row in enumerate(catalog_rows(read(root, CATALOG))):
+    from records import projects as project_records
+    from views import rebase_links
+    for i, row in enumerate(project_records(root)):
         name, goal, status, owner, estimate, waiting, link = row
         plan = Path("plans") / PLAN_LINK.fullmatch(link).group(1)
+        goal = rebase_links(goal, plan.parent, Path("plans"))
+        waiting = rebase_links(waiting, plan.parent, Path("plans"))
         plan_text = read(root, plan)
         linked = plan_gap_ids(plan_text)
         if any(gap not in seen for gap in linked):
@@ -263,9 +267,10 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Projects and participation",
         "",
-        "The [project catalog](../plans/index.md) owns current priority, "
-        "status and accountability; project packs contain their own scope, "
-        "sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) "
+        "Each project pack holds its own status, owner and estimate (at the "
+        "top of its `plan.md`) and its scope, sources, tasks and proof; "
+        "[plans/priority.md](../plans/priority.md) sets the order, and the "
+        "[project catalog](../plans/index.md) lists every project. [How to contribute](../docs/contribution-workflow.md) "
         "covers issues, claims, scope review, PRs, writing and completion. "
         "Individual gap records hold their own evidence and closure criteria.",
         "",
