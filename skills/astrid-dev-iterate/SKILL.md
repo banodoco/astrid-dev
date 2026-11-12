@@ -23,7 +23,7 @@ Two different activities share the word "test". Keep them apart.
 - **Iterating** is getting one red test to green. It is cheap and disposable. Reproduce the failing test with its exact command, keep the full raw output in your workdir, read the first error before forming a hypothesis, fix the cause, and rerun that test as often as you need. Reruns on a new commit need no permission, no review and no committed record. Stop at the worker threshold in the [run contract](../astrid-dev-shared/run-contract.md#cheapest-model-first) and hand the manager the raw output, what you tried and your best guess.
 - **Qualifying** is the evidence a release gate counts. It runs once, on the frozen commit, on CI. Only this run needs the exact-SHA record described below, and nothing before it counts as evidence.
 
-Gate rules do not apply to iteration. A scratch or diagnostic run needs no authorization, no independent review and no sanitized-only output. Keep raw logs while diagnosing; redact only what you commit, and never print credentials. Two things hold in both modes: never skip, loosen, xfail or delete a check to get a pass, and paid spend always needs its own authorization.
+Gate rules do not apply to iteration. A scratch or diagnostic run needs no authorization, no independent review and no sanitized-only output. Keep raw logs while diagnosing; redact only what you commit, and never print credentials. Two things hold in both modes: [no check is weakened to get a pass](../astrid-dev-shared/run-contract.md#checks-and-failure-repair), and paid spend always needs its own authorization.
 
 ## Capture proof and repair failures
 
@@ -31,7 +31,8 @@ Record each check's proof, repair its failures and carry proof forward exactly a
 
 ## Return a candidate
 
-Return the exact candidate SHA/tree and source identity, changed paths, mapped behavior, focused commands and inner exits, proof carried forward with its unchanged-input basis, first failures and reruns, remaining claims/gaps, and any dependency or scope issue. A candidate is a feature handoff only: this workflow does not integrate it, independently review it, promote it, publish it, or claim that those actions occurred.
+Return the exact candidate SHA/tree and source identity, changed paths, mapped behavior, focused commands and inner exits, proof carried forward with its unchanged-input basis, first failures and reruns, remaining claims/gaps, and any dependency or scope issue. A candidate is a [feature handoff only](../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries).
+
 ## Source adaptation
 
 The narrow venue, inner-exit, retry-family, exact-revision, and carry-forward principles were adapted from `banodoco/astrid-agent`'s `astrid/packs/developer/docs/fast-iteration/SKILL.md` at commit `43b6fb2cdb877afd6d37832c7f279754ba01592d` (2026-11-02). Broad suite defaults, receipt machinery, tuple-train procedures, and release gates were not imported; the local scoped-check policy in the shared contract governs.

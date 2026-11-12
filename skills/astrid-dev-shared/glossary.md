@@ -4,19 +4,19 @@ One meaning per word; two meanings, two terms.
 
 **owner:** the person whose decisions and own message give authority.
 
-**project owner:** the person or account named once on a plan's `Owner:` line (a GitHub handle, the agent account or a role). By convention others propose changes to an active pack by pull request, and the project owner or the manager running it merges; accountability, not permission.
+**project owner:** the person or account named once on a plan's `Owner:` line (a GitHub handle, the agent account or a role).
 
 **maintainer:** reviews and merges contributors' pull requests.
 
 **contributor:** a person or agent changing astrid-dev.
 
-**orchestrator:** a standing session that plans and starts projects, advises managers, checks in on runs.
+**orchestrator:** a standing session that plans and starts projects, advises managers, checks on runs.
 
-**advisor:** the `run.yaml` role answering blocking questions: the orchestrator or, without one, a fresh high-judgment sub-agent.
+**advisor:** the `run.yaml` role answering blocking questions: the orchestrator or else a fresh high-judgment sub-agent.
 
 **manager:** dispatches tasks, judges reports, keeps `tasks.md` current; normally the accountable agent.
 
-**Codex manager:** a Codex process managing its own sub-agents, hosted in a Claude session or in its own Codex Cloud chat; never the default.
+**Codex manager:** a Codex process managing its own sub-agents, hosted in a Claude session or a Codex Cloud chat; never the default.
 
 **host:** the Claude session running a Codex manager; it answers for the run.
 
@@ -32,7 +32,7 @@ One meaning per word; two meanings, two terms.
 
 **project:** work with its own owner, priority and completion proof.
 
-**plan:** a project as numbered in `plans/` (Plan NN); its file is `plan.md`.
+**plan:** a project as numbered in `plans/` (Plan NN), file `plan.md`.
 
 **project pack:** `plans/<NN-name>/`: `plan.md`, `inputs.md`, `tasks.md`.
 
@@ -42,9 +42,13 @@ One meaning per word; two meanings, two terms.
 
 **task:** one assignment in `tasks.md`; its **card** holds outcome, route, scope, dependencies and proof.
 
+**task scope:** what a task may change: paths with their tests, shared surfaces or contracts, or `path:symbol`.
+
+**project scope:** the outcome and work the owner accepted; adding to it needs her decision.
+
 **task route:** `N`, `X`, `S` or `T` (taste), the capability band a task runs on.
 
-**manager's route:** the band chosen once per run for the manager.
+**manager's route:** the band chosen once for the manager.
 
 **run:** one authorized execution of a project, begun on its `Run start` line.
 
