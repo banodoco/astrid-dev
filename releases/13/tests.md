@@ -4,6 +4,8 @@ Kept by the Release 13 test manager ([brief](test-manager-brief.md)). There is o
 
 ## Latest comparison
 
+**Update, 18:17 UTC:** run `43254543283` is complete. Shards 1 and 5 hit the 120-min limit, **slow, not hung** (no timeout dumps, progress at 94% and 82%), because the committed `tests/.test_durations` is badly stale (W29 is refreshing it). They are NO-RESULT. Re-sorted with shard 4 (6 of 8 unit shards): regression 41, no-baseline 28, preexisting 850, missing 5,309 (provisional). Evidence: `/home/user/wt/r13-tests/compare/agent/f9214240-b/` (to be committed with the next full comparison). The next full run is on the newest compose head, once the durations fix lands.
+
 **PARTIAL, 17:48 UTC:** `f9214240` (Agent CI `43254543283`, `int/r13`) against R12 `main` `0e1543e0`, covering finished unit shards 2, 3, 6, 7 and 8 plus darwin and windows. Shards 1, 4 and 5 are NO-RESULT until they land (about 18:03). Evidence: [`evidence/tests/agent/f9214240-partial/`](evidence/tests/agent/f9214240-partial/summary.md).
 
 **Baselines,** all at `0e1543e0`:
@@ -16,7 +18,7 @@ Kept by the Release 13 test manager ([brief](test-manager-brief.md)). There is o
 
 | Bucket | f9214240 (partial) | fc4b36d4 |
 |---|---|---|
-| 1 regression | 31, in 7 clusters; triage W11–W13 running | pending |
+| 1 regression | 41 with shard 4 added (31 triaged, 7 clusters; the 10 new ones are attributed in the next comparison) | pending |
 | 2 new test failing, R13 behaviour | at least 1 (`test_core_provider_neutrality`) | pending |
 | 3 new test failing, defect already on R12 | 0 so far | pending |
 | 4 preexisting | 553 | pending |
