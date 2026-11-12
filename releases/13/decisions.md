@@ -983,3 +983,24 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - "Enable once" is moot.
   - The binding fence goes to the machines lane for an acceptance test.
 - **CI:** cancelled the superseded runs (30a644bc, 857c3955, d5ed5162). The comparison head is `int/r13-aef8647a`.
+
+## 12 Nov ~20:25 UTC: owner, be pragmatic, less ceremony
+
+- **Owner (Hannah):** get generation working reliably first and harden afterwards. No excessive bureaucracy, especially around RunPod. Take advice pragmatically.
+- **LT is cut to the rows that stop real money loss or a broken claim/generate path:**
+  - the custody gaps;
+  - a durable billing stop;
+  - the release-retry boundary;
+  - `cancel_requested` in recovery;
+  - a late create's result reaches the journal;
+  - release never waits behind an observation.
+- **Deferred to after R13:**
+  - LT-b's publication latch (T1–T4), as one issue;
+  - R2-2 (it fails safe);
+  - the cede write-ahead record, unless it comes free;
+  - the binding-fence test.
+- **Reviews:**
+  - Astra only on product changes to money, custody or the main generate path, one pass each;
+  - none for test-expectation updates or lint;
+  - U2's current round is its last, unless it finds an install or start bug.
+- **Advisor:** any recommendation that adds process must show the concrete failure it prevents before Saturday.
