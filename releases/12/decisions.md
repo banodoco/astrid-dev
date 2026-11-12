@@ -469,3 +469,12 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - App main `3e53462f4` → `237b28be9` (Railway deploy pending)
   - Gate record: the ComfyUI full SHA filled (`ee71d5c4993f…`, from `pins.json` at `0e1543e0`). I'd missed this placeholder because it wasn't in `{{}}` form; the orchestrator caught it.
   - Post-publish, under way: the served-manifest poller, and the push-triggered runs on all three mains (Agent CI, Lanes, Chat service, Windows task host journey; Runtime CI; App Tests, E2E, Lanes, Dockerfile Check, Windows installer). Any red is ruled against the pre-publish state.
+- 2026-11-12 04:38Z — **Post-publish: served state correct.**
+  - `https://astrid.haus/install-manifest.json` has sha256 `1f3cd5b0…69f1`. It names release 12, Agent `0e1543e0` and Runtime `42ae24aff`; first matched at 04:36Z.
+  - `install`, `install.sh` and `install.ps1` serve `c268a5fa`, `591c4c51` and `ea581d5d`, as recorded.
+  - Live phone check (Playwright, iPhone 13, `/?experience=agent`): the callouts read "Open knowledge", "Leverage open source tools" and "Agent workflows", which confirms your copy change. No page errors.
+  - The served-manifest canary (deployment_status run 43155773142) is queued. Push-triggered runs on the three mains are still running.
+  - Pre-publish reference for the same workflows on the old mains:
+    - Agent `a105de3a4`: CI, Lanes and Windows task host journey failed; Chat service passed.
+    - Runtime `4f5477cb0`: CI failed.
+    - App `3e53462f4`: Tests, E2E and Lanes failed; Dockerfile Check passed.
