@@ -19,7 +19,7 @@ Describe the intended sequence, key trade-offs, dependencies, qualification, and
 
 - [Plan NN](../plans/index.md) — One sentence saying what this plan contributes to the release.
 
-Only list plans actually intended for this release. Replace the example link with each real `plans/<id>/plan.md` link. The plan catalog remains the source for ownership, priority, status and estimates.
+Only list plans actually intended for this release. Replace the example link with each real `plans/<id>/plan.md` link. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
 
 ## Included pull requests
 
