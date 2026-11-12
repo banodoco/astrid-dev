@@ -264,55 +264,28 @@ def _markdown_links(context):
 def _link_anchors(context):
     """A #fragment into a skill, template or top-level doc must name a heading there."""
     import posixpath
-    from urllib.parse import unquote
-    from check_docs import LINK
-    from records import read_text
-    root = context.root
-    checked = re.compile(r"(?:skills|templates)/.+\.md|docs/[^/]+\.md")
-    headings = {}
+    from check_docs import LINK, read
+    root, fence = context.root, r"(?ms)^\s*```.*?^\s*```[^\n]*$"
 
     def anchors(relative):
-        if relative not in headings:
-            text = read_text(root, Path(relative))
-            text = re.sub(r"(?ms)^\s*```.*?^\s*```[^\n]*$", "", text)
-            lines = text.splitlines()
-            titles = []
-            for index, line in enumerate(lines):
-                atx = re.match(r"^ {0,3}#{1,6}(?:[ \t]+(.*?))?[ \t]*$", line)
-                if atx:
-                    titles.append(re.sub(r"(?:^|[ \t]+)#+[ \t]*$", "", atx.group(1) or ""))
-                elif (line.strip() and index + 1 < len(lines)
-                      and re.fullmatch(r" {0,3}(?:=+|-+)[ \t]*", lines[index + 1])):
-                    titles.append(line)
-            found = set()
-            for title in titles:
-                title = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
-                slug = "".join(c for c in title if c.isalnum() or c in " -_").replace(" ", "-")
-                candidate, number = slug, 0
-                while candidate in found:
-                    number += 1
-                    candidate = f"{slug}-{number}"
-                found.add(candidate)
-            headings[relative] = found
-        return headings[relative]
+        seen, found = {}, set()
+        for title in re.findall(r"(?m)^ {0,3}#{1,6}[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", re.sub(fence, "", read(root, relative))):
+            title = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
+            slug = "".join(c for c in title if c.isalnum() or c in " -_").replace(" ", "-")
+            seen[slug] = seen.get(slug, -1) + 1
+            found.add(slug if seen[slug] == 0 else f"{slug}-{seen[slug]}")
+        return found
 
     errors = []
-    for path in sorted(p.relative_to(root) for p in root.rglob("*.md")
-                       if ".git" not in p.relative_to(root).parts):
-        text = read_text(root, path)
-        text = re.sub(r"(?ms)^\s*```.*?^\s*```[^\n]*$", "", text)
-        for hit in LINK.finditer(text):
-            target = hit.group(1).strip().split(' "', 1)[0].strip("<>")
-            if "#" not in target or target.startswith(("/", "//")) or re.match(r"^[a-z][\w+.-]*:", target, re.I):
+    for path in sorted(p.relative_to(root) for p in root.rglob("*.md") if ".git" not in p.relative_to(root).parts):
+        for hit in LINK.finditer(re.sub(fence, "", read(root, path))):
+            address, _, fragment = hit.group(1).strip().split(' "', 1)[0].strip("<>").partition("#")
+            if not fragment or re.match(r"^([a-z][\w+.-]*:|/)", address, re.I):
                 continue
-            address, fragment = target.split("#", 1)
-            if not fragment:
-                continue
-            resolved = posixpath.normpath((path.parent / (unquote(address.split("?", 1)[0]) or path.name)).as_posix())
-            if not checked.fullmatch(resolved) or not (root / resolved).is_file():
-                continue
-            if unquote(fragment) not in anchors(resolved):
-                errors.append(f"{path.as_posix()}: link to {resolved}#{fragment} names no heading there; fix the link or restore the heading")
+            target = posixpath.normpath((path.parent / (address or path.name)).as_posix())
+            if (re.fullmatch(r"(?:skills|templates)/.+\.md|docs/[^/]+\.md", target) and (root / target).is_file()
+                    and fragment not in anchors(Path(target))):
+                errors.append(f"{path.as_posix()}: link to {target}#{fragment} names no heading there; fix the link or restore the heading")
     return errors
 
 
