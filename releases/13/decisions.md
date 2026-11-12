@@ -328,3 +328,13 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Also: `plan_from_receipt` (`993fd926`; engine_runner 143 passed plus the 2 pre-existing packaged-lock failures; Ruff improved to 2117) and C1 task 2 (`77ebb920`; 4 new tests plus remote_placement and install-verify green) were committed.
   - The provider gate (Terra) is again NOT implemented: lifecycle's post-delete absence polling also needs gating and drops `Retry-After`. It moves to Sol after the live test; it isn't on the live-TTS path, since the product has released every pod since the first.
   - The smoke test (Sol) was blocked by my own file exclusions (it needs `failure_receipt.py` and `target_selection.py`). It's deferred; the declared-logs e2e covers the key path.
+- **2026-11-12 04:05** Declared logs, wave 1 results.
+  - Committed after my test runs:
+    - a1 collector `15db432f` (11 passed);
+    - a6 receipt and `--logs`/`--name` `d9cf88a9` (receipt 43, logs 3, failure_logs 6);
+    - a9 `astrid tasks logs` `90551c4f` (5, plus the task/run verbs 108). I appended `logs` after `follow` and added exactly `logs`/`tasks_logs` to the two pinned lists; the four MCP parity failures are pre-existing at the base.
+    - vc1 VibeComfy `logs.json` `42b229ed` (6).
+  - a1, a6 and a9 are merged into `r13/declared-logs` `0af2f95d`.
+  - a2 stopped: the registry publisher rejects any file in the registry dir. Ruling: the live log goes in a sibling `comfyui-logs/engine.log`, appended from launch, with the snapshot unchanged.
+  - a7 stopped on a brief-versus-spec contradiction. Ruling: the spec wins (keep the whole file, only the 256 MiB cap), reusing `run_logs.collect`.
+  - Wave 2 dispatched: a2 rework and a8, local-streams, vc2 (Terra); a7 rework, a4, a5 (Luna). a3 follows a2.
