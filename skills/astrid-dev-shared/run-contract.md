@@ -36,7 +36,8 @@ Plans tag each task with its route, and execution uses that same tag. Normally *
 | Setup | Accountable agent | Others |
 |---|---|---|
 | A manager in its own session | The manager | The orchestrator advises, and stays idle between questions |
-| A Codex manager [hosted in a Claude session](../astrid-dev-orchestrate/codex-in-claude-cloud/README.md) | The hosting session | Codex dispatches, judges and integrates the tasks; the host does everything Codex can't |
+| A Claude session with [Codex workers](../astrid-dev-orchestrate/codex-in-claude-cloud/README.md#use-codex-for-the-workers-under-a-claude-manager) (the default with Codex) | That session: it is the manager | Each Codex call does one card and returns |
+| A Codex manager [hosted in a Claude session](../astrid-dev-orchestrate/codex-in-claude-cloud/README.md) (only by choice) | The hosting session | Codex dispatches, judges and integrates the tasks; the host does everything Codex can't |
 | One agent doing a small project itself | That agent | None |
 
 **It is recorded where everyone can read it:** the `Run start` line in the plan's [`inputs.md`](../../templates/project/inputs.md) names the accountable session, what it may do without asking, what still needs the owner's go, and the advisor if there is one. `run.yaml` is local and git-ignored, so it can't carry this.
