@@ -42,7 +42,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Use [Plan](../astrid-dev-pla
 2. **Update the release document first**, if its highlight, intent, approach or included plans change. Drafts can change without a publication event. An already finalized release is history: plan the change in a later release.
 3. **Update the matching strategy row** (headline and complete linked plan set), or create a new numbered release brief from the template once its planned scope is credible. Do not create a release number or assert that a plan ships merely because it is queued.
 4. **Keep the overview concise** and update its **Last reviewed** date when the roadmap genuinely changes. Changes to sequencing are owner decisions.
-5. **Check it.** `python3 scripts/astrid_dev.py check` verifies structure, release links and summary consistency; a project completion PR must touch strategy.
+5. **[Check it.](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing)** `python3 scripts/astrid_dev.py check` verifies structure, release links and summary consistency; a project completion PR must touch strategy.
 
 ## Done when
 

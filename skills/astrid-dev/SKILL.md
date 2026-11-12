@@ -21,6 +21,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Someone else's pull request, usually an outside contributor's | [Merge](../astrid-dev-merge/SKILL.md): a lead critic and a few cheap helpers review it, then merge it, send it back or bring it to the owner |
 | Integration, release or publication | [Release](../astrid-dev-release/SKILL.md), with explicit current authorization |
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
+| Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](../astrid-dev-improve/SKILL.md): find the rule's one home, change only that, prove it |
 
 ## One path, proportionate depth
 
@@ -28,7 +29,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 2. **Investigate:** Trace actual behavior and prior work before changing it. Search issues and projects; confirm source revision, dependencies and relevant proof.
 3. **Decide:** Agree the smallest complete result and test of success. Reuse accepted scope; challenge consequential designs without creating a mandatory second planning ritual.
 4. **Build:** Work on the authorized source using [Iterate](../astrid-dev-iterate/SKILL.md); protect existing work and respect the current run's constraints.
-5. **Prove:** Record the exact candidate, environment, checks, observed successes/failures, model provenance and limits. A green wrapper is not product proof.
+5. **Prove:** Record proof as the [run contract](../astrid-dev-shared/run-contract.md#checks-and-failure-repair) and its [route provenance](../astrid-dev-shared/run-contract.md#actual-route-provenance) say. A green wrapper is not product proof.
 6. **Land:** Link issue/project and implementation PRs; use ordinary review and [Release](../astrid-dev-release/SKILL.md) for cross-repo integration and separately authorized promotion.
 
 Start at the first stage **not already established by evidence**; a fact-finding task can end after investigation, and a known small fix needn't revisit architectural planning.
