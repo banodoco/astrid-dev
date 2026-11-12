@@ -894,3 +894,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Merged:** `r13/tests/lint-ratchet` `1d1cb25f` (Astra-approved) → `r13/compose` `857c39557`. It adds per-(file, code) ruff and mypy ratchets in CI's gate scope, seeded from R12 `0e1543e0`. The candidate is red as intended: ruff 27 rows / 59 findings, mypy 74 rows / 159 findings, owned by the lanes.
 - **Owner decision (Hannah, in this session):** drop the mypy total gate. Its committed total of 2,192 was stale (R12 itself has 2,338) and kept fast checks red on R12 main. The per-(file, code) ratchet is the one mypy gate. R12's debt stays with Plan 39.
 - **Follow-up:** the test lane removes the total gate. It does the same for ruff only if that gate adds nothing the ratchet lacks.
+
+## 12 Nov ~19:45 UTC: Plan 52 product changes travel with Release 13
+
+- The Plan 52 issue-intake redirects (an issue-template `config.yml` that sends people to astrid-dev's issue chooser, plus `AGENTS.md` and README lines) travel with R13, not as PRs to main. During the gate, changes land in the release; App main deploys on merge.
+- **Agent:** `r13/plan52-agent` `e8ff26d5c` is merged into `r13/compose` (`67b96b54d`).
+- **App, Runtime and Pinokio:** `r13/plan52-app` `7d54484bc`, `r13/plan52-runtime` `3996e41f3` and `r13/plan52-pinokio` `d3279bd9a` merge at publish.
+- **Held for the owner's reading:** the six reporting rules, `r13/plan52-agent-skill` `0206435eb`, in `packs/_core/docs/SKILL.md`, the file the profile names. See astrid-dev#606 for the second root skill file. Not read by the cut line means the next release. Open point: the version command prints the package version (`astrid/0.1.0`), not the release.
+- The four earlier PRs (astrid-app#256, astrid-agent#345, astrid-runtime#49, astrid-pinokio#16) are closed unmerged. Their branch `claude/relaxed-ptolemy-tih6dn` is unused.
