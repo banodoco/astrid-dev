@@ -8,9 +8,9 @@
 
 **Owner:** Plan 48 manager
 
-**Estimate:** about 1.5 remaining: the refresh job (hosted proof PM-8h, review R8, go-live C-2). Phase 3's form track and phase 4 are not scheduled
+**Estimate:** none scheduled: Phase 2 and the queued Phase 3 work are complete; track C and phase 4 are not scheduled
 
-**Waiting on:** The owner's bot identity and scratch repository (O-1) for the refresh job
+**Waiting on:** An order to schedule track C and phase 4
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
