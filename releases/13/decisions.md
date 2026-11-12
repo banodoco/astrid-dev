@@ -963,3 +963,23 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - 3 release-after-failure tests ("custody could not be verified").
 
   Attribution against R12 is due first from the test lane, because these are money paths.
+
+## 12 Nov ~20:20 UTC: release-after-failure alarm withdrawn; six failures attributed; CI runners freed
+
+- **No pod leak.** 80bbf690 deliberately changed failed acquisition to an immediate exact release followed by a raise. The pod is deleted (fake-provider probe: `deletes == ['pod-1']`, `cleanup_complete`).
+  - Tests A and B are stale on the exception type; C on a timing (f0535fef's 5 s floor); D's 6 cases on the gate names (0a7de39c made them provider-neutral).
+  - The test lane updates them so they get stronger, with Astra reviewing.
+- **The real product bug:** `worker_owner.py:400` raises "custody could not be verified" even after a successful release.
+  - The test lane fixes it under R-13, with a truthful error when the release succeeded.
+  - In the same branch, the dict-gate guard at `worker_preparation.py:48`.
+- **The six attributed failures:**
+  - Two lock-digest tests: R13, from def11775. Fixed (`r13/engine-lockdigest` `e7164c0c8`, now in compose `6f304c485`).
+  - Three param-map parity cases: they also fail on R12.
+    - The live edit and SFX cells are unaffected: the catalog map takes precedence (`backends/vibecomfy.py:522`).
+    - The param map is declared twice; the issue is filed for after R13.
+  - The registry backend-id test: also fails on R12. Plan 39.
+- **Removed test:** `test_runpod_front_door` went with the deleted route (b7b406be).
+  - Its coverage moved to r5 and the exact-release tests.
+  - "Enable once" is moot.
+  - The binding fence goes to the machines lane for an acceptance test.
+- **CI:** cancelled the superseded runs (30a644bc, 857c3955, d5ed5162). The comparison head is `int/r13-aef8647a`.
