@@ -190,3 +190,13 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 - **2026-11-12 01:18** Rehearsal → `8cf3ada9` (merge of `f1a487c9` and `61eafd53` onto `e6d85766`), reinstalled the same way. TTS attempt 4 launched at 01:19:02. Before-census: 0 pods; balance $101.37. Spend so far ≈ $4.05 of $40.
 - **2026-11-12 01:15** Setup bug B: Luna's first version accepted any global-catalog GPU even when the volume's datacenter never hosts it (a silently unusable policy); it also changed an existing assertion. Sent back with "offered here = listed in that datacenter's `gpuAvailability` at any stock level". Not merged.
 - **2026-11-12 01:15** Note for the Release 12 manager / owner: `generic host claim failed: HostError: Runtime terminal evidence is not present in durable task readback` (`generic_host.py:5859`) follows an executor failure. It has not been diagnosed yet; it's queued.
+- **2026-11-12 01:25** STRATEGY (prompted by the user: "is the structure elegant, or are you fixing bullshit?").
+  - Honest answer: tonight's fixes are real but local. Each paid run surfaced one more blind, offline-detectable seam: provider field names, the missing `includeNetworkVolume`, the wait reasons, install verification. Our tests fake exactly those seams with shapes RunPod never returns, and refusals are reason-less because "never leak" is implemented by deleting information.
+  - The structural answer has four parts:
+    (A) one typed provider boundary;
+    (B) contract fixtures recorded from real responses;
+    (C) a fixed-vocabulary failure-reason channel from pod to receipt;
+    (D) an offline end-to-end harness: the real pod agent behind a replaying provider fake, so the whole chain runs in CI.
+  - An Opus design worker is writing `releases/13/structural-runpod-design.md`.
+  - Rule from now until the morning: patch only what blocks a paid diagnostic cell; everything else waits for the design.
+  - The G3 bundle redactor (round 3 on Sol) is the same anti-pattern. The design should say whether structured facts make the free-text bundle unnecessary by default. Changing H10 is the owner's call.
