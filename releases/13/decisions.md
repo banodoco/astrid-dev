@@ -2,20 +2,19 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (17:09 UTC): read this first
+## NOW (18:12 UTC): read this first
 
-### Workstreams
-| Stream | State | Owner | Next |
+| Stream | Where it is | Next | Done (rough) |
 |---|---|---|---|
-| **Candidate** `r13/compose` `fc4b36d4` (also on `int/r13-next`) | f9214240 plus: Lanes pin fix, run-logs skip, T9, T9b (success logs, one merge path), G3 skips, TTS v1 (`pad_token_id` patch), log gaps (tasks default project, skill lines) | me | Fold in each lane merge; one push per CI run |
-| CI | `int/r13` f9214240: CI `43254543283` running (66 min; Lanes failed, fix merged). `int/r13-next` fc4b36d4: CI `43264364443` running. R12 shard-5 scratch baseline `43264595988` queued | test lane | First comparison when they land |
-| **Machines** (fork) | M1 part c (third run); K1 (the edit warm-checkpoint fix, Sol at high); M4 committed, five Astra findings including money (the paid expiry at create time) → card 4 queued. Nothing merged yet: the critical path | machines manager | Merge M1 the moment its final Astra check passes |
-| **Engine** (fork) | A1–A3 plus U1 merged locally `ba8f5ee5c` (not pushed; 56 old-layout test failures from an effort-none worker, being fixed by Sol at high in `c-lfix`). U2 round-2 rework (the lock file records the holder kind) | engine manager | Push `r13/engine-layout`; U2 as a second merge |
-| **Cells (fork here)** | SFX pass 3 (keep stored spellings; canonicalize comparisons through one owner) and music, both running at lower CPU priority | cells fork | Push `r13/sfxfix`, `r13/musicfix` |
-| **Cells session** `session_011EzfVzW8yjKXMxq4Drye89` (Opus, own CPU) | Pin card (VibeComfy `a8a7be7c` into Astrid from fc4b36d4, `r13/cells-pin`); TTS rework `r13/ttsfix-2` (table of dropped attributes; a meta-device model build under locked torch and transformers); preflight design | cells session | `r13/cells-vc` plus the pin |
-| **Test lane** `session_011EzfW2sWuWu9cBBoQkf385` | Rule PR #567 merged; skill PR #572 (`astrid-dev-green`) approved, merge on green; five R13 hand skips resolved | test manager | First comparison |
-| Stage 2 (paid) | After TTS, SFX, music and edit merge | me | Fresh 5090, new root `root-s2` |
-| astrid-dev | Plan 52 and the observations register on main; Plan 50 revision (recommend the CPU preflight as its core) and Plan 52 D1–D6 wait for the owner | owner | — |
+| **Live GPU, Stage 2a** | Installing `r13/stage2` `d99c4cd5` (= candidate `5cca0bca` + VibeComfy `324f653f`). Then one 5090 runs t2i, SFX, music, edit. No pod yet; balance $95.80, floor $67.41 | Results per cell | Stage 1 1/5 |
+| **Candidate** `r13/compose` `5cca0bca` | In: engine layout + in-place install, VibeComfy declarations pin + catalog hashes, success logs (T9/T9b), TTS v1, log gaps, test-lane fixes (Lanes pin, hand skips, artifacts) | K1, M1, cells-vc pin, TTS v3, engine cards, test fixes | ~45% |
+| **Machines** (fork) | K1 (edit fix: after-success check used the job's spent timer) done, in Astra review. M1 part d fixing three custody gaps Astra found. M4 card 4 (paid expiry at create; 429 floor). Nothing merged yet | K1 merge first, then M1 | ~25% |
+| **Engine** (fork) | Layout merged. Running: U2 rework (one lock), engine-fresh (freshness gap), h1 (logs vs caps; input_rejected; dry-run; wheel patches), r2 (placement rename), mypy (41), boundary ratchet | Merge each into compose | ~50% |
+| **Cells** (own session) | SFX + music accepted, combining into VibeComfy `r13/cells-vc` with one-owner defaults and `make preflight`; recapturing 32 packs' schemas on CPU; ComfyUI core schema at the engine's commit. TTS v3 (forward, transformers 5) failed Astra round 1 on two live-only bugs; fixing, ~1–1.5 h | cells-vc pin; TTS → Stage 2b | ~60% |
+| **Test lane** (own session) | First comparison (Stage 1 build vs R12): 31 regressions triaged with owners; mypy +82 routed by file; boundary ratchet +70 routed per lane; candidate shards 1 and 5 hang to 120 min (naming the tests). Rules on main: test-by-test gate (#567), astrid-dev-green skill (#572) | fc4b36d4 comparison (~18:58), then 5cca0bca | ~35% |
+| **astrid-dev** | Plan 52 + observations register on main; Plan 50 revision (CPU preflight as core) and Plan 52 decisions D1–D6 wait for the owner; Plan 39 additions list ready to draft on the owner's go | — | — |
+
+**Biggest risks to the timeline:** machines lane (nothing merged; custody gaps), the candidate's hanging shards, the boundary ratchet's ~70 crossings, TTS slip.
 
 ### Rules in force
 - **Tests:** no worse than R12 `main`, test by test, on hosted `int/r13` CI. No local full suites. Managers run focused proofs only.
