@@ -2,7 +2,7 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (17:55 UTC)
+## NOW (18:00 UTC)
 
 | Item | State | Next |
 |---|---|---|
@@ -11,7 +11,7 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 | 3. Log gaps | Done (orchestrator, `90ae9c31`) | — |
 | 4. Offline preflight | TTS leg exists (meta-device constructors, `engine_deps` lane); SFX and music legs pending | Design once they land |
 
-Heads: Agent `r13/compose` `fc4b36d`; VibeComfy base `a8a7be7c`. Spend: none.
+Heads: Agent `r13/compose` `5f31797` (my branches are cut from `fc4b36d`); VibeComfy base `a8a7be7c`. Spend: none.
 
 ## Entries
 
