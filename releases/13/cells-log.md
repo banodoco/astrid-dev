@@ -2,7 +2,7 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (19:20 UTC, hourly check-in)
+## NOW (18:20 UTC, hourly check-in)
 
 | Item | State | Next |
 |---|---|---|
