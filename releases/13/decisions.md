@@ -357,3 +357,14 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - The ten new main commits are R12's fix round. The one conflict was `tests/packs/h3_av/test_character_swap_cpu_boundary.py`: our side (Plan 32 T6b-4) deliberately deleted the checkout-session schema-ownership tests, and main had only narrowed a patch inside one of them. I kept the deletion.
   - VibeComfy needs no merge: R12's `e65f4941` is an ancestor of `88cff6d5`.
   - The rehearsal gate's baseline is now `0e1543e0`.
+- **2026-11-12 05:48** Declared logs complete offline. Install candidate `6c9efd1a` is installing.
+  - a3 (Luna) was committed as `8e9a3c3c` after I factored its two duplicated 12-line blocks into one helper, `engine_custody.declare_engine_log(out, root, engine)`, which never raises. I checked that `ManagedEnginePreparation.root` and `.recipe.engine` are the real attributes the supervisor's `engine_log_path` uses, and that every pod path (named entry, prepared job, workflow) reaches `run_owned_action` with the job's own `out` (`{remote_root}/out`), which is the root that `finish_command` collects. 60 tests passed with VibeComfy `88cff6d5`.
+  - e2e (Terra) was committed as `1fec1233`, one new test file passing 5 of 5 runs. Codex did not finish the suite comparison, out of caution about a loopback HTTPS test. That was unnecessary, since the file adds no product code.
+  - `r13/declared-logs` is at `08aa3062` locally.
+  - Rehearsal gate, `tests/packs/runpod` at `a6f38902`: 1094 passed, 21 failed, 2 errors.
+    - All of those failures except one also fail at `878d13f4`, so they predate this work (reset diagnostics, pod reset runtime, catalog id, GraphQL confirmation, release after acquisition, pod source install).
+    - The exception is the ratchet test `test_every_runpod_exception_name_is_receipt_safe_or_explicitly_excluded`. It was a real merge interaction: C1 core added `PlacementReasonError` while the ratchet was written in parallel. I classified the name as receipt-safe in `fc063698` (like its parent `RemotePlacementError`, it is fixed vocabulary).
+    - Release 12 main lacks these Release 13 tests, so pre-merge commits are the fair baseline for them.
+    - Correction: my earlier "989 vs 978" comparisons used a `PYTHONPATH` without VibeComfy, so about 67 tests errored instantly. All runs since then use the pinned checkout.
+  - The rest of the gate (core/execution, cli, installer, engine) is still running on `c-reh`. The install candidate was built in a separate clone, `c-bis`, so it doesn't disturb that run: `ddfefa60` is the rehearsal plus a3 and e2e, and `6c9efd1a` locks in ruff 2127 → 2120 (the improvement came with Release 12 main). Focused suites: 201 passed.
+  - Install: the Release 12 App installer (`c268a5fa`, from App main) with the Release 12 manifest plus Agent `{sha: 6c9efd1a, repo: /home/user/wt/c-bis}`, VibeComfy `88cff6d5`, release 13.
