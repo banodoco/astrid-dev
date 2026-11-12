@@ -623,3 +623,24 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Stopped the batch, cancelled the queued SFX task. No pods are running; balance $97.66.
   - Evidence: `install-r13b/runs/stuck-task/`. A subagent is investigating the root cause for both bugs; the old host is kept alive for it.
 - **Fresh install** `root-b4`/`data-b4` at dd5bc822 + VibeComfy c7a47e36 is done, with its host not started. Paid cells wait for the bug 1 root cause, since any failure with declared logs may block the queue.
+
+### 12:51 UTC — Root causes for BUG 1 and BUG 2; four workers launched; keep-warm passes 3-4 committed
+**BUG 1, release-blocker:** any project task whose result carries an output whose bytes were ever published unscoped can't record its result. An empty log (`sha256:e3b0…`) is the guaranteed case.
+- **Runtime `_stage_outputs`** (`service.py` about 9294-9321): an existing object with no project owner requires an ingest receipt; inline bytes that were already hash-verified don't count as proof. Result: 409 "output object is outside the task project".
+- **Agent `reconcile_publication`** (`generic_host.py` about 11590): it then replays the rejected fail forever at 0.25 s, silently. The cede-after-expiry branch is unreachable for a fail.
+- The task stays running and holds the GPU reservation and the executor's single slot, so every later task waits forever.
+- Old orphan 0d7f7e41: the same dead end via SIGTERM mid-publication; nothing replays or cedes on restart.
+
+**BUG 2:**
+- The Runtime `_claim_task` reports only the first blocker. Storage (787 MB < 1 GiB) masked the real one: the slot held by BUG 1's task.
+- The generate CLI is silent: `_runpod_generation_policy` reads `task["spec"]["inputs"]`, but the real shape is `spec.spec.inputs`. So there is no heartbeat, and the timeout is 3600 s. A flat fixture hides it.
+
+**Workers launched (Terra):**
+- `terminal-reconcile` (c-recon, Agent): classify unknown vs definite rejection; cede with `reconciliation_required`; backoff; one log line per state change; restart recovery; log claim-reason changes.
+- `cli-wait-visibility` (c-cliwait, Agent): one spec-envelope accessor; the wait prints state and waiting-reason changes plus a heartbeat for every placement; actionable text.
+- `rt-inline-proof` (c-rt-proof, Runtime `42ae24af`): verified inline bytes prove possession of an existing object, with the project associated; `_claim_task` lists all blockers, names the holder and its lease state, and emits an event on change. Any schema-digest impact must be reported.
+- `keep-warm5` (c-warm, on `r13/keep-warm` `d072cf5d`): passes 3-4 committed after my review (default lane 289 passed; 7 new tests passed; ruff 2117). My review notes were added to pass 5: the custody comparison must be scoped to reuse candidates, and a typed exception replaces message matching.
+
+**Integration lane** (`-m integration`, test_remote_machine_cpu + test_worker_preparation): 24 of 25 fail on the unchanged base `b306b2be` too, with the same failure set as keep-warm ("target status task failed"). It is an environment issue, so it provides no local coverage. Noted; not blocking.
+
+**Batch 6 still held.** It runs once terminal-reconcile and rt-inline-proof land (the Runtime fix needs a new Runtime pin in the manifest).
