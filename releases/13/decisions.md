@@ -2,64 +2,59 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## Candidate estimate (2026-11-12 08:50 UTC, honest)
+## NOW (11:48 UTC): read this first; it is enough to carry on from
 
-- **Release 13 candidate: realistically 14:00–15:00 UTC today, at the earliest ~13:30.** That assumes no new root cause appears in the batch re-run. Each new cause adds about one cycle (about 1 h: diagnose from the declared logs, fix, re-run).
-- **Path:**
-  - seven parallel workers, about 1–2 h;
-  - my review and merges, about 1 h;
-  - ONE batch on one 5090 pod (TTS, SFX, t2i, edit, music back to back, warm reuse), about 1.5 h and about $2–3;
-  - then video if 5090 stock allows;
-  - then composing and qualifying the candidate, about 1 h.
-- **Biggest risks:**
-  - the ComfyUI bump and re-lock, which could change many packages;
-  - TTS also needing its `TTS` model folder (fixed by models-folders) once the decorator patch is in.
+**Rehearsal:** `scratch/r13-rehearsal` = `b306b2be` on origin, local clone `/home/user/wt/c-bis`. It merges:
+- published Release 12 main `0e1543e0`;
+- the structural slices: ratchet, receiptplan, C1 core and task 2, setup fixes, G4;
+- declared logs (`r13/declared-logs` `603b6728`: logs.json, `role=log` task outputs, `astrid tasks logs`, `generate failure --logs`, preparation-step logs, engine startup slice, legacy scrape removed);
+- models-folders `43b69032`;
+- TTS source patch `687a0ed9`;
+- music lock `634a2608`;
+- credential scrub and describe `e798df2b`;
+- provider gate `f0535fef`;
+- ComfyUI → `6bfaacc6` plus Linux re-lock `43b44c1e`;
+- engine command output `72fbdf65`;
+- setuptools lock-hash fix `6eacb077`;
+- VibeComfy pin → `fe92ac78` (template identity) in `b306b2be`.
 
-## NOW: morning note (2026-11-12 08:05 UTC)
+**Running now:** batch 5 (`install-r13b/runs/batch5.sh`, log `runs/batch5.log`, background job `bjr4jgeay`).
+- It runs on a FRESH install state: `. ./env-b3.sh` (HOME/XDG under `home-b3`), data root `data-b3`, project `setup`, preferences = volume `2z2dlu1v8g`, EUR-NO-1, RTX 5090, $3 cap.
+- TTS started 10:53:57 UTC on pod `v7l7yk2u75kkie` (RTX 5090, $1.19/hr). At 11:48 it had cost $0.28, so most of the elapsed time was waiting for capacity, and the rest is preparing the new ComfyUI and lock and downloading models.
+- Limits: cap $3, P/E/I 2700/900/1800 s.
+- Then SFX ($3), t2i ($1), edit ($1, `--edit inputs/edit-src.png`) and music ($1) run on the same pod.
+- It stops after TTS if the engine install fails; the reason is now in `engine-install.stderr`.
 
-**Headline.** Every generation failure is now understandable from the product itself. Declared run logs work live on RunPod. On each failed task, `astrid tasks logs <task> --project setup [--name <log>]` and `astrid generate failure --logs` show the real cause. With that, tonight's four blind cells each have a root cause:
+**How to check or release:**
+- `. ./env-b3.sh; ./root/run-astrid machines --json` lists live machines.
+- REST census: `curl -fsS https://rest.runpod.io/v1/pods -H "Authorization: Bearer proxy-injected"`.
+- To stop a batch, stop the script, every process from `install-r13b/root/versions/`, and any admitted task (see the 10:08 incident).
 
-| Cell | Root cause (from the product's own logs) | Fix |
-|---|---|---|
-| TTS `audio/qwen3_tts_custom_voice` | The QwenTTS pack (pin = upstream HEAD `d8122a8`) uses `@check_model_inputs()`, which locked transformers 5.22.1 made a plain decorator. The pack swallows the TypeError, and it surfaces as "cannot import name Qwen3TTSTokenizerV1Config". Its `TTS` models are also invisible (next row). | **Owner decision 1** + the models-folders fix |
-| SFX `audio/hunyuan_video_foley` | The model lock has six folders, but the engine exposes a fixed four on the volume. The Foley pack reads `<ComfyUI>/models/hunyuan_foley`, finds nothing, and publishes an `error`-only schema, so doctor reports `unknown input foley_checkpoint_name`. | The models-folders fix (Terra, own branch, **owner decision 2**) |
-| t2i `qwen-image-2.1-turbo` (and edit) | `QwenImage21Cache` and `TextEncodeQwenImage21` are ComfyUI core nodes on master but not at our ComfyUI pin `ee71d5c4`. | **Owner decision 3**: a ComfyUI pin bump plus an engine re-lock |
-| music `audio/ace_step_1_5_t2a_song` | Its models (`acestep_v1.5_turbo`, `ace_1.5_vae`) are not in the RunPod model lock, and the template exposes only `seed`. Not run, since it can't succeed. | Lock the models, or drop the cell from Release 13 |
+**Money:** balance $98.33 at 11:48. About $7 of $40 spent overnight and this morning. Floor $67.41.
 
-**State.**
-- Origin: `scratch/r13-rehearsal` = `e7f00181` (Release 12 main, the structural branches, declared logs and fixes), installed at `install-r13b`, host up. `r13/declared-logs` = `603b6728`.
-- Gate classified: two real merge regressions, both fixed. The rest predate the merges or come from this venv.
-- Pods: 0. Balance $99.02 (stop at $67.41). Spent about $6.4 of $40 overnight (six paid runs, about $0.27–0.33 each, plus earlier runs).
+**Per cell (root cause → fix → merged → re-run):**
+- **TTS:** the pack's `@check_model_inputs()` against transformers 5.22.1 → recipe source patch `687a0ed9` → merged → batch 5 running. Its `TTS` model folder was also invisible → models-folders `43b69032`.
+- **SFX:** the Foley pack couldn't see `models/hunyuan_foley` on the volume → models-folders → merged → pending in batch 5.
+- **t2i and edit:** ComfyUI pin predated the Qwen Image 2.1 nodes → `6bfaacc6` (still 0.36.0, so H3 holds) → merged → pending.
+- **music:** models not locked → `634a2608`; staged template id lost its category → VibeComfy `fe92ac78` → merged → pending.
+- **engine install, found on the first batch:** discarded command output → `72fbdf65`; then setuptools double hash in the re-lock → `6eacb077`.
 
-**What changed tonight in the product** (all on `r13/declared-logs`):
-- one `logs.json` model, from the job, VibeComfy, the engine log slice and the engine startup slice;
-- logs travel back over the verified fetch on failure too;
-- logs become `role=log` task outputs;
-- `astrid tasks logs` and `generate failure --logs`;
-- a failed preparation step's whole output becomes `preparation.<step>.*`;
-- the old scrape is removed.
+**Workers:** none running. Parked: the installed smoke test (`c-smoke2`, both cases fail before task creation: preferences not visible to the installed CLI); C1 task 1 (needs its allowlist removed); C1 task 3.
 
-Three real bugs were found only by live runs and fixed: `tasks logs` read managed outputs, digests replaced step output, and startup output fell outside the slice. The test fakes that had encoded those wrong beliefs now mirror the real SDK and Runtime.
+**Next three steps:**
+1. Read each batch-5 cell from the product (`generate failure --logs`, `tasks logs <task> --project setup`) and log it as it lands.
+2. Fix any new root cause, then video if 5090 stock allows.
+3. Compose the Release 13 candidate. In parallel, have a worker sweep every `_Runner.run`-style call site for discarded command output (orchestrator 11:47).
 
-**Owner decisions (REVIEW):**
-1. **TTS fix route:** (a) a banodoco fork of ComfyUI-QwenTTS with a one-line decorator fix that works with both forms (recommended; needs a new repository, which I won't create unasked), or (b) a recipe source-patch step.
-2. **models-folders, ready for review on `r13/models-folders` `b1830b9e` (not merged into the rehearsal):** folders come from the model lock, all of them go into the search paths, and only lock folders the checkout doesn't track get links. The clean-source check accepts exactly those verified links. I reverted one unrequested relaxation (a models root inside the engine tree is refused again) and pinned the real no-volume case. Runner, custody and preparation: 251 passed, plus the two known packaged-lock failures; RunPod machine suite 118 passed; ruff 2120. If you agree: merge it, then re-run SFX.
-3. **ComfyUI pin bump and re-lock** for the Qwen Image 2.1 nodes. The lock was compiled from inputs on another machine.
-4. `_CREDENTIAL_KEY` blanks every `*_key` field in error snapshots (`variant_key` shows as `<redacted>`), against the no-redaction ruling. Proposal: match only credential names.
-5. Music: lock the ACE-Step models or drop the cell.
-6. H10, the free-text failure bundle: mostly superseded by declared logs; proposal to close it.
+**Old install state (unreconciled):** `install-r13b/home` and `install-r13b/data` hold orphaned task `0d7f7e41` (lease expired 10:07:35, GPU reservation unreleased) and the night's failure receipts. The installer refuses there ("busy") until a Runtime with the installed identity runs `astrid-runtime tasks clear 0d7f7e41…`. Not forced.
 
-**Small findings:**
-- `generate describe <entry id>` fails with a raw `[Errno 2] No such file or directory: 'audio'`.
-- The edit input key is `image_ref`, not `image`; the product said so clearly.
+**Owner REVIEW items still open:**
+- the TTS fork as the durable form (route a);
+- the four templates without a qualified id;
+- lifecycle exposing `Retry-After`;
+- Hannah may overrule any orchestrator ruling of 08:34.
 
-**Parked:**
-- C1 task 1 (rework without its allowlist);
-- C1 task 3 (regressed);
-- the provider gate with 429 backoff (to Sol);
-- the installed smoke test.
-
-**Next once decided:** models-folders and the fixes above → re-run TTS, SFX, t2i and edit on the rehearsal → the Release 13 candidate.
+**Candidate estimate:** if batch 5 passes, the candidate can be composed this afternoon (about 2 h after the batch). Each new root cause adds about 1 h.
 
 ## Entries
 
