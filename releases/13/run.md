@@ -2,7 +2,7 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (20:45 UTC Thu 12 Nov): read this first
+## Now (21:35 UTC Thu 12 Nov): read this first
 
 ### Timeline to release: publish Saturday 14 Nov by 12:00 UTC (assumed UTC)
 | When (UTC) | Milestone | Owner | Status |
@@ -23,8 +23,8 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
 ### Streams
 | Stream | State |
 |---|---|
-| Candidate `r13/compose` `3c111cbed` | Since 19:35: provider gate, publication classifier, catalog fixes (one argv builder), fakescope, lock-digest, engine lint (BLE001 cleared), M1 (claim is the only paid authority), lint gate narrowed to bug classes (owner), dead-owner code removed, cells pin VibeComfy `b3f20f33`. Boundary 101 passing |
-| Live | **Stage 2b running** on `3c111cbed` via the claim path: claim, then t2i, t2i again (#595 reload check), TTS, SFX, music, edit, then release. The two t2i runs differ only in seed. Balance $95.57 (floor $67.41) |
+| Candidate `r13/compose` `060a7555e` (comparison CI on frozen `int/r13-1f69f754`, running) | Since 20:45: SFX route repointed (`hunyuan-foley-local` → the template we proved), preflight gate plus `live_cells.json`, release-after-failure fix (truthful error, retry kept), exit-stall fix, **U2** (reason strings, network-mount rule, dead-owner handover), pod-log collection on failure, two catalog fixes. Boundary 101 passing |
+| Live | **BLOCKED.** Stage 2b (`3c111cbed`): the claim works live (5090, $1.39/h, 25 min stock wait), but the first engine start on every fresh pod fails with `endpoint_ownership`. The break is in f9214240..5cca0bca; suspect the engine-layout merge `913c6b8f` (engine lane bisecting on CPU). The rerun on U2 (`cc8bc0b8c`) is blocked: `machines setup` now returns `conflict` (new, 3c111cbed..cc8bc0b8c; machines and engine lanes on it). Spent tonight: $0.33. Balance $95.19 |
 | Machines (own session `…2mhfLHKp…`) | M1 merged. K1 fix round 2 (money bug). LT-a design round 2 (3 money holes), cut to 6 rows by the owner. M2a re-proof. Pod-side watchdog card (owner approved). Cut decision Fri 10:00: K1, M1 and M2 green on compose |
 | Cells (own session `…VzW8yjKX…`) | cells-vc frozen `b3f20f33`, pin merged. Preflight: fixing it to read one declared `scripts/live_cells.json`. Catalog contracts #342–#344 by the cut line, or unlisted |
 | Engine (fork, here) | U2 final round (Astra REWORK: 3 start/install fixes; no more rounds). #607 placement fix, then one Astra pass. Lint merged |
