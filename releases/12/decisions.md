@@ -405,3 +405,11 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - Extended rows: K1a, K1c, K5, Owner.
   - Estimate: +13–16 worker-days.
   - **REVIEW, for Hannah:** SF4's proposed limit (30 commits or 3,000 lines per repo) is a placeholder for you to set. SF4 and SF5 need an advisor review before they start.
+- 2026-11-12 01:22Z — **Agent fix-round follow-ups integrated: `cef4c2850` on `r12/fix-round`** (Codex Terra, plus my correction).
+  - Terra found the top-level `python -m astrid packs` is "unknown command" and proposed `python3 -m astrid.core.pack.cli add …`. That would not work for a shipped user: `python3` on PATH lacks Astrid.
+  - I traced the shipped entry instead: pyproject `astrid = astrid.console:main`, with `console.py:22-25` routing `packs`. The **documented** command `astrid packs add https://github.com/banodoco/poms_packs --revision main --pack-id astrid_motion --subpath astrid_motion` installs astrid_motion end to end from poms_packs `2379ab54` (run myself through `astrid.console.main` into a scratch packs root). That is the shipped command, and the test drives the parser and handler into the Git install transaction.
+  - Also in this commit: exact IDs of any kind before aliases (collision test); `content` read by the visualize labels, caption extraction and CLI cut summaries (`test_add_text_readers.py`); and the duplicate alias copies routed through the shared policy.
+  - Terra's by-ID check on the touched suites found nothing that passed before and fails after. My focused run: 105 passed.
+  - **Final Astra read of `abd1886ee..cef4c2850`** (product: `dc87e6230` + `cef4c2850`) is running.
+  - The cut merge is prepared locally as `b186d4204` (cand/29-r12 + fix-round) and pushes when the review clears.
+- 2026-11-12 01:22Z — **Matrix harness `1940a2fe1`** (Codex Luna, which I reviewed; harness-only): the autostart-off leg runs `journey.verify("install")` and records `import_origins` like every other leg. 192 passed. The qualifying matrix uses `harness/29-r12` `1940a2fe1`.
