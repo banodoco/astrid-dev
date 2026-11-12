@@ -1,5 +1,5 @@
 name: Question
-description: Ask the maintainers anything about Astrid. No keys, tokens or private paths.
+description: Any question for Astrid's maintainers (no keys, tokens or private paths).
 title: "question: "
 labels: ["question"]
 body:

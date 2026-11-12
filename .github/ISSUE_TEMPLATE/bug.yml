@@ -1,5 +1,5 @@
 name: Bug
-description: A failure someone needs fixed or recovered from. No keys, tokens or private paths.
+description: Something in Astrid that failed and needs a fix or a way to recover (no keys, tokens or private paths).
 title: "bug: "
 labels: ["bug"]
 body:
@@ -28,7 +28,7 @@ body:
     id: steps
     attributes:
       label: Steps
-      description: The steps that lead to the failure, if you know them.
+      description: "Optional: the steps that lead to the failure."
   - type: input
     id: about
     attributes:
