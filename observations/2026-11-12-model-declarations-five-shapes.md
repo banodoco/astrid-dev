@@ -1,0 +1,6 @@
+Date: 2026-11-12
+Source: Release 13 live and offline runs, 11–12 Nov (smell 3; failures 2 and 3)
+About: F-008; Plan 17
+Outcome: open
+
+Model declarations come in five shapes across templates and locks, and VibeComfy silently guessed `checkpoints` for an unknown loader; 39 templates had bare filenames. Being fixed as T2 and T3 (one record `{name, subdir, url, sha256, size_bytes}`, a corpus check with no allowlist). Left over and unplanned: 18 templates were moved to drafts and are no longer listed; someone has to regenerate or retire each.

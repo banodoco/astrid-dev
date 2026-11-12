@@ -54,3 +54,4 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 08-release1-install-update
 - 01-installer-consent
 - 50-recorded-boundaries
+- 52-observations-register

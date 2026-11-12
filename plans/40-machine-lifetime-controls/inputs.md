@@ -44,6 +44,18 @@ Rejected: an uncapped keep; a pod-side cap (it would need a credential on the po
 
 - **D13.** Hannah, 12 Nov, after a live failed job deleted a kept pod (`unsafe_job_state`): "unless the actual machine fails for some kind of terminal reason, we should never automatically terminate it, because people have set up the rule to keep the pod warm." This narrows D12's immediate-release list. A preparation or installation that cannot be verified no longer releases the machine when the pod is reachable, exactly owned and its jobs are verified stopped: it is kept as `stale_after_failure` within the consented idle and paid limits, generation is refused on it, and the next claim re-prepares it on the same pod. A refreshed install receipt (only `receipt_sha256` changed) is accepted. Immediate release stays for custody lost or changed, an unverifiable job stop, an output digest mismatch, the paid limit, an unreachable engine, a reset failure and host shutdown (D12; restart retention needs the deferred pod-side cap below). Each release records its own reason in place of `unsafe_job_state`. Implemented on Agent `r13/keep-warm` for Release 13 (decision log, 12 Nov).
 
+- **D14.** Hannah, 12 Nov, the machines redesign, shipping in Release 13 (decision log, 12 Nov). It replaces D1's capped-consent shape and the per-job paid consent of D6/D7 for generation:
+  - O1: declared once; preferences are overridable defaults.
+  - O2: claiming is separate from generating; `generate` only uses an existing machine.
+  - O3: `generate` never claims automatically.
+  - O4: no consent flag.
+  - O5: named machines (`generate --machine <name>`).
+  - O6: jobs queue on their machine.
+  - O7: no hard datacenter pin; overridable at claim.
+  - O8: you can see what is happening on a machine.
+  - Lifetime: the idle timer is the one lifetime mode; idle counts only while nothing runs or is queued; `keep` extends it; `--idle never` replaces `--until-release`; the budget cap still bounds everything.
+  - Being built as M1–M10 on Agent `r13/machines`.
+
 ## Deferred
 
 - A session-level keep: hold a machine across jobs and tools from one setting, with extend and release.
