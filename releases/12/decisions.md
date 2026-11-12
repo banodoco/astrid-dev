@@ -6,12 +6,13 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
 
 Overnight mode from 00:33Z: I'm working through without you or the orchestrator, and deciding unanswered questions by the brief's priorities (marked REVIEW). Release 13 isn't this session's scope, so no spend and no pods here.
 
-- **State:** the tuple is frozen and qualified except one Agent CI test.
+- **State: GATE-GREEN posted (04:3xZ); waiting for the orchestrator to publish.** The tuple is frozen and qualified.
   - Frozen tuple: App `237b28be9`, Agent `0e1543e0`, Runtime `42ae24aff`.
   - Matrix 11/11 green, native Windows included. App Tests green. Direct Journey green, with exactly the 4 named exceptions.
   - The Agent delta against `c5370a86` is clean apart from one new failing ID: `tests/packs/test_audio_render.py::…test_rendered_mp4_contains_audio_stream`, a custody-lock deadline on darwin/Remotion. The fix round touches no render code.
   - The failed jobs are re-running as attempt 2. Shard 7 and fast checks are done: 0 new failing IDs.
-- **Next:** darwin passes → timing flake → GATE-GREEN, and the orchestrator publishes. It fails again → diagnose before anything ships.
+- **Darwin:** audio-render passed on rerun. A pre-existing custody-lock flake (R11 code) hits one darwin test per run, so it was ruled a known issue (REVIEW).
+- **Next:** the orchestrator publishes; then my served-manifest check; then stop. Still to do after that: land the record branches on astrid-dev main.
 - **Decided for you (REVIEW):**
   - add_text's default element becomes bundled text-card.
   - The recovery command points at banodoco/poms_packs `--revision main`.
@@ -453,3 +454,12 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - `unit shard 7` failed with 93 bad IDs, all also bad on attempt 1. 0 new.
   - `fast checks` gives Mypy 2338/2192, unchanged and pre-existing.
   - Darwin (holding `test_audio_render`) and the other shards are still running; pollers are on them.
+- 2026-11-12 04:31Z — **Darwin attempt 2: `test_audio_render` PASSED.** `test_text_card_render_smoke` (passed in attempt 1) failed in attempt 2 with the same custody-lock error.
+  - **Diagnosis (my own read; no product change follows, so no Astra):** a pre-existing intermittent flake.
+    - The raising code, `custody_broker._observation_guard`, is darwin-only and deadline-based. It came in with R11 `62dbe56ea` and is identical in R11, `c5370a86` and `0e1543e0`.
+    - Of 22 darwin jobs scanned since 9 Nov, 4 hit it, one test each: `87d1fbbc4` (R12, before the fix round; the same text-card test), the R13 rehearsal `bf3b6ba77`, and `0e1543e0` attempts 1 and 2.
+    - Every affected ID passes on another attempt of the same SHA.
+  - The fix round's render edits are alias-map refactors only.
+  - My earlier phrase "touches no render code" was imprecise. Corrected in the gate record.
+  - **Ruled a known issue; Plan 39. REVIEW.**
+- 2026-11-12 04:31Z — **A-FROZEN + GATE-GREEN.** Gate record `r12-progress/gate-record` is complete with no placeholders. Main heads were rechecked just now: Agent `a105de3a4`, Runtime `4f5477cb0` and App `3e53462f4` are all fast-forward. Sent to the orchestrator with the three publish commands.
