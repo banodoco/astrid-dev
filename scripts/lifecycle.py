@@ -1,5 +1,6 @@
 """The project's lifecycle vocabulary and the requirements for entering it."""
 from dataclasses import dataclass
+import re
 
 
 @dataclass(frozen=True)
@@ -21,24 +22,25 @@ STATUSES = (
 
 
 def names():
-    raise NotImplementedError
+    return tuple(status.name for status in STATUSES)
 
 
 def terminal():
-    raise NotImplementedError
+    return tuple(status.name for status in STATUSES if status.terminal)
 
 
 def phrase():
-    raise NotImplementedError
+    values = names()
+    return ", ".join(values[:-1]) + " or " + values[-1]
 
 
 def route_pattern():
-    raise NotImplementedError
+    return r"(?i)\b(" + "|".join(re.escape(name) for name in names()) + r")\b"
 
 
 def requiring(need):
-    raise NotImplementedError
+    return tuple(status.name for status in STATUSES if need in status.needs)
 
 
 def definitions():
-    raise NotImplementedError
+    return "; ".join(f"`{status.name}` = {status.meaning}" for status in STATUSES) + "."

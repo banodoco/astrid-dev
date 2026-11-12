@@ -59,10 +59,23 @@ def _catalog(root: Path) -> str:
     return before + start + "\n" + "\n".join(lines) + "\n" + end + after
 
 
+def _status_definitions(root: Path) -> str:
+    from lifecycle import definitions
+    path = root / "plans/index.md"
+    text = path.read_text(encoding="utf-8")
+    start, end = "<!-- status-definitions:start -->", "<!-- status-definitions:end -->"
+    if text.count(start) != 1 or text.count(end) != 1:
+        return text
+    before, rest = text.split(start, 1)
+    _, after = rest.split(end, 1)
+    return before + start + "\n" + definitions() + "\n" + end + after
+
+
 VIEWS = (
     View("public-vision", ("vision/", "plans/*/plan.md", "plans/priority.md"), "vision/README.md", _vision),
     View("root-vision-summary", ("vision/", "plans/*/plan.md", "plans/priority.md"), "README.md", _root_readme, "vision-summary"),
     View("plan-catalog", ("plans/*/plan.md", "plans/priority.md"), "plans/index.md", _catalog, "plan-catalog"),
+    View("status-definitions", ("scripts/lifecycle.py",), "plans/index.md", _status_definitions, "status-definitions"),
     View("check-catalog", ("scripts/checks.py",), "docs/checks.md", _checks),
 )
 
