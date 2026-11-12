@@ -110,31 +110,73 @@ def shape_errors(folder: str, shape: dict[str, object], root: Path) -> list[str]
     return errors
 
 
+# A deleted pack copied to a new folder can be indistinguishable from a rename.
 def new_packs(base: str, root: Path) -> list[str]:
     """Return new pack folders in the working tree, excluding Git-detected renames."""
+    import os
+    import shutil
+    import subprocess
+    import tempfile
+
     root = Path(root)
     valid = git_result(root, "cat-file", "-e", f"{base}^{{commit}}")
     if valid.returncode:
         raise ValueError(f"base revision {base!r} is unavailable")
 
-    changed = git_result(root, "diff", "-M", "--name-status", base, "--", "plans/*/plan.md")
-    if changed.returncode:
-        raise ValueError(f"can't compare project changes: {changed.stderr.strip()}")
+    def git_path(name: str) -> Path:
+        result = git_result(root, "rev-parse", "--git-path", name)
+        if result.returncode:
+            raise ValueError(f"can't locate Git {name}: {result.stderr.strip()}")
+        path = Path(result.stdout.strip())
+        return path if path.is_absolute() else root / path
+
+    with tempfile.TemporaryDirectory() as temporary:
+        temporary = Path(temporary)
+        index = temporary / "index"
+        real_index = git_path("index")
+        if real_index.exists():
+            shutil.copyfile(real_index, index)
+        objects = temporary / "objects"
+        objects.mkdir()
+        env = os.environ.copy()
+        env["GIT_INDEX_FILE"] = str(index)
+        env["GIT_OBJECT_DIRECTORY"] = str(objects)
+        alternates = [str(git_path("objects").resolve())]
+        if env.get("GIT_ALTERNATE_OBJECT_DIRECTORIES"):
+            alternates.append(env["GIT_ALTERNATE_OBJECT_DIRECTORIES"])
+        env["GIT_ALTERNATE_OBJECT_DIRECTORIES"] = os.pathsep.join(alternates)
+
+        def run(*args: str) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(["git", *args], cwd=root, env=env, text=True,
+                                  capture_output=True, check=False)
+
+        added = run("add", "-A", "--", "plans/")
+        if added.returncode:
+            raise ValueError(f"can't snapshot project changes: {added.stderr.strip()}")
+        changed = run("diff", "--cached", "-M20%", "--name-status", "-z", base, "--", "plans/")
+        if changed.returncode:
+            raise ValueError(f"can't compare project changes: {changed.stderr.strip()}")
+
     renamed = set()
     candidates = set()
-    for line in changed.stdout.splitlines():
-        fields = line.split("\t")
-        status = fields[0]
-        if status.startswith("R") and len(fields) == 3:
-            renamed.add(Path(fields[2]).parent.name)
-        elif status != "D" and len(fields) >= 2:
-            candidates.add(Path(fields[-1]).parent.name)
-
-    untracked = git_result(root, "ls-files", "--others", "--exclude-standard", "--", "plans/")
-    if untracked.returncode:
-        raise ValueError(f"can't list untracked project files: {untracked.stderr.strip()}")
-    candidates.update(Path(name).parent.name for name in untracked.stdout.splitlines()
-                      if Path(name).name == "plan.md")
+    fields = iter(changed.stdout.split("\0"))
+    pack_files = {"plan.md", "inputs.md", "tasks.md"}
+    for status in fields:
+        if not status:
+            break
+        source = Path(next(fields))
+        destination = Path(next(fields)) if status.startswith(("R", "C")) else source
+        if destination.parts[:1] != ("plans",) or len(destination.parts) != 3:
+            continue
+        if destination.name == "plan.md" and status != "D":
+            candidates.add(destination.parent.name)
+        if (status.startswith("R") and len(source.parts) == 3
+                and source.parts[0] == "plans" and source.name in pack_files
+                and destination.name in pack_files and source.parent != destination.parent
+                and not (root / source.parent).exists()):
+            prior = git_result(root, "cat-file", "-e", f"{base}:{source.parent}/plan.md")
+            if not prior.returncode:
+                renamed.add(destination.parent.name)
 
     new = set()
     for folder in candidates - renamed:
