@@ -149,3 +149,10 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - The $40 cap and RTX 4090/5090 only still apply. A pod that isn't ours is noted and never touched.
   - The morning note goes at the top of this file.
 - **2026-11-12 00:40** RULE (from the user). On bugs, issues and strategy, the manager's own judgement wins over a Codex worker's or reviewer's. Codex output is evidence, not a verdict. Each diff and finding is read and judged on its merits before it is committed or acted on. For a genuinely contested call, ask the orchestrator for a second opinion; with no answer in 15 minutes, decide, tag REVIEW, and carry on.
+- **2026-11-12 00:50** G4 follow-ups `54556c6f`: Astra review REJECTED it, and I confirmed each finding.
+  - An unvalidated hostname is printed (a `%3A…%40` "host" survives).
+  - IPv6 crashes the identity check.
+  - Validation, staging and managed resolution normalize differently.
+  - Severity: I rate the first a FIX, not a BLOCKER. It isn't a usable credential URL, but it breaks the "print only a validated identity" rule, so it gets fixed anyway.
+  - Astra's test runs were blocked by its read-only sandbox (no writable /tmp), so I'll run the suites myself after the fix.
+  - Round 3 dispatched to Codex Luna (`r13/g4-followups-2`): one strict stdlib validator used at all three boundaries.
