@@ -42,8 +42,12 @@ def request(method: str, path: str, payload=None):
             **({"Content-Type": "application/json"} if data is not None else {}),
         },
     )
-    with urllib.request.urlopen(req, timeout=20) as response:
-        return json.loads(response.read())
+    try:
+        with urllib.request.urlopen(req, timeout=20) as response:
+            return json.loads(response.read())
+    except urllib.error.HTTPError as exc:
+        # Name the call: "HTTP Error 403: Forbidden" alone cannot be traced.
+        raise urllib.error.HTTPError(exc.url, exc.code, f"{method} {path}: {exc.msg}", exc.hdrs, exc.fp) from exc
 
 
 def changed_files(repo: str, number: int) -> list[dict]:
