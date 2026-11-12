@@ -1,0 +1,16 @@
+[0s] queued  waiting=-
+[1s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [1m 0s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [2m 0s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [3m 0s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [4m 0s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [5m 0s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [6m 0s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [7m 0s] running  waiting=-
+Still following RunPod task f477c18d4cbc420797a018ce0f680cd2: [8m 0s] running  waiting=-
+[8m 21s] failed  waiting=-
+Failure: exception=RemotePlacementError, stage=preparation, code=generation_failed, category=execution. machine pxhlv0sh1eli0u kept until 2026-11-12 21:44 UTC (cost so far $0.28); reuse it or run `astrid machines release pxhlv0sh1eli0u`
+engine install job 862e66ba1b7b42dc839e424262a141f6 exited 1: {"error": {"code": "endpoint_ownership", "message": "Engine operation failed.", "recovery_handle": null, "retryable": false, "step": "start"}}
+ (full logs: /home/user/wt/install-r13b/data-s3/runpod/0f69bcd7be89ff390759fdc10584ed8a711d260c55daa9a27fdd7e8c11fe09d0/preparation/5e13ba2ea3f249c5b61bbbe9e4cb689c/logs/engine-install.stderr)
+code: task_failed
+state snapshot: {"readiness": {"entry": null, "fixes": [], "issues": [{"code": "task_failed", "details": {"result": {"error": {"code": "executor_failed", "message": "engine install job 862e66ba1b7b42dc839e424262a141f6 exited 1: {\"error\": {\"code\": \"endpoint_ownership\", \"message\": \"Engine operation failed.\", \"recovery_handle\": null, \"retryable\": false, \"step\": \"start\"}}\n (full logs: /home/user/wt/install-r13b/data-s3/runpod/0f69bcd7be89ff390759fdc10584ed8a711d260c55daa9a27fdd7e8c11fe09d0/preparation/5e13ba2ea3f249c5b61bbbe9e4cb689c/logs/engine-install.stderr)", "retryable": false}, "host_failure": {"code": "executor_failed", "message": "engine install job 862e66ba1b7b42dc839e424262a141f6 exited 1: {\"error\": {\"code\": \"endpoint_ownership\", \"message\": \"Engine operation failed.\", \"recovery_handle\": null, \"retryable\": false, \"step\": \"start\"}}\n (full logs: /home/user/wt/install-r13b/data-s3/runpod/0f69bcd7be89ff390759fdc10584ed8a711d260c55daa9a27fdd7e8c11fe09d0/preparation/5e13ba2ea3f249c5b61bbbe9e4cb689c/logs/engine-install.stderr)"}, "outcomes": {"execution": {"status": "failed"}}, "outputs": [], "status": "failed"}, "sdk_category": "runtime", "sdk_error": "CapabilityRuntimeError", "state": "failed"}, "message": "engine install job 862e66ba1b7b42dc839e424262a141f6 exited 1: {\"error\": {\"code\": \"endpoint_ownership\", \"message\": \"Engine operation failed.\", \"recovery_handle\": null, \"retryable\": false, \"step\": \"start\"}}\n (full logs: /home/user/wt/install-r13b/data-s3/runpod/0f69bcd7be89ff390759fdc10584ed8a711d260c55daa9a27fdd7e8c11fe09d0/preparation/5e13ba2ea3f249c5b61bbbe9e4cb689c/logs/engine-install.stderr)", "severity": "error"}], "status": "blocked", "target": null}}

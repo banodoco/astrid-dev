@@ -1031,3 +1031,18 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The host renews a deadline file on the pod, and the pod stops itself with its own RunPod identity when it lapses.
   - A missing identity means the claim refuses.
   - Live check of the pod's identity env (presence only): mine, tonight.
+
+## 12 Nov ~21:20 UTC: Stage 2b, the claim works but the first job fails at engine start
+
+- **Build:** `r13/compose` `3c111cbed`, M1 claim path, VibeComfy `b3f20f33`.
+- **First attempt:** the claim refused at a $1.25 ceiling, correctly. The secure 5090 is $1.39/h. The message doesn't name the rate; that's being fixed in M2b.
+- **Second attempt:** the claim waited about 25 minutes for EUR-NO-1 stock, then succeeded. Pod `pxhlv0sh1eli0u`, $1.39/h; generation 1, the claim's own job, succeeded.
+- **The failure:** t2i (generation 2) and t2i again (generation 3) both failed at the engine install's `start` step with `endpoint_ownership` / "Engine operation failed."
+  - The same signature as Stage 2a's edit. In both runs it was the first job to reach a fresh pod, so it isn't specific to a cell.
+  - Stage 1 (`f9214240`) t2i passed.
+- **Released explicitly.** $0.33; 0 pods; balance $95.21. Evidence: `evidence/stage2b/`.
+- **Hypothesis, not proven:** the claim's own job leaves the engine, its supervisor or a keep-warm checkpoint running, and the job's start refuses it because it doesn't own it.
+- **Next:**
+  - U2's reason strings land first, plus the host bringing back the pod's engine and supervisor logs on failure. Only one line came back tonight.
+  - A CPU reproduction of claim-prepare followed by job-prepare.
+  - Then a live rerun, about $0.35.
