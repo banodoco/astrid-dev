@@ -666,3 +666,26 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The TTS cell is in the product's capacity wait: no 5090 or 4090 in EUR-NO-1 (the volume's datacenter); EU-RO-1 has Low 5090 stock.
   - The CLI is silent during the wait while the host logs "no stock yet" (usability log).
 - **14:02 UTC:** Hannah agreed the idle-timer ruling. Dispatch rule added: every Astra, Sol or Terra task gets a paired read-only Luna inventory, launched by the manager (nested Codex fails in the sandbox). The senior worker's brief points at it and hands mechanical edits back as a list.
+
+### 14:19 UTC — Batch 6 results so far; Codex skill fix on astrid-dev main; model-layout design with Fable
+- **Batch 6 on pod `8qrbypj90g1kzt`** (RTX 5090, EUR-NO-1, claimed at about 13:53 after 46 capacity attempts):
+  - **TTS:** node restore PASSED (declared patches work live). It then failed at prepare: VibeComfy refused `TTS/…` as outside `ComfyUI/models`.
+  - **The pod was KEPT,** so keep-warm works live.
+  - **SFX** was first refused reuse: "target policy differs from the retained provider owner", because its limits differed (usability). Re-run with identical limits, it reused the pod, then failed the same way on `hunyuan_foley/…`.
+  - t2i, edit and music are running.
+- **Root cause, BUG 3, structural:** "where models live" is decided in about five places:
+  - Astrid: the models root, symlinks and search paths;
+  - VibeComfy: the fetch root, the prepare root hard-coded at `prepared.py:218`, and `target_path` under `models_root.parent`;
+  - ComfyUI: `extra_model_paths` rooted at `runtime_root/models`.
+
+  Terra pass 2 (`c-vcroot`) adds one resolver with two named roots. Fable is designing the model layout from first principles, covering existing ComfyUI installs, managed installs, RunPod volume or plain disk, VibeComfy standalone, and more engines later, with Luna explorers.
+- **CPU journey on the fixed Runtime: 21 passed, 3 failed, 2 errors** (it was 1 of 25 failing before). The remaining failures:
+  - host-graph cleanup unresolved;
+  - pod-operation deadline;
+  - cancel didn't release;
+  - receipt `unavailable` vs `not_collected`.
+
+  Still to classify.
+- **Codex skill fix, astrid-dev #557** (merged `6aacfcf`): every Codex worker runs with `-s danger-full-access` and must use its Luna sub-agents; `agents.max_threads` is set to the CPU count. Under `workspace-write`, `~/.codex` is read-only, which broke sub-agents and nested Codex (verified).
+- **Keep-warm pass 6** committed as `r13/keep-warm` `9e7b2a48`; merged into `r13/machines` `22e5a13e` (its suite is running). **terminal-reconcile** `56284e6c`: its failure set is identical to the base; merged into the rehearsal `922a19eb`.
+- **Money:** balance $97.17 at 14:19; about $8.5 of $40 spent.
