@@ -8,10 +8,10 @@ import re
 from pathlib import Path
 from urllib.parse import quote
 
-from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
+from check_docs import ROOT, read
 from gap_relationships import parse_gap_relationships
 from project_contract import plan_gap_ids
-from records import git_output, heading as record_heading, section as record_section
+from records import PLAN_CELL, git_output, heading as record_heading, section as record_section
 from vision_subject import parse_subject, render_subject_markdown
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"
@@ -169,7 +169,7 @@ def build(root: Path, revision: str) -> dict:
     from views import rebase_links
     for i, row in enumerate(project_records(root)):
         link = row[6]
-        plan = Path("plans") / PLAN_LINK.fullmatch(link).group(1)
+        plan = Path("plans") / PLAN_CELL.fullmatch(link).group(1)
         row = [rebase_links(value, plan.parent, Path("plans")) for value in row[:6]] + [link]
         name, goal, status, owner, estimate, waiting, link = row
         plan_text = read(root, plan)

@@ -16,42 +16,13 @@ from vision_subject import parse_subject
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
 README = Path('README.md')
-HEADER = '| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |'
-DIVIDER = '|---|---|---|---|---:|---|---|'
 STATUSES = {'queued', 'active', 'blocked', 'paused', 'done', 'cancelled'}
-VISIBLE = {'queued', 'active', 'blocked', 'paused'}
 LINK = re.compile(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)')
-PLAN_LINK = re.compile(r'\[[^\]]+\]\(([^)]+/plan\.md)\)')
 GAP_NAME = re.compile(r'([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md')
 
 
 def read(root: Path, path: Path) -> str:
     return read_text(root, path)
-
-
-def catalog_rows(text: str) -> list[list[str]]:
-    """Parse exactly one canonical seven-column Markdown table."""
-    lines = text.splitlines()
-    heads = [i for i, line in enumerate(lines) if line.strip() == HEADER]
-    if len(heads) != 1 or lines[heads[0] + 1].strip() != DIVIDER:
-        raise ValueError('plans/index.md needs one canonical plan table')
-    rows: list[list[str]] = []
-    for line in lines[heads[0] + 2:]:
-        if not line.startswith('|'):
-            break
-        cells = split_table_row(line)
-        if len(cells) != 7 or not all(cells):
-            raise ValueError(f'malformed plan row: {line}')
-        if cells[2] not in STATUSES:
-            raise ValueError(f'invalid status {cells[2]!r} in {cells[0]}')
-        if not PLAN_LINK.fullmatch(cells[6]):
-            raise ValueError(f'plan cell must be a single plan.md link: {cells[6]}')
-        rows.append(cells)
-    if not rows:
-        raise ValueError('plan catalog is empty')
-    if any(r[2] in VISIBLE for r in rows[next((i for i, r in enumerate(rows) if r[2] not in VISIBLE), len(rows)):]):
-        raise ValueError('done/cancelled rows must follow prioritized nonterminal rows')
-    return rows
 
 
 def local_links(root: Path, path: Path) -> list[str]:
