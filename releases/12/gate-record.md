@@ -1,24 +1,24 @@
 # Release 12 gate record
 
-State: DRAFT, with no gate yet.
+State: DRAFT. Qualifying window started 12 Nov ~01:50Z on the tuple below; results pending.
 
 ## Tuple
 
 | Component | Full SHA / value |
 |---|---|
-| App | `{{FILL}}` (re-pin SHA) |
-| Agent | `c5370a862d0b374afa412dd071418070e76f834c` |
+| App | `237b28be935af49c23464fa6ca1cf30db67ebaa0` (re-pin commit on `scratch/r12-app-int`) |
+| Agent | `0e1543e0da2215db9cb3320cfd1083174c3c62a9` (`cand/29-r12`) |
 | Runtime | `42ae24aff8d2cb854f874ce134161077a3ba3641` |
-| harness (`harness/29-r12`) | `{{FILL}}` |
+| harness (`harness/29-r12`) | `1940a2fe1` (full SHA in the matrix run) |
 | VibeComfy | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` |
 | ComfyUI (RunPod) | `ee71d5c4` — FULL SHA TO FILL |
 | runpod-lifecycle | `f2948817eeb94af8dee76be21f6d673724f1606e` |
-| Pinokio | `{{FILL}}` |
+| Pinokio | `d15c58b5cd1f7e24c1e699340b33961027f7c573` (int/r1 fallback; Pinokio rows are deferred, direct_only) |
 | OMP source | `https://github.com/banodoco/oh-my-pi` @ `78f0e0960f471c2c62b943272a48c33366f239fe` |
-| Manifest sha256 | `{{FILL}}` |
-| `public/install` sha256 | `{{FILL}}` |
-| `public/install.sh` sha256 | `{{FILL}}` |
-| `public/install.ps1` sha256 | `{{FILL}}` |
+| Manifest sha256 | `1f3cd5b0b06579a035adf42e62e953edca07042554fd7e8af6f357a3e0bc69f1` |
+| `public/install` sha256 | `c268a5fae7ff318414745cee7bfcec13b6d7a81434f7aaa10d218ffe28248fff` |
+| `public/install.sh` sha256 | `591c4c51b148fccef2a7d1c45782d9ff949d5fd03d46cd82b5591e3a23d1b285` |
+| `public/install.ps1` sha256 | `ea581d5d7c2d02f9f062dc15affabe1f7c3e38d641984cecf4797f13ac58b3a9` |
 
 ## Gate items
 
@@ -102,9 +102,9 @@ Publishing follows the legacy path: Agent main, then Runtime main, then App main
 
 ### Agent
 
-- Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main c5370a862d0b374afa412dd071418070e76f834c && echo ok`
-- Publish (fast-forward push only; never `--force`): `git push https://github.com/banodoco/astrid-agent.git c5370a862d0b374afa412dd071418070e76f834c:refs/heads/main`
-- Expected `main` SHA afterwards: `c5370a862d0b374afa412dd071418070e76f834c`.
+- Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main 0e1543e0da2215db9cb3320cfd1083174c3c62a9 && echo ok`
+- Publish (fast-forward push only; never `--force`): `git push https://github.com/banodoco/astrid-agent.git 0e1543e0da2215db9cb3320cfd1083174c3c62a9:refs/heads/main`
+- Expected `main` SHA afterwards: `0e1543e0da2215db9cb3320cfd1083174c3c62a9`.
 
 ### Runtime
 
@@ -114,14 +114,14 @@ Publishing follows the legacy path: Agent main, then Runtime main, then App main
 
 ### App
 
-- Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main {{APP_FROZEN_SHA}} && echo ok`
+- Pre-check: `git fetch origin main && git merge-base --is-ancestor origin/main 237b28be935af49c23464fa6ca1cf30db67ebaa0 && echo ok`
 - Confirm the re-pinned manifest raises release 11 to 12 in the same change as the tuple with `node scripts/installer/release-guard.mjs origin/main HEAD --pins`.
-- Publish (fast-forward push only; never `--force`): `git push https://github.com/banodoco/astrid-app.git {{APP_FROZEN_SHA}}:refs/heads/main`
-- Expected `main` SHA afterwards: `{{APP_FROZEN_SHA}}`.
+- Publish (fast-forward push only; never `--force`): `git push https://github.com/banodoco/astrid-app.git 237b28be935af49c23464fa6ca1cf30db67ebaa0:refs/heads/main`
+- Expected `main` SHA afterwards: `237b28be935af49c23464fa6ca1cf30db67ebaa0`.
 
 ### Post-check
 
-- Check the served release and tuple: `curl -sS https://astrid.haus/install-manifest.json | jq '{release, agent: .agent.sha, runtime: .runtime.sha}'`. Expect release `12`, Agent `c5370a862d0b374afa412dd071418070e76f834c`, and Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`.
+- Check the served release and tuple: `curl -sS https://astrid.haus/install-manifest.json | jq '{release, agent: .agent.sha, runtime: .runtime.sha}'`. Expect release `12`, Agent `0e1543e0da2215db9cb3320cfd1083174c3c62a9`, and Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`.
 - Check the served body hash: `curl -sS https://astrid.haus/install-manifest.json | sha256sum`; expect `{{manifest sha256}}`.
 - Check the served-manifest canary; it is being diagnosed.
 
