@@ -785,3 +785,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - R5 is a new cause on 913c6b8f (an unknown model placement during workflow parsing), to be investigated.
   - Stage 2a: the first launch failed because the installer needs an absolute `--root` with `--managed-by pinokio`. It was relaunched; build `d99c4cd5-6855dfa8-1520cef5` is installing.
   - `r13/compose` goes to `int/r13-next` once 43264364443 finishes (about 18:58).
+
+### 18:20 UTC — Core-neutrality design pass (Fable); Stage 2a setup hiccup; advisor session
+- **Fable design pass on the 73 boundary rows:**
+  - **34 are scanner artifacts.** 28 are the placement value `"local"`, which equals the `local` visual-elements pack id; 6 are `setup`, retroactively flagged because R13 added a `setup` pack. Proposed fix: the scanner skips `pack_name_literal` for words core declares as its own vocabulary (`placement.BUILTIN_KINDS`, `omp_agent._PACK_ROUTE_BLOCKLIST`), pinned by a guard test. That loosens one rule for core-owned words, so it needs the owner's yes. The alternative is a `LOCAL` constant (28 edits across 12 files) plus renaming the `setup` pack.
+  - **39 are real.** 36 of them are one seam the machines plan already names as **M11** (scheduled "later"): extend the existing `generation.machine` protocol with `leases()`, a failure recorder and `find_receipt`, and the operator verbs; core keeps a dispatcher. Pins (2) and bootstrap (1) are small.
+  - **The comfy mentions (+22)** are engine-lane growth, unrelated to the boundary rows: relocate engine-specific modules out of core.
+  - **Consequence:** R13 can't ship the ratchet green without pulling M11 in, after M7, or an explicit owner exception. Raising the baseline isn't an option.
+- **Stage 2a:** the in-script `machines setup` failed transiently (host starting at load 15; its output was cut), so t2i, SFX and music were refused "preferences incomplete" with no pod and no cost. Setup re-run by hand succeeded; edit is now running; t2i, SFX and music will re-run on the warm pod. The script now checks that setup saved before running cells.
+- **Advisor session (Fable 5.2)** `session_011EzfW4KxQbf3mB7UevxVdh` started at the owner's request. Brief `releases/13/advisor-brief.md`; briefs and designs published under `releases/13/briefs/` (`124a025`).
