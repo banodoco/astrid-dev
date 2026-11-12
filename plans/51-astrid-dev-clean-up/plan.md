@@ -4,13 +4,13 @@
 
 **Goal:** Contributors and their agents meet one word for each thing, one home for each rule and one skill for changing astrid-dev itself, in fewer words and fewer script lines than today.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Plan 51 manager
 
-**Estimate:** about 7.5
+**Estimate:** about 8.5
 
-**Waiting on:** the owner's scope decision (D1); Plan 48's refresh job going live (its task C-2) before Part 2
+**Waiting on:** Nothing; the orchestrator merges each part after its review
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -35,6 +35,8 @@ When it is done:
 
 - **Part 1, words.** It starts on the owner's go. It touches no file under `scripts/`, no workflow, and none of the files Plan 48's open refresh change edits. Tasks CU-0 to CU-9, with two review stops.
 - **Part 2, scripts and one check.** It starts only after Plan 48's refresh job is live on `main` (Plan 48's task C-2). Tasks CU-11 to CU-16 and the final review.
+
+*Owner decisions, 12 Nov 2026:* the completion-form change is taken and joins Part 2 (D9.1); the older packs' sentence is left (D7); the other two check changes stay proposed.
 
 **Proposed, not committed** (owner decisions D7 and D9): correcting one sentence in five older packs; making the unfilled completion form fail the completion check; letting ten checks report while a plan's header is broken; and a check that asks for a reason when a pull request adds words to the skills. Nobody has hit a failure from the first three, and the fourth adds a step for every author.
 
