@@ -1153,3 +1153,20 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - (d) The fetch-stage exception goes to job.stderr with its stack.
   - One re-pin.
 - **Engine:** `r13/engine-failreason` puts the remote `issues[].message` on the CLI failure line and in the receipt cause (owner principle: every failure understandable from the product).
+
+## 12 Nov ~23:55 UTC: Stage 2f done on `bb0ae49da`; 2 of 5 cells green; the pod is released
+
+| Cell | Result | Cause | Route |
+|---|---|---|---|
+| t2i | **PASS**, 15m 45s | — | — |
+| tts | **PASS**, 4m 34s | — | — |
+| sfx | FAIL at fetch | Two identities for one model (`convert.py:826-836`) | cells: `r13/foley-requirement`, structural |
+| music | FAIL at fetch: `integrity_failed`, digest differs (`qwen_0.6b_ace15`) | The model is declared twice: VibeComfy downloads it from `Comfy-Org/ace_step_1.5_ComfyUI_files@main` with no digest, while Agent's `models.lock.json` checks it against `Comfy-Org/ACE-Step-1.5@371bb168` | cells: `modelrec` (one record per model, Agent reads it) |
+| edit | FAIL at output collection: "completed job has no verified canonical installation", after 222 s of execution | K1: `_checkpoint_installed` rejects a success after `stale_after_failure` (left by the music failure). The receipt cause is `unknown`, a gap K1's reason codes close | machines: K1, about 00:15 |
+
+- **Evidence:** `evidence/stage2f/{sfx,music,edit}-*`.
+- **Spend:** the pod was released explicitly; 0 pods at the census; the balance is $93.85 (Stage 2f about $1.03).
+- **Next live:** re-run sfx, music and edit once K1, foley and modelrec are pinned. Edit runs both in isolation and after a failing job.
+- **Also ruled:**
+  - A Fable spec lead is writing up the offline "dry pod" check: Codex exploration, then an Astra sense-check using Luna helpers. It delivers `briefs/dry-pod/plan.md` for cells.
+  - Merged `r13/engine-failreason` `8b1e42e79` and `r13/fetch-stack` `300103c3d`. Compose is `11cf5544b`.

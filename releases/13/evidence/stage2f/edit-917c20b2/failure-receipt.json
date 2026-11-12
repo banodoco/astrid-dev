@@ -1,0 +1,104 @@
+{
+  "cause": {
+    "category": "unknown",
+    "code": "unknown",
+    "exception": "MachineError"
+  },
+  "collection": {
+    "bytes": 0,
+    "cap_bytes": 268435456,
+    "reason": null,
+    "state": "not_collected"
+  },
+  "files": [],
+  "identity": {
+    "attempt_id": "a05b52adfdbf48e3abf88971eebac178",
+    "generation": 6,
+    "gpu": "RTX 5090",
+    "invocation_id": "917c20b2d0684b9a9a8a54e41235af19:a05b52adfdbf48e3abf88971eebac178:1",
+    "lease": "7cf2a2bdeb2649879b5f925162d3fdea",
+    "machine_id": "nk9ukqpoy7zwme",
+    "placement": "runpod",
+    "pod_source_digest": null,
+    "remote_job_id": "a49de5def367444b8017c84cb50e5986",
+    "run_id": "c63b8f698649474098cc58442ea35f36",
+    "task_id": "917c20b2d0684b9a9a8a54e41235af19",
+    "warm": false
+  },
+  "logs": [],
+  "machine": {
+    "after": "kept",
+    "cost_usd": 1.0294255729450117,
+    "expires_at": 1794529154.8971865,
+    "preparation_state": "stale_after_failure",
+    "release_at": 1794527355.851816,
+    "release_reason": null
+  },
+  "message": "The generation finished but its outputs could not be verified and collected.",
+  "outcome": "failed",
+  "phase": "fetch",
+  "receipt_id": "775ba5e2128141d2ab829e0456b7c21b",
+  "schema": "astrid.generation.failure-receipt.v1",
+  "stage": "output_collection",
+  "stage_basis": "controller_step",
+  "timing": {
+    "phases": {
+      "capacity_wait": null,
+      "collection": {
+        "end": null,
+        "seconds": null,
+        "start": 1794527285.2380922
+      },
+      "execution": {
+        "end": 1794527284.0929341,
+        "seconds": 222.308,
+        "start": 1794527061.7852924
+      },
+      "idle": null,
+      "paid_clock": {
+        "end": 1794527355.851816,
+        "seconds": 2666.138,
+        "start": 1794524689.713484
+      },
+      "preparation": {
+        "end": 1794527044.1364944,
+        "seconds": 67.935,
+        "start": 1794526976.2011209
+      },
+      "release": {
+        "end": 1794527355.851816,
+        "seconds": 30.65,
+        "start": 1794527325.2014773
+      }
+    },
+    "pod_phases": [
+      {
+        "at": 1794527113.472238,
+        "phase": "prepare"
+      },
+      {
+        "at": 1794527163.6334615,
+        "phase": "align"
+      },
+      {
+        "at": 1794527231.9959445,
+        "phase": "run"
+      },
+      {
+        "at": 1794527284.0929153,
+        "phase": "done"
+      }
+    ],
+    "schema": "astrid.generation.phase-timing.v1",
+    "stamps": {
+      "claimed_at": 1794526976.2011175,
+      "collection_started_at": 1794527285.2380922,
+      "job_ended_at": 1794527284.0929341,
+      "job_started_at": 1794527061.7852924,
+      "preparation_ended_at": 1794527044.1364944,
+      "preparation_started_at": 1794526976.2011209,
+      "release_started_at": 1794527325.2014773,
+      "released_at": 1794527355.851816
+    }
+  }
+}

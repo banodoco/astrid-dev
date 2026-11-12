@@ -1,0 +1,220 @@
+{
+  "cause": {
+    "category": "integrity",
+    "code": "integrity_failed",
+    "exception": "MachineError",
+    "exit_code": 2
+  },
+  "collection": {
+    "bytes": 10910,
+    "cap_bytes": 268435456,
+    "reason": null,
+    "state": "collected"
+  },
+  "files": [],
+  "identity": {
+    "attempt_id": "1f7315dbfb8b442794fe74afd95cd3be",
+    "generation": 5,
+    "gpu": "RTX 5090",
+    "invocation_id": "6a406557e0b943daa332ce3a278977db:1f7315dbfb8b442794fe74afd95cd3be:1",
+    "lease": "7cf2a2bdeb2649879b5f925162d3fdea",
+    "machine_id": "nk9ukqpoy7zwme",
+    "placement": "runpod",
+    "pod_source_digest": null,
+    "remote_job_id": "88dbaeef4d5345ce9d58782c04f57d52",
+    "run_id": "ab3fb1d1fbb24ad788cd313c46cbcb1a",
+    "task_id": "6a406557e0b943daa332ce3a278977db",
+    "warm": true
+  },
+  "logs": [
+    {
+      "bytes": 0,
+      "file": "engine.log",
+      "missing": false,
+      "name": "engine",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/engine.log",
+      "role": "engine",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/root/astrid/engines/comfyui/runtime/out/sessions/comfyui-logs/engine.log",
+      "truncated": false
+    },
+    {
+      "bytes": 7716,
+      "file": "engine.startup.log",
+      "missing": false,
+      "name": "engine.startup",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/engine.startup.log",
+      "role": "engine",
+      "sha256": "2e7ec0ccda6256271e9bdbcc1a81ffc6b0342009a4ecd7767946406cd84e7923",
+      "source": "/root/astrid/engines/comfyui/runtime/out/sessions/comfyui-logs/engine.log",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "preparation.nodes_restore.stdout.log",
+      "missing": false,
+      "name": "preparation.nodes_restore.stdout",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/preparation.nodes_restore.stdout.log",
+      "role": "stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/root/astrid/runs/ab3fb1d1fbb24ad788cd313c46cbcb1a/out/.preparation-logs/nodes_restore.stdout.log",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "preparation.nodes_restore.stderr.log",
+      "missing": false,
+      "name": "preparation.nodes_restore.stderr",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/preparation.nodes_restore.stderr.log",
+      "role": "stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/root/astrid/runs/ab3fb1d1fbb24ad788cd313c46cbcb1a/out/.preparation-logs/nodes_restore.stderr.log",
+      "truncated": false
+    },
+    {
+      "bytes": 487,
+      "file": "preparation.fetch.stdout.log",
+      "missing": false,
+      "name": "preparation.fetch.stdout",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/preparation.fetch.stdout.log",
+      "role": "stdout",
+      "sha256": "e8e3aa9dacbb25100f217953afe0bc04abe18966125400cf0a5308bf4ce7f098",
+      "source": "/root/astrid/runs/ab3fb1d1fbb24ad788cd313c46cbcb1a/out/.preparation-logs/fetch.stdout.log",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "preparation.fetch.stderr.log",
+      "missing": false,
+      "name": "preparation.fetch.stderr",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/preparation.fetch.stderr.log",
+      "role": "stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/root/astrid/runs/ab3fb1d1fbb24ad788cd313c46cbcb1a/out/.preparation-logs/fetch.stderr.log",
+      "truncated": false
+    },
+    {
+      "bytes": 2399,
+      "file": "preparation.prepare.stdout.log",
+      "missing": false,
+      "name": "preparation.prepare.stdout",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/preparation.prepare.stdout.log",
+      "role": "stdout",
+      "sha256": "2dd2e5105c54464b944fde33ba870561b83d4827bfac32bb423476fe3367d9ea",
+      "source": "/root/astrid/runs/ab3fb1d1fbb24ad788cd313c46cbcb1a/out/.preparation-logs/prepare.stdout.log",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "preparation.prepare.stderr.log",
+      "missing": false,
+      "name": "preparation.prepare.stderr",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/preparation.prepare.stderr.log",
+      "role": "stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/root/astrid/runs/ab3fb1d1fbb24ad788cd313c46cbcb1a/out/.preparation-logs/prepare.stderr.log",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "job.stdout.log",
+      "missing": false,
+      "name": "job.stdout",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/job.stdout.log",
+      "role": "stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/workspace/.astrid-jobs/88dbaeef4d5345ce9d58782c04f57d52/stdout",
+      "truncated": false
+    },
+    {
+      "bytes": 0,
+      "file": "job.stderr.log",
+      "missing": false,
+      "name": "job.stderr",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/job.stderr.log",
+      "role": "stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/workspace/.astrid-jobs/88dbaeef4d5345ce9d58782c04f57d52/stderr",
+      "truncated": false
+    },
+    {
+      "bytes": 308,
+      "file": "generation.stdout.json",
+      "missing": false,
+      "name": "generation.stdout",
+      "path": "/home/user/wt/install-r13b/data-s6/generation/failures/6a406557e0b943daa332ce3a278977db/logs/generation.stdout.json",
+      "role": "stdout",
+      "sha256": "c76716c379a2d8c3d2ff1e34c74a5bed5c8e662073a15de861b7b997d30a6b84",
+      "source": "/root/astrid/runs/ab3fb1d1fbb24ad788cd313c46cbcb1a/result.json",
+      "truncated": false
+    }
+  ],
+  "machine": {
+    "after": "kept",
+    "cost_usd": 0.8409897259652613,
+    "expires_at": 1794528666.866354,
+    "preparation_state": "stale_after_failure",
+    "release_at": 1794526867.8165092,
+    "release_reason": null
+  },
+  "message": "The machine could not fetch the models this generation needs.",
+  "outcome": "failed",
+  "phase": "fetch",
+  "receipt_id": "ff205aa9b62642f28a4f8de30fc650c1",
+  "schema": "astrid.generation.failure-receipt.v1",
+  "stage": "model_download",
+  "stage_basis": "progress",
+  "timing": {
+    "phases": {
+      "capacity_wait": null,
+      "collection": {
+        "end": 1794526837.1650252,
+        "seconds": 7.356,
+        "start": 1794526829.8090286
+      },
+      "execution": {
+        "end": 1794526828.6646612,
+        "seconds": 185.859,
+        "start": 1794526642.8054857
+      },
+      "idle": null,
+      "paid_clock": {
+        "end": 1794526867.8165092,
+        "seconds": 2178.103,
+        "start": 1794524689.713484
+      },
+      "preparation": {
+        "end": 1794526627.0009792,
+        "seconds": 16.382,
+        "start": 1794526610.6186748
+      },
+      "release": {
+        "end": 1794526867.8165092,
+        "seconds": 30.651,
+        "start": 1794526837.1651359
+      }
+    },
+    "pod_phases": [
+      {
+        "at": 1794526695.1057165,
+        "phase": "prepare"
+      },
+      {
+        "at": 1794526744.6774147,
+        "phase": "align"
+      }
+    ],
+    "schema": "astrid.generation.phase-timing.v1",
+    "stamps": {
+      "claimed_at": 1794526610.618672,
+      "collection_ended_at": 1794526837.1650252,
+      "collection_started_at": 1794526829.8090286,
+      "job_ended_at": 1794526828.6646612,
+      "job_started_at": 1794526642.8054857,
+      "preparation_ended_at": 1794526627.0009792,
+      "preparation_started_at": 1794526610.6186748,
+      "release_started_at": 1794526837.1651359,
+      "released_at": 1794526867.8165092
+    }
+  }
+}

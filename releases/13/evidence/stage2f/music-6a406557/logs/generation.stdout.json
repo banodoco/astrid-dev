@@ -1,0 +1,15 @@
+{
+  "entry": null,
+  "fixes": [],
+  "issues": [
+    {
+      "code": "integrity_failed",
+      "details": {},
+      "message": "managed model bytes differ from the declared digest: qwen_0.6b_ace15.safetensors",
+      "severity": "error"
+    }
+  ],
+  "status": "blocked",
+  "target": null,
+  "task_id": null
+}

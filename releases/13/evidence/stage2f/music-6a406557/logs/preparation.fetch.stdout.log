@@ -1,0 +1,4 @@
+downloaded qwen_0.6b_ace15.safetensors -> /workspace/astrid/engines/comfyui/models/text_encoders/qwen_0.6b_ace15.safetensors
+downloaded qwen_4b_ace15.safetensors -> /workspace/astrid/engines/comfyui/models/text_encoders/qwen_4b_ace15.safetensors
+downloaded ace_1.5_vae.safetensors -> /workspace/astrid/engines/comfyui/models/vae/ace_1.5_vae.safetensors
+downloaded acestep_v1.5_turbo.safetensors -> /workspace/astrid/engines/comfyui/models/diffusion_models/acestep_v1.5_turbo.safetensors
