@@ -19,3 +19,4 @@
 - `completion-assessment pr Require evidence for plans newly marked done`
 - `gap-boundary-assessment pr Require a first-principles assessment for redefined gaps`
 - `project-planning-evidence pr Validate planning evidence for new or opted-in projects`
+- `pack-shape pr Check that new project packs follow the templates`

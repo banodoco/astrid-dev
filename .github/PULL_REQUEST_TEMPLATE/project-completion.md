@@ -12,6 +12,7 @@ Integrated candidate: Exact candidate SHA(s)/versioned receipt (or None — non-
 Routes used: N for the build tasks, X for UR-13n, S for reviews (override: name a specific model only where the run used one other than its route's), or Unknown — reason
 Unproven: Named remaining failures/unsupported scenarios (or None within the stated scope)
 Gap F-XXX: Unchanged — Replace with a justified disposition for **every actually linked gap**.
+Gap impact: None — why this project changes no gap (keep this line only if the plan links no gap, and then delete the Gap line above)
 Strategy: Updated — the strategy.md row and sequence changes, and the gap route changes, in this PR
 
 ### Integrated result

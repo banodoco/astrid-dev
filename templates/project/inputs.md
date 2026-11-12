@@ -22,7 +22,7 @@ A compact record for a **new project's** decision. Bugs and small fixes use thei
 
 ## Owner decisions
 
-Number each decision the owner must make (`D1`, `D2`, …) with the options and your recommendation; when decided, add the date and the choice. Remove this section if there are none.
+Number each decision the owner must make (`D1`, `D2`, …) with the options and your recommendation; when decided, add the date and the choice. If there are none, write `None` and keep the heading.
 
 ## Source identities
 

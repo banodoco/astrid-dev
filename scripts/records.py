@@ -217,6 +217,7 @@ def priority_order(text: str | None) -> list[str]:
 
 
 def projects(root: Path, revision: str | None = None) -> list[list[str]]:
+    import lifecycle
     from project_contract import PLAN_FOLDER
     if revision is None:
         paths = sorted((root / "plans").glob("*/plan.md"))
@@ -235,10 +236,11 @@ def projects(root: Path, revision: str | None = None) -> list[list[str]]:
             fields = project_fields(text)
         except ValueError as exc:
             raise ValueError(f"plans/{folder}/plan.md: {exc}") from exc
-        if fields["Status"] not in {"queued", "active", "blocked", "paused", "done", "cancelled"}:
-            raise ValueError(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use queued, active, blocked, paused, done or cancelled")
+        if fields["Status"] not in lifecycle.names():
+            raise ValueError(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use {lifecycle.phrase()}")
         row = [fields[f] for f in PROJECT_FIELDS]
         row.append(f"[Plan {folder.split('-')[0]}]({folder}/plan.md)")
         items.append((folder, row))
-    items.sort(key=lambda item: (item[1][2] in {"done", "cancelled"}, ranks.get(item[0], len(order)), item[0]))
+    terminal = set(lifecycle.terminal())
+    items.sort(key=lambda item: (item[1][2] in terminal, ranks.get(item[0], len(order)), item[0]))
     return [row for _, row in items]

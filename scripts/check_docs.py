@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 from gap_relationships import parse_gap_relationships
+import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
 from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
                      is_placeholder, key_value_lines, read_text, section as record_section,
@@ -16,7 +17,7 @@ from vision_subject import parse_subject
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
 README = Path('README.md')
-STATUSES = {'queued', 'active', 'blocked', 'paused', 'done', 'cancelled'}
+STATUSES = set(lifecycle.names())
 LINK = re.compile(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)')
 GAP_NAME = re.compile(r'([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md')
 
@@ -45,7 +46,7 @@ def unnamed_active_owners(rows: list[list[str]]) -> list[str]:
     return [
         f"active project needs a named accountable owner: {row[0]}"
         for row in rows
-        if row[2] == 'active' and is_placeholder(row[3], PLACEHOLDERS_ACTIVE_OWNER, trim=None)
+        if row[2] in lifecycle.requiring("named-owner") and is_placeholder(row[3], PLACEHOLDERS_ACTIVE_OWNER, trim=None)
     ]
 
 
@@ -62,9 +63,6 @@ def obsolete_template_paths(root: Path) -> list[str]:
     return issues
 
 ROUTE_PLAN = re.compile(r"\[Plan (\d{2})\]\(\.\./\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)")
-ROUTE_STATUS = re.compile(r"\b(active|queued|blocked|paused|done|cancelled)\b", re.I)
-
-
 def gap_section(text: str, title: str) -> str | None:
     return record_section(text, title, missing='none', boundary=r'^## ', strip=True)
 
@@ -87,8 +85,9 @@ def route_issues(name: str, gap_id: str, text: str, plans: dict[str, str]) -> li
     body = rows[1:] if rows else []
     if not body:
         issues.append(f"{name}: Route to closure needs at least one step row")
+    route_status = re.compile(lifecycle.route_pattern())
     for line in body:
-        for match in ROUTE_STATUS.finditer(line):
+        for match in route_status.finditer(line):
             issues.append(f"{name}: route row carries status/ownership word '{match.group(1)}'; the catalog owns it")
         for _, folder in ROUTE_PLAN.findall(line):
             plan = plans.get(folder)

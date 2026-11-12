@@ -59,10 +59,23 @@ def _catalog(root: Path) -> str:
     return before + start + "\n" + "\n".join(lines) + "\n" + end + after
 
 
+def _status_definitions(root: Path) -> str:
+    from lifecycle import definitions
+    path = root / "plans/index.md"
+    text = path.read_text(encoding="utf-8")
+    start, end = "<!-- status-definitions:start -->", "<!-- status-definitions:end -->"
+    if text.count(start) != 1 or text.count(end) != 1:
+        return text
+    before, rest = text.split(start, 1)
+    _, after = rest.split(end, 1)
+    return before + start + "\n" + definitions() + "\n" + end + after
+
+
 VIEWS = (
     View("public-vision", ("vision/", "plans/*/plan.md", "plans/priority.md"), "vision/README.md", _vision),
     View("root-vision-summary", ("vision/", "plans/*/plan.md", "plans/priority.md"), "README.md", _root_readme, "vision-summary"),
     View("plan-catalog", ("plans/*/plan.md", "plans/priority.md"), "plans/index.md", _catalog, "plan-catalog"),
+    View("status-definitions", ("scripts/lifecycle.py",), "plans/index.md", _status_definitions, "status-definitions"),
     View("check-catalog", ("scripts/checks.py",), "docs/checks.md", _checks),
 )
 
@@ -73,7 +86,7 @@ def _with_marker(view: View, content: str) -> str:
         start = f"<!-- {region}:start -->"
         end = f"<!-- {region}:end -->"
         if content.count(start) != 1 or content.count(end) != 1:
-            raise ValueError(f"view {view.name}: target must contain exactly one summary region")
+            raise ValueError(f"view {view.name}: target must contain exactly one {start} line and one {end} line; restore them in {view.target}")
         if content.count(view.marker) == 1:
             return content
         before, rest = content.split(start, 1)
@@ -99,7 +112,11 @@ def check_view(view: View, root: Path) -> list[str]:
         if actual != wanted:
             return [f"view {view.name} is stale or hand-edited: {view.target} does not match its sources; "
                     f"edit {', '.join(view.sources)} instead, then run python3 scripts/astrid_dev.py sync"]
-    except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+    except ValueError as exc:
+        detail = str(exc).removeprefix(f"view {view.name}: ")
+        return [f"view {view.name}: cannot check {view.target}: {detail}; "
+                "then run python3 scripts/astrid_dev.py sync"]
+    except (OSError, subprocess.CalledProcessError) as exc:
         return [f"view {view.name}: cannot check {view.target}: {exc}; "
                 f"{view.target} is generated from {', '.join(view.sources)}, so fix any error there, "
                 f"then run python3 scripts/astrid_dev.py sync"]
