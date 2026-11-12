@@ -872,3 +872,19 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The engine reads that fact. A failed provider call means no fact, which means a refusal with its reason.
 - **Cards:** machines (provider fact; Sol plus Astra) and engine (consume it; tests for an R12-shaped marker and for another attached pod). Astra's U2 round must drop boot or pod difference as owner-gone evidence on network mounts.
 - **Stage 2 fallback:** if the fact isn't merged by about 22:30, run the five cells on a fresh engine root. The update-journey row is then proven by the Fri 13 Nov 18:00 cut line.
+
+## 12 Nov ~19:40 UTC: correction to the 19:30 U2 entry; the premise was wrong
+
+- **On RunPod the engine root is on the container disk** (`/root/astrid/engines/comfyui`, `astrid/packs/runpod/remote_placement.py:46-55`). Only the models are on the volume (`--models-root`). The engine manager caught it.
+- **What that means:**
+  - A new pod can't carry an old `session.json`.
+  - The R12 update journey isn't affected.
+  - The Stage 2a edit failure was **not** a stale volume marker. The earlier NOW-block and summary wording, "in-place upgrade meeting Stage 1's marker on the reused volume", is wrong.
+- **Withdrawn:** the machines-lane custody-fact card.
+- **Kept:** U2's refusal on network or FUSE mounts, with its reason.
+- **What the evidence shows:** `engine-install.stderr` holds only `endpoint_ownership` / "Engine operation failed." at step `start`. Edit ran fourth on pod `5q0poadojva5ao`, after t2i, SFX and music.
+- **Hypothesis:** port 8188 was held by an earlier cell's warm server that the new job doesn't own.
+- **Next:**
+  - U2 adds each check's fixed reason string to the CLI error and stderr, then Astra.
+  - A CPU reproduction of four sequential jobs on one warm host shows which check fires. If it's an ownership hand-off between jobs, the mechanism comes to me before any fix, because it may touch K1.
+- **Process lesson:** I ruled from my own recollection of where the root lives without reading `remote_placement.py`. Read the placement code before ruling on custody.
