@@ -24,7 +24,7 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
 | Stream | State |
 |---|---|
 | Candidate `r13/compose` `30a644bc` (frozen CI `int/r13-30a644bc`) | Engine layout and in-place install, A1–A3, U1, engine-fresh, h1, r2, r3, mypy and bootstrap; TTS v3; success logs; test-lane fixes; core neutrality green (vocabulary scanner + owner-ruled RunPod baseline) |
-| Live | Stage 1: 1/5 (t2i). Stage 2a (diagnostics): edit failed at engine install, `endpoint_ownership` on the reused volume (U2 needed). No pods. Balance $95.67 (floor $67.41) |
+| Live | Stage 1: 1/5 (t2i). Stage 2a (diagnostics): edit failed at engine start, `endpoint_ownership` (cause unnamed; likely an earlier cell's warm server on port 8188; CPU reproduction running, and U2 adds reason strings). No pods. Balance $95.67 (floor $67.41) |
 | Machines (own session `…2mhfLHKp…`) | Took over at 18:44; K1 fix, M4 card 5 |
 | Cells (own session `…VzW8yjKX…`) | cells-vc, pin, preflight; recapture 36/53 offline |
 | Engine (fork, here) | U2 merge → U2-live → Astra; target-asset tests; node-compat |
