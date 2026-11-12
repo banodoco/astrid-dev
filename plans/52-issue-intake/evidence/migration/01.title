@@ -1,0 +1,1 @@
+observation: The Agent heartbeat reads `waiting_details`, which the pinned Runtime does not send; the field exists only on the unpinned Runtime `1269ada`.

@@ -1,0 +1,1 @@
+observation: On a warm machine the models are unloaded at every job end (Agent `engine_custody.py:1054`, `/api/free`, `_cold_free`), deliberately.

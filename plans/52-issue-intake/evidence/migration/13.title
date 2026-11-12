@@ -1,0 +1,1 @@
+observation: There is no way to see the provider account balance from the product; the validation batch reads it with `curl` against the RunPod API.
