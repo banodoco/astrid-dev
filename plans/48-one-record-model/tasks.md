@@ -246,6 +246,21 @@ These were assumptions while Phase 2 was unbuilt. On 12 Nov 2026 each was read a
 
 **Still open from the Phase 2 review, and not in this queue.** `vision/README.md` is generated and is still the source of the principle list (the follow-up to R2's second point: move the list to `vision/intro.md`). D9 names the queue's rows and that card is not one of them; it has no row yet; and its files (`scripts/export_public_vision.py:build`, `vision/intro.md`, `vision/README.md`) are in no queued card's scope, so "before track A" is an order of preference, not a dependency. It belongs with the after-cut-over PRs to `main` (PM-6z, PM-9), and R3 merges `main` in before it reviews. The false sentence at `strategy.md:5` (R2's first point) is likewise outside the queue.
 
+## Built ahead of the cut-over (orchestrator, 12 Nov 2026)
+
+Phase 2 was built to its cut-over in under two hours and then waited for Release 12. Where a card says it depends on C-1, read that as **its merge to `main` waits for C-1**, not its build. Only code that needs the cut-over's result on `main` waits for it.
+
+| Branch | Cut from | Carries | Merges to `main` |
+| --- | --- | --- | --- |
+| `int/48-one-record-model` | `main` | Phase 2 up to C-1 | first, at the cut-over, when Release 12 has published |
+| `int/48-after` | the Phase 2 candidate head | PM-6z, PM-8a, PM-8b, PM-8t, PM-10e | second |
+| `int/48-phase3` | the Phase 2 candidate head | PM-13h, track A, track B, R3 | third |
+
+- **Still after the cut-over:** PM-9, because the re-migration reads the old folder name; and PM-8h, R8 and C-2, which need the owner's bot identity (O-1).
+- **R3 runs once, now,** on `int/48-phase3` against its base. After C-1, `main` is merged in and the inventory, `check` and the same-feed proof are re-run; the reviewer looks again only if that merge conflicts or changes one of the queue's files.
+- **A proof that needs C-1 on `main`** is named as deferred in the card's progress cell and run after the cut-over, before that branch merges.
+- **The orchestrator makes the three merges, in that order,** each after its review has no blocking finding and the required checks pass on a head that contains current `main`.
+
 ## Phase 3 queue dispatch notes
 
 Written on 12 Nov 2026 against the Phase 2 candidate at `da22d14`, for a Claude session that manages the run and sends each card to a Codex worker with one `codex exec` ([the default shape](../../skills/astrid-dev-orchestrate/SKILL.md#use-codex-from-claude-cloud)). The queue is what the owner accepted under D9: PM-13h, track A, track B without its gate, and one review round; PM-12t was then dropped by the fourth critique. The [Phases 3 and 4 dispatch notes](#phases-3-and-4-dispatch-notes) "For every card" list still applies; where the two differ, this section wins.
