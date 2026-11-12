@@ -2,39 +2,30 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (15:10 UTC): read this first
+## NOW (16:16 UTC): read this first
 
-### The candidate line (orchestrator 14:49: new findings go in group B by default)
-**A. Needed for the five cells to pass and be released safely**
-
-| Item | State | Owner | Estimate |
+### Workstreams (orchestrator view; owner asked for every stream tracked here)
+| Stream | State | Owner | Next |
 |---|---|---|---|
-| BUG 1: a stuck failed task (Runtime `6855dfa8` inline proof plus Agent terminal-reconcile `56284e6c`) | DONE, in the rehearsal | — | — |
-| TTS declared patch (VibeComfy `c7a47e36`, Astrid `dd5bc822`) | DONE; node restore passed live | — | — |
-| Keep-warm: a failed job or failed preparation keeps a healthy pod | DONE (`9e7b2a48`; 326 passed); passed live | — | — |
-| BUG 3: one models-root resolver (VibeComfy `e4118ccf`) | DONE; in Stage 1 | — | — |
-| T1: edit admission (`3ea7381d`) | DONE; in Stage 1 | — | — |
-| Music template declaration (VibeComfy `87d5e825`) | DONE; in Stage 1 | — | — |
-| **Stage 1 live proof:** five cells on candidate `r13/stage1` `f9214240` | RUNNING (started 15:09) | me | about 1 h |
-| Installer progress (IU-20) plus the R1 update fix (IU-14) | DONE, in the rehearsal `2eceb0b0` | — | — |
-| T3: the 37 legacy template declarations (the SFX template is among them) | IN FLIGHT (Sol, `c-vcmusic`) | Sol | about 1–2 h |
-| Success-run engine logs (T9; owner rule "logs for every generation") | QUEUED | Terra | about 1 h |
-| Model layout A1–A3 plus in-place engine upgrade U1–U5, M1'–M3' (owner 15:16: IN the candidate; no symlinks shipped) | DELEGATED to the engine manager (`briefs/wave3/engine-manager.md`); Astra review of the U design first | engine manager | about 4–6 h |
-| Machines redesign M1–M10 (owner 15:16: ship the new command line in Release 13) | DELEGATED to the machines manager; M1 nearly done | machines manager | estimate pending |
-| Candidate compose: Agent plus Runtime `6855dfa8` plus VibeComfy, App re-pin (`release` 13, `pin.mjs`), R1-update proof row (`target_app_sha`) | after Stage 1 | me | about 2 h |
+| **Stage 1 live proof** on pod `o33u3hp1g3gfft`, candidate `r13/stage1` `f9214240` | **t2i PASS** (exit 0). **TTS FAIL**: transformers 5 dropped `pad_token_id` from the QwenTTS config. **SFX FAIL**: VibeComfy refused `CHOICE` against `COMBO`. Edit running; music next. Balance $96.07 (floor $67.41) | me | Re-run TTS and SFX on the warm pod once fixed; release the pod at the end |
+| SFX fix | Sol at high effort, `c-sfxfix` (VibeComfy at `a8a7be7c`); brief `briefs/wave3/live-s1-sfx.md` | Sol, then me | Review, commit `r13/sfxfix`, pin |
+| TTS fix | Sol at high effort, `c-ttsfix-ag` plus `c-ttsfix-vc`; brief `live-s1-tts.md`; an upstream pin is preferred over the declared patch | Sol, then me | Review, commit, pin |
+| Machines redesign M1–M10 (IN the candidate) | M1 part b done (`bf3dd2f09`), in Astra review; M4 card 3 (paid expiry, plus the five `test_warm_session` failures R13 caused) on Sol | machines manager | Merge M1 into `r13/machines`, then M2 |
+| Engine layout and in-place upgrade (IN the candidate), plus T9 | A1–A3 final run; U1+U4 `8ac844bdc` in Astra review; U2 being reworked (one lock, fail fast); T9 (success runs return logs) added 16:15 | engine manager | Merge A1–A3, U1, U2 into `r13/engine-layout` |
+| VibeComfy declarations (T3) | DONE: `r13/music-declaration` `a8a7be7c`; 17 templates moved to drafts, none used by Astrid | me | Pin into the candidate together with the SFX and TTS fixes |
+| Test lane | Separate session `session_011EzfW2sWuWu9cBBoQkf385` (Opus), brief `releases/13/test-manager-brief.md`. CI on `int/r13` `f9214240` running; Lanes run failed (being compared) | test manager | First comparison; skills rule PR |
+| Candidate composition | Pending the lanes: VibeComfy pin (declarations, SFX, TTS), the machines and engine merges, App re-pin (`release` 13, `pin.mjs`), the R1-update proof row | me | After the lane merges |
+| astrid-dev | Plan 52 and the observations register on main (#566); Plan 50 revision and Plan 52 D1–D6 wait for the owner in another session | owner | — |
 
-**B. After the candidate (default for new findings)**
-- T6 (fold into M1), T7 (the wait reason reaching the CLI), T8 (Runtime blocker list, a schema change), T10 (models stay loaded between jobs), T11 (default project), T13 (CPU journey), T14 (catalog dry-run corpus; it finds catalog drift such as `z-image/i2i`).
-- Plan 50 revision (over-built per Fable); pre-existing `test_warm_session` paid-expiry failures (task 18).
+### Rules in force
+- **Tests:** no worse than R12 `main`, test by test, on hosted `int/r13` CI. No local full suites. Managers run focused proofs only.
+- **Codex:** always pass `-c model_reasoning_effort=…` (`high` for Sol and Astra, `medium` for Terra, `low` for Luna). Until 16:13 every worker ran at `none`.
+- **Codex safety:** every brief forbids RunPod calls and `astrid generate` or `machines`. Paid steps stay with me.
+- **Reviews:** Astra for rigour and robustness; Opus for structure, taste and feel.
+- **Disk:** 3.7 GB free. `home-b3` holds the uv cache the Stage 1 venv uses, so never delete it. A VibeComfy clone mirror is at `/home/user/wt/vc.git`.
 
-### State
-- **Rehearsal:** `scratch/r13-rehearsal` `2eceb0b0`.
-- **Stage 1:** `r13/stage1` `f9214240`, installed in `install-r13b/root-s1`, `env-s1.sh`, `data-s1`; script `runs/stage1.sh`, log `runs/stage1.log`, cell outputs `runs-s1/<cell>/`.
-- **Batch 6 result:** t2i PASSED live (6m38s, first green). TTS, SFX and music failed at preparation (BUG 3 and the declarations); edit was refused (T1). All are now fixed in Stage 1.
-- **Money:** balance $96.65 at 15:10; about $10 of $40 spent; floor $67.41.
-- **Codex safety (orchestrator 14:49):** full access means a worker could reach RunPod through the proxy. Every brief must forbid calls to `api.runpod.io` and `rest.runpod.io` and any `astrid generate` or `machines` command. Paid steps stay with me.
-- **Reviews (owner):** Astra for rigour and robustness; Opus for structure, taste and feel. Both after a design and before a build; after an S or SS build, before merge.
-- **Disk:** 3.7 GB free; check before each install.
+### Group B (after the candidate)
+T7 (the wait reason reaching the CLI), T8 (Runtime blocker list), T10 (models stay loaded between jobs), T11 (default project), T13 (CPU journey), T14 (catalog dry-run corpus), Astrid `models.lock.json` to the same model record, the Plan 50 revision.
 
 ## Entries
 
@@ -736,3 +727,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - `int/r13` pushed at `f9214240c6` (= `r13/stage1`) to start the first full CI run. Baseline: CI run `43155525231` on `main` `0e1543e0da`. Only this session pushes `int/r13`, in batches.
 - Task 6 (classify the ~155 rehearsal failures) is superseded by the test manager's first comparison.
 - The engine manager saw clustered failures from several full suites running at once on 4 CPUs. That confirms full suites belong on hosted CI.
+
+### 16:16 UTC — Stage 1 results so far; two live fixes dispatched; Codex effort; cleanup incident
+- Stage 1 got a 5090 and ran. t2i passed on `f9214240`. TTS failed after 46 minutes in node model load (`'Qwen3TTSTalkerConfig' object has no attribute 'pad_token_id'`, transformers 5.22.1). SFX was refused before submit (`public_input_incompatible: 'node:11.model_path_name' type 'CHOICE' is incompatible with 'COMBO'`; offline object-info identity unresolved, so the live schema was used). Both are deep cause B (contracts checked only on a GPU). Bundles copied to `briefs/wave3/live-s1/`. The pod stays warm under keep-warm.
+- Both fixes went to Sol at high effort, with no RunPod access. T9 (a success returns its declared logs: the t2i success returned only the PNG) went to the engine manager.
+- Codex logs showed `reasoning effort: none` for every worker this release. All managers and the test lane were told to set it explicitly.
+- Incident, owned and repaired: disk cleanup removed the clone `c-vc-patch`, which hosted the git data of the worktrees `c-vcmusic`, `c-vcroot` and `c-vcs1`. All three were rebuilt as standalone repos at their pushed SHAs; each was clean, so nothing was lost. The engine lane's suite imports `c-vcroot` files, which were untouched. Rule: before deleting a clone, check `git worktree list` from it.
