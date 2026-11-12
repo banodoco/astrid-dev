@@ -644,3 +644,24 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 **Integration lane** (`-m integration`, test_remote_machine_cpu + test_worker_preparation): 24 of 25 fail on the unchanged base `b306b2be` too, with the same failure set as keep-warm ("target status task failed"). It is an environment issue, so it provides no local coverage. Noted; not blocking.
 
 **Batch 6 still held.** It runs once terminal-reconcile and rt-inline-proof land (the Runtime fix needs a new Runtime pin in the manifest).
+
+### 14:00 UTC — Machines redesign (owner decisions O1–O8); Fable plan; M1 dispatched
+- **Owner (Hannah, 12 Nov):**
+  - **O1:** declare once; preferences are overridable defaults.
+  - **O2:** claiming is separate from generating; generate only uses an existing machine.
+  - **O3:** no automatic claim.
+  - **O4:** no consent flag ("they've already rented the machine").
+  - **O5:** named machines: `generate --machine bjork`.
+  - **O6:** jobs queue on their machine.
+  - **O7:** no hard datacenter pin; overridable.
+  - **O8:** you can see what's happening on a machine.
+
+  Full text: `briefs/wave3/machines-design.md`.
+- **Fable critique accepted** (`briefs/wave3/machines-plan.md`): the claim is the only spend authority. It deletes the paid flags on generate, the generate-claims path and the consent flag; merges seven budget concepts into two; reuses `Placement.machine`, the lease record and the Runtime queue. There are 13 tasks, 10 of them for Release 13. Critical path: M1 → M2 → M10, with M9 last.
+- **REVIEW (manager ruling on the open question):** the idle timer is the only lifetime mode; idle pauses while jobs are queued; `keep` extends it; `--idle never` replaces `--until-release`; the budget cap still bounds everything.
+- **Base:** `r13/machines` `22e5a13e` = rehearsal `922a19eb` + keep-warm `9e7b2a48`. M1 (SS) went to Codex Astra in `c-m1`; the base suites are running.
+- **Dispatch rule:** N → Luna, X → Terra, S → Sol, SS → Astra, T (wording, CLI layout, skill voice) → Opus.
+- **Batch 6:**
+  - The first attempt failed with no project on the fresh install. I created and selected one by hand (usability log #1) and re-ran.
+  - The TTS cell is in the product's capacity wait: no 5090 or 4090 in EUR-NO-1 (the volume's datacenter); EU-RO-1 has Low 5090 stock.
+  - The CLI is silent during the wait while the host logs "no stock yet" (usability log).
