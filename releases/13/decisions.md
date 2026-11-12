@@ -1055,3 +1055,32 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - A green on the kept pod is progress, but it must be repeated once on a fresh claim before start counts as fixed.
   - A red on the kept pod is not evidence against a fix until it also fails on a fresh claim.
 - **After release:** Astrid gives no shell on a rented machine, which is a diagnosis gap (owner O8, "see what a machine is doing").
+
+## 12 Nov ~22:05 UTC: the fresh-pod engine-start cause is found and fixed; setup and claim regressions cleared
+
+- **The cause, proven on CPU and confirmed live:** f0ba64407 (engine-layout merge `913c6b8f`). On a fresh root, the engine supervisor fixed its allowed launch at spawn, from a missing install receipt, so it bound the default models directory. The start step then asked for `--models-directory <volume cache>`.
+  - Live, on U2 build `cc8bc0b8c`, pod `qt9p4420bxw179`: `endpoint_ownership`, reason `request_mismatch`, owner alive, lock held.
+  - **The fix:** `r13/engine-claimrepro` `8a425ee6b`, merged at `75ac0d0c5`. The supervisor binds its launch at admission, from the install's declared binding. There's a new fresh-install test.
+- **Setup "conflict":** a Runtime 409 from stale host state. A clean Runtime restart fixed it; no regression in the code range.
+  - setupmsg merged: the code plus safe details. The message stays hidden, as the security tests require.
+  - Plan 39 issue: astrid-dev#631.
+- **The claim refused immediately on a stockout:** U2's EngineError reason derivation overwrote `stock_unavailable`.
+  - Fixed: `r13/machines-claimwait` `53bb6406d`.
+  - Wait bound: `r13/machines-claimbound` `ee0508d9b`. The default is `--for`, and the timeout message is a clear one-liner.
+- **Kept-pod loop:** a Pinokio-managed install can't `--update` from the CLI, which is correct. So the pod was released. The next installs aren't Pinokio-managed, so updates work in place.
+- **Merged since 21:35:**
+  - fakescope, claimwait and claimbound;
+  - the pod watchdog (`1ef005ed3`);
+  - BLE comments and setupmsg;
+  - engine-artifacts and catalog-two;
+  - lanes-ra (`-rA` on Lanes);
+  - the fresh-root fix.
+
+  Candidate `1706f4ce8`.
+- **Spent tonight:** about $0.90. Balance $94.89; 0 pods at 22:04.
+- **In flight:**
+  - fresh install of `75ac0d0c5` (not Pinokio-managed), then a fresh claim, then t2i, the advisor's "repeat on a fresh claim";
+  - #607 (Astra's required finding, plus the 4 journey tests);
+  - K1 landing proof;
+  - M2b;
+  - W55 bisect of the Lanes groups A, B and D.
