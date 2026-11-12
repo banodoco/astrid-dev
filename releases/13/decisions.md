@@ -518,3 +518,15 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
   - **Follow-up:** lifecycle should expose typed status and `Retry-After` (today the gate parses lifecycle's fixed message for the HTTP status).
   - The ComfyUI bump (Sol, final target `6bfaacc6`) is the last piece before the batch re-run.
 - **2026-11-12 09:19** Correction: the two entries above stamped "10:20" and "10:45" were written at about 09:05 and 09:15 UTC; I estimated their stamps instead of reading the clock. From here, every stamp comes from `date -u`. Census: 0 pods.
+- **2026-11-12 09:38** All of waves A and B are in. Rehearsal `64e00c28` (on origin) = `c473f7dc` + ComfyUI bump `43b44c1e` + the ProviderRefused classification.
+  - **ComfyUI bump:** pinned to `6bfaacc6` on both platforms. Linux re-locked here from the reconstructed `lock-inputs/` (README has the exact command).
+    - Packages that moved down to the installed source's exact pins: frontend 1.57.4→1.53.6, templates 0.11.100→0.11.62, docs 0.5.15→0.5.11, aimdo 0.6.0→0.5.5, kitchen 0.2.40→0.2.35; media-assets-02 removed.
+    - The H3 runtime constraints follow the new pins; `comfy_version ==0.36.0` is unchanged.
+    - I moved the stale packaged-lock digest and count literals (`test_engine_runner.py:1946` and `:1960`, `test_engine_cli.py:163`), so the two tests that had failed since before tonight pass again.
+  - **The digest chain merge** (TTS patch × music × ComfyUI) was recomputed with `scripts/vibecomfy_pin.py` (now `--source`-aware). Verified: patches, models lock, packaged lock, pins, and both recipe digests in `comfyui.yaml`.
+  - **Gate results:**
+    - combined suites: 364 passed, 0 new failures;
+    - `test_machine` + `test_failure_receipt` on `c473f7dc`: 161 passed;
+    - ruff 2117.
+    - The remaining failures all also fail at `e7f00181` or `878d13f4` (`test_packaged_vibecomfy_checkout_supports_generate_list_json`, `test_no_other_tracked_file_copies_the_pin`, `test_generate_and_h3_share_vibecomfy_pin`, `test_to_envelope_omits_code_and_source_type_when_none`).
+  - **Batch (C) started:** reinstall at `64e00c28`, then TTS, SFX, t2i, edit and music on one RTX 5090 with warm reuse (`runs/batch.sh`, balance floor before each cell). Edit inputs now use `image_ref`; music is seed-only (its template exposes only `seed`).
