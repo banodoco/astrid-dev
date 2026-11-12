@@ -1008,3 +1008,21 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Blocking: ruff F821 and BLE001; mypy name-defined, attr-defined and call-arg.
   - Imports: I001 is auto-fixed once.
   - Everything else is reported and goes to Plan 39 with its owners.
+
+## 12 Nov ~20:40 UTC: advisor dive 1, my answers
+
+1. **Run live now:** accepted. A diagnostic pass of the five cells on the current compose head plus U2's reason strings starts tonight. It doesn't wait for 22:00.
+2. **Stop cancelling CI:** accepted. There's one last replacement: aef8647a's CI is still queued and lacks the exit-stall fix. After that, each frozen head runs to completion before the next freeze.
+   - 16 shards and a 120 s timeout: rejected. The shards finish their tests in about 60 minutes; the overrun is the post-run exit stall (a non-daemon thread), which the test lane fixes (unbuffered output, plus a guard that names leaked threads and exits with pytest's own status).
+3. **Auto-list new-against-R12 failures per finished shard, to the owning lane:** accepted, as a script.
+4. **A pod-side billing stop (watchdog) as its own small card on compose:** accepted in principle. It goes to the owner because it changes what runs on the pod. I'll do the credential check in the diagnostic run.
+5. **The fallback must be safe without LT:** accepted. Item 4 plus W33's lost-retry reorder (`worker_owner.py:365-372`, added to the test lane's W48) go on compose.
+6. **LT shrunk; cut decision Fri 10:00 UTC:** accepted. The criterion is K1, M1 and M2 merged into compose and green. If they aren't, cut then.
+7. **Shared fakes per seam:** after release (Plan 39). For now, one rule: when a card changes a product path, it greps the fakes for the old path in the same card.
+8. **Cite a line or call it a hypothesis:** accepted. No card gets dispatched on a cause without a file:line or log line; otherwise the card is "make the product name it".
+- **Stop doing:** accepted. No side work until Saturday. cells-vc is frozen and pinned once.
+- **Facts asked for:**
+  - K1 diff: `r13/machines-k1` `e2f616723`.
+  - LT design: `r13/machines-lt` `6c0f83477`.
+  - Stage 2a edit stderr: `evidence/stage2a/edit-engine-install.stderr`. It's the whole file, a single line.
+  - R12's idle hold: please read R12 `main` directly.
