@@ -139,8 +139,9 @@ def check_view(view: View, root: Path) -> list[str]:
         actual = (root / view.target).read_text(encoding="utf-8")
         wanted = expected(view, root)
         if actual != wanted:
-            return [f"view {view.name} is stale or hand-edited: {view.target} does not match its sources; "
-                    f"edit {', '.join(view.sources)} instead, then run python3 scripts/astrid_dev.py sync"]
+            return [f"view {view.name}: the generated part of {view.target} does not match its sources; "
+                    f"edit {', '.join(view.sources)} instead and undo your change to that part; "
+                    f"it refreshes itself on main after merge"]
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         return [f"view {view.name}: cannot check {view.target}: {exc}; "
                 f"{view.target} is generated from {', '.join(view.sources)}, so fix any error there, "
