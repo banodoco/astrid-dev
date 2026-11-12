@@ -233,8 +233,8 @@ class StatusViewTests(unittest.TestCase):
             path.parent.mkdir(parents=True)
             path.write_text("No markers\n", encoding="utf-8")
             self.assertEqual(views.check_view(view, root), [
-                "view status-definitions: cannot check plans/index.md: view status-definitions: target must contain exactly one summary region; "
-                "plans/index.md is generated from scripts/lifecycle.py, so fix any error there, then run python3 scripts/astrid_dev.py sync"])
+                "view status-definitions: cannot check plans/index.md: target must contain exactly one <!-- status-definitions:start --> line and one <!-- status-definitions:end --> line; "
+                "restore them in plans/index.md; then run python3 scripts/astrid_dev.py sync"])
 
 
 if __name__ == "__main__":
