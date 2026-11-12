@@ -66,6 +66,7 @@ In the [tasks template](../../templates/project/tasks.md), every task has a scop
 - **Before implementation:** its actual base and donor revisions, exact focused checks and authority.
 - **Tests only at load-bearing moments,** per the [run contract's table](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing): before the first task, after each task (its own proof only), before others build on a shared part, and once before review.
 - **A test inventory and focused proofs.** `tasks.md` names the existing tests the plan affects (its test inventory) and, for each task, the exact test files that prove it. The manager's local baseline runs only these. The full suite runs on CI once per review, not per task.
+- **A contract card lists what it makes untrue.** A card that changes a contract, a check's trigger or a message names every existing pinned test, fixture and oracle line the change invalidates, and says how each may change. A card whose proof is a `grep` or a list of pinned tests says "re-check against the code at dispatch", because an earlier card may have moved what it names.
 - **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
   - other repositories come from public git at pinned commits;
   - no GitHub archive downloads;
