@@ -21,20 +21,26 @@ The same partial diffs are also stored as files: `releases/13/briefs/machines/m4
 
 ## 2. In-flight workers at handover
 
-- **K1 Astra review** (`machines-k1-review.md`, read-only, in `c-k1`). At last look, more than 90 cases (about 77% of the suite) had passed with no failures. Findings so far don't change the verdict.
-  - One noted point: the new regressions (the near-deadline case, changed-job fencing, missing reason propagation) failed before the fix and pass after it. They support the fix, but they **don't establish the cause of the live edit failure.** The orchestrator's next live edit run is the real test.
-  - **Next step:** read the final verdict (the worker's last message, after the last line that is exactly `codex`). If it says merge, merge `r13/machines-k1` into `r13/machines` with `--no-ff`.
+- **K1 Astra review: finished.** Verdict: **merge after the listed blocking fix.** 186 passed in five files. No tests weakened. The full verdict is in `briefs/machines/machines-k1-review.result.md`.
+  - **Blocking:** verification holds `owner.lock` for the whole remote observation (`machine.py:1010`). The window from `remote_placement.py:713` reaches the transport only as a command timeout, and `runpod_lifecycle/https.py:482` starts the command before that timeout begins. A stalled start request near paid expiry therefore delays release while the expiry callback waits on the same lock.
+    - Fix: reuse the absolute, cancellable bounded observer that failure verification already uses. Observe outside the owner lock, keeping the locked custody checks before observing and before saving.
+    - Test: a success-checkpoint case with a stalled transport, paid expiry and release, and no late checkpoint.
+  - **Should fix:** reason propagation is incomplete. `install_unverified` is attached only on a `False` return (`machine.py:1022`). A receipt that changes between status and receipt raises at `remote_placement.py:796` and bypasses that handler, and attestation, changed-job and epoch/expiry refusals carry no reason code.
+    - Fix: fixed reason codes plus a one-line next action. Keep the exception types and custody behaviour.
+    - Tests: assert the reason in both the error and the receipt.
+  - **Live edit cause:** still unproven. Explanations (b) and (c) are excluded; (d) is uninvestigated. The live timing (213 s run, collection 1.2 s after `done`) doesn't establish timer exhaustion, and the artifacts lack the execution allowance and the verification reason.
+  - **Next step (new session):** a Sol (high-effort) worker for the blocking fix plus the should-fix on `r13/machines-k1`, then an Astra re-check, then merge with `--no-ff`. Not launched by me.
 - **M1 part d** (Sol, high effort, `machines-m1-6.md`, in `c-m1`). It closes M1's three custody gaps plus the should-fix (see 4). The earlier run, which showed 17 failed and 106 errors, overlapped the full disk and **isn't trusted.** This rerun had no setup errors at last look and was working through the sequential-job cases.
   - Its log shows two confirmed causes for the recovery gaps: journals are rejected before the owner is built, and compatibility errors escape before cleanup.
   - **Next step:** read its final message. Re-run the proof command from `machines-m1-6.md` yourself: the new tests fail before the change and pass after it, ruff passes at baseline 2117, `git diff --check` is clean, and the mypy and boundary gates pass. Commit to `r13/machines-m1`. Then run an Astra re-check (read-only, high effort) of part d alone before merging M1. If the worker never finished, start from `r13/machines-m1-partd-wip`.
 - **M4 card 5:** not running (see the table).
 - **Not mine:** a Codex worker in `c-mypy` (started about 18:40) belongs to the test lane's mypy work.
 
-If I'm still alive when K1's review and M1 part d finish, I'll push their results to `r13/machines-k1` and `r13/machines-m1` (or the WIP branch) and tell the orchestrator. I won't launch any new work.
+If I'm still alive when M1 part d finishes, I'll push its result to `r13/machines-m1` (or the WIP branch) and tell the orchestrator. I won't launch any new work.
 
 ## 3. Order (ruled)
 
-1. **K1:** merge after the Astra review passes.
+1. **K1:** apply the blocking fix and the should-fix from its review, run an Astra re-check, then merge.
 2. **M1:** merge after part d is proven and Astra re-checks it.
 3. **M2** (`machines-m2.md`, brief written): `generate` never rents and takes no paid flags. It deletes `--gpu`, `--datacenter` and the job preferences snapshot from generate, plus the allocation shims and preferences plumbing. With no live machine it refuses in one line.
 4. **LT** (`machines-lt.draft.md`, draft): one lease transition table. Sol (high effort), clone `c-lt`, branch `r13/machines-lt`, based on `r13/machines` after M1 and M2.
@@ -73,7 +79,7 @@ Two blocking findings are **open**, handled by card 5 (partial on the WIP branch
 
 **Task 18:** five `test_warm_session` failures, caused by `f0535fef5` (the 5 s retry floor). **Closed in M4 card 4** by the ruling below.
 
-**K1 review:** running; nothing blocking so far (see 2).
+**K1 review:** finished. Verdict: merge after one blocking fix (verification holds `owner.lock` through unbounded remote observation). One should-fix (reason codes and a next action). Both are **open**; see 2.
 
 ## 5. Rulings in force
 
