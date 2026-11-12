@@ -1,1 +1,0 @@
-observation: `insufficient_storage` masked the real blocker, a held slot, because the Runtime reports only the first blocker.

@@ -1,9 +1,0 @@
-### What I saw
-
-A managed engine cannot upgrade in place. A changed helper or environment identity forces a manual reinstall into `<root>-clean` (Agent `engine_contracts.py` about 78-103, `engine_runner.py` about 575-618), so it fires on almost any Astrid release. Sure of the behaviour; being fixed as U1–U5 in the Release 13 candidate. Set `fixed:` when that merges. Still unplanned: a hosted proof that an engine survives an Astrid update, which fits Plan 09 Phase 2 (upgrade-safe installed state).
-
-Source: Release 13 live and offline runs, 11–12 Nov (smell 1) (interim file `observations/2026-11-12-engine-cannot-upgrade-in-place.md`, 2026-11-12)
-
-### About
-
-F-001; Plan 09

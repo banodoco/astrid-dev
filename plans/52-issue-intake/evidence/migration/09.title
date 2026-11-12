@@ -1,1 +1,0 @@
-observation: `generate --inputs-json FILE --edit IMG` drops the edit image and is refused ("requires image_ref"): `--inputs-json` replaces the CLI inputs instead of merging with them.

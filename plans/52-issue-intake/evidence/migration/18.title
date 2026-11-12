@@ -1,1 +1,0 @@
-observation: A successful run's engine logs are not captured: only the `run` record comes back ("the ComfyUI server owns its logs").

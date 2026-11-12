@@ -1,1 +1,0 @@
-observation: The real Agent-and-Runtime CPU journey (`tests/integrations/test_remote_machine_cpu.py`) takes 57 minutes for 26 tests, so nobody runs it and CI never has.

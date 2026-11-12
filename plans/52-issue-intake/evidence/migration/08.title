@@ -1,1 +1,0 @@
-observation: The `generate` heartbeat prints only "running waiting=-" every minute, the same during a 13-minute stock wait and during engine setup; "no stock yet" is logged on the host only.
