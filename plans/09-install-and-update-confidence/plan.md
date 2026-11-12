@@ -36,6 +36,10 @@ Make supported install, update, rollback, repair, and uninstall routes dependabl
 
 Start from Plan 08's verified Release 1 output, including its five-row hosted gate and update step. Freeze current `pre-main` heads for astrid-agent, astrid-runtime, and astrid-app when work starts; the exact heads and donor commits are not recorded here. Plan 01 shares installer files (`cli.py`, `backend.py`) and must be sequenced with IU-1. Historical source observations and the R1 stand-in do not prove current identities or real schema migration; see [inputs.md](inputs.md).
 
+### Proposed legacy-to-standalone conversion
+
+The separately [paused conversion draft](legacy-conversion/plan.md) describes moving a qualified existing legacy installation to standalone at the same data-root path. Its [task cards](legacy-conversion/tasks.md) reuse this plan's IU-1 transaction and IU-13 lock handoff and retain the existing ownership guards. It is a proposed extension, not a change to this plan's current release scope or permission to resume the paused installation; reconcile its ownership and shared surfaces before dispatch.
+
 ## Sequence
 
 IU-0 freezes source identities and records the path × OS × evidence-mode baseline. IU-1 consolidates the update transaction; IU-2 and IU-3 then cover hosted runtime/rollback legs and real version migration, with IU-4 and IU-9 extending platform evidence. IU-5, IU-6, IU-7, IU-8, and IU-10 follow their indexed dependencies and can proceed independently where the graph permits. IU-END reviews and promotes the exact candidate. Full routes and acceptance are in [tasks.md](tasks.md).
