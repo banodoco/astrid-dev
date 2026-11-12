@@ -38,7 +38,7 @@ Compose an isolated candidate from the frozen base and donors, preserving proven
 
 ## State the claim and select evidence
 
-Before checking, state the release claim and map each required claim to its exact candidate-bound evidence. Run only authorized, focused checks for affected behavior and the prescribed review. Never run broad suites, including opt-in suites or broad RC matrices. The historical release gates do not authorize running them. If a required claim has no lawful focused evidence available, mark that claim and the candidate **unqualified**; do not fabricate a pass, silently reduce the claim, or imply that an input feature candidate automatically qualifies the composed Runtime/Agent/App tuple.
+Before checking, state the release claim and map each required claim to its exact candidate-bound evidence. Run only authorized, focused checks for affected behavior and the prescribed review. Never run broad suites locally, and never run opt-in suites or broad RC matrices; the one full comparison runs on CI. The historical release gates do not authorize running them. If a required claim has no lawful focused evidence available, mark that claim and the candidate **unqualified**; do not fabricate a pass, silently reduce the claim, or imply that an input feature candidate automatically qualifies the composed Runtime/Agent/App tuple.
 
 The source release contract identifies these protected product invariants:
 
@@ -55,7 +55,7 @@ Apply change-directed invalidation: a changed input invalidates only proof that 
 
 After scoped checks and prescribed review pass, promote the **same reviewed head** to the explicitly authorized target using an ordinary push. Never force-push or substitute a different candidate. Movement of a target ref invalidates only affected proof; re-evaluate its dependencies and retain unaffected evidence. A failed check or unresolved review blocker means no promotion.
 
-A publish never turns a passing check red. On each promotion PR into a product `main`, compare its checks by name with that `main`: any check that passes on `main` and fails on the PR blocks the publish. Report each `main`'s red checks by name; they are not this publish's work.
+A publish never turns a passing test red. On each promotion PR into a product `main`, compare per-test results with that `main` using `astrid-baseline-diff` ([`env/baseline-diff.py`](../../env/README.md)); zero regressions and zero failing new tests are required to publish. A check that reports no per-test results is compared by name: one that passes on `main` and fails on the PR blocks the publish. Report each `main`'s red checks by name; they are not this publish's work.
 
 **One publisher at a time.** Only one session publishes an installer release at a time, and only with the owner's go in that session. Before writing App `main`'s install manifest, check that no other project is mid-publish, and that the served release is the one your candidate starts from. If it isn't, re-base the candidate on the served tuple and renumber; never race another project for the same number.
 
