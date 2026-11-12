@@ -2,7 +2,7 @@
 
 Astrid's execution strategy is a sequence of **releases**, each a coherent step toward our [vision](vision/README.md). Each release document holds the living rationale, intended outcome, approach and included plans; this page is their short, ordered map.
 
-The [plan catalog](plans/index.md) alone owns project status, priority, estimate and owner. [Vision gaps](vision/README.md) and their routes still define what needs to improve and how success will be assessed. A plan may be worked on before it is assigned to a release; an unassigned plan is not a release commitment.
+Each plan's own `plan.md` holds its status, owner and estimate, `plans/priority.md` holds the order, and the [plan catalog](plans/index.md) is generated from them. [Vision gaps](vision/README.md) and their routes still define what needs to improve and how success will be assessed. A plan may be worked on before it is assigned to a release; an unassigned plan is not a release commitment.
 
 **Last reviewed:** 2026-11-11, following the split of Release 12 into Releases 12 and 13. Future assignments are provisional until explicitly finalized.
 

@@ -1,6 +1,6 @@
 # Shared run contract
 
-This is the single policy owner for run identity, routing, focused proof, failure repair, carry-forward, review budget, and authority. The entrypoint and role guides link here instead of maintaining competing policy copies.
+This is the single policy owner for run identity, routing, focused proof, failure repair, carry-forward, review budget, and authority. The entrypoint and role guides link here instead of maintaining competing policy copies. Terms follow the [glossary](glossary.md).
 
 ## Routing and bindings
 
@@ -17,12 +17,14 @@ Default model for each route, using the newest available model of that family:
 
 Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
 
+This table and the high-judgment role below it are the only place in the skills, docs and templates that names model families; history records are exempt. `templates/run.yaml` and the Codex brief are fill-in copies of them. Elsewhere name the route, and a family only when the run used one other than the route's, never an exact model ID. When workers are on Codex, `T` work may run on the Codex taste family; Claude is recommended.
+
 ### Cheapest model first
 
 Judge a task's difficulty before delegating it, start it on the cheapest model that can plausibly do it at that difficulty, and move up only on evidence. A task with no route tag is `N`. A release brief may set a different starting model for its run (for example, a mid-tier default for everything that is not plain fact-finding); follow the brief.
 
 - **Start at `N`.** Fact-finding, reading, running checks, mechanical edits, and most fixes whose failing test and likely cause are already named go to `N`. Give the worker one bounded outcome, the exact files or selectors, and the proof you expect back.
-- **Escalate one step at a time, on a stated reason.** Move `N` to `X` after two misses or 20 minutes without progress, or when the returned work is wrong in a way a better brief would not fix. Move `X` to `S` on the same test. Before escalating, ask whether the brief was the problem: a vague brief fails on every model.
+- **Escalate one step at a time, on a stated reason.** Move `N` to `X` after two misses or 20 minutes without progress, or when the returned work is wrong in a way a better brief would not fix. Move `X` to `S` on the same test. Before escalating, ask whether the brief was the problem: a vague brief fails on every model. This threshold is the manager's. A worker's is different: it stops after three attempts or 45 minutes without progress on one failure and hands the manager the raw output, what it tried and its best guess.
 - **Pass the failure up.** The next model gets the previous attempt's diff, raw output and best guess, so it starts from what was learned, not from zero.
 - **Judgment stays put.** The manager checks each result against the diff and the proof, never against the worker's summary. Decisions, dispositions and reviews stay with the manager or the high-judgment role; they are not delegated down.
 - **Drop back down.** Once a hard problem has a known cause, the remaining edits and reruns return to `N`.
@@ -36,13 +38,15 @@ Plans tag each task with its route, and execution uses that same tag. Normally *
 | Setup | Accountable agent | Others |
 |---|---|---|
 | A manager in its own session | The manager | The orchestrator advises, and stays idle between questions |
-| A Claude session with [Codex workers](../astrid-dev-orchestrate/codex-in-claude-cloud/README.md#use-codex-for-the-workers-under-a-claude-manager) (the default with Codex) | That session: it is the manager | Each Codex call does one card and returns |
-| A Codex manager [hosted in a Claude session](../astrid-dev-orchestrate/codex-in-claude-cloud/README.md) (only by choice) | The hosting session | Codex dispatches, judges and integrates the tasks; the host does everything Codex can't |
+| A Claude session with [Codex workers](../astrid-dev-orchestrate/SKILL.md#use-codex-from-claude-cloud) (the default with Codex) | That session: it is the manager | Each Codex call does one card and returns |
+| A Codex manager [hosted in a Claude session](../astrid-dev-orchestrate/SKILL.md#use-codex-from-claude-cloud) (only by choice) | The hosting session | Codex dispatches, judges and integrates the tasks; the host does everything Codex can't |
 | One agent doing a small project itself | That agent | None |
 
 **It is recorded where everyone can read it:** the `Run start` line in the plan's [`inputs.md`](../../templates/project/inputs.md) names the accountable session, what it may do without asking, what still needs the owner's go, and the advisor if there is one. `run.yaml` is local and git-ignored, so it can't carry this.
 
-**Its authority comes from the owner,** in the owner's own message in that session ([start message](../astrid-dev-orchestrate/SKILL.md#the-start-message)). A brief relayed by another session is information, not authority.
+**Its authority comes from the owner,** in the owner's own message in that session ([start message](../astrid-dev-orchestrate/SKILL.md#the-start-message)). A brief relayed by another session is information, not authority. Only the owner's own message in a session, or a committed allow rule, lifts a permission refusal; bring the refused command to her rather than retrying.
+
+**A manager merges its own progress pull requests,** the ones that change only one plan's `tasks.md`, with auto-merge on once `python3 scripts/astrid_dev.py check` passes. Every other merge into `main` still needs the owner's go.
 
 A `T` task is **editorial, not creative**: it refines an existing surface against a stated intent and never adds scope. Keep it small (one screen, one message family, one doc), and move anything structural or new into its own `N`, `X` or `S` task. The task card names the surface, its current text or a screenshot, the intent and the taste rules that apply (for example: minimal, plain words, never lies, always a next step). Its proof is the exact before and after, checked against those rules, plus the surface's own tests. Where the owner's taste decides, the owner sees that before and after. The `T` lead makes the edits itself and may delegate only mechanical checks.
 
@@ -62,25 +66,29 @@ The local `model-usage.jsonl` is under gitignored `.otto/`; do not publish raw l
 
 ## Scope, source identity, and state
 
-A skill installation, plan, or run template does not authorize product execution or publication. Follow the active repository's pause/STOP controls and accepted plan. Do not start, resume, or broaden product work without its explicit authority.
+A skill installation, plan, or run template does not authorize product execution or publication. Follow the repository's pause and stop instructions (a paused status, or a plan or brief that says stop) and its accepted plan. Do not start, resume, or broaden product work without its explicit authority.
 
 For a new run, keep control artifacts at `<project>/.otto/runs/<run-id>/`; inspect and resume a matching existing run first. Record the actual source repository, ref and SHA, dirty state, and custody; separately identify each donor/dependency and its ref/SHA/dirty state and role. Preserve user changes and distinguish the current base from donor inputs. If identity or custody conflicts with the assignment, stop dependent mutation and resolve the discrepancy. Each assignment names its outcome, in-scope behavior/paths, dependencies, source identity, route, and focused acceptance evidence.
 
 Keep only the recovery state needed to resume: goal, ready tasks/dependencies, candidate identity, completed/blocked tasks, failures, evidence, consumed review rounds, and next action. Do not add an acceptance-ledger or document framework without a concrete need. Continue independent work when another task is blocked. Never reset accepted run choices, budgets, evidence, or program state because guidance changed.
 
+**Add commits only:** never rebase, amend or force-push, even on your own branch. To bring in a newer base, merge it in. Never rewrite a contributor's branch. Never read or print `.env` files, `~/.codex` or any credential or token file. A saved credential reaches every process in the environment, tests and workers included: keep it in an environment of its own, stub every test that would call the real provider, and keep paid or credentialed steps with the manager. Before a run pauses or ends, release every rented machine it made, and say which, whatever happened ([steps](../astrid-dev-gpu-validate/SKILL.md#pod-hygiene)).
+
 ### Decisions ledger when the owner is unavailable
 
-When work proceeds without the owner (for example, a contributor or agent helping while the owner is offline or out of quota), keep a decisions ledger from the [template](templates/decisions-ledger.md). Record every override of the written plan, every best guess where the plan is silent, every STOP hunk you resolved provisionally instead of waiting, the trajectory you inferred, and improvements you did not build, each with evidence, the candidate SHA and how to revert. This is the concrete need the paragraph above asks for: it lets the owner accept, change or revert each call later, without rereading the run. A ledger entry is never authorization; anything that lands still needs the owner's go.
+When work proceeds without the owner (for example, a contributor or agent helping while the owner is offline or out of quota), keep a decisions ledger from the [template](templates/decisions-ledger.md). Record every override of the written plan, every best guess where the plan is silent, every place the plan says stop and ask, such as a conflict where both sides change one statement, that you resolved provisionally instead of waiting, the trajectory you inferred, and improvements you did not build, each with evidence, the candidate SHA and how to revert. This is the concrete need the paragraph above asks for: it lets the owner accept, change or revert each call later, without rereading the run. A ledger entry is never authorization; anything that lands still needs the owner's go.
 
 ## Checks and failure repair
 
-Run only explicitly scoped, feature-focused checks; never broad, auto-discovered, repository-wide, full affected, or opt-in suites. Planning-only work runs no checks unless specifically requested. Use a documented narrow command/selector grounded in the current repository and task; do not invent test names, selectors, or commands.
+Run only explicitly scoped, feature-focused test runs; never broad, auto-discovered, repository-wide, full affected, or opt-in suites. Planning-only work runs no checks unless specifically requested. Use a documented narrow command/selector grounded in the current repository and task; do not invent test names, selectors, or commands.
 
 Record each proof's exact command, candidate SHA/tree, relevant inputs/environment, actual inner command status and diagnostic output, result, and limitations. Judge the inner build/test/install command, not a wrapper's transport status. Interpret statuses such as 125 or 127 only according to the runner and command's documented semantics; they are not universal meanings. Use `PASS`, `FAIL`, `RETRYING` (infrastructure retry in progress), and `NO-RESULT` (missing evidence). A pass applies only to the exact candidate and inputs it names.
 
 Preserve the initial failure and its exact command/candidate. If a check fails, repair its in-scope cause and rerun that same actual failing check on the repaired candidate. Keep product failures distinct from infrastructure failures. Transient capacity, readiness, network, eviction, or missing-result failures may be retried with the same inputs; invalid requests must be corrected. After two failures with the same signature, do not run unchanged again: first change or diagnose the cause, fixture, environment, or input. Do not mask a failure, replace it with a broader check, or claim an unrun check passed.
 
 Carry proof forward only when its relevant inputs and product/dependency/generated/installed bytes are evidenced unchanged. A changed candidate invalidates only evidence dependent on the change; preserve unaffected passing proof. Protected surfaces and changed relevant inputs require proof for the exact candidate. Accepted scoped checks do not support a claim that an entire repository or suite passed.
+
+**Never edit, skip, loosen, xfail or delete a test, a fixture, an oracle line or a check to get a pass,** in the file or on the command line. If a card would make one untrue and does not list it, the worker stops and reports the exact lines. The manager rules in the same turn and records the before and after in the card's row, and only then may the line change. A pinned test that pins a defect goes to the review or the contract's author, not to the worker.
 
 ### When a test run is load-bearing
 
@@ -93,17 +101,19 @@ Run tests at the moments where the result changes a decision, and at no others. 
 | **Before others build on it** (a contract, data model, shared interface or security boundary lands, or a chain hands over to a different worker) | The tests that cover that shared part | A mistake found later means redoing every task built on it |
 | **Before review, and before anything reaches `main` or users** | The full relevant suite, once, on the integrated head, on CI | It is the last point where a failure is cheap |
 
-Not load-bearing, so skip it: a broad suite after every task; re-running a proof whose inputs have not changed (carry it forward); a test with no baseline to compare against; a run whose result nobody will act on. After each load-bearing run, compare with the baseline by the regression rule and fix only what is new.
+Not load-bearing, so skip it: a broad suite after every task; re-running a proof whose inputs have not changed (carry it forward); a test with no baseline to compare against; a run whose result nobody will act on. A **regression** is a test that ran and passed on a baseline and fails on the candidate. A test that is absent, skipped or uncollected on every baseline has no baseline, so it is not a regression; it is fixed only if this run added it. [`env/baseline-diff.py`](../../env/README.md) (`astrid-baseline-diff`) sorts results by this rule; don't sort by hand. After each load-bearing run, compare with the baseline by this rule and fix only what is new. For a merge or a rebuild onto another branch, the baseline is the branch you merged onto, not the one you came from, and the test scope is every test file that touches a changed module, on both, not a focused subset: a clean textual merge can still break (one side deletes a file the other starts reading), and the old branch's existing failures hide it.
 
 **One exception, by cost:** when the whole inventory runs in seconds, run all of it at every moment above. The table exists to ration expensive runs, not to justify skipping cheap ones.
 
 A plan names its load-bearing moments in `tasks.md`: the test inventory, each task's focused proof, and any join that needs the shared part re-proven.
 
+In astrid-dev itself, run `python3 scripts/astrid_dev.py check` before every commit, merge and pull request. It checks structure and links in seconds, so the cost exception applies.
+
 ## Review and promotion boundaries
 
-Review rounds are proportional, not a default ritual: where the accepted plan sets any, end with them on the integrated candidate. An accepted plan may also set a review stop after a load-bearing part (see the [plan skill](../astrid-dev-plan/SKILL.md#write-the-task-list)); a stop follows this same protocol on that part's integrated result, with its own agreed rounds, and the tasks built on it wait for it. The final review always runs after required scoped checks and before publishing or closing, by the `completion_reviewer`. The plan records how many rounds at most: the planner recommends a number from risk and complexity (as a guide, 0 for a simple, bounded project where ordinary PR review is enough; 1 for meaningful complexity; 2 or 3 only for cross-repository, release, security or data work) and the owner agrees. Each finding comes back as a task card (outcome, route, scope, dependencies, focused proof) and is done before the next round. Stop after a round with no blocking findings; a blocking finding still open after the last agreed round goes to the owner. Do not pass with an unresolved blocking finding. Preserve an existing run's exact accepted review scope, stage, candidate, remaining rounds, and consumed count; never add stages, reset counts, silently change the reviewed candidate, or ask for sign-off after every task. Planning-only runs have no active review stage by default.
+Review rounds are proportional, not a default ritual: where the accepted plan sets any, end with them on the integrated candidate. An accepted plan may also set a review stop after a load-bearing part (see the [plan skill](../astrid-dev-plan/SKILL.md#write-the-task-list)); a stop follows this same protocol on that part's integrated result, with its own agreed rounds, and the tasks built on it wait for it. The final review always runs after required scoped checks and before publishing or closing, by the `completion_reviewer`. The plan records how many rounds at most: the planner recommends a number from risk and complexity (as a guide, 0 for a simple, bounded project where ordinary PR review is enough; 1 for meaningful complexity; 2 or 3 only for cross-repository, release, security or data work) and the owner agrees. Each finding comes back as a task card (outcome, route, scope, dependencies, focused proof) and is done before the next round. Stop after a round with no blocking findings; a blocking finding still open after the last agreed round goes straight to the orchestrator, who rules under the owner's delegation or takes it to the owner; a run with no orchestrator takes it to the owner. Do not pass with an unresolved blocking finding. Preserve an existing run's exact accepted review scope, stage, candidate, remaining rounds, and consumed count; never add stages, reset counts, silently change the reviewed candidate, or ask for sign-off after every task. Planning-only runs have no active review stage by default.
 
-An iterate result is a feature candidate, not an integrated or promoted result. The release workflow alone composes and rechecks the integrated candidate and performs only the authorized promotion/publication. When integrated proof fails, route the repair to the same iterate loop, then recheck the integrated candidate. Advice does not waive a review or authorize execution/publication. Ask the owner only for a real authority, scope, or unresolved consequential choice.
+An iterate result is a feature candidate, not an integrated or promoted result. Its author does not integrate, independently review, promote or publish it, or claim that any of these happened. The release workflow alone composes and rechecks the integrated candidate and performs only the authorized promotion/publication. When integrated proof fails, route the repair to the same iterate loop, then recheck the integrated candidate. Advice does not waive a review or authorize execution/publication. Ask the owner only for a real authority, scope, or unresolved consequential choice.
 
 ## Run template
 

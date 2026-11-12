@@ -1,4 +1,4 @@
-# Astrid — A tool to unlock the collective artistic ambition of the open-source AI community
+# Astrid — A tool to unlock the artistic potential of the open-source AI community
 
 ## Ambition
 
