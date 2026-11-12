@@ -416,3 +416,10 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
     - it refuses on conflict and never deletes user files;
     - `models-config-check` verifies both.
   - TTS needs this AND the decorator fix (06:40 REVIEW).
+- **2026-11-12 07:40** **REVIEW** models-folders, first attempt: Codex stopped correctly. `<ComfyUI>/models` is inside the ComfyUI source checkout, and the clean-source custody check refused the new links (`?? models/diffusion_models`; it had also replaced a tracked placeholder directory).
+  - Ruling:
+    - the four standard kinds stay on search paths only;
+    - links only for pack-private lock folders that the checkout doesn't track (`hunyuan_foley`, `TTS`), detected structurally;
+    - one exact, verified exemption in the clean-source check: an untracked `models/<folder>` is allowed only if it is a lock folder, is a symlink, and resolves to `<models base>/<folder>`. Everything else still fails.
+  - This narrows an integrity check, even though the exemption is exact and verified, so it's built on a branch and NOT merged into the rehearsal until the owner has looked.
+  - The alternatives were worse: `--base-directory` would also move `custom_nodes`, input and output, and writing to `.git/info/exclude` would hide entries silently.
