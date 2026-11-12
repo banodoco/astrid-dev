@@ -549,3 +549,13 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
   - The RunPod preferences were read from a copy of the old realm store (not the original). They were saved by `runpod.setup`: volume `2z2dlu1v8g` (`storage`, 200 GB, `/workspace`), EUR-NO-1, RTX 5090, pinned image, $3 budget cap. The fresh state gets them again through the documented `astrid machines setup --volume 2z2dlu1v8g --gpu "RTX 5090" --budget-usd 3 --json`, so no new volume is created.
   - **Follow-up for the owner:** reconcile `0d7f7e41` in the old state; an install of the same Runtime identity plus `astrid-runtime tasks clear`, or let a future same-identity host sweep it.
   - Batch 3 started at `72fbdf65`.
+- **2026-11-12 10:45** Batch 3/4 findings, each read from the product, and each refused before renting ($0).
+  - **Fresh state:** generation needs a project, so I created and selected `setup`. The edit image goes through `--edit <path>` (the CLI's `IMAGE_REF`), not a JSON `image_ref` path.
+  - **Engine install root cause** (the `72fbdf65` command-output fix made it visible): `uv pip sync --require-hashes` on the pod failed with "Conflicting archive URL hashes for setuptools". My re-lock had merged setuptools' registry files into the policy's pinned wheel URL, adding the sdist hash.
+    - Fix `6eacb077` (`r13/lock-setuptools`): a recorded post-compile step (`lock-inputs/normalize_direct_urls.py`, documented in the README) keeps exactly the URL's own hash, as in the original lock.
+    - A new invariant test fails on the broken lock and passes on the fixed one.
+    - I first tried a registry pin (`setuptools==84.0.0`), but `test_h3_packaged_sync_allows_only_three_source_builds_and_uses_support_lock` correctly pins the exact wheel URL as build policy, so I reverted to the URL form and kept that test unchanged.
+  - **Music root cause** (reproduced locally): "staged Python identity differs from intended bundle". The ACE-Step template names no `template_id`, so its `audio/` prefix came from its location under `ready_templates/audio/`. Astrid's staged snapshot lives elsewhere, so the id lost its prefix.
+    - Fix in VibeComfy `fe92ac78` (`r13/template-identity`): `new_workflow` uses the template's own fully qualified provenance `ready_id` when it names the same template. Locally the music snapshot stages, Foley is unchanged.
+    - About 16 other templates declare `ready_id` and are fixed the same way. Four declare no qualified id (`z_image_turbo`, `z_image_img2img`, `basic_image_upscale`, `empty_image_red`); none is an R13 cell, and they're left as a follow-up rather than edit generated templates.
+    - A VibeComfy test comparison against `88cff6d5` is running; then the pin bump.
