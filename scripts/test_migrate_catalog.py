@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 import migrate_catalog
@@ -48,6 +49,33 @@ class MigrateCatalogTests(unittest.TestCase):
         content = self.migrate()[Path('plans/01-alpha/plan.md')]
         self.assertIn('[link](../../release.md)', content)
 
+    def test_scheme_links_are_not_rebased(self):
+        self.rows[0][1] = ('[mail](mailto:team@example.com) '
+                           '[custom](web+demo:value) [plain](../release.md)')
+        content = self.migrate()[Path('plans/01-alpha/plan.md')]
+        self.assertIn('[mail](mailto:team@example.com)', content)
+        self.assertIn('[custom](web+demo:value)', content)
+        self.assertIn('[plain](../../release.md)', content)
+
+    def test_write_then_verify(self):
+        (self.root / 'plans/index.md.fixture').write_text(
+            (self.root / 'plans/index.md').read_text(encoding='utf-8'), encoding='utf-8')
+        (self.root / 'plans/01-alpha/plan.md.fixture').write_text(
+            '# Alpha\n\n## Goal\n', encoding='utf-8')
+        observed = []
+
+        def verify_after_write(root, rows, suffix):
+            self.assertIn('**Project:** Alpha',
+                          (self.root / 'plans/01-alpha/plan.md.fixture').read_text(encoding='utf-8'))
+            observed.append(True)
+
+        with patch.object(migrate_catalog, 'verify', side_effect=verify_after_write):
+            result = migrate_catalog.main([
+                '--root', str(self.root), '--from-ref', 'unused', '--suffix', '.fixture',
+                '--write', '--verify'])
+        self.assertEqual(result, 0)
+        self.assertEqual(observed, [True])
+
     def test_suffix_tree(self):
         fixture = self.root / 'plans/01-alpha/plan.md.fixture'
         fixture.write_text('# Alpha\n\n## Goal\n', encoding='utf-8')
@@ -55,6 +83,7 @@ class MigrateCatalogTests(unittest.TestCase):
         index.write_text((self.root / 'plans/index.md').read_text(), encoding='utf-8')
         planned = self.migrate('.fixture')
         self.assertIn(Path('plans/01-alpha/plan.md.fixture'), planned)
+        self.assertNotIn(Path('plans/catalog-notes.md.fixture'), planned)
 
     def test_refuses_missing_plan(self):
         self.plan.unlink()

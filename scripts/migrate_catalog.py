@@ -30,7 +30,7 @@ def _relative(value: str, folder: str) -> str:
     """Rebase links from plans/index.md to plans/<folder>/plan.md."""
     def replace(match: re.Match[str]) -> str:
         target = match.group(1)
-        if target.startswith(('http:', 'https:', '#', '/')):
+        if re.match(r'^[a-z][a-z0-9+.-]*:', target) or target.startswith(('#', '/')):
             return match.group(0)
         return match.group(0).replace(f']({target})', f'](../{target})')
     return re.sub(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)', replace, value)
@@ -94,13 +94,7 @@ def migrate(root: Path, rows: list[list[str]], suffix: str | None = None) -> dic
                 'Plans omitted from the list follow the listed plans.\n\n## Order\n' +
                 ''.join(f'- {folder}\n' for folder in folders))
     priority_rel = Path('plans/priority.md' + extension)
-    notes_rel = Path('plans/catalog-notes.md' + extension)
-    index_text = (root / ('plans/index.md' + extension)).read_text(encoding='utf-8')
-    notes_match = re.search(r'(?ms)^## Delivery context\s*\n.*?(?=^## |\Z)', index_text)
-    if not notes_match:
-        raise ValueError('plans/index.md has no Delivery context section')
     planned[priority_rel] = priority
-    planned[notes_rel] = notes_match.group(0).rstrip() + '\n'
     return planned
 
 
@@ -140,8 +134,6 @@ def main(argv: list[str] | None = None) -> int:
     try:
         rows = _table(root, args.from_ref, args.suffix)
         planned = migrate(root, rows, args.suffix)
-        if args.verify:
-            verify(root, rows, args.suffix)
         for rel, text in planned.items():
             path = root / rel
             old = path.read_text(encoding='utf-8') if path.exists() else None
@@ -151,12 +143,14 @@ def main(argv: list[str] | None = None) -> int:
                 state = 'unchanged' if old == text else 'written'
                 print(f'{rel}: {state}')
             else:
-                print(f'{rel}:')
+                state = 'no change' if old == text else 'planned'
+                print(f'{rel}: {state}')
                 if rel.name.startswith('plan.md'):
                     print(''.join(text.splitlines(keepends=True)[2:14]), end='')
                 else:
                     print(text, end='' if text.endswith('\n') else '\n')
         if args.verify:
+            verify(root, rows, args.suffix)
             print('verify: project records match catalog')
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         print(f'migrate_catalog: {exc}', file=sys.stderr)

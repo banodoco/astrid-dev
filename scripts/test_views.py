@@ -129,19 +129,15 @@ class ViewTests(unittest.TestCase):
                 views.VIEWS = previous
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class PlanCatalogViewTests(unittest.TestCase):
     def view(self):
         import views
         matches = [view for view in views.VIEWS if view.name == "plan-catalog"]
         self.assertEqual(len(matches), 1, "PM-6b must register the plan-catalog view")
         view = matches[0]
-        self.assertEqual(view.sources, ("plans/*/plan.md", "plans/priority.md", "plans/catalog-notes.md"))
+        self.assertEqual(view.sources, ("plans/*/plan.md", "plans/priority.md"))
         self.assertEqual(view.target, "plans/index.md")
-        self.assertFalse(view.region)
+        self.assertEqual(view.region, "plan-catalog")
         return view
 
     def sources(self, root):
@@ -150,9 +146,27 @@ class PlanCatalogViewTests(unittest.TestCase):
                       Goal="Read [release](../../releases/12.md)", **{"Waiting on": "[work](../02-beta/plan.md)"}))
         Records.write(root, "02-beta", Records.plan(Project="Catalog beta", Status="done"))
         (root / "plans/priority.md").write_text("## Order\n- 02-beta\n- 01-alpha\n", encoding="utf-8")
-        (root / "plans/catalog-notes.md").write_text("## Delivery context\n\nHand-written notes stay intact.\n", encoding="utf-8")
+        # Everything outside the table is owned by the author, including the
+        # title, priority explanation, six definitions, edit guidance and notes.
+        (root / "plans/index.md").write_text(
+            self.before() + "<!-- plan-catalog:start -->\nold table\n"
+            "<!-- plan-catalog:end -->" + self.after(), encoding="utf-8")
 
-    def test_catalog_marker_preamble_columns_links_and_notes(self):
+    @staticmethod
+    def before():
+        return ("# Our hand-written catalog title\n\n"
+                "Priority follows plans/priority.md; edit facts in each plan.md and run sync.\n\n"
+                "**Definitions:** `active` = explicitly started; `queued` = planned, not started; "
+                "`blocked` = known impediment; `paused` = deliberately stopped; "
+                "`done` = accepted completion evidence; `cancelled` = intentionally abandoned, "
+                "with reason in the plan. Owner is accountability, not permission. "
+                "Estimates are remaining human engineering days or `TBD`.\n\n")
+
+    @staticmethod
+    def after():
+        return "\n\n## Delivery context\n\nHand-written notes stay intact.\n"
+
+    def test_catalog_region_preserves_prose_and_generates_only_marker_and_table(self):
         import views
         from records import split_table_row
         view = self.view()
@@ -160,12 +174,15 @@ class PlanCatalogViewTests(unittest.TestCase):
             root = Path(directory)
             self.sources(root)
             text = views.expected(view, root)
-            self.assertTrue(text.startswith(view.marker + "\n# Plan catalog\n"))
-            preamble = views._catalog_preamble()
-            self.assertIn(preamble, text)
-            self.assertTrue(preamble.strip())
-            self.assertLess(text.index(preamble), text.index("| Plan | Project |"))
-            self.assertTrue(text.endswith((root / "plans/catalog-notes.md").read_text(encoding="utf-8")))
+            before, rest = text.split("<!-- plan-catalog:start -->")
+            generated, after = rest.split("<!-- plan-catalog:end -->")
+            self.assertEqual(before, self.before())
+            self.assertEqual(after, self.after())
+            self.assertEqual(text.count("<!-- plan-catalog:start -->"), 1)
+            self.assertEqual(text.count("<!-- plan-catalog:end -->"), 1)
+            self.assertEqual(generated.splitlines()[1], view.marker)
+            self.assertTrue(all(line.startswith("|") for line in generated.splitlines()[2:] if line))
+            self.assertFalse((root / "plans/catalog-notes.md").exists())
             lines = [line for line in text.splitlines() if line.startswith("|")]
             self.assertEqual(split_table_row(lines[0]), ["Plan", "Project", "Goal", "Status", "Owner", "Estimate", "Waiting on"])
             rows = [split_table_row(line) for line in lines[2:]]
@@ -175,28 +192,65 @@ class PlanCatalogViewTests(unittest.TestCase):
                 ["[Plan 02](02-beta/plan.md)", "Catalog beta", "Build **one** thing", "done", "Ada", "TBD", "—"],
             ])
 
-    def test_preamble_preserves_all_six_status_definitions_and_explains_edits(self):
+    def test_catalog_has_no_generated_preamble_helper(self):
         import views
-        text = views._catalog_preamble()
-        definitions = ("**Definitions:** `active` = explicitly started; `queued` = planned, not started; "
-                       "`blocked` = known impediment; `paused` = deliberately stopped; "
-                       "`done` = accepted completion evidence; `cancelled` = intentionally abandoned, "
-                       "with reason in the plan. Owner is accountability, not permission. "
-                       "Estimates are remaining human engineering days or `TBD`.")
-        self.assertIn(definitions, text)
-        for source in ("plan.md", "plans/priority.md", "plans/catalog-notes.md"):
-            self.assertIn(source, text)
-        self.assertIn("priority", text.lower())
-        self.assertIn("sync", text)
+        self.assertFalse(hasattr(views, "_catalog_preamble"))
+
+    def test_edits_outside_catalog_region_are_free_and_survive_regeneration(self):
+        import views
+        from test_records import ProjectRecordTests as Records
+        from unittest.mock import patch
+        view = self.view()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.sources(root)
+            with patch.object(views, "VIEWS", (view,)):
+                views.sync(root)
+                target = root / "plans/index.md"
+                text = target.read_text(encoding="utf-8")
+                text = text.replace(self.before(), "# A new author title\n\nFree prose above.\n")
+                text = text.replace(self.after(), "\nFree prose below.\n")
+                target.write_text(text, encoding="utf-8")
+                self.assertEqual(views.check(root), [])
+                self.assertEqual(views.sync(root), [])
+                self.assertEqual(target.read_text(encoding="utf-8"), text)
+                Records.write(root, "01-alpha", Records.plan(Project="Changed source", Status="active"))
+                self.assertEqual(views.sync(root), ["plans/index.md"])
+                rewritten = target.read_text(encoding="utf-8")
+                self.assertEqual(rewritten.split("<!-- plan-catalog:start -->")[0],
+                                 text.split("<!-- plan-catalog:start -->")[0])
+                self.assertEqual(rewritten.split("<!-- plan-catalog:end -->")[1],
+                                 text.split("<!-- plan-catalog:end -->")[1])
+                self.assertIn("Changed source", rewritten)
+                self.assertEqual(views.check(root), [])
+
+    def test_region_markers_take_a_generic_region_name(self):
+        # Neither a view's name nor a hard-coded vision-summary region wins
+        # over its declared region name.
+        view = View("sample", ("source.md",), "target.md", lambda root: "", region="other-region")
+        text = "before\n<!-- other-region:start -->\nvalue\n<!-- other-region:end -->\nafter\n"
+        wanted = text.replace("\nvalue\n", "\n" + view.marker + "\nvalue\n")
+        self.assertEqual(_with_marker(view, text), wanted)
+        self.assertEqual(_with_marker(view, wanted), wanted)
+        for malformed in (text.replace("<!-- other-region:start -->", ""),
+                          text.replace("<!-- other-region:end -->", ""),
+                          text + "<!-- other-region:start -->\n<!-- other-region:end -->\n"):
+            with self.subTest(malformed=malformed), self.assertRaisesRegex(ValueError, "view sample"):
+                _with_marker(view, malformed)
+
+    def test_vision_summary_declares_its_region_name(self):
+        import views
+        view = next(view for view in views.VIEWS if view.name == "root-vision-summary")
+        self.assertEqual(view.region, "vision-summary")
 
     def test_rebase_relative_links_preserves_external_and_fragment_targets(self):
         import views
         value = ("[release](../../releases/12.md) [peer](../02-beta/plan.md#scope) "
                  "[local](#design) [web](https://example.invalid/a) [mail](mailto:a@example.invalid) "
-                 "[root](/assets/icon.svg) plain text")
+                 "[custom](custom+app:resource) [root](/assets/icon.svg) plain text")
         wanted = ("[release](../releases/12.md) [peer](02-beta/plan.md#scope) "
                   "[local](#design) [web](https://example.invalid/a) [mail](mailto:a@example.invalid) "
-                  "[root](/assets/icon.svg) plain text")
+                  "[custom](custom+app:resource) [root](/assets/icon.svg) plain text")
         self.assertEqual(views.rebase_links(value, Path("plans/01-alpha"), Path("plans")), wanted)
         self.assertEqual(views.rebase_links("No links **here**", Path("plans/01-alpha"), Path("plans")),
                          "No links **here**")
@@ -236,7 +290,7 @@ class PlanCatalogViewTests(unittest.TestCase):
 
 
 class PullRequestBaseTests(unittest.TestCase):
-    def test_workflow_uses_verified_merge_first_parent_or_event_base(self):
+    def test_workflow_uses_main_as_of_merge_first_parent_or_event_base(self):
         import os
         import subprocess
         import textwrap
@@ -244,10 +298,11 @@ class PullRequestBaseTests(unittest.TestCase):
         pr_step = source.split("      - name: Run repository checks\n", 1)[1].split("      - name:", 1)[0]
         self.assertIn("PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}", pr_step)
         script = textwrap.dedent(pr_step.split("        run: |\n", 1)[1])
+        # The first parent is main as of that merge, not the event's base.
         for second_parent, first_parent, status, wanted_base in (
-            ("pr-head", "current-main", 0, "current-main"),
+            ("pr-head", "merge-main", 0, "merge-main"),
             ("", "", 0, "event-base"),
-            ("wrong-head", "current-main", 1, None),
+            ("wrong-head", "merge-main", 1, None),
         ):
             with self.subTest(second_parent=second_parent), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
@@ -275,3 +330,7 @@ class PullRequestBaseTests(unittest.TestCase):
                 else:
                     self.assertEqual(capture.read_text().splitlines(),
                                      ["scripts/astrid_dev.py", "check", "--base", wanted_base, "--event", "event.json"])
+
+
+if __name__ == "__main__":
+    unittest.main()

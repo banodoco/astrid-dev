@@ -202,5 +202,8 @@ def priority_order(text: str | None) -> list[str]:
 
 
 def projects(root: Path, revision: str | None = None) -> list[list[str]]:
-    """Return seven-cell catalog rows (legacy cell order), ordered by priority."""
+    """Return priority-ordered legacy-shaped rows.
+
+    Invalid records raise ValueError naming the folder.
+    """
     raise NotImplementedError("PM-6b: project records")
