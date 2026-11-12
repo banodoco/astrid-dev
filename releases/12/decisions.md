@@ -2,7 +2,7 @@
 
 Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIEW** marks user-visible changes, scope-vs-time trades, named exceptions and anything touching Release 13.
 
-## NOW (updated 2026-11-11 23:36Z, from `date -u`)
+## NOW (updated 2026-11-12 00:33Z, from `date -u`)
 
 - **Scope (owner, 11 Nov):** ship the update fixes as soon as possible. The editor data-loss fixes go to Plan 39: [#252](https://github.com/banodoco/astrid-app/issues/252) video drop, [#253](https://github.com/banodoco/astrid-app/issues/253) a refusal blocks later edits, [#254](https://github.com/banodoco/astrid-app/issues/254) "Save them", [#255](https://github.com/banodoco/astrid-app/issues/255) upload lost at reload.
 - **Tuple under test:** Agent `cand/29-r12` = `c5370a862d0b374afa412dd071418070e76f834c`. Runtime `cand/29-r12` = `42ae24aff8d2cb854f874ce134161077a3ba3641`. App integration `scratch/r12-app-int` = `ebfc9a1b7`: 2dc109bcc, then App main `6545f130` (merged, `54a362e2a`), gate 5 fix `e2d48f428`, review fixes `452f6b2f0` and `ed9327947`, blocker fixes `9afd4aaa6`, and the VIDEO-DROP marker correction `48ec9bb70` and `ebfc9a1b7`. App `cand/29-r12` (`657773e6`) moves to the re-pinned head of this branch at freeze. The provisional re-pin is shakedown `scratch/r12-shakedown` = `8f1a19086`.
@@ -19,6 +19,7 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - VIDEO-DROP marker `48ec9bb70`: BLOCKER (wrong attribution). Corrected in `ebfc9a1b7`; second review running. The App candidate holds on it.
 - **Named exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252, all expiring 2026-11-25. That is 7 of the 10-entry ceiling with the three older useClipDrag entries. EXT-BATCH is now shown failing at its marked step on a real run. VIDEO-DROP and DUP-SHOT are pending the 48ec9bb70 run; TASK-SWAP is not yet reached.
 - **Working rules (owner, 2026-11-12 00:20Z):** lean toward speed; see the entry of that time for the seven loosenings and what is not loosened. Before the re-pin, wait for the one last App main push from the tour session and merge it.
+- **Critical path (2026-11-12 00:33Z): an Agent fix round.** The Agent comparison found R12-introduced product regressions (the \`text\` alias refused, the add_text default needing an optional pack, a broken recovery command, the core boundary ratchet). Four Codex fixes are running, then a new Agent candidate, Agent CI (about 2 h), re-pin and the final round. Honest estimate to A-FROZEN: 4–6 h. The App main last push is also awaited before the re-pin.
 - **Blocked:** nothing needs the owner.
 - **Workers:** non-taste tasks run on Codex via `codex exec`, one per task, each in its own clone, from a thin Claude wrapper. Tiers: N = `gpt-6-luna`, X = `gpt-6.1-terra`, S = `gpt-6.1-sol`, reviews = `gpt-6-astra` (read-only). Codex can't use the GitHub tools, so log downloads go to Haiku sub-agents. Fallback used: none. Timestamps come from `date -u`. Entries stamped "2026-11-12 00:50Z/01:05Z" are mis-stamped; see the correction entry.
 
@@ -293,3 +294,20 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - MEDIUM, kept as **REVIEW**/follow-up: the restated VIDEO-DROP exception still stops at the obsolete verified-read wait, so it wouldn't turn green when #253 is fixed. Converting it is Plan 39 work (#253). Also noted: a bare 404 classifies as `unknown`/retry in `client.ts:314-326`, so the comment's "404 not_found" path needs the typed details.
   - LOW, follow-up: the prepared-entry filename, type and duration checks that `191863ca9` removed are not restored.
   - Under rule 5, the side track enters only if it's already green when the main track reaches re-pin.
+- 2026-11-12 00:33Z — **Agent comparison: the 64 R11-passing regressions are ruled. R12 introduced real product regressions, so there will be an Agent fix round.** Sources: Codex Sol `g2a` and Terra `g2b` (reports in `cx-g2a` and `cx-g2b`), checked by me against the code and the merge history.
+  - **Product regressions, R12-introduced** by `924b3b880` and `25b1e8ea1`, which came in on the R12 fix branches `r12/r10-schema-fail-closed` and `r12/schema-cache-invalidation`:
+    1. Exact-ID schema lookup rejects the supported `text` alias for bundled `text-card`. Text clips can't have parameters changed or be created populated. 7 IDs. The refusal is visible and nothing is written, but it blocks ordinary editing.
+    2. The documented default `t.add_text` hardcodes `am-type` from the optional astrid_motion pack, so the first-run example fails on a default install. 1 ID.
+    3. The printed recovery command `astrid packs add astrid_motion` is rejected by the CLI.
+    4. Core pack-boundary ratchet: new pack literals in core (`gpu_environment.py`, `discovery.py`).
+  - **No exception is allowed for these (owner rule).** They are fixed forward, not reverted: the fail-closed change is a deliberate R12 fix.
+  - **Test drift** from the deliberate fail-closed policy, where the test inventory lacks the provider: about 31 motion, 2 reveal, 8 CLI/v10. Plus 5 SimpleNamespace doubles lacking `diagnostic`, and 3 teardown patch leaks.
+  - `test_installer_platforms` ×3 also fails on R10, so it's pre-existing against R10 (rule 2).
+  - **The 89 R10-only regressions** all also fail on R11: introduced by R11 and already shipped. **REVIEW.**
+  - **No-baseline (131 real):** 115 are in shard 1, which has no baseline on either side (R10 log missing, R11 cancelled). 45 are `ModuleNotFoundError: tests.test_verified_host_launch`; that module is absent on both R11 and the candidate, so they're pre-existing. The one new-in-R12 file, `tests/core/pack/test_windows_publish.py`, fails on Linux with a PermissionError: an R12 test to fix. A local by-ID R11-vs-candidate run of all 131 is building the missing baseline.
+  - **Fix round, in progress:** four Codex tasks in clones of `c5370a86`.
+    - Sol `afa`: text alias resolution shared with the renderer, add_text defaulting to text-card, and the recovery command. Product code, so Astra review required.
+    - Terra `afb`: motion and reveal fixtures plus registry-cache clearing.
+    - Luna `afc`: the boundary ratchet. Product code, so Astra review required.
+    - Luna `afd`: the doubles and teardown.
+  - Then: merge into a new Agent candidate, run Agent CI, re-pin, final round. **REVIEW: add_text's default element changes from am-type (motion) to text-card (bundled).** That's a visible default change, chosen because am-type can't work on a default install.
