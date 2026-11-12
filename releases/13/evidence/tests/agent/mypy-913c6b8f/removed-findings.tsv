@@ -1,0 +1,78 @@
+path	code	message	count_delta
+astrid/core/execution/_child_bridge.py	arg-type	Argument 2 to "_validate_compose_evidence" has incompatible type "Any | None"; expected "list[Mapping[str, Any]]" 	1
+astrid/core/execution/generic_host.py	arg-type	Argument "expected_token" to "_replace_quiescent" of "ManagedToolSession" has incompatible type "AdmissionToken | None"; expected "AdmissionToken" 	1
+astrid/core/execution/generic_host.py	arg-type	Argument 1 to "load_workflow_endpoint" has incompatible type "Mapping[str, Any] | None"; expected "Mapping[str, Any]" 	2
+astrid/core/execution/generic_host.py	assignment	Incompatible types in assignment (expression has type "None", variable has type "_ManagedTaskAdapter") 	1
+astrid/core/execution/generic_host.py	assignment	Incompatible types in assignment (expression has type "_ManagedVibeSessionAdapter", variable has type "_ManagedTaskAdapter") 	1
+astrid/core/execution/generic_host.py	attr-defined	"_ManagedVibeSessionAdapter" has no attribute "_hook_binding" 	1
+astrid/core/execution/generic_host.py	no-redef	Name "result_value" already defined on line 12427 	1
+astrid/core/execution/generic_host.py	union-attr	Item "LocalAttestation" of "LocalAttestation | RunPodAttestation | None" has no attribute "pod_id" 	1
+astrid/core/execution/generic_host.py	union-attr	Item "None" of "Any | None" has no attribute "finish" 	1
+astrid/core/execution/generic_host.py	union-attr	Item "None" of "LocalAttestation | RunPodAttestation | None" has no attribute "pod_id" 	1
+astrid/core/execution/generic_host.py	union-attr	Item "None" of "Mapping[str, Any] | None" has no attribute "get" 	5
+astrid/core/execution/generic_host.py	var-annotated	Need type annotation for "chain" (hint: "chain: list[<type>] = ...") 	1
+astrid/core/execution/orchestrator/runner.py	misc	Assignment to variable "error" outside except: block 	1
+astrid/core/generation/backends/registry.py	arg-type	Argument 1 to "resolve" of "PlacementDescriptor" has incompatible type "str | None"; expected "Literal['local', 'runpod'] | None" 	1
+astrid/core/generation/backends/vibecomfy.py	arg-type	Argument "task_id" to "bind_executed_settings" has incompatible type "str | None"; expected "str" 	2
+astrid/core/generation/backends/vibecomfy.py	arg-type	Argument "task_id" to "preserve_result_on_error" has incompatible type "str | None"; expected "str" 	1
+astrid/core/generation/backends/vibecomfy.py	arg-type	Argument 1 to "validate_managed_url" has incompatible type "Any | None"; expected "str" 	1
+astrid/core/generation/backends/vibecomfy.py	arg-type	Argument 3 to "run_workflow_result_path" has incompatible type "**dict[str, Mapping[str, Any] | str | None]"; expected "Callable[..., ContextManager[Any]] | None" 	1
+astrid/core/generation/backends/vibecomfy.py	assignment	Incompatible types in assignment (expression has type "ReadinessEnvelope", variable has type "dict[str, Any] | None") 	1
+astrid/core/generation/backends/vibecomfy.py	override	Signature of "generate" incompatible with supertype "astrid.core.generation.backends.base.BackendAdapter" 	1
+astrid/core/generation/engine_contracts.py	assignment	Incompatible types in assignment (expression has type "str", variable has type "None") 	1
+astrid/core/pack/validate_first_party.py	no-redef	Name "selected" already defined on line 377 	1
+astrid/installer/cli.py	assignment	Incompatible types in assignment (expression has type "Path", variable has type "None") 	1
+astrid/installer/cli.py	attr-defined	"Service" has no attribute "skill_policy_changed" 	2
+astrid/packs/h3_av/actions/compile/compile.py	arg-type	Argument "during" to "_bounded_edit_mask" has incompatible type "tuple[int, ...]"; expected "tuple[int, int]" 	1
+astrid/packs/h3_av/actions/prepare/prepare.py	operator	Unsupported operand types for - ("None" and "float") 	1
+astrid/packs/h3_av/actions/prepare/prepare.py	union-attr	Item "None" of "Any | None" has no attribute "get" 	1
+astrid/packs/h3_av/actions/transform/receipt.py	union-attr	Item "None" of "Mapping[Any, Any] | None" has no attribute "get" 	11
+astrid/packs/h3_av/actions/transform/run.py	arg-type	Argument "capability_type" to "InvocationResult" has incompatible type "str"; expected "Literal['executor', 'orchestrator', 'element']" 	1
+astrid/packs/h3_av/actions/transform/run.py	arg-type	Argument "task_id" to "serialize_terminal_result" has incompatible type "None"; expected "str" 	1
+astrid/packs/h3_av/actions/transform/run.py	arg-type	Argument 1 to "abs" has incompatible type "Any | None"; expected "SupportsAbs[Any]" 	1
+astrid/packs/h3_av/actions/transform/run.py	arg-type	Argument 1 to "add" of "set" has incompatible type "str"; expected "tuple[str, str]" 	1
+astrid/packs/h3_av/actions/transform/run.py	arg-type	Argument 1 to "isfinite" has incompatible type "Any | None"; expected "SupportsFloat | SupportsIndex" 	1
+astrid/packs/h3_av/actions/transform/run.py	arg-type	Argument 1 to "resolve" of "PlacementDescriptor" has incompatible type "str | None"; expected "Literal['local', 'runpod'] | None" 	1
+astrid/packs/h3_av/actions/transform/run.py	assignment	Incompatible types in assignment (expression has type "Any | None", variable has type "str") 	1
+astrid/packs/h3_av/actions/transform/run.py	assignment	Incompatible types in assignment (expression has type "dict[str, tuple[Path, dict[str, Any]]]", variable has type "dict[str, tuple[Path, Mapping[str, Any]]]") 	1
+astrid/packs/h3_av/actions/transform/run.py	assignment	Incompatible types in assignment (expression has type "list[dict[str, Any]]", variable has type "Path") 	1
+astrid/packs/h3_av/actions/transform/run.py	assignment	Incompatible types in assignment (expression has type "tuple[SamplingPass, ...]", variable has type "tuple[None]") 	1
+astrid/packs/h3_av/actions/transform/run.py	assignment	Incompatible types in assignment (expression has type "tuple[str, str]", variable has type "str") 	1
+astrid/packs/h3_av/actions/transform/run.py	attr-defined	"AstridError" has no attribute "h3_child_correlation" 	2
+astrid/packs/h3_av/actions/transform/run.py	attr-defined	"AstridError" has no attribute "lease_diagnostic" 	1
+astrid/packs/h3_av/actions/transform/run.py	attr-defined	"Exception" has no attribute "h3_evidence_persistence" 	1
+astrid/packs/h3_av/actions/transform/run.py	attr-defined	"Exception" has no attribute "h3_journal_status" 	6
+astrid/packs/h3_av/actions/transform/run.py	attr-defined	"Exception" has no attribute "h3_stage" 	2
+astrid/packs/h3_av/actions/transform/run.py	index	Value of type "object" is not indexable 	1
+astrid/packs/h3_av/actions/transform/run.py	misc	Expected iterable as variadic argument 	2
+astrid/packs/h3_av/actions/transform/run.py	return-value	Incompatible return value type (got "Any | str | None", expected "int | float | str") 	1
+astrid/packs/h3_av/actions/verify/verify.py	arg-type	Argument "masks" to "_verify_spatial_mask_complement" has incompatible type "list[dict[str, Any]]"; expected "list[Mapping[str, Any]]" 	1
+astrid/packs/h3_av/actions/verify/verify.py	arg-type	Argument 3 to "_segments_with_spatial_masks" has incompatible type "list[dict[str, Any]]"; expected "list[Mapping[str, Any]]" 	1
+astrid/packs/h3_av/actions/verify/verify.py	assignment	Incompatible types in assignment (expression has type "Mapping[str, Any] | None", variable has type "dict[str, Any]") 	1
+astrid/packs/h3_av/shared/planner.py	no-redef	Name "compiled" already defined on line 111 	1
+astrid/packs/h3_av/shared/request.py	no-redef	Name "result" already defined on line 51 	1
+astrid/packs/runpod/prepared_task.py	assignment	Incompatible types in assignment (expression has type "PreparedTaskRuntime", variable has type "None") 	1
+astrid/packs/runpod/prepared_task.py	assignment	Incompatible types in assignment (expression has type "tuple[Any | None, ...]", variable has type "None") 	1
+astrid/packs/runpod/prepared_task.py	attr-defined	"None" has no attribute "ensure_for_task" 	1
+astrid/packs/runpod/prepared_task.py	attr-defined	"None" has no attribute "retire_after_task" 	1
+astrid/packs/runpod/prepared_task.py	union-attr	Item "None" of "Any | None" has no attribute "encode" 	1
+astrid/packs/runpod/prepared_task.py	union-attr	Item "None" of "Any | None" has no attribute "list_project_tasks" 	1
+astrid/packs/runpod/prepared_task.py	var-annotated	Need type annotation for "seen" (hint: "seen: set[<type>] = ...") 	1
+astrid/packs/runpod/remote_placement.py	union-attr	Item "None" of "RunPodInstallation | None" has no attribute "plan" 	1
+astrid/packs/runpod/worker_preparation.py	union-attr	Item "None" of "Any | dict[Any, Any] | None" has no attribute "get" 	1
+astrid/packs/vibecomfy/actions/run/run.py	arg-type	Argument "execution_request" to "checkout_from_profile" has incompatible type "dict[Any, Any] | None"; expected "Mapping[str, Any]" 	1
+astrid/packs/vibecomfy/actions/run/run.py	arg-type	Argument 1 to "resolve" of "PlacementDescriptor" has incompatible type "str | None"; expected "Literal['local', 'runpod'] | None" 	1
+astrid/packs/vibecomfy/endpoint_checkout.py	arg-type	Argument "execution_request" to "load_workflow_endpoint" has incompatible type "dict[Any, Any] | None"; expected "Mapping[str, Any]" 	2
+astrid/packs/vibecomfy/endpoint_checkout.py	index	Value of type "Any | None" is not indexable 	2
+astrid/packs/vibecomfy/endpoint_checkout.py	operator	Unsupported left operand type for + ("None") 	1
+astrid/packs/vibecomfy/endpoint_checkout.py	union-attr	Item "LocalAttestation" of "LocalAttestation | RunPodAttestation | None" has no attribute "pod_id" 	2
+astrid/packs/vibecomfy/endpoint_checkout.py	union-attr	Item "None" of "LocalAttestation | RunPodAttestation | None" has no attribute "pod_id" 	2
+astrid/packs/vibecomfy/production_engine.py	arg-type	Argument "readiness" to "replace" of "ProductionRunResult" has incompatible type "ReadinessEnvelope"; expected "dict[str, Any] | None" 	1
+astrid/packs/vibecomfy/production_engine.py	arg-type	Argument 2 to "_result_from_runtime_result" has incompatible type "list[Path]"; expected "tuple[Path, ...]" 	1
+astrid/packs/vibecomfy/production_engine.py	assignment	Incompatible types in assignment (expression has type "tuple[Any, ...]", variable has type "list[Path]") 	1
+astrid/packs/vibecomfy/production_engine.py	union-attr	Item "CheckoutServerAdapter" of "ContextManager[Any] | CheckoutServerAdapter" has no attribute "__enter__" 	1
+astrid/packs/vibecomfy/production_engine.py	union-attr	Item "CheckoutServerAdapter" of "ContextManager[Any] | CheckoutServerAdapter" has no attribute "__exit__" 	1
+astrid/sdk/generation.py	arg-type	Argument 23 to "_generate_on_target" of "GenerationFacade" has incompatible type "**dict[str, bool]"; expected "dict[str, Any] | None" 	3
+astrid/sdk/generation.py	arg-type	Argument 24 to "_generate_on_target" of "GenerationFacade" has incompatible type "**dict[str, Path | str]"; expected "dict[str, Any] | None" 	3
+astrid/sdk/generation.py	arg-type	Argument 25 to "_generate_on_target" of "GenerationFacade" has incompatible type "**dict[str, bool]"; expected "dict[str, Any] | None" 	1
+astrid/sdk/invocation.py	arg-type	Argument "project" to "project_parent" has incompatible type "str | None"; expected "str" 	1

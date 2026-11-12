@@ -1,0 +1,154 @@
+path	code	message	count_delta
+astrid/core/_shared/run_logs.py	arg-type	Argument 1 to "int" has incompatible type "str | int | None"; expected "str | Buffer | SupportsInt | SupportsIndex | SupportsTrunc" 	1
+astrid/core/_shared/run_logs.py	operator	Unsupported operand types for <= ("float" and "None") 	1
+astrid/core/_shared/run_logs.py	operator	Unsupported operand types for >= ("float" and "None") 	1
+astrid/core/cli/domain_tasks.py	override	Signature of "parse_args" incompatible with supertype "argparse.ArgumentParser" 	1
+astrid/core/cli/domain_tasks.py	return-value	Incompatible return value type (got "int | None", expected "int") 	1
+astrid/core/cli/domain_tasks.py	union-attr	Item "None" of "Any | dict[Any, Any] | None" has no attribute "get" 	1
+astrid/core/cli/domain_tasks.py	union-attr	Item "None" of "Any | list[Any] | None" has no attribute "__iter__" (not iterable) 	1
+astrid/core/engine_cli.py	union-attr	Item "None" of "Any | list[Any] | None" has no attribute "__iter__" (not iterable) 	1
+astrid/core/engine_cli.py	union-attr	Item "None" of "Any | str | None" has no attribute "endswith" 	1
+astrid/core/execution/generic_host.py	arg-type	Argument 1 to "append" of "list" has incompatible type "ManagedEnginePreparation | None"; expected "Never" 	1
+astrid/core/execution/generic_host.py	attr-defined	"GenericPackHost" has no attribute "_machines_observed_at" 	1
+astrid/core/execution/generic_host.py	no-redef	Name "result_value" already defined on line 12331 	1
+astrid/core/execution/generic_host.py	union-attr	Item "BaseException" of "BaseException | None" has no attribute "readiness" 	1
+astrid/core/execution/generic_host.py	union-attr	Item "None" of "Any | None" has no attribute "operate" 	1
+astrid/core/execution/generic_host.py	union-attr	Item "None" of "BaseException | None" has no attribute "readiness" 	1
+astrid/core/execution/generic_host.py	var-annotated	Need type annotation for "_uncertain_engine_preparations" (hint: "_uncertain_engine_preparations: list[<type>] = ...") 	1
+astrid/core/execution/machine_run.py	assignment	Incompatible types in assignment (expression has type "str", target has type "BaseException | None") 	1
+astrid/core/generation/backends/vibecomfy.py	union-attr	Item "None" of "ComfyTargetClient | None" has no attribute "http_origin" 	1
+astrid/core/generation/backends/vibecomfy.py	union-attr	Item "None" of "ComfyTargetClient | None" has no attribute "object_info" 	1
+astrid/core/generation/backends/vibecomfy_local_server.py	var-annotated	Need type annotation for "identities" (hint: "identities: set[<type>] = ...") 	1
+astrid/core/generation/cli.py	arg-type	Argument 1 to "_kept_failure" has incompatible type "set[tuple[Any | None, Any | None]]"; expected "set[tuple[str, int]]" 	2
+astrid/core/generation/cli.py	assignment	Incompatible types in assignment (expression has type "ValueError", variable has type "AstridSDKError") 	1
+astrid/core/generation/defaults.py	arg-type	Argument 1 to "append" of "list" has incompatible type "str | None"; expected "str" 	1
+astrid/core/generation/engine_custody.py	has-type	Cannot determine type of "cancelled" 	1
+astrid/core/generation/engine_recipe.py	var-annotated	Need type annotation for "seen" (hint: "seen: set[<type>] = ...") 	1
+astrid/core/generation/entries.py	assignment	Incompatible types in assignment (expression has type "tuple[str]", variable has type "list[str]") 	1
+astrid/core/generation/job_inputs.py	dict-item	Unpacked dict entry 0 has incompatible type "Any | None"; expected "SupportsKeysAndGetItem[str, Any]" 	1
+astrid/core/generation/job_inputs.py	misc	Expected iterable as variadic argument 	1
+astrid/core/generation/job_inputs.py	union-attr	Item "None" of "Any | None" has no attribute "items" 	2
+astrid/core/generation/job_inputs.py	union-attr	Item "None" of "Any | None" has no attribute "values" 	2
+astrid/core/generation/job_inputs.py	var-annotated	Need type annotation for "files" (hint: "files: dict[<type>, <type>] = ...") 	1
+astrid/core/generation/local_job.py	arg-type	Argument 1 to "run_named_entry" has incompatible type "dict[str, Any] | None"; expected "dict[str, Any]" 	1
+astrid/core/generation/local_job.py	arg-type	Argument 1 to "set" of "ContextVar" has incompatible type "str | Any"; expected "None" 	1
+astrid/core/generation/managed_preparation.py	assignment	Incompatible types in assignment (expression has type "dict[str, Any]", variable has type "None") 	1
+astrid/core/generation/managed_preparation.py	index	Unsupported target for indexed assignment ("None") 	1
+astrid/core/generation/managed_preparation.py	return-value	Incompatible return value type (got "None", expected "dict[str, Any]") 	1
+astrid/core/generation/target_inventory.py	index	Unsupported target for indexed assignment ("Any | None") 	1
+astrid/core/machines_cli.py	arg-type	Argument 1 to "float" has incompatible type "Any | None"; expected "str | Buffer | SupportsFloat | SupportsIndex" 	1
+astrid/core/machines_cli.py	arg-type	Argument 1 to "float" has incompatible type "float | Any | None"; expected "str | Buffer | SupportsFloat | SupportsIndex" 	3
+astrid/core/machines_cli.py	index	Value of type "object" is not indexable 	1
+astrid/core/pack/validate_first_party.py	assignment	Incompatible types in assignment (expression has type "Path | None", variable has type "Path") 	1
+astrid/core/pack/validate_first_party.py	no-redef	Name "selected" already defined on line 376 	1
+astrid/installer/backend.py	arg-type	Argument 1 to "repository_identity" has incompatible type "object"; expected "str" 	1
+astrid/installer/progress.py	union-attr	Item "None" of "Tracks | None" has no attribute "width" 	3
+astrid/packs/generation/extensions/points/engine_protocol.py	misc	All protocol members must have explicitly declared types 	1
+astrid/packs/h3_av/cli.py	arg-type	Argument 1 to "render_astrid_error" has incompatible type "H3RequestError"; expected "AstridError" 	1
+astrid/packs/h3_av/shared/compile.py	arg-type	Argument "during" to "_bounded_edit_mask" has incompatible type "tuple[int, ...]"; expected "tuple[int, int]" 	1
+astrid/packs/h3_av/shared/generation.py	union-attr	Item "None" of "Any | None" has no attribute "bytes" 	1
+astrid/packs/h3_av/shared/generation.py	union-attr	Item "None" of "Any | None" has no attribute "sha256" 	1
+astrid/packs/h3_av/shared/planner.py	no-redef	Name "compiled" already defined on line 110 	1
+astrid/packs/h3_av/shared/prepare.py	operator	Unsupported operand types for - ("None" and "float") 	1
+astrid/packs/h3_av/shared/prepare.py	union-attr	Item "None" of "Any | None" has no attribute "get" 	1
+astrid/packs/h3_av/shared/request.py	no-redef	Name "result" already defined on line 68 	1
+astrid/packs/h3_av/shared/verify.py	arg-type	Argument "masks" to "_verify_spatial_mask_complement" has incompatible type "list[dict[str, Any]]"; expected "list[Mapping[str, Any]]" 	1
+astrid/packs/h3_av/shared/verify.py	arg-type	Argument 3 to "_segments_with_spatial_masks" has incompatible type "list[dict[str, Any]]"; expected "list[Mapping[str, Any]]" 	1
+astrid/packs/h3_av/shared/verify.py	assignment	Incompatible types in assignment (expression has type "Mapping[str, Any] | None", variable has type "dict[str, Any]") 	1
+astrid/packs/runpod/adapter.py	operator	Unsupported operand types for <= ("int" and "None") 	2
+astrid/packs/runpod/adapter.py	type-var	Value of type variable "SupportsRichComparisonT" of "max" cannot be "int | Any | None" 	2
+astrid/packs/runpod/adapter.py	union-attr	Item "None" of "Any | None" has no attribute "__iter__" (not iterable) 	1
+astrid/packs/runpod/failure_receipt.py	arg-type	Argument 2 to "_collection" has incompatible type "list[dict[Any, Any]]"; expected "list[Mapping[str, Any]]" 	1
+astrid/packs/runpod/generation.py	arg-type	Argument "model_cache_root" to "pin_storage" has incompatible type "str | None"; expected "str" 	1
+astrid/packs/runpod/generation.py	union-attr	Item "None" of "dict[str, Any] | None" has no attribute "get" 	3
+astrid/packs/runpod/machine.py	arg-type	Argument 1 to "dict" has incompatible type "Mapping[str, Any] | None"; expected "SupportsKeysAndGetItem[Any, Any]" 	1
+astrid/packs/runpod/machine.py	arg-type	Argument 1 to "get" of "dict" has incompatible type "str | None"; expected "str" 	1
+astrid/packs/runpod/machine.py	arg-type	Argument 1 to "quote" has incompatible type "str | None"; expected "str" 	1
+astrid/packs/runpod/machine.py	arg-type	Argument 1 to "staged_workflow_path" has incompatible type "**dict[str, Any | None]"; expected "tuple[type[BaseException], ...]" 	1
+astrid/packs/runpod/machine.py	arg-type	Argument 2 to "MachineLease" has incompatible type "Claim | None"; expected "Claim" 	1
+astrid/packs/runpod/machine.py	arg-type	Argument 4 to "MachineLease" has incompatible type "Mapping[str, Any] | None"; expected "Mapping[str, Any]" 	1
+astrid/packs/runpod/machine.py	assignment	Incompatible types in assignment (expression has type "Any | dict[Any, Any]", variable has type "PreparedRunPodLease") 	1
+astrid/packs/runpod/machine.py	attr-defined	"BaseException" has no attribute "claim_context" 	2
+astrid/packs/runpod/machine.py	attr-defined	"BaseException" has no attribute "machine_failure" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "cost_usd" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "expires_at" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "failure_diagnostic" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "failure_exit_code" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "failure_install_receipt" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "failure_logs" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "preparation_state" 	1
+astrid/packs/runpod/machine.py	attr-defined	"MachineLease" has no attribute "unsafe_job_stop" 	1
+astrid/packs/runpod/machine.py	attr-defined	"PreparedRunPodLease" has no attribute "get" 	2
+astrid/packs/runpod/machine.py	call-arg	Unexpected keyword argument "job_id" for "job_start" of "PodOps" 	2
+astrid/packs/runpod/machine.py	dict-item	Unpacked dict entry 0 has incompatible type "Mapping[str, Any] | None"; expected "SupportsKeysAndGetItem[str, Any]" 	1
+astrid/packs/runpod/machine.py	operator	Unsupported operand types for - ("None" and "float") 	1
+astrid/packs/runpod/machine.py	operator	Unsupported operand types for >= ("float" and "None") 	2
+astrid/packs/runpod/machine.py	union-attr	Item "None" of "Any | None" has no attribute "paid_started_at" 	1
+astrid/packs/runpod/machine.py	union-attr	Item "None" of "Mapping[str, Any] | None" has no attribute "get" 	1
+astrid/packs/runpod/pod_fields.py	arg-type	Argument 1 to "append" of "list" has incompatible type "str | None"; expected "int | None" 	1
+astrid/packs/runpod/provider.py	arg-type	Argument "machine_id" to "MachineRecord" has incompatible type "Any | None"; expected "str" 	1
+astrid/packs/runpod/provider.py	arg-type	Argument "state" to "MachineRecord" has incompatible type "str"; expected "Literal['starting', 'running', 'stopped', 'gone']" 	1
+astrid/packs/runpod/provider.py	arg-type	Argument 1 to "get" of "dict" has incompatible type "Any | None"; expected "str" 	1
+astrid/packs/runpod/remote_placement.py	arg-type	Argument 2 to "get" of "PodOps" has incompatible type "str"; expected "Path" 	1
+astrid/packs/runpod/remote_placement.py	assignment	Incompatible types in assignment (expression has type "Path", variable has type "str") 	1
+astrid/packs/runpod/remote_placement.py	assignment	Incompatible types in assignment (expression has type "Reason", variable has type "str") 	1
+astrid/packs/runpod/remote_placement.py	operator	Unsupported operand types for - ("None" and "float") 	6
+astrid/packs/runpod/remote_placement.py	operator	Unsupported operand types for >= ("float" and "None") 	1
+astrid/packs/runpod/remote_placement.py	union-attr	Item "None" of "Claim | None" has no attribute "ops" 	3
+astrid/packs/runpod/remote_placement.py	union-attr	Item "None" of "RunPodInstallation | None" has no attribute "engine" 	1
+astrid/packs/runpod/remote_placement.py	union-attr	Item "None" of "RunPodInstallation | None" has no attribute "platform" 	1
+astrid/packs/runpod/remote_placement.py	union-attr	Item "None" of "RunPodInstallation | None" has no attribute "root" 	2
+astrid/packs/runpod/remote_placement.py	union-attr	Item "PodOps" of "PodOps | Any" has no attribute "deadline" 	1
+astrid/packs/runpod/target_selection.py	arg-type	Argument 1 to "RecordedOffer" has incompatible type "Any | None"; expected "str" 	1
+astrid/packs/runpod/target_selection.py	arg-type	Argument 1 to "float" has incompatible type "float | None"; expected "str | Buffer | SupportsFloat | SupportsIndex" 	1
+astrid/packs/runpod/target_selection.py	arg-type	Argument 1 to "isfinite" has incompatible type "float | None"; expected "SupportsFloat | SupportsIndex" 	1
+astrid/packs/runpod/target_selection.py	arg-type	Argument 1 to "to_thread" has incompatible type "Callable[[], tuple[RunPodOffer, ...]] | None"; expected "Callable[[], tuple[RunPodOffer, ...]]" 	1
+astrid/packs/runpod/target_selection.py	arg-type	Argument 2 to "RecordedOffer" has incompatible type "Any | None"; expected "str" 	1
+astrid/packs/runpod/target_selection.py	arg-type	Argument 3 to "RecordedOffer" has incompatible type "Any | None"; expected "float" 	1
+astrid/packs/runpod/target_selection.py	assignment	Incompatible types in assignment (expression has type "AcquisitionUnresolvedError", variable has type "PaidSelectionError") 	2
+astrid/packs/runpod/target_selection.py	attr-defined	"PaidSelectionError" has no attribute "cause" 	3
+astrid/packs/runpod/target_selection.py	operator	Unsupported operand types for <= ("int" and "None") 	1
+astrid/packs/runpod/target_selection.py	operator	Unsupported operand types for > ("float" and "None") 	1
+astrid/packs/runpod/target_selection.py	return-value	Incompatible return value type (got "Any | None", expected "str") 	1
+astrid/packs/runpod/worker_owner.py	arg-type	Argument 1 to "get" of "dict" has incompatible type "tuple[Any | None, Any | None, Any | None, Any | None]"; expected "tuple[str, str, int, str]" 	1
+astrid/packs/runpod/worker_owner.py	arg-type	Argument 1 to "validate" of "PaidRunConsent" has incompatible type "_RecordedPaidOffer"; expected "RunPodOffer" 	1
+astrid/packs/runpod/worker_owner.py	attr-defined	"RunPodWorkerOwnerError" has no attribute "release_identity" 	1
+astrid/packs/runpod/worker_owner.py	attr-defined	"TargetObservationError" has no attribute "_astrid_failed_identity" 	1
+astrid/packs/runpod/worker_owner.py	dict-item	Unpacked dict entry 0 has incompatible type "Any | dict[Any, Any] | None"; expected "SupportsKeysAndGetItem[str, Any]" 	1
+astrid/packs/runpod/worker_owner.py	index	Value of type "Any | None" is not indexable 	2
+astrid/packs/runpod/worker_owner.py	operator	Unsupported operand types for - ("float" and "None") 	1
+astrid/packs/runpod/worker_owner.py	return-value	Incompatible return value type (got "dict[str, Any] | None", expected "Mapping[str, Any]") 	1
+astrid/packs/runpod/worker_owner.py	union-attr	Item "None" of "Any | dict[Any, Any] | None" has no attribute "get" 	2
+astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py	arg-type	Argument 1 to "setdefault" of "MutableMapping" has incompatible type "tuple[str, str | None]"; expected "tuple[str, str]" 	1
+astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py	attr-defined	"ValueError" has no attribute "missing" 	1
+astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py	attr-defined	"ValueError" has no attribute "unpinned" 	1
+astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py	import-untyped	Library stubs not installed for "yaml" 	1
+astrid/packs/vibecomfy/local_job.py	arg-type	Argument "mode" to "apply_workflow_inputs" has incompatible type "Any | str | None"; expected "str" 	1
+astrid/packs/vibecomfy/local_job.py	arg-type	Argument 1 to "get" of "dict" has incompatible type "Any | str | None"; expected "str" 	1
+astrid/packs/vibecomfy/local_job.py	arg-type	Argument 1 to "set" of "ContextVar" has incompatible type "Callable[[Any, Any], Any]"; expected "None" 	1
+astrid/packs/vibecomfy/local_job.py	arg-type	Argument 2 to "require_generation_target_readiness" has incompatible type "Any | str | None"; expected "str" 	1
+astrid/packs/vibecomfy/local_job.py	assignment	Incompatible types in assignment (expression has type "Path | None", variable has type "Path") 	1
+astrid/packs/vibecomfy/local_job.py	index	Value of type "dict[str, Any] | None" is not indexable 	5
+astrid/packs/vibecomfy/local_job.py	operator	Unsupported operand types for + ("int" and "str") 	1
+astrid/packs/vibecomfy/local_job.py	union-attr	Item "None" of "dict[str, Any] | None" has no attribute "get" 	1
+astrid/packs/vibecomfy/local_server_engine.py	attr-defined	"BaseException" has no attribute "engine_diagnostic" 	1
+astrid/packs/vibecomfy/local_server_engine.py	index	Value of type "dict[str, Any] | None" is not indexable 	1
+astrid/sdk/generation.py	arg-type	Argument 1 to "comfy_selector" has incompatible type "str"; expected "Placement" 	1
+astrid/sdk/generation.py	assignment	Incompatible types in assignment (expression has type "Placement", variable has type "str") 	1
+astrid/sdk/generation.py	attr-defined	"dict[str, Any]" has no attribute "id" 	1
+astrid/sdk/generation.py	attr-defined	"str" has no attribute "device" 	1
+astrid/sdk/generation.py	attr-defined	"str" has no attribute "kind" 	4
+astrid/sdk/generation.py	attr-defined	"str" has no attribute "machine" 	1
+astrid/sdk/generation.py	attr-defined	"str" has no attribute "policy" 	1
+astrid/sdk/generation.py	attr-defined	list? has no attribute "append" 	2
+astrid/sdk/generation.py	index	Unsupported target for indexed assignment ("dict[str, Any] | None") 	1
+astrid/sdk/generation.py	index	Value of type "dict[str, Any] | None" is not indexable 	3
+astrid/sdk/generation.py	index	Value of type list? is not indexable 	1
+astrid/sdk/generation.py	union-attr	Item "None" of "dict[str, Any] | None" has no attribute "get" 	2
+astrid/sdk/generation.py	valid-type	Function "astrid.sdk.generation.GenerationFacade.list" is not valid as a type 	1
+astrid/sdk/invocation.py	arg-type	Argument 1 to "isfinite" has incompatible type "Any | None"; expected "SupportsFloat | SupportsIndex" 	1
+astrid/sdk/invocation.py	assignment	Incompatible types in assignment (expression has type "None", variable has type "float") 	1
+astrid/sdk/invocation.py	operator	Unsupported operand types for + ("float" and "None") 	1
+astrid/sdk/invocation.py	operator	Unsupported operand types for < ("int" and "None") 	1
+astrid/sdk/invocation.py	union-attr	Item "None" of "dict[str, Any] | None" has no attribute "get" 	1
+astrid/skills/__init__.py	assignment	Incompatible types in assignment (expression has type "Any | None", variable has type "Path") 	1
