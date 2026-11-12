@@ -37,7 +37,7 @@ For contributors, the first stage means one command and one list to learn; the s
 | 2 | [Plan 51](../../plans/51-astrid-dev-clean-up/plan.md) | each rule and term has one source; a fresh agent changes astrid-dev from one skill alone | B: one home per rule and one word per term |
 | — | unplanned | reassessment after a real period with at least ten contributors working at the same time | — |
 
-Critical path: step 1, then step 2 (Plan 51's Part 2 waits for Plan 48's task C-2), then the unplanned reassessment.
+Critical path: step 1, then step 2, then the unplanned reassessment.
 
 ## Sources and reassessment
 
