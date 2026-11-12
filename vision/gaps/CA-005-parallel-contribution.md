@@ -1,6 +1,7 @@
 # CA-005 — Many contributors and agents can't yet work in parallel through one clear process
 
-**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · [Completely open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open / partly evidenced (2026-11-12): Plan 48's committed scope is complete and shown on astrid-dev's `main` and in a scratch repository, but not from observed work at scale.
+**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · [Completely open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open / partly evidenced (2026-11-12): Plan 48's committed scope is complete and shown on astrid-dev's `main` and in a scratch repository, and Plan 51 finished its two parts (route step 2); none of it is from observed work at scale.
+
 
 ## Desired state
 
@@ -9,6 +10,8 @@ Someone new, or their agent, can learn from one place each what kinds of record 
 ## Current state
 
 The contribution principles, skills, templates and checks exist and a small number of contributors use them daily. As read on 11 Nov 2026 ([findings](../../plans/48-one-record-model/inputs.md#what-exists-today)): there is no list of what is checked; local and CI runs can disagree; one generated-page pipeline exists and is not reusable; several facts have two hand-kept homes; every change to any project's owner, standing or estimate edits one shared table; ten of 47 project plans follow the template; and two projects share a number. This shows structure only. Nothing here has been observed with many contributors working at once.
+
+**After Plan 51 (12 Nov 2026):** each rule is written in one place and each role and unit of work is defined once, in a glossary; one skill says where a change to astrid-dev goes and how to prove it; the skills and contributor docs hold fewer words than at the project's start (29,410 to 29,181 at its last merge), and the scripts fewer lines (3,005 to 2,996). One fresh worker, given the new skill and the extending guide, added a check; its confusions were recorded, and seven were fixed in the skill and the guide. That is one worker on one task. A new generated page was not tried, and nothing was run with many contributors at once.
 
 ## Gap
 
@@ -34,7 +37,7 @@ For contributors, the first stage means one command and one list to learn; the s
 | Step | Plan | Contributes (closure evidence it delivers) | Milestone |
 |---|---|---|---|
 | 1 | [Plan 48](../../plans/48-one-record-model/plan.md) | one command lists every check and generated page; a project lands by adding only its own folder; one source per fact; a fresh agent extends it from the guide; refusals work. Shown on `main` and in a scratch repository: the list and the same-everywhere command, two plan-adding PRs merging without conflict, hand edits and a missing completion form refused, a fresh agent adding a check and a view from the guide. Not shown: ten contributors at once, a fresh contributor finding five single sources, and adding a project field from the guide | A: one model, and plans define the list (reached 12 Nov 2026). Plan 48's track C (generated completion form) and Phase 4 (one evidence envelope) were not built and remain proposals |
-| 2 | [Plan 51](../../plans/51-astrid-dev-clean-up/plan.md) | each rule and term has one source; a fresh agent changes astrid-dev from one skill alone | B: one home per rule and one word per term |
+| 2 | [Plan 51](../../plans/51-astrid-dev-clean-up/plan.md) | each rule and term has one source; a fresh agent changes astrid-dev from one skill and the guide it links (shown for one new check; not for a new generated page) | B: one home per rule and one word per term |
 | — | unplanned | reassessment after a real period with at least ten contributors working at the same time | — |
 
 Critical path: step 1, then step 2, then the unplanned reassessment.

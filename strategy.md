@@ -4,7 +4,7 @@ Astrid's execution strategy is a sequence of **releases**, each a coherent step 
 
 Each plan's own `plan.md` holds its status, owner and estimate, `plans/priority.md` holds the order, and the [plan catalog](plans/index.md) is generated from them. [Vision gaps](vision/README.md) and their routes still define what needs to improve and how success will be assessed. A plan may be worked on before it is assigned to a release; an unassigned plan is not a release commitment.
 
-**Last reviewed:** 2026-11-12, for the completion of Plan 48 (no release assignment changed; Plan 48 is in no release) after the 2026-11-11 split of Release 12 into Releases 12 and 13. Future assignments are provisional until explicitly finalized.
+**Last reviewed:** 2026-11-12, for the completions of Plan 48 and Plan 51 (no release assignment changed; neither plan is in a release) after the 2026-11-11 split of Release 12 into Releases 12 and 13. Future assignments are provisional until explicitly finalized.
 
 ## Focus now
 
@@ -27,6 +27,7 @@ Past releases are documented in the [existing release log](plans/releases.md) an
 
 ## Decisions
 
+- **2026-11-12:** [Plan 51](plans/51-astrid-dev-clean-up/plan.md) (the astrid-dev clean-up) is done. It was never assigned to a release, so [Release 12](releases/12.md) and [Release 13](releases/13.md) and their rows above are unchanged. It left the release skill and the GPU-validation skill alone. Its assessment and route in [CA-005](vision/gaps/CA-005-parallel-contribution.md) are updated; that gap stays open.
 - **2026-11-11:** Hannah split the combined release. Release 12 is fixes-only and includes the onboarding-tour commits on App `main`; generation (Plans 32, 40, 20 and 34) is [Release 13](releases/13.md), built on published Release 12. This reverses the 10 Nov fold-in below.
 - **2026-11-10:** Hannah folded the generation work (Plans 32, 40, 20 P1.5 and staged work, and Plan 34's proof) into Release 12 instead of a Release 13. The draft `releases/13.md` is folded into [Release 12](releases/12.md); the next release brief starts fresh after publish.
 - **2026-11-10:** Strategy is release-led: each release file starts as a living strategy brief, with a highlight, intent, approach and linked plans. The overview here is mainly a summary of those release files.
