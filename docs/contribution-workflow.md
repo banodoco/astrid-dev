@@ -60,15 +60,9 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 [**Strategy**](../strategy.md) is the short, ordered **release roadmap**. Each [release brief](../releases/TEMPLATE.md) owns the reasoning. Start a future release from the template and revise it as work evolves; it is not a publication request. On finalization, the **same file** becomes the immutable release ledger entry.
 
-**The strategy has four parts.** Documentation CI checks its shape and that the `Sequence` rows match their release files:
-- **Focus now:** short context on the currently qualifying release and concurrent work.
-- **Sequence:** one ordered row per release document with columns `Release` (link), `Highlight`, `Plans` (links) and `Why this order`. Its highlight and complete set of linked plans must match the source release document.
-- **Not now:** work not yet assigned to a release, without invented commitments.
-- **Decisions:** dated owner decisions affecting the release sequence, plus `**Last reviewed:**`.
+Documentation CI checks the strategy's shape and that its `Sequence` rows match their release files.
 
 **When it changes:** creating a release draft or changing its highlight/plans updates the strategy summary in the same PR. A project start/completion may change a release's scope or timing, so review the strategy and release files; the completion PR must touch `strategy.md` (`python3 scripts/astrid_dev.py check`). New priorities and scope require the owner's decision; listing work is not authorization to run or publish it.
-
-**Safe publishing boundary:** drafts (including future numbered releases) can land on `main` with no complete pins; documentation CI validates their structure. Plan 31 implements a separate fail-closed owner-approved Draft→Final transition with pinned commits, manifest checks and immutable history. A strategy edit must never publish a release.
 
 ## Claim a project
 
@@ -142,12 +136,12 @@ CI enforces the mechanical completion contract and current references. A reviewe
 
 Anything noticed in Astrid is one issue here. Each form is the one definition of its headings:
 
-- [observation](../.github/ISSUE_TEMPLATE/observation.yml): something seen, in a sentence; not a commitment.
+- [observation](../.github/ISSUE_TEMPLATE/observation.yml): something seen.
 - [bug](../.github/ISSUE_TEMPLATE/bug.yml): a failure to fix or recover from.
 - [question](../.github/ISSUE_TEMPLATE/question.yml): anything for the maintainers.
 - [idea](../.github/ISSUE_TEMPLATE/idea.yml): something missing; it never creates a gap.
 
-**Filing.** A person: "New issue", pick a form. An agent: search first, `gh api "search/issues?q=repo:banodoco/astrid-dev+is:issue+<words>"`; if it is there, add a thumbs-up or a comment and file nothing. Otherwise write `title.txt` (`observation: <sentence>`, with no trailing newline, which would stay in the title: `printf '%s'` writes none) and `body.txt` with your file tool, so no shell reads the text, then run:
+**Filing.** A person: "New issue", pick a form. An agent: search first, `gh api "search/issues?q=repo:banodoco/astrid-dev+is:issue+<words>"`; if it is there, add a thumbs-up or a comment and file nothing. Otherwise write `title.txt` (`observation: <sentence>`, no trailing newline, which would stay in the title: `printf '%s'`) and `body.txt` with your file tool, so no shell reads the text, then run:
 
 ```sh
 gh api repos/banodoco/astrid-dev/issues -F title=@title.txt -F body=@body.txt
