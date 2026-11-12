@@ -30,7 +30,7 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
 
 ## NOW (updated 2026-11-12 01:27Z, from `date -u`)
 
-**On the critical path:** the qualifying window, all running on one tuple, started ~01:50Z. Agent CI (about 2 h) is the long pole; expected ~03:50–04:10Z.
+**On the critical path:** the qualifying window, all running on one tuple, started ~01:25Z (from `date -u`). Agent CI (about 2 h) is the long pole; expected ~03:25–03:45Z.
 
 **Frozen tuple:**
 - App `237b28be935af49c23464fa6ca1cf30db67ebaa0`: re-pin on `scratch/r12-app-int`; contains App main `3e53462f4`.
@@ -47,9 +47,9 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
 **Then:**
 - Agent comparison as a **delta** against `c5370a86`: the 64 gone or named, and nothing that passed on `c5370a86` now fails.
 - One red: fix exactly that, re-run only what it affects, carry the rest over.
-- ~04:30Z: A-FROZEN, then GATE-GREEN to the orchestrator; it publishes; then the post-publish checks; then stop.
+- ~04:00Z: A-FROZEN, then GATE-GREEN to the orchestrator; it publishes; then the post-publish checks; then stop.
 
-**Scope closed at the cut (01:50Z).** The drop side track goes to Plan 39.
+**Scope closed at the cut (~01:24Z).** The drop side track goes to Plan 39.
 
 - **Exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252. All four proven failing at their markers.
 - **Workers:** Codex N `gpt-6-luna`, X `gpt-6.1-terra`, S `gpt-6.1-sol`, reviews `gpt-6-astra`; log downloads by Haiku. Fallback used: none.
