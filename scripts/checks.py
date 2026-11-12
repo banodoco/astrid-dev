@@ -371,6 +371,16 @@ def _planning_impl(context):
     return errors
 
 
+def _pack_shape_impl(context):
+    import pack_shape as gate
+    root = context.root
+    shape = gate.template_shape(root)
+    errors = []
+    for name in gate.new_packs(context.base, root):
+        errors.extend(gate.shape_errors(name, shape, root))
+    return errors
+
+
 def _completion(context):
     try:
         return _completion_impl(context)
@@ -390,6 +400,13 @@ def _planning(context):
         return _planning_impl(context)
     except (OSError, ValueError) as exc:
         return [f"project evidence: {exc}"]
+
+
+def _pack_shape(context):
+    try:
+        return _pack_shape_impl(context)
+    except (OSError, ValueError) as exc:
+        return [f"can't check new packs against the templates: {exc}; fix that, then run the check again"]
 
 
 @dataclass(frozen=True)
@@ -436,4 +453,5 @@ REGISTRY: tuple[Check, ...] = (
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
     Check('project-planning-evidence', 'pr', 'Validate planning evidence for new or opted-in projects', _planning),
+    Check('pack-shape', 'pr', 'Check that new project packs follow the templates', _pack_shape),
 )
