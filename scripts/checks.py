@@ -50,6 +50,16 @@ def _catalog(context):
     return errors
 
 
+def _unique_project_numbers(context):
+    plans = context.root / "plans"
+    by_number = {}
+    for folder in plans.iterdir():
+        if folder.is_dir() and (match := re.match(r"^(\d{2})-", folder.name)):
+            by_number.setdefault(match.group(1), []).append(folder.name)
+    return [f"duplicate project number {number}: {', '.join(sorted(folders))}"
+            for number, folders in sorted(by_number.items()) if len(folders) > 1]
+
+
 def _release_documents(context):
     from check_docs import catalog_rows, read, CATALOG, release_errors
     root = context.root
@@ -437,6 +447,7 @@ class Check:
 
 REGISTRY: tuple[Check, ...] = (
     Check('plan-catalog', 'always', 'Parse the plan catalog', _catalog),
+    Check('unique-project-numbers', 'always', 'Require unique project numbers', _unique_project_numbers),
     Check('release-documents', 'always', 'Validate release documents', _release_documents),
     Check('strategy-consistency', 'always', 'Validate strategy consistency', _strategy_consistency),
     Check('catalog-paths', 'always', 'Validate catalog paths', _catalog_paths),

@@ -2,6 +2,7 @@
 # Registered checks
 
 - `plan-catalog always Parse the plan catalog`
+- `unique-project-numbers always Require unique project numbers`
 - `release-documents always Validate release documents`
 - `strategy-consistency always Validate strategy consistency`
 - `catalog-paths always Validate catalog paths`
