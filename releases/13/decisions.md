@@ -912,3 +912,16 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Proof: a CPU dry run of every catalog entry through the CLI, against provider fakes.
   - Target: merged by Fri 13 Nov 12:00 UTC.
 - **Live proof of a provider path** needs that provider's key. The RunPod spend authorization doesn't cover it, so it's for the owner.
+
+## 12 Nov ~19:55 UTC: test lane's money fixes, split by owner of state
+
+- **Publication classifier:** split. The shared 4xx classifier and the 408/429 replay land from the test lane.
+- **Moved to the machines lane's LT** (one state machine, not a second one in `generic_host`):
+  - the durable round bound;
+  - the unresolved latch, across `run_task`, the supervisor and `--run-task`;
+  - recovery of sibling roots after restart.
+
+  Round 2's blockers become LT acceptance tests. Until LT lands (Fri ~14:00), the round bound stays in memory only.
+- **Provider gate** (`ece1436d`): accepted, merging after the round-2 Astra review (W44).
+  - The card-5 conflict is resolved: the budget comes from paid expiry, and `claim_lifetime_seconds` applies inside it.
+  - Re-registering the fakes at `_get_provider_pod` is accepted as setup only.
