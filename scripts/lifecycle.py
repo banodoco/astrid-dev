@@ -11,12 +11,17 @@ class Status:
     needs: tuple[str, ...] = ()
 
 
+NAMED_OWNER = "named-owner"
+COMPLETION_ASSESSMENT = "completion-assessment"
+NEEDS = (NAMED_OWNER, COMPLETION_ASSESSMENT)
+
+
 STATUSES = (
     Status("queued", False, "planned, not started"),
-    Status("active", False, "explicitly started", ("named-owner",)),
+    Status("active", False, "explicitly started", (NAMED_OWNER,)),
     Status("blocked", False, "known impediment"),
     Status("paused", False, "deliberately stopped"),
-    Status("done", True, "accepted completion evidence", ("completion-assessment",)),
+    Status("done", True, "accepted completion evidence", (COMPLETION_ASSESSMENT,)),
     Status("cancelled", True, "intentionally abandoned, with reason in the plan"),
 )
 
@@ -39,6 +44,9 @@ def route_pattern():
 
 
 def requiring(need):
+    if need not in NEEDS:
+        known = ", ".join(NEEDS)
+        raise ValueError(f"unknown lifecycle need {need!r}; known needs: {known}")
     return tuple(status.name for status in STATUSES if need in status.needs)
 
 

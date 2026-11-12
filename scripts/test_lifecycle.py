@@ -73,7 +73,15 @@ class DeclarationTests(unittest.TestCase):
     def test_requiring(self):
         self.assertEqual(set(lifecycle.requiring("named-owner")), {"active"})
         self.assertEqual(set(lifecycle.requiring("completion-assessment")), {"done"})
-        self.assertEqual(set(lifecycle.requiring("unknown")), set())
+        with self.assertRaises(ValueError):
+            lifecycle.requiring("unknown")
+
+    def test_requiring_rejects_unknown_needs(self):
+        for need in ("named-owner", "completion-assessment"):
+            with self.subTest(need=need):
+                self.assertIsInstance(lifecycle.requiring(need), tuple)
+        with self.assertRaisesRegex(ValueError, r"known needs: named-owner, completion-assessment"):
+            lifecycle.requiring("completion-assesment")
 
     def test_definitions(self):
         self.assertEqual(lifecycle.definitions(), SENTENCE)
