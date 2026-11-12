@@ -219,5 +219,20 @@ class ProjectCatalogContractTests(unittest.TestCase):
                     with self.subTest(rule=entry.id):
                         self.assertEqual(entry.run(context), [])
 
+    def test_unique_project_numbers_reports_duplicates_and_is_registered(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            plans = root / "plans"
+            (plans / "40-a").mkdir(parents=True)
+            (plans / "40-b").mkdir()
+            entry = next(entry for entry in checks.REGISTRY if entry.id == "unique-project-numbers")
+            self.assertEqual(entry.trigger, "always")
+            self.assertEqual(entry.run(checks.Context(root)), [
+                "duplicate project number 40: 40-a, 40-b"])
+            (plans / "40-b").rmdir()
+            self.assertEqual(entry.run(checks.Context(root)), [])
+            _, listing = invoke(["list"])
+            self.assertIn("unique-project-numbers always", listing)
+
 if __name__ == "__main__":
     unittest.main()
