@@ -6,7 +6,7 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
 
 Overnight mode from 00:33Z: I'm working through without you or the orchestrator, and deciding unanswered questions by the brief's priorities (marked REVIEW). Release 13 isn't this session's scope, so no spend and no pods here.
 
-- **State: GATE-GREEN posted (04:3xZ); waiting for the orchestrator to publish.** The tuple is frozen and qualified.
+- **State: PUBLISHED (~04:33Z).** All three mains are at the frozen SHAs. Post-publish checks are running.
   - Frozen tuple: App `237b28be9`, Agent `0e1543e0`, Runtime `42ae24aff`.
   - Matrix 11/11 green, native Windows included. App Tests green. Direct Journey green, with exactly the 4 named exceptions.
   - The Agent delta against `c5370a86` is clean apart from one new failing ID: `tests/packs/test_audio_render.py::…test_rendered_mp4_contains_audio_stream`, a custody-lock deadline on darwin/Remotion. The fix round touches no render code.
@@ -463,3 +463,9 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - My earlier phrase "touches no render code" was imprecise. Corrected in the gate record.
   - **Ruled a known issue; Plan 39. REVIEW.**
 - 2026-11-12 04:31Z — **A-FROZEN + GATE-GREEN.** Gate record `r12-progress/gate-record` is complete with no placeholders. Main heads were rechecked just now: Agent `a105de3a4`, Runtime `4f5477cb0` and App `3e53462f4` are all fast-forward. Sent to the orchestrator with the three publish commands.
+- 2026-11-12 04:34Z — **PUBLISHED** (orchestrator, by fast-forward, no force; it verified the gate record independently). Confirmed by `git ls-remote`:
+  - Agent main `a105de3a4` → `0e1543e0`
+  - Runtime main `4f5477cb0` → `42ae24aff`
+  - App main `3e53462f4` → `237b28be9` (Railway deploy pending)
+  - Gate record: the ComfyUI full SHA filled (`ee71d5c4993f…`, from `pins.json` at `0e1543e0`). I'd missed this placeholder because it wasn't in `{{}}` form; the orchestrator caught it.
+  - Post-publish, under way: the served-manifest poller, and the push-triggered runs on all three mains (Agent CI, Lanes, Chat service, Windows task host journey; Runtime CI; App Tests, E2E, Lanes, Dockerfile Check, Windows installer). Any red is ruled against the pre-publish state.
