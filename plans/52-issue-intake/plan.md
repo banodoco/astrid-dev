@@ -4,13 +4,13 @@
 
 **Goal:** Anyone using or building Astrid, and their agent, reports what they noticed in one command or one form on astrid-dev's GitHub Issues, where others can say "me too" and nothing is lost or filed twice.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Plan 52 manager
 
 **Estimate:** about 2.5
 
-**Waiting on:** the owner's decisions D1–D13; the owner's go for a run; Plan 51 Part 2 on `main` before the words task (II-5)
+**Waiting on:** Plan 51 Part 2 on `main` before the words task (II-5); the owner for ten minutes at a browser (II-1), the product repositories' pull requests (II-8) and the issue transfers (II-10)
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -28,7 +28,7 @@ When this is done:
 2. **Four types, each one short shape.** The type is the first word of the title (`observation:`, `bug:`, `question:`, `idea:`). Each type has one issue form in `.github/ISSUE_TEMPLATE/`, and that file is the only definition of what the type asks. An observation asks for one sentence. A bug asks what happened, what was expected and the version.
 3. **One command for an agent, one form for a person, the same issue.** An agent runs one command that works inside a cloud session and needs no label rights. A person fills the form, which GitHub itself makes them complete. An agent with no GitHub login hands its person a pre-filled link.
 4. **A small bot does the mechanical part.** On a new or edited issue it reads the title and body as data, applies the type label, and turns an optional `About` line (a plan number or gap ID) into `plan:<NN>` and `gap:<ID>` labels. It posts nothing and closes nothing.
-5. **Triage is a reading step, not a new machine.** At its check-ins the orchestrator reads the issues that have no type label or no answer, suggests duplicates, adds the plan and gap labels a filer could not know, asks for a missing bug detail, answers questions with links, and tells the owner what it could not place.
+5. **Triage is a reading step, not a new machine.** At its check-ins the orchestrator reads the issues that have no type label or no answer, suggests duplicates, adds the plan and gap labels a filer could not know, asks for a missing bug detail, and tells the owner what it could not place. It does not answer questions yet: the owner has put an answering agent off until later (D7), so a question waits for a person.
 6. **Commitment stays in the repository.** An issue that is taken on becomes a task row citing `#N`, written in the planner's own words, and the pull request that fixes it closes it. GitHub's close reasons (completed, not planned, duplicate) are the only outcome words.
 7. **Issue text is never an instruction.** That rule is written once, with the triage rules, and every reader of an issue is bound by it.
 
