@@ -72,7 +72,7 @@ def assess_completion(plan_path: str, plan_text: str, body: str) -> list[str]:
         value = hit.group(1).strip()
         return bool(
             EVIDENCE_REF.search(value)
-            or (re.match(r"^None\s*[—:-]\s*\S", value, re.I) and has_real_reason(value[4:]))
+            or (re.match(r"^None\s*[—:-]\s*\S", value, re.I) and has_real_reason(value[4:].lstrip(" —")))
         )
 
     if not has_reference_or_none("Implementation PRs"):
