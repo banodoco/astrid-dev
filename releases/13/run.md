@@ -2,7 +2,7 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (18:50 UTC Thu 12 Nov): read this first
+## Now (19:35 UTC Thu 12 Nov): read this first
 
 ### Timeline to release: publish Saturday 14 Nov by 12:00 UTC (assumed UTC)
 | When (UTC) | Milestone | Owner | Status |
@@ -23,12 +23,12 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
 ### Streams
 | Stream | State |
 |---|---|
-| Candidate `r13/compose` `30a644bc` (frozen CI `int/r13-30a644bc`) | Engine layout and in-place install, A1–A3, U1, engine-fresh, h1, r2, r3, mypy and bootstrap; TTS v3; success logs; test-lane fixes; core neutrality green (vocabulary scanner + owner-ruled RunPod baseline) |
-| Live | Stage 1: 1/5 (t2i). Stage 2a (diagnostics): edit failed at engine start, `endpoint_ownership` (cause unnamed; likely an earlier cell's warm server on port 8188; CPU reproduction running, and U2 adds reason strings). No pods. Balance $95.67 (floor $67.41) |
-| Machines (own session `…2mhfLHKp…`) | Took over at 18:44; K1 fix, M4 card 5 |
-| Cells (own session `…VzW8yjKX…`) | cells-vc, pin, preflight; recapture 36/53 offline |
-| Engine (fork, here) | U2 merge → U2-live → Astra; target-asset tests; node-compat |
-| Test lane (own session `…sWuWu9cB…`) | Comparing the newest frozen head; money cards (provider-gate atomicity, 4xx classifier); per-code ratchets |
+| Candidate `r13/compose` `857c3955` (frozen CI `int/r13-857c3955`) | As before, plus the no-unload guard (`engine-nofree`) and the per-(file, code) lint ratchet. The ratchet is red until the lanes clear their rows: ruff 27 rows / 59 findings, mypy 74 / 159. The owner dropped the mypy total gate |
+| Live | Stage 1: 1/5 (t2i). Stage 2a: edit failed at engine **start** with `endpoint_ownership`. The cause isn't named yet. It is **not** a volume marker (the engine root is on the container disk). A CPU reproduction of four sequential jobs is running. #595 closed, replaced by #601. No pods. Balance $95.57 (floor $67.41) |
+| Machines (own session `…2mhfLHKp…`) | K1 fix; M1 `72455cf6b` (Astra re-check); M2a; M4 card 5 `354b3d1c8` held for LT; card 6b (abandoned observers). LT gets a new row: cede write-ahead |
+| Cells (own session `…VzW8yjKX…`) | `r13/cells-vc` `1463cb8e` (+ LTX bump if green); pin and preflight due 21:30. Catalog card: one shared argv builder (D1); 3 contracts fixed by the cut line (#342–#344) |
+| Engine (fork, here) | U2 `47950c4a0` + reason strings → Astra; warm-host reproduction; lint card after the catalog card |
+| Test lane (own session `…sWuWu9cB…`) | Lint ratchet merged; drop the mypy total gate; money cards W36b and W37b (5 blockers) being fixed |
 | Advisor (own session `…4KxQbf3m…`) | Report in (18:21); actions taken |
 | Investigation | #595 warm machine, cold engine (models unloaded each job): Opus fork running |
 
