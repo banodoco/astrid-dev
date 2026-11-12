@@ -309,3 +309,10 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - I authorised the cleanup task: it replaces tests of deleted code with tests proving the same guarantee, plus an old→new mapping.
   - C1 task 3 regressed (24 machine-suite failures against 39 passing at the base). It's parked as `briefs/parked-c1t3.diff`, not merged.
   - Disk freed to 9 GB: the old `install-r13` was deleted, along with merged clones and stale pytest temp files.
+- **2026-11-12 03:35** Astra's spec check, integrated with my rulings:
+  - ACCEPTED: (1) full logs: the collector keeps the complete declared slice, with only a 256 MiB transport safety cap (head and tail kept); (2) a2 captures from process launch, so failed startups are on disk; (3) the a3 timing contradiction is settled as "at job start, before its own preparation"; (4) a8 publishes logs on success too.
+  - The pin bump and live supervisor check stay with me (the integration step).
+  - NARROWED: attached-endpoint capture is out of scope for this slice.
+  - OVERRULED: deferring a9 and a7, since the owner explicitly wants task tools and a7 is small and parallel.
+  - The four factual claims (engine ring buffer, several `attempt.json` writers, `*.log` truncation at reset, the declaration paths) were all confirmed.
+  - Wave 1 dispatched: a1, a6, a7, a9 and vc1 (Luna); a2 (Terra). Wave 2 (a3, a4, a5 Luna; a8 and vc2 Terra) follows the wave-1 merge.
