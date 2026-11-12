@@ -39,7 +39,7 @@ def boundary_signature(text: str) -> tuple[str, ...]:
     the outcome does not require a second architecture review.
     """
     title = re.search(r"^# (.+)$", text, re.M)
-    applies = field_match(text, "Applies to", style="bold")
+    applies = re.search(r"^\*\*Applies to:\*\*[ \t]*(.*)$", text, re.M)
     return (
         title.group(1).strip() if title else "",
         re.sub(r"\.\./principles\.md#([a-z0-9-]+)", r"../principles/\1.md", applies.group(1).split("**Assessment:**", 1)[0].strip()) if applies else "",
