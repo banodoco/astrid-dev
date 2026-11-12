@@ -20,4 +20,4 @@ An independent contributor publishes a versioned contribution; a creator and an 
 
 ## Sources and reassessment
 
-[Hivemind protocol](../../plans/22-hivemind-protocol/plan.md) · [Pack lifecycle](../../plans/06-packs/plan.md) · [Plan 40 — contribution discovery](../../plans/40-contribution-discovery/plan.md). Reassess against actual creator/agent work and negative cases.
+[Hivemind protocol](../../plans/22-hivemind-protocol/plan.md) · [Pack lifecycle](../../plans/06-packs/plan.md) · [Plan 49 — contribution discovery](../../plans/49-contribution-discovery/plan.md). Reassess against actual creator/agent work and negative cases.
