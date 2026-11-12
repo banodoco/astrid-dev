@@ -338,6 +338,37 @@ Reviewed on 11 Nov 2026 by a fresh session with no stake in the draft (`session_
 
 **The critic's own minimal Phase 2** is the order the cards now follow: PM-10 first; the two contracts and RS1; the migration applied, then the readers; the base step, R2 and the cut-over with one words pass; then, as separate small PRs, the renumbering, the R1.2 fix, the refresh job and the extension guide.
 
+## Phase 3 queue: re-plan against Phase 2
+
+*12 Nov 2026.* The queue the owner accepted under D9 (PM-13h; PM-11a, PM-11b, PM-11t; PM-12a, PM-12b, PM-12t; R3) was specified before Phase 2 existed. Its eight cards in [tasks.md](tasks.md) are now rewritten against the Phase 2 candidate, `int/48-one-record-model` at `da22d14`, read from the code; the whole inventory (205 tests) and `astrid_dev.py check` pass at that commit. No design changed except where the code made the old one impossible. Track C and Phase 4 were not touched.
+
+### What changed in the cards, and why
+
+- **PM-12b: the definitions sentence is a second small generated region, not a line the catalog view prints.** Phase 2 made the catalog page hand-written prose around one generated table (RS1), so there is no generated preamble to print into. The two ways left were to check the hand-written sentence against the declaration, or to generate it in its own region. Generated was chosen: a check would need a parser for a prose sentence and a new error message, and would leave a repeated fact hand-copied and compared, which statement 4 above rules out; a region reuses `generated-views`, its stale message and `sync`, and adds no check. It was tried at `da22d14`: two region views on one page check, sync and re-sync correctly with `views.py` as it is. The cost is one added line in `golden.txt`, because the `stale-plan-catalog` fixture replaces the page with one that has no such region; the card names that line, and nothing else in the oracle may change.
+- **PM-12a and PM-12b: the list of readers is the real one.** Status words now sit in `check_docs.py` (`STATUSES`, `VISIBLE`, `ROUTE_STATUS`, `unnamed_active_owners`), `checks.py:_catalog`, `records.py:projects` (validity, and the sort that puts terminal rows last) and `check_completion.py:transitions_to_done`. Phase 2 also wrote the list out inside the invalid-status message, twice; that message now comes from the declaration, whose order is the message's order so that it does not change by a byte. The old proof grepped for quoted words and would have missed a comma list, so the new proof greps for the bare words. The catalog page's sentence takes the declaration's order (`queued` first); its meanings do not change.
+- **PM-12t** no longer mentions the dropped gate's messages (D10). It words the six meanings and the sentence, and nothing else.
+- **PM-11a and PM-11b: one fault, one line.** Phase 2 left three checks that already speak about a new pack: `plan-files` (a missing file), `plan-catalog` (the six field lines, on every pack) and `project-planning-evidence` (which runs on every new pack and requires the `## Planning evidence` heading and five labels). `pack-shape` is now silent on all of those, so it reports the headings, the table header and the two labels D13 added (`Review rounds`, `Run start`). `check --base` needs a body since Phase 2, so the command test passes one, with a one-entry registry in a temporary repository.
+- **PM-13h** was checked against the gate as it stands: the form filled with an example per label passes for a gap-linked plan and fails for an enabler, so the fix is still needed. The card now gives the line's wording and says the test calls `assess_completion` with the plan text, so it needs no pack on disk.
+- **R3** names what the reviewer checks first, reviews the branch after `main` has been merged into it, and lists the open PRs that add a pack before the new check reaches them.
+- **Where it lands.** `int/48-phase3`, cut from the Phase 2 candidate's head, merged to `main` only after the cut-over. Starting on a side branch before the cut-over is the orchestrator's call under the delegation on the Phase 2 `Run start` line, which queued this work "after the cut-over"; nothing reaches `main` earlier either way.
+- **The assumptions table** (A1 to A9, and a new A10 for track C) now states what Phase 2 built.
+
+### Sizes
+
+PM-13h 0.1; PM-11a 0.5; PM-11b 0.5; PM-11t 0.25; PM-12a 0.5; PM-12b 0.75; PM-12t 0.25; R3 0.5: 3.35 days of cards, about two elapsed with the tracks side by side. The [estimates](#estimates) above gave these rows about 2.5 to 3; PM-12b grew by the second region and the readers Phase 2 added.
+
+### Owner decisions
+
+None is open for this queue; D18 is not used. D4, D10 and D13 decide the cards' substance, and the choice between a check and a generated region is an implementation choice that follows from statement 4. Two things she may want to know, neither needing an answer: the catalog page's definitions will list `queued` before `active`; and from the day the queue reaches `main`, an open PR that adds a pack not matching the templates fails (D13), which R3 lists beforehand.
+
+### Not placed in the queue
+
+The follow-up to R2's second point (the principle list is still read from the generated `vision/README.md`) is not one of D9's rows, has no card yet, and shares no file with a queued card. It goes with the after-cut-over PRs to `main`. "Before track A" was a preference of order, not a dependency: track A reads only the templates.
+
+### Fourth critique
+
+**Pending — the planner of this re-plan had no sub-agent tool. Next:** before dispatch, the hosting session sends the eight rewritten cards to a fresh high-judgment critic with no stake in them, briefed to build as little as possible, to verify each claim in the candidate's code, and to find a verdict that would change unannounced; one round; its findings and what was accepted are recorded here, and the cards revised. What the planner verified itself by running code at `da22d14`: the completion form's enabler failure; two region views on one target; the inventory and `check` green; every status literal outside tests, by grep. What it did not run: the pack-shape functions (they do not exist), git's rename detection on a moved pack, and the App's parser.
+
 ## Source identities
 
 Planning read astrid-dev `e27e30a6` and wrote this pack on `b43f4e8936e668d4735bfae4f6d409251b311062`. Only astrid-dev changes. The App is consumed read-only through the existing `vision-consumer-contract` job at its `main`. Record each task's actual base SHA when it starts. The Phase 3 and 4 specification read `int/48-one-record-model` at `ee69971f` (Phase 1 integrated, not yet on `main`) and changes only this pack. The Phase 2 re-plan read `main` at `12a54b6` (Phase 1 merged) and changes only this pack.
