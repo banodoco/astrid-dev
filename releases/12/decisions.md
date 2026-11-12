@@ -2,31 +2,27 @@
 
 Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIEW** marks user-visible changes, scope-vs-time trades, named exceptions and anything touching Release 13.
 
-## MORNING NOTE (for Hannah; updated 2026-11-12 01:16Z)
+## MORNING NOTE (for Hannah; updated 2026-11-12 04:25Z)
 
 Overnight mode from 00:33Z: I'm working through without you or the orchestrator, and deciding unanswered questions by the brief's priorities (marked REVIEW). Release 13 isn't this session's scope, so no spend and no pods here.
 
-- **Done:**
-  - Runtime: 0 regressions; gate item filled.
-  - App journey: every three-products test passes or fails exactly at its named exception's marker. All 4 exceptions are proven on real runs.
-  - App main merged (3e53462f4, the last tour push; held since).
-  - Your copy change: the phone home callout now reads "Leverage open source tools".
-  - Agent comparison fully ruled. 89 R11-shipped (recorded, untouched); ~815 pre-existing; no-baseline bucket ruled from a local baseline; 64 R12-introduced. The 64 are being fixed in Agent `r12/fix-round`: the text alias, the add_text default, the recovery command, the core boundary ratchet, test fixtures and teardown leaks.
-  - Plan 39: your structural-fix request is done. Phase 4 (SF1–SF7) is on `r12-progress/plan39-handoffs` `2e6773d`. You set SF4's scope limit (placeholder 30 commits or 3,000 lines).
-- **Not done:**
-  - Agent fix-round follow-ups from review: a recovery command proven by a real install, alias precedence, caption readers. Time-box 02:05Z.
-  - Then cut, re-pin and one qualifying window (Agent CI, App Tests, Direct Journey, matrix together). Then GATE-GREEN, the orchestrator publishes, and the post-publish checks.
-  - Open risk: matrix row `direct-linux-fresh` red twice on the new harness; diagnosis running. If it's a real update failure, that stops the release.
+- **State:** the tuple is frozen and qualified except one Agent CI test.
+  - Frozen tuple: App `237b28be9`, Agent `0e1543e0`, Runtime `42ae24aff`.
+  - Matrix 11/11 green, native Windows included. App Tests green. Direct Journey green, with exactly the 4 named exceptions.
+  - The Agent delta against `c5370a86` is clean apart from one new failing ID: `tests/packs/test_audio_render.py::…test_rendered_mp4_contains_audio_stream`, a custody-lock deadline on darwin/Remotion. The fix round touches no render code.
+  - The failed jobs are re-running as attempt 2. Shard 7 and fast checks are done: 0 new failing IDs.
+- **Next:** darwin passes → timing flake → GATE-GREEN, and the orchestrator publishes. It fails again → diagnose before anything ships.
 - **Decided for you (REVIEW):**
   - add_text's default element becomes bundled text-card.
-  - The recovery command points at banodoco/poms_packs.
-  - The fix round carries five test-only commits beyond the strict regression list (reason in NOW).
-  - The drop data-loss fix goes to Plan 39: not in at the cut.
+  - The recovery command points at banodoco/poms_packs `--revision main`.
+  - The fix round carries five test-only commits beyond the strict list.
+  - The drop data-loss fix goes to Plan 39.
   - The VIDEO-DROP exception stays (#252).
-  - The bootstrap test runs later in the suite to avoid a state leak.
-  - The matrix harness simulates "a newer release is served" for the autostart-off card.
+  - The bootstrap test runs later in the suite.
+  - The matrix harness simulates "newer release served" for the autostart-off card.
+  - `test_parent_clips` mixed-timeline is test drift and becomes a known issue: fixing it would move the Agent SHA.
+  - astrid-dev main merges into my record branches were aborted (conflicts in others' docs); they land after publish.
 - **Need from you:** nothing blocking.
-- **Release 13:** not this session's scope; no spend, no pods.
 
 ## NOW (updated 2026-11-12 01:27Z, from `date -u`)
 
@@ -453,3 +449,7 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - Other jobs: fast checks (mypy, unchanged 2338/2192, pre-existing); darwin (13 failed, the same set as R11 per the earlier comparison; reconfirmed in the delta: no new bad IDs).
 - 2026-11-12 03:41Z — **Shard 5 coverage gap closed locally:** all 90 IDs with no CI result were run on both `c5370a86` and `0e1543e0`. Identical: 56 passed, 13 failed, 21 skipped, and no ID passes on the old candidate and fails on the new one.
 - 2026-11-12 03:41Z — **`test_audio_render` (the one new failing ID):** it's in the Remotion lane (CI darwin job, 13 failed here against R11's same 12), so it can't run locally without Node, ffmpeg and the Remotion install. The fix round touches no render or custody code, and the error is a custody-lock reconciliation deadline. Re-running the failed jobs on 43134432721 (attempt 2) for evidence. If darwin's attempt 2 passes this ID, it's ruled a timing flake and the rest carry over; if it fails again, it gets diagnosed.
+- 2026-11-12 04:25Z — **Attempt 2 of [43134432721](https://github.com/banodoco/astrid-agent/actions/runs/43134432721), partial:**
+  - `unit shard 7` failed with 93 bad IDs, all also bad on attempt 1. 0 new.
+  - `fast checks` gives Mypy 2338/2192, unchanged and pre-existing.
+  - Darwin (holding `test_audio_render`) and the other shards are still running; pollers are on them.
