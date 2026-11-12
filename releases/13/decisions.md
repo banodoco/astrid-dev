@@ -858,3 +858,17 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - issues astrid-agent#342, #343 and #344.
 - **The new ratchet** lands green with those fixes, not before.
 - **Date:** the cut line is Fri 13 Nov, not "Fri 14 Nov" as my message said.
+
+## 12 Nov ~19:30 UTC: proving an engine root's owner is gone on a network volume (U2)
+
+- **Finding:** U2-live (`r13/engine-u2` `47950c4a0`) still refuses the Stage 2 volume, deliberately. The Stage 1 marker carries no pid, boot id or pod id, and the root is on FUSE `/workspace`.
+- **Scope:** Release 12 main writes the same kind of marker (`session.json`, `{identity, owner_id}`). So every R12 user with an engine on a RunPod volume would be refused on update. This is the update journey, so it blocks the release.
+- **Rule** (one rule for all markers, not a migration):
+  - On native-flock filesystems, the lock is the proof.
+  - On network or FUSE mounts, file evidence can't prove the owner is gone. A different boot id or pod id only proves a different host.
+  - There, the proof is one custody fact written by the machines/provider layer at claim or preparation:
+    - this pod holds Astrid's claim;
+    - the provider lists no other pod attached to the volume.
+  - The engine reads that fact. A failed provider call means no fact, which means a refusal with its reason.
+- **Cards:** machines (provider fact; Sol plus Astra) and engine (consume it; tests for an R12-shaped marker and for another attached pod). Astra's U2 round must drop boot or pod difference as owner-gone evidence on network mounts.
+- **Stage 2 fallback:** if the fact isn't merged by about 22:30, run the five cells on a fresh engine root. The update-journey row is then proven by the Fri 13 Nov 18:00 cut line.
