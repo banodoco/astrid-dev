@@ -141,3 +141,10 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Fix dispatched: `r13/provider-contract` (Codex Terra). It reads attachments through one accessor, gives every contract refusal a fixed gate, and tests fixtures built from the real SDK and REST shapes.
   - The next TTS rental waits for this fix.
   - The 429 release-backoff and receipt-label fixes follow once the bundle branch lands, because they touch the same files.
+- **2026-11-12 00:34** OVERNIGHT MODE (from the user). Run to completion without the user or the orchestrator.
+  - A self check-in runs via send_later every 30-45 min (current trigger `trig_01V4DPV2FpiS1w7ZqjQKVqHX`, 01:10 UTC), re-armed each time and cancelled when done.
+  - Workers: Codex Luna, Terra, Sol and Astra. If Codex is lost, fall back to Claude sub-agents.
+  - A question left unanswered for 15 minutes gets decided by the brief's priorities and tagged REVIEW.
+  - A permission refusal is logged and routed around within the rules, never worked around.
+  - The $40 cap and RTX 4090/5090 only still apply. A pod that isn't ours is noted and never touched.
+  - The morning note goes at the top of this file.
