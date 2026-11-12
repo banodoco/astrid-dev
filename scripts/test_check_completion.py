@@ -179,6 +179,69 @@ Routes used: Unknown — Historical run did not record routes.
         self.assertEqual(check_pr(transitions_to_done(catalog("done"), catalog("done")), "", self.root), [])
 
 
+class UnfilledCompletionFormTests(unittest.TestCase):
+    """The form file itself, with only its plan number set, must not pass for any field whose rule
+    can tell an answer from a hint. Tests marked "needs CU-17b" fail until the hints are rewritten
+    and the placeholder test strips the dash."""
+
+    FORM = (Path(__file__).resolve().parent.parent
+            / ".github/PULL_REQUEST_TEMPLATE/project-completion.md")
+    PLAN_PATH = "20-zero-to-first-image/plan.md"
+
+    def unfilled(self) -> list[str]:
+        form = self.FORM.read_text(encoding="utf-8")
+        form = form.replace("plans/<NN-project-name>/plan.md", "plans/20-zero-to-first-image/plan.md")
+        return assess_completion(self.PLAN_PATH, PLAN, form.replace("Plan NN", "Plan 20"))
+
+    def test_unfilled_form_fails_evidence(self):  # needs CU-17b
+        self.assertTrue(any("Evidence" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_completion(self):  # needs CU-17b
+        self.assertTrue(any("Completion needs" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_implementation_prs(self):  # needs CU-17b
+        self.assertTrue(any("Implementation PRs" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_integrated_candidate(self):
+        self.assertTrue(any("Integrated candidate" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_routes_used(self):  # needs CU-17b
+        self.assertTrue(any("Routes used" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_the_gap_line(self):
+        # The hint's placeholder id (F-XXX) is not the plan's linked gap, so F-003 has no disposition.
+        self.assertTrue(any("F-003" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unproven_is_the_listed_exception(self):
+        # Its rule only rejects empty or one-word placeholders, so it cannot tell an answer from a hint.
+        self.assertFalse(any("Unproven" in x for x in self.unfilled()), self.unfilled())
+
+
+class NoneWithPlaceholderTests(unittest.TestCase):
+    """`None — <placeholder>` is not a reason; `None — <reason>` is."""
+
+    PLAN_PATH = "20-zero-to-first-image/plan.md"
+    FIELDS = (("Implementation PRs", "https://github.com/banodoco/astrid-agent/pull/123"),
+              ("Integrated candidate", "abcdef0123456789abcdef0123456789abcdef01"))
+
+    def issues_for(self, field: str, value: str) -> list[str]:
+        original = dict(self.FIELDS)[field]
+        body = RECEIPT.replace(f"{field}: {original}", f"{field}: {value}")
+        self.assertNotEqual(body, RECEIPT)
+        return [x for x in assess_completion(self.PLAN_PATH, PLAN, body) if field in x]
+
+    def test_none_then_a_placeholder_word_fails(self):  # needs CU-17b
+        for field, _ in self.FIELDS:
+            for word in ("TBD", "todo"):
+                with self.subTest(field=field, word=word):
+                    self.assertTrue(self.issues_for(field, f"None — {word}"))
+
+    def test_none_then_a_reason_passes(self):
+        for field, _ in self.FIELDS:
+            with self.subTest(field=field):
+                self.assertEqual(self.issues_for(field, "None — Communication-only project."), [])
+
+
 
 
 class StrategyGateTests(unittest.TestCase):
