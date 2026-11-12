@@ -750,3 +750,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - T9b merged into `r13/compose` (`d5bb2574`): one collection pass merges the pod's brought-back logs with the host's (now in `.host-logs`), and duplicate names become warning rows. Terra found the success fetch was already overwriting the host's `logs.json` before T9.
 - Logs verified: `astrid tasks logs <task> --project <p> [--name …]` lists and reads the 15 declared logs of the live TTS failure. Gaps: `--project` is required (should default), and no skill mentions the command.
 - At the owner's go, a cells manager (fork) owns the VibeComfy cell fixes, the pin, the log gaps and Stage 2 preparation. Paid runs stay with me.
+
+### 16:58 UTC — Candidate fc4b36d4; second CI ref; cells session live
+- `r13/compose` = `fc4b36d4`: f9214240 plus the Lanes pin fix, the run-logs skip, T9, T9b, the G3 skips, TTS (`eb594e09`: a declared source patch defines `pad_token_id` on both QwenTTS configs; upstream has no fix; transformers 5 dropped no other attribute; a CPU test in the new `engine_deps` lane reads the locked version) and log gaps (`90ae9c31`: task commands default to the selected project; one resolver; skill lines).
+- For speed, candidate heads now go to `int/r13-next`. `int/r13` keeps f9214240's run. Owned slip: I re-pushed `int/r13-next` within minutes and cancelled the a94c1902 run; one push per CI run from now on.
+- The owner set up the Opus cells session (named "R13 · Generation fixes") with the brief `releases/13/cells-session-brief.md`. The cells fork here only finishes SFX pass 3 and music, then pushes the branches.
+- SFX pass 2 stopped: two tests pin `CHOICE` on purpose, and these types are digest-bearing. That confirms the design: keep stored spellings, and canonicalize runtime comparisons through one vocabulary owner.
