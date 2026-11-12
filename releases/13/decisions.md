@@ -658,10 +658,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 
   Full text: `briefs/wave3/machines-design.md`.
 - **Fable critique accepted** (`briefs/wave3/machines-plan.md`): the claim is the only spend authority. It deletes the paid flags on generate, the generate-claims path and the consent flag; merges seven budget concepts into two; reuses `Placement.machine`, the lease record and the Runtime queue. There are 13 tasks, 10 of them for Release 13. Critical path: M1 → M2 → M10, with M9 last.
-- **REVIEW (manager ruling on the open question):** the idle timer is the only lifetime mode; idle pauses while jobs are queued; `keep` extends it; `--idle never` replaces `--until-release`; the budget cap still bounds everything.
+- **DECIDED (owner agreed, 12 Nov):** the idle timer is the only lifetime mode; idle pauses while jobs are queued; `keep` extends it; `--idle never` replaces `--until-release`; the budget cap still bounds everything.
 - **Base:** `r13/machines` `22e5a13e` = rehearsal `922a19eb` + keep-warm `9e7b2a48`. M1 (SS) went to Codex Astra in `c-m1`; the base suites are running.
 - **Dispatch rule:** N → Luna, X → Terra, S → Sol, SS → Astra, T (wording, CLI layout, skill voice) → Opus.
 - **Batch 6:**
   - The first attempt failed with no project on the fresh install. I created and selected one by hand (usability log #1) and re-ran.
   - The TTS cell is in the product's capacity wait: no 5090 or 4090 in EUR-NO-1 (the volume's datacenter); EU-RO-1 has Low 5090 stock.
   - The CLI is silent during the wait while the host logs "no stock yet" (usability log).
+- **14:02 UTC:** Hannah agreed the idle-timer ruling. Dispatch rule added: every Astra, Sol or Terra task gets a paired read-only Luna inventory, launched by the manager (nested Codex fails in the sandbox). The senior worker's brief points at it and hands mechanical edits back as a list.
