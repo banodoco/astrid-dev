@@ -256,3 +256,19 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - Decision: the side track keeps the marker where it is, with every assertion unchanged, and restates the exception honestly. Reason, comment and registry issue now point at #253 (side branch `scratch/r12-drop-side`, new head after `05ac65ca5`). Registry 4/0.
   - On the main track (no #252 fix), the #252 wording stays as it is.
   - **REVIEW**: if the side track is taken, the VIDEO-DROP exception's issue changes from #252 (fixed) to #253.
+- 2026-11-12 00:19Z — **Agent CI comparison (gate item 2): 153 IDs in the regression bucket. Not yet ruled. REVIEW.** Full report at `/home/user/logs/ci/gate2/report.md` (local).
+  - Coverage gaps: candidate shard 5 was cancelled at the 2 h limit. There is no baseline for shard 1. R10 shards 1, 3 and 4 and R11 shards 1 and 5 are missing.
+  - Buckets: regression 153, no-baseline 131 real, pre-existing 815, fixed 45, missing 315 (mostly shard 5 truncation and shard drift).
+  - My own split: **89 passed only on R10, and every one also fails on R11** (checked against `r11.combined.log`). They were introduced by R11, which is shipped, so they are not R12-caused and are pre-existing relative to what users have. REVIEW: R11 shipped them.
+  - **64 passed on R11 and fail on the candidate.** These are the real R12 question:
+    - About 41 are one cluster: `ElementPackNotInstalled` (am-sprite, am-type, text, reveal) and editing_conformance. The candidate range `a105de3a..c5370a86` (207 commits) adds +307 lines to `astrid/sdk/timeline_address.py`, where `element_pack_not_installed` is raised.
+    - About 23 are other cases.
+    - Codex **Sol** (`cx-g2a`) is answering the user-impact question for the cluster: can an R11 user with these elements still open and commit on R12? Codex **Terra** (`cx-g2b`) is categorising the other 23.
+  - Darwin: the candidate matches R11 exactly (13 IDs).
+  - Installer tests run on Linux in default-lane shards 6 and 7. Five files are deselected or not imported, which matches R10. Codex can't run them, so the lane question stays open.
+  - This item now holds A-FROZEN.
+- 2026-11-12 00:19Z — **Main track:**
+  - Direct Journey 174 on `7a971cea5`: the dependency-conflict test now passes, and three expected failures were shown (EXT-BATCH, VIDEO-DROP, DUP-SHOT). Unexpected: mixed editing at `:2766`. It saw earlier serial tests' undos in seed3's history; the test passed in isolation (run 173).
+  - Fixed in `d9e2798d4`: the no-undo check covers exactly this test's three new entries. App Tests and Direct Journey are dispatched.
+  - Isolation run 173 (`scratch/r12-iso`): DUP-SHOT and TASK-SWAP fail as expected, and mixed editing and empty bootstrap pass. **All four named exceptions are now shown failing at their marked steps on real runs.**
+- 2026-11-12 00:19Z — **Side track `scratch/r12-drop-side` = `e4df8e0dc`:** the restated VIDEO-DROP (#253, `55949d1e9`); the restored audio unit test checks and pinned e2e command, media, track and span (`ed07f027a`, Codex Luna, which I reviewed); and the merged integration head `d9e2798d4`. Registry 4/0, tsc clean. App Tests and Direct Journey are dispatched. It still needs a reviewer read of `05ac65ca5..e4df8e0dc`.
