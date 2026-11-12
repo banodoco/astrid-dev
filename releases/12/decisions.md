@@ -286,3 +286,10 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   **Not loosened:** no weakened checks outside the registry; no exception for an R12-introduced bug; what's published is exactly what was tested; a truthful list of known issues; the 11-row matrix green on the frozen tuple, native Windows included. A red matrix on a real install or update failure is the one thing to stop for.
 
   Consequence for the Agent comparison: the 64 IDs that passed on R11 and fail on the candidate still need a ruling, because "no exception for an R12-introduced bug" stands. Sol and Terra continue.
+- 2026-11-12 00:22Z — **Side-track review (Astra, `55949d1e9` and `ed07f027a`): BLOCKER ×2, both in the new e2e assertions. Fixed as `3622b91a7`** (test-only, my own read under the owner's rule 3).
+  - `records.commands[].selections` holds structural agent selections, not media selections. That assertion is removed; the five-key and digest checks on `args.media` stay.
+  - `args.row.id` is the clip id; `args.row.track` is the track. The tests now assert `row.track` is V1 or A1, and `row.id` equals the saved clip id.
+  - tsc clean, registry 4/0. Direct Journey is redispatched on the side branch, which cancels the stale run.
+  - MEDIUM, kept as **REVIEW**/follow-up: the restated VIDEO-DROP exception still stops at the obsolete verified-read wait, so it wouldn't turn green when #253 is fixed. Converting it is Plan 39 work (#253). Also noted: a bare 404 classifies as `unknown`/retry in `client.ts:314-326`, so the comment's "404 not_found" path needs the typed details.
+  - LOW, follow-up: the prepared-entry filename, type and duration checks that `191863ca9` removed are not restored.
+  - Under rule 5, the side track enters only if it's already green when the main track reaches re-pin.
