@@ -4,14 +4,15 @@ The [contributor workflow](contribution-workflow.md) is public and works without
 
 ## Security boundary
 
-There are two deliberately separate GitHub workflows:
+There are three deliberately separate GitHub workflows:
 
 | Workflow | Runs when | Permission | May do |
 | --- | --- | --- | --- |
 | [Review intake](../.github/workflows/review-intake.yml) | A PR opens or changes | `contents:read`, `pull-requests:write`, `issues:write` | Check an owner against the project's `plan.md` on live `main`; label a valid request `needs-review`; comment. **Never merge, approve or deploy.** |
+| [Issue intake](../.github/workflows/issue-intake.yml) | An issue opens or is edited | `contents:read`, `issues:write` | Add the type label and `plan:`/`gap:` labels, nothing else. |
 | [Claim merger](../.github/workflows/claim-project.yml) | Unprivileged documentation CI succeeds on a PR | Dedicated repository-scoped GitHub App | Auto-merge **only** a validated change to the Owner line of a queued, unassigned project's `plan.md`. Never checkout or execute fork code. |
 
-The claim bot is disabled by default; if GitHub refuses to run a first-time contributor's CI until approved, claiming cannot skip that platform safeguard. Both workflows use trusted `main` code. Proposed code and PR metadata are untrusted input.
+The claim bot is disabled by default; if GitHub refuses to run a first-time contributor's CI until approved, claiming cannot skip that platform safeguard. All three use trusted `main` code. Proposed code and PR metadata are untrusted input.
 
 ## One-time configuration
 
@@ -42,4 +43,4 @@ If protection, App credentials or GitHub Actions policies prevent claiming, the 
 
 **Cross-repository scope:** the current `needs-review` automation runs on **Astrid-dev PRs**. Implementation PRs in Runtime, Agent, App or other product repositories use their own native GitHub review/branch protections and the [common review submission](../templates/product-pr/review.md). Do not mistake this single-repository workflow for product-wide automated review. A final Astrid-dev completion PR links the externally reviewed and integrated work.
 
-Do not create a mandatory conversation issue for each project; [getting help and keeping decisions discoverable](contribution-workflow.md#get-help-and-keep-decisions-discoverable) says where questions and decisions go.
+Do not create a mandatory conversation issue for each project; [Issues](contribution-workflow.md#issues) says where questions go.

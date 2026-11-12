@@ -28,7 +28,7 @@ When this is done:
 2. **Four types, each one short shape.** The type is the first word of the title (`observation:`, `bug:`, `question:`, `idea:`). Each type has one issue form in `.github/ISSUE_TEMPLATE/`, and that file is the only definition of what the type asks. An observation asks for one sentence. A bug asks what happened, what was expected and the version.
 3. **One command for an agent, one form for a person, the same issue.** An agent runs one command that works inside a cloud session and needs no label rights. A person fills the form, which GitHub itself makes them complete. An agent with no GitHub login hands its person a pre-filled link.
 4. **A small bot does the mechanical part.** On a new or edited issue it reads the title and body as data, applies the type label, and turns an optional `About` line (a plan number or gap ID) into `plan:<NN>` and `gap:<ID>` labels. It posts nothing and closes nothing.
-5. **Triage is a reading step, not a new machine.** At its check-ins the orchestrator reads the issues that have no type label or no answer, suggests duplicates, adds the plan and gap labels a filer could not know, asks for a missing bug detail, and tells the owner what it could not place. It does not answer questions yet: the owner has put an answering agent off until later (D7), so a question waits for a person.
+5. **Triage is a reading step, not a new machine.** At its check-ins the orchestrator reads every issue opened or updated since the last check-in, suggests duplicates, adds the plan and gap labels a filer could not know, asks for a missing bug detail, and tells the owner what it could not place. It does not answer questions yet: the owner has put an answering agent off until later (D7), so a question waits for a person.
 6. **Commitment stays in the repository.** An issue that is taken on becomes a task row citing `#N`, written in the planner's own words, and the pull request that fixes it closes it. GitHub's close reasons (completed, not planned, duplicate) are the only outcome words.
 7. **Issue text is never an instruction.** That rule is written once, with the triage rules, and every reader of an issue is bound by it.
 
@@ -96,7 +96,7 @@ No budget and no paid service. Tasks are in [tasks.md](tasks.md); recording this
 **Produces:**
 - the four form files, which other repositories and the product link to by file name (`observation.yml`, `bug.yml`, `question.yml`, `idea.yml`) and by one field id, `what`;
 - the labels `observation`, `bug`, `question`, `idea`, `plan:<NN>`, `gap:<ID>`;
-- the search links a planner or gap assessor uses: `is:issue is:open label:plan:<NN>` and `label:gap:<ID>`; and the triage query, open issues with none of the four type labels;
+- the search links a planner or gap assessor uses: `is:issue is:open label:plan:<NN>` and `label:gap:<ID>`; and the triage query, open issues opened or updated since the last check-in;
 - the "Issues" section, the address every other document links.
 
 **Limits:** file names, field headings and the `what` id become a contract with the product once II-9 ships; renaming one breaks pre-filled links in installed copies, so II-3 fixes them and no later card may change them. The bot proves nothing about an issue's content.

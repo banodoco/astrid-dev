@@ -26,6 +26,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Words follow the [glossary](
 | A generated page | `scripts/views.py`; how: [extending guide](../../docs/extending.md#add-a-generated-view) | `generated-views` |
 | Who owns a project; who merges; accountability, not permission | principle 5 in the [principles](../../docs/contribution-design-principles.md#the-principles); the [glossary](../astrid-dev-shared/glossary.md)'s project owner | `catalog-paths`, judgment |
 | A principle | the [principles](../../docs/contribution-design-principles.md#the-principles) | judgment |
+| A question, bug, observation or idea about Astrid | the [Issues section](../../docs/contribution-workflow.md#issues) and each type's [form](../../.github/ISSUE_TEMPLATE/) | GitHub's forms, judgment |
 | Friction | the [process ledger](../../docs/ledger/README.md) | `ledger` |
 
 ## Steps

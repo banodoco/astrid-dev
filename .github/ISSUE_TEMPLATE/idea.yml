@@ -1,0 +1,22 @@
+name: Idea
+description: Something Astrid cannot do yet but should (no keys, tokens or private paths).
+title: "idea: "
+labels: ["idea"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What should become possible
+      description: The outcome you want, in plain words.
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: What exists today
+      description: "Optional: how it works now, or what gets in the way."
+  - type: input
+    id: about
+    attributes:
+      label: About
+      description: "A plan number or gap ID, if you know it. Leave empty if you are not sure."
