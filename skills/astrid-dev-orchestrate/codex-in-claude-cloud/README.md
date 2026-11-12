@@ -30,11 +30,13 @@ Use this when a Claude manager session keeps managing (briefing, checking diffs,
 - **One task, one call, one worktree.** From a Claude sub-agent, so the output stays out of the manager's context:
 
   ```bash
-  codex exec -m <model-id> -s workspace-write -c sandbox_workspace_write.network_access=true \
+  codex exec -m <model-id> -s danger-full-access -c agents.max_threads=12 \
     --skip-git-repo-check -C <worktree> "$(cat <brief.md>)" </dev/null
   ```
 
-  The wrapping sub-agent writes the brief to a file, runs the call, and returns Codex's last message plus the commit SHA and the test tail. Where the sandbox can't write the repository's `.git` (a worktree whose metadata lives outside it), say so in the brief: the worker leaves its change uncommitted, and the manager checks it is inside the card's scope, re-runs every proof the card names, and commits it. A proof that needs a commit (a rename, a `--base` comparison) is run by the manager after it commits, in a real scratch clone made with `git clone`; a `cp -a` copy of a worktree shares the real `.git`. It does not do the task itself. Give every task its own `git worktree add` path; Codex can write only there and in `/tmp`.
+  The wrapping sub-agent writes the brief to a file, runs the call, and returns Codex's last message plus the commit SHA and the test tail. The manager checks the change is inside the card's scope, re-runs every proof the card names, and commits it if the worker did not. A proof that needs a commit (a rename, a `--base` comparison) is run by the manager after it commits, in a real scratch clone made with `git clone`; a `cp -a` copy of a worktree shares the real `.git`. It does not do the task itself. Give every task its own `git worktree add` path, and name it in the brief.
+- **Always full access.** Run every Codex worker, reviewers included, with `-s danger-full-access`. The container is the sandbox. Codex's own `workspace-write` sandbox makes everything outside the worktree read-only, including Codex's state, so a worker cannot start its sub-agents or a child `codex exec`; that silently turned every Terra, Sol and Astra task into a solo task (12 Nov 2026). A reviewer stays read-only because its brief says so, not because of the sandbox.
+- **Always tell the worker to use sub-agents.** Every Terra, Sol and Astra brief says, in these words or close: *"Use your Luna sub-agents for reading, inventories, call-site and test searches, mechanical edits and running checks; keep your own effort for the design and the judgment; run independent sub-agents in parallel."* Codex spawns them itself; you do not launch helpers beside it. Set `-c agents.max_threads=12` so finished sub-agents don't exhaust the default cap of 6.
 - **The brief is the same four things** as for any worker: one outcome, the exact repository, branch and files or selectors, what done looks like, and what to return. Add the run's rules that Codex cannot infer: commits are added and never rewritten, no model names in commit messages, never weaken a check, and stop after three attempts.
 - **What stays with the manager.** Pushing to candidate branches, dispatching CI, messages to the orchestrator, anything paid, and anything that needs a credential. A Codex worker inherits the session's network, so a credential the proxy injects reaches it too: do not give Codex workers tasks that call a paid provider.
 - **Switch at a task boundary.** Let running Claude workers finish; start new tasks on Codex. If a model ID is refused or the sign-in is lost, fall back to the Claude route for that task and say so; do not wait.
@@ -122,11 +124,11 @@ It doesn't review Codex's fixes or relay its branches. Codex's own reviewer sub-
 
 ## Known limits
 
-- **Sandbox:** use `-s workspace-write` with network on, which the runner sets. Auto mode refuses `danger-full-access` with approvals off.
-- **Caches:** `~/.cache` is read-only inside the sandbox, so the runner points pip and XDG caches at `/tmp`.
+- **Sandbox:** use `-s danger-full-access`, which the runner sets. `workspace-write` makes `~/.codex` and everything outside the workdir read-only, which breaks sub-agents and child Codex processes. Verified 12 Nov 2026: under full access a Codex worker started a nested `codex exec` that answered; under `workspace-write` it failed with "Read-only file system".
+- **Caches:** the runner points pip and XDG caches at `/tmp`, so parallel workers don't share one cache.
 - **Resume flags:** `codex exec resume` takes no `-C` or `-s`. The runner passes the sandbox through `-c sandbox_mode=...` and runs from the workdir.
 - **The run lives in this container,** including the Codex sign-in. If the container is reclaimed, sign in again and start the run again. The runner resumes from `codex.log`'s session id when that file survives.
-- **No nested Codex:** a Codex process inside the sandbox can't start another (`~/.codex` is read-only there). Get parallel work from sub-agents, not from child `codex exec` processes.
+- **Sub-agents and nested Codex:** both work under full access. Prefer Codex's built-in sub-agents for parallel work; a child `codex exec` is the fallback when a different model is needed for one piece.
 - **Shared filesystem:** sub-agents share one filesystem. Every worker brief must name its own `git worktree add` path and its `<worktree>.env`, and only the manager touches the base clones. Two workers in one checkout will collide on git locks.
 - **GitHub through the proxy:** `git push`, the REST API (`POST /pulls`, workflow dispatch) and artifact downloads work with no token. The proxy appends a Claude Code attribution to PR bodies Codex creates, so mention in the PR body that Codex wrote it.
 - **One branch per PR:** never push to a branch whose PR is already merged. Open a fresh branch for each PR.

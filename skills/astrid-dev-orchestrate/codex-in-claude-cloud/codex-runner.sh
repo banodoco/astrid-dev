@@ -20,17 +20,17 @@ echo running > "$RUN/status"; echo $$ > "$RUN/runner.pid"
 # So codex-hold.sh can restart this runner with the same settings after the container restarts it.
 printf '%q ' "$WD" "$PROMPT" "$RUN" "$MAX" "$MODEL" > "$RUN/runner.args"
 printf 'CODEX_EFFORT=%q CODEX_MAX_THREADS=%q CODEX_PASS_ENV=%q\n' "${CODEX_EFFORT:-}" "${CODEX_MAX_THREADS:-}" "${CODEX_PASS_ENV:-}" > "$RUN/runner.env"
-export PIP_CACHE_DIR=/tmp/codex-pip-cache XDG_CACHE_HOME=/tmp/codex-xdg-cache  # ~/.cache is read-only in the sandbox
+export PIP_CACHE_DIR=/tmp/codex-pip-cache XDG_CACHE_HOME=/tmp/codex-xdg-cache  # per-run caches
 NAMES="PATH,HOME,HTTPS_PROXY,HTTP_PROXY,NO_PROXY,SSL_CERT_FILE,REQUESTS_CA_BUNDLE,NODE_EXTRA_CA_CERTS,PIP_CACHE_DIR,XDG_CACHE_HOME${CODEX_PASS_ENV:+,$CODEX_PASS_ENV}"
 PASS="[$(echo "$NAMES" | sed 's/[^,][^,]*/"&"/g')]"
-FLAGS=(-C "$WD" -s workspace-write --skip-git-repo-check  # the workdir may hold several clones
-  -c sandbox_workspace_write.network_access=true
+# Full access: workspace-write makes ~/.codex read-only, which breaks sub-agents (README, Known limits).
+FLAGS=(-C "$WD" -s danger-full-access --skip-git-repo-check  # the workdir may hold several clones
   -c 'approval_policy="never"'
   -c "shell_environment_policy.include_only=$PASS"
   -c shell_environment_policy.ignore_default_excludes=true
   -o "$RUN/result.md")
 # resume takes no -C/-s: same settings through -c
-RFLAGS=(-c 'sandbox_mode="workspace-write"' "${FLAGS[@]:4}")
+RFLAGS=(-c 'sandbox_mode="danger-full-access"' "${FLAGS[@]:4}")
 [ -n "$MODEL" ] && { FLAGS+=(-m "$MODEL"); RFLAGS+=(-m "$MODEL"); }
 [ -n "${CODEX_EFFORT:-}" ] && { FLAGS+=(-c "model_reasoning_effort=\"$CODEX_EFFORT\""); RFLAGS+=(-c "model_reasoning_effort=\"$CODEX_EFFORT\""); }
 [ -n "${CODEX_MAX_THREADS:-}" ] && { FLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS"); RFLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS"); }
