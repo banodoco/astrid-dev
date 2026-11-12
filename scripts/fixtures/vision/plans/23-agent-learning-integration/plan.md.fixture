@@ -1,5 +1,17 @@
 # 23 — Continuous agent learning in creative workflows
 
+**Project:** Continuous agent learning
+
+**Goal:** Make retrieval, observed local learning and optional contributions a real Astrid Agent workflow.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; approved knowledge API
+
 **Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and this project's [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate live in the [project queue](../../README.md).
 
 **Vision gaps:** [CI-001 — Agents learn from real creative work](../../vision/gaps/CI-001-agent-learning-loop.md) (primary); [CI-002 — Interoperable Hiveminds](../../vision/gaps/CI-002-federated-knowledge.md) (supporting dependency). This plan integrates learning; it does not own the underlying protocol.

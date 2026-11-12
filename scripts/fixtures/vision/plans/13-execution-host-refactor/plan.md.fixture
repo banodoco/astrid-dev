@@ -1,5 +1,17 @@
 # Execution host refactor
 
+**Project:** Execution host refactor
+
+**Goal:** Split the oversized execution host into clear, maintainable modules while preserving supported execution behavior.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

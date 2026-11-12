@@ -1,5 +1,17 @@
 # 09 — Install and update confidence
 
+**Project:** Install and update confidence
+
+**Goal:** Make installing and updating dependable on all three OSes: one update path, and a real hosted test for every install, update, rollback and removal route.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** —
+
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

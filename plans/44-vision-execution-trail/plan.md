@@ -1,5 +1,17 @@
 # 44 — Connect Astrid's vision, projects and execution
 
+**Project:** Connect Astrid's vision, projects and execution
+
+**Goal:** Make the recently revamped astrid-dev and Astrid vision page reveal a maintained chain from stated ambitions through gaps, projects, experiments, evidence, decisions and real outcomes.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** owner/scope agreement; source and dependency checks
+
 **Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md) and [shared run contract](../../skills/astrid-dev-shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
 
 **Vision gaps:** [CA-003 — Connect Astrid's vision, projects and execution](../../vision/gaps/CA-003-vision-experiments-progress.md) (primary).

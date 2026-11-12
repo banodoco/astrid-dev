@@ -1,5 +1,17 @@
 # <Project name>
 
+**Project:** The project's name as the catalog and the public vision page show it.
+
+**Goal:** One sentence on what creators get when this is done.
+
+**Status:** `queued`, `active`, `blocked`, `paused`, `done` or `cancelled`.
+
+**Owner:** Who is accountable now; `Unassigned` until someone claims it.
+
+**Estimate:** Engineering days left, as a number.
+
+**Waiting on:** What the project waits for, or `—`.
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** Link the relevant [existing gap](../../vision/README.md), with its primary and truly useful supporting relationships, or state **Vision role: Foundational enabler** with a reason. A small bug or maintenance fix belongs in an issue.

@@ -1,5 +1,17 @@
 # 07 — Pinokio basic: install, run, update and remove
 
+**Project:** Pinokio basic (R1.1)
+
+**Goal:** Prove users can install, start, stop (including while busy), update and remove Astrid through Pinokio on Linux, macOS and Windows, with a separate three-row hosted gate. Done 7 Nov on Linux, macOS and Windows (6/6 hosted on `main`); remaining gaps moved to Plan 10.
+
+**Status:** done
+
+**Owner:** Release 1 merge coordinator
+
+**Estimate:** 0
+
+**Waiting on:** —
+
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

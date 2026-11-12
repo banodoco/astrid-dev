@@ -1,5 +1,17 @@
 # One update path and release
 
+**Project:** One update path and release
+
+**Goal:** One working way to update: Update now or Update in Pinokio, with every screen agreeing, and a release number that changes only when what users install changes.
+
+**Status:** active
+
+**Owner:** Plan 29 manager
+
+**Estimate:** 11–13
+
+**Waiting on:** —
+
 **Resuming Release 12 on a new machine?** Start at [handoff.md](handoff.md).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).

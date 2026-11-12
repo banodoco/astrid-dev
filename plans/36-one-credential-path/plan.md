@@ -1,5 +1,17 @@
 # One credential path
 
+**Project:** One credential path
+
+**Goal:** Every secret Astrid uses (fal, provider keys, RunPod token) is stored, granted and revoked through the Runtime's credential records, never in plain env files or settings.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Vision gaps:** [User control and recovery](../../vision/gaps/F-002-safe-user-control.md) (primary) · [Local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (supporting).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

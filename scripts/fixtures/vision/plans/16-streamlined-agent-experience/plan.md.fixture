@@ -1,5 +1,17 @@
 # 16 — Streamlined agent setup and execution
 
+**Project:** Streamlined agent setup and execution
+
+**Goal:** Simplify account connection and execution, and let contributors add an agent in one place while preserving alternative agents and pack runs.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
