@@ -1,6 +1,0 @@
-Date: 2026-11-12
-Source: Release 13 live and offline runs, 11–12 Nov (smell 11; usability 5; task T7)
-About: F-005; Plan 40
-Outcome: open
-
-The `generate` heartbeat prints only "running waiting=-" every minute, the same during a 13-minute stock wait and during engine setup; "no stock yet" is logged on the host only. It should name the phase: waiting for a GPU (attempt, datacenter), machine starting, engine setup, downloading models, running, collecting. Fits Plan 40 T4 and T6 (the per-attempt waiting line) and the machines redesign's `machines show`.

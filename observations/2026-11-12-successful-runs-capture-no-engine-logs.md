@@ -1,6 +1,0 @@
-Date: 2026-11-12
-Source: Release 13 live and offline runs, 11–12 Nov (smell 10; usability 7; task T9)
-About: F-003
-Outcome: open
-
-A successful run's engine logs are not captured: only the `run` record comes back ("the ComfyUI server owns its logs"). Owner rule: logs for every generation, successes included. Queued as T9 in the Release 13 candidate line. Release 13's G3 covers only the failure receipt, so its wording should widen when T9 lands.
