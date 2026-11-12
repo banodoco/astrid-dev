@@ -4,26 +4,26 @@ Kept by the Release 13 test manager ([brief](test-manager-brief.md)). There is o
 
 ## Latest comparison
 
-**None yet.** The first comparison runs when these runs finish:
-- Agent CI `43254543283` on `int/r13` at `f9214240`;
-- Agent CI `43264364443` on `int/r13-next` at `fc4b36d4`;
-- Agent Lanes `43268483674` on `r13/compose` at `9f9db742`, which is `fc4b36d4` plus the Lanes fix.
+**PARTIAL, 17:48 UTC:** `f9214240` (Agent CI `43254543283`, `int/r13`) against R12 `main` `0e1543e0`, covering finished unit shards 2, 3, 6, 7 and 8 plus darwin and windows. Shards 1, 4 and 5 are NO-RESULT until they land (about 18:03). Evidence: [`evidence/tests/agent/f9214240-partial/`](evidence/tests/agent/f9214240-partial/summary.md).
 
-**Baselines,** all at R12 `main` `0e1543e0`:
+**Baselines,** all at `0e1543e0`:
 - CI `43155525231`;
-- CI `43134432721`, attempts 1 and 2 (the same SHA, on `cand/29-r12`);
-- shard 5 from CI `43264595988`, on scratch `r13/tests/baseline-r12` `5d108da7` (R12 plus `--ignore=tests/sdk/test_h3_endpoint_r4.py`, which changes coverage; the release manager rules at the binding run);
-- Lanes `43155525276` (push) and `43205560755` (schedule).
+- CI `43134432721`, attempts 1 and 2 (same SHA);
+- shard 5 pending from CI `43264595988`, on scratch `r13/tests/baseline-r12` `5d108da7` (R12 plus `--ignore=tests/sdk/test_h3_endpoint_r4.py`, which changes coverage; the release manager rules at the binding run);
+- Lanes `43155525276` and `43205560755`.
 
-| Bucket | f9214240 | fc4b36d4 |
+**Still to come:** `fc4b36d4` (CI `43264364443`, `int/r13-next`) and Lanes `43268483674` on `9f9db742`.
+
+| Bucket | f9214240 (partial) | fc4b36d4 |
 |---|---|---|
-| 1 regression | pending | pending |
-| 2 new test failing, R13 behaviour | pending | pending |
-| 3 new test failing, defect already on R12 | pending | pending |
-| 4 preexisting | pending | pending |
-| 5 missing | pending | pending |
-| 6 flaky | pending | pending |
-| UNSORTED (no baseline yet) | pending | pending |
+| 1 regression | 31, in 7 clusters; triage W11–W13 running | pending |
+| 2 new test failing, R13 behaviour | at least 1 (`test_core_provider_neutrality`) | pending |
+| 3 new test failing, defect already on R12 | 0 so far | pending |
+| 4 preexisting | 553 | pending |
+| 5 missing | 8,569, provisional: mostly the 3 pending shards | pending |
+| 6 flaky | 4 R12 flips; 3 of them fail on the candidate, and those still block | pending |
+| UNSORTED (no baseline yet) | 5 (`test_timeline_session_pair`), waiting for the shard-5 baseline | pending |
+| Non-test: fast checks (mypy) | fails on both; candidate +228 against R12 +146 (82 more findings). REVIEW | pending |
 
 ## Rows
 
