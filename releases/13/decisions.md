@@ -2,29 +2,23 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-12 02:36 UTC)
+## NOW (2026-11-12 05:25 UTC)
 
-- **Rehearsal head:** `scratch/r13-rehearsal` = `878d13f4`, installed at `install-r13b`; host up.
-- **Pods:** 1 of ours running. TTS attempt 6 is on an RTX 5090 in EUR-NO-1, claimed at 02:30 after 50 capacity attempts; it's under the product's paid limits ($3 cap, 1800 s idle). No pod not of ours seen.
-- **Money:** balance $100.88 before attempt 6; spent ≈ $4.51 of $40 (stop at a balance of $67.41).
-- **TTS progress:** each attempt has moved one stage further.
-  - 1: provider contract (`networkVolumeId` drift; fixed `e6d85766`).
-  - 2: a stock-wait abort (fixed `f1a487c9`).
-  - 3: install verify, blind (labels `61eafd53`).
-  - 4: install verify, `integrity_failed@start`, the models-root bug (fixed `c627edba`).
-  - 5: install OK, the job failed with `generation_failed`, blind (execution diagnostic `eeeee9ef`/`878d13f4`).
-  - 6: running, with the receipt now naming the failing node and exception type.
-  - If 6 is still blind: keep or operator-rent a pod and read the engine error directly (orchestrator 02:31).
-- **Structural slices landed in the rehearsal:**
-  - S1 provider record and recorded fixtures (`ad7723a8`);
-  - S2 one refusal type with the gate required (`0a7de39c`);
-  - S3 host-owned failure evidence, per-engine allowlists and the core neutrality ratchet (`ebdc2504`);
-  - the execution diagnostic with an engine-neutral name;
-  - the C1 reason-channel core (`dd20b74b`, branch `r13/struct-c1b`, not yet in the rehearsal).
-- **Running now (Codex):** the provider gate with 429 backoff (Terra); the installed-entry-point smoke test (Sol); list and import ratchets (Luna); C1 tasks 1 and 3 (Luna).
-- **Next:** `plan_from_receipt` (Luna), C1 task 2, then the merges; SFX and the cheap image and music cells once TTS works. Per the orchestrator, the gate, ratchets and smoke test come before paid cells that exercise release or warm reuse.
-- **Then:** merge with the Release 12 work and get Release 13 release-ready.
-- **For the owner (REVIEW):** H10, whether to make the free-text failure bundle opt-in (bundle round 3 parked at WIP `04dd5f15`).
+- **Release 12 is published** (Agent main `0e1543e0`, Runtime `42ae24aff`, App `237b28be`, VibeComfy `e65f4941`, lifecycle `f2948817`). It is now the Phase 1 base; the next release number is 13.
+- **Rehearsal:** local clone `/home/user/wt/c-reh` = `a6f38902`, made of:
+  - `878d13f4`;
+  - the ratchet, receiptplan, C1 core, C1 task 2, setup fixes and G4 follow-ups;
+  - declared logs `c05e5e31`;
+  - published main `0e1543e0`.
+  The gate is running against `0e1543e0`. Not pushed, because the auto-mode classifier refuses astrid-agent pushes (see the 04:48 entry); the install takes Agent from the local clone instead.
+- **Installed:** still `878d13f4` at `install-r13b`.
+- **Declared logs:** a1, a2, a4–a9, local-streams, vc1 and vc2 are integrated, and VibeComfy is pinned to `88cff6d5` (on origin; it descends from R12's `e65f4941`). a3 (Luna) and e2e (Terra) are running. The cleanup task follows.
+- **Pods:** none. Balance $100.22 (stop at $67.41); about $4.5 of $40 spent.
+- **Next:** merge a3 and e2e → reinstall from the rehearsal → ONE live TTS on `audio/qwen3_tts_custom_voice`. Pass means `astrid tasks logs <task> --name engine-error` prints ComfyUI's real exception. Then the SFX, t2i, edit and music cells.
+- **Parked:** C1 task 1 (needs its allowlist removed), C1 task 3 (regressed), the provider gate (to Sol), and the smoke test.
+- **For the owner (REVIEW):**
+  - allow pushes to `r13/*` on astrid-agent, or push them yourself;
+  - H10, whether the free-text failure bundle should be opt-in (bundle round 3 is parked at `04dd5f15`).
 
 ## Entries
 
@@ -359,3 +353,7 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
     - Its per-step install-unverified labels are good, but it narrows `_safe_label` to an allowlist that turns any other label into "withheld". That is redaction, against the owner's ruling, and would hide a novel engine error code.
     - Rework later: keep the labels and drop the allowlist.
   - The reinstall will use a manifest with the Agent `repo` pointing at the local rehearsal clone; the product supports it, and the controller ships that source to the pod. So the refused push does not block the live test.
+- **2026-11-12 05:25** **REVIEW** Sequencing after the Release 12 publication (orchestrator, 04:33). I merged published Agent main `0e1543e0` into the rehearsal BEFORE the live TTS, so the live evidence is on the real Phase 1 base rather than on a base that is about to be replaced.
+  - The ten new main commits are R12's fix round. The one conflict was `tests/packs/h3_av/test_character_swap_cpu_boundary.py`: our side (Plan 32 T6b-4) deliberately deleted the checkout-session schema-ownership tests, and main had only narrowed a patch inside one of them. I kept the deletion.
+  - VibeComfy needs no merge: R12's `e65f4941` is an ancestor of `88cff6d5`.
+  - The rehearsal gate's baseline is now `0e1543e0`.
