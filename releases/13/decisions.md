@@ -9,30 +9,30 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 
 | Item | State | Owner | Estimate |
 |---|---|---|---|
-| BUG 1: a stuck failed task (Runtime \`6855dfa8\` inline proof plus Agent terminal-reconcile \`56284e6c\`) | DONE, in the rehearsal | — | — |
-| TTS declared patch (VibeComfy \`c7a47e36\`, Astrid \`dd5bc822\`) | DONE; node restore passed live | — | — |
-| Keep-warm: a failed job or failed preparation keeps a healthy pod | DONE (\`9e7b2a48\`; 326 passed); passed live | — | — |
-| BUG 3: one models-root resolver (VibeComfy \`e4118ccf\`) | DONE; in Stage 1 | — | — |
-| T1: edit admission (\`3ea7381d\`) | DONE; in Stage 1 | — | — |
-| Music template declaration (VibeComfy \`87d5e825\`) | DONE; in Stage 1 | — | — |
-| **Stage 1 live proof:** five cells on candidate \`r13/stage1\` \`f9214240\` | RUNNING (started 15:09) | me | about 1 h |
-| Installer progress (IU-20) plus the R1 update fix (IU-14) | DONE, in the rehearsal \`2eceb0b0\` | — | — |
-| T3: the 37 legacy template declarations (the SFX template is among them) | IN FLIGHT (Sol, \`c-vcmusic\`) | Sol | about 1–2 h |
+| BUG 1: a stuck failed task (Runtime `6855dfa8` inline proof plus Agent terminal-reconcile `56284e6c`) | DONE, in the rehearsal | — | — |
+| TTS declared patch (VibeComfy `c7a47e36`, Astrid `dd5bc822`) | DONE; node restore passed live | — | — |
+| Keep-warm: a failed job or failed preparation keeps a healthy pod | DONE (`9e7b2a48`; 326 passed); passed live | — | — |
+| BUG 3: one models-root resolver (VibeComfy `e4118ccf`) | DONE; in Stage 1 | — | — |
+| T1: edit admission (`3ea7381d`) | DONE; in Stage 1 | — | — |
+| Music template declaration (VibeComfy `87d5e825`) | DONE; in Stage 1 | — | — |
+| **Stage 1 live proof:** five cells on candidate `r13/stage1` `f9214240` | RUNNING (started 15:09) | me | about 1 h |
+| Installer progress (IU-20) plus the R1 update fix (IU-14) | DONE, in the rehearsal `2eceb0b0` | — | — |
+| T3: the 37 legacy template declarations (the SFX template is among them) | IN FLIGHT (Sol, `c-vcmusic`) | Sol | about 1–2 h |
 | Success-run engine logs (T9; owner rule "logs for every generation") | QUEUED | Terra | about 1 h |
 | Model layout A1–A3 plus in-place engine upgrade U1–U5 (owner: no shims, so no symlinks shipped) | DESIGNED; reviewed (Astra SOUND WITH CHANGES); next a manager | manager | about 4–6 h. **Owner call: in the candidate, or ship V1 plus symlinks?** |
-| Candidate compose: Agent plus Runtime \`6855dfa8\` plus VibeComfy, App re-pin (\`release\` 13, \`pin.mjs\`), R1-update proof row (\`target_app_sha\`) | after Stage 1 | me | about 2 h |
+| Candidate compose: Agent plus Runtime `6855dfa8` plus VibeComfy, App re-pin (`release` 13, `pin.mjs`), R1-update proof row (`target_app_sha`) | after Stage 1 | me | about 2 h |
 
 **B. After the candidate (default for new findings)**
 - Machines redesign M1–M10 (delegated; manager running): the claim owns spend, named machines, the idle timer. **Owner call: is any of it needed in the candidate?**
-- T6 (fold into M1), T7 (the wait reason reaching the CLI), T8 (Runtime blocker list, a schema change), T10 (models stay loaded between jobs), T11 (default project), T13 (CPU journey), T14 (catalog dry-run corpus; it finds catalog drift such as \`z-image/i2i\`).
-- Plan 50 revision (over-built per Fable); pre-existing \`test_warm_session\` paid-expiry failures (task 18).
+- T6 (fold into M1), T7 (the wait reason reaching the CLI), T8 (Runtime blocker list, a schema change), T10 (models stay loaded between jobs), T11 (default project), T13 (CPU journey), T14 (catalog dry-run corpus; it finds catalog drift such as `z-image/i2i`).
+- Plan 50 revision (over-built per Fable); pre-existing `test_warm_session` paid-expiry failures (task 18).
 
 ### State
-- **Rehearsal:** \`scratch/r13-rehearsal\` \`2eceb0b0\`.
-- **Stage 1:** \`r13/stage1\` \`f9214240\`, installed in \`install-r13b/root-s1\`, \`env-s1.sh\`, \`data-s1\`; script \`runs/stage1.sh\`, log \`runs/stage1.log\`, cell outputs \`runs-s1/<cell>/\`.
+- **Rehearsal:** `scratch/r13-rehearsal` `2eceb0b0`.
+- **Stage 1:** `r13/stage1` `f9214240`, installed in `install-r13b/root-s1`, `env-s1.sh`, `data-s1`; script `runs/stage1.sh`, log `runs/stage1.log`, cell outputs `runs-s1/<cell>/`.
 - **Batch 6 result:** t2i PASSED live (6m38s, first green). TTS, SFX and music failed at preparation (BUG 3 and the declarations); edit was refused (T1). All are now fixed in Stage 1.
-- **Money:** balance \$96.65 at 15:10; about \$10 of \$40 spent; floor \$67.41.
-- **Codex safety (orchestrator 14:49):** full access means a worker could reach RunPod through the proxy. Every brief must forbid calls to \`api.runpod.io\` and \`rest.runpod.io\` and any \`astrid generate\` or \`machines\` command. Paid steps stay with me.
+- **Money:** balance $96.65 at 15:10; about $10 of $40 spent; floor $67.41.
+- **Codex safety (orchestrator 14:49):** full access means a worker could reach RunPod through the proxy. Every brief must forbid calls to `api.runpod.io` and `rest.runpod.io` and any `astrid generate` or `machines` command. Paid steps stay with me.
 - **Reviews (owner):** Astra for rigour and robustness; Opus for structure, taste and feel. Both after a design and before a build; after an S or SS build, before merge.
 - **Disk:** 3.7 GB free; check before each install.
 
