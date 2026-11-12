@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
 """Validate Astrid Dev's documentation index and local links (stdlib only)."""
 from __future__ import annotations
 
-import argparse
 import json
 import re
 from pathlib import Path
@@ -299,29 +297,3 @@ def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> li
         for missing in sorted(release_docs.keys() - referenced):
             errors.append(f'strategy.md: releases/{missing} has no roadmap row')
     return errors
-
-
-
-def check(root: Path) -> tuple[list[str], list[str]]:
-    """Compatibility API backed by the shared check registry."""
-    import checks
-    return checks.run_documentation(checks.Context(root))
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    args = parser.parse_args()
-    errors, warnings = check(ROOT)
-    for issue in warnings:
-        print(f'WARN {issue}')
-    for issue in errors:
-        print(f'ERROR {issue}')
-    if errors:
-        print(f'Document validation failed with {len(errors)} error(s).')
-        return 1
-    print('Documentation structure, project catalog and every Markdown local link: OK')
-    return 0
-
-
-if __name__ == '__main__':
-    raise SystemExit(main())

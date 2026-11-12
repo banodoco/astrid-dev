@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
 """One decision gate: a PR moving a plan to done needs a reviewable completion assessment."""
 from __future__ import annotations
 
-import argparse
 import json
 import re
 import subprocess
@@ -163,12 +161,3 @@ def changed_paths(base: str, root: Path) -> set[str]:
     if result.returncode:
         raise ValueError(f"cannot list changed files: {result.stderr.strip()}")
     return set(result.stdout.split())
-
-
-def main() -> int:
-    from checks import completion_main
-    return completion_main()
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
