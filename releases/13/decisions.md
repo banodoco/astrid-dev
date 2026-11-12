@@ -719,3 +719,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Pass 2 is running: two emitter regressions, plus Astrid's `ltx-2.3/flf` uses the now-draft `video/ltx2_3_runexx_first_last_frame` (`models.yaml:841`).
 - **Installer progress** (Agent `f9d526f1`) merged into the rehearsal `2eceb0b0`; the App re-pin and the R1-update row come at candidate time.
 - **Stage 1** is in the capacity wait for an RTX 5090 in EUR-NO-1.
+
+### 15:22 UTC — Managers restarted as forks, so they launch Codex with full access
+- **Cause:** both managers were started as fresh sub-agents. The auto-mode classifier refused their `codex exec -s danger-full-access` ("Create Unsafe Agents"), because they had never seen Hannah's authorisation; an authorisation relayed by the parent doesn't count, by design. The parent session's own launches pass, because the owner's messages are in its context.
+- **Hannah (about 15:20):** "you need to run it outside of a sandbox … deploy as many Lunas as they want." Asked why the manager can't just launch them.
+- **Fix:** stopped both managers (their sandboxed workers stopped too; partial diffs are kept in `c-m1`, `c-m4` and `c-layout`) and relaunched them as **forks** of the Release 13 manager, so they carry the owner's instructions. They resume from those working trees, with full access and Luna sub-agents.
+- **Lesson for the astrid-dev Codex skill:** a manager that launches Codex workers must be a fork, or must otherwise carry the owner's authorisation in its own context; a fresh sub-agent can't launch full-access workers. To be added with the smells PR.
