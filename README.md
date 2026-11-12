@@ -4,7 +4,7 @@ Astrid Dev connects our creative ambition to practical contributions. Our [contr
 
 ## What we're building
 
-**A tool to unlock the collective artistic ambition of the open-source AI community.**
+**A tool to unlock the artistic potential of the open-source AI community.**
 
 Astrid pairs an adaptable front end at [astrid.haus](https://astrid.haus) with an agent equipped with tools for creative work and open-source AI.
 
