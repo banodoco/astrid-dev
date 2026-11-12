@@ -1004,3 +1004,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - none for test-expectation updates or lint;
   - U2's current round is its last, unless it finds an install or start bug.
 - **Advisor:** any recommendation that adds process must show the concrete failure it prevents before Saturday.
+- **Owner decision on the lint gate (the same exchange):** for R13, the per-(file, code) ratchet blocks publish only on bug classes.
+  - Blocking: ruff F821 and BLE001; mypy name-defined, attr-defined and call-arg.
+  - Imports: I001 is auto-fixed once.
+  - Everything else is reported and goes to Plan 39 with its owners.
