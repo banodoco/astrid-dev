@@ -8,11 +8,11 @@
 
 **Owner:** Who is accountable now; `Unassigned` until someone claims it.
 
-**Estimate:** Engineering days left, as a number.
+**Estimate:** Engineering days left, or `TBD`.
 
 **Waiting on:** What the project waits for, or `—`.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project facts live in the six lines above; priority lives in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** Link the relevant [existing gap](../../vision/README.md), with its primary and truly useful supporting relationships, or state **Vision role: Foundational enabler** with a reason. A small bug or maintenance fix belongs in an issue.
 

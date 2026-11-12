@@ -267,9 +267,10 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Projects and participation",
         "",
-        "The [project catalog](../plans/index.md) owns current priority, "
-        "status and accountability; project packs contain their own scope, "
-        "sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) "
+        "Each project pack holds its own status, owner and estimate (at the "
+        "top of its `plan.md`) and its scope, sources, tasks and proof; "
+        "[plans/priority.md](../plans/priority.md) sets the order, and the "
+        "[project catalog](../plans/index.md) lists every project. [How to contribute](../docs/contribution-workflow.md) "
         "covers issues, claims, scope review, PRs, writing and completion. "
         "Individual gap records hold their own evidence and closure criteria.",
         "",

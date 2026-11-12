@@ -1,8 +1,8 @@
 # Plan catalog
 
-This catalog shows every plan's status, owner, priority order and estimate, including completed and cancelled work. Edit the six fields in each plan's `plan.md` and run `python3 scripts/astrid_dev.py sync` to update the table. The [root README](../README.md) links here; terminal plans remain in this catalog.
+This catalog shows every plan's status, owner, priority order and estimate, including completed and cancelled work. The table is generated, so do not edit it here: change a plan's row in the six lines at the top of its `plans/<id>/plan.md` (Project, Goal, Status, Owner, Estimate, Waiting on) and its order in [priority.md](priority.md), then run `python3 scripts/astrid_dev.py sync` and commit the result. The [root README](../README.md) links here.
 
-**Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. Priority is determined by [priority.md](priority.md). Change its order to reprioritize and update status in the plan's fields. A new plan goes last among these open rows; moving it up is the owner's decision. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
+**Priority:** among `active`, `queued`, `blocked` and `paused` plans, higher rows are higher priority. The order comes from [priority.md](priority.md); move a line there to reprioritize. A new plan goes at the end of that list; moving it up is the owner's decision. Terminal `done`/`cancelled` plans stay at the bottom as history. No status alone authorizes work.
 
 **Definitions:** `active` = explicitly started; `queued` = planned, not started; `blocked` = known impediment; `paused` = deliberately stopped; `done` = accepted completion evidence; `cancelled` = intentionally abandoned, with reason in the plan. Owner is accountability, not permission. Estimates are remaining human engineering days or `TBD`.
 
@@ -70,6 +70,6 @@ The App's `extension-visual` screenshot baseline and scheduled installer/Direct 
 
 ## How to edit safely
 
-Change **this table once** for status, owner, estimate, waiting-on or priority. Preserve a row for every `plans/<id>/plan.md`. Never copy status into a plan's metadata or a second archive table.
+Change status, owner, estimate or waiting-on **once**, in the plan's own six lines, and priority in [priority.md](priority.md); every `plans/<id>/plan.md` gets its row from `sync`. Never copy status into a second table.
 
 Run `python3 scripts/check_docs.py` and `python3 scripts/export_public_vision.py` from the repository root. CI validates on every PR and `main` push; the public vision feed is published only after a validated `main` push. **Moving a plan to `done` also requires the [completion assessment](../.github/PULL_REQUEST_TEMPLATE/project-completion.md)** with actual acceptance evidence and an assessment of every linked gap.

@@ -197,14 +197,14 @@ def project_fields(plan_text: str) -> dict[str, str]:
     for field in PROJECT_FIELDS:
         matches = re.findall(r"^\*\*" + re.escape(field) + r":\*\*([^\r\n]*)", header, re.M)
         if not matches:
-            raise ValueError(f"{field} missing")
+            raise ValueError(f"{field} missing; add a **{field}:** line before the first ## heading")
         if len(matches) != 1:
-            raise ValueError(f"{field} duplicated")
+            raise ValueError(f"{field} duplicated; keep one **{field}:** line before the first ## heading")
         value = matches[0].strip()
         if not value:
-            raise ValueError(f"{field} empty")
+            raise ValueError(f"{field} empty; write a value after **{field}:**")
         if "|" in value:
-            raise ValueError(f"{field} malformed")
+            raise ValueError(f"{field} malformed; remove the | from the **{field}:** line")
         result[field] = value
     return result
 
@@ -233,7 +233,7 @@ def projects(root: Path, revision: str | None = None) -> list[list[str]]:
         except ValueError as exc:
             raise ValueError(f"plans/{folder}/plan.md: {exc}") from exc
         if fields["Status"] not in {"queued", "active", "blocked", "paused", "done", "cancelled"}:
-            raise ValueError(f"plans/{folder}/plan.md: invalid status {fields['Status']!r} in {fields['Project']}")
+            raise ValueError(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use queued, active, blocked, paused, done or cancelled")
         row = [fields[f] for f in PROJECT_FIELDS]
         row.append(f"[Plan {folder.split('-')[0]}]({folder}/plan.md)")
         items.append((folder, row))

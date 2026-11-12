@@ -146,7 +146,7 @@ class ProjectCatalogContractTests(unittest.TestCase):
 
     def test_synthetic_fixture_essential_errors(self):
         expected = {
-            "bad-status": ("plan-catalog", ("invalid status 'maybe' in Synthetic fixture",)),
+            "bad-status": ("plan-catalog", ("plans/99-fixture/plan.md: invalid status 'maybe'",)),
             "unnamed-active-owner": ("catalog-paths", ("active project needs a named accountable owner: Synthetic fixture",)),
             "missing-project-field": ("plan-catalog", ("plans/99-fixture/plan.md:", "Status", "missing")),
             "duplicate-project-field": ("plan-catalog", ("plans/99-fixture/plan.md:", "Status", "duplicat")),
@@ -180,7 +180,7 @@ class ProjectCatalogContractTests(unittest.TestCase):
             errors = self.errors(root, "plan-catalog")
             self.assertEqual(len(errors), 5, errors)
             for fragments in (("bad-folder",), ("plans/01-alpha/plan.md:", "Goal", "missing"),
-                              ("invalid status 'maybe' in Catalog name",),
+                              ("plans/02-beta/plan.md: invalid status 'maybe'",),
                               ("plans/priority.md", "02-beta", "duplicat"),
                               ("plans/priority.md", "98-unknown")):
                 with self.subTest(fragments=fragments):
