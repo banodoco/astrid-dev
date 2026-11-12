@@ -12,7 +12,7 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - App main merged (3e53462f4, the last tour push; held since).
   - Your copy change: the phone home callout now reads "Leverage open source tools".
   - Agent comparison fully ruled. 89 R11-shipped (recorded, untouched); ~815 pre-existing; no-baseline bucket ruled from a local baseline; 64 R12-introduced. The 64 are being fixed in Agent `r12/fix-round`: the text alias, the add_text default, the recovery command, the core boundary ratchet, test fixtures and teardown leaks.
-  - Plan 39: structural fixes requested by you, being drafted on the plan branch.
+  - Plan 39: your structural-fix request is done. Phase 4 (SF1–SF7) is on `r12-progress/plan39-handoffs` `2e6773d`. You set SF4's scope limit (placeholder 30 commits or 3,000 lines).
 - **Not done:**
   - Agent fix-round follow-ups from review: a recovery command proven by a real install, alias precedence, caption readers. Time-box 02:05Z.
   - Then cut, re-pin and one qualifying window (Agent CI, App Tests, Direct Journey, matrix together). Then GATE-GREEN, the orchestrator publishes, and the post-publish checks.
@@ -393,3 +393,15 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - Ruling: an intermittent miss of the specific transition wording, not an install or update failure. It goes in the known issues, with a Plan 39 follow-up to make the transition notice robust. **REVIEW.**
   - **All 11 rows green on attempt 2** (Codex Terra `cx-lf`).
 - 2026-11-12 01:17Z — **The aggregate evidence check is still red:** "direct-linux-autostart-off / direct-macos-autostart-off: installed import origins are absent". That's a harness gap: the autostart-off leg never runs `journey.verify("install")`, so it records no `origin.imports`, which the aggregate requires of every row. Fix with Codex Luna (`cx-aso`). It's harness-only, so my read is enough (rule 3), and it goes onto `harness/29-r12` before the qualifying matrix.
+- 2026-11-12 01:18Z — **Plan 39 updated with structural fixes from Release 12 (owner request).** `r12-progress/plan39-handoffs` = `2e6773d`, drafted by an Opus sub-agent from my brief, spot-checked by me; the docs checks pass.
+  - New "Phase 4: structural fixes":
+    - SF1a/b: each three-products test seeds its own project, the suite runs in parallel, and a nightly shuffle runs.
+    - SF2a–c: expected failures name their step and error pattern; an unmarked wrong-selection refusal test; VIDEO-DROP converted after #253.
+    - SF3a–c: JUnit and `-rA` artifacts on every main and int run; a no-rerun baseline diff; a shard time budget.
+    - SF4: candidate scope rule.
+    - SF5: release freeze, via a ruleset plus a release-contract check.
+    - SF6a–e: single alias policy; inventory-keyed registry cache; printed-command tests; the 45 bad `tests.` imports; a patch-leak guard.
+    - SF7: matrix capture gating, and the simulated release becomes a named option.
+  - Extended rows: K1a, K1c, K5, Owner.
+  - Estimate: +13–16 worker-days.
+  - **REVIEW, for Hannah:** SF4's proposed limit (30 commits or 3,000 lines per repo) is a placeholder for you to set. SF4 and SF5 need an advisor review before they start.
