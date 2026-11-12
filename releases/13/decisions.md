@@ -826,3 +826,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Stage 2a's live pod is watched and released explicitly.
 - **Merged:** TTS v3 (`fae4b09b`), engine-mypy (`2b49b790`), custody-deadline (`ce797451`). `r13/compose` is now `1e1f3b4f`.
 - **Machines handover published** (`0eef285`). The new session takes over once the owner authorizes it.
+- **18:39 UTC Stage 2a (cell diagnostics) result:**
+  - The in-script setup hiccup cost t2i, SFX and music their first attempt (no pod, no cost).
+  - **Edit** ran on pod `5q0poadojva5ao` and failed at preparation after 17 min: the engine install's `start` step returned `endpoint_ownership` ("Engine operation failed."; the declared install log has only that line). Cause, very likely: the in-place upgrade (U1, merged) meeting Stage 1's engine root and owner marker on the reused network volume, while U2 (stop the old supervisor) isn't merged.
+  - **Stopped** the chained t2i, SFX and music runs, which would reproduce the same failure at about 17 min each, and released the pod ($0.17 for this pod; balance $95.67; no pods).
+  - **To the engine lane, blocking:** a CPU reproduction test of an old engine root plus marker against the candidate install (the boundary that should have caught this); U2 to hand over cleanly; the error must name the owner, the marker and the next action.
+  - **Lesson:** the in-place upgrade was merged without proof against a real old root on persistent storage. Any change to installed or persistent state needs its upgrade-from-previous-build test before a live run.
+- R3 merged (`a04a61355`, h3 checked through its live entry and preflight). `r13/compose` is now `65630ff9`.
