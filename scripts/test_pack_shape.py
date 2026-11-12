@@ -224,5 +224,48 @@ class CommandTests(PackFixture):
         self.assertEqual(self.invoke(base), (0, ''))
 
 
+class FolderRenameRegressionTests(CommandTests):
+    def old_pack_base(self):
+        text = self.read('inputs.md')
+        heading = headings(text)[1]
+        self.write('inputs.md', text.replace('## ' + heading, 'Old pack section'))
+        return self.init_git()
+
+    def test_committed_folder_rename_with_rewritten_plan(self):
+        base = self.old_pack_base()
+        self.git('mv', 'plans/99-example', 'plans/98-renamed')
+        (self.root / 'plans/98-renamed/plan.md').write_text('Entirely rewritten plan.\n', encoding='utf-8')
+        self.git('add', '-A')
+        self.git('commit', '-qm', 'rename and rewrite plan')
+        self.assertEqual(self.invoke(base), (0, ''))
+
+    def test_unstaged_folder_move(self):
+        base = self.old_pack_base()
+        shutil.move(str(self.pack), str(self.root / 'plans/98-renamed'))
+        self.assertEqual(self.invoke(base), (0, ''))
+
+    def test_untracked_new_pack_is_checked_without_changing_index(self):
+        base = self.init_git()
+        self.write('tasks.md', self.read('tasks.md') + '\nStaged change.\n')
+        self.git('add', 'plans/99-example/tasks.md')
+        self.write('tasks.md', self.read('tasks.md') + '\nUnstaged change.\n')
+        shutil.copytree(self.templates, self.root / 'plans/100-new')
+        path = self.root / 'plans/100-new/plan.md'
+        text = path.read_text(encoding='utf-8')
+        heading = headings(text)[-1]
+        path.write_text(text.replace('## ' + heading, 'Removed heading'), encoding='utf-8')
+        status_before = self.git('status', '--porcelain')
+        cached_before = self.git('diff', '--cached', '--binary')
+        quiet_before = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=self.root).returncode
+        status, output = self.invoke(base)
+        self.assertEqual(status, 1)
+        self.assertEqual(len(output.splitlines()), 1)
+        self.assertIn('plans/100-new/plan.md:', output)
+        self.assertIn(heading, output)
+        self.assertEqual(self.git('status', '--porcelain'), status_before)
+        self.assertEqual(self.git('diff', '--cached', '--binary'), cached_before)
+        self.assertEqual(subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=self.root).returncode, quiet_before)
+
+
 if __name__ == '__main__':
     unittest.main()
