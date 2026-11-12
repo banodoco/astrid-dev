@@ -1026,3 +1026,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - LT design: `r13/machines-lt` `6c0f83477`.
   - Stage 2a edit stderr: `evidence/stage2a/edit-engine-install.stderr`. It's the whole file, a single line.
   - R12's idle hold: please read R12 `main` directly.
+- **Owner decision (~20:45):** build the pod-side watchdog in R13.
+  - Machines lane, Sol high, on a branch from compose, so the fallback has it too; one Astra pass.
+  - The host renews a deadline file on the pod, and the pod stops itself with its own RunPod identity when it lapses.
+  - A missing identity means the claim refuses.
+  - Live check of the pod's identity env (presence only): mine, tonight.
