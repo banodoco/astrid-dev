@@ -1,6 +1,6 @@
 # Release 13 test table
 
-Kept by the Release 13 test manager ([brief](test-manager-brief.md)). There is one row per failing or missing test id, or per job with no result. Results are sorted only with `env/baseline-diff.py`, by the rules in [`astrid-dev-green`](../../skills/astrid-dev-green/SKILL.md) (once #572 merges).
+Kept by the Release 13 test manager ([brief](test-manager-brief.md)). There is one row per failing or missing test id, or per job with no result. Results are sorted only with `env/baseline-diff.py`, by the rules in `astrid-dev-green` ([banodoco/astrid-dev#572](https://github.com/banodoco/astrid-dev/pull/572)).
 
 ## Latest comparison
 
