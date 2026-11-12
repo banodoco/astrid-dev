@@ -2,15 +2,15 @@
 
 **Project:** Recorded boundaries and an offline generation harness
 
-**Goal:** A generation failure at any boundary (RunPod, the Runtime, the engine) is found and named on a CPU without renting a GPU, because every boundary is tested against recorded real responses and an offline end-to-end harness injects each failure and checks the product's answer.
+**Goal:** The generation failures we know of at the RunPod and Runtime boundaries are found and named on a CPU without renting a GPU: tests use recorded real RunPod responses, and the CPU journey with the real Runtime injects each failure and checks the product's answer.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** Phase 1 about 6–8; phase 2 TBD
+**Estimate:** about 4–5
 
-**Waiting on:** the owner's scope decision (D1); Release 13's in-flight terminal-reconcile and Runtime inline-proof fixes, which phase 1 builds its fault rows on
+**Waiting on:** the owner's scope decision (D1); Release 13's in-flight terminal-reconcile and Runtime inline-proof fixes, which RB-1 needs
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -18,40 +18,41 @@
 
 ## Outcome and scope
 
-A contributor changing the generation path can run one CPU command and see, for every boundary the path crosses and every failure we know of, whether the product still ends in a defined state and says why. Concretely:
+A contributor changing the generation path can run one CPU command and see, for each enumerated boundary failure below, whether the product still says why and ends in a defined state. Concretely:
 
-1. **Recorded responses are the only boundary test data.**
-   - Provider (RunPod REST and GraphQL), Runtime protocol (task read model, claim, settle, fail, cancel, and their rejections) and engine CLI (JSON lines, failed-command output) shapes come from recordings captured during paid runs we already make, scrubbed by a fixed type-preserving allowlist.
-   - A replaying fake refuses any request it has no recording for.
-   - A ratchet stops new hand-written boundary shapes.
-2. **The fixtures that hid the 11–12 Nov live bugs are replaced by recordings:**
-   - the flat task spec;
+1. **The CPU journey runs.** `tests/integrations/test_remote_machine_cpu.py`, which already runs the real Runtime, passes in the shared worker environment and in the Agent integration lane. It fails 24 of 25 tests locally today.
+2. **RunPod test data comes from recordings.**
+   - Extend the existing recordings in `tests/providers/runpod/fixtures/` and their loader in `tests/providers/test_provider_contract.py`; repair their known port-type damage.
+   - Add the RunPod requests the journey makes but that have no recording yet.
+   - A narrow ratchet stops new hand-written RunPod pod dicts and Runtime task dicts in tests.
+3. **The fixtures that hid the 11–12 Nov live bugs are corrected:**
+   - the flat Runtime task spec (`spec.inputs` vs the real `spec.spec.inputs`; the cli-wait branch already converts three files);
    - `networkVolumeId`;
-   - the `tasks logs` source;
    - the empty-log output that the Runtime refused.
-3. **The CPU journey `tests/integrations/test_remote_machine_cpu.py` runs in the shared worker environment and on CI.** Today it fails 24 of 25 tests locally on the unchanged base.
-4. **An offline fault matrix** asserts, for each injected failure, both a named reason in the receipt or CLI and a defined terminal state for the task and the machine. Failures covered:
-   - provider stock and 429;
-   - a pod that dies;
+   Each conversion is checked against a captured real response.
+4. **An offline fault matrix inside the CPU journey** extends its existing stock, killed-pod, cancellation and receipt tests. For each row it asserts a named reason in the receipt or CLI, and the task's and machine's end state as implemented by the Release 13 fixes. Rows:
+   - out of stock;
+   - 429 with `Retry-After`;
+   - a killed pod;
    - an engine install or doctor failure;
-   - a failure publication the Runtime rejects;
+   - a rejected success or failure publication;
    - an expired lease;
    - a host stopped mid-publication;
-   - a storage wait;
-   - a held concurrency slot.
-5. **One written terminal-state contract** for a failed attempt and its machine: what "unknown" versus "definitely rejected" means, who decides each end state, and when a machine is kept or released (Plan 40 D12 as amended by D13). Every transition has a test in the matrix.
-6. **A visibility rule** enforced by a lint or ratchet: no wait loop without a reason line, and no `from None` without a typed reason.
+   - a storage wait that is then unblocked;
+   - a held slot that is then released or cancelled.
+   A kept machine's end state is `idle` or `stale_after_failure`, not necessarily terminated (Plan 40 D12/D13).
 
-**Phase 2 (committed, not estimated):**
-- a real pod agent in the harness;
-- a no-op CPU engine, so the harness needs no ComfyUI;
-- migrating the remaining raw boundary readers;
-- lifecycle typed errors (a lifecycle pin bump);
-- a container CI job for the harness.
+**Candidate follow-ups, not part of this plan's commitment:**
+- engine CLI recordings;
+- a replaying Runtime fake (only if the real Runtime in the journey proves insufficient);
+- a lint against silent wait loops;
+- a real pod agent and a no-op CPU engine in the harness;
+- lifecycle typed errors (a pin bump);
+- a container CI job.
 
 **Not included:**
-- keeping machines across a host restart (needs Plan 40's deferred pod-side cap; see D2);
-- GPU validation itself ([Plan 34](../34-real-gpu-proof/plan.md));
+- keeping machines across a host restart (Plan 40 D12 keeps host shutdown as a release; it needs the deferred pod-side cap);
+- GPU validation and paid capture beyond passive capture in already-authorized runs ([Plan 34](../34-real-gpu-proof/plan.md));
 - greening other CI lanes ([Plan 39](../39-green-mains/plan.md)).
 
 ## Existing work and decision
@@ -62,17 +63,19 @@ The 12 Nov live batch added a second boundary the design did not cover, the Agen
 - **A stuck failure publication:** a rejected `fail` retried forever, so the task stayed `running` and every later task waited.
 - **A silent CLI:** it read `spec.inputs` where the Runtime returns `spec.spec.inputs`.
 
-Both were invisible to tests because the fakes agreed with the code, not with the Runtime. Evidence, alternatives and the challenge are in [inputs.md](inputs.md#planning-evidence).
+Both were invisible to tests because the unit fakes agreed with the code, not with the Runtime, and the CPU journey that uses the real Runtime has never run on CI. Evidence, alternatives and the challenge are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-Phase 1 order is in [tasks.md](tasks.md):
-1. make the CPU journey runnable (RB-1) and land the recording library (RB-2) in parallel;
-2. then replace the known-bad fixtures (RB-3) and write the terminal-state contract (RB-4);
-3. then the fault matrix (RB-5) and the visibility ratchet (RB-6);
+Order is in [tasks.md](tasks.md):
+1. RB-1 (the journey runs) and RB-2 (recordings extended) in parallel;
+2. then RB-3 (correct the known-bad fixtures);
+3. then RB-4 (the fault matrix);
 4. one review round at the end.
 
-Recordings are captured passively during paid runs already authorized for Release 13; this plan authorizes no spend of its own. Recording this plan authorizes no implementation; D1 decides whether phase 1 starts inside Release 13.
+RB-1 needs the Release 13 fix for the rejected empty-log publication (the Runtime inline-proof branch, or an Agent-side upload with a receipt). Terminal reconciliation alone cannot make a rejected successful publication succeed.
+
+Recordings are captured passively during paid runs already authorized for Release 13; this plan authorizes no spend. Recording this plan authorizes no implementation; D1 decides placement.
 
 ## Interfaces and handoff
 
@@ -86,14 +89,14 @@ Recordings are captured passively during paid runs already authorized for Releas
 - `tests/providers/recorded.py` and per-provider recording folders;
 - recorded Runtime and engine shapes;
 - a runnable CPU journey with a fault matrix;
-- `docs/` text for the terminal-state contract;
-- a ratchet in CI.
+- the fault matrix's expected-outcome table, which documents the end states the Release 13 fixes implement;
+- a ratchet against hand-written RunPod and Runtime task dicts.
 
 Later engine or provider work builds on the recording folders and the matrix.
 
 ## Completion
 
 - One documented CPU command runs the journey and fault matrix green on the integrated revisions.
-- Each 11–12 Nov live failure has a matrix row that fails on its pre-fix revision and passes after: `networkVolumeId`, the unclassified stock reason, the bare False verification, the 429 storm, the readback overwrite, the rejected failure publication, the silent wait.
-- **Negative case:** a hand-written provider or Runtime dict in a new test fails the ratchet.
+- Each enumerated 11–12 Nov live failure has a row or converted fixture that fails on its pre-fix revision and passes after: `networkVolumeId`, the 429 storm, the rejected publication, the flat task spec, the hidden wait reason.
+- **Negative case:** a new hand-written RunPod pod dict or Runtime task dict in a test fails the ratchet.
 - **Limits:** this proves behaviour against recorded shapes, not against shapes RunPod or the Runtime have not yet returned; live GPU proof stays with Plan 34 and the release gate.
