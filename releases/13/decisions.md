@@ -2,19 +2,35 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (18:12 UTC): read this first
+## NOW (18:50 UTC Thu 12 Nov): read this first
 
-| Stream | Where it is | Next | Done (rough) |
+### Timeline to release: publish Saturday 14 Nov by 12:00 UTC (assumed UTC)
+| When (UTC) | Milestone | Owner | Status |
 |---|---|---|---|
-| **Live GPU, Stage 2a** | Installing `r13/stage2` `d99c4cd5` (= candidate `5cca0bca` + VibeComfy `324f653f`). Then one 5090 runs t2i, SFX, music, edit. No pod yet; balance $95.80, floor $67.41 | Results per cell | Stage 1 1/5 |
-| **Candidate** `r13/compose` `5cca0bca` | In: engine layout + in-place install, VibeComfy declarations pin + catalog hashes, success logs (T9/T9b), TTS v1, log gaps, test-lane fixes (Lanes pin, hand skips, artifacts) | K1, M1, cells-vc pin, TTS v3, engine cards, test fixes | ~45% |
-| **Machines** (fork) | K1 (edit fix: after-success check used the job's spent timer) done, in Astra review. M1 part d fixing three custody gaps Astra found. M4 card 4 (paid expiry at create; 429 floor). Nothing merged yet | K1 merge first, then M1 | ~25% |
-| **Engine** (fork) | Layout merged. Running: U2 rework (one lock), engine-fresh (freshness gap), h1 (logs vs caps; input_rejected; dry-run; wheel patches), r2 (placement rename), mypy (41), boundary ratchet | Merge each into compose | ~50% |
-| **Cells** (own session) | SFX + music accepted, combining into VibeComfy `r13/cells-vc` with one-owner defaults and `make preflight`; recapturing 32 packs' schemas on CPU; ComfyUI core schema at the engine's commit. TTS v3 (forward, transformers 5) failed Astra round 1 on two live-only bugs; fixing, ~1–1.5 h | cells-vc pin; TTS → Stage 2b | ~60% |
-| **Test lane** (own session) | First comparison (Stage 1 build vs R12): 31 regressions triaged with owners; mypy +82 routed by file; boundary ratchet +70 routed per lane; candidate shards 1 and 5 hang to 120 min (naming the tests). Rules on main: test-by-test gate (#567), astrid-dev-green skill (#572) | fc4b36d4 comparison (~18:58), then 5cca0bca | ~35% |
-| **astrid-dev** | Plan 52 + observations register on main; Plan 50 revision (CPU preflight as core) and Plan 52 decisions D1–D6 wait for the owner; Plan 39 additions list ready to draft on the owner's go | — | — |
+| Thu ~21:30 | Engine **U2 + dead-owner handover** (CPU reproduction, why-errors) merged | engine (here) | building; Astra about 20:30–21:15 |
+| Thu ~21:30 | **`r13/cells-vc` + pin + `scripts/preflight.py`** merged | cells session | 6aede014 pushed; proof, gate and catalog fix running |
+| Thu ~22:00 | **Preflight gate** on the candidate, then **live five-cell run** (current generate path) on the composed candidate | me | after the two above |
+| Thu night | TTS follow-up, catalog fix, node-compat, target-asset tests, test-lane money cards (gate atomicity, 4xx) | lanes | running |
+| Fri ~08:00 | **K1** (edit fix), then **M1**, then **M2**, merged into `r13/machines` | machines session | K1 fix and M4 card 5 running |
+| Fri ~14:00 | **LT** (lease transition table, including the durable billing stop and the re-review rows), then **M4**, then **M3** | machines session | LT draft ready |
+| **Fri 18:00** | **CUT LINE:** machines core merged and Astra-reviewed, plus a **live claim-path proof**. If not, ship without the new machines CLI (R12 renting path + today's fixes) | me | — |
+| Fri ~20:00 | Test lane's "rows still blocking" report on the newest frozen head | test lane | — |
+| Fri evening | Fix the remaining blocking rows; M11 (RunPod code into the pack) only if green early | lanes | — |
+| **Sat 06:00** | **Freeze** the candidate; final frozen CI head | me | — |
+| Sat 06:00–10:00 | Binding test-by-test comparison against R12; final live proof (all five cells, claim path); App re-pin (release 13); R1-update proof row; release record | test lane + me | — |
+| **Sat ~11:00** | **Publish** (an hour of slack before 12:00) | me, with the owner's go | — |
 
-**Biggest risks to the timeline:** machines lane (nothing merged; custody gaps), the candidate's hanging shards, the boundary ratchet's ~70 crossings, TTS slip.
+### Streams
+| Stream | State |
+|---|---|
+| Candidate `r13/compose` `30a644bc` (frozen CI `int/r13-30a644bc`) | Engine layout and in-place install, A1–A3, U1, engine-fresh, h1, r2, r3, mypy and bootstrap; TTS v3; success logs; test-lane fixes; core neutrality green (vocabulary scanner + owner-ruled RunPod baseline) |
+| Live | Stage 1: 1/5 (t2i). Stage 2a (diagnostics): edit failed at engine install, `endpoint_ownership` on the reused volume (U2 needed). No pods. Balance $95.67 (floor $67.41) |
+| Machines (own session `…2mhfLHKp…`) | Took over at 18:44; K1 fix, M4 card 5 |
+| Cells (own session `…VzW8yjKX…`) | cells-vc, pin, preflight; recapture 36/53 offline |
+| Engine (fork, here) | U2 merge → U2-live → Astra; target-asset tests; node-compat |
+| Test lane (own session `…sWuWu9cB…`) | Comparing the newest frozen head; money cards (provider-gate atomicity, 4xx classifier); per-code ratchets |
+| Advisor (own session `…4KxQbf3m…`) | Report in (18:21); actions taken |
+| Investigation | #595 warm machine, cold engine (models unloaded each job): Opus fork running |
 
 ### Rules in force
 - **Tests:** no worse than R12 `main`, test by test, on hosted `int/r13` CI. No local full suites. Managers run focused proofs only.
