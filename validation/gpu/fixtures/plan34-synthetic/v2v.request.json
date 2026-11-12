@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "prompt": "Continue the shot: Morpheus stays in the close-up in the dark room, red chair and lighting held consistent, camera steady.",
+  "duration": 4.0,
+  "continuation": true,
+  "settings": {},
+  "media": [
+    {
+      "id": "source",
+      "asset": {
+        "id": "sha256:5fc84ed8edb2c6978014d70af0c64a92099f83f3d9cb228213163c1860fbbbd8",
+        "modality": "video"
+      },
+      "role": "timeline",
+      "modality": "video",
+      "at": {
+        "frame": 0
+      },
+      "range": [
+        "0",
+        "19/8"
+      ]
+    }
+  ]
+}

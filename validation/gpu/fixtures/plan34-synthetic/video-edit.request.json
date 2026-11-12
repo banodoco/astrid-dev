@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "duration": 4,
+  "prompt": "Change only the selected region.",
+  "media": [
+    {
+      "id": "source",
+      "asset": "source.mp4",
+      "role": "timeline",
+      "modality": "video",
+      "at": {
+        "frame": 0
+      },
+      "range": [
+        2,
+        6
+      ],
+      "edit": [
+        {
+          "stream": "video",
+          "during": [
+            0,
+            4
+          ],
+          "mask": {
+            "full_frame": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "look",
+      "asset": "look.png",
+      "role": "reference",
+      "modality": "image"
+    }
+  ],
+  "settings": {}
+}

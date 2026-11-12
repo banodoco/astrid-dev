@@ -1,0 +1,54 @@
+{
+  "classification": "synthetic validation inputs; not Matrix footage or production media",
+  "source_fixtures": {
+    "v2v": "astrid-agent/tests/fixtures/h3_cpu/request.v2.json (source identity updated to synthetic clip SHA)",
+    "video-edit": "astrid-agent/tests/packs/h3_av/fixtures/edit_binding.json (full-frame.v2)"
+  },
+  "assets": {
+    "LICENSE.astrid-agent.txt": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "i2v.assets.json": {
+      "bytes": 59,
+      "sha256": "777597da5d534457647798735350eded42a57508732ceccc9fec1400bdbf2aee"
+    },
+    "i2v.request.json": {
+      "bytes": 295,
+      "sha256": "58d480672b7f028b3c8ae31ec9dbe63bbe37f67700904802c185b6aaf733d4d9"
+    },
+    "synthetic-reference.png": {
+      "bytes": 874,
+      "sha256": "d5f32ff34068a0f318ec10fbb7b083eb40d6e50e7ba089e8ef0d1bf37fbb4060"
+    },
+    "synthetic-source.mp4": {
+      "bytes": 43205,
+      "sha256": "5fc84ed8edb2c6978014d70af0c64a92099f83f3d9cb228213163c1860fbbbd8"
+    },
+    "v2v.assets.json": {
+      "bytes": 140,
+      "sha256": "cf98ab821c3bf63f963571361caf686f950122839cfbf85390588c16aa42a8aa"
+    },
+    "v2v.request.json": {
+      "bytes": 561,
+      "sha256": "7c0a7aec902f6444be5aea36b092964279d2991e533d3901773bc83a86244cbc"
+    },
+    "video-edit.assets.json": {
+      "bytes": 84,
+      "sha256": "96b908eee3049db8aa4f068ecb434a19890cae629c031ec41271f45dba928957"
+    },
+    "video-edit.request.json": {
+      "bytes": 638,
+      "sha256": "b7b2f607fa67d7f9b43dd16113b7737f2166fc507a5df968923e2f5b9aafdd95"
+    },
+    "README.md": {
+      "bytes": 2163,
+      "sha256": "e71fdc231e19839e9a14b3594f68cbe86674ff2bc7936aa5cd65b59b4759a8bd"
+    }
+  },
+  "license": {
+    "synthetic_media": "Generated locally for validation; no third-party footage. No separate media license was recorded; this bundle does not invent a license grant.",
+    "adapted_requests": "Apache-2.0; see LICENSE.astrid-agent.txt and source_fixtures."
+  },
+  "portability": "Asset-map values resolve relative to this bundle directory. Requests are byte-for-byte copies of the prepared inputs."
+}
