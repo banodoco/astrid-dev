@@ -1112,3 +1112,24 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - A live proof of claim, job and exact release on v2 is mine.
 - **Merged:** PW-soft `d3d20257e`, so the watchdog falls back to host custody with a warning when the pod can't stop itself. PR #293 port `7421ae837`. Compose `e24853a88`.
 - **Running:** Stage 2f, a fresh install of `bb0ae49da`, then claim, t2i and keeping the pod.
+
+## 12 Nov ~23:35 UTC: as soon as possible, no clock waits; models; first live pass on the claim path
+
+- **Owner (23:33):** "We should do everything as soon as possible, not await things."
+  - **Ruling:** every step fires when its inputs are ready.
+    - Merge a card into compose the moment its proof (and, for money or custody, its Astra review) passes.
+    - Freeze a CI head whenever a merged fix changes rows, not once per batch.
+    - The cut decision is taken the moment K1, M1 and M2 are green on compose.
+  - **The clock times are latest points only:** cut decision Fri 10:00, cut line Fri 18:00, freeze Sat 06:00, publish Sat ~11:00. If everything is green earlier, the freeze, the final live run and the publish come earlier, with the owner's go.
+  - **Applied:** froze `int/r13-e51cfee3` at once. It has bounded-node-ids `eff0f0aa9`, so shards 1 and 6 should report for the first time. Machines, cells and the test lane were told.
+- **Models (advisor at 23:17; owner at 23:33: "we have enough Claude"):**
+  - The test lane and cells moved to Sonnet. Verified by `get_session`: `last_served_model` is the Sonnet model, and both have re-read their handovers.
+  - Machines stays on Opus through release. Sonnet session `session_011EzfW1vPXPyhhrz2oFRovQ` is a ready spare, used only if the Opus session's context fails. It has Codex signed in and dispatches nothing.
+  - No Haiku in any seat that rules on red-vs-R12 or on custody.
+- **Live, Stage 2f on `bb0ae49da` (PW-soft):**
+  - The claim worked, and its warm-up job succeeded.
+  - **t2i passed on the claim-then-generate path:** 15m 45s, a 768×768 PNG, checked by eye.
+  - On the pod, the watchdog logged `termination_authorised=no`, so the pod ran under host custody, as PW-soft intends.
+  - Then tts, sfx, music and edit on the same pod (`stage2g.sh`, which releases the pod on exit).
+  - Balance $94.44.
+- **Open PRs:** the IN set is done. #293 is ported, #602 and #604 are merged, and VibeComfy #165/#166 and Agent #341 are already in the candidate. Owner calls pending: #346 (recommend AFTER), closing the 17 stale PRs, and telling the deferred contributors.
