@@ -4,7 +4,7 @@
 
 No run has started. Paths and line numbers were read at astrid-dev `0ed58f9` and the App's `237b28b`; re-check them at dispatch. Phase 1 lands on one integration branch, `int/53-vision-aspirations`, and reaches `main` in two pull requests: the contract (VA-1, VA-2), then the rest.
 
-**Task ids:** `VA-1`, `VA-2`, …; review `R`. **Critical path:** VA-1 → VA-2 → VA-5 → R → VA-7, with the owner's mark-up of VA-3 and VA-4 joining before VA-5. Phase 2: VA-8 → VA-9 → VA-10. **Test inventory:** `scripts/test_vision_subject.py`, `scripts/test_export_public_vision.py`, `scripts/test_gap_relationships.py`, `scripts/test_check_gap_boundaries.py`, `scripts/test_checks.py`; and, passing unedited, `scripts/test_views.py`, `scripts/test_golden.py` (the oracle `scripts/fixtures/golden.txt` does not change in this plan) and `scripts/test_project_contract.py`. In the App, for VA-9: `src/pages/Home/publicVisionContent.test.ts`, `src/pages/Home/visionHierarchy.test.ts`, `tests/e2e/public-astrid-vision-characteristics.spec.ts`, `tests/e2e/public-astrid-vision-hierarchy.spec.ts`.
+**Task ids:** `VA-1`, `VA-2`, …; review `R`. **Critical path:** VA-1 → VA-2 → VA-5 → R → VA-7, with the owner's mark-up of VA-3 and VA-4 joining before VA-5. Phase 2: VA-8 → VA-9 → VA-10 → VA-11. **Test inventory:** `scripts/test_vision_subject.py`, `scripts/test_export_public_vision.py`, `scripts/test_gap_relationships.py`, `scripts/test_check_gap_boundaries.py`, `scripts/test_checks.py`; and, passing unedited, `scripts/test_views.py`, `scripts/test_golden.py` (the oracle `scripts/fixtures/golden.txt` does not change in this plan) and `scripts/test_project_contract.py`. In the App, for VA-9: `src/pages/Home/publicVisionContent.test.ts`, `src/pages/Home/visionHierarchy.test.ts`, `tests/e2e/public-astrid-vision-characteristics.spec.ts`, `tests/e2e/public-astrid-vision-hierarchy.spec.ts`.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
@@ -16,9 +16,10 @@ No run has started. Paths and line numbers were read at astrid-dev `0ed58f9` and
 | VA-6 The rules, each in its one home, the words that point at them, and their wording | X | VA-2; D12 | `docs/contribution-workflow.md` (the "Vision" row of its table at line 23, and the section "Define or reassess a vision gap" at line 36); `templates/gap.md` (the comment block); `skills/astrid-dev-gap/SKILL.md` (line 12 and one link); `skills/astrid-dev-plan/SKILL.md` (one link in step 1); `skills/astrid-dev-improve/SKILL.md` (one new row in the table of homes); `skills/astrid-dev-shared/glossary.md` (three terms) | [Details](#va-6); `check` passes, including `link-anchors`; `git grep -n -i "characteristic" -- docs skills templates vision` prints nothing; before and after for each changed sentence; words added at most 200, counted with `wc -w` and stated in the pull request | [ ] |
 | R Review rounds (at most 1, pending the owner's agreement) | S | VA-1 to VA-6 | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md): findings become rows `R1.<n>` added directly below this one, each with route, scope, dependencies and proof; the second pull request's merge and VA-7 wait for them; [what it looks for](#r) | [ ] |
 | VA-7 The proof | N | R; the second pull request merged to `main`; a person for two minutes | `plans/53-vision-aspirations/evidence/phase-1.md` (new) | The observations in [details](#va-7) | [ ] |
-| VA-8 Phase 2: the feed names each gap's aspiration | N | Release 13 published; VA-5 on `main` | `scripts/export_public_vision.py:build` (the gap loop); `scripts/test_export_public_vision.py` | The test file passes: each gap has `aspiration`, a reference that resolves to an item of `characteristics` under its `primaryAppliesTo` element; `vision-consumer-contract` passes | [ ] |
-| VA-9 Phase 2: the App styles the lists and shows each gap under its aspiration | X | VA-8; the release that takes it, and that release's manager | in astrid-app: `src/pages/Home/publicVisionContent.ts` (types, `parsePublicVisionContent`: the optional `aspiration` field); `VisionDetailDialog.tsx` (the label at line 140; gaps under their aspiration); `visionHierarchy.ts`; `PublicAstridVision.css` (list rules for the section body); the test files in the inventory | That repository's own checks; [details](#va-9) | [ ] |
-| VA-10 Phase 2: the live page, seen | owner | VA-9's release is live | the browser | The owner opens the vision page, opens a pillar, and sees its aspirations with marked, indented lists and its gaps under them; noted in `evidence/phase-2.md` | [ ] |
+| VA-8 Phase 2: the feed names each gap's aspirations | N | Release 13 published; VA-5 on `main` | `scripts/export_public_vision.py:build` (the gap loop); `scripts/test_export_public_vision.py` | The test file passes: each gap has `aspiration` and `supportingAspirations`, each reference carrying the element and the aspiration's id and resolving to an item of that element's `characteristics`; `aspiration` sits under the gap's `primaryAppliesTo`; `vision-consumer-contract` passes | [ ] |
+| VA-9 Phase 2: the page is one hierarchy: aspiration, its gaps, each gap's description and projects | X | VA-8; D17; the release that takes it, and that release's manager | in astrid-app: `src/pages/Home/publicVisionContent.ts` (types; the validator for the two new fields, tolerant of their absence); `VisionDetailDialog.tsx`; `visionHierarchy.ts`; `PublicAstridVision.css`; the unit tests and Playwright specs in the inventory | That repository's own checks; [details](#va-9) | [ ] |
+| VA-10 Phase 2: the hierarchy's layout and copy, seen by the owner before it ships | T | VA-9; the owner's look | in astrid-app: `PublicAstridVision.css`; copy strings in `VisionDetailDialog.tsx` (the heading "What defines this", the two quiet lines, the projects count); no change to data, structure or tests' logic | Screenshots at desktop and phone width in the pull request; the owner's go recorded; the specs pass with only their copy strings changed | [ ] |
+| VA-11 Phase 2: the live page, seen | owner | VA-10's release is live | the browser | The owner opens the vision page and walks the hierarchy in [plan.md](plan.md#completion); noted in `evidence/phase-2.md` | [ ] |
 
 No review-stop row: after the cuts the contract is two tasks, and its questions are in R.
 
@@ -37,10 +38,11 @@ Engineering days. This table is the one home for sizes; `plan.md`'s Estimate lin
 | R | high-judgment sub-agent | 0.2 |
 | VA-7 | cheap worker | 0.1 |
 | VA-8 | cheap worker | 0.1 |
-| VA-9 | X worker, in the App | 0.8 |
-| VA-10 | the owner | 0.1 |
+| VA-9 | X worker, in the App | 1.2 |
+| VA-10 | taste, in the App, then the owner | 0.4 |
+| VA-11 | the owner | 0.1 |
 
-Phase 1 is 2.7: X 1.9, T 0.5, S 0.2, N 0.1. Phase 2 is 1.0. The owner's reading time is not counted.
+Phase 1 is 2.7: X 1.9, T 0.5, S 0.2, N 0.1. Phase 2 is 1.8: N 0.1, X 1.2, T 0.4, the owner 0.1. The owner's reading time is not counted.
 
 **What can run side by side:** VA-3, VA-4 and VA-6's drafting start as soon as VA-1's shape is fixed. VA-1 and VA-2 both touch `export_public_vision.py`, in different functions: merge VA-1 first.
 
@@ -102,8 +104,15 @@ Recorded in `evidence/phase-1.md`, each with the command and what came back:
 
 ### VA-9
 
-- The section body in the dialog gets list rules, so bullets are marked and indented; the page's base styling removes them today (`src/index.css:1`, and `PublicAstridVision.css:1526-1534` has no list rule).
-- The screen-reader label at `VisionDetailDialog.tsx:140` says "Aspirations". It is the only place the page says "characteristic".
-- The parser accepts an optional `aspiration` on each gap and checks that it resolves. The dialog lists each gap under the aspiration it names, and under the element as today when the field is absent.
+The outcome is [decided](inputs.md#the-vision-page-in-phase-2); this card builds its structure and data, and VA-10 its look.
+
+- **An aspiration row** shows title and first sentence. Opened: the paragraph and the two lists, then its gaps, one line each: ID, title, assessment, and the count of projects whose `primaryGapId` (or first `gapIds` entry) is that gap.
+- **A gap line, opened,** shows desired state, current state, what is missing and closure evidence, then its projects, then, if it has supporting aspirations, one "Also relates to" line naming them.
+- **A gap is listed once,** under its primary aspiration. An aspiration with no gap shows one quiet line.
+- **The list "Gaps preventing this"** (`VisionDetailDialog.tsx:165-171`) is removed. The main page's flat gap list and projects section are not touched.
+- **The lists** get rules so bullets are marked and indented; the page's base styling removes them today (`src/index.css:1`, and `PublicAstridVision.css:1526-1534` has no list rule).
+- **The screen-reader label** at `VisionDetailDialog.tsx:140` says "Aspirations". It is the only place the page says "characteristic".
+- **The validator** accepts optional `aspiration` and `supportingAspirations` on each gap and checks that each resolves to an element and one of its items. With the fields absent, gaps fall back to today's list under the element, so an older feed still loads.
+- **Tests:** unit tests for grouping gaps by primary aspiration, the projects count, the fallback, and a reference that resolves to nothing; the Playwright hierarchy and characteristics specs walk open an aspiration, a gap and its projects.
 - Code identifiers and the feed key stay `characteristics`.
 - This card's base is the release line its release names; it opens no pull request to the App's `main`.

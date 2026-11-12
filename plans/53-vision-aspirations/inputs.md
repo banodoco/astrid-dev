@@ -31,6 +31,7 @@ In the [orchestrator's session](https://claude.ai/code/session_011EzfW38XJUpUFew
 - On generation: "one generation path, and then you can choose the engine, which could be like either Cloud, ComfyUI, Wan2GP, other inference engines, then choose the machine … built in an almost neutral way so that you can plug in any inference engine plus any machine."
 - On local and cloud: "everything should be ABLE to run locally but shouldn't have to"; and, for its title, "everything can be local or cloud by choice".
 - On how many aspirations a gap has: "one main one" and "as many as need be supporting".
+- On the vision page: show "the gaps beneath each characteristic… that you can then expand, so it just shows the gaps in the title, and you can expand to look at them and the projects within that"; "the aspiration, then the gap title, and then… 3 projects tackling this, and then they can click into it to get the description… and what the projects tackling it are". It should make the pop-ups "a lot more succinct" and give "a really nice hierarchy of ideas… visual for people to understand"; today it feels "a little bit disconnected" because gaps and projects sit below.
 - On the recommendations: "I agree with where you say for positioning", "I agree with what you mean for the gap placement", "and the desired state".
 - On packs: "the packs should basically render live. They should render instantly. They should be able to be live vibe coded. They should be … completely portable. They should … interoperate … You should be able to extend other packs inside one pack … there should be a defined way for creating an extension, that across the front end and Python back end that generalizes." And: "they should be able to run on the web app."
 
@@ -108,6 +109,18 @@ The owner decided each gap has "one main one" and "as many as need be supporting
 - **On the page:** nothing changes. The App lists a gap only under its primary element and never shows supporting entries.
 - **In the feed:** `appliesTo` is the primary aspiration's element, then the supporting aspirations' elements, without repeats. With the proposals as written it is unchanged for 20 gaps; it changes for CA-003 (one dropped) and CA-004 (primary moved).
 - **In the boundary check:** the one-time move needs no record where the primary element and the set of supporting elements are the same as before. Anything else needs one.
+
+### The vision page in Phase 2
+
+Decided by the owner as an outcome (D17); the look is a taste task she sees before it ships (VA-10).
+
+- **Inside an element's full-screen view,** each aspiration is a row showing its title and first sentence.
+- **An aspiration, opened,** shows its paragraph, its two lists, then its gaps, one line each: ID, title, assessment, and "N projects tackling this".
+- **A gap, opened,** shows its description (desired state, current state, what is missing, closure evidence) and its projects.
+- **A gap sits under its primary aspiration.** *Recommended by the planner:* a supporting link shows as one quiet line inside the opened gap, "Also relates to", naming the other aspirations; it does not list the gap a second time. An aspiration with no gap shows one quiet line, "No gap is measured against this yet".
+- **The element-level list "Gaps preventing this" is replaced** by this.
+- **The main page's flat gap list and its projects section stay as they are** in this plan, as the view across all elements. *Recommended by the planner.*
+- **Data.** The feed already carries gaps and projects with `gapIds` and `primaryGapId`. The only new data is each gap's aspiration references (VA-8).
 
 ### The drafts
 
@@ -237,7 +250,7 @@ One round, 12 Nov 2026, by a fresh session with no stake in the draft, on commit
 
 **Weak proof, corrected.** "Renamed without its gaps" duplicated "names a non-existent aspiration" and is now one case. The exemption has its negative case. The proof no longer excuses unreadable lists in advance: it states the expected plain look and what would count as a failure.
 
-**Phase 2 after the critique:** one App task and the one feed field it reads, added in the same phase.
+**Phase 2 after the critique:** one App task and the one feed field it reads, added in the same phase. The owner then asked for more from the page (D17), so Phase 2 grew to the hierarchy, with its layout as a separate taste task.
 
 ## Owner decisions
 
@@ -259,6 +272,7 @@ Still for the owner: her confirmation of D7 with its wording, the wording of the
 - **D14. Is Phase 2 committed?** *Decided by the planner:* yes, as one feed field and one App task, in the first release after Release 13. Reason: until then the lists show as plain lines.
 - **D15. How many review rounds?** *Decided by the planner, after the critique:* one final round, no review stop.
 - **D16. How does the vision say "local or cloud"?** *Decided by the owner, 12 Nov 2026, in her words:* "everything should be ABLE to run locally but shouldn't have to", titled "everything can be local or cloud by choice". The existing aspiration "Optional cloud capabilities" under Local-first, cloud-capable is reworded to carry it, with the draft title "Everything local or cloud, by choice", her sentence, and the lists in [The drafts](#the-drafts); F-005 and F-006 then fit it. The wording is hers to mark up in VA-4.
+- **D17. What does the vision page show in Phase 2?** *Decided by the owner, 12 Nov 2026:* the hierarchy in [The vision page in Phase 2](#the-vision-page-in-phase-2): aspiration, then its gaps by title, then each gap's description and projects, opened level by level. *Decided by the planner, for her to overrule when she sees it:* how a supporting link and an empty aspiration show, and that the main page's flat lists stay.
 
 ## Source identities
 

@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** about 3.7 (Phase 1 about 2.7; Phase 2 about 1.0)
+**Estimate:** about 4.5 (Phase 1 about 2.7; Phase 2 about 1.8)
 
 **Waiting on:** the scope pull request; then, inside the run, the owner's mark-up of five aspirations and of the proposed supporting aspirations ([inputs.md](inputs.md#owner-decisions))
 
@@ -34,9 +34,9 @@ Then:
 - **Three aspirations are new and two are reworded,** so 28 become 31. Packs and Generation are written from the owner's words. One more covers contributing in parallel. "Optional cloud capabilities" is reworded to say that everything should be able to run locally and nothing should have to, and "Built for reuse" is widened to cover being found. After that, every gap has an aspiration that fits ([mapping](inputs.md#the-proposed-mapping)).
 - **F-008 and F-004 stop carrying the philosophy.** Their desired state shrinks to what is specific to the gap and points at the aspiration.
 - **A planner reads the aspirations of the plan's gaps.** Work that would break a "We should never" changes the aspiration first, in a pull request the owner approves.
-- **The public vision page shows it in two steps.** In Phase 1 the new text is on the page with no App change, but plainly: the lists appear as unmarked, unindented lines under their bold labels, because the page's styling removes list markers. In Phase 2 the App styles the lists and shows each gap under its aspiration.
+- **The public vision page shows it in two steps.** In Phase 1 the new text is on the page with no App change, but plainly: the lists appear as unmarked, unindented lines under their bold labels, because the page's styling removes list markers. In Phase 2 the page becomes one hierarchy a visitor can open level by level: inside a pillar or principle, each aspiration opens to its paragraph, its lists and its gaps, one line each; a gap opens to its description and the projects tackling it ([the decided outcome](inputs.md#the-vision-page-in-phase-2); D17).
 
-**Included:** the parser, the template's text, the eight element pages, the 22 gaps' first line, the gap template, the gap checks and their tests and fixtures, one rule in the contribution workflow with links to it, one row in the improve skill's table of homes, three glossary terms, and, in Phase 2, one field in the feed and the App's vision page.
+**Included:** the parser, the template's text, the eight element pages, the 22 gaps' first line, the gap template, the gap checks and their tests and fixtures, one rule in the contribution workflow with links to it, one row in the improve skill's table of homes, three glossary terms, and, in Phase 2, two fields in the feed and the App's vision page.
 
 **Not included:**
 
@@ -69,7 +69,7 @@ Alternatives compared, including a new level, a file per aspiration, and doing o
 2. **The words the owner marks up:** Packs and Generation (VA-3); the third new aspiration and the two reworded ones (VA-4). These are drafted while step 1 runs and merge after it.
 3. **The gaps move:** all 22 name an aspiration, F-008 and F-004 are trimmed, and the old line is refused from then on (VA-5).
 4. **The rule and its links** (VA-6), one review round (R), then the proof (VA-7).
-5. **Phase 2, with the first release after Release 13:** the feed gains each gap's aspiration (VA-8) and the App shows it and styles the lists (VA-9).
+5. **Phase 2, with the first release after Release 13:** the feed gains each gap's aspirations (VA-8); the App shows the hierarchy (VA-9); its layout is polished and the owner looks at it before it ships (VA-10).
 
 **Constraints.** astrid-dev's required check `vision-consumer-contract` runs the App's `vision:check` at the App's `main`, unpinned, so every astrid-dev pull request must keep the feed readable by whatever the App's `main` is that day. The live page reads the published feed directly. App `main` deploys to production; its change rides with a release.
 
@@ -85,7 +85,7 @@ Alternatives compared, including a new level, a file per aspiration, and doing o
 - the gap line, in `templates/gap.md`: `**Aspiration:**`, then one link marked `(primary)` and any number marked `(supporting)`, then `**Assessment:**`. Each link's text is the aspiration's title and its target is the element's page with the aspiration's anchor, for example `../pillars/liquid-software.md#live-tool-composition`;
 - an aspiration's reference, `pillar:<element>/<aspiration>` or `principle:<element>/<aspiration>`, used in a gap's boundary record and, from Phase 2, in the feed;
 - a feed whose shape is unchanged in Phase 1: `schemaVersion` 1, `characteristics`, `appliesTo` and `primaryAppliesTo` all stay. Each gap's `appliesTo` is the element of its primary aspiration, then the elements of its supporting ones, without repeats;
-- in Phase 2, one added field on each gap, `aspiration`, in the same phase as the App code that reads it.
+- in Phase 2, two added fields on each gap, `aspiration` and `supportingAspirations`, each reference carrying the element and the aspiration's id, in the same phase as the App code that reads them.
 
 **Limits.** An aspiration's identity is its title: renaming one changes its anchor and reference, and the check then fails every gap that names it until they are updated in the same pull request. That is the intended cost of a rename. The link's anchor is the one GitHub makes from the heading, which differs from the feed's id for one existing title ([VA-2](tasks.md#va-2)).
 
@@ -107,6 +107,8 @@ Phase 1 is done when all of these are observed:
 - a list of six bullets fails;
 - in the pull request that moves the gaps, a gap whose primary element or set of supporting elements differs from before, with no boundary record, fails.
 
-Phase 2 is done when the deployed App shows each gap under its aspiration and styles the lists, and still loads a feed that has no `aspiration` field.
+The gap line's anchor check is part of `python3 scripts/astrid_dev.py check`, which the required `documentation` check runs on every pull request.
+
+Phase 2 is done when, on the deployed App, a visitor opens a pillar, opens an aspiration and sees its gaps one line each with a count of projects, opens a gap and sees its description and its projects; the lists are marked and indented; the old element-level "Gaps preventing this" list is gone; and the page still loads a feed that has no `aspiration` field.
 
 **Limits of this proof:** it shows the structure holds and the page shows it. It does not show that planners read the aspirations, or that the bullets settle arguments; the first plan that touches packs or generation after this is the real test. Publishing the App change belongs to a release and its owner, not to this plan.
