@@ -9,6 +9,11 @@ import urllib.request
 CATALOG = "plans/index.md"
 
 
+def plan_text(repository: str, ref: str, folder: str) -> str | None:
+    """Read a plain project plan at ref, returning None only for a 404."""
+    raise NotImplementedError("PM-7b: project plan reader")
+
+
 def request(method: str, path: str, payload=None):
     api_root = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
     data = json.dumps(payload).encode() if payload is not None else None
