@@ -29,10 +29,10 @@ Know, at every moment and per test, whether the Release 13 candidate is **no wor
 
 | What | Ref | SHA at writing |
 |---|---|---|
-| Baseline: Agent | `banodoco/astrid-agent` `main` (Release 12) | `0e1543e0da` |
+| Baseline: Agent | `banodoco/astrid-agent` `main` (Release 12); completed CI run [`43155525231`](https://github.com/banodoco/astrid-agent/actions/runs/43155525231) | `0e1543e0da` |
 | Baseline: VibeComfy | `banodoco/VibeComfy` `main` | `e65f4941d0` |
 | Candidate: Agent, composed | `astrid-agent` `r13/stage1` (rehearsal + edit fix + VibeComfy pin) | `f9214240c6` |
-| Candidate: CI ref | `astrid-agent` `int/r13`, pushed by the orchestrator only; CI runs on `int/**` pushes | = candidate |
+| Candidate: CI ref | `astrid-agent` `int/r13`, pushed by the orchestrator only; CI runs on `int/**` pushes. First push 12 Nov ≈16:00 UTC | `f9214240c6` |
 | Candidate: VibeComfy | `VibeComfy` `r13/music-declaration` (declarations; next pin) | `a8a7be7cc0` |
 | Live lane: machines (not merged) | `astrid-agent` `r13/machines` | `22e5a13e50` |
 | Live lane: engine (not merged) | `astrid-agent` `r13/engine-layout` / `r13/model-layout` | `2eceb0b06a` / `593749c455` |
@@ -117,7 +117,7 @@ If a failure's fix sits in these files, it is the lane's. Hand over the diagnosi
 3. Tell the orchestrator the result before you dispatch any real work.
 
 **The comparison loop:**
-1. **Baseline.** A Luna worker downloads the per-test results from the latest completed `CI` run on Agent `main` at `0e1543e0da`. `ci.yml` sets `PYTEST_ADDOPTS: -rA`, so the shard logs are the baseline with no rerun. If that run is missing or truncated, tell the orchestrator.
+1. **Baseline.** A Luna worker downloads the per-test results from `CI` run `43155525231` on Agent `main` at `0e1543e0da`. `ci.yml` sets `PYTEST_ADDOPTS: -rA`, so the shard logs are the baseline with no rerun. If that run is missing or truncated, tell the orchestrator.
 2. **First comparison.**
    - When CI on `int/r13` finishes, a Luna worker runs `astrid-baseline-diff --baseline r12-main=<logs> --candidate r13=<logs> --out <dir>`.
    - You fill the table.
