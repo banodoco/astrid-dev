@@ -359,3 +359,9 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
   - Codex's own whole-file runs showed failures in suites that already fail massively on R11, so they aren't evidence by themselves. A by-ID before/after comparison on the affected suites (Haiku, local) is running. Astra review of `a17e0555a` is running.
   - The core boundary ratchet fix: Luna did nothing; retried on **Terra**.
   - Next: Agent candidate = cand/29-r12 + fix-round (merge), then Agent CI.
+- 2026-11-12 00:59Z — **Core boundary fix `abd1886ee`** on `r12/fix-round` (Codex Terra, after Luna did nothing; I reviewed it).
+  - `comfy_wrap.run` → vibecomfy now goes through the pack's own `gpu-capabilities.json`, which is packaged by `packs/**/*.json`.
+  - Discovery uses the existing `ExternalPackSource.LOCAL`. Same string, same behaviour.
+  - Ratchet and baseline untouched. The ratchet and GPU tests pass (67). Codex's discovery-suite failures (22) are identical before and after, so they're pre-existing.
+  - Astra review of this commit is running; it's product code, so required.
+  - The fix-round head is now `abd1886ee`. The local before/after comparison may straddle this commit; rerun pinned if it looks inconsistent.
