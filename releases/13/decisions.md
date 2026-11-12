@@ -1097,3 +1097,18 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Merged:**
   - into r13/compose: stopfix with injection tests (`81b6e4fee`) and ctrlc (`10cef0670`); head `1feb10a6b`;
   - on astrid-dev main: #602 (release records skill) and #604 (mypy-gate Plan 39 note).
+
+## 12 Nov ~23:10 UTC: RunPod REST v1 retires on 15 Nov; R13 moves to v2
+
+- **The fact:** RunPod docs (`api-reference/overview.mdx`): "REST API v1 is deprecated and will be retired on November 15, 2026". That's the day after the R13 publish.
+- **The users of v1:**
+  - Agent: `provider_urls.py`, `h3_release.py:323`, `provider.read_raw` and the pack allowlists.
+  - runpod-lifecycle at the pinned `f2948817`: `api.py:52-53` and `storage.py:30`.
+- **Why it matters:** after that date every installed Astrid, R12 included, can't release or list pods through v1, so pods would keep billing.
+- **The live check, read-only, with the account key:** `GET https://api.runpod.io/v2/pods` returns 200; `GET /v2/network-volumes` returns 200 and lists our volume.
+- **Ruling:** the machines lane's top priority, ahead of LT, because it's mandatory for any RunPod path, the fallback included.
+  - runpod-lifecycle on `r13/rest-v2`, then Agent pointed at v2 in one place, then a re-pin.
+  - No v1 fallback.
+  - A live proof of claim, job and exact release on v2 is mine.
+- **Merged:** PW-soft `d3d20257e`, so the watchdog falls back to host custody with a warning when the pod can't stop itself. PR #293 port `7421ae837`. Compose `e24853a88`.
+- **Running:** Stage 2f, a fresh install of `bb0ae49da`, then claim, t2i and keeping the pod.
