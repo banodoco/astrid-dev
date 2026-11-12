@@ -23,10 +23,19 @@ jobs:
       - name: Run repository checks
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         if: github.event_name == 'pull_request'
         run: |
           set -e
-          python3 scripts/astrid_dev.py check --base "$PR_BASE_SHA" --event "$GITHUB_EVENT_PATH"
+          base_sha="$PR_BASE_SHA"
+          if merge_head="$(git rev-parse --verify HEAD^2 2>/dev/null)"; then
+            if [ "$merge_head" != "$PR_HEAD_SHA" ]; then
+              echo "Checked-out merge commit does not match the pull request head." >&2
+              exit 1
+            fi
+            base_sha="$(git rev-parse HEAD^1)"
+          fi
+          PYTHONDONTWRITEBYTECODE=1 python3 scripts/astrid_dev.py check --base "$base_sha" --event "$GITHUB_EVENT_PATH"
       - name: Run repository checks
         if: github.event_name != 'pull_request'
         run: python3 scripts/astrid_dev.py check

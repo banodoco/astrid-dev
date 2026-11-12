@@ -97,3 +97,14 @@ def sync(root: Path) -> list[str]:
             target.write_text(content, encoding="utf-8")
             changed.append(view.target)
     return changed
+
+
+
+def rebase_links(value: str, from_dir: Path, to_dir: Path) -> str:
+    """Re-base relative Markdown link targets between source directories."""
+    raise NotImplementedError("PM-6b: catalog link rebasing")
+
+
+def _catalog_preamble() -> str:
+    """Explain priority, the existing six statuses, and where to edit facts."""
+    raise NotImplementedError("PM-6b: catalog preamble")

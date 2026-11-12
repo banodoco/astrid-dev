@@ -186,3 +186,21 @@ def git_show(root: Path, revision: str, path: str, *, missing: str = "error") ->
             raise ValueError(f"unknown missing-git-blob policy: {missing}")
         raise ValueError(result.stderr.strip())
     return result.stdout
+
+
+PROJECT_FIELDS = ("Project", "Goal", "Status", "Owner", "Estimate", "Waiting on")
+
+
+def project_fields(plan_text: str) -> dict[str, str]:
+    """Read the six required, single-line fields from a plan's header only."""
+    raise NotImplementedError("PM-6b: project header reader")
+
+
+def priority_order(text: str | None) -> list[str]:
+    """Read folder ids in the Order section; None represents a missing file."""
+    raise NotImplementedError("PM-6b: priority reader")
+
+
+def projects(root: Path, revision: str | None = None) -> list[list[str]]:
+    """Return seven-cell catalog rows (legacy cell order), ordered by priority."""
+    raise NotImplementedError("PM-6b: project records")

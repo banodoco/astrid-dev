@@ -131,3 +131,122 @@ class GitRecordTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ProjectRecordTests(unittest.TestCase):
+    """Project rows retain the legacy seven-cell shape for existing consumers."""
+    FIELDS = ("Project", "Goal", "Status", "Owner", "Estimate", "Waiting on")
+
+    @staticmethod
+    def plan(**changes):
+        values = dict(zip(ProjectRecordTests.FIELDS,
+                          ("Catalog name", "Build **one** thing", "queued", "Ada", "TBD", "—")))
+        values.update(changes)
+        return "# A different title\n\n" + "\n\n".join(
+            f"**{key}:** {value}" for key, value in values.items()) + "\n\n"
+
+    @staticmethod
+    def write(root, folder, text):
+        target = root / "plans" / folder / "plan.md"
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8")
+
+    @staticmethod
+    def git(root, *args):
+        return subprocess.check_output(["git", *args], cwd=root, text=True).strip()
+
+    def test_six_fields_preserve_values_and_ignore_body_fields(self):
+        import records
+        self.assertEqual(records.PROJECT_FIELDS, self.FIELDS)
+        text = self.plan() + "## Design\n**Goal:** Body goal\n**Status:** done\n"
+        self.assertEqual(records.project_fields(text), dict(zip(self.FIELDS,
+                         ("Catalog name", "Build **one** thing", "queued", "Ada", "TBD", "—"))))
+
+    def test_each_missing_field_names_the_field_and_reason(self):
+        import records
+        for field in self.FIELDS:
+            lines = self.plan().splitlines()
+            text = "\n".join(line for line in lines if not line.startswith(f"**{field}:**"))
+            text += f"\n## Body\n**{field}:** Not a header\n"
+            with self.subTest(field=field):
+                pattern = rf"(?is)(?=.*{re.escape(field)})(?=.*missing)"
+                with self.assertRaisesRegex(ValueError, pattern):
+                    records.project_fields(text)
+
+    def test_each_duplicate_field_is_refused_even_when_values_match(self):
+        import records
+        for field in self.FIELDS:
+            original = next(line for line in self.plan().splitlines() if line.startswith(f"**{field}:**"))
+            with self.subTest(field=field):
+                pattern = rf"(?is)(?=.*{re.escape(field)})(?=.*duplicat)"
+                with self.assertRaisesRegex(ValueError, pattern):
+                    records.project_fields(self.plan() + original + "\n")
+
+    def test_empty_field_cannot_swallow_the_next_paragraph(self):
+        import records
+        for field in self.FIELDS:
+            for whitespace in ("", " \t "):
+                with self.subTest(field=field, whitespace=whitespace):
+                    pattern = rf"(?is)(?=.*{re.escape(field)})(?=.*empty)"
+                    with self.assertRaisesRegex(ValueError, pattern):
+                        records.project_fields(self.plan(**{field: whitespace}))
+
+    def test_pipe_in_any_field_is_malformed(self):
+        import records
+        for field in self.FIELDS:
+            with self.subTest(field=field):
+                pattern = rf"(?is)(?=.*{re.escape(field)})(?=.*malformed)"
+                with self.assertRaisesRegex(ValueError, pattern):
+                    records.project_fields(self.plan(**{field: "left | right"}))
+
+    def test_priority_is_only_the_order_section_and_keeps_duplicates_for_validation(self):
+        import records
+        text = "# Priority\n- 99-ignore\n\n## Order\n\n- 02-beta\n- 01-alpha\n- 02-beta\n\n## Notes\n- 98-ignore\n"
+        self.assertEqual(records.priority_order(text), ["02-beta", "01-alpha", "02-beta"])
+        self.assertEqual(records.priority_order(None), [])
+        self.assertEqual(records.priority_order("# Priority\n"), [])
+
+    def test_projects_partition_open_and_terminal_then_use_priority_and_folder_order(self):
+        import records
+        from check_docs import PLAN_LINK
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for folder, status in (("01-alpha", "queued"), ("02-beta", "paused"),
+                                   ("03-gamma", "active"), ("04-delta", "blocked"),
+                                   ("05-epsilon", "done"), ("06-zeta", "cancelled"),
+                                   ("07-eta", "done"), ("100-later", "queued")):
+                self.write(root, folder, self.plan(Project=folder, Status=status))
+            self.write(root, "not-a-plan", self.plan())
+            (root / "plans/08-no-pack").mkdir()
+            (root / "plans/priority.md").write_text(
+                "## Order\n- 06-zeta\n- 02-beta\n- 05-epsilon\n- 04-delta\n", encoding="utf-8")
+            rows = records.projects(root)
+            folders = [PLAN_LINK.fullmatch(row[6]).group(1).removesuffix("/plan.md") for row in rows]
+            self.assertEqual(folders, ["02-beta", "04-delta", "01-alpha", "03-gamma", "100-later",
+                                       "06-zeta", "05-epsilon", "07-eta"])
+            self.assertEqual(rows[0], ["02-beta", "Build **one** thing", "paused", "Ada", "TBD", "—",
+                                       "[Plan 02](02-beta/plan.md)"])
+            (root / "plans/priority.md").unlink()
+            rows = records.projects(root)
+            self.assertEqual([row[0] for row in rows], ["01-alpha", "02-beta", "03-gamma", "04-delta",
+                                                        "100-later", "05-epsilon", "06-zeta", "07-eta"])
+
+    def test_revision_reads_git_blobs_and_priority_instead_of_working_tree(self):
+        import records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.git(root, "init", "-q")
+            self.git(root, "config", "user.name", "Contract test")
+            self.git(root, "config", "user.email", "contract@example.invalid")
+            self.write(root, "01-alpha", self.plan(Project="Old alpha", Status="active"))
+            self.write(root, "02-beta", self.plan(Project="Old beta"))
+            (root / "plans/priority.md").write_text("## Order\n- 02-beta\n- 01-alpha\n", encoding="utf-8")
+            self.git(root, "add", ".")
+            self.git(root, "commit", "-qm", "record base")
+            revision = self.git(root, "rev-parse", "HEAD")
+            self.write(root, "01-alpha", self.plan(Project="New alpha", Status="done"))
+            (root / "plans/02-beta/plan.md").unlink()
+            self.write(root, "03-gamma", self.plan(Project="New gamma"))
+            (root / "plans/priority.md").write_text("## Order\n- 03-gamma\n", encoding="utf-8")
+            self.assertEqual([row[0] for row in records.projects(root, revision)], ["Old beta", "Old alpha"])
+            self.assertEqual([row[0] for row in records.projects(root)], ["New gamma", "New alpha"])

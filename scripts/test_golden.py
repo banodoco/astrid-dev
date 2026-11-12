@@ -16,13 +16,18 @@ class GoldenTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="astrid-golden-negative-") as directory:
             root = Path(directory) / "repo"
             golden._copy_tree(root)
-            catalog = root / "plans/index.md"
-            text = catalog.read_text(encoding="utf-8")
-            row = next(line for line in text.splitlines()
-                       if line.startswith("|") and re.search(r"\[Plan \d+\]\(", line))
-            catalog.write_text(text.replace(row + "\n", "", 1), encoding="utf-8")
+            plan = root / "plans/20-zero-to-first-image/plan.md"
+            text = plan.read_text(encoding="utf-8")
+            # This negative proof also runs before PM-6m supplies the headers.
+            if not re.search(r"(?m)^\*\*Status:\*\*", text):
+                from test_records import ProjectRecordTests as Records
+                text = Records.plan(Project="First image", Status="active") + text.split("\n", 1)[1]
+            plan.write_text(re.sub(r"(?m)^\*\*Status:\*\*[^\n]*\n", "", text, count=1),
+                            encoding="utf-8")
             errors = golden._errors(root)
-            self.assertTrue(any("plan folder absent from catalog" in error for error in errors), errors)
+            self.assertTrue(any("plans/20-zero-to-first-image/plan.md:" in error
+                                and "Status" in error and "missing" in error.lower()
+                                for error in errors), errors)
 
 
 

@@ -172,3 +172,9 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
+def project_statuses(root: Path, revision: str | None = None) -> dict[str, str]:
+    """Read folder-to-status records, with the pre-cut-over revision fallback."""
+    raise NotImplementedError("PM-6b: project status reader")

@@ -131,3 +131,147 @@ class ViewTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PlanCatalogViewTests(unittest.TestCase):
+    def view(self):
+        import views
+        matches = [view for view in views.VIEWS if view.name == "plan-catalog"]
+        self.assertEqual(len(matches), 1, "PM-6b must register the plan-catalog view")
+        view = matches[0]
+        self.assertEqual(view.sources, ("plans/*/plan.md", "plans/priority.md", "plans/catalog-notes.md"))
+        self.assertEqual(view.target, "plans/index.md")
+        self.assertFalse(view.region)
+        return view
+
+    def sources(self, root):
+        from test_records import ProjectRecordTests as Records
+        Records.write(root, "01-alpha", Records.plan(Project="Catalog alpha", Status="active",
+                      Goal="Read [release](../../releases/12.md)", **{"Waiting on": "[work](../02-beta/plan.md)"}))
+        Records.write(root, "02-beta", Records.plan(Project="Catalog beta", Status="done"))
+        (root / "plans/priority.md").write_text("## Order\n- 02-beta\n- 01-alpha\n", encoding="utf-8")
+        (root / "plans/catalog-notes.md").write_text("## Delivery context\n\nHand-written notes stay intact.\n", encoding="utf-8")
+
+    def test_catalog_marker_preamble_columns_links_and_notes(self):
+        import views
+        from records import split_table_row
+        view = self.view()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.sources(root)
+            text = views.expected(view, root)
+            self.assertTrue(text.startswith(view.marker + "\n# Plan catalog\n"))
+            preamble = views._catalog_preamble()
+            self.assertIn(preamble, text)
+            self.assertTrue(preamble.strip())
+            self.assertLess(text.index(preamble), text.index("| Plan | Project |"))
+            self.assertTrue(text.endswith((root / "plans/catalog-notes.md").read_text(encoding="utf-8")))
+            lines = [line for line in text.splitlines() if line.startswith("|")]
+            self.assertEqual(split_table_row(lines[0]), ["Plan", "Project", "Goal", "Status", "Owner", "Estimate", "Waiting on"])
+            rows = [split_table_row(line) for line in lines[2:]]
+            self.assertEqual(rows, [
+                ["[Plan 01](01-alpha/plan.md)", "Catalog alpha", "Read [release](../releases/12.md)",
+                 "active", "Ada", "TBD", "[work](02-beta/plan.md)"],
+                ["[Plan 02](02-beta/plan.md)", "Catalog beta", "Build **one** thing", "done", "Ada", "TBD", "—"],
+            ])
+
+    def test_preamble_preserves_all_six_status_definitions_and_explains_edits(self):
+        import views
+        text = views._catalog_preamble()
+        definitions = ("**Definitions:** `active` = explicitly started; `queued` = planned, not started; "
+                       "`blocked` = known impediment; `paused` = deliberately stopped; "
+                       "`done` = accepted completion evidence; `cancelled` = intentionally abandoned, "
+                       "with reason in the plan. Owner is accountability, not permission. "
+                       "Estimates are remaining human engineering days or `TBD`.")
+        self.assertIn(definitions, text)
+        for source in ("plan.md", "plans/priority.md", "plans/catalog-notes.md"):
+            self.assertIn(source, text)
+        self.assertIn("priority", text.lower())
+        self.assertIn("sync", text)
+
+    def test_rebase_relative_links_preserves_external_and_fragment_targets(self):
+        import views
+        value = ("[release](../../releases/12.md) [peer](../02-beta/plan.md#scope) "
+                 "[local](#design) [web](https://example.invalid/a) [mail](mailto:a@example.invalid) "
+                 "[root](/assets/icon.svg) plain text")
+        wanted = ("[release](../releases/12.md) [peer](02-beta/plan.md#scope) "
+                  "[local](#design) [web](https://example.invalid/a) [mail](mailto:a@example.invalid) "
+                  "[root](/assets/icon.svg) plain text")
+        self.assertEqual(views.rebase_links(value, Path("plans/01-alpha"), Path("plans")), wanted)
+        self.assertEqual(views.rebase_links("No links **here**", Path("plans/01-alpha"), Path("plans")),
+                         "No links **here**")
+
+    def test_catalog_sync_is_idempotent_and_hand_edit_names_the_view(self):
+        import checks
+        import views
+        from unittest.mock import patch
+        view = self.view()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.sources(root)
+            with patch.object(views, "VIEWS", (view,)):
+                self.assertEqual(views.sync(root), ["plans/index.md"])
+                first = (root / "plans/index.md").read_bytes()
+                self.assertEqual(views.sync(root), [])
+                self.assertEqual((root / "plans/index.md").read_bytes(), first)
+                self.assertEqual(views.check(root), [])
+                target = root / "plans/index.md"
+                target.write_text(target.read_text().replace("Catalog alpha", "Hand-edited alpha"), encoding="utf-8")
+                errors = checks._generated_views(checks.Context(root))
+                self.assertTrue(any("view plan-catalog" in line and "plans/index.md" in line for line in errors), errors)
+
+    def test_new_valid_folder_appears_last_among_open_rows_without_a_catalog_edit(self):
+        import views
+        from records import split_table_row
+        from test_records import ProjectRecordTests as Records
+        view = self.view()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.sources(root)
+            # It sorts before 01-alpha by folder, but explicit priority wins.
+            Records.write(root, "00-new", Records.plan(Project="New open"))
+            lines = [line for line in views.expected(view, root).splitlines() if line.startswith("|")][2:]
+            self.assertEqual([split_table_row(line)[1] for line in lines],
+                             ["Catalog alpha", "New open", "Catalog beta"])
+
+
+class PullRequestBaseTests(unittest.TestCase):
+    def test_workflow_uses_verified_merge_first_parent_or_event_base(self):
+        import os
+        import subprocess
+        import textwrap
+        source = (Path(__file__).resolve().parents[1] / ".github/workflows/docs.yml").read_text(encoding="utf-8")
+        pr_step = source.split("      - name: Run repository checks\n", 1)[1].split("      - name:", 1)[0]
+        self.assertIn("PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}", pr_step)
+        script = textwrap.dedent(pr_step.split("        run: |\n", 1)[1])
+        for second_parent, first_parent, status, wanted_base in (
+            ("pr-head", "current-main", 0, "current-main"),
+            ("", "", 0, "event-base"),
+            ("wrong-head", "current-main", 1, None),
+        ):
+            with self.subTest(second_parent=second_parent), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                bin_dir = root / "bin"
+                bin_dir.mkdir()
+                git = bin_dir / "git"
+                git.write_text("#!/bin/sh\ncase \"$*\" in\n"
+                               "  'rev-parse --verify HEAD^2') [ -n \"$SECOND_PARENT\" ] || exit 1; printf '%s\\n' \"$SECOND_PARENT\" ;;\n"
+                               "  'rev-parse HEAD^1') printf '%s\\n' \"$FIRST_PARENT\" ;;\n"
+                               "  *) exit 2 ;;\nesac\n", encoding="utf-8")
+                python = bin_dir / "python3"
+                python.write_text("#!/bin/sh\nprintf '%s\\n' \"$@\" > \"$CAPTURE\"\n", encoding="utf-8")
+                git.chmod(0o755)
+                python.chmod(0o755)
+                capture = root / "args.txt"
+                env = dict(os.environ, PATH=str(bin_dir) + os.pathsep + os.environ["PATH"],
+                           SECOND_PARENT=second_parent, FIRST_PARENT=first_parent,
+                           PR_BASE_SHA="event-base", PR_HEAD_SHA="pr-head",
+                           GITHUB_EVENT_PATH="event.json", CAPTURE=str(capture))
+                result = subprocess.run(["bash", "-c", script], cwd=root, env=env,
+                                        text=True, capture_output=True)
+                self.assertEqual(result.returncode, status, result.stderr)
+                if wanted_base is None:
+                    self.assertFalse(capture.exists())
+                else:
+                    self.assertEqual(capture.read_text().splitlines(),
+                                     ["scripts/astrid_dev.py", "check", "--base", wanted_base, "--event", "event.json"])

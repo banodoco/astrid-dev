@@ -12,22 +12,41 @@ def example(status='active', key='01-alpha'):
 
 
 class CatalogTests(unittest.TestCase):
+    def record_errors(self, *, status="active", owner="Owner", folders=None, priority=""):
+        import checks
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for folder, state in (folders or {"01-alpha": status}).items():
+                target = root / "plans" / folder / "plan.md"
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(
+                    "# A title\n\n**Project:** Alpha\n\n**Goal:** Goal\n\n"
+                    f"**Status:** {state}\n\n**Owner:** {owner}\n\n"
+                    "**Estimate:** TBD\n\n**Waiting on:** —\n", encoding="utf-8")
+            (root / "plans/priority.md").write_text("## Order\n" + priority, encoding="utf-8")
+            context = checks.Context(root)
+            return checks._catalog(context), checks._catalog_paths(context)
+
     def test_invalid_status(self):
-        text = HEADER + '\n' + DIVIDER + '\n' + example('maybe')
-        with self.assertRaisesRegex(ValueError, 'invalid status'):
-            catalog_rows(text)
+        errors, _ = self.record_errors(status="maybe")
+        self.assertEqual(errors, ["invalid status 'maybe' in Alpha"])
 
     def test_terminal_not_before_active(self):
-        text = HEADER + '\n' + DIVIDER + '\n' + example('done') + '\n' + example('queued', '02-beta')
-        with self.assertRaisesRegex(ValueError, 'follow'):
-            catalog_rows(text)
+        errors, paths = self.record_errors(folders={"01-alpha": "done", "02-beta": "queued"},
+                                           priority="- 01-alpha\n- 02-beta\n")
+        # Terminal grouping is now a view's responsibility, not a refusal.
+        self.assertEqual(errors, [])
+        self.assertEqual(paths, [])
 
     def test_active_projects_require_a_named_owner_without_new_statuses(self):
-        named = catalog_rows(HEADER + '\n' + DIVIDER + '\n' + example('active'))
-        self.assertEqual(unnamed_active_owners(named), [])
-        unnamed = catalog_rows(HEADER + '\n' + DIVIDER + '\n'
-                               + example('active').replace('| Owner |', '| Unassigned |'))
-        self.assertEqual(len(unnamed_active_owners(unnamed)), 1)
+        self.assertEqual(self.record_errors(), ([], []))
+        for status in ("queued", "blocked", "paused", "done", "cancelled"):
+            with self.subTest(status=status):
+                self.assertEqual(self.record_errors(status=status, owner="Unassigned"), ([], []))
+        for owner in ("Unassigned", "TBD", "none", "—", "-"):
+            with self.subTest(owner=owner):
+                self.assertEqual(self.record_errors(owner=owner),
+                                 ([], ["active project needs a named accountable owner: Alpha"]))
 
     def test_relative_links(self):
         with tempfile.TemporaryDirectory() as directory:
