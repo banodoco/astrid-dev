@@ -2,22 +2,51 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (2026-11-12 06:37 UTC)
+## NOW: morning note (2026-11-12 08:05 UTC)
 
-- **Headline:** declared run logs work live on RunPod. On the failed TTS task, `astrid tasks logs 9269498d --project setup --name engine-error` prints ComfyUI's real exception and traceback from the installed product. The TTS root cause is found: the QwenTTS pack's `@check_model_inputs()` is incompatible with locked transformers 5.22.1, and the pack swallows the error (06:40 entry).
-- **Installed:** Release 13 rehearsal `cffffe05` at `install-r13b`, host up.
-- **On origin:**
-  - `scratch/r13-rehearsal` = `77632da9` (published Release 12 main `0e1543e0`, the structural branches, declared logs, the `tasks logs` fix and the receipt-plan test fix);
-  - `r13/declared-logs` = `62800d35`;
-  - `r13/dl-cleanup` = `30795fec`. The legacy scrape is removed, and the full RunPod suite comparison against `62800d35` is running before the merge.
-- **Gate:** classified (06:45). Two real merge regressions, both fixed; the rest predate the merges.
-- **Running:** the SFX first-look (≤ $3) on pod `d9mi0dtqdgtwqy`, then a t2i re-run with P/E/I bounds that fit $1.
-- **Money:** balance $99.69 (stop at $67.41). About $5 of $40 spent.
-- **For the owner (REVIEW):**
-  1. The TTS fix route: (a) a banodoco fork of ComfyUI-QwenTTS with a one-line decorator fix (recommended; needs a new repository), or (b) a recipe source-patch step.
-  2. `_CREDENTIAL_KEY` blanks every `*_key` field (for example `variant_key`) in error snapshots, against the no-redaction ruling. Proposal: match only credential names.
-  3. H10, whether to make the free-text failure bundle opt-in (bundle round 3 is parked at `04dd5f15`); the cleanup supersedes most of it.
-- **Next:** merge the cleanup, record the SFX and t2i evidence, the engine-startup log-slice follow-up, rework C1 task 1 without its allowlist, the provider gate (Sol), then the Release 13 candidate.
+**Headline.** Every generation failure is now understandable from the product itself. Declared run logs work live on RunPod. On each failed task, `astrid tasks logs <task> --project setup [--name <log>]` and `astrid generate failure --logs` show the real cause. With that, tonight's four blind cells each have a root cause:
+
+| Cell | Root cause (from the product's own logs) | Fix |
+|---|---|---|
+| TTS `audio/qwen3_tts_custom_voice` | The QwenTTS pack (pin = upstream HEAD `d8122a8`) uses `@check_model_inputs()`, which locked transformers 5.22.1 made a plain decorator. The pack swallows the TypeError, and it surfaces as "cannot import name Qwen3TTSTokenizerV1Config". Its `TTS` models are also invisible (next row). | **Owner decision 1** + the models-folders fix |
+| SFX `audio/hunyuan_video_foley` | The model lock has six folders, but the engine exposes a fixed four on the volume. The Foley pack reads `<ComfyUI>/models/hunyuan_foley`, finds nothing, and publishes an `error`-only schema, so doctor reports `unknown input foley_checkpoint_name`. | The models-folders fix (Terra, own branch, **owner decision 2**) |
+| t2i `qwen-image-2.1-turbo` (and edit) | `QwenImage21Cache` and `TextEncodeQwenImage21` are ComfyUI core nodes on master but not at our ComfyUI pin `ee71d5c4`. | **Owner decision 3**: a ComfyUI pin bump plus an engine re-lock |
+| music `audio/ace_step_1_5_t2a_song` | Its models (`acestep_v1.5_turbo`, `ace_1.5_vae`) are not in the RunPod model lock, and the template exposes only `seed`. Not run, since it can't succeed. | Lock the models, or drop the cell from Release 13 |
+
+**State.**
+- Origin: `scratch/r13-rehearsal` = `e7f00181` (Release 12 main, the structural branches, declared logs and fixes), installed at `install-r13b`, host up. `r13/declared-logs` = `603b6728`.
+- Gate classified: two real merge regressions, both fixed. The rest predate the merges or come from this venv.
+- Pods: 0. Balance $99.02 (stop at $67.41). Spent about $6.4 of $40 overnight (six paid runs, about $0.27–0.33 each, plus earlier runs).
+
+**What changed tonight in the product** (all on `r13/declared-logs`):
+- one `logs.json` model, from the job, VibeComfy, the engine log slice and the engine startup slice;
+- logs travel back over the verified fetch on failure too;
+- logs become `role=log` task outputs;
+- `astrid tasks logs` and `generate failure --logs`;
+- a failed preparation step's whole output becomes `preparation.<step>.*`;
+- the old scrape is removed.
+
+Three real bugs were found only by live runs and fixed: `tasks logs` read managed outputs, digests replaced step output, and startup output fell outside the slice. The test fakes that had encoded those wrong beliefs now mirror the real SDK and Runtime.
+
+**Owner decisions (REVIEW):**
+1. **TTS fix route:** (a) a banodoco fork of ComfyUI-QwenTTS with a one-line decorator fix that works with both forms (recommended; needs a new repository, which I won't create unasked), or (b) a recipe source-patch step.
+2. **models-folders:** links for pack-private model folders inside the ComfyUI checkout, plus ONE exact, verified exemption in the clean-source check (a lock folder, a symlink, the exact target; anything else still fails). It narrows an integrity check, so it's not merged into the rehearsal until you agree. Status: Terra is building it on `/home/user/wt/c-models`.
+3. **ComfyUI pin bump and re-lock** for the Qwen Image 2.1 nodes. The lock was compiled from inputs on another machine.
+4. `_CREDENTIAL_KEY` blanks every `*_key` field in error snapshots (`variant_key` shows as `<redacted>`), against the no-redaction ruling. Proposal: match only credential names.
+5. Music: lock the ACE-Step models or drop the cell.
+6. H10, the free-text failure bundle: mostly superseded by declared logs; proposal to close it.
+
+**Small findings:**
+- `generate describe <entry id>` fails with a raw `[Errno 2] No such file or directory: 'audio'`.
+- The edit input key is `image_ref`, not `image`; the product said so clearly.
+
+**Parked:**
+- C1 task 1 (rework without its allowlist);
+- C1 task 3 (regressed);
+- the provider gate with 429 backoff (to Sol);
+- the installed smoke test.
+
+**Next once decided:** models-folders and the fixes above → re-run TTS, SFX, t2i and edit on the rehearsal → the Release 13 candidate.
 
 ## Entries
 
