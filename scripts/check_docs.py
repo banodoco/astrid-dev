@@ -17,7 +17,6 @@ from vision_subject import parse_subject
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
 README = Path('README.md')
-STATUSES = set(lifecycle.names())
 LINK = re.compile(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)')
 GAP_NAME = re.compile(r'([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md')
 

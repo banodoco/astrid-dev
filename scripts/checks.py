@@ -51,6 +51,14 @@ def _catalog(context):
     return errors
 
 
+def _catalog_ready(context):
+    """True when the plan catalog has no errors; the documentation checks skip otherwise."""
+    try:
+        return not _catalog(context)
+    except (OSError, ValueError, IndexError):
+        return False
+
+
 def _unique_project_numbers(context):
     plans = context.root / "plans"
     by_number = {}
@@ -64,12 +72,7 @@ def _unique_project_numbers(context):
 def _release_documents(context):
     from check_docs import read, release_errors
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     release_folder = root / 'releases'
@@ -85,12 +88,7 @@ def _release_documents(context):
 def _strategy_consistency(context):
     from check_docs import read, STRATEGY, strategy_errors
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     release_folder = root / 'releases'
@@ -105,10 +103,10 @@ def _strategy_consistency(context):
 def _catalog_paths(context):
     from check_docs import read, PLAN_FOLDER, unnamed_active_owners
     root = context.root
+    if not _catalog_ready(context):
+        return []
+    from records import projects
     try:
-        if _catalog(context):
-            return []
-        from records import projects
         rows = projects(root)
     except (OSError, ValueError, IndexError):
         return []
@@ -118,12 +116,7 @@ def _catalog_paths(context):
 def _gap_structure(context):
     from check_docs import read, GAP_NAME, parse_gap_relationships, route_issues
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     gaps = sorted((root / 'vision/gaps').glob('*.md'))
@@ -157,12 +150,7 @@ def _gap_structure(context):
 def _plan_files(context):
     from check_docs import read, GAP_NAME, plan_gap_ids
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     actual = set(Path('plans') / p.parent.name / 'plan.md' for p in (root / 'plans').glob('*/plan.md'))
@@ -185,12 +173,7 @@ def _plan_files(context):
 def _subjects(context):
     from check_docs import read, parse_subject
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     # Do not let pillar and principle docs quietly drift into unrelated prose
@@ -212,12 +195,7 @@ def _subjects(context):
 def _obsolete_sources(context):
     from check_docs import read
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md', 'vision/gaps.md'):
@@ -229,12 +207,7 @@ def _obsolete_sources(context):
 def _canonical_principles(context):
     from check_docs import read
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     expected_principles = {'local-first-cloud-capable', 'open-by-design', 'in-the-creators-control', 'eliminate-needless-technical-wrangling'}
@@ -247,12 +220,7 @@ def _canonical_principles(context):
 def _obsolete_templates(context):
     from check_docs import read, obsolete_template_paths
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     errors.extend(obsolete_template_paths(root))
@@ -262,12 +230,7 @@ def _obsolete_templates(context):
 def _ledger(context):
     from check_docs import read, ledger_errors
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     errors.extend(ledger_errors(root))
@@ -277,12 +240,7 @@ def _ledger(context):
 def _markdown_links(context):
     from check_docs import read, CATALOG, README, local_links
     root = context.root
-    try:
-        if _catalog(context):
-            return []
-        from records import projects
-        rows = projects(root)
-    except (OSError, ValueError, IndexError):
+    if not _catalog_ready(context):
         return []
     errors = []
     mandatory = [README, CATALOG, Path('vision/README.md'),
