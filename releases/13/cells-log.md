@@ -98,3 +98,9 @@ Heads: Agent `r13/compose` `5dae0cfe` (my branches are cut from `fc4b36d`); Vibe
 ### 18:50 UTC — Correction
 - The headings "19:05", "19:15" and "19:50 UTC" above are wrong: those entries were written between 18:35 and 18:50 UTC (machine clock). The order is right.
 - **18:50 UTC, deadline corrected (orchestrator):** publication is Saturday 14 Nov at midday. Tonight's 21:30 UTC target for `r13/cells-vc`, its pin and the gate stands if it can be done right; otherwise up to Friday morning. Quality over speed.
+
+### 19:10 UTC — `r13/cells-vc` `1463cb8e`; second re-pin
+- Intermediate re-pin accepted: Agent `r13/cells-vc-pin` `e6c4c811` (VibeComfy `6aede014`; no catalog hash changed; focused pin, catalog and recipe tests have the same 5 failures as base `56a758c07`: the Linux engine-CLI dry run, three param-map parity cases, the registry backend-id test). The worker's "6 vs 5" count included a log line.
+- `6aede014` proof: the union run was interrupted after 177 tests (0 regressions so far); `make preflight` 193 passed with the 19 quarantined failures; the template-index check passes.
+- VibeComfy `r13/preflight-pins` `3cdc2343` accepted: `--pack-identity-commits=<json>` in `tests/conftest.py`, unset means unchanged, invalid input is a usage error, a missing identity fails with a message; `PREFLIGHT_ARGS` in `make preflight`; 0 regressions. With Astrid's recipe pins: 17 failures, 16 quarantined plus `wanvideo_wrapper_wan_animate`; no live cell's template among them.
+- Merged into `r13/cells-vc`: `r13/preflight-pins` and the engine lane's `r13/engine-nodecompat` `a96031a2` (`wanvideo_wrapper_wan_animate` to drafts, REVIEW accepted by the orchestrator) → **`1463cb8e`**, pushed. Final union proof plus both `make preflight` runs (Luna) and the second re-pin to `1463cb8e` (Luna) are running.
