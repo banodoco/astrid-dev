@@ -18,7 +18,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Words follow the [glossary](
 | A term | [glossary](../astrid-dev-shared/glossary.md) | judgment |
 | A record of decisions | the glossary names three: a manager's [decision log](../astrid-dev-manage/SKILL.md#decide), the [decisions ledger](../astrid-dev-shared/run-contract.md#decisions-ledger-when-the-owner-is-unavailable), `inputs.md` Owner decisions | judgment |
 | A pack's shape; what a card holds | the [plan](../../templates/project/plan.md), [inputs](../../templates/project/inputs.md) and [tasks](../../templates/project/tasks.md) templates | `pack-shape` |
-| A project fact: name, goal, status, owner, estimate, waiting | the six lines of its `plan.md` | `plan-catalog` |
+| A project fact: name, goal, status, owner, estimate, waiting | the first six lines of its `plan.md` | `plan-catalog` |
 | Priority | [`plans/priority.md`](../../plans/priority.md) | `plan-catalog` |
 | Claiming, proposing or finishing a project | the [contribution workflow](../../docs/contribution-workflow.md#claim-a-project) | the claim bot, `completion-assessment` |
 | A check | `scripts/checks.py`; how: [extending guide](../../docs/extending.md#add-a-check) | its tests, `list` |
@@ -32,10 +32,10 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Words follow the [glossary](
 1. Start from a recorded failure: a process ledger entry or an issue. No failure, no change.
 2. Find the home in the table. Change it and nothing else; replace any copy with a link to the home's heading.
 3. If you add words, cut as many.
-4. A change to what a check accepts is its own announced change: list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract [bars editing one to get a pass](../astrid-dev-shared/run-contract.md#checks-and-failure-repair).
+4. Change what a check accepts in a separate, announced change: list every pinned test, fixture and `scripts/fixtures/golden.txt` line it makes untrue, and how each changes. The run contract [bars editing one to get a pass](../astrid-dev-shared/run-contract.md#checks-and-failure-repair).
 5. Prove it. Run `python3 scripts/astrid_dev.py check`; the tests of what you touched (`python3 -m unittest discover -s scripts -p "test_<file>.py"`); and `sync` if a generated page changed. `check` confirms that a linked file exists, not the heading after `#`: open the target and read its heading. GitHub's anchor is the heading in lowercase, punctuation dropped except hyphens and underscores, spaces turned into hyphens.
-6. Add a `fix` entry to the process ledger that follows the entry it resolves.
+6. Add a `fix` entry to the process ledger that ends `Follows: <entry it resolves>`.
 
 ## Audit
 
-Run it when a run's ledger entry names friction in the skills, or the owner asks; never on a schedule. `N` helpers each map one area read-only: a skill, a guide, the templates. One high-judgment critic then checks their claims in the code and judges them. The output is ledger entries and at most one proposal, not edits.
+Run it when a run's ledger entry names friction in the skills, or the owner asks; never on a schedule. `N` helpers each map one area read-only: a skill, a guide, the templates. One high-judgment critic then verifies their claims against the code and judges them. The output is ledger entries and at most one proposal, not edits.

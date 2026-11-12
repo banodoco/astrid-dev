@@ -10,13 +10,13 @@ One meaning per word; two meanings, two terms.
 
 **contributor:** a person or agent changing astrid-dev.
 
-**orchestrator:** a standing session that plans and starts projects, advises managers, checks in.
+**orchestrator:** a standing session that plans and starts projects, advises managers, checks in on runs.
 
-**advisor:** the `run.yaml` role answering blocking questions: the orchestrator, or where there is none a fresh high-judgment sub-agent.
+**advisor:** the `run.yaml` role answering blocking questions: the orchestrator or, without one, a fresh high-judgment sub-agent.
 
 **manager:** dispatches tasks, judges reports, keeps `tasks.md` current; normally the accountable agent.
 
-**Codex manager:** a Codex process managing its own sub-agents, hosted in a Claude session or in its own Codex Cloud chat; only by choice.
+**Codex manager:** a Codex process managing its own sub-agents, hosted in a Claude session or in its own Codex Cloud chat; never the default.
 
 **host:** the Claude session running a Codex manager; it answers for the run.
 
@@ -24,7 +24,7 @@ One meaning per word; two meanings, two terms.
 
 **worker:** an agent given one task: a sub-agent or Codex call.
 
-**helper:** an `N` worker doing bounded reading, edits or checks for a lead.
+**helper:** an `N` worker doing bounded reading, editing or verifying for a lead.
 
 **lead:** the agent doing a task or review itself, delegating helper work.
 
@@ -54,7 +54,7 @@ One meaning per word; two meanings, two terms.
 
 **round:** one review of the integrated candidate.
 
-**review stop:** a row (`RS<n>`) reviewing a load-bearing part.
+**review stop:** a task (`RS<n>`) reviewing a load-bearing part.
 
 **track:** parallel work.
 
@@ -70,7 +70,7 @@ One meaning per word; two meanings, two terms.
 
 **decision log:** a manager's append-only list of its own rulings.
 
-**decisions ledger:** calls made while the owner is away, for her to accept or revert.
+**decisions ledger:** decisions made while the owner is away, for her to accept or revert.
 
 **Owner decisions:** the `inputs.md` section of what the owner must decide.
 
