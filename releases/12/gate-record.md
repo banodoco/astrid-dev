@@ -61,7 +61,7 @@ Named expected failures (approved by the orchestrator, registry `config/testing/
 
 ### 4. Review
 
-- Agent candidate review range and verdict (no open blocker): `{{FILL}}`
+- Agent candidate review range and verdict (no open blocker): the R12 fix round `c5370a86..0e1543e0` (merge of `r12/fix-round`) was reviewed commit by commit by independent read-only Astra reviewers: `a17e0555a` BLOCKER (recovery command) → fixed `cef4c2850`; `abd1886ee` NO BLOCKER (MEDIUM fixed `dc87e6230`); `abd1886ee..cef4c2850` BLOCKER (installed `astrid` lacked `packs`) → fixed `cafa71487`; `cafa71487` NO BLOCKER. Test-only commits were read by the manager. No blocker is open. The candidate's earlier range (`origin/main..c5370a86`) was reviewed before this round (see the decision log).
 - App candidate review range and verdict (no open blocker): `{{FILL}}`
 
 ### 5. Runtime
