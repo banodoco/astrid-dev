@@ -794,3 +794,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Consequence:** R13 can't ship the ratchet green without pulling M11 in, after M7, or an explicit owner exception. Raising the baseline isn't an option.
 - **Stage 2a:** the in-script `machines setup` failed transiently (host starting at load 15; its output was cut), so t2i, SFX and music were refused "preferences incomplete" with no pod and no cost. Setup re-run by hand succeeded; edit is now running; t2i, SFX and music will re-run on the warm pod. The script now checks that setup saved before running cells.
 - **Advisor session (Fable 5.2)** `session_011EzfW4KxQbf3mB7UevxVdh` started at the owner's request. Brief `releases/13/advisor-brief.md`; briefs and designs published under `releases/13/briefs/` (`124a025`).
+
+### 18:23 UTC — Advisor report (Fable 5.2 session) and what I've taken
+- **Taken now (within my authority):**
+  - (1) Stage 2a relabelled "cell diagnostics". The shippable proof is claim → `generate --machine` on the composed candidate.
+  - (2) Machines re-sequenced: K1, then M1, then **M2's deletions**, then a new **LT card: one lease transition table** (state × event → next state plus billing action, with an enumerating test; the three 18:03 gaps are its acceptance rows), then M4, then M3. M5–M10 come after the first live claim-path pass.
+  - (3) The CPU preflight, including the catalog dry-run (T14, published to `releases/13/briefs/t14/`), is a gate before any paid stage.
+  - (6) Gates become per-(file, code) ratchets for ruff and mypy: BLE001 rose 211 → 322 inside a "met" total.
+  - (7) CI: one ref per SHA, a frozen head about every 2 h, durations refreshed, shard count and timeout decided from data.
+  - (8) A compose script replaces manual merges. Money and custody work reviewed at effort none (keep-warm, terminal-reconcile, 429 back-off) gets a high-effort re-review.
+- **Asked of the owner:** (4) TTS off the critical path (old red), and fork the node to banodoco, replacing the declared-patches mechanism; (5) the scanner vocabulary fix, M11 inside M4/M7, and dropping the substring-count test; (8) own sessions for machines (and engine); (9) a cut line.
