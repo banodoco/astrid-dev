@@ -1,0 +1,14 @@
+## Rules (all apply)
+- don't push or commit (the manager commits);
+- never weaken, skip or delete a test, except one that encodes behaviour this design removes; convert it where a new behaviour exists, and list each one with what it became or why it went;
+- never call api.runpod.io, rest.runpod.io or any RunPod endpoint, and never run `astrid generate` or `astrid machines` (the proxy would act on a real paid account);
+- never read `.env`, credential files or ~/.codex;
+- ruff must not rise (`python -m scripts.reshape.compare_ruff_baseline`, baseline 2117);
+- no AI model or product names in code, comments, tests or docs;
+- no shims, compatibility layers, journals, rollback machinery or second implementations; one path for each thing;
+- stop after three failed attempts at the same thing, and report;
+- Python is `/home/user/astrid-agent.env/venv/bin/python` with `PYTHONPATH="$PWD:/home/user/wt/c-vcroot"`;
+- use `TMPDIR` and `--basetemp` under your clone (`<clone>/.tmp-tests`), deleted at the end;
+- the machine has 4 CPUs shared with other workers: run focused test files while working (`-x -q`), never the full suite;
+- start no long-lived services;
+- return the diff summary (`git diff --stat HEAD`), the list of converted or deleted tests, and the final proof results with every failure by test id, saying for each whether your change caused it.
