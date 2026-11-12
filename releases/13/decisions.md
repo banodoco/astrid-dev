@@ -4,7 +4,7 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 
 ## NOW (2026-11-11 23:31 UTC, from `date -u`)
 
-- **Money:** balance $101.66 at 00:23 UTC; spent ≈ $3.75 of $40 before this rental. LIVE: pod `3proraahcbflmi` (RTX 5090, $1.19/h, EUR-NO-1 volume `storage`), TTS diagnosis, rented ~00:22 UTC. Stop new rentals at a balance of $67.41 or below.
+- **Money:** balance $101.595 at 00:27 UTC; spent ≈ $3.82 of $40. No pod running (GraphQL census `[]`, spend $0.019/h storage only). Stop new rentals at a balance of $67.41 or below.
 - **Critical path to the first rental (TTS diagnosis), as of 00:00 UTC; new estimate about 02:00 UTC:**
   1. BLOCKER found on the install: the host QUARANTINES the `runpod` and `setup` packs ("Pack does not declare pack_api compatibility"). It loads them from the install's Agent source tree `a/astrid/packs`, outside the bundled root. The capability ledger also lacks `runpod.claim` and `runpod.keep`. No RunPod generation can run on `bf3b6ba7` as installed. Codex Terra is diagnosing and fixing it on `r13/runpod-pack-load`.
   2. After the fix: merge it into the rehearsal, reinstall install-r13b, start the host from this session with `RUNPOD_API_KEY=proxy-injected`, then `machines setup`.
@@ -128,3 +128,9 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Receipt gap: the receipt says stage `no_machine`, cause `unknown`, although a pod existed. This `AcquisitionUnresolvedError` comes from a site the swallow fixes did not cover.
   - Local journal: `releasing`. RunPod REST is rate-limiting (429), so my polling is paused in favour of the host's release.
   - Spend: about $0.06 so far on this pod. Spent ≈ $3.81 of $40, pending confirmation of the release.
+- **2026-11-12 00:27** RELEASE (manual, at the provider). The host's release and `machines release` both failed on `RunPod pod listing failed: HTTP 429: rate limit exceeded for the minute window`. The host re-polls `GET /v1/pods` about every 2 s with no backoff, so the window never resets. I positively identified pod `3proraahcbflmi`: name `astrid-product-558405e4…` matches our lease, and the before-census was empty. Terminated with GraphQL `podTerminate` at 00:26:59. After-census (GraphQL): 0 pods, spend $0.019/h. This rental cost $0.07. REST and local-journal confirmation is pending until the rate-limit window clears.
+- **2026-11-12 00:27** ROOT CAUSE of the TTS diagnosis failure. Not a model problem: the pod's HTTPS agent answered `/health` 200 at 00:24:49, 12 s AFTER the claim gave up at 00:24:37. Boot took about 2.5 min from creation. The product's readiness window (`runpod_lifecycle` `https.py:467`, seven attempts about 21 s apart) ended before that, even though `--preparation-seconds 1800` was granted. Findings to fix before the next rental:
+  - (1) Readiness must be bounded by the paid preparation budget.
+  - (2) The release and listing path must back off on 429.
+  - (3) The receipt must say a machine was acquired (stage boot) rather than `no_machine`/`unknown` for post-create acquisition failures.
+  - (4) The `machines setup` bugs A and B above.
