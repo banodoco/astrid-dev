@@ -233,3 +233,11 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   | 14 | M2 native None bulk | pass | |
 
   Product bugs open in R12: none beyond the four named exceptions (#249 shared with R10/R11; #250 harness; #251 Agent gap shared with R10/R11; #252 owner-deferred).
+- 2026-11-12 00:11Z — **Owner (via orchestrator): #252 may come back into R12 on my judgment.** It comes in only if it is green and reviewed by the time everything else is ready for the re-pin, and it never holds the freeze. #253, #254 and #255 stay with Plan 39.
+  - Decision: run it as a side track. `scratch/r12-drop-side` `05ac65ca5` = integration `7a971cea5` plus video fix `f530e0015`→`10407d784`, truthful text `e57507a1f`→`643619499`, the fresh-project video test `85125e6a6`→`20be9d2b4`, the audio import route `008494364`→`191863ca9`, and the audio test `9e454fac1`→`05ac65ca5`.
+  - Two conflicts were adjacency only. I placed the new tests among the project-creating tests at the end, consistent with `7a971cea5`. Registry 4/0, tsc clean.
+  - The orchestrator's "bonus" doesn't hold as-is. The fix saves video through the manual-save handoff (`clip.add-media`) without restoring the verified-selection read, so the marked three-products video-drop test would still stop at that read. Meanwhile its exception text, "dropped video is not saved", would become untrue.
+  - The side track therefore includes converting that test to the fixed path, with Codex **Sol** (`cx-vd2`). The tampered selection must be refused by the Runtime at commit, nothing written, and the exact native ADD recovery kept. The VIDEO-DROP exception is removed only if the full contract is proven.
+  - Running: an independent Astra review of `7a971cea5..05ac65ca5`, plus App Tests and Direct Journey on `05ac65ca5`.
+  - If any of it isn't green and reviewed when the main track reaches re-pin, the main track freezes without it.
+- 2026-11-12 00:11Z — **Publication pre-authorised to the orchestrator once GATE-GREEN holds.** The gate record must carry exact commands with expected SHAs (Agent main, then Runtime main, then App main, which deploys), the served-manifest check, and the protected-branch and required-check findings. I'm establishing those now.
