@@ -42,4 +42,4 @@ If protection, App credentials or GitHub Actions policies prevent claiming, the 
 
 **Cross-repository scope:** the current `needs-review` automation runs on **Astrid-dev PRs**. Implementation PRs in Runtime, Agent, App or other product repositories use their own native GitHub review/branch protections and the [common review submission](../templates/product-pr/review.md). Do not mistake this single-repository workflow for product-wide automated review. A final Astrid-dev completion PR links the externally reviewed and integrated work.
 
-Do not create a mandatory conversation issue for each project. Existing issues handle real questions and PRs carry work/review; durable decisions are captured in their authoritative project files.
+Do not create a mandatory conversation issue for each project; [getting help and keeping decisions discoverable](contribution-workflow.md#get-help-and-keep-decisions-discoverable) says where questions and decisions go.
