@@ -396,3 +396,12 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - `r13/declared-logs` `0af2f95d` → `62800d35`.
   The owner action for pushes in the NOW block is withdrawn.
   - t2i was refused before renting, correctly: at $1.25/hr, P/E/I of 1800+900+1800 s can cost $1.56, more than the $1 cap. It will re-run with 1200/600/600 s (≤ $0.83). SFX is running at ≤ $3.
+- **2026-11-12 07:15** The live SFX first-look (`runs/sfx-dl1`) on `cffffe05`: RTX 5090, pod `d9mi0dtqdgtwqy`, released, ≈ $0.33. It failed with `integrity_failed` in the managed-alignment `doctor` step (`workflow_validation_failed`).
+  - Declared logs came back, but they exposed the next blind spot: the step's whole stdout and stderr were reduced to two digests in a log line, and the error said "inspect the host log", which isn't a declared log either.
+  - Fixed structurally in `09de4222`: every alignment step goes through `_native`, and on a failure its whole output is written into the run root and declared as `preparation.<step>.stdout` and `preparation.<step>.stderr`; the error names those logs. The public error still carries no step output, and the tests pinning that still pass.
+  - The engine startup slice is done (`r13/dl-startup`). The supervisor writes `launch.json` (launch and ready offsets) and the run also declares `engine.startup` for exactly that range.
+    - I fixed one Codex regression: it had moved `publish_registry` and `check` outside the stop-on-failure guard, so a failure after health would have left the engine running. A new test pins this (it fails on Codex's version).
+  - The e2e task-log fake still served a failed task's outputs as managed outputs, the belief the live run disproved. It now answers like the Runtime (`46f68da5`).
+  - The cleanup was merged after the full RunPod suite showed no new failures against its base (17 failed against 18).
+  - On origin: `r13/declared-logs` `603b6728`, `scratch/r13-rehearsal` `e7f00181`.
+  - Reinstalling at `e7f00181`, then re-running SFX (≤ $3, so the `doctor` output becomes visible) and t2i (≤ $1, P/E/I 1200/600/600 s).
