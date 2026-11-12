@@ -437,7 +437,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
-    Check('generated-views', 'pr', 'Validate generated views changed in this pull request', _generated_views),
+    Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
     Check('project-planning-evidence', 'pr', 'Validate planning evidence for new or opted-in projects', _planning),
