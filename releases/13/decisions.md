@@ -817,3 +817,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Bootstrap defect,** found by the engine lane: the bundle omits the recipe's declared patch files (it's 83 KB against a 64 KB limit). A card fixes it before Stage 2b.
   - **The 15 `test_target_asset_declaration` failures** on the clean candidate are stale expectations from the T3 declarations; an engine-lane card converts them to custody checks.
   - **Stage 2a edit** is running on pod `5q0poadojva5ao`.
+- **18:37 UTC Money and custody re-review** (Astra, high) of the work first reviewed at effort none. All four commits need changes (report: `releases/13/evidence/reviews/money-custody-rereview-w33.md`):
+  - keep-warm expiry only in host-process timers (no billing stop if the host dies);
+  - a journal write before `release()` that can strand a pod in `releasing`;
+  - terminal reconcile treating every 4xx as permanent, and skipping `cancel_requested` at startup;
+  - the provider-gate state file written non-atomically (a torn file blocks every release).
+  - **Routing:** gate atomicity, the gate bypasses and the 4xx classifier go to the test lane. The durable billing stop, the release-retry boundary and `cancel_requested` recovery become required LT rows for the machines session. If no independent stop is possible, the options come to me as a money-safety design choice against keep-warm.
+  - Stage 2a's live pod is watched and released explicitly.
+- **Merged:** TTS v3 (`fae4b09b`), engine-mypy (`2b49b790`), custody-deadline (`ce797451`). `r13/compose` is now `1e1f3b4f`.
+- **Machines handover published** (`0eef285`). The new session takes over once the owner authorizes it.
