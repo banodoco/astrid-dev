@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Keep a Codex run alive while the orchestrator is idle.
 # Usage: codex-runner.sh <workdir> <prompt-file> <run-dir> [max-resumes] [model]
-# Optional env: CODEX_EFFORT (low|medium|high), CODEX_MAX_THREADS (sub-agent cap, Codex default 6),
+# Optional env: CODEX_EFFORT (low|medium|high), CODEX_MAX_THREADS (sub-agent cap; default: CPU count, at least 6),
 #   CODEX_PASS_ENV (see below). Restart-safe: run it again with the same args (codex-hold.sh does)
 #   and it resumes the same Codex session instead of starting over.
 # Start detached:  setsid nohup codex-runner.sh ... >/dev/null 2>&1 < /dev/null &
@@ -33,7 +33,9 @@ FLAGS=(-C "$WD" -s danger-full-access --skip-git-repo-check  # the workdir may h
 RFLAGS=(-c 'sandbox_mode="danger-full-access"' "${FLAGS[@]:4}")
 [ -n "$MODEL" ] && { FLAGS+=(-m "$MODEL"); RFLAGS+=(-m "$MODEL"); }
 [ -n "${CODEX_EFFORT:-}" ] && { FLAGS+=(-c "model_reasoning_effort=\"$CODEX_EFFORT\""); RFLAGS+=(-c "model_reasoning_effort=\"$CODEX_EFFORT\""); }
-[ -n "${CODEX_MAX_THREADS:-}" ] && { FLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS"); RFLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS"); }
+# Sub-agent cap: one per CPU core unless set (Codex's own default of 6 stalls sub-agent-heavy runs).
+CODEX_MAX_THREADS=${CODEX_MAX_THREADS:-$(n=$(nproc 2>/dev/null || echo 6); [ "$n" -lt 6 ] && n=6; echo "$n")}
+FLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS"); RFLAGS+=(-c "agents.max_threads=$CODEX_MAX_THREADS")
 
 money() {  # balance and pod ids only; the key never leaves memory
   [ -n "${RUNPOD_API_KEY:-}" ] && [[ ",${CODEX_PASS_ENV:-}," == *",RUNPOD_API_KEY,"* ]] || return 0

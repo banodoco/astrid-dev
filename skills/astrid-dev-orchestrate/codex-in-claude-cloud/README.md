@@ -30,13 +30,14 @@ Use this when a Claude manager session keeps managing (briefing, checking diffs,
 - **One task, one call, one worktree.** From a Claude sub-agent, so the output stays out of the manager's context:
 
   ```bash
-  codex exec -m <model-id> -s danger-full-access -c agents.max_threads=12 \
+  codex exec -m <model-id> -s danger-full-access -c agents.max_threads=$(nproc) \
     --skip-git-repo-check -C <worktree> "$(cat <brief.md>)" </dev/null
   ```
 
   The wrapping sub-agent writes the brief to a file, runs the call, and returns Codex's last message plus the commit SHA and the test tail. The manager checks the change is inside the card's scope, re-runs every proof the card names, and commits it if the worker did not. A proof that needs a commit (a rename, a `--base` comparison) is run by the manager after it commits, in a real scratch clone made with `git clone`; a `cp -a` copy of a worktree shares the real `.git`. It does not do the task itself. Give every task its own `git worktree add` path, and name it in the brief.
 - **Always full access.** Run every Codex worker, reviewers included, with `-s danger-full-access`. The container is the sandbox. Codex's own `workspace-write` sandbox makes everything outside the worktree read-only, including Codex's state, so a worker cannot start its sub-agents or a child `codex exec`; that silently turned every Terra, Sol and Astra task into a solo task (12 Nov 2026). A reviewer stays read-only because its brief says so, not because of the sandbox.
-- **Always tell the worker to use sub-agents.** Every Terra, Sol and Astra brief says, in these words or close: *"Use your Luna sub-agents for reading, inventories, call-site and test searches, mechanical edits and running checks; keep your own effort for the design and the judgment; run independent sub-agents in parallel."* Codex spawns them itself; you do not launch helpers beside it. Set `-c agents.max_threads=12` so finished sub-agents don't exhaust the default cap of 6.
+- **Always tell the worker to use sub-agents.** Every Terra, Sol and Astra brief says, in these words or close: *"Use your Luna sub-agents for reading, inventories, call-site and test searches, mechanical edits and running checks; keep your own effort for the design and the judgment; run independent sub-agents in parallel."* Codex spawns them itself; you do not launch helpers beside it.
+- **Set the sub-agent cap as high as the CPU allows:** `-c agents.max_threads=$(nproc)`, one thread per core, never below Codex's default of 6. Sub-agents mostly run tests and searches, so cores are the real limit. Finished sub-agents can keep their slot, so a low cap stalls a worker quietly. When several Codex workers run at once, split the cores between them (`$(( $(nproc) / <workers> ))`, at least 6 each).
 - **The brief is the same four things** as for any worker: one outcome, the exact repository, branch and files or selectors, what done looks like, and what to return. Add the run's rules that Codex cannot infer: commits are added and never rewritten, no model names in commit messages, never weaken a check, and stop after three attempts.
 - **What stays with the manager.** Pushing to candidate branches, dispatching CI, messages to the orchestrator, anything paid, and anything that needs a credential. A Codex worker inherits the session's network, so a credential the proxy injects reaches it too: do not give Codex workers tasks that call a paid provider.
 - **Switch at a task boundary.** Let running Claude workers finish; start new tasks on Codex. If a model ID is refused or the sign-in is lost, fall back to the Claude route for that task and say so; do not wait.
@@ -54,11 +55,11 @@ Only when you have chosen a Codex manager over the default above. To hand a whol
 ## Start a run
 
 ```bash
-CODEX_EFFORT=medium CODEX_MAX_THREADS=12 setsid nohup skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-runner.sh <workdir> <prompt.md> <run-dir> 6 <model-id> >/dev/null 2>&1 </dev/null &
+CODEX_EFFORT=medium setsid nohup skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-runner.sh <workdir> <prompt.md> <run-dir> 6 <model-id> >/dev/null 2>&1 </dev/null &
 ```
 
 - **`<workdir>`** is where Codex works. For a manager, make it a folder of partial clones (`git clone --filter=blob:none`) of the repositories the plan touches, plus `run/`. Codex can write only there and in `/tmp`. The runner passes `--skip-git-repo-check`, because that folder isn't itself a repository.
-- **`CODEX_EFFORT`** sets the reasoning effort (`low`, `medium` or `high`). **`CODEX_MAX_THREADS`** raises the cap on open sub-agent threads, which defaults to 6. A finished sub-agent can keep its slot, and Codex may give the manager no tool to close it, so set the cap above the number of sub-agents you expect at once (12 works). Tell the manager to keep a slot free for its reviewer.
+- **`CODEX_EFFORT`** sets the reasoning effort (`low`, `medium` or `high`). **`CODEX_MAX_THREADS`** sets the cap on open sub-agent threads. The runner defaults it to the CPU count (`nproc`, at least 6) rather than Codex's own default of 6. A finished sub-agent can keep its slot, and Codex may give the manager no tool to close it, so keep the cap at the core count; lower it only when several runs share the machine. Tell the manager to keep a slot free for its reviewer.
 - **Keys:** Codex sees only PATH, HOME and the proxy and certificate variables. Add a key it needs by name, for example `CODEX_PASS_ENV=RUNPOD_API_KEY`. With that key passed, the runner also logs the RunPod balance and pod list to `money.log` every 5 minutes, and never logs the key.
 - **Resumes:** `6` is the maximum number of times it resumes a Codex session that stopped before finishing.
 - **Finish line:** the prompt must tell Codex to end with `RUN-STATUS: DONE`, `RUN-STATUS: BLOCKED: <reason>`, or `RUN-STATUS: WAITING` (see the mailbox below).
