@@ -200,3 +200,7 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - An Opus design worker is writing `releases/13/structural-runpod-design.md`.
   - Rule from now until the morning: patch only what blocks a paid diagnostic cell; everything else waits for the design.
   - The G3 bundle redactor (round 3 on Sol) is the same anti-pattern. The design should say whether structured facts make the free-text bundle unnecessary by default. Changing H10 is the owner's call.
+- **2026-11-12 01:28** Diagnosis (Codex Terra, read-only; `/home/user/wt/briefs/release-diag.log`):
+  - (1) The release-429 loop: owner recovery retries every failure after 1 s (`worker_owner.py:705`), with up to two account inventory reads per attempt (`worker_preparation.py:1102,1129`). There's no account-scoped cooldown shared by the daemon, the CLI and lifecycle; lifecycle drops `Retry-After` (`api.py:156`).
+  - (2) The terminal-evidence HostError is a real Agent–Runtime contract mismatch. The host submits `result.error`, Runtime overwrites it with the failure payload (`store.py:6798`), and the readback check (`generic_host.py:5830`) fails. There's no duplicate task; one failed task is settled. But the host keeps the attempt spool as pending and logs a claim failure.
+  - Decision: neither blocks a paid diagnostic cell while I supervise releases. Both are routed into the structural design (A: an account-scoped provider rate gate; C: one canonical failure payload) instead of patching tonight. REVIEW.
