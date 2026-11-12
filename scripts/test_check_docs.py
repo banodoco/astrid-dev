@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_docs import (ROOT, ledger_entry_errors, ledger_errors, release_errors, strategy_errors, DIVIDER, HEADER, catalog_rows, local_links, obsolete_template_paths,
+from check_docs import (ROOT, ledger_entry_errors, ledger_errors, release_errors, strategy_errors, local_links, obsolete_template_paths,
                         route_issues, unnamed_active_owners)
 
 

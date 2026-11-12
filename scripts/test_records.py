@@ -204,7 +204,6 @@ class ProjectRecordTests(unittest.TestCase):
 
     def test_projects_partition_open_and_terminal_then_use_priority_and_folder_order(self):
         import records
-        from check_docs import PLAN_LINK
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             for folder, status in (("01-alpha", "queued"), ("02-beta", "paused"),
@@ -217,7 +216,7 @@ class ProjectRecordTests(unittest.TestCase):
             (root / "plans/priority.md").write_text(
                 "## Order\n- 06-zeta\n- 02-beta\n- 05-epsilon\n- 04-delta\n", encoding="utf-8")
             rows = records.projects(root)
-            folders = [PLAN_LINK.fullmatch(row[6]).group(1).removesuffix("/plan.md") for row in rows]
+            folders = [records.PLAN_CELL.fullmatch(row[6]).group(1).removesuffix("/plan.md") for row in rows]
             self.assertEqual(folders, ["02-beta", "04-delta", "01-alpha", "03-gamma", "100-later",
                                        "06-zeta", "05-epsilon", "07-eta"])
             self.assertEqual(rows[0], ["02-beta", "Build **one** thing", "paused", "Ada", "TBD", "—",
