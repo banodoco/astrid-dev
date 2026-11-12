@@ -730,3 +730,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - VibeComfy `r13/music-declaration` `a8a7be7c` (on `e4118ccf`): every ready template declares its models as one record. 17 unresolvable templates move to `draft_templates/`; none is referenced by Astrid's catalog. Broad run 1091/8/77 against 1078/9/77, with no new failing ids. My recheck: index check ok, `test_cli_models_fetch` + `test_ready_templates` 83 passed, 1 failed (`wan_animate frame_count`, also failing on the base). Reports: `briefs/wave3/t3-pass2/`. Astrid follow-up queued: `packs/runpod/models.lock.json` should move to the same record (`astrid-follow-up.txt`).
 - Observations register and draft Plan 52 merged to astrid-dev main (#566, `04a00487`), at the owner's request.
 - Test bar (proposed to owner, Fable concurs): R13 must be no worse than R12 main, test by test, through `astrid-baseline-diff` on hosted `int/` CI. New failing tests count as regressions or go to Plan 39 rows. `b306b2be` is not on R12 main, so the five `test_warm_session` failures are R13's to fix.
+
+### 16:04 UTC — Test manager set up
+- At the owner's request, a separate Opus session (`session_011EzfW2sWuWu9cBBoQkf385`) becomes the R13 test manager and reports to this session. Brief: `releases/13/test-manager-brief.md`. Its bar is no worse than R12 `main`, test by test, through `astrid-baseline-diff` on hosted CI. It owns the table `releases/13/tests.md`, and its fixes go to `r13/tests/*` for me to merge. Lane-owned failures are routed through me.
+- `int/r13` pushed at `f9214240c6` (= `r13/stage1`) to start the first full CI run. Baseline: CI run `43155525231` on `main` `0e1543e0da`. Only this session pushes `int/r13`, in batches.
+- Task 6 (classify the ~155 rehearsal failures) is superseded by the test manager's first comparison.
+- The engine manager saw clustered failures from several full suites running at once on 4 CPUs. That confirms full suites belong on hosted CI.
