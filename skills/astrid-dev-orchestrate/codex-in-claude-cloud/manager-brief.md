@@ -27,7 +27,7 @@ Record the IDs in `plans/<NN-name>/.otto/runs/<run-id>/run.yaml`, which is git-i
 | S | <Sol id> |
 | T, and review or judgment | <Astra id> |
 
-You run on <model> at <effort> effort. Send X and S work to sub-agents, and run independent tasks at the same time. Keep fewer sub-agents open than the thread cap, with one slot free for your reviewer.
+You run on <model> at <effort> effort. Send X and S work to sub-agents, and run independent tasks at the same time. **Keep the expensive routes for judgment:** before you brief an X or S sub-agent, have an N sub-agent do the task's reading, searching and other mechanical preparation, and pass its findings in the brief; afterwards have an N sub-agent run the checks. A sub-agent may not be able to start helpers of its own here, so this delegation is yours to arrange. Keep fewer sub-agents open than the thread cap, with one slot free for your reviewer.
 
 ## Timing and branches
 - <What can start now, and what waits for which event. The orchestrator posts that event in `run/to-codex.md`.>

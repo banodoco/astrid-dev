@@ -14,10 +14,11 @@ from pathlib import Path
 
 from check_docs import ROOT
 from project_contract import PLAN_FOLDER
+from records import (PLACEHOLDERS_PLANNING, git_result, git_show, is_placeholder,
+                     named_field_matches, read_text, section as record_section)
 
 PLAN = re.compile(r"^plans/(" + PLAN_FOLDER.pattern + r")/(plan|inputs)\.md$")
 LABELS = ("Scope decision", "Prior art", "Approach", "Challenge", "Proof and limits")
-FIELD = re.compile(r"^\*\*(Scope decision|Prior art|Approach|Challenge|Proof and limits):\*\*\s*(.+)$", re.M)
 REFERENCE = re.compile(
     r"https?://[^\s)]+|(?<![0-9a-f])[0-9a-f]{40}(?![0-9a-f])|\]\((?:\.\.?/)[^)]+\)", re.I
 )
@@ -27,12 +28,7 @@ CHALLENGE = re.compile(r"^(Reviewed|Not needed)\s*[—:-]\s*(.+)$", re.I)
 
 
 def planning_block(text: str) -> str | None:
-    match = re.search(r"^## Planning evidence\s*$", text, re.M)
-    if not match:
-        return None
-    tail = text[match.end():]
-    end = re.search(r"^## \S", tail, re.M)
-    return (tail[:end.start()] if end else tail).strip()
+    return record_section(text, "Planning evidence", missing="none", boundary=r"^## \S", strip=True)
 
 
 def validate_pack(name: str, contents: str) -> list[str]:
@@ -41,7 +37,7 @@ def validate_pack(name: str, contents: str) -> list[str]:
         return [f"{name}: missing '## Planning evidence' in inputs.md"]
     found: dict[str, str] = {}
     issues = []
-    for match in FIELD.finditer(block):
+    for match in named_field_matches(block, LABELS, style="bold"):
         label, value = match.groups()
         if label in found:
             issues.append(f"{name}: duplicate field '{label}'")
@@ -70,7 +66,7 @@ def validate_pack(name: str, contents: str) -> list[str]:
                 issues.append(f"{name}: pending '{label}' needs a next action")
             if approved:
                 issues.append(f"{name}: accepted scope cannot leave '{label}' pending")
-        elif value.lower().strip(" .") in {"tbd", "todo", "n/a", "none", "unknown"}:
+        elif is_placeholder(value, PLACEHOLDERS_PLANNING, trim=" .", empty=False):
             issues.append(f"{name}: '{label}' needs a meaningful statement or an explicit pending action")
 
     if approved:
@@ -87,24 +83,26 @@ def validate_pack(name: str, contents: str) -> list[str]:
 def changed_projects(base: str, root: Path) -> set[str]:
     """Check new packs, and older packs that opted in; issues are never included."""
     def git(*args: str) -> subprocess.CompletedProcess[str]:
-        return subprocess.run(["git", *args], cwd=root, text=True, capture_output=True, check=False)
+        return git_result(root, *args)
 
     if git("cat-file", "-e", f"{base}^{{commit}}").returncode:
         raise ValueError(f"base revision {base!r} is unavailable")
-    changed = git("diff", "--name-only", base, "HEAD", "--", "plans/")
+    changed = git("diff", "--name-only", base, "--", "plans/")
     if changed.returncode:
         raise ValueError(f"can't compare project changes: {changed.stderr.strip()}")
+    untracked = git("ls-files", "--others", "--exclude-standard", "--", "plans/")
+    paths = set(changed.stdout.splitlines()) | set(untracked.stdout.splitlines())
     selected = set()
-    for name in set(path for path in changed.stdout.splitlines() if PLAN.fullmatch(path)):
+    for name in set(path for path in paths if PLAN.fullmatch(path)):
         match = PLAN.fullmatch(name)
         project = match.group(1)
         path = root / "plans" / project / "inputs.md"
         if not path.exists():
             continue  # check_docs.py reports missing project files
         previous_plan = git("cat-file", "-e", f"{base}:plans/{project}/plan.md")
-        previous_inputs = git("show", f"{base}:plans/{project}/inputs.md")
-        opted_in = planning_block(path.read_text(encoding="utf-8")) is not None or (
-            previous_inputs.returncode == 0 and planning_block(previous_inputs.stdout) is not None
+        previous_inputs = git_show(root, base, f"plans/{project}/inputs.md", missing="none")
+        opted_in = planning_block(read_text(root, Path("plans") / project / "inputs.md")) is not None or (
+            previous_inputs is not None and planning_block(previous_inputs) is not None
         )
         if previous_plan.returncode != 0 or opted_in:
             selected.add(project)
@@ -112,24 +110,8 @@ def changed_projects(base: str, root: Path) -> set[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True, help="Fetched PR base commit SHA")
-    args = parser.parse_args()
-    try:
-        names = changed_projects(args.base, ROOT)
-        errors = []
-        for name in sorted(names):
-            errors.extend(validate_pack(name, (ROOT / "plans" / name / "inputs.md").read_text(encoding="utf-8")))
-    except (ValueError, OSError) as exc:
-        print(f"ERROR project evidence: {exc}")
-        return 1
-    for error in errors:
-        print(f"ERROR {error}")
-    if errors:
-        print("Fix the project decision record in inputs.md; see the Astrid project template.")
-        return 1
-    print(f"Project evidence OK for {len(names)} new or opted-in project(s)")
-    return 0
+    from checks import planning_main
+    return planning_main()
 
 
 if __name__ == "__main__":

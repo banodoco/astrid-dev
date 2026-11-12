@@ -8,7 +8,7 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 **Your job, in short.** Once a project is running under a manager in its own session, you do three things and nothing else:
 1. **Check in on a schedule,** if the owner asked for check-ins (path 3).
 2. **Answer questions and unblock** managers and the owner (path 2).
-3. **Equip managers to need you less.** Turn each repeated question into a standing rule in the [manage skill](../astrid-dev-manage/SKILL.md) or the task card, so the run moves as fast as it can without you.
+3. **Equip managers to need you less.** Treat every question as a symptom: find why it reached you and fix that cause in the [manage skill](../astrid-dev-manage/SKILL.md), the plan or the task card, so it isn't asked twice and the run moves as fast as it can without you.
 
 **One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your own session, you are its [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#hand-a-long-task-to-codex-from-claude-cloud)).
 
@@ -27,6 +27,12 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
 
 **Between those, stay idle.** Progress lives in the plan's `tasks.md`; handle required dependency handoffs and urgent blockers when received, without taking over task supervision.
 
+**A queue is yours to keep moving.** When the owner gives you an ordered queue (phases of a plan, or several projects), you see that it never stops for want of preparation:
+- **Prepare the next item before the current one ends:** its cards re-planned against what just landed, its `Run start` line, and its start message.
+- **Get the go once.** Ask the owner for one standing go that covers the queue in order, given in the manager's session and recorded on each `Run start` line. Without it, every item waits for her.
+- **At each check-in, confirm the manager has moved on.** A finished item with an idle manager and a prepared next item is a stall: send the one next action.
+- **An item gated on an outside event** (a release publishing, an owner setting) still gets built where it can't hurt: on its integration branch, with only the merge to `main` waiting. Say what is gated and on whom in every report.
+
 ## Path 1: start a project
 
 1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../strategy.md) and the [catalog](../../plans/index.md). With no accepted plan, write one with [Plan](../astrid-dev-plan/SKILL.md) and get the owner's scope decision; you may do the planning yourself. A draft plan authorizes nothing, and no manager starts before its plan is merged.
@@ -38,12 +44,29 @@ You act for the owner across projects. You don't run tasks yourself: a [manager]
    - the owner's limits (budget, CPU or GPU, what needs a go);
    - **the tests, already chosen.** Before any manager starts, check that the plan's `tasks.md` names its test inventory and, for every task, the exact test files that prove it; if any are missing, you or the planner name them now, because choosing tests is judgment and belongs with the stronger model. Then tell the manager in one line: run only those, at the [load-bearing moments](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing), and never a full suite locally;
    - your session id for questions, as its advisor;
-   - its model. A release, a run across more than one repository, or a run with a deadline gets a manager from the strongest available class. An N-class manager suits only a one-repository run of N tasks. Record the choice under `roles.manager` in `run.yaml`. Don't swap managers mid-run, because the new one loses the run's context. Escalate its hard failures to stronger workers instead.
+   - its route, [chosen below](#choose-the-managers-route).
 
    Its first step is Manage step 1: a run file plus a smoke worker per repository.
 
    **Send those in [the start message](#the-start-message),** not in a long brief of your own.
 4. **Schedule check-ins** if the owner wants them (path 3).
+
+## Choose the manager's route
+
+How capable the manager must be is a decision, made once per run and separate from the routes of its tasks. Judge it by what the manager itself will have to do, not by how hard the tasks are: a manager can send an S task to an S worker, but nobody can lend it judgment about when to escalate.
+
+| Route | The manager's own work | Typical run |
+|---|---|---|
+| **N** | Works through a task list: dispatch, run the named proof, land, record. Every decision is already in the plan. | One repository, tasks with stated proofs, nothing to discover |
+| **X** | Iterates and wrangles: gets failing tests or a broken environment working, re-plans a task that failed, tells its own mistake from a real blocker, and knows when to escalate. | Proofs that won't pass first time, several tracks to keep moving, findings to triage |
+| **S** | Holds a correctness problem across the whole run, where one wrong call is expensive or hard to undo. | A release, a run across repositories, a deadline, security, data or a migration |
+| **T** | Judges refinement: the result is right only when it reads or looks right. | A project whose outcome is copy, a screen's polish or a skill's voice |
+
+- **Pick the lowest route that fits,** and say why in one line. If two rows fit, take the higher.
+- **An N manager needs a complete plan.** Every card names its scope, its proof files and every file its acceptance text touches. If the plan can't be made that complete, the run needs an X manager.
+- **A manager below the route of a task still dispatches it,** to a worker on that task's route. It doesn't do or judge that task itself: name the sub-agent or session for each T task and each review in the plan.
+- **Record the choice** on the plan's `Run start` line, and the model under `roles.manager` in `run.yaml`.
+- **Don't swap managers mid-run,** because the new one loses the run's context. Escalate its hard failures to stronger workers or to you instead. If its questions show the route was too low, raise it for the next run or phase.
 
 ## The start message
 
@@ -99,7 +122,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 - **Refresh the facts first:** the exact candidate, source and donor identities, dirty state, the brief, the first failing command, the repair history, and the review budget.
 - **Diagnose from evidence.** A claim in the request is a claim until code, logs or a run supports it. If the cause isn't visible, the next action is to make it visible.
 - **Question the question.** Ask why it reached you: missing evidence, an unclear task card, or a gap in a skill or the plan. Sometimes the right answer is a different question.
-- **Leave the asker better equipped.** Say how they could have settled it themselves (which file, check or evidence), and fix that gap at its source: the task card, the plan, or a skill (through a PR). If you can't fix it now, add an entry file to the [process ledger](../../docs/ledger/README.md). The aim is to be asked less over time.
+- **Unblock it once and for all.** Every message from a manager has a cause behind the question: a rule that is missing, a card that is thin, a tool that misled it, or authority it wasn't given. Answer the question, then name that cause and fix it at its source in the same turn: the task card, the plan, or a skill (through a PR). Say how they could have settled it themselves (which file, check or evidence). If you can't fix it now, add an entry file to the [process ledger](../../docs/ledger/README.md). A question you have answered twice is a fix you still owe.
 - **Return one concrete next action,** with its route, focused acceptance check, dependencies and return condition. For a high-judgment choice, give the simplest viable option, its trade-off, and a concrete challenge against over-engineering.
 - **Require the previously failing check** to run on the repaired candidate.
 - **Don't:**
@@ -108,7 +131,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 
 ## Path 3: check in (only when the owner asks)
 
-When the owner asks for regular check-ins on a run, record the agreed cadence and end condition as `checkin` in the run's `run.yaml`. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. A timer or GitHub comment alone does not resume a separate Codex Cloud chat. Without a verified path, use bounded foreground polling while active and tell the owner when a manual nudge is needed. The Claude-hosted runner has its own liveness requirements above; those are separate from strategic check-ins. These documents never start a check-in themselves.
+When the owner asks for regular check-ins on a run, record the agreed cadence and end condition on the plan's `Run start` line, where everyone can read it, and as `checkin` in the run's `run.yaml` once a run exists. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. A timer or GitHub comment alone does not resume a separate Codex Cloud chat. Without a verified path, use bounded foreground polling while active and tell the owner when a manual nudge is needed. The Claude-hosted runner has its own liveness requirements above; those are separate from strategic check-ins. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, the nudge is to wake it with one next action.
