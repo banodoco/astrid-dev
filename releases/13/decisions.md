@@ -280,3 +280,9 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - the Runtime already associates outputs on failed tasks.
   - Slice 1 (Codex Terra, `r13/failure-logs`): the failure branch builds `failure/` (stdout, stderr, engine log, run record; 2 MiB cap each with a truncated marker, no redaction), fetches it through `_fetch_verified` before the reset, and the receipt records the log paths; `astrid generate failure --logs` prints them. Next slices: upload as Runtime `diagnostic` outputs plus the app view; then the local and attached paths. Delete the redactor and the secrecy allowlists. Structured reasons stay as a closed vocabulary for decisions only. No decision parses raw text.
   - TTS attempt 6 keeps running on the current build. If it's still blind, attempt 7 waits for this slice instead of an operator backdoor.
+- **2026-11-12 02:45** GPU TTS attempt 6: FAIL in execution, $0.28 (pod `8tnysunl86wxoy`, released by the product as `unsafe_job_state`; census 0 pods; balance $100.68; spent ≈ $4.71 of $40).
+  - The receipt now NAMES the failure: `comfy_execution_error` at node `1`, after 171 s of execution. That node is almost certainly `AILab_Qwen3TTSCustomVoice`, the custom TTS node.
+  - The exception type and node class were withheld by the allowlists, which the owner's no-redaction decision removes.
+  - Likely suspects: the custom node loading models from `ComfyUI/models/TTS` rather than the volume's `extra_model_paths`, or a missing pip dependency (`qwen-tts`).
+  - TTS attempt 7 waits for the failure-logs slice (`r13/failure-logs`), so the engine's own error text comes back through the product.
+- **2026-11-12 02:45** GPU t2i diagnostic launched (standard ComfyUI nodes, default entry `qwen-image-2.1-turbo`, 768×768, seed 7; RTX 5090; P1800/E600/I600; cap $1.25). Purpose: prove whether the pipeline works end to end with non-custom nodes. Before-census 0 pods; balance $100.60.
