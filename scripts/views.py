@@ -86,7 +86,7 @@ def _with_marker(view: View, content: str) -> str:
         start = f"<!-- {region}:start -->"
         end = f"<!-- {region}:end -->"
         if content.count(start) != 1 or content.count(end) != 1:
-            raise ValueError(f"view {view.name}: target must contain exactly one summary region")
+            raise ValueError(f"view {view.name}: target must contain exactly one {start} line and one {end} line; restore them in {view.target}")
         if content.count(view.marker) == 1:
             return content
         before, rest = content.split(start, 1)
@@ -112,7 +112,11 @@ def check_view(view: View, root: Path) -> list[str]:
         if actual != wanted:
             return [f"view {view.name} is stale or hand-edited: {view.target} does not match its sources; "
                     f"edit {', '.join(view.sources)} instead, then run python3 scripts/astrid_dev.py sync"]
-    except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+    except ValueError as exc:
+        detail = str(exc).removeprefix(f"view {view.name}: ")
+        return [f"view {view.name}: cannot check {view.target}: {detail}; "
+                "then run python3 scripts/astrid_dev.py sync"]
+    except (OSError, subprocess.CalledProcessError) as exc:
         return [f"view {view.name}: cannot check {view.target}: {exc}; "
                 f"{view.target} is generated from {', '.join(view.sources)}, so fix any error there, "
                 f"then run python3 scripts/astrid_dev.py sync"]

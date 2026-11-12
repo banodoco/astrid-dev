@@ -37,7 +37,7 @@ route-plan-backlink-mismatch: public vision content: duplicate gap IDs in plan d
 route-status-word: F-008-portable-generation.md: route row carries status/ownership word 'active'; the catalog owns it
 stale-plan-catalog: public vision content: README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme
 stale-plan-catalog: view plan-catalog is stale or hand-edited: plans/index.md does not match its sources; edit plans/*/plan.md, plans/priority.md instead, then run python3 scripts/astrid_dev.py sync
-stale-plan-catalog: view status-definitions: cannot check plans/index.md: view status-definitions: target must contain exactly one summary region; plans/index.md is generated from scripts/lifecycle.py, so fix any error there, then run python3 scripts/astrid_dev.py sync
+stale-plan-catalog: view status-definitions: cannot check plans/index.md: target must contain exactly one <!-- status-definitions:start --> line and one <!-- status-definitions:end --> line; restore them in plans/index.md; then run python3 scripts/astrid_dev.py sync
 stale-vision-readme: public vision content: vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme
 strategy-highlight-mismatch: strategy.md: release 12 highlight differs from its document
 strategy-highlight-mismatch: strategy.md: release 12 plan links differ from its document
