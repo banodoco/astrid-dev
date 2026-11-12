@@ -1084,3 +1084,16 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - K1 landing proof;
   - M2b;
   - W55 bisect of the Lanes groups A, B and D.
+
+## 12 Nov ~22:50 UTC: open-PR triage, Codex limit, merges
+
+- **Open-PR triage:** 57 PRs across 8 repos; full table in `evidence/open-prs.md`.
+  - **In R13:** VibeComfy #166 and #165, and Agent #341, are already in the candidates; record them under "Included pull requests".
+  - **To land:** Agent #293 (MCP whole results, matlowai), by the engine lane after #607, via a cherry-pick keeping the author.
+  - **After R13:** Agent #346 (timeline import; it touches a protected invariant), runpod-lifecycle #2 (it would lose failure causes), and the five worker-permission PRs.
+  - **Not as it stands:** Agent #109.
+  - **At publish:** close the ones already in main and the duplicates. Deferred outside contributors are told which release considers them.
+- **Codex:** the shared account hit its usage limit at about 22:41. The lanes fell back to Claude. Hannah: "ask them to try again", then "it should be fixed". All lanes are resuming Codex.
+- **Merged:**
+  - into r13/compose: stopfix with injection tests (`81b6e4fee`) and ctrlc (`10cef0670`); head `1feb10a6b`;
+  - on astrid-dev main: #602 (release records skill) and #604 (mypy-gate Plan 39 note).
