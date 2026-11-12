@@ -11,7 +11,7 @@ State: **GATE-GREEN** (12 Nov 04:31Z). Every gate item below is green or ruled o
 | Runtime | `42ae24aff8d2cb854f874ce134161077a3ba3641` |
 | harness (`harness/29-r12`) | `1940a2fe1` (full SHA in the matrix run) |
 | VibeComfy | `e65f4941d09b1cb4d1dd5aae6171c73e648706f4` |
-| ComfyUI (RunPod) | `ee71d5c4` — FULL SHA TO FILL |
+| ComfyUI (RunPod) | `ee71d5c4993f29086b27fde1629a945ae48425bf` (from `astrid/packs/runpod/pins.json` at `0e1543e0`) |
 | runpod-lifecycle | `f2948817eeb94af8dee76be21f6d673724f1606e` |
 | Pinokio | `d15c58b5cd1f7e24c1e699340b33961027f7c573` (int/r1 fallback; Pinokio rows are deferred, direct_only) |
 | OMP source | `https://github.com/banodoco/oh-my-pi` @ `78f0e0960f471c2c62b943272a48c33366f239fe` |
