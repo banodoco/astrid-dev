@@ -1,0 +1,436 @@
+diff --git a/src/runpod_lifecycle/api.py b/src/runpod_lifecycle/api.py
+index 91cf635..2d9c03c 100644
+--- a/src/runpod_lifecycle/api.py
++++ b/src/runpod_lifecycle/api.py
+@@ -14,6 +14,7 @@ import httpx
+ 
+ from . import graphql as _gql
+ from .errors import CleanupPendingError, ProviderRequestRejected, ProviderCapacityUnavailable
++from .rest import collect_pages, normalize_pod, normalize_volume
+ 
+ # Keep the provider SDK behind the call sites.  The Astrid executor sandbox
+ # permits the declared HTTP/SSH transport but can deny platform probes made by
+@@ -49,8 +50,8 @@ def normalize_allowed_cuda_versions(
+     return tuple(normalized)
+ 
+ GRAPHQL_URL = "https://api.runpod.io/graphql"
+-NETWORK_VOLUMES_URL = "https://rest.runpod.io/v1/networkvolumes"
+-PODS_URL = "https://rest.runpod.io/v1/pods"
++NETWORK_VOLUMES_URL = "https://api.runpod.io/v2/network-volumes"
++PODS_URL = "https://api.runpod.io/v2/pods"
+ 
+ 
+ def _get_runpod() -> Any:
+@@ -85,11 +86,12 @@ def get_network_volumes(api_key: str) -> list[dict[str, Any]]:
+         logger.warning("RunPod SDK get_network_volumes failed: %s", exc)
+ 
+     try:
+-        response = httpx.get(NETWORK_VOLUMES_URL, headers=_auth_headers(api_key), timeout=30)
+-        if response.status_code == 200:
+-            data = response.json()
+-            if isinstance(data, list):
+-                return data
++        def fetch(params):
++            response = httpx.get(NETWORK_VOLUMES_URL, headers=_auth_headers(api_key), timeout=30, params=params)
++            if response.status_code != 200:
++                raise RuntimeError(f"RunPod volume listing failed: HTTP {response.status_code}")
++            return response.json()
++        return [normalize_volume(v) for v in collect_pages(fetch, "networkVolumes")]
+     except Exception as exc:
+         logger.warning("RunPod REST network volume lookup failed: %s", exc)
+ 
+@@ -131,7 +133,7 @@ def list_pods(api_key: str) -> list[dict[str, Any]]:
+     with ``KeyError('data')``. The REST collection is the authoritative fallback
+     and also gives termination verification a transport independent of the
+     mutation call. Successful SDK projections that omit attachment fields are
+-    enriched by exact pod ID from REST with includeNetworkVolume=true.
++    enriched by exact pod ID from REST v2 mount references.
+     """
+     sdk = _get_runpod()
+     if sdk is not None:
+@@ -149,19 +151,17 @@ def list_pods(api_key: str) -> list[dict[str, Any]]:
+     except Exception as exc:
+         logger.warning("RunPod SDK get_pods failed; falling back to REST: %s", exc)
+ 
+-    response = httpx.get(
+-        PODS_URL, headers=_auth_headers(api_key), timeout=30,
+-        params={"includeNetworkVolume": "true"},
+-    )
+-    if response.status_code != 200:
+-        raise RuntimeError(
+-            f"RunPod pod listing failed: HTTP {response.status_code}: {response.text[:500]}"
+-        )
+-    payload = response.json()
+-    if isinstance(payload, dict) and isinstance(payload.get("pods"), list):
+-        payload = payload["pods"]
+-    if not isinstance(payload, list) or any(not isinstance(p, dict) for p in payload):
+-        raise RuntimeError("RunPod pod listing returned a malformed collection")
++    def fetch(params):
++        response = httpx.get(PODS_URL, headers=_auth_headers(api_key), timeout=30, params=params)
++        if response.status_code != 200:
++            raise RuntimeError(
++                f"RunPod pod listing failed: HTTP {response.status_code}: {response.text[:500]}"
++            )
++        return response.json()
++    try:
++        payload = [normalize_pod(p) for p in collect_pages(fetch, "pods")]
++    except ValueError as exc:
++        raise RuntimeError("RunPod pod listing returned a malformed collection") from exc
+     if not isinstance(pods, list):
+         return payload
+     enriched = []
+@@ -174,7 +174,9 @@ def list_pods(api_key: str) -> list[dict[str, Any]]:
+         # Never infer attachment from the requested volume, a pod name, or an
+         # ambiguous join. Missing/null evidence remains explicit in the CLI.
+         attachment = matches[0].get("networkVolume") if len(matches) == 1 else None
+-        enriched.append({**pod, "networkVolume": attachment})
++        extra = {key: matches[0][key] for key in ("mounts", "volumeMountPath")
++                 if len(matches) == 1 and key in matches[0] and key not in pod}
++        enriched.append({**pod, **extra, "networkVolume": attachment})
+     return enriched
+ 
+ 
+@@ -326,16 +328,18 @@ def create_pod(
+     if compute_type == "CPU":
+         if cpu_flavor_priority not in {"availability", "custom"}:
+             raise ValueError("CPU flavor priority must be availability or custom")
+-        payload = {"name": name, "imageName": image_name, "computeType": "CPU",
+-                   "cloudType": "SECURE", "vcpuCount": vcpu_count,
+-                   "cpuFlavorIds": list(cpu_flavor_ids), "cpuFlavorPriority": cpu_flavor_priority,
+-                   "containerDiskInGb": container_disk_in_gb, "volumeInGb": 0,
+-                   "volumeMountPath": volume_mount_path, "networkVolumeId": network_volume_id,
+-                   "ports": (ports or "22/tcp").split(","), "supportPublicIp": True, "env": pod_env}
+-        if network_volume_id is None:
+-            payload.pop("networkVolumeId")
++        if not cpu_flavor_ids:
++            raise ValueError("CPU provisioning requires at least one flavor")
++        # V2 accepts one CPU flavor per request. Capacity fallback remains with
++        # the caller; never retry an ambiguous allocation here.
++        payload = {"name": name, "image": image_name,
++                   "cloud": "SECURE", "cpu": {"id": cpu_flavor_ids[0], "vcpuCount": vcpu_count},
++                   "disk": container_disk_in_gb,
++                   "ports": (ports or "22/tcp").split(","), "env": pod_env}
++        if network_volume_id is not None:
++            payload["mounts"] = {"network": [{"volumeId": network_volume_id, "path": volume_mount_path}]}
+         if boot:
+-            payload.update({"dockerEntrypoint": boot["docker_entrypoint"], "dockerStartCmd": boot["docker_start_cmd"]})
++            payload.update({"entrypoint": boot["docker_entrypoint"], "cmd": boot["docker_start_cmd"]})
+         if data_center_id:
+             payload["dataCenterIds"] = [data_center_id]
+         response = httpx.post(PODS_URL, headers=_auth_headers(api_key), json=payload, timeout=30)
+@@ -625,6 +629,7 @@ def create_pod_with_fallbacks(
+ 
+ 
+ def _normalize_pod_status(runpod_id: str, status: dict[str, Any]) -> dict[str, Any]:
++    status = normalize_pod(status)
+     runtime = status.get("runtime") if isinstance(status, dict) else None
+     runtime = runtime if isinstance(runtime, dict) else {}
+     ports = runtime.get("ports") or status.get("ports", [])
+@@ -864,15 +869,18 @@ def start_pod(pod_id: str, api_key: str) -> dict[str, Any]:
+     contain environment and connection metadata.
+     """
+     response = httpx.post(
+-        f"{PODS_URL}/{pod_id}/start",
++        f"{PODS_URL}/{pod_id}/action",
++        json={"action": "start"},
+         headers=_auth_headers(api_key),
+         timeout=30,
+     )
+-    if response.status_code not in (200, 202):
++    if response.status_code not in (200, 202, 204):
+         raise RuntimeError(
+             f"RunPod pod start failed for {pod_id}: "
+             f"HTTP {response.status_code}: {response.text[:500]}"
+         )
++    if response.status_code == 204:
++        return {}
+     payload = response.json()
+     return payload if isinstance(payload, dict) else {"response": payload}
+ 
+@@ -928,7 +936,7 @@ def terminate_pod(
+ ) -> None:
+     """Terminate a pod and return only after provider-side deletion is verified.
+ 
+-    RunPod's supported termination endpoint is REST ``DELETE /v1/pods/{id}``.
++    RunPod's supported termination endpoint is REST ``DELETE /v2/pods/{id}``.
+     A successful mutation response is not itself a terminal state receipt, so
+     poll the independent account collection until the pod is absent. HTTP 404
+     is idempotent success. A pod that remains visible past the deadline is an
+@@ -962,13 +970,13 @@ def create_network_volume(
+ ) -> dict[str, Any]:
+     """Create a RunPod network volume via REST API.
+ 
+-    POSTs to ``NETWORK_VOLUMES_URL`` with payload ``{name, size, dataCenterId}``.
++    POSTs to ``NETWORK_VOLUMES_URL`` with payload ``{name, size, dataCenter}``.
+     Returns the full API response dict on success.
+     """
+     payload: dict[str, Any] = {
+         "name": name,
+         "size": size_gb,
+-        "dataCenterId": datacenter_id,
++        "dataCenter": datacenter_id,
+     }
+     response = httpx.post(
+         NETWORK_VOLUMES_URL,
+@@ -986,7 +994,7 @@ def create_network_volume(
+             f"Failed to create network volume '{name}': "
+             f"HTTP {response.status_code}: {response.text[:200]}"
+         )
+-    return response.json()
++    return normalize_volume(response.json())
+ 
+ 
+ __all__ = [
+diff --git a/src/runpod_lifecycle/discovery.py b/src/runpod_lifecycle/discovery.py
+index b7c124d..0146410 100644
+--- a/src/runpod_lifecycle/discovery.py
++++ b/src/runpod_lifecycle/discovery.py
+@@ -195,7 +195,7 @@ def _network_volume_evidence(raw: dict[str, Any]) -> dict[str, bool]:
+ def _network_volume_id(raw: dict[str, Any]) -> str | None:
+     """Normalize observed SDK/REST identities, rejecting malformed/conflicting evidence.
+ 
+-    REST GET /v1/pods?includeNetworkVolume=true returns networkVolume.id.
++    REST v2 mounts.network references are normalized to networkVolume.id.
+     It is an attached-volume object, not the similarly named request filter.
+     """
+     identities = []
+@@ -210,6 +210,7 @@ def _network_volume_id(raw: dict[str, Any]) -> str | None:
+ 
+ 
+ def _to_summary(raw: dict[str, Any]) -> PodSummary:
++    raw = api.normalize_pod(raw)
+     runtime = raw.get("runtime") if isinstance(raw.get("runtime"), dict) else {}
+     machine = raw.get("machine") if isinstance(raw.get("machine"), dict) else {}
+     cost = raw.get("costPerHr")
+diff --git a/src/runpod_lifecycle/storage.py b/src/runpod_lifecycle/storage.py
+index e324b73..a032975 100644
+--- a/src/runpod_lifecycle/storage.py
++++ b/src/runpod_lifecycle/storage.py
+@@ -7,7 +7,7 @@ from typing import Any
+ 
+ import requests
+ 
+-from .api import get_network_volumes
++from .api import NETWORK_VOLUMES_URL, get_network_volumes
+ 
+ logger = logging.getLogger("runpod_lifecycle.storage")
+ 
+@@ -27,7 +27,7 @@ def _expand_network_volume(api_key: str, volume_id: str, size_gb: int) -> bool:
+     """Expand a network volume to the requested size in GiB."""
+     try:
+         response = requests.patch(
+-            f"https://rest.runpod.io/v1/networkvolumes/{volume_id}",
++            f"{NETWORK_VOLUMES_URL}/{volume_id}",
+             json={"size": size_gb},
+             headers={
+                 "Authorization": f"Bearer {api_key}",
+diff --git a/src/runpod_lifecycle/transport_smoke.py b/src/runpod_lifecycle/transport_smoke.py
+index fd98fc7..f0b1e2d 100644
+--- a/src/runpod_lifecycle/transport_smoke.py
++++ b/src/runpod_lifecycle/transport_smoke.py
+@@ -28,6 +28,7 @@ import uuid
+ import httpx
+ 
+ from . import api
++from .rest import normalize_pod
+ from .https import HttpsPodTransport, PodTransportError, write_token_file
+ from .preflight import preflight_transport
+ 
+@@ -206,7 +207,10 @@ class Provider:
+         data = response.json()
+         if not isinstance(data, dict) or data.get("id") != pod_id:
+             raise SmokeError("provider exact-ID response is invalid")
+-        return 200, data
++        try:
++            return 200, normalize_pod(data)
++        except ValueError:
++            raise SmokeError("provider exact-ID response is invalid") from None
+ 
+     def terminate(self, pod_id):
+         with _quiet_provider():
+diff --git a/tests/test_api.py b/tests/test_api.py
+index dd6e41d..ff16426 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -9,6 +9,10 @@ from runpod_lifecycle import api
+ from runpod_lifecycle.errors import CleanupPendingError
+ 
+ 
++def pod_page(pods):
++    return {"pods": pods, "pagination": {"nextCursor": None, "hasNextPage": False}}
++
++
+ class FakeResponse:
+     def __init__(self, status_code: int, payload: dict, text: str = ""):
+         self.status_code = status_code
+@@ -32,7 +36,7 @@ def test_list_pods_falls_back_to_rest_when_sdk_graphql_response_is_incomplete(
+         SimpleNamespace(
+             get=lambda *args, **kwargs: FakeResponse(
+                 200,
+-                [{"id": "p1", "desiredStatus": "RUNNING"}],
++                pod_page([{"id": "p1", "desiredStatus": "RUNNING"}]),
+             )
+         ),
+     )
+@@ -54,24 +58,24 @@ def test_successful_sdk_projection_is_enriched_by_exact_rest_id(monkeypatch, run
+ 
+     def get(url, **kwargs):
+         calls.append((url, kwargs))
+-        return FakeResponse(200, [
++        return FakeResponse(200, pod_page([
+             {"id": "unrelated", "networkVolume": {"id": "wrong"}},
+             {"id": "p1", "networkVolume": {"id": "vol-1"}},
+-        ])
++        ]))
+ 
+     monkeypatch.setattr(api.httpx, "get", get)
+     result = api.list_pods("test")
+     assert result == [{**sdk_pod, "networkVolume": {"id": "vol-1"}}]
+     assert "networkVolume" not in sdk_pod  # do not mutate provider payloads
+     assert calls == [(api.PODS_URL, {"headers": {"Authorization": "Bearer test"},
+-                                   "timeout": 30, "params": {"includeNetworkVolume": "true"}})]
++                                   "timeout": 30, "params": {}})]
+ 
+ 
+ @pytest.mark.parametrize("payload", [[], [{"id": "other", "networkVolume": {"id": "vol-1"}}],
+     [{"id": "p1", "networkVolume": {"id": "vol-1"}}] * 2])
+ def test_rest_enrichment_keeps_unobservable_pod_in_inventory(monkeypatch, runpod_sdk_mock, payload):
+     runpod_sdk_mock.get_pods.return_value = [{"id": "p1"}]
+-    monkeypatch.setattr(api.httpx, "get", lambda *a, **kw: FakeResponse(200, payload))
++    monkeypatch.setattr(api.httpx, "get", lambda *a, **kw: FakeResponse(200, pod_page(payload)))
+     assert api.list_pods("test") == [{"id": "p1", "networkVolume": None}]
+ 
+ 
+@@ -79,8 +83,8 @@ def test_rest_fallback_exposes_documented_attachment(monkeypatch, runpod_sdk_moc
+     runpod_sdk_mock.get_pods.side_effect = KeyError("data")
+     payload = [{"id": "p1", "networkVolume": {"id": "vol-1"}}]
+     def get(*args, **kwargs):
+-        assert kwargs["params"] == {"includeNetworkVolume": "true"}
+-        return FakeResponse(200, payload)
++        assert kwargs["params"] == {}
++        return FakeResponse(200, pod_page(payload))
+     monkeypatch.setattr(api.httpx, "get", get)
+     assert api.list_pods("test") == payload
+ 
+@@ -157,8 +161,9 @@ def test_start_pod_posts_to_provider_start_endpoint(monkeypatch: pytest.MonkeyPa
+     result = api.start_pod("p1", "test")
+ 
+     assert result["id"] == "p1"
+-    assert calls[0]["url"] == "https://rest.runpod.io/v1/pods/p1/start"
++    assert calls[0]["url"] == "https://api.runpod.io/v2/pods/p1/action"
+     assert calls[0]["headers"] == {"Authorization": "Bearer test"}
++    assert calls[0]["json"] == {"action": "start"}
+ 
+ 
+ def test_start_pod_surfaces_capacity_error(monkeypatch: pytest.MonkeyPatch) -> None:
+@@ -508,7 +513,7 @@ def test_create_network_volume_posts_correct_shape(monkeypatch: pytest.MonkeyPat
+             "id": "vol-created-1",
+             "name": "my-volume",
+             "size": 100,
+-            "dataCenterId": "dc-test",
++            "dataCenter": "dc-test",
+         })
+ 
+     monkeypatch.setattr("runpod_lifecycle.api.httpx", SimpleNamespace(post=fake_post))
+@@ -521,9 +526,9 @@ def test_create_network_volume_posts_correct_shape(monkeypatch: pytest.MonkeyPat
+     assert post_calls[0]["json"] == {
+         "name": "my-volume",
+         "size": 100,
+-        "dataCenterId": "dc-test",
++        "dataCenter": "dc-test",
+     }
+-    assert "rest.runpod.io/v1/networkvolumes" in post_calls[0]["url"]
++    assert "api.runpod.io/v2/network-volumes" in post_calls[0]["url"]
+ 
+ 
+ def test_create_network_volume_raises_on_non_200_201(monkeypatch: pytest.MonkeyPatch) -> None:
+@@ -645,8 +650,10 @@ def test_cpu_create_uses_supported_priority_and_public_key(monkeypatch):
+     result=api.create_pod("test",None,"image",compute_type="CPU",public_key_string="public-test",
+                           data_center_id="EUR-NO-1",network_volume_id="vol")
+     body=calls[0]["json"]
+-    assert body["cpuFlavorPriority"]=="custom"
+-    assert body["cpuFlavorIds"]==["cpu3c","cpu5c"]
++    assert "cpuFlavorPriority" not in body and body["cpu"]["vcpuCount"] == 2
++    assert "cpuFlavorIds" not in body and body["cpu"]["id"] == "cpu3c"
++    assert body["image"] == "image" and body["cloud"] == "SECURE"
++    assert body["mounts"]["network"] == [{"volumeId": "vol", "path": "/workspace"}]
+     assert body["env"]["PUBLIC_KEY"]=="public-test"
+     assert result["id"]=="cpu-pod"
+ 
+diff --git a/tests/test_cli.py b/tests/test_cli.py
+index 75f1a4a..fecb850 100644
+--- a/tests/test_cli.py
++++ b/tests/test_cli.py
+@@ -380,9 +380,10 @@ def test_cli_list_serializes_rest_attachment_after_sdk_projection(monkeypatch, r
+     monkeypatch.setattr(cli, "_resolve_api_key", lambda _: "test")
+     runpod_sdk_mock.get_pods.return_value = [{"id": "p1", "name": "projected"}]
+     def get(url, **kwargs):
+-        assert url == api.PODS_URL and kwargs["params"] == {"includeNetworkVolume": "true"}
+-        return SimpleNamespace(status_code=200, json=lambda: [
+-            {"id": "p1", "networkVolume": {"id": "vol-1"}}])
++        assert url == api.PODS_URL and kwargs["params"] == {}
++        return SimpleNamespace(status_code=200, json=lambda: {"pods": [
++            {"id": "p1", "networkVolume": {"id": "vol-1"}}],
++            "pagination": {"nextCursor": None, "hasNextPage": False}})
+     monkeypatch.setattr(api.httpx, "get", get)
+     assert cli.main(["list", "--json"]) == 0
+     payload = json.loads(capsys.readouterr().out)
+diff --git a/tests/test_engine_startup_config.py b/tests/test_engine_startup_config.py
+index 2cba9fd..ec36469 100644
+--- a/tests/test_engine_startup_config.py
++++ b/tests/test_engine_startup_config.py
+@@ -270,8 +270,8 @@ def test_cpu_rest_create_payload_with_selection(provider):
+     assert_agent_only(payload["env"], payload["ports"])
+     assert payload["env"]["ASTRID_POD_STATE"].startswith(STATE + "/")
+     assert decoded_engine({"env": payload["env"]}) == selection()["engine_proxy"]
+-    assert payload["dockerEntrypoint"] == ["/bin/bash", "-lc"] and TOKEN not in payload["dockerStartCmd"][0]
+-    assert payload["networkVolumeId"] == "vol" and payload["volumeMountPath"] == "/workspace"
++    assert payload["entrypoint"] == ["/bin/bash", "-lc"] and TOKEN not in payload["cmd"][0]
++    assert payload["mounts"]["network"] == [{"volumeId": "vol", "path": "/workspace"}]
+ 
+ 
+ def test_cpu_sdk_create_payload_with_selection(provider):
+diff --git a/tests/test_https.py b/tests/test_https.py
+index 1b5ab80..2a203bd 100644
+--- a/tests/test_https.py
++++ b/tests/test_https.py
+@@ -319,10 +319,10 @@ def test_cpu_rest_no_volume_bootstrap_and_error_redaction(monkeypatch):
+     result = api.create_pod("test", None, "runpod/base:latest", compute_type="CPU", transport="https", https_token=TOKEN)
+     assert result["id"] == "cpu1"
+     payload = calls[-1]
+-    assert "networkVolumeId" not in payload
++    assert "networkVolumeId" not in payload and not payload.get("mounts", {}).get("network")
+     assert payload["ports"] == ["8000/http"]
+-    assert payload["dockerEntrypoint"] == ["/bin/bash", "-lc"]
+-    assert TOKEN not in payload["dockerStartCmd"][0]
++    assert payload["entrypoint"] == ["/bin/bash", "-lc"]
++    assert TOKEN not in payload["cmd"][0]
+     def reject(url, **kwargs):
+         return httpx.Response(400, json={"error": "bad " + TOKEN})
+     monkeypatch.setattr(api.httpx, "post", reject)
+diff --git a/tests/test_storage.py b/tests/test_storage.py
+index b2ccc28..5665f5c 100644
+--- a/tests/test_storage.py
++++ b/tests/test_storage.py
+@@ -49,7 +49,7 @@ def test_expand_network_volume_uses_patch_contract(monkeypatch: pytest.MonkeyPat
+     assert _expand_network_volume("api-key", "volume-1", 150) is True
+ 
+     seen = requests_seen[0]
+-    assert seen["url"] == "https://rest.runpod.io/v1/networkvolumes/volume-1"
++    assert seen["url"] == "https://api.runpod.io/v2/network-volumes/volume-1"
+     assert seen["json"] == {"size": 150}
+     assert seen["headers"]["Authorization"] == "Bearer api-key"
+ 
+diff --git a/tests/test_transport_smoke.py b/tests/test_transport_smoke.py
+index f0f69c3..af06456 100644
+--- a/tests/test_transport_smoke.py
++++ b/tests/test_transport_smoke.py
+@@ -478,7 +478,7 @@ def test_product_provider_exact_get_404_only(monkeypatch):
+     responses = iter([httpx.Response(404), httpx.Response(403),
+                       httpx.Response(200, json={"id": "other"})])
+     def handler(request):
+-        assert request.method == "GET" and request.url.path == "/v1/pods/fakepod1"
++        assert request.method == "GET" and request.url.path == "/v2/pods/fakepod1"
+         assert request.headers["Authorization"] == "Bearer " + KEY
+         return next(responses)
+     provider.http = httpx.Client(transport=httpx.MockTransport(handler),
