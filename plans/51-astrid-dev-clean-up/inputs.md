@@ -227,6 +227,8 @@ Options for each: take it or leave it. Recommendation: take (1), because the com
 
 **Added by the owner, 12 Nov 2026, after the run started:** the root README should lead with what Astrid is, a tool to unlock the collective ambition of the open-source community, made of an adaptable front end that links to the website and an agent with tools for creative work and open-source AI, placed below the opening line and above how to contribute; "just refactoring it a little bit and rewriting a little bit". Recorded as card CU-20 in Part 1 (0.15 days).
 
+**Changed by the owner, 12 Nov 2026:** the vision statement becomes "A tool to unlock the artistic potential of the open-source AI community". Recorded as cards CU-21 (the statement, at its source and in the README) and CU-22 (the README's copy becomes generated).
+
 ## Source identities
 
 - **Repository:** `banodoco/astrid-dev`. Only this repository changes.
