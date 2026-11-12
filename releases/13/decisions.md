@@ -535,3 +535,10 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
   - **The one remaining blind spot:** the engine install's failed command output was discarded by `_Runner.run`, and the engine CLI printed only "Engine operation failed." The receipt said `Logs: not_collected` with cause `unknown`, and the kept `engine-install.stderr` held only the public JSON.
   - **Fix** `72fbdf65` (`r13/engine-command-output`, fast-forwarded into the rehearsal and pushed): the error carries the failed command's argv, exit code and whole stdout and stderr, and the engine CLI writes them after its unchanged public JSON line. On RunPod that file is already kept on the user's machine, and the controller's error quotes its tail. This applies the no-redaction ruling. Tests: CLI and runner, 183 passed plus 2 new; ruff 2117.
   - **Batch 2 started at `72fbdf65`:** it stops after TTS if the engine install fails again, now with the real `uv` error visible. Most likely cause: the re-locked environment (ComfyUI bump) failing to install or pass `uv pip check` on the pod.
+- **2026-11-12 10:08** Process incident, owned, with no spend.
+  - When I stopped batch 1, `pkill` ended the batch script but not its child, the SFX `generate` CLI. That CLI had already admitted its task to the host.
+  - The batch-2 reinstall then refused ("Astrid is still running"): `astrid-runtime down` doesn't stop the host that `root/run` starts, and the script had already deleted `root` under the running host.
+  - Recovery: I interrupted the orphaned CLI with SIGINT and stopped the old host's processes with SIGTERM, so it couldn't claim a pod for the admitted task. Census showed 0 pods three times, 20 s apart. Nothing was rented.
+  - Fix in `runs/batch2.sh`: stop every process from the install root before replacing it, and tail the right install log.
+  - Lesson: stop a batch by stopping the host and every process from the install root, not just the script.
+  - Batch 2 restarted at `72fbdf65`.
