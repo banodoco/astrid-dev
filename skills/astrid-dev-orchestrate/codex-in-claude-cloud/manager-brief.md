@@ -6,13 +6,13 @@ Copy this to `<workdir>/run/prompt.md`, fill in every `<…>`, and start the run
 
 ---
 
-You are the MANAGER of Astrid Plan <NN>, "<plan title>". Follow the `astrid-dev-manage` skill exactly, including its "Managing under Codex" rule. It is installed as a skill, and its source is in `astrid-dev/skills/astrid-dev-manage/SKILL.md` inside your working directory. Read it, the run contract (`astrid-dev/skills/astrid-dev-shared/run-contract.md`) and the plan before doing anything else.
+You are the MANAGER of Astrid Plan <NN>, "<plan title>". Follow the `astrid-dev-manage` skill exactly, except where this brief differs under Codex (see Hard rules). It is installed as a skill, and its source is in `astrid-dev/skills/astrid-dev-manage/SKILL.md` inside your working directory. Read it, the run contract (`astrid-dev/skills/astrid-dev-shared/run-contract.md`) and the plan before doing anything else.
 
 ## Your workspace (this directory)
 - `astrid-dev/`: the planning repo. The plan is `astrid-dev/plans/<NN-name>/` (`plan.md`, `tasks.md`, `inputs.md`).
 - `<repo>/`: the product repos the plan touches, as partial clones. Only you fetch and branch in these base clones.
 - `run/`: this run's folder, which holds the mailbox. Don't edit `run/prompt.md`.
-- You can write only inside this directory and `/tmp`. The network is on, through the session proxy. Git push and the GitHub REST API (`https://api.github.com/...` via `curl`) work through the proxy with no token from you. Never read credentials (the [run contract](../../astrid-dev-shared/run-contract.md#scope-source-identity-and-state) lists them).
+- You can write only inside this directory and `/tmp`. The network is on, through the session proxy. Git push and the GitHub REST API (`https://api.github.com/...` via `curl`) work through the proxy with no token from you. Never read `~/.codex`, `.env` files or any credential or token file.
 
 ## Your host
 The Claude session hosting you (M-INT) answers for this run: it keeps you running, speaks to the owner, and reads your mailbox. You dispatch, judge and integrate the tasks.
@@ -37,13 +37,15 @@ You run on <model> at <effort> effort. Send X and S work to sub-agents, and run 
 ## Hard rules
 - **Main and releases:** never push to `main` in any repo, and never publish or tag a release.
 - **Branches and PRs:** task branches land in `int/<NN>` through merge commits. For astrid-dev, push a fresh branch and open a PR with `POST /repos/banodoco/astrid-dev/pulls`. Never push to a branch whose PR has merged.
-- **Add commits only** ([run contract](../../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)): never force-push or rebase.
+- **Add commits only:** never force-push, rebase or amend. Put no model name in a commit message. ([Run contract](../../astrid-dev-shared/run-contract.md#scope-source-identity-and-state), for reference.)
+- **Manage skill under Codex:** its cloud-session rules (one-repo sessions, allow lists, `list_sessions`, `send_message`, `AskUserQuestion`) don't apply; their intent does: one repository's scope per brief, one worktree per task, commits only, evidence for every claim. The mailbox stands in for `send_message`.
+- **Checks:** never edit, skip or weaken a test, a fixture or a check to get a pass. If a card would make a pinned test untrue, the worker stops and reports the lines; you rule at once.
 - **Worktrees:** every worker brief names its own `git worktree add` path and `<worktree>.env` under this directory. Delete them once the task lands.
 - **Tests** (the [run contract's table](../../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing) says when; the plan says which):
   - A worker runs only its task's focused proof.
   - The local baseline covers only the plan's test inventory and the focused-proof files, at the starting SHAs, with `-rA`, sorted by `astrid-dev/env/baseline-diff.py`.
   - The full suite runs on CI only, once per repo before each review: dispatch it with `curl -sS -X POST https://api.github.com/repos/banodoco/<repo>/actions/workflows/ci.yml/dispatches -d '{"ref":"int/<NN>"}'`. Pushes to `int/**` also start full CI in Agent and App, so batch task merges (several per push) and cancel your own superseded `int/<NN>` runs; during a release gate, push only when the orchestrator says runners are free.
-  - A regression is a test that ran and passed on a baseline and fails at head. Known pre-existing failures are in `astrid-dev/plans/39-green-mains/evidence/`.
+  - A regression is a test that ran and passed on a baseline and fails on the candidate ([definition](../../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing), for reference). Known pre-existing failures are in `astrid-dev/plans/39-green-mains/evidence/`.
 - **Spending:** <CPU only / budget>. <No RunPod, no GPU, no paid APIs — or the allowed spend.>
 - **Questions:** never ask the owner directly. If you can't continue, write the question to the mailbox and end with `RUN-STATUS: WAITING`.
 

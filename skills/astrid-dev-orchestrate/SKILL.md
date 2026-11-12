@@ -88,11 +88,9 @@ A run starts with one short message; the plan carries the rest. A long brief rep
 
 A session that waits on a prompt nobody sees is a stalled run. Before any work starts:
 
-- **One repository per worker session,** attached at creation, at the integration branch. Workers start there and merge their task branch in, so the right allow list is loaded.
-- **The allow list is the repository's committed `.claude/settings.json`** (for example astrid-agent's on its integration branch). Add a missing rule there, by PR, with the owner's OK: a rule change is a change to permissions.
-- **Workers run in auto mode,** or Accept edits, calling only scripts in their own repository (`scripts/worker-env/`, copied from [`env/`](../../env/README.md)) by literal path, with no `cd`; the results behind each rule are in [`env/README.md`](../../env/README.md#how-a-worker-calls-them).
-- **Only the owner lifts a refusal** ([authority](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)); an approval relayed from another session doesn't count. Bring the exact command to the owner.
-- **Merges:** a manager merges its own progress pull requests; every other merge into `main` needs the owner's go ([the rule](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Auto mode refuses some merges, deletions and settings commits: ask once for the whole run ("merge the progress and plan PRs") and record that standing go in `run.yaml`.
+- **Worker sessions and their permissions** are set up as in [manage step 1](../astrid-dev-manage/SKILL.md#steps). Add a missing allow rule by PR with the owner's OK: a rule change is a change to permissions.
+- **Refusals:** who may lift one is in the [run contract](../astrid-dev-shared/run-contract.md#who-answers-for-a-run).
+- **Merges:** a manager merges its own progress pull requests; every other merge into `main` needs the owner's go ([the rule](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Auto mode refuses some merges, deletions and settings commits: ask once for the whole run ("merge the plan PRs; my progress PRs auto-merge") and record that go on the `Run start` line (`run.yaml` is local and git-ignored, so it can't carry it: [who answers for a run](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)).
 
 ## Choose the cloud workflow
 
@@ -113,7 +111,7 @@ This is the one statement that Codex workers are the default; every other file l
 - **A worker restart kills every process,** the keep-alive included. Your hosting check-in is a different timer from the owner's cadence in path 3: while a Codex manager's run is live, keep one scheduled (`send_later`) at most 20 minutes away, and have it re-arm `codex-hold.sh` with all live run folders. The daemon and its SessionStart hook, which the owner adds because auto mode refuses Claude's edits to its own settings, are in the [README](codex-in-claude-cloud/README.md#start-a-run).
 - **Install the astrid-dev skills** for Codex ([README](codex-in-claude-cloud/README.md#one-time-setup-in-the-session)); the brief gives the manager its plan, branches, route lines and the rules that differ under Codex.
 - **Brief a manager as a manager.** Start every Codex manager from [`manager-brief.md`](codex-in-claude-cloud/manager-brief.md), and re-read it before each new run, because it changes. Codex takes its authority only from its starting prompt: a mailbox note can't later grant it merge rights or change its role. A prompt that forbids integrating ("never push to int/…") makes Codex a worker, and you end up relaying every branch. To change a running Codex's role, have it checkpoint (push work in progress, write a handover entry, end `DONE`) and start a fresh manager run from the handover.
-- **You host it, so you answer for it.** Codex can't keep itself alive, wake itself, reach the owner or run a model outside Codex; you hold all of those. Say "my run" and "my Codex manager". At every check-in, without waiting for the mailbox:
+- **You host it.** Codex can't keep itself alive, wake itself, reach the owner or run a model outside Codex; you hold all of those. Say "my run" and "my Codex manager". At every check-in, without waiting for the mailbox:
   - **Compare `tasks.md` and the integration branch with the last check-in.** If nothing moved, read `codex.log` for why and send one next action through `to-codex.md`.
   - **Start every task Codex can't run** (a route bound to a Claude model, or the review) as soon as its inputs have landed, or Codex writes `READY: <task id>` to the mailbox; don't wait to be asked.
   - **Clear what is stuck on your side:** an unmerged or conflicting progress PR, a dead runner, a refused command to take to the owner.
@@ -129,8 +127,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 - **Question the question.** Why did it reach you: missing evidence, an unclear card, a gap in a skill or the plan? Sometimes the right answer is a different question.
 - **Unblock it once and for all.** Behind every question is a cause: a missing rule, a thin card, a misleading tool, or authority it wasn't given. Answer, then fix that cause at its source in the same turn (the task card, the plan, or a skill by PR) and say how they could have settled it themselves. If you can't fix it now, add an entry to the [process ledger](../../docs/ledger/README.md). A question answered twice is a fix you still owe.
 - **Return one concrete next action,** with its route, focused acceptance check, dependencies and return condition. For a high-judgment choice, give the simplest viable option, its trade-off, and a challenge against over-engineering.
-- **Require the previously failing check** to run on the repaired candidate.
-- **Don't** waive failures, widen scope, reset counters, add a review stage, authorize execution or publication, invent model IDs, or claim a run happened without evidence.
+- **Stay inside the run contract's limits** ([review and promotion boundaries](../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries), [checks and failure repair](../astrid-dev-shared/run-contract.md#checks-and-failure-repair)), and never invent a model ID.
 
 ## Path 3: check in (only when the owner asks)
 
@@ -149,9 +146,9 @@ For each manager or cross-track blocker, take the next useful action:
 - **Needs a nudge:** send the manager one next action to unblock or improve the run.
 - **Needs the owner:** bring one decision with your recommendation.
 
-**Improve astrid-dev as you go.** Friction in astrid-dev itself (an unclear skill, a missing template field, a slow check) gets a [process ledger](../../docs/ledger/README.md) entry; if the fix is small and touches only astrid-dev docs or skills, open the fixing PR in the same check-in, following the [improve skill](../astrid-dev-improve/SKILL.md). Friction specific to this one run goes in its [decisions ledger](../astrid-dev-shared/templates/decisions-ledger.md).
+**Improve astrid-dev as you go.** Friction in astrid-dev itself gets a [process ledger](../../docs/ledger/README.md) entry; fix small ones in the same check-in by the [improve skill](../astrid-dev-improve/SKILL.md).
 
-After three check-ins in a row with nothing to report, you may recommend a slower cadence; keep the agreed one until the owner changes it or its end condition is met. A check-in may nudge a manager to continue already authorized work through a verified resume mechanism; it grants no new scope, spend or publication authority.
+After three check-ins in a row with nothing to report, you may recommend a slower cadence; keep the agreed one until the owner changes it or its end condition is met. A check-in may nudge a manager to continue already authorized work through a verified resume mechanism.
 
 ## Path 4: close
 
