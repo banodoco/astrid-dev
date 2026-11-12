@@ -25,7 +25,7 @@ No mandatory project-conversation issue. Questions belong in an issue or PR; upd
 | Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` and run `python3 scripts/export_public_vision.py --sync-readme` to refresh their derived overview; after review, CI publishes the public JSON feed. Don't copy editorial content into Astrid App |
 | Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
-| Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. Documentation CI checks these paths |
+| Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
 | Product API, UI, installer or extension technical docs | The owning [product repository](../skills/astrid-dev/references/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
 | Typo, small wording or README improvement | Normal, focused PR. No project, new skill, evidence-pack file or planning ceremony |
 
