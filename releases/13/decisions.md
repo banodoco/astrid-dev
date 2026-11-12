@@ -612,3 +612,24 @@ Ruled OUT for now: account/GPU/image/volume incompatibility, settlement-exceptio
 - a successful restore's output is kept as a declared log.
 
 LATER: schema-evidence identity for schema-changing patches, `sha256_before` diagnostics, the attached release-attestation path, concurrent-writer atomicity, and the engine_runner base-bump hazard.
+
+### 12:41 UTC — Declared patches merged into the rehearsal; batch 5 blocked by a stuck task; disk freed
+- **Declared patches.** I reviewed the v2 diff against the Astra findings and added three fixes myself:
+  - the lock upsert never carries `patches` to another URL or commit;
+  - Astrid refuses to declare a recipe patch for a pack locked at a different repository or commit than the recipe's source pin;
+  - a successful preparation step's output is now kept as declared run logs (restore's "declared patches verified" is visible on success).
+
+  The VibeComfy failures are the same 6 as the base `fe92ac78` (cm_cli fallback tests, pre-existing). Astrid: 36 passed plus 205 on the pin suites; ruff 2117.
+  - VibeComfy `r13/declared-patches` `c7a47e36`.
+  - Astrid `r13/declared-patches` `dd5bc822` (pins VibeComfy c7a47e36).
+  - Rehearsal `scratch/r13-rehearsal` fast-forwarded to `dd5bc822`.
+  - Deferred: schema identity for patches that change schemas, the workflow-ref transport, `sha256_before` diagnostics, the attached release attestation.
+- **Batch 5 blocked (BUG, release-blocker candidate).**
+  - TTS task 25b59510 failed at 11:47, but the Runtime still shows it `running` (lease expired at 11:55:47).
+  - The host log shows "ApiError: conflict: output object is outside the task project". py-spy shows the reconcile thread retrying the failure publication forever.
+  - The SFX task then sat queued for 40 minutes with "cannot be claimed: insufficient_storage", and the generate CLI printed NOTHING.
+  - The warm pod expired idle at 12:17 unused.
+  - Disk was at 787 MB free. I freed 9 GB by deleting the abandoned uv cache in the old state and finished baseline trees under /tmp; it still wasn't claimed afterwards.
+  - Stopped the batch, cancelled the queued SFX task. No pods are running; balance $97.66.
+  - Evidence: `install-r13b/runs/stuck-task/`. A subagent is investigating the root cause for both bugs; the old host is kept alive for it.
+- **Fresh install** `root-b4`/`data-b4` at dd5bc822 + VibeComfy c7a47e36 is done, with its host not started. Paid cells wait for the bug 1 root cause, since any failure with declared logs may block the queue.
