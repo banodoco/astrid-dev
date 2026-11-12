@@ -301,3 +301,11 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
     - Astrid half (Terra, `c-logs` `r13/declared-logs`, which replaces my scrape).
   - The VibeComfy change needs a pin bump in Astrid's `pins.json` and the installer manifest; that's my integration step.
 - **2026-11-12 03:20** Declared logs, process (from the user): Fable writes the SPEC and the task split (each task marked luna, terra or sol); Astra sense-checks Fable's spec; I integrate their feedback, trimming anything overzealous; then farm out by difficulty and test live once. The single-Codex-per-half runs and the Opus refiner were stopped and their clones reset. Two Luna traces (pod path; host and Runtime outputs) feed Fable.
+- **2026-11-12 03:28** Noted (Hannah, through the Plan 48 orchestrator): after PR #533 merges, plan status is edited in each plan's `plan.md` and then `python3 scripts/astrid_dev.py sync`; never edit `plans/index.md` by hand; `check_docs.py` becomes `astrid_dev.py check`. There are no edits to `plans/index.md` in flight from this session.
+- **2026-11-12 03:28** Declared-logs spec (Fable): `briefs/declared-logs-spec.md` with 13 task briefs.
+  - Key finding: on the pod, the ComfyUI log is only a 256 KiB in-memory ring, and `comfy.log` is a startup snapshot, so the scrape could never have found it. Task a2 makes the supervisor append the live log.
+  - The declaration is its own `logs.json`, because `attempt.json` has several writers.
+  - The owner's amendments, which I added: (1) TIME-bound slices (`since`/`until`/`line_time`) alongside byte ranges; (2) logs travel through the same output manifest and verified fetch as files; (3) the task tools (a8 role-`log` outputs, a9 `astrid tasks logs`) move into the first wave.
+  - I authorised the cleanup task: it replaces tests of deleted code with tests proving the same guarantee, plus an old→new mapping.
+  - C1 task 3 regressed (24 machine-suite failures against 39 passing at the base). It's parked as `briefs/parked-c1t3.diff`, not merged.
+  - Disk freed to 9 GB: the old `install-r13` was deleted, along with merged clones and stale pytest temp files.
