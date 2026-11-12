@@ -1135,3 +1135,21 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Open PRs:** the IN set is done. #293 is ported, #602 and #604 are merged, and VibeComfy #165/#166 and Agent #341 are already in the candidate. Owner calls pending: #346 (recommend AFTER), closing the 17 stale PRs, and telling the deferred contributors.
 - **23:31 REVIEW (test scope), LT wiring fixtures:** I uphold the machines ruling. Three tests (`test_acquisition_catalog_id::test_catalog_id_survives_display_label_in_acquisition_and_reconciliation`, and `test_provider_gate_review`'s `_fresh_acquisition` cases) built an `allocation_ready` attempt with no paid limits and no deadline. No product path does that after M2, because every create comes through a claim with `--max-usd`. So the fixtures may carry realistic limits and a deadline, setup only, with every assertion unchanged.
   - **Condition:** LT names, or adds, a test that an attempt without paid limits or a deadline can't reach `allocation_ready` or create, and is refused with a reason.
+
+## 12 Nov ~23:45 UTC: live SFX failure; the structural cause and its fix
+
+- **Live:** tts passed (4m 34s, 3.24 s of speech, mean -23 dB). sfx failed at the fetch stage with `cannot resolve bare ready model requirement by exact name: 'hunyuan_foley/vae_128d_48k.pth'` (VibeComfy `porting/convert.py:836`). Evidence: `evidence/stage2f/sfx-096de4ec/`.
+- **Cause (owner asked, "what's the deep fix?"):** a model has two identities.
+  - A node's widget value is a folder-relative path, sometimes with subfolders.
+  - The asset record is the pair `(subdir, name)`.
+  - `convert.py:826-836` still upgrades "legacy bare filename" requirements by exact name, while `runtime/prepared.py:99` refuses bare filenames. Two places disagree, and every path-qualified value fails.
+  - Music was the same class.
+  - 23 ready templates carry path-qualified values (e.g. `wanvideo/Wan2_1_VAE_bf16.safetensors` ×10).
+  - Preflight missed it because it rebuilds the templates but never runs the pod's ready-manifest build.
+- **Ruling, to the cells lane:** fix the structure, not the foley template.
+  - (a) One mapping between a widget value and (folder, subdir, name), used by every resolver.
+  - (b) Requirements are structured records only; delete the bare-string upgrade.
+  - (c) One offline test runs `_ready_requirements` on every ready template.
+  - (d) The fetch-stage exception goes to job.stderr with its stack.
+  - One re-pin.
+- **Engine:** `r13/engine-failreason` puts the remote `issues[].message` on the CLI failure line and in the receipt cause (owner principle: every failure understandable from the product).
