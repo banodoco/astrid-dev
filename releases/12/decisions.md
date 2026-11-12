@@ -488,3 +488,11 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - Still running: Agent CI, Agent Lanes and Runtime CI.
 - 2026-11-12 05:42Z — **Attempt 2 of 43134432721, the remaining shards** (by ID against attempt 1): shards 1, 2, 3, 4, 6 and 8 have **0 new failing IDs**, with 123, 152, 40, 338, 202 and 60 bad respectively, all also bad in attempt 1. Shard 5 has no results again (the 2 h limit; its 90 IDs were covered locally earlier). This confirms the gate ruling after the fact.
 - 2026-11-12 05:49Z — **Post-publish Runtime CI [43155548617](https://github.com/banodoco/astrid-runtime/actions/runs/43155548617) on main `42ae24aff`:** failing jobs are portability-lifecycle ×2, sandbox-process-control and unit ×2. That is exactly the set on the qualifying candidate run 43116561116, which was ruled by ID (0 regressions). Against old main `4f5477cb0`, `darwin-native` and `windows-realm-publication` are now green, and nothing new is red. Not broken.
+- 2026-11-12 06:31Z — **Post-publish Agent runs on main `0e1543e0`, partial:**
+  - **Lanes [43155525276](https://github.com/banodoco/astrid-agent/actions/runs/43155525276):** the failing jobs (integration shards 1–4 and opt-in) are exactly the set on pre-publish main run 42553788553. Nothing new.
+  - **CI [43155525231](https://github.com/banodoco/astrid-agent/actions/runs/43155525231):** boundary, both wheels and windows-native-and-installer pass. fast checks gives Mypy 2338/2192, unchanged.
+  - By ID against the qualifying run (attempts 1 and 2): darwin, and shards 2, 4, 6 and 8, have 0 new failing IDs. Shard 7 has 1: `tests/test_pinokio_platform_adapter.py::test_secret_never_appears_in_receipt_state_or_cli_output`.
+    - It fails with "active process is not the configured listener owner" on the `processes` call, a listener-ownership race that comes before the secret assertion. So it is not a secret leak.
+    - It also fails on R10 (42602166253 and gate2), R11 and `c5370a86`. It passed by chance in both qualifying attempts.
+    - The fix round doesn't touch Pinokio code or tests. Pre-existing and intermittent; Plan 39.
+  - Shards 1, 3 and 5 are still running.
