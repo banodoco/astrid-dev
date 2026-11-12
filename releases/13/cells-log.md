@@ -2,17 +2,17 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (20:10 UTC, hourly check-in)
+## NOW (21:11 UTC, hourly check-in)
 
 | Item | State | Next |
 |---|---|---|
-| 1. Judge fixes | Done; TTS follow-up `r13/ttsfix-4` `5123240b` pushed, not yet handed over | With the 21:30 hand-over |
-| 2. `r13/cells-vc` + pin | `1463cb8e` final proof: 0 regressions in the preflight runs, but two failures misfiled by the worker (preflight sync test; four `test_schemas_ensure.py` with no baseline). Fix card (Terra) has 2 commits, proof running. Pin `r13/cells-vc-pin` `9c558ba5` (to `1463cb8e`) accepted, not pushed | Judge the fix; re-pin if `r13/cells-vc` moves; hand over by 21:30 |
+| 1. Judge fixes | Done. TTS follow-up `r13/ttsfix-4` `5123240b` pushed | Orchestrator merges when convenient |
+| 2. `r13/cells-vc` + pin | **Done.** VibeComfy `b3f20f33` frozen; Agent pin `7eb60798` in `r13/compose` | After the live run: merge `r13/ltx-flf` `3873b326`, one re-pin |
 | 3. Log gaps | Done (orchestrator) | — |
-| 4. Gate `r13/preflight` | Sol: gate, per-cell evidence, CPU env, merged both pins and `r13/catalog-fixes`, shared dry-run admission | Real run; judge; hand over by 21:30 |
-| Catalog | `r13/catalog-fixes` `1cca5aab` handed over. Contracts #342 to #344: causes fixed (Agent 0 regressions); VibeComfy LTX finishing card running. #607 with the engine lane | By the cut line, Fri 13 Nov 18:00 UTC |
+| 4. Gate | **Done.** Agent `r13/preflight` `79bab65a` handed over; five cells PASS catalog, schema and rebuild; TTS constructor PASS; four constructor UNVERIFIED | Plan 50 growth path sent |
+| Catalog | `r13/catalog-fixes` `1cca5aab` and `r13/sfx-route` `c4b01ec2` in compose. `r13/catalog-two` (wan-2.2 i2v unlisted, qwen-image-edit inputs aligned) running. `r13/catalog-contracts` `46684164` and `r13/catalog-inputs` `5772aa5a` (all-entries T14, ratchet) pushed, land after #607 | By the cut line, Fri 13 Nov 18:00 UTC |
 
-Heads: Agent `r13/compose` `aef8647a`. Spend: none. Cut line Fri 13 Nov 18:00 UTC; publication Sat 14 Nov midday.
+Heads: Agent `r13/compose` `4dec04bb`. Spend: none. Disk: 15 GB free after cleanup. Publication Sat 14 Nov midday.
 
 ## Entries
 
