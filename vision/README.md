@@ -2,7 +2,7 @@
 
 # Astrid — A tool to unlock the artistic potential of the open-source AI community
 
-<!-- Ambition and participation come from intro.md; pillar, principle and gap summaries are derived from their own documents. -->
+<!-- Ambition, participation and the principle list come from intro.md; pillar, principle and gap summaries are derived from their own documents. -->
 
 ## Ambition
 

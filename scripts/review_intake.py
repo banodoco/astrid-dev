@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Route PRs to review without approving, merging or executing contributor code.
 
-Uses trusted code in pull_request_target with only issues:write. The PR title,
+Uses trusted code in pull_request_target with only issues:write and pull-requests:write. The PR title,
 body and file list are data; all authorization checks use the live main catalog.
 """
 from __future__ import annotations
