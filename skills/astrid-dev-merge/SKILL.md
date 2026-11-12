@@ -27,7 +27,7 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
 
    Add a helper only when the change needs one (a migration, a user-data path, a performance claim). Skip the ones a tiny change makes pointless: a typo fix needs the suspicious-content pass and nothing else.
 3. **Critique it yourself.** You are the lead critic, on the high-judgment role. Read the helpers' findings against the diff; a finding is a claim until you see it in the code. Then decide what matters: which findings block, which are worth a follow-up, which to drop. Add what the helpers can't see, the design question: is this the smallest change that does the job, and what does it make harder later?
-4. **Check how it lands.** Does it conflict with an open PR, a live project's integration branch, or a release in its gate? If so, say which goes first. Don't rebase a contributor's branch; ask them, or merge the base in.
+4. **Check how it lands.** Does it conflict with an open PR, a live project's integration branch, or a release in its gate? If so, say which goes first. Ask the contributor, or merge the base in ([commits only](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
 5. **Decide.**
    - **Merge** when nothing blocks, CI covering the change is green on the PR's current head, and the change is not in a category below. Use the repository's normal merge method and credit the contributor.
    - **Request changes** when something blocks and the contributor can fix it. Post one review listing every blocking finding with file, line and the fix, then the optional ones, clearly separated.
@@ -39,5 +39,5 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
 - Execute a contributor's code with credentials, or approve a workflow run that would.
 - Merge on a helper's summary without reading the diff yourself.
 - Merge something the suspicious-content pass flagged, however small.
-- Weaken or skip a failing check to get a PR in.
-- Force-push or rewrite a contributor's branch.
+- [Weaken or skip a failing check](../astrid-dev-shared/run-contract.md#checks-and-failure-repair) to get a PR in.
+- Rewrite a contributor's branch ([commits only](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).

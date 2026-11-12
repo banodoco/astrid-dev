@@ -17,10 +17,11 @@ Set the workers' cloud environment's setup script (Settings, Environments, Edit)
 git clone -q --depth 1 https://github.com/banodoco/astrid-dev /opt/astrid-dev && bash /opt/astrid-dev/env/cloud-setup.sh; exit 0
 ```
 
-It runs before Claude starts, so no permission check applies. It installs three commands:
+It runs before Claude starts, so no permission check applies. It installs four commands:
 - `astrid-agent-pytest`;
 - `astrid-agent-pytest-pod`;
-- `vibecomfy-pytest`.
+- `vibecomfy-pytest`;
+- `astrid-baseline-diff`.
 
 Each builds `<checkout>.env/` on its first run, from the checkout root, then runs pytest. A slow setup script is stopped (one was stopped at 5 minutes), so the build happens on the first test run, not at start-up.
 
@@ -51,6 +52,9 @@ What a permission stress test showed (three auto-mode workers, astrid-agent int/
 |---|---|
 | `agent-setup.sh` | Builds a Python 3.13 venv with `-e .[dev]`, then git-fetches the Runtime (installed `--no-deps`, with its Python client) and VibeComfy at the checkout's pins. Needs `uv`, `git` and `ffmpeg`. |
 | `agent-pytest.sh` | Runs `pytest` in that environment with a wiped caller environment. Its arguments go to `pytest` verbatim. |
+| `agent-pytest-pod.sh` | The same run for selectors that need a RunPod pod (through `lifecycle/`, pinned in `astrid/packs/runpod/pins.json`). Installed as `astrid-agent-pytest-pod`. |
+| `cloud-setup.sh` | The cloud environment's setup script (see above). It installs the commands listed above and `astrid-baseline-diff`. Not run by workers. |
+| `runtime-fixture-preflight.py` | Internal: `cmp-run.sh` runs it before pytest on the Runtime custody selections, to check the fixture imports. Nothing else calls it. |
 | `vc-setup.sh`, `vc-pytest.sh` | The same pair for a VibeComfy checkout. |
 | `runtime-setup.sh`, `runtime-pytest.sh` | Builds a Python 3.13 Runtime test environment, installs `.[test]` and `packages/python`, then fetches and SHA-verifies the Agent commit in `tests/astrid-agent.pin`. |
 | `baseline-diff.py` | Sorts a candidate's test results against one or more baselines into regression, no-baseline, preexisting, fixed and missing. A **regression** ran and passed on at least one baseline and fails on the candidate. Feed it pytest logs run with `PYTEST_ADDOPTS=-rA`, for example `astrid-baseline-diff --baseline served-11=base.log --candidate cand.log --out <dir>`. It exits 1 when there are regressions. It writes `summary.md` and one id list per bucket, with one node id per line (the format of Plan 02's `shared-failure-exceptions.txt`). Stdlib only. Installed as `astrid-baseline-diff` by `cloud-setup.sh`, or copied to `scripts/worker-env/baseline-diff.py`. |
