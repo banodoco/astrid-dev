@@ -346,3 +346,16 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
   - One R12-introduced test-hygiene failure: `test_claim_head_of_line::…stays_in_milliseconds`. The body passes, then teardown errors every time, because the test's no-walk patch is still active when an R12 conftest teardown walks the filesystem. R11 is clean. Fix with Codex Luna (`cx-afg`).
   - Not CI-equivalent (local, single process), but it's the only baseline available for shard 1. **REVIEW.**
 - 2026-11-12 00:52Z — **Owner request: phone home-page callout copy.** "Integrated into open-source tools" becomes "Leverage open source tools" (`src/pages/Home/PublicAstridCallouts.tsx:103`, `phoneTitle`; the desktop title is unchanged). Committed on the R12 integration, so it ships with R12. No test pins the string; the Home vitest run passes 188/188 and tsc is clean. Covered by the final round.
+- 2026-11-12 00:55Z — **Agent fix round is on `r12/fix-round` = `3e2a254e5`** (on the candidate `c5370a86`; pushed). I reviewed every diff and committed each piece separately:
+  - `bec57f416`: test_windows_publish fully simulates the Windows branch. Codex's addition of this module to the native Windows CI job was **dropped**: it was never run there, and adding it risked a new red.
+  - `4601e8859`: the claim_head_of_line no-walk guard is scoped to the admission calls.
+  - `a17e0555a` (**product**, Codex Sol plus my corrections):
+    - One shared alias policy (`astrid/core/element/clip_types.py`) for schema lookup, the renderer and render admission, so `text` resolves to installed text-card.
+    - add_text creates text-card `content`.
+    - Recovery command is source-complete. I removed Codex's `--revision '<reviewed revision>'` placeholder so the printed command actually runs (`--revision` is optional; add shows the resolved revision before consent).
+    - Focused files: 31 passed. Codex's last run of the same file had 1 failure.
+  - `e032192e2` (Codex Terra): motion fixture inventory with cache clears; reveal seed provider.
+  - `3e2a254e5` (Codex Luna): real `Backend.diagnostic` bound on doubles; scoped fstat and rmtree patches.
+  - Codex's own whole-file runs showed failures in suites that already fail massively on R11, so they aren't evidence by themselves. A by-ID before/after comparison on the affected suites (Haiku, local) is running. Astra review of `a17e0555a` is running.
+  - The core boundary ratchet fix: Luna did nothing; retried on **Terra**.
+  - Next: Agent candidate = cand/29-r12 + fix-round (merge), then Agent CI.
