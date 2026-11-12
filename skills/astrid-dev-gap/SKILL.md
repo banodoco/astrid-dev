@@ -14,7 +14,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Use [Plan](../astrid-dev-pla
 - **Gap** ([`vision/gaps/`](../../vision/gaps/)): an assessed outcome that blocks the vision. It names a result that would still matter if today's projects were replaced, and it has its own closure evidence.
 - **Closure approach and route to closure** (sections of the gap): the strategy. The approach is prose explaining the idea and the order of work. The route is an ordered table of plans, showing which closure evidence each one delivers.
 - **Plan** ([`plans/`](../../plans/index.md)): one project's scope, tasks and proof. Its `Vision gaps` line names the gap, and its `Contributes to closure` line names the evidence it delivers.
-- **Catalog** ([`plans/index.md`](../../plans/index.md)): the only home for status, priority, owner and estimate.
+- **Catalog** ([`plans/index.md`](../../plans/index.md)): every plan's status, priority, owner and estimate, generated from the six lines at the top of each `plan.md` and from [`plans/priority.md`](../../plans/priority.md); edit those, not the catalog.
 
 ## Steps
 
@@ -38,7 +38,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Use [Plan](../astrid-dev-pla
 ## Revisit the strategy
 
 [`strategy.md`](../../strategy.md) summarizes release briefs, rather than repeating gap plans. Revisit it when gap reassessment or completed work materially changes the intended release outcome:
-1. **Read the release roadmap, catalog and affected gap route.** The catalog owns project priorities/status; the gap owns closure evidence; a release brief owns which plans are bundled for delivery and why.
+1. **Read the release roadmap, catalog and affected gap route.** Each plan's `plan.md` owns its status and `plans/priority.md` owns priorities; the gap owns closure evidence; a release brief owns which plans are bundled for delivery and why.
 2. **Update the release document first**, if its highlight, intent, approach or included plans change. Drafts can change without a publication event. An already finalized release is history: plan the change in a later release.
 3. **Update the matching strategy row** (headline and complete linked plan set), or create a new numbered release brief from the template once its planned scope is credible. Do not create a release number or assert that a plan ships merely because it is queued.
 4. **Keep the overview concise** and update its **Last reviewed** date when the roadmap genuinely changes. Changes to sequencing are owner decisions.
