@@ -2,35 +2,37 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (22:45 UTC Thu 12 Nov): read this first
+## Now (23:20 UTC Thu 12 Nov): read this first
 
-### Timeline to release: publish Saturday 14 Nov by 12:00 UTC (assumed UTC)
+Live Stage 2f is running on the PW-soft build `bb0ae49da`. The claim worked, including its warm-up job, and t2i has been running since 23:07, slower than the earlier 6.5-minute passes. Next: if t2i passes, the other four cells on the same pod, then release.
+
+### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
 |---|---|---|---|
-| Thu ~21:30 | Engine **U2 + dead-owner handover** (CPU reproduction, why-errors) merged | engine (here) | building; Astra about 20:30–21:15 |
-| Thu ~21:30 | **`r13/cells-vc` + pin + `scripts/preflight.py`** merged | cells session | 6aede014 pushed; proof, gate and catalog fix running |
-| Thu ~22:00 | **Preflight gate** on the candidate, then **live five-cell run** (current generate path) on the composed candidate | me | after the two above |
-| Thu night | TTS follow-up, catalog fix, node-compat, target-asset tests, test-lane money cards (gate atomicity, 4xx) | lanes | running |
-| Fri ~08:00 | **K1** (edit fix), then **M1**, then **M2**, merged into `r13/machines` | machines session | K1 fix and M4 card 5 running |
-| Fri ~14:00 | **LT** (lease transition table, including the durable billing stop and the re-review rows), then **M4**, then **M3** | machines session | LT draft ready |
-| **Fri 18:00** | **CUT LINE:** machines core merged and Astra-reviewed, plus a **live claim-path proof**. If not, ship without the new machines CLI (R12 renting path + today's fixes) | me | — |
-| Fri ~20:00 | Test lane's "rows still blocking" report on the newest frozen head | test lane | — |
-| Fri evening | Fix the remaining blocking rows; M11 (RunPod code into the pack) only if green early | lanes | — |
-| **Sat 06:00** | **Freeze** the candidate; final frozen CI head | me | — |
-| Sat 06:00–10:00 | Binding test-by-test comparison against R12; final live proof (all five cells, claim path); App re-pin (release 13); R1-update proof row; release record | test lane + me | — |
-| **Sat ~11:00** | **Publish** (an hour of slack before 12:00) | me, with the owner's go | — |
+| Thu 23:07 | **Stage 2f:** claim, then t2i, then the other four cells from `scripts/live_cells.json` on one pod, then release | me | claim OK (5090 `nk9ukqpoy7zwme`, warm-up job succeeded); t2i running |
+| Fri ~01:00 | **RunPod v2 migration** (REST v1 retires 15 Nov), then a lifecycle re-pin | machines | Codex worker running |
+| Fri ~04:00 | **LT-a wiring**, then one Astra review | machines | running |
+| Fri early | **K1** reconcile; **M2b**, held on 16 test_generation_target ids | machines | running |
+| Fri | **#607** lands (journey card, then the test_generation_target card) | engine (here) | review fix `daf973229` done |
+| Fri | VibeComfy **placement redesign** (about 40 Lanes rows, 3 windows_gpu, 2 test_entries), then a re-pin; sdk-target-tests | cells | Codex Sol running |
+| Fri | Test lane: **bounded-node-ids** `eff0f0aa` (the 1 MB id stalls the CI log), W58b–W61b; then one new frozen CI head | test lane, me | waiting for "proof passed" |
+| **Fri 10:00** | **Cut decision:** K1, M1 and M2 merged and green on compose | me | — |
+| **Fri 18:00** | **Cut line:** if it isn't met, ship without the new machines CLI | me | — |
+| **Sat 06:00** | **Freeze**; final frozen CI head | me | — |
+| Sat 06:00–10:00 | Binding comparison against R12, then the final live five-cell proof, then the App re-pin and the release record | test lane, me | — |
+| **Sat ~11:00** | **Publish**, with the owner's go | me | — |
 
 ### Streams
 | Stream | State |
 |---|---|
-| Candidate `r13/compose` `520803167` (comparison CI on `int/r13-1f69f754`; shards 1/6 near the limit) | Since 21:35: the **fresh-pod engine-start fix** (`8a425ee6b`), the pod watchdog, claim stock-wait fix + bound, setup error details, BLE comments, Lanes `-rA` + lifecycle env, urllib/fallback-hash/h3-helper test fixes, dry-run traceback fix, uncertain-stop custody fix, bridge logs (logs are outputs; selectors pick product outputs), objinfo via the VibeComfy API. Boundary 101 passing |
-| Live | Stage 2c confirmed the start failure live (`request_mismatch`). Stage 2e on the fix build: setup ok, but the claim was refused by the watchdog (`termination_denied`: the pod key can't terminate). Failed closed, 0 pods. **Waiting on PW-soft** (denied/unknown means host custody plus a warning; owner-aligned ruling), due about 23:10. Tonight $0.94; balance $94.83 |
-| Machines | M1 in. Pod watchdog in, with PW-soft due. Claim wait fixed and bounded. Ctrl-C cancel fixed (re-proving). M2b committed `0b2398a1f`, held: 16 test_generation_target failures being compared by id. K1 reconcile with compose reasons, due about 23:45. LT-a design done. Cut decision Fri 10:00 |
-| Cells | Preflight plus live_cells.json merged; SFX route repointed. VibeComfy fix for model placement (about 40 Lanes rows plus 3 windows_gpu) running, then one re-pin |
-| Engine (fork, here) | #607 review fix done (`daf973229`); journey card, then it lands ahead of M2. Fail-safe injection tests plus the doctor-schema env-var fix on `r13/engine-stopfix` |
-| Test lane | Shard-by-shard sorting of 1f69f754. Installer HOME isolation (test infra, owned). VIBECOMFY_SOURCE removed from the wrapper. Group D (R12 flake) to Plan 39. test_generation_target run locally on R12 and compose |
-| Advisor (own session `…4KxQbf3m…`) | Report in (18:21); actions taken |
-| Investigation | #595 warm machine, cold engine (models unloaded each job): Opus fork running |
+| Candidate `r13/compose` `bd59f32e2` | Since 22:45: PW-soft (`bb0ae49da`); the Ctrl-C fix; PR #293 (MCP whole results, IN); the CI VibeComfy checkout in tests (`9b31d6c7d`), with engine's doctor-schema fix |
+| Live | The watchdog log line is confirmed on the pod: `termination_authorised=no`, so the run is under host custody, as PW-soft intends. Census at 23:19: 1 pod (ours), $1.44/h, balance $94.56 (floor $67.41) |
+| Machines (own session; stays on Opus until the Fri cut) | Handover 2 at `r13-progress/machines-handover-2` `50a470be3`. Order: v2, then K1, then M2, then LT/M4 |
+| Cells (own session; moving to Sonnet) | Handover at `r13-progress/cells-log` `443ed443`. Placement card, sdk-target-tests, contracts #342–#344, lifecycle re-vendor |
+| Test lane (own session; moving to Sonnet) | Handover `releases/13/evidence/tests/handover.md` (Rule 0: no "preexisting" without a cited R12 run). Comparison head `1f69f754`; shards 1 and 6 NO-RESULT (the log stall) |
+| Engine (fork, here) | #607; doctor-schema fix in |
+| Advisor (own session `…4KxQbf3m…`) | Ruled on models at 23:17: test lane and cells on Sonnet, machines on Opus until the cut, no Haiku in any seat that rules on red-vs-R12 or custody. Its helpers moved to Haiku/Sonnet |
+| Open PRs | Triage done (`evidence/open-prs.md`). Included PRs are recorded at publish; stale ones are closed and their contributors told |
 
 ### Rules in force
 - **Tests:** no worse than R12 `main`, test by test, on hosted `int/r13` CI. No local full suites. Managers run focused proofs only.
