@@ -21,7 +21,6 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 10-pinokio-qualification
 - 04-concurrent-edits
 - 05-remaining-fixes
-- 51-astrid-dev-clean-up
 - 11-threejs-pack
 - 13-execution-host-refactor
 - 14-repository-cleanup

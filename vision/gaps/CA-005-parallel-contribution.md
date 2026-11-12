@@ -1,6 +1,7 @@
 # CA-005 — Many contributors and agents can't yet work in parallel through one clear process
 
-**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · [Completely open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open; initial assessment (2026-11-11) from a read of astrid-dev's own scripts, templates and packs, reassessed 2026-11-12 after Plan 51 finished (route step 2). Neither is from observed work at scale.
+**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · [Completely open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open / partly evidenced (2026-11-12): Plan 48's committed scope is complete and shown on astrid-dev's `main` and in a scratch repository, and Plan 51 finished its two parts (route step 2); none of it is from observed work at scale.
+
 
 ## Desired state
 
@@ -29,13 +30,13 @@ The workspace's structure is carried by prose and by separate scripts, so it is 
 
 Finish the shared layer the existing scripts already imply before more projects arrive: one way to read a record, one list of checks behind one command, and one way to generate a page. Then let each project carry its own facts, so the catalog is generated from the plans and unrelated work stops meeting in one file. This order keeps the first step free of rule changes, and makes the second step a move onto something already reviewed.
 
-For contributors, the first stage means one command and one list to learn; the second means claiming and updating a project touches only that project. Declaring the pack shape, the lifecycle and a common evidence form is deliberately left until a recorded failure asks for it. Proof at real scale needs real contributors and has no plan yet.
+For contributors, the first stage means one command and one list to learn; the second means claiming and updating a project touches only that project. Plan 48 then declared the pack shape and the lifecycle for new projects; a generated completion form and a common evidence form were left unbuilt until a recorded failure asks for them. Proof at real scale needs real contributors and has no plan yet.
 
 ## Route to closure
 
 | Step | Plan | Contributes (closure evidence it delivers) | Milestone |
 |---|---|---|---|
-| 1 | [Plan 48](../../plans/48-one-record-model/plan.md) | one command lists every check and generated page; a project lands by adding only its own folder; one source per fact; a fresh agent extends it from the guide; refusals work | A: one model, and plans define the list |
+| 1 | [Plan 48](../../plans/48-one-record-model/plan.md) | one command lists every check and generated page; a project lands by adding only its own folder; one source per fact; a fresh agent extends it from the guide; refusals work. Shown on `main` and in a scratch repository: the list and the same-everywhere command, two plan-adding PRs merging without conflict, hand edits and a missing completion form refused, a fresh agent adding a check and a view from the guide. Not shown: ten contributors at once, a fresh contributor finding five single sources, and adding a project field from the guide | A: one model, and plans define the list (reached 12 Nov 2026). Plan 48's track C (generated completion form) and Phase 4 (one evidence envelope) were not built and remain proposals |
 | 2 | [Plan 51](../../plans/51-astrid-dev-clean-up/plan.md) | each rule and term has one source; a fresh agent changes astrid-dev from one skill and the guide it links (shown for one new check; not for a new generated page) | B: one home per rule and one word per term |
 | — | unplanned | reassessment after a real period with at least ten contributors working at the same time | — |
 

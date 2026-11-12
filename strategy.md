@@ -4,7 +4,7 @@ Astrid's execution strategy is a sequence of **releases**, each a coherent step 
 
 Each plan's own `plan.md` holds its status, owner and estimate, `plans/priority.md` holds the order, and the [plan catalog](plans/index.md) is generated from them. [Vision gaps](vision/README.md) and their routes still define what needs to improve and how success will be assessed. A plan may be worked on before it is assigned to a release; an unassigned plan is not a release commitment.
 
-**Last reviewed:** 2026-11-12, following the completion of [Plan 51](plans/51-astrid-dev-clean-up/plan.md); the earlier review was 2026-11-11, after the split of Release 12 into Releases 12 and 13. Future assignments are provisional until explicitly finalized.
+**Last reviewed:** 2026-11-12, for the completions of Plan 48 and Plan 51 (no release assignment changed; neither plan is in a release) after the 2026-11-11 split of Release 12 into Releases 12 and 13. Future assignments are provisional until explicitly finalized.
 
 ## Focus now
 
