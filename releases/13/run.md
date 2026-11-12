@@ -2,14 +2,16 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (23:20 UTC Thu 12 Nov): read this first
+## Now (23:55 UTC Thu 12 Nov): read this first
 
-Live Stage 2f is running on the PW-soft build `bb0ae49da`. The claim worked, including its warm-up job, and t2i has been running since 23:07, slower than the earlier 6.5-minute passes. Next: if t2i passes, the other four cells on the same pod, then release.
+Stage 2f is done on `bb0ae49da`: **t2i and tts pass live** on the claim-then-generate path. sfx, music and edit each failed with a named cause, and each fix is in flight (foley, modelrec, K1). The pod is released (0 pods, $93.85). **Ruling (owner, 23:33): as soon as possible.** Each card is merged when its proof passes, and a CI head is frozen whenever rows change; clock times are only the latest points. Next: K1 (about 00:15), then the cells pin `cda37a7e`, then foley and modelrec, then the live re-run of sfx, music and edit.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
 |---|---|---|---|
-| Thu 23:07 | **Stage 2f:** claim, then t2i, then the other four cells from `scripts/live_cells.json` on one pod, then release | me | claim OK (5090 `nk9ukqpoy7zwme`, warm-up job succeeded); t2i running |
+| Thu 23:07 | **Stage 2f:** claim, then the five cells on one pod, then release | me | **done:** t2i and tts PASS; sfx (foley), music (modelrec) and edit (K1) routed; released |
+| ASAP | **Stage 2h:** re-run sfx, music and edit on a fresh install, once K1, foley and modelrec are in (edit both in isolation and after a failing job) | me | waiting on those three |
+| ~2 h | **Dry-pod spec** (Fable lead, Codex exploration, Astra and Luna check), giving `briefs/dry-pod/plan.md`, which goes to cells | me | running |
 | Fri ~01:00 | **RunPod v2 migration** (REST v1 retires 15 Nov), then a lifecycle re-pin | machines | Codex worker running |
 | Fri ~04:00 | **LT-a wiring**, then one Astra review | machines | running |
 | Fri early | **K1** reconcile; **M2b**, held on 16 test_generation_target ids | machines | running |
@@ -25,7 +27,7 @@ Live Stage 2f is running on the PW-soft build `bb0ae49da`. The claim worked, inc
 ### Streams
 | Stream | State |
 |---|---|
-| Candidate `r13/compose` `bd59f32e2` | Since 22:45: PW-soft (`bb0ae49da`); the Ctrl-C fix; PR #293 (MCP whole results, IN); the CI VibeComfy checkout in tests (`9b31d6c7d`), with engine's doctor-schema fix |
+| Candidate `r13/compose` `11cf5544b` (frozen heads `int/r13-e51cfee3`, `int/r13-58442e7a`) | Since 23:20: bounded-node-ids, sdk-target-tests, engine-failreason (the remote reason reaches the CLI), fetch-stack (traceback to stderr). Earlier: | Since 22:45: PW-soft (`bb0ae49da`); the Ctrl-C fix; PR #293 (MCP whole results, IN); the CI VibeComfy checkout in tests (`9b31d6c7d`), with engine's doctor-schema fix |
 | Live | The watchdog log line is confirmed on the pod: `termination_authorised=no`, so the run is under host custody, as PW-soft intends. Census at 23:19: 1 pod (ours), $1.44/h, balance $94.56 (floor $67.41) |
 | Machines (own session; stays on Opus until the Fri cut) | Handover 2 at `r13-progress/machines-handover-2` `50a470be3`. Order: v2, then K1, then M2, then LT/M4 |
 | Cells (own session; moving to Sonnet) | Handover at `r13-progress/cells-log` `443ed443`. Placement card, sdk-target-tests, contracts #342–#344, lifecycle re-vendor |
