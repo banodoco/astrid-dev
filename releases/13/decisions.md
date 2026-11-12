@@ -300,3 +300,4 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
     - VibeComfy half (Luna, `c-vc-logs` `r13/declared-logs`);
     - Astrid half (Terra, `c-logs` `r13/declared-logs`, which replaces my scrape).
   - The VibeComfy change needs a pin bump in Astrid's `pins.json` and the installer manifest; that's my integration step.
+- **2026-11-12 03:20** Declared logs, process (from the user): Fable writes the SPEC and the task split (each task marked luna, terra or sol); Astra sense-checks Fable's spec; I integrate their feedback, trimming anything overzealous; then farm out by difficulty and test live once. The single-Codex-per-half runs and the Opus refiner were stopped and their clones reset. Two Luna traces (pod path; host and Runtime outputs) feed Fable.
