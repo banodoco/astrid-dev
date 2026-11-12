@@ -14,7 +14,7 @@
 - `obsolete-templates always Validate obsolete templates`
 - `ledger always Validate ledger`
 - `markdown-links always Validate markdown links`
-- `link-anchors always Validate link fragments into skills, templates and top-level docs`
+- `link-anchors always Validate links to headings in skills, templates and top-level docs`
 - `public-vision-content always Validate public vision source content`
 - `generated-views pr Validate generated views that a pull request changes`
 - `completion-assessment pr Require evidence for plans newly marked done`

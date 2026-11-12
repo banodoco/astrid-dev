@@ -256,10 +256,10 @@ class LinkAnchorTests(unittest.TestCase):
         self.assertEqual(self.run_rule({
             "docs/guide.md": "## Set up\n",
             "skills/a/SKILL.md": "See [setup](../../docs/guide.md#install).\n"}), [
-            "skills/a/SKILL.md: link to docs/guide.md#install names no heading there; fix the link or restore the heading"])
+            "skills/a/SKILL.md: link to docs/guide.md#install matches no heading in that file; point the link at a heading that exists"])
         self.assertEqual(self.run_rule({
             "templates/t.md": "## Set up\n\n[bad](#install)\n"}), [
-            "templates/t.md: link to templates/t.md#install names no heading there; fix the link or restore the heading"])
+            "templates/t.md: link to templates/t.md#install matches no heading in that file; point the link at a heading that exists"])
 
     def test_repeated_heading_resolves_with_numeric_suffix(self):
         self.assertEqual(self.run_rule({
@@ -269,7 +269,7 @@ class LinkAnchorTests(unittest.TestCase):
         self.assertEqual(self.run_rule({
             "docs/guide.md": "## Step\n",
             "skills/a/SKILL.md": "[d](../../docs/guide.md#step-1)\n"}), [
-            "skills/a/SKILL.md: link to docs/guide.md#step-1 names no heading there; fix the link or restore the heading"])
+            "skills/a/SKILL.md: link to docs/guide.md#step-1 matches no heading in that file; point the link at a heading that exists"])
 
     def test_heading_with_link_or_backticks_resolves(self):
         self.assertEqual(self.run_rule({

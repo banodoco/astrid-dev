@@ -285,7 +285,7 @@ def _link_anchors(context):
             target = posixpath.normpath((path.parent / (address or path.name)).as_posix())
             if (re.fullmatch(r"(?:skills|templates)/.+\.md|docs/[^/]+\.md", target) and (root / target).is_file()
                     and fragment not in anchors(Path(target))):
-                errors.append(f"{path.as_posix()}: link to {target}#{fragment} names no heading there; fix the link or restore the heading")
+                errors.append(f"{path.as_posix()}: link to {target}#{fragment} matches no heading in that file; point the link at a heading that exists")
     return errors
 
 
@@ -450,7 +450,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('obsolete-templates', 'always', 'Validate obsolete templates', _obsolete_templates),
     Check('ledger', 'always', 'Validate ledger', _ledger),
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
-    Check('link-anchors', 'always', 'Validate link fragments into skills, templates and top-level docs', _link_anchors),
+    Check('link-anchors', 'always', 'Validate links to headings in skills, templates and top-level docs', _link_anchors),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
