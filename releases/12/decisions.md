@@ -338,3 +338,10 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
   - **Direct Journey 176 on `d9e2798d4`:** "concurrent edit" (`:417`) failed waiting for the conflict dialog after "Save them" (`:571`). It passed in every earlier run and in the side run C, so it's a flake candidate. It reruns on `824439ff9` (dispatched); if it's red twice, it gets diagnosed.
   - **Side track (Direct Journey 178 on `3622b91a7`):** all **4 expected failures failed at their markers**, and mixed editing passes. One unexpected: "fresh project video drop" asserted exactly one command, but the commit carries two, because the drop also creates the track. Fixed (test-only, my read): exactly one `clip.add-media` and no other clip write, `63ebc10d3` after merging integration `824439ff9`. Direct Journey redispatched.
   - App Tests 636/637: only the known vendor-lock red.
+- 2026-11-12 00:43Z — **No-baseline bucket ruled.** I built the missing baseline locally (Haiku, by test ID; `/home/user/logs/ci/gate2/local-baseline.tsv`), R11 `a105de3a` against the candidate `c5370a86` for all 131 IDs.
+  - 119 fail or error identically on R11, so they're pre-existing.
+  - 6 can't import on either side (`vibecomfy.schema` absent; they need ASTRID_VIBECOMFY_CHECKOUT), so they're environment-only and pre-existing.
+  - 4 `test_installer_sources` IDs are new and PASS on the candidate.
+  - `test_windows_publish` is new and failing; fixed as `bec57f416` on `r12/fix-round`.
+  - One R12-introduced test-hygiene failure: `test_claim_head_of_line::…stays_in_milliseconds`. The body passes, then teardown errors every time, because the test's no-walk patch is still active when an R12 conftest teardown walks the filesystem. R11 is clean. Fix with Codex Luna (`cx-afg`).
+  - Not CI-equivalent (local, single process), but it's the only baseline available for shard 1. **REVIEW.**
