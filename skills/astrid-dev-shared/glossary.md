@@ -1,8 +1,10 @@
 # Glossary
 
-One meaning per word; a word with two meanings is two terms. Skills link here.
+One meaning per word; two meanings, two terms.
 
-**owner:** decides a project; her own message in the accountable session alone gives authority. The plan's `Owner:` line names who answers for it and grants no merge right.
+**owner:** the person whose decisions and own message give authority.
+
+**project owner:** the person or account named once on a plan's `Owner:` line (a GitHub handle, the agent account or a role). By convention others propose changes to an active pack by pull request, and the project owner or the manager running it merges; accountability, not permission.
 
 **maintainer:** reviews and merges contributors' pull requests.
 
@@ -10,31 +12,29 @@ One meaning per word; a word with two meanings is two terms. Skills link here.
 
 **orchestrator:** a standing session that plans and starts projects, advises managers, checks in.
 
-**advisor:** the `run.yaml` role that answers blocking questions: the orchestrator, or a fresh high-judgment sub-agent with no stake in the draft.
+**advisor:** the `run.yaml` role answering blocking questions: the orchestrator, or where there is none a fresh high-judgment sub-agent.
 
-**planner:** writes a plan and its cards.
+**manager:** dispatches tasks, judges reports, keeps `tasks.md` current; normally the accountable agent.
 
-**manager:** dispatches tasks, judges reports and keeps `tasks.md` current; normally the accountable agent.
-
-**Codex manager:** a Codex process managing its own sub-agents inside a Claude session; only by choice.
+**Codex manager:** a Codex process managing its own sub-agents, hosted in a Claude session or in its own Codex Cloud chat; only by choice.
 
 **host:** the Claude session running a Codex manager; it answers for the run.
 
 **accountable agent:** the one agent answering for a run finishing.
 
-**worker:** an agent given one task: a sub-agent or a Codex call.
+**worker:** an agent given one task: a sub-agent or Codex call.
 
 **helper:** an `N` worker doing bounded reading, edits or checks for a lead.
 
-**lead:** the agent that does a task or review itself, delegating helper work.
+**lead:** the agent doing a task or review itself, delegating helper work.
 
 **reviewer:** independent of the author, read-only, on an exact commit range.
 
 **project:** work with its own owner, priority and completion proof.
 
-**plan:** a project's `plan.md`.
+**plan:** a project as numbered in `plans/` (Plan NN); its file is `plan.md`.
 
-**project pack:** a project's folder `plans/<NN-name>/`: `plan.md`, `inputs.md`, `tasks.md`.
+**project pack:** `plans/<NN-name>/`: `plan.md`, `inputs.md`, `tasks.md`.
 
 **product pack:** a capability bundle in Astrid's agent repository.
 
@@ -42,11 +42,9 @@ One meaning per word; a word with two meanings is two terms. Skills link here.
 
 **task:** one assignment in `tasks.md`; its **card** holds outcome, route, scope, dependencies and proof.
 
-**scope:** the paths and contracts a task may change, with their tests.
+**task route:** `N`, `X`, `S` or `T` (taste), the capability band a task runs on.
 
-**task route:** `N`, `X`, `S` or `T`, the capability band a task runs on; `T` is taste.
-
-**manager's route:** the band chosen once per run for the manager itself.
+**manager's route:** the band chosen once per run for the manager.
 
 **run:** one authorized execution of a project, begun on its `Run start` line.
 
@@ -66,16 +64,14 @@ One meaning per word; a word with two meanings is two terms. Skills link here.
 
 **brief:** what an agent is told at its start.
 
-**check:** a rule registered in `scripts/checks.py`.
+**check:** a rule in `scripts/checks.py`; a scoped test is a test run.
 
 **view:** a generated page (`scripts/views.py`).
-
-**process ledger:** `docs/ledger/`: one file per friction, idea or fix in astrid-dev.
 
 **decision log:** a manager's append-only list of its own rulings.
 
 **decisions ledger:** calls made while the owner is away, for her to accept or revert.
 
-**Owner decisions:** the `inputs.md` section listing what the owner must decide.
+**Owner decisions:** the `inputs.md` section of what the owner must decide.
 
 **home:** the one place a rule, term or fact is written.

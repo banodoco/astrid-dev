@@ -17,14 +17,14 @@ Default model for each route, using the newest available model of that family:
 
 Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
 
-This table is the only place in the repository that names model families. Elsewhere name the route, and a family only when the run used one other than the route's, never an exact model ID. `T` work may run on the Codex taste family even when the other workers are on Codex; Claude is recommended.
+This table and the high-judgment role below it are the only place in the repository that names model families; `templates/run.yaml` and the Codex brief are fill-in copies of them. Elsewhere name the route, and a family only when the run used one other than the route's, never an exact model ID. When workers are on Codex, `T` work may run on the Codex taste family; Claude is recommended.
 
 ### Cheapest model first
 
 Judge a task's difficulty before delegating it, start it on the cheapest model that can plausibly do it at that difficulty, and move up only on evidence. A task with no route tag is `N`. A release brief may set a different starting model for its run (for example, a mid-tier default for everything that is not plain fact-finding); follow the brief.
 
 - **Start at `N`.** Fact-finding, reading, running checks, mechanical edits, and most fixes whose failing test and likely cause are already named go to `N`. Give the worker one bounded outcome, the exact files or selectors, and the proof you expect back.
-- **Escalate one step at a time, on a stated reason.** Move `N` to `X` after two misses or 20 minutes without progress, or when the returned work is wrong in a way a better brief would not fix. Move `X` to `S` on the same test. Before escalating, ask whether the brief was the problem: a vague brief fails on every model. This threshold is the manager's. A worker's is different: it stops after three attempts or 45 minutes without progress on one failure and hands the manager the raw output, what it tried and its best guess ([iterate](../astrid-dev-iterate/SKILL.md#iterate-freely-qualify-once)).
+- **Escalate one step at a time, on a stated reason.** Move `N` to `X` after two misses or 20 minutes without progress, or when the returned work is wrong in a way a better brief would not fix. Move `X` to `S` on the same test. Before escalating, ask whether the brief was the problem: a vague brief fails on every model. This threshold is the manager's. A worker's is different: it stops after three attempts or 45 minutes without progress on one failure and hands the manager the raw output, what it tried and its best guess.
 - **Pass the failure up.** The next model gets the previous attempt's diff, raw output and best guess, so it starts from what was learned, not from zero.
 - **Judgment stays put.** The manager checks each result against the diff and the proof, never against the worker's summary. Decisions, dispositions and reviews stay with the manager or the high-judgment role; they are not delegated down.
 - **Drop back down.** Once a hard problem has a known cause, the remaining edits and reruns return to `N`.
@@ -80,7 +80,7 @@ When work proceeds without the owner (for example, a contributor or agent helpin
 
 ## Checks and failure repair
 
-Run only explicitly scoped, feature-focused checks; never broad, auto-discovered, repository-wide, full affected, or opt-in suites. Planning-only work runs no checks unless specifically requested. Use a documented narrow command/selector grounded in the current repository and task; do not invent test names, selectors, or commands.
+Run only explicitly scoped, feature-focused test runs; never broad, auto-discovered, repository-wide, full affected, or opt-in suites. Planning-only work runs no checks unless specifically requested. Use a documented narrow command/selector grounded in the current repository and task; do not invent test names, selectors, or commands.
 
 Record each proof's exact command, candidate SHA/tree, relevant inputs/environment, actual inner command status and diagnostic output, result, and limitations. Judge the inner build/test/install command, not a wrapper's transport status. Interpret statuses such as 125 or 127 only according to the runner and command's documented semantics; they are not universal meanings. Use `PASS`, `FAIL`, `RETRYING` (infrastructure retry in progress), and `NO-RESULT` (missing evidence). A pass applies only to the exact candidate and inputs it names.
 
