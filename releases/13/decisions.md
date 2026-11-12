@@ -689,3 +689,30 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Codex skill fix, astrid-dev #557** (merged `6aacfcf`): every Codex worker runs with `-s danger-full-access` and must use its Luna sub-agents; `agents.max_threads` is set to the CPU count. Under `workspace-write`, `~/.codex` is read-only, which broke sub-agents and nested Codex (verified).
 - **Keep-warm pass 6** committed as `r13/keep-warm` `9e7b2a48`; merged into `r13/machines` `22e5a13e` (its suite is running). **terminal-reconcile** `56284e6c`: its failure set is identical to the base; merged into the rehearsal `922a19eb`.
 - **Money:** balance $97.17 at 14:19; about $8.5 of $40 spent.
+
+### 14:43 UTC — Fable deep-cause synthesis; dispatch; the machines project delegated
+- **Four deep causes behind nearly every failure** (Fable, with Luna helpers; notes in scratchpad `syn/`):
+  - **A.** One fact, several owners: models root, model-declaration shape, input names, paid limits, project.
+  - **B.** Contracts checked only at run time, on a rented GPU.
+  - **C.** Typed facts flattened at a boundary, so waits and failures are invisible.
+  - **D.** No single table of end states, so "clean up" means "destroy".
+
+  One-offs: setuptools, `tasks logs`, the sandbox.
+- **Corrections to my diagnoses:**
+  - The SFX reuse refusal compares `[kind, engine, preferences]` (`adapter.py` about 495-507), not the limits. The job's preferences snapshot must go (T6, folded into M1).
+  - The reset doesn't restart ComfyUI. Models are deliberately unloaded at job end (`engine_custody.py:1054`, `_cold_free`), which is T10.
+- **Edit root cause:** a duplicate direct `validate_generation_request` at `sdk/generation.py` about 1616 runs before the param_map-translating check. Fix: delete it (T1, dispatched to Luna).
+- **Music:** five declaration shapes; a silent `checkpoints` default; 37 templates with bare filenames, including the SFX template. T2+T3 dispatched to Sol: one record `{name, subdir, url, sha256, size_bytes}`; regenerate from sources or the registry, else unlist; a corpus check with no allowlist.
+- **Machines:** delegated to a machines-manager sub-agent (M1–M10). Its full-access Codex launch was refused by the auto-mode classifier. It continues sandboxed, without sub-agents; the owner was asked to choose between staying sandboxed, Auto mode, or a single-repository session.
+- **Model layout:** Sol stopped on the engine-upgrade contract. On an environment change, Astrid refuses and requires a clean `<root>-clean` reinstall, which collides with any models directory inside the engine. A Fable reframe of engine upgrade plus models location is running.
+  - Per Fable, the legacy-link cleanup is a shim: the links never shipped in a release, so delete it rather than migrate.
+- **Queued from Fable's list:**
+  - T7: the wait and phase reason reach the task.
+  - T8: merge the Runtime blocker list `1269ada`; the Agent heartbeat already reads `waiting_details`.
+  - T9: engine logs for every generation.
+  - T10: models stay loaded between jobs.
+  - T11: a default project created at provisioning.
+  - T13: the CPU journey has two stale tests and a first-claim deadline.
+  - T14: a dry run of every catalog entry (with T1).
+- **Plan 50 critique:** the scrubber, the ratchet and RB-4 are over-built. The two corpus checks plus a journey that runs in minutes pay more (the journey takes 57 minutes, so nobody runs it). Revise Plan 50 accordingly.
+- The pod was released at 14:40; balance $96.67.
