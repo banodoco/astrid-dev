@@ -1,5 +1,17 @@
 # Repository cleanup
 
+**Project:** Repository cleanup
+
+**Goal:** Make the repositories easy to navigate and maintain by removing proven clutter and consolidating code, docs, and tooling.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Vision role:** Foundational enabler — improves source navigability without itself proving a user-facing outcome.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

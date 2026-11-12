@@ -1,5 +1,17 @@
 # 24 — Portable, resizable creative components
 
+**Project:** Portable, resizable creative components
+
+**Goal:** Make real timeline, player, inspector and other-domain components dockable, nestable and responsive to resizing, without losing editing state; Plan 45 connects data and Plan 46 exposes safe agent operations.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; relevant editing/pack foundations
+
 **Start here:** [Astrid development skill](../../skills/astrid-dev/SKILL.md), [shared run contract](../../skills/astrid-dev-shared/run-contract.md), [tasks](tasks.md), [inputs](inputs.md). Status and priority live in the [catalog](../index.md).
 
 **Vision gaps:** [LS-001 — Portable creative components](../../vision/gaps/LS-001-portable-components.md) (primary).

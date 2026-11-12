@@ -1,5 +1,17 @@
 # 40 — Discover and reuse others' packs and contributions
 
+**Project:** Discover and reuse others' packs and contributions
+
+**Goal:** Give creators and agents a streamlined way to discover other contributors' packs, components and creative work, with Hivemind-backed search, provenance, compatibility and maintenance signals.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** owner/scope agreement; source and dependency checks
+
 **Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md) and [shared run contract](../../skills/astrid-dev-shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
 
 **Vision gaps:** [CA-004 — Discover and reuse others' packs and contributions](../../vision/gaps/CA-004-sharing-and-discovery.md) (primary).

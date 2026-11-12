@@ -1,5 +1,17 @@
 # One home for user state
 
+**Project:** One home for user state
+
+**Goal:** User choices, project choices and project work live in the Runtime (app-state and project documents), not in side files, env variables or browser storage; machine bootstrap state stays local.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; Plan 32 T6d
+
 **Vision gaps:** [Local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary) · [User control and recovery](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

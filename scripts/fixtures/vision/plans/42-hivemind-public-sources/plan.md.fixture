@@ -1,5 +1,17 @@
 # 42 — Bring GitHub, Reddit and documentation knowledge into Hivemind
 
+**Project:** Bring GitHub, Reddit and documentation knowledge into Hivemind
+
+**Goal:** Build a maintained, provenance-aware Hivemind intake for selected GitHub issues, Reddit discussions and public documentation so agents can benefit from knowledge across the internet.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** owner/scope agreement; source and dependency checks
+
 **Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md) and [shared run contract](../../skills/astrid-dev-shared/run-contract.md). [Inputs](inputs.md) · [Tasks](tasks.md). The [catalog](../index.md) owns priority, status and owner.
 
 **Vision gaps:** [CI-003 — Bring GitHub, Reddit and documentation knowledge into Hivemind](../../vision/gaps/CI-003-public-source-ingestion.md) (primary).

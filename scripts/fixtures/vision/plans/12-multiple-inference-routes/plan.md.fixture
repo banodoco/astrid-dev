@@ -1,5 +1,17 @@
 # Wan2GP as a second engine on the one generation path
 
+**Project:** Wan2GP as a second engine on the one generation path
+
+**Goal:** Add Wan2GP as the second engine on Plan 32's one generation path, sharing placement, lease and the remote-machine route, with only its own setup and run step.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; Plan 32 T6 (scoping and the Linux recipe can start alongside Plan 32 T2)
+
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
 **Contributes to closure:** F-008 step 3: a second engine (Wan2GP) on the same path. Milestone C.

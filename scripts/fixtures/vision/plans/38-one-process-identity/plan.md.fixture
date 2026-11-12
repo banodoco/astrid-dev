@@ -1,5 +1,17 @@
 # One process identity for Agent and Runtime
 
+**Project:** One process identity for Agent and Runtime
+
+**Goal:** A Runtime-managed host-only pack host starts and runs a task on macOS, Linux and Windows: process identity, peer custody and signalling live once in `runtime_protocol`, the source closure has one definition with golden vectors, every duplicate is deleted, a one-implementation test in each repository stops new copies, and every test in the area is green on all three OSes.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** 10–13: phase 1 7–9, phase 2 3–4
+
+**Waiting on:** release 12 published, then Plan 20's Agent `main` group landed (owner's order, 9 Nov)
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).

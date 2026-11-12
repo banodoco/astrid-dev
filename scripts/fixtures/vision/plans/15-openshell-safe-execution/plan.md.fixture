@@ -1,5 +1,17 @@
 # Sandboxed execution with OpenShell
 
+**Project:** Sandboxed execution with OpenShell
+
+**Goal:** Let users onboard into an isolated full Astrid stack, including the app/frontend and backend, with explicit permissions and tested boundaries.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement
+
 **Vision gaps:** [F-007 — First-class full-stack sandboxing](../../vision/gaps/F-007-first-class-sandbox.md) (primary); [F-002 — trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). The sandbox outcome is independently testable; broader consent and recovery require separate evidence.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

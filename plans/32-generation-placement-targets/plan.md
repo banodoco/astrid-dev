@@ -1,5 +1,17 @@
 # One generation path: requirements, placement, alignment, run, retrieve
 
+**Project:** One generation path
+
+**Goal:** Every generation, any modality and any place, follows one path: one requirements manifest, placement decided once, optional align/check/trust, and RunPod as a rented machine running the same local path, with one run and one retrieve.
+
+**Status:** queued
+
+**Owner:** @AstridPseudon
+
+**Estimate:** about 8–11 days
+
+**Waiting on:** —
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
