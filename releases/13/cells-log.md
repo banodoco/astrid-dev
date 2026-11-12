@@ -97,3 +97,4 @@ Heads: Agent `r13/compose` `5dae0cfe` (my branches are cut from `fc4b36d`); Vibe
 
 ### 18:50 UTC — Correction
 - The headings "19:05", "19:15" and "19:50 UTC" above are wrong: those entries were written between 18:35 and 18:50 UTC (machine clock). The order is right.
+- **18:50 UTC, deadline corrected (orchestrator):** publication is Saturday 14 Nov at midday. Tonight's 21:30 UTC target for `r13/cells-vc`, its pin and the gate stands if it can be done right; otherwise up to Friday morning. Quality over speed.
