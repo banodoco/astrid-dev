@@ -105,7 +105,7 @@ For each side, and each workflow in scope:
   - Runtime CI runs on every push and every pull request.
   - App pushes to `int/**` start its full workflows ([manage](../astrid-dev-manage/SKILL.md#steps)).
   - Before a gate, list every required workflow and where the candidate's run of each comes from.
-- **A scratch ref** is your own branch, started with `POST .../actions/workflows/<file>/dispatches` and `{"ref": "<branch>"}`. Then find its run by listing runs for that branch. It never enters a candidate.
+- **A scratch ref** is your own branch, started with `POST .../actions/workflows/<file>/dispatches`, the header `Content-Type: application/json` (the proxy refuses the call without it) and `{"ref": "<branch>"}`. Then find its run by listing runs for that branch. It never enters a candidate.
 - **Concurrency is set per workflow.** Read its `concurrency:` block. Where `cancel-in-progress` is on, a new run on the same group cancels the one in flight. The Agent's `ci.yml` groups by workflow and ref; manual journey dispatches never cancel each other. The coordination rule is [manage's](../astrid-dev-manage/SKILL.md#steps).
 - **Paid workflows.** VibeComfy's `nightly-runpod.yml` and `e2e_matrix.yml` can rent RunPod pods. Never dispatch them without paid authorization.
 - **Run less to learn more.** Diagnose on one shard or one file, not the whole matrix. Re-run a cancelled shard only after you have changed or diagnosed its cause ([two-same-signature rule](../astrid-dev-shared/run-contract.md#checks-and-failure-repair)).
