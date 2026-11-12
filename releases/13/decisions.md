@@ -225,3 +225,19 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Constraint found: a Codex worker cannot start a nested Codex. Inside its sandbox the child fails with "Read-only file system" on Codex's own state directory (tested live). The workarounds are refused: copying the Codex credentials breaks the never-read-or-copy-`~/.codex` rule, and turning off the sandbox would allow unreviewed pushes.
   - Pattern adopted instead: LEAD-AND-LUNA. A Sol or Terra lead does only the hard core and writes `luna-tasks/<n>.md` (files, interface, acceptance tests). My launcher then starts one Luna per task in its own clone. The lead (or Astra) reviews the Luna diffs before I commit.
   - This applies from the follow-ups of slices 1 and 2; the running workers can't be messaged mid-run.
+- **2026-11-12 01:31** GPU TTS attempt 4: FAIL in install verify, $0.19 (pod `dv89b19sf22qy4`, released by the product). The new label paid off on its first run: `status=failed;error_code=integrity_failed;failed_step_id=start`.
+  - Root cause (mine, offline): `engine_runner.engine_status` planned with no `models_root`, while the pod install binds the volume model cache. The read-only start check therefore compared the live models config against `<root>/models` and refused a healthy engine. `_parse_receipt` already documented the intent ("a reader naming none takes the receipt's record"); it just wasn't wired through.
+  - Fix: `c627edba`, which re-plans with the receipt's `models_root`. The new test reproduces the live failure exactly, `('failed','integrity_failed','start')`, without the fix. engine_runner: the same 2 pre-existing packaged-lock failures as the base. Local model root 21, generation preparation 36 and remote placement 14 passed; Ruff 2128.
+  - The rehearsal fast-forwarded to `c627edba` and was reinstalled. TTS attempt 5 launched at 01:37:35; before-census 0 pods, balance $101.17. Spend ≈ $4.24 of $40.
+- **2026-11-12 01:38** Structural slice 1, `ad7723a8` (Codex Terra, amended by me per the Opus design):
+  - Records carry an `observed` field set and `require()`, so "not reported" can never read as "empty". The GraphQL pod record observes no storage, which is exactly failure 1.
+  - `machine_id` is validated.
+  - I ran the suites Codex couldn't (its sandbox stalls on async tests): providers 11, target_selection 96, provider_fields 33, worker_preparation 41 and guard 19 passed; graphql_confirmation has 1 pre-existing failure.
+  - Ruff improved to 2127; I'll lock in the new baseline at merge. Not yet merged into the rehearsal.
+- **2026-11-12 01:39** The Opus design is in (`releases/13/structural-runpod-design.md`, `d62a8af3`). It agrees with the reconciled plan and adds:
+  - a list of about 30 raw-read sites;
+  - 31 reason-drop sites, two still live: the receipt doesn't copy the install label (`failure_receipt.py:126-133`), and seven bare-False returns remain in `remote_placement.py`;
+  - an account-scoped, file-locked provider gate for the 429 storm;
+  - a harness first slice built on `test_remote_machine_cpu.py`;
+  - a cost estimate: Release 13 about 7.25 worker-days; the Release 14 remainder about 11.
+- **2026-11-12 01:40** Bundle round 3 (Sol) is parked as WIP `04dd5f15` on `r13/g3-bundle-2`, not for merge. It's unqualified: 5 existing assertions conflict with structural masking, some suites didn't run in the sandbox, and there's an inherited Ruff gap. Both designs recommend making the free-text bundle opt-in. That's an H10 decision for the owner. REVIEW.
