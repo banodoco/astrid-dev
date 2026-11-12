@@ -925,3 +925,25 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Provider gate** (`ece1436d`): accepted, merging after the round-2 Astra review (W44).
   - The card-5 conflict is resolved: the budget comes from paid expiry, and `claim_lifetime_seconds` applies inside it.
   - Re-registering the fakes at `_get_provider_pod` is accepted as setup only.
+
+## 12 Nov ~20:00 UTC: LT is the critical card; Stage 2a cause; #607 is not a regression
+
+- **Machines card 6b stopped** at its third patch: 23 failures, and each patch exposed more coupling. The abandoned-observation requirements become an LT row. M4 stays at card 5 `354b3d1c8`. The red work is kept on `r13/machines-m4-card6-wip` `d900965e8`, for reference.
+- **LT-a starts its design now, in parallel with M1 and M2:**
+  - the enums plus the (state × event) → (next state, billing action) table;
+  - Astra reviews the table before any wiring;
+  - wiring starts after M2;
+  - LT-b (the publication latch) runs in parallel.
+- **LT rows:**
+  - the custody gaps;
+  - a durable billing stop;
+  - the release-retry boundary;
+  - `cancel_requested` in startup recovery;
+  - cede write-ahead;
+  - abandoned observations;
+  - the lease-owner lock lifetime (the test lane's R2-1);
+  - the publication bound, latch and sibling recovery;
+  - R2-2, if it needs new journal states.
+- **LT dates:** design reviewed by Fri 08:00, merged by Fri 15:00. If the review isn't clean by Fri 10:00, that's escalated then.
+- **Stage 2a, corrected again:** t2i, SFX and music failed at placement admission ("preferences missing") and never reached the pod. Edit was the only job to reach preparation, so no earlier warm server existed. The check that fired is unknown. Stage 2 on a U2 build (`9bbd06e35`, reason strings, in Astra's review) will name it.
+- **#607:** the same on R12 and the candidate (evidence commented on the issue). It's still fixed in R13, by owner ruling.
