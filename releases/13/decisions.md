@@ -517,3 +517,4 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
   - Results: 181 existing tests passed before and after, plus 17 new ones. On the merged rehearsal, the gate, release, preparation, providers, guard, e2e, patches and models suites give 180 passed; ruff 2120 → 2117 (locked in).
   - **Follow-up:** lifecycle should expose typed status and `Retry-After` (today the gate parses lifecycle's fixed message for the HTTP status).
   - The ComfyUI bump (Sol, final target `6bfaacc6`) is the last piece before the batch re-run.
+- **2026-11-12 09:19** Correction: the two entries above stamped "10:20" and "10:45" were written at about 09:05 and 09:15 UTC; I estimated their stamps instead of reading the clock. From here, every stamp comes from `date -u`. Census: 0 pods.
