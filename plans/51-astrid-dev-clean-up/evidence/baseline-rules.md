@@ -32,6 +32,8 @@ Status column: **agree** = copies say the same; **conflict** = copies say differ
 | 22 | A claim changes only the Owner line in the plan's plan.md. | `.github/PULL_REQUEST_TEMPLATE/claim.md:6`; `docs/contribution-workflow.md:10`; `CONTRIBUTING.md:5` | agree |
 | 23 | Install the astrid-dev skills into the Codex skills folder. | CCR:22 (deletes the folder, then copies); `skills/astrid-dev-orchestrate/codex-cloud/README.md:10-12` (copies each skill); same file :17 ("Do not remove existing skills") | conflict; each guide's one-line purpose is not yet written (CU-14 work) |
 | 24 | Never read `.env` or credential files. | `docs/handoffs/2026-11-10-track-a-codex-resume.md:40`; `docs/handoffs/2026-11-11-release-13-manager-brief.md:76` | agree; only in dated handoffs, not in a skill |
+| 25 | Run `astrid_dev.py check` before a commit, merge or PR. | `skills/astrid-dev-manage/SKILL.md:28` (before auto-merge of the progress PR) and `:115` (completion PR); `skills/astrid-dev-gap/SKILL.md:45` and `:53`; `skills/astrid-dev-orchestrate/codex-in-claude-cloud/manager-brief.md:55`; `docs/contribution-workflow.md:71` (completion PR touching strategy.md); `docs/extending.md:27`, `:41`, `:63` (code recipes); `.github/workflows/docs.yml:38`, `:44`, `:47`, `:128` (CI runs it; not a human rule). Not in the run contract, iterate skill, or the form templates. | agree on the command; the workflow file is CI, not a rule |
+| 26 | No test, fixture or oracle edit to pass; a worker reports the lines instead. | `skills/astrid-dev-manage/SKILL.md:74` (worker stops, reports the exact lines, manager rules); `skills/astrid-dev-manage/SKILL.md:36` ("no check is weakened to get a pass"); `skills/astrid-dev-plan/SKILL.md:69` (a contract card lists the pinned tests it makes untrue); `skills/astrid-dev-merge/SKILL.md:42` (weaken or skip a failing check); `plans/51-astrid-dev-clean-up/tasks.md:95` (the plan's own card rule). Not stated in the run contract, the iterate skill, the Codex README, or `manager-brief.md`. | agree |
 
 ## Notes
 
@@ -41,6 +43,6 @@ Status column: **agree** = copies say the same; **conflict** = copies say differ
 
 **C. Lines that moved since `1826336`.** `codex-runner.sh` rule: 55 to 57. Others named in the plan (MGR:28, RC:39-40, ORCH:97, GPU:31, ITER:23, RC:25, PLAN:63, CCR:12, CCR:28) are unchanged in content at this commit.
 
-**D. Not listed as rows.** "Run `astrid_dev.py check` before a commit or merge" appears in about seven files (including MGR, BRIEF and `docs/contribution-workflow.md`), but the lines were not collected, so it has no row. A row for it needs a full pass with `grep -rn "astrid_dev.py check"`.
+**D. Skipped sources.** For rows 25 and 26 the dated handoffs under `docs/handoffs/`, `docs/ledger/` and `docs/process-ledger.md` were not searched for the command or the test-edit rule; they hold history, not rules. Row 26's briefs are the Codex manager brief and the plan's own dispatch rule at tasks.md:95; the Codex worker brief at `skills/astrid-dev-orchestrate/codex-cloud/README.md` was read and has no such rule.
 
 **E. Not edited.** Only this file was written. The release and GPU-validation skills were read for copies.
