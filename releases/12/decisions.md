@@ -2,16 +2,62 @@
 
 Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIEW** marks user-visible changes, scope-vs-time trades, named exceptions and anything touching Release 13.
 
-## NOW (updated 2026-11-11 23:35Z)
+## MORNING NOTE (for Hannah; final, 2026-11-12 06:50Z)
 
-- **Scope (owner, 23:10Z):** ship the update fixes as soon as possible. The editor data-loss fixes move to Plan 39: [#252](https://github.com/banodoco/astrid-app/issues/252) video drop, [#253](https://github.com/banodoco/astrid-app/issues/253) a refusal blocks later edits, [#254](https://github.com/banodoco/astrid-app/issues/254) "Save them", [#255](https://github.com/banodoco/astrid-app/issues/255) upload lost at reload. Their workers are stopped and the WIP branches pushed (`scratch/r12-drop-fix`, `scratch/r12-audio-drop`).
-- **Agent candidate** `cand/29-r12` = `c5370a862d0b374afa412dd071418070e76f834c`. The qualifying ci.yml run 43085262585 attempt 2 is done or finishing; the R10 baseline is finishing; the R11 attempt-2 re-run is in progress.
-- **App candidate** `cand/29-r12` = `657773e669d83d67cbc3c9ff067524c5d1e0423c`. Integration `scratch/r12-app-int` = `726655c5f`, with the next round in preparation: + authoring test-double fix `04226223`, + a gate-5 serial-chain precondition fix (Codex), + named exception P39-R12-VIDEO-DROP (Codex). On 726655c5, Direct Journey's direct job passed 45/45. three-products failed only at "M2 real gate 5" (precondition commit never sent in the chain); 8 tests were not run behind it.
-- **Path and honest estimates:** (a) App Tests + Direct Journey green on the integration head: 1.5–3 h (each round is ~25 min of CI plus queue; the 8 not-yet-run tests have only been proven solo). (b) Agent CI comparison and rulings: ~1–1.5 h, waiting on the R11 re-run. (c) merge App main: 10 min. (d) re-pin (release 12, Agent c5370a86, Runtime 42ae24aff, VibeComfy e65f4941, OMP repo banodoco): 30 min plus App Tests/Direct Journey on the pinned head. (e) 11-row matrix: 1–2 h. (f) A-FROZEN: after (e). Total about 4–7 h.
-- **Named exceptions:** P39-R12-DUP-SHOT #249, P39-R12-EXT-BATCH #250, P39-R12-TASK-SWAP #251, P39-R12-VIDEO-DROP #252 (pending), all expiring 2026-11-25. 7 of the 10-entry ceiling with the three older useClipDrag entries. None yet shown failing at its marked step on a real run.
-- **Blocked:** nothing.
+**Release 12 is published and verified.** The orchestrator pushed it at ~04:33Z, by fast-forward with no force:
+- Agent `0e1543e0`
+- Runtime `42ae24aff`
+- App `237b28be9`
 
-- **Workers (from 23:15Z):** new non-taste tasks run on Codex via `codex exec`, one call per task, each in its own git worktree, launched from a thin Claude wrapper. Tiers verified with a trivial read-only call each on the owner's ChatGPT sign-in: N = `gpt-6-luna`, X = `gpt-6.1-terra`, S = `gpt-6.1-sol`, reviews = `gpt-6-astra` (read-only). There is no `gpt-6.1-luna` in the catalog. Taste tasks stay on Opus sub-agents. Workers already running finish on Claude. Fallback used so far: none.
+The gate record is `r12-progress/gate-record` (`releases/12/gate-record.md`); it is GATE-GREEN and has no placeholders.
+
+- **Served:** the install manifest has sha256 `1f3cd5b0…69f1` (release 12, matching SHAs), and install, install.sh and install.ps1 are unchanged. The served-manifest canary is green. Your phone copy "Leverage open source tools" is live, on the Agent tab (`/?experience=agent`).
+- **Main after the push:** nothing new red.
+  - App Tests is now green; it was red before. Runtime's darwin-native and windows-realm-publication are now green too.
+  - Everything else is red on the same jobs or IDs as before the push.
+- **Decided for you (REVIEW):**
+  - add_text defaults to the bundled text-card.
+  - The recovery command is `astrid packs add https://github.com/banodoco/poms_packs --revision main …`.
+  - Five test-only commits came in with the fix round.
+  - The drop data-loss fix goes to Plan 39.
+  - The VIDEO-DROP exception stays (#252).
+  - The bootstrap test runs later in the suite.
+  - The matrix harness simulates "newer release served".
+  - Known issues added to the gate record:
+    - `test_parent_clips` mixed-timeline: test drift.
+    - A darwin custody-lock flake: R11 code, one test about 1 run in 5.
+    - linux-fresh: once showed the generic update wording.
+  - A Pinokio listener-race test fails intermittently; it is pre-existing since R10. Plan 39.
+- **Left for you (needs a person):** merge the R12 record branches into astrid-dev main.
+  - The branches are `r12-progress/decision-log`, `r12-progress/gate-record` and `r12-progress/plan39-handoffs`.
+  - Merging main into them conflicted in other people's docs after the Plan 48 cut-over, so I stopped. Merge against the new model: edit plan.md, then run `python3 scripts/astrid_dev.py sync`.
+- **Release 13:** not this session's scope. No spend and no pods here.
+
+## NOW (updated 2026-11-12 01:27Z, from `date -u`)
+
+**On the critical path:** the qualifying window, all running on one tuple, started ~01:25Z (from `date -u`). Agent CI (about 2 h) is the long pole; expected ~03:25–03:45Z.
+
+**Frozen tuple:**
+- App `237b28be935af49c23464fa6ca1cf30db67ebaa0`: re-pin on `scratch/r12-app-int`; contains App main `3e53462f4`.
+- Agent `0e1543e0da2215db9cb3320cfd1083174c3c62a9`: `cand/29-r12` = `c5370a86` + `r12/fix-round` `cafa71487`.
+- Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`.
+- Manifest sha256 `1f3cd5b0…69f1`; harness `harness/29-r12` `1940a2fe1`; OMP banodoco/oh-my-pi `78f0e096`; Pinokio `d15c58b5` (deferred rows).
+
+**Window, running:**
+- Agent ci.yml on `cand/29-r12`.
+- App Tests and Direct Journey on `scratch/r12-app-int`.
+- Matrix 11 rows, direct_only.
+- Astra read of `cafa71487`, the installed `astrid` command routing `packs`, the last product commit. All earlier fix-round product commits are reviewed and clear.
+
+**Then:**
+- Agent comparison as a **delta** against `c5370a86`: the 64 gone or named, and nothing that passed on `c5370a86` now fails.
+- One red: fix exactly that, re-run only what it affects, carry the rest over.
+- ~04:00Z: A-FROZEN, then GATE-GREEN to the orchestrator; it publishes; then the post-publish checks; then stop.
+
+**Scope closed at the cut (~01:24Z).** The drop side track goes to Plan 39.
+
+- **Exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252. All four proven failing at their markers.
+- **Workers:** Codex N `gpt-6-luna`, X `gpt-6.1-terra`, S `gpt-6.1-sol`, reviews `gpt-6-astra`; log downloads by Haiku. Fallback used: none.
 
 ## Decisions
 - 11 Nov (before 22:20Z) — **R12 T3 015/017 ruling (11 Nov):** closed, pre-existing host-load timeouts, not regressions. On clean GitHub runners, `tests/core/execution/test_process_group.py` (91 passed, 5 darwin deselected) and the three native render-scope selectors in `test_render_scope_launch.py` passed on base `313bbd46` ([run 43075148232](https://github.com/banodoco/astrid-agent/actions/runs/43075148232)) and candidate `53908e55` ([run 43075158431](https://github.com/banodoco/astrid-agent/actions/runs/43075158431)). The other modules in old group 017 are covered by the T5 `ci.yml` run.
@@ -133,3 +179,333 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - The unexpected one is the video drop: a 90 s timeout at `:2187`, waiting for the "wrong verified selection" GET. That step comes before the VIDEO-DROP marker, so the #252 exception doesn't cover it. rv1's local run stopped at the same place.
   - It's also the first time this test has run after EXT-BATCH stopped early under its marker, so leaked seed state is a candidate.
   - Codex Luna is diagnosing it from the trace (`cx-vd`). It may fix the test only if this is drift or leaked state; if it's a product defect or #252, it changes nothing and I rule.
+- 2026-11-11 23:33Z — **Runtime gate item: 0 regressions.** Path item (b) is done for the Runtime.
+  - Codex Luna compared base `3e59cf6b` against candidate `5cdedc01` (both `-rA`) and the exact SHA `42ae24aff`. I recounted from the raw logs myself and got the same result: no candidate-only failing ID in any job.
+  - The candidate's failures match the exact-SHA run ID for ID.
+  - windows-realm-publication and darwin-native go green. The darwin custody spawn goes FAILED → strict XFAIL.
+  - Gate record item 5 is filled in (`r12-progress/gate-record`).
+- 2026-11-11 23:33Z — **Video-drop timeout ruled: #252 itself. The marker was misplaced.**
+  - Codex Luna (`cx-vd`) found, from the trace (which I checked myself), that the wrong-selection video drop makes the import (201) and the ordinary selection read (200), and no verified-selection request at all.
+  - `timelineLocalSaveHandoff.ts:437` refuses prepared video before native placement reads its verified media. So the first #252-dependent step is that verified read. This is earlier than both the original position and rv1's position. The first Astra review had judged rv1's position correct; the trace shows it wasn't.
+  - `48ec9bb70` moves the marker to just after the wrong-selection import, with the reason in a comment. Registry check: 4 authorized, 0 forbidden.
+  - **REVIEW**: this exception now covers most of that test, including the Runtime's wrong-selection refusal, because #252 blocks the whole video path.
+  - An independent Astra review of `48ec9bb70` is running. One question it has: does the wrong-selection refusal have coverage without a video?
+  - Direct Journey 171 on `9afd4aaa6` was cancelled, since it would have hit the same step. It was redispatched on `48ec9bb70`. App Tests on `9afd4aaa6` is still running.
+- 2026-11-11 23:33Z — **Matrix shakedown 602** (App `8f1a19086`, Agent `c5370a86`, Runtime `42ae24aff`, harness `b550ecad`). So far:
+  - Green: linux-fresh, linux r0-handoff, linux-r9-install, linux-r11-update (the HOME fix works) and macos-fresh.
+  - Red: **direct-linux-autostart-off**. The card capture timed out (`journey_autostart_capture.mjs:23`) waiting for the approved sentence. The App's copy matches it exactly (`installerUpdateReasons.ts:15`), so the card never appeared. This is the follow-up `fixes.md` T6 asked for. Codex Terra (`cx-aso`) is diagnosing it from the row's receipts, and may fix only harness defects.
+  - The macOS and Windows rows are still running.
+- 2026-11-11 23:35Z — **Astra review of `48ec9bb70`: BLOCKER, accepted.** The manual-drop save path never makes the verified-selection read. It belongs to the native placement path (`nativePlacementCapture.ts:59`), so "image-only guard" was the wrong explanation. MEDIUM: the wrong-selection import was not asserted before the marker.
+  - I checked the history myself. `7b33f8f50` (22 Oct; in the R10 candidate and the R11 App `57e200b4`) removed the native parent-media placement, including its `getProjectVerifiedMedia` call. The same commit removed the native duplicate mount behind DUP-SHOT. The image-only handoff is what remains, and it is #252's visible symptom.
+  - `ebfc9a1b7`: the marker stays before the verified read, which is the first step needing native video placement. The comment now attributes it to `7b33f8f50` and says the #252 fix must restore native video placement, verified read included. The wrong-selection import is asserted as 201 before the marker. Registry: 4 authorized, 0 forbidden. tsc is clean.
+  - A second independent Astra review (`9afd4aaa6..ebfc9a1b7`) is running. The marker isn't final until it clears.
+  - **REVIEW, Plan 39 follow-up:** there is no unmarked e2e test of the Runtime refusing a wrong verified selection. The only negative case is inside this marked test, and has been unreachable since `7b33f8f50`. The #252 fix must bring it back, or an independent test must be added on the native placement path.
+- 2026-11-11 23:38Z — **Second VIDEO-DROP review (Astra, `9afd4aaa6..ebfc9a1b7`): NO BLOCKER. The marker is final.**
+  - The reviewer confirmed from `7b33f8f50^` (`useAssetManagement.ts:285-317`, `useTimelineCommandsService.ts:543-547`) that native video placement, verified read included, was removed by that commit. The marker sits at the first dependent await.
+  - The MEDIUM coverage gap (no unmarked test of the wrong-selection refusal) is pre-existing and goes to Plan 39 with #252.
+  - LOW (the reason text) fixed in `d31b976e1`: text only, registry 4/0.
+- 2026-11-11 23:38Z — **Matrix autostart-off rows: harness defect, fixed as Agent `harness/29-r12` `d92ea0ee6`** (Codex Terra; I checked it against the App code).
+  - The candidate App deliberately shows no autostart-off card on a current install (`resolveUpdate.ts`, `silentWhenCurrent`, CONTRACTS K6), and the row served the candidate's own release 12 to a Release 12 install. The capture also lacked the local-network permission it needs to reach the loopback Runtime.
+  - The fix serves a copy of the candidate manifest with release 13, so a newer release is on offer. It grants local-network access, waits for the connected indicator (`RuntimeConnectionPill.tsx:78`), then opens Settings as the App's Direct Journey does (`:1378`). The exact sentence is still required, and the pre-capture refusal checks are unchanged.
+  - Unit tests: 24 passed. I ran them myself in a scratch environment, since Codex had no pytest.
+  - **REVIEW**: the next-release offer is simulated. It's the smallest stand-in for "R13 served", which can't exist before publication.
+  - The independent Astra review of `b550ecad..d92ea0ee6` is running. The fix qualifies in the next matrix run; run 602 continues on `b550ecad` for the other rows.
+- 2026-11-11 23:38Z — Orchestrator check-in 4 noted:
+  - Runtime: already ruled, 0 regressions.
+  - The NOW block is refreshed, and timestamps come from `date -u`.
+  - The six not-run tests run in Direct Journey 172 on `48ec9bb70`, which has the corrected marker position, so they're known when it lands.
+  - The video-drop marker sits at the first save-dependent step with everything before it asserted, not at the top.
+- 2026-11-11 23:40Z — **Astra review of harness `b550ecad..d92ea0ee6`: BLOCKER, verified and accepted.**
+  - The diagnosis is confirmed: `resolveUpdate.test.ts:404-414` pins "no card when current, card when behind".
+  - BLOCKER: the capture installs `playwright@1.47.2` (`journey_version_jumps.py:1552`), which has no `local-network-access` permission. I checked the 1.47.2 package myself: there are 0 occurrences in its `crBrowser.js`. The App's 1.60.0 has it.
+  - MEDIUM: the page-wide text wait could match the quiet update notice outside Settings.
+  - MEDIUM, pre-existing, **REVIEW**: a macOS capture failure is recorded as `unverified` but the row still passes (`:1716-1739`), so a green macOS row doesn't prove the card. That's a Plan 39/harness follow-up and not changed for R12.
+  - LOW: the capture receipt doesn't record the simulated release.
+  - Codex Luna (`cx-aso`) is applying: the pin to `playwright@1.60.0`; scoping to `#settings-updates` with the "Copy instructions for your agent" action and a section screenshot, as App `direct-journey.spec.ts:1376-1386` does; and recording the real and advertised releases. A reviewer reads it before the matrix uses it.
+- 2026-11-11 23:43Z — **Matrix shakedown 602 done** (harness `b550ecad`; App `8f1a19086`, Agent `c5370a86`, Runtime `42ae24aff`, Pinokio `d15c58b5`): 10 of 11 rows green.
+  - Linux: fresh, r0-handoff, r9-install, r11-update. macOS: fresh, r0-handoff, r9-install, r11-update, autostart-off. Windows: fresh.
+  - Red: linux autostart-off, the harness defect.
+  - The aggregate "Journey evidence" job fails only because a dependency failed.
+  - The macOS autostart-off green does not prove the card: a macOS capture failure is recorded as `unverified` and the row still passes. That's the pre-existing follow-up already flagged.
+- 2026-11-11 23:43Z — **Harness fix `fbd7e7e71`** on Agent `harness/29-r12` (Codex Luna, which I reviewed): Playwright pinned to 1.60.0; the capture scoped to `#settings-updates` with the agent action and a section screenshot; the receipt records `served_release_real` and `served_release_advertised`.
+  - I fixed one ordering race myself: the exactly-once count is now taken after the sentence is visible, not before the card renders.
+  - Tests: 24 passed.
+  - The independent Astra review of `d92ea0ee6..fbd7e7e71` is running. A validation matrix run on `fbd7e7e71` (same tuple) is dispatched in parallel. The qualifying matrix waits for the review.
+- 2026-11-11 23:44Z — **Astra review of harness `d92ea0ee6..fbd7e7e71`: NO BLOCKER. The harness hold is lifted.**
+  - Confirmed: Playwright 1.60.0 maps `local-network-access` to Chromium's permissions, and its CLI install step is unchanged.
+  - Confirmed: the scoped sequence is strict (`waitFor` is strict, so a duplicate throws), and the quiet notice can't satisfy it.
+  - Confirmed: the release fields are consistent with the intercept.
+  - LOW (follow-up, not R12): the unit test checks source strings, not capture behaviour. The live matrix capture is the proof.
+  - The qualifying matrix uses `harness/29-r12` at `fbd7e7e71` or later. A validation run on the shakedown tuple is in flight.
+- 2026-11-11 23:56Z — **App Tests 633 on `9afd4aaa6`:** vitest (including the renamed documentNavigation test) and release-tooling-macos are green. `boundary` is red only on the Agent vendor lock against the pin, which the re-pin clears.
+- 2026-11-11 23:56Z — **Direct Journey 172 on `48ec9bb70`:** `direct-journey` green. three-products: 9 passed, 1 unexpected, 4 not run.
+  - Gate 5 and the restored bootstrap test pass.
+  - EXT-BATCH and VIDEO-DROP now fail as expected at their marked steps: 2 of the 4 exceptions proven on a real run.
+  - Unexpected: "M1 real dependency conflict" (`:2522`) at `openSeededTimeline` (`app.ts:257`). The project selector showed "Bootstrap actual …", the project the bootstrap test (test 7) creates and opens. This is a serial-state leak: test 7 had never run before this round.
+  - Fix: test 7 restores the selected project it found, without weakening any assertion. With Codex Luna (`cx-g8`).
+  - In parallel, following the orchestrator's advice, the four never-reached tests (DUP-SHOT, mixed editing, TASK-SWAP "render R", empty bootstrap) run in isolation on `scratch/r12-iso` `516f21bd4`. That's `d31b976e1` plus a scratch-only `--grep` in the workflow, which never ships.
+- 2026-11-11 23:59Z — **Project leak fixed by test order, `7a971cea5`. Codex's fix rejected.**
+  - Codex Luna (`cx-g8`) proposed a `finally` that restores the Runtime's project selection. That can't work, and I checked why. Each test gets a fresh browser context (`support/app.ts:170`). With no project in the URL, the editor uses the last-opened project from local storage, which is empty, and otherwise `mostRecentlyCreatedProject` (`VideoEditorPage.tsx:279-290`). It never reads the Runtime's selection.
+  - Instead, the bootstrap actual consumer test moves, unchanged, to just before "empty bootstrap", the other project-creating test. Every serial test that expects the seeded project now runs before any second project exists.
+  - I verified it as a pure move: the line multiset is identical apart from three comment lines. Registry 4/0, tsc clean.
+  - Direct Journey is dispatched on `7a971cea5`.
+  - **REVIEW**: this documents an ordering dependency; it doesn't remove it. Making the suite order-independent is a Plan 39 follow-up.
+  - The full R12 test-change range gets one more independent review before A-FROZEN.
+- 2026-11-12 00:08Z — **three-products table** (for the owner's scope view; this replaces the time-boxed message under the d285c34 rules). Integration head `7a971cea5`; latest full run 43120357069 on `48ec9bb70`.
+
+  | # | Test | State | Cause / ruling |
+  |---|---|---|---|
+  | 1 | concurrent edit (`:417`) | pass | test drift fixed |
+  | 2 | Runtime restart (`:611`) | pass | test drift fixed |
+  | 3 | M1 real gesture (`:1558`) | pass | |
+  | 4 | M2 real gate 5 (`:1691`) | pass | serial-seed drift fixed (5→0 reset, `e2d48f428` baseline) |
+  | 5 | M2 ordinary extension batch | expected failure, proven at marker | P39-R12-EXT-BATCH #250 (stale harness) |
+  | 6 | M2 manual video drop | expected failure, proven at marker | P39-R12-VIDEO-DROP #252, product: native video placement removed in `7b33f8f50` (in R10/R11). The fix is a candidate side track (below) |
+  | 7 | bootstrap actual consumer | pass | assertions restored; moved to run last (`7a971cea5`) |
+  | 8 | M1 real dependency conflict | failed on a project leak from 7 | fixed by order `7a971cea5`; DJ running |
+  | 9 | M2 native occurrence duplicate | not yet reached | P39-R12-DUP-SHOT #249; isolation run on `scratch/r12-iso` |
+  | 10 | M2 mixed editing | not yet reached | isolation run |
+  | 11 | render R, publish R+1 | not yet reached | P39-R12-TASK-SWAP #251; isolation run |
+  | 12 | empty bootstrap | not yet reached | isolation run |
+  | 13 | M2 native None single | pass | |
+  | 14 | M2 native None bulk | pass | |
+
+  Product bugs open in R12: none beyond the four named exceptions (#249 shared with R10/R11; #250 harness; #251 Agent gap shared with R10/R11; #252 owner-deferred).
+- 2026-11-12 00:11Z — **Owner (via orchestrator): #252 may come back into R12 on my judgment.** It comes in only if it is green and reviewed by the time everything else is ready for the re-pin, and it never holds the freeze. #253, #254 and #255 stay with Plan 39.
+  - Decision: run it as a side track. `scratch/r12-drop-side` `05ac65ca5` = integration `7a971cea5` plus video fix `f530e0015`→`10407d784`, truthful text `e57507a1f`→`643619499`, the fresh-project video test `85125e6a6`→`20be9d2b4`, the audio import route `008494364`→`191863ca9`, and the audio test `9e454fac1`→`05ac65ca5`.
+  - Two conflicts were adjacency only. I placed the new tests among the project-creating tests at the end, consistent with `7a971cea5`. Registry 4/0, tsc clean.
+  - The orchestrator's "bonus" doesn't hold as-is. The fix saves video through the manual-save handoff (`clip.add-media`) without restoring the verified-selection read, so the marked three-products video-drop test would still stop at that read. Meanwhile its exception text, "dropped video is not saved", would become untrue.
+  - The side track therefore includes converting that test to the fixed path, with Codex **Sol** (`cx-vd2`). The tampered selection must be refused by the Runtime at commit, nothing written, and the exact native ADD recovery kept. The VIDEO-DROP exception is removed only if the full contract is proven.
+  - Running: an independent Astra review of `7a971cea5..05ac65ca5`, plus App Tests and Direct Journey on `05ac65ca5`.
+  - If any of it isn't green and reviewed when the main track reaches re-pin, the main track freezes without it.
+- 2026-11-12 00:11Z — **Publication pre-authorised to the orchestrator once GATE-GREEN holds.** The gate record must carry exact commands with expected SHAs (Agent main, then Runtime main, then App main, which deploys), the served-manifest check, and the protected-branch and required-check findings. I'm establishing those now.
+- 2026-11-12 00:14Z — **App main moved past the cut-off.** `acfe70e7b` (onboarding tour, 24 files, +720) was pushed at 23:25Z by another session (`…W1zBiskaEWc4tZST1r`, not R13's manager). Publication is fast-forward only, so I merged it cleanly into the integration as `02b049ccd`, and it gets tested with the candidate. R12's TourCard fix survives the merge.
+  - **Messaged the orchestrator** (only they or Hannah can do this): hold App main still until publication.
+  - Branch protection: main is unprotected on all three repos, with no required checks visible; rulesets weren't readable without admin. Recorded in the gate record with an ancestor check before each push.
+- 2026-11-12 00:14Z — **Astra review of the drop fix `7a971cea5..05ac65ca5`: NO BLOCKER.**
+  - The Runtime rechecks the five-field selection, project membership and catalog digest inside the acceptance transaction (`timeline_commit_port.py:387-393, :974-990, :1052-1075`; `timeline_commit_store.py:1841-1854`). Dropping the App-side read doesn't remove the Runtime's authority.
+  - MEDIUM: the fresh-project e2e tests don't assert the exact command, object, track or span. MEDIUM: the adversarial case is covered only by the marked test (the Sol conversion is in progress).
+  - Rated LOW by the reviewer and treated by me as a weakened check that must be restored: `191863ca9` dropped the audio unit test's negative assertions and its exact target track.
+  - Codex Luna (`cx-drop2`) is restoring and strengthening those. The side track enters R12 only with all of this done and reviewed.
+- 2026-11-12 00:15Z — **Video-drop test conversion (Codex Sol): not possible in R12. The exception stays, restated.**
+  - Sol traced the fixed path at Runtime `42ae24aff`. A tampered selection is refused at commit with 404 `not_found` (`timeline_commit_port.py:983-988`; `errors.py:57`).
+  - But a real commit refusal persists a rejected outbox chain (`localSaveSession.ts:125, :224`), and further edits are refused until it is resolved (`:292`). The test's later correct drop in the same mounted owner can't proceed. That is #253, owner-deferred to Plan 39.
+  - Sol changed nothing (per D). Its local journey run hit a Node heap limit during the hosted build; CI is the venue.
+  - Decision: the side track keeps the marker where it is, with every assertion unchanged, and restates the exception honestly. Reason, comment and registry issue now point at #253 (side branch `scratch/r12-drop-side`, new head after `05ac65ca5`). Registry 4/0.
+  - On the main track (no #252 fix), the #252 wording stays as it is.
+  - **REVIEW**: if the side track is taken, the VIDEO-DROP exception's issue changes from #252 (fixed) to #253.
+- 2026-11-12 00:19Z — **Agent CI comparison (gate item 2): 153 IDs in the regression bucket. Not yet ruled. REVIEW.** Full report at `/home/user/logs/ci/gate2/report.md` (local).
+  - Coverage gaps: candidate shard 5 was cancelled at the 2 h limit. There is no baseline for shard 1. R10 shards 1, 3 and 4 and R11 shards 1 and 5 are missing.
+  - Buckets: regression 153, no-baseline 131 real, pre-existing 815, fixed 45, missing 315 (mostly shard 5 truncation and shard drift).
+  - My own split: **89 passed only on R10, and every one also fails on R11** (checked against `r11.combined.log`). They were introduced by R11, which is shipped, so they are not R12-caused and are pre-existing relative to what users have. REVIEW: R11 shipped them.
+  - **64 passed on R11 and fail on the candidate.** These are the real R12 question:
+    - About 41 are one cluster: `ElementPackNotInstalled` (am-sprite, am-type, text, reveal) and editing_conformance. The candidate range `a105de3a..c5370a86` (207 commits) adds +307 lines to `astrid/sdk/timeline_address.py`, where `element_pack_not_installed` is raised.
+    - About 23 are other cases.
+    - Codex **Sol** (`cx-g2a`) is answering the user-impact question for the cluster: can an R11 user with these elements still open and commit on R12? Codex **Terra** (`cx-g2b`) is categorising the other 23.
+  - Darwin: the candidate matches R11 exactly (13 IDs).
+  - Installer tests run on Linux in default-lane shards 6 and 7. Five files are deselected or not imported, which matches R10. Codex can't run them, so the lane question stays open.
+  - This item now holds A-FROZEN.
+- 2026-11-12 00:19Z — **Main track:**
+  - Direct Journey 174 on `7a971cea5`: the dependency-conflict test now passes, and three expected failures were shown (EXT-BATCH, VIDEO-DROP, DUP-SHOT). Unexpected: mixed editing at `:2766`. It saw earlier serial tests' undos in seed3's history; the test passed in isolation (run 173).
+  - Fixed in `d9e2798d4`: the no-undo check covers exactly this test's three new entries. App Tests and Direct Journey are dispatched.
+  - Isolation run 173 (`scratch/r12-iso`): DUP-SHOT and TASK-SWAP fail as expected, and mixed editing and empty bootstrap pass. **All four named exceptions are now shown failing at their marked steps on real runs.**
+- 2026-11-12 00:19Z — **Side track `scratch/r12-drop-side` = `e4df8e0dc`:** the restated VIDEO-DROP (#253, `55949d1e9`); the restored audio unit test checks and pinned e2e command, media, track and span (`ed07f027a`, Codex Luna, which I reviewed); and the merged integration head `d9e2798d4`. Registry 4/0, tsc clean. App Tests and Direct Journey are dispatched. It still needs a reviewer read of `05ac65ca5..e4df8e0dc`.
+- 2026-11-12 00:20Z — **Owner (via orchestrator): one more push to App main, then main is held.** The tour session (`…W1zBiskaEWc4tZST1r`) will push once more. No re-pin and no final round until that push has landed and is merged into the integration head. If I'm otherwise ready and it hasn't appeared within about 30 minutes, I message the orchestrator once. Any further commit on main after that gets reported.
+- 2026-11-12 00:20Z — **Owner: lean toward speed. Effective now:**
+  1. A green early run on the exact frozen tuple (same SHAs, same manifest sha256) counts as qualifying.
+  2. The Agent comparison is ruled against R10 once that side is complete; an incomplete R11 side is recorded as an outage.
+  3. Astra is required only for product-code changes. Test-only and marker fixes get my own read.
+  4. Never-run three-products tests still red for stale harness may become named exceptions on my authority, up to 10.
+  5. The drop side track is taken only if it's already green at re-pin.
+  6. Runtime CI red that is also red on main's latest run: record and move on.
+  7. Post GATE-GREEN without a pre-audit.
+
+  **Not loosened:** no weakened checks outside the registry; no exception for an R12-introduced bug; what's published is exactly what was tested; a truthful list of known issues; the 11-row matrix green on the frozen tuple, native Windows included. A red matrix on a real install or update failure is the one thing to stop for.
+
+  Consequence for the Agent comparison: the 64 IDs that passed on R11 and fail on the candidate still need a ruling, because "no exception for an R12-introduced bug" stands. Sol and Terra continue.
+- 2026-11-12 00:22Z — **Side-track review (Astra, `55949d1e9` and `ed07f027a`): BLOCKER ×2, both in the new e2e assertions. Fixed as `3622b91a7`** (test-only, my own read under the owner's rule 3).
+  - `records.commands[].selections` holds structural agent selections, not media selections. That assertion is removed; the five-key and digest checks on `args.media` stay.
+  - `args.row.id` is the clip id; `args.row.track` is the track. The tests now assert `row.track` is V1 or A1, and `row.id` equals the saved clip id.
+  - tsc clean, registry 4/0. Direct Journey is redispatched on the side branch, which cancels the stale run.
+  - MEDIUM, kept as **REVIEW**/follow-up: the restated VIDEO-DROP exception still stops at the obsolete verified-read wait, so it wouldn't turn green when #253 is fixed. Converting it is Plan 39 work (#253). Also noted: a bare 404 classifies as `unknown`/retry in `client.ts:314-326`, so the comment's "404 not_found" path needs the typed details.
+  - LOW, follow-up: the prepared-entry filename, type and duration checks that `191863ca9` removed are not restored.
+  - Under rule 5, the side track enters only if it's already green when the main track reaches re-pin.
+- 2026-11-12 00:33Z — **Agent comparison: the 64 R11-passing regressions are ruled. R12 introduced real product regressions, so there will be an Agent fix round.** Sources: Codex Sol `g2a` and Terra `g2b` (reports in `cx-g2a` and `cx-g2b`), checked by me against the code and the merge history.
+  - **Product regressions, R12-introduced** by `924b3b880` and `25b1e8ea1`, which came in on the R12 fix branches `r12/r10-schema-fail-closed` and `r12/schema-cache-invalidation`:
+    1. Exact-ID schema lookup rejects the supported `text` alias for bundled `text-card`. Text clips can't have parameters changed or be created populated. 7 IDs. The refusal is visible and nothing is written, but it blocks ordinary editing.
+    2. The documented default `t.add_text` hardcodes `am-type` from the optional astrid_motion pack, so the first-run example fails on a default install. 1 ID.
+    3. The printed recovery command `astrid packs add astrid_motion` is rejected by the CLI.
+    4. Core pack-boundary ratchet: new pack literals in core (`gpu_environment.py`, `discovery.py`).
+  - **No exception is allowed for these (owner rule).** They are fixed forward, not reverted: the fail-closed change is a deliberate R12 fix.
+  - **Test drift** from the deliberate fail-closed policy, where the test inventory lacks the provider: about 31 motion, 2 reveal, 8 CLI/v10. Plus 5 SimpleNamespace doubles lacking `diagnostic`, and 3 teardown patch leaks.
+  - `test_installer_platforms` ×3 also fails on R10, so it's pre-existing against R10 (rule 2).
+  - **The 89 R10-only regressions** all also fail on R11: introduced by R11 and already shipped. **REVIEW.**
+  - **No-baseline (131 real):** 115 are in shard 1, which has no baseline on either side (R10 log missing, R11 cancelled). 45 are `ModuleNotFoundError: tests.test_verified_host_launch`; that module is absent on both R11 and the candidate, so they're pre-existing. The one new-in-R12 file, `tests/core/pack/test_windows_publish.py`, fails on Linux with a PermissionError: an R12 test to fix. A local by-ID R11-vs-candidate run of all 131 is building the missing baseline.
+  - **Fix round, in progress:** four Codex tasks in clones of `c5370a86`.
+    - Sol `afa`: text alias resolution shared with the renderer, add_text defaulting to text-card, and the recovery command. Product code, so Astra review required.
+    - Terra `afb`: motion and reveal fixtures plus registry-cache clearing.
+    - Luna `afc`: the boundary ratchet. Product code, so Astra review required.
+    - Luna `afd`: the doubles and teardown.
+  - Then: merge into a new Agent candidate, run Agent CI, re-pin, final round. **REVIEW: add_text's default element changes from am-type (motion) to text-card (bundled).** That's a visible default change, chosen because am-type can't work on a default install.
+- 2026-11-12 00:35Z — **The last App main push has landed and is merged.** App main = `3e53462f4` (tour only; 9 files, +198), directly on `acfe70e7b`. The orchestrator says the tour session has stopped and App main is held. Merged cleanly into the integration as `824439ff9`; registry unchanged. That unblocks the re-pin on this point. Its first end-to-end check is the next Direct Journey on the integration head, dispatched once the in-flight `d9e2798d4` runs finish (per-ref cancel-in-progress). Any further commit on App main gets reported to the orchestrator.
+- 2026-11-12 00:42Z — **Round results** (collected by Haiku; logs in `/home/user/logs/collect/`):
+  - **Matrix 603** (harness `fbd7e7e71`, tuple App `8f1a19086`): the autostart-off fix works, with both the Linux and macOS autostart-off rows green. 10 of 11 green, native Windows included.
+    - Red: **direct-linux-fresh**. "The open page never showed the update's result by itself" (30 min wait for "Astrid updated: Release X → Release Y"). That row was green in 602, and the harness delta doesn't touch it.
+    - This could be a real update failure, the one thing worth stopping for. Failed jobs are re-run on 603 to separate a flake from a real fault. If it's red again, it gets diagnosed before anything else.
+  - **Direct Journey 176 on `d9e2798d4`:** "concurrent edit" (`:417`) failed waiting for the conflict dialog after "Save them" (`:571`). It passed in every earlier run and in the side run C, so it's a flake candidate. It reruns on `824439ff9` (dispatched); if it's red twice, it gets diagnosed.
+  - **Side track (Direct Journey 178 on `3622b91a7`):** all **4 expected failures failed at their markers**, and mixed editing passes. One unexpected: "fresh project video drop" asserted exactly one command, but the commit carries two, because the drop also creates the track. Fixed (test-only, my read): exactly one `clip.add-media` and no other clip write, `63ebc10d3` after merging integration `824439ff9`. Direct Journey redispatched.
+  - App Tests 636/637: only the known vendor-lock red.
+- 2026-11-12 00:43Z — **No-baseline bucket ruled.** I built the missing baseline locally (Haiku, by test ID; `/home/user/logs/ci/gate2/local-baseline.tsv`), R11 `a105de3a` against the candidate `c5370a86` for all 131 IDs.
+  - 119 fail or error identically on R11, so they're pre-existing.
+  - 6 can't import on either side (`vibecomfy.schema` absent; they need ASTRID_VIBECOMFY_CHECKOUT), so they're environment-only and pre-existing.
+  - 4 `test_installer_sources` IDs are new and PASS on the candidate.
+  - `test_windows_publish` is new and failing; fixed as `bec57f416` on `r12/fix-round`.
+  - One R12-introduced test-hygiene failure: `test_claim_head_of_line::…stays_in_milliseconds`. The body passes, then teardown errors every time, because the test's no-walk patch is still active when an R12 conftest teardown walks the filesystem. R11 is clean. Fix with Codex Luna (`cx-afg`).
+  - Not CI-equivalent (local, single process), but it's the only baseline available for shard 1. **REVIEW.**
+- 2026-11-12 00:52Z — **Owner request: phone home-page callout copy.** "Integrated into open-source tools" becomes "Leverage open source tools" (`src/pages/Home/PublicAstridCallouts.tsx:103`, `phoneTitle`; the desktop title is unchanged). Committed on the R12 integration, so it ships with R12. No test pins the string; the Home vitest run passes 188/188 and tsc is clean. Covered by the final round.
+- 2026-11-12 00:55Z — **Agent fix round is on `r12/fix-round` = `3e2a254e5`** (on the candidate `c5370a86`; pushed). I reviewed every diff and committed each piece separately:
+  - `bec57f416`: test_windows_publish fully simulates the Windows branch. Codex's addition of this module to the native Windows CI job was **dropped**: it was never run there, and adding it risked a new red.
+  - `4601e8859`: the claim_head_of_line no-walk guard is scoped to the admission calls.
+  - `a17e0555a` (**product**, Codex Sol plus my corrections):
+    - One shared alias policy (`astrid/core/element/clip_types.py`) for schema lookup, the renderer and render admission, so `text` resolves to installed text-card.
+    - add_text creates text-card `content`.
+    - Recovery command is source-complete. I removed Codex's `--revision '<reviewed revision>'` placeholder so the printed command actually runs (`--revision` is optional; add shows the resolved revision before consent).
+    - Focused files: 31 passed. Codex's last run of the same file had 1 failure.
+  - `e032192e2` (Codex Terra): motion fixture inventory with cache clears; reveal seed provider.
+  - `3e2a254e5` (Codex Luna): real `Backend.diagnostic` bound on doubles; scoped fstat and rmtree patches.
+  - Codex's own whole-file runs showed failures in suites that already fail massively on R11, so they aren't evidence by themselves. A by-ID before/after comparison on the affected suites (Haiku, local) is running. Astra review of `a17e0555a` is running.
+  - The core boundary ratchet fix: Luna did nothing; retried on **Terra**.
+  - Next: Agent candidate = cand/29-r12 + fix-round (merge), then Agent CI.
+- 2026-11-12 00:59Z — **Core boundary fix `abd1886ee`** on `r12/fix-round` (Codex Terra, after Luna did nothing; I reviewed it).
+  - `comfy_wrap.run` → vibecomfy now goes through the pack's own `gpu-capabilities.json`, which is packaged by `packs/**/*.json`.
+  - Discovery uses the existing `ExternalPackSource.LOCAL`. Same string, same behaviour.
+  - Ratchet and baseline untouched. The ratchet and GPU tests pass (67). Codex's discovery-suite failures (22) are identical before and after, so they're pre-existing.
+  - Astra review of this commit is running; it's product code, so required.
+  - The fix-round head is now `abd1886ee`. The local before/after comparison may straddle this commit; rerun pinned if it looks inconsistent.
+- 2026-11-12 00:59Z — **Astra review of product fix `a17e0555a`: BLOCKER, accepted. The blocker is my own correction.**
+  - Removing `--revision` made `astrid packs add` take folder mode (`cli_manage.py:345`; `transaction.py:1282`), so the recovery command still can't install.
+  - MEDIUM: an alias shadows an exact non-effect element of the same ID.
+  - MEDIUM: add_text's `content` is invisible to the visualize motion labels (`motion/model.py:99`), CLI cut summaries (`timeline_cuts.py` TEXT_PARAM_KEYS) and visualize caption extraction (`model.py:582`).
+  - LOW: two duplicate alias implementations remain (`_effect_registry.py:319`, `storage.py:231`).
+  - Confirmed sound: resolution order for effects matches rendering; an alias never names an absent provider; every schema entry point delegates to the resolver; `{content}` satisfies the full text-card JSON schema.
+  - All four go to Codex **Terra** (`cx-afa2`). The recovery command must be proven by a real install into a scratch packs root, and checked by test ID before and after. The fix round's product code is held until a reviewer has read the fix.
+- 2026-11-12 01:01Z — **Boundary fix review (Astra, `abd1886ee`): NO BLOCKER.**
+  - Confirmed: the ratchet's scanner exempts VibeComfy as a core pack, so reading its declaration is a permitted coupling. Discovery's AST is identical to the parent's. `packs/**/*.json` ships in the wheel.
+  - MEDIUM, fixed as `dc87e6230` (my edit, small, product code): a malformed or missing `gpu-capabilities.json` now means no aliases instead of aborting preflight for every capability. Five fault tests and a shipped-file test; 73 passed. It joins the next Astra round together with Terra's `afa2` follow-ups.
+  - LOWs, follow-up: the missing-declaration case is silent; the repo-shape doc describes `local` as ordinary, which predates this.
+- 2026-11-12 01:13Z — **Owner path to shipping received** (orchestrator, 01:12Z). Recorded in NOW with target times. Deviation: the fix round keeps its test-only commits and the `dc87e6230` hardening (reason in NOW). The drop side track isn't merged at the cut, so it goes to Plan 39. The Plan 39 structural-fix update (owner request, 01:00Z) is a doc on the plan branch and doesn't touch either candidate.
+- 2026-11-12 01:13Z — **Matrix 603 attempt 2 is also red.** Assumed `direct-linux-fresh` again; the job list is being confirmed. The row was green in 602 on harness `b550ecad` with the same tuple. On `fbd7e7e71` it timed out twice waiting for "Astrid updated: Release X → Release Y".
+  - Two reds is not a flake by default, and a real fresh-install update failure would stop the release (owner rule). It's being diagnosed now, in parallel with the Agent fix, by Codex **Terra** (`cx-lf`), with the attempt 1 and 2 logs and receipts plus the green 602 receipts.
+  - The main question: does the harness delta (Playwright 1.60 capture browser) reach this row?
+- 2026-11-12 01:17Z — **Matrix 603 ruled. No release-stopping failure.**
+  - **direct-linux-fresh, attempt 1:** the update itself succeeded. The job record says `updated`, release 12 → 13, transaction `complete`, and the Runtime restarted and reconnected. Only the page notice was the generic "Astrid updated. Reload to continue." instead of the release-transition line "Astrid updated: Release 12 → Release 13". That line depends on an 8-second sessionStorage transition (`liveUpdate.ts:37-56`), and the page missed it.
+  - **Attempt 2:** the same row was green.
+  - The harness delta can't reach this row: `install_capture_browser` and `capture_autostart_card` run only on the autostart-off leg. Same Chromium and runner image across all three runs.
+  - Ruling: an intermittent miss of the specific transition wording, not an install or update failure. It goes in the known issues, with a Plan 39 follow-up to make the transition notice robust. **REVIEW.**
+  - **All 11 rows green on attempt 2** (Codex Terra `cx-lf`).
+- 2026-11-12 01:17Z — **The aggregate evidence check is still red:** "direct-linux-autostart-off / direct-macos-autostart-off: installed import origins are absent". That's a harness gap: the autostart-off leg never runs `journey.verify("install")`, so it records no `origin.imports`, which the aggregate requires of every row. Fix with Codex Luna (`cx-aso`). It's harness-only, so my read is enough (rule 3), and it goes onto `harness/29-r12` before the qualifying matrix.
+- 2026-11-12 01:18Z — **Plan 39 updated with structural fixes from Release 12 (owner request).** `r12-progress/plan39-handoffs` = `2e6773d`, drafted by an Opus sub-agent from my brief, spot-checked by me; the docs checks pass.
+  - New "Phase 4: structural fixes":
+    - SF1a/b: each three-products test seeds its own project, the suite runs in parallel, and a nightly shuffle runs.
+    - SF2a–c: expected failures name their step and error pattern; an unmarked wrong-selection refusal test; VIDEO-DROP converted after #253.
+    - SF3a–c: JUnit and `-rA` artifacts on every main and int run; a no-rerun baseline diff; a shard time budget.
+    - SF4: candidate scope rule.
+    - SF5: release freeze, via a ruleset plus a release-contract check.
+    - SF6a–e: single alias policy; inventory-keyed registry cache; printed-command tests; the 45 bad `tests.` imports; a patch-leak guard.
+    - SF7: matrix capture gating, and the simulated release becomes a named option.
+  - Extended rows: K1a, K1c, K5, Owner.
+  - Estimate: +13–16 worker-days.
+  - **REVIEW, for Hannah:** SF4's proposed limit (30 commits or 3,000 lines per repo) is a placeholder for you to set. SF4 and SF5 need an advisor review before they start.
+- 2026-11-12 01:22Z — **Agent fix-round follow-ups integrated: `cef4c2850` on `r12/fix-round`** (Codex Terra, plus my correction).
+  - Terra found the top-level `python -m astrid packs` is "unknown command" and proposed `python3 -m astrid.core.pack.cli add …`. That would not work for a shipped user: `python3` on PATH lacks Astrid.
+  - I traced the shipped entry instead: pyproject `astrid = astrid.console:main`, with `console.py:22-25` routing `packs`. The **documented** command `astrid packs add https://github.com/banodoco/poms_packs --revision main --pack-id astrid_motion --subpath astrid_motion` installs astrid_motion end to end from poms_packs `2379ab54` (run myself through `astrid.console.main` into a scratch packs root). That is the shipped command, and the test drives the parser and handler into the Git install transaction.
+  - Also in this commit: exact IDs of any kind before aliases (collision test); `content` read by the visualize labels, caption extraction and CLI cut summaries (`test_add_text_readers.py`); and the duplicate alias copies routed through the shared policy.
+  - Terra's by-ID check on the touched suites found nothing that passed before and fails after. My focused run: 105 passed.
+  - **Final Astra read of `abd1886ee..cef4c2850`** (product: `dc87e6230` + `cef4c2850`) is running.
+  - The cut merge is prepared locally as `b186d4204` (cand/29-r12 + fix-round) and pushes when the review clears.
+- 2026-11-12 01:22Z — **Matrix harness `1940a2fe1`** (Codex Luna, which I reviewed; harness-only): the autostart-off leg runs `journey.verify("install")` and records `import_origins` like every other leg. 192 passed. The qualifying matrix uses `harness/29-r12` `1940a2fe1`.
+- 2026-11-12 01:27Z — **Final fix-round review (Astra, `abd1886ee..cef4c2850`): BLOCKER.** The installer's `astrid` shim runs run-astrid, which execs `python -m astrid.omp_agent` and bypasses `astrid.console`, so `astrid packs add …` failed on real installs.
+  - That also broke the documented pack-add command in the creative-work skill, for every moved pack.
+  - Fixed as `cafa71487`: `omp_agent.main` routes `packs` exactly as `console.main` does. I ran it end to end: `python -m astrid.omp_agent packs add … --revision main` installed astrid_motion from poms_packs. The tests prove the installed entry routes it. The recovery test is renamed to say it covers argument forwarding (LOW).
+  - All other findings in that review are confirmed fixed.
+  - Under the owner's path ("the Astra read runs in the same window"), the read of `cafa71487` runs in parallel with the qualifying window. A blocker there means: fix only that and re-run only what it affects.
+- 2026-11-12 01:27Z — **Agent candidate cut: `cand/29-r12` = `0e1543e0d`**, merging `r12/fix-round` `cafa71487`; 30+ files.
+  - **Re-pin `237b28be9`** on `scratch/r12-app-int`: agent.sha 0e1543e0, OMP source → banodoco/oh-my-pi at the same sha, vendor lock regenerated against the cut. `pin.mjs --check`, both vendor-lock checks and release-guard `origin/main HEAD --pins` (11 → 12) all pass. App main is an ancestor.
+  - **Qualifying window dispatched together:** Agent ci.yml, App Tests, Direct Journey, matrix (harness `1940a2fe1`).
+  - Gate record tuple and publication SHAs filled in.
+- 2026-11-12 01:28Z — **Astra read of `cafa71487`: NO BLOCKER.** Every Agent product commit in the fix round is now reviewed with no open blocker; recorded in the gate record.
+  - The reviewer confirmed the route behaves identically to console's and that the conversational collision matches what console already does.
+  - LOW (Plan 39, scope closed): the runner test checks the source text rather than running the runner.
+- 2026-11-12 01:53Z — **Qualifying window on the frozen tuple (App `237b28be9`, Agent `0e1543e0`, Runtime `42ae24aff`): App and matrix are GREEN.**
+  - App Tests [43134514508](https://github.com/banodoco/astrid-app/actions/runs/43134514508): all jobs pass, including `boundary` now that the locks match the pin.
+  - Direct Journey [43134521115](https://github.com/banodoco/astrid-app/actions/runs/43134521115): `direct-journey` 45/45; `three-products` 10 passed plus exactly the 4 listed expected failures, 0 unexpected, 0 skipped, 0 not run.
+  - Matrix [43134528275](https://github.com/banodoco/astrid-agent/actions/runs/43134528275) (harness `1940a2fe1`): **11/11 green**, native Windows included; Journey evidence PASS.
+  - Agent CI [43134432721](https://github.com/banodoco/astrid-agent/actions/runs/43134432721) is still running (unit shards and darwin).
+    - So far boundary, both wheels and windows-native-and-installer are green.
+    - `fast checks` is red at the Mypy baseline gate. I ran the same gate on both: `c5370a86` and `0e1543e0` give identical counts, current 2338 against baseline 2192, so the fix round adds 0 findings. Pre-existing and already ruled (stale baseline; Plan 39 AT2).
+  - The gate record is filled except the Agent delta comparison.
+- 2026-11-12 03:27Z — **Notice (Plan 48 orchestrator, relaying Hannah):** `plans/index.md` becomes generated once astrid-dev PR #533 merges. Edit plan.md, then run `python3 scripts/astrid_dev.py sync`; `check_docs.py` becomes `astrid_dev.py check`. No impact here: R12's Plan 39 edit (`2e6773d`) touched only plan.md, tasks.md and inputs.md, and I have no open PR editing the index.
+- 2026-11-12 03:31Z — **Plan 48 cut-over merged** (astrid-dev main `096aa6b`), with the ask to merge main into open astrid-dev branches before their next push.
+  - Attempted on `r12-progress/decision-log` and `r12-progress/gate-record`. Both conflict in files I don't own: other briefs, `releases/13.md`, skills, `plans/index.md`, and main's own copy of `releases/12/decisions.md`.
+  - **Decision (REVIEW): merges aborted.** These are R12 record branches; I push them but never merge them, and they don't touch the index. Resolving others' docs mid-gate risks both.
+  - Their content still has to land on astrid-dev main after publication (post-publish step). Whoever merges them does it against the new model then (edit plan.md, then `astrid_dev.py sync`).
+- 2026-11-12 03:37Z — **Agent CI [43134432721](https://github.com/banodoco/astrid-agent/actions/runs/43134432721) on `0e1543e0`: delta against `c5370a86`** (Haiku, by test ID; logs in `/home/user/logs/newcand/`).
+  - **The 64:** 60 now good.
+    - The 3 `test_installer_platforms` IDs still fail. They also fail on R10, so they stay pre-existing (rule 2).
+    - `test_parent_clips::test_edit_on_a_mixed_timeline_edits_whichever_matched` still fails, and I've read the log. It edits an `am-sprite` clip and gets the intended fail-closed refusal: the astrid_motion pack isn't installed in that test's inventory, and the message prints the now-working `astrid packs add … --revision main` command. Test drift: the motion-fixture scope (`e032192e2`) missed this file. **Not fixed in R12**, because a test-only Agent change would move the Agent SHA and void the qualified tuple. It goes in the gate record's known issues and to Plan 39. **REVIEW.**
+  - **New regressions (good on c5370a86, bad now):** 1. `tests/packs/test_audio_render.py::…test_rendered_mp4_contains_audio_stream`: "render service failed: candidate reconciliation deadline expired acquiring custody lock". That looks like a lock-deadline or timing failure; the fix round touches nothing in the render or custody path. Repeated local runs on old and new are under way for evidence.
+  - **Coverage gap:** unit shard 5 was cancelled at the 2 h limit again, so 90 of c5370a86's IDs have no result. A local run of those 90 on both commits is under way.
+  - Other jobs: fast checks (mypy, unchanged 2338/2192, pre-existing); darwin (13 failed, the same set as R11 per the earlier comparison; reconfirmed in the delta: no new bad IDs).
+- 2026-11-12 03:41Z — **Shard 5 coverage gap closed locally:** all 90 IDs with no CI result were run on both `c5370a86` and `0e1543e0`. Identical: 56 passed, 13 failed, 21 skipped, and no ID passes on the old candidate and fails on the new one.
+- 2026-11-12 03:41Z — **`test_audio_render` (the one new failing ID):** it's in the Remotion lane (CI darwin job, 13 failed here against R11's same 12), so it can't run locally without Node, ffmpeg and the Remotion install. The fix round touches no render or custody code, and the error is a custody-lock reconciliation deadline. Re-running the failed jobs on 43134432721 (attempt 2) for evidence. If darwin's attempt 2 passes this ID, it's ruled a timing flake and the rest carry over; if it fails again, it gets diagnosed.
+- 2026-11-12 04:25Z — **Attempt 2 of [43134432721](https://github.com/banodoco/astrid-agent/actions/runs/43134432721), partial:**
+  - `unit shard 7` failed with 93 bad IDs, all also bad on attempt 1. 0 new.
+  - `fast checks` gives Mypy 2338/2192, unchanged and pre-existing.
+  - Darwin (holding `test_audio_render`) and the other shards are still running; pollers are on them.
+- 2026-11-12 04:31Z — **Darwin attempt 2: `test_audio_render` PASSED.** `test_text_card_render_smoke` (passed in attempt 1) failed in attempt 2 with the same custody-lock error.
+  - **Diagnosis (my own read; no product change follows, so no Astra):** a pre-existing intermittent flake.
+    - The raising code, `custody_broker._observation_guard`, is darwin-only and deadline-based. It came in with R11 `62dbe56ea` and is identical in R11, `c5370a86` and `0e1543e0`.
+    - Of 22 darwin jobs scanned since 9 Nov, 4 hit it, one test each: `87d1fbbc4` (R12, before the fix round; the same text-card test), the R13 rehearsal `bf3b6ba77`, and `0e1543e0` attempts 1 and 2.
+    - Every affected ID passes on another attempt of the same SHA.
+  - The fix round's render edits are alias-map refactors only.
+  - My earlier phrase "touches no render code" was imprecise. Corrected in the gate record.
+  - **Ruled a known issue; Plan 39. REVIEW.**
+- 2026-11-12 04:31Z — **A-FROZEN + GATE-GREEN.** Gate record `r12-progress/gate-record` is complete with no placeholders. Main heads were rechecked just now: Agent `a105de3a4`, Runtime `4f5477cb0` and App `3e53462f4` are all fast-forward. Sent to the orchestrator with the three publish commands.
+- 2026-11-12 04:34Z — **PUBLISHED** (orchestrator, by fast-forward, no force; it verified the gate record independently). Confirmed by `git ls-remote`:
+  - Agent main `a105de3a4` → `0e1543e0`
+  - Runtime main `4f5477cb0` → `42ae24aff`
+  - App main `3e53462f4` → `237b28be9` (Railway deploy pending)
+  - Gate record: the ComfyUI full SHA filled (`ee71d5c4993f…`, from `pins.json` at `0e1543e0`). I'd missed this placeholder because it wasn't in `{{}}` form; the orchestrator caught it.
+  - Post-publish, under way: the served-manifest poller, and the push-triggered runs on all three mains (Agent CI, Lanes, Chat service, Windows task host journey; Runtime CI; App Tests, E2E, Lanes, Dockerfile Check, Windows installer). Any red is ruled against the pre-publish state.
+- 2026-11-12 04:38Z — **Post-publish: served state correct.**
+  - `https://astrid.haus/install-manifest.json` has sha256 `1f3cd5b0…69f1`. It names release 12, Agent `0e1543e0` and Runtime `42ae24aff`; first matched at 04:36Z.
+  - `install`, `install.sh` and `install.ps1` serve `c268a5fa`, `591c4c51` and `ea581d5d`, as recorded.
+  - Live phone check (Playwright, iPhone 13, `/?experience=agent`): the callouts read "Open knowledge", "Leverage open source tools" and "Agent workflows", which confirms your copy change. No page errors.
+  - The served-manifest canary (deployment_status run 43155773142) is queued. Push-triggered runs on the three mains are still running.
+  - Pre-publish reference for the same workflows on the old mains:
+    - Agent `a105de3a4`: CI, Lanes and Windows task host journey failed; Chat service passed.
+    - Runtime `4f5477cb0`: CI failed.
+    - App `3e53462f4`: Tests, E2E and Lanes failed; Dockerfile Check passed.
+- 2026-11-12 05:07Z — **Post-publish runs, partial** (ruled by failing job name against the pre-publish run of the same workflow):
+  - The served-manifest canary [43155773142](https://github.com/banodoco/astrid-app/actions/runs/43155773142) passed.
+  - Passed: App Tests (it failed on old main `3e53462f4`, so this is an improvement), Dockerfile Check, Windows installer, and Agent Chat service.
+  - Same failing jobs as before the push, so nothing new:
+    - App Lanes: `checkout-lanes` and `quick-journey`.
+    - App E2E: the same 6 extension and playwright jobs.
+    - Agent Windows task host journey: both shells.
+  - Still running: Agent CI, Agent Lanes and Runtime CI.
+- 2026-11-12 05:42Z — **Attempt 2 of 43134432721, the remaining shards** (by ID against attempt 1): shards 1, 2, 3, 4, 6 and 8 have **0 new failing IDs**, with 123, 152, 40, 338, 202 and 60 bad respectively, all also bad in attempt 1. Shard 5 has no results again (the 2 h limit; its 90 IDs were covered locally earlier). This confirms the gate ruling after the fact.
+- 2026-11-12 05:49Z — **Post-publish Runtime CI [43155548617](https://github.com/banodoco/astrid-runtime/actions/runs/43155548617) on main `42ae24aff`:** failing jobs are portability-lifecycle ×2, sandbox-process-control and unit ×2. That is exactly the set on the qualifying candidate run 43116561116, which was ruled by ID (0 regressions). Against old main `4f5477cb0`, `darwin-native` and `windows-realm-publication` are now green, and nothing new is red. Not broken.
+- 2026-11-12 06:31Z — **Post-publish Agent runs on main `0e1543e0`, partial:**
+  - **Lanes [43155525276](https://github.com/banodoco/astrid-agent/actions/runs/43155525276):** the failing jobs (integration shards 1–4 and opt-in) are exactly the set on pre-publish main run 42553788553. Nothing new.
+  - **CI [43155525231](https://github.com/banodoco/astrid-agent/actions/runs/43155525231):** boundary, both wheels and windows-native-and-installer pass. fast checks gives Mypy 2338/2192, unchanged.
+  - By ID against the qualifying run (attempts 1 and 2): darwin, and shards 2, 4, 6 and 8, have 0 new failing IDs. Shard 7 has 1: `tests/test_pinokio_platform_adapter.py::test_secret_never_appears_in_receipt_state_or_cli_output`.
+    - It fails with "active process is not the configured listener owner" on the `processes` call, a listener-ownership race that comes before the secret assertion. So it is not a secret leak.
+    - It also fails on R10 (42602166253 and gate2), R11 and `c5370a86`. It passed by chance in both qualifying attempts.
+    - The fix round doesn't touch Pinokio code or tests. Pre-existing and intermittent; Plan 39.
+  - Shards 1, 3 and 5 are still running.
+- 2026-11-12 06:50Z — **Post-publish Agent CI complete; Release 12 done.**
+  - Shard 3: 40 bad, 0 new.
+  - Shards 1 and 5 were cancelled at the 2 h job limit, as on earlier runs. Shard 5's IDs were covered locally earlier. Shard 1 has no baseline on any side, and its IDs were ruled from a local R11 baseline earlier.
+  - Across the whole post-publish Agent CI, the only ID that was bad but not bad in the qualifying run is the Pinokio listener race, which is pre-existing (above).
+  - **No main is broken. All post-publish checks are done.** The self check-in is cancelled and the session stops here.
