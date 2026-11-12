@@ -833,3 +833,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **To the engine lane, blocking:** a CPU reproduction test of an old engine root plus marker against the candidate install (the boundary that should have caught this); U2 to hand over cleanly; the error must name the owner, the marker and the next action.
   - **Lesson:** the in-place upgrade was merged without proof against a real old root on persistent storage. Any change to installed or persistent state needs its upgrade-from-previous-build test before a live run.
 - R3 merged (`a04a61355`, h3 checked through its live entry and preflight). `r13/compose` is now `65630ff9`.
+
+### 18:44 UTC — DEADLINE: tomorrow 13 Nov 12:00 (assumed UTC; owner to confirm)
+- **Checkpoints:**
+  - **About 22:00 tonight:** U2 plus dead-owner handover, K1, the cells-vc pin and the CPU preflight merged; a live five-cell run on the candidate.
+  - **06:00, the cut line:** the machines core (K1, M1, M2, LT, M4) merged and Astra-reviewed, plus a live claim-path pass. If it's not ready, Release 13 ships without the new machines command line (Release 12's renting path plus today's keep-warm and custody fixes), and the redesign moves to Release 14.
+  - **06:00–10:00:** freeze, the binding CI comparison, the final live proof, the App re-pin and the R1-update proof.
+  - **About 11:00:** publish.
+- **Owner:** the authorization was pasted into the machines session. On "a RunPod pack this should go in": yes. The 36 crossings are RunPod code written in core; moving it through the existing `generation.machine` seam is M11 (about 2–3 h). Ruling: land the one-time baseline update now (the owner's question read as a yes); M11 is the first card after R13, in Plan 40.
