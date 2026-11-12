@@ -9,7 +9,7 @@
 | Fix a bug or small issue | Search/open an [Astrid-dev issue](https://github.com/banodoco/astrid-dev/issues) and submit a focused product PR | Reproduction, actual proof and appropriate product PR review; no project pack |
 | Take on an existing project | Claim one `queued` and `Unassigned` project through a PR that changes only the `**Owner:**` line in its `plan.md` | **The claim bot or a maintainer merges the claim.** It gives ownership, not execution authority |
 | Propose new substantial work | Open a [project proposal issue](https://github.com/banodoco/astrid-dev/issues/new?template=project-proposal.md), then a reviewed scope PR | Maintainer accepts the new scope and project pack |
-| Submit project work | Open product PRs; optionally open an Astrid-dev implementation review PR | An owner’s PR is **queued for review**, not auto-approved |
+| Submit project work | Open product PRs; optionally open an Astrid-dev implementation review PR | A project owner’s PR is **queued for review**, not auto-approved |
 | Finish a project | Open an Astrid-dev completion PR linking integrated evidence | Independent completion review and authorized merge |
 
 No mandatory project-conversation issue. Questions belong in an issue or PR; update the authoritative project documents only when a decision actually changes.
@@ -33,7 +33,7 @@ Describe the intended correction and relevant source; give a real reviewer a way
 
 ## Define or reassess a vision gap
 
-The [vision overview](../vision/README.md#gaps--16-assessed-outcomes) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
+The [vision overview](../vision/README.md) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
 
 Every gap has **one primary pillar or principle**, with supporting connections only when they explain a distinct relationship. IDs identify records, not ownership. Plans link to the outcomes they address; gaps do not duplicate the project queue, status, or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
 
@@ -54,7 +54,7 @@ Evidence: source URL or exact source SHA
 
 Use `Supporting connections: None — reason` when appropriate. [CI checks structure and linkage](../scripts/astrid_dev.py), not philosophical merit or actual proof. A reviewer judges overlap, source claims, chosen relationships, and meaningful independent closure. When evidence changes, reassess honestly; don't fabricate a new approval process.
 
-**Each gap file must include** `Applies to` (one primary and only justified supporting relationships), `Assessment` (with dated evidence), **Desired state**, **Current state**, **Gap**, **Closure evidence**, and **Sources and reassessment**. Project status and ownership live only in each plan's `plan.md`.
+**Each gap file must include the sections of [the gap template](../templates/gap.md).** Project status and ownership live only in each plan's `plan.md`.
 
 **Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap skill](../skills/astrid-dev-gap/SKILL.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
 
@@ -77,7 +77,7 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 1. Find an existing `queued`, `Unassigned` [catalog project](../plans/index.md), read its `plan.md`/`inputs.md`/`tasks.md`, and check blockers.
 2. In a clone (fork if needed), open that project's `plans/<id>/plan.md` and change **only its Owner line** from `**Owner:** Unassigned` to `**Owner:** @GitHubUsername`, with your own username. Change nothing else; the catalog refreshes itself on `main` after merge. Open a PR using [the claim template](../.github/PULL_REQUEST_TEMPLATE/claim.md).
 3. The claim bot merges the PR once CI passes, where a maintainer has turned it on; otherwise a maintainer merges it. If two people compete, the second claim conflicts on the same Owner line and is not merged.
-4. **This is ownership only.** It neither changes status to `active` nor accepts unresolved scope, grants code execution, incurs cost, or permits release. Honor the project’s accepted scope and existing authority/STOP controls.
+4. **This is ownership only.** It neither changes status to `active` nor accepts unresolved scope, grants code execution, incurs cost, or permits release. Honor the project’s accepted scope and its existing authority and stop controls (the repository’s pause and stop instructions: a paused status, or a plan or brief that says stop).
 
 No extra registration service, OAuth application for contributors or duplicate owner record.
 
@@ -123,21 +123,13 @@ The low-permission [review-intake workflow](../.github/workflows/review-intake.y
 
 ## Record routes as work happens
 
-Name the **route** (`N`, `X` or `S`, see the [run contract](../skills/astrid-dev-shared/run-contract.md)) that ran each piece of work, at the relevant invocation rather than from memory at the end. Name a specific model only where the run used one other than its route's. Model identifiers stay out of repository artifacts.
+Name the **route** (`N`, `X`, `S` or `T`) that ran each piece of work, at the relevant invocation rather than from memory at the end, as [the run contract's route provenance](../skills/astrid-dev-shared/run-contract.md#actual-route-provenance) requires. Name a family name, never an exact ID, and only where the run used one other than its route's. Exact model IDs stay out of repository artifacts.
 
-In an **Astrid-dev checkout**, the [route-use helper](../scripts/model_usage.py) is available:
-
-```sh
-python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> record \
-  --route N --role implementation --task <task-id> [--override <name>]
-python3 scripts/model_usage.py --run-dir plans/<project>/.otto/runs/<id> summary
-```
-
-The local JSONL stays gitignored under `.otto/`; copy the helper's **Routes used:** line into the review PR. If the route is unknown, use **Unknown — reason**. A manual record is not proof of what actually executed.
+In an **Astrid-dev checkout**, the [route-use helper](../scripts/model_usage.py) records each invocation. Copy its **Routes used:** line into the review PR; its local JSONL stays gitignored under `.otto/`.
 
 ## Submit a completed project
 
-Once the required product changes are integrated into their intended destinations and the **combined result** has been qualified, the owner submits one Astrid-dev completion PR using the [completion template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md):
+Once the required product changes are integrated into their intended destinations and the **combined result** has been qualified, the project owner submits one Astrid-dev completion PR using the [completion template](../.github/PULL_REQUEST_TEMPLATE/project-completion.md):
 
 ```text
 Project: plans/NN-project-name/plan.md
@@ -150,6 +142,6 @@ CI enforces the mechanical completion contract and current references. A reviewe
 
 ## Get help and keep decisions discoverable
 
-Ask a project question using the [optional issue template](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) (or comment on a relevant PR). Reference the plan ID and tag the owner/maintainer when appropriate. Record durable scope decisions in the project pack, not a new standing conversation hub.
+Ask a project question using the [optional issue template](https://github.com/banodoco/astrid-dev/issues/new?template=project-question.md) (or comment on a relevant PR). Reference the plan ID and tag the project owner or a maintainer when appropriate. Record durable scope decisions in the project pack, not a new standing conversation hub.
 
 The README and main skill point here, templates link back, and the automated claim/review response gives the next action. **Maintainers:** [safe automation setup and adversarial smoke tests](contribution-automation-setup.md).
