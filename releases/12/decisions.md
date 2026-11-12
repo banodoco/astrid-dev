@@ -2,28 +2,36 @@
 
 Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIEW** marks user-visible changes, scope-vs-time trades, named exceptions and anything touching Release 13.
 
-## MORNING NOTE (for Hannah; updated 2026-11-12 04:25Z)
+## MORNING NOTE (for Hannah; final, 2026-11-12 06:50Z)
 
-Overnight mode from 00:33Z: I'm working through without you or the orchestrator, and deciding unanswered questions by the brief's priorities (marked REVIEW). Release 13 isn't this session's scope, so no spend and no pods here.
+**Release 12 is published and verified.** The orchestrator pushed it at ~04:33Z, by fast-forward with no force:
+- Agent \`0e1543e0\`
+- Runtime \`42ae24aff\`
+- App \`237b28be9\`
 
-- **State: PUBLISHED (~04:33Z).** All three mains are at the frozen SHAs. Post-publish checks are running.
-  - Frozen tuple: App `237b28be9`, Agent `0e1543e0`, Runtime `42ae24aff`.
-  - Matrix 11/11 green, native Windows included. App Tests green. Direct Journey green, with exactly the 4 named exceptions.
-  - The Agent delta against `c5370a86` is clean apart from one new failing ID: `tests/packs/test_audio_render.py::…test_rendered_mp4_contains_audio_stream`, a custody-lock deadline on darwin/Remotion. The fix round touches no render code.
-  - The failed jobs are re-running as attempt 2. Shard 7 and fast checks are done: 0 new failing IDs.
-- **Darwin:** audio-render passed on rerun. A pre-existing custody-lock flake (R11 code) hits one darwin test per run, so it was ruled a known issue (REVIEW).
-- **Next:** the orchestrator publishes; then my served-manifest check; then stop. Still to do after that: land the record branches on astrid-dev main.
+The gate record is \`r12-progress/gate-record\` (\`releases/12/gate-record.md\`); it is GATE-GREEN and has no placeholders.
+
+- **Served:** the install manifest has sha256 \`1f3cd5b0…69f1\` (release 12, matching SHAs), and install, install.sh and install.ps1 are unchanged. The served-manifest canary is green. Your phone copy "Leverage open source tools" is live, on the Agent tab (\`/?experience=agent\`).
+- **Main after the push:** nothing new red.
+  - App Tests is now green; it was red before. Runtime's darwin-native and windows-realm-publication are now green too.
+  - Everything else is red on the same jobs or IDs as before the push.
 - **Decided for you (REVIEW):**
-  - add_text's default element becomes bundled text-card.
-  - The recovery command points at banodoco/poms_packs `--revision main`.
-  - The fix round carries five test-only commits beyond the strict list.
+  - add_text defaults to the bundled text-card.
+  - The recovery command is \`astrid packs add https://github.com/banodoco/poms_packs --revision main …\`.
+  - Five test-only commits came in with the fix round.
   - The drop data-loss fix goes to Plan 39.
   - The VIDEO-DROP exception stays (#252).
   - The bootstrap test runs later in the suite.
-  - The matrix harness simulates "newer release served" for the autostart-off card.
-  - `test_parent_clips` mixed-timeline is test drift and becomes a known issue: fixing it would move the Agent SHA.
-  - astrid-dev main merges into my record branches were aborted (conflicts in others' docs); they land after publish.
-- **Need from you:** nothing blocking.
+  - The matrix harness simulates "newer release served".
+  - Known issues added to the gate record:
+    - \`test_parent_clips\` mixed-timeline: test drift.
+    - A darwin custody-lock flake: R11 code, one test about 1 run in 5.
+    - linux-fresh: once showed the generic update wording.
+  - A Pinokio listener-race test fails intermittently; it is pre-existing since R10. Plan 39.
+- **Left for you (needs a person):** merge the R12 record branches into astrid-dev main.
+  - The branches are \`r12-progress/decision-log\`, \`r12-progress/gate-record\` and \`r12-progress/plan39-handoffs\`.
+  - Merging main into them conflicted in other people's docs after the Plan 48 cut-over, so I stopped. Merge against the new model: edit plan.md, then run \`python3 scripts/astrid_dev.py sync\`.
+- **Release 13:** not this session's scope. No spend and no pods here.
 
 ## NOW (updated 2026-11-12 01:27Z, from `date -u`)
 
@@ -496,3 +504,8 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
     - It also fails on R10 (42602166253 and gate2), R11 and `c5370a86`. It passed by chance in both qualifying attempts.
     - The fix round doesn't touch Pinokio code or tests. Pre-existing and intermittent; Plan 39.
   - Shards 1, 3 and 5 are still running.
+- 2026-11-12 06:50Z — **Post-publish Agent CI complete; Release 12 done.**
+  - Shard 3: 40 bad, 0 new.
+  - Shards 1 and 5 were cancelled at the 2 h job limit, as on earlier runs. Shard 5's IDs were covered locally earlier. Shard 1 has no baseline on any side, and its IDs were ruled from a local R11 baseline earlier.
+  - Across the whole post-publish Agent CI, the only ID that was bad but not bad in the qualifying run is the Pinokio listener race, which is pre-existing (above).
+  - **No main is broken. All post-publish checks are done.** The self check-in is cancelled and the session stops here.
