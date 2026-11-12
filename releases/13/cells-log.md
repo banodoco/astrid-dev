@@ -2,16 +2,17 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (18:45 UTC)
+## NOW (19:20 UTC, hourly check-in)
 
 | Item | State | Next |
 |---|---|---|
-| 1. Judge fixes | TTS: `eb594e09` short; its rework found the deeper cause (lock drift to transformers 5). Direction changed (owner): stay on transformers 5; forward fix `r13/ttsfix-3` `def11775` (path 2) under Astra review and an equivalence card. SFX `324f653f` judged: socket types accepted, identity rework `6dda5ed5` accepted; recapture attempt 2 running; core-version decision asked; music `6c780a72` accepted | Hand `r13/ttsfix-3`; judge SFX and music on arrival |
-| 2. Pin + `r13/cells-vc` | First pin merged (`f23dabb` in `r13/compose`). `r13/cells-vc` combine (Terra) running | Re-pin from `r13/compose` `913c6b8f` once `r13/cells-vc` is green |
+| 1. Judge fixes | SFX `324f653f` + `r13/sfxfix-2` `6dda5ed5` (pushed) accepted; music `6c780a72` accepted; TTS `r13/ttsfix-3` review round 1 FAIL (2 blockers), fix card (Sol) running | Round 2 review on the fix diff, then hand over |
+| 2. `r13/cells-vc` + pin | Combined (music, SFX, identity rework, defaults, preflight marker), `cda0e248` local; proof rerun and narrower `make preflight` (Luna) running | Push, then re-pin from `r13/compose` |
 | 3. Log gaps | Done (orchestrator, `90ae9c31`) | — |
-| 4. Offline preflight | TTS leg exists (meta-device constructors, `engine_deps` lane); SFX and music legs pending | Design once they land |
+| 4. Offline preflight | VibeComfy leg named (`preflight` marker); TTS leg in Agent `engine_deps`; Agent-side check of recipe core and pins waits for the recapture's selection input | Design note to the orchestrator once the recapture lands |
+| Recapture | `r13/oi-recapture` escalated to Sol, running | Merge into `r13/cells-vc` |
 
-Heads: Agent `r13/compose` `913c6b8f` (my branches are cut from `fc4b36d`); VibeComfy base `a8a7be7c`. Spend: none.
+Heads: Agent `r13/compose` `5dae0cfe` (my branches are cut from `fc4b36d`); VibeComfy base `a8a7be7c`. Spend: none.
 
 ## Entries
 
