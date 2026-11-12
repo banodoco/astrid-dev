@@ -241,3 +241,24 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - a harness first slice built on `test_remote_machine_cpu.py`;
   - a cost estimate: Release 13 about 7.25 worker-days; the Release 14 remainder about 11.
 - **2026-11-12 01:40** Bundle round 3 (Sol) is parked as WIP `04dd5f15` on `r13/g3-bundle-2`, not for merge. It's unqualified: 5 existing assertions conflict with structural masking, some suites didn't run in the sandbox, and there's an inherited Ruff gap. Both designs recommend making the free-text bundle opt-in. That's an H10 decision for the owner. REVIEW.
+- **2026-11-12 01:59** GPU TTS attempt 5: install VERIFIED (the models-root fix works live). The job then ran for 137 s and exited 2 with `category=execution; code=generation_failed`. The pod was released as `unsafe_job_state`, $0.27. Census 0 pods; balance $100.94.
+  - Blind again at the execution stage. Root cause (Codex Terra trace, checked by me):
+    - VibeComfy builds a sanitised `RuntimeNodeError.comfy_diagnostic` (code `comfy_execution_error`, `node_id`, `node_class`, `exception_type`), but `preflight.generation_error` dropped it;
+    - the pod frame builder read only top-level codes and collapsed any code outside `CODES` to `generation_failed`.
+  - Fix `eeeee9ef`: carry the fixed fields; take the deepest known code from the nested result; allow `exception_type` only from a fixed engine-neutral list; pin every VibeComfy execution-path code into `CODES` with a test.
+  - The provider-neutrality ratchet (slice 3) then caught this fix adding `comfy_diagnostic` to `astrid/core`. `878d13f4` corrects it: the VibeComfy pack's run boundary exposes the diagnostic as `engine_diagnostic`, and core reads only that.
+- **2026-11-12 02:20** Fable follow-up (asked by the user): would the structure have prevented the models-root bug? Answer: NO, it would only have shown it one rental earlier. The missing boundary was installer → status reader; "a fact with one owner is re-derived by a second reader", plus fakes that ignore their arguments.
+  - Additions to the design:
+    (1) `plan_from_receipt()`: readers build the plan from the receipt and never re-derive it, with an invariant test that every install-bound field is in the receipt;
+    (2) fakes answer from stored state, not flags;
+    (3) a harness round trip per recipe: install with a mounted cache, then status with no arguments → installed.
+  - General rule folded into Move 1: one record owns each fact; readers parse it and never rebuild it. Queued as the next slice (Luna, after slice 2 is merged).
+- **2026-11-12 02:20** Slices 2 (`0a7de39c`) and 3 (`ebdc2504`) committed after my review and test runs.
+  - Slice 2: I fixed the receipt reader to use `runpod_gate` and kept `gate=offer` for offer refusals; Codex had flagged both as outside its files. receipt 41, target_selection 100, worker_preparation 48 and placement_refused 7 passed.
+  - Slice 3: evidence 7 and 13, diagnostics 53, receipt 41 and the ratchet passed.
+- **2026-11-12 02:22** Rehearsal → `878d13f4`: `c627edba` + execution diagnostic + slices 1, 2 and 3.
+  - Conflicts resolved by hand: `read_exact_pod` takes slice 1's provider read; `failure_diagnostics` combines the exception and oom facts, the per-engine allowlists and the nested traversal, with `engine_id` threaded through.
+  - Integrated tests all pass: diagnostics 58, providers 11, placement_refused 7, target_selection 100, worker_preparation 48, provider_fields 33, install_verify 6, remote_placement 14, terminal evidence 7, ratchet, guard 19, pod_fields 10, receipt 41, local_server_helpers 32.
+  - Ruff improved to 2127 and the baseline was locked.
+  - Reinstalled. TTS attempt 6 launched at 02:23:30; before-census 0 pods; balance $100.88. Spend ≈ $4.51 of $40.
+- **2026-11-12 02:22** C1 lead (Terra) finished the reason-channel core (uncommitted in `c-c1`) and wrote 3 Luna task files (`briefs/luna-tasks/c1-{1,2,3}.md`). Fan-out is deferred until TTS attempt 6 settles, because it needs a fresh base after the `878d13f4` integration.
