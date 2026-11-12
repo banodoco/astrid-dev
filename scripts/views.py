@@ -92,6 +92,11 @@ def expected(view: View, root: Path) -> str:
     return _with_marker(view, view.render(root))
 
 
+def touched(view: View, root: Path, base: str) -> bool:
+    """Compare the generated part at the merge base with the working tree."""
+    raise NotImplementedError
+
+
 def check_view(view: View, root: Path) -> list[str]:
     try:
         actual = (root / view.target).read_text(encoding="utf-8")
