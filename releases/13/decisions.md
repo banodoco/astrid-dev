@@ -509,3 +509,11 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
     - Recorded finding: the existing Linux lock carries NEWER ComfyUI requirements (frontend 1.57.4) than the installed ComfyUI source (`ee71d5c4` declares 1.52.7). No master commit matches the lock exactly. The re-lock makes the source and the lock agree.
   - **Provider gate (Sol):** the first try stopped on a resume test, because Codex wanted to redesign resume. Ruling: no redesign; the gate only paces calls. Running.
   - **Installed smoke (Sol):** partial. The recorded-replay endpoint plus 21 replay tests pass, but both installed-entry cases fail before task creation (the installed CLI in the harness doesn't see saved preferences). Not merged, since it would add a failing test. Parked as a follow-up in `c-smoke2`.
+- **2026-11-12 10:45** **Provider gate** `f0535fef` (`r13/provider-gate`), merged into the rehearsal `c473f7dc`.
+  - One gate per RunPod account, shared across processes through a locked state file named by a sha256 of the account (no key in clear).
+  - 429 or 5xx puts the account into a cooldown, honouring `Retry-After` as seconds or an HTTP date, otherwise exponential back-off with jitter.
+  - Success resets only the exponent.
+  - Lifecycle's `terminate_pod` is admitted as one bounded operation; the release and resume order is unchanged.
+  - Results: 181 existing tests passed before and after, plus 17 new ones. On the merged rehearsal, the gate, release, preparation, providers, guard, e2e, patches and models suites give 180 passed; ruff 2120 → 2117 (locked in).
+  - **Follow-up:** lifecycle should expose typed status and `Retry-After` (today the gate parses lifecycle's fixed message for the HTTP status).
+  - The ComfyUI bump (Sol, final target `6bfaacc6`) is the last piece before the batch re-run.
