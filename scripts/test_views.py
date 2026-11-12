@@ -753,9 +753,14 @@ class RootStatementTests(unittest.TestCase):
         title = intro.splitlines()[0].removeprefix("# Astrid — ")
         readme = (root / "README.md").read_text(encoding="utf-8")
         statement = f"**{title}.**"
+        sentence = ("Astrid pairs an adaptable front end at [astrid.haus](https://astrid.haus) "
+                    "with an agent equipped with tools for creative work and open-source AI.")
         self.assertEqual(readme.count(statement), 1)
-        region = readme.split("<!-- vision-summary:start -->", 1)[1].split("<!-- vision-summary:end -->", 1)[0]
+        region = readme.split("<!-- vision-statement:start -->", 1)[1].split("<!-- vision-statement:end -->", 1)[0]
         self.assertIn(statement, region)
+        self.assertNotIn(sentence, region)
+        self.assertIn(f"## What we're building\n\n<!-- vision-statement:start -->", readme)
+        self.assertIn(f"<!-- vision-statement:end -->\n\n{sentence}\n\n<!-- vision-summary:start -->", readme)
 
 
 if __name__ == "__main__":
