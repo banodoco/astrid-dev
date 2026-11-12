@@ -19,11 +19,11 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
 | Installer progress (IU-20) plus the R1 update fix (IU-14) | DONE, in the rehearsal `2eceb0b0` | — | — |
 | T3: the 37 legacy template declarations (the SFX template is among them) | IN FLIGHT (Sol, `c-vcmusic`) | Sol | about 1–2 h |
 | Success-run engine logs (T9; owner rule "logs for every generation") | QUEUED | Terra | about 1 h |
-| Model layout A1–A3 plus in-place engine upgrade U1–U5 (owner: no shims, so no symlinks shipped) | DESIGNED; reviewed (Astra SOUND WITH CHANGES); next a manager | manager | about 4–6 h. **Owner call: in the candidate, or ship V1 plus symlinks?** |
+| Model layout A1–A3 plus in-place engine upgrade U1–U5, M1'–M3' (owner 15:16: IN the candidate; no symlinks shipped) | DELEGATED to the engine manager (`briefs/wave3/engine-manager.md`); Astra review of the U design first | engine manager | about 4–6 h |
+| Machines redesign M1–M10 (owner 15:16: ship the new command line in Release 13) | DELEGATED to the machines manager; M1 nearly done | machines manager | estimate pending |
 | Candidate compose: Agent plus Runtime `6855dfa8` plus VibeComfy, App re-pin (`release` 13, `pin.mjs`), R1-update proof row (`target_app_sha`) | after Stage 1 | me | about 2 h |
 
 **B. After the candidate (default for new findings)**
-- Machines redesign M1–M10 (delegated; manager running): the claim owns spend, named machines, the idle timer. **Owner call: is any of it needed in the candidate?**
 - T6 (fold into M1), T7 (the wait reason reaching the CLI), T8 (Runtime blocker list, a schema change), T10 (models stay loaded between jobs), T11 (default project), T13 (CPU journey), T14 (catalog dry-run corpus; it finds catalog drift such as `z-image/i2i`).
 - Plan 50 revision (over-built per Fable); pre-existing `test_warm_session` paid-expiry failures (task 18).
 
@@ -706,3 +706,16 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - T14: a dry run of every catalog entry (with T1).
 - **Plan 50 critique:** the scrubber, the ratchet and RB-4 are over-built. The two corpus checks plus a journey that runs in minutes pay more (the journey takes 57 minutes, so nobody runs it). Revise Plan 50 accordingly.
 - The pod was released at 14:40; balance $96.67.
+
+### 15:16 UTC — Owner: layout plus upgrade IN, new command line IN; second manager; smells to Fable
+- **Hannah:**
+  - (1) the model layout plus the in-place engine upgrade go in the candidate;
+  - (2) Release 13 ships the new command line, so the machines redesign M1–M10 is in the candidate.
+- **Engine layout and upgrade** delegated to an engine-manager sub-agent (`briefs/wave3/engine-manager.md`, design in `engine-upgrade-design.md`). Fable's four upgrade decisions: yes to all (REVIEW).
+- **The machines manager was told** its work is candidate-critical; it adds Astra diff reviews and an Opus taste check.
+- **Every Codex brief now forbids RunPod endpoints and `astrid generate`/`machines`** (orchestrator caution, 14:49).
+- **Smells:** `briefs/wave3/smells.md` (13 items) went to Fable 5.2 with Luna helpers. It will place each into an existing plan or a gap, and design the "tickets before plans" mechanism: an interim register plus a draft plan.
+- **Declarations T2+T3** (Sol, VibeComfy `c-vcmusic`): 30 templates declared, 18 moved to drafts, the corpus check green with no allowlist; the SFX and music templates are fully declared.
+  - Pass 2 is running: two emitter regressions, plus Astrid's `ltx-2.3/flf` uses the now-draft `video/ltx2_3_runexx_first_last_frame` (`models.yaml:841`).
+- **Installer progress** (Agent `f9d526f1`) merged into the rehearsal `2eceb0b0`; the App re-pin and the R1-update row come at candidate time.
+- **Stage 1** is in the capacity wait for an RTX 5090 in EUR-NO-1.
