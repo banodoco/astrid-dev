@@ -492,3 +492,4 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
     - Sol: the provider gate with 429 back-off (ruling: gate lifecycle's `terminate_pod` as one bounded operation and don't change lifecycle now);
     - Sol: the installed-entry-point smoke test (ruling: first slice covers provider drift → named claim refusal, and a pod job failure → declared logs).
   - Disk: deleted 17 clones whose HEAD is on origin (3.7 → 11 GB free).
+- **2026-11-12 08:55** A safety classifier flagged one launcher (the ComfyUI-bump worker) as "Create Unsafe Agents". I checked the process list: only the briefed Codex workers are running (Astra read-only; the others `workspace-write` with network on for sockets and registries, pushes disabled in every clone, the manager commits). This is the same launch pattern as all night. Noted for the owner; no change.
