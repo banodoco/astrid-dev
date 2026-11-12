@@ -2,59 +2,49 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
-## NOW (11:48 UTC): read this first; it is enough to carry on from
+## NOW (12:42 UTC): read this first; it is enough to carry on from
 
-**Rehearsal:** `scratch/r13-rehearsal` = `b306b2be` on origin, local clone `/home/user/wt/c-bis`. It merges:
-- published Release 12 main `0e1543e0`;
-- the structural slices: ratchet, receiptplan, C1 core and task 2, setup fixes, G4;
-- declared logs (`r13/declared-logs` `603b6728`: logs.json, `role=log` task outputs, `astrid tasks logs`, `generate failure --logs`, preparation-step logs, engine startup slice, legacy scrape removed);
-- models-folders `43b69032`;
-- TTS source patch `687a0ed9`;
-- music lock `634a2608`;
-- credential scrub and describe `e798df2b`;
-- provider gate `f0535fef`;
-- ComfyUI → `6bfaacc6` plus Linux re-lock `43b44c1e`;
-- engine command output `72fbdf65`;
-- setuptools lock-hash fix `6eacb077`;
-- VibeComfy pin → `fe92ac78` (template identity) in `b306b2be`.
+**Rehearsal:** `scratch/r13-rehearsal` = `dd5bc822` on origin, local clone `/home/user/wt/c-bis`. It contains:
+- everything in `b306b2be`: R12 main `0e1543e0`, the structural slices, declared logs `603b6728`, models-folders `43b69032`, the TTS source patch `687a0ed9`, music lock `634a2608`, misc `e798df2b`, gate `f0535fef`, ComfyUI bump `43b44c1e`, engine command output `72fbdf65`, lock fix `6eacb077`;
+- PLUS declared patches: Astrid `r13/declared-patches` `dd5bc822`, pinning VibeComfy `r13/declared-patches` `c7a47e36`.
+  - The node lock declares a pack's source patches, and VibeComfy honours them by default (restore, doctor, drift, witness). It is documented in VibeComfy's setup SKILL.md and REFERENCE.md.
+  - A successful preparation step's output is now kept as declared run logs.
 
-**Running now:** batch 5 (`install-r13b/runs/batch5.sh`, log `runs/batch5.log`, background job `bjr4jgeay`).
-- It runs on a FRESH install state: `. ./env-b3.sh` (HOME/XDG under `home-b3`), data root `data-b3`, project `setup`, preferences = volume `2z2dlu1v8g`, EUR-NO-1, RTX 5090, $3 cap.
-- TTS started 10:53:57 UTC on pod `v7l7yk2u75kkie` (RTX 5090, $1.19/hr). At 11:48 it had cost $0.28, so most of the elapsed time was waiting for capacity, and the rest is preparing the new ComfyUI and lock and downloading models.
-- Limits: cap $3, P/E/I 2700/900/1800 s.
-- Then SFX ($3), t2i ($1), edit ($1, `--edit inputs/edit-src.png`) and music ($1) run on the same pod.
-- It stops after TTS if the engine install fails; the reason is now in `engine-install.stderr`.
+**Running now:**
+1. **Keep-warm, Terra pass 4,** in `/home/user/wt/c-warm` (log `briefs/wave3/keep-warm4.log`). It finishes `stale_after_failure` admission (scope extension 2: `worker_preparation.py`) and runs the full suites.
+   - Then **pass 5** (`briefs/wave3/keep-warm5.md`, ready, NOT yet launched): keep the pod on a first or repeated preparation failure; a source-digest-only difference re-prepares; `verification_timeout`; receipts name the pod and show expiry, cost and preparation state; recovery keeps the original cause.
+2. **Root-cause subagent** for two live bugs (evidence `install-r13b/runs/stuck-task/`; the old host PID 28173 is kept alive for it):
+   - **BUG 1 (release-blocker candidate):** failed TTS task 25b59510 stays `running`. Failure publication was rejected with "output object is outside the task project"; the reconcile loop (`generic_host.py` about 11540-11640) retries the `fail` forever and never cedes.
+   - **BUG 2:** a queued task waits on `insufficient_storage` with the generate CLI printing nothing; disk was at 787 MB, now about 6 GB free.
+
+**Batch 6 (ready, NOT started):**
+- Fresh install `install-r13b/root-b4`, data `data-b4`, env `. ./env-b4.sh` (uv cache shared with home-b3), build `dd5bc822-42ae24af-52afeb20`.
+- Needs: a copy of `runs/batch5.sh` with root-b4/env-b4/data-b4, the setup step, then the five cells.
+- **Hold it until BUG 1 is understood:** any failure carrying declared logs may block the queue.
+
+**Money:** balance $97.66 at 12:42, no pods. About $8 of $40 spent. Floor $67.41.
+
+**Per cell:**
+- **TTS:** the patch was refused by VibeComfy restore → declared patches `dd5bc822` → merged → re-run in batch 6.
+- **SFX, t2i, edit, music:** not yet run (batch 5 blocked by BUG 1 and BUG 2); their root-cause fixes are in the rehearsal.
 
 **How to check or release:**
-- `. ./env-b3.sh; ./root/run-astrid machines --json` lists live machines.
-- REST census: `curl -fsS https://rest.runpod.io/v1/pods -H "Authorization: Bearer proxy-injected"`.
-- To stop a batch, stop the script, every process from `install-r13b/root/versions/`, and any admitted task (see the 10:08 incident).
+- `. ./env-bN.sh; ./root(-b4)/run-astrid machines --json`; REST census `curl -fsS https://rest.runpod.io/v1/pods -H "Authorization: Bearer proxy-injected"`.
+- To stop a batch: SIGINT the generate CLI, stop the script, then `tasks cancel` any queued task.
 
-**Money:** balance $98.33 at 11:48. About $7 of $40 spent overnight and this morning. Floor $67.41.
+**Disk:** the session allowance is tight. Batch 5 hit 787 MB free; I deleted the old state's uv cache and /tmp baseline trees. Check `df -h /` before each batch.
 
-**Per cell (root cause → fix → merged → re-run):**
-- **TTS:** the pack's `@check_model_inputs()` against transformers 5.22.1 → recipe source patch `687a0ed9` → merged → batch 5 running. Its `TTS` model folder was also invisible → models-folders `43b69032`.
-- **SFX:** the Foley pack couldn't see `models/hunyuan_foley` on the volume → models-folders → merged → pending in batch 5.
-- **t2i and edit:** ComfyUI pin predated the Qwen Image 2.1 nodes → `6bfaacc6` (still 0.36.0, so H3 holds) → merged → pending.
-- **music:** models not locked → `634a2608`; staged template id lost its category → VibeComfy `fe92ac78` → merged → pending.
-- **engine install, found on the first batch:** discarded command output → `72fbdf65`; then setuptools double hash in the re-lock → `6eacb077`.
-
-**Workers:** none running. Parked: the installed smoke test (`c-smoke2`, both cases fail before task creation: preferences not visible to the installed CLI); C1 task 1 (needs its allowlist removed); C1 task 3.
+**Owner REVIEW items open:**
+- host shutdown or restart releases retained pods (recommendation: a restart-adoption slice; see 12:23);
+- the TTS fork as the durable form;
+- the four templates without a qualified id;
+- lifecycle `Retry-After`;
+- the old state's orphan `0d7f7e41` (likely the same mechanism as BUG 1; the subagent checks).
 
 **Next three steps:**
-1. Read each batch-5 cell from the product (`generate failure --logs`, `tasks logs <task> --project setup`) and log it as it lands.
-2. Fix any new root cause, then video if 5090 stock allows.
-3. Compose the Release 13 candidate. In parallel, have a worker sweep every `_Runner.run`-style call site for discarded command output (orchestrator 11:47).
-
-**Old install state (unreconciled):** `install-r13b/home` and `install-r13b/data` hold orphaned task `0d7f7e41` (lease expired 10:07:35, GPU reservation unreleased) and the night's failure receipts. The installer refuses there ("busy") until a Runtime with the installed identity runs `astrid-runtime tasks clear 0d7f7e41…`. Not forced.
-
-**Owner REVIEW items still open:**
-- the TTS fork as the durable form (route a);
-- the four templates without a qualified id;
-- lifecycle exposing `Retry-After`;
-- Hannah may overrule any orchestrator ruling of 08:34.
-
-**Candidate estimate:** if batch 5 passes, the candidate can be composed this afternoon (about 2 h after the batch). Each new root cause adds about 1 h.
+1. Read the BUG 1 and BUG 2 root causes, then brief or fix them structurally.
+2. Run batch 6 on root-b4.
+3. Keep-warm pass 5, then compose the candidate.
 
 ## Entries
 
