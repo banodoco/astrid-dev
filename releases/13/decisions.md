@@ -405,3 +405,14 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - The cleanup was merged after the full RunPod suite showed no new failures against its base (17 failed against 18).
   - On origin: `r13/declared-logs` `603b6728`, `scratch/r13-rehearsal` `e7f00181`.
   - Reinstalling at `e7f00181`, then re-running SFX (≤ $3, so the `doctor` output becomes visible) and t2i (≤ $1, P/E/I 1200/600/600 s).
+- **2026-11-12 07:30** **SFX root cause, read from the product's own logs** (`runs/sfx-dl2` on `e7f00181`, task `f5b69e2a`, pod released, ≈ $0.27).
+  - `astrid tasks logs f5b69e2a --project setup --name preparation.doctor.stdout` shows `WorkflowBundleError: Node 11 (HunyuanFoleyModelLoader) has unknown input foley_checkpoint_name`. The new `engine.startup` log (8.6 KB) shows search paths only for `diffusion_models`, `loras`, `text_encoders` and `vae` on the volume (`/workspace/astrid/engines/comfyui/models`).
+  - Mechanism: the pinned Foley pack builds its loader schema from `folder_paths.models_dir/hunyuan_foley`, which is `<ComfyUI>/models`, not the volume. With no checkpoint there, it publishes an `error`-only schema, so the template's real input looks unknown. The model lock has six top-level folders, but the engine's `models-config` writes a fixed four. `hunyuan_foley` (10 files) and `TTS` (11, QwenTTS) are installed but invisible.
+  - It's the same class as tonight's models-root bug: a fact (where the models live) that one record owns, with a reader that rebuilt it from a fixed list.
+  - Structural fix dispatched to Terra (`/home/user/wt/briefs/models-folders.md`):
+    - the folder list is derived from the lock;
+    - every folder goes into the search paths;
+    - `<ComfyUI>/models/<folder>` links point to the volume for packs that read `models_dir` directly;
+    - it refuses on conflict and never deletes user files;
+    - `models-config-check` verifies both.
+  - TTS needs this AND the decorator fix (06:40 REVIEW).
