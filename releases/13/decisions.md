@@ -564,3 +564,10 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
     - unverifiable drift after a failed job keeps the pod warm with stale preparation, re-prepared on the next claim;
     - only terminal or safety conditions release, each with its own reason (`job_stop_unverified`, `custody_changed`, `output_digest_mismatch`, `paid_limit_exhausted`, `reset_failed`, `engine_unreachable`).
   - Owner-authorised change to the bug-encoding test; the genuine safety tests stay.
+- **2026-11-12 12:10** Batch 5, TTS on pod `v7l7yk2u75kkie`: failed in alignment at `nodes_restore`. VibeComfy refuses the QwenTTS checkout because our declared source patch makes it dirty ("has uncommitted changes; restore refused"). Read from `preparation.nodes_restore.*` in the receipt.
+  - The pod was KEPT this time: the failure came before the receipt refresh. SFX then ran on the same warm pod.
+  - **Owner decision (Hannah, AskUserQuestion):** "Teach VibeComfy about patches", rather than a fork or deferring TTS. Dispatched to Terra (`/home/user/wt/briefs/wave3/declared-patches.md`):
+    - VibeComfy: `VIBECOMFY_DECLARED_SOURCE_PATCHES`, opt-in. Restore treats a pack whose only changes are declared paths at their declared digests as clean; everything else still refuses.
+    - Astrid: `_native` passes the variable from the recipe's `source_patches`.
+  - Keep-warm fix: Terra was re-dispatched with an authorised narrow change to `generation.py:92` (one distinct "kept, preparation stale" state; other non-prepared states still rejected).
+  - Also seen: `astrid tasks logs` on that TTS task said "no logs recorded" because the Runtime still showed the task `running` with an empty result after the CLI had exited. To investigate after the batch.
