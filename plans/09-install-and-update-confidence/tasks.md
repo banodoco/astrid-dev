@@ -22,6 +22,14 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 | [IU-11 Update-test hardening (from the R1 update-test review)](#iu-11-update-test-hardening-from-the-r1-update-test-review) | N / Luna | IU-1 | [ ] |
 | [IU-12 Windows pack-host retirement premise](#iu-12-windows-pack-host-retirement-premise) | X | IU-0 | [ ] |
 | [IU-13 Installer lock hand-off for schema-changing updates](#iu-13-installer-lock-hand-off-for-schema-changing-updates) | X | IU-1 | [ ] |
+| [IU-14 Unblock: set aside managed copies of built-in packs (Release 12.1)](#iu-14-unblock-set-aside-managed-copies-of-built-in-packs-release-121) | X | start | [ ] |
+| [IU-15 Lived-in update gate from every published release](#iu-15-lived-in-update-gate-from-every-published-release) | X | IU-14 | [ ] |
+| [IU-16 Sign-in on clean installs without the legacy copy](#iu-16-sign-in-on-clean-installs-without-the-legacy-copy) | X | IU-14 | [ ] |
+| [IU-17 One bundled-pack root, capabilities proven](#iu-17-one-bundled-pack-root-capabilities-proven) | N | start | [ ] |
+| [IU-18 Nothing outside the version root is authoritative or fatal](#iu-18-nothing-outside-the-version-root-is-authoritative-or-fatal) | S | IU-15, IU-17 | [ ] |
+| [IU-19 Tombstones retired with version pruning](#iu-19-tombstones-retired-with-version-pruning) | X | IU-15, IU-18 | [ ] |
+| [IU-20 An update a person can follow](#iu-20-an-update-a-person-can-follow) | X | IU-14 | [ ] |
+| [IU-21 Review rule for ownership moves](#iu-21-review-rule-for-ownership-moves) | N | IU-15 | [ ] |
 | [IU-END Scoped review and promotion](#iu-end-scoped-review-and-promotion) | X | all | [ ] |
 
 ## Task details
@@ -168,6 +176,120 @@ The project is planned, not dispatched. Exact test selectors are not present in 
 - **Work:** Let the Runtime accept proof that its parent installer already holds the lock: an inherited lock descriptor on the direct path, and a custody lease on Pinokio, because a Windows byte-range lock cannot be handed to another process. Or have the Agent run the migration without the Runtime's own installer mutex. Do not weaken or bypass the lock.
 - **Focused checks:** A stand-in release with a newer schema target updates through both paths on Linux, macOS and Windows, with the workspace preserved.
 - **Done:** That stand-in update passes on all six direct and Pinokio rows.
+
+### IU-14 Unblock: set aside managed copies of built-in packs (Release 12.1)
+
+- **Outcome:** A user who signed in to Hivemind on Release 1, 9 or 10 updates to the current release by re-running the normal update, keeps Hivemind sign-in, and can still roll back.
+- **Route:** X. In progress on astrid-agent `claude/bold-keller-m2v22v`.
+- **Dependencies and inputs:** [Phase 2 evidence](inputs.md#phase-2-upgrade-safe-installed-state).
+  - R1, R9 and R10 `astrid login` provisions a managed Hivemind *before* authenticating: an `active.hivemind` entry in `~/.local/state/astrid/default/pack-sources.json` and a checkout in `~/.local/share/astrid/packs/hivemind`.
+  - From R11, Hivemind is built in, and `astrid/core/pack/ownership.py:39-45` makes the duplicate fatal. The pack host exits 1 and the installer rolls back.
+  - An edited legacy checkout fails at verification (`source_setup.py:384`). A registration whose checkout was deleted fails in `custody_broker.py:2412`.
+- **Work:**
+  - Derive the product pack ids from what ships in the version.
+  - In `active_sources`, set aside managed entries with those ids *before verification*. The custody broker's own parser does the same.
+  - Sign-in keeps reading the legacy helper, and nothing writes the state file or the checkout.
+- **Focused checks:**
+  - Unit fixtures with an R1-shaped state: a clean, a dirty and a deleted checkout; the state is byte-identical afterwards; a non-product managed pack is still verified.
+  - A macOS journey that provisions the managed Hivemind with R1's own code, then updates. It fails on R12, passes on the hotfix, and includes a forced rollback.
+- **Done:** The journey passes in all three variants from R1, R9 and R10. Released through the Release skill as 12.1.
+
+### IU-15 Lived-in update gate from every published release
+
+- **Outcome:** The update gate starts from every published release, in a state that real use creates, and from a hostile home folder.
+- **Route:** X.
+- **Dependencies and inputs:** IU-14. The R12 matrix starts from three hand-picked releases with an empty, isolated HOME, so it could not see this incident.
+- **Work:**
+  - **Fixtures:** for each release in the App manifest history, build a fixture with that release's own code in a disposable HOME/XDG. It signs in (provisioning only), adds a pack, makes a project with a timeline, and keeps an App tab polling during the update. Save it once per release.
+  - **Gate rows:** update from each fixture to the candidate, plus one forced rollback from each origin.
+  - **Hostile-state test:** whatever is under XDG state and data (garbage, duplicates, dirty or missing checkouts, old formats), the host reaches ready with every product capability.
+  - **Write-set:** record each release's write-set outside `versions/` and diff it at review.
+- **Focused checks:** each new row fails against R12 for the incident fixture and passes on IU-14.
+- **Done:** The gate's origin list is generated from the manifest history, and the release skill requires it.
+
+### IU-16 Sign-in on clean installs without the legacy copy
+
+- **Outcome:** `astrid login` works on a fresh install, and updating or rolling back never signs a user out.
+- **Route:** X.
+- **Dependencies and inputs:** IU-14. The R12 `auth.py:45-63` finds a helper only in a managed Hivemind checkout or on PATH. Core Hivemind ships none, and the default declarations are empty (`source_setup.py:508`).
+- **Work:** Ship the helper from core Hivemind (its protocol lives in the Hivemind repository), using the same credential store as the legacy helper.
+- **Focused checks:**
+  - login, status and logout on a clean install;
+  - a signed-in R10 fixture updates and is still signed in;
+  - rollback keeps the login.
+- **Done:** Those three pass on macOS and Linux.
+
+### IU-17 One bundled-pack root, capabilities proven
+
+- **Outcome:** An installed release scans its bundled packs once, and its capability set matches a source checkout.
+- **Route:** N.
+- **Dependencies and inputs:** On installed R12, 11 bundled packs are "quarantined" from `versions/<v>/a/astrid/packs/<id>` while their capabilities still register, which points to a second physical copy. `loader.packs_root()` is path-derived (`loader.py:98-99`), so a second copy makes path-based ownership unsound.
+- **Work:** Find why the second root is scanned and remove it or exclude it. Compare installed and source capability sets.
+- **Focused checks:** No quarantine lines for bundled packs on an installed host, and identical capability ids.
+- **Done:** Both hold on macOS, Linux and Windows.
+
+### IU-18 Nothing outside the version root is authoritative or fatal
+
+- **Outcome:** Astrid's own code lives only inside `versions/<v>`. Anything outside it is user data or cache, and can never override a product pack or stop the host.
+- **Route:** S.
+- **Dependencies and inputs:**
+  - IU-15 protects the refactor; IU-17 makes path-derived ownership sound.
+  - Today ownership is reconstructed independently by name reservation (`discovery.py:437`), manifest arbitration (`ownership.py:39`), path ancestry (`loader.py:296`) and sign-in (`auth.py:45`).
+  - About ten consumers read the managed inventory, including `loader.py`, `skills/__init__.py:29`, `scopes.py:57` and `remotion_runtime.py`.
+- **Work:**
+  - One admission decision, consulted by every discovery path, provisioning, the custody broker and sign-in.
+  - Product pack ids are derived from the version.
+  - Problems with optional inputs set that item aside: duplicate, dirty, malformed, unknown collision. Only loss of a required product component is fatal.
+  - Take managed sources out of the host start path; they are vestigial since R12.
+  - Do **not** rewrite `generic_host.py`, build a generic migration framework or loosen validation.
+- **Focused checks:** IU-15's hostile-state test; the existing pack suites. Replace `tests/core/pack/test_inventory_review_fix.py:163` only with an assertion of the new rule, never a weaker one.
+- **Done:** The hostile-state test passes, and a single admission function is the only place ownership is decided.
+
+### IU-19 Tombstones retired with version pruning
+
+- **Outcome:** Leftovers of older releases that Astrid can recreate are removed aggressively, without ever losing user data or breaking rollback.
+- **Route:** X.
+- **Dependencies and inputs:** IU-15 and IU-18. Owner direction (12 Nov): be aggressive about cleaning up redundant state; never lose projects, timelines, media, credentials or packs the user wrote.
+- **Work:**
+  - Keep one list of legacy product state outside `versions/`. Examples:
+    - the managed Hivemind registration and checkout;
+    - the stale chat command;
+    - old pack-host registration and ready files;
+    - the R0 workspace the R1 handoff retained, once every project is verified in the new workspace;
+    - old version folders beyond the rollback target.
+  - Each entry records its preservation rule (user edits and unknown content are kept; git cleanliness is not proof, because ignored files escape the digest) and which retained versions still need it.
+  - Remove an entry, registration and files together, when the last version needing it is pruned. Log each removal in install.log, and list pending removals in the diagnostics download.
+- **Focused checks:**
+  - an update from an R10 fixture removes the legacy Hivemind only after the rollback target no longer needs it;
+  - an edited copy is kept;
+  - the space freed is reported.
+- **Done:** Those checks pass, and an IU-15 fixture shows no unlisted product leftovers.
+
+### IU-20 An update a person can follow
+
+- **Outcome:** Someone watching an update knows what is happening, why it failed, and what state they are left in.
+- **Route:** X, across Agent, Runtime and App.
+- **Dependencies and inputs:** IU-14. Today:
+  - The installer prints only "Installing Astrid." and "Starting Astrid." across about 15 phases, and prints a log path instead of the cause. The rollback receipt drops the cause (`installer/outcome.py:165-168`).
+  - The App shows "Couldn't load this timeline" while the Runtime is fenced.
+  - The R1-era App shows "Astrid needs repair before it can update" during any update.
+  - "Last update result: Recovery needed" stays after a clean rollback.
+- **Work:**
+  - The installer prints one line per phase, and the failing service's safe cause in plain words, in both the terminal and the receipt. A clean rollback says so plainly, with the next step.
+  - The Runtime and App distinguish an update in progress, temporary fencing and abandoned recovery. The App shows one "Astrid is updating" state and holds edits.
+  - The diagnostics download includes the service logs.
+  - The `timeline_commit_error` name for fenced polls is corrected.
+- **Focused checks:** A scripted failing update with an App tab open asserts the terminal lines, the receipt cause, the App states, and the final "back on Release N" state.
+- **Done:** Those assertions pass on macOS, Linux and Windows.
+
+### IU-21 Review rule for ownership moves
+
+- **Outcome:** A change that moves who owns something names its old writers, current consumers and rollback needs before it merges.
+- **Route:** N.
+- **Dependencies and inputs:** IU-15's write-set diff makes the rule mechanical. The incident came from Hivemind moving into core on the R2–R8 line, which merged into the user line at R11 without reconciling R1, R9 and R10 state.
+- **Work:** Add the rule to the review and release skills, triggered whenever the write-set diff or the product pack ids change, and always at a release-line merge.
+- **Focused checks:** Doc check; the release skill cites the write-set diff.
+- **Done:** The rule is in both skills.
 
 ### IU-END Scoped review and promotion
 
