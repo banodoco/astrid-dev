@@ -365,3 +365,10 @@ Overnight mode from 00:33Z on the owner's instruction: work through without the 
   - Ratchet and baseline untouched. The ratchet and GPU tests pass (67). Codex's discovery-suite failures (22) are identical before and after, so they're pre-existing.
   - Astra review of this commit is running; it's product code, so required.
   - The fix-round head is now `abd1886ee`. The local before/after comparison may straddle this commit; rerun pinned if it looks inconsistent.
+- 2026-11-12 00:59Z — **Astra review of product fix `a17e0555a`: BLOCKER, accepted. The blocker is my own correction.**
+  - Removing `--revision` made `astrid packs add` take folder mode (`cli_manage.py:345`; `transaction.py:1282`), so the recovery command still can't install.
+  - MEDIUM: an alias shadows an exact non-effect element of the same ID.
+  - MEDIUM: add_text's `content` is invisible to the visualize motion labels (`motion/model.py:99`), CLI cut summaries (`timeline_cuts.py` TEXT_PARAM_KEYS) and visualize caption extraction (`model.py:582`).
+  - LOW: two duplicate alias implementations remain (`_effect_registry.py:319`, `storage.py:231`).
+  - Confirmed sound: resolution order for effects matches rendering; an alias never names an absent provider; every schema entry point delegates to the resolver; `{content}` satisfies the full text-card JSON schema.
+  - All four go to Codex **Terra** (`cx-afa2`). The recovery command must be proven by a real install into a scratch packs root, and checked by test ID before and after. The fix round's product code is held until a reviewer has read the fix.
