@@ -21,13 +21,13 @@ def _catalog(context):
     for path in sorted((root / "plans").glob("*/plan.md")):
         folder = path.parent.name
         if not PLAN_FOLDER.fullmatch(folder):
-            errors.append(f"invalid plan folder: plans/{folder}")
+            errors.append(f"plans/{folder}: invalid plan folder name; rename it to the NN-short-name form, like 48-one-record-model")
             continue
         folders.add(folder)
         try:
             fields = project_fields(path.read_text(encoding="utf-8"))
             if fields["Status"] not in STATUSES:
-                errors.append(f"invalid status {fields['Status']!r} in {fields['Project']}")
+                errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use queued, active, blocked, paused, done or cancelled")
         except (ValueError, OSError) as exc:
             errors.append(f"plans/{folder}/plan.md: {exc}")
     priority = root / "plans/priority.md"
@@ -35,9 +35,9 @@ def _catalog(context):
     seen = set()
     for folder in order:
         if folder in seen:
-            errors.append(f"plans/priority.md: duplicate {folder}")
+            errors.append(f"plans/priority.md: duplicate {folder} under ## Order; delete one of its lines")
         if folder not in folders:
-            errors.append(f"plans/priority.md: unknown {folder}")
+            errors.append(f"plans/priority.md: unknown {folder} under ## Order (there is no plans/{folder}/plan.md); fix the name or delete the line")
         seen.add(folder)
     return errors
 

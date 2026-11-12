@@ -47,7 +47,7 @@ def _catalog(root: Path) -> str:
     text = path.read_text(encoding="utf-8")
     start, end = "<!-- plan-catalog:start -->", "<!-- plan-catalog:end -->"
     if text.count(start) != 1 or text.count(end) != 1:
-        raise ValueError("view plan-catalog: target must contain exactly one region")
+        raise ValueError("view plan-catalog: plans/index.md must contain exactly one <!-- plan-catalog:start --> line and one <!-- plan-catalog:end --> line around the table; restore them")
     before, rest = text.split(start, 1)
     _, after = rest.split(end, 1)
     lines = ["| Plan | Project | Goal | Status | Owner | Estimate | Waiting on |",

@@ -1,7 +1,7 @@
 # Plan priority
 
-Priority follows this order among open plans.
-Plans omitted from the list follow the listed plans.
+Open plans in the [catalog](index.md) are ranked in this order, top first; move a line to reprioritize, then run `python3 scripts/astrid_dev.py sync`.
+A plan not listed here comes after the listed ones, and `done` and `cancelled` plans always sit at the bottom.
 
 ## Order
 - 29-update-and-release

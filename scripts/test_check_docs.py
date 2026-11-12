@@ -29,7 +29,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_invalid_status(self):
         errors, _ = self.record_errors(status="maybe")
-        self.assertEqual(errors, ["invalid status 'maybe' in Alpha"])
+        self.assertEqual(errors, ["plans/01-alpha/plan.md: invalid status 'maybe'; use queued, active, blocked, paused, done or cancelled"])
 
     def test_terminal_not_before_active(self):
         errors, paths = self.record_errors(folders={"01-alpha": "done", "02-beta": "queued"},
