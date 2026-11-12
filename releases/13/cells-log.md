@@ -2,17 +2,15 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (21:11 UTC, hourly check-in)
+## NOW (22:11 UTC, hourly check-in)
 
 | Item | State | Next |
 |---|---|---|
-| 1. Judge fixes | Done. TTS follow-up `r13/ttsfix-4` `5123240b` pushed | Orchestrator merges when convenient |
-| 2. `r13/cells-vc` + pin | **Done.** VibeComfy `b3f20f33` frozen; Agent pin `7eb60798` in `r13/compose` | After the live run: merge `r13/ltx-flf` `3873b326`, one re-pin |
-| 3. Log gaps | Done (orchestrator) | — |
-| 4. Gate | **Done.** Agent `r13/preflight` `79bab65a` handed over; five cells PASS catalog, schema and rebuild; TTS constructor PASS; four constructor UNVERIFIED | Plan 50 growth path sent |
-| Catalog | `r13/catalog-fixes` `1cca5aab` and `r13/sfx-route` `c4b01ec2` in compose. `r13/catalog-two` (wan-2.2 i2v unlisted, qwen-image-edit inputs aligned) running. `r13/catalog-contracts` `46684164` and `r13/catalog-inputs` `5772aa5a` (all-entries T14, ratchet) pushed, land after #607 | By the cut line, Fri 13 Nov 18:00 UTC |
+| **Pin regression** (test lane) | Agent `tests/test_windows_gpu_availability.py` 3 failures from VibeComfy `a8a7be7c`'s explicit-placement rule plus conversion dropping the loader class. Fix `r13/cells-vc-fix` from `b3f20f33` (Sol, high) running; group B (z_image SHA-256) in the same card | Judge; merge into `r13/cells-vc`; one re-pin; hand to orchestrator and test lane |
+| 1–4 of the brief | Done (fixes judged; `r13/cells-vc` + pin; log gaps; gate `79bab65a`) | — |
+| Cut-line catalog work | `r13/catalog-two` `aa556c9b` handed over. Staging: VibeComfy `r13/cells-vc-next` `ce4acd54` pushed; Agent `r13/contracts-land-2` (only #342–#344 + pin + green builder tests, Terra) running; `r13/contracts-land` rejected (3 new failing tests). All-entries T14 and ratchet after #607 | By Fri 13 Nov 18:00 UTC |
 
-Heads: Agent `r13/compose` `4dec04bb`. Spend: none. Disk: 15 GB free after cleanup. Publication Sat 14 Nov midday.
+Heads: Agent `r13/compose` `016d46e6b`; VibeComfy candidate `b3f20f33`. Spend: none.
 
 ## Entries
 
