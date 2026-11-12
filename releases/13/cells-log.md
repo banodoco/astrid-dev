@@ -2,11 +2,11 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** change what a user sees, trade scope against time, or touch another stream. Brief: [cells-session-brief.md](cells-session-brief.md). Reports to the Release 13 manager (orchestrator).
 
-## NOW (18:05 UTC)
+## NOW (18:15 UTC)
 
 | Item | State | Next |
 |---|---|---|
-| 1. Judge fixes | TTS: `eb594e09` short; its rework found the deeper cause (lock drift to transformers 5). Direction changed (owner): stay on transformers 5; forward card `r13/ttsfix-3` (Sol, high) running. SFX (pass 3) and music still with the orchestrator | Hand `r13/ttsfix-3`; judge SFX and music on arrival |
+| 1. Judge fixes | TTS: `eb594e09` short; its rework found the deeper cause (lock drift to transformers 5). Direction changed (owner): stay on transformers 5; forward card `r13/ttsfix-3` (Sol, high) running. SFX `324f653f` judged: socket types accepted, identity reworked on `r13/sfxfix-2`; recapture `r13/oi-recapture` running; music still with the orchestrator | Hand `r13/ttsfix-3`; judge SFX and music on arrival |
 | 2. Pin | Merged: `r13/cells-pin` `f23dabb` in `r13/compose` `5f31797` (VibeComfy `a8a7be7c`) | Re-pin to `r13/cells-vc` when it exists (one command) |
 | 3. Log gaps | Done (orchestrator, `90ae9c31`) | — |
 | 4. Offline preflight | TTS leg exists (meta-device constructors, `engine_deps` lane); SFX and music legs pending | Design once they land |
@@ -33,3 +33,7 @@ Heads: Agent `r13/compose` `5f31797` (my branches are cut from `fc4b36d`); VibeC
 ### 18:05 UTC — TTS direction change: forward on transformers 5
 - **REVIEW** (owner, via the orchestrator): downgrading the engine's `transformers` because one node vendors 4.x code is the wrong trade; it costs every cell and builds in a conflict with any node that needs 5. The downgrade work stopped; its lock regeneration and findings are kept as evidence, uncommitted. The pin was merged into `r13/compose` (`5f31797`).
 - Forward card `r13/ttsfix-3` from `5f31797` (Sol, high): (1) a TTS implementation that already supports 5 (a newer `qwen-tts`, another maintained node judged by our constructor test, or ComfyUI core natively) beats our patch; (2) otherwise the three breaks go into the node's existing declared patches, each following the change 5.x made, plus a tiny random-weight CPU forward pass that fails without the patches; (3) either way, `transformers>=5.22,<6` is declared in `lock-inputs`, so a major version is a decision, never drift.
+
+### 18:15 UTC — SFX judged; recapture card
+- **SFX `324f653f`:** socket types accepted (`vibecomfy/socket_types.py` owns names and the only alias table, comparison only; AST ratchet). Commit identity **sent back**: `normalize_cache_identity` translates a 40-hex `pack_version` into `git_commit` on every read, and the writer builds `pack_version` then normalizes, so two fields hold one fact behind a permanent shim. Only one committed cache file stores a commit in `pack_version` (11 use `git_commit`, 36 have none). Rework `r13/sfxfix-2` (Terra, medium): migrate that file with VibeComfy's tools, delete the translation, writer emits `git_commit` only, ratchets; also check `pack`/`pack_slug`.
+- **Recapture** (orchestrator's card) `r13/oi-recapture` from `324f653f` (Terra, medium): the 32 quarantined templates' packs, captured through VibeComfy's own capture code from a CPU ComfyUI boot at Astrid's recipe pins, no weights; reports where Astrid's pins and VibeComfy's `custom_nodes.lock` disagree. The quarantine covers three live cells' templates (`audio/qwen3_tts_*`, `image/qwen_image_2_1_turbo`, `edit/qwen_image_2_1_turbo_edit`).
