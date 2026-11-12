@@ -2,6 +2,19 @@
 
 Append-only. The NOW block is replaced; entries below it are never edited. Entries flagged **REVIEW** are user-visible changes, scope-vs-time trades, named exceptions or anything touching Release 12.
 
+## Candidate estimate (2026-11-12 08:50 UTC, honest)
+
+- **Release 13 candidate: realistically 14:00–15:00 UTC today, at the earliest ~13:30.** That assumes no new root cause appears in the batch re-run. Each new cause adds about one cycle (about 1 h: diagnose from the declared logs, fix, re-run).
+- **Path:**
+  - seven parallel workers, about 1–2 h;
+  - my review and merges, about 1 h;
+  - ONE batch on one 5090 pod (TTS, SFX, t2i, edit, music back to back, warm reuse), about 1.5 h and about $2–3;
+  - then video if 5090 stock allows;
+  - then composing and qualifying the candidate, about 1 h.
+- **Biggest risks:**
+  - the ComfyUI bump and re-lock, which could change many packages;
+  - TTS also needing its `TTS` model folder (fixed by models-folders) once the decorator patch is in.
+
 ## NOW: morning note (2026-11-12 08:05 UTC)
 
 **Headline.** Every generation failure is now understandable from the product itself. Declared run logs work live on RunPod. On each failed task, `astrid tasks logs <task> --project setup [--name <log>]` and `astrid generate failure --logs` show the real cause. With that, tonight's four blind cells each have a root cause:
@@ -462,3 +475,20 @@ Three real bugs were found only by live runs and fixed: `tasks logs` read manage
   - Reverted Codex's relaxation of `_models_root`, which would have allowed a models root inside the engine tree. That was only needed because my brief's case 4 was imprecise. Replaced that case with the real no-volume case (base `<root>/models`, links still made) and a test that the inside-the-engine-tree root is still refused.
   - Music was not run: its ACE-Step models aren't in the RunPod model lock, and the template takes only `seed`. Edit was refused before renting because my input used `image` and not `image_ref`. The product said so clearly. Not re-run, since it would hit the t2i node gap.
 - **2026-11-12 08:35** Overnight run ended. models-folders: RunPod machine suite 118 passed. Final census: 0 pods. No check-ins remain scheduled.
+- **2026-11-12 08:45** **Orchestrator rulings (08:34), exercising Hannah's delegation; she can overrule any of them.**
+  1. TTS: route (b) now, a recipe source patch pinned to the exact QwenTTS commit, failing closed. I checked the cheaper alternative first: the tokenizer file was added once, in `b111101`, already using `@check_model_inputs()`, and earlier commits lack the 12 Hz tokenizer the locked 0.6B model needs. So there's no earlier pin, and it's the patch. The fork (a) stays the durable option if Hannah creates the repository.
+  2. models-folders: Astra review of `e7f00181..b1830b9e`; merge on NO BLOCKER, then re-run SFX.
+  3. ComfyUI bump to the EARLIEST commit with both Qwen Image 2.1 nodes, plus a re-lock on this machine from reconstructed inputs, now committed as `lock-inputs/` with a README: APPROVED.
+  4. `_CREDENTIAL_KEY` narrowed to credential names, with a test that a credential-shaped field is still redacted: APPROVED.
+  5. Music: lock the ACE-Step models if that takes under an hour and they fit the volume, else drop the cell and record a gap (my call).
+  6. **H10 CLOSED**, superseded by declared logs. Failure evidence for Release 13 is the declared-logs path (`logs.json` → `role=log` task outputs → `astrid tasks logs` / `generate failure --logs`). The bundle branches `r13/g3-bundle` and `r13/g3-bundle-2` (`04dd5f15`) are parked for good.
+  7. Fix `generate describe <entry id>`; leave `image_ref`.
+  - Dispatched in parallel (briefs in `/home/user/wt/briefs/wave3/`):
+    - Astra: the models-folders review;
+    - Terra: the TTS patch, based on models-folders, with one shared "declared, verified source modifications" exemption;
+    - Sol: the ComfyUI bump and re-lock;
+    - Luna: the music lock;
+    - Luna: the credential scrub and describe;
+    - Sol: the provider gate with 429 back-off (ruling: gate lifecycle's `terminate_pod` as one bounded operation and don't change lifecycle now);
+    - Sol: the installed-entry-point smoke test (ruling: first slice covers provider drift → named claim refusal, and a pod job failure → declared logs).
+  - Disk: deleted 17 clones whose HEAD is on origin (3.7 → 11 GB free).
