@@ -29,7 +29,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 2. **Investigate:** Trace actual behavior and prior work before changing it. Search issues and projects; confirm source revision, dependencies and relevant proof.
 3. **Decide:** Agree the smallest complete result and test of success. Reuse accepted scope; challenge consequential designs without creating a mandatory second planning ritual.
 4. **Build:** Work on the authorized source using [Iterate](../astrid-dev-iterate/SKILL.md); protect existing work and respect the current run's constraints.
-5. **Prove:** Record the exact candidate, environment, checks, observed successes/failures, model provenance and limits. A green wrapper is not product proof.
+5. **Prove:** Record proof as the [run contract](../astrid-dev-shared/run-contract.md#checks-and-failure-repair) and its [route provenance](../astrid-dev-shared/run-contract.md#actual-route-provenance) say. A green wrapper is not product proof.
 6. **Land:** Link issue/project and implementation PRs; use ordinary review and [Release](../astrid-dev-release/SKILL.md) for cross-repo integration and separately authorized promotion.
 
 Start at the first stage **not already established by evidence**; a fact-finding task can end after investigation, and a known small fix needn't revisit architectural planning.
