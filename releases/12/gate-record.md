@@ -1,6 +1,6 @@
 # Release 12 gate record
 
-State: DRAFT. Qualifying window started 12 Nov ~01:50Z on the tuple below; results pending.
+State: DRAFT. Qualifying window started 12 Nov ~01:25Z on the tuple below; results pending.
 
 ## Tuple
 
