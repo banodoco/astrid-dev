@@ -10,7 +10,7 @@
 
 **Estimate:** about 2.5
 
-**Waiting on:** Plan 51 Part 2 on `main` before the words task (II-5); the owner for ten minutes at a browser (II-1), the product repositories' pull requests (II-8) and the issue transfers (II-10)
+**Waiting on:** Release 13's publish for the product-repository changes (II-8, II-9); then the owner's issue transfers (II-10) and the final proof (II-11, II-12)
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
