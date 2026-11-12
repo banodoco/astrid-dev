@@ -1,4 +1,5 @@
 """Focused checks for a public-page projection with no duplicated editorial copy."""
+import re
 import shutil
 import tempfile
 import unittest
@@ -285,6 +286,72 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn(f"informing {len(self.page['projects']) + 1} projects", changed)
         self.assertIn(f"gaps--{len(self.page['gaps']) + 1}-assessed-outcomes", changed)
         self.assertNotEqual(actual, render_root_readme(actual, hypothetical))
+
+    def fixture_copy(self):
+        """A private copy of the fixture tree that a test may damage."""
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        root = Path(temporary.name) / "tree"
+        shutil.copytree(self.fixture_root, root)
+        return root
+
+    @staticmethod
+    def swap_principle_entries(path, first, second):
+        """Swap two third-level principle entries, each a heading line, in a Markdown file."""
+        text = path.read_text(encoding="utf-8")
+        headings = re.findall(r"^### \[[^\]]+\]\(principles/[^)]+\.md\)$", text, re.M)
+        one, other = headings[first], headings[second]
+        swapped = text.replace(one, "@@").replace(other, one).replace("@@", other)
+        assert swapped != text
+        path.write_text(swapped, encoding="utf-8")
+
+    PRINCIPLE_ORDER = ["local-first-cloud-capable", "open-by-design",
+                       "in-the-creators-control", "eliminate-needless-technical-wrangling"]
+
+    def test_principles_are_the_entries_of_the_intro_section_in_its_order(self):
+        intro = (self.fixture_root / "vision/intro.md").read_text(encoding="utf-8")
+        section = intro.split("## Four driving principles\n", 1)[1].split("\n## ", 1)[0]
+        entries = re.findall(r"^### \[([^\]]+)\]\(principles/([^)]+)\.md\)$", section, re.M)
+        self.assertEqual(len(entries), 4)
+        self.assertEqual([stem for _, stem in entries], self.PRINCIPLE_ORDER)
+        self.assertEqual([(p["title"], p["id"]) for p in self.page["principles"]], entries)
+
+    def test_an_intro_without_the_principle_section_is_refused(self):
+        root = self.fixture_copy()
+        intro = root / "vision/intro.md"
+        text = intro.read_text(encoding="utf-8")
+        head, rest = text.split("## Four driving principles\n", 1)
+        intro.write_text(head + "## Build Astrid with us" + rest.split("## Build Astrid with us", 1)[1],
+                         encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "Four driving principles"):
+            build(root, SHA)
+
+    def test_swapping_principle_headings_in_the_generated_page_changes_nothing(self):
+        root = self.fixture_copy()
+        self.swap_principle_entries(root / "vision/README.md", 0, 3)
+        self.assertEqual(build(root, SHA), self.page)
+
+    def test_a_garbled_generated_page_changes_nothing(self):
+        # The page must still exist: pillars and gaps link to it, and a link to a missing file is refused.
+        root = self.fixture_copy()
+        (root / "vision/README.md").write_text("garbled\n", encoding="utf-8")
+        self.assertEqual(build(root, SHA), self.page)
+
+    def test_swapping_two_intro_entries_changes_the_order(self):
+        root = self.fixture_copy()
+        self.swap_principle_entries(root / "vision/intro.md", 0, 1)
+        page = build(root, SHA)
+        first = self.page["principles"]
+        self.assertEqual(page["principles"], [first[1], first[0], first[2], first[3]])
+
+    def test_a_principle_file_that_disagrees_with_the_intro_names_the_intro(self):
+        root = self.fixture_copy()
+        path = root / "vision/principles/open-by-design.md"
+        text = path.read_text(encoding="utf-8")
+        self.assertTrue(text.startswith("# Completely open by design\n"))
+        path.write_text(text.replace("# Completely open by design", "# Completely open", 1), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "open-by-design.md: principle heading must match the intro"):
+            build(root, SHA)
 
     def test_immutable_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "40-character"):
