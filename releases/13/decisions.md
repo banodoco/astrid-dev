@@ -262,3 +262,14 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - Ruff improved to 2127 and the baseline was locked.
   - Reinstalled. TTS attempt 6 launched at 02:23:30; before-census 0 pods; balance $100.88. Spend ≈ $4.51 of $40.
 - **2026-11-12 02:22** C1 lead (Terra) finished the reason-channel core (uncommitted in `c-c1`) and wrote 3 Luna task files (`briefs/luna-tasks/c1-{1,2,3}.md`). Fan-out is deferred until TTS attempt 6 settles, because it needs a fresh base after the `878d13f4` integration.
+- **2026-11-12 02:24** ORCHESTRATOR (independent "war of attrition" analysis at `c627edba`). Verdict: mostly yes, in agreement with my 01:25 conclusion and the structural design.
+  - Three causes: (A) provider access per call site; (B) reasons dropped per boundary (71 broad excepts, 35 `from None`, 10 bare `return False`, exception names matched by string); (C) hand-kept lists.
+  - Gaps to do now:
+    (1) ratchet the hand-kept lists: every bundled pack action in the census and the matrix; `adapter.py:544` derived from `host_target_operation`; the `EXCEPTIONS` names replaced or ratcheted. Known misses: `ManagedSourcesError`, `WorkerPreparationError`, `PreparationJournalError` and `CapacityWaitCancelled` show as `UnknownError`.
+    (2) one installed-entry-point smoke test: the built wheel, `astrid generate … --placement runpod` against a fake provider built from recordings, requiring a named receipt reason. It needs an injectable provider base URL.
+  - Also a ratchet: no `runpod_lifecycle.api`, `httpx` or `runpod` imports in `astrid/packs/runpod` outside the provider module.
+  - Don't restructure `generic_host`, `_generate_on_target_impl`, `shared/common.py`, the legacy prepared-worker layer, lifecycle error types, or do a rename sweep.
+  - Sequence: the provider gate with backoff, plus (1) and (2), BEFORE further paid cells that exercise release or warm reuse.
+  - TAKEN: all of it.
+  - Dispatching in parallel (lead-and-Luna): the provider gate (Terra lead); (2) the smoke test (Sol); (1) the list ratchets plus the import ratchet (Luna); `plan_from_receipt` (Luna); and the C1 Luna fan-out after its core is rebased onto `878d13f4`.
+  - TTS attempt 6 (a single cell, no warm reuse) continues.
