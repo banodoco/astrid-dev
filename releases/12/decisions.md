@@ -28,25 +28,31 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
 - **Need from you:** nothing blocking.
 - **Release 13:** not this session's scope; no spend, no pods.
 
-## NOW (updated 2026-11-12 01:13Z, from `date -u`)
+## NOW (updated 2026-11-12 01:27Z, from `date -u`)
 
-**On the critical path:** Codex Terra `afa2`, the review follow-ups to the R12 regression fix: a recovery command proven by a real install, alias precedence, and caption readers. Time-box: done by 02:05Z. Otherwise the smaller of a minimal revert of the offending hunk or a narrower fix.
+**On the critical path:** the qualifying window, all running on one tuple, started ~01:50Z. Agent CI (about 2 h) is the long pole; expected ~03:50–04:10Z.
 
-**Path to shipping** (owner via orchestrator, 01:12Z; times are targets):
-1. ~02:10Z: **cut the Agent candidate.** Merge `r12/fix-round` (afa2 + `dc87e6230`) into Agent `cand/29-r12`, after an Astra read of the afa2 and `dc87e6230` delta.
-2. ~02:20Z: **re-pin** on the App integration head (`d3e81f98e`, which already contains App main `3e53462f4`): release 12, the new Agent SHA, Runtime `42ae24aff`, vendor lock regenerated, pin and lock checks.
-3. ~02:25Z → ~04:30Z: **one qualifying window, all at once on that tuple:** Agent ci.yml, App Tests, Direct Journey and the 11-row matrix, plus the Astra read of the fix-round range.
-4. Agent comparison as a **delta** against `c5370a86`: the 64 gone or named and ruled, and nothing that passed on `c5370a86` now fails.
-5. One red → fix exactly that, re-run only what it can affect, and carry over the rest, stated in the gate record.
-6. ~04:45Z: **A-FROZEN** and **GATE-GREEN** (three publish commands, expected SHAs) to the orchestrator; it publishes. Then the post-publish checks, then stop.
+**Frozen tuple:**
+- App `237b28be935af49c23464fa6ca1cf30db67ebaa0`: re-pin on `scratch/r12-app-int`; contains App main `3e53462f4`.
+- Agent `0e1543e0da2215db9cb3320cfd1083174c3c62a9`: `cand/29-r12` = `c5370a86` + `r12/fix-round` `cafa71487`.
+- Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`.
+- Manifest sha256 `1f3cd5b0…69f1`; harness `harness/29-r12` `1940a2fe1`; OMP banodoco/oh-my-pi `78f0e096`; Pinokio `d15c58b5` (deferred rows).
 
-**Scope is closed at the cut.** The drop side track isn't merged, so it goes to Plan 39. No further additions.
-**Deviation (logged):** the fix round also carries five test-only commits for tests among the 64, plus the `dc87e6230` hardening the boundary review asked for. They don't change product behaviour, are integrated and tested, and avoid 49 separate rulings.
+**Window, running:**
+- Agent ci.yml on `cand/29-r12`.
+- App Tests and Direct Journey on `scratch/r12-app-int`.
+- Matrix 11 rows, direct_only.
+- Astra read of `cafa71487`, the installed `astrid` command routing `packs`, the last product commit. All earlier fix-round product commits are reviewed and clear.
 
-- **Tuple so far:** Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641` (gate item done, 0 regressions). Agent `c5370a86` + fix-round, pending. App integration `scratch/r12-app-int` = `d3e81f98e` (main `3e53462f4` merged, held).
-- **Gate reviews:** all App test-range reviews clear. Agent `a17e0555a` BLOCKER (recovery command), fix pending. `abd1886ee` NO BLOCKER.
-- **Exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252. All four proven failing at their markers on real runs.
-- **Workers:** Codex tiers N `gpt-6-luna`, X `gpt-6.1-terra`, S `gpt-6.1-sol`, reviews `gpt-6-astra`. Log downloads go to Haiku. Fallback used: none.
+**Then:**
+- Agent comparison as a **delta** against `c5370a86`: the 64 gone or named, and nothing that passed on `c5370a86` now fails.
+- One red: fix exactly that, re-run only what it affects, carry the rest over.
+- ~04:30Z: A-FROZEN, then GATE-GREEN to the orchestrator; it publishes; then the post-publish checks; then stop.
+
+**Scope closed at the cut (01:50Z).** The drop side track goes to Plan 39.
+
+- **Exceptions:** DUP-SHOT #249, EXT-BATCH #250, TASK-SWAP #251, VIDEO-DROP #252. All four proven failing at their markers.
+- **Workers:** Codex N `gpt-6-luna`, X `gpt-6.1-terra`, S `gpt-6.1-sol`, reviews `gpt-6-astra`; log downloads by Haiku. Fallback used: none.
 
 ## Decisions
 - 11 Nov (before 22:20Z) — **R12 T3 015/017 ruling (11 Nov):** closed, pre-existing host-load timeouts, not regressions. On clean GitHub runners, `tests/core/execution/test_process_group.py` (91 passed, 5 darwin deselected) and the three native render-scope selectors in `test_render_scope_launch.py` passed on base `313bbd46` ([run 43075148232](https://github.com/banodoco/astrid-agent/actions/runs/43075148232)) and candidate `53908e55` ([run 43075158431](https://github.com/banodoco/astrid-agent/actions/runs/43075158431)). The other modules in old group 017 are covered by the T5 `ci.yml` run.
@@ -413,3 +419,12 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
   - **Final Astra read of `abd1886ee..cef4c2850`** (product: `dc87e6230` + `cef4c2850`) is running.
   - The cut merge is prepared locally as `b186d4204` (cand/29-r12 + fix-round) and pushes when the review clears.
 - 2026-11-12 01:22Z — **Matrix harness `1940a2fe1`** (Codex Luna, which I reviewed; harness-only): the autostart-off leg runs `journey.verify("install")` and records `import_origins` like every other leg. 192 passed. The qualifying matrix uses `harness/29-r12` `1940a2fe1`.
+- 2026-11-12 01:27Z — **Final fix-round review (Astra, `abd1886ee..cef4c2850`): BLOCKER.** The installer's `astrid` shim runs run-astrid, which execs `python -m astrid.omp_agent` and bypasses `astrid.console`, so `astrid packs add …` failed on real installs.
+  - That also broke the documented pack-add command in the creative-work skill, for every moved pack.
+  - Fixed as `cafa71487`: `omp_agent.main` routes `packs` exactly as `console.main` does. I ran it end to end: `python -m astrid.omp_agent packs add … --revision main` installed astrid_motion from poms_packs. The tests prove the installed entry routes it. The recovery test is renamed to say it covers argument forwarding (LOW).
+  - All other findings in that review are confirmed fixed.
+  - Under the owner's path ("the Astra read runs in the same window"), the read of `cafa71487` runs in parallel with the qualifying window. A blocker there means: fix only that and re-run only what it affects.
+- 2026-11-12 01:27Z — **Agent candidate cut: `cand/29-r12` = `0e1543e0d`**, merging `r12/fix-round` `cafa71487`; 30+ files.
+  - **Re-pin `237b28be9`** on `scratch/r12-app-int`: agent.sha 0e1543e0, OMP source → banodoco/oh-my-pi at the same sha, vendor lock regenerated against the cut. `pin.mjs --check`, both vendor-lock checks and release-guard `origin/main HEAD --pins` (11 → 12) all pass. App main is an ancestor.
+  - **Qualifying window dispatched together:** Agent ci.yml, App Tests, Direct Journey, matrix (harness `1940a2fe1`).
+  - Gate record tuple and publication SHAs filled in.
