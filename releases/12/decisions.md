@@ -241,3 +241,11 @@ Append-only. Each entry: UTC time, the decision, the evidence or commit. **REVIE
   - Running: an independent Astra review of `7a971cea5..05ac65ca5`, plus App Tests and Direct Journey on `05ac65ca5`.
   - If any of it isn't green and reviewed when the main track reaches re-pin, the main track freezes without it.
 - 2026-11-12 00:11Z — **Publication pre-authorised to the orchestrator once GATE-GREEN holds.** The gate record must carry exact commands with expected SHAs (Agent main, then Runtime main, then App main, which deploys), the served-manifest check, and the protected-branch and required-check findings. I'm establishing those now.
+- 2026-11-12 00:14Z — **App main moved past the cut-off.** `acfe70e7b` (onboarding tour, 24 files, +720) was pushed at 23:25Z by another session (`…W1zBiskaEWc4tZST1r`, not R13's manager). Publication is fast-forward only, so I merged it cleanly into the integration as `02b049ccd`, and it gets tested with the candidate. R12's TourCard fix survives the merge.
+  - **Messaged the orchestrator** (only they or Hannah can do this): hold App main still until publication.
+  - Branch protection: main is unprotected on all three repos, with no required checks visible; rulesets weren't readable without admin. Recorded in the gate record with an ancestor check before each push.
+- 2026-11-12 00:14Z — **Astra review of the drop fix `7a971cea5..05ac65ca5`: NO BLOCKER.**
+  - The Runtime rechecks the five-field selection, project membership and catalog digest inside the acceptance transaction (`timeline_commit_port.py:387-393, :974-990, :1052-1075`; `timeline_commit_store.py:1841-1854`). Dropping the App-side read doesn't remove the Runtime's authority.
+  - MEDIUM: the fresh-project e2e tests don't assert the exact command, object, track or span. MEDIUM: the adversarial case is covered only by the marked test (the Sol conversion is in progress).
+  - Rated LOW by the reviewer and treated by me as a weakened check that must be restored: `191863ca9` dropped the audio unit test's negative assertions and its exact target track.
+  - Codex Luna (`cx-drop2`) is restoring and strengthening those. The side track enters R12 only with all of this done and reviewed.
