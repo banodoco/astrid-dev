@@ -19,6 +19,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Handing off a project, or overseeing several | [Orchestrate](../astrid-dev-orchestrate/SKILL.md): plan it, farm it out to a manager set up for cloud sessions, advise and check in |
 | Running one accepted project | [Manage](../astrid-dev-manage/SKILL.md); ask the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) for a genuine blocker or consequential choice |
 | Someone else's pull request, usually an outside contributor's | [Merge](../astrid-dev-merge/SKILL.md): a lead critic and a few cheap helpers review it, then merge it, send it back or bring it to the owner |
+| Test results: is a candidate worse than its baseline, or why is a `main` red | [Get to green](../astrid-dev-green/SKILL.md): measure completely, then gate on no new failures or retire old red by cause |
 | Integration, release or publication | [Release](../astrid-dev-release/SKILL.md), with explicit current authorization |
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
 | Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](../astrid-dev-improve/SKILL.md): find the rule's one home, change only that, prove it |

@@ -56,7 +56,7 @@ You are expected to decide. The advisor is for thinking that is bigger than your
    - Tell every task to add commits only ([run contract](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
    - Escalate by the [stopping thresholds](../astrid-dev-shared/run-contract.md#cheapest-model-first): re-route a failure to X with the worker's notes, don't try again.
    - Keep independent tasks moving while one is blocked.
-   - A CI step running past one and a half times its usual time is a hang. Cancel it, have a worker reproduce that shard with `-o faulthandler_timeout=300`, name the test, and run it on the baseline. Don't wait for the hung step.
+   - A CI step running past one and a half times its usual time is a hang: cancel it and don't wait; [Get to green](../astrid-dev-green/SKILL.md#2-measure) says how to name the test.
    - Your own wake-up: never end a turn with work in flight (workers, CI, merges) without scheduling a one-off message to yourself in 20–30 minutes, or a background wait on the run; an idle session wakes for nothing.
    - **Worker sessions get exactly one repository,** attached when the session is created: the repository the task changes, at its integration branch, in auto mode (or Accept edits). Its committed `.claude/settings.json` lists the setup and test commands workers may run without a prompt (a multi-repo manager session loads none), so put product-repo commands there, and start workers on the integration branch and merge the task branch in.
    - **No worker may stall on a permission prompt nobody sees.** Write files with the Write tool and run one simple command per Bash call (no heredocs, `cd … &&` chains or `git -c user.*` identity overrides). If a command still prompts, stop and report it to the advisor at once instead of waiting.
@@ -85,7 +85,7 @@ You are expected to decide. The advisor is for thinking that is bigger than your
    - In each repository the project changes, keep one integration branch (`int/<project>`, cut from `main` when the run starts); task PRs target it.
    - Check the changed files stay inside the scope; if not, stop and ask the advisor.
    - A change is ready when its focused proof passes (local proof counts only when it runs the same path as the check, per [Iterate](../astrid-dev-iterate/SKILL.md)) and no check covering its scope newly fails against its base. If the base has no run of a failing check, run that one test on the base yourself.
-   - A check already failing on the base (found when you recorded the baseline) neither blocks the merge nor becomes this project's work: note it once for the owner and leave it to its own project. Never take on full CI health.
+   - A check already failing on the base (found when you recorded the baseline) neither blocks the merge nor becomes this project's work: note it once for the owner and leave it to its own project. Retiring old red is its own project ([Get to green](../astrid-dev-green/SKILL.md), mode B).
    - Moving the reviewed candidate to `main` is [Release](../astrid-dev-release/SKILL.md)'s job, not yours.
 5. **Escalate.**
    - **Decide these yourself; don't ask:**
@@ -95,7 +95,7 @@ You are expected to decide. The advisor is for thinking that is bigger than your
      - when a card requirement on code that a later accepted plan replaces can't be met cheaply, defer it to the task that owns that code, and record the deferral in the merge commit and `tasks.md`;
      - re-run a gate (CI, a journey, the matrix) on a fix commit as soon as the fix lands, and paste the run ids; re-runs need no go, and each starts when its own inputs are ready, not when every fix is done;
      - when a gate fails, first make the failure visible: read the first error, and if the evidence isn't uploaded, reproduce the exact command. Then sort the failing tests against the main branch's latest run by the regression rule, before you ask;
-     - when a suite stops at its first failure (a serial chain), run it once with the stop bypassed and get the complete list before fixing anything. Take first the failures that could be a real product bug, and for each establish whether a user hits it and whether the shipped release has it too;
+     - when a suite stops early, get its complete list once before fixing anything ([how](../astrid-dev-green/SKILL.md#2-measure)). Take first the failures that could be a real product bug, and for each establish whether a user hits it and whether the shipped release has it too;
      - a test that cannot be fixed in its task is quarantined only under the [green-mains quarantine rule](../../plans/39-green-mains/plan.md#quarantine-rule): strict expected-failure, exact title, issue, owner, expiry. Never a skip, and never for a bug this project introduced;
      - when a gate's test drives the product differently from users (a different entry point, flags or pinned versions), fix the test so it drives the product as users do, and record the cause.
    - **Act** on the one next step it returns; [advice is never permission](../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries) to run or publish.
