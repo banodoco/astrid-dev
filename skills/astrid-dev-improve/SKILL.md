@@ -18,7 +18,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Words follow the [glossary](
 | A term | [glossary](../astrid-dev-shared/glossary.md) | judgment |
 | A record of decisions | the glossary names three: a manager's [decision log](../astrid-dev-manage/SKILL.md#decide), the [decisions ledger](../astrid-dev-shared/run-contract.md#decisions-ledger-when-the-owner-is-unavailable), `inputs.md` Owner decisions | judgment |
 | A pack's shape; what a card holds | the [plan](../../templates/project/plan.md), [inputs](../../templates/project/inputs.md) and [tasks](../../templates/project/tasks.md) templates | `pack-shape` |
-| A project fact: name, goal, status, owner, estimate, waiting | the first six lines of its `plan.md` | `plan-catalog` |
+| A project fact: name, goal, status, owner, estimate, waiting | the six lines of its `plan.md` | `plan-catalog` |
 | Priority | [`plans/priority.md`](../../plans/priority.md) | `plan-catalog` |
 | Claiming, proposing or finishing a project | the [contribution workflow](../../docs/contribution-workflow.md#claim-a-project) | the claim bot, `completion-assessment` |
 | A check | `scripts/checks.py`; how: [extending guide](../../docs/extending.md#add-a-check) | its tests, `list` |
