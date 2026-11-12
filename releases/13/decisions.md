@@ -888,3 +888,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - U2 adds each check's fixed reason string to the CLI error and stderr, then Astra.
   - A CPU reproduction of four sequential jobs on one warm host shows which check fires. If it's an ownership hand-off between jobs, the mechanism comes to me before any fix, because it may touch K1.
 - **Process lesson:** I ruled from my own recollection of where the root lives without reading `remote_placement.py`. Read the placement code before ruling on custody.
+
+## 12 Nov ~19:35 UTC: lint ratchet merged; owner drops the mypy total gate
+
+- **Merged:** `r13/tests/lint-ratchet` `1d1cb25f` (Astra-approved) → `r13/compose` `857c39557`. It adds per-(file, code) ruff and mypy ratchets in CI's gate scope, seeded from R12 `0e1543e0`. The candidate is red as intended: ruff 27 rows / 59 findings, mypy 74 rows / 159 findings, owned by the lanes.
+- **Owner decision (Hannah, in this session):** drop the mypy total gate. Its committed total of 2,192 was stale (R12 itself has 2,338) and kept fast checks red on R12 main. The per-(file, code) ratchet is the one mypy gate. R12's debt stays with Plan 39.
+- **Follow-up:** the test lane removes the total gate. It does the same for ruff only if that gate adds nothing the ratchet lacks.
