@@ -113,8 +113,8 @@ class RegisteredRuleTests(unittest.TestCase):
             active = Records.plan(Project="First image", Status="active") + PLAN.split("\n\n", 1)[1]
             (project / "plan.md").write_text(active)
             (project / "inputs.md").write_text(DRAFT)
-            from check_docs import HEADER, DIVIDER
-            (root / "plans/index.md").write_text(HEADER + "\n" + DIVIDER + "\n"
+            (root / "plans/index.md").write_text("| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |\n"
+                "|---|---|---|---|---:|---|---|\n"
                 "| First image | Build a flow | active | Owner | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n")
             gap = root / "vision/gaps/F-005-local-files-cloud-assist.md"
             gap.parent.mkdir(parents=True, exist_ok=True)
@@ -221,6 +221,21 @@ class ProjectCatalogContractTests(unittest.TestCase):
                 if entry.id in documentation:
                     with self.subTest(rule=entry.id):
                         self.assertEqual(entry.run(context), [])
+
+    def test_unique_project_numbers_reports_duplicates_and_is_registered(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            plans = root / "plans"
+            (plans / "40-a").mkdir(parents=True)
+            (plans / "40-b").mkdir()
+            entry = next(entry for entry in checks.REGISTRY if entry.id == "unique-project-numbers")
+            self.assertEqual(entry.trigger, "always")
+            self.assertEqual(entry.run(checks.Context(root)), [
+                "duplicate project number 40: 40-a, 40-b"])
+            (plans / "40-b").rmdir()
+            self.assertEqual(entry.run(checks.Context(root)), [])
+            _, listing = invoke(["list"])
+            self.assertIn("unique-project-numbers always", listing)
 
 if __name__ == "__main__":
     unittest.main()

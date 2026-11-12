@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Documentation rules retain the legacy order and skip after a bad catalog.
 def _catalog(context):
-    from check_docs import STATUSES
+    import lifecycle
     from project_contract import PLAN_FOLDER
     from records import project_fields, priority_order, section
     root = context.root
@@ -28,8 +28,8 @@ def _catalog(context):
         folders.add(folder)
         try:
             fields = project_fields(path.read_text(encoding="utf-8"))
-            if fields["Status"] not in STATUSES:
-                errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use queued, active, blocked, paused, done or cancelled")
+            if fields["Status"] not in lifecycle.names():
+                errors.append(f"plans/{folder}/plan.md: invalid status {fields['Status']!r}; use {lifecycle.phrase()}")
         except (ValueError, OSError) as exc:
             errors.append(f"plans/{folder}/plan.md: {exc}")
     priority = root / "plans/priority.md"
@@ -51,8 +51,18 @@ def _catalog(context):
     return errors
 
 
+def _unique_project_numbers(context):
+    plans = context.root / "plans"
+    by_number = {}
+    for folder in plans.iterdir():
+        if folder.is_dir() and (match := re.match(r"^(\d{2})-", folder.name)):
+            by_number.setdefault(match.group(1), []).append(folder.name)
+    return [f"duplicate project number {number}: {', '.join(sorted(folders))}"
+            for number, folders in sorted(by_number.items()) if len(folders) > 1]
+
+
 def _release_documents(context):
-    from check_docs import catalog_rows, read, CATALOG, release_errors
+    from check_docs import read, release_errors
     root = context.root
     try:
         if _catalog(context):
@@ -73,7 +83,7 @@ def _release_documents(context):
 
 
 def _strategy_consistency(context):
-    from check_docs import catalog_rows, read, CATALOG, STRATEGY, strategy_errors
+    from check_docs import read, STRATEGY, strategy_errors
     root = context.root
     try:
         if _catalog(context):
@@ -93,7 +103,7 @@ def _strategy_consistency(context):
 
 
 def _catalog_paths(context):
-    from check_docs import catalog_rows, read, CATALOG, PLAN_LINK, PLAN_FOLDER, unnamed_active_owners
+    from check_docs import read, PLAN_FOLDER, unnamed_active_owners
     root = context.root
     try:
         if _catalog(context):
@@ -106,7 +116,7 @@ def _catalog_paths(context):
 
 
 def _gap_structure(context):
-    from check_docs import catalog_rows, read, CATALOG, GAP_NAME, parse_gap_relationships, route_issues
+    from check_docs import read, GAP_NAME, parse_gap_relationships, route_issues
     root = context.root
     try:
         if _catalog(context):
@@ -145,7 +155,7 @@ def _gap_structure(context):
 
 
 def _plan_files(context):
-    from check_docs import catalog_rows, read, CATALOG, GAP_NAME, plan_gap_ids
+    from check_docs import read, GAP_NAME, plan_gap_ids
     root = context.root
     try:
         if _catalog(context):
@@ -173,7 +183,7 @@ def _plan_files(context):
 
 
 def _subjects(context):
-    from check_docs import catalog_rows, read, CATALOG, parse_subject
+    from check_docs import read, parse_subject
     root = context.root
     try:
         if _catalog(context):
@@ -200,7 +210,7 @@ def _subjects(context):
 
 
 def _obsolete_sources(context):
-    from check_docs import catalog_rows, read, CATALOG
+    from check_docs import read
     root = context.root
     try:
         if _catalog(context):
@@ -217,7 +227,7 @@ def _obsolete_sources(context):
 
 
 def _canonical_principles(context):
-    from check_docs import catalog_rows, read, CATALOG
+    from check_docs import read
     root = context.root
     try:
         if _catalog(context):
@@ -235,7 +245,7 @@ def _canonical_principles(context):
 
 
 def _obsolete_templates(context):
-    from check_docs import catalog_rows, read, CATALOG, obsolete_template_paths
+    from check_docs import read, obsolete_template_paths
     root = context.root
     try:
         if _catalog(context):
@@ -250,7 +260,7 @@ def _obsolete_templates(context):
 
 
 def _ledger(context):
-    from check_docs import catalog_rows, read, CATALOG, ledger_errors
+    from check_docs import read, ledger_errors
     root = context.root
     try:
         if _catalog(context):
@@ -265,7 +275,7 @@ def _ledger(context):
 
 
 def _markdown_links(context):
-    from check_docs import catalog_rows, read, CATALOG, README, local_links
+    from check_docs import read, CATALOG, README, local_links
     root = context.root
     try:
         if _catalog(context):
@@ -376,6 +386,16 @@ def _planning_impl(context):
     return errors
 
 
+def _pack_shape_impl(context):
+    import pack_shape as gate
+    root = context.root
+    shape = gate.template_shape(root)
+    errors = []
+    for name in gate.new_packs(context.base, root):
+        errors.extend(gate.shape_errors(name, shape, root))
+    return errors
+
+
 def _completion(context):
     try:
         return _completion_impl(context)
@@ -395,6 +415,13 @@ def _planning(context):
         return _planning_impl(context)
     except (OSError, ValueError) as exc:
         return [f"project evidence: {exc}"]
+
+
+def _pack_shape(context):
+    try:
+        return _pack_shape_impl(context)
+    except (OSError, ValueError) as exc:
+        return [f"can't check new packs against the templates: {exc}; if the base revision is missing, fetch the PR base, then run the check again"]
 
 
 @dataclass(frozen=True)
@@ -425,6 +452,7 @@ class Check:
 
 REGISTRY: tuple[Check, ...] = (
     Check('plan-catalog', 'always', 'Parse the plan catalog', _catalog),
+    Check('unique-project-numbers', 'always', 'Require unique project numbers', _unique_project_numbers),
     Check('release-documents', 'always', 'Validate release documents', _release_documents),
     Check('strategy-consistency', 'always', 'Validate strategy consistency', _strategy_consistency),
     Check('catalog-paths', 'always', 'Validate catalog paths', _catalog_paths),
@@ -441,4 +469,5 @@ REGISTRY: tuple[Check, ...] = (
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),
     Check('project-planning-evidence', 'pr', 'Validate planning evidence for new or opted-in projects', _planning),
+    Check('pack-shape', 'pr', 'Check that new project packs follow the templates', _pack_shape),
 )

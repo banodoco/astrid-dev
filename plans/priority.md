@@ -37,7 +37,7 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 26-fully-hosted-v2
 - 27-video-render-options
 - 28-contributor-ownership
-- 40-contribution-discovery
+- 49-contribution-discovery
 - 41-agent-managed-tools
 - 42-hivemind-public-sources
 - 43-nonvideo-editors
