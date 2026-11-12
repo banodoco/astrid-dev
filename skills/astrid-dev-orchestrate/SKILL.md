@@ -10,7 +10,7 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 2. **Answer questions and unblock** managers and the owner (path 2).
 3. **Equip managers to need you less.** Treat every question as a symptom: find why it reached you and fix that cause in the [manage skill](../astrid-dev-manage/SKILL.md), the plan or the task card, so it isn't asked twice and the run moves as fast as it can without you.
 
-**One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your own session, you are its [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#hand-a-long-task-to-codex-from-claude-cloud)).
+**One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your own session, you are its [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
 Managers and their workers verify tasks, run tests, edit task code and make routine calls. Follow the accepted release brief for any coordination duties it assigns you, such as relaying cross-track dependencies, accepting frozen inputs, arranging review or publishing after the owner's go.
 
@@ -102,9 +102,18 @@ For agents in separate Codex Cloud chats, use [Codex Cloud agent coordination](c
 
 For Codex running inside a Claude Code cloud session, use the Claude-hosted runner below. These are different environments.
 
-## Hand a long task to Codex from Claude Cloud
+## Use Codex from Claude Cloud
 
-When a long, self-directed task should run under your oversight, such as a GPU validation run, you can run Codex in your own cloud session. Use [`codex-in-claude-cloud/`](codex-in-claude-cloud/README.md) for this. It gives you a runner that resumes Codex if it stops, a keep-alive (`codex-hold.sh`) that restarts a dead runner and wakes you, and a two-file mailbox. A Codex manager can run a whole project this way, with its sub-agents doing the tasks.
+A Claude cloud session can run Codex in its own container ([`codex-in-claude-cloud/`](codex-in-claude-cloud/README.md)). There are two shapes, and the first is the default:
+
+| Shape | Who manages | Use it when |
+|---|---|---|
+| **Codex workers (default)** | The Claude session manages: it briefs each card, starts one `codex exec` per card on the card's route, checks the result, commits and integrates ([how](codex-in-claude-cloud/README.md#use-codex-for-the-workers-under-a-claude-manager)) | A project run from a task list. This is what "Codex does the bulk of the work" means unless the owner says otherwise |
+| **A Codex manager** | A long-running Codex process manages its own sub-agents; the Claude session hosts it and still answers for the run | One long, self-directed job with few decisions along the way (a GPU validation run), more parallel tracks than the session can supervise, or the owner asks for it. Say which reason applies on the `Run start` line |
+
+A Codex manager is a second manager in the same container: it can't commit, reaches you only through a mailbox, and needs a runner and a keep-alive. Don't add that layer by default, and never tell a session to "run the Codex manager" when you mean "send the cards to Codex".
+
+**The rest of this section applies only when you have chosen a Codex manager.** The runner resumes Codex if it stops, a keep-alive (`codex-hold.sh`) restarts a dead runner and wakes you, and a two-file mailbox carries questions.
 - **A worker restart kills every process,** the keep-alive included. While a run is live, keep a scheduled check-in at most 20 minutes away (`send_later`). Have every check-in re-arm `codex-hold.sh` with all live run folders. Also register each live run in `~/codex/runs.txt` for `codex-hold-daemon.sh`, which a SessionStart hook relaunches, so a dead runner restarts as soon as the session comes back ([README](codex-in-claude-cloud/README.md#start-a-run)). Ask the owner once to add that hook, because auto mode refuses Claude's edits to its own settings.
 - **Install the astrid-dev skills** for Codex (`~/.agents/skills`), and give the manager its plan, its branches, the route-to-model table, and the rules that differ under Codex. The README lists those rules.
 - **Brief a manager as a manager.** Start every Codex manager from [`manager-brief.md`](codex-in-claude-cloud/manager-brief.md), and re-read it before each new run, because it changes. Codex takes its authority only from its starting prompt. A mailbox note can't later grant it merge rights or change its role, and it rightly refuses to accept one. A prompt that forbids integrating ("never push to int/…") makes Codex a worker, and you end up relaying every branch between it and someone else. To change a running Codex's role, have it checkpoint (push work in progress, write a handover entry, end `DONE`) and start a fresh manager run that continues from the handover.
