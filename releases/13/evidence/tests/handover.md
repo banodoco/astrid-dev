@@ -1,6 +1,6 @@
 # R13 test manager: handover (12 Nov, 23:15 UTC)
 
-**Rule 0 (orchestrator, 12 Nov 23:13): never call a failure preexisting, a flake or "not a regression" without a cited R12 run: a CI run id (R12 main CI `43155525276`-era jobs are in `baseline/r12-main/REPORT.md`; R12 Lanes `43155525276`/`43205560755`) or a local R12 command with its log path (R12 checkout `/home/user/wt/agent-r12`, `scripts/worker-env/agent-pytest.sh <file> -q -rA -p no:cacheprovider > <log>`). Anything that can't be settled that way goes to the orchestrator as a question, not a ruling.**
+**Rule 0 (orchestrator, 12 Nov 23:13): never call a failure preexisting, a flake or "not a regression" without a cited R12 run: a CI run id (R12 main CI run `43155525231`, jobs listed in `/home/user/wt/r13-tests/baseline/r12-main/REPORT.md`; R12 main Lanes runs `43155525276` and `43205560755`, logs in `/home/user/wt/r13-tests/baseline/r12-lanes/`) or a local R12 command with its log path (R12 checkout `/home/user/wt/agent-r12`, `scripts/worker-env/agent-pytest.sh <file> -q -rA -p no:cacheprovider > <log>`). Anything that can't be settled that way goes to the orchestrator as a question, not a ruling.**
 
 Brief: `releases/13/test-manager-brief.md`. Table: `releases/13/tests.md` (single source of rows). Workspace: `/home/user/wt/r13-tests` (briefs/, runs/<card>/, triage/, tools/, baseline/, candidate/<sha8>/). Lane session ids: `/home/user/wt/r13-tests/tools-lanes.md` (machines 011EzfW2mh…, cells 011EzfVzW8…, engine via the orchestrator 011EzfW2L4…).
 
