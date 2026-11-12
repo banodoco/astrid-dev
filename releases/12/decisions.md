@@ -439,3 +439,4 @@ Overnight mode from 00:33Z: I'm working through without you or the orchestrator,
     - So far boundary, both wheels and windows-native-and-installer are green.
     - `fast checks` is red at the Mypy baseline gate. I ran the same gate on both: `c5370a86` and `0e1543e0` give identical counts, current 2338 against baseline 2192, so the fix round adds 0 findings. Pre-existing and already ruled (stale baseline; Plan 39 AT2).
   - The gate record is filled except the Agent delta comparison.
+- 2026-11-12 03:27Z — **Notice (Plan 48 orchestrator, relaying Hannah):** `plans/index.md` becomes generated once astrid-dev PR #533 merges. Edit plan.md, then run `python3 scripts/astrid_dev.py sync`; `check_docs.py` becomes `astrid_dev.py check`. No impact here: R12's Plan 39 edit (`2e6773d`) touched only plan.md, tasks.md and inputs.md, and I have no open PR editing the index.
