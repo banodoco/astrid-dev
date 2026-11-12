@@ -2,7 +2,7 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (19:35 UTC Thu 12 Nov): read this first
+## Now (20:45 UTC Thu 12 Nov): read this first
 
 ### Timeline to release: publish Saturday 14 Nov by 12:00 UTC (assumed UTC)
 | When (UTC) | Milestone | Owner | Status |
@@ -23,12 +23,12 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
 ### Streams
 | Stream | State |
 |---|---|
-| Candidate `r13/compose` `857c3955` (frozen CI `int/r13-857c3955`) | As before, plus the no-unload guard (`engine-nofree`) and the per-(file, code) lint ratchet. The ratchet is red until the lanes clear their rows: ruff 27 rows / 59 findings, mypy 74 / 159. The owner dropped the mypy total gate |
-| Live | Stage 1: 1/5 (t2i). Stage 2a: edit failed at engine **start** with `endpoint_ownership`. The cause isn't named yet. It is **not** a volume marker (the engine root is on the container disk). A CPU reproduction of four sequential jobs is running. #595 closed, replaced by #601. No pods. Balance $95.57 (floor $67.41) |
-| Machines (own session `…2mhfLHKp…`) | K1 fix; M1 `72455cf6b` (Astra re-check); M2a; M4 card 5 `354b3d1c8` held for LT; card 6b (abandoned observers). LT gets a new row: cede write-ahead |
-| Cells (own session `…VzW8yjKX…`) | `r13/cells-vc` `1463cb8e` (+ LTX bump if green); pin and preflight due 21:30. Catalog card: one shared argv builder (D1); 3 contracts fixed by the cut line (#342–#344) |
-| Engine (fork, here) | U2 `47950c4a0` + reason strings → Astra; warm-host reproduction; lint card after the catalog card |
-| Test lane (own session `…sWuWu9cB…`) | Lint ratchet merged; drop the mypy total gate; money cards W36b and W37b (5 blockers) being fixed |
+| Candidate `r13/compose` `3c111cbed` | Since 19:35: provider gate, publication classifier, catalog fixes (one argv builder), fakescope, lock-digest, engine lint (BLE001 cleared), M1 (claim is the only paid authority), lint gate narrowed to bug classes (owner), dead-owner code removed, cells pin VibeComfy `b3f20f33`. Boundary 101 passing |
+| Live | **Stage 2b running** on `3c111cbed` via the claim path: claim, then t2i, t2i again (#595 reload check), TTS, SFX, music, edit, then release. The two t2i runs differ only in seed. Balance $95.57 (floor $67.41) |
+| Machines (own session `…2mhfLHKp…`) | M1 merged. K1 fix round 2 (money bug). LT-a design round 2 (3 money holes), cut to 6 rows by the owner. M2a re-proof. Pod-side watchdog card (owner approved). Cut decision Fri 10:00: K1, M1 and M2 green on compose |
+| Cells (own session `…VzW8yjKX…`) | cells-vc frozen `b3f20f33`, pin merged. Preflight: fixing it to read one declared `scripts/live_cells.json`. Catalog contracts #342–#344 by the cut line, or unlisted |
+| Engine (fork, here) | U2 final round (Astra REWORK: 3 start/install fixes; no more rounds). #607 placement fix, then one Astra pass. Lint merged |
+| Test lane (own session `…sWuWu9cB…`) | W48 (stale tests + truthful release error + W33 reorder). Exit-stall fix (unbuffered output + hard exit with pytest's own status). Per-shard auto-attribution. Comparison head: the next freeze, which will carry the exit fix |
 | Advisor (own session `…4KxQbf3m…`) | Report in (18:21); actions taken |
 | Investigation | #595 warm machine, cold engine (models unloaded each job): Opus fork running |
 
