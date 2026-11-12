@@ -134,3 +134,10 @@ Append-only. The NOW block is replaced; entries below it are never edited. Entri
   - (2) The release and listing path must back off on 429.
   - (3) The receipt must say a machine was acquired (stage boot) rather than `no_machine`/`unknown` for post-create acquisition failures.
   - (4) The `machines setup` bugs A and B above.
+- **2026-11-12 00:40** CORRECTION to the 00:27 root cause. Readiness was NOT the problem. The seven "readiness timed out" lines are lifecycle's 15 s inner retries. The outer readiness limit was 900 s; paid expiry was 02:53. The pod became READY at 00:24:50, after three consecutive 200s. The claim then failed in the post-ready provider contract. Journal: `failure_phase: provider_contract`, `TargetObservationError`, gate `provider`.
+  - Cause (high confidence, from code): lifecycle `f294881` dropped the SDK fork. The public SDK's pod query has no `networkVolumeId`, so `list_pods` adds a REST `networkVolume` object instead. Agent `worker_preparation.py:361` still reads `networkVolumeId`, gets None, and raises "volume mismatch" with no gate.
+  - The gate fallback says "provider", and `target_selection.py:855` drops the message (`from None`). The same stale key is read at `target_selection.py:868` (`read_exact_pod`).
+  - This is a contract drift between lifecycle and Agent, reproducible offline against RunPod's public REST schema at no cost.
+  - Fix dispatched: `r13/provider-contract` (Codex Terra). It reads attachments through one accessor, gives every contract refusal a fixed gate, and tests fixtures built from the real SDK and REST shapes.
+  - The next TTS rental waits for this fix.
+  - The 429 release-backoff and receipt-label fixes follow once the bundle branch lands, because they touch the same files.
