@@ -1422,3 +1422,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - the test lane is running the audio ids and the comparison triage;
   - machines is waiting for the test lane before M2;
   - the advisor's next dive is 11:30.
+
+## 08:10 Fri: compose c79f3ce07 frozen for CI
+- **Merged** cells `r13/compose-pin-vc6` b1a9b8b0f, pinning VibeComfy 46251c8c = e240beec + 8895eb00. The literal e240beec pin was not used. **Reason:** it would revert three `template_hash` lines and re-break z-image-i2i and qwen-image-edit, which DP-2 refuses. The music template and the combo reader are byte-identical to e240beec, the commit that passed round 3. The final five-cell run at freeze covers the remaining four templates.
+- **Merged** test lane `r13/tests/ci-finish` de49c3fa2 (compose c79f3ce07) without waiting for the local marked-file runs. **Reason:**
+  - it is config only: per-test 600→120 s, nine slow tests at 300 s with their measured times, and job walls tightened;
+  - no assertion changed, and every bound is tighter, not looser;
+  - a test killed by the timeout shows up in the comparison rather than hiding.
+- **Risk:** shard 6 ran past 240 min on 1e94061c, and the new wall is 180. The test lane owns it if it times out.
+- **Froze int/r13-c79f3ce0** as the one queued head; 05c8ab76 is the one running.
