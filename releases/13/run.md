@@ -2,20 +2,22 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (05:00 UTC Fri 13 Nov): read this first
+## Now (06:00 UTC Fri 13 Nov): read this first
 
-**Candidate:** `r13/compose` `c1789e4ba`.
-- **Merged since 04:00:** T3 (cancel reaches the upload); engine objinfo-identity (the edit blocker; install identity no longer covers model lists); the **lease card** (T1, T2, T5: only a typed verdict, the deadline or registration loss ends paid work; late settle fails with the reason); lanes-verbose.
+**Live, Stage 2i:** running on stage branch `r13/stage-2i` `941449eaf` (compose c1789e4ba + VibeComfy cells-vc-4 `f3bb6f27`, lifecycle 7f0b025e).
+- One claim; sfx, then music, then edit; the pod is held for fix iterations.
+- A safety release check is set for 07:59. Disk 12 GB (uv cache cleared).
 
-**CI:** `int/r13-1e94061c` is running; `int/r13-05c8ab76` is queued.
+**Machines:**
+- T4 is split. The control slot goes after R13: review P1 deadlock #642, which predates T4.
+- The low-disk card (claim refuses below the floor; in-process exact release on `insufficient_storage`) is due ~07:15.
+- M2 is with the test lane.
 
-**Waiting on:**
-- **Cells:** `dp12b`, the DP-2 regression. Either dry run matches `_prepare` after the lock fill, or the unpinned entries get pinned. Then the `cells-vc-4` pin (combo: one V1/V3 object_info reader, plus music's eight inputs).
-- **Machines:** T4 (release control slot, storage fallback, silent-Runtime journey row).
-- **Engine:** idle until T4 (busy-slots).
-- **Test lane:** reviewing the lease card's test conversions (W63).
+**Test lane:** M2's 6 ids first, then the CI card (120 s per-test timeout plus markers, a Lanes hard wall), then W63.
 
-**Then Stage 2i live.** Disk is above 5 GB; 0 pods, $91.83.
+**Cells:** dp12b; the cells-vc-5 pin (z-image and qwen-edit records) follows.
+
+**Engine:** idle.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
