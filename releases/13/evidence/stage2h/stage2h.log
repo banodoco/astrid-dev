@@ -1,0 +1,23 @@
+reuse root-s9
+balance 93.002910448; pods {"data":{"myself":{"pods":[]}}}
+setup: "ok": true
+claim exit=0 tries=1 machine_id=1noemmqgzgb0iv
+CELL sfx: EXIT=2 2026-11-13T03:03:02Z..2026-11-13T03:18:23Z; code: task_failed
+state snapshot: {"readiness": {"entry": null, "fixes": [], "issues": [{"code": "task_failed", "details": {"result": {"error": {"code": "executor_failed", "message": "remote generation failed (exit 2; category=execution; code=generation_failed)", "retryable": f
+  state sfx: idle stale_after_failure
+CELL music: EXIT=2 2026-11-13T03:18:24Z..2026-11-13T03:26:23Z; code: task_failed
+state snapshot: {"readiness": {"entry": null, "fixes": [], "issues": [{"code": "task_failed", "details": {"result": {"error": {"code": "executor_failed", "message": "remote generation failed (exit 2; category=execution; code=generation_failed)", "retryable": f
+  state music: idle prepared
+CELL edit: EXIT=2 2026-11-13T03:26:24Z..2026-11-13T03:34:42Z; code: task_failed
+state snapshot: {"readiness": {"entry": null, "fixes": [], "issues": [{"code": "task_failed", "details": {"result": {"error": {"code": "executor_failed", "message": "Installation checkpoint refused (reason: status=failed;error_code=integrity_failed;failed_step
+  state edit: idle stale_after_failure
+CELL badsfx: EXIT=2 2026-11-13T03:34:43Z..2026-11-13T03:42:35Z; code: task_failed
+state snapshot: {"readiness": {"entry": null, "fixes": [], "issues": [{"code": "task_failed", "details": {"result": {"error": {"code": "executor_failed", "message": "remote generation failed (exit 2; category=execution; code=generation_failed)", "retryable": f
+  state badsfx: idle stale_after_failure
+CELL edit2: EXIT=2 2026-11-13T03:42:36Z..2026-11-13T03:51:20Z; code: task_failed
+state snapshot: {"readiness": {"entry": null, "fixes": [], "issues": [{"code": "task_failed", "details": {"result": {"error": {"code": "executor_failed", "message": "Installation checkpoint refused (reason: status=failed;error_code=integrity_failed;failed_step
+  state edit2: idle stale_after_failure
+STAGE2H DONE
+release: {"error": {"entry": null, "fixes": [], "issues": [{"code": "conflict", "details": {"available_bytes": 99332096, "estimate_source": "capability", "floor_bytes": 1073741824, "ok": false, "output_bytes": 0, "reason": "insufficient_storage", "required_by
+final pods {"data":{"myself":{"pods":[{"id":"1noemmqgzgb0iv","desiredStatus":"RUNNING"}]}}}
+balance after 91.8333992946

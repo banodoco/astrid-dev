@@ -1,0 +1,111 @@
+{
+  "cause": {
+    "category": "installation",
+    "code": "status_not_installed",
+    "exception": "MachineError",
+    "install_unverified": "status=failed;error_code=integrity_failed;failed_step_id=receipt-evidence",
+    "reason": {
+      "code": "status_not_installed",
+      "gate": "install",
+      "stage": "install",
+      "step": "verify"
+    }
+  },
+  "collection": {
+    "bytes": 0,
+    "cap_bytes": 268435456,
+    "reason": null,
+    "state": "not_collected"
+  },
+  "files": [],
+  "identity": {
+    "attempt_id": "ac617e1138ce408980a4d80c8228d875",
+    "generation": 4,
+    "gpu": "RTX 5090",
+    "invocation_id": "f316e060e9b24581b5ccbcea09864222:ac617e1138ce408980a4d80c8228d875:1",
+    "lease": "382fc9d2c5cd410db381a760b19410c0",
+    "machine_id": "1noemmqgzgb0iv",
+    "placement": "runpod",
+    "pod_source_digest": null,
+    "remote_job_id": "5febbbb5cb6e4cc6afbefbd56ca4a2e8",
+    "run_id": "db88c825def646068fdc962190810d75",
+    "task_id": "f316e060e9b24581b5ccbcea09864222",
+    "warm": true
+  },
+  "logs": [],
+  "machine": {
+    "after": "kept",
+    "cost_usd": 0.7490409487439526,
+    "expires_at": 1794542678.785471,
+    "preparation_state": "stale_after_failure",
+    "release_at": 1794540881.2291431,
+    "release_reason": null
+  },
+  "message": "Installation checkpoint refused (reason: status=failed;error_code=integrity_failed;failed_step_id=receipt-evidence); inspect the installation and retry the generation on a prepared machine.",
+  "outcome": "failed",
+  "phase": "fetch",
+  "receipt_id": "8d6b4306ed2843f8ace29d7e71d6515d",
+  "schema": "astrid.generation.failure-receipt.v1",
+  "stage": "install",
+  "stage_basis": "reason",
+  "timing": {
+    "phases": {
+      "capacity_wait": null,
+      "collection": {
+        "end": null,
+        "seconds": null,
+        "start": 1794540806.0841086
+      },
+      "execution": {
+        "end": 1794540805.0481696,
+        "seconds": 237.968,
+        "start": 1794540567.0805364
+      },
+      "idle": null,
+      "paid_clock": {
+        "end": 1794540881.2291431,
+        "seconds": 1939.962,
+        "start": 1794538941.266789
+      },
+      "preparation": {
+        "end": 1794540547.5874667,
+        "seconds": 18.471,
+        "start": 1794540529.1163943
+      },
+      "release": {
+        "end": 1794540881.2291431,
+        "seconds": 31.623,
+        "start": 1794540849.6065097
+      }
+    },
+    "pod_phases": [
+      {
+        "at": 1794540619.3408496,
+        "phase": "prepare"
+      },
+      {
+        "at": 1794540686.3666177,
+        "phase": "align"
+      },
+      {
+        "at": 1794540753.8090556,
+        "phase": "run"
+      },
+      {
+        "at": 1794540805.0481544,
+        "phase": "done"
+      }
+    ],
+    "schema": "astrid.generation.phase-timing.v1",
+    "stamps": {
+      "claimed_at": 1794540529.1163914,
+      "collection_started_at": 1794540806.0841086,
+      "job_ended_at": 1794540805.0481696,
+      "job_started_at": 1794540567.0805364,
+      "preparation_ended_at": 1794540547.5874667,
+      "preparation_started_at": 1794540529.1163943,
+      "release_started_at": 1794540849.6065097,
+      "released_at": 1794540881.2291431
+    }
+  }
+}

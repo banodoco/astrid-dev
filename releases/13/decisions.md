@@ -1323,3 +1323,19 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Ruling:** the VibeComfy re-vendor goes **after R13**. It affects only VibeComfy's own lock, parity CI and standalone `runpod`/`prepare` commands, which stay on v1 until then. Lifecycle's Linux SDK floor is not touched (the live v2 proof ran on it). Astrid may move its pin to `7f0b025e` with machines' next card.
   - **After R13:** a design card (separate venvs for the comfy and runpod extras, or a common SDK floor), added to the Plan 50 follow-ups.
   - **The Intel-mac REVIEW (option a) is withdrawn:** not needed.
+
+## 13 Nov ~03:55 UTC: Stage 2h live on `9e4f2306c` (VibeComfy `3feccf5c`); three new causes; the release refused for local disk
+
+| Cell | Result | Cause | Route |
+|---|---|---|---|
+| sfx | FAIL at approval: `model picker value is not advertised by the selected target: …foley_checkpoint_name='hunyuanvideo_foley_xl.pth'` | Foley now passes fetch. The V3 node's choices (`COMBO` options) aren't read (`vibecomfy/schema/provider.py:1623`) | cells `combo` |
+| music | FAIL: ComfyUI `/prompt` 400, `prompt_outputs_failed_validation`. Required inputs missing: TextEncodeAceStepAudio1.5 bpm, temperature, top_k, min_p, top_p, generate_audio_codes; KSampler denoise; SaveAudioMP3 quality | dp3 passes integrity. The widget values are lost at conversion or emit; the UI source has them | cells `combo`, widened |
+| edit, alone | FAIL at installation checkpoint: `integrity_failed`, `receipt-evidence` | **Install identity included model file lists** (`engine_runner.py:1131-1135`, `_object_info_sha256`), so every model download invalidated the install. Proved offline | engine `r13/engine-objinfo-identity` |
+| bad sfx (deliberate) | failed, as designed | — | — |
+| edit after the failure | same `receipt-evidence` | same cause | same |
+
+- **Release REFUSED:** `insufficient_storage` (local disk at 99 MB, floor 1 GB). Pod `1noemmqgzgb0iv` was terminated by id (204). Census: 0 pods, $91.83.
+  - **Money bug** to machines: release and status must never pass through storage admission. Folded into T4, blocking.
+  - The disk filled from pytest tmp dirs and worktrees. I freed my own installs; engine cleans its own.
+- **What worked:** failreason, fetch-stack, K1's reason codes and the logs-as-outputs. Each failure named its cause live, with traceback and engine log.
+- **Merged:** dp12 (`1ed336448`). Compose is `017651122`. The second VibeComfy pin conflicted with K1b's digest chain; cells re-runs the pin tool.
