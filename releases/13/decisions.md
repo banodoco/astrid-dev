@@ -1237,3 +1237,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Re-run edit alone on an idle container.
   - Machines: K1b (keep the verification observation and logs on a host-side rejection; release ahead of the job queue).
   - Engine: lease survives a transport timeout.
+
+## 13 Nov 00:42 UTC: standing authority overnight
+
+- **Owner:** "You can almost certainly make every decision." The orchestrator decides scope, sequencing and rulings overnight without waiting, recording each one here with its reason. These limits still hold: the $40 night budget and the $67.41 balance floor; no pushes to main, cand/* or R12; no force-push; never read credentials; never weaken a check. The open PRs stay untouched until the owner revisits them.
+- **Merged:** K1 (`r13/machines` 704731116); compose is 673227271.
+- **Boundary ratchet:** red from failreason's `cli.py` import of `astrid.packs.runpod`. Engine is fixing it structurally, and compose.sh now runs the ratchet on every merge.
+- **Edit alone:** the host's own release later failed with "lease release is already in progress", left by the stuck queued release after the provider-side terminate. That evidence went to the lease dive. Census: 0 pods, $93.44.
