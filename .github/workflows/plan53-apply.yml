@@ -1,0 +1,77 @@
+name: Plan 53 apply and check
+
+on:
+  push:
+    branches: [chatgpt/53-vision-aspirations]
+    paths: [.github/workflows/plan53-apply.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/chatgpt/53-vision-aspirations'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Apply the locally validated source delta
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, json, lzma, pathlib, subprocess
+          root = pathlib.Path.cwd()
+          chunks = sorted(root.glob('.plan53-transfer/part-*.b64'))
+          assert len(chunks) == 4, 'Expected all four transfer chunks'
+          raw = lzma.decompress(base64.b64decode(''.join(p.read_text() for p in chunks), validate=True))
+          assert hashlib.sha256(raw).hexdigest() == '259c9d24bf4da75a45f992d8d0ce19d2db710e0232028906afcbf30cdb60eb7b', 'Transfer digest mismatch'
+          changes = json.loads(raw)
+          assert len(changes) == 84
+          prepared = {}
+          for name, change in changes.items():
+              relative = pathlib.PurePosixPath(name)
+              assert not relative.is_absolute() and '..' not in relative.parts
+              assert relative.parts[0] in {'docs', 'scripts', 'skills', 'templates', 'vision'}
+              target = root / relative
+              assert not target.is_symlink()
+              before = target.read_bytes() if target.exists() else b''
+              assert hashlib.sha256(before).hexdigest() == change['before'], f'Source changed: {name}'
+              lines = before.decode().splitlines(keepends=True)
+              for start, end, replacement in reversed(change['edits']):
+                  lines[start:end] = [replacement]
+              after = ''.join(lines).encode()
+              assert hashlib.sha256(after).hexdigest() == change['after'], f'Postimage mismatch: {name}'
+              prepared[name] = after
+          for name, data in prepared.items():
+              target = root / name
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(data)
+          subprocess.run(['git', 'add', '--', *prepared], check=True)
+          subprocess.run(['git', 'rm', '-r', '--', '.plan53-transfer'], check=True)
+          pathlib.Path('/tmp/plan53-source-hashes.json').write_text(json.dumps({name: entry['after'] for name, entry in changes.items()}, indent=2))
+          PY
+      - name: Check source, fixtures and stable golden oracle
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/plan53-evidence
+          python3 scripts/astrid_dev.py check 2>&1 | tee /tmp/plan53-evidence/structure.log
+          for test in test_vision_subject.py test_export_public_vision.py test_gap_relationships.py test_check_gap_boundaries.py test_checks.py test_views.py test_golden.py test_project_contract.py test_records.py; do
+            python3 -m unittest discover -s scripts -p "$test" 2>&1 | tee "/tmp/plan53-evidence/$test.log"
+          done
+          test -z "$(git diff --cached -- scripts/fixtures/golden.txt)"
+          python3 scripts/export_public_vision.py --output /tmp/plan53-evidence/vision.json
+      - name: Commit only to the isolated working branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'feat(vision): migrate all gaps to validated aspirations and export compatible references'
+          git push origin HEAD:refs/heads/chatgpt/53-vision-aspirations
+          git rev-parse HEAD > /tmp/plan53-evidence/commit.txt
+          cp /tmp/plan53-source-hashes.json /tmp/plan53-evidence/source-hashes.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plan53-dev-validation
+          path: /tmp/plan53-evidence/
+          retention-days: 7
