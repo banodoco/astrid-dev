@@ -1339,3 +1339,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The disk filled from pytest tmp dirs and worktrees. I freed my own installs; engine cleans its own.
 - **What worked:** failreason, fetch-stack, K1's reason codes and the logs-as-outputs. Each failure named its cause live, with traceback and engine log.
 - **Merged:** dp12 (`1ed336448`). Compose is `017651122`. The second VibeComfy pin conflicted with K1b's digest chain; cells re-runs the pin tool.
+- **04:00 REVIEW (money): a release refused for low disk.** The gate is the Runtime's `storage_preflight` (`runtime_protocol/store.py` ~:4315): available minus estimates must be at least the floor (1 GiB, `ASTRID_RUNTIME_FREE_DISK_FLOOR_BYTES`). It applies at admission and claim, so declaring zero storage doesn't help.
+  - **Ruling:** option 2, narrowly, plus prevention.
+    - (1) `machines claim` refuses below the floor plus one release's margin, with a reason.
+    - (2) Only when the Runtime refuses `runpod.release` for `insufficient_storage`, the CLI performs the exact release in-process through the same `RunPodLeaseOwner.release` (owner lock, exact id, receipt), and says so plainly.
+    - (3) The host storage envelope exempts release and status.
+    - (4) If idle or paid-expiry auto-release also goes through Runtime tasks, it gets the same fallback.
+    - Tests for each. Machines T4, Sol plus Astra.
+  - **Option 1** (the Runtime exempts control capabilities, with a pin bump) goes to Plan 50 after R13.
+  - **Option 3** (lowering the floor) is refused, because it weakens a check.
+  - **Why not wait:** with a full disk, no pod could be released at all, by hand or automatically. Owner, please confirm in the morning.
