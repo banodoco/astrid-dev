@@ -13,7 +13,7 @@ Terms follow the [glossary](../astrid-dev-shared/glossary.md).
 
 You, the **planner** (an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor), produce an agreed, testable end state and tasks another agent can run. An orchestrator may also plan a project itself before farming it out.
 
-1. **Projects are for new, separately useful outcomes** with their own priority, owner and completion proof. Bugs, small fixes and maintenance normally go in issues; existing project tasks use their accepted plan.
+1. **Projects are for new, separately useful outcomes** with their own priority, owner and completion proof. Bugs, small fixes and maintenance normally go in issues; existing project tasks use their accepted plan. Read the [aspirations of its gaps](../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
 2. **Planning authorizes no execution or release** ([run contract](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)), and runs no checks unless asked ([checks](../astrid-dev-shared/run-contract.md#checks-and-failure-repair)).
 3. **Agree the outcome once.** Record the owner's actual choice with a traceable source; a draft project or PR, or no objection, is not approval. Keep earlier accepted scope; avoid repeated sign-offs.
 

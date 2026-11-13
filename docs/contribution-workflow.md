@@ -20,7 +20,7 @@
 
 | Writing work | Canonical source and route |
 | --- | --- |
-| Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/`; after merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
+| Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md); adding or rewording an aspiration or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
 | Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
 | Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
@@ -33,7 +33,9 @@ Describe the intended correction and relevant source; give a real reviewer a way
 
 The [vision overview](../vision/README.md) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
 
-Every gap has **one primary pillar or principle**, with supporting connections only when they explain a distinct relationship. IDs identify records, not ownership. Plans link to the outcomes they address; gaps do not duplicate the project queue, status, or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
+Every gap has **one primary aspiration**, the outcome it measures the distance to, and any supporting aspirations that each explain a distinct relationship; never a direct pillar or principle link. Plans link to gaps; gaps do not duplicate the project queue, status or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
+
+A planner reads the aspirations of the plan's gaps. Work that would break a **We should never** changes the aspiration first in an owner-approved PR.
 
 **Changes to evidence** (current state, assessment, or sources) use a normal reviewed PR. **Creating, retiring, renaming, or materially redefining an outcome** requires one short first-principles record in the PR description—not another document:
 
@@ -45,8 +47,8 @@ Outcome: missing creator-facing result
 Existing alternatives: nearby gaps/projects and why they do not suffice
 Why this level: why the result survives a different implementation
 Independent closure: real positive and negative proof
-Primary connection: principle:local-first-cloud-capable — reason
-Supporting connections: principle:in-the-creators-control — reason
+Primary connection: principle:local-first-cloud-capable/everything-local-or-cloud-by-choice — reason
+Supporting connections: principle:in-the-creators-control/explicit-permissions-and-privacy — reason
 Evidence: source URL or exact source SHA
 ```
 

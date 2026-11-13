@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 from check_docs import ROOT, read
-from gap_relationships import parse_gap_relationships
+from gap_relationships import gap_metadata, parse_gap_aspirations, parse_gap_relationships
 from project_contract import plan_gap_ids
 from records import PLAN_CELL, git_output, heading as record_heading, section as record_section
 from vision_subject import parse_subject, render_subject_markdown
@@ -134,11 +134,12 @@ def build(root: Path, revision: str) -> dict:
         if gap_id in seen:
             raise ValueError(f"duplicate gap ID: {gap_id}")
         seen.add(gap_id)
-        metadata = next((x for x in contents.splitlines() if x.startswith("**Applies to:**")), "")
+        metadata = gap_metadata(contents)
         assessment = metadata.split("**Assessment:**", 1)
         if len(assessment) != 2 or not (status := STATUS.match(assessment[1].strip())):
             raise ValueError(f"{path}: Assessment must begin with an allowed status")
-        relationships, primary_relationship = parse_gap_relationships(metadata)
+        relationships, primary_relationship = parse_gap_relationships(metadata, root / "vision")
+        aspiration_refs, primary_aspiration = parse_gap_aspirations(metadata, root / "vision")
         for relationship in relationships:
             if relationship not in valid_anchors:
                 raise ValueError(f"{path}: unknown vision relationship {relationship}")
@@ -147,7 +148,9 @@ def build(root: Path, revision: str) -> dict:
                "assessment": status.group(1).lower(),
                "assessmentDetail": assessment[1].strip(),
                "appliesTo": relationships,
-               "primaryAppliesTo": primary_relationship}
+               "primaryAppliesTo": primary_relationship,
+               "aspiration": primary_aspiration,
+               "supportingAspirations": aspiration_refs[1:]}
         for source_title, out_key in [
             ("Desired state", "desiredMarkdown"),
             ("Current state", "currentMarkdown"),
@@ -216,7 +219,7 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Four pillars",
         "",
-        "Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable characteristics.",
+        "Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable aspirations.",
         "",
     ]
     for pillar in page["pillars"]:

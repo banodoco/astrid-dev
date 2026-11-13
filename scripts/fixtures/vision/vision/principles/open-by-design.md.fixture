@@ -8,7 +8,7 @@ We want to open not just our code, but our knowledge, ideas, and even our owners
 
 Our code is open, but openness should reach further: to our evolving vision, experiments, decisions, execution, and what remains unfinished. Knowledge and ideas should be reusable, with creators deciding what private work they share. We also aspire to share company ownership with meaningful contributors; the eligibility, allocation, and legal implementation of that commitment are not yet settled.
 
-## Characteristics
+## Aspirations
 
 ### Inspectable foundations
 
@@ -22,11 +22,11 @@ The right to adapt a tool should be practical, not merely a line in a license.
 
 Creators should be able to inspect, copy, modify, replace, and independently maintain the components they depend on, within the rights of their licenses. Portable projects, understandable interfaces, and replaceable providers make the freedom to fork a real option rather than a theoretical promise.
 
-### Built for reuse
+### Built to be found and reused
 
-Every useful component should make it easier for someone else to build the next thing.
+People and agents should be able to find, understand, adapt and build on each other's contributions.
 
-Reusable contributions are a design requirement, not an afterthought. Clear extension points, open formats, and capabilities that compose with existing ones should turn individual inventions into a shared foundation rather than a collection of isolated tools.
+Publishing source is only the beginning of reuse. Packs, tools, workflows and knowledge need enough context to be discovered, judged and put to work by someone who did not create them. Their interfaces, dependencies, provenance and terms should remain inspectable, so sharing can lead to new creative work rather than a collection of opaque artifacts.
 
 ### Open decisions and working knowledge
 

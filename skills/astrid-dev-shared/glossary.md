@@ -83,3 +83,9 @@ One meaning per word; two meanings, two terms.
 **Owner decisions:** the `inputs.md` section of what the owner must decide.
 
 **home:** the one place a rule, term or fact is written.
+
+**element:** a pillar or principle of the vision; one type with two kinds.
+
+**aspiration:** what an element is trying to reach, with optional paired We should / We should never lists.
+
+**primary and supporting aspirations (of a gap):** its one measured outcome and any distinct related aspirations.

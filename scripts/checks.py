@@ -115,6 +115,7 @@ def _catalog_paths(context):
 
 def _gap_structure(context):
     from check_docs import read, GAP_NAME, parse_gap_relationships, route_issues
+    from gap_relationships import gap_metadata
     root = context.root
     if not _catalog_ready(context):
         return []
@@ -133,12 +134,11 @@ def _gap_structure(context):
         text = read(root, file.relative_to(root))
         if not text.startswith(f'# {gap_id} —'):
             errors.append(f'{file.name}: title must start with gap ID')
-        for field in ['**Applies to:**', '**Assessment:**', '## Desired state', '## Current state', '## Gap', '## Closure evidence', '## Sources and reassessment']:
+        for field in ['**Aspiration:**', '**Assessment:**', '## Desired state', '## Current state', '## Gap', '## Closure evidence', '## Sources and reassessment']:
             if field not in text:
                 errors.append(f'{file.name}: missing {field}')
-        applies = next((s for s in text.splitlines() if s.startswith('**Applies to:**')), '')
         try:
-            parse_gap_relationships(applies)
+            parse_gap_relationships(gap_metadata(text), root / 'vision')
         except ValueError as exc:
             errors.append(f'{file.name}: {exc}')
         plan_texts = {p.parent.name: read(root, p.relative_to(root)) for p in (root / 'plans').glob('*/plan.md')}
@@ -182,7 +182,7 @@ def _subjects(context):
     for folder, prefix in (('pillars', 'Pillar'), ('principles', 'Principle')):
         entries = sorted((root / 'vision' / folder).glob('*.md'))
         if len(entries) != 4:
-            errors.append(f'vision/{folder}: expected exactly four canonical subjects')
+            errors.append(f'vision/{folder}: expected exactly four canonical elements')
         for file in entries:
             relative = file.relative_to(root)
             try:
@@ -267,14 +267,10 @@ def _link_anchors(context):
     from check_docs import LINK, read
     root, fence = context.root, r"(?ms)^\s*```.*?^\s*```[^\n]*$"
 
+    from records import markdown_heading_anchors
+
     def anchors(relative):
-        seen, found = {}, set()
-        for title in re.findall(r"(?m)^ {0,3}#{1,6}[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", re.sub(fence, "", read(root, relative))):
-            title = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
-            slug = "".join(c for c in title if c.isalnum() or c in " -_").replace(" ", "-")
-            seen[slug] = seen.get(slug, -1) + 1
-            found.add(slug if seen[slug] == 0 else f"{slug}-{seen[slug]}")
-        return found
+        return {anchor for _, _, anchor in markdown_heading_anchors(read(root, relative))}
 
     errors = []
     for path in sorted(p.relative_to(root) for p in root.rglob("*.md") if ".git" not in p.relative_to(root).parts):
@@ -343,7 +339,7 @@ def _completion_impl(context):
 
 def _boundary_impl(context):
     import check_gap_boundaries as gate
-    from gap_relationships import parse_gap_relationships
+    from gap_relationships import gap_metadata, parse_gap_aspirations
     from records import read_text
     required = gate.affected_gaps(context.base, context.root)
     if not required:
@@ -355,8 +351,8 @@ def _boundary_impl(context):
         if len(paths) > 1:
             raise ValueError(f'{gap_id}: duplicate gap files')
         if paths:
-            meta = next((line for line in read_text(context.root, paths[0].relative_to(context.root)).splitlines() if line.startswith('**Applies to:**')), '')
-            expected[gap_id] = parse_gap_relationships(meta)
+            meta = gap_metadata(read_text(context.root, paths[0].relative_to(context.root)))
+            expected[gap_id] = parse_gap_aspirations(meta, context.root / 'vision')
         else:
             expected[gap_id] = None
     return gate.check_pr(required, body, expected)

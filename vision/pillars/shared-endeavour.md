@@ -8,7 +8,7 @@ We want to create the conditions for the community to do more together.
 
 We want a collective that inspires people to attempt more demanding artistic and technical work, helping them grow through collaboration and critique. We also want to reward meaningful contributions by sharing ownership in the company with people who advance our core product and wider ecosystem. An Astrid-centered culture and a legally workable ownership model still need to be established.
 
-## Characteristics
+## Aspirations
 
 ### Shared challenges and ambition
 
@@ -27,6 +27,12 @@ Mentorship, thoughtful feedback, shared techniques, and recognition of exception
 Contributors should have a genuine opportunity to benefit from advancing the shared mission.
 
 The stated ambition includes ownership in the company behind the collective for people who advance its mission. Eligibility, allocation, governance, financing, and legal and tax implementation remain unresolved; this vision does not grant equity or promise a particular allocation.
+
+### Many hands, one clear way in
+
+Any person or agent should be able to pick up useful work and land it without getting in anyone else's way.
+
+The shared vision should lead to work that a contributor can understand, claim, improve and prove. Clear ownership and a visible trail of decisions help parallel efforts meet without duplicating work or hiding what remains unfinished. The process should make contribution easier, not become a second project that people must master before they can help.
 
 ## References
 
