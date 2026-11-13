@@ -2,22 +2,25 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (06:00 UTC Fri 13 Nov): read this first
+## Now (07:00 UTC Fri 13 Nov): read this first
 
-**Live, Stage 2i:** running on stage branch `r13/stage-2i` `941449eaf` (compose c1789e4ba + VibeComfy cells-vc-4 `f3bb6f27`, lifecycle 7f0b025e).
-- One claim; sfx, then music, then edit; the pod is held for fix iterations.
-- A safety release check is set for 07:59. Disk 12 GB (uv cache cleared).
+**All five cells have passed live on the claim-then-generate path.** t2i and tts in Stage 2f (tts again on v2); sfx, music and edit in Stage 2i, on stage `941449eaf`.
 
-**Machines:**
-- T4 is split. The control slot goes after R13: review P1 deadlock #642, which predates T4.
-- The low-disk card (claim refuses below the floor; in-process exact release on `insufficient_storage`) is due ~07:15.
-- M2 is with the test lane.
+**Round 2 is running on the same pod** (`f4ahhqg0arqslp`): a deliberately failing sfx (failed in execution; the machine stayed `prepared`), then edit, tts and t2i.
+- **Next:** music with the new defaults (cells `musicdef`, a 30 s song, public prompt, lyrics, duration and seed). Then release, and a repeat on a fresh claim at freeze.
 
-**Test lane:** M2's 6 ids first, then the CI card (120 s per-test timeout plus markers, a Lanes hard wall), then W63.
+**Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
-**Cells:** dp12b; the cells-vc-5 pin (z-image and qwen-edit records) follows.
+**The main risk is now CI.** No complete run yet. The test lane's card: 120 s per-test timeout with markers, plus a Lanes hard wall. Then freeze, and the binding comparison against R12.
 
-**Engine:** idle.
+**Owner items (REVIEW):**
+- the required-update floor of 13;
+- astrid-dev#640;
+- backslash authority;
+- the test-shape change;
+- the low-disk fallback;
+- the music defaults;
+- the partial-cells fallback.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
