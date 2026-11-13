@@ -2,29 +2,21 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (02:00 UTC Fri 13 Nov): read this first
+## Now (03:00 UTC Fri 13 Nov): read this first
 
-**Candidate and CI:** the candidate is `r13/compose` `1e94061c8`, which is also the CI head of record (`int/r13-1e94061c`).
-- **Shards:** printed verbose, with a 240-minute cap, so shards 1 and 6 can finish and name their slow tests.
-- **Merged since 01:00:**
-  - the VibeComfy pin `cda37a7e` (placement), with cells' test fixes;
-  - pymembers (U2 staging regressions, f06, overrun diagnostic, recipe field names, neutrality);
-  - zipdet (resume identity);
-  - the H3 overlay, installer isolation and missing-model-field test fixes;
-  - winfcntl and shard-verbose.
+**Candidate:** `r13/compose` `9e4f2306c`, with VibeComfy `3feccf5c` (placement + music pins + foley) and lifecycle `a67f2fe0` (REST v2).
+- **REST v2 proved live at 02:57:** claim, tts, explicit release, `probe_status=200`, $0.40.
+- **Merged since 02:00:** #607, machines BLE2, v2, rootfix (shard 5 ×79), the cells live pin.
 
-**Live:** waiting on cells' next VibeComfy pin (foley + dp3 music pins + bslash). Then sfx, music and edit run twice. 0 pods, $93.44.
+**CI:** `int/r13-1e94061c` is the head of record, with a 240-minute cap and verbose shards. The next freeze waits for cells' second pin (bslash, lifecycle re-vendor, test shape).
+
+**Live:** Stage 2h is running: sfx, music, edit alone, a deliberately failing sfx, then edit again. Balance $93.00.
 
 **In flight:**
-- **Engine:** #607, then the lease card (T1, T2, T5).
-- **Machines:** M2 (~02:30), v2 fix round (~02:30), BLE001 cleanup, T3, K1b, then T4.
-- **Cells:** foley, bslash, dp12 (dry-run declarations), the next pin.
-- **Test lane:** finishing 05346e9f, then the comparison on 1e94061c.
-
-**Owner items for the morning:**
-- the required-update floor of 13 (REVIEW);
-- Plan 50 PR astrid-dev#640;
-- the backslash test-meaning ruling.
+- **Engine:** the lease card (T1, T2, T5), throttled during live runs.
+- **Machines:** K1b, M2, T3, T4.
+- **Cells:** bslash, the lifecycle re-vendor, dp12.
+- **Test lane:** finishing 05346e9f, then 1e94061c.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
