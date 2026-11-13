@@ -2,9 +2,19 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (23:55 UTC Thu 12 Nov): read this first
+## Now (01:00 UTC Fri 13 Nov): read this first
 
-Stage 2f is done on `bb0ae49da`: **t2i and tts pass live** on the claim-then-generate path. sfx, music and edit each failed with a named cause, and each fix is in flight (foley, modelrec, K1). The pod is released (0 pods, $93.85). **Ruling (owner, 23:33): as soon as possible.** Each card is merged when its proof passes, and a CI head is frozen whenever rows change; clock times are only the latest points. Next: K1 (about 00:15), then the cells pin `cda37a7e`, then foley and modelrec, then the live re-run of sfx, music and edit.
+**Candidate:** `r13/compose` `ec036e6a3`. Merged since 23:55: K1, the boundary fix (`43a99540e`), the L4 logspool, the H3 overlay restore, the Windows fcntl fix, the preflight test rename, failreason and fetch-stack. compose.sh now refuses duplicate test basenames and any growth in the boundary ratchet.
+
+**CI:** `int/r13-05346e9f` running (one running at a time). **Live:** t2i and tts pass. sfx needs foley; music needs the dp3 pins. Edit alone was lost to a host lease timeout under container load, and its release queued behind the dead job (pod terminated by id; 0 pods, $93.44).
+
+**In flight:**
+- **Engine:** #607's last card; then the pymembers regression; then the lease card (T1, T2, T5).
+- **Machines:** v2 fix round (~02:30); M2 confirmation; K1b; BLE001 cleanup; T3 (cancel); then T4 (control slot).
+- **Cells:** placement pin cda37a7e, foley, dp1–3, cfgguider, atfix. Woken at 00:59 after it went idle.
+- **Test lane:** the comparison on 05346e9f.
+
+**Scope:** machines = M1 + K1 + M2 + v2; the LT wiring is out. **Authority:** the owner delegated every decision overnight (00:42).
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
