@@ -1431,3 +1431,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - a test killed by the timeout shows up in the comparison rather than hiding.
 - **Risk:** shard 6 ran past 240 min on 1e94061c, and the new wall is 180. The test lane owns it if it times out.
 - **Froze int/r13-c79f3ce0** as the one queued head; 05c8ab76 is the one running.
+- **08:15, superseded the freeze.** Merged test lane `r13/tests/bounded-node-ids-2` 2cf7d36a1, giving compose c9636ed41, and froze **int/r13-c9636ed4**. I cancelled c79f3ce0's CI (43390129364) and Lanes (43390129244) runs.
+  - **Reason:** shard 6 never reported on 1e94061c because pytest stalled printing a 1 MiB parametrize id. The test lane bounded 33 ids, and values and assertions are unchanged. c79f3ce0 lacked that and would stall again.
+  - **Running:** 05c8ab76 (near its end) and c9636ed4.
