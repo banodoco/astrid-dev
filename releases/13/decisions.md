@@ -1318,3 +1318,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Ruling (b):** T1 + T5 + T2 land **without** sending `lease_seconds`. The authority window is declared and drives the poll interval and HTTP timeout. The hand edit to the hash-locked generated client is reverted.
   - **Residual risk:** a Runtime silence longer than 30 s can still expire the Runtime lease. Engine shows that a late settle is refused with a reason, never passing silently as success.
   - **(a)** (declare `lease_seconds` in the Runtime contract, with a pin bump) goes after R13 (Plan 50 / #640). R13 keeps Runtime at 42ae24aff (G5).
+- **03:12, lifecycle and VibeComfy, follow-up:**
+  - lifecycle `7f0b025e` (Intel mac: `runpod>=1.10.0,<1.11`) fixes the Intel-mac split. VibeComfy's lock still fails on every platform: the lifecycle wheel needs `runpod>=1.12`, which needs `requests>=2.34.2`, against comfyui 0.43.0.2's `requests<2.34`. The old wheel's `runpod>=1.6.0` hid this by resolving an old SDK.
+  - **Ruling:** the VibeComfy re-vendor goes **after R13**. It affects only VibeComfy's own lock, parity CI and standalone `runpod`/`prepare` commands, which stay on v1 until then. Lifecycle's Linux SDK floor is not touched (the live v2 proof ran on it). Astrid may move its pin to `7f0b025e` with machines' next card.
+  - **After R13:** a design card (separate venvs for the comfy and runpod extras, or a common SDK floor), added to the Plan 50 follow-ups.
+  - **The Intel-mac REVIEW (option a) is withdrawn:** not needed.
