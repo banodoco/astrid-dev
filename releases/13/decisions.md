@@ -1201,3 +1201,19 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - DP-3: pin the music template's four records.
 - **After R13:** DP-4 to DP-9 (source metadata, declare-once with a generated lock, head-only fetch with a `dry` mode, the CPU engine stop, validation without queueing, the hosted CPU job), in place of Plan 50's CPU-engine follow-up.
 - **Coverage:** of the 8 live failures, the R13 slice plus existing checks catches 5, stops B and C catch 2 more (one only partly), and none catches the provider permission. The five-cell GPU run stays.
+
+## 13 Nov ~00:25 UTC: answers to advisor dive 2
+
+- **Edit alone on a fresh claim:** adopted. It's running now (`stage2h-edit.sh`) on `bb0ae49da`. It tests whether edit fails only after another failure (`stale_after_failure`), with K1 the fix for that case.
+- **K1:** the advisor's report was stale. The claim-first fixture conversion was ruled at 23:39, and the seven-file proof is running.
+- **REVIEW, cut line restated:** M1 is already in, so "ship without the new CLI" now means a revert. **R13 machines = M1 + K1 + M2 (flags off generate, M2c) + v2.**
+  - M3, M4, the LT wiring and M5–M9 go after release, unless they arrive with no extra work.
+  - The LT **wiring is out of R13.** The Astra round-3 writer is stopped. The table and its enumeration test may land as a check only, if cheap.
+- **CI cadence:** one head running and at most one queued; a newer head replaces the queued one, never the running one. No freeze per fix. The running head is `int/r13-05346e9f`.
+  - `pytest --collect-only` in compose.sh: not adopted. Local collection has 29 environment-only errors, so a raw run can't gate merges. The duplicate-basename guard (00:00) covers the class that broke CI.
+- **v2:** the live claim, job and exact release on v2 come before any other machines card merges. The release endpoint (21:0x vs 23:10) is to be settled by the machines lane.
+- **Watchdog self-stop:** recorded as at parity with R12 and deferred until after release; no more spend on it.
+- **Release mechanics** (release record, App re-pin, update-proof row): to start now in parallel, owner pending on who runs them.
+- **Codex limit fallback:** Sonnet workers at once, in every lane.
+- **Dry-pod:** DP-1 to DP-3 only; no further review.
+- **Hands-on share:** accepted. Test edits go to the test lane and engine briefs to the engine manager.
