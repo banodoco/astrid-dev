@@ -1,0 +1,17 @@
+Nodepack lockfile warnings:
+- ComfyUI-DepthAnythingV2 in lockfile but not installed; skipping drift check
+- ComfyUI-GGUF in lockfile but not installed; skipping drift check
+- ComfyUI-KJNodes in lockfile but not installed; skipping drift check
+- ComfyUI-LTXVideo in lockfile but not installed; skipping drift check
+- ComfyUI-Qwen3-TTS in lockfile but not installed; skipping drift check
+- ComfyUI-WanAnimatePreprocess in lockfile but not installed; skipping drift check
+- ComfyUI-WanVideoWrapper in lockfile but not installed; skipping drift check
+- ComfyUI-segment-anything-2 in lockfile but not installed; skipping drift check
+- ExamplePack in lockfile but not installed; skipping drift check
+- comfyui_controlnet_aux in lockfile but not installed; skipping drift check
+- rgthree-comfy in lockfile but not installed; skipping drift check
+- Workflow declares custom_nodes without structured custom_node_refs; pack pins cannot be verified.
+Local checks passed with runtime warnings:
+- embedded configuration could not be constructed: ModuleNotFoundError: No module named 'comfy'
+Suggested patches:
+- controlnet: KSampler with conditioning detected; ControlNet can splice extra conditioning into the positive/negative chain.

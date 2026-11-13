@@ -1,0 +1,2136 @@
+{
+  "adapter": {
+    "backend": "api",
+    "endpoint": "http://127.0.0.1:8188",
+    "kind": "external"
+  },
+  "alignment": {
+    "fetched": [],
+    "missing": [],
+    "mode": "align",
+    "status": "ready",
+    "verified": true
+  },
+  "comfy_commit": null,
+  "compiled_prompt": {
+    "105": {
+      "class_type": "DualCLIPLoader",
+      "inputs": {
+        "clip_name1": "qwen_0.6b_ace15.safetensors",
+        "clip_name2": "qwen_4b_ace15.safetensors",
+        "device": "default",
+        "type": "ace"
+      }
+    },
+    "106": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "ace_1.5_vae.safetensors"
+      }
+    },
+    "122": {
+      "class_type": "EmptyAceStep1.5LatentAudio",
+      "inputs": {
+        "batch_size": 1,
+        "seconds": 2.0
+      }
+    },
+    "123": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": {
+        "samples": [
+          "3",
+          0
+        ],
+        "vae": [
+          "106",
+          0
+        ]
+      }
+    },
+    "124": {
+      "class_type": "TextEncodeAceStepAudio1.5",
+      "inputs": {
+        "cfg_scale": 1.5,
+        "clip": [
+          "105",
+          0
+        ],
+        "duration": 2.0,
+        "keyscale": "E minor",
+        "language": "en",
+        "lyrics": "Verse\nNeon rain on my screen,\nDreams compile in silver sheen.\nNo weight, just motion,\nI\u2019m plugged into emotion.\n\nChorus\nComfy Cloud \u2014 breathing light,\nCode and color, spark and wire.\nDrift through data, feel alive,\nIn your circuits, I arrive.",
+        "seed": 561594583201063,
+        "tags": "synthwave, techno, synthpop, futuristic, electro, with liquid drum & bass drive.\nRestless, confident, dreamy mood at 128 BPM.\nAnalog bass, pulsating arps, percussive synth stabs, gated drums.\nQuick build,  then explosive drum burst, then clean fade.\nBreathy, rhythmic female vocals, minimal emotion, metallic echo.",
+        "timesignature": "4"
+      }
+    },
+    "125": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "acestep_v1.5_turbo.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "3": {
+      "class_type": "KSampler",
+      "inputs": {
+        "cfg": 1,
+        "latent_image": [
+          "122",
+          0
+        ],
+        "model": [
+          "78",
+          0
+        ],
+        "negative": [
+          "47",
+          0
+        ],
+        "positive": [
+          "124",
+          0
+        ],
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "seed": 7,
+        "steps": 1
+      }
+    },
+    "47": {
+      "class_type": "ConditioningZeroOut",
+      "inputs": {
+        "conditioning": [
+          "124",
+          0
+        ]
+      }
+    },
+    "59": {
+      "class_type": "SaveAudioMP3",
+      "inputs": {
+        "audio": [
+          "123",
+          0
+        ],
+        "filename_prefix": "audio/vibecomfy_ace_step_smoke_astrid_082d116663d546b1b3cd0459f40ff1a6"
+      }
+    },
+    "78": {
+      "class_type": "ModelSamplingAuraFlow",
+      "inputs": {
+        "model": [
+          "125",
+          0
+        ],
+        "shift": 3
+      }
+    }
+  },
+  "drift": {
+    "actual": {},
+    "mismatches": [],
+    "pinned": {
+      "custom_node_packs": [
+        "EmptyAceStep1",
+        "TextEncodeAceStepAudio1"
+      ]
+    },
+    "runtime": {
+      "checks": [],
+      "declared": false,
+      "mismatches": [],
+      "ok": true,
+      "status": "unverified",
+      "warnings": []
+    },
+    "scope": "external_server",
+    "status": "unverified"
+  },
+  "execution_snapshot": {
+    "api_digest": "91ab6e0a3f5be66b60ec6c496c4895615e629d8358b0c99c95b977f54ba0a5fc",
+    "final_sinks": [
+      {
+        "name": "audio",
+        "node_id": "59",
+        "output_type": "SaveAudioMP3"
+      }
+    ],
+    "schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+    "schema_generation": "live:http://127.0.0.1:8188:1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+    "source_revision": "78efb6f48441c544f7a09ad2dbfca33bee017744d391374f2297aa289a329bc9",
+    "workflow_semantic_digest": "f08140d48731d467f34209b0fe6049733b87121adf542406e99d706d96be02d9"
+  },
+  "id_map": {
+    "conditioningzeroout": "47",
+    "dualcliploader": "105",
+    "emptyacestep1_5latentaudio": "122",
+    "ksampler": "3",
+    "modelsamplingauraflow": "78",
+    "saveaudiomp3": "59",
+    "textencodeacestepaudio1_5": "124",
+    "unetloader": "125",
+    "vaedecodeaudio": "123",
+    "vaeloader": "106"
+  },
+  "lockfile_snapshot": {
+    "nodepacks": {
+      "ComfyUI-DepthAnythingV2": {
+        "class_schema_sha256": "f4e181ab42ca179eda161acba5121e999cb54b1dbee0dc087a22bd42af7241ae",
+        "class_set": [
+          "DepthAnything_V2",
+          "DownloadAndLoadDepthAnythingV2Model",
+          "LoadVideoDepthAnythingModel",
+          "VideoDepthAnythingOutput",
+          "VideoDepthAnythingProcess"
+        ],
+        "commit": "553187872eeb1d52e50dc53209fa57e569609a72",
+        "git_commit_sha": "553187872eeb1d52e50dc53209fa57e569609a72",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-DepthAnythingV2",
+        "pip_packages": [
+          "opencv-python-headless",
+          "transformers"
+        ],
+        "schema_hash": "f4e181ab42ca179eda161acba5121e999cb54b1dbee0dc087a22bd42af7241ae",
+        "slug": "ComfyUI-DepthAnythingV2",
+        "source": "git",
+        "url": "https://github.com/kijai/ComfyUI-DepthAnythingV2.git",
+        "version": "unknown"
+      },
+      "ComfyUI-GGUF": {
+        "class_schema_sha256": "1336fad984841444a9559b602c34ef11d1dd4b68a9a902437aaee6771ab5d2d3",
+        "class_set": [
+          "DualCLIPLoaderGGUF",
+          "UnetLoaderGGUF"
+        ],
+        "commit": "6ea2651e7df66d7585f6ffee804b20e92fb38b8a",
+        "git_commit_sha": "6ea2651e7df66d7585f6ffee804b20e92fb38b8a",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-GGUF",
+        "pip_packages": [
+          "gguf"
+        ],
+        "schema_hash": "1336fad984841444a9559b602c34ef11d1dd4b68a9a902437aaee6771ab5d2d3",
+        "slug": "ComfyUI-GGUF",
+        "source": "git",
+        "url": "https://github.com/city96/ComfyUI-GGUF.git",
+        "version": "unknown"
+      },
+      "ComfyUI-H3-Motion-Context-MultiRef": {
+        "class_set": [
+          "H3V2VGranularFractionalDenoise",
+          "MiniMaxH3AVExtensionController",
+          "MiniMaxH3AVSourceAudioModeParam",
+          "MiniMaxH3AVStartModeParam",
+          "MiniMaxH3AssembleExtension",
+          "MiniMaxH3AssembleInterior",
+          "MiniMaxH3AudioVAECompatibility",
+          "MiniMaxH3ClearAVNoiseMask",
+          "MiniMaxH3CropTo32",
+          "MiniMaxH3CustomKeyframes",
+          "MiniMaxH3CustomKeyframesMasked",
+          "MiniMaxH3ExistingVideoMaskedContext",
+          "MiniMaxH3ExtensionStartMode",
+          "MiniMaxH3FanRecoveredContext",
+          "MiniMaxH3FinalizeVHSOutput",
+          "MiniMaxH3GeneratedAVMaskedContext",
+          "MiniMaxH3LastActiveVHSPreviewBarrier",
+          "MiniMaxH3MaskedAVBridge",
+          "MiniMaxH3MotionContext",
+          "MiniMaxH3MotionContextLoadLatent",
+          "MiniMaxH3MotionContextSaveLatent",
+          "MiniMaxH3MotionContextTrim",
+          "MiniMaxH3MusicVideoController",
+          "MiniMaxH3OptionalReferenceImage",
+          "MiniMaxH3OptionalStartFrame",
+          "MiniMaxH3ReferenceToVideo",
+          "MiniMaxH3SetAVNoiseMask",
+          "MiniMaxH3SigmaShift",
+          "MiniMaxH3SongMaskedAVContext",
+          "MiniMaxH3SourceAudioPolicy",
+          "MiniMaxH3SourceAudioRegenLength",
+          "MiniMaxH3SourceAudioRegenMask",
+          "MiniMaxH3StartCanvasSelector",
+          "MiniMaxH3StartMaskedContext",
+          "MiniMaxH3StreamLiveExtensionAVToVHS",
+          "MiniMaxH3StreamLiveMusicVideoToVHS",
+          "MiniMaxH3Validate24FPSVideo"
+        ],
+        "commit": "361624fb406b63eb6694442eac6c895fc1533a70",
+        "git_commit_sha": "361624fb406b63eb6694442eac6c895fc1533a70",
+        "last_seen_at": "2026-09-15T15:40:00+00:00",
+        "name": "ComfyUI-H3-Motion-Context-MultiRef",
+        "pip_packages": [
+          "safetensors"
+        ],
+        "slug": "ComfyUI-H3-Motion-Context-MultiRef",
+        "source": "git",
+        "url": "https://github.com/seitanism/ComfyUI-H3-Motion-Context-MultiRef.git"
+      },
+      "ComfyUI-HunyuanVideo_Foley": {
+        "class_schema_sha256": "b997f40ea6ff56898d81210bcec94811396be39dc6192608ff5318f020ea6c0c",
+        "class_set": [
+          "DACHunyuanVAEDecode",
+          "HunyuanFoleyModelLoader",
+          "HunyuanFoleySampler",
+          "LoadDACHunyuanVAE"
+        ],
+        "commit": "b94f7aca877ff2be5bc264b057abee3dac682c1b",
+        "git_commit_sha": "b94f7aca877ff2be5bc264b057abee3dac682c1b",
+        "name": "ComfyUI-HunyuanVideo_Foley",
+        "pip_packages": [
+          "descript-audiotools",
+          "diffusers",
+          "omegaconf",
+          "timm",
+          "transformers>=4.49.0"
+        ],
+        "schema_hash": "b997f40ea6ff56898d81210bcec94811396be39dc6192608ff5318f020ea6c0c",
+        "slug": "ComfyUI-HunyuanVideo_Foley",
+        "source": "git",
+        "url": "https://github.com/BobRandomNumber/ComfyUI-HunyuanVideo_Foley.git"
+      },
+      "ComfyUI-KJNodes": {
+        "class_schema_sha256": "1beaf129c8fa26175d89a28f9ca10d08b5ac27c8fc9bff920263fcbba17cb691",
+        "class_set": [
+          "BlockifyMask",
+          "DrawMaskOnImage",
+          "GetImageRangeFromBatch",
+          "GetImageSizeAndCount",
+          "INTConstant",
+          "ImageResizeKJv2",
+          "LTXVAddGuide",
+          "PathchSageAttentionKJ",
+          "PointsEditor",
+          "PreviewAnimation",
+          "ResizeImagesByLongerEdge",
+          "SimpleCalculatorKJ",
+          "VAELoaderKJ"
+        ],
+        "commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+        "git_commit_sha": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-KJNodes",
+        "pip_packages": [
+          "matplotlib"
+        ],
+        "schema_hash": "1beaf129c8fa26175d89a28f9ca10d08b5ac27c8fc9bff920263fcbba17cb691",
+        "slug": "ComfyUI-KJNodes",
+        "source": "git",
+        "url": "https://github.com/kijai/ComfyUI-KJNodes.git",
+        "version": "unknown"
+      },
+      "ComfyUI-LTXVideo": {
+        "class_schema_sha256": "82e0b1f31509a969cf441c45e2517d0cd93f31b5390cc16f4a0ffa244421f39e",
+        "class_set": [
+          "EmptyLTXVLatentVideo",
+          "LTX2AttentionTunerPatch",
+          "LTX2_NAG",
+          "LTXAVTextEncoderLoader",
+          "LTXVAudioVAEDecode",
+          "LTXVAudioVAELoader",
+          "LTXVChunkFeedForward",
+          "LTXVConcatAVLatent",
+          "LTXVConditioning",
+          "LTXVCropGuides",
+          "LTXVEmptyLatentAudio",
+          "LTXVImgToVideo",
+          "LTXVImgToVideoInplaceKJ",
+          "LTXVPreprocess",
+          "LTXVScheduler",
+          "LTXVSeparateAVLatent",
+          "LatentUpscaleModelLoader"
+        ],
+        "commit": "229437c6b65796d6a7a63ae34be2bd5ba31fa543",
+        "git_commit_sha": "229437c6b65796d6a7a63ae34be2bd5ba31fa543",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-LTXVideo",
+        "schema_hash": "82e0b1f31509a969cf441c45e2517d0cd93f31b5390cc16f4a0ffa244421f39e",
+        "slug": "ComfyUI-LTXVideo",
+        "source": "git",
+        "url": "https://github.com/Lightricks/ComfyUI-LTXVideo.git",
+        "version": "unknown"
+      },
+      "ComfyUI-Qwen3-TTS": {
+        "class_schema_sha256": "e1e936d1fb13d4c87f7d49c935b7d9a0c1d5860306c5a5b4233c125d769a0be0",
+        "class_set": [
+          "Qwen3AudioCompare",
+          "Qwen3CustomVoice",
+          "Qwen3DataPrep",
+          "Qwen3DatasetFromFolder",
+          "Qwen3FineTune",
+          "Qwen3LoadPrompt",
+          "Qwen3Loader",
+          "Qwen3PromptMaker",
+          "Qwen3SavePrompt",
+          "Qwen3VoiceClone",
+          "Qwen3VoiceDesign"
+        ],
+        "commit": "17c22adb80a63c1c51bf74549e71a5cf218f4e1b",
+        "git_commit_sha": "17c22adb80a63c1c51bf74549e71a5cf218f4e1b",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-Qwen3-TTS",
+        "pip_packages": [
+          "accelerate",
+          "librosa",
+          "modelscope",
+          "qwen-tts",
+          "soundfile"
+        ],
+        "schema_hash": "e1e936d1fb13d4c87f7d49c935b7d9a0c1d5860306c5a5b4233c125d769a0be0",
+        "slug": "ComfyUI-Qwen3-TTS",
+        "source": "git",
+        "url": "https://github.com/DarioFT/ComfyUI-Qwen3-TTS.git",
+        "version": "unknown"
+      },
+      "ComfyUI-QwenTTS": {
+        "class_schema_sha256": "4137bb4f37ea178be0e794377829905d9ede1bc65496a23a51d766a3f03b2c84",
+        "class_set": [
+          "AILab_Qwen3TTSCustomVoice",
+          "AILab_Qwen3TTSCustomVoice_Advanced",
+          "AILab_Qwen3TTSLoadVoice",
+          "AILab_Qwen3TTSVoiceClone",
+          "AILab_Qwen3TTSVoiceClone_Advanced",
+          "AILab_Qwen3TTSVoiceDesign",
+          "AILab_Qwen3TTSVoiceDesign_Advanced",
+          "AILab_Qwen3TTSVoiceInstruct",
+          "AILab_Qwen3TTSVoiceInstructZH",
+          "AILab_Qwen3TTSVoicesLibrary",
+          "AILab_Qwen3TTSWhisperSTT"
+        ],
+        "commit": "d8122a8ba835b65fd65c113d2b273b1ad1579293",
+        "git_commit_sha": "d8122a8ba835b65fd65c113d2b273b1ad1579293",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-QwenTTS",
+        "pip_packages": [
+          "accelerate",
+          "librosa",
+          "openai-whisper",
+          "qwen-tts",
+          "soundfile",
+          "tiktoken"
+        ],
+        "schema_hash": "4137bb4f37ea178be0e794377829905d9ede1bc65496a23a51d766a3f03b2c84",
+        "slug": "ComfyUI-QwenTTS",
+        "source": "git",
+        "url": "https://github.com/1038lab/ComfyUI-QwenTTS.git",
+        "version": "unknown"
+      },
+      "ComfyUI-VideoHelperSuite": {
+        "class_schema_sha256": "8391e679554eecd5d324a3e34a713ff240e619e3a07476587845ba18c9fae310",
+        "class_set": [
+          "VHS_LoadAudio",
+          "VHS_LoadAudioUpload",
+          "VHS_LoadVideo",
+          "VHS_LoadVideoFFmpeg",
+          "VHS_LoadVideoFFmpegPath",
+          "VHS_SelectEveryNthImage",
+          "VHS_SelectEveryNthLatent",
+          "VHS_SelectEveryNthMask",
+          "VHS_SplitImages",
+          "VHS_VideoCombine",
+          "VHS_VideoInfo",
+          "VHS_VideoInfoLoaded",
+          "VHS_VideoInfoSource"
+        ],
+        "commit": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "git_commit_sha": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-VideoHelperSuite",
+        "schema_hash": "8391e679554eecd5d324a3e34a713ff240e619e3a07476587845ba18c9fae310",
+        "slug": "ComfyUI-VideoHelperSuite",
+        "source": "git",
+        "url": "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git",
+        "version": "unknown"
+      },
+      "ComfyUI-WanAnimatePreprocess": {
+        "class_schema_sha256": "2037d30d5343a44a9403c928ea18688bb050b9114fc2d3741df2c6b64edaf7f5",
+        "class_set": [
+          "DrawViTPose",
+          "OnnxDetectionModelLoader",
+          "PoseAndFaceDetection",
+          "PoseDetectionOneToAllAnimation",
+          "PoseRetargetPromptHelper"
+        ],
+        "commit": "1a35b81a418bbba093356ad19b19bf2a76a24f4e",
+        "git_commit_sha": "1a35b81a418bbba093356ad19b19bf2a76a24f4e",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-WanAnimatePreprocess",
+        "pip_packages": [
+          "onnx",
+          "onnxruntime-gpu",
+          "opencv-python-headless"
+        ],
+        "schema_hash": "2037d30d5343a44a9403c928ea18688bb050b9114fc2d3741df2c6b64edaf7f5",
+        "slug": "ComfyUI-WanAnimatePreprocess",
+        "source": "git",
+        "url": "https://github.com/kijai/ComfyUI-WanAnimatePreprocess.git",
+        "version": "unknown"
+      },
+      "ComfyUI-WanVideoWrapper": {
+        "class_schema_sha256": "80187858cc6ec371c9860fd9ca5fcf5174324d75782046657e252492512d115f",
+        "class_set": [
+          "CreateCFGScheduleFloatList",
+          "LoadWanVideoT5TextEncoder",
+          "WanVideoBlockSwap",
+          "WanVideoControlEmbeds",
+          "WanVideoDecode",
+          "WanVideoEasyCache",
+          "WanVideoEmptyEmbeds",
+          "WanVideoEncode",
+          "WanVideoExperimentalArgs",
+          "WanVideoImageToVideoEncode",
+          "WanVideoLoraSelect",
+          "WanVideoLoraSelectMulti",
+          "WanVideoModelLoader",
+          "WanVideoSLG",
+          "WanVideoSampler",
+          "WanVideoSetBlockSwap",
+          "WanVideoSetLoRAs",
+          "WanVideoTextEmbedBridge",
+          "WanVideoTextEncode",
+          "WanVideoTextEncodeCached",
+          "WanVideoTorchCompileSettings",
+          "WanVideoVACEEncode",
+          "WanVideoVACEModelSelect",
+          "WanVideoVACEStartToEndFrame",
+          "WanVideoVAELoader"
+        ],
+        "commit": "df8f3e49daaad117cf3090cc916c83f3d001494c",
+        "git_commit_sha": "df8f3e49daaad117cf3090cc916c83f3d001494c",
+        "name": "ComfyUI-WanVideoWrapper",
+        "pip_packages": [
+          "onnx",
+          "opencv-python-headless"
+        ],
+        "schema_hash": "80187858cc6ec371c9860fd9ca5fcf5174324d75782046657e252492512d115f",
+        "slug": "ComfyUI-WanVideoWrapper",
+        "source": "git",
+        "url": "https://github.com/kijai/ComfyUI-WanVideoWrapper.git"
+      },
+      "ComfyUI-segment-anything-2": {
+        "class_schema_sha256": "e3640990ce145928d9404234721b4f23fd02717c7f07af03b3d0be0f8a150e9c",
+        "class_set": [
+          "DownloadAndLoadSAM2Model",
+          "Florence2toCoordinates",
+          "Sam2AutoSegmentation",
+          "Sam2Segmentation",
+          "Sam2VideoSegmentation",
+          "Sam2VideoSegmentationAddPoints"
+        ],
+        "commit": "0c35fff5f382803e2310103357b5e985f5437f32",
+        "git_commit_sha": "0c35fff5f382803e2310103357b5e985f5437f32",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "ComfyUI-segment-anything-2",
+        "pip_packages": [
+          "opencv-python-headless"
+        ],
+        "schema_hash": "e3640990ce145928d9404234721b4f23fd02717c7f07af03b3d0be0f8a150e9c",
+        "slug": "ComfyUI-segment-anything-2",
+        "source": "git",
+        "url": "https://github.com/kijai/ComfyUI-segment-anything-2.git",
+        "version": "unknown"
+      },
+      "ExamplePack": {
+        "commit": "pinnedsha",
+        "git_commit_sha": "pinnedsha",
+        "name": "ExamplePack",
+        "slug": "ExamplePack",
+        "source": "git",
+        "url": "https://example.test/example.git"
+      },
+      "comfyui_controlnet_aux": {
+        "class_schema_sha256": "e485b148824d72ef7af7e90f711eefb511ffe73b25cd1c6053e1e5c7bd3bbd62",
+        "class_set": [
+          "CannyEdgePreprocessor",
+          "DWPreprocessor"
+        ],
+        "commit": "e8b689a513c3e6b63edc44066560ca5919c0576e",
+        "git_commit_sha": "e8b689a513c3e6b63edc44066560ca5919c0576e",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "comfyui_controlnet_aux",
+        "pip_packages": [
+          "onnxruntime",
+          "opencv-python-headless"
+        ],
+        "schema_hash": "e485b148824d72ef7af7e90f711eefb511ffe73b25cd1c6053e1e5c7bd3bbd62",
+        "slug": "comfyui_controlnet_aux",
+        "source": "git",
+        "url": "https://github.com/Fannovel16/comfyui_controlnet_aux.git",
+        "version": "unknown"
+      },
+      "rgthree-comfy": {
+        "class_schema_sha256": "2b52072e02c59cb05ce83e5c45e1c7fd5b1273fee9b62eaaa0e66a81a4c07872",
+        "class_set": [
+          "Any Switch (rgthree)",
+          "Fast Groups Bypasser (rgthree)",
+          "Fast Groups Muter (rgthree)",
+          "GetNode",
+          "Label (rgthree)",
+          "Power Lora Loader (rgthree)",
+          "Seed (rgthree)",
+          "SetNode"
+        ],
+        "commit": "738105af5fb14e96fbecaf406dc356e284797e8c",
+        "git_commit_sha": "738105af5fb14e96fbecaf406dc356e284797e8c",
+        "last_seen_at": "2026-05-20T09:08:36.504684+00:00",
+        "name": "rgthree-comfy",
+        "schema_hash": "2b52072e02c59cb05ce83e5c45e1c7fd5b1273fee9b62eaaa0e66a81a4c07872",
+        "slug": "rgthree-comfy",
+        "source": "git",
+        "url": "https://github.com/rgthree/rgthree-comfy.git",
+        "version": "unknown"
+      }
+    }
+  },
+  "managed_engine_preparation": {
+    "alignment": {
+      "fetched": [],
+      "missing": [],
+      "mode": "align",
+      "status": "ready",
+      "verified": true
+    },
+    "attempt_id": "082d116663d546b1b3cd0459f40ff1a6",
+    "endpoint": "http://127.0.0.1:8188",
+    "execution_identity": "7f4329337e92959fadc38f3dc0b3bda4472b720000103017c5c15588aab6dbe1",
+    "health": {
+      "healthy": true,
+      "object_info_sha256": "ac2f2f946aa5a387b561b3f2d4e2e934eb414e1efc1f8e356b4b9614bf7fccc7",
+      "required_nodes_present": true
+    },
+    "inputs": {
+      "companion": "0c59ae1b25d7e265db87d5311dd9fe2b28257e7904b84c4430ff3ba151a5a130",
+      "python": "aeab93f463f9c5eb52e6465fa14d3307e75154cdeff0bca17756589fccbd761c",
+      "source": "820e0899c2996967929a8e1632c35da6c4fa52d0e5b503ec374ca44f58ba4494"
+    },
+    "installation": {
+      "helper_sha256": "e3ca06014a2f5b9f2b59214cdf1a610d720b553816c1001fed08a1a10fe42dc5",
+      "receipt_sha256": "75f5ecc28d9838133916b118e2cf7336d7be4c3dec356c668f61f307649d672d",
+      "recipe_sha256": "afdc5f468234a9821f463d4f4d941d88533cfa28a19aaf182a2d9ac29a352b4d",
+      "root": "/root/astrid/engines/comfyui"
+    },
+    "manifest": {
+      "base": null,
+      "engine": "comfyui",
+      "extra": {
+        "nodes": []
+      },
+      "models": [
+        {
+          "name": "qwen_0.6b_ace15.safetensors",
+          "sha256": "fd4590c82153b8ddb67e15a2e7aaa8afa8b83a858c8a9b82a4831063156aa7a7",
+          "size": 1191588248,
+          "subdir": "text_encoders",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_0.6b_ace15.safetensors"
+        },
+        {
+          "name": "qwen_4b_ace15.safetensors",
+          "sha256": "ffe5ffb855086c2ab55e467e9859fb01894781020a0376484dd19de166b79873",
+          "size": 8379154232,
+          "subdir": "text_encoders",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_4b_ace15.safetensors"
+        },
+        {
+          "name": "ace_1.5_vae.safetensors",
+          "sha256": "6de92e3a862acd287e08b024ac90f0783a8635451b728721a33ff03565bcb2bb",
+          "size": 337431732,
+          "subdir": "vae",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/vae/ace_1.5_vae.safetensors"
+        },
+        {
+          "name": "acestep_v1.5_turbo.safetensors",
+          "sha256": "3f6e0797fad420a39bd33979eb6e840e30989e34a3794e843d23b60ec6e422d7",
+          "size": 4787825604,
+          "subdir": "diffusion_models",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/diffusion_models/acestep_v1.5_turbo.safetensors"
+        }
+      ],
+      "models_root": "/workspace/astrid/engines/comfyui/models"
+    },
+    "manifest_sha256": "675b2c880b34299db177aa3b0de148bf89088a6ecd448b858766d121c1b999fe",
+    "mode": "align",
+    "native_preparation": {
+      "compliance": {
+        "checks": [],
+        "declared": false,
+        "mismatches": [],
+        "ok": true,
+        "status": "unverified",
+        "warnings": []
+      },
+      "observation": {
+        "comfy_commit": "6bfaacc67c2103481e5f0c84d75257cd0581d86a",
+        "comfy_version": "0.36.0",
+        "launch_flags": [
+          "/root/astrid/engines/comfyui/runtime/venv/bin/python",
+          "main.py",
+          "--listen",
+          "127.0.0.1",
+          "--port",
+          "8188",
+          "--use-ck-attention",
+          "--disable-comfy-compiler",
+          "--models-directory",
+          "/workspace/astrid/engines/comfyui/models"
+        ],
+        "managed": true,
+        "packages": {
+          "torch": "2.10.0+cu130"
+        },
+        "python_executable": "/root/astrid/engines/comfyui/runtime/venv/bin/python",
+        "python_version": "3.12.10",
+        "runtime_root": "/root/astrid/engines/comfyui/runtime"
+      },
+      "preparation": {
+        "diagnostics": {
+          "python_executable": "/root/astrid/engines/comfyui/runtime/venv/bin/python",
+          "runtime_root": "/root/astrid/engines/comfyui/runtime",
+          "session_id": null
+        },
+        "model_evidence": [],
+        "model_paths": [],
+        "node_results": [],
+        "ok": true,
+        "plan": {
+          "actions": [],
+          "custom_nodes": [
+            "EmptyAceStep1",
+            "TextEncodeAceStepAudio1"
+          ],
+          "models": [
+            {
+              "name": "qwen_0.6b_ace15.safetensors",
+              "sha256": "fd4590c82153b8ddb67e15a2e7aaa8afa8b83a858c8a9b82a4831063156aa7a7",
+              "size_bytes": 1191588248,
+              "subdir": "text_encoders",
+              "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_0.6b_ace15.safetensors"
+            },
+            {
+              "name": "qwen_4b_ace15.safetensors",
+              "sha256": "ffe5ffb855086c2ab55e467e9859fb01894781020a0376484dd19de166b79873",
+              "size_bytes": 8379154232,
+              "subdir": "text_encoders",
+              "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_4b_ace15.safetensors"
+            },
+            {
+              "name": "ace_1.5_vae.safetensors",
+              "sha256": "6de92e3a862acd287e08b024ac90f0783a8635451b728721a33ff03565bcb2bb",
+              "size_bytes": 337431732,
+              "subdir": "vae",
+              "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/vae/ace_1.5_vae.safetensors"
+            },
+            {
+              "name": "acestep_v1.5_turbo.safetensors",
+              "sha256": "3f6e0797fad420a39bd33979eb6e840e30989e34a3794e843d23b60ec6e422d7",
+              "size_bytes": 4787825604,
+              "subdir": "diffusion_models",
+              "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/diffusion_models/acestep_v1.5_turbo.safetensors"
+            }
+          ],
+          "workflow": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/astrid-pod-preparation-hnd4f52n/engine/canonical/workflow.py"
+        },
+        "receipt_path": "/root/astrid/engines/comfyui/runtime/out/preparations/workflow-one-shot.json"
+      },
+      "synchronization": {
+        "actions": [],
+        "changes": [],
+        "checks": [],
+        "declared": false,
+        "mismatches": [],
+        "mode": "sync",
+        "ok": true,
+        "status": "unverified",
+        "synced": false,
+        "warnings": []
+      }
+    },
+    "output_dir": "/root/astrid/engines/comfyui/runtime/ComfyUI/output",
+    "placement": "managed",
+    "schema": "astrid.managed-engine-preparation.v1",
+    "task_id": "a0fbc4ca4ed84ae5bea3b05f4645fbde"
+  },
+  "model_manifest": [
+    {
+      "actual_sha256": null,
+      "class_type": "DualCLIPLoader",
+      "downloadable": true,
+      "expected_sha256": "fd4590c82153b8ddb67e15a2e7aaa8afa8b83a858c8a9b82a4831063156aa7a7",
+      "field": "clip_name1",
+      "name": "qwen_0.6b_ace15.safetensors",
+      "node_id": "105",
+      "reference_type": "workflow-local",
+      "size_bytes": 1191588248,
+      "subdir": "text_encoders",
+      "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_0.6b_ace15.safetensors",
+      "value": "qwen_0.6b_ace15.safetensors"
+    },
+    {
+      "actual_sha256": null,
+      "class_type": "DualCLIPLoader",
+      "downloadable": true,
+      "expected_sha256": "ffe5ffb855086c2ab55e467e9859fb01894781020a0376484dd19de166b79873",
+      "field": "clip_name2",
+      "name": "qwen_4b_ace15.safetensors",
+      "node_id": "105",
+      "reference_type": "workflow-local",
+      "size_bytes": 8379154232,
+      "subdir": "text_encoders",
+      "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_4b_ace15.safetensors",
+      "value": "qwen_4b_ace15.safetensors"
+    },
+    {
+      "actual_sha256": null,
+      "class_type": "VAELoader",
+      "downloadable": true,
+      "expected_sha256": "6de92e3a862acd287e08b024ac90f0783a8635451b728721a33ff03565bcb2bb",
+      "field": "vae_name",
+      "name": "ace_1.5_vae.safetensors",
+      "node_id": "106",
+      "reference_type": "workflow-local",
+      "size_bytes": 337431732,
+      "subdir": "vae",
+      "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/vae/ace_1.5_vae.safetensors",
+      "value": "ace_1.5_vae.safetensors"
+    },
+    {
+      "actual_sha256": null,
+      "class_type": "UNETLoader",
+      "downloadable": true,
+      "expected_sha256": "3f6e0797fad420a39bd33979eb6e840e30989e34a3794e843d23b60ec6e422d7",
+      "field": "unet_name",
+      "name": "acestep_v1.5_turbo.safetensors",
+      "node_id": "125",
+      "reference_type": "workflow-local",
+      "size_bytes": 4787825604,
+      "subdir": "diffusion_models",
+      "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/diffusion_models/acestep_v1.5_turbo.safetensors",
+      "value": "acestep_v1.5_turbo.safetensors"
+    }
+  ],
+  "node_lookups": {
+    "105": {
+      "class_type": "DualCLIPLoader",
+      "inputs": [
+        "clip_name1",
+        "clip_name2",
+        "type",
+        "device"
+      ],
+      "model_assets": [
+        {
+          "class_type": "DualCLIPLoader",
+          "downloadable": false,
+          "field": "clip_name1",
+          "name": "qwen_0.6b_ace15.safetensors",
+          "node_id": "105",
+          "reference_type": "relative-path",
+          "subdir": "text_encoders",
+          "unresolved": true,
+          "value": "qwen_0.6b_ace15.safetensors"
+        },
+        {
+          "class_type": "DualCLIPLoader",
+          "downloadable": false,
+          "field": "clip_name2",
+          "name": "qwen_4b_ace15.safetensors",
+          "node_id": "105",
+          "reference_type": "relative-path",
+          "subdir": "text_encoders",
+          "unresolved": true,
+          "value": "qwen_4b_ace15.safetensors"
+        }
+      ],
+      "outputs": [],
+      "public_bindings": [
+        {
+          "default": "qwen_0.6b_ace15.safetensors",
+          "field": "clip_name1",
+          "name": "node:105.clip_name1",
+          "required": false,
+          "type": "CHOICE",
+          "value": "qwen_0.6b_ace15.safetensors"
+        },
+        {
+          "default": "qwen_4b_ace15.safetensors",
+          "field": "clip_name2",
+          "name": "node:105.clip_name2",
+          "required": false,
+          "type": "CHOICE",
+          "value": "qwen_4b_ace15.safetensors"
+        },
+        {
+          "default": "ace",
+          "field": "type",
+          "name": "node:105.type",
+          "required": false,
+          "type": "CHOICE",
+          "value": "ace"
+        },
+        {
+          "default": "default",
+          "field": "device",
+          "name": "node:105.device",
+          "required": false,
+          "type": "CHOICE",
+          "value": "default"
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "dualcliploader",
+      "widgets": {}
+    },
+    "106": {
+      "class_type": "VAELoader",
+      "inputs": [
+        "vae_name"
+      ],
+      "model_assets": [
+        {
+          "class_type": "VAELoader",
+          "downloadable": false,
+          "field": "vae_name",
+          "name": "ace_1.5_vae.safetensors",
+          "node_id": "106",
+          "reference_type": "relative-path",
+          "subdir": "vae",
+          "unresolved": true,
+          "value": "ace_1.5_vae.safetensors"
+        }
+      ],
+      "outputs": [],
+      "public_bindings": [
+        {
+          "default": "ace_1.5_vae.safetensors",
+          "field": "vae_name",
+          "name": "node:106.vae_name",
+          "required": false,
+          "type": "CHOICE",
+          "value": "ace_1.5_vae.safetensors"
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "vaeloader",
+      "widgets": {}
+    },
+    "122": {
+      "class_type": "EmptyAceStep1.5LatentAudio",
+      "inputs": [
+        "batch_size",
+        "seconds"
+      ],
+      "model_assets": [],
+      "outputs": [],
+      "public_bindings": [
+        {
+          "default": 120.0,
+          "field": "seconds",
+          "name": "node:122.seconds",
+          "required": false,
+          "type": "FLOAT",
+          "value": 2.0
+        },
+        {
+          "default": 1,
+          "field": "batch_size",
+          "name": "node:122.batch_size",
+          "required": false,
+          "type": "INT",
+          "value": 1
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "emptyacestep1_5latentaudio",
+      "widgets": {}
+    },
+    "123": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": [],
+      "model_assets": [],
+      "outputs": [],
+      "public_bindings": [],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "vaedecodeaudio",
+      "widgets": {}
+    },
+    "124": {
+      "class_type": "TextEncodeAceStepAudio1.5",
+      "inputs": [
+        "cfg_scale",
+        "duration",
+        "keyscale",
+        "language",
+        "lyrics",
+        "seed",
+        "tags",
+        "timesignature"
+      ],
+      "model_assets": [],
+      "outputs": [],
+      "public_bindings": [
+        {
+          "default": "synthwave, techno, synthpop, futuristic, electro, with liquid drum & bass drive.\nRestless, confident, dreamy mood at 128 BPM.\nAnalog bass, pulsating arps, percussive synth stabs, gated drums.\nQuick build,  then explosive drum burst, then clean fade.\nBreathy, rhythmic female vocals, minimal emotion, metallic echo.",
+          "field": "tags",
+          "name": "node:124.tags",
+          "required": false,
+          "type": "STRING",
+          "value": "synthwave, techno, synthpop, futuristic, electro, with liquid drum & bass drive.\nRestless, confident, dreamy mood at 128 BPM.\nAnalog bass, pulsating arps, percussive synth stabs, gated drums.\nQuick build,  then explosive drum burst, then clean fade.\nBreathy, rhythmic female vocals, minimal emotion, metallic echo."
+        },
+        {
+          "default": "Verse\nNeon rain on my screen,\nDreams compile in silver sheen.\nNo weight, just motion,\nI\u2019m plugged into emotion.\n\nChorus\nComfy Cloud \u2014 breathing light,\nCode and color, spark and wire.\nDrift through data, feel alive,\nIn your circuits, I arrive.",
+          "field": "lyrics",
+          "name": "node:124.lyrics",
+          "required": false,
+          "type": "STRING",
+          "value": "Verse\nNeon rain on my screen,\nDreams compile in silver sheen.\nNo weight, just motion,\nI\u2019m plugged into emotion.\n\nChorus\nComfy Cloud \u2014 breathing light,\nCode and color, spark and wire.\nDrift through data, feel alive,\nIn your circuits, I arrive."
+        },
+        {
+          "default": 0,
+          "field": "seed",
+          "name": "node:124.seed",
+          "required": false,
+          "type": "INT",
+          "value": 561594583201063
+        },
+        {
+          "default": 120.0,
+          "field": "duration",
+          "name": "node:124.duration",
+          "required": false,
+          "type": "FLOAT",
+          "value": 2.0
+        },
+        {
+          "default": "4",
+          "field": "timesignature",
+          "name": "node:124.timesignature",
+          "required": false,
+          "type": "COMBO",
+          "value": "4"
+        },
+        {
+          "default": "en",
+          "field": "language",
+          "name": "node:124.language",
+          "required": false,
+          "type": "COMBO",
+          "value": "en"
+        },
+        {
+          "default": "E minor",
+          "field": "keyscale",
+          "name": "node:124.keyscale",
+          "required": false,
+          "type": "COMBO",
+          "value": "E minor"
+        },
+        {
+          "default": 2.0,
+          "field": "cfg_scale",
+          "name": "node:124.cfg_scale",
+          "required": false,
+          "type": "FLOAT",
+          "value": 1.5
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "textencodeacestepaudio1_5",
+      "widgets": {}
+    },
+    "125": {
+      "class_type": "UNETLoader",
+      "inputs": [
+        "unet_name",
+        "weight_dtype"
+      ],
+      "model_assets": [
+        {
+          "class_type": "UNETLoader",
+          "downloadable": false,
+          "field": "unet_name",
+          "name": "acestep_v1.5_turbo.safetensors",
+          "node_id": "125",
+          "reference_type": "relative-path",
+          "subdir": "diffusion_models",
+          "unresolved": true,
+          "value": "acestep_v1.5_turbo.safetensors"
+        }
+      ],
+      "outputs": [],
+      "public_bindings": [
+        {
+          "default": null,
+          "field": "unet_name",
+          "name": "model",
+          "required": false,
+          "type": null,
+          "value": "acestep_v1.5_turbo.safetensors"
+        },
+        {
+          "default": "default",
+          "field": "weight_dtype",
+          "name": "node:125.weight_dtype",
+          "required": false,
+          "type": "CHOICE",
+          "value": "default"
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "unetloader",
+      "widgets": {}
+    },
+    "3": {
+      "class_type": "KSampler",
+      "inputs": [
+        "cfg",
+        "sampler_name",
+        "scheduler",
+        "seed",
+        "steps"
+      ],
+      "model_assets": [],
+      "outputs": [],
+      "public_bindings": [
+        {
+          "default": 561594583201063,
+          "field": "seed",
+          "name": "seed",
+          "required": false,
+          "type": "INT",
+          "value": 7
+        },
+        {
+          "default": null,
+          "field": "steps",
+          "name": "steps",
+          "required": false,
+          "type": null,
+          "value": 1
+        },
+        {
+          "default": 8.0,
+          "field": "cfg",
+          "name": "node:3.cfg",
+          "required": false,
+          "type": "FLOAT",
+          "value": 1
+        },
+        {
+          "default": "euler",
+          "field": "sampler_name",
+          "name": "node:3.sampler_name",
+          "required": false,
+          "type": "CHOICE",
+          "value": "euler"
+        },
+        {
+          "default": "simple",
+          "field": "scheduler",
+          "name": "node:3.scheduler",
+          "required": false,
+          "type": "CHOICE",
+          "value": "simple"
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "ksampler",
+      "widgets": {}
+    },
+    "47": {
+      "class_type": "ConditioningZeroOut",
+      "inputs": [],
+      "model_assets": [],
+      "outputs": [],
+      "public_bindings": [],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "conditioningzeroout",
+      "widgets": {}
+    },
+    "59": {
+      "class_type": "SaveAudioMP3",
+      "inputs": [
+        "filename_prefix"
+      ],
+      "model_assets": [],
+      "outputs": [
+        "SaveAudioMP3"
+      ],
+      "public_bindings": [
+        {
+          "default": "audio/ComfyUI",
+          "field": "filename_prefix",
+          "name": "node:59.filename_prefix",
+          "required": false,
+          "type": "STRING",
+          "value": "audio/vibecomfy_ace_step_smoke_astrid_082d116663d546b1b3cd0459f40ff1a6"
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "saveaudiomp3",
+      "widgets": {}
+    },
+    "78": {
+      "class_type": "ModelSamplingAuraFlow",
+      "inputs": [
+        "shift"
+      ],
+      "model_assets": [],
+      "outputs": [],
+      "public_bindings": [
+        {
+          "default": 1.73,
+          "field": "shift",
+          "name": "node:78.shift",
+          "required": false,
+          "type": "FLOAT",
+          "value": 3
+        }
+      ],
+      "source_line": null,
+      "source_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+      "variable_name": "modelsamplingauraflow",
+      "widgets": {}
+    }
+  },
+  "placement": "managed",
+  "prompt_id": null,
+  "queue_acceptance": {
+    "prompt_id": null,
+    "status": "rejected"
+  },
+  "receipt_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/.vibecomfy-runtime/out/runs/run-03f2cf80c9f440349cbc224deecb7aa2/attempt.json",
+  "redactions": [],
+  "runtime_evidence": {
+    "adapter": {
+      "backend": "api",
+      "endpoint": "http://127.0.0.1:8188",
+      "kind": "external"
+    },
+    "api_digest": "91ab6e0a3f5be66b60ec6c496c4895615e629d8358b0c99c95b977f54ba0a5fc",
+    "approved_projection": {
+      "api_digest": "91ab6e0a3f5be66b60ec6c496c4895615e629d8358b0c99c95b977f54ba0a5fc",
+      "api_projection": {
+        "105": {
+          "class_type": "DualCLIPLoader",
+          "inputs": {
+            "clip_name1": "qwen_0.6b_ace15.safetensors",
+            "clip_name2": "qwen_4b_ace15.safetensors",
+            "device": "default",
+            "type": "ace"
+          }
+        },
+        "106": {
+          "class_type": "VAELoader",
+          "inputs": {
+            "vae_name": "ace_1.5_vae.safetensors"
+          }
+        },
+        "122": {
+          "class_type": "EmptyAceStep1.5LatentAudio",
+          "inputs": {
+            "batch_size": 1,
+            "seconds": 2.0
+          }
+        },
+        "123": {
+          "class_type": "VAEDecodeAudio",
+          "inputs": {
+            "samples": [
+              "3",
+              0
+            ],
+            "vae": [
+              "106",
+              0
+            ]
+          }
+        },
+        "124": {
+          "class_type": "TextEncodeAceStepAudio1.5",
+          "inputs": {
+            "cfg_scale": 1.5,
+            "clip": [
+              "105",
+              0
+            ],
+            "duration": 2.0,
+            "keyscale": "E minor",
+            "language": "en",
+            "lyrics": "Verse\nNeon rain on my screen,\nDreams compile in silver sheen.\nNo weight, just motion,\nI\u2019m plugged into emotion.\n\nChorus\nComfy Cloud \u2014 breathing light,\nCode and color, spark and wire.\nDrift through data, feel alive,\nIn your circuits, I arrive.",
+            "seed": 561594583201063,
+            "tags": "synthwave, techno, synthpop, futuristic, electro, with liquid drum & bass drive.\nRestless, confident, dreamy mood at 128 BPM.\nAnalog bass, pulsating arps, percussive synth stabs, gated drums.\nQuick build,  then explosive drum burst, then clean fade.\nBreathy, rhythmic female vocals, minimal emotion, metallic echo.",
+            "timesignature": "4"
+          }
+        },
+        "125": {
+          "class_type": "UNETLoader",
+          "inputs": {
+            "unet_name": "acestep_v1.5_turbo.safetensors",
+            "weight_dtype": "default"
+          }
+        },
+        "3": {
+          "class_type": "KSampler",
+          "inputs": {
+            "cfg": 1,
+            "latent_image": [
+              "122",
+              0
+            ],
+            "model": [
+              "78",
+              0
+            ],
+            "negative": [
+              "47",
+              0
+            ],
+            "positive": [
+              "124",
+              0
+            ],
+            "sampler_name": "euler",
+            "scheduler": "simple",
+            "seed": 7,
+            "steps": 1
+          }
+        },
+        "47": {
+          "class_type": "ConditioningZeroOut",
+          "inputs": {
+            "conditioning": [
+              "124",
+              0
+            ]
+          }
+        },
+        "59": {
+          "class_type": "SaveAudioMP3",
+          "inputs": {
+            "audio": [
+              "123",
+              0
+            ],
+            "filename_prefix": "audio/vibecomfy_ace_step_smoke_astrid_082d116663d546b1b3cd0459f40ff1a6"
+          }
+        },
+        "78": {
+          "class_type": "ModelSamplingAuraFlow",
+          "inputs": {
+            "model": [
+              "125",
+              0
+            ],
+            "shift": 3
+          }
+        }
+      },
+      "input_binding": {
+        "seed": 7
+      },
+      "revision_id": "78efb6f48441c544f7a09ad2dbfca33bee017744d391374f2297aa289a329bc9",
+      "selected_variant": null,
+      "ui_projection": {
+        "extra": {
+          "ds": {
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "scale": 1.0
+          },
+          "vibecomfy": {
+            "layout_version": "m4",
+            "prior_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+            "source_template": "audio/ace_step_1_5_t2a_song"
+          }
+        },
+        "groups": [],
+        "id": "2148ccf6-58c6-5ed1-9dc9-ed142eb648bb",
+        "last_link_id": 11,
+        "last_node_id": 125,
+        "links": [
+          [
+            1,
+            3,
+            0,
+            123,
+            0,
+            "LATENT"
+          ],
+          [
+            2,
+            47,
+            0,
+            3,
+            2,
+            "CONDITIONING"
+          ],
+          [
+            3,
+            78,
+            0,
+            3,
+            1,
+            "MODEL"
+          ],
+          [
+            4,
+            105,
+            0,
+            124,
+            0,
+            "CLIP"
+          ],
+          [
+            5,
+            106,
+            0,
+            123,
+            1,
+            "VAE"
+          ],
+          [
+            6,
+            122,
+            0,
+            3,
+            0,
+            "LATENT"
+          ],
+          [
+            7,
+            123,
+            0,
+            59,
+            2,
+            "AUDIO"
+          ],
+          [
+            8,
+            124,
+            0,
+            3,
+            3,
+            "CONDITIONING"
+          ],
+          [
+            9,
+            124,
+            0,
+            47,
+            0,
+            "CONDITIONING"
+          ],
+          [
+            10,
+            125,
+            0,
+            78,
+            0,
+            "MODEL"
+          ]
+        ],
+        "nodes": [
+          {
+            "flags": {},
+            "id": 3,
+            "inputs": [
+              {
+                "link": 6,
+                "name": "latent_image",
+                "type": "LATENT"
+              },
+              {
+                "link": 3,
+                "name": "model",
+                "type": "MODEL"
+              },
+              {
+                "link": 2,
+                "name": "negative",
+                "type": "CONDITIONING"
+              },
+              {
+                "link": 8,
+                "name": "positive",
+                "type": "CONDITIONING"
+              }
+            ],
+            "mode": 0,
+            "order": 0,
+            "outputs": [
+              {
+                "links": [
+                  1
+                ],
+                "name": "LATENT",
+                "slot_index": 0,
+                "type": "LATENT"
+              }
+            ],
+            "pos": [
+              1560.0,
+              0.0
+            ],
+            "properties": {
+              "Node name for S&R": "KSampler",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "KSampler_0",
+              "vibecomfy_uid": "n8"
+            },
+            "size": [
+              320.0,
+              140.0
+            ],
+            "type": "KSampler",
+            "widgets_values": [
+              7,
+              "fixed",
+              1,
+              1,
+              "euler",
+              "simple"
+            ]
+          },
+          {
+            "flags": {},
+            "id": 47,
+            "inputs": [
+              {
+                "link": 9,
+                "name": "conditioning",
+                "type": "CONDITIONING"
+              }
+            ],
+            "mode": 0,
+            "order": 1,
+            "outputs": [
+              {
+                "links": [
+                  2
+                ],
+                "name": "CONDITIONING",
+                "slot_index": 0,
+                "type": "CONDITIONING"
+              }
+            ],
+            "pos": [
+              1040.0,
+              0.0
+            ],
+            "properties": {
+              "Node name for S&R": "ConditioningZeroOut",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "ConditioningZeroOut_1",
+              "vibecomfy_uid": "n7"
+            },
+            "size": [
+              320.0,
+              30.0
+            ],
+            "type": "ConditioningZeroOut",
+            "widgets_values": []
+          },
+          {
+            "flags": {},
+            "id": 59,
+            "inputs": [
+              {
+                "link": null,
+                "name": "extra_pnginfo",
+                "shape": 7,
+                "type": "EXTRA_PNGINFO"
+              },
+              {
+                "link": null,
+                "name": "prompt",
+                "shape": 7,
+                "type": "PROMPT"
+              },
+              {
+                "link": 7,
+                "name": "audio",
+                "type": "AUDIO"
+              }
+            ],
+            "mode": 0,
+            "order": 2,
+            "outputs": [
+              {
+                "links": null,
+                "name": "audio",
+                "slot_index": 0,
+                "type": "AUDIO"
+              }
+            ],
+            "pos": [
+              2600.0,
+              0.0
+            ],
+            "properties": {
+              "Node name for S&R": "SaveAudioMP3",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "SaveAudioMP3_2",
+              "vibecomfy_uid": "n10"
+            },
+            "size": [
+              320.0,
+              52.0
+            ],
+            "type": "SaveAudioMP3",
+            "widgets_values": [
+              "audio/vibecomfy_ace_step_smoke_astrid_082d116663d546b1b3cd0459f40ff1a6"
+            ]
+          },
+          {
+            "flags": {},
+            "id": 78,
+            "inputs": [
+              {
+                "link": 10,
+                "name": "model",
+                "type": "MODEL"
+              }
+            ],
+            "mode": 0,
+            "order": 3,
+            "outputs": [
+              {
+                "links": [
+                  3
+                ],
+                "name": "MODEL",
+                "slot_index": 0,
+                "type": "MODEL"
+              }
+            ],
+            "pos": [
+              520.0,
+              246.0
+            ],
+            "properties": {
+              "Node name for S&R": "ModelSamplingAuraFlow",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "ModelSamplingAuraFlow_3",
+              "vibecomfy_uid": "n5"
+            },
+            "size": [
+              320.0,
+              52.0
+            ],
+            "type": "ModelSamplingAuraFlow",
+            "widgets_values": [
+              3
+            ]
+          },
+          {
+            "flags": {},
+            "id": 105,
+            "inputs": [],
+            "mode": 0,
+            "order": 4,
+            "outputs": [
+              {
+                "links": [
+                  4
+                ],
+                "name": "CLIP",
+                "slot_index": 0,
+                "type": "CLIP"
+              }
+            ],
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "properties": {
+              "Node name for S&R": "DualCLIPLoader",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "DualCLIPLoader_4",
+              "vibecomfy_uid": "n1"
+            },
+            "size": [
+              320.0,
+              118.0
+            ],
+            "type": "DualCLIPLoader",
+            "widgets_values": [
+              "qwen_0.6b_ace15.safetensors",
+              "qwen_4b_ace15.safetensors",
+              "ace",
+              "default"
+            ]
+          },
+          {
+            "flags": {},
+            "id": 106,
+            "inputs": [],
+            "mode": 0,
+            "order": 5,
+            "outputs": [
+              {
+                "links": [
+                  5
+                ],
+                "name": "VAE",
+                "slot_index": 0,
+                "type": "VAE"
+              }
+            ],
+            "pos": [
+              0.0,
+              474.0
+            ],
+            "properties": {
+              "Node name for S&R": "VAELoader",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "VAELoader_5",
+              "vibecomfy_uid": "n2"
+            },
+            "size": [
+              320.0,
+              52.0
+            ],
+            "type": "VAELoader",
+            "widgets_values": [
+              "ace_1.5_vae.safetensors"
+            ]
+          },
+          {
+            "flags": {},
+            "id": 122,
+            "inputs": [],
+            "mode": 0,
+            "order": 6,
+            "outputs": [
+              {
+                "links": [
+                  6
+                ],
+                "name": "LATENT",
+                "slot_index": 0,
+                "type": "LATENT"
+              }
+            ],
+            "pos": [
+              0.0,
+              158.0
+            ],
+            "properties": {
+              "Node name for S&R": "EmptyAceStep1.5LatentAudio",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "EmptyAceStep1.5LatentAudio_6",
+              "vibecomfy_uid": "n3"
+            },
+            "size": [
+              320.0,
+              74.0
+            ],
+            "type": "EmptyAceStep1.5LatentAudio",
+            "widgets_values": [
+              2.0,
+              1
+            ]
+          },
+          {
+            "flags": {},
+            "id": 123,
+            "inputs": [
+              {
+                "link": 1,
+                "name": "samples",
+                "type": "LATENT"
+              },
+              {
+                "link": 5,
+                "name": "vae",
+                "type": "VAE"
+              }
+            ],
+            "mode": 0,
+            "order": 7,
+            "outputs": [
+              {
+                "links": [
+                  7
+                ],
+                "name": "AUDIO",
+                "slot_index": 0,
+                "type": "AUDIO"
+              }
+            ],
+            "pos": [
+              2080.0,
+              0.0
+            ],
+            "properties": {
+              "Node name for S&R": "VAEDecodeAudio",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "VAEDecodeAudio_7",
+              "vibecomfy_uid": "n9"
+            },
+            "size": [
+              320.0,
+              30.0
+            ],
+            "type": "VAEDecodeAudio",
+            "widgets_values": []
+          },
+          {
+            "flags": {},
+            "id": 124,
+            "inputs": [
+              {
+                "link": 4,
+                "name": "clip",
+                "type": "CLIP"
+              }
+            ],
+            "mode": 0,
+            "order": 8,
+            "outputs": [
+              {
+                "links": [
+                  8,
+                  9
+                ],
+                "name": "CONDITIONING",
+                "slot_index": 0,
+                "type": "CONDITIONING"
+              }
+            ],
+            "pos": [
+              520.0,
+              0.0
+            ],
+            "properties": {
+              "Node name for S&R": "TextEncodeAceStepAudio1.5",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "TextEncodeAceStepAudio1.5_8",
+              "vibecomfy_uid": "n6"
+            },
+            "size": [
+              320.0,
+              206.0
+            ],
+            "type": "TextEncodeAceStepAudio1.5",
+            "widgets_values": [
+              "synthwave, techno, synthpop, futuristic, electro, with liquid drum & bass drive.\nRestless, confident, dreamy mood at 128 BPM.\nAnalog bass, pulsating arps, percussive synth stabs, gated drums.\nQuick build,  then explosive drum burst, then clean fade.\nBreathy, rhythmic female vocals, minimal emotion, metallic echo.",
+              "Verse\nNeon rain on my screen,\nDreams compile in silver sheen.\nNo weight, just motion,\nI\u2019m plugged into emotion.\n\nChorus\nComfy Cloud \u2014 breathing light,\nCode and color, spark and wire.\nDrift through data, feel alive,\nIn your circuits, I arrive.",
+              561594583201063,
+              "fixed",
+              2.0,
+              null,
+              "4",
+              "en",
+              "E minor",
+              null,
+              1.5
+            ]
+          },
+          {
+            "flags": {},
+            "id": 125,
+            "inputs": [],
+            "mode": 0,
+            "order": 9,
+            "outputs": [
+              {
+                "links": [
+                  10
+                ],
+                "name": "MODEL",
+                "slot_index": 0,
+                "type": "MODEL"
+              }
+            ],
+            "pos": [
+              0.0,
+              316.0
+            ],
+            "properties": {
+              "Node name for S&R": "UNETLoader",
+              "_vibecomfy_schema_provider": "target_object_info",
+              "vibecomfy_id": "UNETLoader_9",
+              "vibecomfy_uid": "n4"
+            },
+            "size": [
+              320.0,
+              74.0
+            ],
+            "type": "UNETLoader",
+            "widgets_values": [
+              "acestep_v1.5_turbo.safetensors",
+              "default"
+            ]
+          }
+        ],
+        "state": {
+          "lastLinkId": 11,
+          "lastNodeId": 125,
+          "lastRerouteId": 0
+        },
+        "version": 1.0
+      }
+    },
+    "queue_acceptance": {
+      "prompt_id": null,
+      "status": "rejected"
+    },
+    "record_digest": "49131b1fcd10a3f38a84c76b38124ae52c4ca487f1ae7d47cff6b60966fa3e28",
+    "schema_provenance": {
+      "approval_diagnostics": [
+        {
+          "class_type": "DualCLIPLoader",
+          "code": "target_model_reference",
+          "field": "clip_name1",
+          "model_bytes_status": "unverified_target_inventory",
+          "node_id": "105",
+          "status": "available_on_target",
+          "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+          "target_server_url": "http://127.0.0.1:8188",
+          "value": "qwen_0.6b_ace15.safetensors"
+        },
+        {
+          "class_type": "DualCLIPLoader",
+          "code": "target_model_reference",
+          "field": "clip_name2",
+          "model_bytes_status": "unverified_target_inventory",
+          "node_id": "105",
+          "status": "available_on_target",
+          "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+          "target_server_url": "http://127.0.0.1:8188",
+          "value": "qwen_4b_ace15.safetensors"
+        },
+        {
+          "class_type": "VAELoader",
+          "code": "target_model_reference",
+          "field": "vae_name",
+          "model_bytes_status": "unverified_target_inventory",
+          "node_id": "106",
+          "status": "available_on_target",
+          "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+          "target_server_url": "http://127.0.0.1:8188",
+          "value": "ace_1.5_vae.safetensors"
+        },
+        {
+          "class_type": "UNETLoader",
+          "code": "target_model_reference",
+          "field": "unet_name",
+          "model_bytes_status": "unverified_target_inventory",
+          "node_id": "125",
+          "status": "available_on_target",
+          "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+          "target_server_url": "http://127.0.0.1:8188",
+          "value": "acestep_v1.5_turbo.safetensors"
+        }
+      ],
+      "authority": "live_target",
+      "cache_path": "out/cache/object_info.713183c62be3ff38.json",
+      "digest_algorithm": "sha256",
+      "digest_canonicalization": "object_info_payload_checksum",
+      "fresh_target": true,
+      "object_info_loaded": true,
+      "provider": "UploadedTargetSchema",
+      "schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+      "server_url": "http://127.0.0.1:8188",
+      "target_server_url": "http://127.0.0.1:8188",
+      "validation": "object-info"
+    },
+    "terminal": {
+      "acceptance_known": true,
+      "phase": "queue",
+      "reason": "Workflow queue failed: Workflow queue failed: HTTP Error 400: Bad Request next action: Check server health, the ComfyUI logs, and whether the workflow payload is accepted by this runtime.; id_map={'dualcliploader': '1', 'vaeloader': '2', 'emptyacestep1_5latentaudio': '3', 'unetloader': '4', 'modelsamplingauraflow': '5', 'textencodeacestepaudio1_5': '6', 'conditioningzeroout': '47', 'ksampler': '8', 'vaedecodeaudio': '123', 'saveaudiomp3': '10'} next action: vibecomfy runtime doctor",
+      "reason_type": "QueueError"
+    },
+    "ui_digest": "d34f68c574699513a05b92a4ef70598e5309c4431a63d036416221c669941aba"
+  },
+  "runtime_intent_nodes": [],
+  "runtime_version": "2.8.0",
+  "schema_provenance": {
+    "approval_diagnostics": [
+      {
+        "class_type": "DualCLIPLoader",
+        "code": "target_model_reference",
+        "field": "clip_name1",
+        "model_bytes_status": "unverified_target_inventory",
+        "node_id": "105",
+        "status": "available_on_target",
+        "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+        "target_server_url": "http://127.0.0.1:8188",
+        "value": "qwen_0.6b_ace15.safetensors"
+      },
+      {
+        "class_type": "DualCLIPLoader",
+        "code": "target_model_reference",
+        "field": "clip_name2",
+        "model_bytes_status": "unverified_target_inventory",
+        "node_id": "105",
+        "status": "available_on_target",
+        "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+        "target_server_url": "http://127.0.0.1:8188",
+        "value": "qwen_4b_ace15.safetensors"
+      },
+      {
+        "class_type": "VAELoader",
+        "code": "target_model_reference",
+        "field": "vae_name",
+        "model_bytes_status": "unverified_target_inventory",
+        "node_id": "106",
+        "status": "available_on_target",
+        "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+        "target_server_url": "http://127.0.0.1:8188",
+        "value": "ace_1.5_vae.safetensors"
+      },
+      {
+        "class_type": "UNETLoader",
+        "code": "target_model_reference",
+        "field": "unet_name",
+        "model_bytes_status": "unverified_target_inventory",
+        "node_id": "125",
+        "status": "available_on_target",
+        "target_schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+        "target_server_url": "http://127.0.0.1:8188",
+        "value": "acestep_v1.5_turbo.safetensors"
+      }
+    ],
+    "authority": "live_target",
+    "cache_path": "out/cache/object_info.713183c62be3ff38.json",
+    "digest_algorithm": "sha256",
+    "digest_canonicalization": "object_info_payload_checksum",
+    "fresh_target": true,
+    "object_info_loaded": true,
+    "provider": "UploadedTargetSchema",
+    "schema_digest": "1867b5dc38178deed30f72bef756273047ffc697c1bea5f8bd5c1654773fba2d",
+    "server_url": "http://127.0.0.1:8188",
+    "target_server_url": "http://127.0.0.1:8188",
+    "validation": "object-info"
+  },
+  "source_workflow": {
+    "capability": "audio",
+    "comfy_core": {
+      "commit": "426f5eea52a7ece1dd599fff4cb6cd1f352ddd24",
+      "status": "static_source_schema_only",
+      "version": "0.43.0"
+    },
+    "coverage_tier": "required",
+    "edit_guide": "Public inputs:\n- model: Controls model.\n- seed: Controls seed.\n- steps: Controls steps.\n- node:105.clip_name1: Controls node:105.clip_name1.\n- node:105.clip_name2: Controls node:105.clip_name2.\n- node:105.type: Controls node:105.type.\n- node:105.device: Controls node:105.device.\n- node:106.vae_name: Controls node:106.vae_name.\n- node:122.seconds: Controls node:122.seconds.\n- node:122.batch_size: Controls node:122.batch_size.\n- node:125.weight_dtype: Controls node:125.weight_dtype.\n- node:78.shift: Controls node:78.shift.\n- node:124.tags: Controls node:124.tags.\n- node:124.lyrics: Controls node:124.lyrics.\n- node:124.seed: Controls node:124.seed.\n- node:124.duration: Controls node:124.duration.\n- node:124.timesignature: Controls node:124.timesignature.\n- node:124.language: Controls node:124.language.\n- node:124.keyscale: Controls node:124.keyscale.\n- node:124.cfg_scale: Controls node:124.cfg_scale.\n- node:3.cfg: Controls node:3.cfg.\n- node:3.sampler_name: Controls node:3.sampler_name.\n- node:3.scheduler: Controls node:3.scheduler.\n- node:59.filename_prefix: Controls node:59.filename_prefix.",
+    "id_map": {
+      "dualcliploader": "1",
+      "emptyacestep1_5latentaudio": "3",
+      "ksampler": "8",
+      "modelsamplingauraflow": "5",
+      "saveaudiomp3": "10",
+      "textencodeacestepaudio1_5": "6",
+      "unetloader": "4",
+      "vaeloader": "2"
+    },
+    "model_assets": [
+      {
+        "name": "qwen_0.6b_ace15.safetensors",
+        "sha256": "fd4590c82153b8ddb67e15a2e7aaa8afa8b83a858c8a9b82a4831063156aa7a7",
+        "size_bytes": 1191588248,
+        "subdir": "text_encoders",
+        "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_0.6b_ace15.safetensors"
+      },
+      {
+        "name": "qwen_4b_ace15.safetensors",
+        "sha256": "ffe5ffb855086c2ab55e467e9859fb01894781020a0376484dd19de166b79873",
+        "size_bytes": 8379154232,
+        "subdir": "text_encoders",
+        "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_4b_ace15.safetensors"
+      },
+      {
+        "name": "ace_1.5_vae.safetensors",
+        "sha256": "6de92e3a862acd287e08b024ac90f0783a8635451b728721a33ff03565bcb2bb",
+        "size_bytes": 337431732,
+        "subdir": "vae",
+        "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/vae/ace_1.5_vae.safetensors"
+      },
+      {
+        "name": "acestep_v1.5_turbo.safetensors",
+        "sha256": "3f6e0797fad420a39bd33979eb6e840e30989e34a3794e843d23b60ec6e422d7",
+        "size_bytes": 4787825604,
+        "subdir": "diffusion_models",
+        "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/diffusion_models/acestep_v1.5_turbo.safetensors"
+      }
+    ],
+    "operation": "authored",
+    "output_mode": "ready_template",
+    "output_prefix": "ace_step_1_5_t2a_song",
+    "provenance": {
+      "operation": "authored",
+      "source_id": "audio/ace_step_1_5_t2a_song",
+      "source_workflow": "ready_templates/sources/official/audio/ace_step_1_5_t2a_song.json"
+    },
+    "python_policy_applied": true,
+    "ready_id": "audio/ace_step_1_5_t2a_song",
+    "ready_template": "audio/ace_step_1_5_t2a_song",
+    "ready_template_path": "/root/astrid/runs/4a9b37aabf924b599e31293e90f41841/out/local-server-workflow/workflow.py",
+    "requirements": {
+      "custom_nodes": [
+        "EmptyAceStep1",
+        "TextEncodeAceStepAudio1"
+      ],
+      "models": [
+        {
+          "name": "qwen_0.6b_ace15.safetensors",
+          "sha256": "fd4590c82153b8ddb67e15a2e7aaa8afa8b83a858c8a9b82a4831063156aa7a7",
+          "size_bytes": 1191588248,
+          "subdir": "text_encoders",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_0.6b_ace15.safetensors"
+        },
+        {
+          "name": "qwen_4b_ace15.safetensors",
+          "sha256": "ffe5ffb855086c2ab55e467e9859fb01894781020a0376484dd19de166b79873",
+          "size_bytes": 8379154232,
+          "subdir": "text_encoders",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/text_encoders/qwen_4b_ace15.safetensors"
+        },
+        {
+          "name": "ace_1.5_vae.safetensors",
+          "sha256": "6de92e3a862acd287e08b024ac90f0783a8635451b728721a33ff03565bcb2bb",
+          "size_bytes": 337431732,
+          "subdir": "vae",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/vae/ace_1.5_vae.safetensors"
+        },
+        {
+          "name": "acestep_v1.5_turbo.safetensors",
+          "sha256": "3f6e0797fad420a39bd33979eb6e840e30989e34a3794e843d23b60ec6e422d7",
+          "size_bytes": 4787825604,
+          "subdir": "diffusion_models",
+          "url": "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/371bb1680f8c88d8c1083f6ffb6330d3d55bff76/split_files/diffusion_models/acestep_v1.5_turbo.safetensors"
+        }
+      ]
+    },
+    "resolver_helper_custody": [],
+    "source_id": "audio/ace_step_1_5_t2a_song",
+    "source_path": "ready_templates/sources/official/audio/ace_step_1_5_t2a_song.json",
+    "source_role": "materialized_ready_python_template",
+    "source_type": "api",
+    "source_workflow": "ready_templates/sources/official/audio/ace_step_1_5_t2a_song.json",
+    "source_workflow_path": "ready_templates/sources/official/audio/ace_step_1_5_t2a_song.json",
+    "unbound_inputs": {},
+    "upstream_source_id": "ace_step_1_5_t2a_song",
+    "vibecomfy_version": "2.8.0",
+    "workflow_template": "ace_step_1_5_t2a_song"
+  },
+  "terminal": {
+    "acceptance_known": true,
+    "phase": "queue",
+    "reason": "Workflow queue failed: Workflow queue failed: HTTP Error 400: Bad Request next action: Check server health, the ComfyUI logs, and whether the workflow payload is accepted by this runtime.; id_map={'dualcliploader': '1', 'vaeloader': '2', 'emptyacestep1_5latentaudio': '3', 'unetloader': '4', 'modelsamplingauraflow': '5', 'textencodeacestepaudio1_5': '6', 'conditioningzeroout': '47', 'ksampler': '8', 'vaedecodeaudio': '123', 'saveaudiomp3': '10'} next action: vibecomfy runtime doctor",
+    "reason_type": "QueueError"
+  }
+}

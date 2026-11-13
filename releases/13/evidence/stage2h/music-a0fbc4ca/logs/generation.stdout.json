@@ -1,0 +1,15 @@
+{
+  "entry": null,
+  "fixes": [],
+  "issues": [
+    {
+      "code": "generation_failed",
+      "details": {},
+      "message": "Workflow queue failed: Workflow queue failed: HTTP Error 400: Bad Request next action: Check server health, the ComfyUI logs, and whether the workflow payload is accepted by this runtime.; id_map={'dualcliploader': '1', 'vaeloader': '2', 'emptyacestep1_5latentaudio': '3', 'unetloader': '4', 'modelsamplingauraflow': '5', 'textencodeacestepaudio1_5': '6', 'conditioningzeroout': '47', 'ksampler': '8', 'vaedecodeaudio': '123', 'saveaudiomp3': '10'}",
+      "severity": "error"
+    }
+  ],
+  "status": "blocked",
+  "target": null,
+  "task_id": null
+}

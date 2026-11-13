@@ -1,0 +1,17 @@
+[32m[INFO][0m got prompt
+[1m[31m[ERROR][0m Failed to validate prompt for output 59:
+[1m[31m[ERROR][0m * (prompt):
+[1m[31m[ERROR][0m   - Required input is missing: quality
+[1m[31m[ERROR][0m * TextEncodeAceStepAudio1.5 124:
+[1m[31m[ERROR][0m   - Required input is missing: bpm
+[1m[31m[ERROR][0m   - Required input is missing: temperature
+[1m[31m[ERROR][0m   - Required input is missing: top_k
+[1m[31m[ERROR][0m   - Required input is missing: min_p
+[1m[31m[ERROR][0m   - Required input is missing: top_p
+[1m[31m[ERROR][0m   - Required input is missing: generate_audio_codes
+[1m[31m[ERROR][0m * KSampler 3:
+[1m[31m[ERROR][0m   - Required input is missing: denoise
+[1m[31m[ERROR][0m * SaveAudioMP3 59:
+[1m[31m[ERROR][0m   - Required input is missing: quality
+[1m[31m[ERROR][0m Output will be ignored
+[1m[33m[WARNING][0m invalid prompt: {'type': 'prompt_outputs_failed_validation', 'message': 'Prompt outputs failed validation', 'details': 'Required input is missing: quality', 'extra_info': {}}

@@ -1,0 +1,112 @@
+Traceback (most recent call last):
+  File "/opt/astrid/lib/python3.12/site-packages/vibecomfy/runtime/execution.py", line 280, in queue_server_prompt
+    queued = await client._post_prompt(api_dict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/backends/vibecomfy_local_server.py", line 35, in _post_prompt
+    return await asyncio.to_thread(self.client.submit_prompt, {"prompt": prompt})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/backends/comfy_target.py", line 268, in submit_prompt
+    result = self._json("/prompt", body, timeout=HTTP_TRANSFER_SECONDS, acknowledge_empty=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/backends/comfy_target.py", line 173, in _json
+    with self._opener(request, timeout=timeout) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/backends/comfy_target.py", line 76, in open_comfy_http
+    return urllib_request.build_opener(*handlers).open(request, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/astrid/lib/python3.12/site-packages/vibecomfy/runtime/run.py", line 749, in run
+    await queue_server_prompt(
+  File "/opt/astrid/lib/python3.12/site-packages/vibecomfy/runtime/execution.py", line 284, in queue_server_prompt
+    raise WorkflowQueueError(
+vibecomfy.errors.WorkflowQueueError: Workflow queue failed: HTTP Error 400: Bad Request next action: Check server health, the ComfyUI logs, and whether the workflow payload is accepted by this runtime.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/cli.py", line 839, in main
+    return _main(argv)
+           ^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/cli.py", line 541, in _main
+    return _job_command(argv)
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/cli.py", line 527, in _job_command
+    result = run_job(parsed.entry, parsed.job, parsed.out, mode=parsed.mode, align=parsed.align)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/local_job.py", line 53, in run_job
+    return _run_job(entry, job, out, mode=mode, align=align)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/local_job.py", line 82, in _run_job
+    return run_prepared_job(entry, inputs, execution, bindings, Path(out), task=task, attempt=attempt,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 227, in run_prepared_job
+    return run_owned_action(
+           ^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 29, in run_owned_action
+    return _run_owned_action(workflow, out, task_identity=task_identity,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 156, in _run_owned_action
+    return run_action._run_and_settle(workflow, out, task_identity=task_identity,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/actions/run/run.py", line 975, in _run_and_settle
+    local.submit(comfy_url, workflow_path)
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/actions/run/run.py", line 725, in submit
+    self.result = self._adapter.workflow(Path(workflow), self._output_root, **self._kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/workflow_route.py", line 58, in workflow
+    result = run_workflow_result_path(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 862, in run_workflow_result_path
+    outputs = run_workflow_path(
+              ^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 805, in run_workflow_path
+    outputs = _run_profile(
+              ^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 724, in _run_profile
+    _LAST_PRODUCTION_RESULT = _run_profile_result(
+                              ^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 685, in _run_profile_result
+    return run_local_server(
+           ^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_server_engine.py", line 503, in run_local_server
+    result = run_sync(
+             ^^^^^^^^^
+  File "/opt/astrid/lib/python3.12/site-packages/vibecomfy/runtime/run.py", line 1094, in run_sync
+    return asyncio.run(run(record, bundle, **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/runtime-data/uv-python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/astrid/lib/python3.12/site-packages/vibecomfy/runtime/run.py", line 763, in run
+    raise wrapped from exc
+vibecomfy.errors.QueueError: Workflow queue failed: Workflow queue failed: HTTP Error 400: Bad Request next action: Check server health, the ComfyUI logs, and whether the workflow payload is accepted by this runtime.; id_map={'dualcliploader': '1', 'vaeloader': '2', 'emptyacestep1_5latentaudio': '3', 'unetloader': '4', 'modelsamplingauraflow': '5', 'textencodeacestepaudio1_5': '6', 'conditioningzeroout': '47', 'ksampler': '8', 'vaedecodeaudio': '123', 'saveaudiomp3': '10'} next action: vibecomfy runtime doctor
