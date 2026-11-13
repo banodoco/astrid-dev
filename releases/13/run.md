@@ -2,21 +2,28 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (03:00 UTC Fri 13 Nov): read this first
+## Now (04:00 UTC Fri 13 Nov): read this first
 
-**Candidate:** `r13/compose` `9e4f2306c`, with VibeComfy `3feccf5c` (placement + music pins + foley) and lifecycle `a67f2fe0` (REST v2).
-- **REST v2 proved live at 02:57:** claim, tts, explicit release, `probe_status=200`, $0.40.
-- **Merged since 02:00:** #607, machines BLE2, v2, rootfix (shard 5 ×79), the cells live pin.
+**Candidate:** `r13/compose` `017651122` (VibeComfy `3feccf5c`, lifecycle `7f0b025e`).
+- **Merged since 03:00:** K1b (evidence on host refusal; one stage label), dp12 (DP-1/DP-2: declarations judged in dry-run).
+- **REST v2 is proved live.**
 
-**CI:** `int/r13-1e94061c` is the head of record, with a 240-minute cap and verbose shards. The next freeze waits for cells' second pin (bslash, lifecycle re-vendor, test shape).
+**Stage 2h live:**
+- **sfx:** past fetch, fails at approval. The V3 combo options are unread.
+- **music:** past integrity, ComfyUI 400. Required inputs are lost at conversion.
+- **edit:** install-identity digest included model lists. Proved offline; fix pending.
+- **Release:** refused for local disk, so the pod was terminated by id (0 pods, $91.83). Ruling: claim refuses when disk is short, plus a narrow fallback release (REVIEW).
 
-**Live:** Stage 2h is running: sfx, music, edit alone, a deliberately failing sfx, then edit again. Balance $93.00.
+**Next:** cells `combo`, engine objinfo-identity, machines T4. Then Stage 2i.
 
-**In flight:**
-- **Engine:** the lease card (T1, T2, T5), throttled during live runs.
-- **Machines:** K1b, M2, T3, T4.
-- **Cells:** bslash, the lifecycle re-vendor, dp12.
-- **Test lane:** finishing 05346e9f, then 1e94061c.
+**CI:** `int/r13-1e94061c` is the head of record. It's running, with a 240-minute cap.
+
+**Owner items for the morning (REVIEW):**
+- the required-update floor of 13;
+- Plan 50 PR astrid-dev#640;
+- the backslash ruling;
+- the test-shape ruling;
+- the release-storage fallback.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
