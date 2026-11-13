@@ -1,0 +1,34 @@
+name: Plan 53 app baseline
+on:
+  push:
+    branches: [work/plan53-20261113]
+    paths: [.github/workflows/plan53-app-baseline.yml]
+permissions:
+  contents: read
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: banodoco/astrid-app
+          ref: 237b28be935af49c23464fa6ca1cf30db67ebaa0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Vision baseline
+        run: npx vitest run --config config/testing/vitest.config.ts src/pages/Home/publicVisionContent.test.ts src/pages/Home/visionHierarchy.test.ts
+      - name: Preserve installed dependencies for isolated local checks
+        if: always()
+        run: tar -czf plan53-node-modules.tar.gz node_modules
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plan53-node-modules
+          path: plan53-node-modules.tar.gz
+          retention-days: 1
+          compression-level: 0
