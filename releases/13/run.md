@@ -11,7 +11,8 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
   - edit: 5m55s.
 - **Released:** $0.85. Census: 0 pods, $89.17.
 - **Done 08:10:** the cells pin (vc6) and ci-finish are merged, and compose `c9636ed41` (plus the test lane's bounded test ids) is frozen as `int/r13-c9636ed4`; c79f3ce0 was cancelled.
-- **Next:** the binding comparison on c9636ed4, M2, then the final five-cell run on a fresh claim at freeze. That run includes an edit source with a subject.
+- **M2 merged 08:25** (compose `be56a08cd`); it goes in the next freeze, with the engine and timeline fixes.
+- **Next:** the binding comparison, then the final five-cell run on a fresh claim at freeze. That run includes an edit source with a subject.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 

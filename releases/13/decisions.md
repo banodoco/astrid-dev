@@ -1449,3 +1449,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Timeline ×134 goes to a second worker, on `r13/tests/timeline-runtime`.
   - Machines and cells rows go from the test lane to those lanes directly.
 - **The binding table** is the one on c9636ed4. 1e94061c predates several fixes: rootfix, installers, pins.
+- **08:25: merged M2** (r13/machines 7dd044700, over c9636ed41) → compose be56a08cd.
+  - **What M2 does:** generate never rents, a job runs only on a claimed machine, and admission needs no claim-time preferences.
+  - **Proof:** the test lane has hosted 5 of the 6 ids passing; `[False-music]` is still open between machines and cells. Machines' own local run on the merge gave 229 passed.
+  - **No new freeze yet.** **Reason:** two heads are running (05c8ab76, c9636ed4). The next freeze carries M2 plus the engine and timeline fixes.
