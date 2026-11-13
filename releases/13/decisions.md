@@ -1434,3 +1434,18 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **08:15, superseded the freeze.** Merged test lane `r13/tests/bounded-node-ids-2` 2cf7d36a1, giving compose c9636ed41, and froze **int/r13-c9636ed4**. I cancelled c79f3ce0's CI (43390129364) and Lanes (43390129244) runs.
   - **Reason:** shard 6 never reported on 1e94061c because pytest stalled printing a 1 MiB parametrize id. The test lane bounded 33 ids, and values and assertions are unchanged. c79f3ce0 lacked that and would stall again.
   - **Running:** 05c8ab76 (near its end) and c9636ed4.
+
+## 08:20 Fri: comparison on 1e94061c (older head) routed
+- **Counts:** the test lane's per-bucket table for int/r13-1e94061c (regression / new-failing / preexisting).
+  - shard 1: 50 / 26 / 96
+  - shard 5: 5 / 74
+  - shard 6: no result; cause fixed in c9636ed4
+  - shard 7: 1 / 143, of which 134 are timeline tests
+  - shard 8: 3 / 0
+  - Lanes 2/4: 0 / 3
+  - Lanes 3/4: 28 / 48
+- **Routing:**
+  - Engine rows (shard 1, the custody-marker ×7, generic_host_activation) go to a new engine worker of mine on `r13/engine/s1-regress`. **Reason:** the engine fork no longer runs, so the rows had no owner.
+  - Timeline ×134 goes to a second worker, on `r13/tests/timeline-runtime`.
+  - Machines and cells rows go from the test lane to those lanes directly.
+- **The binding table** is the one on c9636ed4. 1e94061c predates several fixes: rootfix, installers, pins.
