@@ -1,0 +1,57 @@
+Traceback (most recent call last):
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/cli.py", line 839, in main
+    return _main(argv)
+           ^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/cli.py", line 541, in _main
+    return _job_command(argv)
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/cli.py", line 527, in _job_command
+    result = run_job(parsed.entry, parsed.job, parsed.out, mode=parsed.mode, align=parsed.align)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/local_job.py", line 53, in run_job
+    return _run_job(entry, job, out, mode=mode, align=align)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/core/generation/local_job.py", line 82, in _run_job
+    return run_prepared_job(entry, inputs, execution, bindings, Path(out), task=task, attempt=attempt,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 227, in run_prepared_job
+    return run_owned_action(
+           ^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 29, in run_owned_action
+    return _run_owned_action(workflow, out, task_identity=task_identity,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 156, in _run_owned_action
+    return run_action._run_and_settle(workflow, out, task_identity=task_identity,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/actions/run/run.py", line 975, in _run_and_settle
+    local.submit(comfy_url, workflow_path)
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/actions/run/run.py", line 725, in submit
+    self.result = self._adapter.workflow(Path(workflow), self._output_root, **self._kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/workflow_route.py", line 58, in workflow
+    result = run_workflow_result_path(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 862, in run_workflow_result_path
+    outputs = run_workflow_path(
+              ^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 805, in run_workflow_path
+    outputs = _run_profile(
+              ^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 724, in _run_profile
+    _LAST_PRODUCTION_RESULT = _run_profile_result(
+                              ^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/production_engine.py", line 685, in _run_profile_result
+    return run_local_server(
+           ^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_server_engine.py", line 465, in run_local_server
+    record = _approve_live(bundle, bindings, provider)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-d9ef945bb0b77f62/src/astrid-agent/astrid/packs/vibecomfy/local_server_engine.py", line 218, in _approve_live
+    return bundle.compile(run_inputs=bindings, schema_provider=provider)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/astrid/lib/python3.12/site-packages/vibecomfy/workflow_bundle.py", line 2715, in compile
+    approval_diagnostics = _approval_preconditions(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/astrid/lib/python3.12/site-packages/vibecomfy/workflow_bundle.py", line 2491, in _approval_preconditions
+    raise WorkflowBundleError(
+vibecomfy.workflow_bundle.WorkflowBundleError: model picker value is not advertised by the selected target: HunyuanFoleyModelLoader.foley_checkpoint_name='hunyuanvideo_foley_xl.pth'

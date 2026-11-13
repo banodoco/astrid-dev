@@ -1,0 +1,15 @@
+{
+  "entry": null,
+  "fixes": [],
+  "issues": [
+    {
+      "code": "generation_failed",
+      "details": {},
+      "message": "model picker value is not advertised by the selected target: HunyuanFoleyModelLoader.foley_checkpoint_name='hunyuanvideo_foley_xl.pth'",
+      "severity": "error"
+    }
+  ],
+  "status": "blocked",
+  "target": null,
+  "task_id": null
+}
