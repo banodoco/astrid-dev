@@ -2,28 +2,20 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (04:00 UTC Fri 13 Nov): read this first
+## Now (05:00 UTC Fri 13 Nov): read this first
 
-**Candidate:** `r13/compose` `017651122` (VibeComfy `3feccf5c`, lifecycle `7f0b025e`).
-- **Merged since 03:00:** K1b (evidence on host refusal; one stage label), dp12 (DP-1/DP-2: declarations judged in dry-run).
-- **REST v2 is proved live.**
+**Candidate:** `r13/compose` `c1789e4ba`.
+- **Merged since 04:00:** T3 (cancel reaches the upload); engine objinfo-identity (the edit blocker; install identity no longer covers model lists); the **lease card** (T1, T2, T5: only a typed verdict, the deadline or registration loss ends paid work; late settle fails with the reason); lanes-verbose.
 
-**Stage 2h live:**
-- **sfx:** past fetch, fails at approval. The V3 combo options are unread.
-- **music:** past integrity, ComfyUI 400. Required inputs are lost at conversion.
-- **edit:** install-identity digest included model lists. Proved offline; fix pending.
-- **Release:** refused for local disk, so the pod was terminated by id (0 pods, $91.83). Ruling: claim refuses when disk is short, plus a narrow fallback release (REVIEW).
+**CI:** `int/r13-1e94061c` is running; `int/r13-05c8ab76` is queued.
 
-**Next:** cells `combo`, engine objinfo-identity, machines T4. Then Stage 2i.
+**Waiting on:**
+- **Cells:** `dp12b`, the DP-2 regression. Either dry run matches `_prepare` after the lock fill, or the unpinned entries get pinned. Then the `cells-vc-4` pin (combo: one V1/V3 object_info reader, plus music's eight inputs).
+- **Machines:** T4 (release control slot, storage fallback, silent-Runtime journey row).
+- **Engine:** idle until T4 (busy-slots).
+- **Test lane:** reviewing the lease card's test conversions (W63).
 
-**CI:** `int/r13-1e94061c` is the head of record. It's running, with a 240-minute cap.
-
-**Owner items for the morning (REVIEW):**
-- the required-update floor of 13;
-- Plan 50 PR astrid-dev#640;
-- the backslash ruling;
-- the test-shape ruling;
-- the release-storage fallback.
+**Then Stage 2i live.** Disk is above 5 GB; 0 pods, $91.83.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
