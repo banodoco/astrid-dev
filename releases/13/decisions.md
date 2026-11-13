@@ -1274,3 +1274,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - T4: a control slot that claims only release and status, through `capability_ids` (S, custody: Sol plus an Astra review).
 - **Proof:** the tests named per task, the converted `test_sustained_transport_stops_at_last_acknowledged_expiry`, and a CPU-journey row with the Runtime silent for 40 s and a release admitted mid-silence.
 - **After R13:** T6 (lease sized to the full lifetime, once restart recovery is checked) and the rest, mapped to Plan 50 RB-4.
+
+## 13 Nov ~01:27 UTC: REVIEW (test meaning): a target's advertised model spelling is authority
+
+- **Context:** 7 SDK-target rows (5 backslash, plus the 2 that looked like CFGGuider) fail because VibeComfy `055bb164` validates picker values as filesystem paths (`workflow_bundle.py:2474`) before checking target authority. So a Windows target advertising `FLUX1\ae.safetensors` gets its own value refused.
+- **Ruling:** the target's exactly-advertised value is accepted unchanged.
+  - `test_target_model_approval.py:79` becomes three cases: non-advertised backslash names still fail; advertised ones pass; `..` segments and absolute paths are refused even when advertised.
+  - Authored asset destinations stay path-validated.
+  - Normalising `\` to `/` never rewrites the target's spelling.
+- **Who:** cells, on top of the foley widget-value mapping.
+- **Merged since 01:00:** missing-model-field `06e67da19` and installer-home-isolation `54163c70c`. Compose is `a66574c8a`.
