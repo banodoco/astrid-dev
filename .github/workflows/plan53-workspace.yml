@@ -1,0 +1,35 @@
+name: Plan 53 workspace snapshot
+on:
+  push:
+    branches: [work/plan53-20261113]
+    paths: [.github/workflows/plan53-workspace.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 4f8893b8c14bdb08d6d516a7c5d6c7a09ceb3aac
+          path: astrid-dev
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: banodoco/astrid-app
+          ref: 237b28be935af49c23464fa6ca1cf30db67ebaa0
+          path: astrid-app
+          persist-credentials: false
+      - name: Archive tracked sources only
+        run: |
+          mkdir snapshots
+          git -C astrid-dev archive --format=tar --prefix=astrid-dev/ HEAD | gzip > snapshots/astrid-dev.tar.gz
+          git -C astrid-app archive --format=tar --prefix=astrid-app/ HEAD | gzip > snapshots/astrid-app.tar.gz
+          printf 'astrid-dev %s\nastrid-app %s\n' "$(git -C astrid-dev rev-parse HEAD)" "$(git -C astrid-app rev-parse HEAD)" > snapshots/revisions.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plan53-sources
+          path: snapshots/
+          retention-days: 1
+          compression-level: 0
