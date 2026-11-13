@@ -32,19 +32,19 @@ We want to create the conditions for the community to do more together.
 
 ### [Local-first, cloud-capable](principles/local-first-cloud-capable.md)
 
-Everything should be designed to run fully locally, and cheaply and conveniently in the cloud.
+Run fully locally, or cheaply and conveniently in the cloud.
 
 ### [Completely open by design](principles/open-by-design.md)
 
-We want to open not just our code, but our knowledge, ideas, and even our ownership.
+We aim to share our code, knowledge, ideas and ownership.
 
 ### [In the creator's control](principles/in-the-creators-control.md)
 
-Creators should have final say over every part of their creative environments.
+Creators have the final say over their creative environments.
 
 ### [Eliminate technical wrangling](principles/eliminate-needless-technical-wrangling.md)
 
-Technical wrangling should be work for your agents, not work that interrupts your art.
+Your agents handle technical work so you can focus on art.
 
 ## Gaps — 22 assessed outcomes
 
