@@ -1309,3 +1309,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Release was `ended: explicit`, costing $0.40; the census shows 0 pods, $93.00.
   - Two earlier attempts were refused at install, correctly: the manifest's lifecycle and VibeComfy pins were stale. One `setup` was refused with `insufficient_storage` because local disk was at 880 MB. No pod was rented in any of them.
 - **Merged:** rootfix `69021055b` (the shard 5 set of 79) and the cells live pin `e109c593b` (VibeComfy `3feccf5c`: placement + music pins + foley). Compose is `9e4f2306c`.
+- **03:05, the VibeComfy lifecycle re-vendor (a67f2fe0):** VibeComfy's `uv.lock` can't resolve `[comfy]` + `[runpod-launch]` on Intel macOS. runpod 1.10.x there needs `requests>=2.34.2`; comfyui 0.43.0.2 needs `requests<2.34`.
+  - **Ruling:** R13 does **not** wait for it. The Astrid host installs VibeComfy with `--no-deps` plus pins, and Astrid's provider path is on a67f2fe0 (v2, proved live). The old wheel only affects VibeComfy's standalone `runpod` and `prepare` commands. `r13/lifecycle-v2` stays parked.
+  - **Machines** checks whether lifecycle's Intel-mac pin can be relaxed. If it can tonight, a third pin follows; if not, after R13.
+  - **REVIEW (owner):** option (a), declaring Intel macOS unsupported for VibeComfy's lock, is a platform-support decision. Not taken.
+- **03:05:** bslash is done (`r13/target-authority`). The second VibeComfy pin, `cells-vc-3` `db5eae89`, is in proof.
