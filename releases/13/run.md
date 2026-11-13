@@ -2,19 +2,29 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (01:00 UTC Fri 13 Nov): read this first
+## Now (02:00 UTC Fri 13 Nov): read this first
 
-**Candidate:** `r13/compose` `ec036e6a3`. Merged since 23:55: K1, the boundary fix (`43a99540e`), the L4 logspool, the H3 overlay restore, the Windows fcntl fix, the preflight test rename, failreason and fetch-stack. compose.sh now refuses duplicate test basenames and any growth in the boundary ratchet.
+**Candidate and CI:** the candidate is `r13/compose` `1e94061c8`, which is also the CI head of record (`int/r13-1e94061c`).
+- **Shards:** printed verbose, with a 240-minute cap, so shards 1 and 6 can finish and name their slow tests.
+- **Merged since 01:00:**
+  - the VibeComfy pin `cda37a7e` (placement), with cells' test fixes;
+  - pymembers (U2 staging regressions, f06, overrun diagnostic, recipe field names, neutrality);
+  - zipdet (resume identity);
+  - the H3 overlay, installer isolation and missing-model-field test fixes;
+  - winfcntl and shard-verbose.
 
-**CI:** `int/r13-05346e9f` running (one running at a time). **Live:** t2i and tts pass. sfx needs foley; music needs the dp3 pins. Edit alone was lost to a host lease timeout under container load, and its release queued behind the dead job (pod terminated by id; 0 pods, $93.44).
+**Live:** waiting on cells' next VibeComfy pin (foley + dp3 music pins + bslash). Then sfx, music and edit run twice. 0 pods, $93.44.
 
 **In flight:**
-- **Engine:** #607's last card; then the pymembers regression; then the lease card (T1, T2, T5).
-- **Machines:** v2 fix round (~02:30); M2 confirmation; K1b; BLE001 cleanup; T3 (cancel); then T4 (control slot).
-- **Cells:** placement pin cda37a7e, foley, dp1–3, cfgguider, atfix. Woken at 00:59 after it went idle.
-- **Test lane:** the comparison on 05346e9f.
+- **Engine:** #607, then the lease card (T1, T2, T5).
+- **Machines:** M2 (~02:30), v2 fix round (~02:30), BLE001 cleanup, T3, K1b, then T4.
+- **Cells:** foley, bslash, dp12 (dry-run declarations), the next pin.
+- **Test lane:** finishing 05346e9f, then the comparison on 1e94061c.
 
-**Scope:** machines = M1 + K1 + M2 + v2; the LT wiring is out. **Authority:** the owner delegated every decision overnight (00:42).
+**Owner items for the morning:**
+- the required-update floor of 13 (REVIEW);
+- Plan 50 PR astrid-dev#640;
+- the backslash test-meaning ruling.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
