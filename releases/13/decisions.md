@@ -1380,3 +1380,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Merge stop:** from Fri 18:00, only fixes on the path to five cells, or to a clean comparison against R12, are merged.
 - **The war:** if a cell fails on a fourth new cause after 2i, stop peeling. Diff against its first working configuration (t2i passed on Stage 1 `f9214240`).
 - **For the owner:** the partial-cells fallback (publish with the passing cells; the rest marked unavailable, with a reason) is her call at Fri 18:00. The advisor will tell her.
+
+## 13 Nov ~06:40 UTC: Stage 2i: sfx and music PASS live; music defaults
+
+- **LIVE on stage `941449eaf`** (compose c1789e4ba + VibeComfy cells-vc-4 `f3bb6f27`), pod `f4ahhqg0arqslp`:
+  - **sfx PASS:** 23m 48s, a 5.0 s FLAC, mean −13.6 dB. The first sfx pass this release.
+  - **music PASS:** 6m 22s, an MP3, mean −14 dB. The first music pass.
+  - **Tally:** t2i, tts, sfx and music are green on the claim path; edit is running.
+- **Merged:** dp12b `8b4618389` and the cells-vc-5 pin `d1b779db1`. The z-image and qwen-edit records were genuinely missing; DP-2 was right. Compose is `785df62b2` (VibeComfy 8895eb00).
+- **REVIEW (user-visible):** the music template's source carries smoke-test values (duration 2 s, steps 1, filename `vibecomfy_ace_step_smoke`), and it exposes only `seed`.
+  - **Ruling:** fix it now. Expose prompt, lyrics, duration and seed; defaults 30 s, steps per the model card, `audio/ace_step_song`; no separate smoke preset.
+  - Rerun music live with the defaults on the same pod.
