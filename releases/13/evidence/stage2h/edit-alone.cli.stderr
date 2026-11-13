@@ -1,0 +1,10 @@
+[0s] queued  waiting=-
+[1s] running  waiting=-
+Still following RunPod task 23949ab4205d4ba29f476a33ef843f5f: [1m 0s] running  waiting=-
+Still following RunPod task 23949ab4205d4ba29f476a33ef843f5f: [2m 0s] running  waiting=-
+Still following RunPod task 23949ab4205d4ba29f476a33ef843f5f: [3m 0s] running  waiting=-
+Still following RunPod task 23949ab4205d4ba29f476a33ef843f5f: [4m 0s] running  waiting=-
+[4m 35s] failed  waiting=-
+execution lease lost
+code: task_failed
+state snapshot: {"readiness": {"entry": null, "fixes": [], "issues": [{"code": "task_failed", "details": {"result": {"error": {"code": "lease_lost", "diagnostic": {"category": "task_read_exception", "exception_type": "ApiError", "last_successful_heartbeat_at_utc": "2026-11-13T00:29:58.694537+00:00", "last_successful_heartbeat_expiry": "2026-11-13T00:30:28.692+00:00", "observed": {"attempt_id": "7c133306d45d4d1fb6bf060e98385e37", "fence": "1", "lease_expires_at": "2026-11-13T00:30:28.692+00:00", "state": "running"}, "observed_at_utc": "2026-11-13T00:30:25.787587+00:00", "request_id": "request-1ee31f853cc3416a80f18e56c21f5c1e", "runtime_code": "transport_timeout", "schema_version": 1}, "field": null, "fix": "", "message": "execution lease lost", "retryable": false}}, "sdk_category": "runtime", "sdk_error": "CapabilityRuntimeError", "state": "failed"}, "message": "execution lease lost", "severity": "error"}], "status": "blocked", "target": null}}

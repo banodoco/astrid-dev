@@ -1217,3 +1217,23 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Codex limit fallback:** Sonnet workers at once, in every lane.
 - **Dry-pod:** DP-1 to DP-3 only; no further review.
 - **Hands-on share:** accepted. Test edits go to the test lane and engine briefs to the engine manager.
+
+## 13 Nov ~00:40 UTC: edit alone failed differently; release stuck behind a dead job; the next-job dive
+
+- **Edit alone** (fresh claim `6foeue5emvt370`, `bb0ae49da`): failed after 4m 35s with `lease_lost`. The CLI's task read hit `runtime_code: transport_timeout` and the 30 s lease expired.
+  - At the time, this container's load was 4.3 on 4 CPUs: the Astra dive and the engine pytest were running beside the live run. That's my fault.
+  - **Rule:** no heavy local work in the orchestrator's container during a live run.
+  - **Bug, product:** one transport timeout loses a paid job's lease.
+- **Release stuck:** `machines release` sat "queued" for more than 3 minutes behind the lease-lost edit task on the same machine.
+  - I terminated the pod by exact id: v1 `DELETE /pods/6foeue5emvt370` returned 204, and the census shows 0 pods, $93.53.
+  - **Bug, custody:** a release must never queue behind a job, least of all a dead one.
+- **Astra's next-job dive** (`evidence/stage2h/astra-next-job-dive.md`): my "stale after music" theory is **incomplete**.
+  - Edit did re-prepare (68 s), but then `_canonical_installed` returned false (`machine.py:1009`). That can mean status unavailable, not installed, or verification out of time (`remote_placement.py:773`), and no observation was kept.
+  - **Music → edit causation is unproved.** It may be coincidence.
+  - K1 still requires `prepared` (`K/machine.py:1055`); it adds reasons and a verification bound, but isn't shown to fix this.
+  - Also found: failure logs are fetched only for nonzero pod exits (`machine.py:874`), so host-side rejections keep no logs; and the stage label is inconsistent.
+- **Next:**
+  - Merge K1, whose reasons will name which branch failed.
+  - Re-run edit alone on an idle container.
+  - Machines: K1b (keep the verification observation and logs on a host-side rejection; release ahead of the job queue).
+  - Engine: lease survives a transport timeout.
