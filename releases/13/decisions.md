@@ -1185,3 +1185,19 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Close only the 13 whose heads are already in `main`.
   - Keep the rest open with a deferral note.
   - The auto-mode classifier refused the GitHub writes, so they wait on the owner's explicit go for these exact actions.
+
+## 13 Nov ~00:15 UTC: dry-pod plan in; music cause corrected
+
+- **Plan:** `briefs/dry-pod-plan.md`. Fable lead, Codex read-only exploration, one Astra review: rejected as first drafted, then revised; no second review.
+- **Correction to my 23:55 entry:** music was **not** two repositories with different bytes.
+  - `comfyui_engine.py:145-173` joins the template to the lock on (destination, revision-from-URL). The template's URL says `main`, so the four rows kept `sha256=None`.
+  - `_verify_models` (`managed_preparation.py:505-517`) then reported a null declaration as "bytes differ".
+  - Hugging Face metadata shows the same digest and size at `main` and at the lock's revision.
+  - So the cause is a missing declaration, plus a misleading message.
+- **SFX** fails only on the pod because the pod renders as `ready_template` (`managed_preparation.py:415`), while the host uses the scratchpad renderer (`sdk/generation.py:1771`).
+- **R13 slice, to cells:**
+  - DP-1: one `judge_declarations` helper, used by `_prepare` and by dry-run, with separate "no declared digest" and "bytes differ" messages.
+  - DP-2: dry-run calls it and blocks on a fault, so the existing preflight `catalog` check goes red for tonight's two causes.
+  - DP-3: pin the music template's four records.
+- **After R13:** DP-4 to DP-9 (source metadata, declare-once with a generated lock, head-only fetch with a `dry` mode, the CPU engine stop, validation without queueing, the hosted CPU job), in place of Plan 50's CPU-engine follow-up.
+- **Coverage:** of the 8 live failures, the R13 slice plus existing checks catches 5, stops B and C catch 2 more (one only partly), and none catches the provider permission. The five-cell GPU run stays.
