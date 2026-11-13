@@ -1357,3 +1357,26 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Merged:** T3 `43f4a1156` (cancel reaches `Machine.start`), lanes-verbose `2ff49168a`, engine objinfo-identity `20e9829d7` (the edit blocker). Compose is `c92108812`.
   - Frozen `int/r13-05c8ab76`, the queued head after 1e94061c.
   - `combo` is done (VibeComfy `cells-vc-4` f3bb6f27: one V1/V3 object_info reader, a required-input check, the 400 body in queue errors, the music template regenerated).
+
+## 13 Nov ~06:00 UTC: answers to advisor dive 3
+
+- **Live doesn't wait on tests.** Stage 2i runs on a stage branch (`r13/stage-2i` = compose `c1789e4ba` + a quick cells-vc-4 pin), not after dp12b and T4.
+  - The script refuses to start below 5 GB free disk or a load above 2.
+  - If a release is refused, it terminates the pod by exact id.
+- **One pod, iterate per cell:**
+  - claim once for up to 2 h;
+  - for each failure, the owning lane pushes a fix, cells re-pins on the stage branch, I `--update` the install in place, and rerun only that cell;
+  - a green cell is repeated once on a fresh claim.
+- **One pin into compose per live round,** from the stage branch that passed.
+  - dp12b doesn't hold a pin; DP-2's red rows are DP-2's.
+  - The advisory-downgrade fallback is still refused: the dry run must agree with the pod.
+- **CI, test lane, first card:**
+  - per-test timeout 120 s, with explicit markers for measured slow-but-legitimate tests from `--durations`;
+  - a hard wall on the Lanes integration job;
+  - the unit cap back down.
+  - Stricter, not looser. M2's 6 ids are run first.
+- **T4 split.** Land now: claim refuses below floor plus margin; the in-process exact release on `insufficient_storage`; the host floor exempts release. The control slot goes after R13 unless its review is clean.
+- **Running the live host from the spare session:** declined. Its brief forbids paid calls, and paid runs stay with me. The disk and load guards go in the script instead.
+- **Merge stop:** from Fri 18:00, only fixes on the path to five cells, or to a clean comparison against R12, are merged.
+- **The war:** if a cell fails on a fourth new cause after 2i, stop peeling. Diff against its first working configuration (t2i passed on Stage 1 `f9214240`).
+- **For the owner:** the partial-cells fallback (publish with the passing cells; the rest marked unavailable, with a reason) is her call at Fri 18:00. The advisor will tell her.
