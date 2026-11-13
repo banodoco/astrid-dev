@@ -1391,3 +1391,15 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **REVIEW (user-visible):** the music template's source carries smoke-test values (duration 2 s, steps 1, filename `vibecomfy_ace_step_smoke`), and it exposes only `seed`.
   - **Ruling:** fix it now. Expose prompt, lyrics, duration and seed; defaults 30 s, steps per the model card, `audio/ace_step_song`; no separate smoke preset.
   - Rerun music live with the defaults on the same pod.
+- **06:47, LIVE: edit PASS** on stage `941449eaf`, same pod, after sfx and music had downloaded their models. That proves the objinfo-identity fix live. 6m 20s; a 1280×704 PNG ("change the background to a clear blue sky" on the all-black source gave a sky gradient).
+  - **All five cells have now passed live on the claim-then-generate path:** t2i and tts (Stage 2f; tts again on v2), plus sfx, music and edit (Stage 2i).
+  - **Running now, same pod:** a deliberately failing sfx, then edit (recovery), tts and t2i, so all five pass on one build.
+  - **Then:** music again with the new defaults, then a repeat on a fresh claim at freeze.
+  - For the final run, the edit source becomes an image with a subject, so preservation is visible.
+- **Merged:** the machines low-disk card `23ed942aa`:
+  - claim refuses below the floor plus 64 MiB;
+  - the authenticated in-process exact release, only on `insufficient_storage`;
+  - host-floor exemption for release and status;
+  - auto-release proven below the floor; 19 new tests.
+
+  Compose is `175102ea1`.
