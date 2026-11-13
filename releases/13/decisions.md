@@ -1414,3 +1414,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Census:** 0 pods, $89.95.
 - **Round 3, on music-defaults stage `3b3403d46` (VibeComfy e240beec):** an in-place update, then a fresh claim, then music with defaults (30 s), then t2i and edit again. That's the fresh-claim repeat for those two.
 - **M2:** lands once the test lane confirms 5 of the 6 ids hosted. `[False-music]` fails on compose already, so it doesn't hold M2; fix it today. Rerun it with the music-defaults pin first; if it still fails, the job_inputs archive must accept declared defaults (machines).
+
+## 08:00 Fri: round 3 green; pin music-defaults
+- **Ruling:** round 3 on stage `3b3403d46` passed music (30.0 s, real audio), t2i and edit on a fresh install and claim. That is the fresh-claim repeat for those three. Cells pins VibeComfy e240beec into r13/compose, the one pin from this live round. **Reason:** the stage branch that passed is what goes in, per the pin rule.
+- **Released** pod bs3o9u5rha4wqz ($0.85). Census: 0 pods, $89.17.
+- **Lanes** are all idle and review-ready, with nothing stalled:
+  - the test lane is running the audio ids and the comparison triage;
+  - machines is waiting for the test lane before M2;
+  - the advisor's next dive is 11:30.

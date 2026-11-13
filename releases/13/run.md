@@ -2,12 +2,15 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (07:00 UTC Fri 13 Nov): read this first
+## Now (08:00 UTC Fri 13 Nov): read this first
 
-**All five cells have passed live on the claim-then-generate path.** t2i and tts in Stage 2f (tts again on v2); sfx, music and edit in Stage 2i, on stage `941449eaf`.
-
-**Round 2 is running on the same pod** (`f4ahhqg0arqslp`): a deliberately failing sfx (failed in execution; the machine stayed `prepared`), then edit, tts and t2i.
-- **Next:** music with the new defaults (cells `musicdef`, a 30 s song, public prompt, lyrics, duration and seed). Then release, and a repeat on a fresh claim at freeze.
+**All five cells have passed live on the claim-then-generate path, and the repeat on a fresh claim is green.**
+- **Round 3** was a fresh install of music-defaults stage `3b3403d46` (VibeComfy e240beec), then a fresh claim on a 5090:
+  - music, with defaults: 15m49s, a 30.0 s MP3, mean −15.2 dB;
+  - t2i: 6m45s;
+  - edit: 5m55s.
+- **Released:** $0.85. Census: 0 pods, $89.17.
+- **Next:** cells pins e240beec into compose, and I merge it. Then CI freeze and the binding comparison, then the final five-cell run on a fresh claim at freeze. That run includes an edit source with a subject.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
