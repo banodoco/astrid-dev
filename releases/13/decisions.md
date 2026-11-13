@@ -1301,3 +1301,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **REST v2** `fd61b42cf`, with lifecycle pinned at `a67f2fe0`.
 
   Compose is `0106598bb`. The live v2 proof (claim, tts, exact release) is running.
+- **02:57, LIVE: REST v2 proved** on compose `0106598bb` (lifecycle `a67f2fe0`):
+  - `machines setup` OK; v2 `GET /v2/network-volumes` returned 200.
+  - The claim on 5090 `b4mw48ywa1y420` worked at the first try.
+  - The tts job succeeded in 13m 26s on a fresh pod.
+  - The watchdog's `probe_status=200`.
+  - Release was `ended: explicit`, costing $0.40; the census shows 0 pods, $93.00.
+  - Two earlier attempts were refused at install, correctly: the manifest's lifecycle and VibeComfy pins were stale. One `setup` was refused with `insufficient_storage` because local disk was at 880 MB. No pod was rented in any of them.
+- **Merged:** rootfix `69021055b` (the shard 5 set of 79) and the cells live pin `e109c593b` (VibeComfy `3feccf5c`: placement + music pins + foley). Compose is `9e4f2306c`.
