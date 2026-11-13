@@ -14,6 +14,24 @@ FIXTURE_FILES = Path(__file__).parent / "fixtures" / "vision"
 
 
 class PublicVisionProjectionTests(unittest.TestCase):
+
+    def test_every_gap_resolves_to_an_aspiration_and_preserves_element_projection(self):
+        page = self.page
+        known = {f"{kind}:{subject['id']}/{item['id']}": item
+                 for kind, subjects in (("pillar", page["pillars"]), ("principle", page["principles"]))
+                 for subject in subjects for item in subject["characteristics"]}
+        self.assertEqual(len(known), 31)
+        self.assertEqual(len(page["gaps"]), 22)
+        for gap in page["gaps"]:
+            refs = [gap["aspiration"], *gap["supportingAspirations"]]
+            self.assertTrue(all(ref in known for ref in refs), gap["id"])
+            self.assertEqual(gap["primaryAppliesTo"], gap["aspiration"].split("/")[0])
+            self.assertEqual(gap["appliesTo"], list(dict.fromkeys(ref.split("/")[0] for ref in refs)))
+        packs = known["pillar:liquid-software/packs-are-live-portable-and-extensible"]
+        self.assertIn("**We should:**", packs["detailsMarkdown"])
+        self.assertIn("**We should never:**", packs["detailsMarkdown"])
+
+
     @classmethod
     def setUpClass(cls):
         cls._fixture_temp = tempfile.TemporaryDirectory()
@@ -129,7 +147,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertTrue(all(20 <= len(p["explanationMarkdown"].split()) <= 105
                             for p in principles))
         self.assertTrue(all(2 <= len(p["characteristics"]) <= 6 for p in principles))
-        self.assertTrue(all("## Characteristics" in p["bodyMarkdown"] for p in principles))
+        self.assertTrue(all("## Aspirations" in p["bodyMarkdown"] for p in principles))
 
     def test_liquid_software_reframes_creative_friction_without_losing_core_constraints(self):
         liquid = self.page["pillars"][1]
@@ -191,7 +209,9 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertEqual(len(gaps), 22)
         self.assertIn("CA-003", gaps)
         self.assertEqual(gaps["CA-003"]["primaryAppliesTo"], "principle:open-by-design")
-        self.assertIn("pillar:shared-endeavour", gaps["CA-003"]["appliesTo"])
+        self.assertEqual(gaps["CA-003"]["appliesTo"], ["principle:open-by-design"])
+        self.assertEqual(gaps["CA-003"]["supportingAspirations"], [])
+        self.assertEqual(gaps["CA-004"]["primaryAppliesTo"], "principle:open-by-design")
         self.assertEqual(gaps["CA-003"]["assessment"], "partially evidenced")
         self.assertIn("at least three substantive", gaps["CA-003"]["closureEvidenceMarkdown"])
 

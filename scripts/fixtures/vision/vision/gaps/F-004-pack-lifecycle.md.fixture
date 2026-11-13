@@ -1,10 +1,10 @@
 # F-004 — Pack installation and upgrades aren't yet proven under demanding conditions
 
-**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [Open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open / partial current mechanisms (2026-11-06).
+**Aspiration:** [Packs are live, portable and extensible](../pillars/liquid-software.md#packs-are-live-portable-and-extensible) (primary) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · **Assessment:** Open / partial current mechanisms (2026-11-06).
 
 ## Desired state
 
-Artists and agents can discover, install, enable, use, update, disable and safely roll back supported creative packs and their frontend/backend contributions. Compatibility, source identity, trust, ownership and project reference continuity remain understandable and reliable.
+Demanding packs that meet the [live, portable extension contract](../pillars/liquid-software.md#packs-are-live-portable-and-extensible) can be installed, enabled, used, updated, disabled and safely rolled back with their frontend and backend contributions intact. Compatibility, source identity, trust, ownership and project-reference continuity remain understandable and reliable through failures and recovery.
 
 ## Current state
 

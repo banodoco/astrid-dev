@@ -8,7 +8,7 @@ Tools should adapt to creative work as people and agents create together.
 
 “We shape our tools, and thereafter our tools shape us” is a philosophy we should leave in the twentieth century. Astrid is a shared foundation for open, composable creative tools. Their composition and functionality should be adjustable in real time, while people and agents are working. Removing the friction of reshaping software is essential to expanding what we can create, individually and together.
 
-## Characteristics
+## Aspirations
 
 ### A small, dependable foundation
 
@@ -39,6 +39,27 @@ A pack can provide agent actions and human-facing interfaces around the same tim
 A good ready-made tool should remain useful without requiring its creator to customize it.
 
 Creators can work with a considered default composition or adapt every layer as needed. Existing components should be reused before inventing another framework; 2D workspaces and spatial experiences should share primitives without making either mandatory.
+
+### Packs are live, portable and extensible
+
+A pack should be something you can change while you are using it and take anywhere Astrid runs.
+
+A pack is a living part of the workspace, not a separate development project that interrupts making art. People and agents can find, adapt and combine its capabilities while they work. One extension contract connects the interface and Python backend, so a useful contribution can be shared, installed and extended without becoming tied to its author's setup.
+
+**We should:**
+
+- Render a pack's changes in the running app at once, including the web app.
+- Let a creator or agent vibe-code a pack while working in it.
+- Make one pack run unchanged on any install.
+- Let a pack extend another pack from inside it.
+- Give one defined way to build an extension that covers the front end and the Python back end together.
+
+**We should never:**
+
+- Require a rebuild or restart to see a pack change.
+- Tie a pack to one machine or one install.
+- Add a second way to write an extension for one side only.
+- Build a feature that only works because it bypasses the pack contract.
 
 ## References
 

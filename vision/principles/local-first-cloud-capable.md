@@ -8,7 +8,7 @@ Everything should be designed to run fully locally, and cheaply and conveniently
 
 Astrid should be built so that creative work can happen entirely on your machine, even offline, with your projects and files under your control. The same work should be convenient and inexpensive to run in the cloud when helpful. People and their agents should choose where work happens, what is shared, and what it costs.
 
-## Characteristics
+## Aspirations
 
 ### Local work as the default
 
@@ -16,11 +16,23 @@ Creators should be able to make and preserve work on their own computers.
 
 The local project should remain authoritative when the creator chooses a local-first workflow. They can inspect, reopen, revise, and retain the underlying files without depending on a permanent cloud connection.
 
-### Optional cloud capabilities
+### Everything local or cloud, by choice
 
-Remote computation should extend local work without quietly taking it over.
+Everything should be able to run locally, and nothing should have to.
 
-Creators and their agents can explicitly select hosted models, remote agents, or rendering services when those are useful. Results should return to the correct project, with clear data boundaries.
+Local capability gives creators custody without making ownership of a particular computer a condition of participation. A creator can choose a fully local workspace, selected remote capabilities or a fully hosted workspace. That choice remains explicit and reversible, with work able to return to the creator's own machine rather than becoming trapped in a service.
+
+**We should:**
+
+- Make every capability work fully on the creator's own machine.
+- Let a creator run the whole workspace in the cloud if they choose.
+- Let work move back into the creator's custody.
+
+**We should never:**
+
+- Ship a capability that only works in the cloud.
+- Require a local machine to use Astrid.
+- Move work to the cloud without the creator choosing it.
 
 ### Clear boundaries and costs
 

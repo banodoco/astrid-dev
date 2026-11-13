@@ -16,6 +16,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Words follow the [glossary](
 | Running Codex from a Claude session: workers are the default; a Codex manager's check-in | [orchestrate skill](../astrid-dev-orchestrate/SKILL.md#use-codex-from-claude-cloud) | judgment |
 | Reading CI results, getting them complete, using GitHub Actions for tests | [green skill](../astrid-dev-green/SKILL.md) | judgment |
 | Installing skills for Codex | the guide for that environment: [Claude cloud](../astrid-dev-orchestrate/codex-in-claude-cloud/README.md) or [Codex cloud](../astrid-dev-orchestrate/codex-cloud/README.md) | judgment |
+| Vision wording: an element, an aspiration, its lists | [contribution workflow](../../docs/contribution-workflow.md#write-or-improve-documentation) | `subjects`, owner review |
 | A term | [glossary](../astrid-dev-shared/glossary.md) | judgment |
 | A record of decisions | the glossary names three: a manager's [decision log](../astrid-dev-manage/SKILL.md#decide), the [decisions ledger](../astrid-dev-shared/run-contract.md#decisions-ledger-when-the-owner-is-unavailable), `inputs.md` Owner decisions | judgment |
 | A pack's shape; what a card holds | the [plan](../../templates/project/plan.md), [inputs](../../templates/project/inputs.md) and [tasks](../../templates/project/tasks.md) templates | `pack-shape` |

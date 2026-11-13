@@ -8,7 +8,7 @@ What anyone learns should become something everyone can build on.
 
 We want every meaningful creative and technical discovery to strengthen future work. When knowledge is shared, an agent should be able to find relevant past experience, test it against the present task, use it to make progress, and share what it learns for others to build on. That knowledge should compound across creators and communities without taking ownership or judgment away from them.
 
-## Characteristics
+## Aspirations
 
 ### An ecosystem of wisdom grounded in real work
 

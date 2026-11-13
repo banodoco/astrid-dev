@@ -118,7 +118,7 @@ class RegisteredRuleTests(unittest.TestCase):
                 "| First image | Build a flow | active | Owner | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n")
             gap = root / "vision/gaps/F-005-local-files-cloud-assist.md"
             gap.parent.mkdir(parents=True, exist_ok=True)
-            gap_text = ORIGINAL.replace("[Local-first](../principles/local-first-cloud-capable.md)", "[Local-first](../principles/local-first-cloud-capable.md) (primary)")
+            gap_text = ORIGINAL.replace("**Applies to:** [Local-first](../principles/local-first-cloud-capable.md)", "**Aspiration:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary)")
             gap.write_text(gap_text)
             git("add", ".")
             git("commit", "-qm", "base")
@@ -135,11 +135,11 @@ class RegisteredRuleTests(unittest.TestCase):
                 with self.subTest(expected=expected):
                     self.assertEqual(code, 1, output)
                     self.assertIn(expected, output)
-            malformed = ORIGINAL.replace("An outcome is not yet available", "A changed outcome")
+            malformed = gap_text.replace(" (primary)", "")
             gap.write_text(malformed)
             code, output = invoke(["check", "--base", base, "--body-file", str(body)], root=root)
             self.assertEqual(code, 1, output)
-            self.assertRegex(output, r"ERROR [^:]+: gap boundary gate: invalid gap relationship or role:")
+            self.assertRegex(output, r"ERROR [^:]+: gap boundary gate: invalid gap aspiration or role:")
 
 
 class ProjectCatalogContractTests(unittest.TestCase):

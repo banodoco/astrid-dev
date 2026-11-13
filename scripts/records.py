@@ -43,6 +43,21 @@ def heading(text: str, prefix: str = "# ", *, missing: str = "error") -> str | N
     raise ValueError(f"unknown missing-heading policy: {missing}")
 
 
+def markdown_heading_anchors(text: str) -> list[tuple[int, str, str]]:
+    """Return heading level, title and GitHub anchor, preserving duplicate suffixes."""
+    fence = r"(?ms)^\s*```.*?^\s*```[^\n]*$"
+    seen: dict[str, int] = {}
+    found = []
+    for match in re.finditer(r"(?m)^ {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", re.sub(fence, "", text)):
+        title = match.group(2)
+        label = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
+        slug = "".join(c for c in label if c.isalnum() or c in " -_").replace(" ", "-")
+        seen[slug] = seen.get(slug, -1) + 1
+        anchor = slug if seen[slug] == 0 else f"{slug}-{seen[slug]}"
+        found.append((len(match.group(1)), title, anchor))
+    return found
+
+
 def heading_present(text: str, pattern: str | Pattern[str], *, flags: int = re.M) -> bool:
     return _search(pattern, text, flags) is not None
 

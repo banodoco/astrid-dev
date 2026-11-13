@@ -1,6 +1,6 @@
 # CA-003 — Our vision and execution aren't yet fully connected
 
-**Applies to:** [Completely open by design](../principles/open-by-design.md) (primary) · [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (supporting) · **Assessment:** Partially evidenced (2026-11-09; public vision, gaps and project summaries exist, but their relationship to experiments and execution has not been demonstrated end to end).
+**Aspiration:** [Open decisions and working knowledge](../principles/open-by-design.md#open-decisions-and-working-knowledge) (primary) · **Assessment:** Partially evidenced (2026-11-09; public vision, gaps and project summaries exist, but their relationship to experiments and execution has not been demonstrated end to end).
 
 ## Desired state
 

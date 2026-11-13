@@ -1,6 +1,6 @@
 # LS-004 — A creative ecosystem across modalities isn't yet established
 
-**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (supporting) · [Open by design](../principles/open-by-design.md) (supporting) · **Assessment:** Open; vision and draft-plan assessment (2026-11-07), not a qualification of current product coverage.
+**Aspiration:** [A small, dependable foundation](../pillars/liquid-software.md#a-small-dependable-foundation) (primary) · [Artistic agency](../pillars/artistic-ambition.md#artistic-agency) (supporting) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · **Assessment:** Open; vision and draft-plan assessment (2026-11-07), not a qualification of current product coverage.
 
 ## Desired state
 

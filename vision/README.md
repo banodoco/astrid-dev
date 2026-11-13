@@ -10,7 +10,7 @@ Astrid aims to help individuals and the community as a whole pursue artistic wor
 
 ## Four pillars
 
-Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable characteristics.
+Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable aspirations.
 
 ### [A Tool for Artistic Ambition](pillars/artistic-ambition.md)
 

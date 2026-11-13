@@ -1,6 +1,6 @@
 # AA-001 — Astrid hasn't yet proven it can sustain ambitious work end to end
 
-**Applies to:** [A Tool for Artistic Ambition](../pillars/artistic-ambition.md) (primary) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open, initial source assessment (2026-11-06); not a live product qualification.
+**Aspiration:** [Finished artistic work](../pillars/artistic-ambition.md#finished-artistic-work) (primary) · [Approachable, reversible choices](../principles/in-the-creators-control.md#approachable-reversible-choices) (supporting) · **Assessment:** Open, initial source assessment (2026-11-06); not a live product qualification.
 
 ## Desired state
 
