@@ -1314,3 +1314,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Machines** checks whether lifecycle's Intel-mac pin can be relaxed. If it can tonight, a third pin follows; if not, after R13.
   - **REVIEW (owner):** option (a), declaring Intel macOS unsupported for VibeComfy's lock, is a platform-support decision. Not taken.
 - **03:05:** bslash is done (`r13/target-authority`). The second VibeComfy pin, `cells-vc-3` `db5eae89`, is in proof.
+- **03:10, lease T2:** the pinned Runtime (42ae24a) honours `lease_seconds` on heartbeat, but its published contract (`Heartbeat`, `additionalProperties: false`) and the generated client don't declare it.
+  - **Ruling (b):** T1 + T5 + T2 land **without** sending `lease_seconds`. The authority window is declared and drives the poll interval and HTTP timeout. The hand edit to the hash-locked generated client is reverted.
+  - **Residual risk:** a Runtime silence longer than 30 s can still expire the Runtime lease. Engine shows that a late settle is refused with a reason, never passing silently as success.
+  - **(a)** (declare `lease_seconds` in the Runtime contract, with a pin bump) goes after R13 (Plan 50 / #640). R13 keeps Runtime at 42ae24aff (G5).
