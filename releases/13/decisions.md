@@ -1256,3 +1256,21 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **PRs:** untouched, per the owner (Agent #346 and lifecycle #2 included). No contributor notices sent.
   - **Brief:** add `## Included pull requests` to `releases/13.md` at freeze, when the SHAs are final.
 - **Who runs it:** the paperwork waits for the freeze. Then the test lane fills the CI ids, I fill the live evidence and run the ORCHESTRATOR ONLY steps (pushes, dispatch, merges).
+
+## 13 Nov ~01:00 UTC: lease and liveness design in; R13 slice routed
+
+- **Design:** `briefs/lease-liveness/plan.md`, with Astra's facts in `astra-facts.md`.
+- **The cause:** the 30 s attempt lease is a takeover mechanism in a system with no takeover. Its only live effect is that the pack host fails its own paid job when it can't hear the Runtime.
+  - The host's observer acted on a stale private expiry (00:30:28.69), while the Runtime had already committed a heartbeat valid to 00:30:33.72.
+  - Release queued because abort is cooperative and the shipping step never gets the cancel. The failed attempt kept uploading until 00:33:13 and held the host's only slot.
+- **Principle:** only a positive signal ends paid work: a typed Runtime answer, the declared work deadline, or executor liveness.
+- **R13 slice, Agent only, no Runtime pin bump:**
+  - **Engine:**
+    - T1: unknown is not dead, in `generic_host.py:run_task.pump_lease` (S).
+    - T2: one declared 300 s window, sent as `lease_seconds` (N).
+    - T5: every verdict is logged, and a queued task says what it waits for (N).
+  - **Machines:**
+    - T3: a cancel callback into `machine.py:Machine.start`, so abort frees the slot within one chunk (X).
+    - T4: a control slot that claims only release and status, through `capability_ids` (S, custody: Sol plus an Astra review).
+- **Proof:** the tests named per task, the converted `test_sustained_transport_stops_at_last_acknowledged_expiry`, and a CPU-journey row with the Runtime silent for 40 s and a release admitted mid-silence.
+- **After R13:** T6 (lease sized to the full lifetime, once restart recovery is checked) and the rest, mapped to Plan 50 RB-4.
