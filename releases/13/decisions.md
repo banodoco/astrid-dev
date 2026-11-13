@@ -1244,3 +1244,15 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Merged:** K1 (`r13/machines` 704731116); compose is 673227271.
 - **Boundary ratchet:** red from failreason's `cli.py` import of `astrid.packs.runpod`. Engine is fixing it structurally, and compose.sh now runs the ratchet on every merge.
 - **Edit alone:** the host's own release later failed with "lease release is already in progress", left by the stuck queued release after the provider-side terminate. That evidence went to the lease dive. Census: 0 pods, $93.44.
+
+## 13 Nov ~00:55 UTC: release paperwork drafted; rulings on its open questions
+
+- **Drafted** (helper, `9760698`): `release-record.md`, `app-repin-checklist.md` and `update-proof-row.md`, all under `releases/13/`. Everything unknown is marked PENDING.
+- **Rulings** (overnight authority):
+  - **"R1-update proof row"** means the update rows of the Release-1 journey matrix, **plus one row updating from Release 12**, the release users actually have. No row is added for older releases.
+  - **No forced-rollback proof** for R13.
+  - **Version 13. REVIEW: the required-update floor becomes 13.** RunPod REST v1 retires on 15 Nov, after which R12 can't list or release pods, so an R12 user would keep paying. Requiring R13 protects them. For the owner to confirm in the morning.
+  - **Harness:** dispatch `journey.yml` from Agent `main`, with the frozen candidate JSON.
+  - **PRs:** untouched, per the owner (Agent #346 and lifecycle #2 included). No contributor notices sent.
+  - **Brief:** add `## Included pull requests` to `releases/13.md` at freeze, when the SHAs are final.
+- **Who runs it:** the paperwork waits for the freeze. Then the test lane fills the CI ids, I fill the live evidence and run the ORCHESTRATOR ONLY steps (pushes, dispatch, merges).
