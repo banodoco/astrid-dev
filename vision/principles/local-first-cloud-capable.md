@@ -2,7 +2,7 @@
 
 ## Statement
 
-Everything should be designed to run fully locally, and cheaply and conveniently in the cloud.
+Run fully locally, or cheaply and conveniently in the cloud.
 
 ## Explanation
 

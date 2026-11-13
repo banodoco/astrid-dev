@@ -2,7 +2,7 @@
 
 ## Statement
 
-Technical wrangling should be work for your agents, not work that interrupts your art.
+Your agents handle technical work so you can focus on art.
 
 ## Explanation
 

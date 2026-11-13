@@ -2,7 +2,7 @@
 
 ## Statement
 
-We want to open not just our code, but our knowledge, ideas, and even our ownership.
+We aim to share our code, knowledge, ideas and ownership.
 
 ## Explanation
 
