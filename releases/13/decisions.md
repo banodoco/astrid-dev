@@ -1403,3 +1403,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - auto-release proven below the floor; 19 new tests.
 
   Compose is `175102ea1`.
+- **07:20, Stage 2i round 2** on `941449eaf`, same pod:
+  - a deliberately failing sfx failed in execution with ComfyUI's own `execution_error`; the machine stayed `prepared`;
+  - **edit after the failure: PASS** (6m 26s);
+  - **tts: PASS** (5m 16s);
+  - **t2i: PASS** (6m 29s).
+  - **All five cells have now passed on one build, on one pod,** including recovery after a failure.
+  - Pod `f4ahhqg0arqslp` ended `host_shutdown` when I stopped the host to update. The host released its pod on shutdown, which is safe; cost $1.74.
+  - **My error:** killing the host before the update left an owner lock with no discovery, so the installer refused the update. up.sh no longer kills the host; the installer stops it.
+  - **Census:** 0 pods, $89.95.
+- **Round 3, on music-defaults stage `3b3403d46` (VibeComfy e240beec):** an in-place update, then a fresh claim, then music with defaults (30 s), then t2i and edit again. That's the fresh-claim repeat for those two.
+- **M2:** lands once the test lane confirms 5 of the 6 ids hosted. `[False-music]` fails on compose already, so it doesn't hold M2; fix it today. Rerun it with the music-defaults pin first; if it still fails, the job_inputs archive must accept declared defaults (machines).
