@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-No run has started. Paths and line numbers were read at astrid-dev `0ed58f9` and the App's `237b28b`; re-check them at dispatch. Phase 1 lands on one integration branch, `int/53-vision-aspirations`, and reaches `main` in two pull requests: the contract (VA-1, VA-2), then the rest.
+The 13 Nov run implements both phases under the owner's direct end-to-end and main-promotion request; see [current evidence](evidence/execution.md). The original task scopes below remain the acceptance inventory. Paths and line numbers were read at astrid-dev `0ed58f9` and the App's `237b28b`; re-check them at dispatch. Phase 1 lands on one integration branch, `int/53-vision-aspirations`, and reaches `main` in two pull requests: the contract (VA-1, VA-2), then the rest.
 
 **Task ids:** `VA-1`, `VA-2`, …; review `R`. **Critical path:** VA-1 → VA-2 → VA-5 → R → VA-7, with the owner's mark-up of VA-3 and VA-4 joining before VA-5. Phase 2: VA-8 → VA-9 → VA-10 → VA-11. **Test inventory:** `scripts/test_vision_subject.py`, `scripts/test_export_public_vision.py`, `scripts/test_gap_relationships.py`, `scripts/test_check_gap_boundaries.py`, `scripts/test_checks.py`; and, passing unedited, `scripts/test_views.py`, `scripts/test_golden.py` (the oracle `scripts/fixtures/golden.txt` does not change in this plan) and `scripts/test_project_contract.py`. In the App, for VA-9: `src/pages/Home/publicVisionContent.test.ts`, `src/pages/Home/visionHierarchy.test.ts`, `tests/e2e/public-astrid-vision-characteristics.spec.ts`, `tests/e2e/public-astrid-vision-hierarchy.spec.ts`.
 
@@ -117,3 +117,18 @@ The outcome is [decided](inputs.md#the-vision-page-in-phase-2); this card builds
 - **Tests:** unit tests for grouping gaps by primary aspiration, the projects count, the top project, a gap with no project, the fallback, and a reference that resolves to nothing. A Playwright spec with a fixture feed asserts the at-a-glance line (gap name, count, top project) before anything is opened, then opens an aspiration, a gap and its projects.
 - Code identifiers and the feed key stay `characteristics`.
 - This card's base is the release line its release names; it opens no pull request to the App's `main`.
+
+## 13 November execution updates
+
+The owner delegated the two phases and the dismissal fix together. The implementation uses the accepted primary/supporting mapping and wording recommendations, without claiming personal markup or an independent reviewer. The feed fields and consumer ship together; no intermediate release that renders unstyled lists is needed.
+
+| Follow-up | Scope and disposition | Proof |
+| --- | --- | --- |
+| VA-12 Outside taps dismiss once | Native dialog stays in the top layer through the final captured click; pointer cancellation, drag and keyboard activation do not dismiss it. | Delayed-click and real-touch tests pass in Chromium and WebKit in the initial candidate run. |
+| R1.1 All linked projects | The new hierarchy counts all primary-linked projects, including finished work with its status; the legacy current-work list stays unchanged. | Unit expectation now includes the completed project; final candidate run pending. |
+| R1.2 Null is not an omitted array | Reject null supporting-aspiration lists while preserving absence for older feeds. | Added negative unit case; final candidate run pending. |
+| R1.3 Discovery has one home | Remove CA-004 from Shared Endeavor references after moving its primary to Open by design. | Element fixture and source updated together; structure and golden checks. |
+| R1.4 Correct test scope | The new disclosure assertion selects the decision-list body, not its bold title. WebKit runs serially with a cold-transform budget, without retries. | Initial traces show the overbroad selector and unresolved cold Vite CSS load, not a failing dismissal. Rerun the same browser inventory. |
+| Baseline test repairs | Mobile goal clamp: fixed five-line assumption becomes the actual responsive CSS budget. Color grouping: a deterministic primary-only fixture replaces an assumption that supporting gaps are duplicated. Layout: expand the existing ten-gap limit before selecting F-003. | These three tests failed on the untouched baseline. No golden line, test or assertion of the intended behavior was removed. |
+
+Review provenance: the findings above are the implementer's source review, not an independent completion review. Production publication and the owner's physical-device look are not claimed until observed.

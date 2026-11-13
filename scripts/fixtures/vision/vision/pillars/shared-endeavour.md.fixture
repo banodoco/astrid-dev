@@ -36,6 +36,4 @@ The shared vision should lead to work that a contributor can understand, claim, 
 
 ## References
 
-[CA-004 — Discovering each other's contributions](../gaps/CA-004-sharing-and-discovery.md) makes reusable work visible to people and their agents.
-
 **Gaps:** [CA-001 — Artistic challenge culture](../gaps/CA-001-creative-challenge-culture.md) · [CA-002 — Contributor ownership](../gaps/CA-002-contributor-ownership.md).
