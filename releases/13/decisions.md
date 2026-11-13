@@ -1284,3 +1284,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Normalising `\` to `/` never rewrites the target's spelling.
 - **Who:** cells, on top of the foley widget-value mapping.
 - **Merged since 01:00:** missing-model-field `06e67da19` and installer-home-isolation `54163c70c`. Compose is `a66574c8a`.
+
+## 13 Nov ~02:00 UTC: CI shards 1 and 6 time out; new head of record
+
+- **What happened:** shards 1 and 6 on `05346e9f` were cancelled at the 120-minute cap. About a dozen tests per shard run to the 600 s per-test timeout, and `-q` hid their names. R12's own shards also hung, so the slow tests are probably old, but that's unproven.
+- **Ruling:**
+  - Merged `r13/tests/shard-verbose` `43de09e40`: `-v -rA --durations=40` and a 240-minute shard cap. The 600 s per-test timeout is unchanged, so no check is relaxed.
+  - Cancelled `95d9e876`'s CI and froze **`int/r13-1e94061c`** as the head of record.
+  - Each test that reaches the timeout becomes a Rule 0 row. An R13-only hang blocks.
+- **Merged since 01:30:** the VibeComfy pin `cda37a7e` (`81dd1db2e`), agent-test-fixes `74f238a13`, zipdet `79bd96662` (deterministic input zip, which fixes resume) and engine-pymembers `3a7d1bd9c` (the U2 staging regressions, f06, the overrun diagnostic, recipe field names, neutrality).
+- **Plan 50 follow-ups:** PR astrid-dev#640 adds DP-4 to DP-9 and the lease follow-ups. The owner approves on the PR.
