@@ -1294,3 +1294,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Each test that reaches the timeout becomes a Rule 0 row. An R13-only hang blocks.
 - **Merged since 01:30:** the VibeComfy pin `cda37a7e` (`81dd1db2e`), agent-test-fixes `74f238a13`, zipdet `79bd96662` (deterministic input zip, which fixes resume) and engine-pymembers `3a7d1bd9c` (the U2 staging regressions, f06, the overrun diagnostic, recipe field names, neutrality).
 - **Plan 50 follow-ups:** PR astrid-dev#640 adds DP-4 to DP-9 and the lease follow-ups. The owner approves on the PR.
+- **02:35 REVIEW (test shape), VibeComfy `tests/test_porting_assets.py:120`:** add `sha256: None` and `size_bytes: None` to the expected record. `a8a7be7c` (T3 declarations) deliberately added those fields to every structured record; the other keys are unchanged.
+- **Merged since 02:00:**
+  - #607 `7a409baf7`;
+  - machines BLE2 `9df5517d6`;
+  - **REST v2** `fd61b42cf`, with lifecycle pinned at `a67f2fe0`.
+
+  Compose is `0106598bb`. The live v2 proof (claim, tts, exact release) is running.
