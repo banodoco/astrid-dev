@@ -1349,3 +1349,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Option 1** (the Runtime exempts control capabilities, with a pin bump) goes to Plan 50 after R13.
   - **Option 3** (lowering the floor) is refused, because it weakens a check.
   - **Why not wait:** with a full disk, no pod could be released at all, by hand or automatically. Owner, please confirm in the morning.
+- **04:38: DP-2 made ~15 tests red** (z-image-i2i and qwen-image-edit dry runs; paid-catalog dry run; `test_user_workflow_wins…` ×6; target rows). Dry run now blocks with "no declared digest", and the attached-target dry run re-renders user workflows as `ready_template`.
+  - **Ruling:** the dry run must say exactly what the pod would say; no advisory downgrade.
+    - (1) Remove the attached-target re-render (a bug).
+    - (2) Settle whether real managed preparation refuses the same entries after the lock fill. If it does, those entries are broken live, so pin their records the dp3 way, with no test changes. If it doesn't, dry run must judge the same post-fill requirements.
+  - DP-2 is not reverted.
+- **Merged:** T3 `43f4a1156` (cancel reaches `Machine.start`), lanes-verbose `2ff49168a`, engine objinfo-identity `20e9829d7` (the edit blocker). Compose is `c92108812`.
+  - Frozen `int/r13-05c8ab76`, the queued head after 1e94061c.
+  - `combo` is done (VibeComfy `cells-vc-4` f3bb6f27: one V1/V3 object_info reader, a required-input check, the 400 body in queue errors, the music template regenerated).
