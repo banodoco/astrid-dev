@@ -68,7 +68,29 @@ Recorded RunPod shapes, plus the real Runtime in a runnable journey, is the smal
     - **(c)** All after Release 13.
   - **Recommendation: (b).** The 12 Nov bugs would have been caught by the journey alone.
   - Pending.
+- **D2. Release 13 follow-ups (13 Nov).** Add RB-5 to RB-13 to this plan as the post-Release-13 work, and mark the "real pod agent and no-op CPU engine" follow-up superseded.
+  - Options: **(a)** accept as written; **(b)** accept the dry-pod rows only and keep the lease rows with the machines plan; **(c)** decline.
+  - **Recommendation: (a).** The rows are copied from two plans that already name their scope and proof.
+  - Pending.
 - **Inherited, not pending:** machines are released on host shutdown or restart (Plan 40 D12; D13 keeps it). Keeping them needs Plan 40's deferred pod-side cap.
+
+## 13 Nov 2026: Release 13 follow-ups
+
+**Where this came from.** Release 13's live runs failed on declarations (a music template with four null model digests; the SFX requirement rendered differently on the pod than on the host) and on a paid job killed by a host that could not hear the Runtime for one lease while the Runtime still held it. Two plans came out of that and each ends with work after Release 13:
+- the [dry-pod plan](https://github.com/banodoco/astrid-dev/blob/r13-progress/decision-log/releases/13/briefs/dry-pod-plan.md), section 3, "After R13": tasks DP-4 to DP-9, now RB-5 to RB-10;
+- the [lease-liveness plan](https://github.com/banodoco/astrid-dev/blob/r13-progress/decision-log/releases/13/briefs/lease-liveness/plan.md), section 4: T6 and the fault-matrix, lint and timing items, now RB-11 to RB-13.
+
+Both are on the branch `r13-progress/decision-log` and reach `main` with the Release 13 record. Their Astra reviews:
+- dry-pod: one Astra run at high effort, verdict "reject as written" on the first draft; the plan is the revision and has had no second review. The Luna helper spawns are unverified;
+- lease-liveness: Astra's report (`astra-report.md` in that folder) is the source of its facts. Nothing in it was run live.
+
+**What changes in this plan.**
+- The candidate follow-up "a real pod agent and a no-op CPU engine" is superseded by RB-5 to RB-10 (dry-pod plan §3); RB-1 to RB-4 are unchanged.
+- RB-12 extends RB-4's matrix and promotes the silent-wait lint, which the earlier challenge dropped from this plan, to a commitment for abort sites only, as the lease plan asks.
+- The Release 13 slices of both plans (DP-1 to DP-3, T1 to T5) are not rows here; RB-5, RB-6 and RB-11 depend on them.
+- Route, owner lane, scope, dependencies and proof are copied from the source plans. Where a source gives none (RB-11 route, RB-12 and RB-13 proof files) the row says so.
+
+**Owner decision: Pending.** D2 below. The owner approves on the PR that adds these rows.
 
 ## Source identities
 
