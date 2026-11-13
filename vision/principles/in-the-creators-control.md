@@ -2,7 +2,7 @@
 
 ## Statement
 
-Creators should have final say over every part of their creative environments.
+Creators have the final say over their creative environments.
 
 ## Explanation
 
