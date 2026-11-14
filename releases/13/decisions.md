@@ -1711,3 +1711,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Root:** the LTX t2v catalog route and its template declare the same ports.
   - **Proof:** 519 tests, 0 regressions; the six ltx-2.3 t2v/flf regression ids are fixed.
   - **Left:** 3 reds tied to the LTX LoRA and text-encoder digests (i2v-runpod and two new dry-run tests). vc9 pins them through 2 HF metadata reads, followed by a small additive pin commit.
+- **08:10: 6e1c34e2 Lanes 5/5 reported.**
+  - **Regressions:** 0 in 1/4, 2/4 and opt-in.
+  - **Lanes 3/4:** regression-flagged slot_path_cpu ×13 and others, routed to machines and cells. One is a new h3 composition mismatch: "frame coverage observed 164, expected 108" (cells).
+  - **Merged the test lane's lanes-timeouts 748ae723c:** explicit `@pytest.mark.timeout(300–900)` on 9 legitimately slow video/h3 and installer tests, each with its measured hosted time. Everything else keeps 120 s, and no assertion changed. The 28 Pinokio ids are preexisting (#621).
