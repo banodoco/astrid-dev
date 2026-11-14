@@ -57,13 +57,19 @@
 
 ### Phase 4: local-first (14 Nov 2026)
 
-**Scope decision:** Pending — Hannah gave the direction, but no phase 4 decision is recorded yet (OD1–OD6 below). Next: Hannah answers OD1–OD6 in the scope PR.
+**Scope decision:** Pending — Hannah gave the direction, but no phase 4 decision is recorded yet (OD1–OD8 below). Next: Hannah answers OD1–OD8 in the scope PR.
 
 - **Source.** Hannah asked the Release 13 advisor (session `session_011EzfW4KxQbf3mB7UevxVdh`) on 14 Nov 2026 to map the onboarding path, make it local-first and add it to Plan 20 as tasks. The orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) relayed the brief to this planner. Her words, verbatim:
   > "In general, it should probably point to RunPod, but it should only have like a one-line mention of RunPod, and the other general should just be focused on people who are running locally and setting it up."
 
   > "Map out the path for actually connecting and launching your local ComfyUI instance. Is it easy to connect to it? Does it have an intuitive way to run to it? Does it use their existing models? Does it generate via that?"
-- **Draft.** The advisor's map and draft tasks are committed verbatim as [phase-4-local-first-draft.md](phase-4-local-first-draft.md) (astrid-dev commit `b7dd383`). It answers her four questions: connecting is easy when ComfyUI runs on 8188, but saving the choice is clumsy. Running is not yet intuitive. It uses the existing models and generates through the person's server without changing it. None of this is proven live. The draft's sources were Agent `r13/compose` `176e5ba1`, App `d6ee9af`, Pinokio `d15c58b` and VibeComfy `r13/cells-vc-10`, through read-only explorer passes. Nothing was run.
+
+  > "Wherever they install Astrid from, either from the web app or from the agent, it guides them through that process and gets them set up using the stuff that's already on their machine, ideally, or offers them RunPod, and points them towards the RunPod skill, which will contain all the thing. We probably have the bones of this already; it's the refinement path to actually make this good, and make sure there's one path. The documentation is clean and minimal and elegant, one place per concept, pointing towards relevant documents. Everything runs via the Astrid generate skill."
+
+  > "Setting up their defaults is an important thing. We give them defaults, but they might already have workflows on their machine that they recently edited. We should work with them to keep ours, offer to use theirs, biasing towards recent ones, or create new defaults."
+
+  > "In any case, sending a link to astrid.haus to actually see the generated image."
+- **Draft.** The advisor's map and draft tasks are committed verbatim as [phase-4-local-first-draft.md](phase-4-local-first-draft.md) (astrid-dev commits `b7dd383`, then `a9b9488` with the later direction: one hand-off sentence at every door, one home per concept, defaults from the person's recent work and a link to the image). It answers her four questions: connecting is easy when ComfyUI runs on 8188, but saving the choice is clumsy. Running is not yet intuitive. It uses the existing models and generates through the person's server without changing it. None of this is proven live. The draft's sources were Agent `r13/compose` `176e5ba1`, App `d6ee9af`, Pinokio `d15c58b` and VibeComfy `r13/cells-vc-10`, through read-only explorer passes. Nothing was run.
 
 **Approach:** Extend the same skill in place; no new skill and no new plan. Phase 4 keeps phases 1–3 and narrows the RunPod and managed-engine text to one line each. Alternatives considered:
 
@@ -100,7 +106,7 @@ Re-checked for the three-phase plan: all nine still apply. D7 is decided by the 
 
 ### Phase 4 owner decisions (14 Nov 2026)
 
-All six are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
+All eight are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
 
 | # | Decision | Options | Recommendation | Status |
 |---|---|---|---|---|
@@ -109,6 +115,8 @@ All six are **Pending: owner to decide.** The recommendations are the advisor's,
 | OD3 | D8 forbids live GPU tests. May P4.0 and P4.9 run on a local machine with ComfyUI and a GPU (no rental)? | Allow local runs, no rentals; or keep D8 as it is and prove on CPU fakes only | Allow local runs; rentals stay excluded. P4.0 does not start until this is decided | Pending |
 | OD4 | May Astrid download a missing model into the person's ComfyUI models folder, with a yes per file? | Not now (name the file and folder); or yes, per file, through VibeComfy's existing `fetch` | Not now. Revisit after the walk | Pending |
 | OD5 | Create a default project when none exists at the first generation, and say so? | Yes, named "My first project" like the App; or refuse, naming the command to create one | Yes | Pending |
+| OD7 | Does the path end with a link that opens the project in Astrid with the new image in it? Open point with Hannah: the link at the start (Connected, as today), at the end, or both | At the end only; or at both ends | Both: open at Connected as today, then a direct link to the image at the end. The advisor has asked her | Pending |
+| OD8 | Does the defaults step offer, per slot, the person's own saved workflows (most recent first), Astrid's default, or another entry? | Yes, one question per slot; or keep Astrid's defaults and mention saved workflows only | Yes | Pending |
 | OD6 | Timing | P4.0 now, everything else after release 13 publishes; or all after release 13 | P4.0 now, if OD3 allows it. All implementation waits for release 13 to publish | Pending |
 
 ## Source identities
