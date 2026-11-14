@@ -45,6 +45,8 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Structured machine interface: create, delete and leases; the shared inspect_target_records check | briefs/struct-design.md:37, 40 |
 | No shell on a rented machine, for diagnosis (owner request O8) | decisions.md:1057 |
 | Reconcile pod 0d7f7e41 in the old state | decisions.md:493-495 |
+| RunPod model-cache GC: a references-based, dry-run-first cleanup of the network volume with deletion receipts (h3 hit "Disk quota exceeded" on the 200 GB volume 2z2dlu1v8g; suspected old `h3-golden` release copies). About 2–3 days plus live qualification | machines, 04:25 Sat; decisions.md 04:35 |
+| No shell on a rented machine (O8): storage could not be inspected on the full volume. Candidate: product diagnostics as declared run-log steps | decisions.md 04:35 Sat |
 | The lifecycle exposes typed status and Retry-After | decisions.md:463 |
 
 ## Generation, catalog and engine (next generation plan; T-series group B)
