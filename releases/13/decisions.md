@@ -1687,3 +1687,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **The fix:** VibeComfy `r13/cells-vc-8` (vc7 + cells-vc-next), plus Agent cherry-picks f70c4da49, 262f07c08 and 6ee65b1c4, plus ONE pin. That replaces the vc7 pin.
   - **vc7 already did:** a Foley picker root fix; the LTX i2v checkpoint digest (its LoRA and text-encoder digests still missing); a survey finding 132 incomplete model records across 31 templates. That class is deferred: declare revision, digest and size once.
   - **Job-seam:** deferred by cells with a row (ccebf94).
+- **06:10: merged machines b1136626a.**
+  - **mcpc 5158964ba (money path, ROOT):** an MCP, `--json` or non-TTY `machines claim` without `--consent paid` refuses before any import, Runtime access, quote or provider call. A new test drives the real MCP dispatch under runpod_guard, and 2 of its 3 cases fail before the fix.
+  - **edge3 be0027945:** managed_preparation reaches its engine through core's `entries.engine_table`. Structure findings 102→99.
+  - **Still for Sun:** the volume card (round 5, including making the h3 "resume" message true) and the 4 remote_machine_cpu rulings.
