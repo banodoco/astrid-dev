@@ -113,7 +113,8 @@ Rejected outright: none. Overridden later by the orchestrator: moving P4.12 to P
 - **Manager's run state, 14 Nov, about 12:05 UTC** (sent by the manager, recorded here):
   - **Integration branch:** Agent `int/20-phase4`, cut from `main` `0e1543e`. It stays local until the first batch lands, then is pushed once per batch while release 13's freeze shares the runners.
   - **Environment:** `agent-setup.sh` ENV-PASS. Python 3.13.18, runtime `42ae24a`, vibecomfy `e65f494`, lifecycle `f294881`. Smoke: `tests/packs/test_vibecomfy_local.py`, 11 passed.
-  - **Workers:** Claude subagents on route N. The manager noted a Codex fallback, which waits on Hannah's sign-in after her device code lapsed. The orchestrator's later instruction (Claude subagents, no Codex sign-in) is the one in force.
+  - **Workers:** Claude subagents on route N, by Hannah's word. The Codex sign-in is dropped (manager, 12:04).
+  - **Lines:** main-line tasks are on `int/20-phase4`. Release 13-line tasks are on `int/20-phase4-r13`, cut at `r13/compose` `a371431` and local. Nothing is pushed to or merged into `r13/compose`. Which task is on which line is in [tasks.md](tasks.md).
   - **Baseline failures on Agent `main` `0e1543e`, not this project's work:** 15 tests fail before any phase 4 change.
     - `tests/test_sdk_public_surface.py`: 14 `test_generate_*` and `test_video_*` tests (134 run, 120 pass).
     - `backends/test_qwen_21_turbo.py::test_generate_and_h3_share_vibecomfy_pin` (1). The scoped run of `test_generate_align`, `test_comfy_model_resolution` and `test_qwen_21_turbo` gives 75 pass and 1 fail, that same test.
