@@ -1728,3 +1728,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Ruff** is red only because it improved (2049 against a baseline of 2100). Fix the 9 per-file I001 and E402 rises with one mechanical `--fix` card, and cells fixes the F841 at compile.py:402. Then lock in the lower baseline. All of it before the Sun freeze, not after.
   - **Mypy:** 5 attr-defined rows go to machines as typed fields, no ignores. The hosted mypy step gets its stub dependencies (test lane).
   - **Cycles:** the new generation↔machines_cli cycle goes to machines. The two R12-era cycles are Plan 39, with a deferred.md row.
+- **10:00: merged machines 798817046 (the volume card 25927c185, after three independent reviews; the third found no new P1).**
+  - **Preflight:** before downloading, managed preparation refuses with `insufficient_storage` and the message "N bytes needed, M bytes free; use a larger volume", pointing at the `storage.inventory` run log. It refuses only on a measured shortfall in the target directory. Soft quotas and unknown measurements proceed, and only sha256-verified files are credited.
+  - **Message fixed:** the h3 timeout message is now true.
+  - **Docs:** docs/runpod-storage.md.
+  - **Deferred and logged:** native-fetch reuse sharing, cross-directory budgets, inventory walker hardening.
+  - **h3 is still blocked on Hannah's storage decision.** With this, a re-claim on the full volume would refuse up front with numbers and an inventory.
