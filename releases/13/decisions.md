@@ -2039,3 +2039,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - A standalone pod preparation reads its own setting by design; controller-launched jobs can't.
 - **httpj round 4 (b60438061):** the pacing fix holds. A new money finding passes the gate: cancellation is checked before the saved-policy read (now in the worker thread), so a cancel during a slow read could still create a pod.
   - **Round 5 is the LAST:** re-check cancellation and ownership immediately before persisting intent and creating, with a regression test. Further findings not introduced by round 5 go to deferred.md.
+- **18:40: W3 622ba8938 is MERGE-READY** (W90: 0 candidate-only failures across 406 tests; consent probes all correct; Astra W91 APPROVE). It merges after batch A.
+- **Phase 4 final handover:** Agent cf49d41507 (App a1a105c34, Pinokio 51ddd6c).
+  - R4.K's seed now always comes from the bindings sent (the pod runs the shipped bindings), with a rented-machine test via the live-lease seam.
+  - R4.M uses an mkstemp unique partial name.
+  - R4.L: the request lists are once per refusal.
+  - P4.7.1: the recommended wording; the setup skill goes from 286 to 217 lines; pins moved, not weakened.
+  - Proofs gated on exit codes: 223 + 147 + 305 passed. 2 failures: one a known base failure, one a 115 s-vs-120 s timeout (passes alone).
+  - It's with the test lane on its own worker.
+- **Planned compose merge order:** batch A (lanes, comfy-source, timeout, W2) → W3 → hostwedge → httpj → phase 4. Then freeze.
