@@ -1488,3 +1488,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Lanes settle with each other.** I get only merge-ready SHAs, the binding tables and blockers no manager can clear.
   - **I do:** compose.sh merges, freezes, the live GPU runs, the records, Hannah, and the hourly check-in.
   - I start no more workers of my own.
+- **02:25: music slot default → `audio/ace_step_1_5_t2a_song`** (priority 20, above minimax_music_3 at 10). This is a REVIEW item for Hannah: it's a user-visible default.
+  - **Reason:** the builtin default was minimax_music_3. It was never run live, and its required `prompt` has an empty default, which is the cause of `[False-music]`. ace_step is the entry proven live in round 3 (30 s, real audio).
+  - **Rejected:** writing a default prompt for minimax, which would ship invented text for an unproven default.
