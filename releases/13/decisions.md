@@ -2095,3 +2095,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - It's proved once via the Windows CI journey (install → doctor → uninstall) before testers get it.
 - **Machines' W3 round 5b approved:** accept VibeComfy's post-download verification receipt (schema 1, matching path, both digests, inode/size/mtime_ns against the current fstat), so the first job on a fresh pod also skips the re-read. A deferred row covers VibeComfy's redundant verify re-read.
 - **19:22: Fable's Q1 notes on the W3 design, folded into machines' round 5/5b.** (1) Drop st_dev from the key; keep the record co-located with the models on the volume and key it on the relative path plus size plus mtime_ns, so a NEW claim on a warm volume doesn't re-hash everything (the most common case). (2) The record is written at download time (5b). (3) The per-file reason goes in the prep log. (4) No periodic sampling. Fable's Q2 (other hashers, per-job waste) is due within the hour.
+- **19:12: h3dry (cells, dry runs on the phase 4 merged tree).**
+  - **T4 (regional mask) is ADMITTED** via the native spatial-mask route (H3V2VGranularFractionalDenoise; inside strength 1, outside 0). README.md:49-52's "regional masks fail" is STALE for ordinary edits; compile.py's LanPaint path isn't on the active dispatch.
+  - **T2 and T5 are refused only for audio regeneration:** h3 edits can't regenerate audio. Video-only versions are admitted.
+  - **T3 needs v2 "1/6"** (on the frame grid); a seam check at frame 4.
+  - T5b's "Turbo off" is v2 `settings.turbo.enabled: false`.
+  - Live checks compare against the DECODED source (crf 0 still clip).
+  - **Next:** cells commits the assets and requests to astrid-dev, then I run T1–T5 live on the current build. Cells also does the README fixes and adds the corrected requests as worked examples in the h3 skill, with an admission test.
