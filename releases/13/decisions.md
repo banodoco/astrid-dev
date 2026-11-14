@@ -1868,3 +1868,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - If yes: an R13 fix with a VibeComfy re-pin (security outranks the no-re-pin rule). If no: deferred, with the same fix after publish.
   - The planned fix sends the token only to allowed HF hosts on every hop.
   - Plan 20's P4.6b already allows only https://huggingface.co on its side.
+- **12:53: HF_TOKEN exposure is REACHABLE in R13** (cells, evidence at VibeComfy d3850831 and Agent compose).
+  - Shipped locks and templates are Hugging Face only, but **a user workflow's model URL** reaches `_fetch_model` → `fetch.download`, which attaches the token to any host on the initial request. (httpx already strips it on a cross-origin redirect.)
+  - **Ruling: an R13 fix.** VibeComfy `r13/cells-vc-11` (card hfhost, about 60 min): the token goes only to https on the exact HF hosts and their subdomains, with negative tests (lookalike hosts, http, userinfo, a cross-host 302, receipts and logs). Then one Agent pin.
+  - The test lane proves it. Cells smokes the re-pin, confirming vc-11 is d3850831 plus hfhost only.
+  - A deferred row covers the deeper question: whether arbitrary user model URLs should fetch without a confirmation (P4.6b starts that).
