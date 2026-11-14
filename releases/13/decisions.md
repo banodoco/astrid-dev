@@ -1663,3 +1663,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - mcpc;
     - cells: combined sfx, music slot, catrows, jobseam, h3 plain-inputs, and VibeComfy vc7 with its pin.
   - **h3 storage:** the h3 default needs 53.5 GB cold, and the five cells share 45.0 GB, on the full 200 GB volume 2z2dlu1v8g. Setup can't resize or create volumes. Which storage to pay for goes to Hannah.
+- **05:50: merged cells r13/rows-sfx-combined 5fb5f13a5 (clean), giving compose 78d01b137.** It's on top of b63debfb8, which was already merged before cells' "take one, not both" note.
+  - **Check asked:** cells proves the 5 sfx files on 78d01b137 and confirms the two sfx selection fixes don't double-apply. If they do, a reconcile commit, not a revert.
+  - The combined fix goes into the Sun freeze. The 06:00 read has b63 only.
