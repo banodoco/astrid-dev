@@ -1933,3 +1933,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - That the edit took the same time as the warm t2i supports Fable's read: the per-job floor is mostly preparation and verification, not model load. W2 will split the phases, and W3 removes the re-hash. W6 repeats this on the W2+W3 build.
   - All outputs validated: the edit wall drift is class 2 as before. Cost $0.37 (W1, cut short by my local disk guard) plus $0.60 (W1b). 0 pods; $84.22.
   - Local disk was cleaned (old install homes); lesson: check local free disk before a round, not only during it.
+- **15:07: int/r13-a045b00e is the cleanest head so far** (CI 43595414481).
+  - Fast checks all pass. Unit shards: **0 regressions, 0 new**, 7 cleared.
+  - Lanes: the same 32 new-test ids (machines' lanes card), 0 new.
+  - The d18 outer-send id is registered as a flake: it passed hosted on the same code.
+  - Freeze criteria still open: (2) the last R12 verdicts on residual files; (3) lanes; (4) httpj round 3.
+  - The phase 4 interim 68ddbed7 and i2vsel fea67d9cb proofs are running in the test lane.
