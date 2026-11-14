@@ -35,6 +35,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 ## Next machines plan (M-series after R13)
 | Item | Source |
 |---|---|
+| Pod RPC startup timeout without orphaning: the hosted 600 s test (`test_machine_cli_claim_then_generate_reuses_pod_and_paid_expiry`) is the transport retrying 404s until the wall because its command timer starts after startup. A bound that kills the local child skips the transport's remote cancel (orphans an accepted command) and lets claim startup retry past an unreaped child. Root fix: keep the remote command identity and reserve time for verified cancellation, and fence an unreaped observer into the owner's custody before any retry or admit. R13 reverted the unsafe bound | M2 rows review (wt/briefs/wave3/m2-rows-review.log), machines 04:50 Sat |
 | M3, M4 and M5 to M9 | decisions.md:1210 |
 | M11: a neutral machine interface. Core neutrality: either pull M11 into M4/M7 or take an owner exception; the scanner vocabulary fix and a one-time baseline for the 36 RunPod crossings | decisions.md:771-788; briefs/machines-plan.md:56 |
 | M12: several machines per account | briefs/machines-plan.md:57 |
