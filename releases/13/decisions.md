@@ -1584,3 +1584,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - a deliberate band-aid, said in one line, with the deeper cause filed at once: an astrid-dev issue number, or a row in `releases/13/deferred.md`.
 
   An unlogged band-aid or an unexamined workaround is a failure. Lean to root for money, custody and the generate path. Sent to machines, cells and the test lane.
+- **03:30: round 4 on int/r13-65b1d45c (M2): all five cells PASS live on the claim-then-generate path**, on one pod, each validated (`install-r13b/validate/log.md`):
+  - tts 16m22s: exact transcript;
+  - sfx 14m52s: fits the prompt, sync untested (blank source video);
+  - t2i 6m17s: matches the prompt, deterministic against round 3;
+  - edit 5m58s: ran, but the source is blank, so it isn't a meaningful edit test (a real bicycle edit is queued);
+  - music 6m15s: 30 s song with vocals.
+  - **The h3 queue starts on the same pod now.**
