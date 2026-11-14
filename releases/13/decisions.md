@@ -1954,3 +1954,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - Cells takes it because machines is at capacity (httpj, lanes, W2, W3, W4).
   - P4.9.2 (`runtime up --wait` port conflict) is deferred to the Runtime plan unless it blocks single-Runtime onboarding (asked).
   - P4.0.5, .6, .16 and .12 → phase 5 rows.
+- **15:46:** P4.9.2 doesn't block single-Runtime users (it only affects two Runtimes or a source checkout). Deferred to the Runtime plan; deferred.md row added. Phase 4 adds R4.I: the MCP  parity gap the test lane found.

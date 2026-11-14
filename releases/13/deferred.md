@@ -108,6 +108,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 ## Runtime (next Runtime plan)
 | Item | Source |
 |---|---|
+| `astrid-runtime up --wait` fails when another Runtime holds door port 17340, and `--hosted-origin off` is refused with `--wait`. This affects only two Runtimes on one machine or a source checkout; installed users start via the service. | Plan 20 walk P4.9.2, decisions.md 15:46 Sat |
 | Media-type hardening: filter media_type to image, video or audio; Runtime tests for unaccounted media | decisions.md:48 |
 
 ## Plan 39: tests and quality (already failing on Release 12, or quarantine rules)
