@@ -2,18 +2,20 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (13:00 UTC Sat 14 Nov): read this first
+## Now (14:00 UTC Sat 14 Nov): read this first
 
-**Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00 (SHAs by 03:45). The binding comparison is Sun 06:00–09:00, then the live repeat of all five cells plus the three h3 modes on the final head.**
-- **CI:** int/r13-a045b00e was frozen at 12:36 and is running. It carries every fix since fd5ff0d9, including h3cov 16c338f55, which this run proves on the full file. Compose head 980d4888b.
-- **Open before the freeze:**
-  - **machines httpj round 2** (about 14:35): one reuse-policy check on every spending or extending path; Astra BLOCKed round 1 on `runpod.keep`.
-  - **machines lanes** (the `align` family, 32 new-test ids; hard stop 16:30).
-  - **cells hfhost** (SECURITY, about 13:50): HF_TOKEN only to HF hosts. VibeComfy vc-11 plus one Agent pin, re-pin smoke so it's d3850831 plus hfhost only.
-  - Every open item gets test lane proof before merge.
-- **Accounted for:** both real R12→R13 regressions fixed; the remaining Lanes flags are new-in-R13 tests or R12-failing (Plan 39 rows). One d18 id is to watch on a045b00e.
-- **Live:** h3_av is green in all three modes (round 6). 0 pods; balance $85.38.
-- **Outside R13:** Plan 20 phase 4 (PR banodoco/astrid-dev#648, all owner decisions made) builds on int/20-phase4 and int/20-phase4-r13. Its push waits for a045b00e's CI to land, so runners stay free for R13.
+**Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00 (SHAs by 03:45). The binding comparison is Sun 06:00–09:00, then the live repeat of all five cells plus the three h3 modes on the final head, with at least one FRESH model download (vc-11 changed the download path).**
+- **Compose head bb89b3f2b.** VibeComfy is now dba38f86 (vc-11, the HF_TOKEN security fix; real redirect chain verified off-pod). int/r13-a045b00e CI is running, frozen at 12:36.
+- **Critical path to the freeze:**
+  - machines **httpj round 3**: the one reuse-policy fence; ls and release always allowed; keep and claim fail closed; job reuse within the claim's recorded bounds (ruled 13:57). Then the test lane's proof and Astra's re-review.
+  - machines **lanes** (the `align` family; 16:30 hard stop).
+  - cells **i2vsel** (`[video/i2v-attached]` engine selection; a typed refusal code or a product fix, guardrail ruled).
+- **Accounted for:** both R12→R13 regressions fixed. Five base failures found by Plan 20 classified as R12-failing (Plan 39) or stale tests (fixed).
+- **Live:** 0 pods; balance $85.38.
+- **Outside R13:** Plan 20 phase 4, PR banodoco/astrid-dev#648, waiting on Hannah's merge.
+  - int/20-phase4-r13 has P4.1, 4.2, 4.4, 4.5, 4.6b, 4.6.1, 4.6.2, 4.8, 4.10, 4.11b and 4.12; P4.7 is in progress.
+  - Its App and Pinokio branches: astrid-app int/20-phase4-app 833357167; astrid-pinokio int/20-phase4-pinokio c1b5eed.
+  - Pushes wait for R13 CI slots.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
