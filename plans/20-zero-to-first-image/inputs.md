@@ -133,7 +133,7 @@ Rejected outright: none. Overridden later by the orchestrator: moving P4.12 to P
 
 A possible fix, VibeComfy's to decide: memoise the witness per path and stat. The cost to people: "save it as an entry" in the defaults step takes about a minute per workflow, and P4.9 times it. The `--dry-run` preview does not take this path. P4.11b's branch test uses a small fixture through the real CLI, with no assertion changed (manager's ruling).
 
-**Security finding for VibeComfy's owner (phase 4 manager, 14 Nov; passed to the orchestrator):** `vibecomfy.fetch.download` sends `HF_TOKEN` as a bearer header to whatever URL it fetches, on any host. Astrid's managed `_fetch_model` has the same exposure. P4.6b limits it on Astrid's side by allowing only `https://huggingface.co`. The fix in both places is the owners' to make.
+**Security finding for VibeComfy's owner (phase 4 manager, 14 Nov; passed to the orchestrator):** `vibecomfy.fetch.download` sends `HF_TOKEN` as a bearer header to whatever URL it fetches, on any host. Astrid's managed `_fetch_model` has the same exposure. P4.6b limits it on Astrid's side by allowing only `https://huggingface.co`. The fix in both places is the owners' to make. **Update, 14 Nov:** VibeComfy `dba38f86`, the pin merged in P4.R13, limits `HF_TOKEN` to Hugging Face hosts (`fetch.py:488-495`). Astrid's managed `_fetch_model` is not reported fixed.
 
 **Request to Plan 34:** one row in Plan 34's real-GPU proof: the first image on a person's own running ComfyUI through the phase 4 skill, from the skill URL to the image in the Generations pane, with minutes and commands counted. Plan 20 runs no GPU (D8, OD3). Plan 34's owner adds the row; this plan does not edit Plan 34's files.
 
