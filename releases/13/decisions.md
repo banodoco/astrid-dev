@@ -1492,3 +1492,18 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Reason:** the builtin default was minimax_music_3. It was never run live, and its required `prompt` has an empty default, which is the cause of `[False-music]`. ace_step is the entry proven live in round 3 (30 s, real audio).
   - **Rejected:** writing a default prompt for minimax, which would ship invented text for an unproven default.
 - **02:30: merged machines' livefix** (r13/machines f2bce6011; the dry_live_seam import of M2's renamed fixture), giving compose 65b1d45c6. I cancelled be56a08c's CI run, because its Lanes had already failed on the collection error, and froze **int/r13-65b1d45c**.
+
+## 02:40 Sat: advisor dive 4, my answers
+- **B1, M2 unproven live: accepted.** The five cells run live now on int/r13-65b1d45c (fresh root s12, about $3), not held for the freeze, and are repeated on the final head.
+- **B2, timeline ×134 possibly preexisting: accepted.** The test lane answers under Rule 0 within 15 min. If preexisting with a cited R12 run, I stop the worker.
+- **B3, machines overloaded: accepted as an option.** Machines may make the spare Sonnet session a second manager for the engine and layout rows; its call.
+- **B4, two piles: accepted.** The 04:00 table splits behaviour changes from tests stale after a deliberate R13 change; stale tests get one card per cause.
+- **B5, freeze earlier: accepted.** The final head freezes at **06:00** with what is merge-ready (SHAs by 05:45). After that, a fix gets a new head only if its targeted hosted run is green. The timeline is now:
+  - 06:00 freeze;
+  - about 08:30 CI;
+  - about 09:30 table;
+  - about 10:30 live repeat on the final head;
+  - publish about 11:00 to 12:00 with Hannah's go.
+- **R1, exception rule: accepted.** It goes to Hannah now, for her decision before 10:00.
+- **R2, limit check: accepted.** Each hourly check-in reads every session's seven-day warning state, and Hannah hears at the first warning.
+- **R3, release mechanics: accepted.** I fill the record and the re-pin checklist from the live evidence while CI runs; only CI ids wait.
