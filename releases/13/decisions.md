@@ -1453,3 +1453,21 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **What M2 does:** generate never rents, a job runs only on a claimed machine, and admission needs no claim-time preferences.
   - **Proof:** the test lane has hosted 5 of the 6 ids passing; `[False-music]` is still open between machines and cells. Machines' own local run on the merge gave 229 passed.
   - **No new freeze yet.** **Reason:** two heads are running (05c8ab76, c9636ed4). The next freeze carries M2 plus the engine and timeline fixes.
+
+## 02:05 Sat: restart after the weekly-limit stop
+- **What happened:** every session hit the account's weekly limit at about 08:30 Fri: me, the test lane, machines, cells, the advisor, and my engine and timeline workers. Nothing moved for about 17.5 h, and no branch changed after 08:16 Fri. The limit reset at 02:00 Sat.
+- **Money:** 0 pods, $88.73.
+- **CI:** int/r13-c9636ed4 COMPLETED both CI (43391118796) and Lanes (43391118826) at about 10:47 Fri, the first complete run. Both ended in failure, which the comparison will sort.
+- **Froze int/r13-be56a08c** (be56a08cd = c9636ed4 + M2). **Reason:** nothing CI was running, and M2 changes generate.
+- **Restarted** every lane with one next action and a 07:00 target:
+  - the test lane does the binding table on c9636ed4 by 04:00;
+  - machines does its hosted rows;
+  - cells does s8, sfx-foley and `[False-music]`;
+  - the engine and timeline workers resume from where they stopped.
+- **Revised timeline.** The old one (freeze 06:00, publish about 11:00) is lost to the 17.5 h stop.
+  - All fixes merged by about 07:00.
+  - The final head frozen by about 07:30, with CI finished by about 10:00.
+  - The final five-cell live run on that head, at 07:30 in parallel (about $3).
+  - The binding comparison by about 11:00.
+  - Publish about 13:00 Sat with Hannah's go: before the RunPod v1 retirement on 15 Nov.
+- **Process note for after release:** one weekly limit stopped every lane at once, with no warning to the owner. The lanes all showed `allowed_warning` on the seven-day limit from Fri 07:00. Next time, when that warning shows, tell Hannah and cut model use (lanes to Sonnet, fewer helpers) rather than run until the stop.

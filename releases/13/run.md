@@ -2,17 +2,17 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (08:00 UTC Fri 13 Nov): read this first
+## Now (02:05 UTC Sat 14 Nov): read this first
 
-**All five cells have passed live on the claim-then-generate path, and the repeat on a fresh claim is green.**
-- **Round 3** was a fresh install of music-defaults stage `3b3403d46` (VibeComfy e240beec), then a fresh claim on a 5090:
-  - music, with defaults: 15m49s, a 30.0 s MP3, mean −15.2 dB;
-  - t2i: 6m45s;
-  - edit: 5m55s.
-- **Released:** $0.85. Census: 0 pods, $89.17.
-- **Done 08:10:** the cells pin (vc6) and ci-finish are merged, and compose `c9636ed41` (plus the test lane's bounded test ids) is frozen as `int/r13-c9636ed4`; c79f3ce0 was cancelled.
-- **M2 merged 08:25** (compose `be56a08cd`); it goes in the next freeze, with the engine and timeline fixes.
-- **Next:** the binding comparison, then the final five-cell run on a fresh claim at freeze. That run includes an edit source with a subject.
+**Restarted after a 17.5 h stop:** every session hit the weekly limit at about 08:30 Fri; it reset at 02:00 Sat. Money is safe: 0 pods, $88.73.
+- **Live:** all five cells have passed on the claim path, and round 3 (music with defaults, t2i, edit) was green on a fresh claim.
+- **CI:** int/r13-c9636ed4 is the first COMPLETE CI and Lanes run; the test lane's binding table is due 04:00. int/r13-be56a08c (with M2) is running.
+- **Fixes in flight, target 07:00:**
+  - engine rows (shard 1, the custody marker): my worker;
+  - timeline ×134: my worker;
+  - machines' hosted rows;
+  - cells' s8, sfx-foley and `[False-music]`.
+- **Revised timeline:** final freeze about 07:30, then the final live five-cell run, the CI and the comparison by about 11:00. Publish about 13:00 with Hannah's go.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
