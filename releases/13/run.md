@@ -2,14 +2,23 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (08:00 UTC Sat 14 Nov): read this first
+## Now (09:00 UTC Sat 14 Nov): read this first
 
 **Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00.**
-- **CI:** int/r13-6e1c34e2 took regressions from **141 to 1** (the i2v-runpod selection id, expected to clear with vc8 or h3 plain-inputs). int/r13-a4d893c8 is frozen 08:00 (with the collection gate).
-- **Live:** round 4 on M2: all five cells plus the bicycle edit validated. **h3 is blocked on volume space**, awaiting Hannah's storage decision (the resize to 300 GB was refused by the session's permission classifier).
-- **Before Sun 03:45:**
-  - cells: h3 plain-inputs, the vc8 pin (the LTX regression) and engine_facts;
-  - machines: the volume card (round 7 after review).
+- **CI:** int/r13-6e1c34e2 took regressions from 141 to 1. int/r13-a4d893c8 is running; int/r13-2f45835a is queued and carries the collection gate's first run (known set matched; the env fix merged).
+- **Compose `3ff2cc648`**, merged since 07:00:
+  - vc8 pin (the LTX t2v regression fixed);
+  - lanes-timeouts;
+  - h3 plain-inputs (h3 is the video default in practice);
+  - machines' hosted-eng and hosted-rp;
+  - collection-gate-always and its env.
+- **Gate fixes before Sun 03:45:**
+  - ruff: one I001/E402 sweep plus cells' F841, then the lowered baseline locked in;
+  - mypy: 5 typed fields;
+  - the new generation↔machines_cli cycle, broken at the root (machines `gates`, by 11:45);
+  - vc9: the LTX LoRA and text-encoder digests;
+  - the volume card, after re-review.
+- **Live:** round 4 on M2 validated. **h3 is blocked** until Hannah's storage decision.
 - **Money:** 0 pods, $86.87.
 - **Open with Hannah:** storage, and the R12 v1 note.
 
