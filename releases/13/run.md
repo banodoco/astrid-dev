@@ -2,38 +2,16 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (09:00 UTC Sat 14 Nov): read this first
+## Now (16:00 UTC Sat 14 Nov): read this first
 
-**Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00.**
-- **CI:** int/r13-6e1c34e2 took regressions from 141 to 1. int/r13-a4d893c8 is running; int/r13-2f45835a is queued and carries the collection gate's first run (known set matched; the env fix merged).
-- **Compose `3ff2cc648`**, merged since 07:00:
-  - vc8 pin (the LTX t2v regression fixed);
-  - lanes-timeouts;
-  - h3 plain-inputs (h3 is the video default in practice);
-  - machines' hosted-eng and hosted-rp;
-  - collection-gate-always and its env.
-- **Gate fixes before Sun 03:45:**
-  - ruff: one I001/E402 sweep plus cells' F841, then the lowered baseline locked in;
-  - mypy: 5 typed fields;
-  - the new generation↔machines_cli cycle, broken at the root (machines `gates`, by 11:45);
-  - vc9: the LTX LoRA and text-encoder digests;
-  - the volume card, after re-review.
-- **Live:** round 4 on M2 validated. **h3 is blocked** until Hannah's storage decision.
-- **Money:** 0 pods, $86.87.
-- **Open with Hannah:** storage, and the R12 v1 note.
-
-**Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
-
-**The main risk is now CI.** No complete run yet. The test lane's card: 120 s per-test timeout with markers, plus a Lanes hard wall. Then freeze, and the binding comparison against R12.
-
-**Owner items (REVIEW):**
-- the required-update floor of 13;
-- astrid-dev#640;
-- backslash authority;
-- the test-shape change;
-- the low-disk fallback;
-- the music defaults;
-- the partial-cells fallback.
+**No fixed freeze time. Freeze when every item is proven. Then: the frozen head's CI comparison; the live repeat (all five cells plus three h3 modes, more steps for edit and v2v, one FRESH download, warm reuse timing); then Hannah's go.**
+- **Compose head 941fca2a4.** Since 15:00: i2vsel (the attached i2v refusal names its fix). int/r13-a045b00e is the cleanest CI so far: fast checks green, 0 regressions, 0 new, 7 cleared.
+- **Open, all on the critical path:**
+  - machines: httpj round 3 (custody fence; test lane plus Astra), lanes round 4 (the 32 new-test ids; 16:30 stop), W2 (phase timings), W3 (skip re-hash; Astra), W4 after lanes;
+  - cells: `hostwedge`, the stale /tmp attempt wedge found by the P4.9 walk (machines reviews; about 17:15);
+  - phase 4: R4.G (stock seed shape), R4.H (defaults readiness vs missing models), R4.I (MCP open_url parity), then merge 941fca2a4, the re-walk and the handover SHA. The test lane is already proving interim 68ddbed7.
+- **Live:** W1 baseline done (same-pod t2i 4m35s vs 13m19s first). 0 pods; $84.22.
+- **Waiting on Hannah:** the P4.7 wording yes/no list, and merging PR banodoco/astrid-dev#648.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |

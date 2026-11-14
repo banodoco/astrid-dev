@@ -2,6 +2,34 @@
 
 Kept by the Release 13 test manager ([brief](test-manager-brief.md)). There is one row per failing or missing test id, or per job with no result. Results are sorted only with `env/baseline-diff.py`, by the rules in `astrid-dev-green` ([banodoco/astrid-dev#572](https://github.com/banodoco/astrid-dev/pull/572)).
 
+## Current state (Sat 14 Nov, 12:00 UTC; supersedes the older comparison below)
+
+Frozen heads and what the hosted runs showed. Evidence for each: `/home/user/wt/r13-tests/candidate/<sha8>/` (shard and Lanes reports), `runs/w7x/` (worker reports).
+
+| Head | Unit shards: failing ids | Regressions (R12 passed) | Notes |
+|---|---|---|---|
+| `65b1d45c` | n/a | 141 | first head with every shard reporting |
+| `6e1c34e2` | 320 | 1 | 229 ids cleared; 259 of 319 new-failing ids fail on cited local R12 runs |
+| `a4d893c8` | 321 | 1 (`test_runpod_engine_selection[video/i2v-runpod]`, missing LTX digest) | 6 new (4 `-attached` receipt fixture, 2 MCP-consent `PYTHONPATH`), 5 cleared; Lanes 0 regressions in 1/4, 2/4, opt-in |
+| `2f45835a` | 306 | 1 (same id; vc10 pin) | 7 new (4 h3, 2 `test_ltx_required_inputs_dry_run`, 1 d18 flake); Lanes shard 3/4: 32 new-test ids plus 13 regression-flagged (below) |
+| `fd5ff0d9` | 302 | 2 flagged, both explained (i2v-runpod: the h3 fixture PNG, fixed in compose; installer stop test: fixed pid 123, `installer-fake-pid` `e9a81cb56`) | 5 cleared, 1 new; fast checks: ruff, mypy, collection PASS; cycles FAIL until the baseline merged; Lanes: same 32 new-test ids as `2f45835a` |
+| `a045b00e` | 295 (CI `43595414481`) | 0 | 7 cleared (the h3 rows, i2v-runpod, guides test, installer stop test), 0 new; fast checks all PASS; Lanes `43595414414`: the same 32 new-test ids, 0 new; flagged: the 9 slot_path local-managed ids (new tests, machines' `lanes` card), Lane D shared_redo (R12 fails it in a combined run) and `activation[False]` (R12 fails); the h3 composition id, i2v-attached, cpu_path and structural_validation all passed here |
+
+Lanes shard 3/4 on `2f45835a` (run `43576499502`), reconciled by W75 and Rule 0:
+- 13 flagged regressions = `test_runpod_cpu_path::test_cpu_runpod_public_catalog_and_dry_run` (the one R12-to-R13 regression on the generate path: passes at R12 main locally, fails since `889312e1f`, M2a; stale test, ruling: a machines test fix, card `cpupath`); `tests/packs/test_vibecomfy_structural_validation.py::…[incomplete]` (passes at R12 main locally, 2 passed; fails at `fd5ff0d9`; W76 bisecting); `test_generic_host_activation_acceptance[False]` (fails at R12, `triage/lease/r12-activation.log`; Plan 39); 10 `test_runpod_slot_path_cpu` ids that did not exist at R12 (new tests, not regressions).
+- 32 new-test ids (test files not at R12), all test fixtures or observation points after managed-preparation changes (W73, `runs/w73/final.md`): shared recipe stub rejects `registry` (3 TypeError, h3 digest rows), spy observes the old engine factory after `be0027945` (13), pinned source absent in synthetic installs (12), cache-root fixture (9), `stop-uncertain` custody expectation, pod-owned dry preview, attached-h3 `KeyError: 'requirements'`. Owner: machines (card `lanes`); one shared pinned-source fixture with cells' jobseam.
+
+Gates (fast checks), for the record: Ruff baseline 2100 to 2010 (lowered by the I001/E402 sweep `r13/tests/ruff-sweep` `e1f3400ff`; counts only decrease); mypy: 5 attr-defined rows fixed by machines' gates card `8c5cf5704`; hosted mypy step needs types-PyYAML and `numpy<2.4` (`r13/tests/mypy-env` `4debdbd21`); collection gate: known set matched (4 environment-only), the fast-checks job lacked the Runtime, lifecycle and VibeComfy checkouts (`collection-gate-env` `fbeb3871a`); cycles: `generation<->machines_cli` fixed, `generation<->pack` and `rendering<->timeline` predate R13 (reproduce at `0e1543e0`, R12 never ran the step) and are recorded in `import_cycles.json` `known_before_release_13` (deferred.md row).
+
+Named test fixes (deliberate R13 changes; ruled test fixes, not exceptions): h3 declares the kind's plain inputs (`5fe9ed7a0`): `r13/h3-test-rows` and `r13/i2v-attached-red`; M2a (`889312e1f`): `test_cpu_runpod_public_catalog_and_dry_run`.
+
+Flake register (bucket 6):
+| id | evidence | disposition |
+|---|---|---|
+| `tests/core/generation/test_runpod_engine_selection.py::test_default_slot_resolves_to_requested_target_or_refuses[image/edit-auto]` | passes alone on `475c2dade` and `681a56edb` (6.7 s, 7.3 s, `triage/h3rows`, `triage/h3base`); fails only in the whole-file run on `681a56edb` | order-dependent; not a regression; watch, never retried until green |
+| `tests/sdk/test_child_bridge_d18.py::test_concurrent_submission_during_child_wait` | hosted shard 6 (`2f45835a`): `TimeoutError` at the 1 s futures bound; passes 3 of 3 on R13 and on R12 (local) | harness wait moved 1 s to 10 s, `r13/tests/d18-wait` `f45f121ba` (merged) |
+| `tests/core/execution/test_generic_host_child_bridge_d18.py::test_host_bridge_outer_send_diagnostic_preserves_revoke_close[False]` | fails hosted on `fd5ff0d9` (Lanes `43584934678`, `assert 2049 == 1`, O_NONBLOCK left on fd 2); passes on `2f45835a` and `a045b00e` hosted with the same product code, and on R12 main and R13 locally | flaky: not a regression; watch, never retried until green |
+
 ## Latest comparison
 
 **Update, 18:17 UTC:** run `43254543283` is complete. Shards 1 and 5 hit the 120-min limit, **slow, not hung** (no timeout dumps, progress at 94% and 82%), because the committed `tests/.test_durations` is badly stale (W29 is refreshing it). They are NO-RESULT. Re-sorted with shard 4 (6 of 8 unit shards): regression 41, no-baseline 28, preexisting 850, missing 5,309 (provisional). Evidence: `/home/user/wt/r13-tests/compare/agent/f9214240-b/` (to be committed with the next full comparison). The next full run is on the newest compose head, once the durations fix lands.

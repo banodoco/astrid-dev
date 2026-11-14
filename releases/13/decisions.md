@@ -1765,3 +1765,193 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Ruling: record both in import_cycles.json**, each with its cause (predates R13, reproduces at 0e1543e0, Plan 39) and cross-linked to the deferred.md row. Any new pair still fails. This is a preexisting row under its plan, per Hannah's exception rule, not a relaxed check.
 - **10:55: Hannah resized volume 2z2dlu1v8g to 300 GB** (confirmed via RunPod: size 300). Also: **"no need for a note, we have no users."** So there's no R12 user note and no R12 patch for the v1 retirement. That closes the item; the required-update floor of 13 is also moot.
   - **Round 6 started:** a fresh install of compose e51723152 (STAGE_TAG s14), a claim, then the h3 queue in Fable's order: v2v, video-edit, the i2v smoke, the 3 s bicycle i2v. It stops on ffprobe, OOM, CUDA, insufficient_storage or quota errors, then releases. A safety check fires at 13:23.
+- **11:10: merged machines 8e3376515 (volsize, re-merged with compose; the conflict was only the import list).**
+  - **Capacity:** the claim's network volume (id, size_gb, mount_path) travels to the pod job, and free space = size minus a bounded walk of the mount, so the preflight can now see the RunPod volume quota.
+  - **Inventory:** any EDQUOT or ENOSPC fetch failure writes `storage.inventory`, then re-raises.
+  - **Logged:** size_gb is the saved setup value; re-run `machines setup` after a resize. claim.sh does this.
+- **11:30: advisor dive 6, my answers.**
+  - **B1, the 45 local-managed Lanes failures:** the test lane runs 3–4 workers and a bisect of the `align` event. I freeze a head the moment the fix lands.
+  - **B2, the h3 164/108 composition mismatch:** a cells worker now.
+  - **B3:** if h3 fails live, iterate on one pod. Models are now cached on the 300 GB volume, so a re-claim is cheap.
+  - **Lesson accepted:** when a decision waits on the owner more than 30 min and a reversible option is within my authority (here, ephemeral disk), take it and record it. Also, one cheap live probe before review rounds.
+  - **The 3 unlogged rows are filed** in deferred.md (Test infrastructure): local disk cleanup, load-sensitive timeouts including d18, hosted test-env provisioning.
+  - **Release record and re-pin checklist:** a cells worker drafts them now.
+  - **h3 v2v: PASS live** (11:18; the first h3 GPU run; 6 frames 1024×576, soft at 1 step, silent audio kept from the source).
+
+## Sat 11:45: round 6 (h3_av live on e51723152): all three h3 modes PASS
+- **First h3_av GPU runs ever, on a fresh claim** (RTX 5090, volume now 300 GB):
+  - v2v PASS (20m27s, including the about 50 GB cold download);
+  - video-edit pipeline PASS (7m16s); the brightening wasn't shown at 1 step (class 2);
+  - i2v smoke PASS (5m41s): the reference reached the model and generated audio is present;
+  - the bicycle i2v at 3 s and 8 steps PASS (6m18s): faithful to the reference, light, dust, ambience and birds all as prompted; the push-in is weak (class 2, minor).
+- **Pod released explicitly:** $1.04 for the round. 0 pods; balance $85.38.
+- **Validation** for every output is in evidence/live/validation-log.md, frames in evidence/live/frames/r6-*. Samples were sent to Hannah.
+- **The disk-quota fault from round 4 is closed live** by machines' volsize plus the 300 GB resize.
+- **Remaining for h3:** the Sunday live repeat on the final head, with more steps for edit and v2v so prompt adherence can be judged. The test lane's h3 test rows and cells' h3cov (frame coverage 164 vs 108) still have to merge.
+
+## Sat 11:42: the test lane's W75 narrows the R12 regressions
+- **One real R12 regression:** `test_cpu_runpod_public_catalog_and_dry_run`. It's a stale test after the deliberate M2 change (889312e1f: generate takes no paid flags). Ruling: **fix the test, don't take an exception.** Machines updates it the way it updated the earlier M2 rows. The exception rule doesn't apply while a test fix is cheap.
+- **Ten other ids are new matrix tests, not regressions:**
+  - nine fail on "pinned source is absent", routed to cells' jobseam fixture and machines' `lanes` card;
+  - `[video/i2v-attached]` fails on "BasicGuider missing", routed to cells.
+- **The `align` family (32 ids):** machines' `lanes` card owns the bisect, with a hard stop at 15:35. The working lead is be0027945 (engine lookup via `entries.engine_table`, so the `_engine_for` spy sees nothing).
+- **Three earlier flagged ids** are in the count but not in W75; the test lane is reconciling them.
+- **11:43, reconciled on 2f45835a** (Lanes 43576499502): 13 ids were flagged.
+  - Real R12→R13 regressions:
+    - `cpu_path` ×1 (stale test, machines card `cpupath`);
+    - `structural_validation::…declared_assets…[incomplete]` ×1. It passes on R12 and fails at fd5ff0d9 because the VibeComfy canonical-bundle `workflow_load_er…` error now hides the declared-missing asset. The test lane's W76 is bisecting it, then routes.
+  - Not regressions:
+    - `activation[False]` fails on R12 too (Plan 39, cited local R12 run);
+    - `slot_path` ×10 are tests new in R13.
+  - Previously flagged ids cleared between a4d893c8 and 2f45835a: h3-attached, h3-runpod, shared_redo, and 2 h3 slot_path ids.
+
+## Sat 11:47: Plan 20 phase 4 (local-first onboarding): handed to a planner, outside R13
+- At Hannah's request, the advisor drafted phase 4 of Plan 20: P4.0–P4.9 plus R4, and owner decisions OD1–OD6.
+- I started planner session_011EzfVzrMeXfeWXM3LUepKQ under astrid-dev-plan:
+  - commit the draft verbatim, then fold it into Plan 20's files;
+  - a required fresh critic checks P4.1 as a `doctor` mode, a P4.2 conflict with Plan 35, and whether P4.4 is necessary;
+  - it then opens a scope PR for Hannah to merge.
+- The advisor sends the full draft straight to the planner.
+- **Sequencing:** no implementation before R13 publishes. P4.0 (a local walk, evidence only) waits on Hannah's OD3, because D8 forbids live GPU tests.
+- This doesn't touch the R13 freeze.
+- **11:48: merged two cells test-only branches,** both proved by the test lane. They update tests for the deliberate h3 change 5fe9ed7a0; they are test fixes, not exceptions.
+  - r13/h3-test-rows 681a56edb → compose dd8ea822f: 5 ids fixed, 0 regressions. `[image/edit-auto]` is order-dependent in the test lane's env; it passes alone on both commits.
+  - r13/i2v-attached-red f3cc1a80f → compose a371431db: video/i2v-attached and video/i2v-runpod pass.
+
+## Sat 11:51: Plan 20 phase 4 farmed out (Hannah's direction, via the advisor)
+- **Hannah's words:** "send this updated plan to the orchestrator to farm out the tasks, including setting up defaults and creating their own defaults if need be." She decided OD7 (the link at the end) and OD8 (the defaults step). Final draft: eec99b3.
+- **Manager:** session_011EzfW4R5yz8EETVbzZaLCF, integrating on astrid-agent int/20-phase4.
+  - It starts P4.3, P4.6 and P4.11 now; P4.1 follows after the critic's `doctor` ruling.
+  - Everything else waits until R13 publishes. P4.0 waits on OD3.
+- **Deviation, noted:** workers start before the scope PR merges. That's by Hannah's explicit direction to farm the tasks out. Their branches merge nowhere near main or r13, and the critic's verdict can reshape them.
+- **Why a new manager, not cells:** cells is on R13's critical rows (h3cov, the jobseam fixture and BasicGuider) until the freeze.
+- **11:52: Hannah answered OD3 "No on local GPU"** (via the advisor). D8 stands.
+  - P4.0 and P4.9 become walks on a hosted CPU runner against the fake ComfyUI (draft 35ba823). P4.0 starts now.
+  - A real first image on a person's own ComfyUI is requested as a Plan 34 row.
+  - OD6, the early start, I count as decided by Hannah's "farm out the tasks" quote.
+  - P4.1 and P4.4 are held until the planner's PR and the critic's verdict.
+- **11:58: Hannah: "we still need to do that work you received but use Claude subagents, it's refinement work."**
+  - Phase 4 runs in full now, with Claude subagents (the Codex sign-in is dropped).
+  - Work that needs R13 code branches from r13/compose and lands on int/20-phase4-r13 after publish.
+  - P4.12 stays in the phase. P4.2's outcome (a one-step save as default) is kept on the existing stores.
+  - Open owner decisions are built with the recommended option and flagged.
+  - Planner (PR #648) and manager told.
+- **11:58: both real R12→R13 regressions are fixed in compose** (test fixes only; product behaviour unchanged):
+  - r13/structural-node-id 1444896d0 → compose c61db4a82. The test's mocked model reference was missing the shape cells' pin e109c593b now requires; the declared-missing assertion is untouched (13 passed).
+  - r13/machines 6d62f8503 (cpupath) → compose ac3dc93a6.
+  - Left open: machines' `lanes` card (32 new-test ids, the `align` family) and `httpj`.
+- **12:02: Hannah decided Plan 20 phase 4's open items.**
+  - OD4 YES: download missing models, after one confirmation listing the files, sizes and folder.
+  - OD5 YES: create the project automatically in any case.
+  - OD1, OD2, R4 and the critique: YES.
+  - The first image uses our default with the download offered; if she declines, her own workflow.
+  - Planner and manager told.
+- **12:05: fd5ff0d9's unit shards** (CI 43584934648) vs 2f45835a: 302 failing ids vs 306 (5 cleared, 1 new). Both regression-flagged ids are explained:
+  - `[video/i2v-runpod]`: the fixture PNG, already fixed by h3-test-rows in compose dd8ea822f.
+  - `test_no_systemd_second_stop…idempotent`: the test used pid 123 against the real process table, which collides on a busy runner. Merged r13/tests/installer-fake-pid e9a81cb56: the pid is now above pid_max and the assertions are unchanged. That's root-fixed, not a flake exception.
+- **12:07: h3 "frame coverage 164 vs 108" resolved; it was a test fixture, not the product.** Merged r13/h3-compose-coverage 16c338f55.
+  - The cause: the fake clip used an unbounded lavfi colour source plus `-shortest`, and newer FFmpeg emits surplus frames. The source is now bounded with `:d=`. Expected 108 unchanged; production validation unchanged.
+  - The failing id is proved (fails before, passes after). The full-file run was interrupted (NO-RESULT), so the next CI head is the full proof.
+  - Deeper cause: unbounded lavfi sources across fixtures. Cells adds it to Plan 39 (root or logged).
+- **12:34: machines b4201d409 (httpj) is held; Astra BLOCK.**
+  - `runpod.keep` reaches the retained owner without comparing preferences (adapter.py:679). So, with the saved cap lowered, fresh consent can still extend paid custody (worker_owner.py:742). The gap predates httpj; it's the same hole httpj closes for status.
+  - Ruling: fix it at the root. One reuse-policy check is called by every path that spends or extends custody, and an enumeration test fails if a new path bypasses it. Money never ships as an exception.
+  - The rest of httpj passed review.
+  - cpupath and guides are already in compose.
+- **12:36: froze int/r13-a045b00e for CI.**
+  - Why now: lanes moved to 16:30 and httpj round 2 is about 2 h out. Seven merged fixes since fd5ff0d9 shouldn't wait 4 h for proof, including h3cov's interrupted full-file run (advisor lesson: don't idle on a single owner).
+  - fd5ff0d9's Lanes is on its last job, so the one-running-plus-one-queued rule holds.
+  - httpj is held out of compose by machines' own request.
+- **12:38: VibeComfy save-as-entry is slow (about 61 s; witness re-hash with no memo), found by Plan 20.** Ruling: no VibeComfy re-pin into R13 for performance this close to the freeze. Cells fixes it on a branch with a timing test, and it pins after publish. The deferred.md VibeComfy row is added.
+- **12:50: SECURITY (from Plan 20): HF_TOKEN is sent as a bearer header to any host** by `vibecomfy.fetch.download` and Astrid's `_fetch_model`.
+  - Routed to cells to establish whether any R13-reachable path (catalog, user workflow URLs, h3 assets, a cross-host redirect) can reach a non-HF host.
+  - If yes: an R13 fix with a VibeComfy re-pin (security outranks the no-re-pin rule). If no: deferred, with the same fix after publish.
+  - The planned fix sends the token only to allowed HF hosts on every hop.
+  - Plan 20's P4.6b already allows only https://huggingface.co on its side.
+- **12:53: HF_TOKEN exposure is REACHABLE in R13** (cells, evidence at VibeComfy d3850831 and Agent compose).
+  - Shipped locks and templates are Hugging Face only, but **a user workflow's model URL** reaches `_fetch_model` → `fetch.download`, which attaches the token to any host on the initial request. (httpx already strips it on a cross-origin redirect.)
+  - **Ruling: an R13 fix.** VibeComfy `r13/cells-vc-11` (card hfhost, about 60 min): the token goes only to https on the exact HF hosts and their subdomains, with negative tests (lookalike hosts, http, userinfo, a cross-host 302, receipts and logs). Then one Agent pin.
+  - The test lane proves it. Cells smokes the re-pin, confirming vc-11 is d3850831 plus hfhost only.
+  - A deferred row covers the deeper question: whether arbitrary user model URLs should fetch without a confirmation (P4.6b starts that).
+- **13:21: hfhost landed:** VibeComfy r13/cells-vc-11 dba38f86, which is d3850831 plus fetch.py and two test files only.
+  - The token goes only to https on huggingface.co, hf.co and their subdomains. Redirects are now followed manually, with headers rebuilt on every hop, so no client can forward the token across hosts.
+  - 35 new tests pass; the focused suite has 0 regressions.
+  - **Deliberate security change:** test_fetch.py:279's `follow_redirects is True` becomes `is False`, because it pinned the replaced mechanism.
+  - **Risk:** every model download now goes through the manual redirect path. Before the pin merges, cells checks the real HF→CDN chain off-pod (an LFS file and a plain file, sha-checked). Sunday's live repeat must include one FRESH model download, not only a warm volume.
+  - The Agent pin r13/compose-pin-vc11 is about 1 h out.
+- **13:25: vc-11's real redirect chain is verified off-pod** (cells, anonymous, real HF).
+  - LFS: huggingface.co → us.aws.cdn.hf.co, sha256 matches lfs.oid. A plain file also passes.
+  - Every hop is manual. Receipts carry no token, and no .part is left.
+  - `_ResumingClient` resumes with a 206 across the redirect hop.
+  - Evidence: evidence/live/vc11-realfetch-log.txt.
+  - Remaining risk (a real token, multi-GB on a pod) goes to Sunday's fresh download.
+- **13:55: merged the vc-11 security pin.** r13/compose-pin-vc11 d61424055 → compose bb89b3f2b; VibeComfy d3850831 → dba38f86.
+  - The pin-tool commit touches 6 revision lines only, with zero template_hash changes, so every live-proven slot keeps its template.
+  - Paired proof: 0 regressions, 1 fixed.
+  - The preexisting `[video/i2v-attached]` engine-selection failure is carded to cells.
+  - httpj round 2 (9e0d4313d) is with the test lane and Astra.
+- **13:57: httpj round 2 (9e0d4313d).** The keep defect is fixed and the paired proof is clean, but Astra BLOCKs on two points. Both go to machines as round 3:
+  - (1) ls and release are blocked by malformed saved preferences. Ruling: a user can always see and release a pod; non-spending runs before normalisation.
+  - (2) An unreadable settings store fails open. Ruling: keep and claim fail closed.
+  - **Design pin, ruled:** job reuse follows the claim's recorded bounds (no new pod, never above the original limit or expiry). Status and the receipt surface it when the saved policy is now stricter.
+  - Still held out of compose.
+
+## Sat 14:05: Hannah pulls onboarding and warm models into R13; no fixed clock
+- **Hannah, verbatim:** "we should include the rest of the onboarding work and keeping the models warm between tasks and be released when another task comes in or warm down time e[n]ds - get Fable to sense check the current implementing and what we need to do. Rest is okay. And let's not be too anal about arbitrary times, we could even get it done sooner."
+- **IN R13:**
+  1. **All of Plan 20 phase 4.** The Agent line int/20-phase4-r13 merges via compose.sh after the test lane's paired proof. The App (833357167) and Pinokio (c1b5eed) branches fold into R13's App and Pinokio candidates at the release step.
+  2. **Warm models:** a loaded model stays resident between jobs, and is released when another task needs the memory or when warm-down ends. This was T10 plus Plan 32 T5f.
+- **Fable** (session_011EzfW4KxQbf3mB7UevxVdh) sense-checks the current warmth implementation per placement, gives the smallest elegant change, risks and cards, plus a risk read of the phase 4 line. I route the cards; machines (engine) is pre-warned.
+- **"Rest is okay":** the rest of deferred.md stays deferred as listed.
+- **Timeline:** Sun 04:00 is no longer binding. **We freeze when every item is proven**, possibly sooner. Still required, in order: the frozen head's CI comparison; then the live repeat of all cells plus h3 (more steps for edit and v2v, one fresh model download, plus warm-model reuse timing); then Hannah's go.
+- Manager told to push both phase 4 lines now; runner contention no longer applies.
+- **14:06: phase 4 × machines guides conflict ruled.** Setup keeps phase 4's single RunPod line (Hannah's direction). Machines' claim-first safety rule is re-homed to the RunPod skill and widened to every shipped skill: every `machines claim` parses with --consent paid, --max-usd, --deadline and --for, and no generate command carries a paid flag. The RunPod skill's claims gain --deadline.
+- **14:04:** the phase 4 manager's push was refused by the auto-mode classifier ("Undermining Oversight"). It didn't route around it. **Hannah was asked to approve it in that session.**
+- **14:12: warm-models sense-check (Fable, four Luna passes, file:line cited).**
+  - Models ALREADY stay loaded between jobs. The host does no residency control, the engine is handed on, and the pod reset frees nothing. ComfyUI evicts by itself when another model needs VRAM. RunPod's idle timer is the warm-down.
+  - Missing: proof, visibility, a local-managed idle release, and the real per-job cost, which is a full re-hash of every model file on every preparation (managed_preparation.py:539-551).
+  - **Cards, all IN R13:**
+    - W1 (me, live, about $0.30): t2i, t2i, edit on bb89b3f2b as the baseline. **Started 14:12.**
+    - W2 (machines): the per-job engine-log slice, VRAM before and after, and verification seconds.
+    - W3 (machines plus Astra): skip the re-hash on a matching verification record, using the same key as cells' VibeComfy witness memo.
+    - W4 (machines): local-managed idle → `release`.
+    - W5 (cells): the "what warm means" docs.
+    - W6 (me, live): W1 repeated on the W2+W3 build.
+  - Deferred: one home for warmth (backends/vibecomfy fingerprint warm session; `_WARM_SESSION_ADAPTERS`, Wan only). OOM eviction for self-managing node packs only if seen.
+- Fable's phase 4 risk read went to the test lane and the manager (P4.3, P4.2, P4.4, P4.10, P4.8, plus no runpod or machines_cli files).
+- **14:32: merged r13/machines-medialist 595da9bc3 → compose ae1c608a7.** This fixes the R12→R13 regression in test_generation_tags: `media list` takes --placement and rejects --target, finishing T3's rename. Test lane: 3 failed → 14 passed.
+  - It's based on 02b76c709 without httpj; httpj is still held.
+  - A freshness re-check on the merged head was asked of the test lane, because the regenerated surfaces came from an older base.
+  - a045b00e unit residuals: 295 failing, 0 regressions in the hosted attribution so far.
+- **14:34: cells' i2vsel is done.** Agent r13/engine-sel-i2v-attached fea67d9cb; the test lane proves it next.
+  - `[video/i2v-attached]` is NEW in R13 (the R12 run collects zero tests).
+  - The guardrail worked as intended: (b) failed first, so the product refusal was fixed at the raise site (e42e0dd40: it names the missing node and the fix). Then exactly one typed code, `missing_node_pack`, went into REFUSALS, citing 5fe9ed7a0.
+  - 0 regressions; the target id is fixed.
+  - Deeper cause (default selection picks h3 for a target lacking its nodes) is in deferred.md.
+- **14:58: W1 warm baseline done** (bb89b3f2b; RTX 5090; warm volume).
+  - Times: t2i on a fresh claim 13m19s; **t2i again on the same pod 4m35s**; edit (a different model) on the same pod 4m24s.
+  - That the edit took the same time as the warm t2i supports Fable's read: the per-job floor is mostly preparation and verification, not model load. W2 will split the phases, and W3 removes the re-hash. W6 repeats this on the W2+W3 build.
+  - All outputs validated: the edit wall drift is class 2 as before. Cost $0.37 (W1, cut short by my local disk guard) plus $0.60 (W1b). 0 pods; $84.22.
+  - Local disk was cleaned (old install homes); lesson: check local free disk before a round, not only during it.
+- **15:07: int/r13-a045b00e is the cleanest head so far** (CI 43595414481).
+  - Fast checks all pass. Unit shards: **0 regressions, 0 new**, 7 cleared.
+  - Lanes: the same 32 new-test ids (machines' lanes card), 0 new.
+  - The d18 outer-send id is registered as a flake: it passed hosted on the same code.
+  - Freeze criteria still open: (2) the last R12 verdicts on residual files; (3) lanes; (4) httpj round 3.
+  - The phase 4 interim 68ddbed7 and i2vsel fea67d9cb proofs are running in the test lane.
+- **15:42: merged cells' i2vsel fea67d9cb → compose 941fca2a4.**
+  - Exactly 3 files: entries.py (the refusal message gains its recovery sentence), the new recovery test, and engine_selection (one REFUSALS code).
+  - Test lane, paired against ae1c608a7: 0 candidate-only failures, 1 fixed. Six message-text files are identical on both sides.
+  - The slot_path red-cell subset is still running, but the test lane says the decision doesn't hinge on it.
+- **15:45: phase 4 walk 2 (P4.9) results on 3490f1b2.**
+  - Both runs admitted, with open_url and "My first project". fetch-models plans 3 files, 16.10 GiB, with a digest.
+  - Run B (the user's own workflow) took about 0.5 min and 3 commands, against about 4 min and 21 in walk 1.
+  - Two phase 4 defects found, fixed by the manager:
+    - R4.G: the saved seed isn't honoured on ComfyUI's stock `control_after_generate` shape, and an explicit seed is rejected.
+    - R4.H: `defaults` reports ready while models are missing.
+  - **R13 bug P4.9.1 → cells card `hostwedge`, with a machines review.** `_recover_terminal_requests` (generic_host ~14202) globs the shared /tmp for `astrid-attempt-*` and retries for ever on a foreign Runtime's request, so all later generations stay queued silently.
+    - Root fix: per-Runtime attempt scope, foreign requests skipped with a diagnostic, and bounded retry to a visible terminal state.
+    - Cells takes it because machines is at capacity (httpj, lanes, W2, W3, W4).
+  - P4.9.2 (`runtime up --wait` port conflict) is deferred to the Runtime plan unless it blocks single-Runtime onboarding (asked).
+  - P4.0.5, .6, .16 and .12 → phase 5 rows.
+- **15:46:** P4.9.2 doesn't block single-Runtime users (it only affects two Runtimes or a source checkout). Deferred to the Runtime plan; deferred.md row added. Phase 4 adds R4.I: the MCP `open_url` parity gap the test lane found.
