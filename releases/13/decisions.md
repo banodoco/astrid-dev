@@ -1551,3 +1551,17 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Sun:** the live repeat of all cells, h3 included, on the final head.
   - **Publish:** no earlier than Sun about 12:00, with Hannah's go.
   - **Risk raised with Hannah:** RunPod REST v1 retires on 15 Nov. After that, R12 can't list or release pods (decisions.md:1254), so R12 users could keep paying until they update. Mitigation is her call: a user note before 15 Nov, telling R12 users to release their pods and not rent until R13; or a minimal R12 patch.
+- **03:55: round 4 on int/r13-65b1d45c (M2): tts PASS** (16m22s; the machine stayed `idle prepared`). This is the first live proof of M2's claim-then-generate path.
+  - **h3 inputs from cells, all CPU dry-run green here:**
+    - i2v 22d6decff;
+    - video-edit f04dc7f9f;
+    - v2v 4b4e80657.
+  - **References:** the generated red-bicycle image (`inputs/subject-bike.png`), because the old edit-src.png and the b-roll clips are flat single-colour test patterns. The v2v and edit source is a 2 s still clip from the bicycle (1024×576, 24 fps, silent AAC).
+  - **Queued on the same pod after the five cells:**
+    1. h3 i2v smoke (1 step, 5 frames; carries the 49.8 GiB weight download);
+    2. a 3 s bicycle i2v at 8 steps (Hannah's request);
+    3. video-edit;
+    4. v2v.
+
+    Each later job runs only if the smoke test passes.
+  - **h3 defect for the Fable list:** exact "5/24" is refused on source-backed modes (request_v2.py:62-70 against spec.py:218). 6 frames is the shortest window that works.
