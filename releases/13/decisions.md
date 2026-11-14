@@ -1694,3 +1694,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **06:15: merged cells r13/music-slot-default a7ef0489a.** It makes the music default ace_step (priority 20, above minimax at 10), per my 02:25 ruling.
   - **Proof:** 0 regressions. The four default-entry expectations now name ace_step.
   - **Honest note from cells:** the `[music]`/`[tts]` receipt ids pass in isolation on the base too, and time out only under parallel load. So this change stands on the live-proof ruling, not on those tests.
+- **07:40: int/r13-6e1c34e2 CI complete: regressions 141 → 1** (229 ids cleared). The Lanes half is still running.
+  - **The 1 left:** `test_runpod_engine_selection::…[video/i2v-runpod]`. Machines tied it to the LTX digest gap; cells' vc8 pin and h3 plain-inputs are the candidates to clear it.
+  - **New-test failures:** 319, of which 259 fail on cited local R12 runs (Plan 39 #636/#637/#639/#647). Of the residual 60, about 22 are owner-routed and the rest are being checked on R12.
+  - **Shard walls:** s1 took 1:29 (was 2:21) and s6 took 1:47 (was 2:30), both well under the wall.
+  - **Merged machines 580e2b703** (recself, test-only; failure_receipt 44/44), giving compose a4d893c8f.
+  - **The volume card is NOT ready:** a review found 3 P1s and 2 P2s, and round 7 fixes them by Sun 01:00 with a clean re-review. It doesn't unblock h3; that still needs Hannah's storage decision.
