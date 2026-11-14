@@ -49,6 +49,8 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | RunPod model-cache GC: a references-based, dry-run-first cleanup of the network volume with deletion receipts (h3 hit "Disk quota exceeded" on the 200 GB volume 2z2dlu1v8g; suspected old `h3-golden` release copies). About 2–3 days plus live qualification | machines, 04:25 Sat; decisions.md 04:35 |
 | No shell on a rented machine (O8): storage could not be inspected on the full volume. Candidate: product diagnostics as declared run-log steps | decisions.md 04:35 Sat |
 | The lifecycle exposes typed status and Retry-After | decisions.md:463 |
+| Reuse one pod source archive per pinned tuple: bootstrap rebuilds and recompresses the whole source tree for every claim and re-bootstrap (a killed-pod third generation built it three times). R13 drops gzip to level 1 (18.8 s to 6.5 s, 134 MB to 144 MB) as the narrow fix; the root is a content-addressed archive cached locally and on the volume | rows2 report (wt/runs/rows2/keep/report.txt), machines 05:32 Sat; Agent bcd674ed4 |
+| Four remote_machine_cpu assertions that predate deliberate changes, ruled for update, not applied in R13 before the 06:00 read (scheduled for the Sun freeze): custody-change expects `--models-root` (7e3314ad2); cancel-mid-poll keeps the verified idle pod until explicit release, then delete and 404 (80bbf6904, d072cf5da); the preclaimed job has no capacity-wait phase (d29f58570); an unreported log manifest is `unavailable/not_reported` (30795fec8) | rows2 report, machines 05:32 Sat |
 
 ## Generation, catalog and engine (next generation plan; T-series group B)
 | Item | Source |
