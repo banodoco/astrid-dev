@@ -2,20 +2,18 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (14:00 UTC Sat 14 Nov): read this first
+## Now (15:00 UTC Sat 14 Nov): read this first
 
-**Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00 (SHAs by 03:45). The binding comparison is Sun 06:00–09:00, then the live repeat of all five cells plus the three h3 modes on the final head, with at least one FRESH model download (vc-11 changed the download path).**
-- **Compose head bb89b3f2b.** VibeComfy is now dba38f86 (vc-11, the HF_TOKEN security fix; real redirect chain verified off-pod). int/r13-a045b00e CI is running, frozen at 12:36.
-- **Critical path to the freeze:**
-  - machines **httpj round 3**: the one reuse-policy fence; ls and release always allowed; keep and claim fail closed; job reuse within the claim's recorded bounds (ruled 13:57). Then the test lane's proof and Astra's re-review.
-  - machines **lanes** (the `align` family; 16:30 hard stop).
-  - cells **i2vsel** (`[video/i2v-attached]` engine selection; a typed refusal code or a product fix, guardrail ruled).
-- **Accounted for:** both R12→R13 regressions fixed. Five base failures found by Plan 20 classified as R12-failing (Plan 39) or stale tests (fixed).
-- **Live:** 0 pods; balance $85.38.
-- **Outside R13:** Plan 20 phase 4, PR banodoco/astrid-dev#648, waiting on Hannah's merge.
-  - int/20-phase4-r13 has P4.1, 4.2, 4.4, 4.5, 4.6b, 4.6.1, 4.6.2, 4.8, 4.10, 4.11b and 4.12; P4.7 is in progress.
-  - Its App and Pinokio branches: astrid-app int/20-phase4-app 833357167; astrid-pinokio int/20-phase4-pinokio c1b5eed.
-  - Pushes wait for R13 CI slots.
+**No fixed freeze time (Hannah, 14:05). Freeze when every item is proven. Then: the frozen head's CI comparison; the live repeat (all five cells plus three h3 modes, more steps for edit and v2v, one FRESH model download, warm-model reuse timing); then Hannah's go.** Scope now includes all of Plan 20 phase 4 and warm models.
+- **Compose head ae1c608a7** (VibeComfy dba38f86): adds medialist, the R12 regression fix. int/r13-a045b00e CI shows 0 regressions so far in attribution.
+- **Open, all on the critical path:**
+  - machines httpj round 3 (custody fence; the test lane's proof and Astra's re-review);
+  - machines lanes (16:30 stop);
+  - cells i2vsel fea67d9cb (with the test lane for proof);
+  - phase 4 int/20-phase4-r13: compose merged at 5b9dff8d with 162/162 proofs; R4.A (`generate scan`), R4.B and R4.C, the RunPod deadline placeholder and P4.9 remain; then the SHA goes to the test lane;
+  - warm models: W2 and W3 (machines; W3 gets Astra), W4 (after lanes), W5 done (097308932, in phase 4); then W6 live.
+- **Live:** W1 baseline on bb89b3f2b: fresh claim t2i 13m19s, **same-pod t2i 4m35s**, edit 4m24s, so the floor is preparation and verification, not load. $0.97 total; 0 pods; $84.22.
+- **Waiting on Hannah:** the P4.7 wording yes/no list (in chat).
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
