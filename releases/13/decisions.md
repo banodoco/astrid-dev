@@ -1885,3 +1885,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - `_ResumingClient` resumes with a 206 across the redirect hop.
   - Evidence: evidence/live/vc11-realfetch-log.txt.
   - Remaining risk (a real token, multi-GB on a pod) goes to Sunday's fresh download.
+- **13:55: merged the vc-11 security pin.** r13/compose-pin-vc11 d61424055 → compose bb89b3f2b; VibeComfy d3850831 → dba38f86.
+  - The pin-tool commit touches 6 revision lines only, with zero template_hash changes, so every live-proven slot keeps its template.
+  - Paired proof: 0 regressions, 1 fixed.
+  - The preexisting `[video/i2v-attached]` engine-selection failure is carded to cells.
+  - httpj round 2 (9e0d4313d) is with the test lane and Astra.
