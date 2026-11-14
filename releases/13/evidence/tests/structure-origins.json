@@ -1,0 +1,100 @@
+{
+  "scope": "Deduplicated structural import crossings from .tmp-tests/proof/before-structure-classification.json; excludes the 32 findings already present in R12 and nine existing paths per task instruction.",
+  "history_query": "git -c gc.auto=0 log --reverse --format='%H %h %s' -S'<import module string>' 0e1543e0..HEAD -- <offending filepath>",
+  "findings_source": ".tmp-tests/proof/before-structure-classification.json",
+  "origins": [
+    {
+      "path": "astrid/core/execution/generic_host.py",
+      "module": "astrid.packs.runpod.failure_receipt",
+      "origin": "3bcd524e3dae7b1c06dea7f00b16aa916bc94dd1",
+      "subject": "Add machine phase timing, shared verified fetch, and local failure receipt",
+      "state_in_prepared_patch": "removed from generic_host; machine-owned failure_recorder hook replaces it"
+    },
+    {
+      "path": "astrid/core/execution/generic_host.py",
+      "module": "astrid.packs.vibecomfy.local_server_engine",
+      "origin": "2ac65059341f63f09d00d5a4d666db8f6aaa329c",
+      "subject": "Prepare managed engines on the trusted host before worker launch"
+    },
+    {
+      "path": "astrid/core/execution/generic_host.py",
+      "module": "astrid.packs.vibecomfy.actions.run.run",
+      "origin": "f96644329ec545bd764d8697f4375d331724ffc1",
+      "subject": "Verify managed installation and bind preparation to admitted inputs"
+    },
+    {
+      "path": "astrid/core/generation/cli.py",
+      "module": "astrid.packs.runpod.failure_receipt (imported from package astrid.packs.runpod)",
+      "origin": "3bcd524e3dae7b1c06dea7f00b16aa916bc94dd1",
+      "subject": "Add machine phase timing, shared verified fetch, and local failure receipt"
+    },
+    {
+      "path": "astrid/core/generation/engine_facts.py",
+      "module": "astrid.packs.vibecomfy.asset_manifest",
+      "origin": "974a50812616331395b64f476db321dfd7e27e23",
+      "subject": "Plan 32 T6b-3: h3 resolves to its vibecomfy.workflows contribution; build/after_outputs run through the engine"
+    },
+    {
+      "path": "astrid/core/generation/engine_facts.py",
+      "module": "astrid.packs.vibecomfy.invocation_preflight",
+      "origin": "974a50812616331395b64f476db321dfd7e27e23",
+      "subject": "Plan 32 T6b-3: h3 resolves to its vibecomfy.workflows contribution; build/after_outputs run through the engine"
+    },
+    {
+      "path": "astrid/core/generation/local_job.py",
+      "module": "astrid.packs.vibecomfy.local_job",
+      "origin": "fe066bdc9e96ee76f2734384e0f312a8aa203359",
+      "subject": "Move job hook routing to VibeComfy"
+    },
+    {
+      "path": "astrid/core/generation/managed_preparation.py",
+      "module": "astrid.packs.vibecomfy.actions.run",
+      "origin": "2ac65059341f63f09d00d5a4d666db8f6aaa329c",
+      "subject": "Prepare managed engines on the trusted host before worker launch"
+    },
+    {
+      "path": "astrid/core/generation/managed_preparation.py",
+      "module": "astrid.packs.vibecomfy.native_preparation",
+      "origin": "d4da4927e9a69a85a986fca9b02deeff7e62ea12",
+      "subject": "Share native synchronization and frozen workflow preparation for owned engines"
+    },
+    {
+      "path": "astrid/core/generation/placement.py",
+      "module": "astrid.packs.runpod.machine",
+      "origin": "e75a5a8eeaabc42621d0a6028a8bb98c4da0b8ec",
+      "subject": "Plan 32 T5c+T5d: which machine ran a job; warm reuse cleared when the pod dies"
+    },
+    {
+      "path": "astrid/core/machines_cli.py",
+      "module": "astrid.packs.runpod.machine",
+      "origin": "e75a5a8eeaabc42621d0a6028a8bb98c4da0b8ec",
+      "subject": "Plan 32 T5c+T5d: which machine ran a job; warm reuse cleared when the pod dies"
+    },
+    {
+      "path": "astrid/core/machines_cli.py",
+      "module": "astrid.packs.runpod.target_selection",
+      "origin": "7d8239a64158a36e681a902da4cd0dbbb26b0617",
+      "subject": "Add machine keep CLI with paid cap"
+    },
+    {
+      "path": "astrid/core/machines_cli.py",
+      "module": "astrid.packs.runpod.worker_owner",
+      "origin": "7486254135fa58b92e415e016bf2cd8a3326f466",
+      "subject": "Add guided RunPod machine setup"
+    },
+    {
+      "path": "astrid/core/machines_cli.py",
+      "module": "astrid.packs.runpod.adapter",
+      "origin": "7486254135fa58b92e415e016bf2cd8a3326f466",
+      "subject": "Add guided RunPod machine setup"
+    }
+  ],
+  "separate_assigned_finding": {
+    "path": "astrid/core/execution/generic_host.py",
+    "module": "astrid.packs.runpod.failure_receipt",
+    "origin": "3bcd524e3dae7b1c06dea7f00b16aa916bc94dd1",
+    "state_in_prepared_patch": "now fixed by moving receipt construction behind the registered machine's optional failure_recorder method"
+  },
+  "not_traced_per_instruction": "32 imports already present in R12 and nine old paths",
+  "final_assigned_import_status": "Removed from core; registered machine owns recorder. before90newstructurefindings ->after89; standalonecore_pack_boundarycheckexit0,98->97findings."
+}
