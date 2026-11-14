@@ -1991,3 +1991,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - `generate failure` is pinned PRESENT (the read-only diagnostic for agents).
   - `video_ref` is in the exact generate_video schema.
   - Before commit: confirm the product's MCP tool names don't collide (`defaults set` vs `settings set`). If they do, it's a product fix with a no-two-leaves-share-a-name test.
+- **16:50: hostwedge is cleared by machines' review at r13/host-wedge 1505a379c.**
+  - Crash recovery comes from a private per-executor base under the user's state.
+  - A bad attempt goes to recovery_blocked or reconciliation_required, never a startup failure; a squat falls back to a fresh directory; legacy roots are read only when this uid owns them.
+  - Cells: 0 regressions out of 100 tests on each side. Next: the test lane's proof plus an Astra read.
+  - Deferred: reclaim doesn't age crash leftovers in the private root (a slow disk leak, no custody effect).
