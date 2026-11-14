@@ -1634,3 +1634,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **New:** `machines claim --deadline <UTC>` (it can only shorten). MCP exposes the `machines` commands, so MCP claims with explicit paid consent before generating.
   - **Six assertions moved** from generate to claim, under the owner-removed rule.
   - **Money-path ask (root, by Sun 03:45):** a CPU test that an MCP `claim` without `--consent paid` and without stdin refuses with a typed error, with no rental attempt and no prompt.
+- **05:10: merged machines 49d58b194 (the engine-rows card plus Astra's restorations).**
+  - **Rows:** 12 engine row groups.
+  - **Product:** generic_host gets the machine recorder through the registered hook (boundary 98→97). `storage_floor_exempt` defaults to not exempt.
+  - **compare_baselines (48 cross-lane boundary crossings) goes to the test lane:** each one is sorted as either a deliberate R13 change, whose baseline refresh cites its cause commit, or an accidental crossing, routed back to its owner. Machines pushes the origin map to the records branch.
+  - **The MCP claim-consent root fix is in progress** (`r13/machines-mcp-consent`).
