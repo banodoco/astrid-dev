@@ -1836,3 +1836,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - P4.12 stays in the phase. P4.2's outcome (a one-step save as default) is kept on the existing stores.
   - Open owner decisions are built with the recommended option and flagged.
   - Planner (PR #648) and manager told.
+- **11:58: both real R12→R13 regressions are fixed in compose** (test fixes only; product behaviour unchanged):
+  - r13/structural-node-id 1444896d0 → compose c61db4a82. The test's mocked model reference was missing the shape cells' pin e109c593b now requires; the declared-missing assertion is untouched (13 passed).
+  - r13/machines 6d62f8503 (cpupath) → compose ac3dc93a6.
+  - Left open: machines' `lanes` card (32 new-test ids, the `align` family) and `httpj`.
