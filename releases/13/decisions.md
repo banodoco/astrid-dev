@@ -1471,3 +1471,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The binding comparison by about 11:00.
   - Publish about 13:00 Sat with Hannah's go: before the RunPod v1 retirement on 15 Nov.
 - **Process note for after release:** one weekly limit stopped every lane at once, with no warning to the owner. The lanes all showed `allowed_warning` on the seven-day limit from Fri 07:00. Next time, when that warning shows, tell Hannah and cut model use (lanes to Sonnet, fewer helpers) rather than run until the stop.
+- **02:10: machines' report on restart.**
+  - `[False-music]` is cells': `audio/minimax_music_3` `prompt` is required with an empty default, and the archive rightly refuses it.
+  - **Routed:**
+    - dry_live_seam models_root ×5 goes to my engine worker. The cause is the layout change f0ba64407e against tests that hardcode the old path.
+    - dry_live sfx goes to cells: the explicit-only exclusion 8395174a51 conflicts with the pack default from ee3015a5a6.
+    - job-seam `pinned source is absent` goes to cells (fixture without `.git`).
+  - Machines' rows WIP is snapshotted as `r13/machines-m2-rows-wip1`; ETA 05:00.
+  - **Incident:** a machines Sol worker read one runtime skill file under `~/.codex`, against the standing rule. Machines reports no credentials were read. The worker has been told, and machines will repeat the rule in every brief. Reported to Hannah.
