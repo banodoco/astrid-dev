@@ -2008,3 +2008,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - (4) blocked or reconciling attempts aren't shown to keep their fence, or to release the managed session or engine.
   - **Steer to cells:** drop the random fallback (the base is in private user state, so a squat isn't possible). An unsafe base becomes a visible host-wide refusal. Validate by descriptor (O_NOFOLLOW, fstat, ancestors). Apply the uid rule in reclaim. (4) keeps the fence and releases the session or engine on replay, with tests.
   - Not merged. Round 3 goes through machines' read, then the test lane and Astra.
+- **17:28: warm models: W3 (a) and W2 are ready.**
+  - W3 opt-in: `models.trust_unchanged` in the Runtime generation settings, default a full hash; the controller carries it to the pod; the per-prep log records {trust_unchanged, hashed, skipped}.
+  - W2, ec264e87b: a per-job engine-log slice, plus job-run.json (astrid.job-run.v1) with VRAM before and after and fixed phase keys (verify_models, engine_start_or_reuse/engine_reused, queue_wait, execute, collect). Evidence collection never masks the job.
+  - **Batch for the test lane:** lanes 87b8a5850 → comfy-source 2451d9ca6 → timeout c0da1b2d0 → W3 → W2.
+  - Then W6 live, with trust_unchanged on.
+  - Open: cells' W4 (local idle release), hostwedge round 3, httpj round 4, and the phase 4 rented-machine seed test.
