@@ -2102,3 +2102,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - T5b's "Turbo off" is v2 `settings.turbo.enabled: false`.
   - Live checks compare against the DECODED source (crf 0 still clip).
   - **Next:** cells commits the assets and requests to astrid-dev, then I run T1–T5 live on the current build. Cells also does the README fixes and adds the corrected requests as worked examples in the h3 skill, with an admission test.
+- **19:30: Fable's Q2 (per-job inefficiency, read only).** The code does not fully explain the 4m35s: the re-hash accounts for about 1–2 min, leaving about 2–3 min unattributed. **So the measurement comes first (P1: me, once W2 merges).**
+  - Ranked: the re-hash (W3 flip, in hand); the record placement and the download seed (round 5b, in hand); engine status re-validation per preparation (tens of seconds?); 15 s polling on pod ops; a source digest per preparation; whether the engine is actually reused (W2 decides).
+  - **To machines, after 5/5b:** P4 (polling 1→5 s; the source-digest memo; about 1 h), then P3 (a `timing` block with `unaccounted` in every result, `generate --json` and `tasks show`; about half a day; Hannah's profiling ask).
+  - **The first job on a fresh pod (13m19s):** about 9 min is bootstrap plus engine install, because only models persist on the volume. P6 (persist the engine environment on the volume) is the largest saving and isn't small. **Hannah decides whether it's before release.**
+  - The tester brief is corrected after Astra's review (advisor/windows-tester-run 04c125da). Hannah asked for it on astrid-dev main, which needs a PR.
