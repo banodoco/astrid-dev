@@ -1720,3 +1720,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Proof vs compose:** 0 regressions, 20 fixes, 607 passed with 5 preexisting failures.
   - **Narrow follow-up:** the hook validates the request before declaring logs. The deeper cause, implicit hook admission order, is logged in deferred.md.
   - **Behaviour change:** local and attached video defaults now require the H3 dependencies and don't fall back to LTX. GPU execution is unproven until the h3 live run.
+- **08:40: merged the test lane's collection-gate-always 8ba7c0fee and machines 8e699e470, giving compose 2f45835a4.**
+  - **Collection gate fix:** the gate now runs even when ruff, mypy or cycles fail.
+  - **Machines' hosted-eng and hosted-rp:** all 16 of machines' hosted new-file failures are fixed or ruled. **Product fix:** a logs step with nothing collected reports "unavailable", not "kept". **Classification:** 5 new RunPod exception classes are receipt-safe.
+  - **a4d893c8 fast checks: the Ruff baseline gate is RED**, so new lint violations got in. The test lane attributes each by cause commit and routes it to its owner. No baseline raise without a named deliberate cause. The next freeze follows that routing.
