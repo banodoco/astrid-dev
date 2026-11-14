@@ -12,7 +12,8 @@ Frozen heads and what the hosted runs showed. Evidence for each: `/home/user/wt/
 | `6e1c34e2` | 320 | 1 | 229 ids cleared; 259 of 319 new-failing ids fail on cited local R12 runs |
 | `a4d893c8` | 321 | 1 (`test_runpod_engine_selection[video/i2v-runpod]`, missing LTX digest) | 6 new (4 `-attached` receipt fixture, 2 MCP-consent `PYTHONPATH`), 5 cleared; Lanes 0 regressions in 1/4, 2/4, opt-in |
 | `2f45835a` | 306 | 1 (same id; vc10 pin) | 7 new (4 h3, 2 `test_ltx_required_inputs_dry_run`, 1 d18 flake); Lanes shard 3/4: 32 new-test ids plus 13 regression-flagged (below) |
-| `fd5ff0d9` | pending (CI `43584934648`) | pending | fast checks: ruff, mypy and collection gates PASS; cycles gate FAIL until `r13/tests/cycles-baseline` `62c2317e6` merges |
+| `fd5ff0d9` | 302 | 2 flagged, both explained (i2v-runpod: the h3 fixture PNG, fixed in compose; installer stop test: fixed pid 123, `installer-fake-pid` `e9a81cb56`) | 5 cleared, 1 new; fast checks: ruff, mypy, collection PASS; cycles FAIL until the baseline merged; Lanes: same 32 new-test ids as `2f45835a` |
+| `a045b00e` | 295 (CI `43595414481`) | 0 | 7 cleared (the h3 rows, i2v-runpod, guides test, installer stop test), 0 new; fast checks all PASS; Lanes `43595414414`: the same 32 new-test ids, 0 new; flagged: the 9 slot_path local-managed ids (new tests, machines' `lanes` card), Lane D shared_redo (R12 fails it in a combined run) and `activation[False]` (R12 fails); the h3 composition id, i2v-attached, cpu_path and structural_validation all passed here |
 
 Lanes shard 3/4 on `2f45835a` (run `43576499502`), reconciled by W75 and Rule 0:
 - 13 flagged regressions = `test_runpod_cpu_path::test_cpu_runpod_public_catalog_and_dry_run` (the one R12-to-R13 regression on the generate path: passes at R12 main locally, fails since `889312e1f`, M2a; stale test, ruling: a machines test fix, card `cpupath`); `tests/packs/test_vibecomfy_structural_validation.py::…[incomplete]` (passes at R12 main locally, 2 passed; fails at `fd5ff0d9`; W76 bisecting); `test_generic_host_activation_acceptance[False]` (fails at R12, `triage/lease/r12-activation.log`; Plan 39); 10 `test_runpod_slot_path_cpu` ids that did not exist at R12 (new tests, not regressions).
@@ -27,6 +28,7 @@ Flake register (bucket 6):
 |---|---|---|
 | `tests/core/generation/test_runpod_engine_selection.py::test_default_slot_resolves_to_requested_target_or_refuses[image/edit-auto]` | passes alone on `475c2dade` and `681a56edb` (6.7 s, 7.3 s, `triage/h3rows`, `triage/h3base`); fails only in the whole-file run on `681a56edb` | order-dependent; not a regression; watch, never retried until green |
 | `tests/sdk/test_child_bridge_d18.py::test_concurrent_submission_during_child_wait` | hosted shard 6 (`2f45835a`): `TimeoutError` at the 1 s futures bound; passes 3 of 3 on R13 and on R12 (local) | harness wait moved 1 s to 10 s, `r13/tests/d18-wait` `f45f121ba` (merged) |
+| `tests/core/execution/test_generic_host_child_bridge_d18.py::test_host_bridge_outer_send_diagnostic_preserves_revoke_close[False]` | fails hosted on `fd5ff0d9` (Lanes `43584934678`, `assert 2049 == 1`, O_NONBLOCK left on fd 2); passes on `2f45835a` and `a045b00e` hosted with the same product code, and on R12 main and R13 locally | flaky: not a regression; watch, never retried until green |
 
 ## Latest comparison
 
