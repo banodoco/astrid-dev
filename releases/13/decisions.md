@@ -1982,3 +1982,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The MCP parity census tests fail on compose too; the test lane classifies them, then the phase 4 manager updates the census for both in one change.
   - **P4.9r.1: `seed_used` = 0 in receipts is likely real** (my live W1 data root shows 0 too). The phase 4 manager traces it.
   - The apply path end to end (P4.9r.3) becomes part of the final live repeat's fresh-download step.
+- **16:47: W3 is ready,** r13/machines-w3 ae4d0a58e: schema v2 with st_dev in the key, a non-UTF-8 name is a cache miss, real-wiring tests (31 pass, 6 fail before). Astra's second review found no P1; the trust-boundary limit is documented.
+  - **Merge-order trap:** lanes' sparse-weight fixture wraps file_fact without W3's `verification=` kwarg. Machines adds the passthrough in lanes round 5.
+  - **Ruling:** the test lane proves lanes round 5, comfy-source 2451d9ca6 and W3 as ONE batch on 941fca2a4, merged in that order.
+  - The MCP parity census is R12-red (Plan 39); the phase 4 manager updates it for compose and phase 4 together.
