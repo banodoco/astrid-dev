@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Bounded 24 fps RGB frame checks. Requires Python 3, numpy, ffmpeg/ffprobe.
+The default scaler differs from the composer's accurate RGB conversion and can
+cause class-3 false failures; decode both streams with the same accurate path.
 Exit 0: every requested assertion passed. Exit 1: assertion/input/tool failure.
 """
 import argparse
@@ -22,11 +24,15 @@ def probe(path):
         'stream=width,height,avg_frame_rate', '-of', 'json', path]))['streams'][0]
     if (data['width'], data['height'], data['avg_frame_rate']) != (1024, 576, '24/1'):
         raise ValueError(f'{path}: expected 1024x576 at 24/1 fps: {data}')
+    return data['width'], data['height']
 
 
-def decoder(path):
+def decoder(path, dimensions, decode_default=False):
+    width, height = dimensions
+    filters = [] if decode_default else [
+        '-vf', f'scale={width}:{height}:flags=lanczos+accurate_rnd+full_chroma_int,format=rgb24']
     return subprocess.Popen(['ffmpeg', '-v', 'error', '-threads', '1', '-i', path,
-        '-map', '0:v:0', '-t', '3.1', '-fps_mode', 'passthrough', '-threads', '1',
+        '-map', '0:v:0', '-t', '3.1', *filters, '-fps_mode', 'passthrough', '-threads', '1',
         '-f', 'rawvideo', '-pix_fmt', 'rgb24', 'pipe:1'], stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL)
 
@@ -55,6 +61,7 @@ def main():
     p.add_argument('--outside-only', action='store_true')
     p.add_argument('--require-change', action='store_true', help='some inside-mask pixel must differ')
     p.add_argument('--seam', type=int, help='kept prefix must end here; this frame must differ')
+    p.add_argument('--decode-default', action='store_true', help=argparse.SUPPRESS)
     args = p.parse_args()
     if args.outside_only and not args.mask:
         raise ValueError('--outside-only requires --mask')
@@ -62,8 +69,7 @@ def main():
         raise ValueError('--require-change requires --outside-only')
     if args.seam is not None and (not 1 <= args.seam < 72 or args.kept != set(range(args.seam))):
         raise ValueError('--seam requires the exact kept prefix 0-(seam-1)')
-    for path in [args.source, args.output]:
-        probe(path)
+    dimensions = [probe(path) for path in [args.source, args.output]]
     mask = None
     if args.mask:
         raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', args.mask,
@@ -74,7 +80,8 @@ def main():
         expected[144:432, 384:640] = True
         if not np.array_equal(mask, expected):
             raise ValueError('mask must be white x=[384,640), y=[144,432), black elsewhere')
-    procs = [decoder(args.source), decoder(args.output)]
+    procs = [decoder(path, size, args.decode_default)
+             for path, size in zip([args.source, args.output], dimensions)]
     errors, changed, inside_changed = [], [], []
     count = 0
     try:

@@ -20,7 +20,7 @@ The following form is taken from `proof/h3-video-edit-README.md`. The live contr
 
 ## Per-test checks after live generation
 
-Use the **final composed candidate**, not the raw graph output. Replace `<T2_CANDIDATE>`, etc. with the actual retrieved video paths; filenames are not asserted here. These five candidates must each decode to exactly 72 frames at 24 fps, 1024x576. The checker decodes RGB frames through bounded ffmpeg pipes (`-t 3.1`, enough to reject an extra frame); it compares against the decoded source, never against the original still PNG. Ranges below are inclusive, zero-based. Exit **0 = pass / 1 = fail**, including input/tool errors.
+Use the **final composed candidate**, not the raw graph output. Replace `<T2_CANDIDATE>`, etc. with the actual retrieved video paths; filenames are not asserted here. These five candidates must each decode to exactly 72 frames at 24 fps, 1024x576. The checker decodes RGB frames through bounded ffmpeg pipes (`-t 3.1`, enough to reject an extra frame); it compares against the decoded source, never against the original still PNG. Both source and candidate are decoded with the same explicit Lanczos, accurate-rounding, full-chroma RGB conversion to match the composer. Ranges below are inclusive, zero-based. Exit **0 = pass / 1 = fail**, including input/tool errors.
 
 | Test | Exact check command | Assertions |
 |---|---|---|
@@ -49,7 +49,7 @@ python3 check_plan.py dryrun/T5b-video-only.output.json dryrun/T5b-video-only.wo
 bash selftest.sh > selftest.log 2>&1
 ```
 
-The recorded self-tests cover (1) source vs itself, kept 0–71: pass; (2) lossless copy altered only on frames 36–71, kept 0–35 and changed 36–71: pass; (3) that same copy, kept 0–71: expected fail; (4) copy altered only inside the rectangle, outside-only: pass; (5) copy altered outside the rectangle, outside-only: expected fail. All expected exit statuses are checked. Copies use RGB-domain drawbox and lossless FFV1 to avoid a lossy re-encode contaminating protected pixels. Temporary copies are removed. `selftest.log` ends with `ALL SELF-TEST EXPECTATIONS PASSED`.
+The recorded self-tests cover (1) source vs itself, kept 0–71: pass; (2) lossless copy altered only on frames 36–71, kept 0–35 and changed 36–71: pass; (3) that same copy, kept 0–71: expected fail; (4) copy altered only inside the rectangle, outside-only: pass; (5) copy altered outside the rectangle, outside-only: expected fail. An accurate RGB copy also passes the T4-style outside-mask check, while the hidden test-only default decode fails it; the test measures both maximum differences. All expected exit statuses are checked. Copies use RGB-domain drawbox and lossless FFV1 to avoid a lossy re-encode contaminating protected pixels. Temporary copies are removed. `selftest.log` ends with `ALL SELF-TEST EXPECTATIONS PASSED`.
 
 ## Dry-run provenance and limits
 
