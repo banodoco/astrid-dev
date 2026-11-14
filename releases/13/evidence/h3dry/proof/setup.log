@@ -1,0 +1,13 @@
+  × Failed to build `astrid @ file:///home/user/wt/h3live`
+  ├─▶ The build backend returned an error
+  ╰─▶ Call to `setuptools.build_meta.build_editable` failed (exit status: 1)
+
+      [stdout]
+      running egg_info
+      creating astrid.egg-info
+
+      [stderr]
+      error: could not create 'astrid.egg-info': Read-only file system
+
+
+hint: Build failures usually indicate a problem with the package or the build environment

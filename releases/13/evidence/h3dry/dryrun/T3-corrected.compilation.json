@@ -1,0 +1,145 @@
+{
+  "branch": "source_backed_v2v",
+  "capabilities": {
+    "audio_binding": "source_audio_from_source_video, audio_strength=0",
+    "connected_model_assets": [
+      "minimax_h3_audio_vae_fp32.safetensors",
+      "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "minimax_h3_video_vae_int8_convrot.safetensors",
+      "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+    ],
+    "edit_binding": {
+      "during_frames": [
+        4,
+        72
+      ],
+      "frame_load_cap": 72,
+      "refs": [],
+      "seed": 42,
+      "strength": 1.0
+    },
+    "generation_timing": {
+      "duration": 3.0,
+      "fps": 24,
+      "raw_frames": 73,
+      "requested_frames": 72,
+      "trim_tail_frames": 1
+    },
+    "mask_binding": "per-frame video mask",
+    "native_v2_branch": "source_backed_v2v",
+    "operation": "transform",
+    "output_contract": "muxed_av_full_timeline",
+    "overrides": [
+      "model",
+      "steps",
+      "seed",
+      "sampler",
+      "guidance"
+    ],
+    "public_generation": {
+      "internal_outputs": [],
+      "modality": "video",
+      "selectors": [
+        {
+          "ordinal": 0,
+          "required": true,
+          "selector": "main-0",
+          "variant_key": "original"
+        }
+      ]
+    },
+    "reference_order": [],
+    "references": 0,
+    "source_binding": "source_video",
+    "source_frame_fit": {
+      "audio_tail": "silence",
+      "internal_tail_frames": 1,
+      "source_window_frames": 72,
+      "video_mask_tail": "preserve",
+      "video_tail": "repeat_last_selected_frame"
+    }
+  },
+  "compilation_digest": "f7ad599864b59297d2716d48c5f2224af129a08bcb04abe6fa7a7796037fb890",
+  "kind": "h3_av_compilation",
+  "limitations": [
+    "native masked edit is CPU-verified only; spatial mode on ref2va plus Turbo is unproven on GPU",
+    "one modifying video operation per request; static boxes, image masks or per-frame mask video",
+    "audio regeneration, polygon masks and per-operation adapters are unsupported",
+    "box-only regions bind in the graph; end-to-end execution still needs resolved mask propagation for composition paste-back",
+    "windows are limited to 15 s with no automatic chunking",
+    "zero-reference requests assume MiniMaxH3ReferenceToVideo accepts no ref images (unverified)"
+  ],
+  "managed_assets": {
+    "manifest": {
+      "assets": [
+        {
+          "binding": "source_video",
+          "lineage": {
+            "filename": "42632ebb92a26459.mp4",
+            "kind": "source_bytes",
+            "sha256": "sha256:b6975923a3d36246ab9291933186abd7cdb410a3e7f8df2d3607796d80781f36"
+          },
+          "member": "assets/b6975923a3d36246-42632ebb92a26459.mp4",
+          "sha256": "b6975923a3d36246ab9291933186abd7cdb410a3e7f8df2d3607796d80781f36",
+          "size": 61056
+        },
+        {
+          "binding": "video_mask_0",
+          "lineage": {
+            "filename": "bounded-mask.mkv",
+            "kind": "source_bytes",
+            "sha256": "sha256:1a9eb73d137bf69f1084b2573d0f08d7b078572a9be034c20c6aab8b9234d3ef"
+          },
+          "member": "assets/1a9eb73d137bf69f-bounded-mask.mkv",
+          "sha256": "1a9eb73d137bf69f1084b2573d0f08d7b078572a9be034c20c6aab8b9234d3ef",
+          "size": 33166
+        }
+      ],
+      "kind": "vibecomfy_managed_assets",
+      "schema_version": 2,
+      "workflow_inputs": {
+        "guidance": 0.95,
+        "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "prompt": "The bicycle begins to roll forward along the wall.",
+        "sampler": "res_multistep",
+        "scheduler": "simple",
+        "seed": 42,
+        "source_video": "b6975923a3d36246-42632ebb92a26459.mp4",
+        "steps": 8,
+        "video_mask_0": "1a9eb73d137bf69f-bounded-mask.mkv"
+      }
+    },
+    "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/managed-assets.zip",
+    "sha256": "59cab96fdf9dec7007a83254dedd5fea46b9eca2417681483d94f282c931d73c"
+  },
+  "profile": "h3_av.native.v2",
+  "request_digest": "99b7a5742610ffa873d89a188ab82349c2a155eb51b29c9c575981d2cddd339f",
+  "schema_version": 1,
+  "status": "compiled",
+  "workflow": {
+    "source.json": {
+      "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/workflow-bundle/source.json",
+      "sha256": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5"
+    },
+    "workflow.py": {
+      "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/workflow-bundle/workflow.py",
+      "sha256": "bdbdcf9053b851acd82af8bf842c75fa1c160aeb323ab69331f345220282f9e6"
+    },
+    "workflow.vibe.json": {
+      "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/workflow-bundle/workflow.vibe.json",
+      "sha256": "2e6a14a54100c6cb76cd5c7b43d9104ad164e1a3b343a017396aab64acc7ec59"
+    }
+  },
+  "workflow_inputs": {
+    "guidance": 0.95,
+    "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+    "prompt": "The bicycle begins to roll forward along the wall.",
+    "sampler": "res_multistep",
+    "scheduler": "simple",
+    "seed": 42,
+    "source_video": "b6975923a3d36246-42632ebb92a26459.mp4",
+    "steps": 8,
+    "video_mask_0": "1a9eb73d137bf69f-bounded-mask.mkv"
+  }
+}

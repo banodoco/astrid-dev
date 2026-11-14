@@ -2030,3 +2030,94 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **W4 (730ae8089):** an Astra BLOCK that passes the gate. A delayed idle release can free VRAM under a newly admitted job (production HTTP worker lock bypassed; no incarnation pin). It goes to cells as round 2: hold admission exclusion through release, re-check after the lock, `expected_peer`, real-path race tests. **If not clean in one round, W4 moves to the next release** (local warm-down then only at host stop or `generate release`; RunPod unaffected).
   - custody-helpers d89e9fc5b is skipped: it only converts an import error into the real failure (Plan 39).
   - Batch A (lanes, comfy-source, timeout, W2) is proving as Codex worker W89.
+- **18:08: P4.7.1's hand-off sentence is updated everywhere** to "Next: set up generation with the astrid-setup skill." (italic in markdown doors).
+  - App: int/20-phase4-app a1a105c34 (168/168).
+  - Pinokio: int/20-phase4-pinokio 51ddd6c (mine; only my session can push there).
+  - The Agent side waits for the manager's final SHA.
+- **18:05: machines has every card with the test lane:** lanes 87b8a5850, W2 7e553baf7, W3 622ba8938 (consent hole closed), and httpj round 4 (the cap fence inside the paced operation, immediately before create, proven with a real pacing sleep).
+- **18:27: W3 round 4 (622ba8938) APPROVED by Astra** under the gate: the omitted projection is False on every pod-job path, and error-model.md:90 is met. Proof W90 is finishing.
+  - A standalone pod preparation reads its own setting by design; controller-launched jobs can't.
+- **httpj round 4 (b60438061):** the pacing fix holds. A new money finding passes the gate: cancellation is checked before the saved-policy read (now in the worker thread), so a cancel during a slow read could still create a pod.
+  - **Round 5 is the LAST:** re-check cancellation and ownership immediately before persisting intent and creating, with a regression test. Further findings not introduced by round 5 go to deferred.md.
+- **18:40: W3 622ba8938 is MERGE-READY** (W90: 0 candidate-only failures across 406 tests; consent probes all correct; Astra W91 APPROVE). It merges after batch A.
+- **Phase 4 final handover:** Agent cf49d41507 (App a1a105c34, Pinokio 51ddd6c).
+  - R4.K's seed now always comes from the bindings sent (the pod runs the shipped bindings), with a rented-machine test via the live-lease seam.
+  - R4.M uses an mkstemp unique partial name.
+  - R4.L: the request lists are once per refusal.
+  - P4.7.1: the recommended wording; the setup skill goes from 286 to 217 lines; pins moved, not weakened.
+  - Proofs gated on exit codes: 223 + 147 + 305 passed. 2 failures: one a known base failure, one a 115 s-vs-120 s timeout (passes alone).
+  - It's with the test lane on its own worker.
+- **Planned compose merge order:** batch A (lanes, comfy-source, timeout, W2) → W3 → hostwedge → httpj → phase 4. Then freeze.
+
+## Sat 18:55: Hannah asks for a Windows tester run on testers' live GPUs, tomorrow afternoon (via the advisor)
+- Each tester's agent uninstalls Astrid, installs fresh from the latest code, sets up against their own ComfyUI, finds their workflows, runs the defaults and h3_av, and logs friction to one GitHub issue per tester; our agent watches the issues. "Doesn't necessarily need to be on main."
+- The advisor drafted it: astrid-dev `advisor/windows-tester-run` 1c92d8b5 (windows-tester-brief.md, prep.md). The test build is a manifest URL (full SHAs; no repo keys).
+- **Prep questions:**
+  - Q1 answered: all source repos are public.
+  - Q2, Q5, Q6 → phase 4 manager (doctor commit, fetch-models coverage, cancel).
+  - Q3, Q4 → machines (hosted editor vs R13; installer "not newer" on a test manifest).
+  - The asset_gaps P2 is already fixed in phase 4 cf49d415.
+- **Recommendation to Hannah:** cut the test head from compose after phase 4 merges. The release continues on its own track; tester findings feed a point release or the next release unless one blocks.
+- The issue-watch session starts once she picks the schedule.
+- **19:05: Hannah's direction.**
+  - **W4 (local idle release) MUST make R13**, with a 30-minute idle warm-down; no longer deferrable at the freeze. Cells told: 30 min, configurable; state whether /free releases VRAM, RAM or both.
+  - **h3_av investigation** → Fable plus Lunas: frames at positions, masks, a precise first frame with existing inputs, correct video-edit usage (our round 6 used a full-frame mask at 1 step, "not using it right"), what's tested, and mask-exercising live requests for the final repeat.
+  - **Default project at setup**, not only at first generation → the phase 4 manager checks the App and setup and sizes the change.
+  - The 4m35s warm image is far too slow (she expects tens of seconds). Fable's read is that per-job preparation and verification dominate; W2 measures the split and W3 removes the re-hash. The W3 default gets decided with that number.
+- **19:00: tester-prep answers** (machines, the phase 4 manager; read-only) relayed to the advisor.
+  - Q2: the doctor bundle's install-manifest carries the Agent SHA; doctor --json doesn't.
+  - Q3: the hosted R12 editor works with the R13 Runtime (same protocol and schema digest; no version gate).
+  - Q4: the tester manifest must say `release: 13`. An equal release is a silent repair, so moving to the real R13 later needs uninstall or `--update`.
+  - Q5: fetch-models plans only t2i and edit; audio and video models are manual on an attached ComfyUI.
+  - Q6: cancel exists (`run-astrid tasks cancel TASK_ID --project`), but the skills don't name it correctly. This passes the gate, so a one-commit docs fix goes on phase 4.
+- **Default project:** the App already creates "My first project" when opened with none (prepareStarterProject.ts:74-78), so Hannah's broken-state concern is covered. Setup-time `projects ensure-first` and a `generate scan --name` filter become phase 5 rows.
+- **19:05: h3 frames and masks (advisor plus Lunas; full findings in briefs/h3-frames-masks.md).**
+  - Hannah is right: the model supports positioned frames and per-frame, per-region masks. Our i2v uses the image as a REFERENCE, not a pinned first frame, and the round 6 video-edit was the wrong test (full-frame mask, 1 step).
+  - **Cells:** dry-run T2–T4 tonight (no GPU) and settle the regional-mask contradiction. Build the `h3first` card now on a branch (i2v on `MiniMaxH3ImageToVideo.first_frame` / `AddGuide` at frame_idx), ready either way.
+  - An honest docs line goes in phase 4's docs commit until then.
+  - **Hannah decides whether h3first ships in R13** (it reopens scope: about half a day plus one live round). My recommendation: yes, since it's the one gap against her original ask.
+  - The final live checklist gains T1–T5.
+- **19:08: R4.N (a phase 4 docs commit) grows to a root fix.** It replaces every shipped `python3 -m astrid …` (it fails on real installs) with the launcher form, plus a guard test that no shipped skill or doc contains it, plus the cancel command and the honest h3 i2v line. It passes the gate: it's a documented command a user follows that fails.
+- **19:10: h3first2 (cells, about 150 min) started on r13/h3-first-frame.** The locked weights lack the dedicated first-last-frame-to-video diffusion file. `MiniMaxH3AddGuide`@0 only conditions frame 0; the `MiniMaxH3CustomKeyframesMasked` anchor (locked, no new weights) preserves pixels. Ruling: PREFER the anchor (Hannah wants a precise first frame), falling back to AddGuide@0 worded 'conditions frame 0' only if the anchor is too big. The T2–T5 dry-run YAML went to cells.
+- **19:12: R4.N is sized at 141 lines in 20 shipped pack-doc files plus about 250 contributor-doc lines.** Ruling (A): R13 fixes the user-door SKILL.md subset (_core, generation, vibecomfy, timeline, wan2gp; about 50 lines, each with a launcher note), with a guard covering those files; source-checkout docs are excluded by name, with the reason. The rendering and timeline references plus the broad docs sweep become a phase 5 row with a per-file audience split.
+
+## Sat 19:15: Hannah: the per-job model re-hash is "disastrous" and must be fixed before release
+- **Hannah, close to verbatim:** "Anything that enormously degrades user experience needs to be fixed before the release; it's unacceptable." A full re-read and checksum of every model file on every job "shouldn't exist unless someone explicitly opts in."
+- **Her decision (as owner):** a full per-job model re-hash is OFF by default, and full verification is an explicit opt-in. This reverses the 16:52 W3 default and amends docs/contracts/error-model.md:90 for model files.
+- **Fable:** Q1, the minimal elegant design (e.g. verify once at fetch or first admission, then trust on stat match); Q2, a profile of the generate path for other large inefficiencies, plus cheap per-phase profiling on every generation.
+- **Machines** is on standby for W3 round 5 (default flip, opt-in full verify, contract amendment, tests flipped) once Fable answers.
+- **Standing rule from Hannah, applied from now:** a large user-experience degradation is a release blocker.
+- **19:20: Hannah, via the advisor: the h3 masking tests MUST run. T1–T5 run live on the current build as soon as cells' dry runs (h3dry) report, not only after the freeze; outputs go to her.**
+- **Windows tester run (Hannah): testers run BEFORE publish, as soon as possible; agent only, no editor; a technical pass over the defaults; every download tracked and removed afterwards.** The advisor's brief is e505253b, with an Astra review running.
+  - **My item, the tester manifest:** `release: 13`, full SHAs, no `agent.repo`; Runtime 6855dfa8, VibeComfy dba38f86, lifecycle 7f0b025e; windows-x64 assets already present.
+  - The test head is cut from compose when the queue merges (target tonight or early tomorrow).
+  - It's hosted on astrid-dev, raw https.
+  - It's proved once via the Windows CI journey (install → doctor → uninstall) before testers get it.
+- **Machines' W3 round 5b approved:** accept VibeComfy's post-download verification receipt (schema 1, matching path, both digests, inode/size/mtime_ns against the current fstat), so the first job on a fresh pod also skips the re-read. A deferred row covers VibeComfy's redundant verify re-read.
+- **19:22: Fable's Q1 notes on the W3 design, folded into machines' round 5/5b.** (1) Drop st_dev from the key; keep the record co-located with the models on the volume and key it on the relative path plus size plus mtime_ns, so a NEW claim on a warm volume doesn't re-hash everything (the most common case). (2) The record is written at download time (5b). (3) The per-file reason goes in the prep log. (4) No periodic sampling. Fable's Q2 (other hashers, per-job waste) is due within the hour.
+- **19:12: h3dry (cells, dry runs on the phase 4 merged tree).**
+  - **T4 (regional mask) is ADMITTED** via the native spatial-mask route (H3V2VGranularFractionalDenoise; inside strength 1, outside 0). README.md:49-52's "regional masks fail" is STALE for ordinary edits; compile.py's LanPaint path isn't on the active dispatch.
+  - **T2 and T5 are refused only for audio regeneration:** h3 edits can't regenerate audio. Video-only versions are admitted.
+  - **T3 needs v2 "1/6"** (on the frame grid); a seam check at frame 4.
+  - T5b's "Turbo off" is v2 `settings.turbo.enabled: false`.
+  - Live checks compare against the DECODED source (crf 0 still clip).
+  - **Next:** cells commits the assets and requests to astrid-dev, then I run T1–T5 live on the current build. Cells also does the README fixes and adds the corrected requests as worked examples in the h3 skill, with an admission test.
+- **19:30: Fable's Q2 (per-job inefficiency, read only).** The code does not fully explain the 4m35s: the re-hash accounts for about 1–2 min, leaving about 2–3 min unattributed. **So the measurement comes first (P1: me, once W2 merges).**
+  - Ranked: the re-hash (W3 flip, in hand); the record placement and the download seed (round 5b, in hand); engine status re-validation per preparation (tens of seconds?); 15 s polling on pod ops; a source digest per preparation; whether the engine is actually reused (W2 decides).
+  - **To machines, after 5/5b:** P4 (polling 1→5 s; the source-digest memo; about 1 h), then P3 (a `timing` block with `unaccounted` in every result, `generate --json` and `tasks show`; about half a day; Hannah's profiling ask).
+  - **The first job on a fresh pod (13m19s):** about 9 min is bootstrap plus engine install, because only models persist on the volume. P6 (persist the engine environment on the volume) is the largest saving and isn't small. **Hannah decides whether it's before release.**
+  - The tester brief is corrected after Astra's review (advisor/windows-tester-run 04c125da). Hannah asked for it on astrid-dev main, which needs a PR.
+- **19:16: Hannah.**
+  - (1) Back-to-back image generations on the same model setup must be measured: three t2i in a row on one pod with per-phase timing, as P1 right after W2 merges and again in the final repeat.
+  - (2) Confirmed: the live h3 mask round includes the start-frame-only test (T3: a still clip keeps frames 0–3, the rest regenerates; a seam check), T1's frame-0 comparison, and h3first2's precise first frame when ready.
+  - (3) **YES to P6, persisting the installed engine environment on the volume, before release.** A dedicated session (session_011EzfW4Qiu4KtMTg5ncnYNc) designs (≤1 page, about 30 min) and builds on r13/engine-on-volume. Machines reviews. Test lane 2 proves it, then I prove it live (claim, job, release, claim, job: timed).
+
+- **19:20 UTC hostwedge round 4 held (test lane W94):** 9efa11620 makes the host refuse to start when the selected data root is an ordinary 0755 directory (`private default attempt base refused ... mode 0755, expected 0700`), giving 67 paired failures. This is user-hittable on the generate path, so it blocks merge under the gate. The fix goes to cells: 0700 applies only to the spool directories the host creates, and the data root and its ancestors need only same-uid-or-root ownership and must not be group- or world-writable. A test with a 0755 data root is required.
+- **19:20 UTC W3 round 5 landed** at r13/machines-w3 d58115106 (trust_unchanged on by default, `false` opts in to a full re-hash, fail-closed) and is with test lane 2. Round 5b (the record on the volume) is running.
+- **19:20 UTC P6 design accepted for build:** a sealed tar snapshot of the engine environment on the volume, keyed by identity; it's restored onto ENGINE_ROOT on container disk, with custody state never included. The live proof waits for W3 5b, so claim 2 doesn't re-hash models. No phase split exists for 13m19s (about 8m45s of first-time-only work, unsplit), so P6 logs its restore durations.
+- **19:29 UTC httpj round 5 merged:** r13/machines-httpj 3f67b3553 → r13/compose **87bcc78a7**. Lane 2 reran it on a quiet box (vs a921b7dce): 0 candidate-only failures; the cpu_path http_journey now passes (the baseline fails it by design); Astra APPROVE.
+- **19:29 UTC Windows tester:** the brief is on astrid-dev main (#650, c04cc3f6). Lane 2 owns the manifest and the CI proof: the workflow on astrid-agent `windows/tester-<sha8>`, and the manifest at a commit-pinned raw URL on astrid-dev `windows/tester-<sha8>`. Issue watching: a dedicated answering session created at freeze, label `r13-tester`, checks every 10 min by send_later while issues are open, with an hourly scheduled task as fallback; it answers testers and returns fixes as cards. The issues open after the frozen head's CI proof is green and Hannah names the testers.
+- **19:31 UTC tester issues created by the advisor (Hannah named the testers):** astrid-dev #651 (oskarkeo), #652 (Iridium Storm) and #653 (Arts Bro), label `r13-tester`, each marked "Not ready yet". Mine once the frozen test build's Windows CI proof is green: fill in BUILD_NAME, AGENT_SHA and MANIFEST_URL (plus ISSUE_URL in #652/#653), remove the notice, start the answering session, and tell Hannah.
+- **19:52 UTC batch A merged:** lanes 87b8a5850 → comfy-source 2451d9ca6 → timeout c0da1b2d0 → W2 7e553baf7 = r13/compose **5193a2331**. The test manager's W89 found 0 R12-passing ids failing, over ~290 ids. The one merged-only failure, slot_path_cpu [audio/sfx-attached-trust], was "task storage exhausted" under box load and passed at compose; lane 2 is confirming it in isolation, and if that fails, W2/lanes take a fix card. W2 (job-run.json, phase timings) unblocks P1, the back-to-back timing run.
+- **19:52 UTC W4:** round 2 is superseded by round 3, `r13/warm-idle-release` 4e3a20af1 (RAM fields, the empty /free reply no longer reported as failed, a 3 s poll for the after-reading; machines OK), now with lane 2. Machines' nit (break on OSError/ValueError) folds into the next touch, with no new round.
+- **20:02 UTC Windows dry proof (a921b7dce):** the install from the tester manifest PASSes (9m21s), the agent.sha check PASSes, and doctor --bundle PASSes. **Uninstall `--delete-data` FAILs** at install.ps1:324 ("Astrid couldn't finish"). Lane 2's v2 workflow (always-run leftovers check, log collection) plus my log-tail step are on windows/tester-a921b7dc (eaea8d429, 18ece5823). Lane 2 rules whether the uninstall failure is user-reachable; if it's a product fault, it's a fix card to the astrid-app install.ps1 owner, gating the 04:00 green. The journey `packs` step failure is a stale driver, logged in deferred.md.

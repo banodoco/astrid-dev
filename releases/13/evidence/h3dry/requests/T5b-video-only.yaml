@@ -1,0 +1,12 @@
+version: 2
+prompt: "Gently brighten the scene."
+duration: 3.0
+media:
+  - asset: bike.mp4
+    role: timeline
+    modality: video
+    at: {frame: 0}
+    range: [0.0, 3.0]
+    edit:
+      - {stream: video, during: [1.5, 3.0], mask: {full_frame: true}, action: generate}
+settings: {steps: 20, seed: 42, turbo: {enabled: false}}

@@ -1,0 +1,5 @@
+unshare -mn bash /home/user/cells/evidence/h3live/run.sh T2-video-only
+unshare -mn bash /home/user/cells/evidence/h3live/run.sh T3-corrected
+unshare -mn bash /home/user/cells/evidence/h3live/run.sh T4
+unshare -mn bash /home/user/cells/evidence/h3live/run.sh T5a-video-only
+unshare -mn bash /home/user/cells/evidence/h3live/run.sh T5b-video-only
