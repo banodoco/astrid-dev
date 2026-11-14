@@ -2071,3 +2071,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Q5: fetch-models plans only t2i and edit; audio and video models are manual on an attached ComfyUI.
   - Q6: cancel exists (`run-astrid tasks cancel TASK_ID --project`), but the skills don't name it correctly. This passes the gate, so a one-commit docs fix goes on phase 4.
 - **Default project:** the App already creates "My first project" when opened with none (prepareStarterProject.ts:74-78), so Hannah's broken-state concern is covered. Setup-time `projects ensure-first` and a `generate scan --name` filter become phase 5 rows.
+- **19:05: h3 frames and masks (advisor plus Lunas; full findings in briefs/h3-frames-masks.md).**
+  - Hannah is right: the model supports positioned frames and per-frame, per-region masks. Our i2v uses the image as a REFERENCE, not a pinned first frame, and the round 6 video-edit was the wrong test (full-frame mask, 1 step).
+  - **Cells:** dry-run T2–T4 tonight (no GPU) and settle the regional-mask contradiction. Build the `h3first` card now on a branch (i2v on `MiniMaxH3ImageToVideo.first_frame` / `AddGuide` at frame_idx), ready either way.
+  - An honest docs line goes in phase 4's docs commit until then.
+  - **Hannah decides whether h3first ships in R13** (it reopens scope: about half a day plus one live round). My recommendation: yes, since it's the one gap against her original ask.
+  - The final live checklist gains T1–T5.
