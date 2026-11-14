@@ -102,8 +102,6 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Agent #264 | evidence/open-prs.md |
 | Production-engine tests duplicate or mock around the owned-preparation path; build one shared prepared-engine fixture (cells narrow fix: Agent `r13/rows-ir-bridge` 3573a5b85) | cells-log.md 02:51 Sat; r13/rows-ir-bridge |
 | The shipped census hard-codes counts (executors 54 to 49 at `r13/rows-packs-census`): derive the expected set from the pack manifests, keep a short allow-list for deliberate changes | cells-log.md 02:51 Sat; test_b2_integrated_closure.py |
-| `test_audio_preferred_row_owns_its_error[sfx-audio/hunyuan_video_foley]` names an entry the explicit-only Foley ruling (8395174a5) removed from defaults; parametrise over each slot's default entry read from the pack defaults. Fails on `be56a08cd` too | evidence/sfxdef-base2.log |
-| `test_runpod_preferences_live_under_machines_runpod` fixture predates M2's claim/generate split (missing `budget_cap_usd`); rewrite it to the claim path. Fails on `be56a08cd` too | evidence/sfxdef-base2.log |
 
 ## Outside pull requests (owner revisits; nothing closed)
 | Item | Source |
