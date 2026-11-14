@@ -1610,3 +1610,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Pod 8kaoxs12i1n2lm released:** $1.77 for round 4 plus the failed h3 fetch plus the edit.
   - **Census:** 0 pods, $86.93.
   - **No h3 re-claim** until machines sends the volume cleanup commands (due 05:15).
+- **04:25: merged the engine shard-1 card through machines** (r13/machines 0e2b6fa23 = s1-regress 4d0a01ec4 + Astra's two test restorations 42d5bb1ea, with mutation-proven checks).
+  - **Bootstrap budget, machines' ruling:** 120 KiB per string is kept for R13 (local exec is safe). The root fix (shrink, or transfer separately) is logged in deferred.md (143fc6f).
+  - **Leftover rows routed:**
+    - cli_gold, sfx, the ltx digest and CLIPLoader go to cells;
+    - the slot_path stand-in goes to the test lane;
+    - activation ×11 and g28 [settlement] are R12-preexisting by id.
