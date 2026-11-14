@@ -2129,3 +2129,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - T5a/T5b: kept 0–35; 8 steps with Turbo, 20 steps with Turbo off.
   - Source audio is bit-identical in every edit.
   **Test-design gap:** assets/bike.mp4 is a synthetic colour-bar clip, so prompt adherence on edits is unmeasured. Cells rebuild the package from a real clip (T1's own bicycle output) for the final live repeat. Evidence is in evidence/live/h3m/.
+- **20:30 UTC Windows dry proof GREEN** (run 43636566445; windows/tester-a921b7dc 1a12f3c27; manifest astrid-dev c6e7dfb1): install from the tester manifest in 9m22s; agent.sha matches; doctor bundle; uninstall with delete-data; no leftover folders and the scheduled task is gone. At 02:00 only the SHA changes, the pins are checked by lane 2 before the push, and the workflow stays as 1a12f3c27 has it.
