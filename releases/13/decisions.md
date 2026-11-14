@@ -1734,3 +1734,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Docs:** docs/runpod-storage.md.
   - **Deferred and logged:** native-fetch reuse sharing, cross-directory budgets, inventory walker hardening.
   - **h3 is still blocked on Hannah's storage decision.** With this, a re-claim on the full volume would refuse up front with numbers and an inventory.
+- **10:10: merged the test lane's new-ids-a4d 2f6ba882e** (fixture `pod.volume=None`; hosted PYTHONPATH for the MCP consent child). **Then merged cells' r13/compose-pin-vc10 2d5676e16**, pinning VibeComfy cells-vc-10 d3850831.
+  - **vc10 adds:** the LTX i2v LoRA and text-encoder digests, plus the FLF template's seven model identities. All come from unauthenticated HF HEAD reads only.
+  - **Proof:** 368 tests, 0 regressions, 5 fixed, 0 red left. The last regression id (i2v-runpod) is green in the set.
+  - **Root for the class:** the LTX catalog routes and templates declare the same ports, and every managed LTX model carries a pinned revision, digest and size. The other 132 records across 31 templates stay in deferred.md.
