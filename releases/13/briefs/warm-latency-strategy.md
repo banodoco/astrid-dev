@@ -96,3 +96,68 @@ A pooled connection, completion events over a websocket (the bridge refuses upgr
 - **By 13:00 UTC Sunday:** Tier 1, measured live. Roughly a sixfold improvement, to about 30 to 45 s.
 - **Under 5 s:** not safely by 13:00. A prototype behind a setting by Sunday night is realistic; proven and reviewed, Monday or Tuesday.
 - **Hannah's choice:** move the cutoff until Tier 2 is proven, or ship Tier 1 in Release 13 and Tier 2 as the next release within days.
+
+---
+
+# Revision (00:40 UTC Sun): Tier 2 goes through Astrid, and a third horizon
+
+## Tier 2, revised: a resident Astrid job service on the pod
+Hannah asked whether Tier 2's outcome can be had without bypassing Astrid. It can, and it is the better design; **the direct route above is dropped.**
+
+A job service starts once when the claim is attested. It holds the verified state and the compiled schema in memory, takes each job in one exchange over the existing engine endpoint proxy (pointed at the service's loopback port; no agent change), runs it in process, and returns the result and its evidence in the same exchange.
+
+- **One job path:** the same compile, validation, job record, evidence and settlement as today, without the process starts and re-audits.
+- **Custody stays put:** fence, deadline and watchdog checks remain pod-side and in process. New risks are a stale long-lived process (the attestation's incarnation check covers it) and a crash (fall back to the full path).
+- **Two round trips per job** against six to ten for the direct route. Expected overhead 2 to 4 s (estimate).
+- **Supervision:** extend the existing engine supervisor; do not add a second custodian.
+- **Open choice:** if the pod's Runtime stays in the job path, the reset stays (off the caller's wait after W-C). If the service settles straight to the host, there is nothing to reset.
+- **Time to proven:** 2 to 2.5 days. Not by the Sunday cutoff.
+
+**First CPU test,** on `machine_case`: after one full job attests the claim, a second job with the same requirements issues at most three remote operations, starts zero pod processes, runs zero audit commands, and returns a result carrying the job record and timing. Fail-closed cases forcing the full path: supervisor restarted; new workflow requirement; service not answering; attestation absent or corrupt.
+
+## Which placements pay what
+| Cost on a warm second job | RunPod | Local-managed | Attached |
+|---|---|---|---|
+| Installation audits ×3, node restore, dependency preparation, doctor, model verification ×2 | yes | yes (same code) | no |
+| Provider calls, dispatch, pod process starts, catalogue listing, per-file collection, reset | yes | no | no |
+| 1 s polls (pickup, status, ComfyUI history); Runtime publication; five hash passes on delivery | yes | yes | yes |
+| Schema fetched and workflow compiled twice in preflight | yes | yes | yes |
+| The caller's own process start | yes | yes | yes |
+
+So the attestation (W-A) must be keyed on supervisor incarnation and install identity, with the claim id as an extra field when there is one, or local-managed keeps the largest block.
+
+## Third horizon: local overhead under 0.1 s
+For a warm same-model job on local-managed or attached, after Tier 1. Seconds are estimates.
+
+| Remaining cost | Today | Design | After |
+|---|---|---|---|
+| Caller's process start and imports | 0.5 to 2 s for the CLI | Callers that matter are already running (the agent's MCP server, the SDK, the App). The CLI becomes a thin client of the running host over a local socket, with lazy imports | 0 for resident callers; about 0.1 s for the CLI, which is the floor for a Python process |
+| Admission and pickup | up to 1 s of polling, twice | The host is told of the task and the caller of the result by push, on the same local connection | under 10 ms |
+| Schema fetch and compile | 0.2 to 1 s, done twice | Cached per engine incarnation and workflow digest; a job binds inputs to a compiled graph | under 5 ms |
+| Input upload | per input, every job | Skip when the engine already holds that content (by digest) | 0 for repeats |
+| Completion | 1 s history poll | ComfyUI's websocket pushes completion | milliseconds |
+| Evidence and prompt clean-up | three stats calls and three queue calls before returning | After the result is returned | 0 on the caller's wait |
+| Output read, publication, delivery | read, then about five hash passes and copies | One read, one hash, published by link, delivered by link | 10 to 30 ms for an image |
+
+Total for a resident caller: roughly 40 to 80 ms for an image.
+
+**Cards, after Release 13, in order of seconds removed:**
+1. L1: schema and compile cache per engine incarnation.
+2. L2: completion by websocket.
+3. L3: push for admission and result; no polling on the local path.
+4. L4: hash once; link, not copy.
+5. L5: evidence and clean-up after the result.
+6. L6: thin CLI over the local socket.
+7. L7: input reuse by digest.
+
+L1, L2 and L4 also serve the pod service and are the route from Tier 2 to under 0.5 s there.
+
+**The budget test for "under 0.1 s local overhead":** a resident host and a fake ComfyUI that completes instantly and announces it over a websocket. Run one job to warm, then assert on the second:
+- no sleep and no poll (a fake clock that fails if anything waits);
+- no `/object_info` request and no compile;
+- at most three engine requests (optional upload, submit, output read);
+- each output byte hashed exactly once (an instrumented hasher);
+- no process started;
+- and, as a secondary check, median overhead under 100 ms over twenty runs.
+
+Counts are the gate; the time is the witness. Counts do not flake.
