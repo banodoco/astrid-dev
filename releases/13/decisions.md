@@ -1939,3 +1939,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The d18 outer-send id is registered as a flake: it passed hosted on the same code.
   - Freeze criteria still open: (2) the last R12 verdicts on residual files; (3) lanes; (4) httpj round 3.
   - The phase 4 interim 68ddbed7 and i2vsel fea67d9cb proofs are running in the test lane.
+- **15:42: merged cells' i2vsel fea67d9cb → compose 941fca2a4.**
+  - Exactly 3 files: entries.py (the refusal message gains its recovery sentence), the new recovery test, and engine_selection (one REFUSALS code).
+  - Test lane, paired against ae1c608a7: 0 candidate-only failures, 1 fixed. Six message-text files are identical on both sides.
+  - The slot_path red-cell subset is still running, but the test lane says the decision doesn't hinge on it.
