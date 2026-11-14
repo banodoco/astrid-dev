@@ -49,6 +49,19 @@ class SubjectStructureTests(unittest.TestCase):
                              len(data["characteristics"]))
             self.assertIn("## Aspirations", render_subject_markdown(data))
 
+    def test_aspiration_template_supports_optional_paired_guidance(self):
+        template = (ROOT / "vision/templates/aspiration.md").read_text(encoding="utf-8")
+        old = SAMPLE[SAMPLE.index("### Agency"):SAMPLE.index("### Continuity")]
+        with_guidance = parse_subject(SAMPLE.replace(old, template + "\n"), "template.md")
+        details = with_guidance["characteristics"][0]["detailsMarkdown"]
+        self.assertIn("**We should:**", details)
+        self.assertIn("**We should never:**", details)
+        without = template.partition("**We should:**")[0].rstrip() + "\n\n"
+        no_guidance = parse_subject(SAMPLE.replace(old, without), "template-without-guidance.md")
+        self.assertNotIn("We should", no_guidance["characteristics"][0]["detailsMarkdown"])
+        self.assertEqual(with_guidance["characteristics"][0]["summary"],
+                         no_guidance["characteristics"][0]["summary"])
+
     def test_wrong_section_order_is_rejected(self):
         bad = SAMPLE.replace("## Statement", "## Overview")
         with self.assertRaisesRegex(ValueError, "sections"):
