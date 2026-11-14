@@ -67,6 +67,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Installed smoke test (parked as c-smoke2) | decisions.md:310, 456 |
 | Re-pin cells to `r13/cells-vc` | decisions.md:735 |
 | Keep the labels and drop the allowlist (rework) | decisions.md:340 |
+| Engine bootstrap size: R13 raised the per-string source budget 96→120 KiB and the total to 136 KiB (f5f9e2ebc) because the source grew to ~103 KiB. Safe for R13's local-exec use (8 KiB under Linux's 128 KiB MAX_ARG_STRLEN), but the 136 KiB aggregate exceeds Linux's 128 KiB guaranteed minimum, excludes the inherited environment, and no remote caller's serialized transport is checked. Root fix before any remote use: shrink the source (base85 saves ~6.5 KB) or transfer the payload separately, and check the final transport limit | machines/engine ruling 04:10 Sat; s1-regress Astra review (wt/briefs/wave3/s1-regress-review.log) |
 | h3_av: rational `5/24` duration fails canonicalization for source-backed modes (spec.py:218, request_v2.py:62-84; normalization emits a float that is rechecked exactly). R13 inputs use six frames; one duration representation is the root fix (card `h3dur` may land it) | cells-log.md 02:51 Sat |
 
 ## Runtime contract
