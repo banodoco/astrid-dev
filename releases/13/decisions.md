@@ -1928,3 +1928,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The guardrail worked as intended: (b) failed first, so the product refusal was fixed at the raise site (e42e0dd40: it names the missing node and the fix). Then exactly one typed code, `missing_node_pack`, went into REFUSALS, citing 5fe9ed7a0.
   - 0 regressions; the target id is fixed.
   - Deeper cause (default selection picks h3 for a target lacking its nodes) is in deferred.md.
+- **14:58: W1 warm baseline done** (bb89b3f2b; RTX 5090; warm volume).
+  - Times: t2i on a fresh claim 13m19s; **t2i again on the same pod 4m35s**; edit (a different model) on the same pod 4m24s.
+  - That the edit took the same time as the warm t2i supports Fable's read: the per-job floor is mostly preparation and verification, not model load. W2 will split the phases, and W3 removes the re-hash. W6 repeats this on the W2+W3 build.
+  - All outputs validated: the edit wall drift is class 2 as before. Cost $0.37 (W1, cut short by my local disk guard) plus $0.60 (W1b). 0 pods; $84.22.
+  - Local disk was cleaned (old install homes); lesson: check local free disk before a round, not only during it.
