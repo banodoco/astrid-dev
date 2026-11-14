@@ -1996,3 +1996,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - A bad attempt goes to recovery_blocked or reconciliation_required, never a startup failure; a squat falls back to a fresh directory; legacy roots are read only when this uid owns them.
   - Cells: 0 regressions out of 100 tests on each side. Next: the test lane's proof plus an Astra read.
   - Deferred: reclaim doesn't age crash leftovers in the private root (a slow disk leak, no custody effect).
+- **16:52: W3 contract ruling.** The test lane's proof is clean (0 regressions; no exploitable bug, mutations bite), but its Astra read BLOCKs on docs/contracts/error-model.md:90: "any … verification-skipping path must be explicit, operator-chosen, and documented as an opt-out."
+  - **Ruling (a), which complies with the contract:** an explicit setting enables the stat-based skip. The default is a full re-verify; records may be written but are never used to skip unless the setting is on. Documented as the opt-out in the generation and RunPod skills plus the docstring.
+  - W6 measures with the setting ON.
+  - Device numbers on a travelling network volume are best-effort (deferred note).
+  - **Hannah may instead choose default-on, which means rewriting the contract clause. Asked.**
