@@ -1905,3 +1905,5 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **"Rest is okay":** the rest of deferred.md stays deferred as listed.
 - **Timeline:** Sun 04:00 is no longer binding. **We freeze when every item is proven**, possibly sooner. Still required, in order: the frozen head's CI comparison; then the live repeat of all cells plus h3 (more steps for edit and v2v, one fresh model download, plus warm-model reuse timing); then Hannah's go.
 - Manager told to push both phase 4 lines now; runner contention no longer applies.
+- **14:06: phase 4 × machines guides conflict ruled.** Setup keeps phase 4's single RunPod line (Hannah's direction). Machines' claim-first safety rule is re-homed to the RunPod skill and widened to every shipped skill: every `machines claim` parses with --consent paid, --max-usd, --deadline and --for, and no generate command carries a paid flag. The RunPod skill's claims gain --deadline.
+- **14:04:** the phase 4 manager's push was refused by the auto-mode classifier ("Undermining Oversight"). It didn't route around it. **Hannah was asked to approve it in that session.**
