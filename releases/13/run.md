@@ -2,18 +2,16 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (15:00 UTC Sat 14 Nov): read this first
+## Now (16:00 UTC Sat 14 Nov): read this first
 
-**No fixed freeze time (Hannah, 14:05). Freeze when every item is proven. Then: the frozen head's CI comparison; the live repeat (all five cells plus three h3 modes, more steps for edit and v2v, one FRESH model download, warm-model reuse timing); then Hannah's go.** Scope now includes all of Plan 20 phase 4 and warm models.
-- **Compose head ae1c608a7** (VibeComfy dba38f86): adds medialist, the R12 regression fix. int/r13-a045b00e CI shows 0 regressions so far in attribution.
+**No fixed freeze time. Freeze when every item is proven. Then: the frozen head's CI comparison; the live repeat (all five cells plus three h3 modes, more steps for edit and v2v, one FRESH download, warm reuse timing); then Hannah's go.**
+- **Compose head 941fca2a4.** Since 15:00: i2vsel (the attached i2v refusal names its fix). int/r13-a045b00e is the cleanest CI so far: fast checks green, 0 regressions, 0 new, 7 cleared.
 - **Open, all on the critical path:**
-  - machines httpj round 3 (custody fence; the test lane's proof and Astra's re-review);
-  - machines lanes (16:30 stop);
-  - cells i2vsel fea67d9cb (with the test lane for proof);
-  - phase 4 int/20-phase4-r13: compose merged at 5b9dff8d with 162/162 proofs; R4.A (`generate scan`), R4.B and R4.C, the RunPod deadline placeholder and P4.9 remain; then the SHA goes to the test lane;
-  - warm models: W2 and W3 (machines; W3 gets Astra), W4 (after lanes), W5 done (097308932, in phase 4); then W6 live.
-- **Live:** W1 baseline on bb89b3f2b: fresh claim t2i 13m19s, **same-pod t2i 4m35s**, edit 4m24s, so the floor is preparation and verification, not load. $0.97 total; 0 pods; $84.22.
-- **Waiting on Hannah:** the P4.7 wording yes/no list (in chat).
+  - machines: httpj round 3 (custody fence; test lane plus Astra), lanes round 4 (the 32 new-test ids; 16:30 stop), W2 (phase timings), W3 (skip re-hash; Astra), W4 after lanes;
+  - cells: `hostwedge`, the stale /tmp attempt wedge found by the P4.9 walk (machines reviews; about 17:15);
+  - phase 4: R4.G (stock seed shape), R4.H (defaults readiness vs missing models), R4.I (MCP open_url parity), then merge 941fca2a4, the re-walk and the handover SHA. The test lane is already proving interim 68ddbed7.
+- **Live:** W1 baseline done (same-pod t2i 4m35s vs 13m19s first). 0 pods; $84.22.
+- **Waiting on Hannah:** the P4.7 wording yes/no list, and merging PR banodoco/astrid-dev#648.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
