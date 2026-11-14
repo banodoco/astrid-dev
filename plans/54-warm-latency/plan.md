@@ -30,17 +30,18 @@ When this project is done:
 
 The estimate is in days of elapsed time at agent speed. Builds here are hours; the time goes to design and custody review rounds, paired proof, frozen-head CI and live runs.
 
-### The principle: lean on ComfyUI
+### Target architecture
 
-ComfyUI already validates a graph when it is submitted, keeps models loaded and evicts them when another needs the memory, caches the outputs of unchanged nodes between jobs, reads and writes its own input and output folders, and announces completion over a websocket. On a warm job Astrid should use those, not repeat them.
+The end state, stated from first principles. Every task in [tasks.md](tasks.md) serves one of these and says which. **Target warm overhead: one round trip plus milliseconds: under 0.5 seconds rented, tens of milliseconds local.**
 
-Astrid's own layers are needed in three places only:
+1. **Verify at state changes, compare per job.** Installation, claim, engine start and download are the moments facts change. Verify fully then, record the result, and on each job compare cheap digests against the record. Today the full verification runs on every job (`astrid/core/generation/managed_preparation.py:414-857`), and for node packs no record exists at all (`astrid/core/generation/engine_runner.py:909-940`).
+2. **A resident process next to the GPU; a job is one message in and one message out.** Today a rented job is about twelve operations to dispatch, four Python starts on the machine, and a fetch per file (`astrid/packs/runpod/machine.py:431-449, 865-938, 1170-1203`).
+3. **Control plane and data plane are separate.** The control plane owns what lives as long as a claim or an engine start: the lease, deadlines, idle expiry, the attestation and the reset. The data plane runs jobs and checks facts already in memory. Money safety is decided by the control plane, never recomputed on the job path. One qualification from the code: some money facts change with every job (the invocation fence; the idle expiry and its watchdog deadline, which must be in place before success is reported: `astrid/packs/runpod/worker_owner.py:640, 794-798`). In the end state those are a local, acknowledged update to the resident control agent on the machine, costing milliseconds, not a remote command and a new process as today (`astrid/packs/runpod/pod_watchdog.py:260-311`).
+4. **Lean on ComfyUI.** It already keeps models resident and evicts on demand (`comfy/model_management.py:893-983`), validates on submit (`execution.py:846-1238`), caches unchanged nodes between jobs (`comfy_execution/caching.py:102-127`) and announces completion (`server.py:269-290`). Astrid adds only four things: gating before money is spent (on the host, before the claim), provenance (hash once), custody, and translating ComfyUI's errors into its own refusals. Two limits bound this: ComfyUI can queue the valid branches of a graph while reporting errors on the rest (`server.py:1115-1139`), and it lists file names, not verified bytes.
+5. **Content addresses for inputs, compiled workflows and outputs.** An input already on the engine is not sent again; a compiled workflow is reused; an output is hashed once and that digest travels with it. Today inputs are named per task (`astrid/core/generation/backends/comfy_target.py:327`), which also defeats ComfyUI's cache.
+6. **One path for local and remote, always measured.** The same resident executor serves the App, the agent and a rented machine; only the transport differs. Every result carries timing that sums to the wall time, and budget tests are a required check, so the cold path cannot creep back into the warm one.
 
-1. **Before money is spent.** A job ComfyUI rejects on a rented machine has already cost the rental. ComfyUI can also queue the valid branches of a graph while reporting errors on the rest.
-2. **When nothing is submitted.** Dry run, readiness, listings and download planning need an answer without a job.
-3. **Proof of what ran.** ComfyUI lists file names, not verified bytes, and a loaded node class does not prove a pinned source. Pinned digests, receipts and custody are Astrid's.
-
-Everything else on a warm job is a duplicate. The table in [inputs.md](inputs.md#planning-evidence) gives each heavy step, what ComfyUI does, what Astrid adds and the leaner design.
+Astrid's own full check remains where nothing is submitted (dry run, readiness, listings, download planning) and before a claim. The table in [inputs.md](inputs.md#planning-evidence) gives each heavy step, what ComfyUI does, what Astrid adds and the leaner design.
 
 ### Included
 
