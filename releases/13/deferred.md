@@ -64,6 +64,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | T7: the wait reason reaches the CLI | release-record.md:67 |
 | T8: the Runtime blocker list | release-record.md:68 |
 | T10: models stay loaded between jobs | release-record.md:68 |
+| Model verification record limit (W3): an already verified file changed without changing its resolved path, size, mtime_ns, inode or ctime_ns passes until one of those changes (or its declared digest changes). R13 accepts this stat-witness limit to avoid re-reading unchanged multi-GB weights on every preparation; records bind the engine custody root, models root, file path and matched declared sha256. Stronger tamper detection requires a full re-hash or a trusted filesystem content identity | machines/engine W3; Agent `r13/machines-w3` at base `02b76c709` |
 | T13: CPU journey: two stale tests and the first-claim deadline | release-record.md:68; decisions.md:675 |
 | T14: a dry run of every catalog entry (with T1) | release-record.md:68; decisions.md:676 |
 | Astrid models.lock.json uses the same model record | release-record.md:68; briefs/declarations-t3.md:21 |
