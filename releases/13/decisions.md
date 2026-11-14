@@ -1982,3 +1982,29 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The MCP parity census tests fail on compose too; the test lane classifies them, then the phase 4 manager updates the census for both in one change.
   - **P4.9r.1: `seed_used` = 0 in receipts is likely real** (my live W1 data root shows 0 too). The phase 4 manager traces it.
   - The apply path end to end (P4.9r.3) becomes part of the final live repeat's fresh-download step.
+- **16:47: W3 is ready,** r13/machines-w3 ae4d0a58e: schema v2 with st_dev in the key, a non-UTF-8 name is a cache miss, real-wiring tests (31 pass, 6 fail before). Astra's second review found no P1; the trust-boundary limit is documented.
+  - **Merge-order trap:** lanes' sparse-weight fixture wraps file_fact without W3's `verification=` kwarg. Machines adds the passthrough in lanes round 5.
+  - **Ruling:** the test lane proves lanes round 5, comfy-source 2451d9ca6 and W3 as ONE batch on 941fca2a4, merged in that order.
+  - The MCP parity census is R12-red (Plan 39); the phase 4 manager updates it for compose and phase 4 together.
+- **16:49: MCP census ruling (R4.J).**
+  - (a) `generate audio` IS an MCP tool: R13 ships tts, sfx and music, so agents need it. The test narrows to `generate_speech` absent.
+  - `generate failure` is pinned PRESENT (the read-only diagnostic for agents).
+  - `video_ref` is in the exact generate_video schema.
+  - Before commit: confirm the product's MCP tool names don't collide (`defaults set` vs `settings set`). If they do, it's a product fix with a no-two-leaves-share-a-name test.
+- **16:50: hostwedge is cleared by machines' review at r13/host-wedge 1505a379c.**
+  - Crash recovery comes from a private per-executor base under the user's state.
+  - A bad attempt goes to recovery_blocked or reconciliation_required, never a startup failure; a squat falls back to a fresh directory; legacy roots are read only when this uid owns them.
+  - Cells: 0 regressions out of 100 tests on each side. Next: the test lane's proof plus an Astra read.
+  - Deferred: reclaim doesn't age crash leftovers in the private root (a slow disk leak, no custody effect).
+- **16:52: W3 contract ruling.** The test lane's proof is clean (0 regressions; no exploitable bug, mutations bite), but its Astra read BLOCKs on docs/contracts/error-model.md:90: "any … verification-skipping path must be explicit, operator-chosen, and documented as an opt-out."
+  - **Ruling (a), which complies with the contract:** an explicit setting enables the stat-based skip. The default is a full re-verify; records may be written but are never used to skip unless the setting is on. Documented as the opt-out in the generation and RunPod skills plus the docstring.
+  - W6 measures with the setting ON.
+  - Device numbers on a travelling network volume are best-effort (deferred note).
+  - **Hannah may instead choose default-on, which means rewriting the contract clause. Asked.**
+- **17:02: hostwedge 1505a379c: Astra BLOCK (test lane W84).**
+  - (1) fallback spool bases are in-memory only (orphaned custody after restart);
+  - (2) storage reclaim ignores the uid/mode rule;
+  - (3) path validation by pathname, not descriptor; ancestors unchecked;
+  - (4) blocked or reconciling attempts aren't shown to keep their fence, or to release the managed session or engine.
+  - **Steer to cells:** drop the random fallback (the base is in private user state, so a squat isn't possible). An unsafe base becomes a visible host-wide refusal. Validate by descriptor (O_NOFOLLOW, fstat, ancestors). Apply the uid rule in reclaim. (4) keeps the fence and releases the session or engine on replay, with tests.
+  - Not merged. Round 3 goes through machines' read, then the test lane and Astra.

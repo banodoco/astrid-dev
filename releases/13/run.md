@@ -2,16 +2,17 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (16:00 UTC Sat 14 Nov): read this first
+## Now (17:00 UTC Sat 14 Nov): read this first
 
-**No fixed freeze time. Freeze when every item is proven. Then: the frozen head's CI comparison; the live repeat (all five cells plus three h3 modes, more steps for edit and v2v, one FRESH download, warm reuse timing); then Hannah's go.**
-- **Compose head 941fca2a4.** Since 15:00: i2vsel (the attached i2v refusal names its fix). int/r13-a045b00e is the cleanest CI so far: fast checks green, 0 regressions, 0 new, 7 cleared.
-- **Open, all on the critical path:**
-  - machines: httpj round 3 (custody fence; test lane plus Astra), lanes round 4 (the 32 new-test ids; 16:30 stop), W2 (phase timings), W3 (skip re-hash; Astra), W4 after lanes;
-  - cells: `hostwedge`, the stale /tmp attempt wedge found by the P4.9 walk (machines reviews; about 17:15);
-  - phase 4: R4.G (stock seed shape), R4.H (defaults readiness vs missing models), R4.I (MCP open_url parity), then merge 941fca2a4, the re-walk and the handover SHA. The test lane is already proving interim 68ddbed7.
-- **Live:** W1 baseline done (same-pod t2i 4m35s vs 13m19s first). 0 pods; $84.22.
-- **Waiting on Hannah:** the P4.7 wording yes/no list, and merging PR banodoco/astrid-dev#648.
+**No fixed freeze time. Freeze when every item is proven. Then: the frozen head's CI comparison; the live repeat (all five cells plus three h3 modes, more steps for edit and v2v, one FRESH download through fetch-models --apply, warm reuse timing with `models.trust_unchanged` on); then Hannah's go.**
+- **Compose head 941fca2a4.** Ready, in test lane proof:
+  - **batch 1:** lanes round 5 (with the file_fact passthrough) → comfy-source 2451d9ca6 → W3 round 3 (opt-in `models.trust_unchanged`, per error-model.md:90);
+  - **hostwedge** 1505a379c (machines OK; Astra W84 and paired W85 running);
+  - custody-helpers d89e9fc5b;
+  - **phase 4** bea57349 (delta W82). Then R4.J (MCP census: audio and failure on MCP, distinct tool names) and R4.K (seed_used=0, the receipt bug) on its branch.
+- **Still building:** machines httpj round 4 (pacing recheck; cold release for old journals), W2 (phase timings), W3 round 3; cells W4 (local idle release).
+- **Live:** 0 pods; $84.22. W1 baseline: same-pod t2i 4m35s.
+- **Waiting on Hannah:** the P4.7 wording list; W3 default (off, per the contract, unless she rewrites the clause); merging PR banodoco/astrid-dev#648.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
