@@ -1620,3 +1620,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **What it adds:** h3's preparation, plan, compilation, composition and verification evidence is declared through the existing `run_logs`, so `astrid tasks logs` keeps it after cleanup. A preparation timeout tells the user to "rerun to resume the download".
   - **Proof:** 4 new tests, each failing before; no regressions.
   - **Follow-up:** sizing the deadline from the bytes still to fetch is in deferred.md.
+- **04:55: int/r13-65b1d45c COMPLETE** (CI 8/8, Lanes 5/5; Lanes 3/4 finished for the first time, in 1:53).
+  - **Regressions:** 141 (vs 140 on c9636ed4); new-failing CI 202 and Lanes 98.
+  - **Delta:** 3 cleared, and 4 new M2-consequence tests (tests still passing paid flags to generate) routed to machines. The MCP paid-controls one touches money, so it gets a root fix.
+  - **Verified by the test lane on later branches:** the lease restoration, the custody rows and ir-bridge. These clear most of the 141 once in a head.
+  - **Froze int/r13-05826d63 now**, in place of the 06:00 read. **Reason:** no CI was running, and it carries the custody, engine, lease, ir-bridge and h3-evidence fixes.
