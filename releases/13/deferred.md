@@ -62,6 +62,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Astrid `flf` mode shows as unavailable | briefs/declarations-t3.md:49 |
 | About 16 templates' ready_id to fix. Four declare no qualified id (z_image_turbo, z_image_img2img, basic_image_upscale, empty_image_red) | decisions.md:505 |
 | Music: minimax_music_3 needs a real default prompt, or stays below ace_step (R13 made ace_step the default) | decisions.md (02:25 Sat) |
+| h3 i2v is reference-guided, not a true first frame (Hannah asked for "feeding first frame"). A guide at index 0 conditions but doesn't preserve pixels; the follow-up is a protected latent anchor (cells' h3first, 04:55 Sat) | cells' message, 04:55 Sat |
 | Video entries beyond h3 (wan-2.2 "not qualified" in CI) | test lane, 13 Nov |
 | Supervisor records the launch offset, and jobs declare from it | decisions.md:364 |
 | Patch work: schema identity for schema-changing patches, sha256_before diagnostics, attached release attestation, concurrent-writer atomicity, the engine_runner base-bump hazard, workflow-ref transport | decisions.md:564, 576 |

@@ -1625,3 +1625,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Delta:** 3 cleared, and 4 new M2-consequence tests (tests still passing paid flags to generate) routed to machines. The MCP paid-controls one touches money, so it gets a root fix.
   - **Verified by the test lane on later branches:** the lease restoration, the custody rows and ir-bridge. These clear most of the 141 once in a head.
   - **Froze int/r13-05826d63 now**, in place of the 06:00 read. **Reason:** no CI was running, and it carries the custody, engine, lease, ir-bridge and h3-evidence fixes.
+- **05:00: merged cells r13/h3-duration c5e4f7cc2: a ROOT fix.**
+  - **What it fixes:** v2 times stay exact (Fractions) through normalization, validation and native timing, so the 5-frame minimum "5/24" works for every h3 mode.
+  - **Proof:** h3_av tests went from 420 passed/4 failed to 451/4; the 4 are preexisting, with 0 regressions. The CPU dry runs for all 3 modes with "5/24" are ready.
+  - **h3 true first frame:** a follow-up, now in deferred.md (a protected latent anchor). For R13, i2v is reference-guided.
