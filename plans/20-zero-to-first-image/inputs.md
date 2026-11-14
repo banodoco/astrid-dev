@@ -123,6 +123,13 @@ Rejected outright: none. Overridden later by the orchestrator: moving P4.12 to P
     - The logs stay with the manager unless the owner wants them committed.
   - **Manager's rulings, accepted by the orchestrator:** P4.11 is split into 11a and 11b. Task branches are cut from `main`, with minimal diffs in files that release 13 rewrites. P4.0 walks Agent `r13/compose` `a371431` (detached, read-only), not `main`, because `main` lacks the fake and the skill text phase 4 rewrites. Walk 1 is therefore the release 13 path. Both rulings are marked REVIEW for R4.
 
+**Finding for VibeComfy's owner (phase 4 manager, 14 Nov; passed to the orchestrator, not filed by this plan):** saving a UI workflow as an entry (`generate workflow FILE --as-entry NAME --no-run`) is slow and CPU-bound. It takes about 61 s for one flux workflow from the shell, and minutes under pytest on a loaded machine. Cause, from a faulthandler dump at VibeComfy `d3850831` (the release 13 pin):
+- `porting/object_info/consume.py:220` `_sync_reader` calls `cache_file_witness` (`porting/object_info/generation.py:100`, a SHA-256 of the whole file) on the index and every pack file, with no memo.
+- `_load_pack` calls it twice (`:264`, `:270`), and `_resolve_class_type` (`:314`) calls `_load_pack` once per node. Over a cache of about 14 MB, one save does hundreds of full rehashes.
+- The path: `entries.py:131` `import_as_entry` → `import_service.py:227` → `workflow_bundle.py:4067` → `emit_ready.py` → `compact_resolver.py` → `consume.py:791`.
+
+A possible fix, VibeComfy's to decide: memoise the witness per path and stat. The cost to people: "save it as an entry" in the defaults step takes about a minute per workflow, and P4.9 times it. The `--dry-run` preview does not take this path. P4.11b's branch test uses a small fixture through the real CLI, with no assertion changed (manager's ruling).
+
 **Request to Plan 34:** one row in Plan 34's real-GPU proof: the first image on a person's own running ComfyUI through the phase 4 skill, from the skill URL to the image in the Generations pane, with minutes and commands counted. Plan 20 runs no GPU (D8, OD3). Plan 34's owner adds the row; this plan does not edit Plan 34's files.
 
 **Review rounds:** Recommend one round (R4) on the integrated phase 4 result before P4.9's final walk: a user-visible flow and additive changes to two `--json` envelopes (P4.1), but no paid action and, after the critique, no store migration. No review stop. Agreed by Hannah, 14 Nov ("Yes on rest", relayed by the orchestrator).
