@@ -1579,3 +1579,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - (7) h3 evidence is deleted with the job directory, to be declared through the existing run_logs LogDecl pattern;
     - ffmpeg in pod preparation, if it turns out missing.
   - **Anything not done before the Sun 03:45 cut-off goes into deferred.md.**
+- **04:15: "root or logged" (Hannah, via the advisor; checked every dive from 05:30).** Every problem is handled one of two ways:
+  - a root fix for the whole class, with evidence; or
+  - a deliberate band-aid, said in one line, with the deeper cause filed at once: an astrid-dev issue number, or a row in `releases/13/deferred.md`.
+
+  An unlogged band-aid or an unexamined workaround is a failure. Lean to root for money, custody and the generate path. Sent to machines, cells and the test lane.
