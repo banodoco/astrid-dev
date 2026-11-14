@@ -1765,3 +1765,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Ruling: record both in import_cycles.json**, each with its cause (predates R13, reproduces at 0e1543e0, Plan 39) and cross-linked to the deferred.md row. Any new pair still fails. This is a preexisting row under its plan, per Hannah's exception rule, not a relaxed check.
 - **10:55: Hannah resized volume 2z2dlu1v8g to 300 GB** (confirmed via RunPod: size 300). Also: **"no need for a note, we have no users."** So there's no R12 user note and no R12 patch for the v1 retirement. That closes the item; the required-update floor of 13 is also moot.
   - **Round 6 started:** a fresh install of compose e51723152 (STAGE_TAG s14), a claim, then the h3 queue in Fable's order: v2v, video-edit, the i2v smoke, the 3 s bicycle i2v. It stops on ffprobe, OOM, CUDA, insufficient_storage or quota errors, then releases. A safety check fires at 13:23.
+- **11:10: merged machines 8e3376515 (volsize, re-merged with compose; the conflict was only the import list).**
+  - **Capacity:** the claim's network volume (id, size_gb, mount_path) travels to the pod job, and free space = size minus a bounded walk of the mount, so the preflight can now see the RunPod volume quota.
+  - **Inventory:** any EDQUOT or ENOSPC fetch failure writes `storage.inventory`, then re-raises.
+  - **Logged:** size_gb is the saved setup value; re-run `machines setup` after a resize. claim.sh does this.
