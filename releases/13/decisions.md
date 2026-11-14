@@ -1796,3 +1796,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - `[video/i2v-attached]` fails on "BasicGuider missing", routed to cells.
 - **The `align` family (32 ids):** machines' `lanes` card owns the bisect, with a hard stop at 15:35. The working lead is be0027945 (engine lookup via `entries.engine_table`, so the `_engine_for` spy sees nothing).
 - **Three earlier flagged ids** are in the count but not in W75; the test lane is reconciling them.
+- **11:43, reconciled on 2f45835a** (Lanes 43576499502): 13 ids were flagged.
+  - Real R12→R13 regressions:
+    - `cpu_path` ×1 (stale test, machines card `cpupath`);
+    - `structural_validation::…declared_assets…[incomplete]` ×1. It passes on R12 and fails at fd5ff0d9 because the VibeComfy canonical-bundle `workflow_load_er…` error now hides the declared-missing asset. The test lane's W76 is bisecting it, then routes.
+  - Not regressions:
+    - `activation[False]` fails on R12 too (Plan 39, cited local R12 run);
+    - `slot_path` ×10 are tests new in R13.
+  - Previously flagged ids cleared between a4d893c8 and 2f45835a: h3-attached, h3-runpod, shared_redo, and 2 h3 slot_path ids.
