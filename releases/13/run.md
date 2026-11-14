@@ -2,19 +2,21 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (03:00 UTC Sat 14 Nov): read this first
+## Now (04:00 UTC Sat 14 Nov): read this first
 
-**Publish moved back at least 24 h (Hannah).** Sat 06:00 is a CI read; the FINAL freeze is Sun 04:00; then the comparison and the live repeat; publish no earlier than Sun about 12:00, with her go. h3_av, all three video modes, is IN this release.
-- **Live, round 4 on int/r13-65b1d45c (M2, claim-then-generate):**
-  - tts PASS (transcript exact);
-  - sfx PASS (fits the prompt; picture sync untested, because the source was a blank test pattern);
-  - t2i, edit and music running.
+**Publish moved back at least 24 h (Hannah).** Sat 06:00 is a CI read; the FINAL freeze is Sun 04:00; publish no earlier than Sun about 12:00, with her go. h3_av, all three video modes, is IN.
+- **Round 4 DONE on int/r13-65b1d45c (M2), every output validated by eye or ear:**
+  - tts (exact transcript), sfx, t2i, music (30 s with vocals) and a real bicycle edit all PASS;
+  - the bicycle edit has a model-limitation note: the wall texture drifted.
 
-  The h3 queue follows: v2v, video-edit, i2v smoke, the 3 s bicycle, the bicycle image edit. Every output is validated by eye or ear (`install-r13b/validate/log.md`), and samples go to Hannah.
-- **Compose `88c88c114`:** M2, livefix, lanes-wall, scripts and ir-bridge rows. CI read on int/r13-65b1d45c.
-- **Binding table on c9636ed4:** 140 regressions, being fixed by machines (which owns engine now) and cells. All 173 timeline ids are preexisting (#637).
-- **Rules:** "root or logged"; managers farm work to Codex; `deferred.md` holds every follow-up.
-- **Money:** 1 pod (round 4), balance about $87.9.
+  The round cost $1.77, and the pod is released.
+- **h3 v2v: pipeline fault, the network volume is full** (Disk quota exceeded on the 2 big weights). Machines brings sanctioned cleanup commands plus a storage preflight by 05:15, then I re-claim for h3.
+- **Compose `90ca0fa11`:** M2, the machines custody rows, the lease-test restoration and cells' ir-bridge rows.
+  - **Engine:** `r13/engine/s1-regress` (14 groups) is with machines to judge.
+  - **Cells:** h3 plain-inputs, 5/24, first-frame, sfxdef and the other rows are in flight.
+- **CI:** 65b1d45c running (since 02:08).
+- **Lanes:** all active; seven-day limits `allowed`.
+- **Money:** 0 pods, $86.93.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
