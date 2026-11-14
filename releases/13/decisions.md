@@ -1986,3 +1986,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Merge-order trap:** lanes' sparse-weight fixture wraps file_fact without W3's `verification=` kwarg. Machines adds the passthrough in lanes round 5.
   - **Ruling:** the test lane proves lanes round 5, comfy-source 2451d9ca6 and W3 as ONE batch on 941fca2a4, merged in that order.
   - The MCP parity census is R12-red (Plan 39); the phase 4 manager updates it for compose and phase 4 together.
+- **16:49: MCP census ruling (R4.J).**
+  - (a) `generate audio` IS an MCP tool: R13 ships tts, sfx and music, so agents need it. The test narrows to `generate_speech` absent.
+  - `generate failure` is pinned PRESENT (the read-only diagnostic for agents).
+  - `video_ref` is in the exact generate_video schema.
+  - Before commit: confirm the product's MCP tool names don't collide (`defaults set` vs `settings set`). If they do, it's a product fix with a no-two-leaves-share-a-name test.
