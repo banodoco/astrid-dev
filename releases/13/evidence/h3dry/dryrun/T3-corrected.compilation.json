@@ -60,7 +60,7 @@
       "video_tail": "repeat_last_selected_frame"
     }
   },
-  "compilation_digest": "f7ad599864b59297d2716d48c5f2224af129a08bcb04abe6fa7a7796037fb890",
+  "compilation_digest": "a911c24a83196c7c36ef210b1221c2cf2268b05f32b616c7c8cafa8ca8a28246",
   "kind": "h3_av_compilation",
   "limitations": [
     "native masked edit is CPU-verified only; spatial mode on ref2va plus Turbo is unproven on GPU",
@@ -78,11 +78,11 @@
           "lineage": {
             "filename": "42632ebb92a26459.mp4",
             "kind": "source_bytes",
-            "sha256": "sha256:b6975923a3d36246ab9291933186abd7cdb410a3e7f8df2d3607796d80781f36"
+            "sha256": "sha256:a2171bc4f38d77c85e422f9d7e471ea0caec814e340cb8566a565e2cc8a3586e"
           },
-          "member": "assets/b6975923a3d36246-42632ebb92a26459.mp4",
-          "sha256": "b6975923a3d36246ab9291933186abd7cdb410a3e7f8df2d3607796d80781f36",
-          "size": 61056
+          "member": "assets/a2171bc4f38d77c8-42632ebb92a26459.mp4",
+          "sha256": "a2171bc4f38d77c85e422f9d7e471ea0caec814e340cb8566a565e2cc8a3586e",
+          "size": 230408
         },
         {
           "binding": "video_mask_0",
@@ -101,44 +101,44 @@
       "workflow_inputs": {
         "guidance": 0.95,
         "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
-        "prompt": "The bicycle begins to roll forward along the wall.",
+        "prompt": "A person walks into frame from the right, takes the bicycle by the handlebars and wheels it away to the left.",
         "sampler": "res_multistep",
         "scheduler": "simple",
         "seed": 42,
-        "source_video": "b6975923a3d36246-42632ebb92a26459.mp4",
+        "source_video": "a2171bc4f38d77c8-42632ebb92a26459.mp4",
         "steps": 8,
         "video_mask_0": "1a9eb73d137bf69f-bounded-mask.mkv"
       }
     },
-    "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/managed-assets.zip",
-    "sha256": "59cab96fdf9dec7007a83254dedd5fea46b9eca2417681483d94f282c931d73c"
+    "path": "/home/user/wt/h3real.env/tmp/astrid-job-qid0ku4u/h3/plan/compile/managed-assets.zip",
+    "sha256": "fdf15091a8b17db33d1e964276dacbd3ed45b34d91a5bc387f2771f3434127f3"
   },
   "profile": "h3_av.native.v2",
-  "request_digest": "99b7a5742610ffa873d89a188ab82349c2a155eb51b29c9c575981d2cddd339f",
+  "request_digest": "87c8e4c2f8e5752489ccf5ed4c610e34de9a20c3404507accd47f6dc342dbcfa",
   "schema_version": 1,
   "status": "compiled",
   "workflow": {
     "source.json": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/workflow-bundle/source.json",
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-qid0ku4u/h3/plan/compile/workflow-bundle/source.json",
       "sha256": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5"
     },
     "workflow.py": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/workflow-bundle/workflow.py",
-      "sha256": "bdbdcf9053b851acd82af8bf842c75fa1c160aeb323ab69331f345220282f9e6"
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-qid0ku4u/h3/plan/compile/workflow-bundle/workflow.py",
+      "sha256": "b9e37d53071023fa1ba7bbb32d944b684446e34bffb892dba26b76d2e58abf3b"
     },
     "workflow.vibe.json": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy/h3/plan/compile/workflow-bundle/workflow.vibe.json",
-      "sha256": "2e6a14a54100c6cb76cd5c7b43d9104ad164e1a3b343a017396aab64acc7ec59"
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-qid0ku4u/h3/plan/compile/workflow-bundle/workflow.vibe.json",
+      "sha256": "a54014bbd643b3b41d705db5a108579490c8775d0fe05e29c28a56c01104ab14"
     }
   },
   "workflow_inputs": {
     "guidance": 0.95,
     "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
-    "prompt": "The bicycle begins to roll forward along the wall.",
+    "prompt": "A person walks into frame from the right, takes the bicycle by the handlebars and wheels it away to the left.",
     "sampler": "res_multistep",
     "scheduler": "simple",
     "seed": 42,
-    "source_video": "b6975923a3d36246-42632ebb92a26459.mp4",
+    "source_video": "a2171bc4f38d77c8-42632ebb92a26459.mp4",
     "steps": 8,
     "video_mask_0": "1a9eb73d137bf69f-bounded-mask.mkv"
   }

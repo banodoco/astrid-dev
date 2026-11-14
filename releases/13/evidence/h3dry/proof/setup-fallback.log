@@ -1,10 +1,10 @@
 warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
-Using Python 3.13.18 environment at: /home/user/wt/h3live.env/venv
-Resolved 158 packages in 128ms
-   Building astrid @ file:///home/user/wt/h3live.env/source
-      Built astrid @ file:///home/user/wt/h3live.env/source
-Prepared 1 package in 1.83s
-Installed 158 packages in 376ms
+Using Python 3.13.18 environment at: /home/user/wt/h3real.env/venv
+Resolved 158 packages in 48ms
+   Building astrid @ file:///home/user/wt/h3real.env/source
+      Built astrid @ file:///home/user/wt/h3real.env/source
+Prepared 1 package in 1.25s
+Installed 158 packages in 171ms
  + agent-detector==2.0.0
  + aiodns==4.0.4
  + aiofiles==25.1.0
@@ -17,7 +17,7 @@ Installed 158 packages in 376ms
  + annotated-types==0.8.0
  + anthropic==2.8.0
  + anyio==4.16.0
- + astrid==0.1.0 (from file:///home/user/wt/h3live.env/source)
+ + astrid==0.1.0 (from file:///home/user/wt/h3real.env/source)
  + asyncstdlib==3.14.0
  + attrs==26.1.0
  + backoff==2.2.1
@@ -164,9 +164,10 @@ Installed 158 packages in 376ms
  + yarl==1.25.1
  + zopfli==0.4.3
 warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
-Using Python 3.13.18 environment at: /home/user/wt/h3live.env/venv
-Resolved 1 package in 7ms
-Installed 1 package in 6ms
+Using Python 3.13.18 environment at: /home/user/wt/h3real.env/venv
+Resolved 1 package in 3ms
+Installed 1 package in 9ms
  + astrid-runtime==0.1.0 (from file:///root/.cache/uv/sdists-v9/path/cb0db8c78d99a941/10cfy-NcZre4lD2C/astrid_runtime-0.1.0-py3-none-any.whl)
 Preparing worktree (detached HEAD dba38f86)
+Updating files:  94% (3709/3930)Updating files:  95% (3734/3930)Updating files:  96% (3773/3930)Updating files:  97% (3813/3930)Updating files:  98% (3852/3930)Updating files:  99% (3891/3930)Updating files: 100% (3930/3930)Updating files: 100% (3930/3930), done.
 HEAD is now at dba38f86 root: attach HF credentials per allowed host, not by default

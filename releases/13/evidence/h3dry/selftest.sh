@@ -9,13 +9,13 @@ make_copy() {
 }
 make_copy "null" "$TMP_TEST/accurate.mkv"
 make_copy "drawbox=x=0:y=0:w=iw:h=ih:color=white@1:t=fill:enable='gte(n,36)'" "$TMP_TEST/tail.mkv"
-make_copy "drawbox=x=384:y=144:w=256:h=288:color=white@1:t=fill" "$TMP_TEST/inside.mkv"
+make_copy "drawbox=x=290:y=190:w=478:h=336:color=white@1:t=fill" "$TMP_TEST/inside.mkv"
 make_copy "drawbox=x=0:y=0:w=64:h=64:color=white@1:t=fill" "$TMP_TEST/outside.mkv"
 check() {
  local expected=$1; shift
- printf 'COMMAND: python3 check_edit.py'; printf ' %q' "$@"; printf '\n'
+ printf 'COMMAND: python3 check_real_edit.py'; printf ' %q' "$@"; printf '\n'
  set +e
- python3 check_edit.py "$@"
+ python3 check_real_edit.py "$@"
  local actual=$?
  set -e
  printf 'expected=%s actual=%s\n' "$expected" "$actual"
@@ -28,7 +28,7 @@ check 1 assets/bike.mp4 "$TMP_TEST/accurate.mkv" --kept 0-71 --mask assets/frame
 python3 - "$TMP_TEST/accurate.mkv" <<'PYCODE'
 import sys
 import numpy as np
-from check_edit import decoder, frame, probe
+from check_real_edit import decoder, frame, probe
 
 source, candidate = 'assets/bike.mp4', sys.argv[1]
 for default in (True, False):
@@ -40,7 +40,7 @@ for default in (True, False):
             assert a is None and b is None
             break
         diff = np.abs(a.astype(np.int16) - b.astype(np.int16))
-        diff[144:432, 384:640] = 0
+        diff[190:526, 290:768] = 0
         maximum = max(maximum, int(diff.max()))
         count += 1
     for proc in procs:

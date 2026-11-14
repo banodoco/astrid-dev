@@ -1,6 +1,6 @@
 {
-  "encoding": "libx264 -crf 0 -pix_fmt yuv444p",
-  "decoded_png_differing_pixels": 483361,
-  "max_rgb_absolute_difference": 2,
-  "note": "Codec lossless in YUV444; RGB to YUV conversion is not RGB bit identity. Compare kept frames to decoded MP4."
+  "changed_pixels": 540736,
+  "max_abs_channel_diff": 2,
+  "conversion": "accurate Lanczos full-chroma RGB, both frame0 PNG and still decoded using same conversion",
+  "note": "lossless YUV444 encoding does not imply RGB roundtrip identity"
 }

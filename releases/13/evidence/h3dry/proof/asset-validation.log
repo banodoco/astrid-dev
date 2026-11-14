@@ -1,0 +1,1 @@
+PASS: subject PNG equals accurate RGB source frame 0; still has 72 identical decoded frames; silent AAC decodes to max amplitude 0

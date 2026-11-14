@@ -1,0 +1,1 @@
+Post-restart T2 admission completed ready, exit 0. The multi-test shell session was terminated with exit 143 during T3, leaving empty stdout/stderr and a stale exit file. No product diagnostic was emitted. Remaining admissions are therefore invoked individually and only completed JSON plus fresh exits count.

@@ -1,8 +1,8 @@
 [
   {
     "path": "assets/bike-still.mp4",
-    "bytes": 61056,
-    "sha256": "b6975923a3d36246ab9291933186abd7cdb410a3e7f8df2d3607796d80781f36",
+    "bytes": 230408,
+    "sha256": "a2171bc4f38d77c85e422f9d7e471ea0caec814e340cb8566a565e2cc8a3586e",
     "ffprobe": {
       "streams": [
         {
@@ -20,8 +20,6 @@
           "closed_captions": 0,
           "film_grain": 0,
           "has_b_frames": 0,
-          "sample_aspect_ratio": "1:1",
-          "display_aspect_ratio": "16:9",
           "pix_fmt": "yuv444p",
           "level": 31,
           "chroma_location": "left",
@@ -37,10 +35,10 @@
           "start_time": "0.000000",
           "duration_ts": 36864,
           "duration": "3.000000",
-          "bit_rate": "152248",
+          "bit_rate": "603898",
           "bits_per_raw_sample": "8",
           "nb_frames": "72",
-          "extradata_size": 46,
+          "extradata_size": 45,
           "disposition": {
             "default": 1,
             "dub": 0,
@@ -121,15 +119,15 @@
         }
       ],
       "format": {
-        "filename": "assets/bike-still.mp4",
+        "filename": "/home/user/cells/evidence/h3real/package/assets/bike-still.mp4",
         "nb_streams": 2,
         "nb_programs": 0,
         "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
         "format_long_name": "QuickTime / MOV",
         "start_time": "0.000000",
         "duration": "3.000000",
-        "size": "61056",
-        "bit_rate": "162816",
+        "size": "230408",
+        "bit_rate": "614421",
         "probe_score": 100,
         "tags": {
           "major_brand": "isom",
@@ -142,8 +140,8 @@
   },
   {
     "path": "assets/bike.mp4",
-    "bytes": 604364,
-    "sha256": "9a6d66ba434ec40d7459b1fda0b469c1602fe3ea9e1bc02e1bf648873de10e97",
+    "bytes": 864765,
+    "sha256": "bd32975e3ab3738ff248302f4647534919dda8c9d3f305a325d7043a4dfb5810",
     "ffprobe": {
       "streams": [
         {
@@ -161,10 +159,12 @@
           "closed_captions": 0,
           "film_grain": 0,
           "has_b_frames": 2,
-          "sample_aspect_ratio": "1:1",
-          "display_aspect_ratio": "16:9",
           "pix_fmt": "yuv420p",
           "level": 31,
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709",
           "chroma_location": "left",
           "field_order": "progressive",
           "refs": 1,
@@ -178,10 +178,10 @@
           "start_time": "0.000000",
           "duration_ts": 36864,
           "duration": "3.000000",
-          "bit_rate": "1531725",
+          "bit_rate": "2167304",
           "bits_per_raw_sample": "8",
           "nb_frames": "72",
-          "extradata_size": 47,
+          "extradata_size": 48,
           "disposition": {
             "default": 1,
             "dub": 0,
@@ -218,21 +218,21 @@
           "codec_tag_string": "mp4a",
           "codec_tag": "0x6134706d",
           "sample_fmt": "fltp",
-          "sample_rate": "44100",
-          "channels": 1,
-          "channel_layout": "mono",
+          "sample_rate": "32000",
+          "channels": 2,
+          "channel_layout": "stereo",
           "bits_per_sample": 0,
           "initial_padding": 0,
           "id": "0x2",
           "r_frame_rate": "0/0",
           "avg_frame_rate": "0/0",
-          "time_base": "1/44100",
+          "time_base": "1/32000",
           "start_pts": 0,
           "start_time": "0.000000",
-          "duration_ts": 132300,
+          "duration_ts": 96000,
           "duration": "3.000000",
-          "bit_rate": "69599",
-          "nb_frames": "131",
+          "bit_rate": "127295",
+          "nb_frames": "95",
           "extradata_size": 5,
           "disposition": {
             "default": 1,
@@ -262,15 +262,15 @@
         }
       ],
       "format": {
-        "filename": "assets/bike.mp4",
+        "filename": "/home/user/cells/evidence/h3real/package/assets/bike.mp4",
         "nb_streams": 2,
         "nb_programs": 0,
         "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
         "format_long_name": "QuickTime / MOV",
         "start_time": "0.000000",
         "duration": "3.000000",
-        "size": "604364",
-        "bit_rate": "1611637",
+        "size": "864765",
+        "bit_rate": "2306040",
         "probe_score": 100,
         "tags": {
           "major_brand": "isom",
@@ -283,8 +283,8 @@
   },
   {
     "path": "assets/frame-mask.png",
-    "bytes": 3449,
-    "sha256": "7562374a07eaf144186fe98c60b3bded868b7fcc605bd557b890d67e1867bc42",
+    "bytes": 1344,
+    "sha256": "119a5ba0b23c35483336e660918471d9c0307eb04b005693f6c3b1dd201d8b09",
     "ffprobe": {
       "streams": [
         {
@@ -301,9 +301,7 @@
           "closed_captions": 0,
           "film_grain": 0,
           "has_b_frames": 0,
-          "sample_aspect_ratio": "1:1",
-          "display_aspect_ratio": "16:9",
-          "pix_fmt": "rgb24",
+          "pix_fmt": "gray",
           "level": -99,
           "color_range": "pc",
           "color_space": "gbr",
@@ -334,20 +332,20 @@
         }
       ],
       "format": {
-        "filename": "assets/frame-mask.png",
+        "filename": "/home/user/cells/evidence/h3real/package/assets/frame-mask.png",
         "nb_streams": 1,
         "nb_programs": 0,
         "format_name": "png_pipe",
         "format_long_name": "piped png sequence",
-        "size": "3449",
+        "size": "1344",
         "probe_score": 99
       }
     }
   },
   {
     "path": "assets/subject-bike.png",
-    "bytes": 72650,
-    "sha256": "fa15dffeea73ba46398e3cf5a703bed7830d1a815996e6aecb0eadeca21ba60b",
+    "bytes": 395761,
+    "sha256": "4dab2f2ebd08c6a477543b08139ac87aca7ecbf4fe933e6f2249296d857e7d4c",
     "ffprobe": {
       "streams": [
         {
@@ -364,8 +362,6 @@
           "closed_captions": 0,
           "film_grain": 0,
           "has_b_frames": 0,
-          "sample_aspect_ratio": "1:1",
-          "display_aspect_ratio": "16:9",
           "pix_fmt": "rgb24",
           "level": -99,
           "color_range": "pc",
@@ -397,12 +393,12 @@
         }
       ],
       "format": {
-        "filename": "assets/subject-bike.png",
+        "filename": "/home/user/cells/evidence/h3real/package/assets/subject-bike.png",
         "nb_streams": 1,
         "nb_programs": 0,
         "format_name": "png_pipe",
         "format_long_name": "piped png sequence",
-        "size": "72650",
+        "size": "395761",
         "probe_score": 99
       }
     }

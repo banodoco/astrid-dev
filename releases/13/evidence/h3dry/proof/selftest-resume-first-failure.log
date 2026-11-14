@@ -1,0 +1,3 @@
+COMMAND: python3 check_real_edit.py assets/bike.mp4 assets/bike.mp4 --kept 0-71
+{"result": "FAIL", "frames": 17, "changed_frames": [], "inside_changed_frames": [], "errors": ["source/output frame counts differ", "expected exactly 72 decoded frames, got 17"]}
+expected=0 actual=1

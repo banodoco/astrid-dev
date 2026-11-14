@@ -1,0 +1,69 @@
+{
+  "convention": "half-open x0,y0,x1,y1",
+  "threshold": "R>140,G<90,B<90; 8-connected components >=20 pixels",
+  "frames": {
+    "0": [
+      436,
+      290,
+      619,
+      411
+    ],
+    "35": [
+      446,
+      291,
+      632,
+      416
+    ],
+    "71": [
+      573,
+      349,
+      583,
+      377
+    ]
+  },
+  "union": [
+    436,
+    290,
+    632,
+    416
+  ],
+  "strict_red_margin_box": [
+    416,
+    270,
+    652,
+    436
+  ],
+  "approximate_visual_bicycle_bounds": {
+    "0": [
+      335,
+      225,
+      718,
+      482
+    ],
+    "35": [
+      322,
+      218,
+      730,
+      495
+    ],
+    "71": [
+      310,
+      210,
+      748,
+      506
+    ]
+  },
+  "approximate_visual_union": [
+    310,
+    210,
+    748,
+    506
+  ],
+  "chosen_mask_box": [
+    290,
+    190,
+    768,
+    526
+  ],
+  "reason": "Strict red threshold misses dark red parts, wheels, saddle and handlebars; approximate visual whole-bicycle union plus 20 pixels. Drainpipe excluded; wall within rectangle is unavoidably editable."
+}

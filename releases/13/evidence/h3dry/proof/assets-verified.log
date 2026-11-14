@@ -1,0 +1,2 @@
+PASS: source clip is byte-for-byte identical to supplied T1-i2v-bike.mp4
+PASS: mask exactly white x=[290,768), y=[190,526), black elsewhere

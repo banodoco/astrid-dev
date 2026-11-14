@@ -6,17 +6,17 @@
     ],
     "bindings": {
       "guidance": 0.95,
-      "mask_0": "5e4f279cfefea35e-resolved-mask.png",
+      "mask_0": "3473876e57f4abb9-resolved-mask.png",
       "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
       "prompt": "The bicycle frame is deep cobalt blue. Everything else is unchanged.",
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
       "steps": 8
     },
     "build_plan": {
-      "compilation_digest": "c68e4fe667b14625319e62316cac7a908913b783170902b6585afbf8051f6240",
+      "compilation_digest": "0a03f669b822fc1ea725c7248cb96bebfbe737b048bebf7473524241ee74fc83",
       "intent": {
         "groups": [
           {
@@ -51,7 +51,7 @@
         "source_frame_rate": "24/1",
         "video_frames": 72
       },
-      "workflow_inputs_sha256": "sha256:9c54b5fc377cded22d6c982a78d01a80531cab38b615ac8fa3b715f771f9448d",
+      "workflow_inputs_sha256": "sha256:42da7d2a5f6cf440d70f44cb0fdb9588a0ee8c9a5ab64e4f579932fcbd54abd3",
       "workflow_members": {
         "source.json": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5",
         "workflow.py": "df2987d1bf91a2132030c77f0e399cf59a3e7f91fbf7981f0b7ccb0b7c240597",
@@ -60,7 +60,7 @@
     },
     "effective_values": {
       "guidance": 0.95,
-      "mask_0": "5e4f279cfefea35e-resolved-mask.png",
+      "mask_0": "3473876e57f4abb9-resolved-mask.png",
       "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
       "node:1.clip_name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
       "node:1.device": "default",
@@ -95,7 +95,7 @@
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
       "steps": 8
     },
     "engine": "comfyui",
@@ -292,7 +292,7 @@
         "type": "boolean"
       }
     ],
-    "job_dir": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry",
+    "job_dir": "/home/user/wt/h3real.env/tmp/astrid-job-5hm1dld2",
     "kind": "video",
     "mode": "video-edit",
     "model": "h3",

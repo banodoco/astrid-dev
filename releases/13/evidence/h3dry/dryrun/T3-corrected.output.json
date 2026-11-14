@@ -7,16 +7,16 @@
     "bindings": {
       "guidance": 0.95,
       "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
-      "prompt": "The bicycle begins to roll forward along the wall.",
+      "prompt": "A person walks into frame from the right, takes the bicycle by the handlebars and wheels it away to the left.",
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "b6975923a3d36246-42632ebb92a26459.mp4",
+      "source_video": "a2171bc4f38d77c8-42632ebb92a26459.mp4",
       "steps": 8,
       "video_mask_0": "1a9eb73d137bf69f-bounded-mask.mkv"
     },
     "build_plan": {
-      "compilation_digest": "f7ad599864b59297d2716d48c5f2224af129a08bcb04abe6fa7a7796037fb890",
+      "compilation_digest": "a911c24a83196c7c36ef210b1221c2cf2268b05f32b616c7c8cafa8ca8a28246",
       "intent": {
         "groups": [
           {
@@ -39,7 +39,7 @@
         "version": 1
       },
       "output_contract": "muxed_av_full_timeline",
-      "request_digest": "99b7a5742610ffa873d89a188ab82349c2a155eb51b29c9c575981d2cddd339f",
+      "request_digest": "87c8e4c2f8e5752489ccf5ed4c610e34de9a20c3404507accd47f6dc342dbcfa",
       "source_av": {
         "audio_sample_rate": 32000,
         "audio_samples": 96000,
@@ -51,11 +51,11 @@
         "source_frame_rate": "24/1",
         "video_frames": 72
       },
-      "workflow_inputs_sha256": "sha256:3d09b22971d3dbd126cc593c5d83466764173f2912c1f5c0cf8852d50789f035",
+      "workflow_inputs_sha256": "sha256:f35693400ef01e69a5ceebd1bc2166b98522bca165bfdc0c07f73a39c8fa7f29",
       "workflow_members": {
         "source.json": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5",
-        "workflow.py": "bdbdcf9053b851acd82af8bf842c75fa1c160aeb323ab69331f345220282f9e6",
-        "workflow.vibe.json": "2e6a14a54100c6cb76cd5c7b43d9104ad164e1a3b343a017396aab64acc7ec59"
+        "workflow.py": "b9e37d53071023fa1ba7bbb32d944b684446e34bffb892dba26b76d2e58abf3b",
+        "workflow.vibe.json": "a54014bbd643b3b41d705db5a108579490c8775d0fe05e29c28a56c01104ab14"
       }
     },
     "effective_values": {
@@ -100,11 +100,11 @@
       "node:video_mask_0.format": "AnimateDiff",
       "node:video_mask_0.frame_load_cap": 72,
       "node:video_mask_0.start_time": 0.0,
-      "prompt": "The bicycle begins to roll forward along the wall.",
+      "prompt": "A person walks into frame from the right, takes the bicycle by the handlebars and wheels it away to the left.",
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "b6975923a3d36246-42632ebb92a26459.mp4",
+      "source_video": "a2171bc4f38d77c8-42632ebb92a26459.mp4",
       "steps": 8,
       "video_mask_0": "1a9eb73d137bf69f-bounded-mask.mkv"
     },
@@ -137,7 +137,7 @@
         "type": "file"
       },
       {
-        "default": "The bicycle begins to roll forward along the wall.",
+        "default": "A person walks into frame from the right, takes the bicycle by the handlebars and wheels it away to the left.",
         "name": "prompt",
         "type": "string"
       },
@@ -352,7 +352,7 @@
         "type": "boolean"
       }
     ],
-    "job_dir": "/home/user/wt/h3live.env/tmp/astrid-job-dit0dsiy",
+    "job_dir": "/home/user/wt/h3real.env/tmp/astrid-job-qid0ku4u",
     "kind": "video",
     "mode": "video-edit",
     "model": "h3",

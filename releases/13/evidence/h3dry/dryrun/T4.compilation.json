@@ -60,7 +60,7 @@
       "video_tail": "repeat_last_selected_frame"
     }
   },
-  "compilation_digest": "c68e4fe667b14625319e62316cac7a908913b783170902b6585afbf8051f6240",
+  "compilation_digest": "0a03f669b822fc1ea725c7248cb96bebfbe737b048bebf7473524241ee74fc83",
   "kind": "h3_av_compilation",
   "limitations": [
     "native masked edit is CPU-verified only; spatial mode on ref2va plus Turbo is unproven on GPU",
@@ -78,40 +78,40 @@
           "lineage": {
             "filename": "resolved-mask.png",
             "kind": "source_bytes",
-            "sha256": "sha256:5e4f279cfefea35e09bb67399fa13778cdd61c64547b94041f1b5ff282cc202b"
+            "sha256": "sha256:3473876e57f4abb92607c22ae3edeb5c3a1560145fb1e5f8db1de9bc4285cff9"
           },
-          "member": "assets/5e4f279cfefea35e-resolved-mask.png",
-          "sha256": "5e4f279cfefea35e09bb67399fa13778cdd61c64547b94041f1b5ff282cc202b",
-          "size": 1025
+          "member": "assets/3473876e57f4abb9-resolved-mask.png",
+          "sha256": "3473876e57f4abb92607c22ae3edeb5c3a1560145fb1e5f8db1de9bc4285cff9",
+          "size": 1085
         },
         {
           "binding": "source_video",
           "lineage": {
             "filename": "b36a19b59f92a342.mp4",
             "kind": "source_bytes",
-            "sha256": "sha256:9a6d66ba434ec40d7459b1fda0b469c1602fe3ea9e1bc02e1bf648873de10e97"
+            "sha256": "sha256:bd32975e3ab3738ff248302f4647534919dda8c9d3f305a325d7043a4dfb5810"
           },
-          "member": "assets/9a6d66ba434ec40d-b36a19b59f92a342.mp4",
-          "sha256": "9a6d66ba434ec40d7459b1fda0b469c1602fe3ea9e1bc02e1bf648873de10e97",
-          "size": 604364
+          "member": "assets/bd32975e3ab3738f-b36a19b59f92a342.mp4",
+          "sha256": "bd32975e3ab3738ff248302f4647534919dda8c9d3f305a325d7043a4dfb5810",
+          "size": 864765
         }
       ],
       "kind": "vibecomfy_managed_assets",
       "schema_version": 2,
       "workflow_inputs": {
         "guidance": 0.95,
-        "mask_0": "5e4f279cfefea35e-resolved-mask.png",
+        "mask_0": "3473876e57f4abb9-resolved-mask.png",
         "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
         "prompt": "The bicycle frame is deep cobalt blue. Everything else is unchanged.",
         "sampler": "res_multistep",
         "scheduler": "simple",
         "seed": 42,
-        "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+        "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
         "steps": 8
       }
     },
-    "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/managed-assets.zip",
-    "sha256": "909031ca150a6da0f4bb47b831b91fa6292f0a5f7401b8d09b70be35a6ee7e8b"
+    "path": "/home/user/wt/h3real.env/tmp/astrid-job-5hm1dld2/h3/plan/compile/managed-assets.zip",
+    "sha256": "560b1d67834002cc228c77704a100abe41764fa8e907c2bf31b61daeca686626"
   },
   "profile": "h3_av.native.v1",
   "request_digest": "f1b6f1012c87ad44d07143ff50c6f9e99960fc54e08cd16f52477190788dd1a5",
@@ -119,27 +119,27 @@
   "status": "compiled",
   "workflow": {
     "source.json": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/workflow-bundle/source.json",
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-5hm1dld2/h3/plan/compile/workflow-bundle/source.json",
       "sha256": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5"
     },
     "workflow.py": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/workflow-bundle/workflow.py",
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-5hm1dld2/h3/plan/compile/workflow-bundle/workflow.py",
       "sha256": "df2987d1bf91a2132030c77f0e399cf59a3e7f91fbf7981f0b7ccb0b7c240597"
     },
     "workflow.vibe.json": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/workflow-bundle/workflow.vibe.json",
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-5hm1dld2/h3/plan/compile/workflow-bundle/workflow.vibe.json",
       "sha256": "c4adfde2a8038a40a253da16c720b45aa940413c12ecfa58cf4dcd9527a2d925"
     }
   },
   "workflow_inputs": {
     "guidance": 0.95,
-    "mask_0": "5e4f279cfefea35e-resolved-mask.png",
+    "mask_0": "3473876e57f4abb9-resolved-mask.png",
     "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
     "prompt": "The bicycle frame is deep cobalt blue. Everything else is unchanged.",
     "sampler": "res_multistep",
     "scheduler": "simple",
     "seed": 42,
-    "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+    "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
     "steps": 8
   }
 }

@@ -1,0 +1,15 @@
+PASS: check_edit.py and check_plan.py byte-for-byte identical to h3live/package
+--- check_edit.py (unchanged)
++++ check_real_edit.py
+@@ -77,9 +77,9 @@
+             '-pix_fmt', 'rgb24', 'pipe:1'])
+         mask = np.frombuffer(raw, dtype=np.uint8).reshape(576, 1024, 3)[:, :, 0] > 0
+         expected = np.zeros((576, 1024), dtype=bool)
+-        expected[144:432, 384:640] = True
++        expected[190:526, 290:768] = True
+         if not np.array_equal(mask, expected):
+-            raise ValueError('mask must be white x=[384,640), y=[144,432), black elsewhere')
++            raise ValueError('mask must be white x=[290,768), y=[190,526), black elsewhere')
+     procs = [decoder(path, size, args.decode_default)
+              for path, size in zip([args.source, args.output], dimensions)]
+     errors, changed, inside_changed = [], [], []

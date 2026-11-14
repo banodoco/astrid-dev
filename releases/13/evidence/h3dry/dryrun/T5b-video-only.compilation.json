@@ -59,7 +59,7 @@
       "video_tail": "repeat_last_selected_frame"
     }
   },
-  "compilation_digest": "a7ed3d9e1e65d96666ff501b74ad5daf682b48edc38b4fad79f41f7549bac1c1",
+  "compilation_digest": "7eb2e147d98133e5db18aaec8d38633c052fdd4dedccc08ebe6b4ede830502b6",
   "kind": "h3_av_compilation",
   "limitations": [
     "native masked edit is CPU-verified only; spatial mode on ref2va plus Turbo is unproven on GPU",
@@ -77,11 +77,11 @@
           "lineage": {
             "filename": "b36a19b59f92a342.mp4",
             "kind": "source_bytes",
-            "sha256": "sha256:9a6d66ba434ec40d7459b1fda0b469c1602fe3ea9e1bc02e1bf648873de10e97"
+            "sha256": "sha256:bd32975e3ab3738ff248302f4647534919dda8c9d3f305a325d7043a4dfb5810"
           },
-          "member": "assets/9a6d66ba434ec40d-b36a19b59f92a342.mp4",
-          "sha256": "9a6d66ba434ec40d7459b1fda0b469c1602fe3ea9e1bc02e1bf648873de10e97",
-          "size": 604364
+          "member": "assets/bd32975e3ab3738f-b36a19b59f92a342.mp4",
+          "sha256": "bd32975e3ab3738ff248302f4647534919dda8c9d3f305a325d7043a4dfb5810",
+          "size": 864765
         },
         {
           "binding": "video_mask_0",
@@ -103,13 +103,13 @@
         "sampler": "res_multistep",
         "scheduler": "simple",
         "seed": 42,
-        "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+        "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
         "steps": 20,
         "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
       }
     },
-    "path": "/home/user/wt/h3live.env/tmp/astrid-job-0878n_4i/h3/plan/compile/managed-assets.zip",
-    "sha256": "6f9ae800dbe5f4a30976ef45912a99e87cdc3883bc97b52adc1a5066cc2bb21a"
+    "path": "/home/user/wt/h3real.env/tmp/astrid-job-q19_vp66/h3/plan/compile/managed-assets.zip",
+    "sha256": "0b24217bd9141c95f404ac18237782e7a60c00e66bdd785cc2e36adc77fe6a0c"
   },
   "profile": "h3_av.native.v2",
   "request_digest": "753c2913c2067bb968f81c4c9ddd13a81baed558b6d68d23d8023d1152fb24ac",
@@ -117,15 +117,15 @@
   "status": "compiled",
   "workflow": {
     "source.json": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-0878n_4i/h3/plan/compile/workflow-bundle/source.json",
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-q19_vp66/h3/plan/compile/workflow-bundle/source.json",
       "sha256": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5"
     },
     "workflow.py": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-0878n_4i/h3/plan/compile/workflow-bundle/workflow.py",
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-q19_vp66/h3/plan/compile/workflow-bundle/workflow.py",
       "sha256": "56333951b572d553c810d394682b44dc68180479a765b29145782b4f7dd20b12"
     },
     "workflow.vibe.json": {
-      "path": "/home/user/wt/h3live.env/tmp/astrid-job-0878n_4i/h3/plan/compile/workflow-bundle/workflow.vibe.json",
+      "path": "/home/user/wt/h3real.env/tmp/astrid-job-q19_vp66/h3/plan/compile/workflow-bundle/workflow.vibe.json",
       "sha256": "818960369152a0287a6decc8953e7b759094c1b83aa1cc83197dea4043188038"
     }
   },
@@ -135,7 +135,7 @@
     "sampler": "res_multistep",
     "scheduler": "simple",
     "seed": 42,
-    "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+    "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
     "steps": 20,
     "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
   }

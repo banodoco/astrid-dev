@@ -11,12 +11,12 @@
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
       "steps": 8,
       "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
     },
     "build_plan": {
-      "compilation_digest": "d9be3743477217c8501feb968c9d1094fac344d8ee22f078519a5501d626cdcb",
+      "compilation_digest": "e825eaadc969a5b09676e486d80329ef062ceee3fdb35ccb88c16bff5487c66b",
       "intent": {
         "groups": [
           {
@@ -51,7 +51,7 @@
         "source_frame_rate": "24/1",
         "video_frames": 72
       },
-      "workflow_inputs_sha256": "sha256:c0ed6aa2edc4764839d113b844351e3f1f267186b4b1e5e800b94f902f59e2e6",
+      "workflow_inputs_sha256": "sha256:56f73b9afc42cec2f7ff2a00ec55abc0760ce424f306a943cd252ddf4c783eb6",
       "workflow_members": {
         "source.json": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5",
         "workflow.py": "09185553a21fd7345a0b391be2948cdff517c64c24ec7034449708da54c05e5a",
@@ -104,7 +104,7 @@
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
       "steps": 8,
       "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
     },
@@ -352,7 +352,7 @@
         "type": "boolean"
       }
     ],
-    "job_dir": "/home/user/wt/h3live.env/tmp/astrid-job-6unycrm9",
+    "job_dir": "/home/user/wt/h3real.env/tmp/astrid-job-aywrcws4",
     "kind": "video",
     "mode": "video-edit",
     "model": "h3",

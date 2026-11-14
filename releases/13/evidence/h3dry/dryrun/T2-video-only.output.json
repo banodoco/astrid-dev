@@ -7,16 +7,16 @@
     "bindings": {
       "guidance": 0.95,
       "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
-      "prompt": "End state: the same bicycle and wall at dusk, long warm shadows, a street lamp flickers on. Quiet evening ambience.",
+      "prompt": "Late afternoon turns to golden hour: the same bicycle and wall, longer softer shadows and a warmer light that grows over time.",
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
       "steps": 8,
       "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
     },
     "build_plan": {
-      "compilation_digest": "643488957f8b96773b4cb756f6fef04892f5c63ba1c68b90baa299c4f29a39eb",
+      "compilation_digest": "65bd7800759a556b16822dddc3ae6fcf8138f5e74c357ecf8fcf3ee2e32f4755",
       "intent": {
         "groups": [
           {
@@ -39,7 +39,7 @@
         "version": 1
       },
       "output_contract": "muxed_av_full_timeline",
-      "request_digest": "3666725b15f8ecf4afa850e435cbe5838d8d97c409a681c3ababb7cb9fd7316d",
+      "request_digest": "fab921a574f09b567de04a7396b192b61601967cd181882229e589b2470ff3ee",
       "source_av": {
         "audio_sample_rate": 32000,
         "audio_samples": 96000,
@@ -51,11 +51,11 @@
         "source_frame_rate": "24/1",
         "video_frames": 72
       },
-      "workflow_inputs_sha256": "sha256:57e6028fe6fbb173bb386816119876d1651e5fcb2527fe209d56fa95d1197061",
+      "workflow_inputs_sha256": "sha256:ce4448628b26703b66d8feb79123a49a0c41502b94759c436b708db25e4283d5",
       "workflow_members": {
         "source.json": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5",
-        "workflow.py": "ae8cf3d12acffa561fd7a1427117191538ab8c42c63204ecafdd36adee6f2e23",
-        "workflow.vibe.json": "e8769ee21344234038e341b2ae27e2e53637f065ca6b6d1ef7295e1eb065b46e"
+        "workflow.py": "e963e440983eb07e56076f3e456fdc735cab9a5ed98298fcd120bded5f439c39",
+        "workflow.vibe.json": "20663eadbda41304be405c5debb46433d71878177d17cd756b0d956212fd31f7"
       }
     },
     "effective_values": {
@@ -100,11 +100,11 @@
       "node:video_mask_0.format": "AnimateDiff",
       "node:video_mask_0.frame_load_cap": 72,
       "node:video_mask_0.start_time": 0.0,
-      "prompt": "End state: the same bicycle and wall at dusk, long warm shadows, a street lamp flickers on. Quiet evening ambience.",
+      "prompt": "Late afternoon turns to golden hour: the same bicycle and wall, longer softer shadows and a warmer light that grows over time.",
       "sampler": "res_multistep",
       "scheduler": "simple",
       "seed": 42,
-      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "source_video": "bd32975e3ab3738f-b36a19b59f92a342.mp4",
       "steps": 8,
       "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
     },
@@ -137,7 +137,7 @@
         "type": "file"
       },
       {
-        "default": "End state: the same bicycle and wall at dusk, long warm shadows, a street lamp flickers on. Quiet evening ambience.",
+        "default": "Late afternoon turns to golden hour: the same bicycle and wall, longer softer shadows and a warmer light that grows over time.",
         "name": "prompt",
         "type": "string"
       },
@@ -352,7 +352,7 @@
         "type": "boolean"
       }
     ],
-    "job_dir": "/home/user/wt/h3live.env/tmp/astrid-job-yei3lgdj",
+    "job_dir": "/home/user/wt/h3real.env/tmp/astrid-job-hddkw4h7",
     "kind": "video",
     "mode": "video-edit",
     "model": "h3",

@@ -1,5 +1,5 @@
 version: 2
-prompt: "The bicycle begins to roll forward along the wall."
+prompt: "A person walks into frame from the right, takes the bicycle by the handlebars and wheels it away to the left."
 duration: 3.0
 media:
   - asset: bike-still.mp4
