@@ -1507,3 +1507,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **R1, exception rule: accepted.** It goes to Hannah now, for her decision before 10:00.
 - **R2, limit check: accepted.** Each hourly check-in reads every session's seven-day warning state, and Hannah hears at the first warning.
 - **R3, release mechanics: accepted.** I fill the record and the re-pin checklist from the live evidence while CI runs; only CI ids wait.
+- **02:50: Hannah's directions.**
+  - **All managers farm hands-on work to Codex subagents** (`codex exec … < /dev/null`, with the standard forbids), falling back to Sonnet or Haiku. Sent to machines, cells and the test lane.
+  - **Generation status, for Hannah:**
+    - live: the five cells passed on stage builds;
+    - not yet run live on the candidate with M2: round 4 on 65b1d45c is running;
+    - CI: regressions remain, and the binding table is due 04:00.
+  - **Video i2v, v2v and edit** were in generation.md's scope table but were dropped de facto on 12 Nov ("video only if 5090 stock appears quickly"). Not run live. CI shows wan-2.2 video entries as "not qualified". Asked Hannah whether to run them as a diagnostic.
+  - **h3_av:** H3 (Hannah, 11 Nov) puts it immediately after publication, not before. No change unless she says so.
