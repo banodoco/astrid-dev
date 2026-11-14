@@ -1858,3 +1858,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Ruling: fix it at the root. One reuse-policy check is called by every path that spends or extends custody, and an enumeration test fails if a new path bypasses it. Money never ships as an exception.
   - The rest of httpj passed review.
   - cpupath and guides are already in compose.
+- **12:36: froze int/r13-a045b00e for CI.**
+  - Why now: lanes moved to 16:30 and httpj round 2 is about 2 h out. Seven merged fixes since fd5ff0d9 shouldn't wait 4 h for proof, including h3cov's interrupted full-file run (advisor lesson: don't idle on a single owner).
+  - fd5ff0d9's Lanes is on its last job, so the one-running-plus-one-queued rule holds.
+  - httpj is held out of compose by machines' own request.
