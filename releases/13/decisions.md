@@ -1724,3 +1724,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Collection gate fix:** the gate now runs even when ruff, mypy or cycles fail.
   - **Machines' hosted-eng and hosted-rp:** all 16 of machines' hosted new-file failures are fixed or ruled. **Product fix:** a logs step with nothing collected reports "unavailable", not "kept". **Classification:** 5 new RunPod exception classes are receipt-safe.
   - **a4d893c8 fast checks: the Ruff baseline gate is RED**, so new lint violations got in. The test lane attributes each by cause commit and routes it to its owner. No baseline raise without a named deliberate cause. The next freeze follows that routing.
+- **08:50: rulings on the a4d893c8 gates.**
+  - **Ruff** is red only because it improved (2049 against a baseline of 2100). Fix the 9 per-file I001 and E402 rises with one mechanical `--fix` card, and cells fixes the F841 at compile.py:402. Then lock in the lower baseline. All of it before the Sun freeze, not after.
+  - **Mypy:** 5 attr-defined rows go to machines as typed fields, no ignores. The hosted mypy step gets its stub dependencies (test lane).
+  - **Cycles:** the new generation↔machines_cli cycle goes to machines. The two R12-era cycles are Plan 39, with a deferred.md row.
