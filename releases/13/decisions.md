@@ -1629,3 +1629,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **What it fixes:** v2 times stay exact (Fractions) through normalization, validation and native timing, so the 5-frame minimum "5/24" works for every h3 mode.
   - **Proof:** h3_av tests went from 420 passed/4 failed to 451/4; the 4 are preexisting, with 0 regressions. The CPU dry runs for all 3 modes with "5/24" are ready.
   - **h3 true first frame:** a follow-up, now in deferred.md (a protected latent anchor). For R13, i2v is reference-guided.
+- **05:05: merged machines 7bbe01e4a (the M2 argv card).**
+  - **Fixes:** the 4 M2-consequence tests. Paid controls move to `build_claim_argv`, and the preflight plans the claim without executing it. Skills and setup say "claim first".
+  - **New:** `machines claim --deadline <UTC>` (it can only shorten). MCP exposes the `machines` commands, so MCP claims with explicit paid consent before generating.
+  - **Six assertions moved** from generate to claim, under the owner-removed rule.
+  - **Money-path ask (root, by Sun 03:45):** a CPU test that an MCP `claim` without `--consent paid` and without stdin refuses with a typed error, with no rental attempt and no prompt.
