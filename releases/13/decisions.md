@@ -1923,3 +1923,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - It's based on 02b76c709 without httpj; httpj is still held.
   - A freshness re-check on the merged head was asked of the test lane, because the regenerated surfaces came from an older base.
   - a045b00e unit residuals: 295 failing, 0 regressions in the hosted attribution so far.
+- **14:34: cells' i2vsel is done.** Agent r13/engine-sel-i2v-attached fea67d9cb; the test lane proves it next.
+  - `[video/i2v-attached]` is NEW in R13 (the R12 run collects zero tests).
+  - The guardrail worked as intended: (b) failed first, so the product refusal was fixed at the raise site (e42e0dd40: it names the missing node and the fix). Then exactly one typed code, `missing_node_pack`, went into REFUSALS, citing 5fe9ed7a0.
+  - 0 regressions; the target id is fixed.
+  - Deeper cause (default selection picks h3 for a target lacking its nodes) is in deferred.md.
