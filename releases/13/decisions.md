@@ -1649,3 +1649,17 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **05:22: LTX-2.3 i2v local-managed refuses with "managed model has no declared digest".** The guard (731c27b0d) is correct; the gap is VibeComfy 46251c8c's template.
   - **Ruling:** cells declares the sha256 and size from one HF metadata read **only if it rides on a VibeComfy pin refresh already planned** before Sun 03:45. Otherwise it ships refusing honestly; it isn't the video default (h3 is).
   - **The class row goes in deferred.md:** template models without declared digests, with a sweep for others.
+- **05:40: merged cells rows-packs-census 9383bd6eb, rows-sdk-public c4af06c28 and rows-engine f814e5071, giving compose c8436b544.**
+  - **Held:** sfx-default-tests b63debfb8 isn't on any pushed branch; I've asked cells to push it.
+  - **Still proving:** combined sfx, the music slot default, catrows and jobseam.
+  - **Pending:** h3 plain-inputs, and the VibeComfy vc7 refresh (Foley pickers plus the LTX digest), then one Agent pin.
+- **05:45: the 06:00 CI read is int/r13-6e1c34e2** (6e1c34e28), queued behind 05826d63.
+  - **Since 05826d63:**
+    - machines: M2 argv, engine rows, M2 rows, and rows2 08d74e27e (gzip 1 for the pod source archive, RunPod slot max_concurrency 1, the h3 selection ruling);
+    - cells: h3 duration, census, sdk-public, the engine fixture and sfx default tests.
+  - **For the Sun freeze:**
+    - the 4 test_remote_machine_cpu rulings (deferred.md ff7da86);
+    - the volume card, round 4: root fix for a false refusal of resumable .part downloads, due Sun 01:00;
+    - mcpc;
+    - cells: combined sfx, music slot, catrows, jobseam, h3 plain-inputs, and VibeComfy vc7 with its pin.
+  - **h3 storage:** the h3 default needs 53.5 GB cold, and the five cells share 45.0 GB, on the full 200 GB volume 2z2dlu1v8g. Setup can't resize or create volumes. Which storage to pay for goes to Hannah.
