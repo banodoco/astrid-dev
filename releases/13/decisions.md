@@ -1598,3 +1598,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - a custody POST after the paid expiry keeps the journal and reports "consumed its paid lifetime";
     - a reset poll without a job id is a failed reset.
   - The bug14 leftover goes into deferred.md (Runtime contract).
+- **04:35: h3 v2v live FAILED: the network volume is full.** `[Errno 122] Disk quota exceeded` on the two big h3 weights (the ref2va diffusion model and the qwen3vl 32B text encoder). The three small ones downloaded to `/workspace/astrid/engines/comfyui/models/`.
+  - **Class:** a pipeline/infrastructure fault, not h3 itself. The declared run logs named it at once (`preparation.fetch.stdout.log`), so the declared-logs work paid off.
+  - **Stop condition met:** the h3 queue was halted. The bicycle image edit still runs, then the pod is released.
+  - **Routed to machines (pod storage):**
+    - now: find what fills volume 2z2dlu1v8g and make room by a sanctioned cleanup, or size the volume right;
+    - root: a storage preflight that refuses early, with a user-facing message, when the bytes to fetch exceed the free quota;
+    - garbage collection of old versions on the volume is a follow-up if it's bigger.
+  - I re-claim for h3 as soon as machines says the volume is ready.
