@@ -1879,3 +1879,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Deliberate security change:** test_fetch.py:279's `follow_redirects is True` becomes `is False`, because it pinned the replaced mechanism.
   - **Risk:** every model download now goes through the manual redirect path. Before the pin merges, cells checks the real HF→CDN chain off-pod (an LFS file and a plain file, sha-checked). Sunday's live repeat must include one FRESH model download, not only a warm volume.
   - The Agent pin r13/compose-pin-vc11 is about 1 h out.
+- **13:25: vc-11's real redirect chain is verified off-pod** (cells, anonymous, real HF).
+  - LFS: huggingface.co → us.aws.cdn.hf.co, sha256 matches lfs.oid. A plain file also passes.
+  - Every hop is manual. Receipts carry no token, and no .part is left.
+  - `_ResumingClient` resumes with a 206 across the redirect hop.
+  - Evidence: evidence/live/vc11-realfetch-log.txt.
+  - Remaining risk (a real token, multi-GB on a pod) goes to Sunday's fresh download.
