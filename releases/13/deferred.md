@@ -69,6 +69,11 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Keep the labels and drop the allowlist (rework) | decisions.md:340 |
 | h3_av: rational `5/24` duration fails canonicalization for source-backed modes (spec.py:218, request_v2.py:62-84; normalization emits a float that is rechecked exactly). R13 inputs use six frames; one duration representation is the root fix (card `h3dur` may land it) | cells-log.md 02:51 Sat |
 
+## Runtime contract
+| Item | Source |
+|---|---|
+| bug14 `test_conflict_fails_exact_owner_without_conflicting_evidence`: its oracle is from a042638fc, and the pinned Runtime 6855dfa8 now accepts the metadata alias. Decide the contract, then update the test or the Runtime (machines, 04:20 Sat) | machines' message, 04:20 Sat |
+
 ## VibeComfy
 | Item | Source |
 |---|---|

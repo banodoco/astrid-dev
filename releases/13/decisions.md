@@ -1591,3 +1591,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - edit 5m58s: ran, but the source is blank, so it isn't a meaningful edit test (a real bicycle edit is queued);
   - music 6m15s: 30 s song with vocals.
   - **The h3 queue starts on the same pod now.**
+- **04:25: merged machines fe694cc43:**
+  - **W63 lease-test restoration:** 5 weakened checks restored and 6 vacuous ones tightened, with 22 mutation proofs.
+  - **Claim and custody rows:** warm_session, release_cp3, target_selection, publication_replay, provider_gate, reset_diag and job_logs are all green; bug14 has 1 left.
+  - **Two conservative product fixes:**
+    - a custody POST after the paid expiry keeps the journal and reports "consumed its paid lifetime";
+    - a reset poll without a job id is a failed reset.
+  - The bug14 leftover goes into deferred.md (Runtime contract).
