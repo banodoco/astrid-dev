@@ -1804,3 +1804,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - `activation[False]` fails on R12 too (Plan 39, cited local R12 run);
     - `slot_path` ×10 are tests new in R13.
   - Previously flagged ids cleared between a4d893c8 and 2f45835a: h3-attached, h3-runpod, shared_redo, and 2 h3 slot_path ids.
+
+## Sat 11:47: Plan 20 phase 4 (local-first onboarding): handed to a planner, outside R13
+- At Hannah's request, the advisor drafted phase 4 of Plan 20: P4.0–P4.9 plus R4, and owner decisions OD1–OD6.
+- I started planner session_011EzfVzrMeXfeWXM3LUepKQ under astrid-dev-plan:
+  - commit the draft verbatim, then fold it into Plan 20's files;
+  - a required fresh critic checks P4.1 as a `doctor` mode, a P4.2 conflict with Plan 35, and whether P4.4 is necessary;
+  - it then opens a scope PR for Hannah to merge.
+- The advisor sends the full draft straight to the planner.
+- **Sequencing:** no implementation before R13 publishes. P4.0 (a local walk, evidence only) waits on Hannah's OD3, because D8 forbids live GPU tests.
+- This doesn't touch the R13 freeze.
