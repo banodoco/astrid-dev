@@ -2,7 +2,7 @@
 
 The publish-time record of what Release 13 is: the frozen tuple, what it contains, the evidence for each claim and the publication steps. It is filled in as facts arrive and is the one home for them; the [brief](../13.md) holds intent, [run.md](run.md) the live board, [decisions.md](decisions.md) the rulings and [tests.md](tests.md) the test gate. This record links to them and does not repeat them.
 
-**Status: DRAFT, nothing frozen, nothing published.** Drafted 13 Nov 2026 by a worker for the release manager. There is no release-record template in `templates/release/` (only `run.md`), so the sections follow what the [release skill](../../skills/astrid-dev-release/SKILL.md) says a release must report: exact candidate identity, claims, focused checks and results, review result, tuple and artifact identity, unqualified claims and the remaining authorized actions.
+**Status: DRAFT: nothing frozen, nothing published, evidence through 14 Nov ~11:30 UTC.** There is no release-record template in `templates/release/` (only `run.md`), so the sections follow what the [release skill](../../skills/astrid-dev-release/SKILL.md) says a release must report: exact candidate identity, claims, focused checks and results, review result, tuple and artifact identity, unqualified claims and the remaining authorized actions.
 
 Convention: `PENDING: <what fills it>` marks a value that is not yet known. Nothing below is a result unless it cites its evidence.
 
@@ -24,11 +24,11 @@ Nothing is frozen yet. The values on the board are moving candidates, listed so 
 
 | Component | Repository | Ref | Frozen SHA | Dirty state | Role |
 |---|---|---|---|---|---|
-| Agent | banodoco/astrid-agent | `r13/compose` (board of 12 Nov 23:55: `11cf5544b`; frozen CI heads `int/r13-e51cfee3`, `int/r13-58442e7a`; later `int/r13-05346e9f` running; compose `673227271` after K1 at 00:42 on 13 Nov) | PENDING: the Saturday freeze head, full 40-character SHA | PENDING: must be clean | Base candidate |
+| Agent | banodoco/astrid-agent | `r13/compose`: `e51723152` before the 11:10 merge of machines `8e3376515`; PENDING: resulting full compose head ([decisions.md:1767](decisions.md#L1767), [run.md:14](run.md#L14)) | PENDING: the Saturday freeze head, full 40-character SHA | PENDING: must be clean | Base candidate |
 | Runtime | banodoco/astrid-runtime | `main` | Expected `42ae24aff8d2cb854f874ce134161077a3ba3641` (unchanged from R12 by G5) | PENDING: confirm no Runtime change was made | Pinned by Agent `runtime.lock.json` |
 | App | banodoco/astrid-app | `main` plus the re-pin commit | PENDING: the re-pin commit SHA ([app-repin-checklist.md](app-repin-checklist.md)) | PENDING | Hosted App, carries the manifest |
-| VibeComfy | banodoco/VibeComfy | `r13/cells-vc` | PENDING: the final pinned SHA in `astrid/packs/runpod/pins.json` (`b3f20f33` on 12 Nov, since moved by the cells lane) | PENDING | Pack pin |
-| runpod-lifecycle | banodoco/runpod-lifecycle | pin in `pins.json` | PENDING: `f2948817` on 12 Nov; the RunPod v2 migration re-pin may change it | PENDING | Pack pin |
+| VibeComfy | banodoco/VibeComfy | `r13/cells-vc-10` | Candidate `d3850831265c54bb811808c2bc85c53ef5ac7ec9`; PENDING: verify at frozen Agent head ([decisions.md:1737](decisions.md#L1737)) | PENDING | Pack pin |
+| runpod-lifecycle | banodoco/runpod-lifecycle | pin in `pins.json` | Candidate `7f0b025e9391baac9f5c2fb7393617ea6fef0704`; PENDING: verify frozen Agent pin and version ([decisions.md:1322](decisions.md#L1322), [offline evidence:58](evidence/cells/foleybind-bug-evidence-pack.md#L58)) | PENDING | Pack pin |
 | Install manifest | astrid-app `public/install-manifest.json` | | PENDING: `schema_digest` (derived from the Runtime contract), manifest sha256 | | Served at `https://astrid.haus/install-manifest.json` |
 
 **Runtime/Agent/App tuple that the installer pins:**
@@ -38,11 +38,13 @@ Nothing is frozen yet. The values on the board are moving candidates, listed so 
   "release": "PENDING: 13",
   "agent":   { "sha": "PENDING: frozen Agent SHA" },
   "runtime": { "sha": "PENDING: from Agent runtime.lock.json source_commit", "schema_digest": "PENDING: computed by pin.mjs" },
-  "vibecomfy": { "sha": "PENDING: from Agent pins.json" },
-  "lifecycle": { "repo": "https://github.com/banodoco/runpod-lifecycle.git", "sha": "PENDING", "version": "PENDING" },
+  "vibecomfy": { "sha": "d3850831265c54bb811808c2bc85c53ef5ac7ec9" },
+  "lifecycle": { "repo": "https://github.com/banodoco/runpod-lifecycle.git", "sha": "PENDING: verify lifecycle at frozen Agent head", "version": "PENDING: from frozen Agent pins.json" },
   "app": "PENDING: App re-pin commit SHA on main"
 }
 ```
+
+The candidate VibeComfy chain is cells-vc-6 `46251c8c`, -7 `ae7dd067`, -8 `8d64b083`, -9 `f3e95d1c`, -10 `d3850831`; the final pin adds LTX model identities from unauthenticated metadata reads ([decisions.md:1427](decisions.md#L1427), [decisions.md:1710](decisions.md#L1710), [decisions.md:1737](decisions.md#L1737), [vc7 metadata](evidence/cells/vc7-ltx-metadata.txt)). PENDING: verify the full chain at freeze; the cells-log ref is unavailable in this checkout.
 
 The manifest's `vibecomfy` and `lifecycle` blocks are generated by `pin.mjs` from the Agent's `pins.json`; they are not typed by hand.
 
@@ -83,7 +85,7 @@ Each row names the evidence that must exist, bound to the frozen candidate. A ro
 | 6 | Install tuple and release number move together | `release-guard.mjs <base> HEAD --pins` on the App re-pin PR: release 12 to 13, exactly +1 | PENDING: guard output |
 | 7 | Manifest coherence: App `runtime.lock.json`, Agent `runtime.lock.json` and the Runtime contract digest agree | `pin.mjs --check` and `vendor-lock.mjs check runtime.lock.json --producer <runtime>` | PENDING: outputs |
 | 8 | The App's vendored Agent CLI surface matches the pinned Agent | `vendor-lock.mjs check config/astrid-cli-surface/vendor.lock.json --producer <agent>` | PENDING: output |
-| 9 | Generation works live: t2i, tts, sfx, music, edit cells each pass on the frozen tuple, with the gate's pins and the pod's VibeComfy HEAD verified | [Full GPU validation](../../skills/astrid-dev-gpu-validate/SKILL.md) record on the exact candidate (skill: "GPU gate"). Cells per [generation.md](generation.md#gpu-cells). ORCHESTRATOR ONLY: paid | Partial and not binding: t2i and tts PASSED live at Stage 2f on `bb0ae49da` (board of 12 Nov 23:55), which is not the frozen head. sfx, music, edit failed with named causes and fixes were in flight. PENDING: final five-cell run on the frozen head, per-cell evidence file, final pod census (0 pods), spend. Without it the generation claim is **unqualified** |
+| 9 | Generation works live on the qualifying tuple | [generation.md](generation.md#gpu-cells); final candidate-bound receipts and census | Round 4: t2i, TTS, SFX, music and edit passed live on `int/r13-65b1d45c`; the first edit used a blank source, and the subsequent bicycle edit passed ([decisions.md:1587](decisions.md#L1587), [decisions.md:1609](decisions.md#L1609)). The cited `install-r13b/validate/log.md` is not in this checkout. Round 6: h3 v2v passed on `e51723152`, 6 frames, 0.25 s at 24 fps, 1024×576 ([decisions.md:1559](decisions.md#L1559), [decisions.md:1767](decisions.md#L1767), [decisions.md:1779](decisions.md#L1779)). PENDING: h3 i2v smoke, video-edit and 3 s bicycle i2v results in the live validation log and decision log; final repeat on the frozen head, per-cell receipts, census and spend. These earlier passes do not qualify the frozen tuple. |
 | 10 | Failure receipts return a named cause for a forced failure at each stage | Forced failure per stage (G3) | PENDING: evidence file |
 | 11 | One merge review of the R13 candidate against published R12, no open blocker | Review on the exact frozen range, audited by the orchestrator | PENDING: review file under `evidence/reviews/` |
 | 12 | Redaction and log bundle review, and Pins and installer review, with no open blocker | The two reviews in the [brief](../13.md#reviews) | PENDING: review files under `evidence/reviews/` |
@@ -91,6 +93,8 @@ Each row names the evidence that must exist, bound to the frozen candidate. A ro
 | 14 | Real install states are each covered by CI from the real starting state (skill step 0) | List of install states real users are in, each with a named proof row | PENDING: the list and the row for each |
 | 15 | Machines core landed or cut | Cut line Fri 18:00 UTC: K1, M1, M2 (flags off generate) and v2 merged and green; M3, M4, LT wiring out of R13 per the 00:25 ruling | PENDING: decision recorded in `decisions.md` |
 | 16 | Spend stayed within H11 | Ledger: stop $40 total, balance floor $67.41 | PENDING: final ledger. Last figure seen: balance $93.44 (13 Nov about 00:42, 0 pods) |
+
+The [deferred register](deferred.md) records what R13 does not fix and its planned follow-ups. The owner permits only named test exceptions caused by deliberate R13 changes, attributed to their cause commit and listed here; money, pod custody or release, and generate-path failures must be fixed, not listed as exceptions. Preexisting failures need cited R12 evidence ([decisions.md:1529](decisions.md#L1529)). Named exceptions are tracked in [tests.md](tests.md) and [deferred.md:127](deferred.md#L127); for example, h3 declares the kind's plain inputs (`5fe9ed7a0`), with stale declared-input test lists ([deferred.md:136](deferred.md#L136)). PENDING: reconcile the complete named exception list against the final test results.
 
 ## 7. Reviews
 
@@ -127,5 +131,5 @@ Only the publishing session writes this section, in order, after the owner's go.
 
 - M11: move the RunPod operator code into its pack through `generation.machine`, first card after R13 in Plan 40 (decisions, 12 Nov 18:46).
 - Group B on the [board](run.md).
-- `h3_av` live qualification follows publication (H3).
+- Wider h3_av qualification remains a follow-up; the three default video modes are in the pre-publication gate ([decisions.md:1539](decisions.md#L1539)).
 - Land the held worker-permission PRs and the AFTER-verdict PRs.
