@@ -2048,3 +2048,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Proofs gated on exit codes: 223 + 147 + 305 passed. 2 failures: one a known base failure, one a 115 s-vs-120 s timeout (passes alone).
   - It's with the test lane on its own worker.
 - **Planned compose merge order:** batch A (lanes, comfy-source, timeout, W2) → W3 → hostwedge → httpj → phase 4. Then freeze.
+
+## Sat 18:55: Hannah asks for a Windows tester run on testers' live GPUs, tomorrow afternoon (via the advisor)
+- Each tester's agent uninstalls Astrid, installs fresh from the latest code, sets up against their own ComfyUI, finds their workflows, runs the defaults and h3_av, and logs friction to one GitHub issue per tester; our agent watches the issues. "Doesn't necessarily need to be on main."
+- The advisor drafted it: astrid-dev `advisor/windows-tester-run` 1c92d8b5 (windows-tester-brief.md, prep.md). The test build is a manifest URL (full SHAs; no repo keys).
+- **Prep questions:**
+  - Q1 answered: all source repos are public.
+  - Q2, Q5, Q6 → phase 4 manager (doctor commit, fetch-models coverage, cancel).
+  - Q3, Q4 → machines (hosted editor vs R13; installer "not newer" on a test manifest).
+  - The asset_gaps P2 is already fixed in phase 4 cf49d415.
+- **Recommendation to Hannah:** cut the test head from compose after phase 4 merges. The release continues on its own track; tester findings feed a point release or the next release unless one blocks.
+- The issue-watch session starts once she picks the schedule.
