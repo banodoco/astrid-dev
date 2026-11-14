@@ -1738,3 +1738,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **vc10 adds:** the LTX i2v LoRA and text-encoder digests, plus the FLF template's seven model identities. All come from unauthenticated HF HEAD reads only.
   - **Proof:** 368 tests, 0 regressions, 5 fixed, 0 red left. The last regression id (i2v-runpod) is green in the set.
   - **Root for the class:** the LTX catalog routes and templates declare the same ports, and every managed LTX model carries a pinned revision, digest and size. The other 132 records across 31 templates stay in deferred.md.
+- **10:15: int/r13-2f45835a unit shards.** 306 failing ids against 321 (22 cleared, 7 new). Regressions: 1 (i2v-runpod), which vc10, now merged, clears.
+  - **New:** h3 ×4 from h3 plain-inputs (the entry-description required flag, and PIL can't read an 8-byte fixture PNG), routed to cells. LTX ×2, cleared by vc10.
+  - **Merged the d18 harness wait f45f121ba:** the test's own futures bound goes from 1 s to 10 s; the product timeout and assertions are unchanged. It passes 3/3 locally and on R12, so it's a flake on a loaded shard. Ruling: a test harness bound, not a check.
