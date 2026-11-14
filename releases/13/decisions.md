@@ -2035,3 +2035,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Pinokio: int/20-phase4-pinokio 51ddd6c (mine; only my session can push there).
   - The Agent side waits for the manager's final SHA.
 - **18:05: machines has every card with the test lane:** lanes 87b8a5850, W2 7e553baf7, W3 622ba8938 (consent hole closed), and httpj round 4 (the cap fence inside the paced operation, immediately before create, proven with a real pacing sleep).
+- **18:27: W3 round 4 (622ba8938) APPROVED by Astra** under the gate: the omitted projection is False on every pod-job path, and error-model.md:90 is met. Proof W90 is finishing.
+  - A standalone pod preparation reads its own setting by design; controller-launched jobs can't.
+- **httpj round 4 (b60438061):** the pacing fix holds. A new money finding passes the gate: cancellation is checked before the saved-policy read (now in the worker thread), so a cancel during a slow read could still create a pod.
+  - **Round 5 is the LAST:** re-check cancellation and ownership immediately before persisting intent and creating, with a regression test. Further findings not introduced by round 5 go to deferred.md.
