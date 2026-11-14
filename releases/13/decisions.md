@@ -1846,3 +1846,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - OD1, OD2, R4 and the critique: YES.
   - The first image uses our default with the download offered; if she declines, her own workflow.
   - Planner and manager told.
+- **12:05: fd5ff0d9's unit shards** (CI 43584934648) vs 2f45835a: 302 failing ids vs 306 (5 cleared, 1 new). Both regression-flagged ids are explained:
+  - `[video/i2v-runpod]`: the fixture PNG, already fixed by h3-test-rows in compose dd8ea822f.
+  - `test_no_systemd_second_stop…idempotent`: the test used pid 123 against the real process table, which collides on a busy runner. Merged r13/tests/installer-fake-pid e9a81cb56: the pid is now above pid_max and the assertions are unchanged. That's root-fixed, not a flake exception.
