@@ -1491,3 +1491,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **02:25: music slot default → `audio/ace_step_1_5_t2a_song`** (priority 20, above minimax_music_3 at 10). This is a REVIEW item for Hannah: it's a user-visible default.
   - **Reason:** the builtin default was minimax_music_3. It was never run live, and its required `prompt` has an empty default, which is the cause of `[False-music]`. ace_step is the entry proven live in round 3 (30 s, real audio).
   - **Rejected:** writing a default prompt for minimax, which would ship invented text for an unproven default.
+- **02:30: merged machines' livefix** (r13/machines f2bce6011; the dry_live_seam import of M2's renamed fixture), giving compose 65b1d45c6. I cancelled be56a08c's CI run, because its Lanes had already failed on the collection error, and froze **int/r13-65b1d45c**.

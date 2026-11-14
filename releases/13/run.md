@@ -6,7 +6,7 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
 
 **Restarted after a 17.5 h stop:** every session hit the weekly limit at about 08:30 Fri; it reset at 02:00 Sat. Money is safe: 0 pods, $88.73.
 - **Live:** all five cells have passed on the claim path, and round 3 (music with defaults, t2i, edit) was green on a fresh claim.
-- **CI:** int/r13-c9636ed4 is the first COMPLETE CI and Lanes run; the test lane's binding table is due 04:00. int/r13-be56a08c (with M2) is running.
+- **CI:** int/r13-c9636ed4 is the first COMPLETE CI and Lanes run; the test lane's binding table is due 04:00. int/r13-65b1d45c (M2 + livefix) is running; be56a08c was cancelled for a collection error.
 - **Fixes in flight, target 07:00:**
   - engine rows (shard 1, the custody marker): my worker;
   - timeline ×134: my worker;
