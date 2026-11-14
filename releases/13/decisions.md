@@ -1536,3 +1536,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **03:30: Hannah: "Make the default one for video h3_av. Like image to video via that, feeding first frame."**
   - **What changes:** video i2v through the `h3` default (h3_av pack, already the video.i2v default on 65b1d45c) is proven live NOW, on the round 4 pod after the five cells. This overrides H3's post-publication timing for i2v. v2v, video-edit and the full h3_av Matrix-clip qualification stay post-publication (Plan 34) unless she says otherwise.
   - **Inputs:** cells prepares the h3 i2v `request` and `asset_map`, first frame edit-src.png, with a CPU dry-run proof, by 04:00. I run it live before the claim ends (about 04:20).
+- **03:35: Hannah: "let's do h3_av now, we need it on this release… deploy Lunas to explore and Fable to adjudicate an elegant approach to the problems beneath the problems… perhaps it'll all just work."**
+  - **Scope:** h3_av is IN R13, all three video slots (i2v, v2v, video-edit) live on the claim path before publish. This supersedes H3's post-publication timing.
+  - **Two tracks, in parallel:**
+    1. **Fast path:** cells prepares the inputs, argv and a CPU dry run for each mode, via Codex workers. I run each live as soon as it's green.
+    2. **Structural:** a Fable lead with Luna (Codex) explorers finds the root causes of anything blocking h3 on the M2 path and adjudicates fixes. It writes `briefs/h3-live/plan.md` in about 75 min and routes fixes to cells or machines.
+  - **The publish gate now includes the h3 modes.** If a mode fails live with a root cause that can't be fixed by about 10:00, I bring it to Hannah with options. It doesn't ship silently.

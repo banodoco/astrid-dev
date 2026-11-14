@@ -9,7 +9,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 ## Plan 34: real-GPU proof (first after publication)
 | Item | Source |
 |---|---|
-| h3_av: v2v, video-edit and the full Matrix-clip qualification after publication. i2v runs live in R13 on Hannah's 03:30 direction | decisions.md (03:20, 03:30 Sat); generation.md:95, 112 |
+| ~~h3_av after publication~~: **pulled into R13** by Hannah (03:35 Sat): i2v, v2v and video-edit run live before publish. Only what that run leaves unproven stays here. | decisions.md (03:20, 03:30 Sat); generation.md:95, 112 |
 | Warm machine reloads a cold engine and its models (Plan 32 T5f, Plan 34 G2/G5) | briefs/smells-out/h1.md:31 |
 | astrid-dev #260: port only if Plan 34 wants its history | evidence/open-prs.md |
 
