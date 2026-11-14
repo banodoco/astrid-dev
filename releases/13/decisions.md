@@ -1777,3 +1777,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **The 3 unlogged rows are filed** in deferred.md (Test infrastructure): local disk cleanup, load-sensitive timeouts including d18, hosted test-env provisioning.
   - **Release record and re-pin checklist:** a cells worker drafts them now.
   - **h3 v2v: PASS live** (11:18; the first h3 GPU run; 6 frames 1024×576, soft at 1 step, silent audio kept from the source).
+
+## Sat 11:45: round 6 (h3_av live on e51723152): all three h3 modes PASS
+- **First h3_av GPU runs ever, on a fresh claim** (RTX 5090, volume now 300 GB):
+  - v2v PASS (20m27s, including the about 50 GB cold download);
+  - video-edit pipeline PASS (7m16s); the brightening wasn't shown at 1 step (class 2);
+  - i2v smoke PASS (5m41s): the reference reached the model and generated audio is present;
+  - the bicycle i2v at 3 s and 8 steps PASS (6m18s): faithful to the reference, light, dust, ambience and birds all as prompted; the push-in is weak (class 2, minor).
+- **Pod released explicitly:** $1.04 for the round. 0 pods; balance $85.38.
+- **Validation** for every output is in evidence/live/validation-log.md, frames in evidence/live/frames/r6-*. Samples were sent to Hannah.
+- **The disk-quota fault from round 4 is closed live** by machines' volsize plus the 300 GB resize.
+- **Remaining for h3:** the Sunday live repeat on the final head, with more steps for edit and v2v so prompt adherence can be judged. The test lane's h3 test rows and cells' h3cov (frame coverage 164 vs 108) still have to merge.
