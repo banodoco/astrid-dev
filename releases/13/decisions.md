@@ -2077,3 +2077,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - An honest docs line goes in phase 4's docs commit until then.
   - **Hannah decides whether h3first ships in R13** (it reopens scope: about half a day plus one live round). My recommendation: yes, since it's the one gap against her original ask.
   - The final live checklist gains T1–T5.
+- **19:08: R4.N (a phase 4 docs commit) grows to a root fix.** It replaces every shipped `python3 -m astrid …` (it fails on real installs) with the launcher form, plus a guard test that no shipped skill or doc contains it, plus the cancel command and the honest h3 i2v line. It passes the gate: it's a documented command a user follows that fails.
