@@ -1840,3 +1840,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - r13/structural-node-id 1444896d0 → compose c61db4a82. The test's mocked model reference was missing the shape cells' pin e109c593b now requires; the declared-missing assertion is untouched (13 passed).
   - r13/machines 6d62f8503 (cpupath) → compose ac3dc93a6.
   - Left open: machines' `lanes` card (32 new-test ids, the `align` family) and `httpj`.
+- **12:02: Hannah decided Plan 20 phase 4's open items.**
+  - OD4 YES: download missing models, after one confirmation listing the files, sizes and folder.
+  - OD5 YES: create the project automatically in any case.
+  - OD1, OD2, R4 and the critique: YES.
+  - The first image uses our default with the download offered; if she declines, her own workflow.
+  - Planner and manager told.
