@@ -1955,3 +1955,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - P4.9.2 (`runtime up --wait` port conflict) is deferred to the Runtime plan unless it blocks single-Runtime onboarding (asked).
   - P4.0.5, .6, .16 and .12 → phase 5 rows.
 - **15:46:** P4.9.2 doesn't block single-Runtime users (it only affects two Runtimes or a source checkout). Deferred to the Runtime plan; deferred.md row added. Phase 4 adds R4.I: the MCP `open_url` parity gap the test lane found.
+- **16:16: hostwedge review (machines).**
+  - P1: per-incarnation directories would drop crash recovery of the host's own requests, so it moves to a stable per-executor private base.
+  - P2: no startup raise on a single attempt.
+  - **Ruling (machines, at my preference): the host starts; startup fails only on host-wide custody** (no live epoch, or an unreadable executor-owner record).
+    - A bad attempt whose identity is readable gets the fenced, evidence-free `reconciliation_required` failure, via the sidecar plus read-back.
+    - One whose identity is unreadable gets NO write (a guessed fence could fail the wrong attempt). It is quarantined with every byte kept and listed under recovery_blocked on host status and preflight, with a recovery step, and its lease expires on the Runtime side.
+  - Cells is on hostwedge2; test lane proof after machines' read.
