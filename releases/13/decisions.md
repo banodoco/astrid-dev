@@ -1967,3 +1967,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Restoring tamper evidence needs a separate UID or sandbox, deferred post-R13.
   - Alternative (b): W3 off for local-managed until that isolation exists.
   - Round 2 (about 90 min): st_dev in the key with a schema bump; a non-UTF-8 filename becomes a cache miss; the test drives the real wiring.
+- **16:33: machines lanes is ready**, r13/machines-lanes 8cebc4e2a (no httpj).
+  - All 41 hosted local-managed ids were traced; 40 pass serially. The h3 dry_run=live row is left to the hosted run.
+  - One pinned-source fixture replaces the synthetic installs; the integrity refusals are still tested.
+  - Every original matrix assertion is AST-identical.
+  - Product fixes: the engine_custody owner marker is published once under a lock (a launcher/child race), and the trust-mode result exposes public fields only.
+  - It merges together with the test lane's lanes-comfy-source workflow. The test lane proves both paired against 941fca2a4, with an Astra read of the engine_custody change.
+  - W3 handles the `file_fact(verification=)` wrapper interaction.
