@@ -1,0 +1,360 @@
+NOTE (cells, 14 Nov): anonymous run (HF_TOKEN unset). The query strings of CDN redirect URLs (pre-signed public-download parameters) are redacted (15 occurrences); everything else is verbatim. Scanned: no token, bearer value or credential string present.
+UTC_START 2026-11-14T13:21:57Z
+COMMAND env -u HF_TOKEN PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/user/wt/realfetch:/home/user/wt/agentvc11 /home/user/wt/agentvc11.env/venv/bin/python -u /home/user/cells/evidence/realfetch-run.py
+SCRIPT_BEGIN
+import contextlib
+import hashlib
+import inspect
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+import traceback
+from urllib.parse import urlsplit
+import httpx
+from vibecomfy import fetch
+from astrid.core.generation.asset_alignment import _ResumingClient
+
+EVIDENCE = Path('/home/user/cells/evidence')
+ROOT = Path('/tmp/realfetch-root')
+REPO = 'hf-internal-testing/tiny-random-GPT2Model'
+assert 'HF_TOKEN' not in os.environ
+assert fetch.__file__ == '/home/user/wt/realfetch/vibecomfy/fetch.py'
+print('UTC_START', time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), flush=True)
+print('COMMAND env -u HF_TOKEN PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/user/wt/realfetch:/home/user/wt/agentvc11 /home/user/wt/agentvc11.env/venv/bin/python -u /home/user/cells/evidence/realfetch-run.py', flush=True)
+print('SCRIPT_BEGIN\n' + Path(__file__).read_text() + '\nSCRIPT_END', flush=True)
+print('HF_TOKEN_UNSET', 'HF_TOKEN' not in os.environ)
+print('FETCH_MODULE', fetch.__file__)
+print('RESUME_MODULE', inspect.getfile(_ResumingClient))
+for cmd in (['git', 'rev-parse', 'HEAD'], ['git', 'status', '--porcelain'], ['git', '-C', '/home/user/wt/agentvc11', 'log', '--oneline', '-1'], ['df', '-h', '/home']):
+    print('COMMAND', ' '.join(cmd), flush=True)
+    subprocess.run(cmd, check=True)
+api = json.loads((EVIDENCE / 'realfetch-api.json').read_text())
+print('PREVIOUS_API_COMMAND: env -u HF_TOKEN ... python: httpx.get("https://huggingface.co/api/models/' + REPO + '/tree/main",follow_redirects=False,timeout=60); status=200')
+print('RAW_API', json.dumps(api), flush=True)
+lfs = next(x for x in api if x['path'] == 'pytorch_model.bin')
+plain = next(x for x in api if x['path'] == 'config.json')
+assert 'lfs' in lfs and 'lfs' not in plain
+assert lfs['size'] * 3 + plain['size'] < 10_000_000
+assert lfs['size'] > 1048576
+
+class Observer:
+    def __init__(self, label):
+        self.label = label
+        self.hops = []
+    @contextlib.contextmanager
+    def stream(self, method, url, **kwargs):
+        host = urlsplit(str(url)).hostname
+        assert urlsplit(str(url)).scheme == 'https'
+        assert host == 'huggingface.co' or host.endswith(('.huggingface.co', '.xethub.hf.co', '.hf.co')), host
+        headers = httpx.Headers(kwargs.get('headers', {}))
+        row = dict(hop_index=len(self.hops)+1, url=str(url), host=host,
+                   follow_redirects=kwargs.get('follow_redirects'),
+                   authorization_present='authorization' in headers, range=headers.get('range'))
+        self.hops.append(row)
+        print(self.label, 'STREAM', json.dumps(row), flush=True)
+        assert not row['authorization_present']
+        with httpx.stream(method, url, **kwargs) as response:
+            row.update(status=response.status_code, content_length=response.headers.get('content-length'),
+                       content_range=response.headers.get('content-range'), location=response.headers.get('location'))
+            print(self.label, 'RESPONSE', json.dumps(row), flush=True)
+            yield response
+
+ROOT.mkdir(exist_ok=True)
+runroot = Path(tempfile.mkdtemp(prefix='run-', dir=ROOT))
+results = []
+try:
+    original = None
+    for label, item, resume_mode in [('lfs', lfs, None), ('plain', plain, None), ('resume-fresh', lfs, 'fresh'), ('resume-prefix', lfs, 'prefix')]:
+        root = runroot / label
+        entry = {'name': item['path'], 'subdir': 'checkpoints',
+                 'url': f"https://huggingface.co/{REPO}/resolve/main/{item['path']}", 'size_bytes': item['size']}
+        if 'lfs' in item:
+            entry['sha256'] = item['lfs']['oid']
+        observer = Observer(label)
+        client = observer
+        part = root / 'checkpoints' / (item['path'] + '.part')
+        if resume_mode:
+            part.parent.mkdir(parents=True, exist_ok=True)
+            if resume_mode == 'prefix':
+                with original.open('rb') as src:
+                    part.write_bytes(src.read(1048576))
+                assert part.stat().st_size == 1048576
+            else:
+                assert not part.exists()
+            client = _ResumingClient(observer, part, time.monotonic() + 300)
+        print(label, 'DOWNLOAD_ENTRY', json.dumps(entry), 'ROOT', root, flush=True)
+        try:
+            path = fetch.download(entry, root=root, client=client, quiet=True)
+            size = path.stat().st_size
+            sha = hashlib.sha256(path.read_bytes()).hexdigest()
+            assert size == item['size']
+            if 'lfs' in item:
+                assert sha == item['lfs']['oid']
+            else:
+                assert hashlib.sha1(b'blob ' + str(size).encode() + b'\0' + path.read_bytes()).hexdigest() == item['oid']
+            receipt = fetch._verification_receipt_path(path, root=root)
+            raw_receipt = receipt.read_text()
+            receipt_data = json.loads(raw_receipt)
+            assert receipt_data['observed_sha256'] == sha
+            token_free = not any(x in raw_receipt.lower() for x in ('bearer ', 'hf_token', 'authorization', 'hf_'))
+            assert token_free
+            print(label, 'RECEIPT', receipt, raw_receipt, flush=True)
+            partial_before_cleanup = part.exists()
+            if resume_mode:
+                assert part.stat().st_size == size
+                assert hashlib.sha256(part.read_bytes()).hexdigest() == sha
+                # Match _fetch_model's explicit successful caller cleanup; fetch itself does not own this part.
+                part.unlink()
+            leftovers = [str(x) for x in path.parent.iterdir() if x.name.endswith(('.part', '.tmp'))]
+            assert not leftovers
+            result = dict(label=label, hop_count=len(observer.hops), hosts=[x['host'] for x in observer.hops],
+                          final_raw_status=observer.hops[-1]['status'], path=str(path), size=size, sha256=sha,
+                          lfs_oid_match=(sha == item['lfs']['oid']) if 'lfs' in item else None,
+                          plain_git_blob_oid_match=True if 'lfs' not in item else None,
+                          receipt_present=receipt.exists(), receipt_token_free=token_free,
+                          partial_before_caller_cleanup=partial_before_cleanup, leftovers=leftovers,
+                          resumed_from=client.resumed_from if resume_mode else None)
+            results.append(result)
+            print('RESULT', json.dumps(result), flush=True)
+            if label == 'lfs':
+                original = path
+        except Exception:
+            print('FAILURE', label, flush=True)
+            traceback.print_exc(file=sys.stdout)
+    print('RESULTS', json.dumps(results, indent=2), flush=True)
+finally:
+    shutil.rmtree(runroot)
+    ROOT.rmdir()
+    print('CLEANUP /tmp/realfetch-root removed; reused existing environment untouched; no environment created.', flush=True)
+    print('COMMAND git status --porcelain', flush=True)
+    subprocess.run(['git', 'status', '--porcelain'], check=True)
+    print('UTC_END', time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), flush=True)
+
+SCRIPT_END
+HF_TOKEN_UNSET True
+FETCH_MODULE /home/user/wt/realfetch/vibecomfy/fetch.py
+RESUME_MODULE /home/user/wt/agentvc11/astrid/core/generation/asset_alignment.py
+COMMAND git rev-parse HEAD
+dba38f8644c46f652376f2cd5112ea161e40f09b
+COMMAND git status --porcelain
+COMMAND git -C /home/user/wt/agentvc11 log --oneline -1
+d61424055 Pin VibeComfy to dba38f86: Hugging Face credentials only to Hugging Face hosts
+COMMAND df -h /home
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   36G  3.0G  93% /
+PREVIOUS_API_COMMAND: env -u HF_TOKEN ... python: httpx.get("https://huggingface.co/api/models/hf-internal-testing/tiny-random-GPT2Model/tree/main",follow_redirects=False,timeout=60); status=200
+RAW_API [{"type": "file", "oid": "c7d9f3332a950355d5a77d85000f05e6f45435ea", "size": 1477, "path": ".gitattributes"}, {"type": "file", "oid": "1f27cbc5ee238c57d5c3b86d5ca63b061b20a517", "size": 863, "path": "config.json"}, {"type": "file", "oid": "dfa0298b1d3105130a279cadd759dc01ea9d2dbe", "size": 4573, "path": "merges.txt"}, {"type": "file", "oid": "48bdd3c7f2cbceb1b363b77b9751ceb8e979c986", "size": 1664911, "lfs": {"oid": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61", "size": 1664911, "pointerSize": 132}, "xetHash": "4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134", "path": "pytorch_model.bin"}, {"type": "file", "oid": "0204ed10c186a4c7c68f55dff8f26087a45898d6", "size": 99, "path": "special_tokens_map.json"}, {"type": "file", "oid": "9676ab3959e2b1b12b5733fc49055d8b0e323a71", "size": 415712, "lfs": {"oid": "67197a6c462b177b771faa93b838ea607ccf47a3e731321b1f3ad67522b3cc30", "size": 415712, "pointerSize": 131}, "xetHash": "1d15602dae187720674e9b7ce8f513e9d20d931dca1fe9618c641640639c9804", "path": "tf_model.h5"}, {"type": "file", "oid": "904af5484b4a12336c27ce25325e82af3fec9ffe", "size": 31087, "path": "tokenizer.json"}, {"type": "file", "oid": "019129a7bcd5357c5bafcc154cad65ab2a70b6fd", "size": 769, "path": "tokenizer_config.json"}, {"type": "file", "oid": "21ec2c0e0a6aa79aed11793f3baa88116d9ec19b", "size": 14640, "path": "vocab.json"}]
+lfs DOWNLOAD_ENTRY {"name": "pytorch_model.bin", "subdir": "checkpoints", "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "size_bytes": 1664911, "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61"} ROOT /tmp/realfetch-root/run-l5opewsq/lfs
+lfs STREAM {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null}
+lfs RESPONSE {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null, "status": 302, "content_length": "1159", "content_range": null, "location": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>"}
+lfs STREAM {"hop_index": 2, "url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>", "host": "us.aws.cdn.hf.co", "follow_redirects": false, "authorization_present": false, "range": null}
+lfs RESPONSE {"hop_index": 2, "url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>", "host": "us.aws.cdn.hf.co", "follow_redirects": false, "authorization_present": false, "range": null, "status": 200, "content_length": "1664911", "content_range": null, "location": null}
+lfs RECEIPT /tmp/realfetch-root/run-l5opewsq/lfs/.vibecomfy/model-verification/aac1debdef821809db0509156a5f5150299ad1db7be76f010a7728c8a16a2b04.json {
+  "actual_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "effective_url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>",
+  "expected_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "expected_size_bytes": 1664911,
+  "fetch_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin",
+  "kind": "model_url_resolution",
+  "observed_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "path": "/tmp/realfetch-root/run-l5opewsq/lfs/checkpoints/pytorch_model.bin",
+  "requested_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin",
+  "schema_version": 1,
+  "size_bytes": 1664911,
+  "stat": {
+    "dev": 65024,
+    "inode": 943476,
+    "mtime_ns": 1794662518097885174,
+    "size": 1664911
+  }
+}
+
+RESULT {"label": "lfs", "hop_count": 2, "hosts": ["huggingface.co", "us.aws.cdn.hf.co"], "final_raw_status": 200, "path": "/tmp/realfetch-root/run-l5opewsq/lfs/checkpoints/pytorch_model.bin", "size": 1664911, "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61", "lfs_oid_match": true, "plain_git_blob_oid_match": null, "receipt_present": true, "receipt_token_free": true, "partial_before_caller_cleanup": false, "leftovers": [], "resumed_from": null}
+plain DOWNLOAD_ENTRY {"name": "config.json", "subdir": "checkpoints", "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/config.json", "size_bytes": 863} ROOT /tmp/realfetch-root/run-l5opewsq/plain
+plain STREAM {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/config.json", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null}
+plain RESPONSE {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/config.json", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null, "status": 307, "content_length": "286", "content_range": null, "location": "/api/resolve-cache/models/hf-internal-testing/tiny-random-GPT2Model/d6694b0d8fe17978761c9305dc151780506b192e/config.json?%2Fhf-internal-testing%2Ftiny-random-GPT2Model%2Fresolve%2Fmain%2Fconfig.json=&etag=%221f27cbc5ee238c57d5c3b86d5ca63b061b20a517%22"}
+plain STREAM {"hop_index": 2, "url": "https://huggingface.co/api/resolve-cache/models/hf-internal-testing/tiny-random-GPT2Model/d6694b0d8fe17978761c9305dc151780506b192e/config.json?<query-redacted>", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null}
+plain RESPONSE {"hop_index": 2, "url": "https://huggingface.co/api/resolve-cache/models/hf-internal-testing/tiny-random-GPT2Model/d6694b0d8fe17978761c9305dc151780506b192e/config.json?<query-redacted>", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null, "status": 200, "content_length": "863", "content_range": null, "location": null}
+plain RECEIPT /tmp/realfetch-root/run-l5opewsq/plain/.vibecomfy/model-verification/889c9e9a30c89b7142572f2e52b2105cce07473f3c1766347827b00fb281c8df.json {
+  "actual_sha256": "d0d312c819595090ad6b23d9abf0877d5bfe287e5f1f25e47d7fdb7941d6fb3b",
+  "effective_url": "https://huggingface.co/api/resolve-cache/models/hf-internal-testing/tiny-random-GPT2Model/d6694b0d8fe17978761c9305dc151780506b192e/config.json?<query-redacted>",
+  "expected_sha256": "d0d312c819595090ad6b23d9abf0877d5bfe287e5f1f25e47d7fdb7941d6fb3b",
+  "expected_size_bytes": 863,
+  "fetch_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/config.json",
+  "kind": "model_url_resolution",
+  "observed_sha256": "d0d312c819595090ad6b23d9abf0877d5bfe287e5f1f25e47d7fdb7941d6fb3b",
+  "path": "/tmp/realfetch-root/run-l5opewsq/plain/checkpoints/config.json",
+  "requested_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/config.json",
+  "schema_version": 1,
+  "size_bytes": 863,
+  "stat": {
+    "dev": 65024,
+    "inode": 1034703,
+    "mtime_ns": 1794662518781963768,
+    "size": 863
+  }
+}
+
+RESULT {"label": "plain", "hop_count": 2, "hosts": ["huggingface.co", "huggingface.co"], "final_raw_status": 200, "path": "/tmp/realfetch-root/run-l5opewsq/plain/checkpoints/config.json", "size": 863, "sha256": "d0d312c819595090ad6b23d9abf0877d5bfe287e5f1f25e47d7fdb7941d6fb3b", "lfs_oid_match": null, "plain_git_blob_oid_match": true, "receipt_present": true, "receipt_token_free": true, "partial_before_caller_cleanup": false, "leftovers": [], "resumed_from": null}
+resume-fresh DOWNLOAD_ENTRY {"name": "pytorch_model.bin", "subdir": "checkpoints", "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "size_bytes": 1664911, "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61"} ROOT /tmp/realfetch-root/run-l5opewsq/resume-fresh
+resume-fresh STREAM {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null}
+resume-fresh RESPONSE {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": null, "status": 302, "content_length": "1155", "content_range": null, "location": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>"}
+resume-fresh STREAM {"hop_index": 2, "url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>", "host": "us.aws.cdn.hf.co", "follow_redirects": false, "authorization_present": false, "range": null}
+resume-fresh RESPONSE {"hop_index": 2, "url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>", "host": "us.aws.cdn.hf.co", "follow_redirects": false, "authorization_present": false, "range": null, "status": 200, "content_length": "1664911", "content_range": null, "location": null}
+resume-fresh RECEIPT /tmp/realfetch-root/run-l5opewsq/resume-fresh/.vibecomfy/model-verification/3e22768c201fc3253ed50227b101b1507073054306b76f6e776762e18149d356.json {
+  "actual_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "effective_url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>",
+  "expected_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "expected_size_bytes": 1664911,
+  "fetch_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin",
+  "kind": "model_url_resolution",
+  "observed_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "path": "/tmp/realfetch-root/run-l5opewsq/resume-fresh/checkpoints/pytorch_model.bin",
+  "requested_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin",
+  "schema_version": 1,
+  "size_bytes": 1664911,
+  "stat": {
+    "dev": 65024,
+    "inode": 1721013,
+    "mtime_ns": 1794662519641885266,
+    "size": 1664911
+  }
+}
+
+RESULT {"label": "resume-fresh", "hop_count": 2, "hosts": ["huggingface.co", "us.aws.cdn.hf.co"], "final_raw_status": 200, "path": "/tmp/realfetch-root/run-l5opewsq/resume-fresh/checkpoints/pytorch_model.bin", "size": 1664911, "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61", "lfs_oid_match": true, "plain_git_blob_oid_match": null, "receipt_present": true, "receipt_token_free": true, "partial_before_caller_cleanup": true, "leftovers": [], "resumed_from": 0}
+resume-prefix DOWNLOAD_ENTRY {"name": "pytorch_model.bin", "subdir": "checkpoints", "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "size_bytes": 1664911, "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61"} ROOT /tmp/realfetch-root/run-l5opewsq/resume-prefix
+resume-prefix STREAM {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": "bytes=1048576-"}
+resume-prefix RESPONSE {"hop_index": 1, "url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin", "host": "huggingface.co", "follow_redirects": false, "authorization_present": false, "range": "bytes=1048576-", "status": 302, "content_length": "1159", "content_range": null, "location": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>"}
+resume-prefix STREAM {"hop_index": 2, "url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>", "host": "us.aws.cdn.hf.co", "follow_redirects": false, "authorization_present": false, "range": "bytes=1048576-"}
+resume-prefix RESPONSE {"hop_index": 2, "url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>", "host": "us.aws.cdn.hf.co", "follow_redirects": false, "authorization_present": false, "range": "bytes=1048576-", "status": 206, "content_length": "616335", "content_range": "bytes 1048576-1664910/1664911", "location": null}
+resume-prefix RECEIPT /tmp/realfetch-root/run-l5opewsq/resume-prefix/.vibecomfy/model-verification/d7301a2050ab1c4e098083a6d0420ff7311b8ab613963fe6c23b6304465afba2.json {
+  "actual_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "effective_url": "https://us.aws.cdn.hf.co/xet-bridge-us/637e71a0cd8b2c2d9bae4c71/4604c6ad533a0a740855379f6cb77aa43f765c8dc5862edd48fec1375d165134?<query-redacted>",
+  "expected_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "expected_size_bytes": 1664911,
+  "fetch_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin",
+  "kind": "model_url_resolution",
+  "observed_sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+  "path": "/tmp/realfetch-root/run-l5opewsq/resume-prefix/checkpoints/pytorch_model.bin",
+  "requested_url": "https://huggingface.co/hf-internal-testing/tiny-random-GPT2Model/resolve/main/pytorch_model.bin",
+  "schema_version": 1,
+  "size_bytes": 1664911,
+  "stat": {
+    "dev": 65024,
+    "inode": 1720536,
+    "mtime_ns": 1794662520469885315,
+    "size": 1664911
+  }
+}
+
+RESULT {"label": "resume-prefix", "hop_count": 2, "hosts": ["huggingface.co", "us.aws.cdn.hf.co"], "final_raw_status": 206, "path": "/tmp/realfetch-root/run-l5opewsq/resume-prefix/checkpoints/pytorch_model.bin", "size": 1664911, "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61", "lfs_oid_match": true, "plain_git_blob_oid_match": null, "receipt_present": true, "receipt_token_free": true, "partial_before_caller_cleanup": true, "leftovers": [], "resumed_from": 1048576}
+RESULTS [
+  {
+    "label": "lfs",
+    "hop_count": 2,
+    "hosts": [
+      "huggingface.co",
+      "us.aws.cdn.hf.co"
+    ],
+    "final_raw_status": 200,
+    "path": "/tmp/realfetch-root/run-l5opewsq/lfs/checkpoints/pytorch_model.bin",
+    "size": 1664911,
+    "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+    "lfs_oid_match": true,
+    "plain_git_blob_oid_match": null,
+    "receipt_present": true,
+    "receipt_token_free": true,
+    "partial_before_caller_cleanup": false,
+    "leftovers": [],
+    "resumed_from": null
+  },
+  {
+    "label": "plain",
+    "hop_count": 2,
+    "hosts": [
+      "huggingface.co",
+      "huggingface.co"
+    ],
+    "final_raw_status": 200,
+    "path": "/tmp/realfetch-root/run-l5opewsq/plain/checkpoints/config.json",
+    "size": 863,
+    "sha256": "d0d312c819595090ad6b23d9abf0877d5bfe287e5f1f25e47d7fdb7941d6fb3b",
+    "lfs_oid_match": null,
+    "plain_git_blob_oid_match": true,
+    "receipt_present": true,
+    "receipt_token_free": true,
+    "partial_before_caller_cleanup": false,
+    "leftovers": [],
+    "resumed_from": null
+  },
+  {
+    "label": "resume-fresh",
+    "hop_count": 2,
+    "hosts": [
+      "huggingface.co",
+      "us.aws.cdn.hf.co"
+    ],
+    "final_raw_status": 200,
+    "path": "/tmp/realfetch-root/run-l5opewsq/resume-fresh/checkpoints/pytorch_model.bin",
+    "size": 1664911,
+    "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+    "lfs_oid_match": true,
+    "plain_git_blob_oid_match": null,
+    "receipt_present": true,
+    "receipt_token_free": true,
+    "partial_before_caller_cleanup": true,
+    "leftovers": [],
+    "resumed_from": 0
+  },
+  {
+    "label": "resume-prefix",
+    "hop_count": 2,
+    "hosts": [
+      "huggingface.co",
+      "us.aws.cdn.hf.co"
+    ],
+    "final_raw_status": 206,
+    "path": "/tmp/realfetch-root/run-l5opewsq/resume-prefix/checkpoints/pytorch_model.bin",
+    "size": 1664911,
+    "sha256": "725e6f17f6d47b1b90aa4e4ca9b95ff7d84b24228489bf40ca34dc98d5aebb61",
+    "lfs_oid_match": true,
+    "plain_git_blob_oid_match": null,
+    "receipt_present": true,
+    "receipt_token_free": true,
+    "partial_before_caller_cleanup": true,
+    "leftovers": [],
+    "resumed_from": 1048576
+  }
+]
+CLEANUP /tmp/realfetch-root removed; reused existing environment untouched; no environment created.
+COMMAND git status --porcelain
+UTC_END 2026-11-14T13:22:00Z
+
+EXACT PREPARATION COMMANDS (executed before main script):
+pwd; git rev-parse HEAD; git status --porcelain; df -h /home; ls /home/user/wt/*.env/venv/bin/python; if [ -d /home/user/wt/agentvc11 ]; then git -C /home/user/wt/agentvc11 log --oneline -1; fi
+Initial results: expected detached HEAD dba38f8644c46f652376f2cd5112ea161e40f09b; porcelain output empty; /home available 3.0G. Existing agentvc11.env and witness.env found. Reused agentvc11.env; no setup/install or new environment.
+EXACT API AND IMPORT COMMAND:
+env -u HF_TOKEN PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/user/wt/realfetch:/home/user/wt/agentvc11 /home/user/wt/agentvc11.env/venv/bin/python - <<'API_PY'
+import httpx, json
+from vibecomfy import fetch
+from astrid.core.generation.asset_alignment import _ResumingClient
+print('fetch module:',fetch.__file__)
+print('resume module:',_ResumingClient.__module__)
+url='https://huggingface.co/api/models/hf-internal-testing/tiny-random-GPT2Model/tree/main'
+r=httpx.get(url,follow_redirects=False,timeout=60)
+print('API',r.status_code)
+print(r.text)
+open('/home/user/cells/evidence/realfetch-api.json','w').write(r.text)
+API_PY
+EXACT EXECUTION COMMAND (source embedded above and retained alongside log):
+env -u HF_TOKEN PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/user/wt/realfetch:/home/user/wt/agentvc11 /home/user/wt/agentvc11.env/venv/bin/python -u /home/user/cells/evidence/realfetch-run.py > /home/user/cells/evidence/realfetch-log.txt 2>&1
+FINAL VERIFICATION COMMAND:
+git rev-parse HEAD; git status --porcelain; test ! -e /tmp/realfetch-root
+Result: expected HEAD unchanged, porcelain output empty, temporary root absent.
+Interpretation: observed current LFS CDN was us.aws.cdn.hf.co, not a cas-bridge.xethub.hf.co hostname. Actual redirect locations are logged above. No Authorization header on any hop; follow_redirects=False on every stream call. Plain SHA-256 was computed locally after download (not supplied in entry), additionally checked against API Git blob SHA-1 oid. _ResumingClient owns a persistent .part; fetch does not remove it. After verifying each mirrored part, harness removed it exactly as _fetch_model does on success. No fetch .tmp remained before that caller cleanup. Reused pre-existing environment intentionally preserved.
+Payload totals: 1664911 + 863 + 1664911 + (1664911 - 1048576) = 3947020 bytes across four file downloads, plus small API/redirect responses. No tests, GPU, paid calls, credentials, installs, repository edits, commits, or pushes.
