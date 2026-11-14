@@ -1639,3 +1639,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Product:** generic_host gets the machine recorder through the registered hook (boundary 98→97). `storage_floor_exempt` defaults to not exempt.
   - **compare_baselines (48 cross-lane boundary crossings) goes to the test lane:** each one is sorted as either a deliberate R13 change, whose baseline refresh cites its cause commit, or an accidental crossing, routed back to its owner. Machines pushes the origin map to the records branch.
   - **The MCP claim-consent root fix is in progress** (`r13/machines-mcp-consent`).
+- **05:20: merged machines ffdba462c (the M2 rows card with its review fixes).**
+  - **Startup bound reverted:** the RPC startup bound is back to byte-identical. That clears Astra's two P1 custody bugs; the root fix is in deferred.md (c54346c).
+  - **Fixes:**
+    - a wrapped acquisition failure keeps the machine identity, with `after="unknown"` when release isn't proven;
+    - an explicit 1800 s hold is kept.
+  - **Proof:** 8 new regression tests.
+  - **The hosted run is the proof** for the local integration setup failures, which come from a local VibeComfy pin mismatch on machines' box.
