@@ -1,0 +1,425 @@
+{
+  "entry": {
+    "accepted_inputs": [
+      "asset_map",
+      "request"
+    ],
+    "bindings": {
+      "guidance": 0.95,
+      "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "prompt": "End state: the same bicycle and wall at dusk, long warm shadows, a street lamp flickers on. Quiet evening ambience.",
+      "sampler": "res_multistep",
+      "scheduler": "simple",
+      "seed": 42,
+      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "steps": 8,
+      "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
+    },
+    "build_plan": {
+      "compilation_digest": "643488957f8b96773b4cb756f6fef04892f5c63ba1c68b90baa299c4f29a39eb",
+      "intent": {
+        "groups": [
+          {
+            "group_key": "main",
+            "selectors": [
+              {
+                "ordinal": 0,
+                "required": true,
+                "selector": "main-0",
+                "variant_key": "original"
+              }
+            ]
+          }
+        ],
+        "metadata": {
+          "compiled_generation_contract": true
+        },
+        "modality": "video",
+        "partial_success_policy": "reject",
+        "version": 1
+      },
+      "output_contract": "muxed_av_full_timeline",
+      "request_digest": "3666725b15f8ecf4afa850e435cbe5838d8d97c409a681c3ababb7cb9fd7316d",
+      "source_av": {
+        "audio_sample_rate": 32000,
+        "audio_samples": 96000,
+        "expected_audio_samples": 96000,
+        "fps": 24,
+        "fractional_mismatch": 0.0,
+        "has_audio": true,
+        "source_avg_frame_rate": "24/1",
+        "source_frame_rate": "24/1",
+        "video_frames": 72
+      },
+      "workflow_inputs_sha256": "sha256:57e6028fe6fbb173bb386816119876d1651e5fcb2527fe209d56fa95d1197061",
+      "workflow_members": {
+        "source.json": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5",
+        "workflow.py": "ae8cf3d12acffa561fd7a1427117191538ab8c42c63204ecafdd36adee6f2e23",
+        "workflow.vibe.json": "e8769ee21344234038e341b2ae27e2e53637f065ca6b6d1ef7295e1eb065b46e"
+      }
+    },
+    "effective_values": {
+      "guidance": 0.95,
+      "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "node:1.clip_name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+      "node:1.device": "default",
+      "node:1.type": "minimax",
+      "node:10.channels": 2,
+      "node:10.duration": 0.041666666666666664,
+      "node:10.sample_rate": 44100,
+      "node:11.direction": "after",
+      "node:12.batch_size": 1,
+      "node:12.color": 0,
+      "node:12.height": 576,
+      "node:12.width": 1024,
+      "node:14.channel": "red",
+      "node:19.filename_prefix": "h3_av/generated",
+      "node:19.format": "video/h264-mp4",
+      "node:19.frame_rate": 24,
+      "node:19.loop_count": 0,
+      "node:19.pingpong": false,
+      "node:19.save_output": true,
+      "node:2.vae_name": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "node:3.vae_name": "minimax_h3_audio_vae_fp32.safetensors",
+      "node:5.attention": "comfy kitchen attention",
+      "node:7.batch_index": 71,
+      "node:7.length": 1,
+      "node:8.amount": 1,
+      "node:99.custom_height": 0,
+      "node:99.custom_width": 0,
+      "node:99.force_rate": 24,
+      "node:99.format": "AnimateDiff",
+      "node:99.frame_load_cap": 72,
+      "node:99.start_time": 0.0,
+      "node:model.weight_dtype": "default",
+      "node:schedule.denoise": 1.0,
+      "node:turbo_lora.lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "node:video_mask_0.custom_height": 0,
+      "node:video_mask_0.custom_width": 0,
+      "node:video_mask_0.force_rate": 24,
+      "node:video_mask_0.format": "AnimateDiff",
+      "node:video_mask_0.frame_load_cap": 72,
+      "node:video_mask_0.start_time": 0.0,
+      "prompt": "End state: the same bicycle and wall at dusk, long warm shadows, a street lamp flickers on. Quiet evening ambience.",
+      "sampler": "res_multistep",
+      "scheduler": "simple",
+      "seed": 42,
+      "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+      "steps": 8,
+      "video_mask_0": "3027cc326ad48ef2-bounded-mask.mkv"
+    },
+    "engine": "comfyui",
+    "id": "h3",
+    "inputs": [
+      {
+        "default": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "name": "model",
+        "type": "string"
+      },
+      {
+        "default": 8,
+        "name": "steps",
+        "type": "integer"
+      },
+      {
+        "default": 42,
+        "name": "seed",
+        "type": "integer"
+      },
+      {
+        "default": "",
+        "name": "source_video",
+        "type": "file"
+      },
+      {
+        "default": "",
+        "name": "video_mask_0",
+        "type": "file"
+      },
+      {
+        "default": "End state: the same bicycle and wall at dusk, long warm shadows, a street lamp flickers on. Quiet evening ambience.",
+        "name": "prompt",
+        "type": "string"
+      },
+      {
+        "default": "res_multistep",
+        "name": "sampler",
+        "type": "string"
+      },
+      {
+        "default": "simple",
+        "name": "scheduler",
+        "type": "string"
+      },
+      {
+        "default": 0.95,
+        "name": "guidance",
+        "type": "number"
+      },
+      {
+        "default": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+        "name": "node:1.clip_name",
+        "type": "string"
+      },
+      {
+        "default": "minimax",
+        "name": "node:1.type",
+        "type": "string"
+      },
+      {
+        "default": "default",
+        "name": "node:1.device",
+        "type": "string"
+      },
+      {
+        "default": "minimax_h3_video_vae_int8_convrot.safetensors",
+        "name": "node:2.vae_name",
+        "type": "string"
+      },
+      {
+        "default": "minimax_h3_audio_vae_fp32.safetensors",
+        "name": "node:3.vae_name",
+        "type": "string"
+      },
+      {
+        "default": 60.0,
+        "name": "node:10.duration",
+        "type": "number"
+      },
+      {
+        "default": 44100,
+        "name": "node:10.sample_rate",
+        "type": "integer"
+      },
+      {
+        "default": 2,
+        "name": "node:10.channels",
+        "type": "integer"
+      },
+      {
+        "default": 512,
+        "name": "node:12.width",
+        "type": "integer"
+      },
+      {
+        "default": 512,
+        "name": "node:12.height",
+        "type": "integer"
+      },
+      {
+        "default": 1,
+        "name": "node:12.batch_size",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:12.color",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:99.force_rate",
+        "type": "number"
+      },
+      {
+        "default": 0,
+        "name": "node:99.custom_width",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:99.custom_height",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:99.frame_load_cap",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:99.start_time",
+        "type": "number"
+      },
+      {
+        "default": "AnimateDiff",
+        "name": "node:99.format",
+        "type": "string"
+      },
+      {
+        "default": "default",
+        "name": "node:model.weight_dtype",
+        "type": "string"
+      },
+      {
+        "default": 0,
+        "name": "node:video_mask_0.force_rate",
+        "type": "number"
+      },
+      {
+        "default": 0,
+        "name": "node:video_mask_0.custom_width",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:video_mask_0.custom_height",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:video_mask_0.frame_load_cap",
+        "type": "integer"
+      },
+      {
+        "default": 0,
+        "name": "node:video_mask_0.start_time",
+        "type": "number"
+      },
+      {
+        "default": "AnimateDiff",
+        "name": "node:video_mask_0.format",
+        "type": "string"
+      },
+      {
+        "default": "pytorch attention",
+        "name": "node:5.attention",
+        "type": "string"
+      },
+      {
+        "default": 0,
+        "name": "node:7.batch_index",
+        "type": "integer"
+      },
+      {
+        "default": 1,
+        "name": "node:7.length",
+        "type": "integer"
+      },
+      {
+        "default": "after",
+        "name": "node:11.direction",
+        "type": "string"
+      },
+      {
+        "default": 1,
+        "name": "node:8.amount",
+        "type": "integer"
+      },
+      {
+        "default": "red",
+        "name": "node:14.channel",
+        "type": "string"
+      },
+      {
+        "default": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+        "name": "node:turbo_lora.lora_name",
+        "type": "string"
+      },
+      {
+        "default": 1.0,
+        "name": "node:schedule.denoise",
+        "type": "number"
+      },
+      {
+        "default": 8,
+        "name": "node:19.frame_rate",
+        "type": "number"
+      },
+      {
+        "default": 0,
+        "name": "node:19.loop_count",
+        "type": "integer"
+      },
+      {
+        "default": "AnimateDiff",
+        "name": "node:19.filename_prefix",
+        "type": "string"
+      },
+      {
+        "default": "video/h264-mp4",
+        "name": "node:19.format",
+        "type": "string"
+      },
+      {
+        "default": false,
+        "name": "node:19.pingpong",
+        "type": "boolean"
+      },
+      {
+        "default": true,
+        "name": "node:19.save_output",
+        "type": "boolean"
+      }
+    ],
+    "job_dir": "/home/user/wt/h3live.env/tmp/astrid-job-yei3lgdj",
+    "kind": "video",
+    "mode": "video-edit",
+    "model": "h3",
+    "reason": "explicitly selected workflow entry",
+    "rejected_inputs": [],
+    "requirements": {
+      "base": "6bfaacc67c2103481e5f0c84d75257cd0581d86a",
+      "engine": "comfyui",
+      "extra": {
+        "nodes": [
+          {
+            "commit": "361624fb406b63eb6694442eac6c895fc1533a70",
+            "repo": "https://github.com/seitanism/ComfyUI-H3-Motion-Context-MultiRef.git"
+          },
+          {
+            "commit": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+            "repo": "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git"
+          }
+        ]
+      },
+      "models": [
+        {
+          "name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+          "sha256": "9255f52b6677845ad238f20dfaafa94727053694127ab7f255c048f0f9365779",
+          "size": 20970379616,
+          "subdir": "diffusion_models",
+          "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors"
+        },
+        {
+          "name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+          "sha256": "bc2ced0fbea64757fa9acddccfc0b3f4819d1dcf1da6c124d690d368be283923",
+          "size": 27141342152,
+          "subdir": "text_encoders",
+          "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+        },
+        {
+          "name": "minimax_h3_video_vae_int8_convrot.safetensors",
+          "sha256": "52a2c8c73583c86e4f41cdcce3a6ad0ea562987bc0bf3d60a0cef5f5c8e60c0e",
+          "size": 2811065184,
+          "subdir": "vae",
+          "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/vae/minimax_h3_video_vae_int8_convrot.safetensors"
+        },
+        {
+          "name": "minimax_h3_audio_vae_fp32.safetensors",
+          "sha256": "8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48",
+          "size": 605254808,
+          "subdir": "vae",
+          "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/vae/minimax_h3_audio_vae_fp32.safetensors"
+        },
+        {
+          "name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+          "sha256": "2339acdf19bfe123f46b971ea35d367a84adb85de43627e1eceafa5a5b2b111e",
+          "size": 1956193000,
+          "subdir": "loras",
+          "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors"
+        }
+      ]
+    },
+    "unbound": [],
+    "workflow": "h3_av_reference_generation"
+  },
+  "fixes": [],
+  "issues": [],
+  "status": "ready",
+  "target": {
+    "engine": "comfyui",
+    "placement": "runpod",
+    "state": "pending_host_readiness"
+  }
+}

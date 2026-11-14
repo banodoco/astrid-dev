@@ -1,0 +1,9 @@
+version: 1
+operation: edit
+source: {asset: bike.mp4, range: [0.0, 3.0]}
+output: {duration: 3.0}
+content: {prompt: "End state: the same bicycle and wall at dusk, long warm shadows, a street lamp flickers on. Quiet evening ambience."}
+changes:
+  video: [{during: [1.5, 3.0], area: {full_frame: true}, action: generate}]
+  audio: []
+overrides: {steps: 8, seed: 42}

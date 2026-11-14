@@ -1,0 +1,12 @@
+version: 2
+prompt: "The bicycle begins to roll forward along the wall."
+duration: 3.0
+media:
+  - asset: bike-still.mp4
+    role: timeline
+    modality: video
+    at: {frame: 0}
+    range: [0.0, 3.0]
+    edit:
+      - {stream: video, during: ["1/6", 3.0], mask: {full_frame: true}, action: generate}
+settings: {steps: 8, seed: 42, turbo: {enabled: true}}

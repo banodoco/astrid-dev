@@ -1,0 +1,9 @@
+HEAD=cf49d41507f832e855630790b2e6907a11cc3947
+tree=3d92402fd907462ad56644a9b17be9776576f26c
+compose 941fca2a4 ancestor: yes
+VibeComfy=dba38f8644c46f652376f2cd5112ea161e40f09b
+1e8b9789e8ca487a1cc04dea22c1d2d0e341efe55689a62cec4b65ed4aab5968  /root/.cache/uv/sdists-v9/path/cb0db8c78d99a941/10cfy-NcZre4lD2C/astrid_runtime-0.1.0-py3-none-any.whl
+3.13.18 (main, Oct 26 2026, 14:08:19) [Clang 23.1.3 ]
+/home/user/wt/h3live/astrid/__init__.py
+/home/user/wt/h3live.env/venv/lib/python3.13/site-packages/runtime_protocol/__init__.py
+/home/user/wt/h3live.env/vibecomfy/vibecomfy/__init__.py

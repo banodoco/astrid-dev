@@ -1,0 +1,4 @@
+COMMAND: python3 check_plan.py dryrun/T5a-video-only.output.json dryrun/T5a-video-only.workflow.vibe.json 8 on
+PASS: steps=8 seed=42 turbo=on LoraLoaderModelOnly=True
+COMMAND: python3 check_plan.py dryrun/T5b-video-only.output.json dryrun/T5b-video-only.workflow.vibe.json 20 off
+PASS: steps=20 seed=42 turbo=off LoraLoaderModelOnly=False

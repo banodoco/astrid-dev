@@ -1,0 +1,145 @@
+{
+  "branch": "source_backed_v2v",
+  "capabilities": {
+    "audio_binding": "source_audio_from_source_video, audio_strength=0",
+    "connected_model_assets": [
+      "minimax_h3_audio_vae_fp32.safetensors",
+      "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "minimax_h3_video_vae_int8_convrot.safetensors",
+      "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+    ],
+    "edit_binding": {
+      "during_frames": [
+        0,
+        72
+      ],
+      "frame_load_cap": 72,
+      "refs": [],
+      "seed": 42,
+      "strength": 1.0
+    },
+    "generation_timing": {
+      "duration": 3.0,
+      "fps": 24,
+      "raw_frames": 73,
+      "requested_frames": 72,
+      "trim_tail_frames": 1
+    },
+    "mask_binding": "mask_0 (static image, spatial, crop disabled, channel red)",
+    "native_v2_branch": "source_backed_v2v",
+    "operation": "transform",
+    "output_contract": "muxed_av_full_timeline",
+    "overrides": [
+      "model",
+      "steps",
+      "seed",
+      "sampler",
+      "guidance"
+    ],
+    "public_generation": {
+      "internal_outputs": [],
+      "modality": "video",
+      "selectors": [
+        {
+          "ordinal": 0,
+          "required": true,
+          "selector": "main-0",
+          "variant_key": "original"
+        }
+      ]
+    },
+    "reference_order": [],
+    "references": 0,
+    "source_binding": "source_video",
+    "source_frame_fit": {
+      "audio_tail": "silence",
+      "internal_tail_frames": 1,
+      "source_window_frames": 72,
+      "video_mask_tail": "broadcast_static_mask",
+      "video_tail": "repeat_last_selected_frame"
+    }
+  },
+  "compilation_digest": "c68e4fe667b14625319e62316cac7a908913b783170902b6585afbf8051f6240",
+  "kind": "h3_av_compilation",
+  "limitations": [
+    "native masked edit is CPU-verified only; spatial mode on ref2va plus Turbo is unproven on GPU",
+    "one modifying video operation per request; static boxes, image masks or per-frame mask video",
+    "audio regeneration, polygon masks and per-operation adapters are unsupported",
+    "box-only regions bind in the graph; end-to-end execution still needs resolved mask propagation for composition paste-back",
+    "windows are limited to 15 s with no automatic chunking",
+    "zero-reference requests assume MiniMaxH3ReferenceToVideo accepts no ref images (unverified)"
+  ],
+  "managed_assets": {
+    "manifest": {
+      "assets": [
+        {
+          "binding": "mask_0",
+          "lineage": {
+            "filename": "resolved-mask.png",
+            "kind": "source_bytes",
+            "sha256": "sha256:5e4f279cfefea35e09bb67399fa13778cdd61c64547b94041f1b5ff282cc202b"
+          },
+          "member": "assets/5e4f279cfefea35e-resolved-mask.png",
+          "sha256": "5e4f279cfefea35e09bb67399fa13778cdd61c64547b94041f1b5ff282cc202b",
+          "size": 1025
+        },
+        {
+          "binding": "source_video",
+          "lineage": {
+            "filename": "b36a19b59f92a342.mp4",
+            "kind": "source_bytes",
+            "sha256": "sha256:9a6d66ba434ec40d7459b1fda0b469c1602fe3ea9e1bc02e1bf648873de10e97"
+          },
+          "member": "assets/9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+          "sha256": "9a6d66ba434ec40d7459b1fda0b469c1602fe3ea9e1bc02e1bf648873de10e97",
+          "size": 604364
+        }
+      ],
+      "kind": "vibecomfy_managed_assets",
+      "schema_version": 2,
+      "workflow_inputs": {
+        "guidance": 0.95,
+        "mask_0": "5e4f279cfefea35e-resolved-mask.png",
+        "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "prompt": "The bicycle frame is deep cobalt blue. Everything else is unchanged.",
+        "sampler": "res_multistep",
+        "scheduler": "simple",
+        "seed": 42,
+        "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+        "steps": 8
+      }
+    },
+    "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/managed-assets.zip",
+    "sha256": "909031ca150a6da0f4bb47b831b91fa6292f0a5f7401b8d09b70be35a6ee7e8b"
+  },
+  "profile": "h3_av.native.v1",
+  "request_digest": "f1b6f1012c87ad44d07143ff50c6f9e99960fc54e08cd16f52477190788dd1a5",
+  "schema_version": 1,
+  "status": "compiled",
+  "workflow": {
+    "source.json": {
+      "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/workflow-bundle/source.json",
+      "sha256": "7b2369a260e81bb58e97f2d511d645b82e7b31f18abe9b3f18fdf78f3e3741b5"
+    },
+    "workflow.py": {
+      "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/workflow-bundle/workflow.py",
+      "sha256": "df2987d1bf91a2132030c77f0e399cf59a3e7f91fbf7981f0b7ccb0b7c240597"
+    },
+    "workflow.vibe.json": {
+      "path": "/home/user/wt/h3live.env/tmp/astrid-job-maedodry/h3/plan/compile/workflow-bundle/workflow.vibe.json",
+      "sha256": "c4adfde2a8038a40a253da16c720b45aa940413c12ecfa58cf4dcd9527a2d925"
+    }
+  },
+  "workflow_inputs": {
+    "guidance": 0.95,
+    "mask_0": "5e4f279cfefea35e-resolved-mask.png",
+    "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+    "prompt": "The bicycle frame is deep cobalt blue. Everything else is unchanged.",
+    "sampler": "res_multistep",
+    "scheduler": "simple",
+    "seed": 42,
+    "source_video": "9a6d66ba434ec40d-b36a19b59f92a342.mp4",
+    "steps": 8
+  }
+}

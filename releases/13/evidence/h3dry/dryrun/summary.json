@@ -1,0 +1,47 @@
+[
+  {
+    "test": "T2-video-only",
+    "exit": 0,
+    "status": "ready",
+    "target_state": "pending_host_readiness",
+    "seed": 42,
+    "steps": 8,
+    "captured_job": "astrid-job-yei3lgdj"
+  },
+  {
+    "test": "T3-corrected",
+    "exit": 0,
+    "status": "ready",
+    "target_state": "pending_host_readiness",
+    "seed": 42,
+    "steps": 8,
+    "captured_job": "astrid-job-dit0dsiy"
+  },
+  {
+    "test": "T4",
+    "exit": 0,
+    "status": "ready",
+    "target_state": "pending_host_readiness",
+    "seed": 42,
+    "steps": 8,
+    "captured_job": "astrid-job-maedodry"
+  },
+  {
+    "test": "T5a-video-only",
+    "exit": 0,
+    "status": "ready",
+    "target_state": "pending_host_readiness",
+    "seed": 42,
+    "steps": 8,
+    "captured_job": "astrid-job-6unycrm9"
+  },
+  {
+    "test": "T5b-video-only",
+    "exit": 0,
+    "status": "ready",
+    "target_state": "pending_host_readiness",
+    "seed": 42,
+    "steps": 20,
+    "captured_job": "astrid-job-0878n_4i"
+  }
+]
