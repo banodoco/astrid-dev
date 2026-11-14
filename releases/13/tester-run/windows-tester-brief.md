@@ -1,6 +1,6 @@
 # Astrid on Windows: technical test run
 
-**Give this whole document to your coding agent.** It is written for the agent. You stay nearby to approve downloads.
+**Give this whole document to your coding agent.** It is written for the agent. It downloads large model files (about 32 GB for the core run) and deletes them at the end.
 
 | | |
 |---|---|
@@ -17,15 +17,14 @@ We want to know what works, what fails, and the exact error when it fails. A fai
 
 - **Done** means parts 1 to 4 and the clean-up. Part 5 is optional.
 - **If the install fails, or the installed commit is wrong:** post the output and stop. That is the result.
-- **If the person is away:** skip anything that needs their yes, and mark it skipped.
 - **Don't fight one cell for more than 15 minutes** (downloads don't count). Report it and move on.
 
 ## Ground rules
 
-1. **Ask the person before any download over 1 GB.** Say the size and where it goes.
-2. **Never install node packs or Python packages into the person's ComfyUI.** Adding model files is fine, with their yes.
+1. **Download what the test needs without asking each time,** and delete it at the end. Tell the person the total once, before you start, and check there is disk space. Never delete a model that was there before.
+2. **Never install node packs or Python packages into the person's ComfyUI.** Adding model files to it is fine.
 3. **Spend no money.** Never use a RunPod or other paid option, even if Astrid offers one.
-4. **Don't patch Astrid** to get past a problem. Report it instead.
+4. **Fix small Astrid problems that block you, and share the fix.** If a small change to Astrid's installed code gets a step working (a wrong path, a quoting bug, a missing Windows case), make it, keep going, and record the file and the exact diff in the report straight away. Keep fixes minimal, and say in the cell table which cells ran on patched code. If it needs more than a small change, report it and move on. Don't work around an Astrid problem by changing the person's ComfyUI.
 
 **Shell.** Use Windows PowerShell, not WSL. No admin rights are needed. If your shell doesn't keep variables between commands, or isn't PowerShell, put each block in a `.ps1` file and run `powershell -NoProfile -ExecutionPolicy Bypass -File <file>`. The install, the downloads and the video cells run longer than most command time limits: run them in the background and poll.
 
@@ -92,7 +91,7 @@ Record what the scan found against what is really there, and the `defaults` outp
 & $astrid generate fetch-models qwen-image-2.1-turbo t2i --comfy-url $url --apply <plan_sha256> --json
 ```
 
-Show the person the plan before the second command. If it is interrupted, run it again; it resumes.
+Record the plan (files, sizes, folder) in your list of added files. If the download is interrupted, run it again; it resumes.
 
 ```powershell
 # A: image from text
@@ -104,7 +103,7 @@ Show the person the plan before the second command. If it is interrupted, run it
 & $astrid generate audio --entry audio/ace_step_1_5_t2a_song --mode music --prompt "A calm instrumental piece with soft piano and light strings" --input "lyrics=[instrumental]" --seed 7 --placement $url --out C:\astrid-test\C --json
 ```
 
-Astrid can't fetch the music models. Run C once and record the message. If the person agrees to 14.7 GB more, fetch these four files from `Comfy-Org/ACE-Step-1.5` into the ComfyUI models folder, in the subfolders shown, and run C again:
+Astrid can't fetch the music models. Run C once and record the message. Then fetch these four files (14.7 GB) from `Comfy-Org/ACE-Step-1.5` into the ComfyUI models folder, in the subfolders shown, and run C again:
 
 `diffusion_models/acestep_v1.5_turbo.safetensors`, `vae/ace_1.5_vae.safetensors`, `text_encoders/qwen_0.6b_ace15.safetensors`, `text_encoders/qwen_4b_ace15.safetensors`
 
@@ -130,7 +129,7 @@ These need custom node packs, and video needs an exact ComfyUI environment. They
 - Video refuses a mismatched environment: ComfyUI `0.36.0`, torch `2.10.0+cu130`, `comfy-kitchen` `0.2.35`, `comfy-aimdo` `0.5.5`, started with `--use-ck-attention --disable-comfy-compiler`.
 - Start it as a background process with its output in a log file; the bundled `.bat` waits for a key press.
 - To reuse models already downloaded, point an `extra_model_paths.yaml` at the person's models folder.
-- Stop the person's ComfyUI while video runs (with their yes) and start it again afterwards; one GPU won't hold both.
+- Stop the person's ComfyUI while video runs and start it again afterwards; one GPU won't hold both. Tell the person first.
 - **Before the 53 GB video download,** run E once against the test ComfyUI. Continue only when the refusal is about missing models, not about versions.
 
 Do them in this order and stop where disk, memory or time runs out.
@@ -160,10 +159,10 @@ $t = "http://127.0.0.1:8199"
 ## Part 6: Clean up and report
 
 1. **Make the diagnostics bundle first;** it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\astrid-doctor.zip`.
-2. **Models added to the person's ComfyUI:** show them your list. Delete what they don't want to keep.
+2. **Delete every model this test added to the person's ComfyUI,** from your list. If the person asks to keep some, keep those and say which.
 3. **Uninstall Astrid** with the command from part 2, unless the person wants to keep the test build. Note anything left behind: the folders under `%LOCALAPPDATA%` that start with `Astrid`, the `Astrid Runtime` scheduled task, an `astrid` command.
 4. **Delete the test ComfyUI** and everything else on your list.
 
 Never delete a whole `models`, `custom_nodes`, `input` or `output` folder, and never delete a file you didn't add.
 
-**The final report** goes on the issue: the commit from part 2; the machine facts; the cell table; the problems, worst first; what was downloaded and what the clean-up removed or kept; the doctor bundle and the images from A and B attached. If you can export this agent session, attach it too, after checking it for tokens: it shows what really happened. Keep `C:\astrid-test` until we confirm on the issue that we have what we need.
+**The final report** goes on the issue: the commit from part 2; the machine facts; the cell table; the problems, worst first; every fix you made to Astrid, as a diff; what was downloaded and what the clean-up removed or kept; the doctor bundle and the images from A and B attached. If you can export this agent session, attach it too, after checking it for tokens: it shows what really happened. Keep `C:\astrid-test` until we confirm on the issue that we have what we need.
