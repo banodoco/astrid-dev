@@ -121,6 +121,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | The shipped census hard-codes counts (executors 54 to 49 at `r13/rows-packs-census`): derive the expected set from the pack manifests, keep a short allow-list for deliberate changes | cells-log.md 02:51 Sat; test_b2_integrated_closure.py |
 | Red-cell characterization tests pin another layer's message wording instead of an error code (cells narrow fix: `r13/sfx-red-ruling` 11f222e36, `_RED[("audio","sfx"),"attached"]`); characterize red cells by error code plus the missing-weight name | cells-log.md 05:15 Sat; machines ruling 05:10 |
 | Integration cells run under the 120 s timeout on a loaded box and share the worktree's `astrid/.packs.transaction.lock` between concurrent runs (load artefacts, no code): give each concurrent run its own pack-lock root | cells-log.md 05:15 Sat; gold-after.log |
+| Import cycles `generation ↔ pack` (pack/permissions.py:7 ↔ generation/availability.py:23) and `rendering ↔ timeline` (timeline/banodoco_schema.py:518 ↔ rendering/profile.py:13) are absent from import_cycles.json yet reproduce at R12 main 0e1543e0 (worker-env run, `make cycles`); move each shared contract to a dependency-neutral module. The third pair, `generation ↔ machines_cli`, is new at R13 and is fixed by machines, not deferred | test-manager run W71 (a4d893c8), /home/user/wt/r13-tests/runs/w71/report.md; orchestrator ruling 08:43 Sat |
 
 ## Outside pull requests (owner revisits; nothing closed)
 | Item | Source |
