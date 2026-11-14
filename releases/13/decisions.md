@@ -2030,3 +2030,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **W4 (730ae8089):** an Astra BLOCK that passes the gate. A delayed idle release can free VRAM under a newly admitted job (production HTTP worker lock bypassed; no incarnation pin). It goes to cells as round 2: hold admission exclusion through release, re-check after the lock, `expected_peer`, real-path race tests. **If not clean in one round, W4 moves to the next release** (local warm-down then only at host stop or `generate release`; RunPod unaffected).
   - custody-helpers d89e9fc5b is skipped: it only converts an import error into the real failure (Plan 39).
   - Batch A (lanes, comfy-source, timeout, W2) is proving as Codex worker W89.
+- **18:08: P4.7.1's hand-off sentence is updated everywhere** to "Next: set up generation with the astrid-setup skill." (italic in markdown doors).
+  - App: int/20-phase4-app a1a105c34 (168/168).
+  - Pinokio: int/20-phase4-pinokio 51ddd6c (mine; only my session can push there).
+  - The Agent side waits for the manager's final SHA.
+- **18:05: machines has every card with the test lane:** lanes 87b8a5850, W2 7e553baf7, W3 622ba8938 (consent hole closed), and httpj round 4 (the cap fence inside the paced operation, immediately before create, proven with a real pacing sleep).
