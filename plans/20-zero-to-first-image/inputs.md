@@ -57,7 +57,7 @@
 
 ### Phase 4: local-first (14 Nov 2026)
 
-**Scope decision:** Pending — Hannah gave the direction, but no phase 4 decision is recorded yet (OD1–OD8 below). Next: Hannah answers OD1–OD8 in the scope PR.
+**Scope decision:** Pending — Hannah gave the direction and decided OD7 and OD8 (14 Nov); OD1–OD6 are still open (below). Next: Hannah answers OD1–OD6 in the scope PR.
 
 - **Source.** Hannah asked the Release 13 advisor (session `session_011EzfW4KxQbf3mB7UevxVdh`) on 14 Nov 2026 to map the onboarding path, make it local-first and add it to Plan 20 as tasks. The orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) relayed the brief to this planner. Her words, verbatim:
   > "In general, it should probably point to RunPod, but it should only have like a one-line mention of RunPod, and the other general should just be focused on people who are running locally and setting it up."
@@ -69,7 +69,7 @@
   > "Setting up their defaults is an important thing. We give them defaults, but they might already have workflows on their machine that they recently edited. We should work with them to keep ours, offer to use theirs, biasing towards recent ones, or create new defaults."
 
   > "In any case, sending a link to astrid.haus to actually see the generated image."
-- **Draft.** The advisor's map and draft tasks are committed verbatim as [phase-4-local-first-draft.md](phase-4-local-first-draft.md) (astrid-dev commits `b7dd383`, then `a9b9488` with the later direction: one hand-off sentence at every door, one home per concept, defaults from the person's recent work and a link to the image). It answers her four questions: connecting is easy when ComfyUI runs on 8188, but saving the choice is clumsy. Running is not yet intuitive. It uses the existing models and generates through the person's server without changing it. None of this is proven live. The draft's sources were Agent `r13/compose` `176e5ba1`, App `d6ee9af`, Pinokio `d15c58b` and VibeComfy `r13/cells-vc-10`, through read-only explorer passes. Nothing was run.
+- **Draft.** The advisor's map and draft tasks are committed verbatim as [phase-4-local-first-draft.md](phase-4-local-first-draft.md) (astrid-dev commits `b7dd383`, `a9b9488` and `eec99b3`; the last records OD7 and OD8. `a9b9488` added with the later direction: one hand-off sentence at every door, one home per concept, defaults from the person's recent work and a link to the image). It answers her four questions: connecting is easy when ComfyUI runs on 8188, but saving the choice is clumsy. Running is not yet intuitive. It uses the existing models and generates through the person's server without changing it. None of this is proven live. The draft's sources were Agent `r13/compose` `176e5ba1`, App `d6ee9af`, Pinokio `d15c58b` and VibeComfy `r13/cells-vc-10`, through read-only explorer passes. Nothing was run.
 
 **Approach:** Extend the same skill in place; no new skill and no new plan. Phase 4 keeps phases 1–3 and narrows the RunPod and managed-engine text to one line each. Alternatives considered:
 
@@ -106,7 +106,7 @@ Re-checked for the three-phase plan: all nine still apply. D7 is decided by the 
 
 ### Phase 4 owner decisions (14 Nov 2026)
 
-All eight are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
+OD7 and OD8 are decided (below). OD1–OD6 are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
 
 | # | Decision | Options | Recommendation | Status |
 |---|---|---|---|---|
@@ -115,9 +115,9 @@ All eight are **Pending: owner to decide.** The recommendations are the advisor'
 | OD3 | D8 forbids live GPU tests. May P4.0 and P4.9 run on a local machine with ComfyUI and a GPU (no rental)? | Allow local runs, no rentals; or keep D8 as it is and prove on CPU fakes only | Allow local runs; rentals stay excluded. P4.0 does not start until this is decided | Pending |
 | OD4 | May Astrid download a missing model into the person's ComfyUI models folder, with a yes per file? | Not now (name the file and folder); or yes, per file, through VibeComfy's existing `fetch` | Not now. Revisit after the walk | Pending |
 | OD5 | Create a default project when none exists at the first generation, and say so? | Yes, named "My first project" like the App; or refuse, naming the command to create one | Yes | Pending |
-| OD7 | Does the path end with a link that opens the project in Astrid with the new image in it? Open point with Hannah: the link at the start (Connected, as today), at the end, or both | At the end only; or at both ends | Both: open at Connected as today, then a direct link to the image at the end. The advisor has asked her | Pending |
-| OD8 | Does the defaults step offer, per slot, the person's own saved workflows (most recent first), Astrid's default, or another entry? | Yes, one question per slot; or keep Astrid's defaults and mention saved workflows only | Yes | Pending |
-| OD6 | Timing | P4.0 now, everything else after release 13 publishes; or all after release 13 | P4.0 now, if OD3 allows it. All implementation waits for release 13 to publish | Pending |
+| OD7 | Where the link to Astrid comes | Once at the end; at Connected only; or both | — | **Decided by Hannah, 14 Nov 2026 (about 13:00 UTC)**, in the advisor session `session_011EzfW4KxQbf3mB7UevxVdh`, relayed by the advisor: "Maybe we should just send it at the end, pointing towards: you can click the generations thing at the bottom here to see this image in the app." Answer: once, at the end, opening the project with the image in it, plus one sentence pointing to the Generations pane. Reason: a person who installed through an agent may never have had Astrid open. The pane's real label and position are confirmed by P4.10, not assumed |
+| OD8 | The defaults step | Per slot: keep ours, use theirs, pick another or create a new one; or keep Astrid's defaults only | — | **Decided by Hannah, 14 Nov 2026**, same session and relay. Answer: one question per slot: keep Astrid's default (with its readiness), use one of theirs (most recently edited first), pick another entry, or create a new default from their own workflow (previewed first, with one undo command) |
+| OD6 | Timing | (a) P4.0 now, everything else after release 13 publishes; (b) as (a), but P4.1, P4.3, P4.6 and P4.11 start on branches from Agent `main` before release 13 (the advisor's suggestion, 14 Nov), landing only after it; (c) all after release 13 | (a). This planner's brief keeps all phase 4 implementation until release 13 publishes. (b) is cheaper in wall-clock time but rebases work onto a moving release, and P4.1's shape depends on the critique | Pending. Hannah has asked the orchestrator to farm the tasks out; until she picks (b), workers wait for release 13 |
 
 ## Source identities
 
