@@ -2,31 +2,19 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (11:00 UTC Sat 14 Nov): read this first
+## Now (12:00 UTC Sat 14 Nov): read this first
 
-**Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00.**
-- **Live:** the volume is now 300 GB (Hannah). **Round 6, the first h3 GPU run**, is under way on e51723152 (pod ciyddchaezkjs1): v2v (with the cold download), then video-edit, the i2v smoke and the 3 s bicycle.
-- **CI:**
-  - int/r13-fd5ff0d9 passes the ruff, mypy and collection gates; cycles are recorded as R12-era (62c2317e6).
-  - Last regression against R12: the vc10 pin should clear it.
-- **Must fix before the freeze:** 45 local-managed Lanes failures (14 R12 regressions on the generate path; the "align" event is missing). The test lane is root-causing them (W73).
-- **Machines:** volsize (network-volume capacity, plus inventory on errno 122) conflicted with compose. It's re-merging.
-- **Compose `e51723152`.**
-- **Money:** 1 pod, about $86.
-- **Hannah:** no R12 users, so no note is needed.
-
-**Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
-
-**The main risk is now CI.** No complete run yet. The test lane's card: 120 s per-test timeout with markers, plus a Lanes hard wall. Then freeze, and the binding comparison against R12.
-
-**Owner items (REVIEW):**
-- the required-update floor of 13;
-- astrid-dev#640;
-- backslash authority;
-- the test-shape change;
-- the low-disk fallback;
-- the music defaults;
-- the partial-cells fallback.
+**Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00 (SHAs by 03:45). The binding comparison is Sun 06:00–09:00, then the live repeat of all five cells plus the three h3 modes on the final head.**
+- **Live:** round 6 on e51723152 put **h3_av live-green in all three modes**: v2v, video-edit (pipeline), i2v smoke, and the 3 s 8-step bicycle i2v (faithful to the reference, ambience plus birds). The pod was released explicitly ($1.04). 0 pods; balance $85.38. Validation: evidence/live/validation-log.md and frames/r6-*. Samples were sent to Hannah.
+- **Compose head ac3dc93a6.** Merged since 11:00: h3-test-rows 681a56edb, i2v-attached-red f3cc1a80f, structural-node-id 1444896d0, machines cpupath 6d62f8503. **Both real R12→R13 regressions are now fixed** (test fixes only). The other Lanes flags are new-in-R13 tests or R12-failing (cited).
+- **Open before freeze:**
+  - machines' `lanes` card (the `align` family, 32 new-test ids; ETA after 12:10) and `httpj`;
+  - cells' h3cov (frame coverage 164 vs 108, about 13:00), plus the jobseam pinned-source fixture.
+  - The next CI freeze goes on the lanes SHA.
+- **Outside R13:** Plan 20 phase 4 (local-first onboarding) runs in full now with Claude subagents (Hannah 11:58).
+  - Manager session_011EzfW4R5yz8EETVbzZaLCF; planner session_011EzfVzrMeXfeWXM3LUepKQ; scope PR banodoco/astrid-dev#648.
+  - Owner decisions are all made: no local GPU; download models after one confirmation; always create the project.
+  - None of it merges into r13.
 
 ### Timeline to release: publish Saturday 14 Nov about 11:00 UTC
 | When (UTC) | Milestone | Owner | Status |
