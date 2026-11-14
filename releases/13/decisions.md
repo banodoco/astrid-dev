@@ -2064,3 +2064,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **h3_av investigation** → Fable plus Lunas: frames at positions, masks, a precise first frame with existing inputs, correct video-edit usage (our round 6 used a full-frame mask at 1 step, "not using it right"), what's tested, and mask-exercising live requests for the final repeat.
   - **Default project at setup**, not only at first generation → the phase 4 manager checks the App and setup and sizes the change.
   - The 4m35s warm image is far too slow (she expects tens of seconds). Fable's read is that per-job preparation and verification dominate; W2 measures the split and W3 removes the re-hash. The W3 default gets decided with that number.
+- **19:00: tester-prep answers** (machines, the phase 4 manager; read-only) relayed to the advisor.
+  - Q2: the doctor bundle's install-manifest carries the Agent SHA; doctor --json doesn't.
+  - Q3: the hosted R12 editor works with the R13 Runtime (same protocol and schema digest; no version gate).
+  - Q4: the tester manifest must say `release: 13`. An equal release is a silent repair, so moving to the real R13 later needs uninstall or `--update`.
+  - Q5: fetch-models plans only t2i and edit; audio and video models are manual on an attached ComfyUI.
+  - Q6: cancel exists (`run-astrid tasks cancel TASK_ID --project`), but the skills don't name it correctly. This passes the gate, so a one-commit docs fix goes on phase 4.
+- **Default project:** the App already creates "My first project" when opened with none (prepareStarterProject.ts:74-78), so Hannah's broken-state concern is covered. Setup-time `projects ensure-first` and a `generate scan --name` filter become phase 5 rows.
