@@ -21,13 +21,15 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | T6: size the lease to the full lifetime; key restart recovery on executor liveness and epoch (RB-4) | decisions.md:1276; briefs/lease-liveness/plan.md:79 |
 | The Runtime declares `lease_seconds` in its contract (option a, with a pin bump) | decisions.md:1317-1320 |
 | The Runtime exempts control capabilities from storage admission (option 1, with a pin bump). T4's control slot: deadlock #642, and #641 | decisions.md:1343-1349 |
-| Separate venvs for the comfy and runpod extras, or a common SDK floor | decisions.md:1324 |
+| Separate venvs for the comfy and runpod extras, or a common SDK floor. **This covers the VibeComfy re-vendor:** lifecycle on Linux keeps `runpod>=1.12`, so VibeComfy's `[comfy]+[runpod-launch]` lock can't resolve against comfyui's `requests<2.34` | decisions.md:1324 |
 | Fault-matrix rows (reply lost after commit, host stalled, release during a job, release after a failed job) and a slow-transport injector | briefs/lease-liveness/plan.md:80 |
 | The 57-minute CPU journey: bound its time (RB-1) | smells-out/2026-11-12-cpu-journey-takes-57-minutes.md |
 | CPU journey's remaining failures: host graph cleanup, the pod deadline, a cancelled machine not released, receipt unavailable vs not_collected | smells-out/2026-11-12-cpu-journey-remaining-failures.md |
 | The Agent reads `waiting_details`, which the pinned Runtime omits: pin a Runtime that sends it, or remove the read (RB-3/RB-4) | smells-out/2026-11-12-agent-reads-field-pinned-runtime-omits.md |
 | The integration lane's Runtime and lifecycle checkouts are unprovisioned (RB-1; Plan 39 AT1.4) | smells-out/2026-11-12-integration-lane-dependencies-unprovisioned.md |
 | Revise Plan 50: the scrubber, the ratchet and RB-4 are over-built (critique accepted) | decisions.md:677; smells-out/2026-11-12-plan-50-over-built.md |
+| The timeout failure RPC carries no `failure_diagnostic`; only `lease_lost` sends it (generic_host.py ~:11552). The receipt has it. A new contract, not R13 (machines, 04:25 Sat) | machines' message, 04:25 Sat |
+| T4 control slot: branch `r13/machines-t4` b9dcbce0f (#642 deadlock, #641 unacknowledged cancel). It conflicts with engine T1 on `test_fail_closed_g28.py::…[settlement]`. Journey row `test_runtime_silent_for_one_lease_then_release` is saved as `wt/runs/t4/journey-test-v2.patch`, and is blocked on the CPU fake pod serving the install-receipt and logs-manifest reads | machines' message, 04:25 Sat |
 | Volume pins an empty datacenter (no home yet; adjacent to RB-4) | smells-out/h2.md:28 |
 
 ## Next machines plan (M-series after R13)
