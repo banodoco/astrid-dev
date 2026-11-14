@@ -45,3 +45,54 @@ And one meta cause: **no budget.** Nothing counts round trips or asserts that ti
 - Custody and money bounds do not move: nothing here extends a claim or skips release; release only stops blocking the result.
 - A fix without a budget test is not finished.
 - One lane writes code (machines). The advisor and reviewers read.
+
+---
+
+# Design and cards (00:10 UTC Sun 15 Nov)
+
+**Target set by Hannah (23:16 Sat):** overhead on a warm same-model job under 5 s for Release 13; under 0.5 s as a follow-up. She approved the per-claim attestation.
+
+Sources: machines' findings note (G1 to G6) and four Astra reviews of compose ee14644a (host and transport; pod side; collection, release and the instrument; the direct route). Nothing below is measured except the table at the top.
+
+## What a warm job does today
+- **Before the pod is touched:** 7 or more provider calls (liveness, inventory, machine, GPU catalogue, rate) and four git processes, per job. Runtime admission, with 1 s pickup and status polls.
+- **Preparation:** 5 remote commands and a file read to re-confirm a pod that has not changed.
+- **Dispatch:** a directory, then each file uploaded and separately checksummed, then a start: about 12 operations. Every operation opens and closes its own connection through RunPod's proxy.
+- **On the pod:** four Python starts before generation, including a full catalogue listing. Then three complete installation audits (18 git processes and four environment probes each, importing torch), two model-verification passes, node restore, dependency preparation and doctor, with nothing to change.
+- **After generation:** six more Python starts to declare logs; the host fetches each file one at a time, re-verifies the installation, runs a reset job and waits for it, then publishes to the Runtime, and the caller's side hashes the output five times.
+
+None of this is slow by itself. It is the cold path, repeated, in series, over a transport that pays a connection per step.
+
+## Tier 1: what machines builds now (one lane, three workers)
+| Card | What | Removes |
+|---|---|---|
+| W-A | Per-claim attestation, as a set of attested workflow requirements (in flight) | The pod-side audits, the preparation status check, the collection-time re-verification |
+| W-B | One dispatch bundle (one upload, one start); one verified output bundle; log declarations in one process (in flight) | About 10 dispatch operations, N file fetches, five Python starts |
+| W-C | Result first, reset after, behind the existing `ready` gate; a reset failure fences the lease at the next start as today | 21 s from the caller's wait |
+| W-D | Validate the selected entry only; no catalogue listing on the pod | One CLI cold start |
+| W-E | One connection held for the job, not one per operation | A proxy handshake per operation |
+| W-F | Polls at 0.2 s: host pickup, caller status, ComfyUI history | Up to 3 s |
+| W-G | On an attested claim, one liveness call; identity, GPU and rate facts cached for the claim | 6 or more provider calls |
+| W-H | The instrument: P3 plus a pod whole-job span, the caller's clock started at process entry, and a budget test on `machine_case` with one shared counter of remote operations and process starts | Lets none of this come back |
+
+**Expected result: about 30 to 45 s of overhead** (my estimate from the step counts; unmeasured). It cannot reach 5 s: one pod-side Python start and import, the Runtime round trips and the remaining operations are several seconds each.
+
+## Tier 2: under 5 s. The direct route
+Once a claim is attested, a later job with attested requirements does not go through the pod's Astrid at all. The host compiles the workflow and talks to the pod's ComfyUI directly: upload inputs, submit, watch, download. The channel exists: the authenticated engine endpoint through the pod agent (`astrid/core/generation/engine_endpoint.py`, `engine_transport.py`; the lifecycle's engine bridge), tested but not used by the pod path (`packs/runpod/adapter.py:5`). No bundle, no pod process, and no pod Runtime state to reset.
+
+What must still hold, and how:
+- **Lease, cost and deadline checks, the invocation fence, idle timers:** unchanged, on the host. The watchdog deadline update is today a Python command on the pod; it needs an acknowledged update through the agent.
+- **Requirements:** the host compares the workflow's requirements with the attested set. Anything new takes the full path.
+- **Logs and receipts for every generation:** the host writes the job record and reads the engine log slice through the agent.
+- **Cancellation and containment:** as the attached path does it; never resubmit after an uncertain acceptance.
+- **Clean-up:** inputs and outputs for that prompt, through the agent, after delivery.
+
+Astra's verdict, which I share: under 5 s is plausible for small outputs; twelve hours is credible for a prototype, **not for a safe release**, because it changes custody paths (watchdog, fences, cancellation) that this release has refused to ship unproven. Estimate: 8 to 12 product files, a lifecycle-agent change, and at least one live round.
+
+## Tier 3: under 0.5 s
+A pooled connection, completion events over a websocket (the bridge refuses upgrades today), compiled workflows and schema cached per claim, the output streamed in the same exchange, and settlement and delivery that hash once. A plan of its own, after Tier 2 is measured.
+
+## Honest answer on the cutoff
+- **By 13:00 UTC Sunday:** Tier 1, measured live. Roughly a sixfold improvement, to about 30 to 45 s.
+- **Under 5 s:** not safely by 13:00. A prototype behind a setting by Sunday night is realistic; proven and reviewed, Monday or Tuesday.
+- **Hannah's choice:** move the cutoff until Tier 2 is proven, or ship Tier 1 in Release 13 and Tier 2 as the next release within days.
