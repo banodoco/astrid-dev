@@ -1515,3 +1515,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - CI: regressions remain, and the binding table is due 04:00.
   - **Video i2v, v2v and edit** were in generation.md's scope table but were dropped de facto on 12 Nov ("video only if 5090 stock appears quickly"). Not run live. CI shows wan-2.2 video entries as "not qualified". Asked Hannah whether to run them as a diagnostic.
   - **h3_av:** H3 (Hannah, 11 Nov) puts it immediately after publication, not before. No change unless she says so.
+- **03:00: binding table on int/r13-c9636ed4** (CI 8/8, including shard 6; Lanes 4 of 5, with 3/4 cut by the 150-min wall).
+  - **Totals:** 140 regressions and 431 new-test-failing.
+  - **Regressions by owner:** machines' claim and custody rows about 90; machines' engine rows about 50; cells about 12.
+  - **New-test-failing, of the 431:**
+    - timeline: 173 ids, of which 133 are preexisting against a cited local R12 run (#637) and 40 are being checked;
+    - tests/scripts: 85 + 4 preexisting (Plan 39);
+    - the rest: M2, engine and claim_runpod.
+  - **Six audio ids:** five pass. `[False-music]` is cells', via the ace_step default.
+  - **Stopped my timeline worker** (preexisting). Merged lanes-wall 814b88f71 (Lanes wall 150→240), giving compose 21dacd488, for the 06:00 freeze.
+  - **Machines did not add a second manager.** Its four workers are briefed to finish by 05:30.
