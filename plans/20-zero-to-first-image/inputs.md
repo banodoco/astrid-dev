@@ -109,6 +109,8 @@ Rejected outright: none. Overridden later by the orchestrator: moving P4.12 to P
 - **Decisions:** all eight are decided (14 Nov).
 - **Still needs a go:** merging to Agent `main` or any release branch, and any GPU or paid run (D8, OD3).
 - **Release 13 (14 Nov, about 14:12, relayed by the phase 4 manager):** Hannah pulled phase 4 into release 13 and approved pushing `int/20-phase4-r13`, which is pushed at `78161ad8`. `int/20-phase4` is retired, because it is wholly inside that line. The phase now lands with release 13, through the release 13 candidate, not after it.
+- **Process note (14 Nov):** `3cf6da2e` was pushed before its proof finished, because the push was chained after `tail`, not after pytest's exit status. The manager flagged it at once, and the handover stayed at `6c34aaf8` until `cf49d415`. Pushes are now gated on the exit status.
+- **Final release 13 handover (14 Nov, about 18:39):** Agent `int/20-phase4-r13` `cf49d41507f832e855630790b2e6907a11cc3947`, App `int/20-phase4-app` `a1a105c34`, Pinokio `int/20-phase4-pinokio` `51ddd6c`. P4.7.1's wording shipped by the orchestrator's ruling, not by Hannah's answers. That includes the hand-off sentence, now "Next: set up generation with the astrid-setup skill.", and she may revise it.
 - **Records:** the manager cannot push to astrid-dev, so this planning session (`session_011EzfVzrMeXfeWXM3LUepKQ`) records its landings, proof and rulings in these files. `run.yaml` is local and git-ignored, so the manager keeps it.
 - **Advisor:** `session_011EzfW4KxQbf3mB7UevxVdh`.
 - **Manager's run state, 14 Nov, about 12:05 UTC** (sent by the manager, recorded here):
