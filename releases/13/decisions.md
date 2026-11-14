@@ -2001,3 +2001,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - W6 measures with the setting ON.
   - Device numbers on a travelling network volume are best-effort (deferred note).
   - **Hannah may instead choose default-on, which means rewriting the contract clause. Asked.**
+- **17:02: hostwedge 1505a379c: Astra BLOCK (test lane W84).**
+  - (1) fallback spool bases are in-memory only (orphaned custody after restart);
+  - (2) storage reclaim ignores the uid/mode rule;
+  - (3) path validation by pathname, not descriptor; ancestors unchecked;
+  - (4) blocked or reconciling attempts aren't shown to keep their fence, or to release the managed session or engine.
+  - **Steer to cells:** drop the random fallback (the base is in private user state, so a squat isn't possible). An unsafe base becomes a visible host-wide refusal. Validate by descriptor (O_NOFOLLOW, fstat, ancestors). Apply the uid rule in reclaim. (4) keeps the fence and releases the session or engine on replay, with tests.
+  - Not merged. Round 3 goes through machines' read, then the test lane and Astra.
