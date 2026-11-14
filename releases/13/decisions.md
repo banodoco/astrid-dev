@@ -1814,3 +1814,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - The advisor sends the full draft straight to the planner.
 - **Sequencing:** no implementation before R13 publishes. P4.0 (a local walk, evidence only) waits on Hannah's OD3, because D8 forbids live GPU tests.
 - This doesn't touch the R13 freeze.
+- **11:48: merged two cells test-only branches,** both proved by the test lane. They update tests for the deliberate h3 change 5fe9ed7a0; they are test fixes, not exceptions.
+  - r13/h3-test-rows 681a56edb → compose dd8ea822f: 5 ids fixed, 0 regressions. `[image/edit-auto]` is order-dependent in the test lane's env; it passes alone on both commits.
+  - r13/i2v-attached-red f3cc1a80f → compose a371431db: video/i2v-attached and video/i2v-runpod pass.
