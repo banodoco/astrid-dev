@@ -2014,3 +2014,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Batch for the test lane:** lanes 87b8a5850 → comfy-source 2451d9ca6 → timeout c0da1b2d0 → W3 → W2.
   - Then W6 live, with trust_unchanged on.
   - Open: cells' W4 (local idle release), hostwedge round 3, httpj round 4, and the phase 4 rented-machine seed test.
+
+## Sat 17:52: advisor dive 7. Nothing merged in 2 h; three review loops. Rulings to converge.
+1. **The batch is split:** lanes 87b8a5850 → comfy-source 2451d9ca6 → timeout c0da1b2d0 → W2 ec264e87b, proved and merged WITHOUT W3. W3 follows on its own.
+2. **W2 is measured live as soon as it's in compose** (t2i, t2i, edit; `verify_models` seconds). If verification is under about 30 s of the 4m35s floor, W3 drops from R13; if it's most of it, Hannah decides the default with the number in hand.
+3. **hostwedge round 4 is the last.** It keeps own-executor scope, the foreign skip with a diagnostic, bounded retry to a visible state, and Astra item 4 (fence kept, session or engine released: custody). Descriptor validation, ancestor checks and the reclaim uid rule become deferred rows.
+4. **httpj round 4** keeps the saved-cap recheck before the create POST (money). The cold release for old journals is cut (no users, so no old journals) and becomes a deferred row.
+5. **Phase 4:** fix 3cf6da2e's four failures; no more R4 items. The advisor's P2 is fixed before merge: asset_gaps.py:423's fixed `.astrid-partial` name could delete a person's file, so it becomes an exclusive unique temp name. asset_gaps.py:328 becomes a deferred row. **P4.7.1 ships the RECOMMENDED wording now;** it changes after if Hannah answers otherwise.
+6. **New review gate (my orchestrator rule; it's Hannah's weighting, so she's told):** an Astra finding BLOCKS only if it names a money, custody or generate-path failure a user can hit in R13. Everything else becomes a deferred row.
+7. **R13 scope is closed:** new walk findings go to phase 5.
+8. **The test lane farms:** one worker per queued branch, launched together.
+9. **Me:** fewer hands-on calls. No more branch edits or worker launches for lanes; managers do it.
