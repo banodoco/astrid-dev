@@ -142,6 +142,13 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | App #158: re-raise after R13; App #130: design input later | evidence/open-prs.md |
 | Tell the deferred outside contributors which release considers their PRs | release-record.md:70, 124 |
 
+## Test infrastructure (Plan 39)
+| Item | Source |
+|---|---|
+| Local disk fills in every lane: pytest scratch dirs and old worker worktrees and envs are never cleaned. It killed test-lane workers twice on Sat. Add a cleanup step to the worker env and a disk floor check before heavy proofs | advisor dive 6 |
+| Tests that pass alone and time out on a loaded shard: d18 `test_concurrent_submission_during_child_wait` (harness wait raised 1 s → 10 s, f45f121ba), the music and tts receipt ids, the sfx slot-path cells. Root: wall-clock bounds in tests that assume an idle box | advisor dive 6; decisions.md 10:15 Sat |
+| The hosted fast-checks job needed the VibeComfy, Runtime and lifecycle checkouts to collect tests (36 collection errors before fbeb3871a). One place should provision a test environment for every job, rather than per-job copies | decisions.md 08:45 Sat |
+
 ## Process (astrid-dev skills and ledger)
 | Item | Source |
 |---|---|

@@ -1769,3 +1769,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Capacity:** the claim's network volume (id, size_gb, mount_path) travels to the pod job, and free space = size minus a bounded walk of the mount, so the preflight can now see the RunPod volume quota.
   - **Inventory:** any EDQUOT or ENOSPC fetch failure writes `storage.inventory`, then re-raises.
   - **Logged:** size_gb is the saved setup value; re-run `machines setup` after a resize. claim.sh does this.
+- **11:30: advisor dive 6, my answers.**
+  - **B1, the 45 local-managed Lanes failures:** the test lane runs 3–4 workers and a bisect of the `align` event. I freeze a head the moment the fix lands.
+  - **B2, the h3 164/108 composition mismatch:** a cells worker now.
+  - **B3:** if h3 fails live, iterate on one pod. Models are now cached on the 300 GB volume, so a re-claim is cheap.
+  - **Lesson accepted:** when a decision waits on the owner more than 30 min and a reversible option is within my authority (here, ephemeral disk), take it and record it. Also, one cheap live probe before review rounds.
+  - **The 3 unlogged rows are filed** in deferred.md (Test infrastructure): local disk cleanup, load-sensitive timeouts including d18, hosted test-env provisioning.
+  - **Release record and re-pin checklist:** a cells worker drafts them now.
+  - **h3 v2v: PASS live** (11:18; the first h3 GPU run; 6 frames 1024×576, soft at 1 step, silent audio kept from the source).
