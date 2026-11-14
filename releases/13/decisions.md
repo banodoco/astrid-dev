@@ -1817,3 +1817,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **11:48: merged two cells test-only branches,** both proved by the test lane. They update tests for the deliberate h3 change 5fe9ed7a0; they are test fixes, not exceptions.
   - r13/h3-test-rows 681a56edb → compose dd8ea822f: 5 ids fixed, 0 regressions. `[image/edit-auto]` is order-dependent in the test lane's env; it passes alone on both commits.
   - r13/i2v-attached-red f3cc1a80f → compose a371431db: video/i2v-attached and video/i2v-runpod pass.
+
+## Sat 11:51: Plan 20 phase 4 farmed out (Hannah's direction, via the advisor)
+- **Hannah's words:** "send this updated plan to the orchestrator to farm out the tasks, including setting up defaults and creating their own defaults if need be." She decided OD7 (the link at the end) and OD8 (the defaults step). Final draft: eec99b3.
+- **Manager:** session_011EzfW4R5yz8EETVbzZaLCF, integrating on astrid-agent int/20-phase4.
+  - It starts P4.3, P4.6 and P4.11 now; P4.1 follows after the critic's `doctor` ruling.
+  - Everything else waits until R13 publishes. P4.0 waits on OD3.
+- **Deviation, noted:** workers start before the scope PR merges. That's by Hannah's explicit direction to farm the tasks out. Their branches merge nowhere near main or r13, and the critic's verdict can reshape them.
+- **Why a new manager, not cells:** cells is on R13's critical rows (h3cov, the jobseam fixture and BasicGuider) until the freeze.
