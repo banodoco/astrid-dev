@@ -1849,3 +1849,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **12:05: fd5ff0d9's unit shards** (CI 43584934648) vs 2f45835a: 302 failing ids vs 306 (5 cleared, 1 new). Both regression-flagged ids are explained:
   - `[video/i2v-runpod]`: the fixture PNG, already fixed by h3-test-rows in compose dd8ea822f.
   - `test_no_systemd_second_stop…idempotent`: the test used pid 123 against the real process table, which collides on a busy runner. Merged r13/tests/installer-fake-pid e9a81cb56: the pid is now above pid_max and the assertions are unchanged. That's root-fixed, not a flake exception.
+- **12:07: h3 "frame coverage 164 vs 108" resolved; it was a test fixture, not the product.** Merged r13/h3-compose-coverage 16c338f55.
+  - The cause: the fake clip used an unbounded lavfi colour source plus `-shortest`, and newer FFmpeg emits surplus frames. The source is now bounded with `:d=`. Expected 108 unchanged; production validation unchanged.
+  - The failing id is proved (fails before, passes after). The full-file run was interrupted (NO-RESULT), so the next CI head is the full proof.
+  - Deeper cause: unbounded lavfi sources across fixtures. Cells adds it to Plan 39 (root or logged).
