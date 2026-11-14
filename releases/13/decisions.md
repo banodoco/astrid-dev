@@ -1974,3 +1974,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Product fixes: the engine_custody owner marker is published once under a lock (a launcher/child race), and the trust-mode result exposes public fields only.
   - It merges together with the test lane's lanes-comfy-source workflow. The test lane proves both paired against 941fca2a4, with an Astra read of the engine_custody change.
   - W3 handles the `file_fact(verification=)` wrapper interaction.
+- **16:45: phase 4 handover SHA bea57349a** (contains compose 941fca2a4; VibeComfy dba38f86).
+  - R4.F, R4.G (stock seed shape), R4.H and R4.I (open_url on MCP, CLI and tasks_show via one helper) are all in.
+  - 452 passed; 3 base failures.
+  - The re-walk passed all 11 checks: Run A took 1.5 min and 6 commands (walk 1: about 4 min and 21); Run B took 0.3–0.7 min and 3 commands.
+  - The test lane runs the delta proof.
+  - The MCP parity census tests fail on compose too; the test lane classifies them, then the phase 4 manager updates the census for both in one change.
+  - **P4.9r.1: `seed_used` = 0 in receipts is likely real** (my live W1 data root shows 0 too). The phase 4 manager traces it.
+  - The apply path end to end (P4.9r.3) becomes part of the final live repeat's fresh-download step.
