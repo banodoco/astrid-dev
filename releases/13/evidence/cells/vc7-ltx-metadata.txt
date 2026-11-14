@@ -1,0 +1,38 @@
+URL: https://huggingface.co/Lightricks/LTX-2.3-fp8/resolve/main/ltx-2.3-22b-dev-fp8.safetensors
+Method: HEAD (one request, no redirect followed, no auth header, no weight bytes)
+Exit: 0
+Raw response headers:
+HTTP/1.1 200 Connection Established
+
+HTTP/2 302 
+content-type: text/plain; charset=utf-8
+content-length: 1108
+location: https://us.aws.cdn.hf.co/xet-bridge-us/69aa086a8bf763d7e27cd33e/94d11e676b844dd40d74196f059f8b6fdc0fa5c6a07ed9db72d91be06910640a?user_id=public&response-content-disposition=inline%3B+filename*%3DUTF-8%27%27ltx-2.3-22b-dev-fp8.safetensors%3B+filename%3D%22ltx-2.3-22b-dev-fp8.safetensors%22%3B&xip=QfFTrZtZMTA&X-Xet-Cas-Uid=public&Expires=1794637261&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjlhYTA4NmE4YmY3NjNkN2UyN2NkMzNlLzk0ZDExZTY3NmI4NDRkZDQwZDc0MTk2ZjA1OWY4YjZmZGMwZmE1YzZhMDdlZDlkYjcyZDkxYmUwNjkxMDY0MGFcXD91c2VyX2lkPXB1YmxpYyZyZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3bHR4LTIuMy0yMmItZGV2LWZwOC5zYWZldGVuc29ycyUzQitmaWxlbmFtZSUzRCUyMmx0eC0yLjMtMjJiLWRldi1mcDguc2FmZXRlbnNvcnMlMjIlM0ImeGlwPVFmRlRyWnRaTVRBJlgtWGV0LUNhcy1VaWQ9cHVibGljIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJFcG9jaFRpbWUiOjE3OTQ2MzcyNjF9fX1dfQ__&Signature=MEUCIQD-uvPLigkzh50sY-9zaNlbWnWN1Y26l%7EKvkzuIJIfefQIgHH4npXZzps1BVNsHYDH4VBKIMU6x9N4vTnCUYy6wzq4_&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F&Hash-Algorithm=SHA256
+date: Sat, 14 Nov 2026 05:21:01 GMT
+x-powered-by: huggingface-moon
+x-request-id: Root=1-6af7efbd-401667634aece41f78e028e4
+ratelimit: "resolvers";r=2968;t=232
+ratelimit-policy: "fixed window";"resolvers";q=3000;w=300
+cross-origin-opener-policy: same-origin
+referrer-policy: strict-origin-when-cross-origin
+access-control-max-age: 86400
+access-control-allow-origin: https://huggingface.co
+vary: Origin, Accept
+access-control-expose-headers: X-Repo-Commit,X-HF-Warning,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash,RateLimit,RateLimit-Policy
+x-repo-commit: 91eda216f820e5ecb3d17dc9fe3b7cdaf56b587d
+accept-ranges: bytes
+x-hub-cache: HIT
+x-linked-size: 29145431166
+x-linked-etag: "28606c5b5a06ce56f896d4dfcb20f212739e07a68fbe48e53638188449d26450"
+cache-control: no-store
+x-xet-hash: 94d11e676b844dd40d74196f059f8b6fdc0fa5c6a07ed9db72d91be06910640a
+link: <https://huggingface.co/api/models/Lightricks/LTX-2.3-fp8/xet-read-token/91eda216f820e5ecb3d17dc9fe3b7cdaf56b587d>; rel="xet-auth", <https://cas-server.xethub.hf.co/v1/reconstructions/94d11e676b844dd40d74196f059f8b6fdc0fa5c6a07ed9db72d91be06910640a>; rel="xet-reconstruction-info"
+x-cache: Miss from cloudfront
+via: 1.1 018bc8ac3ac3155b3d0b36b861811052.cloudfront.net (CloudFront)
+x-amz-cf-pop: IAD55-P8
+alt-svc: h3=":443"; ma=86400
+x-amz-cf-id: STmf1rdu7iXTAmUxB61TKlU-Or10b0Jy8KUcalwVcchENMhdPypBwQ==
+strict-transport-security: max-age=31536000
+
+
+Stderr:

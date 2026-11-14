@@ -2,21 +2,16 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (05:00 UTC Sat 14 Nov): read this first
+## Now (08:00 UTC Sat 14 Nov): read this first
 
 **Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00.**
-- **Live:** round 4 on M2 passed all five cells plus a real bicycle edit, every output validated.
-- **h3 is blocked on the full network volume.** Machines' volume card is due about 05:30: a storage preflight with "needed and free", plus a `storage.inventory` run log. Then I re-claim.
-  - Merged since: h3 evidence logs (552747f19) and the root fix for exact h3 durations (c5e4f7cc2).
-  - First frame is a follow-up.
-- **CI:**
-  - int/r13-65b1d45c COMPLETE: 141 regressions, most fixed on branches merged since.
-  - int/r13-05826d63 frozen 04:55 (custody, engine, lease, ir-bridge, h3 evidence); results about 07:30.
-  - Compose is now `055a18ad0`.
-- **In flight:**
-  - machines: the 4 M2-consequence tests (the MCP paid-controls one gets a root fix) and the volume card;
-  - cells: h3 plain-inputs, musicslot, sdkpub, catrows, gold, jobseam, sfx tests and census.
+- **CI:** int/r13-6e1c34e2 took regressions from **141 to 1** (the i2v-runpod selection id, expected to clear with vc8 or h3 plain-inputs). int/r13-a4d893c8 is frozen 08:00 (with the collection gate).
+- **Live:** round 4 on M2: all five cells plus the bicycle edit validated. **h3 is blocked on volume space**, awaiting Hannah's storage decision (the resize to 300 GB was refused by the session's permission classifier).
+- **Before Sun 03:45:**
+  - cells: h3 plain-inputs, the vc8 pin (the LTX regression) and engine_facts;
+  - machines: the volume card (round 7 after review).
 - **Money:** 0 pods, $86.87.
+- **Open with Hannah:** storage, and the R12 v1 note.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 

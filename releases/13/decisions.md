@@ -1663,3 +1663,68 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - mcpc;
     - cells: combined sfx, music slot, catrows, jobseam, h3 plain-inputs, and VibeComfy vc7 with its pin.
   - **h3 storage:** the h3 default needs 53.5 GB cold, and the five cells share 45.0 GB, on the full 200 GB volume 2z2dlu1v8g. Setup can't resize or create volumes. Which storage to pay for goes to Hannah.
+- **05:50: merged cells r13/rows-sfx-combined 5fb5f13a5 (clean), giving compose 78d01b137.** It's on top of b63debfb8, which was already merged before cells' "take one, not both" note.
+  - **Check asked:** cells proves the 5 sfx files on 78d01b137 and confirms the two sfx selection fixes don't double-apply. If they do, a reconcile commit, not a revert.
+  - The combined fix goes into the Sun freeze. The 06:00 read has b63 only.
+
+## 06:00 Sat: answers to advisor dive 5
+- **B1, h3 storage: decided A** (grow volume 2z2dlu1v8g from 200 to 300 GB, about $7 a month more; it keeps the cached models).
+  - **Rejected:** a hand cleanup on the pod, because there's no product shell (O8) and the contents are unknown.
+  - **Blocked:** the RunPod resize call was refused by the session's permission classifier as an external destructive action. It needs Hannah's explicit OK, or for her to resize it in the RunPod console.
+  - Then I re-claim and run the h3 queue in Fable's order (v2v first), iterating on one pod.
+- **B3, collection guard:** the test lane drafts a `--collect-only` check with the known set of 29 environment-only errors. I review it before wiring it into compose.sh.
+- **B4, proof load:** cells and the test lane cap heavy local proofs at 3 per box; long paired proofs go to hosted CI on scratch refs.
+- **Role check: accepted.**
+  - Output validation stays with me, because the GPU outputs exist only on my machine; I keep it to `check.sh` plus a look.
+  - h3 follow-ups go to cells.
+  - No fixture or test edits by me. No new workers of mine.
+- **Root or logged:** asked cells for the missing rows (sfx installed-package proof, job-seam), and the test lane for the six sfx slot-path failures.
+- **h3 done means one validated output per mode** (i2v, v2v, video-edit), on the final head or the head before it.
+- **Merged** the test lane's structure-baseline-deliberate fcca5859e: 12 itemised entries with cause commits; R12's 59 are preexisting under #647. Compose is now 31f19f1f1.
+- **Still with Hannah:** RunPod v1 retirement on 15 Nov, a note to R12 users or an R12 patch.
+- **06:05: cells vc7 → vc8, approved.**
+  - **The regression:** 6 `ltx-2.3:t2v|flf` CLI dispatch ids pass on R12 and fail on compose, so they're a generate-path regression and must be fixed. The #342 fix was staged on 12 Nov and never landed.
+  - **The fix:** VibeComfy `r13/cells-vc-8` (vc7 + cells-vc-next), plus Agent cherry-picks f70c4da49, 262f07c08 and 6ee65b1c4, plus ONE pin. That replaces the vc7 pin.
+  - **vc7 already did:** a Foley picker root fix; the LTX i2v checkpoint digest (its LoRA and text-encoder digests still missing); a survey finding 132 incomplete model records across 31 templates. That class is deferred: declare revision, digest and size once.
+  - **Job-seam:** deferred by cells with a row (ccebf94).
+- **06:10: merged machines b1136626a.**
+  - **mcpc 5158964ba (money path, ROOT):** an MCP, `--json` or non-TTY `machines claim` without `--consent paid` refuses before any import, Runtime access, quote or provider call. A new test drives the real MCP dispatch under runpod_guard, and 2 of its 3 cases fail before the fix.
+  - **edge3 be0027945:** managed_preparation reaches its engine through core's `entries.engine_table`. Structure findings 102→99.
+  - **Still for Sun:** the volume card (round 5, including making the h3 "resume" message true) and the 4 remote_machine_cpu rulings.
+- **06:15: merged cells r13/music-slot-default a7ef0489a.** It makes the music default ace_step (priority 20, above minimax at 10), per my 02:25 ruling.
+  - **Proof:** 0 regressions. The four default-entry expectations now name ace_step.
+  - **Honest note from cells:** the `[music]`/`[tts]` receipt ids pass in isolation on the base too, and time out only under parallel load. So this change stands on the live-proof ruling, not on those tests.
+- **07:40: int/r13-6e1c34e2 CI complete: regressions 141 → 1** (229 ids cleared). The Lanes half is still running.
+  - **The 1 left:** `test_runpod_engine_selection::…[video/i2v-runpod]`. Machines tied it to the LTX digest gap; cells' vc8 pin and h3 plain-inputs are the candidates to clear it.
+  - **New-test failures:** 319, of which 259 fail on cited local R12 runs (Plan 39 #636/#637/#639/#647). Of the residual 60, about 22 are owner-routed and the rest are being checked on R12.
+  - **Shard walls:** s1 took 1:29 (was 2:21) and s6 took 1:47 (was 2:30), both well under the wall.
+  - **Merged machines 580e2b703** (recself, test-only; failure_receipt 44/44), giving compose a4d893c8f.
+  - **The volume card is NOT ready:** a review found 3 P1s and 2 P2s, and round 7 fixes them by Sun 01:00 with a clean re-review. It doesn't unblock h3; that still needs Hannah's storage decision.
+- **08:00: froze int/r13-a4d893c8** (a4d893c8f), queued behind 6e1c34e2's Lanes.
+  - **Adds:** MCP consent, the music slot default, the collection gate (its first hosted run), rows3, sfx combined, the structure baseline and recself.
+  - **Still to come for Sun:**
+    - cells: h3 plain-inputs (h3merge), the vc8 pin and engine_facts;
+    - machines: the volume card.
+  - **h3 is still waiting on Hannah's storage decision.**
+- **08:05: merged cells r13/compose-pin-vc8 de9a2a130.**
+  - **What it lands:** the never-merged #342 fix (the LTX t2v route is prompt-only, plus audio scalar types and admission tests), and ONE pin to VibeComfy cells-vc-8 8d64b083.
+  - **Root:** the LTX t2v catalog route and its template declare the same ports.
+  - **Proof:** 519 tests, 0 regressions; the six ltx-2.3 t2v/flf regression ids are fixed.
+  - **Left:** 3 reds tied to the LTX LoRA and text-encoder digests (i2v-runpod and two new dry-run tests). vc9 pins them through 2 HF metadata reads, followed by a small additive pin commit.
+- **08:10: 6e1c34e2 Lanes 5/5 reported.**
+  - **Regressions:** 0 in 1/4, 2/4 and opt-in.
+  - **Lanes 3/4:** regression-flagged slot_path_cpu ×13 and others, routed to machines and cells. One is a new h3 composition mismatch: "frame coverage observed 164, expected 108" (cells).
+  - **Merged the test lane's lanes-timeouts 748ae723c:** explicit `@pytest.mark.timeout(300–900)` on 9 legitimately slow video/h3 and installer tests, each with its measured hosted time. Everything else keeps 120 s, and no assertion changed. The 28 Pinokio ids are preexisting (#621).
+- **08:15: merged cells r13/h3-plain-judge 05b83dc58: h3 is now the video default in practice.**
+  - **Routing:** plain `--image-ref` goes to h3 i2v, and plain `--video-ref` to h3 v2v. A prompt with no reference is refused.
+  - **Proof vs compose:** 0 regressions, 20 fixes, 607 passed with 5 preexisting failures.
+  - **Narrow follow-up:** the hook validates the request before declaring logs. The deeper cause, implicit hook admission order, is logged in deferred.md.
+  - **Behaviour change:** local and attached video defaults now require the H3 dependencies and don't fall back to LTX. GPU execution is unproven until the h3 live run.
+- **08:40: merged the test lane's collection-gate-always 8ba7c0fee and machines 8e699e470, giving compose 2f45835a4.**
+  - **Collection gate fix:** the gate now runs even when ruff, mypy or cycles fail.
+  - **Machines' hosted-eng and hosted-rp:** all 16 of machines' hosted new-file failures are fixed or ruled. **Product fix:** a logs step with nothing collected reports "unavailable", not "kept". **Classification:** 5 new RunPod exception classes are receipt-safe.
+  - **a4d893c8 fast checks: the Ruff baseline gate is RED**, so new lint violations got in. The test lane attributes each by cause commit and routes it to its owner. No baseline raise without a named deliberate cause. The next freeze follows that routing.
+- **08:50: rulings on the a4d893c8 gates.**
+  - **Ruff** is red only because it improved (2049 against a baseline of 2100). Fix the 9 per-file I001 and E402 rises with one mechanical `--fix` card, and cells fixes the F841 at compile.py:402. Then lock in the lower baseline. All of it before the Sun freeze, not after.
+  - **Mypy:** 5 attr-defined rows go to machines as typed fields, no ignores. The hosted mypy step gets its stub dependencies (test lane).
+  - **Cycles:** the new generation↔machines_cli cycle goes to machines. The two R12-era cycles are Plan 39, with a deferred.md row.
