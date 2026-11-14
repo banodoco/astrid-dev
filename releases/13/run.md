@@ -2,17 +2,19 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (17:00 UTC Sat 14 Nov): read this first
+## Now (18:00 UTC Sat 14 Nov): read this first
 
-**No fixed freeze time. Freeze when every item is proven. Then: the frozen head's CI comparison; the live repeat (all five cells plus three h3 modes, more steps for edit and v2v, one FRESH download through fetch-models --apply, warm reuse timing with `models.trust_unchanged` on); then Hannah's go.**
-- **Compose head 941fca2a4.** Ready, in test lane proof:
-  - **batch 1:** lanes round 5 (with the file_fact passthrough) → comfy-source 2451d9ca6 → W3 round 3 (opt-in `models.trust_unchanged`, per error-model.md:90);
-  - **hostwedge** 1505a379c (machines OK; Astra W84 and paired W85 running);
-  - custody-helpers d89e9fc5b;
-  - **phase 4** bea57349 (delta W82). Then R4.J (MCP census: audio and failure on MCP, distinct tool names) and R4.K (seed_used=0, the receipt bug) on its branch.
-- **Still building:** machines httpj round 4 (pacing recheck; cold release for old journals), W2 (phase timings), W3 round 3; cells W4 (local idle release).
-- **Live:** 0 pods; $84.22. W1 baseline: same-pod t2i 4m35s.
-- **Waiting on Hannah:** the P4.7 wording list; W3 default (off, per the contract, unless she rewrites the clause); merging PR banodoco/astrid-dev#648.
+**No fixed freeze time; freeze when proven. R13 scope is CLOSED (17:52). Review gate: an Astra finding blocks only for a user-hittable money, custody or generate-path failure in R13. The checklist after the freeze: evidence/live/final-live-checklist.md.**
+- **Compose head 941fca2a4.** Proving now, one worker per branch:
+  - **batch A**, lanes 87b8a5850 → comfy-source 2451d9ca6 → timeout c0da1b2d0 → W2 ec264e87b (W89). Then **W2 is measured live** (verify_models seconds), and that decides W3.
+  - **phase 4**: the manager's next SHA (3cf6da2e + R4.L + R4.M + the recommended P4.7.1 wording). App via the P4.8 worker; Pinokio's sentence via me.
+- **Last rounds:**
+  - hostwedge round 4 (cells, kept as built);
+  - httpj round 4 (machines, saved-cap recheck only; about 19:00);
+  - W3 round 4 (opt-in; the omitted projection becomes False);
+  - W4 round 2 (cells, the idle-release race; deferred to the next plan if not through both reads at the freeze).
+- **Live:** 0 pods; $84.22.
+- **Waiting on Hannah:** the W3 default (best decided after the W2 number), the PR banodoco/astrid-dev#648 merge, and optionally the P4.7 wording (the recommendations ship meanwhile) and the review gate.
 
 ### Timeline
 No fixed clock (Hannah, 14:05 Sat): freeze when every item is proven, then the CI comparison, the live repeat (evidence/live/final-live-checklist.md), and publish only on her go. The earlier timeline and stream tables were removed at 17:55 Sat as stale; the history is in decisions.md.
