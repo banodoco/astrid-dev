@@ -110,6 +110,15 @@ Rejected outright: none. Overridden later by the orchestrator: moving P4.12 to P
 - **Still needs a go:** merging to Agent `main` or any release branch, and any GPU or paid run (D8, OD3).
 - **Records:** the manager cannot push to astrid-dev, so this planning session (`session_011EzfVzrMeXfeWXM3LUepKQ`) records its landings, proof and rulings in these files. `run.yaml` is local and git-ignored, so the manager keeps it.
 - **Advisor:** `session_011EzfW4KxQbf3mB7UevxVdh`.
+- **Manager's run state, 14 Nov, about 12:05 UTC** (sent by the manager, recorded here):
+  - **Integration branch:** Agent `int/20-phase4`, cut from `main` `0e1543e`. It stays local until the first batch lands, then is pushed once per batch while release 13's freeze shares the runners.
+  - **Environment:** `agent-setup.sh` ENV-PASS. Python 3.13.18, runtime `42ae24a`, vibecomfy `e65f494`, lifecycle `f294881`. Smoke: `tests/packs/test_vibecomfy_local.py`, 11 passed.
+  - **Workers:** Claude subagents on route N. The manager noted a Codex fallback, which waits on Hannah's sign-in after her device code lapsed. The orchestrator's later instruction (Claude subagents, no Codex sign-in) is the one in force.
+  - **Baseline failures on Agent `main` `0e1543e`, not this project's work:** 15 tests fail before any phase 4 change.
+    - `tests/test_sdk_public_surface.py`: 14 `test_generate_*` and `test_video_*` tests (134 run, 120 pass).
+    - `backends/test_qwen_21_turbo.py::test_generate_and_h3_share_vibecomfy_pin` (1). The scoped run of `test_generate_align`, `test_comfy_model_resolution` and `test_qwen_21_turbo` gives 75 pass and 1 fail, that same test.
+    - The logs stay with the manager unless the owner wants them committed.
+  - **Manager's rulings, accepted by the orchestrator:** P4.11 is split into 11a and 11b. Task branches are cut from `main`, with minimal diffs in files that release 13 rewrites. P4.0 walks Agent `r13/compose` `a371431` (detached, read-only), not `main`, because `main` lacks the fake and the skill text phase 4 rewrites. Walk 1 is therefore the release 13 path. Both rulings are marked REVIEW for R4.
 
 **Request to Plan 34:** one row in Plan 34's real-GPU proof: the first image on a person's own running ComfyUI through the phase 4 skill, from the skill URL to the image in the Generations pane, with minutes and commands counted. Plan 20 runs no GPU (D8, OD3). Plan 34's owner adds the row; this plan does not edit Plan 34's files.
 
