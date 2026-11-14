@@ -1,186 +1,281 @@
-# Astrid on Windows with your own ComfyUI: tester run
+# Astrid on Windows: technical test run
 
-**Give this whole document to your coding agent.** It is written for the agent. You stay nearby to answer its questions and approve downloads.
+**Give this whole document to your coding agent.** It is written for the agent. You stay nearby to approve downloads and answer its questions.
 
 | | |
 |---|---|
 | Your GitHub issue | `{{ISSUE_URL}}` |
-| Build under test | `{{BUILD_NAME}}`, Agent commit `{{AGENT_SHA}}` |
+| Build under test | `{{BUILD_NAME}}`: Agent commit `{{AGENT_SHA}}` |
 | Install manifest | `{{MANIFEST_URL}}` |
-| Time needed | About 1 hour for parts 1 to 4. Parts 5 and 6 are optional and can take longer |
+| You need | Windows 10 or 11, an NVIDIA GPU, a working ComfyUI, PowerShell, git |
+| Disk | 25 GB for the core run; about 95 GB for everything |
+| Time | 1 to 2 hours for the core run; longer with the video cells |
 
-## What this run is for
+## What this is
 
-Astrid has never been run on a real Windows machine with a real person's ComfyUI. You are the first. We want to know two things:
+A technical check that a pre-release of Astrid installs and generates on a real Windows machine with a real GPU. Nobody has done that yet. You install one exact build, connect it to ComfyUI, and run Astrid's default workflows one by one: two image cells, three audio cells, three video cells.
 
-1. Does a fresh install lead you, without outside help, to a first image made on this person's own ComfyUI?
-2. Which of Astrid's default workflows run here, and when one can't, does Astrid say clearly why and what to do?
+Everything runs from the command line through your agent. **The browser editor is not part of this test;** skip any step that asks you to open astrid.haus.
 
-**A problem is a result, not a failure of the test.** We learn most from the places where you had to guess, search, retry or work around something. Record every one.
+We are not judging the design. We want to know **what works, what fails, and the exact error when it fails.** A failure is a useful result. Don't spend more than 15 minutes fighting any one cell: report it and move on.
 
 ## Rules
 
-1. **Do not change the person's ComfyUI.** Don't restart it, update it, install node packs into it, or move its models, unless the person says yes to that specific action. Astrid itself should never do these things; if it does or tries to, report it.
-2. **Ask before any download over 1 GB**, and say the size and the folder first.
-3. **Spend no money.** Don't rent machines, and don't use any RunPod or paid-provider option, even if Astrid offers one.
-4. **Don't fix Astrid.** Don't edit its code or settings files to get past a problem. Report the problem, then use a workaround only if the product or our agent on the issue gives you one.
-5. **Keep secrets out of the issue.** No tokens, keys or passwords. Replace the Windows user name in paths with `<user>`.
-6. **Use native Windows PowerShell,** not WSL and not Git Bash.
-7. **Follow the product first.** For setup, do what Astrid's own output and its `astrid-setup` skill tell you. This document deliberately does not list the setup commands. If you can't tell what to do next from the product, that is a finding: report it, then ask on the issue.
+1. **Keep a ledger of everything this test adds to the machine** (part 1), and remove all of it at the end (part 7), except what was already there.
+2. **Ask the person before each download over 1 GB.** Say the size and the folder.
+3. **Don't change the person's own ComfyUI environment.** Adding model files to it is fine, with their yes. Installing custom node packs or Python packages into it is not: those go into the separate test ComfyUI in part 5.
+4. **Spend no money.** Never use a RunPod or other paid option, even if Astrid offers one.
+5. **Don't edit Astrid's code or settings files** to get past a problem. Report it. Use a workaround only from Astrid's own help or from our agent on the issue.
+6. **No secrets in the issue:** no tokens or keys. Replace the Windows user name in paths with `<user>`.
+7. **Native Windows PowerShell only.** Not WSL, not Git Bash. No admin shell is needed.
+8. **Don't update Astrid during the run.**
 
-## How to report
+All Astrid commands below use the launcher. Define it once per PowerShell window:
 
-Post to the GitHub issue as you go, not only at the end. Our agent watches the issue and will answer questions there.
+```powershell
+$astrid = "$env:LOCALAPPDATA\Astrid\run-astrid.cmd"
+```
 
-- **One comment at the start** with the machine facts (part 1).
-- **One comment for each friction**, at the moment it happens, in this shape:
+If a command below is rejected, run the same command with `--help`, use what the help says, and report the difference. The commands were written from the source code, not from a Windows run.
+
+## Reporting
+
+Post to the GitHub issue as you go. Our agent watches it and answers there.
+
+- **A start comment** with the machine facts from part 1.
+- **A comment whenever something fails or surprises you:**
 
   ```
-  FRICTION <number>: <one line>
-  Step: <which part of this document, or which Astrid step>
-  What I did: <the exact command or action>
-  What happened: <the exact output or error, trimmed to the relevant lines>
-  What I expected:
-  How I got past it: <workaround, or "blocked">
-  Severity: blocker / slowed me down / confusing / cosmetic
+  PROBLEM <number>: <one line>
+  Step: <part and cell>
+  Command: <exact command>
+  Output: <the exact error, trimmed to the relevant lines>
+  Task ID: <if there is one>
+  Got past it: <how, or "blocked">
   ```
 
-- **A question for our agent:** start the comment with `QUESTION:`. Carry on with any step that doesn't depend on the answer.
-- **One comment at the end** with the final report (part 7).
+- **`QUESTION:`** at the start of a comment asks our agent. Carry on with whatever doesn't depend on the answer.
+- **A final comment** with the report from part 8.
 
-Friction includes: an unclear message, a command that didn't work as documented, a wrong path for Windows, a step where you had to read source code, a long wait with no sign of progress, a result you didn't expect, and anything the person found odd.
+## Part 1: Record the machine and start the ledger
 
-## Part 1: Record the machine
+Post in the start comment:
 
-Post these in your first comment:
-
-- Windows version, and PowerShell version (`$PSVersionTable.PSVersion`).
-- GPU model and VRAM (`nvidia-smi`), and the driver version.
-- Free disk space on the drive that holds the ComfyUI models folder.
-- How ComfyUI is installed: portable build, the ComfyUI desktop app, Stability Matrix, Pinokio, a git checkout, or something else. Its version, the address and port it listens on, and whether it is running now.
-- Roughly how many custom node packs and saved workflows it has.
-- Whether Astrid was already installed, and how (the install script, Pinokio, or a source checkout).
+- Windows version; PowerShell version (`$PSVersionTable.PSVersion`).
+- GPU, VRAM and driver (`nvidia-smi`); system RAM; free disk space.
+- ComfyUI: how it is installed (portable build, desktop app, Stability Matrix, Pinokio, git checkout), its version, its address and port, and the path of its folder.
+- Whether Astrid was already installed, and how.
 - Which agent you are (name and model).
 
-Make sure ComfyUI is running before part 3.
+Create a folder for this test, for example `C:\astrid-test`, and in it:
+
+```powershell
+$test = "C:\astrid-test"; New-Item -ItemType Directory -Force $test | Out-Null
+$comfy = "<path to the person's ComfyUI folder>"
+Get-ChildItem -Recurse -File "$comfy\models" | Select-Object FullName, Length | Export-Csv "$test\models-before.csv" -NoTypeInformation
+Get-ChildItem -File "$comfy\input", "$comfy\output" -Recurse | Select-Object FullName | Export-Csv "$test\io-before.csv" -NoTypeInformation
+```
+
+Start `ledger.md` in that folder. Add a line each time you download or create something outside `C:\astrid-test`: what, where, how big, and whether it replaced anything.
 
 ## Part 2: Remove any existing Astrid, then install the test build
 
-**Remove.** If Astrid is installed, tell the person that this deletes their Astrid workspace (projects made in Astrid) and ask. Their ComfyUI, its models and its workflows are not touched. Then run:
+**Remove.** If Astrid is installed, tell the person this deletes their Astrid workspace (projects made in Astrid), and ask. Their ComfyUI is not touched.
 
 ```powershell
 & ([scriptblock]::Create((irm https://astrid.haus/install.ps1))) --uninstall --delete-data
 ```
 
-If Astrid was installed through Pinokio, use Pinokio's own Uninstall for it instead. Then check that these are gone, and report anything left behind:
+If it was installed through Pinokio, use Pinokio's own Uninstall for it instead. Then check, and report anything left behind:
 
-- the folders `%LOCALAPPDATA%\Astrid`, `%LOCALAPPDATA%\Astrid Runtime` and `%LOCALAPPDATA%\Astrid Installer`;
-- the scheduled task named `Astrid Runtime` (`Get-ScheduledTask -TaskName "Astrid Runtime"`);
-- an `astrid` command on PATH (`Get-Command astrid`).
+```powershell
+Test-Path "$env:LOCALAPPDATA\Astrid", "$env:LOCALAPPDATA\Astrid Runtime", "$env:LOCALAPPDATA\Astrid Installer"
+Get-ScheduledTask -TaskName "Astrid Runtime" -ErrorAction SilentlyContinue
+Get-Command astrid -ErrorAction SilentlyContinue
+```
 
-Leave `%LOCALAPPDATA%\Astrid GPU` alone if it exists, and tell us it was there.
+Leave `%LOCALAPPDATA%\Astrid GPU` alone if it exists; just tell us.
 
-**Install the test build.** In a new PowerShell window:
+**Install.** In a new PowerShell window:
 
 ```powershell
 $env:ASTRID_INSTALL_MANIFEST_URL = '{{MANIFEST_URL}}'
 & ([scriptblock]::Create((irm https://astrid.haus/install.ps1))) --yes --autostart on --command on --skills on --skill-copies off
 ```
 
-Record how long it took and the last 20 lines of output.
+Report the time taken and the last 20 lines of output.
 
-**Confirm the build.** Run `astrid doctor --json` (if `astrid` is not found, use `& "$env:LOCALAPPDATA\Astrid\run-astrid.cmd" doctor --json`, and report that as a friction). Check that the Agent commit it reports is `{{AGENT_SHA}}`. If you can't find the commit in the output, or it differs, stop and post a `QUESTION:`.
+**Confirm the build.** This is the check that matters most: without it we don't know what you tested.
 
-**Do not update Astrid during the run,** even if something offers to.
+```powershell
+Get-ChildItem "$env:LOCALAPPDATA\Astrid\versions\*\manifest.json" | ForEach-Object { $_.FullName; (Get-Content $_ -Raw | ConvertFrom-Json) | Select-Object release, @{n='agent';e={$_.agent.sha}}, @{n='runtime';e={$_.runtime.sha}}, @{n='vibecomfy';e={$_.vibecomfy.sha}} }
+```
 
-## Part 3: Set up generation, guided only by the product
+The Agent commit must be `{{AGENT_SHA}}`. If it is anything else, **stop** and post a `QUESTION:`. Then:
 
-The installer's last lines should tell you what to do next. Do that. It should lead you to the `astrid-setup` skill, and the skill should take you through:
+```powershell
+$astrid = "$env:LOCALAPPDATA\Astrid\run-astrid.cmd"
+& $astrid doctor --json
+& $astrid status --json
+```
 
-1. finding the running ComfyUI;
-2. saving it as the place Astrid generates;
-3. showing what is ready and what is missing;
-4. choosing defaults: Astrid's, or the person's own recent workflows;
-5. offering to download missing models for Astrid's default, with a list of files, sizes and the folder, before anything is written;
-6. a first image;
-7. a link to see the image in the Astrid editor.
+Post both outputs, with the user name replaced.
 
-For each of the seven, report: did the product lead you there by itself (yes / with guessing / no), the exact commands you ran, and how long it took. Open the final link with the person and report whether the image is there.
+## Part 3: Connect ComfyUI
 
-Two choices to make with the person:
+Make sure the person's ComfyUI is running.
 
-- **The model download.** If Astrid offers to download its default image model and the person has the disk space and bandwidth (it is about 17 GB), say yes: it tests the download path on Windows. If they prefer not to, decline and let Astrid use one of their own workflows. Report which you did.
-- **The Hugging Face token.** If a download asks for one, the person provides it in their own terminal. It must never appear in the issue.
+```powershell
+& $astrid generate scan --json
+```
 
-## Part 4: The person's own workflows
+If it finds nothing, pass the port: `& $astrid generate scan --ports 8188,8000,<port> --json`. Report what it found against what is really there. Then save the address and look at what is ready:
 
-This is the part we know least about.
+```powershell
+& $astrid generate settings set placement http://127.0.0.1:<port>
+& $astrid generate defaults --json
+& $astrid generate list --json
+```
 
-1. Ask Astrid to list the person's saved ComfyUI workflows. Report how many it found against how many they have, and whether the most recent are listed first.
-2. With the person, pick two they use often: one simple, one complicated. Run each through Astrid **by name**.
-3. Offer to make one of them the person's default for its kind, then generate once using only the default.
+Post the `defaults` output. It shows, for each default, whether this ComfyUI is ready for it and why not.
 
-For each workflow report: its custom node packs, whether it ran, how the result compares with running it in ComfyUI directly, and the exact message if Astrid refused it.
+## Part 4: Core cells on the person's own ComfyUI
 
-## Part 5: Astrid's default workflows (the matrix)
+These three need only model files, no custom node packs. `$url` is the ComfyUI address.
 
-Run each cell below through Astrid's generation skill, on the person's own ComfyUI. **Use the skill to work out the command**; post the exact command you ended up with. The cells chain: each uses an earlier output, so no test files are needed.
+```powershell
+$url = "http://127.0.0.1:<port>"; Set-Location $test
+```
 
-Many cells will not run on a given machine, because the ComfyUI lacks a node pack or a model, or the GPU is too small. That is expected. **For those, what we need is the exact message Astrid gave, and whether it told you precisely what is missing and what to do.** Don't install node packs to make a cell pass unless the person wants that workflow anyway; if you do, report every step it took.
+**Models for A and B** (about 17 GB, three files, shared by both). Astrid plans the download and writes nothing until you confirm:
 
-| # | Cell | Input | Prompt and settings |
+```powershell
+& $astrid generate fetch-models qwen-image-2.1-turbo t2i --comfy-url $url --json
+```
+
+Show the person the files, sizes and folder. On yes, run it again with `--apply <plan_sha256 from the plan>`. Then run the same pair for `qwen-image-2.1-turbo-edit edit`; it should find nothing left to fetch. Add the files to the ledger.
+
+**Cell A, image from text:**
+
+```powershell
+& $astrid generate image --entry qwen-image-2.1-turbo --mode t2i --prompt "A red bicycle leaning against a white wall in soft morning light" --width 768 --height 768 --seed 7 --placement $url --out "$test\A" --json
+```
+
+**Cell A2, the same again** with `--seed 8` and `--out "$test\A2"`, straight after A. Report both wall times; the second should be clearly faster.
+
+**Cell B, image edit,** using the image A produced:
+
+```powershell
+& $astrid generate image --entry qwen-image-2.1-turbo-edit --mode edit --prompt "Repaint the bicycle frame a deep cobalt blue; keep the wall, light, shadows and everything else unchanged" --edit "<the image from A>" --placement $url --out "$test\B" --json
+```
+
+**Cell C, music.** It uses nodes built into ComfyUI. Astrid can't fetch its models, so first run it and report the exact message:
+
+```powershell
+& $astrid generate audio --entry audio/ace_step_1_5_t2a_song --mode music --prompt "A calm instrumental piece with soft piano and light strings" --seed 7 --placement $url --out "$test\C" --json
+```
+
+If it reports missing models and the person agrees to 6.3 GB more, download these three files from the Hugging Face repository `Comfy-Org/ACE-Step-1.5` into the ComfyUI models folder, keeping the subfolder names, then run it again:
+
+- `diffusion_models/acestep_v1.5_turbo.safetensors`
+- `vae/ace_1.5_vae.safetensors`
+- `text_encoders/qwen_0.6b_ace15.safetensors`
+
+For every cell, record the row described in part 6.
+
+## Part 5: The remaining cells on a separate test ComfyUI
+
+Speech, sound effects and the video cells need custom node packs with their own Python packages, and the video cells need a specific recent ComfyUI. Installing those into a working ComfyUI can break it and can't be cleanly undone. So these cells run on a **second, throwaway ComfyUI inside `C:\astrid-test`**, which is deleted at the end.
+
+Before anything else in this part, run each cell once against the person's own ComfyUI and post the exact refusal. We want to see what Astrid says when the nodes are missing. Then:
+
+1. **Install a portable ComfyUI** into `C:\astrid-test\ComfyUI` (the official Windows portable build for NVIDIA). The video cells were proven on ComfyUI 0.36.0; use that version if you can, and report the version you used. Check it has the video model's nodes after starting it: `http://127.0.0.1:8199/object_info/MiniMaxH3ReferenceToVideo` must return a definition.
+2. **Share the models already downloaded:** add an `extra_model_paths.yaml` pointing at the person's ComfyUI models folder, so nothing is downloaded twice.
+3. **Start it on another port,** for example 8199, and leave the person's ComfyUI as it is (stop it if the GPU can't hold both).
+4. **Install the node packs** each cell needs into `C:\astrid-test\ComfyUI\custom_nodes`, at the commit given, with the portable build's own Python (`python_embeded\python.exe -m pip install -r requirements.txt`), then restart the test ComfyUI.
+5. **Download each cell's models** into `C:\astrid-test\ComfyUI\models`, keeping the subfolders, with the person's yes each time.
+6. Point Astrid at it for these cells with `--placement http://127.0.0.1:8199`.
+
+Do the cells in this order, and stop where disk, VRAM or time runs out. Say where you stopped.
+
+| Cell | What | Node packs (commit) | Models |
 |---|---|---|---|
-| A | Image from text | none | "A red bicycle leaning against a white wall in soft morning light", 768×768, seed 7 |
-| B | Image from text, again | none | The same, seed 8, straight after A. Report both times: the second should be clearly faster |
-| C | Image edit | the image from A | "Repaint the bicycle frame a deep cobalt blue; keep the wall, light, shadows and everything else unchanged" |
-| D | Speech | none | "The weather is calm and clear this morning." |
-| E | Music | none | Defaults, 30 seconds, an instrumental prompt of your choice, seed 7 |
-| F | Video from an image | the image from A | "camera slowly pushes in, warm afternoon light shifts across the wall, breeze stirs the dust; quiet street ambience, distant birds, no speech or music", 3 seconds, 8 steps, seed 7 |
-| G | Sound effects for a video | the video from F, or any short clip | "Soft footsteps on a quiet path, with a light breeze in the background" |
-| H | Video from a video | the video from F, or any short clip | "Keep the composition; shift the scene to dusk with long shadows", 8 steps, seed 42 |
-| I | Video edit | the video from F, or any short clip | "Gently brighten the scene, keeping the composition" |
+| D | Speech | `1038lab/ComfyUI-QwenTTS` (`d8122a8b`) | 2.5 GB: Hugging Face `Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice`, the whole repository, into `models/TTS/Qwen3-TTS/Qwen3-TTS-12Hz-0.6B-CustomVoice/` |
+| E | Video from an image | `seitanism/ComfyUI-H3-Motion-Context-MultiRef` (`361624fb`), `Kosinkadink/ComfyUI-VideoHelperSuite` (`4ee72c06`) | 53.5 GB: Hugging Face `Comfy-Org/MiniMax-H3`, five files (below) |
+| F | Video from a video | as E | as E |
+| G | Video edit | as E | as E |
+| H | Sound effects for a video | `BobRandomNumber/ComfyUI-HunyuanVideo_Foley` (`b94f7aca`) | 10.6 GB: `tencent/HunyuanVideo-Foley`, `google/siglip2-base-patch16-512`, `laion/larger_clap_general`, under `models/hunyuan_foley/` |
 
-Order: A, B and C first. Then D and E. F to I are the video cells: they need about 53 GB of models, recent ComfyUI nodes and a large GPU, so run them only if the person has the disk space and at least 24 GB of VRAM, or already has the models. Otherwise try F once without downloading anything, to capture the message, and skip the rest.
+The five video model files, each into the subfolder shown:
 
-Record one row per cell:
+- `diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors` (21.0 GB)
+- `text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors` (27.1 GB)
+- `vae/minimax_h3_video_vae_int8_convrot.safetensors` (2.8 GB)
+- `vae/minimax_h3_audio_vae_fp32.safetensors` (0.6 GB)
+- `loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors` (2.0 GB)
+
+The video cells have only been run on a 32 GB RTX 5090. On a smaller card they may run slowly or run out of memory. Try cell E anyway if the person has the disk space, and report exactly what happens; that is one of the things we most want to learn. If the model file names Astrid asks for differ from the ones above, trust Astrid's message and tell us.
+
+```powershell
+$t = "http://127.0.0.1:8199"
+# D, speech
+& $astrid generate audio --entry audio/qwen3_tts_custom_voice --mode tts --prompt "The weather is calm and clear this morning." --placement $t --out "$test\D" --json
+# E, video from the image A made: 3 seconds, 8 steps
+& $astrid generate video --entry h3 --mode i2v --prompt "camera slowly pushes in, warm afternoon light shifts across the wall, breeze stirs the dust; quiet street ambience, distant birds, no speech or music" --image-ref "<the image from A>" --frames 72 --steps 8 --seed 7 --placement $t --out "$test\E" --json
+# F, video from the video E made
+& $astrid generate video --entry h3 --mode v2v --prompt "The same scene at dusk, with long warm shadows" --video-ref "<the video from E>" --steps 8 --seed 42 --placement $t --out "$test\F" --json
+# G, video edit of the video E made
+& $astrid generate video --entry h3 --mode video-edit --prompt "Gently brighten the scene, keeping the composition" --video-ref "<the video from E>" --steps 8 --placement $t --out "$test\G" --json
+# H, sound effects for the video E made
+& $astrid generate audio --entry audio/hunyuan_video_foley --mode sfx --prompt "Soft footsteps on a quiet path, with a light breeze in the background" --video-ref "<the video from E>" --placement $t --out "$test\H" --json
+```
+
+If a cell needs an input by another name, `& $astrid generate describe --entry <entry> --mode <mode>` lists the inputs it declares.
+
+## Part 6: What to record for each cell
 
 ```
-Cell | Result | Wall time | Command | Notes
+Cell | Result | Wall time | Peak VRAM | Task ID | Notes
 ```
 
-where Result is one of:
+Result is one of:
 
-- **ran**: an output was produced. Look at it or listen to it, and say whether it matches the prompt;
-- **refused, clear**: Astrid named what is missing and what to do, and you could have acted on it;
-- **refused, unclear**: it refused, and you couldn't tell what to do from the message alone;
-- **failed**: an error, a hang, or an out-of-memory. Include the task ID and the output of `astrid tasks show <TASK_ID> --json`;
-- **skipped**: say why.
+- **ran:** an output file exists. Open it. Say whether it matches the prompt, and for video and audio whether it plays;
+- **refused:** Astrid declined before generating. Paste the message, and say whether it named exactly what is missing;
+- **failed:** an error, a hang or an out-of-memory. Paste the error and attach `& $astrid tasks show <TASK_ID> --project <project> --json` and `& $astrid tasks logs <TASK_ID> --project <project>`;
+- **skipped:** say why (disk, VRAM, time, the person declined a download).
 
-For timings, Astrid has only been measured on a rented RTX 5090, where a first image took about 13 minutes including preparation and the next about 4 and a half. On your own running ComfyUI we expect much less. Tell us what you see.
+Keep every output file in `C:\astrid-test` until the report is posted. Attach the image from A, the image from B, and one video if there is one.
 
-If a generation shows no progress for 10 minutes, don't kill ComfyUI. Report it as a friction with the task ID, try Astrid's own cancel, and move on.
+If a generation shows no progress for 10 minutes: `& $astrid tasks cancel <TASK_ID> --project <project>`, report it as a problem, and move on. Don't kill ComfyUI unless cancel fails; if you must, say so.
 
-## Part 6: Optional extras
+## Part 7: Clean up
 
-Only if there is time and the person is willing:
+Do this after the final report is drafted, and include the result in it.
 
-- Stop ComfyUI, ask Astrid for an image, and report what it says. Start ComfyUI again and retry.
-- Restart Windows, then generate an image without doing any setup again.
-- Run a generation from the Astrid editor in the browser instead of from the agent.
+1. **Models added to the person's ComfyUI:** list the files now under `$comfy\models` that are not in `models-before.csv`. Show the person the list. Delete them, unless the person wants to keep some; record which were kept.
+2. **Inputs and outputs:** the same comparison for `$comfy\input` and `$comfy\output` against `io-before.csv`. Delete only the new files.
+3. **The test ComfyUI:** stop it, then delete `C:\astrid-test\ComfyUI`.
+4. **Astrid:** ask the person whether to keep the test build. The default is to remove it, because it is not a release:
 
-## Part 7: Final report
+   ```powershell
+   & ([scriptblock]::Create((irm https://astrid.haus/install.ps1))) --uninstall --delete-data
+   ```
 
-Post one closing comment with:
+   Then repeat the three checks from part 2 and report what is left. Also report whether Astrid's skills are still present in your agent's skills folder.
+5. **Everything else in the ledger.** Remove it, or say why it stays.
+6. Keep `C:\astrid-test\ledger.md` and the output files until we confirm on the issue that we have what we need. Then delete the folder.
 
-1. **Summary table:** for each of parts 2 to 5, done / partly / blocked, and the time it took.
-2. **The matrix table** from part 5.
-3. **Top five frictions,** worst first, by number.
-4. **Three questions answered in a sentence or two each:**
-   - Could a person who had never seen Astrid have got to the first image with only their agent and the product's own guidance?
-   - What was the most confusing moment?
-   - What one change would have saved the most time?
-5. **The person's own words:** anything they found odd, good or annoying.
-6. **The doctor bundle.** Run `astrid doctor --bundle`. It saves a file to the Desktop with user names and secrets already removed. Look through it once, then attach it to the issue.
-7. **Your conversation.** Export or copy this whole agent session (your messages, the commands and their output) and attach it to the issue as a file. Check it for tokens and keys first. This is the most useful thing you can give us: it shows what actually happened, including the parts nobody thought to report.
+Never delete a whole `models`, `input`, `output` or `custom_nodes` folder, and never delete a file that is in the before lists.
 
-**Afterwards.** The test build is not a release. When the person is done with it, either uninstall it with the command in part 2, or leave it and expect to reinstall when the release is published. Ask the person which they want, and say which you did.
+## Part 8: Final report
+
+One closing comment with:
+
+1. **The build:** the manifest line from part 2.
+2. **The cell table** from part 6.
+3. **Install and uninstall:** time taken, and anything left behind each time.
+4. **Problems,** worst first, by number.
+5. **Downloads:** total size fetched, and what the clean-up removed and kept.
+6. **The diagnostics bundle.** Run `& $astrid doctor --bundle "$test\astrid-doctor.zip"` before uninstalling. User names and secrets are already removed from it. Look through it once, then attach it.
+7. **Your conversation.** Export this whole agent session (your messages, the commands and their output) and attach it as a file. Check it for tokens first. This is the most useful thing you can send: it shows what really happened.
