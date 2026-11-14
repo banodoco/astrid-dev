@@ -1863,3 +1863,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - fd5ff0d9's Lanes is on its last job, so the one-running-plus-one-queued rule holds.
   - httpj is held out of compose by machines' own request.
 - **12:38: VibeComfy save-as-entry is slow (about 61 s; witness re-hash with no memo), found by Plan 20.** Ruling: no VibeComfy re-pin into R13 for performance this close to the freeze. Cells fixes it on a branch with a timing test, and it pins after publish. The deferred.md VibeComfy row is added.
+- **12:50: SECURITY (from Plan 20): HF_TOKEN is sent as a bearer header to any host** by `vibecomfy.fetch.download` and Astrid's `_fetch_model`.
+  - Routed to cells to establish whether any R13-reachable path (catalog, user workflow URLs, h3 assets, a cross-host redirect) can reach a non-HF host.
+  - If yes: an R13 fix with a VibeComfy re-pin (security outranks the no-re-pin rule). If no: deferred, with the same fix after publish.
+  - The planned fix sends the token only to allowed HF hosts on every hop.
+  - Plan 20's P4.6b already allows only https://huggingface.co on its side.
