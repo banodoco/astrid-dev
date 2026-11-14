@@ -1646,3 +1646,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - an explicit 1800 s hold is kept.
   - **Proof:** 8 new regression tests.
   - **The hosted run is the proof** for the local integration setup failures, which come from a local VibeComfy pin mismatch on machines' box.
+- **05:22: LTX-2.3 i2v local-managed refuses with "managed model has no declared digest".** The guard (731c27b0d) is correct; the gap is VibeComfy 46251c8c's template.
+  - **Ruling:** cells declares the sha256 and size from one HF metadata read **only if it rides on a VibeComfy pin refresh already planned** before Sun 03:45. Otherwise it ships refusing honestly; it isn't the video default (h3 is).
+  - **The class row goes in deferred.md:** template models without declared digests, with a sweep for others.
