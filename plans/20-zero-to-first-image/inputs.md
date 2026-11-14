@@ -57,7 +57,7 @@
 
 ### Phase 4: local-first (14 Nov 2026)
 
-**Scope decision:** Pending — Hannah gave the direction and decided OD7 and OD8 (14 Nov); OD1–OD6 are still open (below). Next: Hannah answers OD1–OD6 in the scope PR.
+**Scope decision:** Pending — Hannah gave the direction and decided OD3, OD7 and OD8 (14 Nov); OD1, OD2, OD4, OD5 and OD6 are still open (below). Next: Hannah answers them in the scope PR.
 
 - **Source.** Hannah asked the Release 13 advisor (session `session_011EzfW4KxQbf3mB7UevxVdh`) on 14 Nov 2026 to map the onboarding path, make it local-first and add it to Plan 20 as tasks. The orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) relayed the brief to this planner. Her words, verbatim:
   > "In general, it should probably point to RunPod, but it should only have like a one-line mention of RunPod, and the other general should just be focused on people who are running locally and setting it up."
@@ -79,14 +79,14 @@
 | A separate local-onboarding skill beside `astrid-setup` | Two skills for one journey. Shipped App builds and the README already link `docs/setup/SKILL.md` |
 | Keep the RunPod walkthrough in the setup skill | About half of the 404-line skill repeats the RunPod skill for three operating systems. One line and a link removes the copy |
 | Download missing models into the person's ComfyUI now | OD4: it changes the person's machine, and the walk has not yet shown it is needed. Name the file and folder instead |
-| Prove only on CPU fakes, as D8 requires | The question is whether the local path works. A fake cannot show minutes to the first image or where an agent guesses, so one local run is asked for (OD3) |
+| One real local GPU run for the walks | Asked as OD3; Hannah said no (14 Nov). The walks run on CPU against the fake ComfyUI, and the real image goes to Plan 34 |
 | _Critique-driven alternatives are recorded under Challenge below_ | |
 
 **Challenge:** Pending — independent critique running. Next: record its findings and the decisions taken.
 
-**Proof and limits:** P4.0 and P4.9 are live walks on a machine with a running ComfyUI and a GPU, which a cloud worker cannot run (OD3). Everything else is proven by focused Agent tests against the existing fake ComfyUI. No rentals. ComfyUI Desktop, a stopped ComfyUI and Wan2GP are not proven.
+**Proof and limits:** P4.0 and P4.9 walk the path on a hosted CPU runner against the existing fake ComfyUI, up to the generation command being admitted (OD3, D8). They cannot show a real image, real model lists or speed; one row asks Plan 34 for the real first image on a person's own ComfyUI. Everything else is proven by focused Agent tests against the existing fake ComfyUI. No rentals. ComfyUI Desktop, a stopped ComfyUI and Wan2GP are not proven.
 
-**Run start:** 14 Nov 2026. The orchestrator (`session_011EzfW2L4ou5fDudzKLrc9d`), acting on Hannah's request to farm the tasks out (relayed by the advisor), started a phase 4 manager, `session_011EzfW4R5yz8EETVbzZaLCF`. It may start P4.3, P4.6 and P4.11 now, on Agent `int/20-phase4` cut from Agent `main`. It still needs the owner's go for: P4.0 (OD3); any other task, which waits for release 13 to publish and for OD6; merging to Agent `main` or any release branch; and P4.1, P4.2, P4.4, P4.10 and P4.12 before the critique below has settled their shape. The advisor is `session_011EzfW4KxQbf3mB7UevxVdh`. This start was made by the orchestrator, not recorded from Hannah directly; OD6 stays Pending for the rest.
+**Run start:** 14 Nov 2026. The orchestrator (`session_011EzfW2L4ou5fDudzKLrc9d`), acting on Hannah's request to farm the tasks out (relayed by the advisor), started a phase 4 manager, `session_011EzfW4R5yz8EETVbzZaLCF`. It may start P4.3, P4.6 and P4.11 now, on Agent `int/20-phase4` cut from Agent `main`. It still needs the owner's go for: any other task, which waits for release 13 to publish and for OD6; merging to Agent `main` or any release branch; and P4.1, P4.2, P4.4, P4.10 and P4.12 before the critique below has settled their shape. The advisor is `session_011EzfW4KxQbf3mB7UevxVdh`. This start was made by the orchestrator, not recorded from Hannah directly; OD6 stays Pending for the rest.
 
 **Review rounds:** Recommend one round (R4) on the integrated phase 4 result before P4.9's final walk: a user-visible flow and a contract change (P4.2), but no paid action. No review stop. Pending: owner to confirm.
 
@@ -108,18 +108,18 @@ Re-checked for the three-phase plan: all nine still apply. D7 is decided by the 
 
 ### Phase 4 owner decisions (14 Nov 2026)
 
-OD7 and OD8 are decided (below). OD1–OD6 are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
+OD3, OD7 and OD8 are decided (below). OD1, OD2, OD4, OD5 and OD6 are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
 
 | # | Decision | Options | Recommendation | Status |
 |---|---|---|---|---|
 | OD1 | Does the skill continue past Connected to a first image, with RunPod and the managed engine one line each? | Yes, superseding the 9 Nov "ends at Connected" layout and, for the local path, D7's split with Plan 32 S2; or keep the 9 Nov layout | Yes. It follows from the 14 Nov direction; confirm it | Pending |
 | OD2 | When no shipped entry is ready, does the first image come from the person's own saved workflow? | Yes; or stop and name the missing models | Yes. It matches the 9 Nov line "its proof is a real first image from a saved workflow" | Pending |
-| OD3 | D8 forbids live GPU tests. May P4.0 and P4.9 run on a local machine with ComfyUI and a GPU (no rental)? | Allow local runs, no rentals; or keep D8 as it is and prove on CPU fakes only | Allow local runs; rentals stay excluded. P4.0 does not start until this is decided | Pending |
+| OD3 | D8 forbids live GPU tests. May P4.0 and P4.9 use one real run on a local GPU? | Allow local runs, no rentals; or keep D8 | — | **Decided no by Hannah, 14 Nov 2026 (about 13:15 UTC)**, in the advisor session `session_011EzfW4KxQbf3mB7UevxVdh`, relayed by the advisor: "No on local GPU." D8 stands unchanged. P4.0 and P4.9 walk the path on a hosted CPU runner against the fake ComfyUI, up to the generation command being admitted. The real first image on a person's own ComfyUI is one row requested from Plan 34 |
 | OD4 | May Astrid download a missing model into the person's ComfyUI models folder, with a yes per file? | Not now (name the file and folder); or yes, per file, through VibeComfy's existing `fetch` | Not now. Revisit after the walk | Pending |
 | OD5 | Create a default project when none exists at the first generation, and say so? | Yes, named "My first project" like the App; or refuse, naming the command to create one | Yes | Pending |
 | OD7 | Where the link to Astrid comes | Once at the end; at Connected only; or both | — | **Decided by Hannah, 14 Nov 2026 (about 13:00 UTC)**, in the advisor session `session_011EzfW4KxQbf3mB7UevxVdh`, relayed by the advisor: "Maybe we should just send it at the end, pointing towards: you can click the generations thing at the bottom here to see this image in the app." Answer: once, at the end, opening the project with the image in it, plus one sentence pointing to the Generations pane. Reason: a person who installed through an agent may never have had Astrid open. The pane's real label and position are confirmed by P4.10, not assumed |
 | OD8 | The defaults step | Per slot: keep ours, use theirs, pick another or create a new one; or keep Astrid's defaults only | — | **Decided by Hannah, 14 Nov 2026**, same session and relay. Answer: one question per slot: keep Astrid's default (with its readiness), use one of theirs (most recently edited first), pick another entry, or create a new default from their own workflow (previewed first, with one undo command) |
-| OD6 | Timing | (a) P4.0 now, everything else after release 13 publishes; (b) as (a), but P4.1, P4.3, P4.6 and P4.11 start on branches from Agent `main` before release 13 (the advisor's suggestion, 14 Nov), landing only after it; (c) all after release 13 | (a). This planner's brief keeps all phase 4 implementation until release 13 publishes. (b) is cheaper in wall-clock time but rebases work onto a moving release, and P4.1's shape depends on the critique | Pending. Hannah has asked the orchestrator to farm the tasks out; until she picks (b), workers wait for release 13 |
+| OD6 | Timing | (a) P4.0 now (CPU only), everything else after release 13 publishes; (b) as (a), but P4.1, P4.3, P4.6 and P4.11 start on branches from Agent `main` before release 13 (the advisor's suggestion, 14 Nov), landing only after it; (c) all after release 13 | (a). This planner's brief keeps all phase 4 implementation until release 13 publishes. (b) is cheaper in wall-clock time but rebases work onto a moving release, and P4.1's shape depends on the critique | Pending. Hannah has asked the orchestrator to farm the tasks out; until she picks (b), workers wait for release 13 |
 
 ## Source identities
 

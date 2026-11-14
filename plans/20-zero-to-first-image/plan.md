@@ -10,7 +10,7 @@
 
 **Estimate:** 10–11: phase 1 (fast path, live on merge) 1, phase 2 (next App release) 1, phase 3 3–4, phase 4 (local-first, proposed) about 5
 
-**Waiting on:** release 12 published, then the owner's go to merge the Agent `main` group; the App group rides the next App release; the generation group waits on Plan 32 S2, T5d and T6d; phase 4 waits on the owner's OD1–OD8 and, apart from P4.0, on release 13 published
+**Waiting on:** release 12 published, then the owner's go to merge the Agent `main` group; the App group rides the next App release; the generation group waits on Plan 32 S2, T5d and T6d; phase 4 waits on the owner's OD1, OD2 and OD4–OD6 and, apart from P4.0, P4.3, P4.6 and P4.11, on release 13 published
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
@@ -32,7 +32,7 @@ Hannah gave this direction on 9 Nov in two parts. The source is in [inputs.md](i
 
 ## Direction (owner, 14 Nov 2026): local-first
 
-Hannah asked the advisor to map the path for someone running ComfyUI locally, and to make the onboarding local-first. Her words are in [inputs.md](inputs.md#phase-4-local-first-14-nov-2026). In short: RunPod gets a one-line mention, and the rest of the skill is for people running locally. This is **phase 4**. It is proposed, not accepted: the owner decisions OD1–OD8 are Pending. Once OD1 is confirmed it supersedes point 3 above (the skill ends at Connected) and D7's split with Plan 32 S2, for the local path only.
+Hannah asked the advisor to map the path for someone running ComfyUI locally, and to make the onboarding local-first. Her words are in [inputs.md](inputs.md#phase-4-local-first-14-nov-2026). In short: RunPod gets a one-line mention, and the rest of the skill is for people running locally. This is **phase 4**. It is proposed, not accepted: OD3, OD7 and OD8 are decided; OD1, OD2 and OD4–OD6 are Pending. Once OD1 is confirmed it supersedes point 3 above (the skill ends at Connected) and D7's split with Plan 32 S2, for the local path only.
 
 ## Outcome and scope
 
@@ -90,7 +90,7 @@ The rule is enforced by tests in both repositories. **Agent (phase 1):** the gui
 | **1. Fast path** | The skill rewritten for the whole guided install, with the [choices rule](#the-choices-rule), the step shape and a skill that ends at Connected. The README and Getting Started point at it and drop the "`--yes` without a prompt" advice. Agent docs, the README and its generator, and the guide tests only | When the PR merges to Agent `main` | Release 12 published: the skill quotes installer first lines that exist only in release 12 (`outcome.py:137-166` on `cand/29-r12`, absent on Agent `main` at `a105de3a48`) | 1 day |
 | **2. Next App release** | The App brief's yes/no consent line becomes "show these choices and offer a change", with the four flag spellings and a pointer to the skill, in both install briefs; the entry screens show the pointer; the "Set up generation" card after Connected links Plan 32 S2's "Set up my generation" section | With the next ordinary App release; no release of its own | Phase 1 merged; Plan 29's orchestrator for the App branch; for the card, Plan 32 S2's section on Agent `main` | 1 day, plus the wait for the release |
 | **3. Generation half** | On top of Plan 32 S2's generation step, the skill does it rather than points: use an existing setup, install a managed engine (its own yes), or rent RunPod (paid consent and a cap). The skill reaches the synced skill view. Lighter per-OS proof with one real GPU image. Completion | Skill text on merge to Agent `main`; the synced-view change with the next Agent release | Plan 32 S2, T5d and T6d in a published release | 3–4 days |
-| **4. Local-first** (proposed, 14 Nov) | The skill carries on past Connected to a first image from the person's own running ComfyUI and models, in about 100 lines: install and connect; see what you have (one readiness report); one yes saves the connection; a project exists; a first image from a ready shipped entry or the person's own saved workflow; defaults after the win. RunPod and the managed engine are one line each, linking their own skills. The App card, the installer's success output and Pinokio's README all end at the same next step. See [phase 4](#phase-4-local-first) | Skill text on merge to Agent `main`; the Agent changes (P4.1–P4.4, P4.6, P4.8) with the next Agent release | P4.0: OD3. Everything else: OD1–OD8 and release 13 published | about 5 days |
+| **4. Local-first** (proposed, 14 Nov) | The skill carries on past Connected to a first image from the person's own running ComfyUI and models, in about 100 lines: install and connect; see what you have (one readiness report); one yes saves the connection; a project exists; a first image from a ready shipped entry or the person's own saved workflow; defaults after the win. RunPod and the managed engine are one line each, linking their own skills. The App card, the installer's success output and Pinokio's README all end at the same next step. See [phase 4](#phase-4-local-first) | Skill text on merge to Agent `main`; the Agent changes (P4.1–P4.4, P4.6, P4.8) with the next Agent release | Everything but P4.0 (a CPU walk) and the started P4.3, P4.6, P4.11: OD1, OD2, OD4–OD6 and release 13 published | about 5 days |
 
 Users get value after phase 1: an agent following the README or a shipped App brief gets one guided install with choices they saw, ending at Connected.
 
@@ -111,7 +111,7 @@ Users get value after phase 1: an agent following the README or a shipped App br
 
 **Not in phase 4:** adopting a ComfyUI that is not running; sharing its models folder with the managed engine; discovering ComfyUI Desktop; downloading models into the person's ComfyUI (OD4); Wan2GP (Plan 12); the RunPod path itself (Plan 40 and the machines work).
 
-**Completion.** P4.0's walk, repeated on the new path (P4.9): minutes to the first image and the number of commands, compared with the first walk. The CPU branch test is green on hosted CI. A negative case: no step launches, restarts or writes to the person's ComfyUI. Limits: one real local run per walk, on the owner's or a contributor's machine (OD3), and no rentals.
+**Completion.** P4.0's walk, repeated on the new path (P4.9), on a hosted CPU runner against the fake ComfyUI: minutes to the admitted generation command and the number of commands, compared with the first walk. The result gives one link that opens the project with the image in the Generations pane (OD7). The CPU branch test is green on hosted CI. A negative case: no step launches, restarts or writes to the person's ComfyUI. Limits: no GPU and no rentals (D8, reaffirmed by OD3). The real first image on a person's own ComfyUI is one row requested from Plan 34.
 
 ## Interfaces and handoff
 
