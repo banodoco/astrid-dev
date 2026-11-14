@@ -1682,3 +1682,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **h3 done means one validated output per mode** (i2v, v2v, video-edit), on the final head or the head before it.
 - **Merged** the test lane's structure-baseline-deliberate fcca5859e: 12 itemised entries with cause commits; R12's 59 are preexisting under #647. Compose is now 31f19f1f1.
 - **Still with Hannah:** RunPod v1 retirement on 15 Nov, a note to R12 users or an R12 patch.
+- **06:05: cells vc7 → vc8, approved.**
+  - **The regression:** 6 `ltx-2.3:t2v|flf` CLI dispatch ids pass on R12 and fail on compose, so they're a generate-path regression and must be fixed. The #342 fix was staged on 12 Nov and never landed.
+  - **The fix:** VibeComfy `r13/cells-vc-8` (vc7 + cells-vc-next), plus Agent cherry-picks f70c4da49, 262f07c08 and 6ee65b1c4, plus ONE pin. That replaces the vc7 pin.
+  - **vc7 already did:** a Foley picker root fix; the LTX i2v checkpoint digest (its LoRA and text-encoder digests still missing); a survey finding 132 incomplete model records across 31 templates. That class is deferred: declare revision, digest and size once.
+  - **Job-seam:** deferred by cells with a row (ccebf94).
