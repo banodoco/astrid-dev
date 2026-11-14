@@ -1830,3 +1830,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - A real first image on a person's own ComfyUI is requested as a Plan 34 row.
   - OD6, the early start, I count as decided by Hannah's "farm out the tasks" quote.
   - P4.1 and P4.4 are held until the planner's PR and the critic's verdict.
+- **11:58: Hannah: "we still need to do that work you received but use Claude subagents, it's refinement work."**
+  - Phase 4 runs in full now, with Claude subagents (the Codex sign-in is dropped).
+  - Work that needs R13 code branches from r13/compose and lands on int/20-phase4-r13 after publish.
+  - P4.12 stays in the phase. P4.2's outcome (a one-step save as default) is kept on the existing stores.
+  - Open owner decisions are built with the recommended option and flagged.
+  - Planner (PR #648) and manager told.
