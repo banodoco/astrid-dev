@@ -1715,3 +1715,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Regressions:** 0 in 1/4, 2/4 and opt-in.
   - **Lanes 3/4:** regression-flagged slot_path_cpu ×13 and others, routed to machines and cells. One is a new h3 composition mismatch: "frame coverage observed 164, expected 108" (cells).
   - **Merged the test lane's lanes-timeouts 748ae723c:** explicit `@pytest.mark.timeout(300–900)` on 9 legitimately slow video/h3 and installer tests, each with its measured hosted time. Everything else keeps 120 s, and no assertion changed. The 28 Pinokio ids are preexisting (#621).
+- **08:15: merged cells r13/h3-plain-judge 05b83dc58: h3 is now the video default in practice.**
+  - **Routing:** plain `--image-ref` goes to h3 i2v, and plain `--video-ref` to h3 v2v. A prompt with no reference is refused.
+  - **Proof vs compose:** 0 regressions, 20 fixes, 607 passed with 5 preexisting failures.
+  - **Narrow follow-up:** the hook validates the request before declaring logs. The deeper cause, implicit hook admission order, is logged in deferred.md.
+  - **Behaviour change:** local and attached video defaults now require the H3 dependencies and don't fall back to LTX. GPU execution is unproven until the h3 live run.
