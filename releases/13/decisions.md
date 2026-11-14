@@ -2139,3 +2139,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - the phase 4 manager stands down after the final proof;
   - P6 stops at a reviewable SHA.
   The priority order is the tester head by 07:00, then the queue merges, the freeze and the live repeat.
+- **21:20 UTC PHASE 4 merged:** int/20-phase4-r13 ec00046f3 (cf49d415 + R4.N + R4.O) → r13/compose **8c0d7f03f**. W105/W106: 0 R12-passing ids failing, R4 files all pass, 3 ids fixed; one load flake (readiness 2 s timeout) passed 6/6 alone, deferred row. The App (a1a105c34) and Pinokio (51ddd6c) sides are unchanged and ride with the tester/freeze heads. P6 382f1f7 is machines-OK and with lane 2.
