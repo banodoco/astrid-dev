@@ -167,6 +167,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Local disk fills in every lane: pytest scratch dirs and old worker worktrees and envs are never cleaned. It killed test-lane workers twice on Sat. Add a cleanup step to the worker env and a disk floor check before heavy proofs | advisor dive 6 |
 | Tests that pass alone and time out on a loaded shard: d18 `test_concurrent_submission_during_child_wait` (harness wait raised 1 s → 10 s, f45f121ba), the music and tts receipt ids, the sfx slot-path cells. Root: wall-clock bounds in tests that assume an idle box | advisor dive 6; decisions.md 10:15 Sat |
 | The hosted fast-checks job needed the VibeComfy, Runtime and lifecycle checkouts to collect tests (36 collection errors before fbeb3871a). One place should provision a test environment for every job, rather than per-job copies | decisions.md 08:45 Sat |
+| The windows-journey driver calls the removed `astrid packs` family (`scripts/ci_journey.py:2402` `install_journey_packs`), so the journey fails at the SDK-task step on R13 (head 07d35cc2d/18ece5823, run 43633299370). R12 main is also red on it (install step, run 43155525290). The fix exists on PR #346 (49e50b9b, 'Use installed pack entrypoint in journey checks') and is not in R13. Owner: tests/installer. Not a generate, custody or money path | test lane 2 (Windows tester dry run), 2026-11-14 |
 
 ## Process (astrid-dev skills and ledger)
 | Item | Source |
