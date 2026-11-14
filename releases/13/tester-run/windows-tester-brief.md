@@ -8,7 +8,7 @@
 | Build under test | `{{BUILD_NAME}}`: Agent commit `{{AGENT_SHA}}` |
 | Install manifest | `{{MANIFEST_URL}}` |
 | You need | Windows 10 or 11, an NVIDIA GPU, a working ComfyUI, PowerShell, git |
-| Disk | 25 GB for the core run; about 95 GB for everything |
+| Disk | 40 GB free for the core run; about 110 GB for everything |
 | Time | 1 to 2 hours for the core run; longer with the video cells |
 
 ## What this is
@@ -76,6 +76,16 @@ Get-ChildItem -Recurse -File "$comfy\models" | Select-Object FullName, Length | 
 Get-ChildItem -File "$comfy\input", "$comfy\output" -Recurse | Select-Object FullName | Export-Csv "$test\io-before.csv" -NoTypeInformation
 ```
 
+Also record what the installer may touch, so the clean-up can be checked against it:
+
+```powershell
+[Environment]::GetEnvironmentVariable('Path','User') | Out-File "$test\path-before.txt"
+Get-ChildItem "$env:USERPROFILE\.claude\skills", "$env:USERPROFILE\.codex\skills", "$env:USERPROFILE\.agents\skills" -ErrorAction SilentlyContinue | Select-Object FullName | Export-Csv "$test\skills-before.csv" -NoTypeInformation
+Test-Path "$env:USERPROFILE\.vibecomfy", "$env:USERPROFILE\.cache\huggingface", "$env:LOCALAPPDATA\Astrid GPU" | Out-File "$test\dirs-before.txt"
+```
+
+(Use your own agent's skills folder if it is somewhere else.)
+
 Start `ledger.md` in that folder. Add a line each time you download or create something outside `C:\astrid-test`: what, where, how big, and whether it replaced anything.
 
 ## Part 2: Remove any existing Astrid, then install the test build
@@ -111,7 +121,7 @@ Report the time taken and the last 20 lines of output.
 Get-ChildItem "$env:LOCALAPPDATA\Astrid\versions\*\manifest.json" | ForEach-Object { $_.FullName; (Get-Content $_ -Raw | ConvertFrom-Json) | Select-Object release, @{n='agent';e={$_.agent.sha}}, @{n='runtime';e={$_.runtime.sha}}, @{n='vibecomfy';e={$_.vibecomfy.sha}} }
 ```
 
-The Agent commit must be `{{AGENT_SHA}}`. If it is anything else, **stop** and post a `QUESTION:`. Then:
+The Agent commit must be `{{AGENT_SHA}}`. If it is anything else, or more than one version is listed, **stop** and post a `QUESTION:`. Then:
 
 ```powershell
 $astrid = "$env:LOCALAPPDATA\Astrid\run-astrid.cmd"
@@ -153,7 +163,7 @@ $url = "http://127.0.0.1:<port>"; Set-Location $test
 & $astrid generate fetch-models qwen-image-2.1-turbo t2i --comfy-url $url --json
 ```
 
-Show the person the files, sizes and folder. On yes, run it again with `--apply <plan_sha256 from the plan>`. Then run the same pair for `qwen-image-2.1-turbo-edit edit`; it should find nothing left to fetch. Add the files to the ledger.
+Show the person the files, sizes and folder. On yes, run it again with `--apply <plan_sha256 from the plan>`. Then run the plan (without `--apply`) for `qwen-image-2.1-turbo-edit edit`; it should list nothing left to fetch. Don't apply an empty plan: it reports `nothing_to_download`. Add the files to the ledger.
 
 **Cell A, image from text:**
 
@@ -172,14 +182,15 @@ Show the person the files, sizes and folder. On yes, run it again with `--apply 
 **Cell C, music.** It uses nodes built into ComfyUI. Astrid can't fetch its models, so first run it and report the exact message:
 
 ```powershell
-& $astrid generate audio --entry audio/ace_step_1_5_t2a_song --mode music --prompt "A calm instrumental piece with soft piano and light strings" --seed 7 --placement $url --out "$test\C" --json
+& $astrid generate audio --entry audio/ace_step_1_5_t2a_song --mode music --prompt "A calm instrumental piece with soft piano and light strings" --input "lyrics=[instrumental]" --seed 7 --placement $url --out "$test\C" --json
 ```
 
-If it reports missing models and the person agrees to 6.3 GB more, download these three files from the Hugging Face repository `Comfy-Org/ACE-Step-1.5` into the ComfyUI models folder, keeping the subfolder names, then run it again:
+If it reports missing models and the person agrees to 14.7 GB more, download these four files from the Hugging Face repository `Comfy-Org/ACE-Step-1.5` into the ComfyUI models folder, then run it again. In the repository they sit under `split_files/`; in the models folder they go in the subfolders shown:
 
-- `diffusion_models/acestep_v1.5_turbo.safetensors`
-- `vae/ace_1.5_vae.safetensors`
-- `text_encoders/qwen_0.6b_ace15.safetensors`
+- `diffusion_models/acestep_v1.5_turbo.safetensors` (4.8 GB)
+- `vae/ace_1.5_vae.safetensors` (0.3 GB)
+- `text_encoders/qwen_0.6b_ace15.safetensors` (1.2 GB)
+- `text_encoders/qwen_4b_ace15.safetensors` (8.4 GB)
 
 For every cell, record the row described in part 6.
 
@@ -187,14 +198,15 @@ For every cell, record the row described in part 6.
 
 Speech, sound effects and the video cells need custom node packs with their own Python packages, and the video cells need a specific recent ComfyUI. Installing those into a working ComfyUI can break it and can't be cleanly undone. So these cells run on a **second, throwaway ComfyUI inside `C:\astrid-test`**, which is deleted at the end.
 
-Before anything else in this part, run each cell once against the person's own ComfyUI and post the exact refusal. We want to see what Astrid says when the nodes are missing. Then:
+Before anything else in this part, run cells D and E once against the person's own ComfyUI (`--placement $url`) and post the exact refusals. We want to see what Astrid says when the nodes are missing. Then:
 
-1. **Install a portable ComfyUI** into `C:\astrid-test\ComfyUI` (the official Windows portable build for NVIDIA). The video cells were proven on ComfyUI 0.36.0; use that version if you can, and report the version you used. Check it has the video model's nodes after starting it: `http://127.0.0.1:8199/object_info/MiniMaxH3ReferenceToVideo` must return a definition.
+1. **Install a portable ComfyUI** into `C:\astrid-test` (the official Windows portable build for NVIDIA). The archive unpacks to a folder that holds `python_embeded` and an inner `ComfyUI` folder side by side; node packs and models go in the inner one. **The video cells check the environment and refuse a mismatch,** so match these exactly: ComfyUI `0.36.0`, torch `2.10.0+cu130`, `comfy-kitchen` `0.2.35`, `comfy-aimdo` `0.5.5`, started with `--use-ck-attention --disable-comfy-compiler`. Report the versions you ended up with. After starting it, `http://127.0.0.1:8199/object_info/MiniMaxH3ReferenceToVideo` must return a definition.
 2. **Share the models already downloaded:** add an `extra_model_paths.yaml` pointing at the person's ComfyUI models folder, so nothing is downloaded twice.
 3. **Start it on another port,** for example 8199, and leave the person's ComfyUI as it is (stop it if the GPU can't hold both).
 4. **Install the node packs** each cell needs into `C:\astrid-test\ComfyUI\custom_nodes`, at the commit given, with the portable build's own Python (`python_embeded\python.exe -m pip install -r requirements.txt`), then restart the test ComfyUI.
-5. **Download each cell's models** into `C:\astrid-test\ComfyUI\models`, keeping the subfolders, with the person's yes each time.
-6. Point Astrid at it for these cells with `--placement http://127.0.0.1:8199`.
+5. **Before downloading the 53.5 GB of video models,** run cell E once against the test ComfyUI. If the refusal is about the ComfyUI version or packages, fix that first; continue only when the refusal is about missing models.
+6. **Download each cell's models** into the test ComfyUI's `models` folder, keeping the subfolders, with the person's yes each time.
+7. Point Astrid at it for these cells with `--placement http://127.0.0.1:8199`.
 
 Do the cells in this order, and stop where disk, VRAM or time runs out. Say where you stopped.
 
@@ -204,7 +216,7 @@ Do the cells in this order, and stop where disk, VRAM or time runs out. Say wher
 | E | Video from an image | `seitanism/ComfyUI-H3-Motion-Context-MultiRef` (`361624fb`), `Kosinkadink/ComfyUI-VideoHelperSuite` (`4ee72c06`) | 53.5 GB: Hugging Face `Comfy-Org/MiniMax-H3`, five files (below) |
 | F | Video from a video | as E | as E |
 | G | Video edit | as E | as E |
-| H | Sound effects for a video | `BobRandomNumber/ComfyUI-HunyuanVideo_Foley` (`b94f7aca`) | 10.6 GB: `tencent/HunyuanVideo-Foley`, `google/siglip2-base-patch16-512`, `laion/larger_clap_general`, under `models/hunyuan_foley/` |
+| H | Sound effects for a video | `BobRandomNumber/ComfyUI-HunyuanVideo_Foley` (`b94f7aca`) | 10.6 GB under `models/hunyuan_foley/`: the three `.pth` files of `tencent/HunyuanVideo-Foley` directly in it; `google/siglip2-base-patch16-512` in `siglip2/`; `laion/larger_clap_general` in `clap/` |
 
 The five video model files, each into the subfolder shown:
 
@@ -219,7 +231,7 @@ The video cells have only been run on a 32 GB RTX 5090. On a smaller card they m
 ```powershell
 $t = "http://127.0.0.1:8199"
 # D, speech
-& $astrid generate audio --entry audio/qwen3_tts_custom_voice --mode tts --prompt "The weather is calm and clear this morning." --placement $t --out "$test\D" --json
+& $astrid generate audio --entry audio/qwen3_tts_custom_voice --mode tts --input "text=The weather is calm and clear this morning." --placement $t --out "$test\D" --json
 # E, video from the image A made: 3 seconds, 8 steps
 & $astrid generate video --entry h3 --mode i2v --prompt "camera slowly pushes in, warm afternoon light shifts across the wall, breeze stirs the dust; quiet street ambience, distant birds, no speech or music" --image-ref "<the image from A>" --frames 72 --steps 8 --seed 7 --placement $t --out "$test\E" --json
 # F, video from the video E made
@@ -242,7 +254,7 @@ Result is one of:
 
 - **ran:** an output file exists. Open it. Say whether it matches the prompt, and for video and audio whether it plays;
 - **refused:** Astrid declined before generating. Paste the message, and say whether it named exactly what is missing;
-- **failed:** an error, a hang or an out-of-memory. Paste the error and attach `& $astrid tasks show <TASK_ID> --project <project> --json` and `& $astrid tasks logs <TASK_ID> --project <project>`;
+- **failed:** an error, a hang or an out-of-memory. Paste the error and attach `& $astrid tasks show <TASK_ID> --project <project> --json` and `& $astrid tasks logs <TASK_ID> --project <project>` (that lists the logs; add `--name <log name>` to print one);
 - **skipped:** say why (disk, VRAM, time, the person declined a download).
 
 Keep every output file in `C:\astrid-test` until the report is posted. Attach the image from A, the image from B, and one video if there is one.
@@ -251,7 +263,7 @@ If a generation shows no progress for 10 minutes: `& $astrid tasks cancel <TASK_
 
 ## Part 7: Clean up
 
-Do this after the final report is drafted, and include the result in it.
+Do this after the final report is drafted, and include the result in it. **First make the diagnostics bundle** (part 8, item 6): it can't be made once Astrid is removed. Delete only things the ledger says this test added; a new file in a folder is not proof that the test made it, so check with the person when unsure.
 
 1. **Models added to the person's ComfyUI:** list the files now under `$comfy\models` that are not in `models-before.csv`. Show the person the list. Delete them, unless the person wants to keep some; record which were kept.
 2. **Inputs and outputs:** the same comparison for `$comfy\input` and `$comfy\output` against `io-before.csv`. Delete only the new files.
@@ -262,7 +274,7 @@ Do this after the final report is drafted, and include the result in it.
    & ([scriptblock]::Create((irm https://astrid.haus/install.ps1))) --uninstall --delete-data
    ```
 
-   Then repeat the three checks from part 2 and report what is left. Also report whether Astrid's skills are still present in your agent's skills folder.
+   Then repeat the three checks from part 2 and report what is left. Compare the user PATH and the skills folders with `path-before.txt` and `skills-before.csv`, and the three folders in `dirs-before.txt`; report every difference. Don't delete a Hugging Face cache that existed before.
 5. **Everything else in the ledger.** Remove it, or say why it stays.
 6. Keep `C:\astrid-test\ledger.md` and the output files until we confirm on the issue that we have what we need. Then delete the folder.
 
@@ -277,5 +289,5 @@ One closing comment with:
 3. **Install and uninstall:** time taken, and anything left behind each time.
 4. **Problems,** worst first, by number.
 5. **Downloads:** total size fetched, and what the clean-up removed and kept.
-6. **The diagnostics bundle.** Run `& $astrid doctor --bundle "$test\astrid-doctor.zip"` before uninstalling. User names and secrets are already removed from it. Look through it once, then attach it.
+6. **The diagnostics bundle.** Run `& $astrid doctor --bundle "$test\astrid-doctor.zip"` before part 7. User names and secrets are already removed from it. Look through it once, then attach it.
 7. **Your conversation.** Export this whole agent session (your messages, the commands and their output) and attach it as a file. Check it for tokens first. This is the most useful thing you can send: it shows what really happened.
