@@ -1873,3 +1873,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Ruling: an R13 fix.** VibeComfy `r13/cells-vc-11` (card hfhost, about 60 min): the token goes only to https on the exact HF hosts and their subdomains, with negative tests (lookalike hosts, http, userinfo, a cross-host 302, receipts and logs). Then one Agent pin.
   - The test lane proves it. Cells smokes the re-pin, confirming vc-11 is d3850831 plus hfhost only.
   - A deferred row covers the deeper question: whether arbitrary user model URLs should fetch without a confirmation (P4.6b starts that).
+- **13:21: hfhost landed:** VibeComfy r13/cells-vc-11 dba38f86, which is d3850831 plus fetch.py and two test files only.
+  - The token goes only to https on huggingface.co, hf.co and their subdomains. Redirects are now followed manually, with headers rebuilt on every hop, so no client can forward the token across hosts.
+  - 35 new tests pass; the focused suite has 0 regressions.
+  - **Deliberate security change:** test_fetch.py:279's `follow_redirects is True` becomes `is False`, because it pinned the replaced mechanism.
+  - **Risk:** every model download now goes through the manual redirect path. Before the pin merges, cells checks the real HF→CDN chain off-pod (an LFS file and a plain file, sha-checked). Sunday's live repeat must include one FRESH model download, not only a warm volume.
+  - The Agent pin r13/compose-pin-vc11 is about 1 h out.
