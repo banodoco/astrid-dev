@@ -2,21 +2,21 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (04:00 UTC Sat 14 Nov): read this first
+## Now (05:00 UTC Sat 14 Nov): read this first
 
-**Publish moved back at least 24 h (Hannah).** Sat 06:00 is a CI read; the FINAL freeze is Sun 04:00; publish no earlier than Sun about 12:00, with her go. h3_av, all three video modes, is IN.
-- **Round 4 DONE on int/r13-65b1d45c (M2), every output validated by eye or ear:**
-  - tts (exact transcript), sfx, t2i, music (30 s with vocals) and a real bicycle edit all PASS;
-  - the bicycle edit has a model-limitation note: the wall texture drifted.
-
-  The round cost $1.77, and the pod is released.
-- **h3 v2v: pipeline fault, the network volume is full** (Disk quota exceeded on the 2 big weights). Machines brings sanctioned cleanup commands plus a storage preflight by 05:15, then I re-claim for h3.
-- **Compose `90ca0fa11`:** M2, the machines custody rows, the lease-test restoration and cells' ir-bridge rows.
-  - **Engine:** `r13/engine/s1-regress` (14 groups) is with machines to judge.
-  - **Cells:** h3 plain-inputs, 5/24, first-frame, sfxdef and the other rows are in flight.
-- **CI:** 65b1d45c running (since 02:08).
-- **Lanes:** all active; seven-day limits `allowed`.
-- **Money:** 0 pods, $86.93.
+**Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00.**
+- **Live:** round 4 on M2 passed all five cells plus a real bicycle edit, every output validated.
+- **h3 is blocked on the full network volume.** Machines' volume card is due about 05:30: a storage preflight with "needed and free", plus a `storage.inventory` run log. Then I re-claim.
+  - Merged since: h3 evidence logs (552747f19) and the root fix for exact h3 durations (c5e4f7cc2).
+  - First frame is a follow-up.
+- **CI:**
+  - int/r13-65b1d45c COMPLETE: 141 regressions, most fixed on branches merged since.
+  - int/r13-05826d63 frozen 04:55 (custody, engine, lease, ir-bridge, h3 evidence); results about 07:30.
+  - Compose is now `055a18ad0`.
+- **In flight:**
+  - machines: the 4 M2-consequence tests (the MCP paid-controls one gets a root fix) and the volume card;
+  - cells: h3 plain-inputs, musicslot, sdkpub, catrows, gold, jobseam, sfx tests and census.
+- **Money:** 0 pods, $86.87.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
