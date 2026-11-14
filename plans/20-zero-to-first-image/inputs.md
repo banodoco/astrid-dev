@@ -57,7 +57,7 @@
 
 ### Phase 4: local-first (14 Nov 2026)
 
-**Scope decision:** Pending — Hannah gave the direction and decided OD3, OD7 and OD8 (14 Nov); OD1, OD2, OD4, OD5 and OD6 are still open (below). Next: Hannah answers them in the scope PR.
+**Scope decision:** Pending — Hannah gave the direction and decided OD3, OD6, OD7 and OD8 (14 Nov); OD1, OD2, OD4 and OD5 are still open (below). Next: Hannah answers them in the scope PR.
 
 - **Source.** Hannah asked the Release 13 advisor (session `session_011EzfW4KxQbf3mB7UevxVdh`) on 14 Nov 2026 to map the onboarding path, make it local-first and add it to Plan 20 as tasks. The orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) relayed the brief to this planner. Her words, verbatim:
   > "In general, it should probably point to RunPod, but it should only have like a one-line mention of RunPod, and the other general should just be focused on people who are running locally and setting it up."
@@ -86,7 +86,9 @@
 
 **Proof and limits:** P4.0 and P4.9 walk the path on a hosted CPU runner against the existing fake ComfyUI, up to the generation command being admitted (OD3, D8). They cannot show a real image, real model lists or speed; one row asks Plan 34 for the real first image on a person's own ComfyUI. Everything else is proven by focused Agent tests against the existing fake ComfyUI. No rentals. ComfyUI Desktop, a stopped ComfyUI and Wan2GP are not proven.
 
-**Run start:** 14 Nov 2026. The orchestrator (`session_011EzfW2L4ou5fDudzKLrc9d`), acting on Hannah's request to farm the tasks out (relayed by the advisor), started a phase 4 manager, `session_011EzfW4R5yz8EETVbzZaLCF`. It may start P4.3, P4.6 and P4.11 now, on Agent `int/20-phase4` cut from Agent `main`. It still needs the owner's go for: any other task, which waits for release 13 to publish and for OD6; merging to Agent `main` or any release branch; and P4.1, P4.2, P4.4, P4.10 and P4.12 before the critique below has settled their shape. The advisor is `session_011EzfW4KxQbf3mB7UevxVdh`. This start was made by the orchestrator, not recorded from Hannah directly; OD6 stays Pending for the rest.
+**Run start:** 14 Nov 2026, under OD6. The orchestrator (`session_011EzfW2L4ou5fDudzKLrc9d`) started a phase 4 manager, `session_011EzfW4R5yz8EETVbzZaLCF`. It may start P4.0 (CPU walk), P4.3, P4.6 and P4.11 now, on Agent `int/20-phase4` cut from Agent `main`. It holds P4.1 and P4.4 until this scope PR records the critique. Every other task waits for release 13 to publish. It still needs a go to merge to Agent `main` or any release branch, and nothing lands there before release 13 publishes. The advisor is `session_011EzfW4KxQbf3mB7UevxVdh`.
+
+**Request to Plan 34:** one row in Plan 34's real-GPU proof: the first image on a person's own running ComfyUI through the phase 4 skill, from the skill URL to the image in the Generations pane, with minutes and commands counted. Plan 20 runs no GPU (D8, OD3). Plan 34's owner adds the row; this plan does not edit Plan 34's files.
 
 **Review rounds:** Recommend one round (R4) on the integrated phase 4 result before P4.9's final walk: a user-visible flow and a contract change (P4.2), but no paid action. No review stop. Pending: owner to confirm.
 
@@ -108,7 +110,7 @@ Re-checked for the three-phase plan: all nine still apply. D7 is decided by the 
 
 ### Phase 4 owner decisions (14 Nov 2026)
 
-OD3, OD7 and OD8 are decided (below). OD1, OD2, OD4, OD5 and OD6 are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
+OD3, OD6, OD7 and OD8 are decided (below). OD1, OD2, OD4 and OD5 are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
 
 | # | Decision | Options | Recommendation | Status |
 |---|---|---|---|---|
@@ -119,7 +121,7 @@ OD3, OD7 and OD8 are decided (below). OD1, OD2, OD4, OD5 and OD6 are **Pending: 
 | OD5 | Create a default project when none exists at the first generation, and say so? | Yes, named "My first project" like the App; or refuse, naming the command to create one | Yes | Pending |
 | OD7 | Where the link to Astrid comes | Once at the end; at Connected only; or both | — | **Decided by Hannah, 14 Nov 2026 (about 13:00 UTC)**, in the advisor session `session_011EzfW4KxQbf3mB7UevxVdh`, relayed by the advisor: "Maybe we should just send it at the end, pointing towards: you can click the generations thing at the bottom here to see this image in the app." Answer: once, at the end, opening the project with the image in it, plus one sentence pointing to the Generations pane. Reason: a person who installed through an agent may never have had Astrid open. The pane's real label and position are confirmed by P4.10, not assumed |
 | OD8 | The defaults step | Per slot: keep ours, use theirs, pick another or create a new one; or keep Astrid's defaults only | — | **Decided by Hannah, 14 Nov 2026**, same session and relay. Answer: one question per slot: keep Astrid's default (with its readiness), use one of theirs (most recently edited first), pick another entry, or create a new default from their own workflow (previewed first, with one undo command) |
-| OD6 | Timing | (a) P4.0 now (CPU only), everything else after release 13 publishes; (b) as (a), but P4.1, P4.3, P4.6 and P4.11 start on branches from Agent `main` before release 13 (the advisor's suggestion, 14 Nov), landing only after it; (c) all after release 13 | (a). This planner's brief keeps all phase 4 implementation until release 13 publishes. (b) is cheaper in wall-clock time but rebases work onto a moving release, and P4.1's shape depends on the critique | Pending. Hannah has asked the orchestrator to farm the tasks out; until she picks (b), workers wait for release 13 |
+| OD6 | Timing | (a) P4.0 now on CPU, everything else after release 13 publishes; (b) as (a), but some tasks start on branches from Agent `main` before release 13 and land only after it; (c) all after release 13 | — | **Decided by Hannah, 14 Nov 2026 (about 13:05 UTC)**, in the advisor session: "send this updated plan to the orchestrator to farm out the tasks, including setting up defaults and creating their own defaults if need be." The orchestrator read this as (b) and logged it in its release 13 decisions log (14 Nov, 11:51). Answer: P4.0 (CPU), P4.3, P4.6 and P4.11 start now; P4.1 and P4.4 wait for this scope PR; the rest wait for release 13 to publish. Nothing lands on Agent `main` before release 13 publishes |
 
 ## Source identities
 
