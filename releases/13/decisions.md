@@ -1895,3 +1895,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - (2) An unreadable settings store fails open. Ruling: keep and claim fail closed.
   - **Design pin, ruled:** job reuse follows the claim's recorded bounds (no new pod, never above the original limit or expiry). Status and the receipt surface it when the saved policy is now stricter.
   - Still held out of compose.
+
+## Sat 14:05: Hannah pulls onboarding and warm models into R13; no fixed clock
+- **Hannah, verbatim:** "we should include the rest of the onboarding work and keeping the models warm between tasks and be released when another task comes in or warm down time e[n]ds - get Fable to sense check the current implementing and what we need to do. Rest is okay. And let's not be too anal about arbitrary times, we could even get it done sooner."
+- **IN R13:**
+  1. **All of Plan 20 phase 4.** The Agent line int/20-phase4-r13 merges via compose.sh after the test lane's paired proof. The App (833357167) and Pinokio (c1b5eed) branches fold into R13's App and Pinokio candidates at the release step.
+  2. **Warm models:** a loaded model stays resident between jobs, and is released when another task needs the memory or when warm-down ends. This was T10 plus Plan 32 T5f.
+- **Fable** (session_011EzfW4KxQbf3mB7UevxVdh) sense-checks the current warmth implementation per placement, gives the smallest elegant change, risks and cards, plus a risk read of the phase 4 line. I route the cards; machines (engine) is pre-warned.
+- **"Rest is okay":** the rest of deferred.md stays deferred as listed.
+- **Timeline:** Sun 04:00 is no longer binding. **We freeze when every item is proven**, possibly sooner. Still required, in order: the frozen head's CI comparison; then the live repeat of all cells plus h3 (more steps for edit and v2v, one fresh model download, plus warm-model reuse timing); then Hannah's go.
+- Manager told to push both phase 4 lines now; runner contention no longer applies.

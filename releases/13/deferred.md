@@ -10,7 +10,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Item | Source |
 |---|---|
 | ~~h3_av after publication~~: **pulled into R13** by Hannah (03:35 Sat): i2v, v2v and video-edit run live before publish. Only what that run leaves unproven stays here. | decisions.md (03:20, 03:30 Sat); generation.md:95, 112 |
-| Warm machine reloads a cold engine and its models (Plan 32 T5f, Plan 34 G2/G5) | briefs/smells-out/h1.md:31 |
+| ~~Warm machine reloads a cold engine and its models (Plan 32 T5f, Plan 34 G2/G5)~~: **pulled into R13** with T10 (Hannah, 14:05 Sat) | briefs/smells-out/h1.md:31 |
 | astrid-dev #260: port only if Plan 34 wants its history | evidence/open-prs.md |
 
 ## Plan 50: recorded boundaries, offline harness, dry pod (astrid-dev #640)
@@ -63,7 +63,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 |---|---|
 | T7: the wait reason reaches the CLI | release-record.md:67 |
 | T8: the Runtime blocker list | release-record.md:68 |
-| T10: models stay loaded between jobs | release-record.md:68 |
+| ~~T10: models stay loaded between jobs~~: **pulled into R13** by Hannah (14:05 Sat), with release on memory need or warm-down. Fable sense-check, then cards | release-record.md:68 |
 | T13: CPU journey: two stale tests and the first-claim deadline | release-record.md:68; decisions.md:675 |
 | T14: a dry run of every catalog entry (with T1) | release-record.md:68; decisions.md:676 |
 | Astrid models.lock.json uses the same model record | release-record.md:68; briefs/declarations-t3.md:21 |
