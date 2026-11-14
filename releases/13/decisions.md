@@ -1749,3 +1749,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - (2) run storage.inventory on any errno 122/28 fetch failure.
   - **Also merged:** machines d27e2ad53 (gates: 5 typed fields, cycle broken through cli_shared.py), giving compose 326245663.
   - **h3 is still blocked on Hannah's storage decision.**
+- **10:35: merged a run of gate and test fixes.**
+  - **test lane mypy-env 4debdbd21:** stubs and numpy<2.4 for the hosted mypy step.
+  - **machines ed24df2cd:** scanhook, test-only.
+  - **test lane ruff-sweep e1f3400ff:**
+    - cells' F841 fix;
+    - an I001/E402 import sort on 9 files: the AST is identical apart from imports, and one hand-restored line in generic_host.py;
+    - the lowered baseline locked in: 2100 → 2010 (BLE001 309→260, I001 295→256), decreases only.
+  - **Remaining gate rows, all R12-era:** mypy ffmpeg/command.py 9 against 8 reproduces at R12; the cycles generation↔pack and rendering↔timeline reproduce at R12 (Plan 39); the structure ratchet is #647.
