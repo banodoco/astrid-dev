@@ -1757,3 +1757,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - an I001/E402 import sort on 9 files: the AST is identical apart from imports, and one hand-restored line in generic_host.py;
     - the lowered baseline locked in: 2100 → 2010 (BLE001 309→260, I001 295→256), decreases only.
   - **Remaining gate rows, all R12-era:** mypy ffmpeg/command.py 9 against 8 reproduces at R12; the cycles generation↔pack and rendering↔timeline reproduce at R12 (Plan 39); the structure ratchet is #647.
+- **10:45: int/r13-fd5ff0d9 fast checks:**
+  - **Ruff PASS** (2010 = baseline).
+  - **Mypy PASS:** the ffmpeg row was an artefact of the worker environment.
+  - **Collection gate PASS:** the known set matches, 0 new.
+  - **Import cycles FAIL**, only on generation↔pack and rendering↔timeline. Both reproduce at R12 main 0e1543e0; R12's hosted gate never ran the step.
+  - **Ruling: record both in import_cycles.json**, each with its cause (predates R13, reproduces at 0e1543e0, Plan 39) and cross-linked to the deferred.md row. Any new pair still fails. This is a preexisting row under its plan, per Hannah's exception rule, not a relaxed check.
