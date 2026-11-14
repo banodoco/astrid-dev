@@ -1479,3 +1479,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - job-seam `pinned source is absent` goes to cells (fixture without `.git`).
   - Machines' rows WIP is snapshotted as `r13/machines-m2-rows-wip1`; ETA 05:00.
   - **Incident:** a machines Sol worker read one runtime skill file under `~/.codex`, against the standing rule. Machines reports no credentials were read. The worker has been told, and machines will repeat the rule in every brief. Reported to Hannah.
+- **02:20: orchestrator role reset (Hannah: "be an orchestrator… not getting caught up in the weeds").**
+  - **Machines now owns the engine lane** until release. It adopts my two in-flight workers' results (engine s1-regress, timeline-runtime) and dispatches its own workers for engine, layout and timeline rows.
+  - **The test lane owns the row-to-owner map** and sends rows to lanes directly:
+    - engine, layout and timeline go to machines;
+    - VibeComfy, pins, catalog and foley go to cells;
+    - claim, custody and CLI go to machines.
+  - **Lanes settle with each other.** I get only merge-ready SHAs, the binding tables and blockers no manager can clear.
+  - **I do:** compose.sh merges, freezes, the live GPU runs, the records, Hannah, and the hourly check-in.
+  - I start no more workers of my own.
