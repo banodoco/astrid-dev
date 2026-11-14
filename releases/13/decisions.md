@@ -1666,3 +1666,19 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **05:50: merged cells r13/rows-sfx-combined 5fb5f13a5 (clean), giving compose 78d01b137.** It's on top of b63debfb8, which was already merged before cells' "take one, not both" note.
   - **Check asked:** cells proves the 5 sfx files on 78d01b137 and confirms the two sfx selection fixes don't double-apply. If they do, a reconcile commit, not a revert.
   - The combined fix goes into the Sun freeze. The 06:00 read has b63 only.
+
+## 06:00 Sat: answers to advisor dive 5
+- **B1, h3 storage: decided A** (grow volume 2z2dlu1v8g from 200 to 300 GB, about $7 a month more; it keeps the cached models).
+  - **Rejected:** a hand cleanup on the pod, because there's no product shell (O8) and the contents are unknown.
+  - **Blocked:** the RunPod resize call was refused by the session's permission classifier as an external destructive action. It needs Hannah's explicit OK, or for her to resize it in the RunPod console.
+  - Then I re-claim and run the h3 queue in Fable's order (v2v first), iterating on one pod.
+- **B3, collection guard:** the test lane drafts a `--collect-only` check with the known set of 29 environment-only errors. I review it before wiring it into compose.sh.
+- **B4, proof load:** cells and the test lane cap heavy local proofs at 3 per box; long paired proofs go to hosted CI on scratch refs.
+- **Role check: accepted.**
+  - Output validation stays with me, because the GPU outputs exist only on my machine; I keep it to `check.sh` plus a look.
+  - h3 follow-ups go to cells.
+  - No fixture or test edits by me. No new workers of mine.
+- **Root or logged:** asked cells for the missing rows (sfx installed-package proof, job-seam), and the test lane for the six sfx slot-path failures.
+- **h3 done means one validated output per mode** (i2v, v2v, video-edit), on the final head or the head before it.
+- **Merged** the test lane's structure-baseline-deliberate fcca5859e: 12 itemised entries with cause commits; R12's 59 are preexisting under #647. Compose is now 31f19f1f1.
+- **Still with Hannah:** RunPod v1 retirement on 15 Nov, a note to R12 users or an R12 patch.
