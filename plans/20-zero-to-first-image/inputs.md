@@ -55,6 +55,33 @@
 
 **Proof and limits:** See P3.5 in [tasks.md](tasks.md). Hosted macOS, Windows and Linux runners on CPU reach each branch's first command against a fake, RunPod included. No live GPU tests in this plan (D8, owner 10 Nov): real inference on every branch is recorded as "needs a live run" and belongs to [Plan 34](../34-real-gpu-proof/plan.md). macOS has no managed engine. Wan2GP and providers are excluded.
 
+### Phase 4: local-first (14 Nov 2026)
+
+**Scope decision:** Pending — Hannah gave the direction, but no phase 4 decision is recorded yet (OD1–OD6 below). Next: Hannah answers OD1–OD6 in the scope PR.
+
+- **Source.** Hannah asked the Release 13 advisor (session `session_011EzfW4KxQbf3mB7UevxVdh`) on 14 Nov 2026 to map the onboarding path, make it local-first and add it to Plan 20 as tasks. The orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) relayed the brief to this planner. Her words, verbatim:
+  > "In general, it should probably point to RunPod, but it should only have like a one-line mention of RunPod, and the other general should just be focused on people who are running locally and setting it up."
+
+  > "Map out the path for actually connecting and launching your local ComfyUI instance. Is it easy to connect to it? Does it have an intuitive way to run to it? Does it use their existing models? Does it generate via that?"
+- **Draft.** The advisor's map and draft tasks are committed verbatim as [phase-4-local-first-draft.md](phase-4-local-first-draft.md) (astrid-dev commit `b7dd383`). It answers her four questions: connecting is easy when ComfyUI runs on 8188, but saving the choice is clumsy. Running is not yet intuitive. It uses the existing models and generates through the person's server without changing it. None of this is proven live. The draft's sources were Agent `r13/compose` `176e5ba1`, App `d6ee9af`, Pinokio `d15c58b` and VibeComfy `r13/cells-vc-10`, through read-only explorer passes. Nothing was run.
+
+**Approach:** Extend the same skill in place; no new skill and no new plan. Phase 4 keeps phases 1–3 and narrows the RunPod and managed-engine text to one line each. Alternatives considered:
+
+| Alternative | Why not |
+|---|---|
+| Keep the 9 Nov layout (skill ends at Connected; Plan 32 S2 owns the next step) | Against the 14 Nov direction. The map shows the path stopping at Connected, with nothing saying what to run first (OD1) |
+| A separate local-onboarding skill beside `astrid-setup` | Two skills for one journey. Shipped App builds and the README already link `docs/setup/SKILL.md` |
+| Keep the RunPod walkthrough in the setup skill | About half of the 404-line skill repeats the RunPod skill for three operating systems. One line and a link removes the copy |
+| Download missing models into the person's ComfyUI now | OD4: it changes the person's machine, and the walk has not yet shown it is needed. Name the file and folder instead |
+| Prove only on CPU fakes, as D8 requires | The question is whether the local path works. A fake cannot show minutes to the first image or where an agent guesses, so one local run is asked for (OD3) |
+| _Critique-driven alternatives are recorded under Challenge below_ | |
+
+**Challenge:** Pending — independent critique running. Next: record its findings and the decisions taken.
+
+**Proof and limits:** P4.0 and P4.9 are live walks on a machine with a running ComfyUI and a GPU, which a cloud worker cannot run (OD3). Everything else is proven by focused Agent tests against the existing fake ComfyUI. No rentals. ComfyUI Desktop, a stopped ComfyUI and Wan2GP are not proven.
+
+**Review rounds:** Recommend one round (R4) on the integrated phase 4 result before P4.9's final walk: a user-visible flow and a contract change (P4.2), but no paid action. No review stop. Pending: owner to confirm.
+
 ## Owner decisions needed
 
 Re-checked for the three-phase plan: all nine still apply. D7 is decided by the owner; D1–D6, D8 and D9 were agreed on 10 Nov at the answers below. D3, D5 and D6 name the test that pins each.
@@ -70,6 +97,19 @@ Re-checked for the three-phase plan: all nine still apply. D7 is decided by the 
 | D7 | 1, 2 | The overlap with Plan 32 S2 | **Decided by the owner, 9 Nov (commit c07ea31).** The earlier recommendation, to move S2's `docs/setup/SKILL.md` step to this plan, was reversed: S2 keeps the `docs/setup/SKILL.md` generation step. Plan 20's skill ends at Connected (step 3), with no machine probe and no "Set up generation" section. Not settled by the reversal: S2's App `agentInstructions` line |
 | D8 | 3 | Proof hardware, budget and the weaker agent | **Agreed by the owner, 10 Nov 2026, with one change**, in the [Plan 32 orchestrator session](https://claude.ai/code/session_011EzfVz8zzHLnUqSqMnGUCT): "yeah, i agree on all", then "let's get it going but no live GPU tests". Answer: hosted macOS arm64, Windows x64 and Linux x64 runners on CPU for every row up to each branch's first command, and one smaller model as the "weaker agent" for one row. **No live GPU tests in this plan:** no real RunPod image and no NVIDIA machine row. The GPU-only proofs are recorded as "needs a live run" and left to [Plan 34](../34-real-gpu-proof/plan.md) |
 | D9 | all | Review rounds | **Agreed by the owner, 10 Nov 2026**, in the [Plan 32 orchestrator session](https://claude.ai/code/session_011EzfVz8zzHLnUqSqMnGUCT), answering the orchestrator's message that listed it at the recommended answer: "I AGREE". Answer: R1 = 1 round, R2 = 1, R3 = 2 (not 3). Phase 1: 1 (Agent text and guide tests, no product code). Phase 2: 1 (a few App strings and one card, against an unchanged fixture). Phase 3: at most 2 (paid consent, an engine install consent and a user-visible flow across Plan 32's contracts). R1 has run (one round); R1, R2 and R3 stay. *Review stop:* none recommended for P3.1 (see its row in tasks.md): a late finding would redo only P3.2 and P3.4, and R3 reviews them together before any live run |
+
+### Phase 4 owner decisions (14 Nov 2026)
+
+All six are **Pending: owner to decide.** The recommendations are the advisor's, adjusted where the critique below changed them.
+
+| # | Decision | Options | Recommendation | Status |
+|---|---|---|---|---|
+| OD1 | Does the skill continue past Connected to a first image, with RunPod and the managed engine one line each? | Yes, superseding the 9 Nov "ends at Connected" layout and, for the local path, D7's split with Plan 32 S2; or keep the 9 Nov layout | Yes. It follows from the 14 Nov direction; confirm it | Pending |
+| OD2 | When no shipped entry is ready, does the first image come from the person's own saved workflow? | Yes; or stop and name the missing models | Yes. It matches the 9 Nov line "its proof is a real first image from a saved workflow" | Pending |
+| OD3 | D8 forbids live GPU tests. May P4.0 and P4.9 run on a local machine with ComfyUI and a GPU (no rental)? | Allow local runs, no rentals; or keep D8 as it is and prove on CPU fakes only | Allow local runs; rentals stay excluded. P4.0 does not start until this is decided | Pending |
+| OD4 | May Astrid download a missing model into the person's ComfyUI models folder, with a yes per file? | Not now (name the file and folder); or yes, per file, through VibeComfy's existing `fetch` | Not now. Revisit after the walk | Pending |
+| OD5 | Create a default project when none exists at the first generation, and say so? | Yes, named "My first project" like the App; or refuse, naming the command to create one | Yes | Pending |
+| OD6 | Timing | P4.0 now, everything else after release 13 publishes; or all after release 13 | P4.0 now, if OD3 allows it. All implementation waits for release 13 to publish | Pending |
 
 ## Source identities
 
