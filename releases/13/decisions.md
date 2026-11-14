@@ -2059,3 +2059,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The asset_gaps P2 is already fixed in phase 4 cf49d415.
 - **Recommendation to Hannah:** cut the test head from compose after phase 4 merges. The release continues on its own track; tester findings feed a point release or the next release unless one blocks.
 - The issue-watch session starts once she picks the schedule.
+- **19:05: Hannah's direction.**
+  - **W4 (local idle release) MUST make R13**, with a 30-minute idle warm-down; no longer deferrable at the freeze. Cells told: 30 min, configurable; state whether /free releases VRAM, RAM or both.
+  - **h3_av investigation** → Fable plus Lunas: frames at positions, masks, a precise first frame with existing inputs, correct video-edit usage (our round 6 used a full-frame mask at 1 step, "not using it right"), what's tested, and mask-exercising live requests for the final repeat.
+  - **Default project at setup**, not only at first generation → the phase 4 manager checks the App and setup and sizes the change.
+  - The 4m35s warm image is far too slow (she expects tens of seconds). Fable's read is that per-job preparation and verification dominate; W2 measures the split and W3 removes the re-hash. The W3 default gets decided with that number.
