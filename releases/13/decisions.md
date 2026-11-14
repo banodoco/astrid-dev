@@ -1890,3 +1890,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Paired proof: 0 regressions, 1 fixed.
   - The preexisting `[video/i2v-attached]` engine-selection failure is carded to cells.
   - httpj round 2 (9e0d4313d) is with the test lane and Astra.
+- **13:57: httpj round 2 (9e0d4313d).** The keep defect is fixed and the paired proof is clean, but Astra BLOCKs on two points. Both go to machines as round 3:
+  - (1) ls and release are blocked by malformed saved preferences. Ruling: a user can always see and release a pod; non-spending runs before normalisation.
+  - (2) An unreadable settings store fails open. Ruling: keep and claim fail closed.
+  - **Design pin, ruled:** job reuse follows the claim's recorded bounds (no new pod, never above the original limit or expiry). Status and the receipt surface it when the saved policy is now stricter.
+  - Still held out of compose.
