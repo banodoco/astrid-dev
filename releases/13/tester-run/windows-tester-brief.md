@@ -24,13 +24,18 @@ We want to know what works, what fails, and the exact error when it fails. A fai
 1. **Download what the test needs without asking each time,** and delete it at the end. Tell the person the total once, before you start, and check there is disk space. Never delete a model that was there before.
 2. **Never install node packs or Python packages into the person's ComfyUI.** Adding model files to it is fine.
 3. **Spend no money.** Never use a RunPod or other paid option, even if Astrid offers one.
-4. **Fix small Astrid problems that block you, and share the fix.** If a small change to Astrid's installed code gets a step working (a wrong path, a quoting bug, a missing Windows case), make it, keep going, and record the file and the exact diff in the report straight away. Keep fixes minimal, and say in the cell table which cells ran on patched code. If it needs more than a small change, report it and move on. Don't work around an Astrid problem by changing the person's ComfyUI.
+4. **Fix small Astrid problems that block you, and share the fix.** If a small change to Astrid's installed code gets a step working (a wrong path, a quoting bug, a missing Windows case), make it, keep going, and add the exact diff to `fixes.diff` straight away. Keep fixes minimal, and say in the cell table which cells ran on patched code. If it needs more than a small change, report it and move on. Don't work around an Astrid problem by changing the person's ComfyUI.
 
 **Shell.** Use Windows PowerShell, not WSL. No admin rights are needed. If your shell doesn't keep variables between commands, or isn't PowerShell, put each block in a `.ps1` file and run `powershell -NoProfile -ExecutionPolicy Bypass -File <file>`. The install, the downloads and the video cells run longer than most command time limits: run them in the background and poll.
 
-**Reporting.** Keep one file, `C:\astrid-test\report.md`, and write to it as you go: for anything that fails or surprises you, the command, the exact error and the task ID. Post it to the GitHub issue if you can (`gh auth status`); otherwise the person pastes it. Ask our agent on the issue by starting a comment with `QUESTION:`, and carry on without waiting. Keep tokens and the Windows user name out of what you post.
+**Records.** Everything goes in one folder, `C:\astrid-test\report`, which you zip and attach at the end:
 
-Keep a plain list in the report of **every file or folder this test adds outside `C:\astrid-test`.** The clean-up works from that list.
+- `report.md`: your notes as you go. For anything that fails or surprises you: the command, the exact error and the task ID. Also a plain list of **every file or folder this test adds outside `C:\astrid-test`;** the clean-up works from that list.
+- `log.txt`: every command you run and its full output, appended as you go.
+- `fixes.diff`: any change you made to Astrid.
+- the diagnostics bundle and the images from A and B (part 6).
+
+Ask our agent on the GitHub issue by starting a comment with `QUESTION:`, and carry on without waiting. If you can't post (`gh auth status` fails), the person pastes for you. Keep tokens out of everything in the folder.
 
 ## Part 1: The machine
 
@@ -158,11 +163,19 @@ $t = "http://127.0.0.1:8199"
 
 ## Part 6: Clean up and report
 
-1. **Make the diagnostics bundle first;** it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\astrid-doctor.zip`.
+1. **Make the diagnostics bundle first;** it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\report\astrid-doctor.zip`. Copy the images from A and B into the report folder too.
 2. **Delete every model this test added to the person's ComfyUI,** from your list. If the person asks to keep some, keep those and say which.
 3. **Uninstall Astrid** with the command from part 2, unless the person wants to keep the test build. Note anything left behind: the folders under `%LOCALAPPDATA%` that start with `Astrid`, the `Astrid Runtime` scheduled task, an `astrid` command.
 4. **Delete the test ComfyUI** and everything else on your list.
 
 Never delete a whole `models`, `custom_nodes`, `input` or `output` folder, and never delete a file you didn't add.
 
-**The final report** goes on the issue: the commit from part 2; the machine facts; the cell table; the problems, worst first; every fix you made to Astrid, as a diff; what was downloaded and what the clean-up removed or kept; the doctor bundle and the images from A and B attached. If you can export this agent session, attach it too, after checking it for tokens: it shows what really happened. Keep `C:\astrid-test` until we confirm on the issue that we have what we need.
+**Finish `report.md`** with a summary at the top: the commit from part 2; the machine facts; the cell table; the problems, worst first; the fixes you made; what was downloaded and what the clean-up removed or kept. If you can export this agent session, add it to the folder: it shows what really happened.
+
+**Then zip the folder and attach it to the issue,** with the summary pasted as the comment:
+
+```powershell
+Compress-Archive -Path C:\astrid-test\report\* -DestinationPath C:\astrid-test\astrid-test-report.zip -Force
+```
+
+Check the zip for tokens first. GitHub takes attachments up to 25 MB; if yours is larger, leave out the session export and say so. Keep `C:\astrid-test` until we confirm on the issue that we have what we need.
