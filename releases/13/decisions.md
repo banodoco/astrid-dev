@@ -1565,3 +1565,17 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 
     Each later job runs only if the smoke test passes.
   - **h3 defect for the Fable list:** exact "5/24" is refused on source-backed modes (request_v2.py:62-70 against spec.py:218). 6 frames is the shortest window that works.
+- **04:10: h3 structural review** (Fable lead with Luna helpers and hivemind; `briefs/h3-live/plan.md`).
+  - **Verdict:** nothing structural blocks `--entry h3` in any of the three modes on 21dacd488. All three CPU dry runs are ready. The models are inside the 110 GB lock on the 200 GB volume, and `--consent user_env` isn't needed on RunPod. But h3 has never run on a real GPU on any revision.
+  - **Pod queue reordered:** h3 v2v first (it shows a missing ffprobe within seconds, before paying for generation), then video-edit, the i2v smoke, the 3 s bicycle i2v and the bicycle image edit. Each runs with `--recovery-path`.
+  - **Stop and diagnose on:** ffmpeg missing, a storage refusal, CUDA OOM, an `adaln_proj` or LoRA key error, compose or verify failing, or two preparation-deadline failures in a row.
+  - **Routed to cells:**
+    - (1) h3 is the video default in name only: the plain CLI with `--edit` skips it and falls to ltx-2.3. **My ruling: adopt `r13/h3/plain-inputs` 5fe9ed7a0** after cells judges it, because Hannah said make h3 the default.
+    - (2) `--video-ref` alone infers t2v.
+    - (3) i2v is reference-guided, not first-frame (Hannah asked for first frame): cells sizes it.
+    - (4) the 5/24 lossy float.
+  - **Routed to machines:**
+    - (5) cold-run deadlines for the 53.5 GB weights;
+    - (7) h3 evidence is deleted with the job directory, to be declared through the existing run_logs LogDecl pattern;
+    - ffmpeg in pod preparation, if it turns out missing.
+  - **Anything not done before the Sun 03:45 cut-off goes into deferred.md.**
