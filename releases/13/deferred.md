@@ -86,6 +86,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 |---|---|
 | Lifecycle re-vendor: the lock can't resolve comfy and runpod-launch together (`r13/lifecycle-v2` is parked) | decisions.md:1312-1323 |
 | cm_cli tests (6), already failing before R13 | decisions.md:572 |
+| `audio/hunyuan_video_foley` exposes only seed, video_ref, prompt, but the one local catalog row `hunyuan-foley-local` still declares `diffusion_model` and `vae` picker roles (stale since c4b01ec2b changed templates and kept both bindings). Remote placement skips the binder so the live cell passes; an explicit attached/local run fails binding (`catalog role 'foley' does not match its pinned template input`, vibecomfy.py:215). Root fix: the template exposes optional `diffusion_model` -> HunyuanFoleyModelLoader.foley_checkpoint_name and `vae` -> LoadDACHunyuanVAE.vae_name (diff: astrid-dev evidence/foleybind-template.diff), then an Agent pin/hash update, or drop the stale roles from the row; one declaration either way | cells card foleybind; evidence/foleybind-bug-evidence-pack.md |
 
 ## Runtime (next Runtime plan)
 | Item | Source |
@@ -114,6 +115,8 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | Agent #264 | evidence/open-prs.md |
 | Production-engine tests duplicate or mock around the owned-preparation path; build one shared prepared-engine fixture (cells narrow fix: Agent `r13/rows-ir-bridge` 3573a5b85) | cells-log.md 02:51 Sat; r13/rows-ir-bridge |
 | The shipped census hard-codes counts (executors 54 to 49 at `r13/rows-packs-census`): derive the expected set from the pack manifests, keep a short allow-list for deliberate changes | cells-log.md 02:51 Sat; test_b2_integrated_closure.py |
+| Red-cell characterization tests pin another layer's message wording instead of an error code (cells narrow fix: `r13/sfx-red-ruling` 11f222e36, `_RED[("audio","sfx"),"attached"]`); characterize red cells by error code plus the missing-weight name | cells-log.md 05:15 Sat; machines ruling 05:10 |
+| Integration cells run under the 120 s timeout on a loaded box and share the worktree's `astrid/.packs.transaction.lock` between concurrent runs (load artefacts, no code): give each concurrent run its own pack-lock root | cells-log.md 05:15 Sat; gold-after.log |
 
 ## Outside pull requests (owner revisits; nothing closed)
 | Item | Source |

@@ -1,0 +1,11 @@
+--- a/ready_templates/audio/hunyuan_video_foley.py
++++ b/ready_templates/audio/hunyuan_video_foley.py
+@@ -32,6 +32,8 @@
+ 
+ 
+ PUBLIC_INPUT_METADATA = {
++    'diffusion_model': InputSpec(node=ref('hunyuanfoleymodelloader'), field='foley_checkpoint_name', default=FOLEY_CHECKPOINT_NAME, type='COMBO', required=False, infer_type=False),
++    'vae': InputSpec(node=ref('loaddachunyuanvae'), field='vae_name', default=VAE_NAME, type='COMBO', required=False, infer_type=False),
+     'seed': InputSpec(node=ref('hunyuanfoleysampler'), field='seed', default=DEFAULT_SEED, type='INT', infer_type=False),
+     'video_ref': InputSpec(node=ref('loadvideo'), field='file', default=DEFAULT_VIDEO_REF, type='COMBO', required=True, media_semantics='video', infer_type=False),
+     'prompt': InputSpec(node=ref('hunyuanfoleysampler'), field='prompt', default=DEFAULT_PROMPT, type='STRING', required=True, infer_type=False),
