@@ -1919,3 +1919,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - W6 (me, live): W1 repeated on the W2+W3 build.
   - Deferred: one home for warmth (backends/vibecomfy fingerprint warm session; `_WARM_SESSION_ADAPTERS`, Wan only). OOM eviction for self-managing node packs only if seen.
 - Fable's phase 4 risk read went to the test lane and the manager (P4.3, P4.2, P4.4, P4.10, P4.8, plus no runpod or machines_cli files).
+- **14:32: merged r13/machines-medialist 595da9bc3 → compose ae1c608a7.** This fixes the R12→R13 regression in test_generation_tags: `media list` takes --placement and rejects --target, finishing T3's rename. Test lane: 3 failed → 14 passed.
+  - It's based on 02b76c709 without httpj; httpj is still held.
+  - A freshness re-check on the merged head was asked of the test lane, because the regenerated surfaces came from an older base.
+  - a045b00e unit residuals: 295 failing, 0 regressions in the hosted attribution so far.
