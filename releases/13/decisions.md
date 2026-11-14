@@ -1525,3 +1525,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Six audio ids:** five pass. `[False-music]` is cells', via the ace_step default.
   - **Stopped my timeline worker** (preexisting). Merged lanes-wall 814b88f71 (Lanes wall 150→240), giving compose 21dacd488, for the 06:00 freeze.
   - **Machines did not add a second manager.** Its four workers are briefed to finish by 05:30.
+- **03:20: Hannah's decisions ("go with your recommendation, but make sure anything deferred is captured in future plans").**
+  - **Exception rule:**
+    - *may ship:* a test failing only because of a deliberate R13 change (an old path, layout, fixture or name), named, attributed to its cause commit and listed in the release record;
+    - *never ships:* money, pod custody or release, or the generate path;
+    - preexisting rows with a cited R12 run are R12's, listed under their plan (#636, #637, #639).
+  - **Video: correction to my 02:50 option.** `generate defaults` on 65b1d45c shows all three video slots (i2v, v2v, video-edit) default to `h3`, from the h3_av pack. So a video diagnostic is an h3_av run, and H3 (11 Nov) puts that immediately after publication. Video therefore runs first after publish, with h3_av (Plan 34). Not on the round 4 pod.
+  - **Deferred register:** I'm writing `releases/13/deferred.md`, every deferred item with its target plan, from a read-only extraction of the records. After publication, a planning PR lands each item in its future plan on astrid-dev main.
