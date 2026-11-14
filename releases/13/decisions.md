@@ -1825,3 +1825,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Everything else waits until R13 publishes. P4.0 waits on OD3.
 - **Deviation, noted:** workers start before the scope PR merges. That's by Hannah's explicit direction to farm the tasks out. Their branches merge nowhere near main or r13, and the critic's verdict can reshape them.
 - **Why a new manager, not cells:** cells is on R13's critical rows (h3cov, the jobseam fixture and BasicGuider) until the freeze.
+- **11:52: Hannah answered OD3 "No on local GPU"** (via the advisor). D8 stands.
+  - P4.0 and P4.9 become walks on a hosted CPU runner against the fake ComfyUI (draft 35ba823). P4.0 starts now.
+  - A real first image on a person's own ComfyUI is requested as a Plan 34 row.
+  - OD6, the early start, I count as decided by Hannah's "farm out the tasks" quote.
+  - P4.1 and P4.4 are held until the planner's PR and the critic's verdict.
