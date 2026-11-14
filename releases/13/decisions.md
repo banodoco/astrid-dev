@@ -2087,3 +2087,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Fable:** Q1, the minimal elegant design (e.g. verify once at fetch or first admission, then trust on stat match); Q2, a profile of the generate path for other large inefficiencies, plus cheap per-phase profiling on every generation.
 - **Machines** is on standby for W3 round 5 (default flip, opt-in full verify, contract amendment, tests flipped) once Fable answers.
 - **Standing rule from Hannah, applied from now:** a large user-experience degradation is a release blocker.
+- **19:20: Hannah, via the advisor: the h3 masking tests MUST run. T1–T5 run live on the current build as soon as cells' dry runs (h3dry) report, not only after the freeze; outputs go to her.**
+- **Windows tester run (Hannah): testers run BEFORE publish, as soon as possible; agent only, no editor; a technical pass over the defaults; every download tracked and removed afterwards.** The advisor's brief is e505253b, with an Astra review running.
+  - **My item, the tester manifest:** `release: 13`, full SHAs, no `agent.repo`; Runtime 6855dfa8, VibeComfy dba38f86, lifecycle 7f0b025e; windows-x64 assets already present.
+  - The test head is cut from compose when the queue merges (target tonight or early tomorrow).
+  - It's hosted on astrid-dev, raw https.
+  - It's proved once via the Windows CI journey (install → doctor → uninstall) before testers get it.
+- **Machines' W3 round 5b approved:** accept VibeComfy's post-download verification receipt (schema 1, matching path, both digests, inode/size/mtime_ns against the current fstat), so the first job on a fresh pod also skips the re-read. A deferred row covers VibeComfy's redundant verify re-read.
