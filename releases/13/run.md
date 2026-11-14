@@ -2,22 +2,19 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (02:05 UTC Sat 14 Nov): read this first
+## Now (03:00 UTC Sat 14 Nov): read this first
 
-**Restarted after a 17.5 h stop:** every session hit the weekly limit at about 08:30 Fri; it reset at 02:00 Sat. Money is safe: 0 pods, $88.73.
-- **Live:** all five cells have passed on the claim path, and round 3 (music with defaults, t2i, edit) was green on a fresh claim.
-- **CI:** int/r13-c9636ed4 is the first COMPLETE CI and Lanes run; the test lane's binding table is due 04:00. int/r13-65b1d45c (M2 + livefix) is running; be56a08c was cancelled for a collection error.
-- **Fixes in flight, target 07:00:**
-  - engine rows (shard 1, the custody marker): my worker;
-  - timeline ×134: my worker;
-  - machines' hosted rows;
-  - cells' s8, sfx-foley and `[False-music]`.
-- **Timeline (Hannah, 03:50: publish moved back at least 24 h):**
-  - Sat 06:00: a CI read.
-  - Saturday: h3_av live, all three modes.
-  - Sun 04:00: the final freeze.
-  - Sun 06:00–09:00: the binding comparison, then the live repeat.
-  - Publish no earlier than Sun about 12:00, with her go.
+**Publish moved back at least 24 h (Hannah).** Sat 06:00 is a CI read; the FINAL freeze is Sun 04:00; then the comparison and the live repeat; publish no earlier than Sun about 12:00, with her go. h3_av, all three video modes, is IN this release.
+- **Live, round 4 on int/r13-65b1d45c (M2, claim-then-generate):**
+  - tts PASS (transcript exact);
+  - sfx PASS (fits the prompt; picture sync untested, because the source was a blank test pattern);
+  - t2i, edit and music running.
+
+  The h3 queue follows: v2v, video-edit, i2v smoke, the 3 s bicycle, the bicycle image edit. Every output is validated by eye or ear (`install-r13b/validate/log.md`), and samples go to Hannah.
+- **Compose `88c88c114`:** M2, livefix, lanes-wall, scripts and ir-bridge rows. CI read on int/r13-65b1d45c.
+- **Binding table on c9636ed4:** 140 regressions, being fixed by machines (which owns engine now) and cells. All 173 timeline ids are preexisting (#637).
+- **Rules:** "root or logged"; managers farm work to Codex; `deferred.md` holds every follow-up.
+- **Money:** 1 pod (round 4), balance about $87.9.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
