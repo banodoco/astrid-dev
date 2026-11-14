@@ -1788,3 +1788,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **Validation** for every output is in evidence/live/validation-log.md, frames in evidence/live/frames/r6-*. Samples were sent to Hannah.
 - **The disk-quota fault from round 4 is closed live** by machines' volsize plus the 300 GB resize.
 - **Remaining for h3:** the Sunday live repeat on the final head, with more steps for edit and v2v so prompt adherence can be judged. The test lane's h3 test rows and cells' h3cov (frame coverage 164 vs 108) still have to merge.
+
+## Sat 11:42: the test lane's W75 narrows the R12 regressions
+- **One real R12 regression:** `test_cpu_runpod_public_catalog_and_dry_run`. It's a stale test after the deliberate M2 change (889312e1f: generate takes no paid flags). Ruling: **fix the test, don't take an exception.** Machines updates it the way it updated the earlier M2 rows. The exception rule doesn't apply while a test fix is cheap.
+- **Ten other ids are new matrix tests, not regressions:**
+  - nine fail on "pinned source is absent", routed to cells' jobseam fixture and machines' `lanes` card;
+  - `[video/i2v-attached]` fails on "BasicGuider missing", routed to cells.
+- **The `align` family (32 ids):** machines' `lanes` card owns the bisect, with a hard stop at 15:35. The working lead is be0027945 (engine lookup via `entries.engine_table`, so the `_engine_for` spy sees nothing).
+- **Three earlier flagged ids** are in the count but not in W75; the test lane is reconciling them.
