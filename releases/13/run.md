@@ -12,7 +12,12 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
   - timeline ×134: my worker;
   - machines' hosted rows;
   - cells' s8, sfx-foley and `[False-music]`.
-- **Revised timeline:** final freeze about 07:30, then the final live five-cell run, the CI and the comparison by about 11:00. Publish about 13:00 with Hannah's go.
+- **Timeline (Hannah, 03:50: publish moved back at least 24 h):**
+  - Sat 06:00: a CI read.
+  - Saturday: h3_av live, all three modes.
+  - Sun 04:00: the final freeze.
+  - Sun 06:00–09:00: the binding comparison, then the live repeat.
+  - Publish no earlier than Sun about 12:00, with her go.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 

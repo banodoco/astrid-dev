@@ -1543,3 +1543,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     2. **Structural:** a Fable lead with Luna (Codex) explorers finds the root causes of anything blocking h3 on the M2 path and adjudicates fixes. It writes `briefs/h3-live/plan.md` in about 75 min and routes fixes to cells or machines.
   - **The publish gate now includes the h3 modes.** If a mode fails live with a root cause that can't be fixed by about 10:00, I bring it to Hannah with options. It doesn't ship silently.
 - **03:45: Hannah: "the key is we get everything working, some stuff may be better as a follow up."** Rule for h3 and the remaining rows: ship the smallest sound fix that works now, with no check weakened. The deeper elegant fix becomes a named follow-up in `deferred.md` with its target plan. The Fable lead has been told it may also deploy Lunas freely, for depth.
+- **03:50: Hannah: "push release back too, 24 hours at least."** New timeline:
+  - **Sat 06:00:** a CI read of everything merged by 05:45. Not final.
+  - **h3_av:** all three modes live on Saturday.
+  - **Sun 04:00:** the final freeze (SHAs by 03:45).
+  - **Sun 06:00–09:00:** the binding comparison; the test lane's scheduled task is moved to Sun 05:50.
+  - **Sun:** the live repeat of all cells, h3 included, on the final head.
+  - **Publish:** no earlier than Sun about 12:00, with Hannah's go.
+  - **Risk raised with Hannah:** RunPod REST v1 retires on 15 Nov. After that, R12 can't list or release pods (decisions.md:1254), so R12 users could keep paying until they update. Mitigation is her call: a user note before 15 Nov, telling R12 users to release their pods and not rent until R13; or a minimal R12 patch.
