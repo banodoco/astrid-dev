@@ -1862,3 +1862,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Why now: lanes moved to 16:30 and httpj round 2 is about 2 h out. Seven merged fixes since fd5ff0d9 shouldn't wait 4 h for proof, including h3cov's interrupted full-file run (advisor lesson: don't idle on a single owner).
   - fd5ff0d9's Lanes is on its last job, so the one-running-plus-one-queued rule holds.
   - httpj is held out of compose by machines' own request.
+- **12:38: VibeComfy save-as-entry is slow (about 61 s; witness re-hash with no memo), found by Plan 20.** Ruling: no VibeComfy re-pin into R13 for performance this close to the freeze. Cells fixes it on a branch with a timing test, and it pins after publish. The deferred.md VibeComfy row is added.
