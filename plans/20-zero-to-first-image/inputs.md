@@ -86,6 +86,8 @@
 
 **Proof and limits:** P4.0 and P4.9 are live walks on a machine with a running ComfyUI and a GPU, which a cloud worker cannot run (OD3). Everything else is proven by focused Agent tests against the existing fake ComfyUI. No rentals. ComfyUI Desktop, a stopped ComfyUI and Wan2GP are not proven.
 
+**Run start:** 14 Nov 2026. The orchestrator (`session_011EzfW2L4ou5fDudzKLrc9d`), acting on Hannah's request to farm the tasks out (relayed by the advisor), started a phase 4 manager, `session_011EzfW4R5yz8EETVbzZaLCF`. It may start P4.3, P4.6 and P4.11 now, on Agent `int/20-phase4` cut from Agent `main`. It still needs the owner's go for: P4.0 (OD3); any other task, which waits for release 13 to publish and for OD6; merging to Agent `main` or any release branch; and P4.1, P4.2, P4.4, P4.10 and P4.12 before the critique below has settled their shape. The advisor is `session_011EzfW4KxQbf3mB7UevxVdh`. This start was made by the orchestrator, not recorded from Hannah directly; OD6 stays Pending for the rest.
+
 **Review rounds:** Recommend one round (R4) on the integrated phase 4 result before P4.9's final walk: a user-visible flow and a contract change (P4.2), but no paid action. No review stop. Pending: owner to confirm.
 
 ## Owner decisions needed
