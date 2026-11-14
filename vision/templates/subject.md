@@ -10,11 +10,26 @@ One concise paragraph explaining why this matters and the governing idea behind 
 
 ## Aspirations
 
+<!-- Use [the aspiration template](aspiration.md) for each item below. The
+summary is always visible; its substantive explanation expands first. Optional
+We should / We should never lists live behind a separate, initially closed
+"We should / We should never" toggle inside that explanation. Keep both lists
+with 1-5 single-sentence bullets each, or omit both completely. Do not add empty
+placeholders or move these decisions into a separate App-only copy. -->
+
 ### First distinct aspiration
 
 One sentence explaining what must be true for this aspiration.
 
 A short, substantive explanation with practical implications, boundaries, examples or tradeoffs. This paragraph stays hidden until the reader expands the aspiration.
+
+**We should:**
+
+- State a concrete choice that advances this aspiration in practice.
+
+**We should never:**
+
+- State a meaningful boundary that protects this aspiration from compromise.
 
 ### Second distinct aspiration
 

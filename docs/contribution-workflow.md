@@ -20,7 +20,7 @@
 
 | Writing work | Canonical source and route |
 | --- | --- |
-| Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md); adding or rewording an aspiration or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
+| Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md) and [the aspiration template](../vision/templates/aspiration.md); adding or rewording an aspiration or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
 | Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
 | Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
