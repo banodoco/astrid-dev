@@ -10,6 +10,12 @@ Draft for Plan 20 (Zero-to-first-image onboarding), phase 4. Written by the Rele
 
 > "Map out the path for actually connecting and launching your local ComfyUI instance. Is it easy to connect to it? Does it have an intuitive way to run to it? Does it use their existing models? Does it generate via that?"
 
+> "Wherever they install Astrid from, either from the web app or from the agent, it guides them through that process and gets them set up using the stuff that's already on their machine, ideally, or offers them RunPod, and points them towards the RunPod skill, which will contain all the thing. We probably have the bones of this already; it's the refinement path to actually make this good, and make sure there's one path. The documentation is clean and minimal and elegant, one place per concept, pointing towards relevant documents. Everything runs via the Astrid generate skill."
+
+> "Setting up their defaults is an important thing. We give them defaults, but they might already have workflows on their machine that they recently edited. We should work with them to keep ours, offer to use theirs, biasing towards recent ones, or create new defaults."
+
+> "In any case, sending a link to astrid.haus to actually see the generated image."
+
 This changes two things in Plan 20's 9 Nov layout: the skill carries on past Connected to a first image, and RunPod and the managed engine shrink to one line each with a link to their own skills.
 
 ## The path today
@@ -48,6 +54,43 @@ One promise: **point Astrid at the ComfyUI you already run and get an image from
 
 The skill becomes about 100 lines: each command once, one way of calling Astrid, one fallback (`--doctor`).
 
+## How they get to it: one path from every door
+
+Whichever door a person uses, they should land on the same sentence and the same skill, already installed.
+
+| Door | Today | Target |
+|---|---|---|
+| Agent README | Banner points to the setup skill's public URL | Unchanged; the skill is the path |
+| App, hosted or local | "Copy instructions for your agent" brief installs and stops at Connected; the "Set up generation" card is staged, not landed (P2.3) | The brief ends with the same hand-off sentence; the card after Connected carries it too |
+| Installer output | "Astrid installed" then "Open https://astrid.haus" | One added line: what to ask your agent next |
+| Pinokio | README says Start, then Open Astrid | The same line |
+| Already installed | Skills are synced with install (on by default), so `astrid-setup` is present | "Set up my generation" re-enters the same path |
+
+The hand-off sentence is one string, owned in one place and tested for equality at every door: *"Ask your agent: set up my generation with the astrid-setup skill."*
+
+**The end of the path is a link.** After the first image, the agent gives the person a link that opens their project in Astrid (astrid.haus, or the local editor) with the image in it. The App already accepts links that open a project or timeline directly (`welcomeProgress.ts:79`, `useVideoEditorRouteState.ts:13`), and it already creates "My first project" at Connected. What is missing is the generation result naming that link.
+
+## One place per concept
+
+| Concept | Its one home | Everything else |
+|---|---|---|
+| The path: install, connect, find, use, first image, defaults | `astrid-setup` skill | README, Getting Started, App brief, Pinokio: one line and a link |
+| Generating, placement, defaults, your own workflows | `generation` skill | The setup skill links to its sections and repeats none of them |
+| Your ComfyUI: scan, ports, Pinokio, launching, missing files | `vibecomfy` skill | Linked from the generation skill |
+| Renting a GPU: key, preferences, claim, keeping it warm, release, cost | `runpod` skill | One line and a link from the setup skill; nothing else |
+| Install failures and support bundles | Troubleshooting | One fallback line in the setup skill |
+
+Every generation in the path, the first image included, runs through the `generation` skill's commands. The setup skill never carries a second way to generate.
+
+## Defaults: theirs, ours, or new
+
+After the first image, the skill walks the default slots with the person, one question each, with three answers:
+1. **Keep Astrid's default** (shown with whether it is ready on their machine).
+2. **Use one of yours:** their saved workflows, most recently edited first, saved as an entry and pinned to the slot.
+3. **Pick another shipped entry,** or leave the slot unset.
+
+Today the scan returns saved workflow names only, with no edit time, so "most recent first" is not possible yet.
+
 ## Decisions for Hannah
 
 | # | Decision | Recommendation |
@@ -57,11 +100,13 @@ The skill becomes about 100 lines: each command once, one way of calling Astrid,
 | OD3 | Plan 20's D8 forbids live GPU tests. The walk-through needs one real run on a machine with ComfyUI and a GPU (no rental) | Allow local runs; rentals stay excluded |
 | OD4 | May Astrid download a missing model into the user's own ComfyUI models folder, on a per-file yes? VibeComfy's `fetch` can already do it | Not now. Name the file and the folder; revisit after the walk-through |
 | OD5 | Create a default project when none exists, at first generation, and say so (the App already does) | Yes |
+| OD7 | The path ends by giving a link that opens the project in Astrid with the image in it | Yes |
+| OD8 | Defaults step offers theirs (recent first), ours, or another entry, one question per slot | Yes |
 | OD6 | Timing | P4.0 now; everything else after Release 13 publishes |
 
 ## Tasks (Plan 20, phase 4)
 
-Task ids continue Plan 20's `P` series. Routes per the run contract: `N` default, `X` very hard, `S` deepest reasoning, `T` taste. **Critical path:** P4.0 → P4.1 → P4.5 → P4.9. **Estimate:** about 5 days. **Test inventory:** Agent `tests/test_setup_skill_pack.py`, `tests/test_setup_skill_branches.py`, `tests/test_installer_maintained_guides.py`, `tests/core/generation/test_cli*.py`, `tests/test_cli_surface*.py`; App `src/shared/components/RuntimeConnection/copy.test.ts`. Re-check every path and line below against the code at dispatch.
+Task ids continue Plan 20's `P` series. Routes per the run contract: `N` default, `X` very hard, `S` deepest reasoning, `T` taste. **Critical path:** P4.0 → P4.1 → P4.5 → P4.12 → P4.9. **Estimate:** about 7 days. **Test inventory:** Agent `tests/test_setup_skill_pack.py`, `tests/test_setup_skill_branches.py`, `tests/test_installer_maintained_guides.py`, `tests/core/generation/test_cli*.py`, `tests/test_cli_surface*.py`; App `src/shared/components/RuntimeConnection/copy.test.ts`. Re-check every path and line below against the code at dispatch.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
@@ -75,9 +120,12 @@ Task ids continue Plan 20's `P` series. Routes per the run contract: `N` default
 | P4.5 The skill, rewritten local-first | N | P4.1–P4.4 (it names their commands) | Agent `astrid/packs/setup/docs/SKILL.md` (the source; `docs/setup/SKILL.md` regenerated by `scripts/generate_setup_skill_mirror.py`), `astrid/packs/generation/docs/SKILL.md` "Set up my generation". **Contract card:** `tests/test_setup_skill_branches.py` extracts fenced commands per branch, and `tests/test_installer_maintained_guides.py` pins headings and quoted installer lines; list each assertion the rewrite invalidates | The skill is the six steps above in about 100 lines: each command once, the launcher path defined once, RunPod one line linking the RunPod skill, the managed engine one line linking its section. The RunPod claim walkthrough is deleted here, not copied. One way of calling Astrid in both skills; the "never install during setup" contradiction is gone. Branch test: every fenced command parses and runs against the fakes; no step launches, restarts or writes to a ComfyUI | [ ] |
 | P4.6 A missing model on the user's ComfyUI is explained truthfully | N | — | Agent `astrid/core/generation/backends/comfy_target.py` (about `:606-628`), `asset_gaps.py` (about `:52-73`); their tests | New test fails first: on an attached target the message names the file, its role and the folder from the server's own folder paths, and does not suggest `align --apply` (which writes to the managed engine). The managed-target message is unchanged | [ ] |
 | P4.7 The skill's wording | T | P4.5 | Agent `astrid/packs/setup/docs/SKILL.md` wording only | Plan 20's taste rules; before and after shown to Hannah; P4.5's tests still pass | [ ] |
-| P4.8 Every entry point ends at the same next step | N | P4.5 | Agent `astrid/installer/outcome.py` (one added line after the existing first lines, which the skill quotes; none changed); App: land the staged "Set up generation" card and its repairs (P2.3, R2.1, R2.2) and align its brief; Pinokio `README.md` | The installer's success output, the App card's brief and the Pinokio README each name the skill and the same sentence to give an agent. Installer outcome tests; `copy.test.ts`; a grep test that the three strings match | [ ] |
+| P4.8 Every door ends at the same sentence | N | P4.5 | Agent `astrid/installer/outcome.py` (one added line after the existing first lines, which the skill quotes; none changed); App: land the staged "Set up generation" card and its repairs (P2.3, R2.1, R2.2) and align its brief; Pinokio `README.md` | The hand-off sentence is one string with one owner. The installer's success output, the App brief and card, the README banner and the Pinokio README each carry it. Installer outcome tests; `copy.test.ts`; a grep test that the three strings match | [ ] |
+| P4.10 The first image ends with a link that opens it in Astrid | X | P4.3 | Agent `astrid/core/generation/delivery.py` and the CLI result in `cli.py`; App route handling only if the existing project or timeline link cannot show a new image (`src/app/onboarding/welcomeProgress.ts`, `src/app/hooks/useVideoEditorRouteState.ts`). **Contract card:** the link format is a cross-repository contract; name its one owner | New test fails first: a completed generation's result carries `open_url` for the selected project, hosted or local by how Astrid was installed; the App test opens that URL and lands in the project with the asset present, not on the welcome flow | [ ] |
+| P4.11 Defaults from their recent work | N | P4.4 | Agent `astrid/packs/vibecomfy/local.py:scan` (add each saved workflow's edit time, most recent first; read-only), `astrid/packs/generation/docs/SKILL.md` "Set up my generation" step 4–5 | New test fails first, on the fake ComfyUI: the scan lists workflows newest first with their times. The skill's defaults step offers, per slot: keep Astrid's (with readiness), use one of theirs (recent first, via `--as-entry` then `defaults set`), or another entry. The branch test runs each offered command | [ ] |
+| P4.12 One home per concept in the docs | N | P4.5 | Agent `README.md` and `scripts/render_readme.py`, `docs/getting-started.md`, `docs/setup/README.md`, `astrid/packs/_core/docs/SKILL.md`, `astrid/packs/generation/docs/SKILL.md`, `astrid/packs/vibecomfy/docs/SKILL.md`, `astrid/packs/runpod/docs/SKILL.md` (it gains keep-warm and release if any of that lived only in the setup skill) | Each concept in the table above appears in full in one file; the others carry a line and a link. A test fails if `machines claim` or `credential set runpod` appears outside the RunPod skill, or a generate command appears in the setup skill other than by link to the generation skill | [ ] |
 | P4.9 Proof and completion | N | all rows above | astrid-dev evidence and completion PR; repair rows `P4.9.<n>` | P4.0 repeated on the new path: minutes to first image and the count of commands, against walk 1. The CPU branch test green on hosted CI. Disposition for F-003 | [ ] |
-| R4 Review, 1 round | S | P4.1–P4.8 | read-only | One round on the integrated branch per the run contract; findings become `R4.<n>` | [ ] |
+| R4 Review, 1 round | S | P4.1–P4.8, P4.10–P4.12 | read-only | One round on the integrated branch per the run contract; findings become `R4.<n>` | [ ] |
 
 **Deliberately not in this phase:** adopting a ComfyUI install that is not running; sharing its models folder with the managed engine; discovering ComfyUI Desktop; downloading models into the user's ComfyUI (OD4); Wan2GP (Plan 12); the RunPod path itself (Plan 40 and the machines work).
 
