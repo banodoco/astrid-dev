@@ -1955,3 +1955,30 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - P4.9.2 (`runtime up --wait` port conflict) is deferred to the Runtime plan unless it blocks single-Runtime onboarding (asked).
   - P4.0.5, .6, .16 and .12 → phase 5 rows.
 - **15:46:** P4.9.2 doesn't block single-Runtime users (it only affects two Runtimes or a source checkout). Deferred to the Runtime plan; deferred.md row added. Phase 4 adds R4.I: the MCP `open_url` parity gap the test lane found.
+- **16:16: hostwedge review (machines).**
+  - P1: per-incarnation directories would drop crash recovery of the host's own requests, so it moves to a stable per-executor private base.
+  - P2: no startup raise on a single attempt.
+  - **Ruling (machines, at my preference): the host starts; startup fails only on host-wide custody** (no live epoch, or an unreadable executor-owner record).
+    - A bad attempt whose identity is readable gets the fenced, evidence-free `reconciliation_required` failure, via the sidecar plus read-back.
+    - One whose identity is unreadable gets NO write (a guessed fence could fail the wrong attempt). It is quarantined with every byte kept and listed under recovery_blocked on host status and preflight, with a recovery step, and its lease expires on the Runtime side.
+  - Cells is on hostwedge2; test lane proof after machines' read.
+- **16:28: W3 Astra review found no P1. Trust-boundary ruling: option (a), accepted (machines proposed, I agree; Hannah informed and may choose (b)).**
+  - The verification records live in the engine root, which same-user ComfyUI code can write. That code can already rewrite the venv, the source and the receipts, so the cache is "an optimization for trusted writers on reliable metadata, not tamper-proof evidence against engine-user code."
+  - Restoring tamper evidence needs a separate UID or sandbox, deferred post-R13.
+  - Alternative (b): W3 off for local-managed until that isolation exists.
+  - Round 2 (about 90 min): st_dev in the key with a schema bump; a non-UTF-8 filename becomes a cache miss; the test drives the real wiring.
+- **16:33: machines lanes is ready**, r13/machines-lanes 8cebc4e2a (no httpj).
+  - All 41 hosted local-managed ids were traced; 40 pass serially. The h3 dry_run=live row is left to the hosted run.
+  - One pinned-source fixture replaces the synthetic installs; the integrity refusals are still tested.
+  - Every original matrix assertion is AST-identical.
+  - Product fixes: the engine_custody owner marker is published once under a lock (a launcher/child race), and the trust-mode result exposes public fields only.
+  - It merges together with the test lane's lanes-comfy-source workflow. The test lane proves both paired against 941fca2a4, with an Astra read of the engine_custody change.
+  - W3 handles the `file_fact(verification=)` wrapper interaction.
+- **16:45: phase 4 handover SHA bea57349a** (contains compose 941fca2a4; VibeComfy dba38f86).
+  - R4.F, R4.G (stock seed shape), R4.H and R4.I (open_url on MCP, CLI and tasks_show via one helper) are all in.
+  - 452 passed; 3 base failures.
+  - The re-walk passed all 11 checks: Run A took 1.5 min and 6 commands (walk 1: about 4 min and 21); Run B took 0.3–0.7 min and 3 commands.
+  - The test lane runs the delta proof.
+  - The MCP parity census tests fail on compose too; the test lane classifies them, then the phase 4 manager updates the census for both in one change.
+  - **P4.9r.1: `seed_used` = 0 in receipts is likely real** (my live W1 data root shows 0 too). The phase 4 manager traces it.
+  - The apply path end to end (P4.9r.3) becomes part of the final live repeat's fresh-download step.
