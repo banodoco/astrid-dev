@@ -1691,3 +1691,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **mcpc 5158964ba (money path, ROOT):** an MCP, `--json` or non-TTY `machines claim` without `--consent paid` refuses before any import, Runtime access, quote or provider call. A new test drives the real MCP dispatch under runpod_guard, and 2 of its 3 cases fail before the fix.
   - **edge3 be0027945:** managed_preparation reaches its engine through core's `entries.engine_table`. Structure findings 102→99.
   - **Still for Sun:** the volume card (round 5, including making the h3 "resume" message true) and the 4 remote_machine_cpu rulings.
+- **06:15: merged cells r13/music-slot-default a7ef0489a.** It makes the music default ace_step (priority 20, above minimax at 10), per my 02:25 ruling.
+  - **Proof:** 0 regressions. The four default-entry expectations now name ace_step.
+  - **Honest note from cells:** the `[music]`/`[tts]` receipt ids pass in isolation on the base too, and time out only under parallel load. So this change stands on the live-proof ruling, not on those tests.
