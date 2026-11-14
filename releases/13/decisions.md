@@ -2107,3 +2107,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **To machines, after 5/5b:** P4 (polling 1→5 s; the source-digest memo; about 1 h), then P3 (a `timing` block with `unaccounted` in every result, `generate --json` and `tasks show`; about half a day; Hannah's profiling ask).
   - **The first job on a fresh pod (13m19s):** about 9 min is bootstrap plus engine install, because only models persist on the volume. P6 (persist the engine environment on the volume) is the largest saving and isn't small. **Hannah decides whether it's before release.**
   - The tester brief is corrected after Astra's review (advisor/windows-tester-run 04c125da). Hannah asked for it on astrid-dev main, which needs a PR.
+- **19:16: Hannah.**
+  - (1) Back-to-back image generations on the same model setup must be measured: three t2i in a row on one pod with per-phase timing, as P1 right after W2 merges and again in the final repeat.
+  - (2) Confirmed: the live h3 mask round includes the start-frame-only test (T3: a still clip keeps frames 0–3, the rest regenerates; a seam check), T1's frame-0 comparison, and h3first2's precise first frame when ready.
+  - (3) **YES to P6, persisting the installed engine environment on the volume, before release.** A dedicated session (session_011EzfW4Qiu4KtMTg5ncnYNc) designs (≤1 page, about 30 min) and builds on r13/engine-on-volume. Machines reviews. Test lane 2 proves it, then I prove it live (claim, job, release, claim, job: timed).
