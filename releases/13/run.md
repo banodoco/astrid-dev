@@ -2,25 +2,18 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (09:00 UTC Sat 14 Nov): read this first
+## Now (11:00 UTC Sat 14 Nov): read this first
 
 **Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00.**
-- **CI:** int/r13-6e1c34e2 took regressions from 141 to 1. int/r13-a4d893c8 is running; int/r13-2f45835a is queued and carries the collection gate's first run (known set matched; the env fix merged).
-- **Compose `3ff2cc648`**, merged since 07:00:
-  - vc8 pin (the LTX t2v regression fixed);
-  - lanes-timeouts;
-  - h3 plain-inputs (h3 is the video default in practice);
-  - machines' hosted-eng and hosted-rp;
-  - collection-gate-always and its env.
-- **Gate fixes before Sun 03:45:**
-  - ruff: one I001/E402 sweep plus cells' F841, then the lowered baseline locked in;
-  - mypy: 5 typed fields;
-  - the new generation↔machines_cli cycle, broken at the root (machines `gates`, by 11:45);
-  - vc9: the LTX LoRA and text-encoder digests;
-  - the volume card, after re-review.
-- **Live:** round 4 on M2 validated. **h3 is blocked** until Hannah's storage decision.
-- **Money:** 0 pods, $86.87.
-- **Open with Hannah:** storage, and the R12 v1 note.
+- **Live:** the volume is now 300 GB (Hannah). **Round 6, the first h3 GPU run**, is under way on e51723152 (pod ciyddchaezkjs1): v2v (with the cold download), then video-edit, the i2v smoke and the 3 s bicycle.
+- **CI:**
+  - int/r13-fd5ff0d9 passes the ruff, mypy and collection gates; cycles are recorded as R12-era (62c2317e6).
+  - Last regression against R12: the vc10 pin should clear it.
+- **Must fix before the freeze:** 45 local-managed Lanes failures (14 R12 regressions on the generate path; the "align" event is missing). The test lane is root-causing them (W73).
+- **Machines:** volsize (network-volume capacity, plus inventory on errno 122) conflicted with compose. It's re-merging.
+- **Compose `e51723152`.**
+- **Money:** 1 pod, about $86.
+- **Hannah:** no R12 users, so no note is needed.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
