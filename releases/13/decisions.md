@@ -2131,3 +2131,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   **Test-design gap:** assets/bike.mp4 is a synthetic colour-bar clip, so prompt adherence on edits is unmeasured. Cells rebuild the package from a real clip (T1's own bicycle output) for the final live repeat. Evidence is in evidence/live/h3m/.
 - **20:30 UTC Windows dry proof GREEN** (run 43636566445; windows/tester-a921b7dc 1a12f3c27; manifest astrid-dev c6e7dfb1): install from the tester manifest in 9m22s; agent.sha matches; doctor bundle; uninstall with delete-data; no leftover folders and the scheduled task is gone. At 02:00 only the SHA changes, the pins are checked by lane 2 before the push, and the workflow stays as 1a12f3c27 has it.
 - **20:55 UTC hostwedge round 5 merged:** r13/host-wedge 7e01b773a → r13/compose **f26c8127f**. W103 (0755 data root, not chmodded): 0 candidate-only failures across 18 files, 2 fixed, new tests 116/116, the round 4 regressions back to baseline; Astra W104 APPROVE (notes in deferred.md).
+- **20:59 UTC SEVEN-DAY LIMIT at allowed_warning** (seen on the P6 and machines sessions; it resets Sat 21 Nov 02:00 UTC). By the standing rule I've told Hannah and cut model use:
+  - all lanes do only R13 merge-queue work; no exploratory proofs, new cards or deferred hardening;
+  - Codex workers are preferred (separate quota), and Claude helpers use the cheapest model that fits;
+  - the advisor skips the 23:30 dive, and its 05:30 dive covers tester readiness only;
+  - h3first2 is parked;
+  - the phase 4 manager stands down after the final proof;
+  - P6 stops at a reviewable SHA.
+  The priority order is the tester head by 07:00, then the queue merges, the freeze and the live repeat.
