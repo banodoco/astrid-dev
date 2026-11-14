@@ -1700,3 +1700,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Shard walls:** s1 took 1:29 (was 2:21) and s6 took 1:47 (was 2:30), both well under the wall.
   - **Merged machines 580e2b703** (recself, test-only; failure_receipt 44/44), giving compose a4d893c8f.
   - **The volume card is NOT ready:** a review found 3 P1s and 2 P2s, and round 7 fixes them by Sun 01:00 with a clean re-review. It doesn't unblock h3; that still needs Hannah's storage decision.
+- **08:00: froze int/r13-a4d893c8** (a4d893c8f), queued behind 6e1c34e2's Lanes.
+  - **Adds:** MCP consent, the music slot default, the collection gate (its first hosted run), rows3, sfx combined, the structure baseline and recself.
+  - **Still to come for Sun:**
+    - cells: h3 plain-inputs (h3merge), the vc8 pin and engine_facts;
+    - machines: the volume card.
+  - **h3 is still waiting on Hannah's storage decision.**

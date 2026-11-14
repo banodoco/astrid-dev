@@ -2,25 +2,16 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (07:00 UTC Sat 14 Nov): read this first
+## Now (08:00 UTC Sat 14 Nov): read this first
 
 **Publish no earlier than Sun about 12:00, with Hannah's go. The final freeze is Sun 04:00.**
-- **Live:** round 4 on M2 passed all five cells plus a real bicycle edit, all validated.
-- **h3 is blocked on volume space.** The resize (200→300 GB, about $7 a month) is decided but needs Hannah's OK; the permission classifier refused it. The other route is machines' volume card (preflight plus storage.inventory), due Sun 01:00.
-- **Compose `d8c116f18`.** Merged since 06:00:
-  - MCP claim consent, a money-path root fix (b1136626a);
-  - the music slot default (a7ef0489a);
-  - the collection gate (86326310f);
-  - rows3 (a50bfda18);
-  - sfx combined, verified with no double-apply (5fb5f13a5);
-  - the structure baseline, itemised (fcca5859e).
-- **CI:** int/r13-05826d63 reports about 07:30; int/r13-6e1c34e2 is queued.
+- **CI:** int/r13-6e1c34e2 took regressions from **141 to 1** (the i2v-runpod selection id, expected to clear with vc8 or h3 plain-inputs). int/r13-a4d893c8 is frozen 08:00 (with the collection gate).
+- **Live:** round 4 on M2: all five cells plus the bicycle edit validated. **h3 is blocked on volume space**, awaiting Hannah's storage decision (the resize to 300 GB was refused by the session's permission classifier).
 - **Before Sun 03:45:**
-  - cells: h3 plain-inputs (h3merge about 08:00), vc8 plus one pin (the LTX t2v regression), engine_facts;
-  - machines: the volume card.
-- **Lanes:** all active; seven-day limits `allowed`.
+  - cells: h3 plain-inputs, the vc8 pin (the LTX regression) and engine_facts;
+  - machines: the volume card (round 7 after review).
 - **Money:** 0 pods, $86.87.
-- **Open with Hannah:** the storage resize, and the R12 note for the v1 retirement.
+- **Open with Hannah:** storage, and the R12 v1 note.
 
 **Candidate:** `r13/compose` `175102ea1`. Merged since 06:00: dp12b, cells-vc-5 (z-image and qwen-edit records), low-disk release.
 
