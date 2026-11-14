@@ -1706,3 +1706,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - cells: h3 plain-inputs (h3merge), the vc8 pin and engine_facts;
     - machines: the volume card.
   - **h3 is still waiting on Hannah's storage decision.**
+- **08:05: merged cells r13/compose-pin-vc8 de9a2a130.**
+  - **What it lands:** the never-merged #342 fix (the LTX t2v route is prompt-only, plus audio scalar types and admission tests), and ONE pin to VibeComfy cells-vc-8 8d64b083.
+  - **Root:** the LTX t2v catalog route and its template declare the same ports.
+  - **Proof:** 519 tests, 0 regressions; the six ltx-2.3 t2v/flf regression ids are fixed.
+  - **Left:** 3 reds tied to the LTX LoRA and text-encoder digests (i2v-runpod and two new dry-run tests). vc9 pins them through 2 HF metadata reads, followed by a small additive pin commit.
