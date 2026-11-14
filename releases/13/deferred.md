@@ -64,6 +64,7 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 | T7: the wait reason reaches the CLI | release-record.md:67 |
 | T8: the Runtime blocker list | release-record.md:68 |
 | ~~T10: models stay loaded between jobs~~: **pulled into R13** by Hannah (14:05 Sat), with release on memory need or warm-down. Fable sense-check, then cards | release-record.md:68 |
+| One home for warmth: `backends/vibecomfy.py` fingerprint warm session (frees on any fingerprint change) and `_WARM_SESSION_ADAPTERS` (Wan only) sit off the R13 warm path. Plus: release before the next job after an OOM-classified failure, only if a self-managing node pack (TTS, Foley, h3) is seen to OOM | Fable warm-models check, decisions.md 14:12 Sat |
 | T13: CPU journey: two stale tests and the first-claim deadline | release-record.md:68; decisions.md:675 |
 | T14: a dry run of every catalog entry (with T1) | release-record.md:68; decisions.md:676 |
 | Astrid models.lock.json uses the same model record | release-record.md:68; briefs/declarations-t3.md:21 |

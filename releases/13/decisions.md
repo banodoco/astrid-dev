@@ -1907,3 +1907,15 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - Manager told to push both phase 4 lines now; runner contention no longer applies.
 - **14:06: phase 4 × machines guides conflict ruled.** Setup keeps phase 4's single RunPod line (Hannah's direction). Machines' claim-first safety rule is re-homed to the RunPod skill and widened to every shipped skill: every `machines claim` parses with --consent paid, --max-usd, --deadline and --for, and no generate command carries a paid flag. The RunPod skill's claims gain --deadline.
 - **14:04:** the phase 4 manager's push was refused by the auto-mode classifier ("Undermining Oversight"). It didn't route around it. **Hannah was asked to approve it in that session.**
+- **14:12: warm-models sense-check (Fable, four Luna passes, file:line cited).**
+  - Models ALREADY stay loaded between jobs. The host does no residency control, the engine is handed on, and the pod reset frees nothing. ComfyUI evicts by itself when another model needs VRAM. RunPod's idle timer is the warm-down.
+  - Missing: proof, visibility, a local-managed idle release, and the real per-job cost, which is a full re-hash of every model file on every preparation (managed_preparation.py:539-551).
+  - **Cards, all IN R13:**
+    - W1 (me, live, about $0.30): t2i, t2i, edit on bb89b3f2b as the baseline. **Started 14:12.**
+    - W2 (machines): the per-job engine-log slice, VRAM before and after, and verification seconds.
+    - W3 (machines plus Astra): skip the re-hash on a matching verification record, using the same key as cells' VibeComfy witness memo.
+    - W4 (machines): local-managed idle → `release`.
+    - W5 (cells): the "what warm means" docs.
+    - W6 (me, live): W1 repeated on the W2+W3 build.
+  - Deferred: one home for warmth (backends/vibecomfy fingerprint warm session; `_WARM_SESSION_ADAPTERS`, Wan only). OOM eviction for self-managing node packs only if seen.
+- Fable's phase 4 risk read went to the test lane and the manager (P4.3, P4.2, P4.4, P4.10, P4.8, plus no runpod or machines_cli files).
