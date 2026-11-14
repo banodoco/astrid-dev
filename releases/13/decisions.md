@@ -1962,3 +1962,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - A bad attempt whose identity is readable gets the fenced, evidence-free `reconciliation_required` failure, via the sidecar plus read-back.
     - One whose identity is unreadable gets NO write (a guessed fence could fail the wrong attempt). It is quarantined with every byte kept and listed under recovery_blocked on host status and preflight, with a recovery step, and its lease expires on the Runtime side.
   - Cells is on hostwedge2; test lane proof after machines' read.
+- **16:28: W3 Astra review found no P1. Trust-boundary ruling: option (a), accepted (machines proposed, I agree; Hannah informed and may choose (b)).**
+  - The verification records live in the engine root, which same-user ComfyUI code can write. That code can already rewrite the venv, the source and the receipts, so the cache is "an optimization for trusted writers on reliable metadata, not tamper-proof evidence against engine-user code."
+  - Restoring tamper evidence needs a separate UID or sandbox, deferred post-R13.
+  - Alternative (b): W3 off for local-managed until that isolation exists.
+  - Round 2 (about 90 min): st_dev in the key with a schema bump; a non-UTF-8 filename becomes a cache miss; the test drives the real wiring.
