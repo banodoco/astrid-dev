@@ -1616,3 +1616,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - cli_gold, sfx, the ltx digest and CLIPLoader go to cells;
     - the slot_path stand-in goes to the test lane;
     - activation ×11 and g28 [settlement] are R12-preexisting by id.
+- **04:30: merged machines 552747f19 (the h3 evidence card).**
+  - **What it adds:** h3's preparation, plan, compilation, composition and verification evidence is declared through the existing `run_logs`, so `astrid tasks logs` keeps it after cleanup. A preparation timeout tells the user to "rerun to resume the download".
+  - **Proof:** 4 new tests, each failing before; no regressions.
+  - **Follow-up:** sizing the deadline from the bytes still to fetch is in deferred.md.
