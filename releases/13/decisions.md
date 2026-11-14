@@ -1741,3 +1741,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **10:15: int/r13-2f45835a unit shards.** 306 failing ids against 321 (22 cleared, 7 new). Regressions: 1 (i2v-runpod), which vc10, now merged, clears.
   - **New:** h3 ×4 from h3 plain-inputs (the entry-description required flag, and PIL can't read an 8-byte fixture PNG), routed to cells. LTX ×2, cleared by vc10.
   - **Merged the d18 harness wait f45f121ba:** the test's own futures bound goes from 1 s to 10 s; the product timeout and assertions are unchanged. It passes 3/3 locally and on R12, so it's a flake on a loaded shard. Ruling: a test harness bound, not a check.
+- **10:25: storage probe on compose 4cf9341a8** (pod ew8ec0cga836h8, $0.39, released; census 0 pods, $86.37).
+  - **What happened:** the volume card's preflight logged "storage capacity could not be measured; proceeding" on the RunPod network volume. The fetch then failed again with `Disk quota exceeded` on the two big h3 weights, and the inventory didn't run because it's tied to the refusal.
+  - **Class:** the check can't see the one quota that matters.
+  - **Routed to machines:**
+    - (1) measure network-volume capacity: the RunPod-reported size minus a bounded usage walk, or the mount's quota tooling;
+    - (2) run storage.inventory on any errno 122/28 fetch failure.
+  - **Also merged:** machines d27e2ad53 (gates: 5 typed fields, cycle broken through cli_shared.py), giving compose 326245663.
+  - **h3 is still blocked on Hannah's storage decision.**
