@@ -1,6 +1,6 @@
-# Warm-job latency
+# Generation speed
 
-**Project:** Warm-job latency
+**Project:** Generation speed
 
 **Goal:** When the model is already loaded, a generation returns in about the time the model takes: under 5 seconds of overhead on a rented machine, then under half a second, and under a tenth of a second on a creator's own computer.
 
@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 9–13
+**Estimate:** 3–5
 
 **Waiting on:** [Release 13](../../releases/13.md) publishing with the first tier of fixes, and the owner's go
 
@@ -18,47 +18,70 @@
 
 ## Outcome and scope
 
-On 14 November 2026 a second image job on a warm rented machine took 242 seconds. ComfyUI spent 2.9 of them generating. The rest was Astrid repeating its cold path: re-checking an installation that had not changed, starting new processes, talking to the machine one small step at a time, and making the caller wait for clean-up.
+On 14 November 2026 a second image job on a warm rented machine took 242 seconds. ComfyUI spent 2.9 of them generating. The rest was Astrid repeating its cold path around ComfyUI: re-checking an unchanged installation, starting new processes, talking to the machine one small step at a time, and making the caller wait for clean-up.
 
 When this project is done:
 
 - **Rented machine, warm, same model:** overhead (wall time minus the model's own time) is under 5 seconds, then under 0.5 seconds.
-- **Creator's own computer, warm (Astrid-managed or their own ComfyUI):** overhead is under 0.1 seconds for a caller that is already running (the agent, the SDK, the App); the command line is at the floor of starting a process, about 0.1 seconds.
+- **Creator's own computer, warm (Astrid-managed or their own ComfyUI):** overhead under 0.1 seconds for a caller that is already running (the agent, the SDK, the App); the command line sits at the floor of starting a process, about 0.1 seconds.
+- **First job and model switches are no slower than they must be:** a fresh rented machine does not reinstall an engine environment it has installed before, and the node and installation checks are cheap on every path.
 - **Every second is accounted for.** Each result carries a timing breakdown whose parts add up to the wall time, with any remainder shown as `unaccounted`.
-- **It stays that way.** Tests count remote operations, process starts, polls and hash passes on a warm job, and fail when a budget is exceeded.
+- **It stays that way.** Tests count remote operations, process starts, polls and hash passes on a warm job, and fail over a budget.
 
-Included:
+The estimate is in days of elapsed time at agent speed. Builds here are hours; the time goes to design and custody review rounds, paired proof, frozen-head CI and live runs.
 
-1. **Phase 1, a resident Astrid job service on the rented machine.** Started once when the claim is attested, it holds the verified state and compiled schema in memory, takes each job in one exchange and returns the result and its evidence in the same exchange. Jobs still pass through Astrid: the same compile, validation, job record, evidence and settlement.
-2. **Phase 2, rented under 0.5 seconds.** A held-open connection, completion pushed over ComfyUI's websocket, schema and compiled workflows cached per engine start, one hash pass.
-3. **Phase 3, local under 0.1 seconds.** The same caches and push on the local path, admission and results without polling, evidence after the result, a thin command line.
-4. **Carried from Release 13:** any first-tier card that misses the Release 13 freeze (listed in [tasks.md](tasks.md)).
+### The principle: lean on ComfyUI
 
-Not included: model load time, generation time, the first job on a fresh machine (installing the engine environment is its own work), and provider start-up time.
+ComfyUI already validates a graph when it is submitted, keeps models loaded and evicts them when another needs the memory, caches the outputs of unchanged nodes between jobs, reads and writes its own input and output folders, and announces completion over a websocket. On a warm job Astrid should use those, not repeat them.
+
+Astrid's own layers are needed in three places only:
+
+1. **Before money is spent.** A job ComfyUI rejects on a rented machine has already cost the rental. ComfyUI can also queue the valid branches of a graph while reporting errors on the rest.
+2. **When nothing is submitted.** Dry run, readiness, listings and download planning need an answer without a job.
+3. **Proof of what ran.** ComfyUI lists file names, not verified bytes, and a loaded node class does not prove a pinned source. Pinned digests, receipts and custody are Astrid's.
+
+Everything else on a warm job is a duplicate. The table in [inputs.md](inputs.md#planning-evidence) gives each heavy step, what ComfyUI does, what Astrid adds and the leaner design.
+
+### Included
+
+1. **Phase 1, rented under 5 seconds.** A warm job stops being the cold path run again: no process starts on the machine, no re-audit, one exchange each way. **Design first:** the first sketch failed its review, and the phase opens with a design round led by the pod-custody owner.
+2. **Phase 2, rented under 0.5 seconds.** A held-open channel, completion by push, compiled workflows reused.
+3. **Phase 3, local under 0.1 seconds.** The narrow, change-driven check; push for admission, completion and results; one hash pass; a thin command line.
+4. **Phase 4, the first job.** The engine environment kept on the volume; a node receipt; one installation audit; what a model switch costs, measured and reduced where Astrid causes it.
+5. **Carry-overs from Release 13,** each as its own task: listed in [tasks.md](tasks.md).
+
+Not included: the model's own load and generation time, and the provider's machine start-up time.
 
 ## Existing work and decision
 
-Release 13 delivers the first tier on the existing path: a per-claim attestation so later jobs skip re-verification, one bundle each way, the result returned before the reset, faster polling, and per-phase timing. That is expected to bring a warm rented job to roughly 30 to 45 seconds of overhead. It cannot reach 5: a process start on the machine and the remaining round trips cost seconds each.
+Release 13 delivers the first tier on the existing path: a per-claim warm attestation, bundles each way, faster polling, per-phase timing, one schema fetch and compile per job, and one hash pass on delivery where proven in time. That is expected to bring a warm rented job to roughly 30 to 45 seconds of overhead; it cannot reach 5.
 
-This project builds on that attestation, the existing engine supervisor, and the authenticated engine endpoint that already reaches a loopback port on the machine. The alternative of sending warm jobs straight from the host to ComfyUI was designed and rejected: it would give rented jobs a second code path and move custody checks. Evidence, alternatives, the critique and the owner's choices are in [inputs.md](inputs.md#planning-evidence).
+Three shapes for Phase 1 were examined; the evidence and the reviews are in [inputs.md](inputs.md#planning-evidence):
+
+- **The host talks straight to ComfyUI on the machine.** Rejected by the owner: rented jobs must still pass through Astrid.
+- **A new job service on its own port.** The engine endpoint is bound to the engine's one port and the engine supervisor holds one engine; both would need new work, one of them in the external lifecycle package.
+- **Admit the job to the machine's resident Runtime host and keep its executor warm.** The least new machinery, but its first design note was stopped at review: today's pod job does not use the pod's Runtime, the per-job reset replaces that Runtime, and settlement and the watchdog deadline must complete before success is reported.
+
+So Phase 1 begins with a decision, not a build: which execution boundary on the machine stays resident, and what the per-job reset is for.
 
 ## Sequence and readiness
 
-Phase 1 first: it removes the most seconds and defines the protocol the later phases reuse. A review stop follows the protocol and the supervision design, before the service is built on them. Phase 2 and Phase 3 share three tasks (schema and compile cache, websocket completion, hash once) and can run in parallel after Phase 1's protocol is reviewed. Nothing here starts before Release 13 publishes and the owner starts a run. Tasks, routes and the critical path are in [tasks.md](tasks.md).
+Phase 4's small tasks and Phase 3's independent tasks can start as soon as a run is authorized; they do not wait for Phase 1's design. Phase 1 runs design, review stop, build, custody review, live proof. Phase 2 follows Phase 1. Two tasks need a change in another repository (VibeComfy for completion by push, the Runtime for admission by push) and are sequenced around those pins. Tasks, routes and the critical path are in [tasks.md](tasks.md).
 
-Constraints: custody and money bounds do not move. A service that cannot prove it is the one the attestation describes is not used; the job takes the full path. Paid live runs are the orchestrator's.
+Constraints: custody and money bounds do not move. Paid live runs are the orchestrator's.
 
 ## Interfaces and handoff
 
-**Consumes:** Release 13's warm attestation record and timing block (astrid-agent, the Release 13 tag), the engine supervisor (`astrid/core/generation/engine_custody.py`), the engine endpoint transport (`astrid/core/generation/engine_endpoint.py`, `engine_transport.py`) and the pinned `runpod-lifecycle` version.
+**Consumes:** Release 13's warm attestation, model-verification record and timing block (astrid-agent at the Release 13 tag); the engine supervisor (`astrid/core/generation/engine_custody.py`); the engine endpoint transport (`astrid/core/generation/engine_endpoint.py`, `engine_transport.py`); the pinned `runpod-lifecycle`, VibeComfy and Runtime versions.
 
-**Produces:** a versioned job-service protocol (one request, one response carrying result, evidence and timing); budget tests that later work must keep green; and a timing block whose parts sum to the wall time. Phase 2 may need a lifecycle change to allow websocket upgrades through the engine bridge; that is a cross-repository contract change and is called out in its task.
+**Produces:** a reviewed design for resident execution on a rented machine; a shared meter and budget tests that later work must keep green; a timing block whose parts sum to the wall time; a workflow-scoped readiness check other features can call. Cross-repository changes (VibeComfy websocket completion, Runtime push admission, any lifecycle change Phase 2 needs) are each called out in their task.
 
 ## Completion
 
-- A live run on a rented machine: the same image model three times, a video edit twice, then the image model again. For the second and third image jobs, wall time minus ComfyUI's reported time is under 5 seconds after Phase 1 and under 0.5 seconds after Phase 2, with `unaccounted` under 5% of the wall time.
-- A local run on an Astrid-managed engine and on a person's own ComfyUI: median overhead under 0.1 seconds over twenty warm jobs from a resident caller.
-- The budget tests pass and are part of the standing suite.
-- Negative cases: a restarted supervisor, a new workflow requirement, an unreachable service and a corrupt or missing attestation each take the full verified path and say so in the timing block.
+- **Rented, live:** the same image model three times, a video edit twice, then the image model again, on one machine. For the second and third image jobs, wall time minus ComfyUI's reported time is under 5 seconds after Phase 1 and under 0.5 seconds after Phase 2, with `unaccounted` under 5% of the wall time.
+- **Local:** on an Astrid-managed engine and on a person's own ComfyUI, median overhead under 0.1 seconds over twenty warm jobs from a resident caller.
+- **First job:** on a fresh machine with a volume that has run Astrid before, the time from claim to the first result, less model load and generation, is reported and has no reinstall in it.
+- **The budget tests** pass and are in the standing suite.
+- **Negative cases:** a restarted engine, a new workflow requirement, a changed model folder, an unreachable warm executor, and an unknown submission outcome each take the verified path, never run a job twice, and say so in the timing block.
 
 Limits: the targets are for small outputs (an image); large video outputs are bounded by transfer. Proof on Windows is local only.

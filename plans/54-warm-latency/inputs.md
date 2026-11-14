@@ -1,48 +1,88 @@
-# Inputs — Warm-job latency
+# Inputs — Generation speed
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
 
-**Scope decision:** Decided by the owner on 14 November 2026, relayed by the Release 13 orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) to the advisor between about 22:40 and 23:40 UTC and recorded in `releases/13/decisions.md` on `r13-progress/decision-log`: warm overhead under 5 seconds, with a plan for under 0.5 seconds on a rented machine and under 0.1 seconds locally; every second accounted for; the faster path must still pass through Astrid. See [Owner decisions](#owner-decisions).
+**Scope decision:** Decided by the owner on 14 and 15 November 2026, relayed by the Release 13 orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) to the advisor between about 22:40 and 23:50 UTC and recorded in `releases/13/decisions.md` on branch `r13-progress/decision-log`. Release 13 keeps its cutoff and ships the first tier; "put all the rest onto a speed-focused follow-up plan in astrid-dev, with context on everything else." See [Owner decisions](#owner-decisions).
 
 **Prior art:**
-- **The measurement.** `releases/13/evidence/live/p1-timing.md` (`r13-progress/decision-log`, d6384df): warm same-model image jobs at 242 and 261 seconds of wall time for 2.88 and 3.01 seconds in ComfyUI; preparation 17 to 18 s, execution 104 to 121 s, collection 47 s, release 21 to 22 s, 52 to 53 s outside every host phase; 91 to 108 s of execution in no pod phase.
-- **Where the time goes.** The machines manager's per-gap note (G1 to G6, compose `ee14644a4`) and four independent code reviews of the same commit, summarised in `releases/13/briefs/warm-latency-strategy.md`. Per warm job: seven or more provider calls; five remote commands to re-confirm the machine; about twelve operations to dispatch (`astrid/packs/runpod/machine.py:865-938`); four Python starts and a full catalogue listing on the machine (`machine.py:431-449`); three installation audits, two model-verification passes, node restore, dependency preparation and doctor (`astrid/core/generation/managed_preparation.py:414-857`); six more Python starts for logs; one fetch per file and an installation re-check (`machine.py:1031-1203`); a reset the caller waits for (`astrid/packs/runpod/pod_reset.py:287-329`). Each remote operation opens its own connection (`astrid/packs/runpod/remote_placement.py:1036-1054`).
-- **What already exists to build on.** The engine supervisor is resident (`astrid/core/generation/engine_custody.py`). An authenticated engine endpoint with a host-side loopback bridge exists and is tested but is not used by the rented path (`astrid/core/generation/engine_endpoint.py:376`, `engine_transport.py:305`, `astrid/packs/runpod/adapter.py:5`). Release 13 adds the per-claim attestation (card W-A) and per-phase timing (W2, P3).
-- **Negative findings.** The bridge refuses websocket upgrades today (`engine_transport.py:319`). The local-managed path pays the same audits as the rented path; the attached path does not, but fetches the schema and compiles twice per job (`astrid/packs/vibecomfy/local_server_engine.py:98-145, 213-219`) and polls history at one second.
 
-**Approach:** Three options were compared for reaching under 5 seconds on a rented machine.
-1. *Keep batching the existing path.* Release 13's first tier. Reaches about 30 to 45 seconds; cannot reach 5.
-2. *Direct route:* after attestation the host talks to the machine's ComfyUI itself. Fewer moving parts on the machine, but rented jobs take a different code path, evidence and receipts are rewritten host-side, custody checks move, the lifecycle agent needs new endpoints, and each job still makes six to ten requests through the provider's proxy.
-3. *A resident Astrid job service on the machine* (chosen). One job path, custody checks stay where they are, two round trips per job, and it is the natural base for under 0.5 seconds because it can watch ComfyUI locally and return the result in the same exchange.
-Doing less (stopping at the first tier) was put to the owner and declined: see D1.
+*The measurement.* `releases/13/evidence/live/p1-timing.md` (`r13-progress/decision-log`, d6384df), build 6a6ab6f4d, RTX 5090:
+- Warm same-model image jobs: 242 and 261 s wall for 2.88 and 3.01 s in ComfyUI. Preparation 17 to 18 s, execution 104 to 121 s, collection 47 s, release 21 to 22 s, 52 to 53 s outside every host phase. Of execution, 91 to 108 s is in no pod phase: 42 to 49 s before the pod job starts and about 40 s inside it.
+- The engine was reused, nothing was loaded or hashed, and GPU memory did not move.
+- First job on a fresh machine with a warm model volume: 13m49s.
+- Video: the first edit paid a one-time load of about 50 GB (211 s in ComfyUI); the second was warm (70 s in ComfyUI) with about 300 s of overhead.
+- Model switch: an image job after video reloaded the image model (62 s in ComfyUI).
 
-**Challenge:** Required: the plan touches custody, release and a cross-repository contract. The advisor wrote the plan and is the standing critic; the orchestrator ruled that the advisor's critique below counts, with an independent pass checking its claims against the code.
-- *Critique (advisor).* (a) The largest risk is a second custodian: the service must be supervised by the existing engine supervisor, not beside it, or the release and reset paths gain a process they do not know about. (b) A long-lived process can hold stale verified state; every job must bind to the current supervisor incarnation, and a cached record alone is not enough. (c) "Under 0.1 seconds" is not reachable from a fresh Python process; the plan says so and sets the command line's target at the process-start floor. (d) Timing targets flake; the gates are counts (operations, process starts, polls, hash passes) and time is a witness. (e) Returning the result before clean-up must not weaken the reset: a failed reset has to fence the next job exactly as today. (f) Phase 2's websocket needs a lifecycle change; if that is refused, completion can be pushed by the resident service over the existing exchange, which is why the service comes first.
-- *Independent pass.* Pending — an independent reviewer checks the code claims in this pack before greenlight. Next: record its findings and what was accepted.
+*Where the time goes* (the machines manager's per-gap note G1 to G6 on compose `ee14644a4`; four independent code reviews of the same commit; summarised in `releases/13/briefs/warm-latency-strategy.md`). Per warm job on a rented machine:
+- Seven or more provider calls and four git processes before the machine is touched; five remote commands and a file read to re-confirm it.
+- About twelve operations to dispatch: a directory, each file uploaded and separately checksummed, a start (`astrid/packs/runpod/machine.py:865-938`). Each remote operation opens its own connection through the provider's proxy (`astrid/packs/runpod/remote_placement.py:1036-1054`).
+- On the machine: four Python starts including a full catalogue listing (`machine.py:431-449`); three installation audits of 18 git processes and four environment probes each, two model-verification passes, node restore, dependency preparation and doctor, with nothing to change (`astrid/core/generation/managed_preparation.py:414-857`; `astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py:189-214`).
+- After generation: five Python starts to declare logs and one for the output manifest (`machine.py:456, 468`); one fetch per file; an installation re-check (`machine.py:1081, 1224`); a reset the caller waits for (`machine.py:1510, 1581`; `astrid/packs/runpod/pod_reset.py:287-329`); Runtime publication; several hash passes on delivery (`astrid/core/generation/delivery.py:103-174`, `astrid/sdk/media_open.py:153, 394`, `astrid/sdk/media_views.py:50-82`).
 
-**Proof and limits:** Completion is defined in [plan.md](plan.md#completion): a live rented run and a local run with overhead measured as wall time minus ComfyUI's own time, the budget tests, and four fail-closed cases. Limits: targets are for small outputs; estimates of seconds per step in the strategy note are estimates, and only the totals above are measured.
+*Which placements pay what.*
 
-**Review rounds:** Recommended: one review stop after the job-service protocol and supervision design (later tasks build on both, and a mistake there reaches custody), and one final round before any release task. Pending — the owner confirms the number.
+| Cost on a warm second job | Rented | Astrid-managed local | Person's own ComfyUI |
+|---|---|---|---|
+| Installation audits, node restore, dependency preparation, doctor, model verification | yes | yes (same code) | no |
+| Provider calls, dispatch, machine process starts, catalogue listing, per-file collection, reset | yes | no | no |
+| One-second polls (pickup, status, ComfyUI history); Runtime publication; repeated hashing on delivery | yes | yes | yes |
+| Schema fetched and workflow compiled twice in preflight (`astrid/packs/vibecomfy/local_server_engine.py:142, 219`) | yes | yes | yes |
+| The caller's own process start | yes | yes | yes |
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run after Release 13 publishes, record the date, the phase it covers, the accountable session, what it may do without asking, and the advisor session.
+*Lean on ComfyUI* (independent review of ComfyUI at `6bfaacc`, VibeComfy at `dba38f86` and the Agent at `ee14644a4`):
+
+| Step | ComfyUI does | Astrid adds | Needed on a warm job? | Leaner design |
+|---|---|---|---|---|
+| Graph validation | Validates classes, inputs, links, types, ranges and choices on submit and returns typed errors (`execution.py:846-1238`) | Fetches the whole `/object_info` (megabytes; ComfyUI rebuilds it per request, `server.py:754-814`) and compiles twice | Only its policy: refusal codes and guidance | Ask per node class (`server.py:816-822`) and per model folder (`server.py:342`); reuse the compiled projection; on a paid, warm engine submit and map ComfyUI's errors |
+| Models | Lists files, keeps models resident, evicts on demand (`comfy/model_management.py:893-983`) | Digest pinning and verification | Identity, yes; re-verification, no | Verify on acquisition or change; keep the record |
+| Node caching | Skips unchanged nodes between prompts (`comfy_execution/caching.py:102-127`) | Uploads inputs under `astrid/{task_id}` (`astrid/core/generation/backends/comfy_target.py:327`), so an identical input looks new and its descendants re-run | Attribution of outputs, yes | Name inputs by content; keep per-attempt output prefixes |
+| Inputs | Reads its input folder; de-duplicates only after an upload | An HTTP upload per input per job, even on the same disk | Custody of bytes, yes | On a shared filesystem stage by link or copy into the input folder; skip when the content is already there |
+| Outputs | Writes files and reports them in history | Download, hash, temp copy, publication, further hash passes | Receipts and custody, yes; the repeats, no | Read once, hash once into the store; keep delivery copies independent of the store's file |
+| Installation | Loaded node classes at start-up | Source, lock and environment attestation | A receipt, yes; a re-audit, no | Verify on mutation; a node receipt |
+| Completion | Websocket events (`server.py:269-290`; `execution.py:496, 577, 824`) | Polls history every second (`vibecomfy/runtime/session.py:4200, 4236`) | Completion, yes | Subscribe before submit; keep a poll as fallback |
+
+Limits of leaning on ComfyUI, which bound the design: it can queue the valid branches of a graph while reporting errors on others (`server.py:1115-1139`), so an optimistic submit must treat any reported error as a failure; a missing node class is reported without saying which pack provides it; a person's own ComfyUI exposes no restart signal (`/system_stats` has versions only, `server.py:689`) and its model list changes without a restart (`astrid/core/generation/asset_gaps.py:475`).
+
+*Negative findings and constraints carried from Release 13.*
+- A cross-job schema cache is unsafe as first proposed: live preflight uses model choices (`local_server_engine.py:170`) that change without a restart, and a person's ComfyUI gives no trustworthy incarnation. It needs a revision signal or a cheap freshness probe. Release 13 takes only "fetch and compile once per job".
+- Moving evidence and clean-up after the result is custody-adjacent: evidence including the final `/system_stats` is recorded before settlement (`astrid/core/generation/job_evidence.py:89`), the prompt is drained before the engine lock is released (`managed_preparation.py:350`), and a clean-up failure latches uncertainty (`astrid/core/execution/generic_host.py:13825`).
+- The engine endpoint addresses one port (`astrid/core/generation/engine_endpoint.py:346, 407`); requests have 15 and 25 second limits and close their connection (`astrid/core/generation/engine_transport.py:21, 27, 179`); the bridge refuses websocket upgrades (`engine_transport.py:319`).
+- The engine supervisor holds one engine and transient command handles (`astrid/core/generation/engine_custody.py:1146`).
+- No record exists that node packs were installed correctly: the install receipt holds recipe, model and health evidence only (`astrid/core/generation/engine_runner.py:909-940, 1017-1021`).
+
+**Approach:** see [plan.md](plan.md#existing-work-and-decision). For Phase 1, three shapes were compared and none is yet chosen for build. Doing less (stopping at the first tier) was put to the owner and declined: D1.
+
+**Challenge:** Required: the plan touches custody, release and cross-repository contracts. The advisor wrote the plan and is the standing critic; the orchestrator ruled that the advisor's critique counts, with independent passes checking claims against the code. Three passes were run and are reflected in this pack.
+- *Check of the first draft.* Verdict: do not greenlight unchanged. Corrected citations; found the endpoint and supervisor claims overstated; found the simpler reuse of the machine's resident host; found missing tasks (watchdog publication, idle timers, declared logs, cancellation, concurrent admission) and proofs that counted operations without proving a job ran. All accepted.
+- *Review stop on the resident-host note* (`releases/13/briefs/warm-tier2-resident-host.md`). Verdict: stop as written. Today's pod job runs the generation in the shell job's own process, not through the pod's Runtime (`astrid/core/generation/local_job.py:79-96`; `astrid/packs/vibecomfy/local_job.py:252`); the per-job reset replaces the Runtime owner and rotates its credentials, so nothing kept warm under it survives; settlement, the idle expiry, its watchdog deadline and the host timer must complete before success is reported (`astrid/packs/runpod/worker_owner.py:640, 794-798`; `astrid/packs/runpod/pod_watchdog.py:303-310`); a failed reset must release the machine at once as today (`machine.py:1508-1516, 1568`); reconciling an unknown outcome needs an idempotent request key stored before submission. All accepted: Phase 1 opens with a design round.
+- *Lean-on-ComfyUI review and the narrower-check evaluation.* Reflected in the table and limits above.
+- *Advisor's own critique.* (a) The largest risk is a second custodian on the machine. (b) Long-lived state goes stale: every job must bind to the live engine identity. (c) "Under 0.1 seconds" is not reachable from a fresh Python process; the plan says so. (d) Timing targets flake: the gates are counts and valid outputs; time is the witness. (e) The first estimate in days was human-shaped; the owner corrected it; and the first Phase 1 date was optimistic and failed review. Estimates here name the bottleneck.
+
+**Proof and limits:** Completion is defined in [plan.md](plan.md#completion). Per-step seconds in the strategy note are estimates; only the totals quoted above are measured. The share of the pod-side block taken by each of audits, node restore, dependency preparation and doctor is not yet measured; SP-1 measures it.
+
+**Review rounds:** Recommended: one review stop on the Phase 1 design (custody is built on it), one on the workflow-scoped check (every placement's readiness depends on it), and one final round before any release task. Pending — the owner confirms the number.
+
+**Run start:** Pending — No run is authorized. Next: when the owner starts a run after Release 13 publishes, record the date, the phases it covers, the accountable session, what it may do without asking, and the advisor session.
 
 ## Owner decisions
 
-- **D1 The target.** Decided 14 November 2026: warm same-model overhead under 5 seconds on a rented machine, a follow-up to under 0.5 seconds, and under 0.1 seconds locally. Source: orchestrator relay, 23:16 and 23:34 UTC.
+- **D1 The targets.** Decided 14 November 2026: warm same-model overhead under 5 seconds on a rented machine for the work now in this plan, then under 0.5 seconds, and under 0.1 seconds locally. Source: orchestrator relay, 23:16 and 23:34 UTC.
 - **D2 Warm attestation.** Decided 14 November 2026: approved. The first job on a claim verifies fully; later jobs with the same requirements skip re-verification; anything changed re-verifies. Same trust boundary as the model-verification record. Source: orchestrator relay, 23:16 UTC.
-- **D3 Through Astrid.** Decided 14 November 2026: the faster path keeps Astrid's own job path, "for the sake of consistency". The direct route is not built. Source: orchestrator relay, 23:29 UTC.
-- **D4 Every second accounted for.** Decided 14 November 2026. Source: orchestrator relay, 23:14 UTC ("properly understand and eliminate every level of this delay").
-- **D5 Does the machine's own Runtime stay in the job path?** Open. Options: (a) keep it, so the reset remains but runs after the result; (b) the service settles straight to the host, so there is nothing to reset. Recommendation: (b), decided at the review stop with the protocol in hand.
-- **D6 Review rounds.** Open. Recommendation: one review stop and one final round.
-- **D7 Priority.** Open. Recommendation: directly after Release 13's follow-ups.
+- **D3 Through Astrid.** Decided 14 November 2026: the fast path keeps Astrid's own job path, "for the sake of consistency". Source: orchestrator relay, 23:29 UTC.
+- **D4 Every second accounted for.** Decided 14 November 2026. Source: orchestrator relay, 23:14 UTC.
+- **D5 Release 13 keeps its cutoff.** Decided 14 November 2026: Release 13 ships the first tier; the rest is this plan. Source: orchestrator relay, 23:46 UTC.
+- **D6 Model files are not re-hashed on every job.** Decided 14 November 2026: full verification is an explicit opt-in. Source: `releases/13/decisions.md`, 19:15 UTC entry.
+- **D7 Lean on ComfyUI, with a narrower check.** Direction given 14 November 2026: "does Comfy not handle this?"; "we might need to check it for our reasons, like to know what to update and download, but maybe in a more narrow way". Source: orchestrator relay, 23:46 and 23:47 UTC. The principle and its limits are in the plan.
+- **D8 Which execution boundary on a rented machine stays resident.** Open; decided at RS1. Options: a kept-warm job runner beside today's direct execution; the machine's Runtime host with a reset that preserves it; a new supervised service.
+- **D9 Is submit-first acceptable on a paid, warm engine?** Open. It trades Astrid's early typed refusal for speed on jobs that will succeed. Recommendation: yes, only when the claim is attested for the workflow's requirements.
+- **D10 Review rounds and priority.** Open. Recommendation: two review stops and one final round; priority directly after Release 13's follow-ups.
 
 ## Source identities
 
-Pending — recorded at run start. Expected base: astrid-agent at the Release 13 tag; VibeComfy and `runpod-lifecycle` at the versions that release pins. The analysis in this pack was made against astrid-agent `r13/compose` at `ee14644a4`.
+Pending — recorded at run start. Expected base: astrid-agent at the Release 13 tag, with VibeComfy, the Runtime and `runpod-lifecycle` at the versions that release pins. The analysis in this pack was made against astrid-agent `r13/compose` at `ee14644a4`, VibeComfy `dba38f86`, the Runtime `6855dfa8` and ComfyUI `6bfaacc`.
 
 ## References
 
-- `releases/13/briefs/warm-latency-strategy.md` and `releases/13/evidence/live/p1-timing.md` on branch `r13-progress/decision-log`.
-- `releases/13/decisions.md`, entries of 14 November from 19:15 UTC, same branch.
+On branch `r13-progress/decision-log`: `releases/13/briefs/warm-latency-strategy.md`; `releases/13/briefs/warm-tier2-resident-host.md` (stopped at review; kept as the record of that design); `releases/13/evidence/live/p1-timing.md`; `releases/13/decisions.md`, entries of 14 November from 19:15 UTC.
