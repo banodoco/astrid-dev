@@ -1943,3 +1943,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Exactly 3 files: entries.py (the refusal message gains its recovery sentence), the new recovery test, and engine_selection (one REFUSALS code).
   - Test lane, paired against ae1c608a7: 0 candidate-only failures, 1 fixed. Six message-text files are identical on both sides.
   - The slot_path red-cell subset is still running, but the test lane says the decision doesn't hinge on it.
+- **15:45: phase 4 walk 2 (P4.9) results on 3490f1b2.**
+  - Both runs admitted, with open_url and "My first project". fetch-models plans 3 files, 16.10 GiB, with a digest.
+  - Run B (the user's own workflow) took about 0.5 min and 3 commands, against about 4 min and 21 in walk 1.
+  - Two phase 4 defects found, fixed by the manager:
+    - R4.G: the saved seed isn't honoured on ComfyUI's stock `control_after_generate` shape, and an explicit seed is rejected.
+    - R4.H: `defaults` reports ready while models are missing.
+  - **R13 bug P4.9.1 → cells card `hostwedge`, with a machines review.** `_recover_terminal_requests` (generic_host ~14202) globs the shared /tmp for `astrid-attempt-*` and retries for ever on a foreign Runtime's request, so all later generations stay queued silently.
+    - Root fix: per-Runtime attempt scope, foreign requests skipped with a diagnostic, and bounded retry to a visible terminal state.
+    - Cells takes it because machines is at capacity (httpj, lanes, W2, W3, W4).
+  - P4.9.2 (`runtime up --wait` port conflict) is deferred to the Runtime plan unless it blocks single-Runtime onboarding (asked).
+  - P4.0.5, .6, .16 and .12 → phase 5 rows.
