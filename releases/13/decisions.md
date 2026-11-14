@@ -1853,3 +1853,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The cause: the fake clip used an unbounded lavfi colour source plus `-shortest`, and newer FFmpeg emits surplus frames. The source is now bounded with `:d=`. Expected 108 unchanged; production validation unchanged.
   - The failing id is proved (fails before, passes after). The full-file run was interrupted (NO-RESULT), so the next CI head is the full proof.
   - Deeper cause: unbounded lavfi sources across fixtures. Cells adds it to Plan 39 (root or logged).
+- **12:34: machines b4201d409 (httpj) is held; Astra BLOCK.**
+  - `runpod.keep` reaches the retained owner without comparing preferences (adapter.py:679). So, with the saved cap lowered, fresh consent can still extend paid custody (worker_owner.py:742). The gap predates httpj; it's the same hole httpj closes for status.
+  - Ruling: fix it at the root. One reuse-policy check is called by every path that spends or extends custody, and an enumeration test fails if a new path bypasses it. Money never ships as an exception.
+  - The rest of httpj passed review.
+  - cpupath and guides are already in compose.
