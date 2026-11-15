@@ -2581,3 +2581,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - All 8 scenarios ran on the real `stage()` at 9814193a, with hostile symlinks and hardlinks planted inside the candidate.
   - Each scenario made exactly one removal, of `versions/<candidate>`. The outside dirs, symlink targets, data files, versions/old and install.json were untouched, and no switch or declaration happened.
   - Groups (4) and (2)+(3) are still being reproduced.
+- **22:35 UTC: W233 FINAL confirms all 15 post-publish ids are intended changes from 896544e95 with stale tests. NO ROLLBACK.** Local runs: R12 main 15 pass; 401dbd78 15 pass; 9814193a 15 fail; 9814193a plus the tests-update patch 15 pass.
+  - **Ruling:**
+    - (a) The 13.1 card updates the 15 tests to the intended behaviour (runs/w233/tests-update.patch, not yet applied).
+    - (b) The 13.1 code item: give `windows-upgrade-unsupported` its own Settings-free Next action. Today, with no Runtime running, it falls back to "run the same command again", which can't help in that permanent state. Limit the `next_steps()` substitution to reasons where a rerun helps. This is a user-visible wording defect with no data effect.
+  - Still running: shard 6, Lanes integration 3.
