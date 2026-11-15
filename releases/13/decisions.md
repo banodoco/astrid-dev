@@ -2529,3 +2529,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The advisor's dive task trig_01QpJUYDLeTf7bq7cEhS4oQM is disabled (verified), as are its tester-issue watch and its PR 348 subscription.
   - Nobody is watching tester issues astrid-dev #651/#652/#653 now. They are on r14-test heads and not an R13 gate; whether someone answers them goes to Hannah after publish.
   - Follow-ups are in astrid-dev #669–#685; PR 684 is on auto-merge.
+- **20:33 UTC: CI 43757233210 fast checks are GREEN on 9814193a**, including the hosted mypy baseline gate and the import-cycles gate (the verdict).
+  - Ruff, collection, boundary, windows-native-and-installer and release wheels 3.11/3.12 are green.
+  - darwin native is red, as on every candidate since A″; the ids still need matching.
+  - Journey 43757304537 so far: direct-windows, macos-fresh (uninstall passed), macos-r9-install and macos-r11-update are green; none red.
