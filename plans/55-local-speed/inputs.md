@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the owner chose this scope on 15 November 2026 at about 10:45 UTC, relayed by the Release 13 orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) and recorded in the [Release 13 decision log](https://github.com/banodoco/astrid-dev/blob/r13-progress/decision-log/releases/13/decisions.md): "we need the next release to get it very fast, RunPod is unimportant. Let's do a proper speed release after this one, focused on getting this as fast as possible. Think through it from first principles." The targets and the points in [Owner decisions](#owner-decisions) are not yet decided.
+**Scope decision:** Accepted — the owner chose this scope on 15 November 2026 at about 10:45 UTC, relayed by the Release 13 orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) and recorded in the [Release 13 decision log](https://github.com/banodoco/astrid-dev/blob/r13-progress/decision-log/releases/13/decisions.md): "we need the next release to get it very fast, RunPod is unimportant. Let's do a proper speed release after this one, focused on getting this as fast as possible. Think through it from first principles." The owner accepted the recommendation for each of D1 to D8 and all ten statements in the 15 November 2026 run-start message; see [Owner decisions](#owner-decisions).
 
 **Prior art:** Measurements and code traces from Release 13 and [Plan 54](../54-warm-latency/inputs.md), plus five code readings and one independent review made for this plan on 15 November 2026 ([review.md](review.md)).
 
@@ -32,9 +32,9 @@
 
 **Proof and limits:** Completion is defined in [plan.md](plan.md#completion). Every time in the floor table is an estimate until LS-1 reports. The 30 s baseline was measured against a stand-in, not a real ComfyUI. Windows' slowest cases are unknown. The targets are medians for a small output on an idle queue; queue wait, large outputs and new inputs are reported, not promised.
 
-**Review rounds:** Pending — recommended: one stop after the design (RS1, one round) and one final round. RS1 protects LS-4, LS-7, LS-8, LS-9 and LS-10 from being built on a wrong approval rule, hand-off or crash rule. Next: the owner confirms.
+**Review rounds:** Accepted — the owner's 15 November 2026 start message authorizes exactly one design stop, RS1 (one round), and one final round, R. Both have 0 rounds consumed. RS1 guards LS-4, LS-7, LS-8, LS-15, LS-9 and LS-10. Notify the owner when LS-3 is ready for review and when the completion PR is up.
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run after Release 13 publishes, record the date, the tasks it covers, the accountable session, what it may do without asking, and the advisor session.
+**Run start:** Accepted — 15 November 2026 (Europe/Berlin), by the owner's own message in accountable manager session `chatgpt-workspace-6ee41b0f0cca/root`. This session answers for LS-1 to LS-15, RS1 and R finishing, follows astrid-dev → astrid-dev-manage, and owns this active plan. It may create branches and PRs, merge task PRs into `int/55-local-speed`, merge its own progress PRs on astrid-dev, and run each task's named CPU tests without asking. The first progress PR records this start and decisions; later progress PRs change tasks.md only. It must ask the owner before any product-repository main merge, any re-pin, any paid action (including GPU rental for LS-1 or LS-14), arranging a Windows tester for LS-13, any scope or decision change, and anything concerning publication of Release 14. A refused command is reported to the owner, never retried. Approved spend: zero. Advisor: no existing advisor session is attached; the configured judgment route will be commissioned for a genuine blocker. This manager was selected directly by the owner, with bounded task workers. Release 13 publication has been verified against the deployed manifest and its successful live canary; exact source identities are below. Without verified publication, only LS-1 and LS-2 would be allowed. Notify the owner when LS-1's measurements are in.
 
 ### Framing from the owner
 
@@ -47,7 +47,7 @@ Recorded from 15 November 2026, relayed by the Release 13 orchestrator (session 
 
 ### Ten statements
 
-Given to the owner by the orchestrator at 12:10 UTC on 15 November 2026. **Her reactions are pending**; record each contested one as a decision here and revise the plan before greenlight.
+Given to the owner by the orchestrator at 12:10 UTC on 15 November 2026. **Accepted in full by the owner on 15 November 2026**, with the exact qualifications below and D1 to D8. There are no contested statements.
 
 1. Overhead is under 2 s in stage one; under 0.1 s is a measured stretch.
 2. No program is started per job; one helper lives as long as ComfyUI does.
@@ -159,16 +159,43 @@ Pull request 660 proposed staged local targets and a durability decision inside 
 
 ## Owner decisions
 
-- **D1 The targets.** Median Astrid overhead for a one-megapixel image on an idle queue. Stage one: under 2 s for every caller on every system. Stage two: under 0.1 s for an already-connected caller; under 0.25 s from the command line on Linux and macOS, Windows' command-line target set after LS-1 measures it. Throughout: under 3 s (5 s on Windows) for the first job after a start or change. Open: whether stage two is a commitment of this release or a measured stretch (the orchestrator's statement 1 says stretch; the estimates say reachable), and median against slowest-in-twenty. Recommendation: commit to stage one; build for stage two and promise it once LS-1 has measured the floor; medians, with the slowest-in-twenty reported.
+**Accepted — 15 November 2026, in the owner's run-start message.** D1 to D8 are each accepted as recommended. The operative decisions are below; the original options that follow remain as planning rationale, not pending decisions.
+
+| Decision | Accepted choice |
+| --- | --- |
+| D1 | Commit to median overhead under 2 s for every caller on every system for the stated workload. Build for under 0.1 s for an already-connected caller, and promise it only once LS-1 has measured the floor. Report the slowest-in-twenty, retain the first-job targets, and measure the Windows CLI target before setting it. |
+| D2 | Option (a): success means the output is stored and the result recorded on disk. Any change returns to the owner. |
+| D3 | Every caller goes through the Runtime. |
+| D4 | A Python CLI and an in-process agent tool server now; a native client requires a later owner decision based on measurements. |
+| D5 | Require nothing of a person's ComfyUI. Use targeted cancel only where available; refuse a running cancel rather than use global interrupt. |
+| D6 | Rely on ComfyUI's submission validation on the warm path and record the last target check. Same-name model replacement remains undetected. |
+| D7 | Plan 54 is the rented-machine plan and queues behind Plan 55. No separate rented-machine speed work is included here. |
+| D8 | Astrid core provides the resident-session capability to packs, with VibeComfy as its first user. Build only what that first user needs; ComfyUI-specific logic stays in VibeComfy. |
+
+- **D1 The targets.** Median Astrid overhead for a one-megapixel image on an idle queue. Stage one: under 2 s for every caller on every system. Stage two: under 0.1 s for an already-connected caller; under 0.25 s from the command line on Linux and macOS, Windows' command-line target set after LS-1 measures it. Throughout: under 3 s (5 s on Windows) for the first job after a start or change. Resolved by the accepted choice above. Original recommendation: commit to stage one; build for stage two and promise it once LS-1 has measured the floor; medians, with the slowest-in-twenty reported.
 - **D2 What success means.** (a) As today: a reply means the result is stored and recorded on disk; the forced writes are grouped. Estimated 15 to 70 ms on Linux, 25 to 120 ms on Windows. (b) The record survives Astrid crashing but not a power cut in the following second. (c) Reply first, record after: faster, and a caller can hold a result the record does not yet have. Recommendation: (a), and revisit only if LS-1 shows Windows missing D1.
 - **D3 One door.** Every caller goes through the Runtime (recommended), or a direct connection to the worker for the SDK and command line. The direct door is quicker to build; the App would not use it, and permissions and the record would have two paths.
 - **D4 The command line.** Agents use the command line, so it is the commonest caller. A Python client costs 25 to 150 ms to start on Linux and 80 to 500 ms on Windows; a small native client costs 3 to 20 ms and 10 to 60 ms, and is another thing to build, sign and update. Recommendation: Python client and the in-process tool server now; decide on a native client from LS-1's Windows numbers.
 - **D5 The person's ComfyUI.** Require nothing of it: no extension, and features such as per-job cancel used where the version has them (recommended). On an older ComfyUI a running job then cannot be cancelled, only a queued one, because the only alternative can stop someone else's work. Alternative: a small optional extension that gives exact restart detection, cancel and duplicate protection.
 - **D6 Trust in the person's ComfyUI on the warm path.** Astrid stops re-reading the node list every job and relies on ComfyUI to refuse what it cannot run; the record says when the target was last checked. A model file replaced under the same name is not detected, as today. Recommendation: accept.
-- **D8 Where the resident session lives.** The owner's instinct (15 November 2026, relayed by the orchestrator at 12:15 UTC): a general capability Astrid core provides to packs (a pack declares it needs a long-lived session; core supervises and fences it), used first by the VibeComfy pack, with the ComfyUI connection and template logic in VibeComfy. The plan now does this (LS-8 core, LS-15 the pack, LS-4 and LS-5 in the VibeComfy package). The first draft described the helper as specific to local ComfyUI jobs. Alternative: build it inside the VibeComfy pack only, which is a little quicker and leaves every later pack to reinvent supervision. Recommendation: the owner's instinct, built for its first user only. Recorded as open until she confirms.
+- **D8 Where the resident session lives.** The owner's instinct (15 November 2026, relayed by the orchestrator at 12:15 UTC): a general capability Astrid core provides to packs (a pack declares it needs a long-lived session; core supervises and fences it), used first by the VibeComfy pack, with the ComfyUI connection and template logic in VibeComfy. The plan now does this (LS-8 core, LS-15 the pack, LS-4 and LS-5 in the VibeComfy package). The first draft described the helper as specific to local ComfyUI jobs. Alternative: build it inside the VibeComfy pack only, which is a little quicker and leaves every later pack to reinvent supervision. Recommendation: the owner's instinct, built for its first user only. Confirmed by the owner in the accepted choice above.
 - **D7 Plan 54.** It becomes the rented-machine plan and queues behind this one. Any rented-machine speed work between Release 13 and this release is dropped unless it is also a donor here. Recommendation: yes.
 
 ## Source identities
+
+### Run-start source identities
+
+Release 13 is published. Its brief still says Draft / Not pinned, so that stale label was not used as the publication authority. The deployed [App manifest at `d7d48cfe3891d490b740e017081ae558970cd56e`](https://github.com/banodoco/astrid-app/blob/d7d48cfe3891d490b740e017081ae558970cd56e/public/install-manifest.json) specifies release 13, and [served-manifest canary 43760624263](https://github.com/banodoco/astrid-app/actions/runs/43760624263/job/132954388685) succeeded against that deployment on 15 November 2026. These are the starting product commits, not donor heads or the current main tips:
+
+| Repository | Published Release 13 commit |
+| --- | --- |
+| astrid-agent | `9814193a73f606719e81883a8be197d27dd361d4` |
+| VibeComfy | `dba38f8644c46f652376f2cd5112ea161e40f09b` |
+| astrid-runtime | `6855dfa8df65cf8ae4c002b57134d6505493c17c` |
+
+Plan read: all four requested files at `91035254`. Recording base: astrid-dev main `1e1c646ea428bfd022adc024bbc25bc08078ef93`; the four plan files were unchanged. Each changed product repository's integration branch is `int/55-local-speed`, based on its published commit above. Task PRs target it, and a draft PR from it to main opens when its first task lands. Progress stays on astrid-dev main through progress PRs; product-main promotion and re-pins still require the owner. No Release 14 publication action is authorized.
+
+### Planning and donor identities
 
 Planning read: astrid-agent `a91c35dfd` (Release 13 candidate A), VibeComfy `dba38f86`, Runtime `6855dfa8`, ComfyUI `6bfaacc`, astrid-app `d6ee9af2`. Base for code work: Release 13 as published, recorded at run start. Donors, to be checked against the published base: astrid-agent `r13/machines-wa-life` (repeat checks removed on a warm engine), `r13/machines-p3split` (named timing), `abef725c1` (in-process entry check), VibeComfy `e8f19340` (schema lookup memo). Rented-only branches (`r13/machines-wb-dispatch`, `r13/machines-p6obs`) are not donors.
 
