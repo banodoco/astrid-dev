@@ -202,6 +202,8 @@ def release_errors(filename: str, body: str) -> list[str]:
         if error.startswith('Included plans') and not plans:
             continue
         issues.append(f'releases/{filename}: {error}')
+    if state == 'Final' and brief['issues_present'] and not brief['issues_frozen']:
+        issues.append(f'releases/{filename}: Final Issues block must be frozen')
     if state:
         if state == 'Draft':
             if 'Not pinned.' not in sections['Publication']:
