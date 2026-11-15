@@ -2331,3 +2331,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The log-fetch add-on 51971b0e2 FAILED W197: a test-double regression, a nested-symlink escape, and a malformed-size cap bypass. It rides A⁗ only if it's fixed and proven in time; otherwise it goes in the first post-R13 update.
 - **15:50 UTC: the A‴ journey is COMPLETE, all 13 rows GREEN.** The cycle fix a06d55a79 is MERGE-READY (W199: zero output differences; the pod archive includes the leaf module). Merged onto A‴ → r13/compose-aprime 3d8c1d8d9, pushed early so the hosted fast checks prove the gate (local `make cycles` OK). That push is not the candidate: A⁗ = this + bootmanifest2.
   - App direct-journey 43718524654: direct-journey PASS. three-products failed :417 (UI click-stability timeout) and :2904, while main fails :3674, so it's UNRESOLVED. I re-ran the failed jobs on the same SHA, and W201 is building the flake history. It's attributed again on the A⁗ App re-pin.
+- **16:05 UTC: A⁗ frozen, the publish candidate.**
+  - **Agent** 91b60416bf92f2a6cf0ab898608f8e77b79784cc (r13/compose-aprime = PR #347 head; int/r13-91b60416) = A‴ 8e0006f5 + cycle fix a06d55a79 + cells-bootmanifest 1e1aa811a: old stamp preserved and restored on rollback; restamp deferred until the busy/permitted checks pass; exact match against the full R9–R12 manifest; support-root bug fixed. Local cycles OK; 139 focused passed.
+  - **App** 3b3c85fdae7592cd74e2a87a702167f67879b162 (PR #268 head; int/r13-app-repin-91b60416): required 13, guard passes, manifest sha256 206601dc…, direct-journey dispatched.
+  - The log-fetch add-on is NOT in it (it failed W197) and goes in the first update.
+  - **Gate:** 13 journey rows + W194 re-proof + fast checks + the App PR by name.
