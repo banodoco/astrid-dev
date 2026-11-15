@@ -2470,3 +2470,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - (F) The new POSIX test catches the old defect.
   - Non-blocking, deferred: a positional `shell=True` slips the Popen guard (same on R12, unchanged); hardening (close sockets on verification failure, `__module__`, more negative tests).
   - Pending: the 13 rows (43747941639), linux-fresh ×2, CI/Lanes on int/r13-8625a463, W218 on App 0d9d620d, and the Windows guard real-generation run on 61661569.
+- **00:40 UTC hourly check-in:** 0 pods. Waiting on the recut journey/CI (runner backlog) and the Windows real-generation proof. Hannah was asked whether to cancel the superseded 8e8e60b1 runs.
