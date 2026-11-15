@@ -2503,3 +2503,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **Agent** 9814193a73f606719e81883a8be197d27dd361d4 (PR #347 head; int/r13-9814193a) = ff9da5d8 + 29ca1469 (overloads for vibecomfy_runtime_root; `_program_name` normalisation Windows-only, POSIX exact).
   - **App** 7297d266564997c460a051a7eeb63a9f1ae2278c (PR #268 head); manifest 29dc13cf…; Runtime 6855dfa8.
   - **Gate:** the 14-row journey (incl. direct-windows-r12-update), CI green (mypy), shards vs R12, Lanes, the W227 re-verify, W218, and the advisor's Windows guard on 29ca1469.
+- **20:20 UTC: tuple 9814193a verified.**
+  - Its tree equals W228 scratch 0dbbcbaa1 (12c7faaab), so the W228 results carry over: mypy, ruff and cycles all exit 0.
+  - W227 re-verify PASS: fuzz over 82,740 command lists, 0 widened and 0 narrowed vs 8625a463; check G identical.
+  - Running: journey 43757304537 (14 rows) plus captures 43757315244 / 43757326484, and CI 43757233210 / Lanes 43757233283 on int/r13-9814193a.
+  - Cancelled the superseded ff9da5d8 journey runs (43756164752, 43756176197, 43756187211). Kept the 36f04678 Windows shakeout 43756097648.
