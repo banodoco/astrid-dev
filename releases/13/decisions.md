@@ -2218,3 +2218,5 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - per cell: SEED_CHECK, engine_reused, realm_rows_before, tier1_cards and the phases.
 
   There is no separate h3first request: since h3first2, a single-image v2 request defaults to first_frame, so the i2v and bike cells are the anchor cases. Estimate is ~2 h 50 m–3 h 20 m and ~$4, so a start at 08:50 ends ~11:40–12:10. Not covered: the fetch-models fresh download and sfx on the bike clip (not in the checklist inputs; deferred).
+
+- **07:05 UTC: test manager container restart (~06:40).** It killed W146b/W147 (Tier 1 proofs), W149 (release fix), V1 (W135), A3 (W136) and the rehearsal watcher; on-disk evidence survived. Recovery: four parallel Tier 1 proof workers on tier1 a27195351 (target 08:15); W149b on dcc99a752 (~60 min); A3 resumes (~75 min); V1 deprioritised (−1 s; next release if not proven by 08:30); Astra W151 (W-B r4) and W152 (W-A r5, plus the off fallback) alive. 08:45 holds. Whatever isn't proven goes out: W-A off via waoff, or a rebuild without the unproven part.
