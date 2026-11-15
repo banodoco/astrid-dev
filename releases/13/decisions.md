@@ -2415,3 +2415,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - (a) a timing diff across the four artifact sets;
   - (b) a capture-only harness branch (page status responses, sessionStorage, console, DOM, screenshot), with N=3 linux-fresh on the final tuple plus 1 macos control.
   - Any change to the assertion is Hannah's decision; I'm taking it to her. The publish is held.
+- **21:25 UTC: Hannah (AskUserQuestion): "Wait for the evidence".** Publish only if the capture runs show that just the transient notice is missed while the page state is correct; then the notice fix goes to 13.1. If they show a real page or update problem, it is fixed first. The assertion is not changed.
