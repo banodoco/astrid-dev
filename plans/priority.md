@@ -55,3 +55,4 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 50-recorded-boundaries
 - 53-vision-aspirations
 - 55-local-speed
+- 56-workflow-setup
