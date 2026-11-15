@@ -15,6 +15,13 @@
 - Video: the first edit paid a one-time load of about 50 GB (211 s in ComfyUI); the second was warm (70 s in ComfyUI) with about 300 s of overhead.
 - Model switch: an image job after video reloaded the image model (62 s in ComfyUI).
 
+*Second measurement, with Release 13's first-tier fixes* (15 November, candidate B `a639ff3f`, two warm image runs, reported by the Release 13 orchestrator at 10:14 UTC):
+- Wall 153 and 156 s (candidate A without the fixes: 215 s). Preparation 16.0 and 15.3 s, execution 64.9 and 66.4 s, collection 31.2 and 31.8 s, release 16.7 and 17.4 s, about 24 s outside every host phase.
+- Inside the machine's job: 63.0 and 65.1 s in all; execute 12.0 and 12.8 s, engine reuse 1.6 and 1.8 s, model verification 0.14 and 0.21 s, collect 0.04 s, and **49.2 and 50.3 s in no named phase**.
+- What this settles: dispatch outside the job is now about 2 s; model verification costs nothing warm; collection on the machine costs nothing, so all 31 s of collection is the caller's remote operations.
+- What it does not settle: what the 50 s is. Audits, node restore, dependency preparation, doctor and the extra Python starts are the candidates by elimination only. Split it (timestamps in the job's own log first, named timers otherwise) before fixing the scope of the repeat-check removal (SP-18, SP-19, SP-22).
+- Ceilings: removing the repeat checks can save at most about 50 s of 153. The caller's side (preparation, collection, release and the unphased gap) is about 88 s and is untouched by it. About 9 s of the named execute phase is not ComfyUI either.
+
 *Where the time goes* (the machines manager's per-gap note G1 to G6 on compose `ee14644a4`; four independent code reviews of the same commit; summarised in `releases/13/briefs/warm-latency-strategy.md`). Per warm job on a rented machine:
 - Seven or more provider calls and four git processes before the machine is touched; five remote commands and a file read to re-confirm it.
 - About twelve operations to dispatch: a directory, each file uploaded and separately checksummed, a start (`astrid/packs/runpod/machine.py:865-938`). Each remote operation opens its own connection through the provider's proxy (`astrid/packs/runpod/remote_placement.py:1036-1054`).
