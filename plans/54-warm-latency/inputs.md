@@ -62,7 +62,7 @@ Limits of leaning on ComfyUI, which bound the design: it can queue the valid bra
 
 **Proof and limits:** Completion is defined in [plan.md](plan.md#completion). Per-step seconds in the strategy note are estimates; only the totals quoted above are measured. The share of the pod-side block taken by each of audits, node restore, dependency preparation and doctor is not yet measured; SP-1 measures it.
 
-**Review rounds:** Recommended: one review stop on the Phase 1 design (custody is built on it), one on the workflow-scoped check (every placement's readiness depends on it), and one final round before any release task. Pending — the owner confirms the number.
+**Review rounds:** Agreed by the owner on 15 November 2026 (D10): one review stop on the Phase 1 design (custody is built on it), one on the workflow-scoped check (every placement's readiness depends on it), and one final round before any release task.
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run after Release 13 publishes, record the date, the phases it covers, the accountable session, what it may do without asking, and the advisor session.
 
@@ -103,8 +103,8 @@ Open questions and hypotheses, not tasks. None is measured unless it says so. Ea
 - **D6 Model files are not re-hashed on every job.** Decided 14 November 2026: full verification is an explicit opt-in. Source: `releases/13/decisions.md`, 19:15 UTC entry.
 - **D7 Lean on ComfyUI, with a narrower check.** Direction given 14 November 2026: "does Comfy not handle this?"; "we might need to check it for our reasons, like to know what to update and download, but maybe in a more narrow way". Source: orchestrator relay, 23:46 and 23:47 UTC. The principle and its limits are in the plan.
 - **D8 Which execution boundary on a rented machine stays resident.** Open; decided at RS1. Options: a kept-warm job runner beside today's direct execution; the machine's Runtime host with a reset that preserves it; a new supervised service.
-- **D9 Is submit-first acceptable on a paid, warm engine?** Open. It trades Astrid's early typed refusal for speed on jobs that will succeed. Recommendation: yes, only when the claim is attested for the workflow's requirements.
-- **D10 Review rounds and priority.** Open. Recommendation: two review stops and one final round; priority directly after Release 13's follow-ups.
+- **D9 Submit-first on a paid, warm engine.** Decided 15 November 2026: agreed, only when the claim is attested for the workflow's requirements, and with the translation of ComfyUI's errors to Astrid's typed refusals (SP-24) as its prerequisite. Source: orchestrator relay, 00:12 UTC.
+- **D10 Review rounds and priority.** Decided 15 November 2026: two review stops (RS1, RS2) and one final round; priority directly after Release 13's follow-ups. Source: orchestrator relay, 00:12 UTC.
 
 ## Source identities
 
