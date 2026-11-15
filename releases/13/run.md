@@ -2,11 +2,13 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (17:05 UTC Sun 15 Nov): read this first
+## Now (18:00 UTC Sun 15 Nov): read this first
 
-**Hannah's GO is given** (0.0.13, full, REQUIRED, compact card). **Publish tuple:** Agent 37bd5e06 (PR #347 head 401dbd78 = + Ruff baseline lock-in), App adad82f0 (PR #268), manifest 4a9e99c8, Runtime 6855dfa8.
-**Green:** 13/13 rows (43728710873); macos-fresh and windows on adad82f0; App PR clean by name (release-guard, three-products); W207b, W208, W211 (unit-8 extras are R12-preexisting); local paired run.
-**Held on:**
-- (1) **linux-fresh:** 3 fails and 2 passes on the 8-second "Astrid updated: Release N → M" page notice. The post-update state is correct, and no agent or Runtime defect was found (W209, W210, W212, W214). Hannah: wait for the evidence. Capture runs (harness/32-r13-capture): linux ×3 (43738941120 / 43738950381 / 43738959409) plus a macos control (43738967961). Publish if only the notice is missed; fix first if it's a real problem.
-- (2) **PR #347 fast checks on 401dbd78:** ruff, mypy and cycles, still to run.
-**R13.1:** the Windows fresh-install work is the advisor's (r14/windows-install); machines' TLS 95b8130e8 and CI guard 59497cf9d are handed over; cells' model lookup is running. Balance $77.46, 0 pods.
+**R13 publish is ON HOLD (Hannah, 22:45):** the Windows fresh-install fixes go INTO R13. The advisor ("the lead") owns them on astrid-agent r14/windows-install (base 37bd5e06) plus a Runtime DB-mode branch, and sends SHAs per part. The orchestrator composes them onto r13/compose-aprime 401dbd78; the test manager proves each part; then recut, re-pin the App (and the Runtime if it changed), and run the full journey.
+**Current base (proven):** agent 37bd5e06 / 401dbd78 (Ruff lock-in); App adad82f0 (compact required card); manifest 4a9e99c8; Runtime 6855dfa8.
+- 13/13 rows green;
+- App PR clean by name;
+- fast checks green;
+- unit shards: 0 regressions vs R12.
+**Linux-fresh notice question:** still open. On the final tuple, 4 passed and 1 failed at the click step; capture rows continue. Hannah's rule: publish only if only the notice is missed.
+**Codex is rate-limited until 19 Nov:** worker reads run as Claude Haiku/Sonnet subagents (Hannah). Cells' ml131 (model lookup) proofs are running via Haiku. Balance $77.38, 0 pods.
