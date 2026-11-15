@@ -4,13 +4,13 @@
 
 **Goal:** Anyone reads one strategy page and sees what each version and release is for, in sentences pulled from the release briefs and plans, and each release brief lists the plans and issues it ships.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Plan 58 manager (ChatGPT session 3417d5f77996)
 
 **Estimate:** about 4.5
 
-**Waiting on:** the owner's go for a run
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

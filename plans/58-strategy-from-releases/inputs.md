@@ -61,9 +61,9 @@ Chosen: the release brief as the structured source; generated parts on the strat
 
 **Proof and limits:** Completion and its limits are in [plan.md](plan.md#completion). Not verified while planning: branch protection and code owners on GitHub; whether Plan 52's II-13 has landed; the line numbers and test names in the cards beyond the critique's reading, which the cards say to re-check. The `Kind` line and the roll-up came after the critique and are covered by the final review round.
 
-**Review rounds:** Pending — recommended: one final round, because the plan rewrites checks other plans rely on. No review stop: the reduced scope is about 4.5 days and the release brief contract has its own tests. Next: the owner confirms.
+**Review rounds:** Agreed — one final review round, confirmed by the owner in the run-start message on 15 November 2026. No review stop. Findings become task rows and the integration merge waits for their resolution.
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking, and the advisor session.
+**Run start:** Authorized on 15 November 2026 by the owner's message in this ChatGPT conversation: "This message is my go for the run." Covers SR-1 to SR-7 and the one final review round. Accountable agent and project owner: the Plan 58 manager, ChatGPT `/root`, session/workspace `3417d5f77996`; advisor: none assigned (a separate high-judgment advisor may be consulted if needed). The manager may create branches and pull requests on astrid-dev, merge task pull requests into `int/58-strategy-from-releases`, merge its own progress pull requests, run the repository's checks and tests, and read astrid-dev issues for SR-4. The owner's go is required for merging the integration branch into `main`, any scope or decision change, the SR-3 wording (which the owner rewrites), and anything touching a product repository or publishing a release. A refused command is brought to the owner without retrying it. One pull request per task; a draft integration pull request opens as soon as the first task lands and stays current; after all tasks and review, the manager opens the completion pull request from the completion template. The owner is notified when the draft is open, when the SR-3 draft is ready and when the completion pull request is open.
 
 ## What the owner said
 
@@ -114,7 +114,7 @@ The owner's replies on SR-3 and on the open decisions come on top.
 
 ## Source identities
 
-astrid-dev `main` at `a398525a526a2bfe0eb2cccac47732c3491c467d` (15 November 2026) for every reading above; the critique read the draft at `ed0171cfd5b53e1cdb57b08715f68581c6b09282`. No product repository is read or changed. The run starts from astrid-dev `main` at its start and records that commit here.
+astrid-dev `main` at `a398525a526a2bfe0eb2cccac47732c3491c467d` (15 November 2026) for every reading above; the critique read the draft at `ed0171cfd5b53e1cdb57b08715f68581c6b09282`. No product repository is read or changed. The run starts from astrid-dev `main` at `1e1c646ea428bfd022adc024bbc25bc08078ef93`, the generated-view refresh immediately after the owner's plan reference `91035254b96342ce811afb2711631f300969572d`; the four plan documents are unchanged between them. The new clone was clean at the start. Implementation lands on `int/58-strategy-from-releases`; progress-only pull requests keep `tasks.md` current on `main` under the management skill.
 
 ## References
 
