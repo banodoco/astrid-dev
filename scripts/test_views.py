@@ -764,9 +764,6 @@ class RootStatementTests(unittest.TestCase):
         self.assertIn(f"<!-- vision-statement:end -->\n\n{sentence}\n\n<!-- vision-summary:start -->", readme)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 class StrategyViewTests(unittest.TestCase):
     def test_two_versions_roll_up_and_preserve_prose(self):
         import views
@@ -793,13 +790,11 @@ class StrategyViewTests(unittest.TestCase):
                 second = text.split('<!-- strategy-0.2:start -->')[1].split('<!-- strategy-0.2:end -->')[0]
                 self.assertIn('Release 1 — GPU control', first)
                 self.assertIn('Release 2](releases/2.md)', first)
-                self.assertIn('Contribution 1.', first)
-                self.assertIn('Contribution 2.', first)
+                self.assertIn('[Release 1](releases/1.md): Contribution 1; [Release 2](releases/2.md): Contribution 2.', first)
                 self.assertEqual(first.count('[Plan 40 — Machine lifetime controls]'), 1)
-                self.assertIn('Contribution 3.', second)
-                self.assertIn('Contribution 4.', second)
+                self.assertIn('[Release 3](releases/3.md): Contribution 3; [Release 4](releases/4.md): Contribution 4.', second)
                 self.assertIn('**Aim:** Fast.', text)
-                (root / 'strategy.md').write_text(text.replace('Contribution 1.', 'Edited.'), encoding='utf-8')
+                (root / 'strategy.md').write_text(text.replace('Contribution 1;', 'Edited;'), encoding='utf-8')
                 self.assertTrue(check_view(views.VIEWS[0], root))
                 (root / 'strategy.md').write_text(text.replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
                 self.assertIn('restore', check_view(views.VIEWS[0], root)[0])
@@ -827,6 +822,8 @@ class StrategyViewTests(unittest.TestCase):
             with patch.object(records, 'release_brief', side_effect=reader):
                 rendered = views._strategy(root, '0.1')
             self.assertIn('[Release 13 issues](releases/13.md#issues): 2', rendered)
+            # A blank line separates the counts from the plan bullets above them.
+            self.assertIn('.\n\n[Release 13 issues](releases/13.md#issues): 2', rendered)
 
     def test_normal_check_reports_missing_marker_before_sync(self):
         import astrid_dev
@@ -841,6 +838,23 @@ class StrategyViewTests(unittest.TestCase):
                 code = astrid_dev.main(['check'], root=root)
             self.assertEqual(code, 1)
             self.assertIn('strategy-0.1:end', output.getvalue())
+            self.assertNotIn('Traceback', output.getvalue())
+
+    def test_sync_reports_missing_marker_as_one_error_line(self):
+        import astrid_dev
+        source = Path(__file__).resolve().parent.parent
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'repo'
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            target = root / 'strategy.md'
+            target.write_text(target.read_text(encoding='utf-8').replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                code = astrid_dev.main(['sync'], root=root)
+            self.assertEqual(code, 1)
+            self.assertTrue(output.getvalue().startswith(
+                'ERROR sync: view strategy-0.1: target must contain exactly one ordered'), output.getvalue())
+            self.assertEqual(output.getvalue().count('\n'), 1)
             self.assertNotIn('Traceback', output.getvalue())
 
     def test_major_membership_and_next_version(self):
@@ -884,11 +898,16 @@ class StrategyViewTests(unittest.TestCase):
                 return brief
             with patch.object(records, 'release_brief', side_effect=reader):
                 rendered = views._strategy(root, '1.0').split('<!-- strategy-1.0:start -->')[1].split('<!-- strategy-1.0:end -->')[0]
-            self.assertIn('[Release 3](releases/3.md) — GPU control (Draft); Creators can control rented GPU machine lifetime.', rendered)
+            self.assertIn('[Release 3](releases/3.md) — GPU control (Draft): Creators can control rented GPU machine lifetime.', rendered)
             self.assertIn('On the way: [Release 2 — GPU control](releases/2.md)', rendered)
             self.assertEqual(rendered.count('[Plan 40 — Machine lifetime controls]'), 1)
-            self.assertEqual(rendered.count('Contribution 2.'), 1)
-            self.assertEqual(rendered.count('Contribution 3.'), 1)
-            self.assertNotIn('Contribution 1.', rendered)
+            self.assertIn('[Release 2](releases/2.md): Contribution 2; [Release 3](releases/3.md): Contribution 3.', rendered)
+            self.assertEqual(rendered.count('Contribution 2'), 1)
+            self.assertEqual(rendered.count('Contribution 3'), 1)
+            self.assertNotIn('Contribution 1', rendered)
             self.assertIn('[Release 2 issues](releases/2.md#issues): 2', rendered)
             self.assertIn('[Release 3 issues](releases/3.md#issues): 2', rendered)
+
+
+if __name__ == "__main__":
+    unittest.main()

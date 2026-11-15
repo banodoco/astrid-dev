@@ -1,3 +1,5 @@
+import io
+import os
 import tempfile
 import unittest
 from datetime import date
@@ -81,11 +83,69 @@ class IssuesTests(unittest.TestCase):
         output = ri.refresh(BRIEF, 15, api=api, today=date(2026, 1, 1))
         self.assertEqual([r['number'] for r in records.release_brief(output)['issues']], [101])
         self.assertEqual(len(calls), 2)
-        for reason, expected in [('completed','done'), ('not_planned','decided not to act'), ('duplicate','duplicate')]:
+        for reason, expected in [('completed','done'), (None,'done'), ('not_planned','decided not to act'), ('duplicate','duplicate')]:
             self.assertEqual(ri.issue_data(issue(1, [], 'closed', reason))[2], expected)
-        for bad in [issue(1, ['bug','idea']), issue(1, [], 'closed'), issue(1, [], 'mystery')]:
+        for bad in [issue(1, ['bug','idea']), issue(1, [], 'mystery')]:
             with self.assertRaises(ValueError):
                 ri.issue_data(bad)
+
+    def test_irrelevant_issue_with_two_types_is_ignored(self):
+        def api(method, path):
+            return [issue(7, ['bug', 'idea']), issue(8, ['release:15', 'bug'])]
+        output = ri.refresh(BRIEF, 15, api=api, today=date(2026, 11, 16))
+        rows = records.release_brief(output)['issues']
+        self.assertEqual([r['number'] for r in rows], [8])
+        self.assertEqual(rows[0]['type'], 'bug')
+
+    def test_relevant_issue_with_two_types_names_issue(self):
+        def api(method, path):
+            return [issue(962, ['plan:39', 'bug', 'idea'])]
+        with self.assertRaisesRegex(ValueError, r'issue #962 has more than one type label \(bug, idea\); leave one'):
+            ri.refresh(BRIEF, 15, api=api, today=date(2026, 11, 16))
+
+    def test_existing_row_closed_without_reason_becomes_done(self):
+        one = ri.refresh(BRIEF, 15, today=date(2026, 11, 16), api=lambda m, p: [issue(2, ['plan:50'])])
+        def api(method, path):
+            if '?' in path:
+                return []
+            return issue(2, ['plan:50'], 'closed', None)
+        two = ri.refresh(one, 15, today=date(2026, 11, 17), api=api)
+        rows = records.release_brief(two)['issues']
+        self.assertEqual([(r['number'], r['state']) for r in rows], [(2, 'done')])
+
+    def test_missing_token_gives_clear_message(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'scripts').mkdir()
+            (root / 'releases').mkdir()
+            path = root / 'releases/15.md'
+            path.write_text(BRIEF)
+            env = {k: v for k, v in os.environ.items() if k != 'GH_TOKEN'}
+            with patch.object(ri, '__file__', str(root / 'scripts/release_issues.py')), \
+                    patch.dict(os.environ, env, clear=True), \
+                    patch('urllib.request.urlopen', side_effect=AssertionError('no network')), \
+                    patch('sys.stderr', new_callable=io.StringIO) as err:
+                self.assertEqual(ri.main(['15']), 1)
+            self.assertEqual(err.getvalue(), 'release issues: set GH_TOKEN to a token that can read banodoco/astrid-dev issues\n')
+            self.assertEqual(path.read_text(), BRIEF)
+
+    def test_write_replaces_file_atomically(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'scripts').mkdir()
+            (root / 'releases').mkdir()
+            path = root / 'releases/15.md'
+            path.write_text(BRIEF)
+            expected = ri.refresh(BRIEF, 15, api=lambda *a: [issue(1, ['release:15'])])
+            real_replace = os.replace
+            with patch.object(ri, '__file__', str(root / 'scripts/release_issues.py')), \
+                    patch.object(ri, 'request', return_value=[issue(1, ['release:15'])]), \
+                    patch.object(ri.os, 'replace', wraps=real_replace) as rep:
+                self.assertEqual(ri.main(['15']), 0)
+            self.assertEqual(rep.call_count, 1)
+            self.assertEqual(rep.call_args[0][1], path)
+            self.assertEqual(path.read_text(encoding='utf-8'), expected)
+            self.assertEqual([p.name for p in (root / 'releases').iterdir()], ['15.md'])
 
     def test_bad_blocks_refused(self):
         one = ri.refresh(BRIEF, 15, api=lambda *a: [issue(1, ['plan:39'])])

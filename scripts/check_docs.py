@@ -10,8 +10,7 @@ from gap_relationships import parse_gap_relationships
 import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
 from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
-                     is_placeholder, key_value_lines, read_text, release_brief, section as record_section,
-                     split_table_row)
+                     is_placeholder, key_value_lines, read_text, release_brief, section as record_section)
 from vision_subject import parse_subject
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -157,12 +156,6 @@ VERSION_HEADING = re.compile(r'^(#{3,4}) Version (\d+)\.(\d+)\s*$', re.M)
 # `**Aim:**` would capture the next line as its value.
 VERSION_FIELD = re.compile(r'^\*\*(Aim):\*\*[ \t]*(.*)$', re.M)
 VERSION_OPEN = 'Open'
-RELEASE_PLAN = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
-RELEASE_SECTIONS = ('Highlight', 'Intent', 'Approach', 'Included plans', 'Publication')
-
-
-def release_section(body: str, name: str) -> str:
-    return record_section(body, name, missing='empty', boundary=r'^## ', strip=True) or ''
 
 
 def release_errors(filename: str, body: str) -> list[str]:

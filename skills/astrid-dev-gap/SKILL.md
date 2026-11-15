@@ -38,7 +38,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Use [Plan](../astrid-dev-pla
 ## Revisit the strategy
 
 [`strategy.md`](../../strategy.md) summarizes release briefs, rather than repeating gap plans. Revisit it when gap reassessment or completed work materially changes the intended release outcome:
-1. **Read the release roadmap, catalog and affected gap route.** Each plan's `plan.md` owns its status and `plans/priority.md` owns priorities; the gap owns closure evidence; a release brief owns which plans are bundled for delivery and why.
+1. **Read the strategy page, the affected release briefs, the catalog and the affected gap route.** Each plan's `plan.md` owns its status and `plans/priority.md` owns priorities; the gap owns closure evidence; a release brief owns which plans are bundled for delivery and why.
 2. **Update the release document first**, if its highlight, intent, approach or included plans change. Drafts can change without a publication event. An already finalized release is history: plan the change in a later release.
 3. **Create a numbered release brief** when needed and its scope is credible. A queued plan alone does not warrant a number or promise shipment.
 4. **Review authored strategy decisions** and update **Last reviewed** when direction changes. Sequencing is the owner’s decision.

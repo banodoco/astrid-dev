@@ -87,6 +87,28 @@ The candidate combined all seven task PRs with `main` at `eb79504c93fa02f619bd17
 
 After the fixes, the manager joined `main` at `a9dc8fb4197ead24d73b8207dbf1403651900be0` into candidate `64aaf557cf845f74d23c241aa005393926ba8145`, tree `4328d950523b72a6be5f76e8433ade83518a20f0`. That join adds only Plan 55 and Plan 58 progress already on main. The accepted inventory passed **221 tests in 28.879 seconds**, both repository checks passed, and `sync` reported that views were current. The [baseline comparison](evidence/tests/astrid-dev/64aaf557/summary.md) records the run-start baseline, candidate IDs, authorized retired IDs and raw logs.
 
-Remote commit `a9d79f65e359ee021c902dc3a763a0ef4f58a324` has the identical full tree and is retained as the completion-record commit's parent. The tests ran on the local candidate; tree identity connects that proof to the remote source. Subsequent closure edits contain only this report, evidence, the plan's done status and its generated catalog row.
+Remote commit `a9d79f65e359ee021c902dc3a763a0ef4f58a324` has the identical full tree and is retained as the completion-record commit's parent. The tests ran on the local candidate; tree identity connects that proof to the remote source. Subsequent closure edits contain only this report, evidence, the plan's done status and its generated catalog row. That was true when the manager closed the run; the owner's later check added the fixes recorded under "After completion" below.
 
 Hosted full-suite CI is a separate pre-main gate; the local inventory and this review do not substitute for it. The completion PR reports its current result. Direct shell-authenticated GitHub REST was not exercised: live issue data came from the authenticated connector and was replayed through the real CLI entry point with injected read-only transport. The four lists remain unfrozen candidates. Releases 12 and 13 are still finalized by Plan 31. No product code or release publication changed, and integration-to-main still requires the owner's go.
+
+## After completion: the owner's check, 15 November 2026
+
+After the manager marked the plan done, the owner asked the planning session to check the integration branch before it merged. Four reviewers read the integrated work at `a7c2f4861d80fe05f1f7c4d2fcc5de92635966d5`, and one further reviewer then read the whole merge candidate against the plan. Their findings were fixed on `claude/nice-hopper-x1ifrw`, on top of the integration branch joined with `main`, and merged into the integration branch before it went to `main`.
+
+| Finding | Fix |
+| --- | --- |
+| An open issue with two type labels, or a listed issue closed with no reason, stopped the issue command for every release | `af6c0524`: only issues in the list or matching its labels are validated; a closure with no reason reads as done; a missing token gives a clear message; the release brief is replaced in one step |
+| The auto-merge rule failed open on a hidden line break, an empty patch and a renamed release brief | `dfff896f`, and the commit that adds this section: each is refused |
+| The glossary gave `version` two meanings; a ledger entry was marked resolved by an entry that said it was not; the release template carried a real plan link and a real issue row | `a726888b` |
+| A plan in two releases rendered a full stop before a semicolon; `sync` printed a traceback for a missing marker; four unused names remained | `00457e98` |
+| A unit test pinned the wording, kind and plans of Releases 12 to 17, so an ordinary edit to a release brief failed CI | The commit that adds this section: the test checks shape only |
+| A frozen issue count would have rendered inside the last plan bullet, and a link in a highlight was not re-based | The commit that adds this section |
+
+**Proof on the final tree:** `python3 scripts/astrid_dev.py check`, the base check against `main`, `sync` (views current) and the whole unit suite, 387 tests, all passing.
+
+**Left as they are, and known:**
+- Before the freeze a row removed by hand returns at the next run; the cut is made after the freeze.
+- A listed issue that is deleted or transferred stops the command until its row is removed by hand.
+- Adding or removing a `## ` heading above a `**Kind:**` or `**State:**` line changes what the reader takes from a release brief without changing that line, and auto-merge does not see it. Plan 31's approval of the Final transition is the proper guard.
+- A patch release's highlight and state are not shown on the strategy page, only its title.
+- Hand-written lines on the strategy page that the owner may want to revisit: version 0.1 is described as Releases 14 to 17 while the generated part also lists Releases 12 and 13 on the way; the candidates paragraph says none is assigned while Plans 20 and 32 appear under 0.1; and the decision that says the sentence for 1.0 was proposed by the advisor predates the accepted aim.

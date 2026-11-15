@@ -35,6 +35,8 @@ Contributing without an agent? See [CONTRIBUTING.md](CONTRIBUTING.md). Noticed s
 
 **Want to use Astrid, rather than develop it?** Start at **[astrid.haus](https://astrid.haus)** (recommended). For manual installation of the local Runtime and agent, follow [Set up Astrid](https://github.com/banodoco/astrid-agent/blob/main/docs/getting-started.md). You don't need to clone `astrid-app` to use the editor.
 
+Moving an older Pinokio installation? See the [Version 0 standalone migration guide](docs/version-0-standalone-migration.md).
+
 ## From vision to projects
 
 The vision defines the destination, while projects in the [plan catalog](plans/index.md) are attempts to close the gaps between our current state and that goal. Completing a plan doesn't automatically close a gap; it informs our [reassessment](docs/contribution-workflow.md#define-or-reassess-a-vision-gap).

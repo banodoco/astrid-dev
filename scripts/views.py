@@ -122,7 +122,7 @@ def _strategy(root: Path, version: str) -> str:
     lines = []
     for brief in releases:
         if brief["kind"] in ("minor", "major"):
-            lines.append(f"[Release {brief['number']}](releases/{brief['number']}.md) — {brief['title']} ({brief['state']}); {brief['highlight']}")
+            lines.append(f"[Release {brief['number']}](releases/{brief['number']}.md) — {brief['title']} ({brief['state']}): {rebase_links(brief['highlight'], Path('releases'), Path('.'))}")
     patches = [b for b in releases if b["kind"] == "patch"]
     if patches:
         lines.append("On the way: " + ", ".join(f"[Release {b['number']} — {b['title']}](releases/{b['number']}.md)" for b in patches))
@@ -137,11 +137,14 @@ def _strategy(root: Path, version: str) -> str:
         for folder, entry in plans.items():
             number, contributions = entry["number"], entry["contributions"]
             name = project_fields((root / "plans" / folder / "plan.md").read_text(encoding="utf-8"))["Project"]
-            lines.append(f"- [Plan {number} — {name}](plans/{folder}/plan.md) — " + "; ".join(contributions))
-    for brief in releases:
-        if brief.get("issues_frozen", False):
-            count = len(brief["issues"])
-            lines.append(f"[Release {brief['number']} issues](releases/{brief['number']}.md#issues): {count}")
+            # Each sentence may end with its own period; drop one so the joined line ends with exactly one.
+            ended = [contribution.rstrip().removesuffix(".").rstrip() for contribution in contributions]
+            lines.append(f"- [Plan {number} — {name}](plans/{folder}/plan.md) — " + "; ".join(ended) + ".")
+    counts = [f"[Release {brief['number']} issues](releases/{brief['number']}.md#issues): {len(brief['issues'])}"
+              for brief in releases if brief.get("issues_frozen", False)]
+    if counts:
+        # A blank line first, or Markdown reads the counts as part of the last plan bullet.
+        lines.extend(["", *counts])
     if not releases:
         lines.append("No release yet.")
     return before + start + "\n" + "\n".join(lines) + "\n" + end + after
