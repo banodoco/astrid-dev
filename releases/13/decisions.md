@@ -2387,3 +2387,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - R13 publish proceeds unless that shows an R13-specific failure.
 - **20:05 UTC: the 13-row journey 43728710873 on agent 37bd5e06 is COMPLETE, all 13 GREEN**, including every upgrade row (R0/R9/R11/R12 → 13 on Linux and macOS), fresh installs on Linux, macOS and Windows, autostart-off, and the exact-tuple evidence job. On App adad82f0, macos-fresh is GREEN. Pending: adad82f0 linux-fresh and windows, the flake-gate rerun 43729912653, W203 (PR #347), and A⁗′ CI/Lanes.
 - **20:10 UTC: Windows installer fixes reassigned to the advisor** (Hannah's direct instruction to it; branch r14/windows-install off int/r13-37bd5e06). Machines' four R13.1 Windows cards are stopped (WIP pushed for reference only), and cells' B2 VibeComfy archive card is paused. The advisor's `\\?\` fix should cover it; the TLS draft is offered to the advisor. Cells' model lookup (ml131) continues. I keep the investigation of tester #651's fresh-R12 Windows 11 start-up failure, and I review the advisor's SHA for int/r13.1.
+- **20:25 UTC: tester #651's fresh R12 Windows 11 failure investigated. It is NOT a regression, but R13 can fail the same way.**
+  - **The real cause:** the 300 s pack-host readiness deadline (Agent services.py:143; the Runtime caps it at 300 in runtime_protocol/services.py:101). Start-up runs Remotion launch validation, which SHA-256-hashes all of remotion/node_modules, the registry inputs and src before the ready file (remotion_runtime.py:403-421, 683-723, 962-989). That is slow on freshly written files under Defender. The log stops in that phase.
+  - **The "all packs quarantined for pack_api" lines are noise:** capability_ledger.py:213 validates the provenance checkout a\astrid\packs as external packs, while the real inventory reports 0 quarantined.
+  - **The "DB is group/world-writable" warning** is a POSIX-mode check misfiring on Windows (Runtime timeline_commit_store.py:376); it costs performance only. The `auth_rejected` is unrelated: a browser-door token mismatch around the rollback, unproven.
+  - **R13 decision:** publish proceeds. It is identical to R12, and on a failed update the restored R12 still starts (W200).
+  - **R13.1 fixes:**
+    - take Remotion validation off the readiness path, or hash only the lockfile and package.json;
+    - `_validate=False` at capability_ledger.py:213;
+    - a Windows branch for the DB-mode check;
+    - emit host_startup_phase rows in --service mode (generic_host.py:77).
+    - Owners: agent side to machines, Runtime side TBD.
