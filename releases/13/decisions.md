@@ -2405,3 +2405,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The finished TLS fallback 95b8130e8 and the CI guard 59497cf9d are handed to the advisor to bring onto its branch.
   - The DACL message (astrid-app) and the Runtime's Windows DB-mode fix are handed over, not started.
   - I keep the R13 publish and the R13 release-note Windows prerequisites, and I compose the advisor's SHA onto int/r13.1 when it's sent.
+- **21:00 UTC: PR #347 fast checks were RED on the Ruff ratchet** (the tree is 1 finding BETTER than the baseline, and the ratchet requires locking it in, so mypy and cycles were skipped). Fixed by 401dbd782 on r13/compose-aprime: the baseline file only, 2010 → 2009. This is a tightening, not a weakening. The publish tuple is unchanged: the App pins agent 37bd5e06 (the parent; byte-identical installed code). The CI on 401dbd78 is the first hosted mypy + cycles proof. Other W203 notes:
+  - darwin, opt-in and integration-1 have the same ids as A″;
+  - integration-2 adds the known shared-redo flake;
+  - unit-8 has 2 extra installer-transaction ids, to be classified against R12;
+  - the Windows task-host PR check is red on R12 too (harness).
+  - Journey: macos-fresh and windows are GREEN on adad82f0; linux-fresh 43729187987 and the re-run 43729912653 are in progress.
