@@ -10,7 +10,7 @@
 
 **Estimate:** 12.5 (9.5–18): phase 1 11.5, phase 2 1
 
-**Waiting on:** Plan 29; the owner's go; owner decisions; astrid-dev `main` protection
+**Waiting on:** Plan 29; the owner's go; owner decisions; astrid-dev `main` protection; [Plan 58](../58-strategy-from-releases/plan.md), which first makes the briefs and the strategy page the records this plan publishes from
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 

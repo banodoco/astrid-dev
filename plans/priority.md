@@ -8,6 +8,7 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 20-zero-to-first-image
 - 40-machine-lifetime-controls
 - 38-one-process-identity
+- 58-strategy-from-releases
 - 31-releases-from-astrid-dev
 - 30-update-everywhere
 - 39-green-mains
