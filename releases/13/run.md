@@ -4,7 +4,7 @@ The live state of the Release 13 run: streams, owners and sessions, the timeline
 
 ## Now (01:00 UTC Sun 15 Nov): read this first
 
-**CUTOFF 13:00 UTC.** Model limit at warning: conserve. **Compose 22ffe8483.** Hannah: ship h3first2 (it merges on the test manager's MERGE-READY, after a stale-test update). Standing rule: plan/docs PRs recording Hannah'"'"'s decisions merge once green. Plans #654 (speed) and #648 (phase 4) are merged on astrid-dev main.
+**CUTOFF 13:00 UTC.** Model limit at warning: conserve. **Compose 22ffe8483.** Hannah: ship h3first2 (it merges on the test manager's MERGE-READY, after a stale-test update). Standing rule: plan/docs PRs recording Hannah's decisions merge once green. Plans #654 (speed) and #648 (phase 4) are merged on astrid-dev main.
 
 **Open:**
 - Machines' Tier 1 integrated head (incl. P3, W-H, Q6, Q2; tier1_cards in evidence) ~03:30–04:00.
