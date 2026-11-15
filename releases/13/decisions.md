@@ -2464,3 +2464,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **App** 0d9d620d28a0bb062389d3ac16b571fef1f68dc5 (PR #268 head); manifest da5976b8…; Runtime 6855dfa8.
   - The test manager runs: 13 rows + 2 linux-fresh, W217 with the POSIX equivalence check, the policy/engine lanes, the shards, and the App by name.
   - **Ready:** these pass AND the advisor's Windows guard real-generation run on 61661569 passes (or #651's clean run).
+- **00:30 UTC: W217, the independent Sonnet review of network_policy on 8625a463, PASSES.**
+  - (G) Default socket calls and asyncio are IDENTICAL with and without the policy; the 8e8e60b1 defect is confirmed fixed.
+  - (A–E) SAFE: the only unchecked connect targets the listener's own fresh loopback port; a hostile early peer is rejected; 21,363 concurrent loopback connects during 300 pair builds were all denied; no defaults are injected on POSIX; GuardedPopen denies the same cases as before.
+  - (F) The new POSIX test catches the old defect.
+  - Non-blocking, deferred: a positional `shell=True` slips the Popen guard (same on R12, unchanged); hardening (close sockets on verification failure, `__module__`, more negative tests).
+  - Pending: the 13 rows (43747941639), linux-fresh ×2, CI/Lanes on int/r13-8625a463, W218 on App 0d9d620d, and the Windows guard real-generation run on 61661569.
