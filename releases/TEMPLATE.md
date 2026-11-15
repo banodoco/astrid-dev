@@ -2,6 +2,7 @@
 
 **Release:** NN
 **State:** Draft
+**Kind:** patch
 
 ## Highlight
 
@@ -17,9 +18,9 @@ Describe the intended sequence, key trade-offs, dependencies, qualification, and
 
 ## Included plans
 
-- [Plan NN](../plans/index.md) — One sentence saying what this plan contributes to the release.
+- [Plan 19](../plans/19-first-principles-documentation/plan.md) — One sentence saying what this plan contributes to the release; the strategy page shows it.
 
-Only list plans actually intended for this release. Replace the example link with each real `plans/<id>/plan.md` link. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
+List only plans intended for this release, using each real `plans/<id>/plan.md` link; a draft without plans says `None yet`. Kind may be omitted (default `patch`), or set to `minor` or `major`. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
 
 ## Included pull requests
 

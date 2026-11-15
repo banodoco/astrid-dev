@@ -10,7 +10,7 @@ from gap_relationships import parse_gap_relationships
 import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
 from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
-                     is_placeholder, key_value_lines, read_text, section as record_section,
+                     is_placeholder, key_value_lines, read_text, release_brief, section as record_section,
                      split_table_row)
 from vision_subject import parse_subject
 
@@ -174,30 +174,36 @@ def release_errors(filename: str, body: str) -> list[str]:
     """A release brief is valid as a draft, without publication pins."""
     issues = []
     stem = Path(filename).stem
-    match = re.search(r'^\*\*Release:\*\* ([1-9]\d*)$', body, re.M)
-    if not stem.isdigit() or not match or match.group(1) != stem:
+    brief = release_brief(body, strict=False)
+    if not stem.isdigit() or not re.fullmatch(r'[1-9]\d*', brief['number'] or '') or brief['number'] != stem:
         issues.append(f'releases/{filename}: Release must equal the numeric filename')
-    if not re.search(r'^# Release ' + re.escape(stem) + r' — \S.+$', body, re.M):
+    if brief['title_number'] != stem:
         issues.append(f'releases/{filename}: title must be # Release {stem} — <title>')
-    state = re.search(r'^\*\*State:\*\* (Draft|Final)$', body, re.M)
+    state = brief['state'] if brief['state'] in ('Draft', 'Final') else None
     if not state:
         issues.append(f'releases/{filename}: State must be Draft or Final')
-    sections = {name: release_section(body, name) for name in RELEASE_SECTIONS}
+    sections = brief['sections']
     for name, content in sections.items():
         if not content:
             issues.append(f'releases/{filename}: missing or empty ## {name}')
     highlight = sections['Highlight'].splitlines()
     if highlight and (len(highlight) != 1 or len(highlight[0]) < 15):
         issues.append(f'releases/{filename}: Highlight must be one substantive sentence on one line')
-    plans = RELEASE_PLAN.findall(sections['Included plans'])
-    if not plans:
+    plans = brief['plan_links']
+    none_yet = sections['Included plans'] == 'None yet' and state == 'Draft'
+    if not plans and not none_yet:
         issues.append(f'releases/{filename}: Included plans must link project plan.md files')
     if len({folder for _, folder in plans}) != len(plans):
         issues.append(f'releases/{filename}: duplicated included plan')
     if any(number != folder[:2] for number, folder in plans):
         issues.append(f'releases/{filename}: included plan number does not match its link')
+    for error in brief['errors']:
+        # Preserve the existing no-links diagnostic without adding a duplicate.
+        if error.startswith('Included plans') and not plans:
+            continue
+        issues.append(f'releases/{filename}: {error}')
     if state:
-        if state.group(1) == 'Draft':
+        if state == 'Draft':
             if 'Not pinned.' not in sections['Publication']:
                 issues.append(f'releases/{filename}: draft publication must say Not pinned.')
         else:

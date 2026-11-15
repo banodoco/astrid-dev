@@ -21,6 +21,7 @@ from records import (
     matching_sections,
     named_field_matches,
     read_text,
+    release_brief,
     section,
     section_after_match,
     split_table_row,
@@ -82,6 +83,26 @@ class MarkdownRecordTests(unittest.TestCase):
     def test_table_split_matches_simple_pipe_table_rules(self):
         self.assertEqual(split_table_row(" | First | Second | "), ["First", "Second"])
         self.assertEqual(split_table_row(r"| a\|b | c |"), ["a\\", "b", "c"])
+
+
+class ReleaseBriefTests(unittest.TestCase):
+    def test_real_briefs_parse(self):
+        root = Path(__file__).resolve().parents[1]
+        briefs = [release_brief((root / f"releases/{n}.md").read_text()) for n in range(12, 18)]
+        self.assertEqual([b["number"] for b in briefs], [str(n) for n in range(12, 18)])
+        self.assertEqual([b["kind"] for b in briefs], ["patch"] * 5 + ["minor"])
+        self.assertTrue(all(b["title"] and b["state"] and b["highlight"] and b["plans"] for b in briefs))
+        self.assertEqual(briefs[-1]["plans"][0], {"number": "19", "folder": "19-first-principles-documentation", "sentence": "documentation from purpose to finished work."})
+
+    def test_kind_rejects_duplicate_empty_and_invalid_without_consuming_next_line(self):
+        for header in ("**Kind:** patch\n**Kind:** minor", "**Kind:**\n**State:** Draft", "**Kind:** giant"):
+            with self.subTest(header=header):
+                text = f"# Release 1 — Example title\n\n**Release:** 1\n{header}\n\n## Included plans\n\nNone yet\n"
+                with self.assertRaisesRegex(ValueError, "Kind"):
+                    release_brief(text)
+                if "**Kind:**\n" in header:
+                    self.assertEqual(release_brief(text, strict=False)["kind"], "")
+                    self.assertEqual(release_brief(text, strict=False)["state"], "Draft")
 
 
 class PlaceholderPolicyTests(unittest.TestCase):
