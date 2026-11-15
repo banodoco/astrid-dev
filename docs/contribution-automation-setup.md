@@ -4,15 +4,16 @@ The [contributor workflow](contribution-workflow.md) is public and works without
 
 ## Security boundary
 
-There are three deliberately separate GitHub workflows:
+The contribution workflows have separate responsibilities:
 
 | Workflow | Runs when | Permission | May do |
 | --- | --- | --- | --- |
 | [Review intake](../.github/workflows/review-intake.yml) | A PR opens or changes | `contents:read`, `pull-requests:write`, `issues:write` | Check an owner against the project's `plan.md` on live `main`; label a valid request `needs-review`; comment. **Never merge, approve or deploy.** |
 | [Issue intake](../.github/workflows/issue-intake.yml) | An issue opens or is edited | `contents:read`, `issues:write` | Add the type label and `plan:`/`gap:` labels, nothing else. |
 | [Claim merger](../.github/workflows/claim-project.yml) | Unprivileged documentation CI succeeds on a PR | Dedicated repository-scoped GitHub App | Auto-merge **only** a validated change to the Owner line of a queued, unassigned project's `plan.md`. Never checkout or execute fork code. |
+| [Planning auto-merge](../.github/workflows/auto-merge.yml) | A PR opens or changes | Dedicated repository-scoped GitHub App: `contents:write`, `pull-requests:write` | Enable squash auto-merge for eligible planning content; remove only this App's request when eligibility is lost. |
 
-The claim bot is disabled by default; if GitHub refuses to run a first-time contributor's CI until approved, claiming cannot skip that platform safeguard. All three use trusted `main` code. Proposed code and PR metadata are untrusted input.
+The merge bots are disabled by default. They cannot skip GitHub's first-time contributor CI approval. All use trusted `main` code; PR code and metadata are untrusted input.
 
 ## One-time configuration
 
@@ -22,6 +23,10 @@ The claim bot is disabled by default; if GitHub refuses to run a first-time cont
 4. **Assign review ownership.** The low-permission intake adds `needs-review` (creating it if missing). Have maintainers watch [the review queue](https://github.com/banodoco/astrid-dev/pulls?q=is%3Apr+is%3Aopen+label%3Aneeds-review), or configure GitHub's ordinary reviewer/CODEOWNERS mechanisms. A label is **a request**, not an assigned human or completed review.
 
 These settings cannot be created merely by merging workflow files. GitHub repository administrators must configure the ruleset/App and verify their permissions.
+
+## Planning auto-merge
+
+Enable squash merging and auto-merge in repository settings, keeping required checks and reviews on `main`. Install a dedicated App on this repository with **Contents: write** and **Pull requests: write**, without protection bypass; set secret `AUTO_MERGE_PRIVATE_KEY`, then variable `AUTO_MERGE_APP_ID`. An empty App ID skips the job. Reserve this App for this workflow: the API's `auto_merge.enabled_by` Bot login identifies its requests, but cannot distinguish workflows sharing an App. Requests enabled by people or other identities are preserved. The App token lets merges trigger the `main` push workflows for generated views and vision publication; the default `GITHUB_TOKEN` would suppress them. Verify eligibility, holds, required-check gating and both push workflows before relying on it.
 
 ## Adversarial smoke test before enabling claim merges
 

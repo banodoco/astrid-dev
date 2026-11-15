@@ -29,6 +29,10 @@
 
 Describe the intended correction and relevant source; give a real reviewer a way to verify technical claims. For consequential vision/architecture changes, review the *meaning*, not just Markdown validity. Don't invent a documentation-only state machine or keep copies of old drafts for posterity.
 
+With the [auto-merge App configured](contribution-automation-setup.md#planning-auto-merge), non-draft PRs by owners, members or collaborators merge automatically after required checks and reviews pass if every changed path (including rename sources) is under `plans/`, `releases/`, `vision/`, `docs/`, or exactly `strategy.md` or `README.md`. Hold one with the `hold` label, the exact phrase `Owner decision needed` in its body, or draft status; the workflow removes only its own App's auto-merge request. Product code is unaffected.
+
+Before pushing a change to `scripts/` or adding a release brief or plan, run `python3 -m unittest discover -s scripts -p "test_*.py"` as well as `python3 scripts/astrid_dev.py check`.
+
 ## Define or reassess a vision gap
 
 The [vision overview](../vision/README.md) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
