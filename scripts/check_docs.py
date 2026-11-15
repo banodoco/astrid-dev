@@ -154,6 +154,8 @@ STRATEGY = Path('strategy.md')
 STRATEGY_HEADER = '| Release | Highlight | Plans | Why this order |'
 STRATEGY_SECTIONS = ('## Focus now', '## Versions', '## Sequence', '## Not now', '## Decisions')
 VERSION_HEADING = re.compile(r'^(#{3,4}) Version (\d+)\.(\d+)\s*$', re.M)
+# Not records.named_field_matches: its `\s*` after the label can cross a newline, so an empty
+# `**Aim:**` would capture the next line as its value.
 VERSION_FIELD = re.compile(r'^\*\*(Aim|Plans|Releases):\*\*[ \t]*(.*)$', re.M)
 VERSION_RELEASE = re.compile(r'\[Release ([1-9]\d*)\]\(releases/([1-9]\d*)\.md\)')
 VERSION_OPEN = 'Open'
@@ -293,7 +295,11 @@ def version_errors(text: str, release_plans: dict[str, set] | None = None) -> li
     blocks = []
     for index, match in enumerate(heads):
         end = heads[index + 1].start() if index + 1 < len(heads) else len(body)
-        fields = {name: value.strip() for name, value in VERSION_FIELD.findall(body[match.end():end])}
+        fields: dict[str, str] = {}
+        for name, value in VERSION_FIELD.findall(body[match.end():end]):
+            if name in fields:
+                errors.append(f"strategy.md: version {match.group(2)}.{match.group(3)}: duplicate field '{name}'")
+            fields[name] = value.strip()
         blocks.append((len(match.group(1)), int(match.group(2)), int(match.group(3)), fields))
     majors = [(major, minor) for level, major, minor, _ in blocks if level == 3]
     if not majors:
@@ -334,17 +340,17 @@ def version_errors(text: str, release_plans: dict[str, set] | None = None) -> li
             errors.append(f'strategy.md: version {name} has an aim, so it needs at least one linked plan')
         for plan in plan_refs:
             if plan in seen_plans:
-                errors.append(f'strategy.md: Plan {plan[0]} is in versions {seen_plans[plan]} and {name}')
+                errors.append(f'strategy.md: plan {plan[0]} is in versions {seen_plans[plan]} and {name}')
             seen_plans[plan] = name
         for number, file_number in VERSION_RELEASE.findall(fields.get('Releases', '')):
             if number != file_number:
-                errors.append(f'strategy.md: version {name} release link mismatch: Release {number}')
+                errors.append(f'strategy.md: version {name} release link mismatch: release {number}')
             elif release_plans is not None:
                 if number not in release_plans:
-                    errors.append(f'strategy.md: version {name} lists Release {number}, which has no sequence row')
+                    errors.append(f'strategy.md: version {name} lists release {number}, which has no sequence row')
                 else:
                     for plan in sorted(release_plans[number] - set(plan_refs)):
-                        errors.append(f'strategy.md: Release {number} carries Plan {plan[0]}, '
+                        errors.append(f'strategy.md: release {number} carries plan {plan[0]}, '
                                       f'which version {name} does not list')
     if current is not None and expected_minor != 10:
         errors.append(f'strategy.md: version {current}.0 must contain versions '

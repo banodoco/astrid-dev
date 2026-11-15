@@ -181,11 +181,14 @@ class StrategyTests(unittest.TestCase):
         bad = self.GOOD.replace("#### Version 0.2\n\n**Aim:** Open\n\n**Plans:** None yet",
                                 "#### Version 0.2\n\n**Aim:** More.\n\n"
                                 "**Plans:** [Plan 40](plans/40-machine-lifetime-controls/plan.md)")
-        self.assertTrue(any('Plan 40 is in versions 0.1 and 0.2' in e
+        self.assertTrue(any('plan 40 is in versions 0.1 and 0.2' in e
                             for e in strategy_errors(bad, {'13.md': self.RELEASE})))
         bad = self.GOOD.replace("**Plans:** [Plan 40](plans/40-machine-lifetime-controls/plan.md)\n\n**Releases:**",
                                 "**Plans:** [Plan 31](plans/31-releases-from-astrid-dev/plan.md)\n\n**Releases:**")
-        self.assertTrue(any('Release 13 carries Plan 40' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
+        self.assertTrue(any('release 13 carries plan 40' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
+        bad = self.GOOD.replace("**Aim:** Fast and dependable.", "**Aim:** Fast and dependable.\n\n**Aim:** Again.")
+        self.assertTrue(any("version 0.1: duplicate field 'Aim'" in e
+                            for e in strategy_errors(bad, {'13.md': self.RELEASE})))
         bad = self.GOOD.replace("## Versions", "## Roadmap")
         self.assertTrue(any('## Versions' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
 
