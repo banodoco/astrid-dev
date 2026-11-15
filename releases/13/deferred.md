@@ -209,3 +209,8 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 - Requirement normalisation keeps one declaration per repository, first wins (comfyui_engine.py:162). Conflicting raw repo/commit declarations are not inventoried separately.
 - Cost scales with pack bytes: 0.528 s for 64 MiB plus 1,000 files. Plan 54 owns making this incremental.
 - A record can outlive a later generation failure or a crash after the atomic replace, because it witnesses verified preparation, not job completion. This is the accepted boundary.
+
+## W148 notes on the release fix (deferred, cause r13/machines-rel dcc99a752)
+- A release result with ok=True but no target_operation, or of a non-mapping or legacy shape, still exits 0. All current adapter returns carry it, so only an older host or a future payload shape can hit this. Follow-up: treat ok without target_operation as unverified and warn.
+- A falsified ended journal row exits 0 without contacting the host; this relies on journal integrity. A valid ended row alongside another row of unknown live status can also succeed.
+- CLI journal discovery uses saved account settings, so corrupt settings give an empty listing and exit 2. This predates the fix.
