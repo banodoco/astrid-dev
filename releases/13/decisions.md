@@ -2433,3 +2433,13 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Plan: the advisor sends SHAs per part; I compose them onto r13/compose-aprime 401dbd78; the test manager proves each; then recut, re-pin the App (and the Runtime if changed), and rerun the full journey and linux-fresh evidence.
   - The advisor's scope (expected): long paths, Git preflight, messages, Remotion readiness, ledger noise, O_DIRECTORY / _TargetFiles, the TLS fallback, the CI guard, and the Runtime DB mode.
 - **22:55 UTC hourly check-in:** 0 pods. The publish is on hold for the advisor's Windows fixes (Hannah). Waiting on the advisor's scope, ETA and SHAs.
+- **23:05 UTC: the advisor's Windows set for R13** (astrid-agent r14/windows-install bf956730, draft PR #348, base 37bd5e06) covers:
+  - installer long paths, Git preflight and messages;
+  - task-host ready before Remotion validation, plus the ledger noise;
+  - the TLS fallback and the CI guard;
+  - Unix-only flags off the Windows path (incl. `_engine_target_files` via a Windows adapter only where O_DIRECTORY is missing, which changes the helper digests);
+  - startup wait 180 → 300;
+  - UTF-8 inputs;
+  - an OpenBLAS loader-lock deadlock fix (OPENBLAS_NUM_THREADS=1 on win32), the root cause of #651's 300 s hang.
+  The Windows guard is green on real Windows up to 6317d661; a real generation is in progress. The Runtime stays at 6855dfa8 for R13 (DB-mode 038e0e8 → R14), as agreed.
+  - Trial merge onto 401dbd78: clean, cycles OK, 65 focused tests pass. BUT the Ruff ratchet regresses by 5: a BLE001 in remotion_runtime.py (blocking), plus F811/F401 in generic_host.py and media_handles.py. Sent back to the advisor to fix in code (no baseline raise). Compose reset to 401dbd78 until the fixed SHA arrives.
