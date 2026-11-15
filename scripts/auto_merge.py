@@ -5,9 +5,10 @@ import json
 from pathlib import Path
 import re
 
+from records import key_value_lines
+
 
 RELEASE_BRIEF = re.compile(r"^releases/[1-9]\d*\.md$")
-PROTECTED_RELEASE_LINE = re.compile(r"^[+-][ \t]*\*\*(Kind|State):\*\*")
 
 
 def eligibility_reason(draft, author_association, labels, body, changed_paths, file_entries=None):
@@ -48,9 +49,13 @@ def eligibility_reason(draft, author_association, labels, body, changed_paths, f
         for line in patch.splitlines():
             if line.startswith(("+++", "---")):
                 continue
-            match = PROTECTED_RELEASE_LINE.match(line)
-            if match:
-                return f"release brief changes **{match.group(1)}:**"
+            if not line.startswith(("+", "-")):
+                continue
+            fields = key_value_lines(line[1:].lstrip(" \t"), style="bold")
+            if fields:
+                key, separator, _ = fields[0]
+                if separator and key in {"Kind", "State"}:
+                    return f"release brief changes **{key}:**"
     if release_paths - covered_release_paths:
         return "release brief patch unavailable"
     return None
