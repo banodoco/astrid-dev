@@ -2349,3 +2349,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The Pinokio checks are made meaningful.
   - Paired vitest 269 → 279, with mutation checks.
   - Final evidence plan agreed with the test manager: the full 13-row matrix on agent 91b60416 (43725021701), plus the 3 fresh-install rows on the exact final App SHA. The journey reads only the unchanged manifest and install scripts.
+- **17:10 UTC hourly check-in:** 0 pods. The final candidate is Agent 91b60416 + App e7d27462; every gate item is running and none has failed. ETA live ~17:15.
