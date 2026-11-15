@@ -2577,3 +2577,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **(2)+(3) Copy (5):** the intended "honest failure messages" wording. The first line and the Next/Details lines remain.
   - **Action:** a 13.1 card updates the 15 tests to the intended behaviour.
   - **Process lesson:** a recut whose hosted unit shards were cancelled (36f04678, ff9da5d8) left the merged Windows branch with no hosted unit run before publish. Next time, run the merged branch's own unit shards before the final recut even when the fast rule waives the final head's shards.
+- **22:45 UTC: W233 CONFIRMS by reproduction that group (1) is not a custody regression.**
+  - All 8 scenarios ran on the real `stage()` at 9814193a, with hostile symlinks and hardlinks planted inside the candidate.
+  - Each scenario made exactly one removal, of `versions/<candidate>`. The outside dirs, symlink targets, data files, versions/old and install.json were untouched, and no switch or declaration happened.
+  - Groups (4) and (2)+(3) are still being reproduced.
