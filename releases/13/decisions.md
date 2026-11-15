@@ -2209,3 +2209,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **06:25 UTC: rehearsal CI clean.** int/r13-f5637687 (CI 43679796336), against R12: 0 regressions. It's the first R13 head where every fast check passes (ruff 2010, mypy, cycles, collection); darwin has no R13-only failure (the audio timeout fix works); Windows is green. Two readiness_missing_models tests failing hosted are treated as a load flake: they pass 8/8 ×6 on a quiet box, the fake server has 2 s timeouts, and a deferred row exists. If they fail again on the final head, they get a timeout fix, not a skip. Lanes 43679796305 is due ~07:45–08:00.
 
 - **06:55 UTC: disk for the final run.** 8.2 GB free after a helper's cleanup (stale uv cache 2.3 GB, npm cache, pycache, a pushed worktree). The old install version a921b7dc (2.8 GB) is the installer's rollback copy and stays. The next update keeps {new, 6a6ab6f4} and removes a921b7dc itself (backend.py Backend.finish, ~1830), so the ~3 GB install costs nearly nothing net. common.sh's guard still stops cells below 5 GB.
+- **07:00 UTC: final live round script ready (not run).** s2i/roundfinal.sh <sha>:
+  - local pre-flight (inputs plus checksums; the real-clip package extracted from e3fe473's evidence/h3dry);
+  - claim 1: t2i 7/8/9, edit (bike), tts, sfx, music, h3 v2v/edit/i2v/bike, real-clip T2–T5b, synthetic T5a/T5b (the P1 8/20-step comparison), t2i 10;
+  - release, which must confirm an empty pod list;
+  - P6 claim 2: one t2i, expecting engine_snapshot_restore=restored and no install step;
+  - release, then local checks (check_real_edit.py, and frame-0 SSIM for the i2v anchors against the old reference-only 0.8627);
+  - per cell: SEED_CHECK, engine_reused, realm_rows_before, tier1_cards and the phases.
+
+  There is no separate h3first request: since h3first2, a single-image v2 request defaults to first_frame, so the i2v and bike cells are the anchor cases. Estimate is ~2 h 50 m–3 h 20 m and ~$4, so a start at 08:50 ends ~11:40–12:10. Not covered: the fetch-models fresh download and sfx on the bike clip (not in the checklist inputs; deferred).
