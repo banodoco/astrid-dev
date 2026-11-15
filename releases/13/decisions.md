@@ -2508,3 +2508,14 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - W227 re-verify PASS: fuzz over 82,740 command lists, 0 widened and 0 narrowed vs 8625a463; check G identical.
   - Running: journey 43757304537 (14 rows) plus captures 43757315244 / 43757326484, and CI 43757233210 / Lanes 43757233283 on int/r13-9814193a.
   - Cancelled the superseded ff9da5d8 journey runs (43756164752, 43756176197, 43756187211). Kept the 36f04678 Windows shakeout 43756097648.
+- **20:22 UTC: the new gate row direct-windows-r12-update PASSED on its first real run** (43756097648; 36f04678 + App f1967a1e, harness/33 ea5c0bff6).
+  - All 9 steps and all 10 checks passed.
+  - The update went 12 → 13 via the candidate `install.ps1 --update`, exit 0.
+  - Doctor ok; dry-run generate ok; seeded data intact.
+  - This is plumbing proof only: the gate is the same row on 9814193a, in run 43757304537.
+- **Gate (confirmed to the advisor):**
+  - journey 43757304537 plus its 2 capture rows;
+  - CI 43757233210 (mypy, shards) and Lanes 43757233283;
+  - W218 on 7297d266;
+  - advisor Windows guard 43756890273.
+  - A macos-fresh failure with W224's exact shutdown-race signature gets one rerun. Any other failure blocks.
