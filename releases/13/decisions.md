@@ -2533,3 +2533,6 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Ruff, collection, boundary, windows-native-and-installer and release wheels 3.11/3.12 are green.
   - darwin native is red, as on every candidate since A″; the ids still need matching.
   - Journey 43757304537 so far: direct-windows, macos-fresh (uninstall passed), macos-r9-install and macos-r11-update are green; none red.
+- **20:37 UTC: GATE ROW direct-windows-r12-update is GREEN on the publish tuple** (43757304537; installed tuple agent 9814193a, App 7297d266, Runtime 6855dfa8).
+  - All 9 steps and all 10 checks passed.
+  - Journey: 6/14 green, none red.
