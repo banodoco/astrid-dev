@@ -2,9 +2,12 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (13:00 UTC Sun 15 Nov): read this first
+## Now (14:00 UTC Sun 15 Nov): read this first
 
-**Hannah's GO is given** (0.0.13, full, REQUIRED update; publish without waiting for the final head's full CI). **Blocker:** an upgrade regression. Every older install updating to 13 is rolled back (BootManifestDrift; 9f00e2ae2/a26030e78). Cells' r13/cells-bootmanifest is due ~14:05. The journey on the new harness harness/31-r13-upgrade (R0/R9/R11/R12 → 13, fresh) runs 43715487164 on A″ to scope it.
-**A‴ components:** A″ 34fee0cf + boot-manifest (pending) + the Windows stack r13/machines-winnofollow (pending: winclaim, fcntl, graph_facts, credential read) + logfetch 8b6f8434d (W181 proof) + redact 887f81594 (READY) + LTX marker 8519cd2a0 (READY).
-**Then:** freeze → App re-pin with --require → journey all rows → publish (Agent → Runtime fast-forward 6855dfa8 → App → deploy check). ETA live ~16:30.
-**Post-R13:** first update = model lookup (cells) + generate-failure leftovers. R14 = local speed (Plan 55), and release docs 14–19 in astrid-dev#664. Balance $77.5428138996, 0 pods.
+**Hannah's GO is given** (0.0.13, full, REQUIRED update; publish without waiting for the final head's full CI). A‴ is frozen: Agent 8e0006f5 (int/r13-8e0006f5); App 200e6647 (required block). Publish PRs are open but not merged: astrid-agent#347 and astrid-app#268.
+**Blockers:**
+- (1) **W194 on the boot-manifest restamp:** rollback to R12 breaks after the restamp, a busy host gets restamped, and the match isn't exact. Cells' bootmanifest2 is due ~15:05.
+- (2) **The hosted Import-cycles gate is red:** machines' redact f5d8c2b9d added it. Fix: move redact_log to a leaf module, a new commit on r13/machines-redact.
+**Journey on A‴ (43718444065):** 8/13 green, including R0 → 13 on Linux and macOS, R12 → 13 on macOS and R9 on Linux; none failed so far.
+**Then:** A⁗ = A‴ + bootmanifest2 + the cycle fix (+ log-fetch add-on 51971b0e2 if W197 is MERGE-READY). Then re-pin the App, rerun W194's probes and the full 13 rows, and publish. ETA live ~16:45.
+**Post-R13:** first update = model lookup (cells; built, paused) + generate-failure leftovers. R14 = local speed (Plan 55). Balance $77.51, 0 pods.
