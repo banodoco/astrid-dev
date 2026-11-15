@@ -36,7 +36,7 @@ When this is done, each level owns one sentence that the level above pulls, and 
 5. **The brief lists its issues, pulled by a command.** A person or agent runs it; it writes a marked block at the bottom of the brief with each issue's number, type, state and title. No check calls GitHub.
 6. **What ships is decided at shipping.** When a brief is finalised its issue list is frozen: each issue is recorded as shipped or moved on. The final brief is the record of what the release contained.
 7. **Decisions stay the owner's.** A pull request that changes which version a release leads to, a brief's state or a frozen issue list does not merge by itself.
-8. **The documents agree.** Every skill, guide and template that describes the old page or tells an agent to copy into it is corrected, and the terms `version`, `release version` and `standing lane` are each defined once.
+8. **The documents agree.** The hierarchy in the table above is described once, in the contribution guide. Every skill, guide and template that describes the old page or tells an agent to copy into it is corrected, and the terms `version`, `release version` and `standing lane` are each defined once.
 
 **Included:** the brief template and its checks; a reader for briefs; the strategy view and the checks it replaces; rewriting `strategy.md` and the six current briefs to the new shape; a `Release` column in the plan catalog; the `release:NN` label rule; the issue-list command and its freeze; the pull-request guard; the documentation corrections listed in [SR-12](tasks.md).
 

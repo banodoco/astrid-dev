@@ -46,6 +46,7 @@ An issue's title is text anyone can write. In the block a title is cut to 100 ch
 
 ## SR-12: what to correct
 
+- One home for the hierarchy itself: `docs/contribution-workflow.md`, "Review the strategy", says once how the levels fit (a gap says what must improve, a plan what is built, a release what ships together, a version where a run of releases leads, a major version the aim) and which line each level hands upward. The README, the glossary and the skills link there and do not restate it.
 - `docs/contribution-workflow.md`: "Review the strategy" (what the page is, what CI checks, when it changes); the sentence that a completion pull request must touch `strategy.md`.
 - `README.md`: the paragraph describing the strategy page.
 - `skills/astrid-dev/SKILL.md`: the Strategy row says "the order across gaps"; the page orders versions and releases.
