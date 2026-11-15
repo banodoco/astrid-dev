@@ -2519,3 +2519,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - W218 on 7297d266;
   - advisor Windows guard 43756890273.
   - A macos-fresh failure with W224's exact shutdown-race signature gets one rerun. Any other failure blocks.
+- **20:31 UTC: gate item 4 is GREEN. The advisor's Windows fresh-user install guard 43756890273 passed on 29ca1469**; I verified completed/success myself.
+  - Both variants passed: long paths ON (job 132942826225) and OFF (job 132942826601).
+  - Each ran a fresh install as a normal user with a 27-character user name, plus one real generation through the installed product.
+  - This is the Windows proof for agent 9814193a.
+  - The macOS shutdown race is filed as astrid-dev #685 (R14).
+  - Remaining: journey 43757304537 plus captures, CI/Lanes on int/r13-9814193a, and W218.
