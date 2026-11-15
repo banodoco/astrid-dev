@@ -1,0 +1,105 @@
+[
+  {
+    "cost_usd": 0.3109,
+    "ended": null,
+    "gpu": "RTX 5090",
+    "hourly_usd": 1.39,
+    "id": "r2irzme94z5skd",
+    "idle_expires_at": 1794743007.3663132,
+    "idle_timeout_s": 7200.0,
+    "kind": "runpod",
+    "last_job": {
+      "failure": null,
+      "generation": 2,
+      "outcome": "success"
+    },
+    "lease": "d47d69d1fb0949549f6f410e2b3659c3",
+    "live": true,
+    "minutes_left": 119.9,
+    "preparation_state": "prepared",
+    "release_at": 1794743007.3663132,
+    "release_capability_id": "runpod.release",
+    "release_reason": null,
+    "self_stop": false,
+    "state": "idle"
+  },
+  {
+    "cost_usd": 1.5413,
+    "ended": "engine_unreachable",
+    "gpu": "RTX 5090",
+    "hourly_usd": 1.39,
+    "id": "rcy8ezu1juaf8t",
+    "idle_expires_at": null,
+    "idle_timeout_s": 7200.0,
+    "kind": "runpod",
+    "last_job": {
+      "failure": {
+        "category": "ownership",
+        "code": "custody_unresolved",
+        "exception": "MachineError",
+        "issue_message": "managed preparation failed; exact owned engine stop remains unconfirmed",
+        "logs_dir": "/home/user/wt/install-r13b/data-s16/generation/failures/2a2b9a15028444459312bea845d9c1a1/logs",
+        "stage": "model_download"
+      },
+      "generation": 11,
+      "outcome": "failed"
+    },
+    "lease": "e93d4d01cb4a4d66b5832bf3a7715935",
+    "live": false,
+    "minutes_left": null,
+    "preparation_state": "prepared",
+    "release_at": null,
+    "release_capability_id": "runpod.release",
+    "release_reason": null,
+    "self_stop": null,
+    "state": "ended"
+  },
+  {
+    "cost_usd": 1.0512,
+    "ended": "explicit",
+    "gpu": "RTX 5090",
+    "hourly_usd": 1.39,
+    "id": "65y7tk8hiheike",
+    "idle_expires_at": null,
+    "idle_timeout_s": 7200.0,
+    "kind": "runpod",
+    "last_job": {
+      "failure": null,
+      "generation": 7,
+      "outcome": "success"
+    },
+    "lease": "f6f5d72ff350486b8c90660680bd43cf",
+    "live": false,
+    "minutes_left": null,
+    "preparation_state": "prepared",
+    "release_at": null,
+    "release_capability_id": "runpod.release",
+    "release_reason": null,
+    "self_stop": null,
+    "state": "ended"
+  },
+  {
+    "cost_usd": 1.3705,
+    "ended": "explicit",
+    "gpu": "RTX 5090",
+    "hourly_usd": 1.39,
+    "id": "ephmvk5zhes2uk",
+    "idle_expires_at": null,
+    "idle_timeout_s": 7200.0,
+    "kind": "runpod",
+    "last_job": {
+      "failure": null,
+      "generation": 7,
+      "outcome": "success"
+    },
+    "lease": "df539502c3bd4534a937ee47cc1380bb",
+    "live": false,
+    "minutes_left": null,
+    "preparation_state": "prepared",
+    "release_at": null,
+    "release_capability_id": "runpod.release",
+    "release_reason": null,
+    "self_stop": null,
+    "state": "ended"
+  }
+]
