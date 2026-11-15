@@ -1,0 +1,113 @@
+{
+  "branch": "source_free",
+  "capabilities": {
+    "first_frame": {
+      "crop": "disabled",
+      "decoded_pixels": "not guaranteed identical",
+      "position": 0,
+      "preservation": "encoded video latent; zero denoise mask"
+    },
+    "generation_timing": {
+      "duration": 0.20833333333333334,
+      "fps": 24,
+      "raw_frames": 5,
+      "requested_frames": 5,
+      "trim_tail_frames": 0
+    },
+    "image_roles": [
+      {
+        "asset": "first-frame.png",
+        "purpose": "first_frame"
+      }
+    ],
+    "native_v2_branch": "source_free",
+    "operation": "transform",
+    "output_contract": "muxed_av_full_timeline",
+    "public_generation": {
+      "internal_outputs": [],
+      "modality": "video",
+      "selectors": [
+        {
+          "ordinal": 0,
+          "required": true,
+          "selector": "main-0",
+          "variant_key": "original"
+        }
+      ]
+    },
+    "reference_binding": "explicit look references and timed image roles",
+    "reference_capacity": 9,
+    "reference_order": [
+      "first-frame.png"
+    ],
+    "references": 1,
+    "validation": "CPU structural; live GPU acceptance pending"
+  },
+  "compilation_digest": "ac106d29a3489d87728af679d11083da1c595ff6d9ee90176e4d24109f4d6c38",
+  "kind": "h3_av_compilation",
+  "limitations": [
+    "image references and timed image guides only; no source-free masks",
+    "first_frame preserves the encoded latent at frame 0; identical decoded pixels are not guaranteed",
+    "keyframe conditions its requested frame without pixel preservation",
+    "single pass, up to 362 frames at 24 fps"
+  ],
+  "managed_assets": {
+    "manifest": {
+      "assets": [
+        {
+          "binding": "reference_0",
+          "lineage": {
+            "filename": "3d7fa1d53c5434db.png",
+            "kind": "source_bytes",
+            "sha256": "sha256:c02608104b56df80622a70eb4c18ba45fefc01d67f981e884c9b896086e67421"
+          },
+          "member": "assets/c02608104b56df80-3d7fa1d53c5434db.png",
+          "sha256": "c02608104b56df80622a70eb4c18ba45fefc01d67f981e884c9b896086e67421",
+          "size": 989344
+        }
+      ],
+      "kind": "vibecomfy_managed_assets",
+      "schema_version": 2,
+      "workflow_inputs": {
+        "guidance": 0.95,
+        "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "prompt": "Animate the supplied image with a gentle camera push. Quiet ambience, no speech or music.",
+        "reference_0": "c02608104b56df80-3d7fa1d53c5434db.png",
+        "sampler": "res_multistep",
+        "scheduler": "simple",
+        "seed": 42,
+        "steps": 1
+      }
+    },
+    "path": "/tmp/astrid-job-6pu7a6s7/h3/plan/compile/managed-assets.zip",
+    "sha256": "0323df71c131c29ed87e5859ee1c52655b1c27b85f956ab95914488de918359a"
+  },
+  "profile": "h3_av.native.v2",
+  "request_digest": "46578b4f1295a006d180f0afdf6d18deadd161dcb1646fc5e44451103d0c4745",
+  "schema_version": 1,
+  "status": "compiled",
+  "workflow": {
+    "source.json": {
+      "path": "/tmp/astrid-job-6pu7a6s7/h3/plan/compile/workflow-bundle/source.json",
+      "sha256": "d78bf7b4b5f3ef7896cc06f0dfa96eb7a20fc05e00e276db10e94761638eb1e9"
+    },
+    "workflow.py": {
+      "path": "/tmp/astrid-job-6pu7a6s7/h3/plan/compile/workflow-bundle/workflow.py",
+      "sha256": "9839b6bd4261d08a3508fec92df0319830f9cc6ef48dca7a887c0cc7911ca42e"
+    },
+    "workflow.vibe.json": {
+      "path": "/tmp/astrid-job-6pu7a6s7/h3/plan/compile/workflow-bundle/workflow.vibe.json",
+      "sha256": "4c0ea30375f507c368a97a435ad58825dd01784b607c07e75ebe0723fb7acdc1"
+    }
+  },
+  "workflow_inputs": {
+    "guidance": 0.95,
+    "model": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+    "prompt": "Animate the supplied image with a gentle camera push. Quiet ambience, no speech or music.",
+    "reference_0": "c02608104b56df80-3d7fa1d53c5434db.png",
+    "sampler": "res_multistep",
+    "scheduler": "simple",
+    "seed": 42,
+    "steps": 1
+  }
+}

@@ -1,0 +1,57 @@
+managed alignment failed task=2a2b9a15028444459312bea845d9c1a1 attempt=dc62a1e62d564173a7084cda69dd412b step=doctor reason=workflow_validation_failed missing_classes=[] exit=1 stdout_sha256=2a70b01939460ce5535b26a4f053f62355fa71f7d09d689ae2f3ca775c2a5eed stderr_sha256=fb96914fe4fd2ea790f02699c4578fce8514b2ca12e6f65a6db88a16a3f69f73
+Engine custody refusal: Engine supervisor did not confirm command cleanup; inspect the engine state before retrying. root=/root/astrid/engines/comfyui engine=comfyui helper_sha256=d9b357d47d8e marker_path=/root/astrid/engines/comfyui/.astrid-engine/session/session.json owner_state=alive evidence=pid_start_ticks lock_state=held. Inspect engine processes and custody state before retrying.
+Traceback (most recent call last):
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/cli.py", line 871, in main
+    return _main(argv)
+           ^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/cli.py", line 568, in _main
+    return _job_command(argv)
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/cli.py", line 554, in _job_command
+    result = run_job(parsed.entry, parsed.job, parsed.out, mode=parsed.mode, align=parsed.align)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/local_job.py", line 78, in run_job
+    return _run_job(entry, job, out, mode=mode, align=align)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/local_job.py", line 108, in _run_job
+    return run_prepared_job(entry, inputs, execution, bindings, Path(out), task=task, attempt=attempt,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 245, in run_prepared_job
+    return run_named_entry(described, entry, inputs, {}, out, task=task, attempt=attempt,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 358, in run_named_entry
+    result = run_owned_action(
+             ^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 29, in run_owned_action
+    return _run_owned_action(workflow, out, task_identity=task_identity,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/packs/vibecomfy/local_job.py", line 157, in _run_owned_action
+    report = preparation.prepare(workflow, execution_identity=identity, inputs=members,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/managed_preparation.py", line 378, in prepare
+    report = self._prepare(workflow, execution_identity=execution_identity, inputs=inputs, canonical_workflow=canonical_workflow, input_digests=input_digests)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/managed_preparation.py", line 504, in _prepare
+    alignment = engine.align(manifest, self.mode, workflow=canonical_path)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py", line 213, in align
+    commands.doctor()
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py", line 122, in doctor
+    self._run("doctor")
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py", line 114, in _run
+    self.runner(self.argv(step))
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/managed_preparation.py", line 829, in _command
+    return self._doctor(argv)
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/managed_preparation.py", line 882, in _doctor
+    self._stop_preparing_engine()
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/managed_preparation.py", line 411, in _stop_preparing_engine
+    raise error from None
+astrid.core.generation.engine_contracts.CustodyUnresolved: managed preparation failed; exact owned engine stop remains unconfirmed
+owned engine stop failed: CustodyUnresolved
+managed preparation close failed: CustodyUnresolved
+Exception ignored in: <generator object LinuxPlatformAdapter.local_install_lock at 0x79c190de9080>
+Traceback (most recent call last):
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-agent/astrid/core/generation/engine_platforms.py", line 207, in local_install_lock
+  File "/root/astrid/bootstrap/upload-34f70b12ceb1f53b/src/astrid-runtime/runtime_protocol/platform.py", line 278, in unlock_file
+ImportError: sys.meta_path is None, Python is likely shutting down
