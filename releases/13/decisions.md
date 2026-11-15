@@ -2411,3 +2411,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - unit-8 has 2 extra installer-transaction ids, to be classified against R12;
   - the Windows task-host PR check is red on R12 too (harness).
   - Journey: macos-fresh and windows are GREEN on adad82f0; linux-fresh 43729187987 and the re-run 43729912653 are in progress.
+- **21:20 UTC: the linux-fresh flake gate is NOT met.** The re-run of the original tuple (43729912653) and the FINAL tuple's linux-fresh (43729187987) both FAILED with the same assertion: the open page never showed the 8-second "Astrid updated: Release N → M" notice in 30 min. The tally over the last tuples is 3 fails and 2 passes, and it doesn't follow the agent or the App head. W210 showed that the persistent post-update state is correct (Settings: "Astrid updated. Reload to continue.", required card gone), but the cause is unknown: the artifacts keep only request counts. Actions:
+  - (a) a timing diff across the four artifact sets;
+  - (b) a capture-only harness branch (page status responses, sessionStorage, console, DOM, screenshot), with N=3 linux-fresh on the final tuple plus 1 macos control.
+  - Any change to the assertion is Hannah's decision; I'm taking it to her. The publish is held.
