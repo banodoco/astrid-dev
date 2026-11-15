@@ -2193,3 +2193,11 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **05:10 UTC: ruff fix merged; pre-freeze CI.** r13/tests/ruff-tester acef27e45 → r13/compose f56376877 (ruff 2010 = baseline; cycles and collection pass; mypy green per W139). Frozen as int/r13-f5637687 so hosted ruff, mypy and cycles run for real before the 13:00 freeze; the test manager attributes it against R12.
 
 - **05:12 UTC: activation regression cleared (not custody).** W141 classified the 3 rows as intended: the answer plus the two declared logs (job.stdout, job.stderr). r13/tests/activation-logs 9c07cd512 replaces `len == 1` with an exact list naming all three rows, checked after recovery, so a duplicate would still fail. Merged into compose; the blocker is lifted. [True] stays R12-red (an ordering problem in the acceptance callback).
+
+- **05:40 UTC: freeze moved earlier (advisor's 05:30 dive, accepted).** Run in series, freeze → CI comparison → final live repeat ends after 13:00. New schedule:
+  - **08:45:** the freeze candidate is decided: compose plus whatever of Tier 1, V1, A3 and L7 is MERGE-READY. Anything not ready goes to plan 54 or the next release; same line for W-C, L7, V1 and the source-identity cache.
+  - **~09:00:** the paid run on that candidate is both the Tier 1 re-measure and the final live repeat: claim-to-first-result (the P6 proof), t2i ×3 warm, all cells, the h3 real clip, h3first anchor quality, the P6 two-claim run, and non-zero `seed_used` in receipts (R4.K).
+  - **≤09:30:** freeze the candidate (--ci); the CI comparison runs in parallel with the live repeat.
+  - **13:00:** publish on Hannah's go.
+
+  The advisor's open items are already handled: W141 was a stale test (cleared 05:12), and R4.K seed plus the cancel command shipped in phase 4 R4.N (8c0d7f03f). The review-intake script already has a deferred row.
