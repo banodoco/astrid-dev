@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import os
+import tempfile
 from datetime import date
 from pathlib import Path
 import sys
@@ -12,27 +14,34 @@ from records import ISSUE_START, ISSUE_END, ISSUE_HEADER, ISSUE_RULE, release_br
 
 REPO = "banodoco/astrid-dev"
 TYPES = {"observation", "bug", "question", "idea"}
+TOKEN_MESSAGE = "release issues: set GH_TOKEN to a token that can read banodoco/astrid-dev issues"
 
 
-def issue_data(issue: object) -> tuple[int, str, str, set[str]]:
+def issue_key(issue: object) -> tuple[int, set[str]]:
+    """Validate only the number and label names of an issue."""
     if not isinstance(issue, dict) or type(issue.get("number")) is not int or issue["number"] < 1:
         raise ValueError("malformed issue number")
     labels = issue.get("labels")
     if not isinstance(labels, list) or any(not isinstance(x, dict) or not isinstance(x.get("name"), str) for x in labels):
         raise ValueError("malformed issue labels")
-    names = {x["name"] for x in labels}
+    return issue["number"], {x["name"] for x in labels}
+
+
+def issue_data(issue: object) -> tuple[int, str, str, set[str]]:
+    n, names = issue_key(issue)
     types = names & TYPES
     if len(types) > 1:
-        raise ValueError(f"issue #{issue['number']} has multiple type labels")
+        raise ValueError(f"issue #{n} has more than one type label ({', '.join(sorted(types))}); leave one")
     kind = next(iter(types), "—")
     state, reason = issue.get("state"), issue.get("state_reason")
     if state == "open" and reason in (None, "reopened"):
         status = "open"
-    elif state == "closed" and reason in {"completed", "not_planned", "duplicate"}:
-        status = {"completed": "done", "not_planned": "decided not to act", "duplicate": "duplicate"}[reason]
+    elif state == "closed" and reason in {"completed", None, "not_planned", "duplicate"}:
+        # GitHub shows a closed issue with no close reason as completed.
+        status = {None: "done", "completed": "done", "not_planned": "decided not to act", "duplicate": "duplicate"}[reason]
     else:
-        raise ValueError(f"issue #{issue['number']} has unexpected state or reason")
-    return issue["number"], kind, status, names
+        raise ValueError(f"issue #{n} has unexpected state or reason")
+    return n, kind, status, names
 
 
 def render(rows: list[dict], stamp: str, frozen: bool) -> str:
@@ -67,16 +76,19 @@ def refresh(text: str, number: int, *, freeze: bool = False, today: date | None 
                 raise ValueError("malformed issue")
             if "pull_request" in item:
                 continue
-            n, kind, state, labels = issue_data(item)
+            n, labels = issue_key(item)
             if n in seen:
                 raise ValueError("duplicate issue in API pages")
             seen.add(n)
+            if n not in old and not (labels & routes):
+                continue  # irrelevant to this release: not validated further
+            n, kind, state, labels = issue_data(item)
             if state != "open":
                 raise ValueError("open issues endpoint returned a non-open issue")
             matching = sorted(labels & routes)
             if n in old:
                 rows[n] = {**old[n], "state": state}
-            elif matching:
+            else:
                 rows[n] = {"number": n, "type": kind, "state": state, "via": matching}
         if len(data) < 100:
             break
@@ -115,11 +127,30 @@ def main(argv=None) -> int:
         before = path.read_text(encoding="utf-8")
         after = refresh(before, args.number, freeze=args.freeze)
         if after != before:
-            path.write_text(after, encoding="utf-8")
-    except (ValueError, OSError, KeyError) as exc:
+            write_atomic(path, after)
+    except KeyError as exc:
+        print(TOKEN_MESSAGE if exc.args == ("GH_TOKEN",) else f"release issues: {exc}", file=sys.stderr)
+        return 1
+    except (ValueError, OSError) as exc:
         print(f"release issues: {exc}", file=sys.stderr)
         return 1
     return 0
+
+
+def write_atomic(path: Path, text: str) -> None:
+    """Write text to a temp file beside path, then replace path with it."""
+    fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(text)
+        os.chmod(tmp, path.stat().st_mode & 0o7777)
+        os.replace(tmp, path)
+    except BaseException:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
 
 
 if __name__ == "__main__":
