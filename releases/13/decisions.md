@@ -2546,3 +2546,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Capture row 43757315244: PASS.
   - **Ruling (Hannah's standing go, 13:45/14:15):** publish once W218 shows no App check that passes on main and fails on 7297d266. The unit shards and Lanes on 9814193a are reported after publish, with rollback if a regression appears; the fast checks (mypy, cycles) are already green.
   - Lanes opt-in red is pre-existing: it fails on main 43705886232 and on every int/r13-* run since 34fee0cf. darwin native red is the same as every candidate since A″.
+- **20:50 UTC: W218 CLEAN BY NAME on App 7297d266.** No check that passes on main fails on the head. release-guard RAN and passed on the merge ref (12 → 13; the pins match). three-products passes (14 passed; 4 allowlisted). The failures are identical to main by spec id.
+- **20:52 UTC: PUBLISHING (Hannah's go, 13:45/14:15).**
+  - Pre-check: astrid.haus served release 12 (agent 0e1543e0, Runtime 42ae24af).
+  - (1) Agent PR #347 merged as **959da7326c982a9197b5d6e2a4489f45e1deef0e** (parent 9814193a).
+  - (2) Runtime main fast-forwarded 42ae24af → **6855dfa8** (no force).
+  - (3) App PR #268 merged as **d7d48cfe3891d490b740e017081ae558970cd56e**. The manifest on main hashes to 29dc13cf… (matches the candidate).
+  - Next: wait for the deploy and confirm the served manifest.
