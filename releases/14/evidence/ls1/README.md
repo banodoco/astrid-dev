@@ -57,3 +57,25 @@ PYTHONPATH=.:tests /path/to/venv/bin/python /path/to/astrid-dev/releases/14/evid
 On Windows PowerShell, in the Runtime checkout, set `$env:PYTHONPATH = '.;tests'`, then invoke the same script with `& .\venv\Scripts\python.exe` and Windows paths for `--graph` and `--output`. Run both `--callers 1` and `--callers 2` per graph; use a single declared output, suitable `--media-type`, and a unique `__LS1_PREFIX__` slot. This only prepares runnable commands: Windows and GPU results still require a tester or authorized machine.
 
 **Real CPU ComfyUI barrier:** no ComfyUI checkout or package was found in the workspace, and `torch` and `comfy` are absent in system Python and both prepared Runtime and VibeComfy Python 3.13 environments. A real trivial run therefore requires an isolated compatible ComfyUI checkout and its CPU PyTorch/runtime dependencies. No weights are needed for the included EmptyImage→SaveImage graph. No large dependencies or models were installed and no existing user ComfyUI was changed.
+
+## Prepared warm-model graph (not executed)
+
+`warm-z-image-graph.json` is a hand-written API prompt transcribed from the
+published VibeComfy ready template `ready_templates/image/z_image_turbo.py` at
+VibeComfy revision `dba38f8644c46f652376f2cd5112ea161e40f09b`. Its node classes,
+links, model filenames, AuraFlow shift, sampler, and eight-step settings follow
+that source; the prompt text reuses the template's default prompt. The source
+declares three model assets: `z_image_turbo_bf16.safetensors`,
+`qwen_3_4b.safetensors`, and `ae.safetensors`, in ComfyUI's diffusion_models,
+text_encoders, and vae model directories respectively. This graph is input to
+`comfy_floor.py` or `integrated_floor.py`, not a VibeComfy bundle.
+
+The probe substitutes `__LS1_PREFIX__` with a unique output prefix on every
+sample. It substitutes `__LS1_SEED__` with the sample index. The graph and node
+compatibility have not been validated against a running ComfyUI; it makes no
+claim that the named files are installed, that the graph runs on a specific
+ComfyUI revision, that its memory fits a particular GPU, or that any runtime or
+warm-model timing has been measured. A tester must use an isolated ComfyUI with
+these compatible model files already available and record its ComfyUI/model
+versions and hardware before execution. No model download or load was performed
+to prepare this file.
