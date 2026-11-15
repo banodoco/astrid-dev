@@ -2,9 +2,56 @@
 
 The publish-time record of what Release 13 is: the frozen tuple, its claims and their evidence, and what is left before publication. The [brief](../13.md) holds intent, [run.md](run.md) the live board, [decisions.md](decisions.md) the rulings, [tests.md](tests.md) the test gate and [deferred.md](deferred.md) what R13 does not fix. This record links to them and does not repeat them. Sections follow what the [release skill](../../skills/astrid-dev-release/SKILL.md) says a release must report (there is no release-record template in `templates/release/`).
 
-**Status: candidate frozen, not published.** Candidate A′ was frozen at 10:40 UTC Sun 15 Nov ([decisions.md:2281](decisions.md#L2281)); evidence below runs through 11:35 UTC Sun 15 Nov ([decisions.md:2286](decisions.md#L2286)). Nothing has been published.
+**Status: final tuple 9814193a under its last checks; go given; not yet published (see section 0).** Earlier status: Candidate A′ was frozen at 10:40 UTC Sun 15 Nov ([decisions.md:2281](decisions.md#L2281)); evidence below runs through 11:35 UTC Sun 15 Nov ([decisions.md:2286](decisions.md#L2286)). Nothing has been published.
 
 Convention: `PENDING: <what fills it>` marks a value not yet known. Nothing below is a result unless it cites its evidence.
+
+## 0. Final publish tuple (Sun 15 Nov, 20:40 UTC). This section supersedes sections 1, 2, 4 and 7 where they differ.
+
+Sections 1 to 7 below describe candidate A′ as of 11:35 UTC. After that point, the candidate went through A″ and A‴, then Hannah held the publish for the Windows fixes ([decisions.md:2432](decisions.md#L2432)). The final tuple is ([decisions.md:2502](decisions.md#L2502)):
+
+| Component | SHA |
+|---|---|
+| Agent | `9814193a73f606719e81883a8be197d27dd361d4`: PR #347 head `r13/compose-aprime`, tested as `int/r13-9814193a`. It is ff9da5d8 plus a merge of the advisor's `r14/windows-install` `29ca1469` |
+| App | `7297d266564997c460a051a7eeb63a9f1ae2278c`: PR #268 head `r13/app-repin-8e0006f5`. The release guard passes |
+| Install manifest | sha256 `29dc13cf7c8d9e7553b4fb8a3f357199bfc80885e55775c6aea6a91e0a163483`, release 13, required |
+| Runtime | `6855dfa8df65cf8ae4c002b57134d6505493c17c`. On publish, Runtime main is fast-forwarded to it from `42ae24af` |
+| VibeComfy / lifecycle | `dba38f86…` / `7f0b025e…`: unchanged |
+
+**Identity (decided).** Version 0.0.13, a full release, a REQUIRED update with the compact card ([decisions.md:2303](decisions.md#L2303), [:2308](decisions.md#L2308), [:2340](decisions.md#L2340)). Hannah's go stands, so no further confirmation is needed.
+
+**Gate on the final tuple:**
+
+| Check | Run | Result |
+|---|---|---|
+| Whole-tree mypy, ruff and cycles, run as CI does (W228; tree identical to 9814193a) | local | exit 0 |
+| Hosted fast checks: mypy baseline, import cycles, ruff, collection, boundary, windows-native, release wheels | CI 43757233210 | **GREEN** ([decisions.md:2532](decisions.md#L2532)); darwin native red as on every candidate since A″ |
+| 8 unit shards vs R12, opt-in, installed wheel | CI 43757233210 | PENDING |
+| Integration lanes | Lanes 43757233283 | PENDING |
+| W227 POSIX equivalence of `_program_name` | local fuzz over 82,740 lists | PASS: 0 widened, 0 narrowed |
+| Windows fresh-user install, long paths ON and OFF, with real generation | 43756890273 on 29ca1469 | **GREEN** ([decisions.md:2522](decisions.md#L2522)) |
+| 14-row journey, including direct-windows-r12-update | 43757304537 | PENDING. The gate row direct-windows-r12-update is **GREEN** ([decisions.md:2536](decisions.md#L2536)) |
+| linux-fresh capture rows | 43757315244, 43757326484 | PENDING |
+| App checks by name (W218) | App 7297d266 | PENDING |
+
+A macos-fresh uninstall failure that matches W224's shutdown-race signature gets one rerun. That race is present in R12's Runtime and is filed as astrid-dev #685. Any other red result blocks the publish.
+
+**Publish order:**
+1. Merge Agent PR #347.
+2. Fast-forward Runtime main `42ae24af` to `6855dfa8`.
+3. Merge App PR #268.
+4. Wait for the deploy and confirm that `https://astrid.haus/install-manifest.json` serves release 13 with these SHAs.
+5. Fast-forward the `int/*` branches.
+6. Tell Hannah, with the release notes.
+
+**Known limits added since section 6:**
+- **Windows:**
+  - Generation with your own ComfyUI works with long paths OFF (short VibeComfy runtime root).
+  - The managed engine is not offered on Windows.
+- **The macOS update and uninstall shutdown race** is rare and retryable, with no data lost (#685).
+- **Managed-local refuses templates without fingerprints.** The fix is ml131, the first item for 13.1.
+- **Coverage gaps:** no CI job generates against a real ComfyUI. macOS own-ComfyUI and Windows RunPod have had no real runs.
+- **Follow-ups:** astrid-dev #669–#685.
 
 ## 1. Release identity
 
