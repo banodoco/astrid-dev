@@ -1,0 +1,211 @@
+diff --git a/tests/test_boundary_handoff.py b/tests/test_boundary_handoff.py
+index b09554f3b..c5ba25397 100644
+--- a/tests/test_boundary_handoff.py
++++ b/tests/test_boundary_handoff.py
+@@ -825,7 +825,7 @@ def test_cli_handled_handoff_refuses_policy_change_and_reports_saved_policy(case
+     assert cli.main([*args, '--autostart', 'on']) == 1
+     out = capsys.readouterr().out
+     assert 'cannot apply setup choice changes (autostart)' in out
+-    assert 'Astrid did NOT update: the installer refused to continue' in out
++    assert 'Astrid did NOT update: the installer could not continue.' in out
+     assert not handoff.journal_path(c.service).exists() and not c.runtime_calls
+     assert (c.service.selection.read_bytes(), snapshot(c.data)) == before
+     assert_r0(c)
+diff --git a/tests/test_installer_acl.py b/tests/test_installer_acl.py
+index 6c1c64ca2..098bdd7fd 100644
+--- a/tests/test_installer_acl.py
++++ b/tests/test_installer_acl.py
+@@ -343,14 +343,28 @@ def test_windows_staged_version_folder_is_a_protected_record_parent(tmp_path, mo
+         raise Staged
+ 
+     monkeypatch.setattr(backend_module, "source", source)
++    # stage() removes the candidate folder when preparation fails, so the folder is
++    # inspected at the moment of removal.
++    real_remove = backend_module.remove_pack_tree
++    observed = {}
++
++    def observe(path, **kwargs):
++        path = Path(path)
++        observed["folder"] = path
++        observed["protected"] = windows_dacls.key(path) in windows_dacls.protected
++        observed["manifest_private"] = _runtime_private_read(path / "manifest.json")
++        return real_remove(path, **kwargs)
++
++    monkeypatch.setattr(backend_module, "remove_pack_tree", observe)
+     manifest = {"agent": {"sha": "a" * 40}, "runtime": {"sha": "b" * 40},
+                 "tools": {"uv": {"version": "1.0.0"}, "python": {"version": "3.11.9"}}}
+     with pytest.raises(Staged):
+         backend.stage(manifest, root, tmp_path / "workspace")
+ 
+-    (folder,) = (root / "versions").iterdir()
+-    assert windows_dacls.key(folder) in windows_dacls.protected
+-    assert _runtime_private_read(folder / "manifest.json")
++    assert observed["folder"].parent == root / "versions"
++    assert observed["protected"]
++    assert observed["manifest_private"]
++    assert list((root / "versions").iterdir()) == []
+ 
+ 
+ def _legacy_selection(local, record):
+diff --git a/tests/test_installer_installed_schema.py b/tests/test_installer_installed_schema.py
+index 66ed2caf6..b63e3871a 100644
+--- a/tests/test_installer_installed_schema.py
++++ b/tests/test_installer_installed_schema.py
+@@ -77,6 +77,31 @@ def _damage(schema, kind, outside):
+         schema.write_text("{}", encoding="utf-8")
+ 
+ 
++@pytest.fixture
++def rejected_candidate(monkeypatch):
++    """Observe the candidate folder at the moment stage() removes it after a rejection.
++
++    stage() deletes the folder it created when preparation fails, so what the
++    rejected candidate held is read just before that removal.
++    """
++    import astrid.installer.backend as backend_module
++
++    seen = {}
++    real = backend_module.remove_pack_tree
++
++    def observe(path, **kwargs):
++        path = Path(path)
++        seen["folder"] = path
++        seen["services"] = (path / "services.json").exists()
++        seen["profile"] = (path / "profile.json").exists()
++        installed = path / "a" / SCHEMA
++        seen["agent_schema"] = installed.read_bytes() if installed.is_file() else None
++        return real(path, **kwargs)
++
++    monkeypatch.setattr(backend_module, "remove_pack_tree", observe)
++    return seen
++
++
+ @pytest.fixture
+ def staged_installer(tmp_path, monkeypatch, release_wheel):
+     outside = tmp_path / "outside-checkout"
+@@ -274,7 +299,7 @@ print(json.dumps({'origins': origins, 'schema': str(path),
+ @pytest.mark.parametrize("damage_at", ["source", "wheel"])
+ @pytest.mark.parametrize("damage", ["missing", "symlink", "mismatch"])
+ def test_stage_rejects_damaged_source_or_installed_schema_before_declaration(
+-        staged_installer, damage_at, damage):
++        staged_installer, rejected_candidate, damage_at, damage):
+     state = staged_installer
+     state.damage_at, state.damage = damage_at, damage
+     # A missing installed schema is named by its path; the other damage keeps its own wording.
+@@ -283,17 +308,18 @@ def test_stage_rejects_damaged_source_or_installed_schema_before_declaration(
+                 else "local canonical timeline schema|Runtime source pin")
+     with pytest.raises(ValueError, match=expected):
+         state.backend.stage(state.manifest, state.root, state.data)
+-    candidates = list((state.root / "versions").iterdir())
+-    assert len(candidates) == 1
+-    assert not (candidates[0] / "services.json").exists()
+-    assert not (candidates[0] / "profile.json").exists()
++    # The rejected candidate was never declared, and stage() removed it again.
++    assert rejected_candidate["folder"].parent == state.root / "versions"
++    assert not rejected_candidate["services"]
++    assert not rejected_candidate["profile"]
++    assert list((state.root / "versions").iterdir()) == []
+     assert not (state.root / "current").exists()
+     assert not any("service_declaration" in arg or "source_checkout_digest" in arg
+                    for command in state.commands for arg in command)
+     if damage_at == "source":
+         assert not any(command[1:2] == ["venv"] for command in state.commands)
+     else:
+-        assert (candidates[0] / "a" / SCHEMA).read_bytes() == (ROOT / SCHEMA).read_bytes()
++        assert rejected_candidate["agent_schema"] == (ROOT / SCHEMA).read_bytes()
+ 
+ 
+ @pytest.mark.parametrize("damage", ["missing", "symlink", "mismatch"])
+@@ -409,27 +435,27 @@ def test_stage_umask_0002_subprocess(tmp_path):
+     assert result.returncode == 0, result.stdout + result.stderr
+ 
+ 
+-def test_stage_rejects_foreign_guarded_directory_before_declaration(staged_installer):
++def test_stage_rejects_foreign_guarded_directory_before_declaration(staged_installer, rejected_candidate):
+     if os.name == "nt":
+         pytest.skip("POSIX ownership")
+     state = staged_installer
+     state.damage_at = "foreign"
+     with pytest.raises(ValueError, match="foreign owner or type"):
+         state.backend.stage(state.manifest, state.root, state.data)
+-    candidate, = (state.root / "versions").iterdir()
+-    assert not (candidate / "services.json").exists()
+-    assert not (candidate / "profile.json").exists()
++    assert not rejected_candidate["services"]
++    assert not rejected_candidate["profile"]
++    assert list((state.root / "versions").iterdir()) == []  # the rejected candidate is removed
+     assert not any("service_declaration" in arg for command in state.commands for arg in command)
+ 
+ 
+-def test_stage_rejects_foreign_object_before_declaration(staged_installer):
++def test_stage_rejects_foreign_object_before_declaration(staged_installer, rejected_candidate):
+     state = staged_installer
+     state.damage_at, state.damage = "wheel", "fifo"
+     with pytest.raises(ValueError, match="foreign owner or type"):
+         state.backend.stage(state.manifest, state.root, state.data)
+-    candidate, = (state.root / "versions").iterdir()
+-    assert not (candidate / "services.json").exists()
+-    assert not (candidate / "profile.json").exists()
++    assert not rejected_candidate["services"]
++    assert not rejected_candidate["profile"]
++    assert list((state.root / "versions").iterdir()) == []  # the rejected candidate is removed
+ 
+ 
+ def test_pack_build_npm_failure_stops_before_service_declaration(staged_installer, monkeypatch):
+diff --git a/tests/test_installer_pinokio_lifecycle.py b/tests/test_installer_pinokio_lifecycle.py
+index e6cbcf169..9125c9bdb 100644
+--- a/tests/test_installer_pinokio_lifecycle.py
++++ b/tests/test_installer_pinokio_lifecycle.py
+@@ -415,7 +415,7 @@ def _stub_cli_install(tmp_path, monkeypatch, home):
+ 
+     monkeypatch.setattr(cli, "Backend", BackendWithReadOnlyPreflight)
+     monkeypatch.setattr(cli, "Installer", InstallerStub)
+-    monkeypatch.setattr(cli, "current", lambda _root: SimpleNamespace(python=python))
++    monkeypatch.setattr(cli, "current", lambda _root: SimpleNamespace(python=python, env={}))
+     return selection, captured
+ 
+ 
+diff --git a/tests/test_update_from_field_states.py b/tests/test_update_from_field_states.py
+index 28805424e..176b48e53 100644
+--- a/tests/test_update_from_field_states.py
++++ b/tests/test_update_from_field_states.py
+@@ -594,7 +594,7 @@ def test_every_non_zero_outcome_ends_with_next_and_details():
+         rolled = Outcome("rolled-back", 1, 1, 2, "error", "update", log).headline()
+         assert rolled[-3].startswith("Run the same command again")
+     console = Outcome("failed", None, None, 2, "error").headline()
+-    assert console[-1] == "Details: shown above in this window (the installer log was not used)."
++    assert console[-1] == "Details: see the error in this window."
+     for kind in ("updated", "already-current", "repaired"):
+         assert not any(line.startswith("Next: ")
+                        for line in Outcome(kind, 2, 1, 2, None, "update", log).headline())
+@@ -634,6 +634,11 @@ EXPECTED_NEXT = {
+ }
+ 
+ 
++# Without an observed running Runtime the App's Settings page is not reachable, so a Next line
++# that names it falls back to rerunning the command and sending the log.
++NO_RUNTIME_NEXT = "Next: run the same command again; if it fails again, send the error and install log to support."
++
++
+ @pytest.mark.parametrize("reason", sorted(EXPECTED_NEXT))
+ def test_each_reason_has_its_own_next_step(reason):
+     """Plan 29 R11 card 1: the Next line is the reason's own action; support only for bugs and errors."""
+@@ -642,10 +647,14 @@ def test_each_reason_has_its_own_next_step(reason):
+     assert set(REASONS) == set(EXPECTED_NEXT)  # every reason in the enum is covered, none invented
+     log = "/tmp/install.log"
+     for kind in ("not-updated", "failed", "rolled-back"):
+-        lines = Outcome(kind, 1, 1, 2, reason, "update", log).headline()
+-        assert lines[-2:] == [EXPECTED_NEXT[reason], f"Details: {log}"], (kind, lines)
+-        mentions_support = any("to support" in line for line in lines)
+-        assert mentions_support == (reason in {"installer-bug", "error"}), (kind, lines)
++        for runtime_running in (True, False):
++            lines = Outcome(kind, 1, 1, 2, reason, "update", log, runtime_running=runtime_running).headline()
++            expected = EXPECTED_NEXT[reason]
++            if not runtime_running and "Settings > Updates" in expected:
++                expected = NO_RUNTIME_NEXT
++            assert lines[-2:] == [expected, f"Details: {log}"], (kind, runtime_running, lines)
++            mentions_support = any("to support" in line for line in lines)
++            assert mentions_support == ("to support" in expected), (kind, runtime_running, lines)
+ 
+ 
+ def _local_update(c, monkeypatch, capsys, release):
