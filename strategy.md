@@ -14,7 +14,7 @@ A creator should be able to take a project through repeated revisions to finishe
 
 First, make what Astrid already does fast and dependable. Version 0.1 brings together local speed, stability, installation and updates, then hardening and documentation. After that, choose the next steps from real creative work and the problems people encounter. Version 0.2 is open; its candidates are not commitments. Each release brief says what it delivers and why, and the groups below show how those releases build toward each version.
 
-**Last reviewed:** 2026-11-15. The recorded release and version decisions below stand; this opening and the 0.1 wording are a draft for the owner's rewrite under [Plan 58](plans/58-strategy-from-releases/plan.md).
+**Last reviewed:** 2026-11-15. The owner accepted this opening and the 0.1 wording under [Plan 58](plans/58-strategy-from-releases/plan.md); the recorded release and version decisions below stand.
 
 ## Focus now
 

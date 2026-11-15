@@ -103,7 +103,9 @@ On 15 November 2026 in ChatGPT session `3417d5f77996`, the owner replied to the 
 - **D13 The generated 1.0 section.** Accepted: retain the nine minor regions and add a full generated `1.0` region beneath the major aim. It shows the major release and patches leading to it, their plan contributions and frozen issue counts. After 0.9, pending patches belong there while awaiting the major. Keep the nine-minor limit and refuse releases after a major. This resolves SR-2's missing region without hiding releases or inventing 0.10; its marker and boundary tests enforce the decision.
 - **D14 SR-5's ordering evidence.** Accepted: Plan 52's shared guide and state-link test already landed in [PR 620](https://github.com/banodoco/astrid-dev/pull/620), commit `e503694c`, before this run's base. SR-5 follows that change and preserves its six searches and heading rule. This satisfies SR-5's coordination item; it neither asserts an acknowledgement from the older manager session nor completes Plan 52's broader II-13 task.
 
-D8 remains in force: [SR-3's draft](https://github.com/banodoco/astrid-dev/pull/695) awaits the owner's rewrite. This reply approves D13 and D14; it supplies no rewritten strategy text.
+D13 and D14 did not settle D8; the owner accepted the strategy words in the later reply below.
+
+- **D15 SR-3's wording.** On 15 November 2026, in the same run, the owner replied: "I agree with the draft". This accepts the proposed strategy opening and 0.1 wording in [PR 695](https://github.com/banodoco/astrid-dev/pull/695), at commit `5ba1efd7ff96a5ee829f4b0cdea4c8f71b45da14`, unchanged. It completes D8's owner wording step. The integration-to-main merge still requires her go.
 
 ## Estimate
 
