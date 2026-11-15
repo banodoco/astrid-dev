@@ -42,4 +42,4 @@
 | Runtime | `6855dfa8df65cf8ae4c002b57134d6505493c17c` |
 | VibeComfy | `dba38f8644c46f652376f2cd5112ea161e40f09b` |
 | runpod-lifecycle | `7f0b025e9391baac9f5c2fb7393617ea6fef0704` (0.3.1.dev0) |
-| App | PR #268 merge commit (manifest sha256 `29dc13cf…`) |
+| App | `d7d48cfe3891d490b740e017081ae558970cd56e` (served manifest sha256 `29dc13cf…`) |

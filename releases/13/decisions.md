@@ -2553,3 +2553,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - (2) Runtime main fast-forwarded 42ae24af → **6855dfa8** (no force).
   - (3) App PR #268 merged as **d7d48cfe3891d490b740e017081ae558970cd56e**. The manifest on main hashes to 29dc13cf… (matches the candidate).
   - Next: wait for the deploy and confirm the served manifest.
+- **20:54 UTC: RELEASE 13 IS LIVE.**
+  - https://astrid.haus/install-manifest.json serves release 13, required ("This update fixes problems that could keep a rented machine billing after a job, or lose a finished result.").
+  - Served SHAs: agent 9814193a73f6…, Runtime 6855dfa8…, VibeComfy dba38f86…, lifecycle 7f0b025e…
+  - The served bytes hash to 29dc13cf… (identical to the candidate).
+  - int/r13 is fast-forwarded f9214240 → 959da732 (no force).
+  - The hourly check-in trig_01J4NitQRDxgQdgRzUiJnG5p is disabled. The advisor dive was already disabled.
+  - Still running and reported after publish: the CI 43757233210 shards vs R12, Lanes 43757233283 and capture row 43757326484. Rollback is on the table only for a user-hittable regression.

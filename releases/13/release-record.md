@@ -2,7 +2,7 @@
 
 The publish-time record of what Release 13 is: the frozen tuple, its claims and their evidence, and what is left before publication. The [brief](../13.md) holds intent, [run.md](run.md) the live board, [decisions.md](decisions.md) the rulings, [tests.md](tests.md) the test gate and [deferred.md](deferred.md) what R13 does not fix. This record links to them and does not repeat them. Sections follow what the [release skill](../../skills/astrid-dev-release/SKILL.md) says a release must report (there is no release-record template in `templates/release/`).
 
-**Status: final tuple 9814193a under its last checks; go given; not yet published (see section 0).** Earlier status: Candidate A′ was frozen at 10:40 UTC Sun 15 Nov ([decisions.md:2281](decisions.md#L2281)); evidence below runs through 11:35 UTC Sun 15 Nov ([decisions.md:2286](decisions.md#L2286)). Nothing has been published.
+**Status: PUBLISHED 20:54 UTC Sun 15 Nov 2026.** Agent main 959da732 (merge of 9814193a), Runtime main 6855dfa8, App main d7d48cfe; served manifest release 13, sha256 29dc13cf…; see section 0. Earlier status: Earlier status: Candidate A′ was frozen at 10:40 UTC Sun 15 Nov ([decisions.md:2281](decisions.md#L2281)); evidence below runs through 11:35 UTC Sun 15 Nov ([decisions.md:2286](decisions.md#L2286)). Nothing has been published.
 
 Convention: `PENDING: <what fills it>` marks a value not yet known. Nothing below is a result unless it cites its evidence.
 
