@@ -221,3 +221,10 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 - Hit-path cost: a 500 MB / 100,000-file pack took 26-31 s per inventory under the install lock, and it uses the job's shared preparation deadline. Plan 54 needs a per-file (size, mtime_ns, inode) fast path with content re-hash only on change, or a size/entry cap that refuses attestation.
 - There is no launch snapshot, so a same-user race exists between inventory and engine import.
 - If round 5 isn't re-read clean by 07:30, R13 ships W-A disabled (r13/machines-tier1-waoff 95c3dd184).
+
+## W-B (one dispatch bundle, archives, one finish process): out of R13 (cause W151 on tier1 8eb4b4274)
+Four review rounds didn't land by the 07:30 line, so R13 ships the pre-W-B per-file dispatch and collection (r13/machines-tier1-nowb e12127da7). Plan 54 picks it up from r13/machines-t1-wb4 6ae0dceb8 with:
+- Restore is destructive on failure: each restore needs its own error handling; on any restore failure keep a non-temporary staging dir next to the destination, with a small journal, and recover it on the next fetch.
+- Log members can fail the first output seal: write logs only to logs.tar, or add them after the outputs and manifest are sealed, guarded so a failure only marks LOGS_UNAVAILABLE.
+- Notes: an outputs.tar.https-part is left behind after a timeout; the deadline message gives no size or advice; the size-scaled cap can time out a healthy slow transfer (4 GiB needs 6.83 MiB/s or more); the markerless fallback writes straight to destinations; local hashing has no deadline checkpoints; Windows sharing violations, junctions and durability are untested; rollback tests check bytes only.
+- The W145 and W130 notes listed in the earlier rows still apply.
