@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_completion import assess_completion, check_pr, strategy_errors, transitions_to_done
+from check_completion import assess_completion, check_pr, transitions_to_done
 
 PLAN = ("# Zero-to-first-image\n\n"
         "**Vision gaps:** [Creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).\n\n"
@@ -258,14 +258,6 @@ class NoneWithPlaceholderTests(unittest.TestCase):
 
 
 
-class StrategyGateTests(unittest.TestCase):
-    def test_completion_without_strategy_update_fails(self):
-        self.assertEqual(len(strategy_errors({"plans/index.md", "vision/gaps/F-001-platform-reliability.md"})), 1)
-
-    def test_completion_with_strategy_update_passes(self):
-        self.assertEqual(strategy_errors({"plans/index.md", "strategy.md"}), [])
-
-
 class ProjectStatusTests(unittest.TestCase):
     def test_working_tree_always_uses_fields_even_with_a_hand_written_catalog(self):
         from check_completion import project_statuses
@@ -338,14 +330,12 @@ class CompletionRecordIntegrationTests(unittest.TestCase):
                     self.assertIn(revision, (None, "base"))
                     revisions.append(revision)
                     return before if revision else after
-                with patch.object(gate, "project_statuses", side_effect=statuses) as reader, \
-                     patch.object(gate, "changed_paths", return_value={"plans/index.md"}):
+                with patch.object(gate, "project_statuses", side_effect=statuses) as reader:
                     errors = checks._completion_impl(checks.Context(root, "base", body_file=body))
                 self.assertEqual(reader.call_count, 2)
                 self.assertCountEqual(revisions, ["base", None])
                 if completes:
                     self.assertTrue(any("missing '## Completion assessment" in error for error in errors), errors)
-                    self.assertIn(gate.strategy_errors({"plans/index.md"})[0], errors)
                 else:
                     self.assertEqual(errors, [])
 

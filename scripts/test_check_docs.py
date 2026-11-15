@@ -107,18 +107,12 @@ class StrategyTests(unittest.TestCase):
         "## Publication\n\nNot pinned. No publication authority.\n"
     )
     GOOD = (
-        "# Strategy\n\n**Last reviewed:** 2026-11-10, by the owner.\n\n"
-        "## Focus now\n\nWork in progress.\n\n## Versions\n\n### Version 1.0\n\n**Aim:** Finished work.\n\n"
-        "#### Version 0.1\n\n**Aim:** Fast and dependable.\n\n"
-        "**Plans:** [Plan 40](plans/40-machine-lifetime-controls/plan.md)\n\n"
-        "**Releases:** [Release 13](releases/13.md)\n\n"
-        + "".join(f"#### Version 0.{n}\n\n**Aim:** Open\n\n**Plans:** None yet\n\n" for n in range(2, 10))
-        + "## Sequence\n\n"
-        "| Release | Highlight | Plans | Why this order |\n"
-        "|---|---|---|---|\n"
-        "| [Release 13 (draft)](releases/13.md) | Creators can control rented GPU machine lifetime. | "
-        "[Plan 40](plans/40-machine-lifetime-controls/plan.md) | Work on consent first. |\n\n"
-        "## Not now\n\nOther projects.\n\n## Decisions\n\n- 2026-11-10: Release first.\n"
+        "# Strategy\n\n**Last reviewed:** 2026-11-10\n\n## Focus now\n\n## Versions\n\n"
+        "### Version 1.0\n\n**Aim:** Finished work.\n\n"
+        "<!-- strategy-1.0:start -->\n<!-- strategy-1.0:end -->\n\n"
+        + "".join(f"#### Version 0.{n}\n\n**Aim:** {'Fast.' if n == 1 else 'Open'}\n\n"
+                  f"<!-- strategy-0.{n}:start -->\n<!-- strategy-0.{n}:end -->\n\n" for n in range(1, 10))
+        + "## Not now\n\n## Decisions\n"
     )
 
     def test_valid_strategy_passes(self):
@@ -163,57 +157,42 @@ class StrategyTests(unittest.TestCase):
         final = self.RELEASE.replace('**State:** Draft', '**State:** Final')
         self.assertTrue(any('JSON payload' in e for e in release_errors('13.md', final)))
 
-    def test_release_requires_matching_roadmap_row(self):
-        errors = strategy_errors(self.GOOD, {'13.md': self.RELEASE, '14.md': self.RELEASE})
-        self.assertTrue(any('14.md' in e for e in errors))
-
-    def test_summary_and_plans_must_match_document(self):
-        bad = self.GOOD.replace('Creators can control rented GPU machine lifetime.', 'A different summary.')
-        self.assertTrue(any('highlight differs' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
-        bad = self.GOOD.replace('[Plan 40](plans/40-machine-lifetime-controls/plan.md)',
-                                '[Plan 31](plans/31-releases-from-astrid-dev/plan.md)')
-        self.assertTrue(any('plan links differ' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
-
     def test_versions_must_reach_the_major_version_without_gaps(self):
-        bad = self.GOOD.replace("#### Version 0.5\n\n**Aim:** Open\n\n**Plans:** None yet\n\n", "")
-        errors = strategy_errors(bad, {'13.md': self.RELEASE})
-        self.assertTrue(any('expected version 0.5' in e for e in errors))
-        bad = self.GOOD.replace("#### Version 0.9\n\n**Aim:** Open\n\n**Plans:** None yet\n\n", "")
-        self.assertTrue(any('must contain versions 0.1 to 0.9' in e
-                            for e in strategy_errors(bad, {'13.md': self.RELEASE})))
+        bad = self.GOOD.replace('#### Version 0.5', '#### Version 0.6', 1)
+        self.assertTrue(any('expected version 0.5' in e for e in strategy_errors(bad)))
 
-    def test_version_needs_an_aim_and_plans_or_is_open(self):
-        bad = self.GOOD.replace("**Aim:** Fast and dependable.\n\n", "")
-        self.assertTrue(any('version 0.1 needs an "**Aim:**"' in e
-                            for e in strategy_errors(bad, {'13.md': self.RELEASE})))
-        bad = self.GOOD.replace("**Aim:** Finished work.", "**Aim:** Open")
-        self.assertTrue(any('major version 1.0 needs a real aim' in e
-                            for e in strategy_errors(bad, {'13.md': self.RELEASE})))
-        bad = self.GOOD.replace("#### Version 0.2\n\n**Aim:** Open\n\n**Plans:** None yet",
-                                "#### Version 0.2\n\n**Aim:** Something new.\n\n**Plans:** None yet")
-        self.assertTrue(any('version 0.2 has an aim' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
+    def test_version_needs_an_aim_and_major_cannot_be_open(self):
+        bad = self.GOOD.replace('**Aim:** Fast.', '')
+        self.assertTrue(any('version 0.1 needs an' in e for e in strategy_errors(bad)))
+        bad = self.GOOD.replace('**Aim:** Finished work.', '**Aim:** Open')
+        self.assertTrue(any('major version 1.0 needs a real aim' in e for e in strategy_errors(bad)))
+        bad = self.GOOD.replace('**Aim:** Fast.', '**Aim:** Fast.\n**Aim:** Again.')
+        self.assertTrue(any('duplicate field' in e for e in strategy_errors(bad)))
 
-    def test_plan_in_one_version_and_release_plans_belong_to_their_version(self):
-        bad = self.GOOD.replace("#### Version 0.2\n\n**Aim:** Open\n\n**Plans:** None yet",
-                                "#### Version 0.2\n\n**Aim:** More.\n\n"
-                                "**Plans:** [Plan 40](plans/40-machine-lifetime-controls/plan.md)")
-        self.assertTrue(any('plan 40 is in versions 0.1 and 0.2' in e
-                            for e in strategy_errors(bad, {'13.md': self.RELEASE})))
-        bad = self.GOOD.replace("**Plans:** [Plan 40](plans/40-machine-lifetime-controls/plan.md)\n\n**Releases:**",
-                                "**Plans:** [Plan 31](plans/31-releases-from-astrid-dev/plan.md)\n\n**Releases:**")
-        self.assertTrue(any('release 13 carries plan 40' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
-        bad = self.GOOD.replace("**Aim:** Fast and dependable.", "**Aim:** Fast and dependable.\n\n**Aim:** Again.")
-        self.assertTrue(any("version 0.1: duplicate field 'Aim'" in e
-                            for e in strategy_errors(bad, {'13.md': self.RELEASE})))
-        bad = self.GOOD.replace("## Versions", "## Roadmap")
-        self.assertTrue(any('## Versions' in e for e in strategy_errors(bad, {'13.md': self.RELEASE})))
+    def test_only_one_major_version_is_allowed(self):
+        extra = "\n### Version 2.0\n\n**Aim:** Later.\n\n" + "".join(
+            f"#### Version 1.{n}\n\n**Aim:** Open\n\n" for n in range(1, 10))
+        bad = self.GOOD.replace('## Not now', extra + '## Not now')
+        self.assertTrue(any('exactly one major' in e for e in strategy_errors(bad)))
+
+    def test_release_kinds_and_generated_regions(self):
+        docs = {f'{n}.md': self.RELEASE.replace('**State:** Draft', '**State:** Draft\n**Kind:** minor') for n in range(1, 11)}
+        self.assertTrue(any('more than nine' in e for e in strategy_errors(self.GOOD, docs)))
+        docs = {'1.md': self.RELEASE.replace('**State:** Draft', '**State:** Draft\n**Kind:** major'), '2.md': self.RELEASE}
+        self.assertTrue(any('major release brief must be last' in e for e in strategy_errors(self.GOOD, docs)))
+        generated = self.GOOD.replace('<!-- strategy-0.1:end -->', '#### Version 9.9\n**Aim:** bogus\n<!-- strategy-0.1:end -->')
+        self.assertEqual(strategy_errors(generated), [])
+        self.assertTrue(any('ordered' in e for e in strategy_errors(self.GOOD.replace('<!-- strategy-0.1:end -->', ''))))
+
+    def test_major_region_is_required_and_excluded_from_authored_structure(self):
+        missing = self.GOOD.replace('<!-- strategy-1.0:end -->', '')
+        self.assertTrue(any('strategy-1.0:end' in e for e in strategy_errors(missing)))
+        generated = self.GOOD.replace('<!-- strategy-1.0:end -->', '### Version 9.0\n**Aim:** bogus\n<!-- strategy-1.0:end -->')
+        self.assertEqual(strategy_errors(generated), [])
 
     def test_bad_release_link_and_missing_section_fail(self):
-        bad = self.GOOD.replace('[Release 13 (draft)](releases/13.md)',
-                                '[Release 13 (draft)](releases/14.md)').replace('## Not now', '## Later stuff')
-        errors = strategy_errors(bad)
-        self.assertTrue(any('matching link' in e for e in errors))
-        self.assertTrue(any('## Not now' in e for e in errors))
+        bad = self.GOOD.replace('## Not now', '## Later stuff')
+        self.assertTrue(any('## Not now' in e for e in strategy_errors(bad)))
 
 
 class LedgerTests(unittest.TestCase):
