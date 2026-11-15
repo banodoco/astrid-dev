@@ -2586,3 +2586,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - (a) The 13.1 card updates the 15 tests to the intended behaviour (runs/w233/tests-update.patch, not yet applied).
     - (b) The 13.1 code item: give `windows-upgrade-unsupported` its own Settings-free Next action. Today, with no Runtime running, it falls back to "run the same command again", which can't help in that permanent state. Limit the `next_steps()` substitution to reasons where a rerun helps. This is a user-visible wording defect with no data effect.
   - Still running: shard 6, Lanes integration 3.
+- **22:36 UTC: CI 43757233210 on the published agent is COMPLETE.**
+  - All 8 shards vs R12 main: regression 15, no-baseline 353, pre-existing 907, fixed 55. The 15 are exactly W233's stale-test ids; shard 6 has 0.
+  - darwin native has 13 ids, a subset of 401dbd78's 14, with none new.
+  - Lanes integration 3 is still running.
