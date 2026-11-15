@@ -1,0 +1,27 @@
+{
+  "ended_at": "2026-11-15T09:28:50.787532+00:00",
+  "engine_reused": true,
+  "model_verification_seconds": 0.10633460991084576,
+  "notes": [
+    "VRAM after unavailable: system stats request failed or contained no valid free VRAM",
+    "execute not reached; recorded 0 seconds"
+  ],
+  "phase_sources": {
+    "collect": "phase-timing.v1 collection: local finalization and evidence capture; excludes record serialization",
+    "engine_start_or_reuse": "sum of supervisor probe/start and readiness-health calls, including doctor preparation",
+    "execute": "phase-timing.v1 execution: dispatch through producer result; includes ComfyUI prompt queue",
+    "queue_wait": "phase-timing.v1 capacity_wait: local engine custody admission",
+    "verify_models": "managed preparation verification_seconds; model_verification_seconds is an alias"
+  },
+  "phases": {
+    "collect": 0.004,
+    "engine_start_or_reuse": 0.43447302700951695,
+    "execute": 0.0,
+    "queue_wait": 0.001,
+    "verify_models": 0.10633460991084576
+  },
+  "schema": "astrid.job-run.v1",
+  "started_at": "2026-11-15T09:28:10.363307+00:00",
+  "vram_free_after_bytes": null,
+  "vram_free_before_bytes": 2886174520
+}
