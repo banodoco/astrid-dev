@@ -10,7 +10,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). Use [Plan](../astrid-dev-pla
 ## The levels
 
 - **Vision** ([elements and their aspirations](../../vision/README.md)): where Astrid is heading; a gap [names its aspirations](../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
-- **Strategy** ([`strategy.md`](../../strategy.md)): the short, ordered release roadmap. Each linked [release document](../../releases/TEMPLATE.md) is the living strategy for that release (highlight, intent, approach and included plans), later preserved as its final record.
+- **Strategy** ([`strategy.md`](../../strategy.md)): the map of versions (a major version, the minor versions that lead to it, each with one aim and its plans) and the short, ordered release roadmap. Each linked [release document](../../releases/TEMPLATE.md) is the living strategy for that release (highlight, intent, approach and included plans), later preserved as its final record.
 - **Gap** ([`vision/gaps/`](../../vision/gaps/)): an assessed outcome that blocks the vision. It names a result that would still matter if today's projects were replaced, and it has its own closure evidence.
 - **Closure approach and route to closure** (sections of the gap): the strategy. The approach is prose explaining the idea and the order of work. The route is an ordered table of plans, showing which closure evidence each one delivers.
 - **Plan** ([`plans/`](../../plans/index.md)): one project's scope, tasks and proof. Its `Vision gaps` line names the gap, and its `Contributes to closure` line names the evidence it delivers.

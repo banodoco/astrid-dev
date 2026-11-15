@@ -152,7 +152,14 @@ def ledger_errors(root: Path) -> list[str]:
 
 STRATEGY = Path('strategy.md')
 STRATEGY_HEADER = '| Release | Highlight | Plans | Why this order |'
-STRATEGY_SECTIONS = ('## Focus now', '## Sequence', '## Not now', '## Decisions')
+STRATEGY_SECTIONS = ('## Focus now', '## Versions', '## Sequence', '## Not now', '## Decisions')
+VERSION_HEADING = re.compile(r'^(#{3,4}) Version (\d+)\.(\d+)\s*$', re.M)
+# Not records.named_field_matches: its `\s*` after the label can cross a newline, so an empty
+# `**Aim:**` would capture the next line as its value.
+VERSION_FIELD = re.compile(r'^\*\*(Aim|Plans|Releases):\*\*[ \t]*(.*)$', re.M)
+VERSION_RELEASE = re.compile(r'\[Release ([1-9]\d*)\]\(releases/([1-9]\d*)\.md\)')
+VERSION_OPEN = 'Open'
+VERSION_NO_PLANS = 'None yet'
 RELEASE_ROW = re.compile(r'\[Release ([1-9]\d*) \((draft|final)\)\]\(releases/([1-9]\d*)\.md\)')
 RELEASE_PLAN = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
 STRATEGY_PLAN = re.compile(r'\[Plan (\d+)\]\(plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
@@ -265,4 +272,87 @@ def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> li
     if release_docs is not None:
         for missing in sorted(release_docs.keys() - referenced):
             errors.append(f'strategy.md: releases/{missing} has no roadmap row')
+    row_plans = {cells[0]: set(STRATEGY_PLAN.findall(cells[2])) for cells in rows if len(cells) == 4}
+    release_plans = {m.group(1): plans for release, plans in row_plans.items()
+                     if (m := RELEASE_ROW.fullmatch(release))}
+    return errors + version_errors(text, release_plans)
+
+
+def version_errors(text: str, release_plans: dict[str, set] | None = None) -> list[str]:
+    """Validate the version map: each major version holds every minor version that leads to it.
+
+    A major version (`### Version N.0`) states its aim. Under it, the minor versions
+    `#### Version (N-1).1` to `(N-1).9` appear once each, in order, so the path to the major
+    version has no gaps. A minor version states its aim and its plans, or is `Open` with no
+    plans yet. A plan belongs to one version, and a release listed under a version may only
+    carry that version's plans.
+    """
+    body = record_section(text, 'Versions', missing='none', boundary=r'^## ', strip=False)
+    if body is None:
+        return []
+    errors = []
+    heads = list(VERSION_HEADING.finditer(body))
+    blocks = []
+    for index, match in enumerate(heads):
+        end = heads[index + 1].start() if index + 1 < len(heads) else len(body)
+        fields: dict[str, str] = {}
+        for name, value in VERSION_FIELD.findall(body[match.end():end]):
+            if name in fields:
+                errors.append(f"strategy.md: version {match.group(2)}.{match.group(3)}: duplicate field '{name}'")
+            fields[name] = value.strip()
+        blocks.append((len(match.group(1)), int(match.group(2)), int(match.group(3)), fields))
+    majors = [(major, minor) for level, major, minor, _ in blocks if level == 3]
+    if not majors:
+        return ['strategy.md: Versions needs at least one major version heading (### Version N.0)']
+    seen_plans: dict[tuple[str, str], str] = {}
+    current = None
+    expected_minor = 1
+    for level, major, minor, fields in blocks:
+        name = f'{major}.{minor}'
+        aim = fields.get('Aim', '')
+        if not aim:
+            errors.append(f'strategy.md: version {name} needs an "**Aim:**" sentence')
+        if level == 3:
+            if minor != 0 or major < 1:
+                errors.append(f'strategy.md: major version heading must be N.0: {name}')
+            if current is not None:
+                if expected_minor != 10:
+                    errors.append(f'strategy.md: version {current}.0 must contain versions '
+                                  f'{current - 1}.1 to {current - 1}.9 in order')
+                if major != current + 1:
+                    errors.append(f'strategy.md: major version {name} must follow {current}.0')
+            if aim == VERSION_OPEN:
+                errors.append(f'strategy.md: major version {name} needs a real aim, not "{VERSION_OPEN}"')
+            current, expected_minor = major, 1
+            continue
+        if current is None:
+            errors.append(f'strategy.md: version {name} is outside a major version')
+            continue
+        if major != current - 1 or minor != expected_minor:
+            errors.append(f'strategy.md: expected version {current - 1}.{expected_minor} here, found {name}')
+        expected_minor = minor + 1
+        plans_text = fields.get('Plans', '')
+        plan_refs = STRATEGY_PLAN.findall(plans_text)
+        if aim == VERSION_OPEN:
+            if plans_text != VERSION_NO_PLANS:
+                errors.append(f'strategy.md: open version {name} must say "**Plans:** {VERSION_NO_PLANS}"')
+        elif not plan_refs:
+            errors.append(f'strategy.md: version {name} has an aim, so it needs at least one linked plan')
+        for plan in plan_refs:
+            if plan in seen_plans:
+                errors.append(f'strategy.md: plan {plan[0]} is in versions {seen_plans[plan]} and {name}')
+            seen_plans[plan] = name
+        for number, file_number in VERSION_RELEASE.findall(fields.get('Releases', '')):
+            if number != file_number:
+                errors.append(f'strategy.md: version {name} release link mismatch: release {number}')
+            elif release_plans is not None:
+                if number not in release_plans:
+                    errors.append(f'strategy.md: version {name} lists release {number}, which has no sequence row')
+                else:
+                    for plan in sorted(release_plans[number] - set(plan_refs)):
+                        errors.append(f'strategy.md: release {number} carries plan {plan[0]}, '
+                                      f'which version {name} does not list')
+    if current is not None and expected_minor != 10:
+        errors.append(f'strategy.md: version {current}.0 must contain versions '
+                      f'{current - 1}.1 to {current - 1}.9 in order')
     return errors

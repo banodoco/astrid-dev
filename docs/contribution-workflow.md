@@ -60,11 +60,11 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 ## Review the strategy
 
-[**Strategy**](../strategy.md) is the short, ordered **release roadmap**. Each [release brief](../releases/TEMPLATE.md) owns the reasoning. Start a future release from the template and revise it as work evolves; it is not a publication request. On finalization, the **same file** becomes the immutable release ledger entry.
+[**Strategy**](../strategy.md) is the **map of versions** (a major version holding the minor versions that lead to it, each with one aim and its plans) and the short, ordered **release roadmap**. Each [release brief](../releases/TEMPLATE.md) owns the reasoning. Start a future release from the template and revise it as work evolves; it is not a publication request. On finalization, the **same file** becomes the immutable release ledger entry.
 
-Documentation CI checks the strategy's shape and that its `Sequence` rows match their release files.
+Documentation CI checks the strategy's shape, that its `Versions` map has every minor version up to each major version with an aim and plans (or `Open`), and that its `Sequence` rows match their release files.
 
-**When it changes:** creating a release draft or changing its highlight/plans updates the strategy summary in the same PR. A project start/completion may change a release's scope or timing, so review the strategy and release files; the completion PR must touch `strategy.md` (`python3 scripts/astrid_dev.py check`). New priorities and scope require the owner's decision; listing work is not authorization to run or publish it.
+**When it changes:** creating a release draft or changing its highlight/plans updates the strategy summary in the same PR. Deciding what a version is for, or assigning a plan or a release to a version, updates that version's `Aim`, `Plans` or `Releases` line. A project start/completion may change a release's scope or timing, so review the strategy and release files; the completion PR must touch `strategy.md` (`python3 scripts/astrid_dev.py check`). New priorities and scope require the owner's decision; listing work is not authorization to run or publish it.
 
 ## Claim a project
 

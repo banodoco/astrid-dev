@@ -36,20 +36,40 @@ route-status-word: F-008-portable-generation.md: route row carries status/owners
 strategy-highlight-mismatch: strategy.md: release 12 highlight differs from its document
 strategy-highlight-mismatch: strategy.md: release 12 plan links differ from its document
 strategy-highlight-mismatch: strategy.md: releases/13.md has no roadmap row
+strategy-highlight-mismatch: strategy.md: releases/14.md has no roadmap row
+strategy-highlight-mismatch: strategy.md: releases/15.md has no roadmap row
+strategy-highlight-mismatch: strategy.md: releases/16.md has no roadmap row
+strategy-highlight-mismatch: strategy.md: releases/17.md has no roadmap row
 strategy-missing-release-document: strategy.md: missing link target releases/99.md
 strategy-missing-release-document: strategy.md: no release document 99.md
 strategy-missing-release-document: strategy.md: releases/12.md has no roadmap row
 strategy-missing-release-document: strategy.md: releases/13.md has no roadmap row
+strategy-missing-release-document: strategy.md: releases/14.md has no roadmap row
+strategy-missing-release-document: strategy.md: releases/15.md has no roadmap row
+strategy-missing-release-document: strategy.md: releases/16.md has no roadmap row
+strategy-missing-release-document: strategy.md: releases/17.md has no roadmap row
 strategy-missing-section-and-bad-release-link: strategy.md: missing link target releases/999.md12.md
 strategy-missing-section-and-bad-release-link: strategy.md: missing section ## Not now
 strategy-missing-section-and-bad-release-link: strategy.md: release needs a matching link to releases/<N>.md: [Release 12 (draft)](releases/999.md12.md)
 strategy-missing-section-and-bad-release-link: strategy.md: releases/12.md has no roadmap row
 strategy-missing-section-and-bad-release-link: strategy.md: releases/13.md has no roadmap row
+strategy-missing-section-and-bad-release-link: strategy.md: releases/14.md has no roadmap row
+strategy-missing-section-and-bad-release-link: strategy.md: releases/15.md has no roadmap row
+strategy-missing-section-and-bad-release-link: strategy.md: releases/16.md has no roadmap row
+strategy-missing-section-and-bad-release-link: strategy.md: releases/17.md has no roadmap row
 strategy-plan-links-mismatch: strategy.md: release 12 highlight differs from its document
 strategy-plan-links-mismatch: strategy.md: release 12 plan links differ from its document
 strategy-plan-links-mismatch: strategy.md: releases/13.md has no roadmap row
+strategy-plan-links-mismatch: strategy.md: releases/14.md has no roadmap row
+strategy-plan-links-mismatch: strategy.md: releases/15.md has no roadmap row
+strategy-plan-links-mismatch: strategy.md: releases/16.md has no roadmap row
+strategy-plan-links-mismatch: strategy.md: releases/17.md has no roadmap row
 strategy-release-mismatch: strategy.md: release 12 highlight differs from its document
 strategy-release-mismatch: strategy.md: release 12 plan links differ from its document
 strategy-release-mismatch: strategy.md: release 12 state differs from its document
 strategy-release-mismatch: strategy.md: releases/13.md has no roadmap row
+strategy-release-mismatch: strategy.md: releases/14.md has no roadmap row
+strategy-release-mismatch: strategy.md: releases/15.md has no roadmap row
+strategy-release-mismatch: strategy.md: releases/16.md has no roadmap row
+strategy-release-mismatch: strategy.md: releases/17.md has no roadmap row
 unnamed-active-owner: active project needs a named accountable owner: Synthetic fixture
