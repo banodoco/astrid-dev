@@ -1,6 +1,6 @@
 # Scoped CPU comparisons — 15 November 2026
 
-These are focused task checks against the published Release 13 sources. They are not full-suite qualification, a speed-budget pass, RS1, or the final review. Empty bucket files mean that `env/baseline-diff.py` found no test IDs in that bucket.
+These are focused task checks against the published Release 13 sources and the explicitly named Plan 55 integration baselines. They are not full-suite qualification, a speed-budget pass, RS1, or the final review. Empty bucket files mean that `env/baseline-diff.py` found no test IDs in that bucket.
 
 | Repository | Checked local candidate | Exact tree | Published baseline | Candidate proof |
 | --- | --- | --- | --- | --- |
@@ -36,3 +36,17 @@ The tests exercise a file changed after harvesting being rejected by real Runtim
 Agent `e920bf026748616ea4255d2958d995b0411da6c5`, tree `0c1d1ba490a5a87cf225fc2b2d6e0bb617516482`, prepares a shared per-attempt prompt-witness check for the runtime adapter and attached artifact retrieval. The connector commit `0e79077ba94a612b274a17a73cb758cbadbdabf8` in [task PR #352](https://github.com/banodoco/astrid-agent/pull/352) has that exact tree. Artifacts require the matching accepted attempt journal as well as the attempt's witness. Raw diagnostic/history access and the Pod transport remain unchanged.
 
 An independent N check passed all 52 cases in `tests/core/generation/backends/test_comfy_target.py` and, with the explicit integration marker, `test_attached_workflow_uses_view_custody_without_shared_output_directory` and `test_prompt_timeout_deletes_only_accepted_prompt` in `tests/packs/vibecomfy/test_local_server_run.py`. The comparison under `astrid-agent/e920bf0/` contains 52 baseline IDs and 54 candidate IDs with no regression or missing ID. Runtime and VibeComfy dependencies remain the published pins. This is custody/compatibility proof only: the guarded transport integration, event consumer, re-pin and composed-path proof remain open.
+
+## LS-5 VibeComfy guarded injection
+
+VibeComfy `7340fd1b6d197b6319c5e446142ae41474259068`, tree `eabc2a3e07cef763d463b4a81325b48a0787d56d`, adds HTTP-context and WebSocket-connector injection, a single-slot prompt-scoped event consumer, and opt-in attempt cleanup that leaves an injected owner open. Connector commit `cdee2d950eb43ea14af8b0540a9613ca5f7a08d4` in [task PR #169](https://github.com/banodoco/VibeComfy/pull/169) has that tree; integration merge `7fde33e2523281f840121b93a8a865a7f5d847de` retains it. The cumulative change against published Release 13 touches five files and no templates or dependency declarations.
+
+An independent N check passed 24 cases: `tests/test_runtime_transport.py` and the six existing session cases named in the initial LS-5 proof. The queue-response selector expands to two cases. Inner exit was 0. Integration baseline `c59d6999b244fd94a01559ff1c0b0eeb8f079dc2` passed 16 cases. The corrected comparison under `VibeComfy/7340fd1/` has 16 baseline IDs, 24 candidate IDs and all result buckets empty. Its README records the earlier incorrect baseline-input selection and captured-log parsing artifact; raw logs remain preserved and the committed derived inputs retain every pytest final status row. No failed test was suppressed. The manager read the production/test diff and the raw pytest summaries.
+
+Exact command, from the candidate worktree:
+
+```sh
+PYTEST_ADDOPTS=-rA bash /workspace/scratch/6ee41b0f0cca/astrid-dev/env/vc-pytest.sh -q tests/test_runtime_transport.py tests/test_runtime_session_server.py::test_server_session_waits_for_history_and_records_outputs tests/test_runtime_session_server.py::test_server_session_does_not_finalize_watchdog_completed_before_history tests/test_runtime_session_server.py::test_server_session_concurrent_runs_get_exclusive_roots tests/test_runtime_session_server.py::test_server_queue_http_200_without_or_blank_prompt_id_fails_without_history_retry tests/test_runtime_session_server.py::test_server_acceptance_witness_write_failure_is_unknown_discarded
+```
+
+This proves the injection seam and its lifetime behavior, not the composed Agent path. Agent dependencies remain unchanged. Real upstream event ordering, guarded Agent wiring, the owner-approved re-pin and composed proof still gate LS-5 completion.
