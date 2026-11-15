@@ -65,7 +65,7 @@ All work is in astrid-dev; no product repository is read or changed. Work lands 
 
 **How it joins Plan 31,** where a release brief becoming Final is what publishes a release: the release brief stays the one file; this plan's reader is what Plan 31's record check and manifest render read; the freeze happens before Final, so the published record already says which issues shipped; and kind is declared in the release brief from the draft, so Plan 31's version step has its source. Plan 31's approval of the Final transition (a code owner's review) replaces this plan's auto-merge rule for `State` when it lands. Releases 12 and 13 are made Final in Plan 31, not here (D5). One thing is Plan 31's to settle with the owner: its plan to make her the code owner of all of `releases/` would make every issue-list pull wait for her, so it should protect the Final transition and not every edit to a draft.
 
-The owner decided D1 to D12 in planning and D13 to D14 during this run on 15 November 2026 ([inputs.md](inputs.md#owner-decisions), [run decisions](inputs.md#run-decisions)). The recorded Run start authorizes implementation within its limits; D8 still requires the owner's wording for SR-3.
+The owner decided D1 to D12 in planning and D13 to D15 during this run on 15 November 2026 ([inputs.md](inputs.md#owner-decisions), [run decisions](inputs.md#run-decisions)). The recorded Run start authorizes implementation within its limits. D15 accepts the SR-3 strategy draft unchanged, completing D8's owner-wording step; the integration-to-main merge still requires her go.
 
 ## Interfaces and handoff
 
