@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the owner asked for this on 15 November 2026 in the advisor's session: "what I'd like is that we have a way to just download all the models for a workflow and if we can't find them we have a simple way to reconcile them, similar with custom nodes", and earlier the same day, "why have this blocker for stuff we can acquire instantly, automatically?" Recorded on the [strategy page](../../strategy.md#version-02-open) as a candidate for version 0.2. D1 to D3 below were decided the same day.
+**Scope decision:** Accepted — the owner asked for this on 15 November 2026 in the advisor's session: "what I'd like is that we have a way to just download all the models for a workflow and if we can't find them we have a simple way to reconcile them, similar with custom nodes", and earlier the same day, "why have this blocker for stuff we can acquire instantly, automatically?" Recorded on the [strategy page](../../strategy.md#candidates-not-yet-in-a-version) as a candidate for version 0.2. D1 to D3 below were decided the same day.
 
 **Prior art:** Four code readings on 15 November 2026 of astrid-agent `a91c35dfd` and VibeComfy `dba38f86`; summarised in [issue 665](https://github.com/banodoco/astrid-dev/issues/665) for the model half.
 
@@ -48,5 +48,5 @@ Planning read: astrid-agent `a91c35dfd`, VibeComfy `dba38f86`. Base for code wor
 ## References
 
 - [Issue 665](https://github.com/banodoco/astrid-dev/issues/665): the model identification half
-- [Strategy: version 0.2 candidates](../../strategy.md#version-02-open)
+- [Strategy: version 0.2 candidates](../../strategy.md#candidates-not-yet-in-a-version)
 - [Independent review](review.md)
