@@ -54,3 +54,4 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 01-installer-consent
 - 50-recorded-boundaries
 - 53-vision-aspirations
+- 55-local-speed
