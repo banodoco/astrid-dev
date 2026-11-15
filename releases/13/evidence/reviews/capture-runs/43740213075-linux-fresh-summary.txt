@@ -1,0 +1,41 @@
+== run 43740213075: 2 update-button.json; dir /tmp/cap43740213075-ne571ec0
+stage live | error 
+live None | live_error TimeoutError: locator.waitFor: Timeout 1800000ms exceeded.
+Call log:
+  - waiting for getByText(/Astrid updated: Release \d+ → Release \d+/).first() to be visibl
+POST 2026-11-15T17:43:15.611Z 202 {'operation_id': '7cea72a21c234e8eadab45ae43d5bfd2', 'state': 'accepted'}
+instance 5d0b47a1 first -2.8s last +57.7s
+instance d7e9d2f7 first +65.0s last +1799.2s
+door_failures 24 [('+6.3s', '/api/runtime/v1/health', 'net::ERR_ABORTED'), ('+63.2s', '/api/astrid/acp/projects/816c03a2bfa34e3bbf2ae23f7d7e7b7f/chat', 'net::ERR_FAILED'), ('+63.3s', '/api/runtime/v1/health', 'net::ERR_CONNECTION_REFUSED'), ('+63.3s', '/api/runtime/v1/update/status', 'net::ERR_CONNECTION_REFUSED'), ('+63.3s', '/api/runtime/v1/health', 'net::ERR_CONNECTION_REFUSED'), ('+63.3s', '/api/runtime/v1/health', 'net::ERR_CONNECTION_REFUSED')]
+5xx responses 48 first +58.6s last +63.0s
+storage after_load -1.8s {'astrid.update.seen': '{"instance":"5d0b47a15a5543e8a5a262ee04118bb4","release":13}'}
+storage before_click -1.8s {'astrid.update.seen': '{"instance":"5d0b47a15a5543e8a5a262ee04118bb4","release":13}'}
+storage after_post +0.0s {'astrid.update.seen': '{"instance":"5d0b47a15a5543e8a5a262ee04118bb4","release":13}'}
+storage end +1800.1s {'astrid.update.seen': '{"instance":"d7e9d2f7dc3844da908270626b233cdf","release":14}', 'astrid.update.updated': '{"from":13,"to":14,"until":1794764668611}'}
+dom after_load -1.8s notice 1 line False settings: App Settings / Updates /  / Update available: Release 14 /  / Update now / Copy instructions for your agent /  / Run it yourself /  / No coding agent? Run this in a terminal: /  / curl -fsSL https://astrid.haus/install | sh -s -- --update / Diagnostics / The app build
+dom before_click -1.8s notice 1 line False settings: App Settings / Updates /  / Update available: Release 14 /  / Update now / Copy instructions for your agent /  / Run it yourself /  / No coding agent? Run this in a terminal: /  / curl -fsSL https://astrid.haus/install | sh -s -- --update / Diagnostics / The app build
+dom after_post +0.0s notice 1 line False settings: App Settings / Updates /  / Update available: Release 14 /  / Updating Astrid… / Copy instructions for your agent /  / Run it yourself /  / No coding agent? Run this in a terminal: /  / curl -fsSL https://astrid.haus/install | sh -s -- --update /  / Update in progress
+dom end +1800.1s notice 0 line False settings: App Settings / Updates /  / Astrid updated. Reload to continue. /  / Check for updates / Reload / Diagnostics / The app build and update log, and a report to share if something goes wrong. / Download diagnostics / Astrid on this computer / Connected / Runtime / Work
+samples 179 [{'body_text_has_updated_line': False, 'quiet_update_notice_exists': False, 't': 1794766375723, 'url': 'https://astrid.haus/tools/video-editor?settings=updates&project=816c03a2bfa34e3bbf2ae23f7d7e7b7f&timeline=4541dd17-e50e-593f-824c-b1e4cc032528'}, {'body_text_has_updated_line': False, 'quiet_update_notice_exists': False, 't': 1794766385724, 'url': 'https://astrid.haus/tools/video-editor?settings=updates&project=816c03a2bfa34e3bbf2ae23f7d7e7b7f&timeline=4541dd17-e50e-593f-824c-b1e4cc032528'}]
+console errors/warnings 63 ["Access to fetch at 'http://127.0.0.1:17340/api/astrid/acp/projects/816c03a2bfa34e3bbf2ae23f7d7e7b7f/", 'Failed to load resource: net::ERR_CONNECTION_REFUSED', 'Failed to load resource: net::ERR_FAILED', 'Failed to load resource: the server responded with a status of 503 (Service Unavailable)']
+page_text: Connected to Astrid / Project / tst-b1-fresh-install / New project / Timeline mode select. Desktop pointer controls are active. / Main / 0:00.00 / Render / Preview overlay transforms are available in the preview. Mode select. / 0.5× / 0.75× / Normal / 1.25× / 1.5× / 2× / Saved / 0:00.00 / 0:05.00 / 0:10.00 / 0:15.00 / 0:20.00 / V1 / A1 / + Video / + Audio / Inspector / Extensions / Select a clip to edit timing, position, audio, text, or effects. / No shots yet / 0 / Activity / No active tasks / New chat / Astrid / How do you want Astrid to think? /  / You can switch
+stage live | error 
+live None | live_error TimeoutError: locator.waitFor: Timeout 1800000ms exceeded.
+Call log:
+  - waiting for getByText(/Astrid updated: Release \d+ → Release \d+/).first() to be visibl
+POST 2026-11-15T17:43:15.611Z 202 {'operation_id': '7cea72a21c234e8eadab45ae43d5bfd2', 'state': 'accepted'}
+instance 5d0b47a1 first -2.8s last +57.7s
+instance d7e9d2f7 first +65.0s last +1799.2s
+door_failures 24 [('+6.3s', '/api/runtime/v1/health', 'net::ERR_ABORTED'), ('+63.2s', '/api/astrid/acp/projects/816c03a2bfa34e3bbf2ae23f7d7e7b7f/chat', 'net::ERR_FAILED'), ('+63.3s', '/api/runtime/v1/health', 'net::ERR_CONNECTION_REFUSED'), ('+63.3s', '/api/runtime/v1/update/status', 'net::ERR_CONNECTION_REFUSED'), ('+63.3s', '/api/runtime/v1/health', 'net::ERR_CONNECTION_REFUSED'), ('+63.3s', '/api/runtime/v1/health', 'net::ERR_CONNECTION_REFUSED')]
+5xx responses 48 first +58.6s last +63.0s
+storage after_load -1.8s {'astrid.update.seen': '{"instance":"5d0b47a15a5543e8a5a262ee04118bb4","release":13}'}
+storage before_click -1.8s {'astrid.update.seen': '{"instance":"5d0b47a15a5543e8a5a262ee04118bb4","release":13}'}
+storage after_post +0.0s {'astrid.update.seen': '{"instance":"5d0b47a15a5543e8a5a262ee04118bb4","release":13}'}
+storage end +1800.1s {'astrid.update.seen': '{"instance":"d7e9d2f7dc3844da908270626b233cdf","release":14}', 'astrid.update.updated': '{"from":13,"to":14,"until":1794764668611}'}
+dom after_load -1.8s notice 1 line False settings: App Settings / Updates /  / Update available: Release 14 /  / Update now / Copy instructions for your agent /  / Run it yourself /  / No coding agent? Run this in a terminal: /  / curl -fsSL https://astrid.haus/install | sh -s -- --update / Diagnostics / The app build
+dom before_click -1.8s notice 1 line False settings: App Settings / Updates /  / Update available: Release 14 /  / Update now / Copy instructions for your agent /  / Run it yourself /  / No coding agent? Run this in a terminal: /  / curl -fsSL https://astrid.haus/install | sh -s -- --update / Diagnostics / The app build
+dom after_post +0.0s notice 1 line False settings: App Settings / Updates /  / Update available: Release 14 /  / Updating Astrid… / Copy instructions for your agent /  / Run it yourself /  / No coding agent? Run this in a terminal: /  / curl -fsSL https://astrid.haus/install | sh -s -- --update /  / Update in progress
+dom end +1800.1s notice 0 line False settings: App Settings / Updates /  / Astrid updated. Reload to continue. /  / Check for updates / Reload / Diagnostics / The app build and update log, and a report to share if something goes wrong. / Download diagnostics / Astrid on this computer / Connected / Runtime / Work
+samples 179 [{'body_text_has_updated_line': False, 'quiet_update_notice_exists': False, 't': 1794766375723, 'url': 'https://astrid.haus/tools/video-editor?settings=updates&project=816c03a2bfa34e3bbf2ae23f7d7e7b7f&timeline=4541dd17-e50e-593f-824c-b1e4cc032528'}, {'body_text_has_updated_line': False, 'quiet_update_notice_exists': False, 't': 1794766385724, 'url': 'https://astrid.haus/tools/video-editor?settings=updates&project=816c03a2bfa34e3bbf2ae23f7d7e7b7f&timeline=4541dd17-e50e-593f-824c-b1e4cc032528'}]
+console errors/warnings 63 ["Access to fetch at 'http://127.0.0.1:17340/api/astrid/acp/projects/816c03a2bfa34e3bbf2ae23f7d7e7b7f/", 'Failed to load resource: net::ERR_CONNECTION_REFUSED', 'Failed to load resource: net::ERR_FAILED', 'Failed to load resource: the server responded with a status of 503 (Service Unavailable)']
+page_text: Connected to Astrid / Project / tst-b1-fresh-install / New project / Timeline mode select. Desktop pointer controls are active. / Main / 0:00.00 / Render / Preview overlay transforms are available in the preview. Mode select. / 0.5× / 0.75× / Normal / 1.25× / 1.5× / 2× / Saved / 0:00.00 / 0:05.00 / 0:10.00 / 0:15.00 / 0:20.00 / V1 / A1 / + Video / + Audio / Inspector / Extensions / Select a clip to edit timing, position, audio, text, or effects. / No shots yet / 0 / Activity / No active tasks / New chat / Astrid / How do you want Astrid to think? /  / You can switch
