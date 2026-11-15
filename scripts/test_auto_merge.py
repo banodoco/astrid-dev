@@ -148,6 +148,15 @@ class JsonInputTests(unittest.TestCase):
         self.assertEqual(self.decide(pages, body="Owner decision needed"), "Owner decision needed in body")
         self.assertNotEqual(self.decide(pages, author_association="NONE"), "eligible")
 
+    def test_release_patch_guard_normalizes_field_whitespace(self):
+        for field, value in (("Kind", "minor"), ("State", "Final")):
+            for key in (f"{field} ", f" {field}", f" \t{field} \t"):
+                with self.subTest(field=field, key=key):
+                    diff = (f"+**{key}:** {value}" if field == "Kind" else
+                            f"-**{key}:** Draft\n+**{key}:** {value}")
+                    pages = [[{"filename": "releases/14.md", "patch": f"@@ -1 +1 @@\n{diff}"}]]
+                    self.assertEqual(self.decide(pages), f"release brief changes **{field}:**")
+
     def test_release_patch_guard_uses_files_json(self):
         changed = [[{"filename": "releases/13.md",
                      "patch": "@@ -1 +1 @@\n-**Kind:** patch\n+**Kind:** minor"}]]
