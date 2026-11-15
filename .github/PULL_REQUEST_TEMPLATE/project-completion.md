@@ -13,7 +13,7 @@ Routes used: <each route the run used and the tasks it ran, plus any model overr
 Unproven: Named remaining failures/unsupported scenarios (or None within the stated scope)
 Gap F-XXX: Unchanged — Replace with a justified disposition for **every actually linked gap**.
 Gap impact: None — why this project changes no gap (keep this line only if the plan links no gap, and then delete the Gap line above)
-Strategy: Updated — the strategy.md row and sequence changes, and the gap route changes, in this PR
+Strategy: Reviewed — describe any source changes to affected release briefs, authored strategy decisions and gap routes, or why none were needed
 
 ### Integrated result
 
