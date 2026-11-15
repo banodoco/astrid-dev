@@ -2201,3 +2201,5 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - **13:00:** publish on Hannah's go.
 
   The advisor's open items are already handled: W141 was a stale test (cleared 05:12), and R4.K seed plus the cancel command shipped in phase 4 R4.N (8c0d7f03f). The review-intake script already has a deferred row.
+
+- **05:45 UTC: W-C approved by Astra (W143), saving not on the default path.** The default watchdog has no termination authority, so the default path keeps the reset before delivery, and the W-C saving does not apply. The 09:00 forecast for t2i warm overhead therefore excludes the ~47 s collection/reset saving. Qualifications are in deferred.md; giving the watchdog a termination authority goes to plan 54 SP-0.
