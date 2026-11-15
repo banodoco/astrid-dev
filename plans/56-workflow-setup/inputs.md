@@ -48,5 +48,6 @@ Planning read: astrid-agent `a91c35dfd`, VibeComfy `dba38f86`. Base for code wor
 ## References
 
 - [Issue 665](https://github.com/banodoco/astrid-dev/issues/665): the model identification half
+- [Windows tester report, 15 November 2026](https://github.com/banodoco/astrid-dev/issues/651): two default workflows (speech, video) refused for missing node packs on an ordinary ComfyUI; `fetch-models` returned `no_model_roles` for the music workflow, so the tester downloaded its four model files by hand; since then the missing-node-pack message gives the install commands, and Astrid still installs nothing
 - [Strategy: version 0.2 candidates](../../strategy.md#candidates-not-yet-in-a-version)
 - [Independent review](review.md)

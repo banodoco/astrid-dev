@@ -175,5 +175,6 @@ Planning read: astrid-agent `a91c35dfd` (Release 13 candidate A), VibeComfy `dba
 ## References
 
 - [Independent review](review.md)
+- [Windows tester report, 15 November 2026](https://github.com/banodoco/astrid-dev/issues/651): the first measurements on a person's Windows computer (RTX 4080 SUPER, one-megapixel turbo image): 157 s cold, 42 s with the model loaded, 178 s for an edit; the task host took 205 s to start because a rendering check hashed 21,545 files, now moved to the first render
 - [Plan 54 inputs](../54-warm-latency/inputs.md): the rented-machine measurements, the duplication survey and the earlier local estimate
 - [Release 13 decision log](https://github.com/banodoco/astrid-dev/blob/r13-progress/decision-log/releases/13/decisions.md)
