@@ -2378,3 +2378,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Small follow-ups: OSError text isn't printed in the CLI ("the message above says why" with no message), and a partial versions\<id>\ folder is left until the next success.
   - Release notes for Windows: Git for Windows required, and long paths must be enabled (admin) until fixed.
   - First-update fixes: \\?\ paths or a shorter staging, VibeComfy archive exclusions (docs/handover), a Git preflight or pinned MinGit before any download, the OSError message, and a CI job with LongPathsEnabled=0, a long username and no Git.
+- **19:30 UTC hourly check-in:** 0 pods. The publish tuple is 37bd5e06 / adad82f0. Waiting on the linux-fresh flake gate, the 13 rows, the fresh rows and the PR checks.

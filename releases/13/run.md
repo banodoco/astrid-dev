@@ -2,14 +2,13 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (15:00 UTC Sun 15 Nov): read this first
+## Now (16:00 UTC Sun 15 Nov): read this first
 
-**Hannah's GO is given** (0.0.13, full, REQUIRED; at 16:35 she chose a compact required card). **FINAL candidate:** Agent 91b60416 (A⁗ = A‴ + cycle fix a06d55a79 + rollback-safe restamp 1e1aa811a; PR astrid-agent#347) and App e7d27462 (PR astrid-app#268). Manifest sha256 206601dc…, Runtime 6855dfa8.
-**Gate (all running):**
-- W200: restamp rollback/busy/exact-match re-proof;
-- W207: delta read of the App notice change;
-- 13 journey rows on agent 91b60416 (43725021701, no failures so far) + 3 fresh rows on App e7d27462;
-- A⁗ fast checks (cycle gate);
-- PR #268 by name (release-guard, three-products).
-**Then publish:** Agent #347 → Runtime fast-forward → App #268 → deploy → served-manifest check. ETA live ~17:15.
-**Deferred to the first update:** model lookup (cells, paused), log-fetch 4eb67605d (MERGE-READY), touch-layout card overlap. R14 = local speed (Plan 55). Balance $77.51, 0 pods.
+**Hannah's GO is given** (0.0.13, full, REQUIRED, compact card). **Publish tuple:** Agent 37bd5e06 (PR astrid-agent#347), App adad82f0 (PR astrid-app#268), manifest 4a9e99c8, Runtime 6855dfa8. W207b (App) and W208 (installer move) are MERGE-READY.
+**Open gate:**
+- the linux-fresh flake gate: re-run 43729912653 AND the adad82f0 linux-fresh row 43729187987 must both pass (W209/W210 found no agent link, and the post-update page state is correct);
+- the 13-row run 43728710873;
+- the remaining fresh rows;
+- PR #347/#268 by name.
+**Windows tester (#652):** fresh installs need Git + long paths (pre-existing since R12). The update path is safe: identical path lengths, and a failure happens before the stop. Release-note item; fixes go to the first update.
+**Next:** publish (Agent → Runtime fast-forward → App → served-manifest check). After that: an R13.1 milestone with issues from deferred.md (Hannah to confirm), model lookup, R14 docs. Balance $77.48, 0 pods.
