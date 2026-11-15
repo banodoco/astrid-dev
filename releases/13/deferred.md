@@ -215,3 +215,9 @@ The sources were extracted from the R13 records (decisions.md, release-record.md
 - A release result with ok=True but no target_operation, or of a non-mapping or legacy shape, still exits 0. All current adapter returns carry it, so only an older host or a future payload shape can hit this. Follow-up: treat ok without target_operation as unverified and warn.
 - A falsified ended journal row exits 0 without contacting the host; this relies on journal integrity. A valid ended row alongside another row of unknown live status can also succeed.
 - CLI journal discovery uses saved account settings, so corrupt settings give an empty listing and exit 2. This predates the fix.
+
+## W-A warm attestation: loader fidelity and hit cost (plan 54; cause W144/W150 on tier1 8eb4b4274)
+- The warm inventory must equal exactly what the pinned engine imports. That means every registered custom_nodes root, including extra_model_paths.yaml (Git-ignored, read automatically by main.py) and COMFYUI_PATH or base-path overrides; top-level custom_nodes/__pycache__ (prestartup_script.py runs there, main.py:210-219); and any extra config the loader reads.
+- Hit-path cost: a 500 MB / 100,000-file pack took 26-31 s per inventory under the install lock, and it uses the job's shared preparation deadline. Plan 54 needs a per-file (size, mtime_ns, inode) fast path with content re-hash only on change, or a size/entry cap that refuses attestation.
+- There is no launch snapshot, so a same-user race exists between inventory and engine import.
+- If round 5 isn't re-read clean by 07:30, R13 ships W-A disabled (r13/machines-tier1-waoff 95c3dd184).
