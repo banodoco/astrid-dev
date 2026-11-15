@@ -41,6 +41,11 @@ Every budget test asserts **valid outputs and a job record as well as counts**; 
 | SP-28 Incremental workflow emission: the approval emit, the live emit and the child's emit reuse the unchanged parts of the first (for example the companion) and re-derive only what differs. Contract: a VibeComfy change and re-pin. Baseline about 10 s per job across three emits | S | RS2 | VibeComfy emit (`emit_ready`), `astrid/core/generation/workflow_bundle.py:3248, 3276, 4051` | CPU: a counter shows the shared parts built once per job; the three bundles are byte-identical to today's | [ ] |
 | SP-29 A cheaper fingerprint for pack discovery and registries that keeps the content guarantee (incremental or change-notified), and one load of each registry per process | X | — | `astrid/sdk/invocation.py:140-160`, `astrid/core/generation/entries.py:224-251`, the model and extension registries | CPU: a second discovery in one process reads no pack file; an edited pack file is still seen | [ ] |
 | SP-30 Source identity for the Runtime connect computed without a git process per file, or cached on the checkout's head and index | X | — | the Runtime's `source_identity.py:104, 221-225`; `astrid/sdk/autobootstrap.py:349` | CPU: a connect on an unchanged checkout starts no git process; a changed file is still detected | [ ] |
+| SP-31 Unknown input names are never an error by themselves: validate against the node's V3 dynamic template when `/object_info` carries one; otherwise warn and let POST `/prompt` decide. Strict checks stay for what the schema states completely and for dry run, readiness and anything before a claim. The per-node allow-list goes | X | — | VibeComfy `schema/validate.py:281-330, 963-970`; a re-pin | CPU: a dynamic input on a legacy node warns and submits; a template-declared name outside its prefix or range is refused; a dry run submits nothing | [ ] |
+| SP-32 ComfyUI's progress and preview events reach the caller: the command line, the SDK and the App show steps and a preview while a job runs | X | SP-13 | VibeComfy `runtime/session.py`, `runtime/watchdog.py:308-316`; `astrid/core/execution/generic_host.py` child events; `astrid/sdk/invocation.py` wait | CPU against a fake ComfyUI emitting progress: the caller receives each step without polling | [ ] |
+| SP-33 One digest through the task child: stage each workflow member once, hash it once, and use that as the admitted identity; no read-back compare, no post-load re-hash, no re-emit and reload of a JSON workflow; `judge_declarations` reuses the emitted workflow | S | RS2 | `astrid/packs/vibecomfy/local_job.py:94-137`, `astrid/core/generation/managed_preparation.py:200-304` | CPU: each member is read once and hashed once per job; a member changed between admission and staging is still refused | [ ] |
+| SP-34 A termination authority for the pod: a credential scoped to deleting that pod, checked positively, so a pod ends at its deadline even when the host is off; then the reset can follow the result. Owner decision needed on placing that credential on the pod | S | RS1 | `astrid/packs/runpod/pod_watchdog.py:88-139, 234-315`, `astrid/packs/runpod/worker_owner.py:1400-1447` | CPU: with the host timer disabled, the watchdog deletes exactly its own pod at the deadline; live: one run with the host stopped | [ ] |
+| SP-35 A failed output fetch leaves nothing at the destination | N | — | `astrid/packs/runpod/machine.py:1183-1217` | CPU: a `get` that raises mid-file removes its landing file | [ ] |
 | R Review rounds (at most 1, agreed with the owner) | S | all other tasks | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
 
 **Tasks by principle** (numbers as in [plan.md](plan.md#target-architecture)):
@@ -49,9 +54,9 @@ Every budget test asserts **valid outputs and a job record as well as counts**; 
 |---|---|
 | 1 Verify at state changes, compare per job | SP-7, SP-9, SP-18, SP-19, SP-20, SP-30 |
 | 2 Resident process; one message in, one out | SP-2, SP-3, SP-4, SP-5, SP-8 |
-| 3 Control plane apart from data plane | SP-6, SP-16, SP-22, SP-23 |
-| 4 Lean on ComfyUI | SP-9, SP-11, SP-13, SP-24 |
-| 5 Content addresses | SP-10, SP-12, SP-14, SP-28, SP-29 |
+| 3 Control plane apart from data plane | SP-6, SP-16, SP-22, SP-23, SP-34, SP-35 |
+| 4 Lean on ComfyUI | SP-9, SP-11, SP-13, SP-24, SP-31, SP-32 |
+| 5 Content addresses | SP-10, SP-12, SP-14, SP-28, SP-29, SP-33 |
 | 6 One path, always measured | SP-1, SP-15, SP-17, SP-21, SP-25, SP-26, SP-27 |
 
 **Phases.** Phase 1 (rented under 5 s): SP-1 to SP-7, SP-22, SP-23. Phase 2 (rented under 0.5 s): SP-8, with SP-10, SP-13 and SP-14 on the machine. Phase 3 (local under 0.1 s): SP-9 to SP-17, SP-24, SP-25, SP-28 to SP-30. SP-26 closes the plan. Phase 4 (first job): SP-18 to SP-20.

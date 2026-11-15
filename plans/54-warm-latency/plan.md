@@ -41,6 +41,11 @@ The end state, stated from first principles. Every task in [tasks.md](tasks.md) 
 5. **Content addresses for inputs, compiled workflows and outputs.** An input already on the engine is not sent again; a compiled workflow is reused; an output is hashed once and that digest travels with it. Today inputs are named per task (`astrid/core/generation/backends/comfy_target.py:327`), which also defeats ComfyUI's cache.
 6. **One path for local and remote, always measured.** The same resident executor serves the App, the agent and a rented machine; only the transport differs. Every result carries timing that sums to the wall time, and budget tests are a required check, so the cold path cannot creep back into the warm one.
 
+Two rules follow from principles 1 and 4, and each has a failure behind it:
+
+- **ComfyUI is the authority on what a node accepts; Astrid never refuses what ComfyUI would run.** On 15 November a live first-frame video job was refused for an input name that the node accepts at run time and that `/object_info` does not list. ComfyUI itself does not reject unknown input names (`execution.py:1128-1195`); the pre-check was stricter than the engine it guards.
+- **Verify at a trust boundary once; inside a job, carry the digest.** What was installed, what was admitted and what was delivered are each worth proving once. Re-reading, re-hashing, re-emitting and re-auditing the same thing later in the same job proves it only to ourselves.
+
 Astrid's own full check remains where nothing is submitted (dry run, readiness, listings, download planning) and before a claim. The table in [inputs.md](inputs.md#planning-evidence) gives each heavy step, what ComfyUI does, what Astrid adds and the leaner design.
 
 ### Included
