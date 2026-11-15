@@ -3,9 +3,14 @@
 import argparse
 import json
 from pathlib import Path
+import re
 
 
-def eligibility_reason(draft, author_association, labels, body, changed_paths):
+RELEASE_BRIEF = re.compile(r"^releases/[1-9]\d*\.md$")
+PROTECTED_RELEASE_LINE = re.compile(r"^[+-][ \t]*\*\*(Kind|State):\*\*")
+
+
+def eligibility_reason(draft, author_association, labels, body, changed_paths, file_entries=None):
     """Return None if eligible, otherwise a reason. Paths include rename sources."""
     if draft:
         return "draft pull request"
@@ -28,6 +33,26 @@ def eligibility_reason(draft, author_association, labels, body, changed_paths):
             continue
         if "/" not in path or path.split("/", 1)[0] not in {"plans", "releases", "vision", "docs"}:
             return "changed path outside planning content"
+
+    release_paths = {path for path in changed_paths if RELEASE_BRIEF.fullmatch(path)}
+    covered_release_paths = set()
+    for file in file_entries or []:
+        paths = [file.get("filename"), file.get("previous_filename")]
+        matching = {path for path in paths if isinstance(path, str) and RELEASE_BRIEF.fullmatch(path)}
+        if not matching:
+            continue
+        covered_release_paths.update(matching)
+        patch = file.get("patch")
+        if not isinstance(patch, str):
+            return "release brief patch unavailable"
+        for line in patch.splitlines():
+            if line.startswith(("+++", "---")):
+                continue
+            match = PROTECTED_RELEASE_LINE.match(line)
+            if match:
+                return f"release brief changes **{match.group(1)}:**"
+    if release_paths - covered_release_paths:
+        return "release brief patch unavailable"
     return None
 
 
@@ -54,7 +79,7 @@ def main():
             paths.append(file["previous_filename"])
     reason = eligibility_reason(pr["draft"], pr["author_association"],
                                 [label["name"] for label in pr["labels"]],
-                                pr["body"], paths)
+                                pr["body"], paths, file_entries=files)
     print(reason or "eligible")
 
 
