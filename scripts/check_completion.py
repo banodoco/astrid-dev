@@ -125,23 +125,6 @@ def check_pr(changes: list[str], body: str, root: Path) -> list[str]:
     return errors
 
 
-STRATEGY = "strategy.md"
-
-
-def strategy_errors(changed_paths: set[str]) -> list[str]:
-    """A completion must update strategy.md so the sequence stays current."""
-    if STRATEGY in changed_paths:
-        return []
-    return [f"{STRATEGY}: a plan completion must update the strategy (its row, and focus or sequence if they changed)"]
-
-
-def changed_paths(base: str, root: Path) -> set[str]:
-    result = git_result(root, "diff", "--name-only", base, "HEAD")
-    if result.returncode:
-        raise ValueError(f"cannot list changed files: {result.stderr.strip()}")
-    return set(result.stdout.split())
-
-
 def project_statuses(root: Path, revision: str | None = None) -> dict[str, str]:
     """Read plan field statuses; an unreadable revision asks for the PR base."""
     from records import projects

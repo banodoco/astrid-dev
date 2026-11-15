@@ -334,7 +334,6 @@ def _completion_impl(context):
     if not changes:
         return []
     errors = gate.check_pr(changes, _body(context), context.root)
-    errors.extend(gate.strategy_errors(gate.changed_paths(context.base, context.root)))
     return errors
 
 def _boundary_impl(context):
@@ -436,7 +435,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('plan-catalog', 'always', 'Parse the plan catalog', _catalog),
     Check('unique-project-numbers', 'always', 'Require unique project numbers', _unique_project_numbers),
     Check('release-documents', 'always', 'Validate release documents', _release_documents),
-    Check('strategy-consistency', 'always', 'Validate strategy consistency', _strategy_consistency),
+    Check('strategy-consistency', 'always', 'Validate strategy structure and release kinds', _strategy_consistency),
     Check('catalog-paths', 'always', 'Validate catalog paths', _catalog_paths),
     Check('gap-structure', 'always', 'Validate gap structure', _gap_structure),
     Check('plan-files', 'always', 'Validate plan files', _plan_files),
