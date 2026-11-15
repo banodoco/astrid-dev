@@ -1,0 +1,4 @@
+tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream
+tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke
+tests/test_pinokio_platform_adapter.py::test_real_local_start_http_readiness_snapshot_stop_and_port_free
+tests/test_pinokio_platform_adapter.py::test_secret_never_appears_in_receipt_state_or_cli_output
