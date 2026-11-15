@@ -2385,3 +2385,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Cells owns B2 (VibeComfy export-ignore docs/handover + pin), then the model-lookup resume.
   - Tester #651 (published R12 on Windows 11) failed start-up: all packs quarantined for pack_api, registry_settle 63 s, task host readiness timeout. A read-only investigator is checking the cause and whether R13 can fail the same way.
   - R13 publish proceeds unless that shows an R13-specific failure.
+- **20:05 UTC: the 13-row journey 43728710873 on agent 37bd5e06 is COMPLETE, all 13 GREEN**, including every upgrade row (R0/R9/R11/R12 → 13 on Linux and macOS), fresh installs on Linux, macOS and Windows, autostart-off, and the exact-tuple evidence job. On App adad82f0, macos-fresh is GREEN. Pending: adad82f0 linux-fresh and windows, the flake-gate rerun 43729912653, W203 (PR #347), and A⁗′ CI/Lanes.
