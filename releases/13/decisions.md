@@ -2361,3 +2361,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - W206 by name;
   - W208 on the installer move;
   - the A⁗ direct-linux-fresh failure: re-run 43729912653 plus W209 (agent vs flake).
+- **18:15 UTC: W209 on the A⁗ direct-linux-fresh failure: UNKNOWN, with no agent regression shown.** Both updates succeeded identically (109 s, the installer logged "Astrid updated", transaction complete, no restamp or drift events). The page assertion waits for the App's 8-second transient notice, which only appears when the open tab sees the Runtime instance change. That tab never saw it in 1,800 s. The pass/fail decision rests on the same-tuple re-run 43729912653 and the linux-fresh row on adad82f0/37bd5e06. Open question for W209 if those pass: why a tab polling 1,193 times never observed the new instance. A flake that isn't understood isn't accepted for a required update without at least the two passes.
