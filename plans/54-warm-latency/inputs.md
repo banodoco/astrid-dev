@@ -21,6 +21,15 @@
 - On the machine: four Python starts including a full catalogue listing (`machine.py:431-449`); three installation audits of 18 git processes and four environment probes each, two model-verification passes, node restore, dependency preparation and doctor, with nothing to change (`astrid/core/generation/managed_preparation.py:414-857`; `astrid/packs/vibecomfy/extensions/generation.engine/comfyui_engine.py:189-214`).
 - After generation: five Python starts to declare logs and one for the output manifest (`machine.py:456, 468`); one fetch per file; an installation re-check (`machine.py:1081, 1224`); a reset the caller waits for (`machine.py:1510, 1581`; `astrid/packs/runpod/pod_reset.py:287-329`); Runtime publication; several hash passes on delivery (`astrid/core/generation/delivery.py:103-174`, `astrid/sdk/media_open.py:153, 394`, `astrid/sdk/media_views.py:50-82`).
 
+*A person's own ComfyUI, measured* (15 November, tester head `9acb55b60`, against a stand-in ComfyUI that answers instantly; profiler and a per-request call-site log covering all 13 requests). A warm job takes **30.2 s** (median); Release 12 takes 37.3 s on the same test, so this is not a regression. Command start to admission 17.0 s; admission to claim 0.4 s; claim to submit 11.4 s; submit to complete 0.6 s; complete to exit 0.65 s. Three Python interpreters per job (the command, the Runtime connect, the task child). Where it goes:
+- Workflow emission runs three times: twice in the command (about 6.6 s) and again in the task child (about 3.5 s). The three emits are different bundles by design (the approval emit marks the operation; the live emit registers 15 more inputs), so the saving is an incremental emit that reuses unchanged parts, a VibeComfy change.
+- VibeComfy re-hashes every loaded pack file on each schema lookup (`porting/object_info/consume.py:220`): the hottest leaf in both processes, at least 3.2 s in the child. A memo fix exists (VibeComfy `e8f19340`).
+- Pack scans repeat within one process: the model registry twice in the command (1.4 s) and twice in the child (1.6 s), the extension registry (1.0 s), and action-entry discovery (4.2 s). Discovery is already memoised on a content fingerprint and its tests forbid a cheaper key, so the question there is a cheaper fingerprint.
+- Ready workflows are all loaded on every call (52 loads; about 2.8 s) even when one is named.
+- The Runtime connect computes source identity with 184 git subprocesses (1.8 s).
+- `/object_info` is fetched once by the command and three times by the child (engine probe, live preflight, reconciliation): small beside the above on a stand-in, larger on a real ComfyUI.
+Release 13 takes the memo fix, the registry memo and "load only the named entry" where proven in time; the expected saving is 8 to 10 of the 30 seconds.
+
 *Which placements pay what.*
 
 | Cost on a warm second job | Rented | Astrid-managed local | Person's own ComfyUI |
