@@ -15,6 +15,10 @@ One or two sentences: where the release stands, and the next thing that matters.
 | **<when>** | **Freeze** the candidate; final frozen CI head | release manager | — |
 | **<when>** | **Publish**, with the owner's go | release manager | — |
 
+### Issue list
+
+- Brief: `releases/NN.md` → Issues; last pulled: <date or not yet>.
+
 ### Lanes
 
 | Lane | Session | Brief | State |
