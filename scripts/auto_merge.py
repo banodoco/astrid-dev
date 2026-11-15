@@ -9,6 +9,9 @@ from records import key_value_lines
 
 
 RELEASE_BRIEF = re.compile(r"^releases/[1-9]\d*\.md$")
+# records.key_value_lines splits with str.splitlines(), which also breaks on these
+# characters. A patch line containing one could be read as several lines, so refuse it.
+UNUSUAL_LINE_BREAKS = frozenset("\r\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029")
 
 
 def eligibility_reason(draft, author_association, labels, body, changed_paths, file_entries=None):
@@ -44,11 +47,13 @@ def eligibility_reason(draft, author_association, labels, body, changed_paths, f
             continue
         covered_release_paths.update(matching)
         patch = file.get("patch")
-        if not isinstance(patch, str):
+        if not isinstance(patch, str) or not patch:
             return "release brief patch unavailable"
-        for line in patch.splitlines():
-            if line.startswith(("+++", "---")):
-                continue
+        # Split on "\n" only, as git writes patches. Hunks have no file headers,
+        # so every "+" or "-" line is content, including ones starting "+++" or "---".
+        for line in patch.split("\n"):
+            if UNUSUAL_LINE_BREAKS.intersection(line):
+                return "release brief patch has an unusual line break"
             if not line.startswith(("+", "-")):
                 continue
             fields = key_value_lines(line[1:].lstrip(" \t"), style="bold")

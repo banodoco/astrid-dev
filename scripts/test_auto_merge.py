@@ -99,6 +99,64 @@ class EligibilityTests(unittest.TestCase):
             "patch": "@@ -1 +1 @@\n-**State:** Draft\n+**State:** Final",
         }]), "release brief changes **State:**")
 
+    def test_hidden_line_breaks_in_release_patch_are_refused(self):
+        for character in ("\r", "\x0b", "\x0c", "\x1c", "\x1d", "\x1e", "\x85", "\u2028", "\u2029"):
+            for field, value in (("Kind", "major"), ("State", "Final")):
+                for line in (f"+x{character}**{field}:** {value}", f"+**{field}:** {value}{character}"):
+                    with self.subTest(character=repr(character), line=line):
+                        self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+                            "filename": "releases/13.md", "patch": f"@@ -1 +1 @@\n{line}",
+                        }]), "release brief patch has an unusual line break")
+
+    def test_carriage_return_in_release_patch_is_refused(self):
+        self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md",
+            "patch": "@@ -1 +1 @@\n-Approach: old\r\n+Approach: new\r",
+        }]), "release brief patch has an unusual line break")
+
+    def test_empty_release_patch_is_not_eligible(self):
+        self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md", "patch": "",
+        }]), "release brief patch unavailable")
+
+    def test_rename_out_of_releases_needs_a_patch(self):
+        for entry in ({"patch": ""}, {}):
+            with self.subTest(entry=entry):
+                self.assertEqual(self.reason(changed_paths=["plans/13.md", "releases/13.md"], file_entries=[{
+                    "filename": "plans/13.md", "previous_filename": "releases/13.md",
+                    "status": "renamed", **entry,
+                }]), "release brief patch unavailable")
+
+    def test_realistic_approach_paragraph_patch_is_eligible(self):
+        patch = ("@@ -8,7 +8,7 @@ # Release 13 — Example\n"
+                 " **Kind:** minor\n"
+                 " **State:** Draft\n"
+                 " \n"
+                 " ## Approach\n"
+                 "-The old paragraph describes the change.\n"
+                 "+The new paragraph describes the change in more detail.\n"
+                 " \n"
+                 " ## Included plans\n")
+        self.assertIsNone(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md", "patch": patch,
+        }]))
+
+    def test_markdown_horizontal_rule_lines_are_eligible(self):
+        for patch in ("@@ -3,0 +4,1 @@\n+---",
+                      "@@ -4,1 +3,0 @@\n----",
+                      "@@ -4,3 +4,3 @@\n Intro text\n----\n+---\n Outro text"):
+            with self.subTest(patch=patch):
+                self.assertIsNone(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+                    "filename": "releases/13.md", "patch": patch,
+                }]))
+
+    def test_state_in_non_brief_release_files_is_eligible(self):
+        for path in ("releases/TEMPLATE.md", "releases/12/decisions.md"):
+            with self.subTest(path=path):
+                self.assertIsNone(self.reason(changed_paths=[path], file_entries=[{
+                    "filename": path, "patch": "@@ -1 +1 @@\n-**State:** Draft\n+**State:** Final",
+                }]))
+
 
 class JsonInputTests(unittest.TestCase):
     def decide(self, pages, **changes):
