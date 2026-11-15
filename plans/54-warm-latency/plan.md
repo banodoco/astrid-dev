@@ -23,7 +23,7 @@ On 14 November 2026 a second image job on a warm rented machine took 242 seconds
 When this project is done:
 
 - **Rented machine, warm, same model:** overhead (wall time minus the model's own time) is under 5 seconds, then under 0.5 seconds.
-- **Creator's own computer, warm (Astrid-managed or their own ComfyUI):** overhead under 0.1 seconds for a caller that is already running (the agent, the SDK, the App); the command line sits near the floor of starting a process (measured today at about 0.2 seconds for `generate --help` against a 17 ms Python floor).
+- **Creator's own computer, warm (Astrid-managed or their own ComfyUI):** for a caller that is already running (the agent, the SDK, the App), overhead under 2 seconds at the first stage, then under 0.5 seconds, with under 0.1 seconds as a measured stretch target for small outputs that is **not yet a commitment** (see the local floor in [inputs.md](inputs.md#planning-evidence)). The command line adds its own start, about 0.2 seconds today.
 - **First job and model switches are no slower than they must be:** a fresh rented machine does not reinstall an engine environment it has installed before, and the node and installation checks are cheap on every path.
 - **Every second is accounted for.** Each result carries a timing breakdown whose parts add up to the wall time, with any remainder shown as `unaccounted`.
 - **It stays that way.** Tests count remote operations, process starts, polls and hash passes on a warm job, and fail over a budget.
@@ -52,7 +52,7 @@ Astrid's own full check remains where nothing is submitted (dry run, readiness, 
 
 1. **Phase 1, rented under 5 seconds.** A warm job stops being the cold path run again: no process starts on the machine, no re-audit, one exchange each way. **Design first:** the first sketch failed its review, and the phase opens with a design round led by the pod-custody owner.
 2. **Phase 2, rented under 0.5 seconds.** A held-open channel, completion by push, compiled workflows reused.
-3. **Phase 3, local under 0.1 seconds.** The narrow, change-driven check; push for admission, completion and results; one hash pass; a thin command line.
+3. **Phase 3, local.** A resident executor on the local host first, then cheaper discovery and emission, the narrow change-driven check, push for admission, completion and results, one hash pass, a bounded number of durable writes per job, and a thin command line. Stages: under 2 seconds, under 0.5 seconds, then the 0.1 second stretch.
 4. **Phase 4, the first job.** The engine environment kept on the volume; a node receipt; one installation audit; what a model switch costs, measured and reduced where Astrid causes it.
 5. **Carry-overs from Release 13,** each as its own task: listed in [tasks.md](tasks.md).
 
