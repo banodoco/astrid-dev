@@ -14,7 +14,7 @@ from auto_merge import eligibility_reason, main
 class EligibilityTests(unittest.TestCase):
     def reason(self, **changes):
         inputs = dict(draft=False, author_association="MEMBER", labels=[], body=None,
-                      changed_paths=["plans/01-example/plan.md"])
+                      changed_paths=["plans/01-example/plan.md"], file_entries=[])
         inputs.update(changes)
         return eligibility_reason(**inputs)
 
@@ -23,7 +23,8 @@ class EligibilityTests(unittest.TestCase):
             with self.subTest(association=association):
                 self.assertIsNone(self.reason(author_association=association, changed_paths=[
                     "plans/a.md", "releases/13.md", "vision/gaps/a.md", "docs/guide.md",
-                    "strategy.md", "README.md", "docs/nested/README.md"]))
+                    "strategy.md", "README.md", "docs/nested/README.md"], file_entries=[
+                        {"filename": "releases/13.md", "patch": "@@ -1 +1 @@\n-Approach: old\n+Approach: new"}]))
 
     def test_draft(self):
         self.assertEqual(self.reason(draft=True), "draft pull request")
@@ -65,6 +66,38 @@ class EligibilityTests(unittest.TestCase):
     def test_rename_sources_must_also_be_planning(self):
         self.assertIsNotNone(self.reason(changed_paths=["plans/new.md", "scripts/old.py"]))
         self.assertIsNone(self.reason(changed_paths=["plans/new.md", "docs/old.md"]))
+
+    def test_release_kind_and_state_changes_are_not_eligible(self):
+        for field in ("Kind", "State"):
+            for change, diff in (
+                ("addition", f"+**{field}:** Final"),
+                ("removal", f"-**{field}:** Draft"),
+                ("change", f"-**{field}:** Draft\n+**{field}:** Final"),
+            ):
+                with self.subTest(field=field, change=change):
+                    reason = self.reason(changed_paths=["releases/13.md"], file_entries=[{
+                        "filename": "releases/13.md", "patch": f"@@ -1 +1 @@\n{diff}",
+                    }])
+                    self.assertEqual(reason, f"release brief changes **{field}:**")
+
+    def test_release_approach_change_is_eligible(self):
+        self.assertIsNone(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md",
+            "patch": "@@ -1 +1 @@\n-Approach: old\n+Approach: new",
+        }]))
+
+    def test_release_brief_without_patch_is_not_eligible(self):
+        for file_entries in ([], [{"filename": "releases/13.md"}],
+                             [{"filename": "releases/13.md", "patch": None}]):
+            with self.subTest(file_entries=file_entries):
+                self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=file_entries),
+                                 "release brief patch unavailable")
+
+    def test_release_rename_source_patch_is_guarded(self):
+        self.assertEqual(self.reason(changed_paths=["docs/new.md", "releases/13.md"], file_entries=[{
+            "filename": "docs/new.md", "previous_filename": "releases/13.md",
+            "patch": "@@ -1 +1 @@\n-**State:** Draft\n+**State:** Final",
+        }]), "release brief changes **State:**")
 
 
 class JsonInputTests(unittest.TestCase):
@@ -114,6 +147,16 @@ class JsonInputTests(unittest.TestCase):
         self.assertEqual(self.decide(pages, labels=[{"name": "hold"}]), "hold label")
         self.assertEqual(self.decide(pages, body="Owner decision needed"), "Owner decision needed in body")
         self.assertNotEqual(self.decide(pages, author_association="NONE"), "eligible")
+
+    def test_release_patch_guard_uses_files_json(self):
+        changed = [[{"filename": "releases/13.md",
+                     "patch": "@@ -1 +1 @@\n-**Kind:** patch\n+**Kind:** minor"}]]
+        self.assertEqual(self.decide(changed), "release brief changes **Kind:**")
+        approach = [[{"filename": "releases/13.md",
+                      "patch": "@@ -1 +1 @@\n-Approach: old\n+Approach: new"}]]
+        self.assertEqual(self.decide(approach), "eligible")
+        missing_patch = [[{"filename": "releases/13.md"}]]
+        self.assertEqual(self.decide(missing_patch), "release brief patch unavailable")
 
 
 if __name__ == "__main__":
