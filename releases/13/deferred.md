@@ -252,4 +252,3 @@ Four review rounds didn't land by the 07:30 line, so R13 ships the pre-W-B per-f
 | `logs/render.png` (a real output under a `logs/` dir) is treated as an optional log by logfetch 8b6f8434d; not user-hittable in default templates | W181 review | Post-R13 first update |
 | A pre-existing local symlinked `logs` dir lets a verified log install outside the destination (needs a pre-planted symlink; probe only) | W181 review | Post-R13 first update |
 | Bounded success-log fetch add-on (51971b0e2): aggregate deadline, pre-download size cap, sanitized keys. Failed W197 (test-double regression, nested-symlink escape, malformed-size cap bypass); the unbounded fetch is pre-existing since A′ | W181/W197 | First post-R13 update |
-| Collapsed required-update card hides in-progress/error lines from an earlier update attempt after a remount until "Show how" is clicked (auto-open when an operation is running or failed) | App notice fix 4e9faabc8 | First post-R13 update |
