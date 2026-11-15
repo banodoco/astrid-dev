@@ -36,6 +36,41 @@
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run after Release 13 publishes, record the date, the tasks it covers, the accountable session, what it may do without asking, and the advisor session.
 
+### Framing from the owner
+
+Recorded from 15 November 2026, relayed by the Release 13 orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) at 10:45, 12:15 and 12:20 UTC and in the [Release 13 decision log](https://github.com/banodoco/astrid-dev/blob/r13-progress/decision-log/releases/13/decisions.md).
+
+- **The planning principle.** "Get rid of any nonsense unless there's a really strong reason, around validating the Comfy workflow." Every step on a warm job is deleted unless it names a concrete failure it prevents and its cost: [the keep list](#the-keep-list).
+- **"Checks only when something changes"** means a change to what is installed or running: an add-on, a model, ComfyUI or Astrid installed, updated or restarted, or a pack or workflow edited. It never means request values: a new prompt or seed re-checks nothing.
+- **Placement.** The resident helper is a general capability of Astrid core for long-lived pack sessions (start, supervise, restart, custody), used by the VibeComfy pack, with the ComfyUI connection and template logic in VibeComfy: D8.
+- **Stages.** Under 2 s first, with [the time ledger](#the-time-ledger) showing what that needs; under 0.1 s after, confirmed by measurement: D1.
+
+### Ten statements
+
+Given to the owner by the orchestrator at 12:10 UTC on 15 November 2026. **Her reactions are pending**; record each contested one as a decision here and revise the plan before greenlight.
+
+1. Overhead is under 2 s in stage one; under 0.1 s is a measured stretch.
+2. No program is started per job; one helper lives as long as ComfyUI does.
+3. Push, not polling.
+4. The workflow is prepared once; values are filled per job.
+5. Heavy checks run only when the installation changes.
+6. ComfyUI is the authority on node inputs.
+7. Success still means saved and recorded, unless D2 says otherwise.
+8. A standing local speed test runs on every build.
+9. Rented-machine speed is out of scope.
+10. The command line becomes a thin client; agents do not start a program per call.
+
+Edges: a change made behind Astrid's back is caught only when ComfyUI refuses a job, restarts, or the installation changes (D6); an older ComfyUI may not be able to cancel a running job (D5).
+
+Where the plan's wording is more exact than a statement: (2) the session lives until its pack or Astrid's installation changes; a ComfyUI restart renews the connection and re-reads the node list without ending the session. (1) Two independent estimates put an already-connected caller at 15 to 70 ms on Linux and 25 to 120 ms on Windows, so under 0.1 s is the design's aim and not only a hope; it stays unpromised until LS-1 measures it.
+
+### Today's evidence
+
+- **Rented machine, for context only** (Release 13 live rounds, 15 November): candidate A warm image job 215 s; candidate B with the first-tier fixes 153 to 156 s, of which about 50 s inside the machine's job is in no named phase and 31 s is collection ([Plan 54 inputs](../54-warm-latency/inputs.md)). The 50 s is the nearest measurement of what audits, node restore, dependency sync and doctor cost on a managed ComfyUI; it has not been split or measured locally.
+- **A person's own ComfyUI:** the 30.2 s attribution by the test lane, in [the time ledger](#the-time-ledger).
+- **Where Astrid repeats ComfyUI or itself:** the duplication survey and its two rules ("ComfyUI is the authority on what a node accepts; Astrid never refuses what ComfyUI would run"; "verify at a trust boundary once; inside a job, carry the digest"), merged in [pull request 659](https://github.com/banodoco/astrid-dev/pull/659).
+- **Whether Plan 54 as written reaches under 0.1 s locally:** no; one to four seconds from caching alone, 0.2 to 2 s with a resident executor, held back by the Runtime's writes, the synchronous preview, the per-job process and one emission per job ([pull request 660](https://github.com/banodoco/astrid-dev/pull/660), with an independent Astra review that agreed). That answer is why this plan starts from the floor instead of from Plan 54.
+
 ### The keep list
 
 The default is delete. A step stays on a warm job only if it names a failure it prevents. "When something changes" means install, update, a pack or workflow edit, a ComfyUI restart, or a refusal from ComfyUI. Costs marked * are estimates; the rest are measured on the stand-in (see the time ledger). LS-1 and LS-2 fill every estimate.
@@ -124,7 +159,7 @@ Pull request 660 proposed staged local targets and a durability decision inside 
 
 ## Owner decisions
 
-- **D1 The targets.** Proposed: median Astrid overhead for a one-megapixel image on an idle queue, under 0.1 s for an already-connected caller on every system; under 0.25 s from the command line on Linux and macOS, Windows' command-line target set after LS-1 measures it; under 3 s (5 s on Windows) for the first job after a start or change. Alternative: a slowest-in-twenty target instead of a median, which is stricter and may not be reachable on Windows. Recommendation: medians, with the slowest-in-twenty reported.
+- **D1 The targets.** Median Astrid overhead for a one-megapixel image on an idle queue. Stage one: under 2 s for every caller on every system. Stage two: under 0.1 s for an already-connected caller; under 0.25 s from the command line on Linux and macOS, Windows' command-line target set after LS-1 measures it. Throughout: under 3 s (5 s on Windows) for the first job after a start or change. Open: whether stage two is a commitment of this release or a measured stretch (the orchestrator's statement 1 says stretch; the estimates say reachable), and median against slowest-in-twenty. Recommendation: commit to stage one; build for stage two and promise it once LS-1 has measured the floor; medians, with the slowest-in-twenty reported.
 - **D2 What success means.** (a) As today: a reply means the result is stored and recorded on disk; the forced writes are grouped. Estimated 15 to 70 ms on Linux, 25 to 120 ms on Windows. (b) The record survives Astrid crashing but not a power cut in the following second. (c) Reply first, record after: faster, and a caller can hold a result the record does not yet have. Recommendation: (a), and revisit only if LS-1 shows Windows missing D1.
 - **D3 One door.** Every caller goes through the Runtime (recommended), or a direct connection to the worker for the SDK and command line. The direct door is quicker to build; the App would not use it, and permissions and the record would have two paths.
 - **D4 The command line.** Agents use the command line, so it is the commonest caller. A Python client costs 25 to 150 ms to start on Linux and 80 to 500 ms on Windows; a small native client costs 3 to 20 ms and 10 to 60 ms, and is another thing to build, sign and update. Recommendation: Python client and the in-process tool server now; decide on a native client from LS-1's Windows numbers.

@@ -75,7 +75,7 @@ Estimates, not measurements; LS-1 measures them before anything is built.
 
 Two independent estimates (the advisor's and an Astra review that was not shown it) agree that under 0.1 s is plausible for an already-connected caller on both systems, with Windows' slowest cases unproven. They also agree on what is outside the number: waiting behind another job in ComfyUI's queue, a large output (about 50 to 330 ms per 100 MB to read and hash), a new input file, and a custom node whose own validation is slow.
 
-Proposed targets (D1): median overhead for a one-megapixel image, measured as caller wall time minus ComfyUI's own start-to-success span.
+Proposed targets (D1), after a first stage of under 2 s for every caller: median overhead for a one-megapixel image, measured as caller wall time minus ComfyUI's own start-to-success span.
 
 | Caller | Linux and macOS | Windows |
 | --- | --- | --- |
