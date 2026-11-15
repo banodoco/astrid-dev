@@ -9,7 +9,7 @@ The contribution workflows have separate responsibilities:
 | Workflow | Runs when | Permission | May do |
 | --- | --- | --- | --- |
 | [Review intake](../.github/workflows/review-intake.yml) | A PR opens or changes | `contents:read`, `pull-requests:write`, `issues:write` | Check an owner against the project's `plan.md` on live `main`; label a valid request `needs-review`; comment. **Never merge, approve or deploy.** |
-| [Issue intake](../.github/workflows/issue-intake.yml) | An issue opens or is edited | `contents:read`, `issues:write` | Add the type label and `plan:`/`gap:` labels, nothing else. |
+| [Issue intake](../.github/workflows/issue-intake.yml) | An issue opens or is edited | `contents:read`, `issues:write` | Add the type label and `plan:`/`gap:` labels, nothing else; triage applies release candidate labels. |
 | [Claim merger](../.github/workflows/claim-project.yml) | Unprivileged documentation CI succeeds on a PR | Dedicated repository-scoped GitHub App | Auto-merge **only** a validated change to the Owner line of a queued, unassigned project's `plan.md`. Never checkout or execute fork code. |
 | [Planning auto-merge](../.github/workflows/auto-merge.yml) | A PR opens or changes | Dedicated repository-scoped GitHub App: `contents:write`, `pull-requests:write` | Enable squash auto-merge for eligible planning content; remove only this App's request when eligibility is lost. |
 
