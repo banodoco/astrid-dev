@@ -2231,3 +2231,5 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - At 13:00 Hannah gets A, plus B if it's green, each with its evidence.
 
 - **08:20 UTC: candidate A frozen early; final live round started.** int/r13-a91c35df = a91c35dfd63f8d5969714541a30afe25feb2d626 (CI 43693935046, Lanes 43693934998). roundfinal.sh is running detached on that SHA with SKIP_SYNTH_T5=1: the synthetic T5s only compare Tier 1, which A doesn't include. Expected end ~11:00–11:30. The first launch was stopped during the installer's download (no pod; the install is unchanged) because the tool's 2 h background limit was shorter than the round; it was relaunched under setsid.
+
+- **08:40 UTC: final round, first result.** Claim 1 took 145 s; fin-t2i-7 succeeded in 12 m 55 s (claim start → first result 944 s). The script's SEED_CHECK says MISSING because neither `tasks show --json` nor `tasks logs` carries a seed_used field. The applied seed is correct, though: the PNG's embedded workflow has noise_seed=7 (requested 7). The R4.K receipt field is checked in validation, not by the live script.
