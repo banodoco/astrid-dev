@@ -2400,3 +2400,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - Owners: agent side to machines, Runtime side TBD.
 - **20:40 UTC: R13.1 TLS fallback (machines) is ready for proof.** r13/machines-r131-tls 95b8130e8 on int/r13.1. It adds astrid/installer/tls_fallback.py, which retries once with an OS-trust-store context only on CERTIFICATE_VERIFY_FAILED, never disabling verification. truststore (MIT, ~56 KB) is vendored under astrid/installer/_tls_truststore/. tools.py download() changes by +3/−1. 12 new tests, 152 in tests/installer, cycles OK. The test-lane proof is queued after the R13 gate clears. The Remotion readiness card and the Windows CI guard are in progress.
 - **20:45 UTC: R13.1 Windows install CI guard (machines) is ready.** r13/machines-r131-ci 59497cf9d: windows-latest, LongPathsEnabled=0, a long LOCALAPPDATA, Git off PATH, a real candidate install, blocking. Its first run is deferred until after the R13 publish, so it doesn't compete for runners. It is expected red until the advisor's r14/windows-install lands.
+- **20:50 UTC: Hannah (via the advisor): ALL fresh-Windows-install work for the next release belongs to the advisor** (branch r14/windows-install).
+  - Machines' Remotion readiness card is stopped.
+  - The finished TLS fallback 95b8130e8 and the CI guard 59497cf9d are handed to the advisor to bring onto its branch.
+  - The DACL message (astrid-app) and the Runtime's Windows DB-mode fix are handed over, not started.
+  - I keep the R13 publish and the R13 release-note Windows prerequisites, and I compose the advisor's SHA onto int/r13.1 when it's sent.
