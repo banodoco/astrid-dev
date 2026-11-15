@@ -10,7 +10,7 @@
 
 **Estimate:** 12.5 (9.5–18): phase 1 11.5, phase 2 1
 
-**Waiting on:** Plan 29; the owner's go; owner decisions; astrid-dev `main` protection
+**Waiting on:** Plan 29; the owner's go; owner decisions; astrid-dev `main` protection; [Plan 58](../58-strategy-from-releases/plan.md), which first makes the briefs and the strategy page the records this plan publishes from
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
@@ -53,6 +53,8 @@ Phase 1, releases defined and published from astrid-dev:
 Phase 2, on screen: **RL-3**, users see versions. It ships with the next record after its own review round.
 
 All work lands on `int/31-releases-from-astrid-dev` in astrid-dev and the App. Only the Release skill moves either branch to `main`.
+
+**After Plan 58 (owner, 15 Nov 2026).** [Plan 58](../58-strategy-from-releases/plan.md) is done first. It delivers the release template, the draft checks, one reader for release briefs, a strategy page generated from them, each release's kind in its brief and a frozen list of the issues it ships. Where this plan says the strategy page is checked against the release briefs, or that CI rejects a strategy row that diverges, read: the page is generated, so that case cannot occur. RL-1a then keeps the final-record checks and the legacy record and reads release briefs through Plan 58's reader. Two points are for the owner when this plan is taken up: whether Releases 12 and 13 are made Final here; and that making her the code owner of all of `releases/` would hold every issue-list pull for her approval, so the rule should cover the Final transition. Plan 58's last task rewrites the affected lines of this pack.
 
 This plan was sequenced after [Plan 29](../29-update-and-release/plan.md) and the owner's go (decision recorded 8 Nov 2026). The initial legacy record must describe **whichever release is actually live when implementation starts**; the earlier estimate that it would be Release 10 is historical, not an instruction to overwrite the newer releases. The next new release is the first one published through this path. The owner turns on astrid-dev `main` protection before the first publish. The details are in [tasks.md](tasks.md). Recording this plan does not authorize implementation.
 
