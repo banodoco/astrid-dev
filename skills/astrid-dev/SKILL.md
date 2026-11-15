@@ -15,7 +15,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Noticed something, or have a question | [Issues](../../docs/contribution-workflow.md#issues): file it, search first |
 | Task in a claimed project | Existing [plan, inputs and tasks](../../docs/project-format.md); inherit accepted decisions and permissions |
 | New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/README.md), then use [Plan](../astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
-| What we're doing now, next and later | [Strategy](../../strategy.md): read it first; the order across gaps and why |
+| What we're doing now, next and later | [Strategy](../../strategy.md): read it first for release and version direction; see [the hierarchy](../../docs/contribution-workflow.md#review-the-strategy) |
 | A gap, or the strategy across several plans | [Gap](../astrid-dev-gap/SKILL.md): define or reassess the outcome, write its closure approach and route to closure |
 | Handing off a project, or overseeing several | [Orchestrate](../astrid-dev-orchestrate/SKILL.md): plan it, farm it out to a manager set up for cloud sessions, advise and check in |
 | Running one accepted project | [Manage](../astrid-dev-manage/SKILL.md); ask the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) for a genuine blocker or consequential choice |

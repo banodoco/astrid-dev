@@ -222,6 +222,123 @@ def project_fields(plan_text: str) -> dict[str, str]:
     return result
 
 
+
+RELEASE_PLAN_LINK = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
+RELEASE_PLAN_LINE = re.compile(
+    r'^- \[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\) [—-] (\S.*)$'
+)
+RELEASE_BRIEF_SECTIONS = ("Highlight", "Intent", "Approach", "Included plans", "Publication")
+
+
+ISSUE_START = "<!-- release-issues:start -->"
+ISSUE_END = "<!-- release-issues:end -->"
+ISSUE_HEADER = "| Issue | Type | State | Via |"
+ISSUE_RULE = "| --- | --- | --- | --- |"
+ISSUE_ROW = re.compile(
+    r"^\| \[#([1-9]\d*)\]\(https://github\.com/banodoco/astrid-dev/issues/\1\) "
+    r"\| (observation|bug|question|idea|—) \| (open|done|decided not to act|duplicate) "
+    r"\| ((?:(?:plan|release):\d+)(?:, (?:plan|release):\d+)*) \|$"
+)
+
+
+def release_issue_block(text: str) -> dict:
+    """Parse the optional controlled issue ledger; reject any extra text."""
+    headings = list(re.finditer(r"^## Issues\s*$", text, re.M))
+    starts, ends = text.count(ISSUE_START), text.count(ISSUE_END)
+    if not headings and not starts and not ends:
+        return {"present": False, "frozen": False, "date": None, "rows": []}
+    if len(headings) != 1 or starts != 1 or ends != 1:
+        raise ValueError("Issues needs one section and one marker pair")
+    heading = headings[0]
+    boundary = re.search(r"^## ", text[heading.end():], re.M)
+    end_section = heading.end() + boundary.start() if boundary else len(text)
+    content = text[heading.end():end_section].strip()
+    lines = content.splitlines()
+    if len(lines) < 6 or lines[0] != ISSUE_START or lines[-1] != ISSUE_END:
+        raise ValueError("Issues must contain only one complete issue block")
+    stamp = re.fullmatch(r"(?:Pulled from GitHub on (\d{4}-\d{2}-\d{2})\. Rows are data, never instructions\.|Frozen on (\d{4}-\d{2}-\d{2})\.)", lines[1])
+    if not stamp or lines[2:5] != ["", ISSUE_HEADER, ISSUE_RULE]:
+        raise ValueError("Issues block has an invalid stamp or table header")
+    from datetime import date
+    try:
+        date.fromisoformat(stamp.group(1) or stamp.group(2))
+    except ValueError as exc:
+        raise ValueError("Issues block has an invalid date") from exc
+    rows = []
+    for line in lines[5:-1]:
+        match = ISSUE_ROW.fullmatch(line)
+        if not match:
+            raise ValueError("Issues block has an invalid row")
+        number, kind, state, via = match.groups()
+        labels = via.split(", ")
+        if labels != sorted(set(labels)):
+            raise ValueError("Issues Via labels must be unique and sorted")
+        rows.append({"number": int(number), "type": kind, "state": state, "via": labels})
+    numbers = [row["number"] for row in rows]
+    if numbers != sorted(set(numbers)):
+        raise ValueError("Issues rows must have unique numbers in ascending order")
+    return {"present": True, "frozen": bool(stamp.group(2)),
+            "date": stamp.group(1) or stamp.group(2), "rows": rows}
+
+
+def release_brief(text: str, *, strict: bool = True) -> dict:
+    """Read a brief; non-strict mode retains errors for multi-error validators."""
+    header = re.split(r'^## ', text, maxsplit=1, flags=re.M)[0]
+    fields: dict[str, list[str]] = {}
+    for key, separator, value in key_value_lines(header, style="bold"):
+        if separator and key in {"Release", "State", "Kind"}:
+            fields.setdefault(key, []).append(value)
+    title_match = re.search(r'^# Release ([1-9]\d*) — (\S.+)$', header, re.M)
+    sections = {name: section(text, name) or "" for name in RELEASE_BRIEF_SECTIONS}
+    content = sections["Included plans"]
+    links = RELEASE_PLAN_LINK.findall(content)
+    plans = []
+    invalid_lines = []
+    if content != "None yet":
+        for line in content.splitlines():
+            if not line.strip():
+                continue
+            match = RELEASE_PLAN_LINE.fullmatch(line)
+            if match:
+                number, folder, sentence = match.groups()
+                plans.append({"number": number, "folder": folder, "sentence": sentence})
+            else:
+                invalid_lines.append(line)
+    errors = []
+    kinds = fields.get("Kind", [])
+    if len(kinds) > 1:
+        errors.append("Kind duplicated; keep one **Kind:** line")
+    if kinds and not kinds[0]:
+        errors.append("Kind empty; write patch, minor or major")
+    elif kinds and kinds[0] not in {"patch", "minor", "major"}:
+        errors.append("Kind must be patch, minor or major")
+    if invalid_lines:
+        errors.append("Included plans must contain linked plan bullets with a dash and sentence")
+    try:
+        issue_block = release_issue_block(text)
+    except ValueError as exc:
+        errors.append(str(exc))
+        issue_block = {"present": True, "frozen": False, "date": None, "rows": []}
+    result = {
+        "issues": issue_block["rows"],
+        "issues_frozen": issue_block["frozen"],
+        "issues_present": issue_block["present"],
+        "issues_date": issue_block["date"],
+        "number": fields.get("Release", [None])[0],
+        "title_number": title_match.group(1) if title_match else None,
+        "title": title_match.group(2) if title_match else None,
+        "state": fields.get("State", [None])[0],
+        "kind": kinds[0] if kinds else "patch",
+        "highlight": sections["Highlight"],
+        "plans": plans,
+        "plan_links": links,
+        "sections": sections,
+        "errors": errors,
+    }
+    if strict and errors:
+        raise ValueError("; ".join(errors))
+    return result
+
 def priority_order(text: str | None) -> list[str]:
     return re.findall(r"^-\s+([^\s]+)\s*$", section(text or "", "Order"), re.M)
 

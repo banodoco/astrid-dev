@@ -14,7 +14,7 @@ from auto_merge import eligibility_reason, main
 class EligibilityTests(unittest.TestCase):
     def reason(self, **changes):
         inputs = dict(draft=False, author_association="MEMBER", labels=[], body=None,
-                      changed_paths=["plans/01-example/plan.md"])
+                      changed_paths=["plans/01-example/plan.md"], file_entries=[])
         inputs.update(changes)
         return eligibility_reason(**inputs)
 
@@ -23,7 +23,8 @@ class EligibilityTests(unittest.TestCase):
             with self.subTest(association=association):
                 self.assertIsNone(self.reason(author_association=association, changed_paths=[
                     "plans/a.md", "releases/13.md", "vision/gaps/a.md", "docs/guide.md",
-                    "strategy.md", "README.md", "docs/nested/README.md"]))
+                    "strategy.md", "README.md", "docs/nested/README.md"], file_entries=[
+                        {"filename": "releases/13.md", "patch": "@@ -1 +1 @@\n-Approach: old\n+Approach: new"}]))
 
     def test_draft(self):
         self.assertEqual(self.reason(draft=True), "draft pull request")
@@ -65,6 +66,105 @@ class EligibilityTests(unittest.TestCase):
     def test_rename_sources_must_also_be_planning(self):
         self.assertIsNotNone(self.reason(changed_paths=["plans/new.md", "scripts/old.py"]))
         self.assertIsNone(self.reason(changed_paths=["plans/new.md", "docs/old.md"]))
+
+    def test_release_kind_and_state_changes_are_not_eligible(self):
+        for field in ("Kind", "State"):
+            for change, diff in (
+                ("addition", f"+**{field}:** Final"),
+                ("removal", f"-**{field}:** Draft"),
+                ("change", f"-**{field}:** Draft\n+**{field}:** Final"),
+            ):
+                with self.subTest(field=field, change=change):
+                    reason = self.reason(changed_paths=["releases/13.md"], file_entries=[{
+                        "filename": "releases/13.md", "patch": f"@@ -1 +1 @@\n{diff}",
+                    }])
+                    self.assertEqual(reason, f"release brief changes **{field}:**")
+
+    def test_release_approach_change_is_eligible(self):
+        self.assertIsNone(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md",
+            "patch": "@@ -1 +1 @@\n-Approach: old\n+Approach: new",
+        }]))
+
+    def test_release_brief_without_patch_is_not_eligible(self):
+        for file_entries in ([], [{"filename": "releases/13.md"}],
+                             [{"filename": "releases/13.md", "patch": None}]):
+            with self.subTest(file_entries=file_entries):
+                self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=file_entries),
+                                 "release brief patch unavailable")
+
+    def test_release_rename_source_patch_is_guarded(self):
+        self.assertEqual(self.reason(changed_paths=["docs/new.md", "releases/13.md"], file_entries=[{
+            "filename": "docs/new.md", "previous_filename": "releases/13.md",
+            "patch": "@@ -1 +1 @@\n-**State:** Draft\n+**State:** Final",
+        }]), "release brief changes **State:**")
+
+    def test_hidden_line_breaks_in_release_patch_are_refused(self):
+        for character in ("\r", "\x0b", "\x0c", "\x1c", "\x1d", "\x1e", "\x85", "\u2028", "\u2029"):
+            for field, value in (("Kind", "major"), ("State", "Final")):
+                for line in (f"+x{character}**{field}:** {value}", f"+**{field}:** {value}{character}"):
+                    with self.subTest(character=repr(character), line=line):
+                        self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+                            "filename": "releases/13.md", "patch": f"@@ -1 +1 @@\n{line}",
+                        }]), "release brief patch has an unusual line break")
+
+    def test_carriage_return_in_release_patch_is_refused(self):
+        self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md",
+            "patch": "@@ -1 +1 @@\n-Approach: old\r\n+Approach: new\r",
+        }]), "release brief patch has an unusual line break")
+
+    def test_empty_release_patch_is_not_eligible(self):
+        self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md", "patch": "",
+        }]), "release brief patch unavailable")
+
+    def test_rename_out_of_releases_needs_a_patch(self):
+        for entry in ({"patch": ""}, {}):
+            with self.subTest(entry=entry):
+                self.assertEqual(self.reason(changed_paths=["plans/13.md", "releases/13.md"], file_entries=[{
+                    "filename": "plans/13.md", "previous_filename": "releases/13.md",
+                    "status": "renamed", **entry,
+                }]), "release brief patch unavailable")
+
+    def test_renamed_release_brief_is_not_eligible(self):
+        patch = "@@ -14,1 +14,1 @@\n-An old approach line.\n+A new approach line.\n"
+        for old, new in (("releases/next.md", "releases/18.md"), ("releases/17.md", "releases/18.md"),
+                         ("releases/13.md", "plans/13.md")):
+            with self.subTest(old=old, new=new):
+                self.assertEqual(self.reason(changed_paths=[new, old], file_entries=[{
+                    "filename": new, "previous_filename": old, "status": "renamed", "patch": patch,
+                }]), "release brief renamed")
+
+    def test_realistic_approach_paragraph_patch_is_eligible(self):
+        patch = ("@@ -8,7 +8,7 @@ # Release 13 — Example\n"
+                 " **Kind:** minor\n"
+                 " **State:** Draft\n"
+                 " \n"
+                 " ## Approach\n"
+                 "-The old paragraph describes the change.\n"
+                 "+The new paragraph describes the change in more detail.\n"
+                 " \n"
+                 " ## Included plans\n")
+        self.assertIsNone(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+            "filename": "releases/13.md", "patch": patch,
+        }]))
+
+    def test_markdown_horizontal_rule_lines_are_eligible(self):
+        for patch in ("@@ -3,0 +4,1 @@\n+---",
+                      "@@ -4,1 +3,0 @@\n----",
+                      "@@ -4,3 +4,3 @@\n Intro text\n----\n+---\n Outro text"):
+            with self.subTest(patch=patch):
+                self.assertIsNone(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+                    "filename": "releases/13.md", "patch": patch,
+                }]))
+
+    def test_state_in_non_brief_release_files_is_eligible(self):
+        for path in ("releases/TEMPLATE.md", "releases/12/decisions.md"):
+            with self.subTest(path=path):
+                self.assertIsNone(self.reason(changed_paths=[path], file_entries=[{
+                    "filename": path, "patch": "@@ -1 +1 @@\n-**State:** Draft\n+**State:** Final",
+                }]))
 
 
 class JsonInputTests(unittest.TestCase):
@@ -114,6 +214,25 @@ class JsonInputTests(unittest.TestCase):
         self.assertEqual(self.decide(pages, labels=[{"name": "hold"}]), "hold label")
         self.assertEqual(self.decide(pages, body="Owner decision needed"), "Owner decision needed in body")
         self.assertNotEqual(self.decide(pages, author_association="NONE"), "eligible")
+
+    def test_release_patch_guard_normalizes_field_whitespace(self):
+        for field, value in (("Kind", "minor"), ("State", "Final")):
+            for key in (f"{field} ", f" {field}", f" \t{field} \t"):
+                with self.subTest(field=field, key=key):
+                    diff = (f"+**{key}:** {value}" if field == "Kind" else
+                            f"-**{key}:** Draft\n+**{key}:** {value}")
+                    pages = [[{"filename": "releases/14.md", "patch": f"@@ -1 +1 @@\n{diff}"}]]
+                    self.assertEqual(self.decide(pages), f"release brief changes **{field}:**")
+
+    def test_release_patch_guard_uses_files_json(self):
+        changed = [[{"filename": "releases/13.md",
+                     "patch": "@@ -1 +1 @@\n-**Kind:** patch\n+**Kind:** minor"}]]
+        self.assertEqual(self.decide(changed), "release brief changes **Kind:**")
+        approach = [[{"filename": "releases/13.md",
+                      "patch": "@@ -1 +1 @@\n-Approach: old\n+Approach: new"}]]
+        self.assertEqual(self.decide(approach), "eligible")
+        missing_patch = [[{"filename": "releases/13.md"}]]
+        self.assertEqual(self.decide(missing_patch), "release brief patch unavailable")
 
 
 if __name__ == "__main__":

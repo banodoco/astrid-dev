@@ -2,6 +2,7 @@
 
 **Release:** NN
 **State:** Draft
+**Kind:** patch
 
 ## Highlight
 
@@ -17,13 +18,15 @@ Describe the intended sequence, key trade-offs, dependencies, qualification, and
 
 ## Included plans
 
-- [Plan NN](../plans/index.md) — One sentence saying what this plan contributes to the release.
+- [Plan NN](../plans/index.md) — One sentence saying what this plan contributes to the release; the strategy page shows it.
 
-Only list plans actually intended for this release. Replace the example link with each real `plans/<id>/plan.md` link. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
+Delete this paragraph once the list is written; only plan bullets or `None yet` may stay in this section. Replace the example with one bullet for each real `plans/<id>/plan.md` link, or write `None yet` for a draft with no plans. List only plans intended for this release. Kind may be omitted (default `patch`), or set to `minor` or `major`. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
 
 ## Included pull requests
 
 Optional. Open pull requests brought into this release that belong to no listed plan, usually from outside contributors: one line each with the link and what it contributes. The [Release skill](../skills/astrid-dev-release/SKILL.md#take-stock-of-open-pull-requests) says how they are chosen and ordered. Remove this section if there are none.
+
+The optional Issues section is created by `python3 scripts/release_issues.py <N>`, which places it between this section and Publication. It lists each candidate issue's linked number, type, state and the label that brought it in, and no text from the issue. Refresh it when the release is first planned and at check-ins. Before the freeze the list is the whole candidate set: a row removed by hand comes back at the next run while its issue is open and still carries the `release:<N>` label or the label of an included plan. To drop an assorted ticket, remove its `release:<N>` label and its row. Run `--freeze` before the brief becomes Final, then remove by hand the rows that are not shipping, since the command no longer rewrites a frozen block.
 
 ## Publication
 

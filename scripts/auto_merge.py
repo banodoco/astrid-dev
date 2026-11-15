@@ -3,9 +3,18 @@
 import argparse
 import json
 from pathlib import Path
+import re
+
+from records import key_value_lines
 
 
-def eligibility_reason(draft, author_association, labels, body, changed_paths):
+RELEASE_BRIEF = re.compile(r"^releases/[1-9]\d*\.md$")
+# records.key_value_lines splits with str.splitlines(), which also breaks on these
+# characters. A patch line containing one could be read as several lines, so refuse it.
+UNUSUAL_LINE_BREAKS = frozenset("\r\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029")
+
+
+def eligibility_reason(draft, author_association, labels, body, changed_paths, file_entries=None):
     """Return None if eligible, otherwise a reason. Paths include rename sources."""
     if draft:
         return "draft pull request"
@@ -28,6 +37,36 @@ def eligibility_reason(draft, author_association, labels, body, changed_paths):
             continue
         if "/" not in path or path.split("/", 1)[0] not in {"plans", "releases", "vision", "docs"}:
             return "changed path outside planning content"
+
+    release_paths = {path for path in changed_paths if RELEASE_BRIEF.fullmatch(path)}
+    covered_release_paths = set()
+    for file in file_entries or []:
+        paths = [file.get("filename"), file.get("previous_filename")]
+        matching = {path for path in paths if isinstance(path, str) and RELEASE_BRIEF.fullmatch(path)}
+        if not matching:
+            continue
+        covered_release_paths.update(matching)
+        patch = file.get("patch")
+        if not isinstance(patch, str) or not patch:
+            return "release brief patch unavailable"
+        # Split on "\n" only, as git writes patches. Hunks have no file headers,
+        # so every "+" or "-" line is content, including ones starting "+++" or "---".
+        for line in patch.split("\n"):
+            if UNUSUAL_LINE_BREAKS.intersection(line):
+                return "release brief patch has an unusual line break"
+            if not line.startswith(("+", "-")):
+                continue
+            fields = key_value_lines(line[1:].lstrip(" \t"), style="bold")
+            if fields:
+                key, separator, _ = fields[0]
+                if separator and key in {"Kind", "State"}:
+                    return f"release brief changes **{key}:**"
+        # A rename shows only the lines that differ, so a brief moved into or out of
+        # releases/<N>.md can carry a Kind or State line the patch never mentions.
+        if file.get("previous_filename") or file.get("status") == "renamed":
+            return "release brief renamed"
+    if release_paths - covered_release_paths:
+        return "release brief patch unavailable"
     return None
 
 
@@ -54,7 +93,7 @@ def main():
             paths.append(file["previous_filename"])
     reason = eligibility_reason(pr["draft"], pr["author_association"],
                                 [label["name"] for label in pr["labels"]],
-                                pr["body"], paths)
+                                pr["body"], paths, file_entries=files)
     print(reason or "eligible")
 
 

@@ -61,9 +61,9 @@ Chosen: the release brief as the structured source; generated parts on the strat
 
 **Proof and limits:** Completion and its limits are in [plan.md](plan.md#completion). Not verified while planning: branch protection and code owners on GitHub; whether Plan 52's II-13 has landed; the line numbers and test names in the cards beyond the critique's reading, which the cards say to re-check. The `Kind` line and the roll-up came after the critique and are covered by the final review round.
 
-**Review rounds:** Pending — recommended: one final round, because the plan rewrites checks other plans rely on. No review stop: the reduced scope is about 4.5 days and the release brief contract has its own tests. Next: the owner confirms.
+**Review rounds:** Agreed — one final review round, confirmed by the owner in the run-start message on 15 November 2026. No review stop. Findings become task rows and the integration merge waits for their resolution. After completion the owner asked for a further check; its findings and fixes are recorded in [review.md](./review.md).
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking, and the advisor session.
+**Run start:** Authorized on 15 November 2026 by the owner's message in this ChatGPT conversation: "This message is my go for the run." Covers SR-1 to SR-7 and the one final review round. Accountable agent and project owner: the Plan 58 manager, ChatGPT `/root`, session/workspace `3417d5f77996`; advisor: none assigned (a separate high-judgment advisor may be consulted if needed). The manager may create branches and pull requests on astrid-dev, merge task pull requests into `int/58-strategy-from-releases`, merge its own progress pull requests, run the repository's checks and tests, and read astrid-dev issues for SR-4. The owner's go is required for merging the integration branch into `main`, any scope or decision change, the SR-3 wording (which the owner rewrites), and anything touching a product repository or publishing a release. A refused command is brought to the owner without retrying it. One pull request per task; a draft integration pull request opens as soon as the first task lands and stays current; after all tasks and review, the manager opens the completion pull request from the completion template. The owner is notified when the draft is open, when the SR-3 draft is ready and when the completion pull request is open.
 
 ## What the owner said
 
@@ -96,6 +96,17 @@ All decided by the owner on 15 November 2026 in the planning session.
 - **D11 What the strategy page shows.** She asked: "only show greater than minor?" and "Should it include all the plans and issues done in patches before too?" **Decided: the roll-up, as recommended ("Yes to all 4!"):** each version shows its minor release in full; the patches on the way as one line of linked titles; the plans of all of them, each once; and a count of issues for each frozen list. A minor release's own brief lists only its own plans and issues. The alternative, hiding patches from the page entirely, was not chosen.
 - **D12 Under what authority an assorted ticket is worked.** The rules say an issue becomes work only through a task row, and an assorted ticket has no plan. **Decided, as recommended ("Yes to all 4!"):** its row in a release brief's issue list counts, worked under that release's run; the label alone still commits nothing.
 
+## Run decisions
+
+On 15 November 2026 in ChatGPT session `3417d5f77996`, the owner replied to the manager's two recommendations: "Yeah, we should give them, like, a full version generated section, like the 1.0. Yeah. And yeah, I agree with the merge order. And one thing I was thinking about is how... never mind. Please go ahead with that."
+
+- **D13 The generated 1.0 section.** Accepted: retain the nine minor regions and add a full generated `1.0` region beneath the major aim. It shows the major release and patches leading to it, their plan contributions and frozen issue counts. After 0.9, pending patches belong there while awaiting the major. Keep the nine-minor limit and refuse releases after a major. This resolves SR-2's missing region without hiding releases or inventing 0.10; its marker and boundary tests enforce the decision.
+- **D14 SR-5's ordering evidence.** Accepted: Plan 52's shared guide and state-link test already landed in [PR 620](https://github.com/banodoco/astrid-dev/pull/620), commit `e503694c`, before this run's base. SR-5 follows that change and preserves its six searches and heading rule. This satisfies SR-5's coordination item; it neither asserts an acknowledgement from the older manager session nor completes Plan 52's broader II-13 task.
+
+D13 and D14 did not settle D8; the owner accepted the strategy words in the later reply below.
+
+- **D15 SR-3's wording.** On 15 November 2026, in the same run, the owner replied: "I agree with the draft". This accepts the proposed strategy opening and 0.1 wording in [PR 695](https://github.com/banodoco/astrid-dev/pull/695), at commit `5ba1efd7ff96a5ee829f4b0cdea4c8f71b45da14`, unchanged. It completes D8's owner wording step. The integration-to-main merge still requires her go.
+
 ## Estimate
 
 | Task | Days |
@@ -114,7 +125,7 @@ The owner's replies on SR-3 and on the open decisions come on top.
 
 ## Source identities
 
-astrid-dev `main` at `a398525a526a2bfe0eb2cccac47732c3491c467d` (15 November 2026) for every reading above; the critique read the draft at `ed0171cfd5b53e1cdb57b08715f68581c6b09282`. No product repository is read or changed. The run starts from astrid-dev `main` at its start and records that commit here.
+astrid-dev `main` at `a398525a526a2bfe0eb2cccac47732c3491c467d` (15 November 2026) for every reading above; the critique read the draft at `ed0171cfd5b53e1cdb57b08715f68581c6b09282`. No product repository is read or changed. The run starts from astrid-dev `main` at `1e1c646ea428bfd022adc024bbc25bc08078ef93`, the generated-view refresh immediately after the owner's plan reference `91035254b96342ce811afb2711631f300969572d`; the four plan documents are unchanged between them. The new clone was clean at the start. Implementation lands on `int/58-strategy-from-releases`; progress-only pull requests keep `tasks.md` current on `main` under the management skill.
 
 ## References
 

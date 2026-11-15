@@ -4,13 +4,13 @@
 
 **Goal:** Anyone reads one strategy page and sees what each version and release is for, in sentences pulled from the release briefs and plans, and each release brief lists the plans and issues it ships.
 
-**Status:** queued
+**Status:** done
 
-**Owner:** Unassigned
+**Owner:** Plan 58 manager
 
 **Estimate:** about 4.5
 
-**Waiting on:** the owner's go for a run
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -30,7 +30,7 @@ When this is done, each level owns one sentence that the level above pulls, and 
 | Major version (1.0) | the aim, on the strategy page | a few paragraphs, on the strategy page |
 
 1. **The release brief is the structured source.** It says what kind of release it is: a patch, a minor or a major (D10). It may start with a highlight and intent and no plans. It lists its own plans and, at the bottom, its own issues, and never another release's.
-2. **The strategy page is generated where it repeats a release brief.** Under each version's hand-written sentence and paragraph, a generated part rolls up everything since the previous minor release: the minor release that ships the version, with its state and highlight; the patch releases on the way to it, as one line of linked titles; the plans those releases include, each once with its release and what it contributes; and, for each release whose issue list is frozen, how many issues it shipped (D11). The sequence table and the hand-kept `Plans` and `Releases` lines go.
+2. **The strategy page is generated where it repeats a release brief.** Under each version's hand-written sentence and paragraph, a generated part rolls up everything since the previous minor release: the minor or major release that ships the version, with its state and highlight; the patch releases on the way to it, as one line of linked titles; the plans those releases include, each once with its release and what it contributes; and, for each release whose issue list is frozen, how many issues it shipped (D11). The nine minor regions are followed in the model by a generated 1.0 region under the major aim; pending patches after 0.9 belong there (D13). The sequence table and the hand-kept `Plans` and `Releases` lines go.
 3. **One strategy document per major version.** `strategy.md` is the path to 1.0. It opens with the aim in one line and a few paragraphs: where we are, what will be true at 1.0, and how we get there. When 1.0 ships the page is kept as `strategy-1.0.md` beside it and a new `strategy.md` starts.
 4. **An issue reaches a release in two ways:** through a plan the release includes (the `plan:NN` label, as now), or directly, as an assorted ticket (a new `release:NN` label). The label means candidate, not commitment.
 5. **The release brief lists its issues, pulled by a command.** A person or agent runs it, from the day the release is first planned; it writes a marked block at the bottom of the release brief with each issue's linked number, its type, its state and how it came in. No issue text is copied, and no check calls GitHub.
@@ -65,7 +65,7 @@ All work is in astrid-dev; no product repository is read or changed. Work lands 
 
 **How it joins Plan 31,** where a release brief becoming Final is what publishes a release: the release brief stays the one file; this plan's reader is what Plan 31's record check and manifest render read; the freeze happens before Final, so the published record already says which issues shipped; and kind is declared in the release brief from the draft, so Plan 31's version step has its source. Plan 31's approval of the Final transition (a code owner's review) replaces this plan's auto-merge rule for `State` when it lands. Releases 12 and 13 are made Final in Plan 31, not here (D5). One thing is Plan 31's to settle with the owner: its plan to make her the code owner of all of `releases/` would make every issue-list pull wait for her, so it should protect the Final transition and not every edit to a draft.
 
-The owner decided D1 to D12 on 15 November 2026 ([inputs.md](inputs.md#owner-decisions)); none is open. Recording this plan does not authorize implementation.
+The owner decided D1 to D12 in planning and D13 to D15 during this run on 15 November 2026 ([inputs.md](inputs.md#owner-decisions), [run decisions](inputs.md#run-decisions)). The recorded Run start authorizes implementation within its limits. D15 accepts the SR-3 strategy draft unchanged, completing D8's owner-wording step; the integration-to-main merge still requires her go.
 
 ## Interfaces and handoff
 
@@ -79,7 +79,7 @@ The owner decided D1 to D12 on 15 November 2026 ([inputs.md](inputs.md#owner-dec
 
 **Limits:**
 - After a release brief changes, the strategy page on `main` is stale until the refresh job commits it (one CI run); a pull request compares a generated part only if it touched it.
-- The issue list is as current as its last run and says when that was.
+- The issue list is as current as its last run; the date it shows is when a row last changed.
 - A frozen list records each issue's state on the freeze date. It does not prove a fix is inside the pinned commits, and a fix merged only to an integration branch still reads as open; the release manager corrects the list by hand before Final.
 - The auto-merge rule keeps a change from merging by itself; it does not stop a person with merge rights.
 
@@ -88,6 +88,7 @@ The owner decided D1 to D12 on 15 November 2026 ([inputs.md](inputs.md#owner-dec
 - Changing a release brief's highlight, state, kind or plans changes the strategy page on the next `sync`, with no hand edit, and a hand edit to a generated part is refused.
 - A draft release brief with a highlight, an intent and `None yet` for its plans passes; a plan line without a link is refused.
 - With Release 17 marked minor, the page shows it under 0.1 with its highlight, the earlier releases on one line, and their plans, each once; marking a later release minor fills 0.2 with no edit to the page.
+- A major release appears in full in the generated 1.0 region with its preceding patches, plan contributions and frozen counts; patches after 0.9 appear there while awaiting it. More than nine minors and releases after a major are refused.
 - For Release 15, the command lists the issues labelled `plan:39`, `plan:50` and `plan:40` and any labelled `release:15`, each once; an issue closed between two runs keeps its row; a second run on the same day changes nothing.
 - The block holds no text from an issue. A final release brief with an unfrozen block is refused.
 - A pull request that adds or changes a `Kind` or `State` line is not eligible for auto-merge; one that changes only an Approach is.
