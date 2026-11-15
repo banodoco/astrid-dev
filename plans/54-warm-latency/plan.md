@@ -23,7 +23,7 @@ On 14 November 2026 a second image job on a warm rented machine took 242 seconds
 When this project is done:
 
 - **Rented machine, warm, same model:** overhead (wall time minus the model's own time) is under 5 seconds, then under 0.5 seconds.
-- **Creator's own computer, warm (Astrid-managed or their own ComfyUI):** overhead under 0.1 seconds for a caller that is already running (the agent, the SDK, the App); the command line sits at the floor of starting a process, about 0.1 seconds.
+- **Creator's own computer, warm (Astrid-managed or their own ComfyUI):** overhead under 0.1 seconds for a caller that is already running (the agent, the SDK, the App); the command line sits near the floor of starting a process (measured today at about 0.2 seconds for `generate --help` against a 17 ms Python floor).
 - **First job and model switches are no slower than they must be:** a fresh rented machine does not reinstall an engine environment it has installed before, and the node and installation checks are cheap on every path.
 - **Every second is accounted for.** Each result carries a timing breakdown whose parts add up to the wall time, with any remainder shown as `unaccounted`.
 - **It stays that way.** Tests count remote operations, process starts, polls and hash passes on a warm job, and fail over a budget.

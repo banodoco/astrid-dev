@@ -37,6 +37,7 @@ Every budget test asserts **valid outputs and a job record as well as counts**; 
 | SP-25 One execution path: the resident executor that serves a rented machine also serves the local host for the App and the agent; only the transport differs | S | SP-3, SP-15 | `astrid/core/execution/generic_host.py`, `astrid/packs/vibecomfy/local_job.py`, `astrid/packs/vibecomfy/production_engine.py` | CPU: the same job run locally and on the fake machine executes the same functions after dispatch (asserted by a shared trace) | [ ] |
 | SP-26 The budget tests are a required check on astrid-agent pull requests | N | SP-21 | astrid-agent `.github/workflows/`; branch protection is the owner's to set | A pull request that adds a remote operation or a process start to the warm path fails the check | [ ] |
 | SP-21 Standing budgets and live proof: the rented and local budgets join the standing suite; the orchestrator runs the live rounds in [plan.md](plan.md#completion) | X | SP-5, SP-6, SP-9 to SP-17 | tests only; evidence under `releases/` | The completion numbers | [ ] |
+| SP-27 Command-line start-up hygiene: lazy imports for preflight, placement, file locking and asyncio, gateway dispatch and `urllib.request`; the version as a baked constant; bytecode compiled at install; plain `--help` without full pack discovery | N | — | `astrid/core/generation/cli.py:51, 84, 462, 470`, `astrid/version.py:10`, `astrid/core/generation/targets.py:23`, `astrid/core/gateway/omp_agent.py:20, 43-63`, `astrid/core/generation/placement.py:21`, the installer's compile step | A budget test on `python -X importtime`: `generate --help` under 150 ms and plain `--help` under 300 ms on CI, with the named modules absent from the import trace | [ ] |
 | R Review rounds (at most 1, pending the owner's confirmation) | S | all other tasks | read-only | Rounds per the [run contract](../../skills/astrid-dev-shared/run-contract.md): findings become rows `R<round>.<n>` added directly below this one, each with route, scope, dependencies and proof; publishing or closing waits for them | [ ] |
 
 **Tasks by principle** (numbers as in [plan.md](plan.md#target-architecture)):
@@ -48,11 +49,11 @@ Every budget test asserts **valid outputs and a job record as well as counts**; 
 | 3 Control plane apart from data plane | SP-6, SP-16, SP-22, SP-23 |
 | 4 Lean on ComfyUI | SP-9, SP-11, SP-13, SP-24 |
 | 5 Content addresses | SP-10, SP-12, SP-14 |
-| 6 One path, always measured | SP-1, SP-15, SP-17, SP-21, SP-25, SP-26 |
+| 6 One path, always measured | SP-1, SP-15, SP-17, SP-21, SP-25, SP-26, SP-27 |
 
 **Phases.** Phase 1 (rented under 5 s): SP-1 to SP-7, SP-22, SP-23. Phase 2 (rented under 0.5 s): SP-8, with SP-10, SP-13 and SP-14 on the machine. Phase 3 (local under 0.1 s): SP-9 to SP-17, SP-24, SP-25. SP-26 closes the plan. Phase 4 (first job): SP-18 to SP-20.
 
-**Can start at once, in parallel:** SP-1, SP-9, SP-12, SP-13, SP-14, SP-18, SP-19. **Merge order where functions overlap:** SP-9 before SP-10 and SP-11 (the check and its cache); SP-3 before SP-19 (both change preparation); SP-4 before SP-6 (both change the machine's release path); SP-14 before SP-15 (host settlement).
+**Can start at once, in parallel:** SP-1, SP-9, SP-12, SP-13, SP-14, SP-18, SP-19, SP-23, SP-27. **Merge order where functions overlap:** SP-9 before SP-10 and SP-11 (the check and its cache); SP-3 before SP-19 (both change preparation); SP-4 before SP-6 (both change the machine's release path); SP-14 before SP-15 (host settlement).
 
 **Where the time goes** (elapsed, at agent speed): builds are one to three hours each. Phase 1 is bounded by its design and review stop (three to four hours), then custody review rounds (three to five rounds of about an hour by Release 13's record), then one live run. SP-13 and SP-15 are bounded by a re-pin and its CI. Phase 4's SP-20 is bounded by a live run on a fresh machine.
 

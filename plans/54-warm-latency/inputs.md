@@ -72,7 +72,7 @@ Open questions and hypotheses, not tasks. None is measured unless it says so. Ea
 
 | Angle | Why it might matter | Cheapest way to find out |
 |---|---|---|
-| Command-line start-up and imports | Half a second to two seconds on every call, on every placement; the floor under every other saving | `python -X importtime` on `astrid generate --help`; the orchestrator has a profile running |
+| Command-line start-up and imports | **Measured 15 November** (median of 5, installed copy of 6a6ab6f4d): `generate --help` 213 ms, `tasks --help` 144 ms, plain `--help` 1,010 ms, against a Python floor of 17 ms. Lazy imports would save about 70 to 80 ms per command; bytecode is not precompiled at install (351 `.pyc` for 972 `.py`). So the command line is not the half second to two seconds first assumed, except plain `--help` | Done; it is task SP-27. Still open: what the remaining 800 ms of plain `--help` is (pack discovery, `astrid/core/gateway/omp_agent.py:43-50`) |
 | The agent's own loop | An agent may make five to twenty tool calls and read a long skill to produce one image; that can dwarf the job | Count tool calls and wall time per image in the tester sessions' transcripts |
 | Perceived wait in the App and through MCP | A job that streams progress and a preview feels faster than a quicker silent one | Check whether ComfyUI's progress and preview events reach the App today; time to first visible sign of life |
 | Step counts and Turbo defaults per model | Halving steps halves generation, which is now the part that matters; video took the same wall time at 8 and 20 steps only because overhead hid it | For each default, the fewest steps at which output is acceptable, from one live grid |
