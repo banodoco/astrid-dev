@@ -2,14 +2,9 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (12:00 UTC Sun 15 Nov): read this first
+## Now (13:00 UTC Sun 15 Nov): read this first
 
-**Candidate A′ int/r13-f709407c** (A + h3first2 revert + prepstop): live recheck 5/5 validated (i2v MD5-identical to the reference route; no poisoning). A's binding table is CLEAN. G4 APPROVE.
-**A″ train** (machines, ~12:45–13:00, each with fail-first tests; the test manager proves each):
-- r13/machines-logfetch: a log-only fetch failure must not fail a completed generation (G3 W172 #3);
-- r13/machines-redact: token-only URL userinfo, plus redaction at every print/return boundary (generate failure, tasks logs, MCP, remote install stdout) (G3 #2 and W176);
-- r13/machines-winclaim: Windows RunPod claim (os.fchmod, directory os.open) (W171; W179 verifying).
-
-Then freeze A″ → re-pin the App (now cf2f9535a on A′, CI running) → journey matrix → Hannah's go, ~14:00–14:30.
-**Open:** the Runtime 6855dfa8 durable ref; Hannah's version/kind/required-update decision; tester links (0 comments).
-**R14:** plan #662 (plans/55-local-speed; D1–D8 open); releases/14 docs PR in progress. **Balance** $77.5719805663, 0 pods.
+**Hannah's GO is given** (0.0.13, full, REQUIRED update; publish without waiting for the final head's full CI). **Blocker:** an upgrade regression. Every older install updating to 13 is rolled back (BootManifestDrift; 9f00e2ae2/a26030e78). Cells' r13/cells-bootmanifest is due ~14:05. The journey on the new harness harness/31-r13-upgrade (R0/R9/R11/R12 → 13, fresh) runs 43715487164 on A″ to scope it.
+**A‴ components:** A″ 34fee0cf + boot-manifest (pending) + the Windows stack r13/machines-winnofollow (pending: winclaim, fcntl, graph_facts, credential read) + logfetch 8b6f8434d (W181 proof) + redact 887f81594 (READY) + LTX marker 8519cd2a0 (READY).
+**Then:** freeze → App re-pin with --require → journey all rows → publish (Agent → Runtime fast-forward 6855dfa8 → App → deploy check). ETA live ~16:30.
+**Post-R13:** first update = model lookup (cells) + generate-failure leftovers. R14 = local speed (Plan 55), and release docs 14–19 in astrid-dev#664. Balance $77.5428138996, 0 pods.
