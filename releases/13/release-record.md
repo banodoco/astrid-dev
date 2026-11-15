@@ -1,135 +1,91 @@
 # Release 13 — release record
 
-The publish-time record of what Release 13 is: the frozen tuple, what it contains, the evidence for each claim and the publication steps. It is filled in as facts arrive and is the one home for them; the [brief](../13.md) holds intent, [run.md](run.md) the live board, [decisions.md](decisions.md) the rulings and [tests.md](tests.md) the test gate. This record links to them and does not repeat them.
+The publish-time record of what Release 13 is: the frozen tuple, its claims and their evidence, and what is left before publication. The [brief](../13.md) holds intent, [run.md](run.md) the live board, [decisions.md](decisions.md) the rulings, [tests.md](tests.md) the test gate and [deferred.md](deferred.md) what R13 does not fix. This record links to them and does not repeat them. Sections follow what the [release skill](../../skills/astrid-dev-release/SKILL.md) says a release must report (there is no release-record template in `templates/release/`).
 
-**Status: DRAFT: nothing frozen, nothing published, evidence through 14 Nov ~11:30 UTC.** There is no release-record template in `templates/release/` (only `run.md`), so the sections follow what the [release skill](../../skills/astrid-dev-release/SKILL.md) says a release must report: exact candidate identity, claims, focused checks and results, review result, tuple and artifact identity, unqualified claims and the remaining authorized actions.
+**Status: candidate frozen, not published.** Candidate A′ was frozen at 10:40 UTC Sun 15 Nov ([decisions.md:2281](decisions.md#L2281)); evidence below runs through 11:35 UTC Sun 15 Nov ([decisions.md:2286](decisions.md#L2286)). Nothing has been published.
 
-Convention: `PENDING: <what fills it>` marks a value that is not yet known. Nothing below is a result unless it cites its evidence.
+Convention: `PENDING: <what fills it>` marks a value not yet known. Nothing below is a result unless it cites its evidence.
 
 ## 1. Release identity
 
 | Field | Value |
 |---|---|
-| Release number | 13 (the next integer after served Release 12; `release-guard` requires exactly +1) |
-| Version | PENDING: the owner's version for Release 13. Releases 10 to 12 are `0.0.N`; the patch rule in the skill gives `0.0.13`, but this is a full release, so confirm. The install manifest has no version field, so check where the version is stated |
-| Kind | PENDING: full or patch release, with the required-update decision (`required` floor). The brief's Publication section is still "Not pinned" |
-| Built on | Published Release 12: Agent `0e1543e0da2215db9cb3320cfd1083174c3c62a9`, Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`, VibeComfy `e65f4941d09b1cb4d1dd5aae6171c73e648706f4`, lifecycle `f2948817eeb94af8dee76be21f6d673724f1606e` (all read from astrid-app `public/install-manifest.json`, `release: 12`, on 13 Nov) |
-| Deadline | Publish Saturday 14 Nov by 12:00 UTC, target about 11:00 ([run.md](run.md)) |
-| Publication authority | NOT GIVEN. Needs the owner's go in the publishing session, naming the exact SHAs (skill: "Owner's go, in this session") |
-| Publisher | PENDING: the one session that publishes; only one publisher at a time |
+| Release number | 13 (served Release 12 + 1; `release-guard` requires exactly +1) |
+| Version | **PENDING: owner decision.** The open question: is the version `0.0.13`? That is the default if R13 follows Releases 10 to 12, which are `0.0.N` (as recorded in the earlier draft of this record), but no rule in the release skill sets it and R13 is a full release, so Hannah confirms or names another. The install manifest has no version field, so where the version is stated is also to be confirmed |
+| Kind | **PENDING: owner decision**, full or patch. The brief's [Publication](../13.md#publication) section is still "Not pinned" |
+| Required update | **PENDING: owner decision** (whether R13 raises the `required` floor) |
+| Built on | Published Release 12: Agent `0e1543e0da2215db9cb3320cfd1083174c3c62a9`, Runtime `42ae24aff8d2cb854f874ce134161077a3ba3641`, VibeComfy `e65f4941d09b1cb4d1dd5aae6171c73e648706f4`, lifecycle `f2948817eeb94af8dee76be21f6d673724f1606e` (astrid-app `public/install-manifest.json`, `release: 12`, read 13 Nov). R12 Agent `0e1543e0` is an ancestor of A′ |
+| Cutoff | Hannah: 13:00 UTC Sun 15 Nov, "assuming nothing critical is broken" ([decisions.md:2146](decisions.md#L2146)); "ship asap, anything lagging into next" ([decisions.md:2269](decisions.md#L2269)) |
+| Publication authority | **NOT GIVEN** (section 8) |
 
-## 2. Frozen tuple
+## 2. Exact candidate identity and tuple
 
-Nothing is frozen yet. The values on the board are moving candidates, listed so the freeze has a starting point; none of them is the tuple.
+**Candidate A′:** Agent `int/r13-f709407c` = `f709407cb10cc56bafebae51080832386bca3a44` on branch `r13/compose-aprime` (`r13/compose` untouched). It is candidate A `a91c35dfd63f8d5969714541a30afe25feb2d626` + merge of `r13/revert-h3first2` `8d88fc7ec` (merge commit `9a8a3b634`) + merge of `r13/machines-prepstop` `16dbe5b41` (merge commit `f709407cb`) ([decisions.md:2270](decisions.md#L2270), [:2281](decisions.md#L2281)). Verified in `/home/user/wt/c-aprime`: HEAD and both parents match, the worktree is clean, and the A→A′ diff touches only the h3 pack, `astrid/sdk/generation.py`, `managed_preparation.py` and tests; no pin file changes.
 
-| Component | Repository | Ref | Frozen SHA | Dirty state | Role |
-|---|---|---|---|---|---|
-| Agent | banodoco/astrid-agent | `r13/compose`: `e51723152` before the 11:10 merge of machines `8e3376515`; PENDING: resulting full compose head ([decisions.md:1767](decisions.md#L1767), [run.md:14](run.md#L14)) | PENDING: the Saturday freeze head, full 40-character SHA | PENDING: must be clean | Base candidate |
-| Runtime | banodoco/astrid-runtime | `main` | Expected `42ae24aff8d2cb854f874ce134161077a3ba3641` (unchanged from R12 by G5) | PENDING: confirm no Runtime change was made | Pinned by Agent `runtime.lock.json` |
-| App | banodoco/astrid-app | `main` plus the re-pin commit | PENDING: the re-pin commit SHA ([app-repin-checklist.md](app-repin-checklist.md)) | PENDING | Hosted App, carries the manifest |
-| VibeComfy | banodoco/VibeComfy | `r13/cells-vc-10` | Candidate `d3850831265c54bb811808c2bc85c53ef5ac7ec9`; PENDING: verify at frozen Agent head ([decisions.md:1737](decisions.md#L1737)) | PENDING | Pack pin |
-| runpod-lifecycle | banodoco/runpod-lifecycle | pin in `pins.json` | Candidate `7f0b025e9391baac9f5c2fb7393617ea6fef0704`; PENDING: verify frozen Agent pin and version ([decisions.md:1322](decisions.md#L1322), [offline evidence:58](evidence/cells/foleybind-bug-evidence-pack.md#L58)) | PENDING | Pack pin |
-| Install manifest | astrid-app `public/install-manifest.json` | | PENDING: `schema_digest` (derived from the Runtime contract), manifest sha256 | | Served at `https://astrid.haus/install-manifest.json` |
-
-**Runtime/Agent/App tuple that the installer pins:**
-
-```json
-{
-  "release": "PENDING: 13",
-  "agent":   { "sha": "PENDING: frozen Agent SHA" },
-  "runtime": { "sha": "PENDING: from Agent runtime.lock.json source_commit", "schema_digest": "PENDING: computed by pin.mjs" },
-  "vibecomfy": { "sha": "d3850831265c54bb811808c2bc85c53ef5ac7ec9" },
-  "lifecycle": { "repo": "https://github.com/banodoco/runpod-lifecycle.git", "sha": "PENDING: verify lifecycle at frozen Agent head", "version": "PENDING: from frozen Agent pins.json" },
-  "app": "PENDING: App re-pin commit SHA on main"
-}
-```
-
-The candidate VibeComfy chain is cells-vc-6 `46251c8c`, -7 `ae7dd067`, -8 `8d64b083`, -9 `f3e95d1c`, -10 `d3850831`; the final pin adds LTX model identities from unauthenticated metadata reads ([decisions.md:1427](decisions.md#L1427), [decisions.md:1710](decisions.md#L1710), [decisions.md:1737](decisions.md#L1737), [vc7 metadata](evidence/cells/vc7-ltx-metadata.txt)). PENDING: verify the full chain at freeze; the cells-log ref is unavailable in this checkout.
-
-The manifest's `vibecomfy` and `lifecycle` blocks are generated by `pin.mjs` from the Agent's `pins.json`; they are not typed by hand.
-
-## 3. Release claim
-
-PENDING: the owner or manager states the exact claim before checking. The brief's done condition, for the manager to confirm as the claim: the gate holds on one frozen tuple built on published Release 12, and every in-scope GPU cell has passed live.
-
-## 4. Included plans
-
-Linked from the [brief](../13.md#included-plans): Plan 32 (generation placement targets), Plan 40 (machine lifetime controls), Plan 20 (zero to first image), Plan 34 (real GPU proof).
-
-## 5. Included pull requests
-
-Source: [evidence/open-prs.md](evidence/open-prs.md), triage of 12 Nov. The same lines belong in the brief under `## Included pull requests`; the brief does not have that section yet, so the manager adds it.
-
-| PR | What it contributes | Reason it is in | State |
+| Component | Repository | SHA | Source (verified at `f709407cb`) |
 |---|---|---|---|
-| [Agent #293](https://github.com/banodoco/astrid-agent/pull/293) (outside contributor) | MCP returns whole `invoke` results and skill descriptions: drops the `[:20000]` and `[:1000]` cuts, with 2 regression tests | A two-line formatting fix in the MCP generation tools; reopens only the Agent CI comparison | **Ported** into `r13/compose` by cherry-pick of `6aad6a46` (the fork's CI never ran). The run board of 12 Nov 23:55 lists it as in. PENDING: the SHA of the ported commit on the frozen head; PENDING: green `tests/test_mcp_server.py` and `tests/test_mcp_generation_parity.py` on the merged head |
-| [Agent #341](https://github.com/banodoco/astrid-agent/pull/341) | Plan 20: guide setup through Connected (draft) | Its head is an ancestor of `r13/compose`; already in the candidate | Already composed. Closes when R13 reaches Agent `main` |
-| [VibeComfy #165](https://github.com/banodoco/VibeComfy/pull/165) | Remove Foley template region notices | Its head is an ancestor of `r13/cells-vc` | Already composed in the VibeComfy pin. Closes when cells-vc reaches VibeComfy `main` |
-| [VibeComfy #166](https://github.com/banodoco/VibeComfy/pull/166) | Reconcile model picker paths with declared custody | Same | Same |
-| [astrid-dev #602](https://github.com/banodoco/astrid-dev/pull/602) | Release skill: one home for each release record (the `run.md` / `decisions.md` / `tests.md` layout and the run-board template) | Process record; not part of the shipped tuple | PENDING: merged into astrid-dev `main`? Triage said it merges cleanly with green checks |
-| [astrid-dev #604](https://github.com/banodoco/astrid-dev/pull/604) | Plan 39: records that the mypy total gate is dropped | Process record, one line | PENDING: merged into astrid-dev `main`? Same |
+| Agent | banodoco/astrid-agent | `f709407cb10cc56bafebae51080832386bca3a44` | `int/r13-f709407c`, `origin/r13/compose-aprime` |
+| Runtime | banodoco/astrid-runtime | `6855dfa8df65cf8ae4c002b57134d6505493c17c` | `runtime.lock.json` and `astrid/resources/runtime.lock.json` `source_commit`. Changed from R12 `42ae24aff` |
+| VibeComfy | banodoco/VibeComfy | `dba38f8644c46f652376f2cd5112ea161e40f09b` | `astrid/packs/runpod/pins.json` and `astrid/packs/vibecomfy/pins.json` (vc-11 security pin, [decisions.md:1888](decisions.md#L1888)) |
+| runpod-lifecycle | banodoco/runpod-lifecycle | `7f0b025e9391baac9f5c2fb7393617ea6fef0704`, version `0.3.1.dev0` | `astrid/packs/runpod/pins.json` |
+| App | banodoco/astrid-app | PENDING: the re-pin commit on `main` ([app-repin-checklist.md](app-repin-checklist.md)) | |
+| Install manifest | astrid-app `public/install-manifest.json` | PENDING: `schema_digest` (computed by `pin.mjs`) and manifest sha256 | |
 
-Not included, for the record (full reasons in the triage): Agent #346 (timeline-import fix) is AFTER and awaits an owner ruling; runpod-lifecycle #2 is AFTER; the five worker-permission PRs (Agent #312, Runtime #38, App #220, VibeComfy #164, lifecycle #4) land after publish and stay out of the cells-vc pin. Deferred outside contributors (matlowai, sirjoonas, stierma1, theCosmicCrafter, protereus) are to be told on their PRs which release considers them; PENDING: that has not been done.
+The same Runtime, VibeComfy and lifecycle SHAs were in the Windows tester manifest ([decisions.md:2092](decisions.md#L2092), [:2169](decisions.md#L2169)). The manifest's `vibecomfy` and `lifecycle` blocks are generated by `pin.mjs` from `pins.json`, not typed by hand.
 
-## 6. Evidence for each claim
+Included plans: Plan 32, Plan 40, Plan 20 (phase 4 included), Plan 34 ([brief](../13.md#included-plans)). Included pull requests: [evidence/open-prs.md](evidence/open-prs.md).
 
-Each row names the evidence that must exist, bound to the frozen candidate. A row stays PENDING until a file or run link is entered. Evidence from earlier heads does not carry over to the frozen head unless its inputs still match.
+## 3. Claims and evidence
 
-| # | Claim | Required evidence | Result |
+| # | Claim | Evidence | Qualification |
 |---|---|---|---|
-| 1 | Agent CI shows no regression against published R12, test by test | `astrid-baseline-diff` over complete CI runs: the candidate's `int/**` run against R12 `main`'s run (Agent CI and Lanes do not run on pull requests). Zero regressions and zero failing new tests. Rule 0 of the test lane: no "preexisting" without a cited R12 run. See [tests.md](tests.md) | PENDING: candidate run id, R12 run id, diff output (`evidence/tests/`) |
-| 2 | Checks without per-test results (lint, build) do not turn red against `main` | Name-by-name comparison; report each `main`'s red checks by name | PENDING: run ids |
-| 3 | App Tests: 0 failures on the pinned App head | `test.yml` run on the App re-pin commit | PENDING: run id |
-| 4 | Direct Journey: 0 failures (`direct-journey` and `three-products` jobs) | `direct-journey.yml` run on the App re-pin commit; pass rule is in the workflow header | PENDING: run id |
-| 5 | The 11-row `journey.yml` matrix (row=direct) is green on the tuple | Agent `journey.yml` dispatch, `direct_only`. Per-row receipts | PENDING: run id and per-row verdicts. Includes the R1-update proof row, see [update-proof-row.md](update-proof-row.md) |
-| 6 | Install tuple and release number move together | `release-guard.mjs <base> HEAD --pins` on the App re-pin PR: release 12 to 13, exactly +1 | PENDING: guard output |
-| 7 | Manifest coherence: App `runtime.lock.json`, Agent `runtime.lock.json` and the Runtime contract digest agree | `pin.mjs --check` and `vendor-lock.mjs check runtime.lock.json --producer <runtime>` | PENDING: outputs |
-| 8 | The App's vendored Agent CLI surface matches the pinned Agent | `vendor-lock.mjs check config/astrid-cli-surface/vendor.lock.json --producer <agent>` | PENDING: output |
-| 9 | Generation works live on the qualifying tuple | [generation.md](generation.md#gpu-cells); final candidate-bound receipts and census | Round 4: t2i, TTS, SFX, music and edit passed live on `int/r13-65b1d45c`; the first edit used a blank source, and the subsequent bicycle edit passed ([decisions.md:1587](decisions.md#L1587), [decisions.md:1609](decisions.md#L1609)). The cited `install-r13b/validate/log.md` is not in this checkout. Round 6: h3 v2v passed on `e51723152`, 6 frames, 0.25 s at 24 fps, 1024×576 ([decisions.md:1559](decisions.md#L1559), [decisions.md:1767](decisions.md#L1767), [decisions.md:1779](decisions.md#L1779)). PENDING: h3 i2v smoke, video-edit and 3 s bicycle i2v results in the live validation log and decision log; final repeat on the frozen head, per-cell receipts, census and spend. These earlier passes do not qualify the frozen tuple. |
-| 10 | Failure receipts return a named cause for a forced failure at each stage | Forced failure per stage (G3) | PENDING: evidence file |
-| 11 | One merge review of the R13 candidate against published R12, no open blocker | Review on the exact frozen range, audited by the orchestrator | PENDING: review file under `evidence/reviews/` |
-| 12 | Redaction and log bundle review, and Pins and installer review, with no open blocker | The two reviews in the [brief](../13.md#reviews) | PENDING: review files under `evidence/reviews/` |
-| 13 | Timeline persistence and the App update guard are qualified on the integrated tuple | Direct Journey / matrix rows for those paths (protected invariants in the skill) | PENDING: map to the rows above |
-| 14 | Real install states are each covered by CI from the real starting state (skill step 0) | List of install states real users are in, each with a named proof row | PENDING: the list and the row for each |
-| 15 | Machines core landed or cut | Cut line Fri 18:00 UTC: K1, M1, M2 (flags off generate) and v2 merged and green; M3, M4, LT wiring out of R13 per the 00:25 ruling | PENDING: decision recorded in `decisions.md` |
-| 16 | Spend stayed within H11 | Ledger: stop $40 total, balance floor $67.41 | PENDING: final ledger. Last figure seen: balance $93.44 (13 Nov about 00:42, 0 pods) |
+| C1 | All five generation types work on RunPod: image (t2i, edit), audio (tts, sfx, music) and h3 video (v2v, video-edit, i2v) | A's final live round: t2i ×3, edit, tts, sfx, music, h3 v2v, h3 video-edit and the claim-2 t2i passed ([decisions.md:2254](decisions.md#L2254)); outputs checked by eye and ear ([decisions.md:2239](decisions.md#L2239)). A′ recheck 5/5 PASS: h3 i2v, t2i straight after it, bike i2v (3 s), h3 video-edit, t2i; decoded streams MD5-identical to the earlier reference-route runs ([decisions.md:2286](decisions.md#L2286)) | edit, tts, sfx and music ran on A only. A′ differs from A in the h3 pack and `managed_preparation.py` (prepstop), so their A′ result rests on that small delta, not a rerun. The sfx input clip is all black, so sync is not exercised ([decisions.md:2239](decisions.md#L2239)) |
+| C2 | The W142 release false-success is fixed: `machines release <stale-id>` no longer returns ok while the pod is live | `r13/machines-rel` `dcc99a752` merged into A; the release test passes 2/2 with the fix and fails 2/2 without it on a quiet box; Astra W148 APPROVE ([decisions.md:2206](decisions.md#L2206), [:2226](decisions.md#L2226)); Lanes on A: release binding[True] fixed ([decisions.md:2285](decisions.md#L2285)) | Deferred notes: [deferred.md](deferred.md#w148-notes-on-the-release-fix-deferred-cause-r13machines-rel-dcc99a752) |
+| C3 | Prepstop: a failed preparation no longer kills a warm engine; a reused engine stays up and only the job fails | Cause and fix ([decisions.md:2243](decisions.md#L2243)); Astra W166 APPROVE ([decisions.md:2278](decisions.md#L2278)); two paired runs, 0 candidate-only failures ([decisions.md:2284](decisions.md#L2284)); live, t2i after h3 i2v passed on A′ ([decisions.md:2286](decisions.md#L2286)) | Thin proof: no test or live job runs a second full job after a real preparation failure ([deferred.md:238](deferred.md#L238)); W166's limits ([decisions.md:2278](decisions.md#L2278)) |
+| C4 | h3 masked edits (temporal, start-frame, regional, strength) are admitted and documented | Dry runs ([decisions.md:2098](decisions.md#L2098), [evidence/h3dry/](evidence/h3dry/)); live T1–T5b masking round, all pipeline checks pass, on `a921b7dce` (an ancestor of A′) ([decisions.md:2124](decisions.md#L2124), [evidence/live/h3m/](evidence/live/h3m/)); worked examples and an admission test merged (`521e12dfc`, [decisions.md:2143](decisions.md#L2143)); h3 video-edit passed on A and A′ | The live masking round used a synthetic clip, so prompt adherence is unmeasured; the real-clip T2–T5b cells failed on A after the poisoning and were not in A′'s recheck ([decisions.md:2241](decisions.md#L2241)). [deferred.md:240](deferred.md#L240) ("never run live") predates the 20:45 round |
+| C5 | The W3 per-job full model re-hash is off by default; full verification is opt-in | Hannah's ruling ([decisions.md:2084](decisions.md#L2084)); round 5 and 5b ([decisions.md:2116](decisions.md#L2116)); merged `6a6ab6f4d` → `cb1a336ea` with 0 candidate-only failures ([decisions.md:2157](decisions.md#L2157)); live, 0 files hashed on warm jobs ([decisions.md:2148](decisions.md#L2148)); test ruling ([deferred.md:200](deferred.md#L200)) | [deferred.md:74](deferred.md#L74) still says "default: full re-verification", which predates the ruling |
+| C6 | Plan 20 phase 4 (local-first onboarding) is in R13 | Hannah pulls onboarding in ([decisions.md:1899](decisions.md#L1899)); merged `ec00046f3` → `8c0d7f03f`, 0 R12-passing ids failing ([decisions.md:2142](decisions.md#L2142)); Windows install → doctor → uninstall proof green ([decisions.md:2132](decisions.md#L2132), [:2173](decisions.md#L2173)) | No tester feedback yet (section 6) |
+| C7 | No CI regression against published R12 | Section 4 | A′ CI and Lanes pending |
 
-The [deferred register](deferred.md) records what R13 does not fix and its planned follow-ups. The owner permits only named test exceptions caused by deliberate R13 changes, attributed to their cause commit and listed here; money, pod custody or release, and generate-path failures must be fixed, not listed as exceptions. Preexisting failures need cited R12 evidence ([decisions.md:1529](decisions.md#L1529)). Named exceptions are tracked in [tests.md](tests.md) and [deferred.md:127](deferred.md#L127); for example, h3 declares the kind's plain inputs (`5fe9ed7a0`), with stale declared-input test lists ([deferred.md:136](deferred.md#L136)). PENDING: reconcile the complete named exception list against the final test results.
+## 4. Focused checks and results
 
-## 7. Reviews
-
-| Review | Reviewer | Range | Result |
-|---|---|---|---|
-| Redaction and log bundle (G3) | PENDING | PENDING | PENDING |
-| Pins and installer (G4) | PENDING | PENDING | PENDING |
-| Merge review against R12 | PENDING | PENDING: `<R12 main>..<frozen head>` | PENDING |
-
-## 8. Unqualified claims
-
-PENDING: filled at the freeze. As of this draft the generation claim is unqualified (no passing full GPU validation on the frozen candidate), and the App per-test claim is unqualified if App test jobs still cannot be compared per test (skill: "until they can be compared, their per-test claim is unqualified").
-
-## 9. Publication log
-
-Only the publishing session writes this section, in order, after the owner's go.
-
-| Step | Detail | Done |
+| Check | Head | Result |
 |---|---|---|
-| 0. Real install states covered | See claim 14 | PENDING |
-| 1. Owner's go, in the publishing session, naming exact SHAs | PENDING: owner's words and time | PENDING |
-| 2. One publisher; nobody else mid-publish; served release is the one the candidate starts from | Check `https://astrid.haus/install-manifest.json` serves release 12 and Agent `0e1543e0`. If not, re-base and renumber | PENDING |
-| 3. Merge Agent | PENDING: PR or fast-forward of the exact reviewed SHA | PENDING |
-| 4. Merge Runtime | Expected no change (stays `42ae24aff`); PENDING: confirm | PENDING |
-| 5. Merge App (manifest names the other two) | PENDING: merge SHA | PENDING |
-| 6. Wait for the production deploy and the served-manifest canary | Canary runs only after a successful deployment; a canary before then shows as skipped | PENDING: deployment and canary run ids |
-| 7. Confirm the served manifest | `https://astrid.haus/install-manifest.json` serves release 13 and the exact SHAs | PENDING |
-| 8. Fast-forward each `int/<project>` to its `main` (push, never forced) | Cloud sessions cannot write refs through the GitHub API | PENDING |
-| 9. Close the project through Manage's completion PR | | PENDING |
-| 10. Owner checks through the normal App path on a real long-lived install | The project is not done until this passes | PENDING |
-| 11. Close the included PRs whose heads reached `main` (Agent #341, VibeComfy #165 and #166, Agent #293) and the stale ones listed in the triage; tell deferred contributors | A maintainer's job | PENDING |
+| Binding CI comparison vs R12 (CI `43693935046`, Lanes `43693934998`) | A `a91c35df` | **Clean.** 0 regressions in all 8 unit shards; fast checks, boundary, release wheels, Windows native/installer PASS; darwin = R12; Lanes 0 regressions, one R12-old intermittent; one load-sensitive LTX catalog timeout deferred ([tests.md](tests.md#current-state-sat-14-nov-1200-utc-supersedes-the-older-comparison-below), [decisions.md:2285](decisions.md#L2285), [evidence/tests/agent/a91c35df/](evidence/tests/agent/a91c35df/), [deferred.md:170](deferred.md#L170)) |
+| CI delta (CI `43705081374`) and Lanes delta (`43705081352`) | A′ `f709407c` | **PENDING** (units ~12:15, Lanes ~13:40 UTC, [decisions.md:2285](decisions.md#L2285)) |
+| Revert proof W164 | `8d88fc7ec` | Faithful, 0 regressions ([decisions.md:2284](decisions.md#L2284)) |
+| Prepstop proof W165 | `16dbe5b41` | 0 candidate-only failures in two paired runs ([decisions.md:2284](decisions.md#L2284)) |
+| Final live round, 18 cells | A | 10/18 PASS; h3 i2v failed in preparation and poisoned the machine, so 8 later cells failed fast ([decisions.md:2241](decisions.md#L2241), [:2254](decisions.md#L2254), [evidence/live/final-A/](evidence/live/final-A/)) |
+| Live recheck, 5 cells (`roundA2.sh`) | A′ | **5/5 PASS**, pod released, balance $77.64 ([decisions.md:2286](decisions.md#L2286)) |
+| Windows install/uninstall CI proof | tester head `9acb55b6` | Green, run `43664846375` ([decisions.md:2173](decisions.md#L2173)) |
+| App Tests, Direct Journey, `journey.yml` matrix, `release-guard`, `pin.mjs --check`, `vendor-lock` checks | App re-pin | PENDING: run on the App re-pin commit |
 
-## 10. After publish
+## 5. Review result
 
-- M11: move the RunPod operator code into its pack through `generation.machine`, first card after R13 in Plan 40 (decisions, 12 Nov 18:46).
-- Group B on the [board](run.md).
-- Wider h3_av qualification remains a follow-up; the three default video modes are in the pre-publication gate ([decisions.md:1539](decisions.md#L1539)).
-- Land the held worker-permission PRs and the AFTER-verdict PRs.
+| Review | Range | Result |
+|---|---|---|
+| Astra W166 | prepstop `16dbe5b41` | APPROVE, with notes for R14 ([decisions.md:2278](decisions.md#L2278)) |
+| W164 (test manager) | revert `8d88fc7ec` | Revert faithful, 0 regressions ([decisions.md:2284](decisions.md#L2284)) |
+| Astra W148 | W142 fix `dcc99a752` | APPROVE ([decisions.md:2226](decisions.md#L2226)) |
+| Merge review of the whole range `0e1543e0..f709407c`; redaction and log bundle (G3); pins and installer (G4) | | PENDING: no review file in [evidence/reviews/](evidence/reviews/) |
+
+## 6. Unqualified claims and known limits
+
+These go in the release notes ([run.md](run.md)).
+
+- **P6 (engine snapshot on the volume) is not effective.** It is wired and on by default, but showed no live saving and its outcome is never recorded ([decisions.md:2254](decisions.md#L2254), [:2264](decisions.md#L2264)).
+- **First-frame i2v is reverted.** Single-image h3 i2v uses the reference route as in R12; h3first2 moves to plan 54 ([decisions.md:2244](decisions.md#L2244), [deferred.md:169](deferred.md#L169)).
+- **seed_used appears only in synchronous `generate --json`**, not in `tasks show` or a durable receipt. Seeding itself works ([decisions.md:2242](decisions.md#L2242), [deferred.md:166](deferred.md#L166)).
+- **RunPod warm overhead is ~215 s per t2i** on A ([decisions.md:2279](decisions.md#L2279)). Speed work moves to R14, local-first; RunPod speed is out of its scope ([decisions.md:2282](decisions.md#L2282), astrid-dev#662).
+- **Attached cancel uses ComfyUI's global `/interrupt`**, so it can stop another client's job ([deferred.md:237](deferred.md#L237)).
+- **A′'s Lanes delta is pending at the time of the go**; the test manager says so plainly if it has not finished ([decisions.md:2278](decisions.md#L2278)).
+- **No Windows tester feedback yet** (0 comments, [run.md](run.md)). The Windows CI install/uninstall proof is green ([decisions.md:2173](decisions.md#L2173)).
+- Also unqualified: prepstop's second-job path (C3); h3 mask prompt adherence on a real clip (C4); edit, tts, sfx and music not rerun on A′ (C1).
+
+## 7. Remaining authorized actions
+
+**Publication needs Hannah's go, in the publishing session, naming the exact SHAs** (Agent `f709407cb10cc56bafebae51080832386bca3a44`, Runtime `6855dfa8df65cf8ae4c002b57134d6505493c17c`, VibeComfy `dba38f8644c46f652376f2cd5112ea161e40f09b`, lifecycle `7f0b025e9391baac9f5c2fb7393617ea6fef0704`, plus the App re-pin SHA). Not given as of 11:35 UTC. Her publish condition ([decisions.md:2269](decisions.md#L2269)): A's binding table clean (done), revert and prepstop proofs clean (done), A′ hosted fast checks and unit shards green (PENDING), A′ live recheck (done). Before the go she also sets version, kind and required update (section 1).
+
+After the go, only the one publishing session acts, in the skill's order: confirm the served manifest is still release 12; merge Agent, then Runtime `6855dfa8` (changed from R12), then the App with the manifest; wait for the production deploy and the served-manifest canary; confirm `https://astrid.haus/install-manifest.json` serves release 13 with these SHAs; fast-forward each `int/<project>` (never forced); close the project through Manage; owner check on a real long-lived install; close included PRs. Each step is logged here with its run id.
+
+After publish: R14 local-first speed ([decisions.md:2282](decisions.md#L2282)); the paused R13.1 RunPod cards ([decisions.md:2269](decisions.md#L2269)); the [deferred register](deferred.md).
