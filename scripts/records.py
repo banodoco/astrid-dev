@@ -222,6 +222,63 @@ def project_fields(plan_text: str) -> dict[str, str]:
     return result
 
 
+
+RELEASE_PLAN_LINK = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
+RELEASE_PLAN_LINE = re.compile(
+    r'^- \[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\) [—-] (\S.*)$'
+)
+RELEASE_BRIEF_SECTIONS = ("Highlight", "Intent", "Approach", "Included plans", "Publication")
+
+
+def release_brief(text: str, *, strict: bool = True) -> dict:
+    """Read a brief; non-strict mode retains errors for multi-error validators."""
+    header = re.split(r'^## ', text, maxsplit=1, flags=re.M)[0]
+    fields: dict[str, list[str]] = {}
+    for key, separator, value in key_value_lines(header, style="bold"):
+        if separator and key in {"Release", "State", "Kind"}:
+            fields.setdefault(key, []).append(value)
+    title_match = re.search(r'^# Release ([1-9]\d*) — (\S.+)$', header, re.M)
+    sections = {name: section(text, name) or "" for name in RELEASE_BRIEF_SECTIONS}
+    content = sections["Included plans"]
+    links = RELEASE_PLAN_LINK.findall(content)
+    plans = []
+    invalid_lines = []
+    if content != "None yet":
+        for line in content.splitlines():
+            if not line.strip():
+                continue
+            match = RELEASE_PLAN_LINE.fullmatch(line)
+            if match:
+                number, folder, sentence = match.groups()
+                plans.append({"number": number, "folder": folder, "sentence": sentence})
+            else:
+                invalid_lines.append(line)
+    errors = []
+    kinds = fields.get("Kind", [])
+    if len(kinds) > 1:
+        errors.append("Kind duplicated; keep one **Kind:** line")
+    if kinds and not kinds[0]:
+        errors.append("Kind empty; write patch, minor or major")
+    elif kinds and kinds[0] not in {"patch", "minor", "major"}:
+        errors.append("Kind must be patch, minor or major")
+    if invalid_lines:
+        errors.append("Included plans must contain linked plan bullets with a dash and sentence")
+    result = {
+        "number": fields.get("Release", [None])[0],
+        "title_number": title_match.group(1) if title_match else None,
+        "title": title_match.group(2) if title_match else None,
+        "state": fields.get("State", [None])[0],
+        "kind": kinds[0] if kinds else "patch",
+        "highlight": sections["Highlight"],
+        "plans": plans,
+        "plan_links": links,
+        "sections": sections,
+        "errors": errors,
+    }
+    if strict and errors:
+        raise ValueError("; ".join(errors))
+    return result
+
 def priority_order(text: str | None) -> list[str]:
     return re.findall(r"^-\s+([^\s]+)\s*$", section(text or "", "Order"), re.M)
 

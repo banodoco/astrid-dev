@@ -18,6 +18,7 @@ missing-project-field: plans/99-fixture/plan.md: Status missing; add a **Status:
 missing-project-field: public vision content: plans/99-fixture/plan.md: Status missing; add a **Status:** line before the first ## heading
 obsolete-project-path: docs/project-format.md: obsolete strategy/projects path; use plans/
 priority-unknown-id: plans/priority.md: unknown 98-no-such-folder under ## Order (there is no plans/98-no-such-folder/plan.md); fix the name or delete the line
+release-included-plans-unlinked: releases/12.md: Included plans must contain linked plan bullets with a dash and sentence
 release-included-plans-unlinked: strategy.md: release 12 highlight differs from its document
 release-included-plans-unlinked: strategy.md: release 12 plan links differ from its document
 release-missing-sections-and-plans: releases/12.md: missing or empty ## Approach

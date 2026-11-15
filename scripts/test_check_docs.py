@@ -142,6 +142,22 @@ class StrategyTests(unittest.TestCase):
         self.assertTrue(any('Approach' in e for e in errors))
         self.assertTrue(any('Included plans' in e for e in errors))
 
+    def test_draft_without_plans_and_strict_plan_bullets(self):
+        line = '- [Plan 40](../plans/40-machine-lifetime-controls/plan.md) — Include spend control.'
+        self.assertEqual(release_errors('13.md', self.RELEASE.replace(line, 'None yet')), [])
+        self.assertTrue(any('Included plans' in e for e in release_errors('13.md', self.RELEASE.replace(line, '- Plan 40 — Include spend control.'))))
+        mixed = self.RELEASE.replace(line, line + '\n- Plan 41 — Another contribution.')
+        self.assertTrue(any('dash and sentence' in e for e in release_errors('13.md', mixed)))
+        final = self.RELEASE.replace(line, 'None yet').replace('**State:** Draft', '**State:** Final')
+        self.assertTrue(any('Included plans' in e for e in release_errors('13.md', final)))
+
+    def test_kind_errors_are_reported_alongside_existing_errors(self):
+        bad = self.RELEASE.replace('**State:** Draft', '**State:** Draft\n**Kind:**\n**Kind:** minor').replace('## Approach', '## Notes')
+        errors = release_errors('13.md', bad)
+        self.assertTrue(any('Kind duplicated' in e for e in errors))
+        self.assertTrue(any('Kind empty' in e for e in errors))
+        self.assertTrue(any('Approach' in e for e in errors))
+
     def test_draft_needs_no_pins_but_final_does(self):
         self.assertEqual(release_errors('13.md', self.RELEASE), [])
         final = self.RELEASE.replace('**State:** Draft', '**State:** Final')
