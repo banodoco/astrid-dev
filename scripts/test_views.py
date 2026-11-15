@@ -822,6 +822,8 @@ class StrategyViewTests(unittest.TestCase):
             with patch.object(records, 'release_brief', side_effect=reader):
                 rendered = views._strategy(root, '0.1')
             self.assertIn('[Release 13 issues](releases/13.md#issues): 2', rendered)
+            # A blank line separates the counts from the plan bullets above them.
+            self.assertIn('.\n\n[Release 13 issues](releases/13.md#issues): 2', rendered)
 
     def test_normal_check_reports_missing_marker_before_sync(self):
         import astrid_dev

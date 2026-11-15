@@ -127,6 +127,15 @@ class EligibilityTests(unittest.TestCase):
                     "status": "renamed", **entry,
                 }]), "release brief patch unavailable")
 
+    def test_renamed_release_brief_is_not_eligible(self):
+        patch = "@@ -14,1 +14,1 @@\n-An old approach line.\n+A new approach line.\n"
+        for old, new in (("releases/next.md", "releases/18.md"), ("releases/17.md", "releases/18.md"),
+                         ("releases/13.md", "plans/13.md")):
+            with self.subTest(old=old, new=new):
+                self.assertEqual(self.reason(changed_paths=[new, old], file_entries=[{
+                    "filename": new, "previous_filename": old, "status": "renamed", "patch": patch,
+                }]), "release brief renamed")
+
     def test_realistic_approach_paragraph_patch_is_eligible(self):
         patch = ("@@ -8,7 +8,7 @@ # Release 13 — Example\n"
                  " **Kind:** minor\n"

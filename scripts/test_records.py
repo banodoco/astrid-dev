@@ -87,12 +87,27 @@ class MarkdownRecordTests(unittest.TestCase):
 
 class ReleaseBriefTests(unittest.TestCase):
     def test_real_briefs_parse(self):
+        # Shape only: the wording, kind and plans of a real brief are its author's to change.
         root = Path(__file__).resolve().parents[1]
-        briefs = [release_brief((root / f"releases/{n}.md").read_text()) for n in range(12, 18)]
-        self.assertEqual([b["number"] for b in briefs], [str(n) for n in range(12, 18)])
-        self.assertEqual([b["kind"] for b in briefs], ["patch"] * 5 + ["minor"])
-        self.assertTrue(all(b["title"] and b["state"] and b["highlight"] and b["plans"] for b in briefs))
-        self.assertEqual(briefs[-1]["plans"][0], {"number": "19", "folder": "19-first-principles-documentation", "sentence": "documentation from purpose to finished work."})
+        paths = sorted(p for p in (root / "releases").glob("[0-9]*.md") if p.stem.isdigit())
+        self.assertTrue(paths)
+        for path in paths:
+            brief = release_brief(path.read_text(encoding="utf-8"))
+            self.assertEqual(brief["number"], path.stem)
+            self.assertIn(brief["kind"], {"patch", "minor", "major"})
+            self.assertTrue(brief["title"] and brief["state"] and brief["highlight"], path.name)
+
+    def test_brief_fields_are_read_from_a_literal_brief(self):
+        text = (
+            "# Release 7 — A title\n\n**Release:** 7\n**State:** Draft\n**Kind:** minor\n\n"
+            "## Highlight\n\nA creator sees one clear change.\n\n## Intent\n\nWhy.\n\n## Approach\n\nHow.\n\n"
+            "## Included plans\n\n- [Plan 19](../plans/19-first-principles-documentation/plan.md) — documentation from purpose to finished work.\n\n"
+            "## Publication\n\nNot pinned.\n"
+        )
+        brief = release_brief(text)
+        self.assertEqual((brief["number"], brief["title"], brief["state"], brief["kind"]), ("7", "A title", "Draft", "minor"))
+        self.assertEqual(brief["plans"], [{"number": "19", "folder": "19-first-principles-documentation", "sentence": "documentation from purpose to finished work."}])
+        self.assertEqual(release_brief(text.replace("**Kind:** minor\n", ""))["kind"], "patch")
 
     def test_kind_rejects_duplicate_empty_and_invalid_without_consuming_next_line(self):
         for header in ("**Kind:** patch\n**Kind:** minor", "**Kind:**\n**State:** Draft", "**Kind:** giant"):

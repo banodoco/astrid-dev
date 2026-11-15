@@ -6,7 +6,7 @@
 
 **Status:** done
 
-**Owner:** Plan 58 manager (ChatGPT session 3417d5f77996)
+**Owner:** Plan 58 manager
 
 **Estimate:** about 4.5
 
@@ -79,7 +79,7 @@ The owner decided D1 to D12 in planning and D13 to D15 during this run on 15 Nov
 
 **Limits:**
 - After a release brief changes, the strategy page on `main` is stale until the refresh job commits it (one CI run); a pull request compares a generated part only if it touched it.
-- The issue list is as current as its last run and says when that was.
+- The issue list is as current as its last run; the date it shows is when a row last changed.
 - A frozen list records each issue's state on the freeze date. It does not prove a fix is inside the pinned commits, and a fix merged only to an integration branch still reads as open; the release manager corrects the list by hand before Final.
 - The auto-merge rule keeps a change from merging by itself; it does not stop a person with merge rights.
 

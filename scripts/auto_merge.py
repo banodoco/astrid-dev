@@ -61,6 +61,10 @@ def eligibility_reason(draft, author_association, labels, body, changed_paths, f
                 key, separator, _ = fields[0]
                 if separator and key in {"Kind", "State"}:
                     return f"release brief changes **{key}:**"
+        # A rename shows only the lines that differ, so a brief moved into or out of
+        # releases/<N>.md can carry a Kind or State line the patch never mentions.
+        if file.get("previous_filename") or file.get("status") == "renamed":
+            return "release brief renamed"
     if release_paths - covered_release_paths:
         return "release brief patch unavailable"
     return None

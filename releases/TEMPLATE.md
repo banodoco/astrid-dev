@@ -20,7 +20,7 @@ Describe the intended sequence, key trade-offs, dependencies, qualification, and
 
 - [Plan NN](../plans/index.md) — One sentence saying what this plan contributes to the release; the strategy page shows it.
 
-Replace this example with one bullet for each real `plans/<id>/plan.md` link, or write `None yet` for a draft with no plans. List only plans intended for this release. Kind may be omitted (default `patch`), or set to `minor` or `major`. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
+Delete this paragraph once the list is written; only plan bullets or `None yet` may stay in this section. Replace the example with one bullet for each real `plans/<id>/plan.md` link, or write `None yet` for a draft with no plans. List only plans intended for this release. Kind may be omitted (default `patch`), or set to `minor` or `major`. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
 
 ## Included pull requests
 
