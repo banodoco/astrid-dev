@@ -4,7 +4,7 @@
 
 **Goal:** Anyone reads one strategy page and sees what each version and release is for, in sentences pulled from the release briefs and plans, and each release brief lists the plans and issues it ships.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Plan 58 manager (ChatGPT session 3417d5f77996)
 
