@@ -2323,3 +2323,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - The forward upgrade itself works on the journey: Linux and macOS r0-handoff and Windows fresh all SUCCESS.
   - **Ruling:** cells recuts with old-stamp preservation so rollback restores it byte-for-byte (proved with R12 0e1543e0); restamping only after the busy/permitted checks; and exact match against the known R9–R12 stamp.
   - Then A⁗ = A‴ with the new head, an App re-pin, W194's probes, and the full 13 journey rows again. PRs #347/#268 get updated, not merged. The rest of the A‴ journey keeps running as evidence for the other fixes.
+- **15:08 UTC: the h3first2 revert proof landed (cells revproof).** 8d88fc7ec, already in A′/A‴: 0 regressions against a91c35dfd. The only missing tests are the reverted feature's own 36, and the i2v dry-runs contain no keyframe-masked nodes. T2–T5b are undisturbed. This closes the revert's thin-proof note; no recut needed for it.
