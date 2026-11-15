@@ -101,7 +101,7 @@ Record the plan (files, sizes, folder) in your list of added files. If the downl
 ```powershell
 # A: image from text
 & $astrid generate image --entry qwen-image-2.1-turbo --mode t2i --prompt "A red bicycle leaning against a white wall in soft morning light" --width 768 --height 768 --seed 7 --placement $url --out C:\astrid-test\A --json
-# A2: the same with --seed 8 and --out C:\astrid-test\A2, straight after A. It should be clearly faster.
+# A2: the same with --seed 8 and --out C:\astrid-test\A2, straight after A. Record both times.
 # B: edit the image from A
 & $astrid generate image --entry qwen-image-2.1-turbo-edit --mode edit --prompt "Repaint the bicycle frame a deep cobalt blue; keep everything else unchanged" --edit "<image from A>" --placement $url --out C:\astrid-test\B --json
 # C: music (uses nodes built into ComfyUI)
@@ -117,6 +117,8 @@ A resumable download that ships with Windows (in the repository these files sit 
 ```powershell
 curl.exe -L -C - -o "<models folder>\<subfolder>\<file>" "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/main/split_files/<subfolder>/<file>"
 ```
+
+**Known:** about 30 seconds of Astrid's own overhead per job on your own ComfyUI is being worked on. Please still record the A and A2 timings, but don't report it as a finding.
 
 **Two free checks.** Run cells D and E from part 5 against `$url`, using the image from A for E. They should refuse, because the person's ComfyUI lacks their nodes. Record the exact messages: we want to know whether they say clearly what is missing.
 
