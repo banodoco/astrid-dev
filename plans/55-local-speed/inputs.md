@@ -28,13 +28,79 @@
 
 **Approach:** see [plan.md](plan.md#the-design). Alternatives compared: caching inside today's path (Plan 54's local tasks; reaches one to four seconds); a direct socket to the worker that bypasses the Runtime (two doors; D3); replying before the record is written (changes what success means; D2); returning ComfyUI's own file path (not today's result: the file is mutable and the caller has no stored, digested output). The chosen approach keeps the Runtime's existing steps and removes waits and repeats around them; a deeper Runtime change is conditional on LS-1.
 
-**Challenge:** Reviewed — an independent Astra review of the starting hypothesis against the code ([review.md](https://github.com/banodoco/astrid-dev/blob/main/plans/55-local-speed/review.md)). Accepted from it: keep the Runtime's create, claim and settle and measure before redesigning; completion wakes on the history-ready event and reads history once; the output is fetched and hashed once, never handed over as ComfyUI's path; the resident worker is a separate supervised process because today's code changes process-wide state; the template needs a VibeComfy interface that keeps the approval record's protection; cancel by job only; a lost acknowledgement is never resubmitted; a two-step first spike. Left to the owner: D2, D4, D5, D6. Rejected: none.
+**Challenge:** Reviewed — an independent Astra review of the starting hypothesis against the code ([review.md](https://github.com/banodoco/astrid-dev/blob/main/plans/55-local-speed/review.md)). Accepted from it: keep the Runtime's create, claim and settle and measure before redesigning; completion wakes on the history-ready event and reads history once; the output is fetched and hashed once, never handed over as ComfyUI's path; the resident worker is a separate supervised process because today's code changes process-wide state; the template needs a VibeComfy interface that keeps the approval record's protection; cancel by job only; a lost acknowledgement is never resubmitted; a two-step first spike. Left to the owner: D2, D4, D5, D6. The review's suggestion to keep per-job value checks was not taken, on the owner's bar that workflow validation stays only where there is a strong reason: ComfyUI validates every submission, so Astrid's check moves to template compile (see the keep list). Rejected: none.
 
 **Proof and limits:** Completion is defined in [plan.md](plan.md#completion). Every time in the floor table is an estimate until LS-1 reports. The 30 s baseline was measured against a stand-in, not a real ComfyUI. Windows' slowest cases are unknown. The targets are medians for a small output on an idle queue; queue wait, large outputs and new inputs are reported, not promised.
 
 **Review rounds:** Pending — recommended: one stop after the design (RS1, one round) and one final round. RS1 protects LS-4, LS-7, LS-8, LS-9 and LS-10 from being built on a wrong approval rule, hand-off or crash rule. Next: the owner confirms.
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run after Release 13 publishes, record the date, the tasks it covers, the accountable session, what it may do without asking, and the advisor session.
+
+### The keep list
+
+The default is delete. A step stays on a warm job only if it names a failure it prevents. "When something changes" means install, update, a pack or workflow edit, a ComfyUI restart, or a refusal from ComfyUI. Costs marked * are estimates; the rest are measured on the stand-in (see the time ledger). LS-1 and LS-2 fill every estimate.
+
+| Step today | Failure it prevents | Cost per warm job today | Verdict |
+| --- | --- | --- | --- |
+| Permission check on the request | Another program or user on the machine running jobs or reading results | about 1 ms* | **Keep**, once per connection plus a token per request |
+| Create the task | A retried request running twice; no identity to cancel or record against | one committed write* | **Keep** |
+| Claim by one executor | Two workers running the same job | one committed write* | **Keep** |
+| Immediate lease renewal | Nothing, when the fresh lease already covers the job | one committed write* | **Delete**; renew only for long jobs |
+| Working out the workflow, placement and settings | Running the wrong workflow or target | part of 17 s before admission | **Move** to when something changes; a lookup per job |
+| Pack discovery and pack digests | Running a pack that was edited or corrupted after it was accepted | about 8 s | **Move**: verify when a pack is installed or updated and hold the result. Installed packs are not edited in place; a development checkout ends the session when its files change |
+| Source identity by git (184 processes) | Connecting to a host built from different source | 1.8 s | **Move** to install and update |
+| VibeComfy's graph and schema validation | A misspelt or renamed input silently ignored (ComfyUI accepts unknown input names); a wrong link type | inside emission and compile, about 10 s | **Delete per job.** Run once when the template is compiled, as a warning where ComfyUI would accept. ComfyUI itself checks classes, required inputs, link types, ranges, choices and each node's own rules on every submit |
+| Reading ComfyUI's node list (4 times) | Compiling against a node set that has changed | small on the stand-in; a real list is megabytes* | **Delete per job**; read once per ComfyUI start, again after a refusal |
+| Model presence check | Submitting a job whose model is missing | inside the above | **Delete**: ComfyUI refuses with a typed error, which is translated |
+| Model content re-hash | A model file replaced by different bytes | off by default since Release 13 | **Stays off**; hash at download |
+| Doctor | Starting a job on a broken installation | not measured locally | **Move** to install, update and after a failure. Astrid's own ComfyUI only |
+| Installation audits (three per job) | A managed ComfyUI that has drifted from its lock | not measured locally | **Move** to when something changes. Astrid's own ComfyUI only |
+| Node restore | Missing or wrong node packs in a managed ComfyUI | not measured locally | **Move**, as above |
+| Dependency sync | Missing Python packages in a managed ComfyUI | not measured locally | **Move**, as above |
+| Managed-engine preparation on a person's own ComfyUI | Nothing: there is nothing of ours to prepare | not measured | **Delete** |
+| A new process per job | State leaking between jobs; running unpinned code | process start and imports, seconds | **Replace** with a session that lives exactly as long as its source is unchanged |
+| Input file hashed and uploaded | ComfyUI reading a different file from the one the caller gave | proportional to size | **Keep**, once per file: named by content, skipped when present |
+| Private output name per attempt | Collecting another job's file, or ComfyUI's cached earlier result | negligible | **Keep** |
+| GPU state read before and after (two requests) | Nothing; it is diagnostic | about 2 ms* | **Delete** on success; read on failure |
+| Polling for work, completion and result (three, each a second) | Nothing | up to 3 s | **Delete** |
+| One history read; declared outputs present | Reporting success with a missing or wrong output | 1 to 8 ms* | **Keep** |
+| Output fetched and hashed | The result changing after the reply (ComfyUI's file is mutable); no identity for the App and timeline | 1 to 8 ms per megabyte* | **Keep**, one pass |
+| Output hashed again (four more passes locally) | A worker claiming a digest the bytes do not have | not measured | **Delete** all but one check at the store's boundary, if the store needs its own |
+| Copy to the caller's folder | The caller having no file of their own | about 1 ms per megabyte* | **Keep** for the command line |
+| Preview image before the reply | Nothing | not measured | **Move** after the reply |
+| Log and evidence declarations on success | Nothing before the reply | not measured | **Move** after the reply |
+| Settle: the record forced to disk | A reported success that is lost | 2 to 35 ms* | **Keep** (D2) |
+| Forced disk write on create and claim | Nothing a waiting caller would not see as an error | part of the Runtime's writes* | **Delete if the Runtime can scope it**; LS-1 measures whether it matters |
+| Version agreement | A new client talking to an old session | — | **Keep**, once per connection |
+
+### The time ledger
+
+The 30.2 s warm job on a person's own ComfyUI, measured by the test lane on `9acb55b60` against a stand-in. The four segments are exclusive and add up. The lines inside a segment come from a profiler and overlap (the re-hash runs inside emission and inside the scans), so they do not add up; LS-2 must produce exclusive times.
+
+| Segment or line | Today | Measured? | Removed by | Left after | On the keep list? |
+| --- | --- | --- | --- | --- | --- |
+| **Command start to admission** | **17.0 s** | measured | | | |
+| Emission, twice in the command | 6.6 s | measured | LS-4, LS-10 | 0; fill under 5 ms | fill only |
+| Model registry twice, extension registry | 2.4 s | measured | LS-10, LS-15 | 0 | no |
+| All 52 ready workflows loaded | 2.8 s | measured | LS-10, LS-15 | 0 | no |
+| Source identity, 184 git processes | 1.8 s | measured | LS-10 | 0 | no |
+| Interpreter, imports, connect process, the rest | about 3.4 s | by subtraction | LS-10 | 25 to 150 ms from the command line; 0 when connected | client start only |
+| **Admission to claim** | **0.4 s** | measured | LS-7 | a few ms | create and claim |
+| **Claim to submit, in the per-job process** | **11.4 s** | measured | | | |
+| Finding the action entry | 4.2 s | measured | LS-8, LS-15 | 0 | no |
+| Emission, third time | 3.5 s | measured | LS-4 | 0 | no |
+| Pack files re-hashed on each schema lookup | 3.2 s or more | measured; overlaps emission | VibeComfy `e8f19340`, LS-4 | 0 | no |
+| Model registry twice | 1.6 s | measured | LS-15 | 0 | no |
+| Interpreter and imports of the per-job process | not split out | not measured | LS-8 | 0 | no |
+| ComfyUI's node list, three reads; two compiles | small on the stand-in | not measured on a real ComfyUI | LS-15 | 0 | no |
+| Managed-engine preparation | not split out | not measured | LS-15 | 0 | no |
+| **Submit to result in the caller's hands** | **about 1.4 s** | by subtraction | | | |
+| Completion poll, result poll | up to 1 s each | interval known, share not measured | LS-5, LS-7 | a few ms | one history read |
+| Output passes, storage, record, preview, delivery | not split out | not measured | LS-6, LS-7 | 5 to 50 ms | fetch, one hash, record |
+
+**For the first target, under 2 s:** the template (LS-4), the session (LS-8, LS-15) and the thin request (LS-10) remove about 28 s between them. The polls alone can then cost up to 3 s, so the held connection (LS-5) and the first half of the Runtime hand-off (LS-7) are needed too. Nothing else in the plan is required for under 2 s; the rest is for under 0.1 s, the first job and Windows.
+
+**What LS-1 and LS-2 must measure before the scope is fixed:** exclusive times for the lines above; the per-job process's start and imports; managed-engine preparation on a person's own ComfyUI; the node list and submit validation on a real ComfyUI with a normal number of nodes and models; the Runtime's writes and forced flushes per job; the output passes; the same on Windows; and, for Astrid's own managed ComfyUI, the audits, node restore, dependency sync and doctor, which have only been measured on rented machines (about 50 s there, not yet split).
 
 ### Plan 54: what moves here
 
@@ -44,7 +110,7 @@
 | SP-13 completion by push; SP-32 progress to the caller | LS-5 |
 | SP-14 read once, hash once; SP-35 failed fetch leaves nothing; thumbnail after the result | LS-6 |
 | SP-15 no polling on the local path; durable-write budget | LS-7 |
-| SP-25 one execution path (local half); local resident executor | LS-8 |
+| SP-25 one execution path (local half); local resident executor | LS-8 (core capability), LS-15 (the VibeComfy pack on it) |
 | SP-24 errors translated; SP-31 unknown inputs are ComfyUI's to judge | LS-9 |
 | SP-17 thin command line; SP-27 start-up hygiene | LS-10 |
 | SP-12 inputs by content | LS-11 |
@@ -52,7 +118,7 @@
 | SP-9 workflow-scoped check; SP-33 one digest through the task child | Dropped for local: the check moves to the first job with a key, and the warm path has no task child |
 | SP-1 to SP-8, SP-11, SP-18 to SP-23, SP-26, SP-34 | Stay in Plan 54 (rented machines) |
 
-New here: the measured floor (LS-1), the fast-lane key and target generation (LS-3), the thin request with resolution on the resident side and the tool server in-process (LS-10), cancel by job only (LS-9), Windows as a budget of its own (LS-13).
+New here: the measured floor (LS-1), the fast-lane key and target generation (LS-3), resident sessions as a core capability (LS-8), the thin request with resolution on the resident side and the tool server in-process (LS-10), cancel by job only (LS-9), Windows as a budget of its own (LS-13).
 
 Pull request 660 proposed staged local targets and a durability decision inside Plan 54; both are superseded by D1 and D2 here.
 
@@ -64,6 +130,7 @@ Pull request 660 proposed staged local targets and a durability decision inside 
 - **D4 The command line.** Agents use the command line, so it is the commonest caller. A Python client costs 25 to 150 ms to start on Linux and 80 to 500 ms on Windows; a small native client costs 3 to 20 ms and 10 to 60 ms, and is another thing to build, sign and update. Recommendation: Python client and the in-process tool server now; decide on a native client from LS-1's Windows numbers.
 - **D5 The person's ComfyUI.** Require nothing of it: no extension, and features such as per-job cancel used where the version has them (recommended). On an older ComfyUI a running job then cannot be cancelled, only a queued one, because the only alternative can stop someone else's work. Alternative: a small optional extension that gives exact restart detection, cancel and duplicate protection.
 - **D6 Trust in the person's ComfyUI on the warm path.** Astrid stops re-reading the node list every job and relies on ComfyUI to refuse what it cannot run; the record says when the target was last checked. A model file replaced under the same name is not detected, as today. Recommendation: accept.
+- **D8 Where the resident session lives.** The owner's instinct (15 November 2026, relayed by the orchestrator at 12:15 UTC): a general capability Astrid core provides to packs (a pack declares it needs a long-lived session; core supervises and fences it), used first by the VibeComfy pack, with the ComfyUI connection and template logic in VibeComfy. The plan now does this (LS-8 core, LS-15 the pack, LS-4 and LS-5 in the VibeComfy package). The first draft described the helper as specific to local ComfyUI jobs. Alternative: build it inside the VibeComfy pack only, which is a little quicker and leaves every later pack to reinvent supervision. Recommendation: the owner's instinct, built for its first user only. Recorded as open until she confirms.
 - **D7 Plan 54.** It becomes the rented-machine plan and queues behind this one. Any rented-machine speed work between Release 13 and this release is dropped unless it is also a donor here. Recommendation: yes.
 
 ## Source identities

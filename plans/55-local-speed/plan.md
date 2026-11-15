@@ -39,10 +39,10 @@ Everything else Astrid does today answers a question whose answer only changes w
 
 - **A fast lane, entered by a key.** The key is the workflow's identity, the shape of its inputs (which optional inputs are present, list lengths), where it runs, the running ComfyUI, and the Astrid installation. The first job with a key takes the full path and leaves behind a prepared workflow and the facts it verified. Every later job with that key takes the fast lane.
 - **Leaving the fast lane costs nothing to detect.** ComfyUI restarting drops the held connection. A workflow or installation change changes the key. A model that has gone, or a node that no longer accepts the workflow, is refused by ComfyUI itself; that refusal sends the job round the full path once, which produces the same typed refusal as today. The fast lane never guesses: any surprise is the full path.
-- **A prepared workflow.** VibeComfy compiles a workflow once into a template with named slots. A job fills the slots (prompt, seed, sizes, input file names, a private output prefix) and checks the values against rules captured at compile time. Structure is checked once; values every time.
+- **A prepared workflow.** VibeComfy compiles a workflow once into a template with named slots. A job fills the slots (prompt, seed, sizes, input file names, a private output prefix). Astrid does not validate the graph per job: ComfyUI validates every submission itself, and its refusal is translated into Astrid's typed refusal. The [keep list](inputs.md#the-keep-list) names every step that stays on a warm job and why.
 - **One held connection to ComfyUI.** Submit against it, be woken by it when the job's history is ready, read that history once, and pass progress through. No polling. The connection is shared; what is per job (the one-prompt-per-attempt rule, the witnessed prompt) stays per job.
 - **The output handled once.** One read, hashing as it streams, written to the store and to the caller's destination from the same bytes. The preview image is made after the reply.
-- **A resident worker.** The pack host is already resident; today it starts a new process per job. A supervised helper process holds the catalogue, placements, templates and connections across jobs. It is a separate process from the host, because today's code changes process-wide state per job, and it keeps what the per-job process protects (the pinned pack source and a clean environment) by living exactly as long as those stay unchanged. Arbitrary pack code keeps its per-job process.
+- **Resident sessions, a capability Astrid gives to packs.** A pack declares that an action needs a long-lived session. Astrid core starts it, pins its source, gives it a clean environment, fences it, and ends it when its source or the installation changes or when it misbehaves. The session is a separate process from the host. The VibeComfy pack is the first user: its session holds the catalogue, placements, templates and the ComfyUI connection. Everything that knows about ComfyUI (the connection, the template, completion) lives in the VibeComfy package; core knows nothing about ComfyUI. Packs that do not declare a session keep a process per job (D8).
 - **One door.** Every caller (the App, the SDK, the command line, an agent) still asks through the Runtime, so there is one record and one set of permissions. The existing create, claim and settle steps stay; what goes is the three places that poll once a second (the host looking for work, VibeComfy looking for completion, the caller looking for the result). The Runtime gains a way to wait for work and to wait for a result. A deeper Runtime change (admission and claim in one step, the output published in one pass) is built only if LS-1 shows the existing steps do not fit the budget. A direct door that bypasses the Runtime was considered and is not proposed (D3).
 - **A thin request.** The caller sends what was asked (which workflow, which values). Working out what that means moves to the resident side, where the answers are already in memory. The command line becomes a small client; the agent tool server calls in-process instead of starting the command line.
 - **Success keeps its meaning.** A reply still means a stored, recorded result. The saving comes from doing the forced disk writes once and together, not from replying early (D2).
@@ -54,7 +54,7 @@ Everything else Astrid does today answers a question whose answer only changes w
 - Every output has a content digest and is stored unchanged.
 - Refusals keep their types and wording.
 - Install and download decisions (what is missing, what to fetch, is this ready) keep their full checks; they are state-change work and are not on the warm path.
-- A job never trusts the person's ComfyUI further than today: the same value checks, a private output name per attempt, and declared outputs confirmed in the result.
+- A job never takes another job's output: a private output name per attempt, and declared outputs confirmed in the result.
 - Astrid never stops, restarts or interrupts work on a person's ComfyUI that it did not start.
 
 ### The floor, and the targets
@@ -87,7 +87,7 @@ Queue wait is reported separately and never subtracted silently.
 
 ### Included
 
-Phase 1, the floor and the meter: LS-1, LS-2. Phase 2, design: LS-3, RS1. Phase 3, the fast lane: LS-4 to LS-11. Phase 4, the first job and Windows: LS-12, LS-13. Phase 5, proof: LS-14, R.
+Phase 1, the floor and the meter: LS-1, LS-2. Phase 2, design: LS-3, RS1. Phase 3, the fast lane: LS-4 to LS-11, LS-15. Phase 4, the first job and Windows: LS-12, LS-13. Phase 5, proof: LS-14, R.
 
 ### Not included
 
