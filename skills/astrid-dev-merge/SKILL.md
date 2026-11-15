@@ -32,7 +32,7 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
    - **Merge** when nothing blocks, CI covering the change is green on the PR's current head, and the change is not in a category below. Use the repository's normal merge method and credit the contributor.
    - **Request changes** when something blocks and the contributor can fix it. Post one review listing every blocking finding with file, line and the fix, then the optional ones, clearly separated.
    - **Bring it to the owner,** with your recommendation, when the change touches security, credentials, user data, a migration, cost, deployment or release machinery, workflow files, or licensing; when the suspicious-content pass found anything; or when the right answer is "no" to a substantial contribution.
-6. **Record it.** Say on the PR what was checked and what wasn't run. If the PR belongs to a release, add it to that release brief's list. If the process itself got in the way, add a [ledger](../../docs/ledger/README.md) entry.
+6. **Record it.** Say on the PR what was checked and what wasn't run. If the PR belongs to a release, add it under `## Included pull requests` in that release brief, distinct from its `## Issues` list. If the process itself got in the way, add a [ledger](../../docs/ledger/README.md) entry.
 
 ## Never
 

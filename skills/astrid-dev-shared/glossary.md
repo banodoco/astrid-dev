@@ -89,3 +89,9 @@ One meaning per word; two meanings, two terms.
 **aspiration:** what an element is trying to reach, with optional paired We should / We should never lists.
 
 **primary and supporting aspirations (of a gap):** its one measured outcome and any distinct related aspirations.
+
+**version:** a user-facing `major.minor.patch` identifier for a release.
+
+**kind:** a release’s declared version step: `patch`, `minor` or `major`; an absent declaration defaults to `patch`.
+
+**standing lane:** the continuing place in a release for fixes and small plans arising from actual usage and user reports, alongside its theme.
