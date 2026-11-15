@@ -1,0 +1,11 @@
+native job darwin native (132750234876): completed failure (0.56s)
+shard 6: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-6.md (18.55s)
+native job windows-native-and-installer (132750234912): completed success (0.50s)
+shard 5: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-5.md (1.12s)
+shard 1: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-1.md (1.99s)
+shard 2: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-2.md (2.34s)
+shard 3: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-3.md (1.10s)
+shard 8: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-8.md (1.99s)
+shard 4: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-4.md (0.98s)
+shard 7: wrote /home/user/wt/r13-tests/candidate/a91c35df/ci/shard-7.md (8.46s)
+done: 8/8 shard reports; native jobs done=True
