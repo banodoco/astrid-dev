@@ -4,7 +4,7 @@
 
 **Task ids:** `SR-n`. **Critical path:** SR-1 → SR-2 → SR-3 → SR-7 → R; SR-1 → SR-4 → SR-7 joins it. **Test inventory:** `scripts/test_check_docs.py`, `scripts/test_checks.py`, `scripts/test_check_completion.py`, `scripts/test_views.py`, `scripts/test_records.py`, `scripts/test_auto_merge.py`, `scripts/test_issue_intake.py`, `scripts/test_export_public_vision.py`, `scripts/test_golden.py` with `scripts/fixtures/golden.txt` and the fixture folders named in the cards.
 
-Every task is in astrid-dev and follows the [Improve](../../skills/astrid-dev-improve/SKILL.md) skill. Work lands on `int/58-strategy-from-releases`, one pull request per task; `main` receives it in one merge. No card may be dispatched before the owner's word on D5, D10, D11 and D12 ([inputs.md](inputs.md#owner-decisions)); the cards below are written for the recommended answers. Before dispatch the manager runs the plan skill's ambiguity pass on each card. Line numbers and test names in the cards are from astrid-dev `main` at the commit in [inputs.md](inputs.md#source-identities): re-check them against the code at dispatch.
+Every task is in astrid-dev and follows the [Improve](../../skills/astrid-dev-improve/SKILL.md) skill. Work lands on `int/58-strategy-from-releases`, one pull request per task; `main` receives it in one merge. The cards follow the owner's decisions D1 to D12 ([inputs.md](inputs.md#owner-decisions)). Before dispatch the manager runs the plan skill's ambiguity pass on each card. Line numbers and test names in the cards are from astrid-dev `main` at the commit in [inputs.md](inputs.md#source-identities): re-check them against the code at dispatch.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
@@ -19,7 +19,7 @@ Every task is in astrid-dev and follows the [Improve](../../skills/astrid-dev-im
 
 SR-4, SR-5 and SR-6 can run beside SR-2. SR-1, SR-2 and SR-4 each change `scripts/check_docs.py`: they merge into the integration branch in that order.
 
-**Held, not a task:** making the release briefs of Releases 12 and 13 Final (D5). If the owner keeps it in this plan it becomes a card with route X that depends on SR-2, names where each of the eight payload keys comes from, adds no issue block to either release brief, and does not hold this plan's closing on Release 13.
+**Not a task here:** making the release briefs of Releases 12 and 13 Final. The owner left it to Plan 31 (D5); until then the page shows both as drafts and the hand-written "Focus now" says they are out.
 
 ## SR-1: the release brief contract
 

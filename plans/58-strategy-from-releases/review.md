@@ -44,12 +44,12 @@ A fresh agent with no stake in the draft read the pack at commit `ed0171cfd5b53e
 | 46 | No `fix` ledger entries; "brief" used for "release brief"; `Waiting on` hid an open decision; the Scope decision cited a line this draft added | SR-7 writes the entries; the pack says "release brief"; `Waiting on` names the open decisions; the Scope decision links the session |
 | 47, 48 | 4.5 days was too low for the drafted scope; one final round suits the reduced scope | A per-task estimate is in inputs.md; with the cuts it is about 4.5 |
 
-### Left to the owner
+### Left to the owner, and decided by her on 15 November 2026
 
 | # | Finding | Decision |
 | --- | --- | --- |
-| 4 | Whether Releases 12 and 13 are finalised here | D5, reopened |
-| 34 | Under what authority an assorted ticket is worked, since an issue becomes work only through a task row | D12 |
+| 4 | Whether Releases 12 and 13 are finalised here | D5: left to Plan 31 |
+| 34 | Under what authority an assorted ticket is worked, since an issue becomes work only through a task row | D12: its row in a release brief's issue list, under that release's run |
 | 46 | The planning skill leaves `plans/priority.md` to the owner or orchestrator, and the draft added its own line | Kept, on the owner's words "I'd like to get this all done first" (D9); she may move or remove it |
 
 ### Rejected
