@@ -2560,3 +2560,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - int/r13 is fast-forwarded f9214240 → 959da732 (no force).
   - The hourly check-in trig_01J4NitQRDxgQdgRzUiJnG5p is disabled. The advisor dive was already disabled.
   - Still running and reported after publish: the CI 43757233210 shards vs R12, Lanes 43757233283 and capture row 43757326484. Rollback is on the table only for a user-hittable regression.
+- **20:57 UTC, post-publish footnote to W218:** App E2E playwright-default on 7297d266 had 28 failures vs main's 27. The one extra id is `[chromium-mobile] public-astrid-vision-stability.spec.ts:94`, a load-sensitive animation-timing check on the public vision page, which App main's #269–#271 also touched. It is not on the editor, install or update path, so it has no effect on the release. Deferred row filed by the test manager (plan 54 timing tests).
