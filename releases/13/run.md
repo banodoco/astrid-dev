@@ -2,7 +2,7 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (02:00 UTC Sun 15 Nov): read this first
+## Now (03:00 UTC Sun 15 Nov): read this first
 
-**CUTOFF 13:00 UTC.** **Compose 247335369** (W4 r4 and h3first2 merged). **Tester head int/r13-9acb55b6** (CI 43664822003 / Lanes 43664822007); manifest astrid-dev dd3ad1bf (pins passed); the Windows proof run 43664846375 is running, and on green issues #651–#653 go live. **Tier 1** integrated head ~04:00 (W-A/B/C Astra fixes in progress; W-E/Q2 approved; Q6 dropped). L7 is under Astra W134. ~09:00: live re-measure. **Balance** $81.55, 0 pods.
+**CUTOFF 13:00 UTC.** **Testers LIVE** (#651–#653, int/r13-9acb55b6; answering session 011EzfW4YzVAmvkWq4xP5Wxq, no comments yet). **Compose 247335369** (+W4, +h3first2). **Attached overhead** measured at 30.2 s warm (R12 37.3 s, so not a regression); cells is on V1 (witness-memo re-pin), V2-narrow and A3 (~8–10 s expected) by 09:00; V3, A-B1 and L1/L4/L5 went to plan 54 on safety. **Tier 1** integrated head ~04:00; the ~09:00 live re-measure follows. **Balance** $81.55, 0 pods.
 
