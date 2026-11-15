@@ -5,18 +5,17 @@
 | | |
 |---|---|
 | Your GitHub issue | `{{ISSUE_URL}}` |
-| Build under test | `{{BUILD_NAME}}`: Agent commit `{{AGENT_SHA}}` |
-| Install manifest | `{{MANIFEST_URL}}` |
+| Build under test | Release 13 as published (`{{BUILD_NAME}}`): Agent commit `{{AGENT_SHA}}` |
 | You need | Windows 10 or 11, an NVIDIA GPU, a working ComfyUI, 40 GB free disk |
 
 ## What this is
 
-A technical check that a pre-release of Astrid installs and generates on a real Windows machine. Nobody has done that yet. You install one exact build, point it at the person's running ComfyUI, and run Astrid's default workflows. Everything is command line; **skip any step that asks you to open a browser or astrid.haus.**
+A technical check that Release 13 of Astrid installs (or updates) and generates on a real Windows machine with a person's own ComfyUI. Nobody has done that yet. You install the published release, point it at the person's running ComfyUI, and run Astrid's default workflows. Everything is command line; **skip any step that asks you to open a browser or astrid.haus.**
 
 We want to know what works, what fails, and the exact error when it fails. A failure is a useful result.
 
 - **Done** means parts 1 to 4 and the clean-up. Part 5 is optional.
-- **If the install fails, or the installed commit is wrong:** post the output and stop. That is the result.
+- **If the install or update fails, or the installed commit is wrong:** post the output and stop. That is the result.
 - **Don't fight one cell for more than 15 minutes** (downloads don't count). Report it and move on.
 
 ## Ground rules
@@ -24,7 +23,7 @@ We want to know what works, what fails, and the exact error when it fails. A fai
 1. **Download what the test needs without asking each time,** and delete it at the end. Tell the person the total once, before you start, and check there is disk space. Never delete a model that was there before.
 2. **Never install node packs or Python packages into the person's ComfyUI.** Adding model files to it is fine.
 3. **Spend no money.** Never use a RunPod or other paid option, even if Astrid offers one.
-4. **Fix small Astrid problems that block you, and share the fix.** If a small change to Astrid's installed code gets a step working (a wrong path, a quoting bug, a missing Windows case), make it, keep going, and add the exact diff to `fixes.diff` straight away. Keep fixes minimal, and say in the cell table which cells ran on patched code. If it needs more than a small change, report it and move on. Don't work around an Astrid problem by changing the person's ComfyUI.
+4. **Fix small Astrid problems that block you, and share the fix.** If a small change to Astrid's installed code gets a step working (a wrong path, a quoting bug, a missing Windows case), make it, keep going, and add the exact diff to `fixes.diff` straight away. Keep fixes minimal, and say in the cell table which cells ran on patched code. If Astrid then refuses to run because its own files changed, undo the change and report both. If it needs more than a small change, report it and move on. Don't work around an Astrid problem by changing the person's ComfyUI. A fix here lasts only until the next update, so it must be in the report to count.
 
 **Shell.** Use Windows PowerShell, not WSL. No admin rights are needed. If your shell doesn't keep variables between commands, or isn't PowerShell, put each block in a `.ps1` file and run `powershell -NoProfile -ExecutionPolicy Bypass -File <file>`. The install, the downloads and the video cells run longer than most command time limits: run them in the background and poll.
 
@@ -41,20 +40,22 @@ Ask our agent on the GitHub issue by starting a comment with `QUESTION:`, and ca
 
 Record: Windows and PowerShell versions; GPU, VRAM and driver (`nvidia-smi`); RAM; free disk; how ComfyUI is installed (portable, desktop app, Stability Matrix, Pinokio, git), its version and its address; whether Astrid was already installed; which agent you are.
 
-## Part 2: Install the test build
+## Part 2: Install or update to Release 13
 
-**Remove any existing Astrid first.** This deletes the person's Astrid projects, so ask. Their ComfyUI is not touched. (If Astrid came from Pinokio, use Pinokio's Uninstall instead.)
+**If Astrid is already installed, update it; don't remove it.** Updating keeps the person's Astrid projects, and it is the path most people will take, so we want to know whether it works. Record the version before (`& "$env:LOCALAPPDATA\Astrid\run-astrid.cmd" doctor --json`). Remove Astrid first only if the person asks for a clean install, or if it came from Pinokio (then use Pinokio's own Update or Uninstall); removing deletes their Astrid projects, so ask:
 
 ```powershell
 & ([scriptblock]::Create((irm https://astrid.haus/install.ps1))) --uninstall --delete-data
 ```
 
-**Install:**
+**Install or update.** The same command does both. It installs the published release; make sure no test setting is left over from an earlier attempt:
 
 ```powershell
-$env:ASTRID_INSTALL_MANIFEST_URL = '{{MANIFEST_URL}}'
+Remove-Item Env:ASTRID_INSTALL_MANIFEST_URL -ErrorAction SilentlyContinue
 & ([scriptblock]::Create((irm https://astrid.haus/install.ps1))) --yes --autostart on --command on --skills on --skill-copies off
 ```
+
+Record the first line it prints (`Astrid is installed and running`, `Astrid updated:` or `Astrid is already up to date`), whether this was a fresh install or an update, and from which version.
 
 **Confirm the build.** Without this we don't know what you tested.
 
@@ -62,7 +63,7 @@ $env:ASTRID_INSTALL_MANIFEST_URL = '{{MANIFEST_URL}}'
 Get-ChildItem "$env:LOCALAPPDATA\Astrid\versions\*\manifest.json" | ForEach-Object { (Get-Content $_ -Raw | ConvertFrom-Json).agent.sha }
 ```
 
-It must print exactly one line, `{{AGENT_SHA}}`. Anything else: stop and post a `QUESTION:`.
+One of the lines it prints must be exactly `{{AGENT_SHA}}` (after an update an older version's folder may still be there and print a second line; record every line). If none matches: stop and post a `QUESTION:`.
 
 Every Astrid command below goes through the launcher, written here as `$astrid`:
 
@@ -118,7 +119,7 @@ A resumable download that ships with Windows (in the repository these files sit 
 curl.exe -L -C - -o "<models folder>\<subfolder>\<file>" "https://huggingface.co/Comfy-Org/ACE-Step-1.5/resolve/main/split_files/<subfolder>/<file>"
 ```
 
-**Known:** about 30 seconds of Astrid's own overhead per job on your own ComfyUI is being worked on. Please still record the A and A2 timings, but don't report it as a finding.
+**Known in Release 13, no need to report as findings:** about 30 seconds of Astrid's own overhead per job on your own ComfyUI (the next release is about this; still record the A and A2 timings); model download covers only image and edit, which is why music is fetched by hand above; video from an image (cell E) uses the image as a reference, not as the exact first frame.
 
 **Two free checks.** Run cells D and E from part 5 against `$url`, using the image from A for E. They should refuse, because the person's ComfyUI lacks their nodes. Record the exact messages: we want to know whether they say clearly what is missing.
 
@@ -167,12 +168,12 @@ $t = "http://127.0.0.1:8199"
 
 1. **Make the diagnostics bundle first;** it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\report\astrid-doctor.zip`. Copy the images from A and B into the report folder too.
 2. **Delete every model this test added to the person's ComfyUI,** from your list. If the person asks to keep some, keep those and say which.
-3. **Uninstall Astrid** with the command from part 2, unless the person wants to keep the test build. Note anything left behind: the folders under `%LOCALAPPDATA%` that start with `Astrid`, the `Astrid Runtime` scheduled task, an `astrid` command.
+3. **Leave Astrid installed** unless the person wants it removed: it is the released version. If they do, or if it was not installed before the test and they don't want it, uninstall with the command from part 2 and note anything left behind: the folders under `%LOCALAPPDATA%` that start with `Astrid`, the `Astrid Runtime` scheduled task, an `astrid` command.
 4. **Delete the test ComfyUI** and everything else on your list.
 
 Never delete a whole `models`, `custom_nodes`, `input` or `output` folder, and never delete a file you didn't add.
 
-**Finish `report.md`** with a summary at the top: the commit from part 2; the machine facts; the cell table; the problems, worst first; the fixes you made; what was downloaded and what the clean-up removed or kept. If you can export this agent session, add it to the folder: it shows what really happened.
+**Finish `report.md`** with a summary at the top: the commit from part 2 and whether it was a fresh install or an update; the machine facts; the cell table; the problems, worst first; the fixes you made; what was downloaded and what the clean-up removed or kept. If you can export this agent session, add it to the folder: it shows what really happened.
 
 **Then zip the folder and attach it to the issue,** with the summary pasted as the comment:
 
