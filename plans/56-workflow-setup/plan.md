@@ -10,7 +10,7 @@
 
 **Estimate:** 1–2
 
-**Waiting on:** [Release 13](../../releases/13.md) publishing, the model fingerprint look-up fix that follows it, and the owner's answers to D1 to D3 in [inputs.md](inputs.md#owner-decisions)
+**Waiting on:** [Release 13](../../releases/13.md) publishing, the model fingerprint look-up fix that follows it
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -48,7 +48,7 @@ Most of the parts exist and are not joined up ([inputs.md](inputs.md#planning-ev
 
 ## Sequence and readiness
 
-WS-1 is a small correction and goes in the standing fixes lane straight after the fingerprint fix. WS-2 builds the one list on the existing requirements contract; WS-3 the command on it; WS-4 the reconcile step; WS-5 proves the ComfyUI-Manager path on real data before anything depends on it; WS-6 the proof. WS-3 waits for D1, because it is the first time Astrid would install code into a person's own ComfyUI. Task details are in [tasks.md](tasks.md). Recording this plan authorizes no work.
+WS-1 is a small correction and goes in the standing fixes lane straight after the fingerprint fix. WS-2 builds the one list on the existing requirements contract; WS-3 the command on it; WS-4 the reconcile step; WS-5 proves the ComfyUI-Manager path on real data before anything depends on it; WS-6 the proof. WS-3 is the first time Astrid installs code into a person's own ComfyUI; the owner decided how on 15 November 2026 (D1). Task details are in [tasks.md](tasks.md). Recording this plan authorizes no work.
 
 ## Interfaces and handoff
 

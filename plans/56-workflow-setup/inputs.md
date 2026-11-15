@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the owner asked for this on 15 November 2026 in the advisor's session: "what I'd like is that we have a way to just download all the models for a workflow and if we can't find them we have a simple way to reconcile them, similar with custom nodes", and earlier the same day, "why have this blocker for stuff we can acquire instantly, automatically?" Recorded in the [Release 16 brief](../../releases/16.md). D1 to D3 below are not yet decided.
+**Scope decision:** Accepted — the owner asked for this on 15 November 2026 in the advisor's session: "what I'd like is that we have a way to just download all the models for a workflow and if we can't find them we have a simple way to reconcile them, similar with custom nodes", and earlier the same day, "why have this blocker for stuff we can acquire instantly, automatically?" Recorded in the [Release 16 brief](../../releases/16.md). D1 to D3 below were decided the same day.
 
 **Prior art:** Four code readings on 15 November 2026 of astrid-agent `a91c35dfd` and VibeComfy `dba38f86`; summarised in [issue 665](https://github.com/banodoco/astrid-dev/issues/665) for the model half.
 
@@ -37,9 +37,9 @@
 
 ## Owner decisions
 
-- **D1 Installing node packs into a person's own ComfyUI.** Today Astrid never does. Approving a node pack means letting someone else's code run with the person's own access; a pinned commit does not make it safe, and its Python packages can break workflows that work today. Proposed: install only on approval of a plan that names each pack, repository, commit and every Python package to be added; refuse any item that would change a package already installed or an existing pack folder, and leave that item to the person. Alternative: keep all of it manual and have the plan print the exact steps. Recommendation: the proposal.
-- **D2 Where Astrid may look.** In this plan: what Astrid and VibeComfy already know, and the ComfyUI-Manager node list once WS-5 has proven it. Later, under issue 665: Hugging Face and Civitai for models. Recommendation: as stated; a candidate is never applied without confirmation.
-- **D3 Sources outside Hugging Face.** A workflow can name any address. Proposed: such a source is shown in the plan with its host, fingerprinted on download and recorded; it is never fetched without the plan being approved. This closes the deferred Release 13 item on addresses from unknown hosts.
+- **D1 Installing node packs into a person's own ComfyUI.** Today Astrid never does. Approving a node pack means letting someone else's code run with the person's own access; a pinned commit does not make it safe, and its Python packages can break workflows that work today. Proposed: install only on approval of a plan that names each pack, repository, commit and every Python package to be added; refuse any item that would change a package already installed or an existing pack folder, and leave that item to the person. Alternative: keep all of it manual and have the plan print the exact steps. Recommendation: the proposal. **Decided 15 November 2026 (Hannah, "yes on all"): the recommendation.**
+- **D2 Where Astrid may look.** In this plan: what Astrid and VibeComfy already know, and the ComfyUI-Manager node list once WS-5 has proven it. Later, under issue 665: Hugging Face and Civitai for models. Recommendation: as stated; a candidate is never applied without confirmation. **Decided 15 November 2026 (Hannah, "yes on all"): the recommendation.**
+- **D3 Sources outside Hugging Face.** A workflow can name any address. Proposed: such a source is shown in the plan with its host, fingerprinted on download and recorded; it is never fetched without the plan being approved. This closes the deferred Release 13 item on addresses from unknown hosts. **Decided 15 November 2026 (Hannah, "yes on all"): the recommendation.**
 
 ## Source identities
 
