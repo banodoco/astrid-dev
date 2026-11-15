@@ -2541,3 +2541,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Main heads: Agent 0e1543e0 (= PR base), Runtime 42ae24af (fast-forward to 6855dfa8 pending).
   - App main moved ae4da5d7 → 7058ef04: three public-site and vision UI fixes, #269–#271, 20 files under src/pages/Home, tests/e2e, playwright and scripts/quality. None touches public/install-manifest.json, the installer scripts or the vendor lock, and #268 merges cleanly (merge-tree). Not a blocker; already deployed from main.
   - The release record has a section 0 with the final tuple and the gate.
+- **20:45 UTC: JOURNEY GREEN ON THE PUBLISH TUPLE.**
+  - Run 43757304537: 14/14 rows, and the exact-tuple evidence job passed. linux-fresh and macos-fresh both passed.
+  - Capture row 43757315244: PASS.
+  - **Ruling (Hannah's standing go, 13:45/14:15):** publish once W218 shows no App check that passes on main and fails on 7297d266. The unit shards and Lanes on 9814193a are reported after publish, with rollback if a regression appears; the fast checks (mypy, cycles) are already green.
+  - Lanes opt-in red is pre-existing: it fails on main 43705886232 and on every int/r13-* run since 34fee0cf. darwin native red is the same as every candidate since A″.
