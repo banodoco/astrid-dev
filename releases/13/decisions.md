@@ -2536,3 +2536,8 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **20:37 UTC: GATE ROW direct-windows-r12-update is GREEN on the publish tuple** (43757304537; installed tuple agent 9814193a, App 7297d266, Runtime 6855dfa8).
   - All 9 steps and all 10 checks passed.
   - Journey: 6/14 green, none red.
+- **20:45 UTC: publish prep.**
+  - The PR #347 and #268 bodies are updated to the final tuple; both were stale at 8e0006f5.
+  - Main heads: Agent 0e1543e0 (= PR base), Runtime 42ae24af (fast-forward to 6855dfa8 pending).
+  - App main moved ae4da5d7 → 7058ef04: three public-site and vision UI fixes, #269–#271, 20 files under src/pages/Home, tests/e2e, playwright and scripts/quality. None touches public/install-manifest.json, the installer scripts or the vendor lock, and #268 merges cleanly (merge-tree). Not a blocker; already deployed from main.
+  - The release record has a section 0 with the final tuple and the gate.
