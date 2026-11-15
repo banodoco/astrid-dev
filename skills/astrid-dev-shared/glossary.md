@@ -90,7 +90,7 @@ One meaning per word; two meanings, two terms.
 
 **primary and supporting aspirations (of a gap):** its one measured outcome and any distinct related aspirations.
 
-**version:** a user-facing `major.minor.patch` identifier for a release.
+**version:** the user-facing `major.minor.patch` number of a release. A minor or major release ships a new version (0.1, 1.0); the strategy page has one section for each version, holding that release and the patch releases that lead to it.
 
 **kind:** a release’s declared version step: `patch`, `minor` or `major`; an absent declaration defaults to `patch`.
 

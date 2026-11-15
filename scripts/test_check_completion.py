@@ -111,7 +111,7 @@ Routes used: Unknown — Historical run did not record routes.
             "Routes used": "Unknown — The historical run did not record routes.",
             "Unproven": "None within the stated project scope.",
             "Gap impact": "None — This project does not change a vision gap.",
-            "Strategy": "Updated — The project changes its strategy row and sequence.",
+            "Strategy": "Reviewed — the release brief for Release 14 gained this plan's line.",
         }
         for label, example in examples.items():
             filled, count = re.subn(
