@@ -2,6 +2,20 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+## Rulings
+
+### Now
+
+- Accountable manager: `chatgpt-workspace-6ee41b0f0cca/root`; authorization and limits are in [inputs.md](inputs.md#planning-evidence).
+- Starting tuple: published Release 13 — Agent `9814193a73f606719e81883a8be197d27dd361d4`, VibeComfy `dba38f8644c46f652376f2cd5112ea161e40f09b`, Runtime `6855dfa8df65cf8ae4c002b57134d6505493c17c`.
+- Starting work: environment smoke and scoped baselines, then LS-1 and LS-2. Independent LS-5, LS-6 and LS-11 are ready after their environment checks. Design-dependent tasks wait for LS-1 → LS-3 → RS1.
+- Owner gates: paid GPU access for live LS-1 / LS-14; a Windows tester; later re-pins and product-main merges. No gated action has been taken.
+- Spend: $0. RS1: 0/1 rounds used; final R: 0/1 rounds used.
+
+2026-11-15 — The owner accepted D1–D8 and the ten statements, assigned this manager the full run, and set the limits recorded in inputs.md. This first progress PR records the start; later progress PRs change this file only.
+
+2026-11-15 — Release 13's brief is stale. The [successful served-manifest canary](https://github.com/banodoco/astrid-app/actions/runs/43760624263/job/132954388685) and deployed manifest establish publication and the exact base. Current product main tips are not substituted for it.
+
 **Task ids:** `LS-n`. **Critical path:** LS-1 → LS-3 → RS1 → LS-8 → LS-15 → LS-9 → LS-14 → R. **Test inventory:** astrid-agent `tests/packs/vibecomfy/` (local server engine and local job), `tests/core/generation/backends/test_comfy_target.py`, `tests/core/generation/test_delivery.py`, `tests/core/execution/` (generic host), `tests/sdk/` (invocation); VibeComfy `tests/` for bundle compile, runtime session and schema validation; Runtime `tests/` for task lifecycle and publication; the test lane's attached-ComfyUI harness (Release 13 lane 2), which becomes the standing budget test in LS-2.
 
 Every budget test asserts **a valid output and a job record as well as counts**; a count alone does not prove a job ran. Routes and review rules are the [run contract](../../skills/astrid-dev-shared/run-contract.md)'s.

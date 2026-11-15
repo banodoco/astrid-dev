@@ -4,13 +4,13 @@
 
 **Goal:** On your own computer with the model already loaded, a generation comes back in the time the model takes: Astrid adds under a tenth of a second for a caller that is already connected.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** ChatGPT manager — `chatgpt-workspace-6ee41b0f0cca/root`
 
 **Estimate:** 2–3
 
-**Waiting on:** [Release 13](../../releases/13.md) publishing, and the owner's answers to D1 to D4 in [inputs.md](inputs.md#owner-decisions)
+**Waiting on:** LS-1 measurements before LS-3; owner approval for paid GPU work, a Windows tester, re-pins and product-main merges. [Run authorization and published base](inputs.md#run-start-source-identities).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -109,7 +109,7 @@ LS-5, LS-6 and LS-11 do not wait for the design: they are needed under any door.
 
 Real bottlenecks: the design review; two re-pins (VibeComfy for the template and the connection, the Runtime for the hand-off and the record); a live measurement on a GPU machine where Astrid and ComfyUI run together; a Windows measurement, which needs a tester or a Windows machine.
 
-Task details are in [tasks.md](tasks.md). Recording this plan authorizes no work.
+Task details are in [tasks.md](tasks.md). The owner's 15 November 2026 run authorization is recorded in [inputs.md](inputs.md#planning-evidence); its limits govern this run.
 
 ## Interfaces and handoff
 
