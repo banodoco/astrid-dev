@@ -99,7 +99,7 @@ def release_membership(briefs: list[dict]) -> dict[str, list[dict]]:
             result.setdefault(version, []).extend(pending)
             pending = []
     if pending:
-        result.setdefault(f"0.{minor + 1}", []).extend(pending)
+        result.setdefault(f"0.{minor + 1}" if minor < 9 else "1.0", []).extend(pending)
     return result
 
 
@@ -121,7 +121,7 @@ def _strategy(root: Path, version: str) -> str:
     releases = release_membership(briefs).get(version, [])
     lines = []
     for brief in releases:
-        if brief["kind"] == "minor":
+        if brief["kind"] in ("minor", "major"):
             lines.append(f"[Release {brief['number']}](releases/{brief['number']}.md) — {brief['title']} ({brief['state']}); {brief['highlight']}")
     patches = [b for b in releases if b["kind"] == "patch"]
     if patches:
@@ -154,9 +154,9 @@ VIEWS = (
     View("plan-catalog", ("plans/*/plan.md", "plans/priority.md"), "plans/index.md", _catalog, "plan-catalog"),
     View("status-definitions", ("scripts/lifecycle.py",), "plans/index.md", _status_definitions, "status-definitions"),
     View("check-catalog", ("scripts/checks.py",), "docs/checks.md", _checks),
-) + tuple(View(f"strategy-0.{n}", ("releases/*.md", "plans/*/plan.md"), "strategy.md",
-               lambda root, version=f"0.{n}": _strategy(root, version), f"strategy-0.{n}")
-          for n in range(1, 10))
+) + tuple(View(f"strategy-{version}", ("releases/*.md", "plans/*/plan.md"), "strategy.md",
+               lambda root, version=version: _strategy(root, version), f"strategy-{version}")
+          for version in [*(f"0.{n}" for n in range(1, 10)), "1.0"])
 
 
 def _with_marker(view: View, content: str) -> str:

@@ -219,8 +219,8 @@ def release_errors(filename: str, body: str) -> list[str]:
 def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> list[str]:
     """Validate authored structure and release kinds, excluding generated regions."""
     errors = []
-    for n in range(1, 10):
-        start, end = f'<!-- strategy-0.{n}:start -->', f'<!-- strategy-0.{n}:end -->'
+    for version in [*(f'0.{n}' for n in range(1, 10)), '1.0']:
+        start, end = f'<!-- strategy-{version}:start -->', f'<!-- strategy-{version}:end -->'
         if text.count(start) != 1 or text.count(end) != 1 or text.find(start) > text.find(end):
             errors.append(f'strategy.md: needs exactly one ordered {start} and {end} pair')
         else:

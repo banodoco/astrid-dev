@@ -109,6 +109,7 @@ class StrategyTests(unittest.TestCase):
     GOOD = (
         "# Strategy\n\n**Last reviewed:** 2026-11-10\n\n## Focus now\n\n## Versions\n\n"
         "### Version 1.0\n\n**Aim:** Finished work.\n\n"
+        "<!-- strategy-1.0:start -->\n<!-- strategy-1.0:end -->\n\n"
         + "".join(f"#### Version 0.{n}\n\n**Aim:** {'Fast.' if n == 1 else 'Open'}\n\n"
                   f"<!-- strategy-0.{n}:start -->\n<!-- strategy-0.{n}:end -->\n\n" for n in range(1, 10))
         + "## Not now\n\n## Decisions\n"
@@ -182,6 +183,12 @@ class StrategyTests(unittest.TestCase):
         generated = self.GOOD.replace('<!-- strategy-0.1:end -->', '#### Version 9.9\n**Aim:** bogus\n<!-- strategy-0.1:end -->')
         self.assertEqual(strategy_errors(generated), [])
         self.assertTrue(any('ordered' in e for e in strategy_errors(self.GOOD.replace('<!-- strategy-0.1:end -->', ''))))
+
+    def test_major_region_is_required_and_excluded_from_authored_structure(self):
+        missing = self.GOOD.replace('<!-- strategy-1.0:end -->', '')
+        self.assertTrue(any('strategy-1.0:end' in e for e in strategy_errors(missing)))
+        generated = self.GOOD.replace('<!-- strategy-1.0:end -->', '### Version 9.0\n**Aim:** bogus\n<!-- strategy-1.0:end -->')
+        self.assertEqual(strategy_errors(generated), [])
 
     def test_bad_release_link_and_missing_section_fail(self):
         bad = self.GOOD.replace('## Not now', '## Later stuff')

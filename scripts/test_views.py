@@ -849,3 +849,46 @@ class StrategyViewTests(unittest.TestCase):
                   ((1, 'minor'), (2, 'patch'), (3, 'major'))]
         self.assertEqual([b['number'] for b in release_membership(briefs)['1.0']], ['2', '3'])
         self.assertEqual([b['number'] for b in release_membership(briefs[:2])['0.2']], ['2'])
+
+    def test_after_ninth_minor_patches_belong_to_major_with_or_without_it(self):
+        from views import release_membership
+        minors = [{'number': str(n), 'kind': 'minor'} for n in range(1, 10)]
+        patches = [{'number': '10', 'kind': 'patch'}, {'number': '11', 'kind': 'patch'}]
+        for tail in (patches, patches + [{'number': '12', 'kind': 'major'}]):
+            membership = release_membership(minors + tail)
+            self.assertEqual([b['number'] for b in membership['1.0']], [b['number'] for b in tail])
+            self.assertNotIn('0.10', membership)
+
+    def test_major_renders_all_contributions_and_frozen_counts(self):
+        from unittest.mock import patch
+        import records
+        import views
+        from test_check_docs import StrategyTests
+        from test_records import ProjectRecordTests
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'releases').mkdir()
+            (root / 'strategy.md').write_text(StrategyTests.GOOD, encoding='utf-8')
+            ProjectRecordTests.write(root, '40-machine-lifetime-controls', ProjectRecordTests.plan(Project='Machine lifetime controls'))
+            self.assertIn('No release yet.', views._strategy(root, '1.0'))
+            for n, kind in ((1, 'minor'), (2, 'patch'), (3, 'major')):
+                brief = (StrategyTests.RELEASE.replace('Release 13', f'Release {n}')
+                         .replace('**Release:** 13', f'**Release:** {n}')
+                         .replace('**State:** Draft', f'**State:** Draft\n**Kind:** {kind}')
+                         .replace('Include spend control.', f'Contribution {n}.'))
+                (root / f'releases/{n}.md').write_text(brief, encoding='utf-8')
+            original = records.release_brief
+            def reader(text, **kwargs):
+                brief = original(text, **kwargs)
+                brief.update(issues=[{'number': 1}, {'number': 2}], issues_frozen=True)
+                return brief
+            with patch.object(records, 'release_brief', side_effect=reader):
+                rendered = views._strategy(root, '1.0').split('<!-- strategy-1.0:start -->')[1].split('<!-- strategy-1.0:end -->')[0]
+            self.assertIn('[Release 3](releases/3.md) — GPU control (Draft); Creators can control rented GPU machine lifetime.', rendered)
+            self.assertIn('On the way: [Release 2 — GPU control](releases/2.md)', rendered)
+            self.assertEqual(rendered.count('[Plan 40 — Machine lifetime controls]'), 1)
+            self.assertEqual(rendered.count('Contribution 2.'), 1)
+            self.assertEqual(rendered.count('Contribution 3.'), 1)
+            self.assertNotIn('Contribution 1.', rendered)
+            self.assertIn('[Release 2 issues](releases/2.md#issues): 2', rendered)
+            self.assertIn('[Release 3 issues](releases/3.md#issues): 2', rendered)
