@@ -1,0 +1,25 @@
+**The unguarded credential read is not reached by the normal R13 paid-machine job.** It is reachable through the separate managed remote-worker activation route, and the same reader and both call sites existed in R12. The sweep did find a **new R13 Windows blocker on the normal job route**: the controller imports a pod module that unconditionally imports `fcntl`.
+
+The normal A″ flow is:
+
+1. `astrid machines claim` → `machines_cli.py:383` → `GenerationFacade.claim` → the host’s target operation → `RunPodLeaseOwner.claim` (`worker_owner.py:692`). This rents and retains a machine; it does not activate a remote worker.
+2. A RunPod generation is routed by `generic_host.py:13352` to `machine_run.py:69`, then `RunPodMachine.claim` (`machine.py:674`) and `prepare_retained_generation` (`generation.py:33`). That preparation explicitly operates **without a worker on the pod**.
+3. The intended continuation is `RunPodMachine.start` → poll → fetch → release. In A″ on Windows, preparation first reaches `ensure_pod_ready` → `pod_state_command` → `pod_paths`, whose local import of `pod_reset` fails on `fcntl`. Thus the job does not normally get as far as dispatch.
+
+The separate activation route is `PreparedRunPodTaskClient.invoke_result` → `_ProductionPreparedTaskRuntime.ensure_for_task` → launcher `park` and `activate` → `RunPodRemoteWorkerPreparer.acknowledge` (`worker_owner.py:2351`). It reads the **local Runtime-provisioned worker activation credential**, initially disabled and bound to the qualified executor, then delivers it to the remote worker’s `executor.token`. It is not the user’s RunPod provider API key. After activation and readiness, `RunPodRemoteWorkerInspector.observe_ready` reads it again at `worker_owner.py:3179` to authenticate that executor. On Windows, `os.O_NOFOLLOW` raises `AttributeError` before the `OSError` handler can run.
+
+R12 has the identical reader at `worker_owner.py:809–814` and equivalent calls at `:1605` and `:2432`. Its prepared-worker route could reach them; for example, its explicitly prepared task flow bound a client and activated the worker. That supports **no R13 regression for this reader**. It does not establish that every R12 RunPod claim failed: claiming and activating a worker are distinct operations, and R12 also contained a retained preparation route described as running without a worker.
+
+For `worker_owner.py:1545`, the smallest security-preserving direction is to open through `runtime_protocol.dirfd.filesystem.open` with its `filesystem.O_NOFOLLOW`, retaining the existing regular-file, single-link, owner/DACL, and identity checks. Its Windows implementation opens reparse points without following them and rejects them. The reader already checks `path.is_symlink()`; replacing the flag with `getattr(os, "O_NOFOLLOW", 0)` alone would avoid the exception but would leave a check-to-open race and would not provide the same no-follow guarantee. The existing Windows ownership helper checks the opened handle’s owner-only DACL.
+
+| A″ location | R12 comparison | Controller-side finding |
+| --- | --- | --- |
+| `packs/runpod/pod_reset.py:26` | **New in R13**; module absent in R12 | Unguarded `fcntl` import. Normal preparation imports this module locally through `machine.py:234`, so Windows fails before dispatch. |
+| `packs/runpod/failure_diagnostics.py:277` | **New in R13**; module absent in R12 | `graph_facts` uses unguarded `O_NOFOLLOW`. `machine.py:915` calls it during dispatch when a source path is supplied; this is a further blocker after the import is fixed. A missing source returns before the open. |
+| `packs/runpod/worker_owner.py:1545` | **Identical at R12** (`:814`) | Unguarded `O_NOFOLLOW` in the separately selected managed-worker activation and readiness route. |
+| `core/execution/_child_bridge.py:457,466` | **Identical at R12** | Unguarded directory flags in controller-side bridge construction, conditional on a task carrying child-delegation or delegated-output specifications; not shown to be required by an ordinary paid generation. |
+| `core/execution/_child_bridge.py:260,263,267,1192,1213,1248` | **Identical at R12** | Further unguarded no-follow/directory opens in that conditional bridge’s snapshot and materialization operations. |
+
+The other matching `failure_diagnostics.py` opens at `:327` and `:342` run in the diagnostic program shipped to the pod, rather than through its controller-side call at `:277`. Other pod-side matches include worker staging, worker process, snapshot, watchdog and reset operations. The Linux-only selected-pack capture and the host’s directory-descriptor branch have platform guards.
+
+This was a source investigation, with no provider calls. A local simulation confirmed the two new failures: removing `os.O_NOFOLLOW` produces `AttributeError` in `graph_facts`, and making `fcntl` unavailable produces `ModuleNotFoundError` when importing `pod_reset`. No Windows end-to-end run was performed. Both detached worktrees were removed.
