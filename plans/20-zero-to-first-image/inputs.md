@@ -57,7 +57,7 @@
 
 ### Phase 4: local-first (14 Nov 2026)
 
-**Scope decision:** Accepted — Hannah gave the direction and decided all eight phase 4 decisions on 14 Nov (below), including one review round and the critique with the orchestrator's restorations ("Yes on rest"). Next: Hannah merges the scope PR.
+**Phase 4 scope decision:** Accepted — Hannah gave the direction and decided all eight phase 4 decisions on 14 Nov (below), including one review round and the critique with the orchestrator's restorations ("Yes on rest"). Next: Hannah merges the scope PR.
 
 - **Source.** Hannah asked the Release 13 advisor (session `session_011EzfW4KxQbf3mB7UevxVdh`) on 14 Nov 2026 to map the onboarding path, make it local-first and add it to Plan 20 as tasks. The orchestrator (session `session_011EzfW2L4ou5fDudzKLrc9d`) relayed the brief to this planner. Her words, verbatim:
   > "In general, it should probably point to RunPod, but it should only have like a one-line mention of RunPod, and the other general should just be focused on people who are running locally and setting it up."
@@ -71,7 +71,7 @@
   > "In any case, sending a link to astrid.haus to actually see the generated image."
 - **Draft.** The advisor's map and draft tasks are committed verbatim as [phase-4-local-first-draft.md](phase-4-local-first-draft.md) (astrid-dev commits `b7dd383`, `a9b9488` and `eec99b3`; the last records OD7 and OD8. `a9b9488` added with the later direction: one hand-off sentence at every door, one home per concept, defaults from the person's recent work and a link to the image). It answers her four questions: connecting is easy when ComfyUI runs on 8188, but saving the choice is clumsy. Running is not yet intuitive. It uses the existing models and generates through the person's server without changing it. None of this is proven live. The draft's sources were Agent `r13/compose` `176e5ba1`, App `d6ee9af`, Pinokio `d15c58b` and VibeComfy `r13/cells-vc-10`, through read-only explorer passes. Nothing was run.
 
-**Approach:** Extend the same skill in place; no new skill and no new plan. Phase 4 keeps phases 1–3 and narrows the RunPod and managed-engine text to one line each. Alternatives considered:
+**Phase 4 approach:** Extend the same skill in place; no new skill and no new plan. Phase 4 keeps phases 1–3 and narrows the RunPod and managed-engine text to one line each. Alternatives considered:
 
 | Alternative | Why not |
 |---|---|
@@ -85,7 +85,7 @@
 | Run a saved workflow by name, with the prompt found automatically (draft P4.4) | The path exists without it, and prompt finding is new, risky logic. Reduced to a conversion check |
 | Move the onboarding docs' one-home sweep (draft P4.12) to Plan 19 | The critique suggested it. The orchestrator kept it in phase 4, 14 Nov, scoped to the onboarding docs, with the test limited to those files |
 
-**Challenge:** Reviewed, 14 Nov 2026. A fresh critic subagent of this planning session (`session_011EzfVzrMeXfeWXM3LUepKQ`), which had not seen the draft's rationale, was briefed to build as little as possible. It read the code at Agent `r13/compose` `a371431db94a75b6a83bd57cb3068d51e9ce8b36` (read only), App `d6ee9af20936fab0787ea4ea1d8237cd190cffef` and VibeComfy `e65f4941d09b1cb4d1dd5aae6171c73e648706f4`, and did not compare against Agent `main` `0e1543e0`. The planner spot-checked `listing.py:125`, `targets.py:407` and VibeComfy's `local_library.py`. Line numbers are at those commits; re-check them at dispatch.
+**Phase 4 challenge:** Reviewed, 14 Nov 2026. A fresh critic subagent of this planning session (`session_011EzfVzrMeXfeWXM3LUepKQ`), which had not seen the draft's rationale, was briefed to build as little as possible. It read the code at Agent `r13/compose` `a371431db94a75b6a83bd57cb3068d51e9ce8b36` (read only), App `d6ee9af20936fab0787ea4ea1d8237cd190cffef` and VibeComfy `e65f4941d09b1cb4d1dd5aae6171c73e648706f4`, and did not compare against Agent `main` `0e1543e0`. The planner spot-checked `listing.py:125`, `targets.py:407` and VibeComfy's `local_library.py`. Line numbers are at those commits; re-check them at dispatch.
 
 | Question | Finding (code evidence) | Taken |
 |---|---|---|
@@ -100,7 +100,7 @@ Rejected outright: none. Overridden later by the orchestrator: moving P4.12 to P
 
 **Note for Plan 19:** P4.12 covers only the onboarding docs. One home per concept across the rest of the docs, including the reference pages, stays with Plan 19.
 
-**Proof and limits:** P4.0 and P4.9 walk the path on a hosted CPU runner against the existing fake ComfyUI, up to the generation command being admitted (OD3, D8). They cannot show a real image, real model lists or speed; one row asks Plan 34 for the real first image on a person's own ComfyUI. Everything else is proven by focused Agent tests against the existing fake ComfyUI. No rentals. ComfyUI Desktop, a stopped ComfyUI and Wan2GP are not proven.
+**Phase 4 proof and limits:** P4.0 and P4.9 walk the path on a hosted CPU runner against the existing fake ComfyUI, up to the generation command being admitted (OD3, D8). They cannot show a real image, real model lists or speed; one row asks Plan 34 for the real first image on a person's own ComfyUI. Everything else is proven by focused Agent tests against the existing fake ComfyUI. No rentals. ComfyUI Desktop, a stopped ComfyUI and Wan2GP are not proven.
 
 **Run start:** 14 Nov 2026. The orchestrator (`session_011EzfW2L4ou5fDudzKLrc9d`) started a phase 4 manager, `session_011EzfW4R5yz8EETVbzZaLCF`, under OD6. Then, on Hannah's word relayed by the orchestrator ("we still need to do that work you received but use Claude subagents, it's refinement work"), **the whole phase runs now**:
 - **Workers:** Claude subagents.
