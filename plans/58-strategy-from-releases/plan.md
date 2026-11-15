@@ -61,6 +61,8 @@ Shortest path: the brief contract (SR-1, SR-2), then the strategy view and its c
 
 All work is in astrid-dev; no product repository changes. It is done before Plan 31 starts, and Plan 31's RL-1a then begins from this plan's template and checks.
 
+How it joins Plan 31, where a brief becoming Final is what publishes a release: the brief stays the one file; this plan's reader is what Plan 31's record check and manifest render read; the freeze happens before Final, so the published record already says which issues shipped; and the guard on a `State` line is the first half of Plan 31's rule that only the owner's approved transition publishes. Two things are Plan 31's to settle with the owner: briefs made Final here (Releases 12 and 13) are history when its publisher goes live and must never be published again; and its plan to make the owner the code owner of all of `releases/` would make every issue-list pull wait for her, so it should protect the Final transition rather than every edit to a draft.
+
 The owner decided D1 to D9 on 15 November 2026 ([inputs.md](inputs.md#owner-decisions)); her reading of D4 is still to be confirmed. Recording this plan does not authorize implementation.
 
 ## Interfaces and handoff
