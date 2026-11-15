@@ -2371,3 +2371,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - B1 and B3 are present in R12 too; CI runners have long paths and Git, so CI never saw this.
   - Publish HOLDS on one question being investigated: does the required R12→R13 UPDATE on Windows hit the same limits for users who installed R12 fine (e.g. a VibeComfy entry that is new since R12), and what state does a failed update leave them in?
   - The fixes (\\?\ paths or a shorter staging, VibeComfy archive exclusions, Git preflight or pinned MinGit), the CI job (LongPathsEnabled=0, long username, no Git) and the release-note prerequisites go to the first post-R13 update.
+- **19:10 UTC: the Windows update-path question is answered, and it does NOT block publish.**
+  - The R12→R13 update stages into the same versions\<id>\a.unpack / v.unpack prefix (backend.py:1335, tools.py:373) as a fresh install.
+  - The longest archive entries are IDENTICAL in R12 and R13: agent 178, VibeComfy 206 (the same docs/handover file), Runtime 135. So any R12 Windows user who installed successfully already has working long paths. B1, B2 and B3 are all pre-existing.
+  - If an update fails at extraction (e.g. long paths later turned off), it fails in prepare() before the journal, stop or switch (core.py:550/837). R12 keeps running and stays selected, the workspace is untouched, and the required card stays.
+  - Small follow-ups: OSError text isn't printed in the CLI ("the message above says why" with no message), and a partial versions\<id>\ folder is left until the next success.
+  - Release notes for Windows: Git for Windows required, and long paths must be enabled (admin) until fixed.
+  - First-update fixes: \\?\ paths or a shorter staging, VibeComfy archive exclusions (docs/handover), a Git preflight or pinned MinGit before any download, the OSError message, and a CI job with LongPathsEnabled=0, a long username and no Git.
