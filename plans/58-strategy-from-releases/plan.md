@@ -10,7 +10,7 @@
 
 **Estimate:** about 4.5
 
-**Waiting on:** owner decisions D1 to D8; the owner's go for a run
+**Waiting on:** the owner's go for a run
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -33,17 +33,17 @@ When this is done, each level owns one sentence that the level above pulls, and 
 2. **The strategy page is generated where it repeats a brief.** Under each version's hand-written sentence and paragraph, a generated part lists that version's releases with their state and highlight, and under each release its plans with what each contributes. The sequence table and the hand-kept `Plans` and `Releases` lines go.
 3. **One strategy document per major version.** `strategy.md` is the path to 1.0. It opens with the aim in one line and a few paragraphs: where we are, what will be true at 1.0, and how we get there. When 1.0 ships the page is kept unchanged as `strategy/1.0.md` and a new `strategy.md` starts.
 4. **An issue reaches a release in two ways:** through a plan the release includes (the `plan:NN` label, as now), or directly, as an assorted ticket (a new `release:NN` label). The label means candidate, not commitment.
-5. **The brief lists its issues, pulled by a command.** A person or agent runs it; it writes a marked block at the bottom of the brief with each issue's number, type, state and title. No check calls GitHub.
+5. **The brief lists its issues, pulled by a command.** A person or agent runs it, from the day the release is first planned; it writes a marked block at the bottom of the brief with each issue's linked number, its type and its state. No issue text is copied, and no check calls GitHub.
 6. **What ships is decided at shipping.** When a brief is finalised its issue list is frozen: each issue is recorded as shipped or moved on. The final brief is the record of what the release contained.
 7. **Decisions stay the owner's.** A pull request that changes which version a release leads to, a brief's state or a frozen issue list does not merge by itself.
-8. **The documents agree.** The hierarchy in the table above is described once, in the contribution guide. Every skill, guide and template that describes the old page or tells an agent to copy into it is corrected, and the terms `version`, `release version` and `standing lane` are each defined once.
+8. **The documents and templates agree.** The hierarchy in the table above is described once, in the contribution guide. The release template carries the new lines and sections, and a strategy template starts the next major version's page. Every skill, guide and template that describes the old page or tells an agent to copy into it is corrected, and the terms `version` and `standing lane` are each defined once.
 
-**Included:** the brief template and its checks; a reader for briefs; the strategy view and the checks it replaces; rewriting `strategy.md` and the six current briefs to the new shape; a `Release` column in the plan catalog; the `release:NN` label rule; the issue-list command and its freeze; the pull-request guard; the documentation corrections listed in [SR-12](tasks.md).
+**Included:** the brief template and its checks; a reader for briefs; the strategy view and the checks it replaces; rewriting `strategy.md` and the six current briefs to the new shape; a strategy template; a `Release` column in the plan catalog; the `release:NN` label rule; the issue-list command and its freeze; finalising the briefs of Releases 12 and 13; the pull-request guard; the documentation corrections listed in [SR-12](tasks.md).
 
 **Not included:**
 - publishing a release from its final brief, the release contract, the manifest and showing release versions to users: [Plan 31](../31-releases-from-astrid-dev/plan.md), which builds on the briefs this plan leaves;
 - briefs for Releases 9 to 11 and the release log's missing rows (Plan 31, RL-1a);
-- a bot that writes issue lists, a check that calls GitHub, priorities, severities or a project board;
+- issue titles or any other issue text in a brief, a bot that writes issue lists, a check that calls GitHub, priorities, severities or a project board;
 - showing vision gaps on the strategy page: gaps keep their own routes;
 - shortening plan goals: the page pulls the brief's line for each plan instead.
 
@@ -53,7 +53,7 @@ Kept: the brief template and its five sections; the view machinery that already 
 
 Replaced: the hand-copied sequence table and the checks that compare it with the briefs; the rule that a brief must link a plan; the rule that a plan completion must edit `strategy.md`.
 
-Plan 48 deferred "generating the strategy release table" to Plan 31. Plan 31 has not started, and the owner wants this done first, as its own plan, so that Plan 31 publishes from documents that are already right. Plan 52 excluded a copy of issues in the repository; the owner now asks for the list in the brief, and this plan keeps Plan 52's reason for the rule it does not reverse (a check gives the same result on a laptop and in CI). Evidence, alternatives, the critique and the owner's words are in [inputs.md](inputs.md#planning-evidence).
+Plan 48 deferred "generating the strategy release table" to Plan 31. Plan 31 has not started, and the owner wants this done first, as its own plan, so that Plan 31 publishes from documents that are already right. Plan 52 excluded a copy of issues in the repository; the owner now asks for the list in the brief, as linked numbers only. Plan 52's rule that issue text is never pasted into a brief stands, and so does its rule that a check gives the same result on a laptop and in CI. Evidence, alternatives, the critique and the owner's words are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
@@ -61,7 +61,7 @@ Shortest path: the brief contract (SR-1, SR-2), then the strategy view and its c
 
 All work is in astrid-dev; no product repository changes. It is done before Plan 31 starts, and Plan 31's RL-1a then begins from this plan's template and checks.
 
-Unresolved: owner decisions D1 to D8 in [inputs.md](inputs.md#owner-decisions). D5 (whether Releases 12 and 13 are finalised here) and D2 (issue titles in a brief) change the task list; the others change wording. Recording this plan does not authorize implementation.
+The owner decided D1 to D9 on 15 November 2026 ([inputs.md](inputs.md#owner-decisions)); her reading of D4 is still to be confirmed. Recording this plan does not authorize implementation.
 
 ## Interfaces and handoff
 
@@ -81,7 +81,7 @@ Unresolved: owner decisions D1 to D8 in [inputs.md](inputs.md#owner-decisions). 
 - A draft brief with a highlight, an intent and no plans passes; a final brief that ships nothing is refused.
 - A brief whose `Toward` names a version the strategy page does not have is refused.
 - For Release 15, the command lists the open issues labelled `plan:39`, `plan:50` and `plan:40` under their plans and any `release:15` issue under assorted; run twice it writes the same block.
-- A final brief with an unfrozen issue list is refused. An issue title containing a marker, a link or a heading comes out as plain text.
+- A final brief with an unfrozen issue list is refused. The block holds no text from an issue: only its number, type and state.
 - A pull request that changes a `Toward` line merges only after the owner acts on it.
 - `git grep` finds no instruction to update a strategy row by hand.
 

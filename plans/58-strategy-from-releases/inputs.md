@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the owner asked for this on 15 November 2026 in the planning session, recorded on the [strategy page](../../strategy.md#decisions); her words are under [What the owner said](#what-the-owner-said). She chose a plan of its own, done before Plan 31: "the existing plan is one that basically makes releases happen based on these docs but I'd like to get this all done first. And of course fix the documentation. And merge the plan to main." D1 to D8 below are still hers to make.
+**Scope decision:** Accepted — the owner asked for this on 15 November 2026 in the planning session, recorded on the [strategy page](../../strategy.md#decisions); her words are under [What the owner said](#what-the-owner-said). She chose a plan of its own, done before Plan 31: "the existing plan is one that basically makes releases happen based on these docs but I'd like to get this all done first. And of course fix the documentation. And merge the plan to main." She decided D1 to D9 the same day.
 
 **Prior art:** Five read-only readings of astrid-dev `main` at `a398525a526a2bfe0eb2cccac47732c3491c467d` on 15 November 2026, one each on the checks and fixtures, the release system and Plan 31, issue intake and Plan 52, every plan header, and the rules for changing astrid-dev; and one read of astrid-dev's open issues on GitHub the same day.
 
@@ -46,6 +46,7 @@
 - *Keep the hand copy and its checks.* This is today's state and the recorded complaint.
 - *Generate the whole page.* The aim, each version's sentence and paragraph, the candidates and the decisions are judgment and have no other home; they stay hand-written.
 - *Pull each plan's goal.* 36 goals are too long for a list, and a goal is wrong for a plan that ships across two releases. The brief's sentence fits (D1).
+- *Pull issue titles into the brief.* Anyone can write a title, and agents read briefs; it would need an exception to the rule that issue text is never pasted into a brief. The owner chose linked numbers (D2).
 - *A GitHub milestone per release.* It puts the list outside the repository, where no check sees it and no pull request reviews it.
 - *A bot that writes the issue list.* It needs write access to `main` and a view whose source is not in the repository. A command a person or agent runs needs neither (D3).
 - *Hand-written fix lines in the brief.* The owner asked for the list to be pulled; Release 15 alone would need about 35 lines.
@@ -57,7 +58,7 @@ Chosen: the brief as the structured source; generated parts on the strategy page
 
 **Proof and limits:** Completion is in [plan.md](plan.md#completion). Not verified while planning: whether the App that refreshes generated pages on `main` is configured (the pages were current, which suggests it is); the live label list; whether `gh api` reaches the issues endpoint from every session that will run the command (the issue rules already file through it). The frozen list records each issue's state on a date and does not prove a fix is in the pinned commits. Whether the page is clearer is the owner's to judge on reading it.
 
-**Review rounds:** Pending — recommended: one final round, because the plan rewrites checks other plans rely on and puts text anyone can write into files agents read. No review stop: the estimate is under five days and the brief contract is covered by its own tests. Next: the owner confirms.
+**Review rounds:** Pending — recommended: one final round, because the plan rewrites checks other plans rely on. No review stop: the estimate is under five days and the brief contract is covered by its own tests. Next: the owner confirms.
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking, and the advisor session.
 
@@ -75,15 +76,17 @@ In the planning session on 15 November 2026 (dictated; spelling tidied, words un
 
 ## Owner decisions
 
-- **D1 The line shown for each plan under a release.** (a) The plan's name and the brief's sentence on what it contributes to that release. (b) The plan's goal. Recommendation: (a); it is short, already written and right for a plan in two releases.
-- **D2 Issue titles in a brief.** Anyone can write a title, and agents read briefs; the issue rules say issue text is never pasted into a brief. (a) Titles reduced to plain text, in a block marked as data, as the one exception to that rule. (b) Numbers, types and states only. (c) A sentence in our own words for each, by hand. Recommendation: (a); 35 bare numbers cannot be read, and 35 hand-written sentences will not be kept up.
-- **D3 Who pulls the list.** (a) A command run by the release manager or the orchestrator at check-ins and at the freeze, committed by pull request. (b) A workflow that writes to `main`. Recommendation: (a).
-- **D4 The words.** `**Toward:** 0.1` on a brief. "Version" means a step on the strategy page (0.1 to 1.0). "Release version" means what users see (0.0.14). The release that completes a version is the one the owner declares a minor release version under Plan 29's decision 7, so Release 17 would be release version 0.1.0. Recommendation: accept, or name other words.
-- **D5 Releases 12 and 13.** (a) Finalise their briefs in this plan from their gate records, with the owner's go for each (SR-11). (b) Leave them as drafts for Plan 31; until then the page shows them as drafts and the hand-written "Focus now" says they are out. Recommendation: (a) for Release 12, and for Release 13 once its record is complete.
-- **D6 How the owner's decisions are kept from merging by themselves.** (a) A check that fails a pull request changing a `Toward` line, a `State` line or a frozen list unless its body says `Owner decision needed`, which is the phrase that already holds auto-merge. (b) Teach auto-merge to read the diff. Recommendation: (a); it reuses the existing hold.
-- **D7 Who may apply `release:NN`.** (a) Triage, as a candidate only. (b) Only the release manager or the owner. Recommendation: (a); the commitment is the freeze, which is the owner's.
-- **D8 The words at the top of the page.** The planner drafts the three paragraphs from the briefs and the vision; the owner rewrites them. The aim for 1.0 was proposed by the advisor on 15 November 2026 and is still hers to change. Recommendation: draft, then her edit.
-- **D9 Order.** Decided 15 November 2026 (the owner): this plan is done before Plan 31. It is placed directly above Plan 31 in [priority.md](../priority.md); she may move it.
+All decided by the owner on 15 November 2026, in the planning session.
+
+- **D1 The line shown for each plan under a release.** (a) The plan's name and the brief's sentence on what it contributes to that release. (b) The plan's goal. Recommended (a). **Decided: (a), "Yes, we should also make sure templates cover and include this."** The release template says what that sentence is for, and a strategy template is added (SR-1, SR-5).
+- **D2 Issue titles in a brief.** (a) Titles reduced to plain text. (b) Numbers, types and states only. (c) A hand-written sentence each. Recommended (a). **Decided: "Probably should just include hyperlinked issue number."** The block holds each issue's linked number with its type and state, which are our own words, and no text from the issue. The rule that issue text is never pasted into a brief is unchanged.
+- **D3 Who pulls the list.** (a) A command run by a person or agent, committed by pull request. (b) A workflow that writes to `main`. Recommended (a). **Decided: (a), "Yes, but it can be populated earlier, e.g. when we're figuring out the strategy for the release. And probably should be."** The list is pulled when the release is first planned, at check-ins and at the freeze.
+- **D4 The words.** Proposed: `**Toward:** 0.1` on a brief, with "version" for a step on the strategy page and "release version" for what users see. **Decided: "It should probably be based on the released."** Read as: there is one numbering. A version on the strategy page is the version a release ships as under Plan 29's decision 7; releases on the way to 0.1 ship as 0.0.N, and the release that completes it ships as 0.1.0 when the owner declares it. So "version" has one meaning and "release version" is not a second term. *To confirm with the owner before SR-1 starts:* that this reading is hers, and that the brief's line stays `Toward`.
+- **D5 Releases 12 and 13.** (a) Finalise their briefs in this plan from their gate records. (b) Leave them for Plan 31. Recommended (a). **Decided: (a), "Yes, release."** Each brief becomes Final with her go on its pull request (SR-11); Release 13 follows once its record is complete.
+- **D6 How the owner's decisions are kept from merging by themselves.** A check that fails a pull request changing a `Toward` line, a `State` line or a frozen list unless its body says `Owner decision needed`, the phrase that already holds auto-merge. **Decided: as recommended.**
+- **D7 Who may apply `release:NN`.** Triage, as a candidate only; the commitment is the freeze. **Decided: as recommended.**
+- **D8 The words at the top of the page.** The planner drafts the three paragraphs from the briefs and the vision; the owner rewrites them. **Decided: as recommended.**
+- **D9 Order.** **Decided: this plan is done before Plan 31.** It is placed directly above Plan 31 in [priority.md](../priority.md); she may move it.
 
 ## Source identities
 
