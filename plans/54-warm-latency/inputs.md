@@ -66,6 +66,33 @@ Limits of leaning on ComfyUI, which bound the design: it can queue the valid bra
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run after Release 13 publishes, record the date, the phases it covers, the accountable session, what it may do without asking, and the advisor session.
 
+### Angles to explore
+
+Open questions and hypotheses, not tasks. None is measured unless it says so. Each becomes a task only if the cheap check shows it matters.
+
+| Angle | Why it might matter | Cheapest way to find out |
+|---|---|---|
+| Command-line start-up and imports | Half a second to two seconds on every call, on every placement; the floor under every other saving | `python -X importtime` on `astrid generate --help`; the orchestrator has a profile running |
+| The agent's own loop | An agent may make five to twenty tool calls and read a long skill to produce one image; that can dwarf the job | Count tool calls and wall time per image in the tester sessions' transcripts |
+| Perceived wait in the App and through MCP | A job that streams progress and a preview feels faster than a quicker silent one | Check whether ComfyUI's progress and preview events reach the App today; time to first visible sign of life |
+| Step counts and Turbo defaults per model | Halving steps halves generation, which is now the part that matters; video took the same wall time at 8 and 20 steps only because overhead hid it | For each default, the fewest steps at which output is acceptable, from one live grid |
+| Text encoders kept in system RAM across model switches | A switch back to the image model cost 62 s (measured); video's text encoder is 27 GB | During a switch, read ComfyUI's load lines: how much of the reload is the text encoder and how much the diffusion model |
+| ComfyUI launch settings | High-VRAM mode, attention backend, fp8 weights, compiled graphs: possibly tens of per cent of generation and load | One live grid on one model with each flag; the recipe sets `--use-ck-attention --disable-comfy-compiler` today |
+| Model load from a network volume | The first job reads tens of gigabytes; read speed there sets the cold start (video's first load: 211 s, measured) | `fio` or a timed `cat` of one model file on the volume against the machine's local disk; then consider copying hot models to local disk at claim |
+| Fresh-machine bootstrap and engine install | About nine minutes of the first job (measured as a block); the environment is rebuilt on every new machine | SP-1's timing on a first job; `uv` cache and the environment kept on the volume (SP-20) |
+| Claim and capacity wait, and GPU choice | Minutes when the chosen GPU is scarce; a cheaper, more available card may finish sooner end to end | The `capacity_wait` phase across the release's claims, by GPU type and hour |
+| Idle retention length | A longer warm window turns cold starts into warm ones at a known price per idle minute | From claim history: the gap between consecutive jobs, against the 30-minute default |
+| Several jobs per claim | A queue or a batch on one claim pays the fixed costs once; ComfyUI batches natively | How often the same person or agent submits more than one job within a minute |
+| Speculative warm-up | Load the default model when a session starts or a claim is made, before the first prompt | Time from session start to first submit in real sessions |
+| Transfer of inputs and outputs | Video outputs and reference clips are megabytes over the provider's proxy; per-file fetch is already being removed | Bytes and seconds per transfer from the timing block once SP-1 lands; then compression or a preview-first response |
+| Output encoding | The video encode and container mux may be a visible share of a short clip | ComfyUI's per-node timing for the save node |
+| Install and first-run time on a person's computer | The first impression: installer, Runtime start, the 17 GB first download | The tester reports' install time and download rate |
+| Windows-specific costs | Antivirus scanning of model files and process start cost are much higher on Windows | The tester reports' A against A2 timings and install time |
+| The Runtime's own latency | Admission, settlement and storage each involve a store write and an fsync | Timing inside the Runtime for one task, from its own logs |
+| Workflow conversion in VibeComfy | Witness hashing was 3,058 hashes per save before its fix; other per-job walks may remain | A profile of one compile and one save-as-entry |
+| Readiness and listing calls | `generate list` and `defaults` probe every target and fetch the full node list; agents call them often | Wall time of each call on a tester's machine |
+| The size of the skills an agent reads | Token and reading time before the first action | Size of each skill file, and which parts a typical first generation needs |
+
 ## Owner decisions
 
 - **D1 The targets.** Decided 14 November 2026: warm same-model overhead under 5 seconds on a rented machine for the work now in this plan, then under 0.5 seconds, and under 0.1 seconds locally. Source: orchestrator relay, 23:16 and 23:34 UTC.
