@@ -2525,3 +2525,7 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - This is the Windows proof for agent 9814193a.
   - The macOS shutdown race is filed as astrid-dev #685 (R14).
   - Remaining: journey 43757304537 plus captures, CI/Lanes on int/r13-9814193a, and W218.
+- **20:32 UTC: at Hannah's word (relayed by the advisor), the advisor has stopped. The orchestrator drives R13 to completion alone.**
+  - The advisor's dive task trig_01QpJUYDLeTf7bq7cEhS4oQM is disabled (verified), as are its tester-issue watch and its PR 348 subscription.
+  - Nobody is watching tester issues astrid-dev #651/#652/#653 now. They are on r14-test heads and not an R13 gate; whether someone answers them goes to Hannah after publish.
+  - Follow-ups are in astrid-dev #669–#685; PR 684 is on auto-merge.
