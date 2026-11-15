@@ -10,7 +10,7 @@
 
 **Estimate:** about 4.5
 
-**Waiting on:** the owner's word on D5, D10, D11 and D12; the owner's go for a run
+**Waiting on:** the owner's go for a run
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -42,7 +42,7 @@ When this is done, each level owns one sentence that the level above pulls, and 
 
 **Not included:**
 - publishing a release from its final release brief, the release contract, the manifest and showing versions to users: [Plan 31](../31-releases-from-astrid-dev/plan.md), which builds on the release briefs this plan leaves;
-- making the release briefs of Releases 12 and 13 Final: recommended for Plan 31, pending the owner's word (D5);
+- making the release briefs of Releases 12 and 13 Final: Plan 31 (D5);
 - release briefs for Releases 9 to 11 and the release log's missing rows: no plan covers these today, and this one does not add them;
 - issue titles or any other issue text in a release brief, a bot that writes issue lists, a check that calls GitHub, priorities, severities or a project board;
 - a list of plans that are in no release: the catalog lists every plan;
@@ -63,9 +63,9 @@ Shortest path: the release brief contract (SR-1), then the generated page in one
 
 All work is in astrid-dev; no product repository is read or changed. Work lands on `int/58-strategy-from-releases`, one pull request per task, and reaches `main` in one merge with the owner's go: a registered view without its markers on the page breaks `sync` for every pull request, so the parts cannot reach `main` separately.
 
-**How it joins Plan 31,** where a release brief becoming Final is what publishes a release: the release brief stays the one file; this plan's reader is what Plan 31's record check and manifest render read; the freeze happens before Final, so the published record already says which issues shipped; and kind is declared in the release brief from the draft, so Plan 31's version step has its source. Plan 31's approval of the Final transition (a code owner's review) replaces this plan's auto-merge rule for `State` when it lands. One thing is Plan 31's to settle with the owner: its plan to make her the code owner of all of `releases/` would make every issue-list pull wait for her, so it should protect the Final transition and not every edit to a draft.
+**How it joins Plan 31,** where a release brief becoming Final is what publishes a release: the release brief stays the one file; this plan's reader is what Plan 31's record check and manifest render read; the freeze happens before Final, so the published record already says which issues shipped; and kind is declared in the release brief from the draft, so Plan 31's version step has its source. Plan 31's approval of the Final transition (a code owner's review) replaces this plan's auto-merge rule for `State` when it lands. Releases 12 and 13 are made Final in Plan 31, not here (D5). One thing is Plan 31's to settle with the owner: its plan to make her the code owner of all of `releases/` would make every issue-list pull wait for her, so it should protect the Final transition and not every edit to a draft.
 
-Unresolved, and each changes a task card, so no run starts before them: D5 (reopened by the critique), D10 and D11 (the owner's question of 15 November 2026 on kinds, with a recommendation she has not yet answered) and D12 ([inputs.md](inputs.md#owner-decisions)). Recording this plan does not authorize implementation.
+The owner decided D1 to D12 on 15 November 2026 ([inputs.md](inputs.md#owner-decisions)); none is open. Recording this plan does not authorize implementation.
 
 ## Interfaces and handoff
 
