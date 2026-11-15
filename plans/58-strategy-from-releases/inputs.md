@@ -96,6 +96,15 @@ All decided by the owner on 15 November 2026 in the planning session.
 - **D11 What the strategy page shows.** She asked: "only show greater than minor?" and "Should it include all the plans and issues done in patches before too?" **Decided: the roll-up, as recommended ("Yes to all 4!"):** each version shows its minor release in full; the patches on the way as one line of linked titles; the plans of all of them, each once; and a count of issues for each frozen list. A minor release's own brief lists only its own plans and issues. The alternative, hiding patches from the page entirely, was not chosen.
 - **D12 Under what authority an assorted ticket is worked.** The rules say an issue becomes work only through a task row, and an assorted ticket has no plan. **Decided, as recommended ("Yes to all 4!"):** its row in a release brief's issue list counts, worked under that release's run; the label alone still commits nothing.
 
+## Run decisions
+
+On 15 November 2026 in ChatGPT session `3417d5f77996`, the owner replied to the manager's two recommendations: "Yeah, we should give them, like, a full version generated section, like the 1.0. Yeah. And yeah, I agree with the merge order. And one thing I was thinking about is how... never mind. Please go ahead with that."
+
+- **D13 The generated 1.0 section.** Accepted: retain the nine minor regions and add a full generated `1.0` region beneath the major aim. It shows the major release and patches leading to it, their plan contributions and frozen issue counts. After 0.9, pending patches belong there while awaiting the major. Keep the nine-minor limit and refuse releases after a major. This resolves SR-2's missing region without hiding releases or inventing 0.10; its marker and boundary tests enforce the decision.
+- **D14 SR-5's ordering evidence.** Accepted: Plan 52's shared guide and state-link test already landed in [PR 620](https://github.com/banodoco/astrid-dev/pull/620), commit `e503694c`, before this run's base. SR-5 follows that change and preserves its six searches and heading rule. This satisfies SR-5's coordination item; it neither asserts an acknowledgement from the older manager session nor completes Plan 52's broader II-13 task.
+
+D8 remains in force: [SR-3's draft](https://github.com/banodoco/astrid-dev/pull/695) awaits the owner's rewrite. This reply approves D13 and D14; it supplies no rewritten strategy text.
+
 ## Estimate
 
 | Task | Days |

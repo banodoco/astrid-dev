@@ -83,6 +83,70 @@ def _status_definitions(root: Path) -> str:
     return before + start + "\n" + definitions() + "\n" + end + after
 
 
+def release_membership(briefs: list[dict]) -> dict[str, list[dict]]:
+    """Assign releases to their next shipping minor or major version."""
+    result: dict[str, list[dict]] = {}
+    pending = []
+    minor = 0
+    for brief in sorted(briefs, key=lambda b: int(b["number"])):
+        pending.append(brief)
+        if brief["kind"] in ("minor", "major"):
+            if brief["kind"] == "minor":
+                minor += 1
+                version = f"0.{minor}"
+            else:
+                version = "1.0"
+            result.setdefault(version, []).extend(pending)
+            pending = []
+    if pending:
+        result.setdefault(f"0.{minor + 1}" if minor < 9 else "1.0", []).extend(pending)
+    return result
+
+
+def _strategy(root: Path, version: str) -> str:
+    from records import project_fields, release_brief
+    text = (root / "strategy.md").read_text(encoding="utf-8")
+    start, end = f"<!-- strategy-{version}:start -->", f"<!-- strategy-{version}:end -->"
+    if text.count(start) != 1 or text.count(end) != 1 or text.find(start) > text.find(end):
+        raise ValueError(f"view strategy-{version}: target must contain exactly one ordered {start} and {end} pair; restore them in strategy.md")
+    before, rest = text.split(start, 1)
+    _, after = rest.split(end, 1)
+    briefs = []
+    for path in (root / "releases").glob("[0-9]*.md"):
+        if path.stem.isdigit():
+            body = path.read_text(encoding="utf-8")
+            brief = release_brief(body, strict=False)
+            if brief["number"] and brief["number"].isdigit():
+                briefs.append(brief)
+    releases = release_membership(briefs).get(version, [])
+    lines = []
+    for brief in releases:
+        if brief["kind"] in ("minor", "major"):
+            lines.append(f"[Release {brief['number']}](releases/{brief['number']}.md) — {brief['title']} ({brief['state']}); {brief['highlight']}")
+    patches = [b for b in releases if b["kind"] == "patch"]
+    if patches:
+        lines.append("On the way: " + ", ".join(f"[Release {b['number']} — {b['title']}](releases/{b['number']}.md)" for b in patches))
+    plans = {}
+    for brief in releases:
+        for plan in brief["plans"]:
+            key = plan["folder"]
+            entry = plans.setdefault(key, {"number": plan["number"], "contributions": []})
+            entry["contributions"].append(f"[Release {brief['number']}](releases/{brief['number']}.md): {rebase_links(plan['sentence'], Path('releases'), Path('.'))}")
+    if plans:
+        lines.append("")
+        for folder, entry in plans.items():
+            number, contributions = entry["number"], entry["contributions"]
+            name = project_fields((root / "plans" / folder / "plan.md").read_text(encoding="utf-8"))["Project"]
+            lines.append(f"- [Plan {number} — {name}](plans/{folder}/plan.md) — " + "; ".join(contributions))
+    for brief in releases:
+        if brief.get("issues_frozen", False):
+            count = len(brief["issues"])
+            lines.append(f"[Release {brief['number']} issues](releases/{brief['number']}.md#issues): {count}")
+    if not releases:
+        lines.append("No release yet.")
+    return before + start + "\n" + "\n".join(lines) + "\n" + end + after
+
+
 VIEWS = (
     View("public-vision", ("vision/", "plans/*/plan.md", "plans/priority.md"), "vision/README.md", _vision),
     View("root-vision-summary", ("vision/", "plans/*/plan.md", "plans/priority.md"), "README.md", _root_readme, "vision-summary"),
@@ -90,7 +154,9 @@ VIEWS = (
     View("plan-catalog", ("plans/*/plan.md", "plans/priority.md"), "plans/index.md", _catalog, "plan-catalog"),
     View("status-definitions", ("scripts/lifecycle.py",), "plans/index.md", _status_definitions, "status-definitions"),
     View("check-catalog", ("scripts/checks.py",), "docs/checks.md", _checks),
-)
+) + tuple(View(f"strategy-{version}", ("releases/*.md", "plans/*/plan.md"), "strategy.md",
+               lambda root, version=version: _strategy(root, version), f"strategy-{version}")
+          for version in [*(f"0.{n}" for n in range(1, 10)), "1.0"])
 
 
 def _with_marker(view: View, content: str) -> str:
