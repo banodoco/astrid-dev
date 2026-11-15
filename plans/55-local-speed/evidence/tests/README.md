@@ -22,3 +22,11 @@ VibeComfy used the prepared `env/vc-pytest.sh` environment with `PYTEST_ADDOPTS=
 LS-2 remains a measurement scaffold: it explicitly records `budget_certified: false`, labels synthetic execution, and leaves unobserved child-process, compile/emission, output-hash and native flush counts unknown. SDK and CLI timing boundaries are reported separately; these tests do not establish comparable performance medians.
 
 LS-5's real upstream terminal-event ordering has not been independently verified; the source-read tool returned `DisabledError` and was not retried. The tests exercise the documented history-ready signal. Agent transport integration, progress consumers and a re-pin remain outstanding. No dependency pin changed in either candidate. Full relevant CI and review remain future gates.
+
+## Partial LS-6 combined candidate
+
+Agent `6e7e0ec9d40d43ab82178000443f05095f708f0e`, tree `618b517c1f0f272039300fe74b6619c2fe8ace95`, adds the host digest-carrying change to the already checked LS-2/LS-11 integration. The connector commit `12ca27d59c779e8c602fc6a7830415e800a06421` in [task PR #351](https://github.com/banodoco/astrid-agent/pull/351) has exactly that tree.
+
+An independent N check passed 45 cases in `tests/core/generation/test_output_delivery.py`, `tests/sdk/test_media_open.py`, and `tests/core/test_generic_host_thumbnails.py`. With the explicit integration marker it also passed the attached-custody selector in `tests/packs/vibecomfy/test_local_server_run.py`, the attached placement selector, and both meter cases: four integration cases. The comparison under `astrid-agent/6e7e0ec/` contains 43 baseline IDs and 49 candidate IDs, with no regressions or missing baseline IDs. Warnings concern the existing legacy template-ref fallback.
+
+The tests exercise a file changed after harvesting being rejected by real Runtime inline staging, attempt-bound upload identity checks, remaining hash passes, truncated caller delivery, and source-aware caller-copy isolation. The manager withheld an SDK materialization optimization rather than change existing reuse semantics; SDK production code is byte-identical to the published base. Global duplicate hashes, buffered transfers, and synchronous thumbnails remain. This candidate does not complete LS-6 or certify a speed target.
