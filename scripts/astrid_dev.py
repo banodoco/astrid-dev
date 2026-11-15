@@ -22,7 +22,11 @@ def main(argv=None, *, root=ROOT, registry=None):
     entries = checks.REGISTRY if registry is None else registry
     if args.command == "sync":
         import views
-        changed = views.sync(Path(root))
+        try:
+            changed = views.sync(Path(root))
+        except (ValueError, OSError) as exc:
+            print(f"ERROR sync: {exc}")
+            return 1
         for target in changed:
             print(f"Updated {target}")
         if not changed:
