@@ -2398,3 +2398,4 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - a Windows branch for the DB-mode check;
     - emit host_startup_phase rows in --service mode (generic_host.py:77).
     - Owners: agent side to machines, Runtime side TBD.
+- **20:40 UTC: R13.1 TLS fallback (machines) is ready for proof.** r13/machines-r131-tls 95b8130e8 on int/r13.1. It adds astrid/installer/tls_fallback.py, which retries once with an OS-trust-store context only on CERTIFICATE_VERIFY_FAILED, never disabling verification. truststore (MIT, ~56 KB) is vendored under astrid/installer/_tls_truststore/. tools.py download() changes by +3/−1. 12 new tests, 152 in tests/installer, cycles OK. The test-lane proof is queued after the R13 gate clears. The Remotion readiness card and the Windows CI guard are in progress.
