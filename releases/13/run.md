@@ -2,14 +2,7 @@
 
 The live state of the Release 13 run: streams, owners and sessions, the timeline, and status. It's updated at every check-in. The [brief](../13.md) holds intent and approach; [decisions.md](decisions.md) holds dated rulings (append-only); [tests.md](tests.md) holds the test gate.
 
-## Now (01:00 UTC Sun 15 Nov): read this first
+## Now (02:00 UTC Sun 15 Nov): read this first
 
-**CUTOFF 13:00 UTC.** Model limit at warning: conserve. **Compose 22ffe8483.** Hannah: ship h3first2 (it merges on the test manager's MERGE-READY, after a stale-test update). Standing rule: plan/docs PRs recording Hannah's decisions merge once green. Plans #654 (speed) and #648 (phase 4) are merged on astrid-dev main.
-
-**Open:**
-- Machines' Tier 1 integrated head (incl. P3, W-H, Q6, Q2; tier1_cards in evidence) ~03:30–04:00.
-- Cells L7 safe subset; L1/L4 moved to plan 54 on safety.
-- W4 r4 (lane 2); P3 W125; h3first2 W117/W121.
-
-**Live:** ~09:00 re-measure, then the freeze at 13:00 and the final repeat. **Testers:** cut at 02:00, CI by 04:00, live by 07:00. **Balance** $81.55, 0 pods.
+**CUTOFF 13:00 UTC.** **Compose 247335369** (W4 r4 and h3first2 merged). **Tester head int/r13-9acb55b6** (CI 43664822003 / Lanes 43664822007); manifest astrid-dev dd3ad1bf (pins passed); the Windows proof run 43664846375 is running, and on green issues #651–#653 go live. **Tier 1** integrated head ~04:00 (W-A/B/C Astra fixes in progress; W-E/Q2 approved; Q6 dropped). L7 is under Astra W134. ~09:00: live re-measure. **Balance** $81.55, 0 pods.
 
