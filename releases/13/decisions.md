@@ -2342,3 +2342,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Gate additions: the diff read, 13 journey rows on the exact App SHA, and PR #268 three-products by name.
 - **16:50 UTC: final App b5b1e188fd0073b0b8b176d7a98553b36b987b06** (PR #268 head). The required card now opens by itself while an update is running, failed or needs a restart, including after a remount; a user's own toggle wins. This closes the hidden-failed-update block (test manager agreed it was a block), so the deferred row for it is removed. Paired vitest 269/269 → 276/276, with no existing assertion changed in this commit. Manifest and Agent unchanged. Next: 13 journey rows on b5b1e188f, the W205 delta read, W206 by-name on PR #268, W200 and A⁗ fast checks.
 - **16:55 UTC: W205 diff read.** The BLOCK (hidden failed update) is already fixed in b5b1e188f. One more App commit: compact card and badge only for manifest-required updates (schema/recovery cards unchanged), a max-height and scroll on the open card, and a meaningful Pinokio test. Touch-layout overlap is deferred.
+- **17:05 UTC: FINAL App e7d27462e583e84dc5668603a3534b2fcc56ed0c** (PR #268 head; 4 files under src/ vs 3b3c85fd).
+  - Compact card only for manifest-required updates, via an explicit `required` flag; schema/recovery cards are unchanged.
+  - The open card is capped (60vh/32rem, scroll).
+  - The manual toggle is tied to the update-state kind, so a new failure reopens the card.
+  - The Pinokio checks are made meaningful.
+  - Paired vitest 269 → 279, with mutation checks.
+  - Final evidence plan agreed with the test manager: the full 13-row matrix on agent 91b60416 (43725021701), plus the 3 fresh-install rows on the exact final App SHA. The journey reads only the unchanged manifest and install scripts.
