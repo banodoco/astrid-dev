@@ -2564,3 +2564,10 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
 - **21:15 UTC: second capture row 43757326484 (linux-fresh, published tuple) missed the update line again.** It is the same shape as verdict A: the App recorded the transition (astrid.update.updated {13→14}), and the final page reads "Astrid updated. Reload to continue."; the line never rendered. It does not gate.
   - **New observation for 13.1:** straight after the update POST, Settings showed "Astrid needs repair before it can update." where passing rows show "Updating Astrid…", with 33 aborted health/update-status polls in the first 20 s. This is a transient wrong message during the update, not a wrong end state. It is added to the 13.1 App display-defect row.
   - CI 43757233210: shards 3, 4, 5 and 8 are red. Attribution vs R12 waits until all eight conclude.
+- **22:22 UTC: POST-PUBLISH CI on 9814193a: 15 unit ids pass on R12 main and fail on the published agent** (shards 7 and 8; 0 in the 401dbd78 baseline, so they came in with the Windows merges 8e8e60b1 → 9814193a).
+  - **The groups:**
+    - (1) 8 installer staged-schema tests plus 1 ACL test: the rejection still raises, but the rejected candidate folder is now removed.
+    - (2)+(3) 5 failure-copy tests: "Astrid did NOT update…" became "Astrid couldn't finish. Your work is kept. … Nothing was changed".
+    - (4) 1 Pinokio skill-policy save test.
+  - **My miss:** the hosted shards on 36f04678 and ff9da5d8 were cancelled (superseded or mypy-red), so the Windows merge's unit tests never had a hosted run before publish, and Hannah's fast rule let the publish go ahead without them.
+  - **Next:** a Sonnet worker classifies each group, with the custody question first: can the new cleanup delete a foreign or symlinked object? If it can, that blocks and I bring rollback to Hannah. Otherwise it is a 13.1 fix with the tests updated by ruling.
