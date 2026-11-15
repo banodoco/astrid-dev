@@ -266,5 +266,28 @@ class ReviewEventTests(unittest.TestCase):
             self.assertFalse(any(c.args[0] != "GET" for c in request.call_args_list))
 
 
+
+class GitHubPlanTextEncodingTests(unittest.TestCase):
+    def test_wrapped_github_contents_base64_is_decoded(self):
+        import base64
+        import contribution_api
+        wrapped = base64.encodebytes(PLAN.encode("utf-8")).decode("ascii")
+        for content in (wrapped, wrapped.replace("\n", "\r\n")):
+            with self.subTest(crlf="\r\n" in content), \
+                    patch("contribution_api.request", return_value={
+                        "type": "file", "encoding": "base64", "content": content,
+                    }):
+                self.assertEqual(contribution_api.plan_text(REPO, MAIN, FOLDER), PLAN)
+
+    def test_non_base64_characters_still_fail_closed(self):
+        import base64
+        import contribution_api
+        wrapped = base64.encodebytes(PLAN.encode("utf-8")).decode("ascii")
+        corrupted = "@" + wrapped[1:]
+        with patch("contribution_api.request", return_value={
+                "type": "file", "encoding": "base64", "content": corrupted,
+        }), self.assertRaisesRegex(ValueError, "not valid base64 UTF-8"):
+            contribution_api.plan_text(REPO, MAIN, FOLDER)
+
 if __name__ == "__main__":
     unittest.main()
