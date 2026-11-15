@@ -84,6 +84,7 @@ Version 0.2 is open. These are the candidates so far, from Release 13's deferred
 - **Generation complete:** every bundled workflow ready, video models beyond the default, the rest of onboarding ([Plan 20](plans/20-zero-to-first-image/plan.md), [Plan 32](plans/32-generation-placement-targets/plan.md)); frames at positions on the default video workflow (first frame, last frame or any position, one feature).
 - **Finish a video:** generate onto the timeline, agent edits that never overwrite the creator's, export ([Plan 37](plans/37-generate-time-destination/plan.md), [Plan 04](plans/04-concurrent-edits/plan.md), [Plan 18](plans/18-timeline-editing/plan.md), [Plan 27](plans/27-video-render-options/plan.md)). Three of these are goals without tasks; walk one real video end to end before scoping.
 - **Rented machines:** speed and the slow first job ([Plan 54](plans/54-warm-latency/plan.md)).
+- **Packs extend the database:** a pack adds its own tables and rows, with Astrid's own fields protected, updates accommodated and destructive actions refused; features such as references then become default-installed packs ([Plan 57](plans/57-pack-database-extensions/plan.md), a draft; the owner asked for it on 15 November 2026 as one for after version 0.1).
 
 ## Sequence
 
