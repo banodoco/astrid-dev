@@ -2266,3 +2266,12 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
   - Two principles: "ComfyUI is the authority on what a node accepts; Astrid never refuses what ComfyUI would run" and "verify at a trust boundary once; inside a job, carry the digest."
   - Top items: (1) verify the installation only at state changes (W-A, 60–100 s rented); (2) template-aware or advisory unknown-input validation, which removes the h3first2 class of false refusal; (3) the V1 witness re-pin, ≥3.2 s; (4) one dispatch digest command, 5–10 s; (5) forward ComfyUI progress and previews (not forwarded today); (6) incremental emission, ~10 s local.
   - The h3first2 allowance gap: validate.py:963–970 covers MiniMaxH3CustomKeyframes, but h3first2 compiles to ...Masked.
+- **10:08 UTC: Hannah: "Let's get this release shipped asap and get anything that's lagging into next".**
+  - **R13 = A′** = a91c35dfd + r13/revert-h3first2 8d88fc7ec + r13/machines-prepstop 16dbe5b41.
+  - **Tier 1 (B/B′) moves to R13.1**, starting from r13/machines-tier1-bprime, with W-A, W-B dispatch, the truncated-get fix and P6 observability.
+  - Publish condition:
+    - A's binding table is clean;
+    - the revert and prepstop delta proofs are clean;
+    - A′'s hosted fast checks and unit shards are green;
+    - A′'s short live recheck passes (s2i/roundA2.sh: h3 i2v reference route, then t2i straight after to prove no poisoning, bike i2v, h3 video-edit, t2i, release; ~40 min).
+  - A′'s Lanes delta is reported when it lands. B's short round finishes for R13.1's warm-timing data.
