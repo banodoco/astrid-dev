@@ -2571,3 +2571,9 @@ LATER: schema-evidence identity for schema-changing patches, `sha256_before` dia
     - (4) 1 Pinokio skill-policy save test.
   - **My miss:** the hosted shards on 36f04678 and ff9da5d8 were cancelled (superseded or mypy-red), so the Windows merge's unit tests never had a hosted run before publish, and Hannah's fast rule let the publish go ahead without them.
   - **Next:** a Sonnet worker classifies each group, with the custody question first: can the new cleanup delete a foreign or symlinked object? If it can, that blocks and I bring rollback to Hannah. Otherwise it is a 13.1 fix with the tests updated by ruling.
+- **22:40 UTC: my classification of the 15 post-publish ids: no user-hittable regression; NO ROLLBACK** (pending the test manager's Sonnet confirmation).
+  - **(1) Schema and ACL (9):** 896544e95 removes ONLY the candidate folder that the same `stage` call just created (mkdir without exist_ok), via shutil.rmtree, which does not follow symlinks. Planted foreign and symlink objects are inside it. The tests pin the old leftover folder; their real asserts still hold.
+  - **(4) Pinokio (1):** a stale stub. `prior.env` was already accessed in R12 (401dbd78 backend.py:1375); the stub SimpleNamespace lacks `env`.
+  - **(2)+(3) Copy (5):** the intended "honest failure messages" wording. The first line and the Next/Details lines remain.
+  - **Action:** a 13.1 card updates the 15 tests to the intended behaviour.
+  - **Process lesson:** a recut whose hosted unit shards were cancelled (36f04678, ff9da5d8) left the merged Windows branch with no hosted unit run before publish. Next time, run the merged branch's own unit shards before the final recut even when the fast rule waives the final head's shards.
