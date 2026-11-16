@@ -80,6 +80,21 @@ class EligibilityTests(unittest.TestCase):
                     }])
                     self.assertEqual(reason, f"release brief changes **{field}:**")
 
+    def test_release_included_plans_change_is_not_eligible(self):
+        plan = "- [Plan 40](../plans/40-x/plan.md) — Included."
+        for change, diff in (("addition", f"+{plan}"), ("removal", f"-{plan}"),
+                             ("heading", "-## Included plans\n+## Plans")):
+            with self.subTest(change=change):
+                self.assertEqual(self.reason(changed_paths=["releases/13.md"], file_entries=[{
+                    "filename": "releases/13.md", "patch": f"@@ -1 +1 @@\n{diff}",
+                }]), "release brief changes ## Included plans")
+
+    def test_release_branches_and_issues_changes_are_eligible(self):
+        diff = ("+| astrid-agent | `release/14/x` | fix #5 | not yet cut | open |\n"
+                "+| [#5](https://github.com/banodoco/astrid-dev/issues/5) | bug | open | release:14 |")
+        self.assertIsNone(self.reason(changed_paths=["releases/14.md"], file_entries=[{
+            "filename": "releases/14.md", "patch": f"@@ -1 +1 @@\n{diff}"}]))
+
     def test_release_approach_change_is_eligible(self):
         self.assertIsNone(self.reason(changed_paths=["releases/13.md"], file_entries=[{
             "filename": "releases/13.md",

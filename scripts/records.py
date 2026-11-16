@@ -326,9 +326,13 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
         if (repo, branch) in seen:
             errors.append(f"{label}: duplicate repository and branch")
         seen.add((repo, branch))
-        kind = "plan" if role.startswith("plan ") else role
-        if kind not in BRANCH_STATES or (kind == "plan" and not re.fullmatch(r"plan \d+", role)):
-            errors.append(f"{label}: Role must be release, plan <PP> or fix")
+        kind = "plan" if role.startswith("plan ") else "fix" if role.startswith("fix") else role
+        if role == "fix":
+            errors.append(f"{label}: a fix branch names its issue; Role must be fix #<issue>")
+            continue
+        if kind not in BRANCH_STATES or (kind == "plan" and not re.fullmatch(r"plan \d+", role)) \
+                or (kind == "fix" and not re.fullmatch(r"fix #\d+", role)):
+            errors.append(f"{label}: Role must be release, plan <PP> or fix #<issue>")
             continue
         repeated = kind == "release" and repo in release_repos
         (release_repos if kind == "release" else other_repos).add(repo)
@@ -353,6 +357,22 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
             errors.append(f"{label}: State for a {kind} row must be {' or '.join(BRANCH_STATES[kind])}")
     for repo in sorted(other_repos - release_repos):
         errors.append(f"Branches repository {repo}: has a plan or fix row but no release row")
+    return list(dict.fromkeys(errors))
+
+
+def release_fix_issue_errors(text: str, number: str) -> list[str]:
+    """Each fix row's issue must be listed in the same brief's Issues block."""
+    try:
+        listed = {row["number"] for row in release_issue_block(text)["rows"]}
+    except ValueError:
+        return []  # the malformed block is reported by release_brief
+    errors = []
+    for line in (section(text, "Branches") or "").splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        match = re.fullmatch(r"fix #(\d+)", cells[2]) if line.strip().startswith("|") and len(cells) == 5 else None
+        if match and int(match.group(1)) not in listed:
+            errors.append(f"Branches row {cells[0]} {cells[1]}: issue #{match.group(1)} is not in the Issues block; "
+                          f"it must carry release:{number} or the label of an included plan, then refresh the block")
     return list(dict.fromkeys(errors))
 
 

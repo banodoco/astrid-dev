@@ -74,7 +74,7 @@ One meaning per word; two meanings, two terms.
 
 **plan branch:** `release/<NN>/plan-<PP>`, where a plan's work lands inside its release.
 
-**fix branch:** `release/<NN>/<topic>`, where work outside a plan lands inside its release.
+**fix branch:** `release/<NN>/<topic>`, where work outside a plan lands inside its release; its brief row's Role is `fix #<issue>`, the astrid-dev issue it answers.
 
 **tester build:** a pre-release install manifest naming one exact commit on a release branch, for outside testers.
 

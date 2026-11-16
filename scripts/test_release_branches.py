@@ -40,7 +40,7 @@ Not pinned.
 GOOD_ROWS = [
     "| astrid-agent | `release/14/main` | release | " + CUT + " | open |",
     "| astrid-agent | `release/14/plan-55` | plan 55 | " + CUT + " | merged |",
-    "| astrid-agent | `release/14/tester-fixes` | fix | " + CUT + " | open |",
+    "| astrid-agent | `release/14/tester-fixes` | fix #721 | " + CUT + " | open |",
     "| astrid-runtime | `release/14/main` | release | " + CUT + " | open |",
 ]
 
@@ -77,7 +77,7 @@ GOOD_ANCESTORS = [(PLAN, MAIN), (CUT, MAIN), (CUT, PLAN), (CUT, FIX), (CUT, RUNT
 class ReleaseBranchesTests(unittest.TestCase):
     def verify(self, refs=None, ancestors=None, text=None):
         return rb.verify(text or page(), 14, remote=fake_remote(refs or healthy_refs()),
-                         check=ancestors or known_ancestors(*GOOD_ANCESTORS))
+                         check=ancestors or known_ancestors(*GOOD_ANCESTORS), issue_exists=lambda n: True)
 
     def test_all_good(self):
         report = self.verify()
@@ -173,6 +173,30 @@ class ReleaseBranchesTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             rb.parse_clones(["NotAProduct=/tmp/x"])
         self.assertEqual(rb.parse_clones(["VibeComfy=/tmp/v"]), {"VibeComfy": Path("/tmp/v")})
+
+    def test_fix_issue_is_checked_when_it_can_be(self):
+        refs = fake_remote(healthy_refs())
+        ok = known_ancestors(*GOOD_ANCESTORS)
+        report = rb.verify(page(), 14, remote=refs, check=ok, issue_exists=lambda n: n == 721)
+        self.assertEqual((report.flagged, report.unverified), ([], []))
+        report = rb.verify(page(), 14, remote=refs, check=ok, issue_exists=lambda n: False)
+        self.assertEqual(report.flagged, ["astrid-agent release/14/tester-fixes: issue #721 does not exist in banodoco/astrid-dev"])
+        report = rb.verify(page(), 14, remote=refs, check=ok)
+        self.assertEqual(report.flagged, [])
+        self.assertEqual(report.unverified, ["astrid-agent release/14/tester-fixes: issue #721 not verified (no GH_TOKEN)"])
+
+    def test_api_issue_exists_maps_404_and_other_errors(self):
+        def api(code):
+            def call(method, path):
+                self.assertEqual(path, "/repos/banodoco/astrid-dev/issues/721")
+                if code:
+                    raise urllib.error.HTTPError(path, code, "x", None, None)
+                return {}
+            return call
+        self.assertTrue(rb.api_issue_exists(api(None))(721))
+        self.assertFalse(rb.api_issue_exists(api(404))(721))
+        with self.assertRaises(rb.NotVerified):
+            rb.api_issue_exists(api(403))(721)
 
     def test_list_table_shows_heads_and_missing(self):
         refs = healthy_refs()

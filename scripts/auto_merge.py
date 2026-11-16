@@ -56,6 +56,9 @@ def eligibility_reason(draft, author_association, labels, body, changed_paths, f
                 return "release brief patch has an unusual line break"
             if not line.startswith(("+", "-")):
                 continue
+            # Scoping a release is the owner's decision: a plan line or its heading changing needs the owner.
+            if re.match(r"^(?:- \[Plan \d+\]\(|## Included plans\s*$)", line[1:].lstrip(" \t")):
+                return "release brief changes ## Included plans"
             fields = key_value_lines(line[1:].lstrip(" \t"), style="bold")
             if fields:
                 key, separator, _ = fields[0]
