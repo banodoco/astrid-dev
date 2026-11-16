@@ -1,22 +1,26 @@
-# Release 14 G0 — canonical worker scripts
+# Release 14 G0 — worker smoke and coordinated submissions
 
-16 November 2026. This is the astrid-dev portion of [G0](../tasks.md), under the
-[Release 14 scope](../plan.md#release-14-scope). The product copies still need
-coordinated submissions; G0 is not marked complete.
+16 November 2026. This records the canonical scripts and coordinated product
+submissions for [G0](../tasks.md), under the
+[Release 14 scope](../plan.md#release-14-scope). Implementation and local G0
+acceptance are complete in all three submissions. Their integration remains
+pending, so the task's merged-completion checkbox stays open.
 
 ## Source and scope
 
 - Base: `2770aa79e8d9325c7891294609c746963cc4776e`.
 - Implementation: `5fb12b7908d0a0e771e989f9f1f1d51b993788df`, tree
   `71fc701d644a55480b65b80c3065cc36fd840855`.
-- Authorized destination: astrid-dev `p39/g0` only. No product branch, release
-  branch or `main` was pushed or merged.
-- Local validation: Linux, Python 3.13.5; fresh detached product checkouts with
+- The original assignment authorized astrid-dev `p39/g0` only. The owner later
+  explicitly authorized the coordinated Runtime/App submissions. All remote
+  writes are to `p39/g0` in those three repositories; no release branch or
+  `main` was pushed or merged.
+- Initial local validation: Linux, Python 3.13.5; fresh detached checkouts with
   only the proposed worker scripts copied into `scripts/worker-env/`.
-- Runtime checkout: `2537fed24385ec1c24f48a812e09af4bb63fb794`, the inspected
+- Runtime validation base: `2537fed24385ec1c24f48a812e09af4bb63fb794`, the inspected
   `release/14/main` and `release/14/plan-39` head. Its Agent pin is
   `b05ac03a5bcab278bccf99d85b49f4037b5dec10`.
-- App checkout: `0b6ef16152dc3fa11246ccc2007da630c66d1a1a`, the inspected
+- App validation base: `0b6ef16152dc3fa11246ccc2007da630c66d1a1a`, the inspected
   `release/14/main` and `release/14/plan-39` head. Its manifest pins Agent
   `9814193a73f606719e81883a8be197d27dd361d4` and Runtime
   `6855dfa8df65cf8ae4c002b57134d6505493c17c`.
@@ -28,7 +32,7 @@ script blobs below are unchanged. No full product CI or integrated release quali
 is claimed.
 
 Git CLI push could not authenticate in this session. Publication uses the
-connected GitHub API with a lease on the assigned branch's base; the uploaded
+connected GitHub API with a lease on the assigned astrid-dev branch's base; the uploaded
 implementation tree is exactly the locally tested tree above. No source bytes
 changed for that transport fallback.
 
@@ -163,8 +167,8 @@ ERROR release-documents: releases/14.md: Branches row astrid-dev `release/14/pla
 
 Those Release 14 document entries are outside G0 and remain unchanged. The
 follow-up below supplies real focused Agent and VibeComfy smoke runs as well.
-No full product suite, hosted product smoke, macOS or Windows validation was
-performed.
+No full product suite was run locally. No hosted worker-smoke or native
+macOS/Windows worker-smoke proof is claimed.
 
 ## Follow-up: remaining smoke checks and review submission
 
@@ -236,11 +240,11 @@ Git had no credential helper; the connected GitHub API was authenticated as
 working route for updates solely to `p39/g0`; CLI credentials do not block this
 submission.
 
-## Required coordinated copies
+## Coordinated copies
 
-Copy these exact canonical blobs into later product submissions. Both products
-need additions, since the directories are absent on the inspected release heads.
-The local validation copies do not constitute a remote submission.
+These exact canonical blobs are now committed in the product submissions below.
+Both products add the files, since the directories are absent on their unchanged
+release-plan bases.
 
 | Repository and destination | Canonical source | Git blob | Mode |
 | --- | --- | --- | --- |
@@ -250,9 +254,104 @@ The local validation copies do not constitute a remote submission.
 | App `scripts/worker-env/app-setup.sh` | `env/app-setup.sh` | `2361cfb7735fbd090d300d413e644cdb5b519d07` | 100644 |
 | App `scripts/worker-env/smoke.sh` | `env/smoke.sh` | `1d5ac2b970b0407a8f8438c5fcdb8e4857d5b22e` | 100755 |
 
-After coordinated copying, repeat the literal smoke commands and `cmp` checks
-on each product submission's exact head. Do not merge the old `int/38` branch
-wholesale just to obtain its three files.
+The literal smoke commands and all five `cmp` checks were repeated against
+fresh checkouts of the published product commits. The old `int/38` branch was
+not merged to obtain the files.
+
+## Completed product submissions and exact-commit proof
+
+The owner then requested the coordinated work end to end. The connected GitHub
+API created only the two `p39/g0` product branches, each directly from its
+previously validated `release/14/plan-39` base. Each published tree matches the
+locally calculated tree, and each commit has exactly the intended base parent.
+Fresh checkouts were fetched from GitHub for the following proof.
+
+| Submission | Commit | Base | Product changes |
+| --- | --- | --- | --- |
+| [Runtime PR #52](https://github.com/banodoco/astrid-runtime/pull/52) | `dff3f116053d9e64e761509bfe35d77c1f6b96ad` | `2537fed24385ec1c24f48a812e09af4bb63fb794` | Three worker scripts only |
+| [App PR #278](https://github.com/banodoco/astrid-app/pull/278) | `9dc7a313e90b85c0f855f20be2fd8d037436fe1c` | `0b6ef16152dc3fa11246ccc2007da630c66d1a1a` | Two worker scripts only |
+
+Both drafts target `release/14/plan-39` from `p39/g0` and link the canonical
+[astrid-dev PR #762](https://github.com/banodoco/astrid-dev/pull/762). They have
+not been merged. The canonical implementation and all four script blobs remain
+unchanged from `d9f6abcec4bc05781adbd29529a5d421a5728f66`; this follow-up changes
+only G0's task progress and evidence.
+
+Runtime, from `/workspace/scratch/0f74e42cf9ba/g0-validation/runtime-submission`:
+
+```text
+$ bash scripts/worker-env/smoke.sh runtime tests/test_platform.py
+python=3.13.5
+agent=b05ac03a5bcab278bccf99d85b49f4037b5dec10
+node=v22.23.5
+tsc=Version 5.9.3
+70 passed, 1 skipped, 2 deselected in 1.40s
+ENV-PASS runtime tests/test_platform.py
+smoke_exit=0
+```
+
+The same two external environment probes described above passed through this
+commit's `runtime-pytest.sh` in 0.28s. They again verified the actual local Node
+and compiler paths, lockfile TypeScript 5.9.3, and exact Agent checkout/pin.
+Three literal canonical `cmp` checks, shell syntax and whitespace checks passed;
+the checkout remained clean.
+
+A separate throwaway worktree from `dff3f116053d9e64e761509bfe35d77c1f6b96ad`
+used the same smoke command after setting only its Agent pin to 40 zeroes:
+
+```text
+fatal: remote error: upload-pack: not our ref 0000000000000000000000000000000000000000
+ENV-FAIL setup (runtime)
+smoke_exit=3
+```
+
+The negative case stopped before pytest. Its pin was restored and that
+worktree is clean; no altered pin or test is part of any submission.
+
+App, from `/workspace/scratch/0f74e42cf9ba/g0-validation/app-submission`, with
+the same Node 20.19.4/npm 10.8.2 and external proxy preparation described above:
+
+```text
+$ bash scripts/worker-env/smoke.sh app scripts/installer/manifest.test.mjs
+added 569 packages in 10s
+# tests 4
+# pass 4
+# fail 0
+# skipped 0
+ENV-PASS app scripts/installer/manifest.test.mjs
+command exit: 0
+```
+
+With actual Node 24.22.1 first on `PATH`, the same command again refused setup
+with `ENV: expected Node 20.19.x first on PATH` and `ENV-FAIL setup (app)`, exit
+3, before npm/tests. Both literal canonical `cmp` checks, shell syntax and
+whitespace checks passed. The App checkout remained clean, including its
+manifest and lockfile. The earlier Agent/VC smoke proof carries forward because
+their source, inputs and the canonical scripts are unchanged.
+
+### Hosted checks and remaining integration
+
+The product submissions do not change workflows. Runtime's unrestricted PR
+trigger started [CI run 43921815789](https://github.com/banodoco/astrid-runtime/actions/runs/43921815789)
+on its submitted commit; it was queued at this evidence update. Its untouched
+base has [CI run 43888599361](https://github.com/banodoco/astrid-runtime/actions/runs/43888599361)
+with five failed jobs (both unit jobs, sandbox-process-control, and both
+portability-lifecycle jobs). A passing full Runtime suite is not claimed, nor
+is a result inferred for the queued candidate run.
+
+App's existing Tests workflow accepts PR bases `main` or `release/*/main`, so
+it does not run for this `release/14/plan-39` submission. The applicable
+[Dockerfile Check run 43921978796](https://github.com/banodoco/astrid-app/actions/runs/43921978796)
+was also queued at this evidence update. Neither product's existing CI invokes
+these new worker scripts; the exact-commit local results above are G0's worker
+acceptance evidence. Workflow changes belong to other Plan 39 tasks.
+
+The astrid-dev documentation failures described above remain outside G0; the
+later [run on d9f6abcec4bc05781adbd29529a5d421a5728f66](https://github.com/banodoco/astrid-dev/actions/runs/43919638960)
+also ran 417 tests with the same three failures. There is no green CI claim.
+All G0 implementation, matching copies and focused local validation are now
+submitted. Coordinated review/merge and subsequent release qualification remain
+with the release process; no release branch or `main` was changed here.
 
 Routes used: G0's N route, with an N helper for App implementation and dispatch
 checks and a separate read-only helper for the merged-work audit and focused
