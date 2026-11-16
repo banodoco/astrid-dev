@@ -87,7 +87,7 @@ def refresh(text: str, number: int, *, freeze: bool = False, today: date | None 
                 raise ValueError("open issues endpoint returned a non-open issue")
             matching = sorted(labels & routes)
             if n in old:
-                rows[n] = {**old[n], "state": state}
+                rows[n] = {**old[n], "state": state, "via": matching or old[n]["via"]}
             else:
                 rows[n] = {"number": n, "type": kind, "state": state, "via": matching}
         if len(data) < 100:
@@ -97,10 +97,10 @@ def refresh(text: str, number: int, *, freeze: bool = False, today: date | None 
         item = api("GET", f"/repos/{REPO}/issues/{n}")
         if not isinstance(item, dict) or "pull_request" in item:
             raise ValueError(f"issue #{n} returned malformed data")
-        actual, kind, state, _ = issue_data(item)
+        actual, kind, state, labels = issue_data(item)
         if actual != n:
             raise ValueError(f"issue #{n} returned a different number")
-        rows[n] = {**old[n], "state": state}
+        rows[n] = {**old[n], "state": state, "via": sorted(labels & routes) or old[n]["via"]}
     ordered = [rows[n] for n in sorted(rows)]
     stamp = (today or date.today()).isoformat() if freeze or not block["present"] or ordered != block["rows"] else block["date"]
     new_block = render(ordered, stamp, freeze)

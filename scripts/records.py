@@ -360,6 +360,22 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
     return list(dict.fromkeys(errors))
 
 
+def release_fix_issue_errors(text: str, number: str) -> list[str]:
+    """Each fix row's issue must be listed in the same brief's Issues block."""
+    try:
+        listed = {row["number"] for row in release_issue_block(text)["rows"]}
+    except ValueError:
+        return []  # the malformed block is reported by release_brief
+    errors = []
+    for line in (section(text, "Branches") or "").splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        match = re.fullmatch(r"fix #(\d+)", cells[2]) if line.strip().startswith("|") and len(cells) == 5 else None
+        if match and int(match.group(1)) not in listed:
+            errors.append(f"Branches row {cells[0]} {cells[1]}: issue #{match.group(1)} is not in the Issues block; "
+                          f"it must carry release:{number} or the label of an included plan, then refresh the block")
+    return list(dict.fromkeys(errors))
+
+
 def release_brief(text: str, *, strict: bool = True) -> dict:
     """Read a brief; non-strict mode retains errors for multi-error validators."""
     header = re.split(r'^## ', text, maxsplit=1, flags=re.M)[0]

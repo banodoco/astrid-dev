@@ -113,6 +113,16 @@ class IssuesTests(unittest.TestCase):
         rows = records.release_brief(two)['issues']
         self.assertEqual([(r['number'], r['state']) for r in rows], [(2, 'done')])
 
+    def test_via_follows_current_routing_labels(self):
+        one = ri.refresh(BRIEF, 15, today=date(2026, 11, 16), api=lambda m, p: [issue(4, ['plan:39', 'release:15'])])
+        two = ri.refresh(one, 15, today=date(2026, 11, 17), api=lambda m, p: [issue(4, ['release:15'])])
+        self.assertEqual(records.release_brief(two)['issues'][0]['via'], ['release:15'])
+        def api(method, path):
+            return [] if '?' in path else issue(4, ['plan:50'], 'closed', 'completed')
+        three = ri.refresh(two, 15, today=date(2026, 11, 18), api=api)
+        row = records.release_brief(three)['issues'][0]
+        self.assertEqual((row['via'], row['state']), (['plan:50'], 'done'))
+
     def test_missing_token_gives_clear_message(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
