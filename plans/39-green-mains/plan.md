@@ -4,13 +4,13 @@
 
 **Goal:** Every CI workflow on Agent, Runtime and App `main` is green and stays green: root causes fixed (never a loosened test), one strict-xfail quarantine rule with an owner and an expiry, a nightly report of new red, and releases that need every required check green on each pinned commit (through Plan 31's `release-contract`).
 
-**Status:** paused
+**Status:** queued
 
 **Owner:** Unassigned
 
 **Estimate:** 22–31 (8–11 elapsed): phase 1 6.5, phase 2 13–21, phase 3 3.5
 
-**Waiting on:** the owner's go to queue it (ready, held by the owner on 9 Nov); release 12 published; Plan 38 for the custody tests; Plan 31 RL-1b for K4
+**Waiting on:** a manager; G1 redone on `release/14/main` ([Release 14 scope](#release-14-scope)); Plan 38 for the custody tests; Plan 31 RL-1b for K4, which is Release 15's
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
@@ -38,6 +38,54 @@ It also includes astrid-dev's worker environment for the Runtime and App (G0), t
 - product features. A real product bug found here gets its own fix task. When it is large, it goes to an issue and is quarantined under the rule.
 
 **Replaces:** the "full CI health is a separate project" deferral in [Plan 29](../29-update-and-release/inputs.md#planning-evidence) (decision 6), Plan 29's unfinished UR-0 ("why App main is red"), and the strategy row "Green mains (proposed): a Release rule plus a one-off fix batch". [Plan 30](../30-update-everywhere/plan.md) inherited the same deferral through Plan 29's shared evidence.
+
+## Release 14 scope
+
+Added on 16 November 2026, when the owner brought this plan into [Release 14](../../releases/14.md). The plan was written on 9 November, two releases ago. Where this section and the text around it differ, this section governs until G1 is redone and the task table is corrected from it.
+
+**What is in.** Phases 1 to 3, and from phase 4 only SF3a to SF3c: results stored per test, a comparison without re-runs, and shards that finish. The rest of phase 4, and K4 and K5, which wait for Plan 31, are [Release 15](../../releases/15.md)'s.
+
+**Where it lands.** `release/14/plan-39` in each repository, then `release/14/main`. This replaces `int/39-green-mains`. Until Release 14 is published, "green `main`" in this plan means green `release/14/main`; publishing fast-forwards each `main` to it, and the required checks then apply to `main` as well.
+
+**Done for Release 14.** Every merge-tier and release-tier check in [Required checks](tasks.md#required-checks) is green on the head of `release/14/main` in Agent, Runtime and App three nights in a row, the merge tier is required on pull requests into it, and each repository's quarantine holds at most ten entries, all within age.
+
+**What it leaves alone.** Tests in [Plan 55](../55-local-speed/tasks.md)'s test inventory (the VibeComfy pack, the ComfyUI target, delivery, the generic host and SDK invocation) until its fast lane has landed, because that plan rewrites what they test: a failure there gets a row and waits. Plan 38's tests, as before. Rented-machine defects that no failing test shows: those issues were filed here during Release 13 and moved to Release 15 on 16 November.
+
+### Measured on 16 November
+
+Read from the latest completed runs on `release/14/main`. Two of the Agent's eight unit shards and three of its five failing lane jobs were sampled, from the last 1,500 lines of each log, so the Agent's numbers are a floor. G1 replaces this table.
+
+| Repository | Failing | What the logs show |
+| --- | --- | --- |
+| Runtime | 5 of 10 `CI` jobs | `unit` on Ubuntu: 77 failed, 8,440 passed, 1,010 errors, the error count of the 9 November triage unchanged. At least 718 of the errors are causes R-a, R-b and R-c: no Agent checkout, a hard-coded scratch path, and `git archive` on a shallow checkout. |
+| Agent | 10 of 16 `CI` jobs, with all eight unit shards; 5 of 6 `Lanes` jobs; both `Windows task host journey` jobs | Collection no longer aborts (A-a is fixed), so real failures show: 250 failed and 160 errors in shard 7, 98 failed in shard 8. They cluster: 62 are one copy-only upgrade-boundary error, 25 one `KeyError: 'macos-15'`. The lint gate fails because findings fell ([#742](https://github.com/banodoco/astrid-dev/issues/742)). |
+| App | all six `E2E` jobs; 2 of 5 `Lanes` jobs; `Tests` is green | Three `E2E` jobs share one cause: the fake Runtime has no route for `GET /api/runtime/packs/inventory`. `chrome-export` gets `retired_route` from it. |
+
+Since the triage: A-a and PE1 are fixed, and vitest runs on pull requests into a release branch (part of K1c). R-a, R-b, R-c, R-f, A-c and A-i are still present on `release/14/main`. An Agent run takes about two hours, jobs waited 30 to 68 minutes to start, and a new push cancels the run in flight.
+
+### What changes in the order
+
+1. **Store results first.** SF3a moves from phase 4 to the start. The Runtime runs `pytest -q`, with no per-test lines, so its runs cannot be compared by test at all; the Agent prints `-rA` and uploads only durations. Every later measurement, and every worker's proof, reads the stored results.
+2. **Gates that parallel work can pass.** The Agent's Ruff and mypy gates fail when findings fall as well as when they rise. Two pull requests that each remove findings then break each other once both merge. Before the fan-out, the gate fails on a rise only, and the baseline is rewritten once per batch on the plan branch.
+3. **One full run per batch, not per card.** A worker proves a card with its focused tests and the stored results. The manager merges a batch into the plan branch and waits for one full run, because a full run per card would queue fifteen two-hour runs on runners that are already full.
+
+### How the work fans out
+
+The 35 to 47 worker-days do not divide by the number of workers, because four steps cannot be shared out: the two measurements, the review stop, and three consecutive green nights. Between them the work is one cause to one worker.
+
+| Wave | Workers | Work | Elapsed |
+| --- | --- | --- | --- |
+| 0 | 1 to 3 | G0 and G1 redone on `release/14/main`; SF3a in the three repositories; the gate change above | about 1 day |
+| 1 | about 10 | The wiring cards, all independent: RE1 to RE4 in the Runtime, AE2 and the journey's install source in the Agent, the fake Runtime's routes in the App, K1a to K1c | 1 to 2 days |
+| stop | 1 | G2, then the one review round RS1 | about 1 day |
+| 2 | 10 to 15 | One worker per cause from G2's clusters, the three repositories at once; K2 and K3 beside them | 4 to 7 days, set by the Agent's count |
+| 3 | 1 | Three green nights, then the final review R | 3 days at least |
+
+That is 10 to 14 days elapsed, as the [estimate](tasks.md#estimate) says. More workers shorten wave 2 only; more CI capacity shortens every wave. The rule in the estimate still holds: if G2 shows more than 60 distinct Agent causes, the manager splits AT1 and re-estimates before going on.
+
+### Issues
+
+Filed against this plan and in scope, each to be given a task row at G1: the red release branch ([#742](https://github.com/banodoco/astrid-dev/issues/742)); 133 timeline tests that assert one hard-coded Runtime commit ([#637](https://github.com/banodoco/astrid-dev/issues/637)); the stale structure baseline ([#647](https://github.com/banodoco/astrid-dev/issues/647)); shards that never finish ([#614](https://github.com/banodoco/astrid-dev/issues/614)); stale or environment-dependent fixtures ([#615](https://github.com/banodoco/astrid-dev/issues/615), [#626](https://github.com/banodoco/astrid-dev/issues/626)); tests that fail with no cause recorded yet ([#639](https://github.com/banodoco/astrid-dev/issues/639), [#636](https://github.com/banodoco/astrid-dev/issues/636), [#621](https://github.com/banodoco/astrid-dev/issues/621)); a test no CI job can run ([#606](https://github.com/banodoco/astrid-dev/issues/606)); the integration lane's unprovisioned checkouts ([#585](https://github.com/banodoco/astrid-dev/issues/585)); the 57-minute CPU journey ([#578](https://github.com/banodoco/astrid-dev/issues/578)); the lint and type findings Release 13 added and the parked type fixes ([#613](https://github.com/banodoco/astrid-dev/issues/613), [#633](https://github.com/banodoco/astrid-dev/issues/633)); and the deferred engine-lane items ([#612](https://github.com/banodoco/astrid-dev/issues/612)). The live-scene tests that run in no lane ([#734](https://github.com/banodoco/astrid-dev/issues/734)) are shared with the release's standing lane.
 
 ## Quarantine rule
 

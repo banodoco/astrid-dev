@@ -58,3 +58,4 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 55-local-speed
 - 56-workflow-setup
 - 57-pack-database-extensions
+- 59-into-the-minkhole-proof-point

@@ -20,7 +20,7 @@ Routes, per the [run contract](../../skills/astrid-dev-shared/run-contract.md):
 
 X and S tasks delegate reading, mechanical edits and checks to N helpers. An N task that misses the same check twice re-routes to X.
 
-**Where work lands:** by PR to `int/39-green-mains` in each repository (decision D1). The branch is cut from `main` after release 12 is published, and each task records its base SHA when it starts.
+**Where work lands:** by PR to `release/14/plan-39` in each repository, cut from `release/14/main` ([Release 14 scope](plan.md#release-14-scope), which replaces decision D1's `int/39-green-mains`). Each task records its base SHA when it starts.
 
 **Proof labels:**
 - *Local* runs in a worker with only that repository attached, through `scripts/worker-env/` (G0). Other repositories come from public git at pinned commits.
