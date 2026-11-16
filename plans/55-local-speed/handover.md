@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md) · [Release 14](../../releases/14.md)
 
-Written by the Release 14 release manager on 16 November 2026, about 21:00 UTC, from the branches, pull requests and CI results as they stood then. It is a dated snapshot for the manager who takes this plan next. The run's own records are on the astrid-dev branch `release/14/plan-55`: its `decisions.md` and `evidence/continuation-20261116/approved-implementation-followup.md` are newer than anything on `main`. The run `2026-11-15-local-speed` was still active when this was written.
+Written by the Release 14 release manager on 16 November 2026, about 21:00 UTC, from the branches, pull requests and CI results as they stood then. It is a dated snapshot for the manager who takes this plan next, and an independent reading: the manager's own account is the "Now" block of [tasks.md](tasks.md) and its [developer handoff](developer-handoff.md), which hold the commands, commit identities and evidence locations. Its decisions are in `decisions.md` on the astrid-dev branch `release/14/plan-55`. The run `2026-11-15-local-speed` was still active when this was written.
 
 ## Where it stands
 
@@ -36,7 +36,7 @@ On the critical path, LS-1 → LS-3 → RS1 → LS-8 → LS-15 → LS-9 → LS-1
 | LS-8 resident sessions | Not started | |
 | LS-9 leaving the fast lane | Partly | Cancel by job only, 23 local cases (draft #355); its Windows check failed. Six of eight cases absent. |
 | LS-10 thin callers | Not started | |
-| LS-11 inputs by content | Done | Merged into the Agent plan branch. Its row in `tasks.md` is still empty. |
+| LS-11 inputs by content | Done | Agent #349, merged into the Agent plan branch. |
 | LS-12 first job | Code, no proof | Draft Agent #361, no checks run. |
 | LS-13 Windows | Partly | Hosted Windows only. No tester. |
 | LS-14 live proof | No result | Needs paid GPU time. |
@@ -68,7 +68,7 @@ D10 to D13 (the VibeComfy pin, LS-6's scope, the Windows fixture repair, progres
 
 1. Read the [Manage skill](../../skills/astrid-dev-manage/SKILL.md), then `decisions.md` and the follow-up on the plan branch. You answer for this plan finishing.
 2. Save what could be lost: the LS-5 code, and #756.
-3. Make the record true. `tasks.md` shows seventeen empty rows and a "Now" block dated 15 November. D13 lets you merge a pull request to `main` that changes only that file.
+3. Keep the record in one place. `tasks.md` on `main` was brought up to date on 16 November (#774); the copy on the plan branch is a day older and still shows every row empty. D13 lets you merge a pull request to `main` that changes only that file.
 4. Merge `release/14/main` into the Agent plan branch. Merge or close each draft: a draft that is right goes in, one that is superseded is closed with a line saying why.
 5. **Write LS-3 now**, from the numbers in hand. It needs the fast-lane key, what ends the fast lane, the resident helper, the Runtime hand-off, and an answer on Windows. Then the one review round, RS1.
 6. After RS1, LS-4, LS-7 and LS-8 at the same time, then LS-15, with LS-10 beside LS-9. Cut the Runtime plan branch for LS-7. LS-8 arrives as a module of its own beside the host ([Plan 13](../13-execution-host-refactor/plan.md#release-14-scope)).
@@ -81,4 +81,4 @@ D10 to D13 (the VibeComfy pin, LS-6's scope, the Windows fixture repair, progres
 - **Everything stayed a draft.** Eleven pull requests are open, all drafts, so each new branch is built on unmerged work.
 - **Approval was asked for what a manager decides.** Four requests went to the owner on 16 November. The Manage skill's "Decide" section lets a manager make most such calls and log the ruling.
 - **Work lived outside the repositories.** A workspace failed and took tested code with it. Push a branch before proving anything on it.
-- **The records disagree with each other.** `tasks.md`, `decisions.md`, the follow-up and the pull request descriptions give different states, heads and tester baselines. One progress record, on `main`.
+- **The records disagree with each other.** `tasks.md` on `main` and on the plan branch, `decisions.md`, the follow-up and the pull request descriptions give different states, heads and tester baselines. One progress record, on `main`.
