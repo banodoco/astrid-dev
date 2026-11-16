@@ -11,7 +11,8 @@ release-main/public-main promotion have not started.
 G0 is complete and recorded in [its evidence](release-14-g0-worker-smoke.md).
 GL and SF3a implementations are merged into `release/14/plan-39`. GL
 acceptance is complete: hosted fast checks passed on the integrated head.
-SF3a hosted artifact qualification is still in progress. G1 has an exact-head baseline
+SF3a hosted artifact qualification is complete in Runtime and App and is
+still in progress in Agent. G1 has an exact-head baseline
 inventory with explicit missing evidence; those gaps are not passes.
 
 | Repository | Integrated head | Included work |
@@ -137,11 +138,11 @@ them while they qualify the batch:
 
 | Repository / workflow | Run | Head | Current acceptance |
 | --- | --- | --- | --- |
-| Agent CI | [43934820640](https://github.com/banodoco/astrid-agent/actions/runs/43934820640) | `b8f26929` | Fast checks passed; Windows artifact available; other named test-result artifacts pending. |
-| Agent Lanes | [43934820639](https://github.com/banodoco/astrid-agent/actions/runs/43934820639) | `b8f26929` | Running; integration artifacts pending. |
-| Runtime CI | [43933604506](https://github.com/banodoco/astrid-runtime/actions/runs/43933604506) | `16d5734a` | Running; Completed with five failed jobs; every scoped CI job has a downloaded, verified artifact. |
+| Agent CI | [43934820640](https://github.com/banodoco/astrid-agent/actions/runs/43934820640) | `b8f26929` | Fast checks passed; Windows and failed Darwin artifacts verified; unit artifacts pending. |
+| Agent Lanes | [43934820639](https://github.com/banodoco/astrid-agent/actions/runs/43934820639) | `b8f26929` | Running; failed integration shard 1 artifact verified; shards 2-4 pending. |
+| Runtime CI | [43933604506](https://github.com/banodoco/astrid-runtime/actions/runs/43933604506) | `16d5734a` | Completed with five failed jobs; every scoped CI job has a downloaded, verified artifact. |
 | Runtime Nightly | [43933606695](https://github.com/banodoco/astrid-runtime/actions/runs/43933606695) | `16d5734a` | Failed; its integration artifact is verified below. |
-| App Tests | [43933616087](https://github.com/banodoco/astrid-app/actions/runs/43933616087) | `15249284` | Running; Vitest artifact pending. |
+| App Tests | [43933616087](https://github.com/banodoco/astrid-app/actions/runs/43933616087) | `15249284` | Completed successfully; both Vitest XML files downloaded and verified. |
 
 Downloaded Runtime ZIP contents, also independently parsed by root:
 
@@ -163,12 +164,37 @@ elements. JUnit skips combine ordinary skips and the 13 xfailed cases
 pytest summaries. Portability and Nightly testcase-element counts equal
 their aggregates. No cases or counts were fabricated to normalize this. Summary/upload steps succeeded while the underlying tests
 remained red. Runtime reporting acceptance is complete across all six scoped jobs, including
-failed jobs. Agent Windows artifact `14259214357` is also downloaded and
-verified: four XML files, 112 aggregate tests and 112 testcase elements, all
-passing (15 installer, 40 host-recovery/services, 36 Remotion, 21 native).
-The other Agent and App artifacts remain NO-RESULT until observed. A
-failed test-result artifact can satisfy SF3a reporting proof; it never means
-that its test passed or that Release 14 is qualified.
+failed jobs. All six expire on 14 February 2027, consistent with the declared
+90-day retention.
+
+App artifact `14260289801`, `test-results-vitest-all-Linux`, also expires on
+14 February 2027. The archive was downloaded, and root parsed both XML files to confirm
+20,870 App Vitest cases and 335 SDK boundary cases, each with zero failures,
+errors or skips. The suite aggregates, literal testcase counts and logged
+summaries agree. Its ZIP SHA-256 is
+`85115f785bfda0a02518d629e831f13b12c9ebcef8c56137659444419e141f6d`.
+The original `npm test` command remains intact; these XML files cover its
+Vitest runs, not the separate Node test runner. App reporting acceptance is
+complete. The `npm test` step took 993.767 seconds versus 752.545 seconds in
+exact-base run `43883626058` (1.321 times); Vitest's own duration was 896.82
+versus 682.95 seconds (1.313 times), both below the 1.5-times hang threshold.
+
+Agent artifacts downloaded and independently parsed by root so far:
+
+| Artifact ID / job | XML tests / testcase elements | Failures | Errors | Skips | Log reconciliation |
+| --- | --- | --- | --- | --- | --- |
+| `14259214357`, Windows native and installer | 112 / 112 | 0 | 0 | 0 | 15 installer + 40 host-recovery/services + 36 Remotion + 21 native passed |
+| `14260398808`, Darwin native | 55 / 55 | 13 | 1 | 0 | 41 passed + 13 failed + 1 error; 31,235 deselected are outside the XML count |
+| `14260249942`, Lanes integration shard 1 | 516 / 516 | 36 | 0 | 0 | 480 passed + 36 failed; 32,170 deselected are outside the XML count |
+
+All three have 90-day expiry on 14 February 2027. The failed Darwin and
+integration jobs still summarized and uploaded their results. At 19:23 UTC,
+Agent unit shards 2-7 were active, shards 1 and 8 queued, and integration
+shards 2-4 active. Those artifacts remain NO-RESULT until observed. Existing
+duration artifact configuration is unchanged; actual unit duration uploads
+also await those jobs. A failed test-result artifact can satisfy SF3a
+reporting proof; it never means that its test passed or that Release 14 is
+qualified.
 
 Routes used: N workers for G1, GL and SF3a, with manager review and integration.
 No outside per-task verification gate was added, as the owner instructed.
