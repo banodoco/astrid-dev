@@ -1,6 +1,6 @@
 # LS-5 exact re-pin request
 
-**State:** proposed, not approved. No dependency pin has been changed. This request is for the Plan 55 integration candidate only.
+**State:** approved by the owner on 16 November 2026 — the exact pin and generated records; see [D10](../decisions.md#d10--ls-5-connection-integration-and-exact-re-pin-approved). The original request below is retained as the implementation brief. No dependency pin has been changed. This request is for the Plan 55 integration candidate only.
 
 ## Proposed source change
 
@@ -26,7 +26,7 @@ The generator may rewrite other catalog files byte-identically. Template catalog
 
 ## Work and proof after approval
 
-Keep this in `int/55-local-speed`. Wire the Agent's existing loopback/attested transport policy, redirect/proxy refusals, bounded responses, prompt witness and attempt journal through the new factories. Pod requests must continue through their attested transport. Do not replace those controls with VibeComfy's standalone defaults. Add progress consumption and preserve the existing typed results, one submission per attempt, and unknown-acknowledgement behavior.
+Keep this in `release/14/plan-55`, per the owner's branch migration. Wire the Agent's existing loopback/attested transport policy, redirect/proxy refusals, bounded responses, prompt witness and attempt journal through the new factories. Pod requests must continue through their attested transport. Do not replace those controls with VibeComfy's standalone defaults. Add progress consumption and preserve the existing typed results, one submission per attempt, and unknown-acknowledgement behavior.
 
 The composed candidate must pass the pin generator and single-source tests, the packaged recipe authority tests, the Comfy target cases and attached output-custody/cancellation tests against the exact proposed source. New guarded HTTP/WS and consumer behavior needs focused tests, including a connector refusal that makes no POST, disconnect reconciliation with no raw-client fallback, and one attempt never reading another's outputs. The initial VibeComfy injection proof does not substitute for that composed run. The actual upstream ComfyUI success/cache/error/interruption event ordering also remains to be verified; a refused source read has not been retried.
 
