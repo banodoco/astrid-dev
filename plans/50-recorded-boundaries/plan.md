@@ -46,7 +46,7 @@ A contributor changing the generation path can run one CPU command and see, for 
 - engine CLI recordings;
 - a replaying Runtime fake (only if the real Runtime in the journey proves insufficient);
 - a lint against silent wait loops;
-- a real pod agent and a no-op CPU engine in the harness;
+- ~~a real pod agent and a no-op CPU engine in the harness~~ **superseded 13 Nov** by the dry-pod follow-ups RB-5 to RB-10 in [tasks.md](tasks.md) (source: Release 13 dry-pod plan §3);
 - lifecycle typed errors (a pin bump);
 - a container CI job.
 
