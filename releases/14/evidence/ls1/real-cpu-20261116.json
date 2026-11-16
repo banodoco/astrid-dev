@@ -1,0 +1,181 @@
+{
+  "accountable_manager": "chatgpt-workspace-6ee41b0f0cca/root",
+  "ci_run_id": 43858887774,
+  "evidence_kind": "derived_from_retained_original_CPU_probe_artifacts",
+  "queue_time_subtracted": false,
+  "run": "2026-11-15-local-speed",
+  "scope": "real pinned ComfyUI CPU and unchanged Runtime floor; not installed Agent latency or GPU proof",
+  "sides": {
+    "linux": {
+      "archive_sha256": "6c59d33f0c8f07c23079a5d3589dbabcabbf69a254b1e3ba74b60e4910a95ce5",
+      "artifact_id": 14223360385,
+      "cells": {
+        "image1mp-integrated-1": {
+          "components_ms": {
+            "admission_wait_ms": {"max": 0.007023, "median": 0.003397},
+            "caller_wall_ms": {"max": 509.948955, "median": 217.280415},
+            "claim_ms": {"max": 4.38453, "median": 2.688173},
+            "create_ms": {"max": 40.029782, "median": 3.005561},
+            "descriptor_ms": {"max": 2.456376, "median": 1.375958},
+            "execution_observed_ms": {"max": 190.314447, "median": 176.070393},
+            "fetch_hash_ms": {"max": 3.555128, "median": 1.868483},
+            "fill_ms": {"max": 0.035306, "median": 0.026494},
+            "history_fetch_ms": {"max": 1.052626, "median": 0.785154},
+            "history_ready_after_success_ms": {"max": 0.410683, "median": 0.377536},
+            "post_response_to_start_observed_ms": {"max": 0.811659, "median": 0.527606},
+            "post_validation_ms": {"max": 204.794524, "median": 1.288309},
+            "settle_ms": {"max": 307.788256, "median": 28.821131}
+          },
+          "original_file": "image1mp-integrated-1.json",
+          "original_file_sha256": "f1eb9de0409cce682dbfd2ed4e7db60891eda3855a61d7e62937d6c505e88fc6",
+          "overhead_max_ms": 319.634508,
+          "overhead_median_ms": 41.354744,
+          "sample_count": 20
+        },
+        "image1mp-integrated-2": {
+          "original_file": "image1mp-integrated-2.json",
+          "original_file_sha256": "788385317fb9e460c19897a47612eaae42889393493e310242deef3c1ecae09c",
+          "overhead_max_ms": 225.223737,
+          "overhead_median_ms": 178.492648,
+          "sample_count": 20
+        },
+        "image1mp-transport-1": {
+          "original_file": "image1mp-transport-1.json",
+          "original_file_sha256": "e226d0f9890a4ada6f4568fb41be7154539db7185ec62a69480292b6005a4e18",
+          "overhead_max_ms": 6.051866,
+          "overhead_median_ms": 4.832577,
+          "sample_count": 20
+        },
+        "trivial-integrated-1": {
+          "original_file": "trivial-integrated-1.json",
+          "original_file_sha256": "dcdf948eb1032ad536033dd7389181a57cc40e86705b9fd7e694ad1cec637104",
+          "overhead_max_ms": 43.015505,
+          "overhead_median_ms": 15.940455,
+          "sample_count": 20
+        },
+        "trivial-integrated-2": {
+          "original_file": "trivial-integrated-2.json",
+          "original_file_sha256": "1d51f26d93df3afbe3f925a9c179fac171cbb28fcf818cd60d49648f163b8623",
+          "overhead_max_ms": 34.808223,
+          "overhead_median_ms": 29.614581,
+          "sample_count": 20
+        },
+        "trivial-transport-1": {
+          "original_file": "trivial-transport-1.json",
+          "original_file_sha256": "3b5479e92a4a92962cca141f683707ed321d31b31e59795e70a37be561bc97c8",
+          "overhead_max_ms": 3.820053,
+          "overhead_median_ms": 3.195677,
+          "sample_count": 20
+        }
+      },
+      "environment": {
+        "gpu_used": false,
+        "manager": "chatgpt-workspace-6ee41b0f0cca/root",
+        "measurement": "real ComfyUI CPU floor; not installed Agent end-to-end latency",
+        "models_downloaded": false,
+        "owner_decision": "D9",
+        "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+        "probe_sha256": {
+          "comfy_floor.py": "09a4a1d454ac5822035e513859ef86cb565fe2679eb6422ce1a817fe0dfaa76f",
+          "integrated_floor.py": "61aff3baf6478f55cef2dc1b1a3499d5083bbf56d80eb2e994aa546d04a64d5d",
+          "trivial-graph.json": "554a3cd70588a999b132bce83149b3f1ef11dd821a57eb4f1be29d3d3021fb3f"
+        },
+        "python": "3.11.18 (main, Oct 26 2026, 02:48:29) [GCC 15.2.0]",
+        "run": "2026-11-15-local-speed",
+        "samples_per_cell": 20,
+        "sources": {
+          "agent": "1081422c4a9eab568684587a044d5cdfc213e23f",
+          "astrid_dev": "ab73cc12c8d90762e8e6e7e664ff5a32a360cc0d",
+          "comfyui": "6bfaacc67c2103481e5f0c84d75257cd0581d86a",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c"
+        }
+      }
+    },
+    "windows": {
+      "archive_sha256": "1b9a885b09691a2adbf356b4848d6bc4438848c1c05a9d8ad8505b596a48bc36",
+      "artifact_id": 14221813257,
+      "cells": {
+        "image1mp-integrated-1": {
+          "components_ms": {
+            "admission_wait_ms": {"max": 0.0066, "median": 0.00355},
+            "caller_wall_ms": {"max": 676.619, "median": 309.32825},
+            "claim_ms": {"max": 122.6537, "median": 16.7905},
+            "create_ms": {"max": 166.3671, "median": 22.28795},
+            "descriptor_ms": {"max": 3.1985, "median": 2.98675},
+            "execution_observed_ms": {"max": 84.562, "median": 84.11895},
+            "fetch_hash_ms": {"max": 3.5454, "median": 2.57155},
+            "fill_ms": {"max": 0.0344, "median": 0.024},
+            "history_fetch_ms": {"max": 0.8446, "median": 0.72725},
+            "history_ready_after_success_ms": {"max": 0.928, "median": 0.5594},
+            "post_response_to_start_observed_ms": {"max": 0.9133, "median": 0.77115},
+            "post_validation_ms": {"max": 172.8417, "median": 1.67705},
+            "settle_ms": {"max": 550.7705, "median": 159.981}
+          },
+          "original_file": "image1mp-integrated-1.json",
+          "original_file_sha256": "1368c248cdd9700620905bc715a922c8ce6cdc0b1f39a34e602180275740ea14",
+          "overhead_max_ms": 592.057,
+          "overhead_median_ms": 225.63075,
+          "sample_count": 20
+        },
+        "image1mp-integrated-2": {
+          "original_file": "image1mp-integrated-2.json",
+          "original_file_sha256": "c42524dacc08136ca2c595cdc9d3a887e3bc0f1cbcf78108b7cf1b426c65cd71",
+          "overhead_max_ms": 546.027,
+          "overhead_median_ms": 284.01115,
+          "sample_count": 20
+        },
+        "image1mp-transport-1": {
+          "original_file": "image1mp-transport-1.json",
+          "original_file_sha256": "ed7392f1b1c973ef9081f215ecebb1c74f6085fc44d3ee87e1d100bec3919b2d",
+          "overhead_max_ms": 5.9319,
+          "overhead_median_ms": 5.49385,
+          "sample_count": 20
+        },
+        "trivial-integrated-1": {
+          "original_file": "trivial-integrated-1.json",
+          "original_file_sha256": "8490b26ed81b6d51389bb840659ca049c6266edc6a3d73a18e88910f642aa2e4",
+          "overhead_max_ms": 286.7165,
+          "overhead_median_ms": 134.36635,
+          "sample_count": 20
+        },
+        "trivial-integrated-2": {
+          "original_file": "trivial-integrated-2.json",
+          "original_file_sha256": "ffcb29fd3121d8e3cace601a9edd37739e5a2077269cc5f7e71c099bdd478727",
+          "overhead_max_ms": 388.1785,
+          "overhead_median_ms": 161.3868,
+          "sample_count": 20
+        },
+        "trivial-transport-1": {
+          "original_file": "trivial-transport-1.json",
+          "original_file_sha256": "3ecdee970d8876c64cea6b01b0331e563de620045a05c1bef3042c2b5bd34860",
+          "overhead_max_ms": 4.1634,
+          "overhead_median_ms": 3.32645,
+          "sample_count": 20
+        }
+      },
+      "environment": {
+        "gpu_used": false,
+        "manager": "chatgpt-workspace-6ee41b0f0cca/root",
+        "measurement": "real ComfyUI CPU floor; not installed Agent end-to-end latency",
+        "models_downloaded": false,
+        "owner_decision": "D9",
+        "platform": "Windows-10-10.0.26100-SP0",
+        "probe_sha256": {
+          "comfy_floor.py": "4e39ce1e67717b0c5ee1db30988ae103785ff1ad0007ff2740411229e8920957",
+          "integrated_floor.py": "df3b796bcceff0d135d08dd0bfe0f9f06f156fb54ee7f36e3c901c17ea352221",
+          "trivial-graph.json": "45ade3ad9b0b92be721c618c24d2afad93f575550e7cc0b3cdaa2bec7a61a926"
+        },
+        "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+        "run": "2026-11-15-local-speed",
+        "samples_per_cell": 20,
+        "sources": {
+          "agent": "1081422c4a9eab568684587a044d5cdfc213e23f",
+          "astrid_dev": "ab73cc12c8d90762e8e6e7e664ff5a32a360cc0d",
+          "comfyui": "6bfaacc67c2103481e5f0c84d75257cd0581d86a",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c"
+        }
+      }
+    }
+  },
+  "raw_records": "All twenty raw records per cell remain in the original named artifact members; this is a derived summary, not a raw-log substitute."
+}
