@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "manager_normalized_transcription_of_observed_ci_results",
+  "observed_date": "2026-11-16",
+  "run": "2026-11-15-local-speed",
+  "accountable_manager": "chatgpt-workspace-6ee41b0f0cca/root",
+  "repository": "banodoco/astrid-agent",
+  "selection": "python -m pytest -q -rA -m opt_in",
+  "baseline": {
+    "role": "published_release_13",
+    "agent_sha": "9814193a73f606719e81883a8be197d27dd361d4",
+    "workflow_run_id": 43757233283,
+    "job_id": 132943873159,
+    "source_url": "https://github.com/banodoco/astrid-agent/actions/runs/43757233283/job/132943873159",
+    "summary": {"failed": 12, "passed": 19, "deselected": 31189, "warnings": 2, "duration_seconds": 187.15}
+  },
+  "candidate": {
+    "agent_sha": "cb1a590e0008dde7e3fc2d3fbf341ef98401b32a",
+    "workflow_run_id": 43769390907,
+    "job_id": 132981680460,
+    "source_url": "https://github.com/banodoco/astrid-agent/actions/runs/43769390907/job/132981680460",
+    "summary": {"failed": 12, "passed": 19, "deselected": 31202, "warnings": 2, "duration_seconds": 187.95}
+  },
+  "shared_checked_out_dependencies": {
+    "runtime_sha": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+    "vibecomfy_sha": "dba38f8644c46f652376f2cd5112ea161e40f09b"
+  },
+  "matched_failure_groups": [
+    {
+      "baseline_status": "failed",
+      "candidate_status": "failed",
+      "matched_cause": "provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "test_ids": [
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[None]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-bytes]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[saved-revision]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[requested-frame]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[render-digest]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-path]"
+      ]
+    },
+    {
+      "baseline_status": "failed",
+      "candidate_status": "failed",
+      "matched_cause": "AssertionError: editorial.arrange not found in discovery",
+      "test_ids": [
+        "tests/test_onboarding_parity.py::test_editorial_arrange_is_discoverable_via_discover"
+      ]
+    },
+    {
+      "baseline_status": "failed",
+      "candidate_status": "failed",
+      "matched_cause": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "test_ids": [
+        "tests/test_onboarding_parity.py::test_editorial_arrange_is_inspectable_via_get_capability",
+        "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_provenance",
+        "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_safety_declaration",
+        "tests/test_onboarding_parity.py::test_capability_schema_is_json_serializable",
+        "tests/test_onboarding_parity.py::test_provenance_is_populated_on_editorial_arrange"
+      ]
+    }
+  ],
+  "matched_passes": {
+    "baseline_status": "passed",
+    "candidate_status": "passed",
+    "test_ids": [
+      "tests/core/generation/test_closure_install_cpu.py::test_linux_x86_64_h3_environment_closure_before_model_stages",
+      "tests/packs/test_pack_enum_recoverability.py::test_pack_enum_recoverability_exhaustive_surfaces_recover_within_budget",
+      "tests/test_onboarding_parity.py::test_tutorial_file_exists",
+      "tests/test_onboarding_parity.py::test_tutorial_mentions_editorial_arrange",
+      "tests/test_onboarding_parity.py::test_tutorial_mentions_dry_run",
+      "tests/test_onboarding_parity.py::test_tutorial_mentions_runtime_events",
+      "tests/test_onboarding_parity.py::test_tutorial_mentions_no_api_keys",
+      "tests/test_onboarding_parity.py::test_tutorial_contains_python_code_blocks",
+      "tests/test_onboarding_parity.py::test_tutorial_complete_script_block_is_present",
+      "tests/test_onboarding_parity.py::test_all_documented_astrid_names_are_in_public_sdk",
+      "tests/test_onboarding_parity.py::test_all_error_classes_from_quick_reference_are_importable",
+      "tests/test_onboarding_parity.py::test_event_stream_record_has_documented_fields",
+      "tests/test_onboarding_parity.py::test_invoke_element_raises_unsupported_capability_error",
+      "tests/test_onboarding_parity.py::test_get_capability_not_found_raises_capability_not_found_error",
+      "tests/test_onboarding_parity.py::test_get_capability_ambiguous_raises_capability_ambiguous_error",
+      "tests/test_onboarding_parity.py::test_discovery_result_is_iterable",
+      "tests/test_onboarding_parity.py::test_tutorial_code_blocks_use_only_public_sdk_names",
+      "tests/test_onboarding_parity.py::test_tutorial_code_blocks_have_no_from_astrid_dot_imports",
+      "tests/test_onboarding_parity.py::test_import_astrid_is_lazy"
+    ]
+  },
+  "comparison": {
+    "executed_test_ids_compared": 31,
+    "new_failing_test_ids_within_selection": [],
+    "changed_pass_fail_outcomes_within_selection": [],
+    "candidate_minus_baseline_deselected_count": 13,
+    "classification": "All twelve observed candidate opt-in failures also occur on the actual published-source baseline with matching test IDs and reported causes. Both jobs remain failed.",
+    "scope": "Only the executed opt-in selection; not full-suite, installed-product, performance, GPU or Windows qualification. This does not prove that the code paths hidden by these failures work."
+  },
+  "integration_jobs": [
+    {"shard": 1, "baseline_job_id": 132943873394, "candidate_job_id": 132981680578, "baseline_conclusion": "failure", "candidate_conclusion": "failure", "per_test_classification": "pending"},
+    {"shard": 2, "baseline_job_id": 132943873354, "candidate_job_id": 132981680766, "baseline_conclusion": "failure", "candidate_conclusion": "failure", "per_test_classification": "pending"},
+    {"shard": 3, "baseline_job_id": 132943873344, "candidate_job_id": 132981680602, "baseline_conclusion": "failure", "candidate_conclusion": "failure", "per_test_classification": "pending"},
+    {"shard": 4, "baseline_job_id": 132943873317, "candidate_job_id": 132981680773, "baseline_conclusion": "failure", "candidate_conclusion": "failure", "per_test_classification": "pending"}
+  ],
+  "installed_wheel_jobs": {
+    "baseline": {"job_id": 132943873385, "conclusion": "success"},
+    "candidate": {"job_id": 132981680712, "conclusion": "success"},
+    "limitation": "Job success does not resolve the missing archived registry receipt file documented in recovery-20261116.md."
+  },
+  "preserved_boundaries": {
+    "independent_check": "not performed",
+    "full_astrid_dev_check": "not performed",
+    "formal_review_rounds_consumed": {"RS1": 0, "R": 0},
+    "spend_usd": 0,
+    "product_main_merge": false,
+    "dependency_repin": false,
+    "scope_change": false,
+    "release_publication": false,
+    "original_workspace_recovered": false,
+    "ls2_worker_recreated": false
+  },
+  "limitations": [
+    "This is a derived manager-authored transcription, not a raw log archive, rerun, or independent review.",
+    "The thirteen-count deselection difference is not an execution result for those tests.",
+    "No integration failure is classified solely because both job conclusions are failure.",
+    "Original run configuration and the unfinished LS-2 worker remain unavailable; their state was not overwritten.",
+    "Only LS-11 is complete; tasks.md on main remains authoritative."
+  ]
+}
