@@ -31,7 +31,7 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 - **Prepare the next item before the current one ends:** its cards re-planned against what just landed, its `Run start` line, and its start message.
 - **Get the go once:** one standing go from the owner for the whole queue, given in the manager's session and recorded on each `Run start` line. Without it, every item waits for her.
 - **At each check-in, confirm the manager has moved on.** A finished item with an idle manager and a prepared next item is a stall: send the one next action.
-- **An item gated on an outside event** (a release publishing, an owner setting) is still built on its integration branch, with only the merge to `main` waiting. Say what is gated, and on whom, in every report.
+- **An item gated on an outside event** (a release publishing, an owner setting) is still built on its plan branch, with only publication to `main` waiting. Say what is gated, and on whom, in every report.
 
 ## Path 1: start a project
 
@@ -40,7 +40,7 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 2. **Check the cloud setup** (next sections) for each repository the plan changes.
 3. **Farm it out.** Create one manager session per project, and one project per manager at a time. Give it:
    - the plan's path;
-   - the integration branch (`int/<project>`), and the exact starting versions;
+   - the plan branch (`release/<NN>/plan-<PP>`), and the exact starting versions;
    - the owner's limits (budget, CPU or GPU, what needs a go);
    - **the tests, already chosen.** Check that `tasks.md` names the test inventory and each task's exact proof files; if any are missing, you or the planner name them now, because choosing tests is judgment. Tell the manager to run only those, at the [load-bearing moments](../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing), and never a full suite locally;
    - your session id for questions, as its advisor;
@@ -77,7 +77,7 @@ A run starts with one short message; the plan carries the rest. A long brief rep
    You are accountable for Plan <NN>, <phase or tasks>: you answer for it finishing.
    Follow the astrid-dev-manage skill. The plan is plans/<NN-name>/ on astrid-dev main at <sha>;
    start from the Run start line in inputs.md and the dispatch notes in tasks.md.
-   Land work on int/<NN-name>. You may <what it may do without asking>.
+   Land work on the plan branch `release/<NN>/plan-<PP>`. You may <what it may do without asking>.
    Come to me for <what needs the owner's go>. Your advisor for hard questions is session <id>.
    ```
 
@@ -112,7 +112,7 @@ This is the one statement that Codex workers are the default; every other file l
 - **Install the astrid-dev skills** for Codex ([README](codex-in-claude-cloud/README.md#one-time-setup-in-the-session)); the brief gives the manager its plan, branches, route lines and the rules that differ under Codex.
 - **Brief a manager as a manager.** Start every Codex manager from [`manager-brief.md`](codex-in-claude-cloud/manager-brief.md), and re-read it before each new run, because it changes. Codex takes its authority only from its starting prompt: a mailbox note can't later grant it merge rights or change its role. A prompt that forbids integrating ("never push to int/…") makes Codex a worker, and you end up relaying every branch. To change a running Codex's role, have it checkpoint (push work in progress, write a handover entry, end `DONE`) and start a fresh manager run from the handover.
 - **You host it.** Codex can't keep itself alive, wake itself, reach the owner or run a model outside Codex; you hold all of those. Say "my run" and "my Codex manager". At every check-in, without waiting for the mailbox:
-  - **Compare `tasks.md` and the integration branch with the last check-in.** If nothing moved, read `codex.log` for why and send one next action through `to-codex.md`.
+  - **Compare `tasks.md` and the plan branch with the last check-in.** If nothing moved, read `codex.log` for why and send one next action through `to-codex.md`.
   - **Start every task Codex can't run** (a route bound to a Claude model, or the review) as soon as its inputs have landed, or Codex writes `READY: <task id>` to the mailbox; don't wait to be asked.
   - **Clear what is stuck on your side:** an unmerged or conflicting progress PR, a dead runner, a refused command to take to the owner.
   - **Open the final PR and bring the owner their decisions.**

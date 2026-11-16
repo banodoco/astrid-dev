@@ -11,7 +11,7 @@ Use this workflow for cross-repository integration, candidate qualification, and
 
 Name the outcome, destination, and authorized actions before acting:
 
-1. **Pre-main integration:** compose requested donors into the named integration destination. This does not imply deployment, installer tuple change, version release, registry publication, or public release.
+1. **Pre-main integration:** compose requested donors into the named release branch, `release/<NN>/main`. This does not imply deployment, installer tuple change, version release, registry publication, or public release.
 2. **Agent or hosted App artifact/release/deployment:** prepare or promote the named artifact or deployment. Source integration, artifact creation, deployment, and public verification are distinct actions.
 3. **Agent/Runtime installer tuple:** update the shared installed compatibility tuple only when requested; this is separate from an App web-bundle deployment.
 4. **Extension-platform RC:** use only when the request names this lane. Its App/Astrid candidate is distinct from a routine hosted App deployment.
@@ -33,6 +33,15 @@ A release with more than one lane, or with a deadline, also keeps a folder, `rel
 
 **The timeline and the cut line go in on day one.** The timeline runs from now to publish, with an owner for each milestone. The cut line names what ships without, and by when, if a lane isn't done. Decide that early, so the deadline doesn't decide it for you.
 
+**Cut the release branches when the release starts.** For each product repository the release touches, including a fix release, cut `release/<NN>/main` from the served release (normally `main`; a repository whose served pin is not on `main`, such as VibeComfy today, from the pinned commit), push it, and record repository, branch and commit in the brief's `## Branches` table. This is the one statement of the branch structure:
+- `release/<NN>/main` is the release's one canonical branch. Full CI runs on it. Tester builds and release candidates are cut only from it.
+- A **plan branch**, `release/<NN>/plan-<PP>`, is cut from it when a plan's run starts. A **fix branch**, `release/<NN>/<topic>`, holds work outside a plan. Task branches merge into their plan or fix branch.
+- Plan and fix branches merge into `release/<NN>/main` when their proof passes. Merges only, never rebase or force-push.
+- When `release/<NN>/main` moves, merge it into each open plan and fix branch promptly. A plan or fix branch lands only when it contains the release branch's current head and its focused proof passed on that combined tree; if the release branch moved since, merge it in and re-run the proof.
+- Publication fast-forwards each repository's `main` to the reviewed commit on `release/<NN>/main`. Plan and fix branches are finished once merged; they are not fast-forwarded to `main`.
+- A release that starts before an earlier one ships cuts its `release/<MM>/main` from the earlier release's branch. Fixes flow forward only.
+- Once a release's branches exist, its number is fixed; a late fix takes a new number.
+
 **Give each lane its own session,** with a manager and its brief in `briefs/`. The release manager orchestrates and runs the paid and live steps itself.
 
 ## Pull and freeze issues
@@ -46,7 +55,7 @@ When a release is being specified, and again before its candidate is frozen, loo
 1. **List them** per repository with author, age, what each changes and whether CI is green. `N` helpers do the listing.
 2. **Sort each one:** *in this release* (it is ready or nearly, and fits the release's intent), *after this release* (sound, but it would reopen qualification or widen scope), or *not as it stands* (say why on the PR).
 3. **Work out how the "in" set fits together:** which PRs touch the same function, contract or screen; which depend on a plan in the release; the order they must land in; and what each one reopens (tests, pins, review). Two PRs that change the same surface need one agreed model before either lands.
-4. **Review and land each "in" PR** with [Merge](../astrid-dev-merge/SKILL.md), into the release's integration destination, not straight to `main` during the gate.
+4. **Review and land each "in" PR** with [Merge](../astrid-dev-merge/SKILL.md), into the plan or fix branch that owns it (an outside pull request no plan owns gets a fix branch), never `main`.
 5. **Record them in the release brief** under `## Included pull requests`, one line each with its reason, beside the included plans. Adding a PR after the candidate is frozen is added scope: say what it reopens and offer the next release instead.
 
 A contributor whose PR is deferred is told which release it is considered for, on the PR.
@@ -76,21 +85,21 @@ Apply change-directed invalidation: a changed input invalidates only proof that 
 
 After scoped checks and prescribed review pass, promote the **same reviewed head** to the explicitly authorized target using an ordinary push. Never force-push or substitute a different candidate. Movement of a target ref invalidates only affected proof; re-evaluate its dependencies and retain unaffected evidence. A failed check or unresolved review blocker means no promotion.
 
-A publish never turns a passing test red. For each promotion into a product `main`, compare the candidate's per-test results with that `main`'s using `astrid-baseline-diff` ([`env/baseline-diff.py`](../../env/README.md)), from complete CI runs ([measure first](../astrid-dev-green/SKILL.md#2-measure)). Agent CI and Lanes don't run on pull requests, so their candidate runs are its `int/**` runs; list where each other required workflow's run comes from. Zero regressions and zero failing new tests are required to publish. A check that has no per-test results (lint, a build) is compared by name: one that passes on `main` and fails on the candidate blocks the publish. App test jobs do have per-test results; until they can be compared, their per-test claim is unqualified ([why](../astrid-dev-green/SKILL.md#2-measure)). Report each `main`'s red checks by name; they are not this publish's work.
+A publish never turns a passing test red. For each promotion into a product `main`, compare the candidate's per-test results with that `main`'s using `astrid-baseline-diff` ([`env/baseline-diff.py`](../../env/README.md)), from complete CI runs ([measure first](../astrid-dev-green/SKILL.md#2-measure)). Agent CI and Lanes don't run on pull requests, so their candidate runs are its `release/<NN>/main` runs; list where each other required workflow's run comes from. Zero regressions and zero failing new tests are required to publish. A check that has no per-test results (lint, a build) is compared by name: one that passes on `main` and fails on the candidate blocks the publish. App test jobs do have per-test results; until they can be compared, their per-test claim is unqualified ([why](../astrid-dev-green/SKILL.md#2-measure)). Report each `main`'s red checks by name; they are not this publish's work.
 
-**One publisher at a time.** Only one session publishes an installer release at a time, and only with the owner's go in that session. Before writing App `main`'s install manifest, check that no other project is mid-publish, and that the served release is the one your candidate starts from. If it isn't, re-base the candidate on the served tuple and renumber; never race another project for the same number.
+**One publisher at a time.** Only one session publishes an installer release at a time, and only with the owner's go in that session. Before writing App `main`'s install manifest, check that no other project is mid-publish, and that the served release is the one your candidate starts from. If it isn't, merge the served tuple into the candidate, or renumber while the release's branches are not yet cut (after that, take a new number). Never race another project for the same number.
 
 **Publishing an installer release** (Runtime, Agent and App to `main`):
 0. **Cover real install states.** Before publishing, list the install states real users are in (diagnostics received, past releases, migrations they went through) and have CI cover each one from that real starting state. A proof row is named after its literal starting state. After publishing, the owner checks the release through the normal App path on a real long-lived install, with no custom commands. Plan 29 is not done until that check passes.
 1. **Owner's go, in this session.** As soon as the candidate qualifies, ask the owner for the go here, naming the exact SHAs. A go recorded elsewhere, in a plan's `inputs.md` or another session, does not satisfy this session's permission check. If a merge is refused as a production action, stop and ask the owner; don't retry another way.
-2. **Merge in order:** Agent, then Runtime, then App, whose manifest names the other two. Use merge PRs or fast-forwards of the exact reviewed SHAs.
+2. **Publish in order:** Agent, then Runtime, then App, whose manifest names the other two. Fast-forward each repository's `main` (`git push`, never forced) to the exact reviewed commit on its `release/<NN>/main`.
 3. **Wait for the deploy.** The App merge starts a production deployment. The served-manifest canary runs only when that deployment succeeds, so a canary run before then shows as skipped. Wait for both, then confirm `https://astrid.haus/install-manifest.json` serves the release and the exact SHAs.
-4. **Bring integration branches up to `main`.** Fast-forward each `int/<project>` to its `main` with `git push`, never forced. Cloud sessions can't write refs through the GitHub API.
+4. **Mark the release published.** With `main` at the reviewed commit, set the release's row in `## Branches` to `published`. Plan and fix branches are finished once merged; don't fast-forward them.
 5. **Close the project** through [Manage](../astrid-dev-manage/SKILL.md)'s completion PR.
 
 **Fixes / standing-lane release** (a small fix on top of the served release, without a full release cycle; see [glossary](../astrid-dev-shared/glossary.md)):
 - **What qualifies:** the served tuple plus a short, listed set of fix commits that change no contract. That means no Runtime protocol or schema change, no new user-facing feature, no generation or GPU path, and no pin change beyond the patched component. Anything else is a full release.
-- **Number and version:** the next integer, because `release-guard` requires +1 and installs only update to a higher number. Its kind is `patch` (Plan 29 decision 7). With another release in flight, the fix takes the next number and renumbers it, with its manager’s and owner’s agreement. The release manager renames `release:NN` labels highest first; ask the orchestrator if unable to write labels. Otherwise, fold the fix into the in-flight release if it need not ship sooner.
+- **Number and version:** the next integer, because `release-guard` requires +1 and installs only update to a higher number. Its kind is `patch` (Plan 29 decision 7). With another release in flight, the fix takes the next number. Renumber a release instead only while its branches are not yet cut, with its manager’s and owner’s agreement; then the release manager renames `release:NN` labels highest first (ask the orchestrator if unable to write labels). Otherwise, fold the fix into the in-flight release if it need not ship sooner.
 - **Evidence:** change-directed, with the claim stated as usual.
   1. Focused tests for the fix, shown failing on the served tuple.
   2. The update rows from every published release (Plan 09 IU-15; until it exists, the matrix's update rows), plus one forced rollback.
