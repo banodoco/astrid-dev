@@ -861,3 +861,12 @@ qualification_continuation_20261116_2344:
     no_manual_workflow_dispatch: true
     inputs_or_task_checkbox_edit: false
   next: Bounded recheck exact attempt1 Lanes integration3 once finished, then full exact-ID/outer-log qualification. Seek independent review and hosted proof for PR373. Preserve all owner holds.
+
+bounded_followup_20261117:
+  confirmed_scheduled: true
+  schedule_utc: '2026-11-17T01:44:16Z'
+  schedule_local: '2026-11-16T17:44:16-08:00'
+  reused_existing_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  purpose: Recheck exact Agent Lanes43967861160 attempt1 shard3, obtain log/XML and hashes once completed, compare exact IDs without baseline rewrite, keep review/ownership holds
+  safe_actions: read_and_record_on_astrid_dev_p39_g1_only
+  no_new_automation_created: true
