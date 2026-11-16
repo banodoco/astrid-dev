@@ -1,0 +1,32 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "-rA",
+    "-s",
+    "tests/core/generation/backends/test_comfy_cancel_safety.py",
+    "tests/core/generation/test_local_speed_hash_observer.py",
+    "/mnt/data/plan55-d9-work/hash_delivery_probe.py",
+    "--junitxml=/mnt/data/plan55-d9-work/d9-focused-final.xml"
+  ],
+  "returncode": 0,
+  "pythonpath": "/mnt/data/plan55-d9-work/agent:/mnt/data/plan55-d9-work/agent/astrid-runtime:/mnt/data/plan55-d9-work/agent/astrid-runtime/packages/python",
+  "base_product_blob_verified": "fec01b40cd2d99de2012f787bc18e7506e289793",
+  "candidate_file_sha256": {
+    "astrid/core/generation/backends/comfy_target.py": "351694dd1b8ad5919843a9bea1db1ab9b9b7de2a354a29119c261eef1e248e3b",
+    "tests/_local_speed_hashes.py": "7d38b02ddbe4d4749dc584963050b7bb2cd16dd87ad2d225a729dd3961da5da4",
+    "tests/core/generation/test_local_speed_hash_observer.py": "ee1b25fa2b3d36e704b4f3f2ca06cd0bd8a8bd6f8302bdc270688ec698ae2839",
+    "tests/core/generation/backends/test_comfy_cancel_safety.py": "cd66b12ab64ac3f74f2cd839208886ad46b9dc6ef643900f2c76389e47736028"
+  },
+  "limitations": [
+    "Partial source snapshot, not complete checkout",
+    "No complete original tests/core/generation/test_output_delivery.py run",
+    "No real ComfyUI CPU server, no live GPU or Windows",
+    "Test durations are not generation latency"
+  ],
+  "environment": {
+    "python": "Python 3.13.5"
+  }
+}

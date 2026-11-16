@@ -1,0 +1,49 @@
+.......................................HASH_PHASE {"phase": "download", "streams": 1, "bytes": 8, "gaps": []}
+HASH_PHASE {"phase": "harvest", "streams": 2, "bytes": 16, "gaps": []}
+HASH_PHASE {"phase": "host", "streams": 2, "bytes": 16, "gaps": []}
+HASH_PHASE {"phase": "runtime", "streams": 3, "bytes": 24, "gaps": []}
+HASH_PHASE {"phase": "delivery", "streams": 6, "bytes": 48, "gaps": []}
+.
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_running_owned_job_is_refused_not_interrupted[attached]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_running_owned_job_is_refused_not_interrupted[managed]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_pending_owned_job_is_deleted_without_touching_other_work[attached]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_pending_owned_job_is_deleted_without_touching_other_work[managed]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_pending_to_running_race_is_refused
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_finished_job_is_not_resubmitted_or_interrupted
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_unwitnessed_job_is_refused_before_network[other]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_unwitnessed_job_is_refused_before_network[guessed]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_invalid_identity_is_refused_before_network[]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_invalid_identity_is_refused_before_network[../ours]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_invalid_identity_is_refused_before_network[ours?x=1]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_invalid_identity_is_refused_before_network[None]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_malformed_queue_is_not_success_or_permission_to_interrupt[queue0]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_malformed_queue_is_not_success_or_permission_to_interrupt[queue1]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_malformed_queue_is_not_success_or_permission_to_interrupt[queue2]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_malformed_queue_is_not_success_or_permission_to_interrupt[queue3]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_attached_raw_interrupt_is_refused_even_with_owned_prompt[payload0]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_attached_raw_interrupt_is_refused_even_with_owned_prompt[payload1]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_attached_raw_interrupt_is_refused_even_with_owned_prompt[payload2]
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_repeat_cancellation_of_pending_job_is_safe
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_separate_callers_cannot_cancel_each_others_jobs
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_lost_delete_ack_does_not_retry_or_interrupt
+PASSED tests/core/generation/backends/test_comfy_cancel_safety.py::test_private_journal_cleanup_propagates_running_refusal
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_supported_entry_points_are_counted_once[sha256]
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_supported_entry_points_are_counted_once[new]
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_supported_entry_points_are_counted_once[file_string]
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_supported_entry_points_are_counted_once[file_callable]
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_supported_entry_points_are_counted_once[file_cached]
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_supported_entry_points_are_counted_once[file_real]
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_split_updates_are_one_full_stream
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_two_hashes_are_two_passes_not_one
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_repeated_digest_and_copy_of_finished_hash_do_not_rehash
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_copied_prefix_only_counts_prefix_once
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_unrelated_content_and_other_algorithms_are_not_output_hashes
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_preseeded_file_digest_callable_reports_unknown_not_zero_coverage
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_failed_update_is_not_counted
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_hash_not_explicitly_finalized_is_observed_at_snapshot
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_mismatched_declared_size_is_not_a_complete_pass
+PASSED tests/core/generation/test_local_speed_hash_observer.py::test_megabyte_file_is_counted_across_real_readinto_chunks
+PASSED ../hash_delivery_probe.py::test_output_hash_passes_across_download_host_runtime_and_delivery
+40 passed in 13.28s
