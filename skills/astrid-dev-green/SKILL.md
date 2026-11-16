@@ -88,7 +88,7 @@ For each side, and each workflow in scope:
    - a cause spans about ten files or more;
    - the same signature comes back after two batches.
 5. **A real bug** gets its own fix card. A test that can't be fixed in its card follows the [quarantine rule](../../plans/39-green-mains/plan.md#quarantine-rule), and only once that rule's guard exists in the repository. The Agent's guard fails every xfail today (`tests/lanes.py`).
-6. **Fix where the change will ship.** While a release candidate far ahead of `main` is in flight, ask the owner where to cut the work.
+6. **Fix where the change will ship.** While a release is in flight, cut the work as a fix branch (`release/<NN>/<topic>`) under the release it belongs to.
 
 ## Using GitHub Actions
 
@@ -100,10 +100,10 @@ For each side, and each workflow in scope:
   - Cancel your own run: `POST .../runs/<id>/cancel`.
 - **Timestamps.** A job log prefixes every line with a timestamp. Strip it with the regex `^\S+Z ` (for example, Python `re.sub`) before sorting, or the sorter finds nothing. Grep for the failing ids rather than reading whole logs. Logs and artifacts expire (test durations after 3 days, and some logs vanish), so commit the evidence when you take it.
 - **Know each workflow's trigger.** Read its `on:` block before relying on a run.
-  - In the Agent, `ci.yml` and `lanes.yml` run on pushes to `main`, `release-1` and `int/**`, and on dispatch; they don't run on pull requests.
+  - In the Agent, `ci.yml` and `lanes.yml` run on pushes to `main`, `release-1`, `release/*/main` and `int/**`, and on dispatch; they don't run on pull requests.
   - The Agent's `windows-journey.yml` runs on pull requests to `main` and on pushes to `windows/**`.
   - Runtime CI runs on every push and every pull request.
-  - App pushes to `int/**` start its full workflows ([manage](../astrid-dev-manage/SKILL.md#steps)).
+  - App pushes to `release/*/main` and `int/**` start its full workflows ([manage](../astrid-dev-manage/SKILL.md#steps)).
   - Before a gate, list every required workflow and where the candidate's run of each comes from.
 - **A scratch ref** is your own branch, started with `POST .../actions/workflows/<file>/dispatches`, the header `Content-Type: application/json` (the proxy refuses the call without it) and `{"ref": "<branch>"}`. Then find its run by listing runs for that branch. It never enters a candidate.
 - **Concurrency is set per workflow.** Read its `concurrency:` block. Where `cancel-in-progress` is on, a new run on the same group cancels the one in flight. The Agent's `ci.yml` groups by workflow and ref; manual journey dispatches never cancel each other. The coordination rule is [manage's](../astrid-dev-manage/SKILL.md#steps).
