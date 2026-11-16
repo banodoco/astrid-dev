@@ -3,12 +3,14 @@
 # Run from the Runtime checkout root. Builds <checkout>.env/ next to it.
 # Installs Runtime test dependencies and the Python client, then fetches the Agent
 # at tests/astrid-agent.pin and verifies the exact commit before installing it.
-# Needs uv, git, Python 3.13, and public reads from PyPI and GitHub.
+# Installs an environment-local Node 22 and the lockfile's TypeScript compiler.
+# Needs uv, git, node/npm, Python 3.13, and public reads from PyPI, npm and GitHub.
 set -euo pipefail
 trap 'status=$?; echo "ENV: setup failed (exit $status): $BASH_COMMAND" >&2; exit 3' ERR
-for t in uv git; do command -v "$t" >/dev/null || { echo "ENV: missing tool $t" >&2; exit 3; }; done
+for t in uv git node npm; do command -v "$t" >/dev/null || { echo "ENV: missing tool $t" >&2; exit 3; }; done
 CO=$(pwd -P); E="$CO.env"
-test -f "$CO/pyproject.toml" -a -f "$CO/tests/astrid-agent.pin" -a -d "$CO/packages/python" || {
+test -f "$CO/pyproject.toml" -a -f "$CO/tests/astrid-agent.pin" -a -d "$CO/packages/python" \
+  -a -f "$CO/packages/typescript/package.json" -a -f "$CO/packages/typescript/package-lock.json" || {
   echo "ENV: not an astrid-runtime checkout: $CO" >&2; exit 3;
 }
 AGENT_SHA=$(tr -d '[:space:]' < "$CO/tests/astrid-agent.pin")
@@ -25,5 +27,15 @@ test "$(git -C "$E/agent" rev-parse HEAD)" = "$AGENT_SHA" || {
   echo "ENV: fetched Agent SHA does not match tests/astrid-agent.pin ($AGENT_SHA)" >&2; exit 3;
 }
 uv pip install -q --python "$PY" --no-deps "$E/agent"
+npm install --prefix "$E/node" --no-save --no-package-lock --no-audit --no-fund node@22
+export PATH="$E/node/node_modules/.bin:$CO/packages/typescript/node_modules/.bin:$PATH"
+NODE_VERSION=$("$E/node/node_modules/.bin/node" --version)
+[[ "$NODE_VERSION" =~ ^v22\. ]] || {
+  echo "ENV: Runtime worker requires Node 22" >&2; exit 3;
+}
+npm ci --prefix "$CO/packages/typescript" --include=dev --no-audit --no-fund
+TSC_VERSION=$("$CO/packages/typescript/node_modules/.bin/tsc" --version)
+PYTHON_VERSION=$("$PY" -c 'import sys; print(sys.version.split()[0])')
 dirname "$(command -v uv)" > "$E/uv-dir"
-printf 'python=%s\nagent=%s\n' "$("$PY" -c 'import sys; print(sys.version.split()[0])')" "$AGENT_SHA" | tee "$E/setup.txt"
+printf 'python=%s\nagent=%s\nnode=%s\ntsc=%s\n' \
+  "$PYTHON_VERSION" "$AGENT_SHA" "$NODE_VERSION" "$TSC_VERSION" | tee "$E/setup.txt"

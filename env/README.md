@@ -4,10 +4,10 @@ Setup and test scripts that any Astrid project's worker can run in a **single-re
 
 ## Rules every script here follows
 
-- **Run from the product checkout root.** The script builds `<checkout>.env/` next to the checkout, never inside it.
+- **Run from the product checkout root.** Python workers build `<checkout>.env/` next to the checkout. Runtime setup also installs its TypeScript lockfile into `packages/typescript/node_modules/` inside the checkout; App setup installs its lockfile into the checkout's root `node_modules/`.
 - **Other repositories come only from git,** at the commit the product checkout pins (for example `runtime.lock.json` or `VIBECOMFY_ENGINE_REVISION`), and each fetch checks the SHA. Nothing downloads a GitHub archive: a cloud session's GitHub proxy only serves archives for its attached repository.
-- **Public repositories and PyPI only.** Nothing private, no credentials, no cloud resources.
-- **Exit 3 means an environment problem,** never a test result.
+- **Public git, PyPI and npm only.** Nothing private, no credentials, no cloud resources.
+- **Setup failures exit 3.** Pytest runners preserve pytest's exit status. `smoke.sh` keeps its existing exit 3 for either setup or test failure; its `ENV-FAIL` line identifies the step, and the test output gives the verdict.
 
 ## Simplest: let the cloud environment run them
 
@@ -40,6 +40,8 @@ bash scripts/worker-env/agent-setup.sh                  # astrid-agent checkout
 bash scripts/worker-env/agent-pytest.sh -q <selectors>
 bash scripts/worker-env/agent-pytest-pod.sh <selectors>
 bash scripts/worker-env/smoke.sh agent <one selector>
+bash scripts/worker-env/smoke.sh runtime tests/test_platform.py # astrid-runtime checkout
+bash scripts/worker-env/smoke.sh app scripts/installer/manifest.test.mjs # astrid-app checkout
 ```
 
 What a permission stress test showed (three auto-mode workers, astrid-agent int/33 at 187d692, 8 Nov 2026):
@@ -56,10 +58,11 @@ What a permission stress test showed (three auto-mode workers, astrid-agent int/
 | `cloud-setup.sh` | The cloud environment's setup script (see above). It installs the commands listed above and `astrid-baseline-diff`. Not run by workers. |
 | `runtime-fixture-preflight.py` | Internal: `cmp-run.sh` runs it before pytest on the Runtime custody selections, to check the fixture imports. Nothing else calls it. |
 | `vc-setup.sh`, `vc-pytest.sh` | The same pair for a VibeComfy checkout. |
-| `runtime-setup.sh`, `runtime-pytest.sh` | Builds a Python 3.13 Runtime test environment, installs `.[test]` and `packages/python`, then fetches and SHA-verifies the Agent commit in `tests/astrid-agent.pin`. |
+| `runtime-setup.sh`, `runtime-pytest.sh` | Reuses Plan 38 W0: Python 3.13, `.[test]`, `packages/python`, and the SHA-verified Agent at `tests/astrid-agent.pin`. Requires `uv`, `git` and working `node`/`npm` to provision an environment-local Node 22 via `node@22`; installs TypeScript with `npm ci --include=dev` from `packages/typescript/package-lock.json`. The runner puts that Node and local `tsc` on `PATH`, and sets `ASTRID_CHECKOUT` to the fetched Agent. Setup records the Python, Agent, Node and TypeScript versions. |
+| `app-setup.sh` | Requires the first `node` on `PATH` to be 20.19.x and runs `npm ci --legacy-peer-deps` against the checkout's lockfile, including its install scripts. A missing tool, wrong Node version, missing manifest/lockfile or failed install exits 3. It does not switch Node versions. |
 | `baseline-diff.py` | Sorts a candidate's test results against one or more baselines into regression, no-baseline, preexisting, fixed and missing. A **regression** ran and passed on at least one baseline and fails on the candidate. Feed it pytest logs run with `PYTEST_ADDOPTS=-rA`, for example `astrid-baseline-diff --baseline served-11=base.log --candidate cand.log --out <dir>`. It exits 1 when there are regressions. It writes `summary.md` and one id list per bucket, with one node id per line (the format of Plan 02's `shared-failure-exceptions.txt`). Stdlib only. Installed as `astrid-baseline-diff` by `cloud-setup.sh`, or copied to `scripts/worker-env/baseline-diff.py`. |
 | `cmp-run.sh` | Runs one Agent test set at one commit in its own worktree, with `-rA`, for a before/after comparison. Run one per commit in parallel, then compare the logs with `baseline-diff.py`. Falls back to these `env/` copies for commits without `scripts/worker-env/`. |
-| `smoke.sh` | Setup plus one named test. A manager runs it in one throwaway worker per repository before a run's first task, so environment problems surface once, in minutes. |
+| `smoke.sh` | Setup plus one named test: `agent`, `vc` and `runtime` run one pytest selector; `app` runs `node --test <file>`. Prints `ENV-PASS` only after both steps succeed. A manager runs it in a throwaway worker per repository before a run's first task. |
 
 `cmp-run.sh` recognizes selectors that include Runtime custody fixture tests (the D40 source and orchestrator custody tests, plus the stage1 external-orchestrator test that can reuse D40's fixture loader). For those selections only, it installs that checkout's already pinned Runtime source in editable mode and checks that `runtime_protocol` and both producer fixture modules import from that source tree before pytest starts. A failed or incomplete fixture setup exits 3 as an environment error. Older worktrees with no matching test file simply skip this preflight; the general Agent setup remains noneditable.
 
