@@ -2,15 +2,15 @@
 
 **Project:** Into the Minkhole proof point
 
-**Goal:** A creator and an agent can finish Into the Minkhole in Astrid and repeat its voice-conditioned editing workflow on another timeline.
+**Goal:** A creator finishes Into the Minkhole in Astrid, and a weaker agent can repeat the editing workflow on another timeline.
 
 **Status:** active
 
 **Owner:** Hannah
 
-**Estimate:** 30–45 engineering days, pending pilot and source recovery.
+**Estimate:** TBD; the work advances one creative task at a time.
 
-**Waiting on:** D1–D5 remain open; owner go is required for creative reviews, pull requests, merges, publication/release, and spend beyond the authorized RunPod ceiling.
+**Waiting on:** D3, how the compositor source is maintained, until single-source sizing is in.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -18,24 +18,31 @@
 
 ## Outcome and scope
 
-Import both supplied timelines without overwriting work; inspect, edit, visualize and render them through Astrid. Make per-clip fit and crop explicit and independent, preserve a versioned legacy baseline, and prove preview, export and composed visualization agree. Enable source and generated word transcription, durable clip-specific intent and alignment, automatic masks, and a usable H3_AV editing procedure. Finish the parody and prove the reusable system with a fresh weaker agent on a different timeline. The reusable workflow matters most.
+What done looks like:
 
-Use the existing packs, Runtime authority and timeline wherever possible. Fix blockers needed for this journey now; file durable or disproportionate adjacent problems for later. Full consolidation of the App renderer into the shared package is deferred unless small. Do not treat CPU fixtures as GPU proof or a machine transcript as creative approval.
+1. You open Into the Minkhole and the Matrix shots fill the frame edge to edge, with no black bars.
+2. That frame looks the same in the editor, in an export, and in the picture an agent pulls from the CLI, because all three read from one place.
+3. On any clip you can see and change Fit/Fill and crop, and changing one never moves the other.
+4. One command gives an agent a single clean frame of any moment, and it never reports success while handing back nothing.
+5. The archive you handed over imports on the release build with one command.
+6. Morpheus says the new lines in his own voice with his mouth matching, using a technique you chose after hearing real attempts side by side.
+7. An agent asks "what is said in this clip, and when?" and gets words with timestamps, for source footage and for anything generated.
+8. An agent says "change the mouth in this shot" and gets a mask without painting one.
+9. A generated take arrives next to the shot it's for; you compare takes, pick one, and it's on the timeline.
+10. A cheaper agent, given a different timeline, a script and only the skill, makes a comparable edit and stops only to ask you taste questions.
 
 ## Existing work and decision
 
-[Inputs](inputs.md#planning-evidence) records the source, alternatives, prior work, owner direction and decisions still needed. Existing H3 stages, timeline transfer and narration transcripts are starting points, not proof of the missing end-to-end capability. This new project joins them around a separately useful creative outcome; it does not replace their existing plans.
+Extend Astrid's existing timeline, rendering, transcription and H3 tools as each creative task needs them. The live sequence and blocker record are in [tasks.md](tasks.md); concise prior-art and source evidence are in [inputs.md](inputs.md#planning-evidence). This work is through Astrid's own tools: fix a blocker at its cause, or file an issue when useful work is too large for now. No workarounds.
 
 ## Sequence and readiness
 
-Phase 1 (approximately 10–15 days): unblock and prove appearance; phase 2 (approximately 12–20 days): clip knowledge and masks; phase 3 (approximately 8–10 days): GPU pilot, voice choice, edit and independent repeatability. Work tracks in parallel where their inputs allow; appearance must be proven before creative H3 work. The pilot gates the experiments, not the unpaid preparation. [Tasks](tasks.md) has the critical path, dependency gates and focused proofs. Estimates are planning estimates, not a schedule or a guarantee.
-
-The intended base and landing are Release 14's per-repository `release/14/main`, via `release/14/plan-59`; the owner has directed these branches. Inclusion in and shipment with Release 14 remain an explicit decision because the release brief does not include this plan. No implementation or publication is authorized by this planning document.
+Use the loop in [tasks.md](tasks.md): take the next creative task, attempt it with Astrid, diagnose and properly fix blockers (or file an issue), return to the creative task, and record what was learned for the skill. Later tasks are expected to change as the work teaches us. Owner taste decisions return to Hannah. Keep the $25 RunPod ceiling and its split in [inputs.md](inputs.md#owner-decisions). The owner decided on 16 November 2026 to include this work in Release 14; adding it to the release's Included plans list is the release manager's step.
 
 ## Interfaces and handoff
 
-Consume the hash-verified public timeline-v1 archives, exact Runtime/Agent/App/VibeComfy source revisions, and the shipped 0.0.17 compositor artifact identified in [inputs](inputs.md#source-identities). Record actual dispatch heads and clean/dirty custody before use. Produce a versioned appearance contract and coherent package pins, editable timelines, durable clip knowledge, candidate and transcript evidence, a finished render, and a runbook that identifies the exact integrated tuple. Archive transfer is not a full history backup. Package provenance, the legacy baseline, source recovery and release inclusion are unresolved until decided and proven. Link implementation PRs and the integrated completion PR here as they become available.
+Consume the supplied timeline-v1 archives and the actual Release 14 source heads recorded at dispatch. Produce a finished edit in Astrid and a skill/runbook that lets a weaker agent repeat it on another timeline. Record exact revisions, artifacts and proof in the live task record as they become available. The composition package's source custody remains open until its single-source sizing is complete.
 
 ## Completion
 
-On the exact integrated tuple, both archives open with resolved media; a guarded edit, composed visualization and render succeed. The same authored appearance matches across all three paths including legacy and negative cases; the owner reviews the Matrix Fill crop. Real GPU receipts establish a working pilot and chosen voice approach, with spend and pod cleanup accounted for. The finished timeline contains owner-accepted takes, transcript comparison and a rendered video. A fresh weaker agent, given only the published-in-repository instructions and a different suitable timeline, completes a comparable edit through Astrid; retain its actions, output, errors and assessment. This proves those setups and cases, not all clips, models or environments. Integration and release remain subject to the [release workflow](../../skills/astrid-dev-release/SKILL.md) and explicit authority.
+Complete the ten outcomes above through Astrid, with the owner reviewing creative choices and the final result. Then have a fresh weaker agent use only the skill on a different timeline, stopping only for taste questions. The task log records evidence and remaining limits; a finished plan does not itself merge or publish the work. Release 14 inclusion is recorded by the release manager in [releases/14.md](../../releases/14.md).
