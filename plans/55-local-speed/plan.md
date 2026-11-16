@@ -128,6 +128,8 @@ Task details are in [tasks.md](tasks.md). The owner's 15 November 2026 run autho
 
 ## Interfaces and handoff
 
+**Developer pickup:** [Current branches, open issues, exact reproductions and next actions](developer-handoff.md). This guide preserves unresolved permission and meter failures; it does not waive proof or mark tasks complete.
+
 **Consumes:** Release 13 as published (astrid-agent, VibeComfy and Runtime at the Release 13 pins); the test lane's attached-ComfyUI harness; Release 13's per-phase timing block; donor branches named in [inputs.md](inputs.md#source-identities).
 
 **Produces:** a VibeComfy template interface (compile once, fill per job) and a held ComfyUI connection; a Runtime hand-off for local jobs; a resident worker in the pack host; a thin command-line client; a standing budget test that fails a pull request which adds a process start, a wait or a forced disk write to the warm local path. Plan 54 can reuse the worker and the template for rented machines.
