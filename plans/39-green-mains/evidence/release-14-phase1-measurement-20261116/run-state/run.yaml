@@ -781,3 +781,83 @@ qualification_continuation_later_read_20261116_2249:
   CI_pending_unit_shards: [1, 2, 4, 5, 6, 7]
   Lanes_pending_integration_shards: [3, 4]
   no_cancel_rerun_or_public_branch_mutation: true
+
+qualification_continuation_20261116_2344:
+  status: active_incomplete
+  captured_at_utc: '2026-11-16T23:49:00Z'
+  exact_agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  evidence: agent/merged-head-6bbda788/completed-ci-lanes-followup-20261116.md
+  raw_xml_inventory:
+    local_name: p39-merged-head-completed-xml-inventory-20261116.json.gz
+    sha256: 7109d26f8653bb9a36c62afc0678383d9271adf8bc706930c7a300569d9ffc0a
+    scope: 12 completed failing XML jobs, exact full literal messages/testcase IDs
+    note: GitHub ZIP artifact sources, verified SHA-256 and XML hashes are linked in evidence; local inventory not a hosted repository artifact
+  CI:
+    run_id: 43967861168
+    attempt: 1
+    status: completed_failure
+    failing_test_jobs: 9
+    failed_aggregate_job: unit
+    successful_jobs: [fast_checks, boundary, windows_native_and_installer, release_wheel_3_11, release_wheel_3_12]
+    skipped_jobs: [landing_reference]
+    junit_tests: 31351
+    junit_failures: 882
+    junit_errors: 398
+    junit_skipped: 55
+    full_literal_message_groups_per_job: 549
+    all_failing_test_jobs_have_actual_xml: true
+    direct_testcase_identity_caveat: unit6 has 30 failing subtests without standalone IDs
+    newly_completed_job_ids: [133651924807, 133651924632, 133651924745, 133651924751, 133651924641, 133651924616]
+    new_pass_to_failure_exact_id:
+      tests.core.generation.test_readiness_missing_models::test_list_and_defaults_agree_when_files_are_missing: ownership_and_setup_hold
+  Lanes:
+    run_id: 43967861160
+    attempt: 1
+    status: in_progress
+    finished_failed_jobs: [133651923592, 133651923670, 133651924063, 133651923157]
+    finished_passed_jobs: [133651923640]
+    pending_job_id: 133651923800
+    actual_xml_finished_integration_shards: [1, 2, 4]
+    integration_finished_failures: 213
+    integration_finished_errors: 198
+    opt_in_failed_log_cases_without_xml: 12
+    full_literal_xml_message_groups_completed_integration: 112
+    missing: integration3 actual XML and outer log, final completed run conclusion
+  compared_completed_exact_IDs:
+    shared_old_red_to_pass: 7
+    shared_old_pass_to_red: 3
+    unmatched_shard_memberships_classification: unknown_not_regressions
+    source_attribution: not_proven
+  K1a:
+    route: N
+    proven_windows_selector_gap: 2
+    real_prior_windows_passed_tests: 112
+    draft_product_PR: https://github.com/banodoco/astrid-agent/pull/373
+    task_branch: p39/k1a-windows-native-coverage-20261116
+    task_branch_head: 80e748fff9d41a1e33728c49d81832df12eb0773
+    status: isolated_unmerged_unreviewed_candidate
+    remaining: independent_review_local_focused_policy_proof_integrated_hosted_windows_two_exact_IDs
+    hardlink_capability_skip: unresolved_separate_hold
+  K1b:
+    runtime_clip: uncommitted_25_passed_2_failed_contract_owner_hold
+    draft_Runtime_PR56: orphan_declaration_metadata_only
+  ownership:
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+  acceptance:
+    formal_G1: incomplete
+    formal_G2: incomplete
+    RS1: 0/1
+  operations:
+    astrid_dev_branch_only: p39/g1
+    product_task_branch_only: p39/k1a-windows-native-coverage-20261116
+    product_pr_opened_draft: 373
+    product_pr_merged: false
+    release_14_main_or_public_main_pushed: false
+    no_cancel_or_rerun: true
+    no_authentication_retry: true
+    no_manual_workflow_dispatch: true
+    inputs_or_task_checkbox_edit: false
+  next: Bounded recheck exact attempt1 Lanes integration3 once finished, then full exact-ID/outer-log qualification. Seek independent review and hosted proof for PR373. Preserve all owner holds.
