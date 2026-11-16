@@ -85,6 +85,21 @@ def _release_documents(context):
     return errors
 
 
+def _active_plans_in_releases(context):
+    from check_docs import read
+    from records import active_plan_errors, project_fields, release_brief
+    root = context.root
+    if not _catalog_ready(context):
+        return []
+    active = {}
+    for path in sorted((root / 'plans').glob('*/plan.md')):
+        if project_fields(read(root, path.relative_to(root)))['Status'] == 'active':
+            active[path.parent.name[:2]] = path.parent.name
+    briefs = [release_brief(read(root, p.relative_to(root)), strict=False)
+              for p in sorted((root / 'releases').glob('[0-9]*.md')) if p.stem.isdigit()]
+    return active_plan_errors(active, briefs)
+
+
 def _strategy_consistency(context):
     from check_docs import read, STRATEGY, strategy_errors
     root = context.root
@@ -435,6 +450,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('plan-catalog', 'always', 'Parse the plan catalog', _catalog),
     Check('unique-project-numbers', 'always', 'Require unique project numbers', _unique_project_numbers),
     Check('release-documents', 'always', 'Validate release documents', _release_documents),
+    Check('active-plans-in-releases', 'always', 'Require every active plan in an unpublished release brief', _active_plans_in_releases),
     Check('strategy-consistency', 'always', 'Validate strategy structure and release kinds', _strategy_consistency),
     Check('catalog-paths', 'always', 'Validate catalog paths', _catalog_paths),
     Check('gap-structure', 'always', 'Validate gap structure', _gap_structure),

@@ -25,7 +25,7 @@ Delete this paragraph once the list is written; only plan bullets or `None yet` 
 
 ## Branches
 
-One release branch per product repository, `release/<N>/main`, which every plan and fix branch of the release merges into ([How a release runs](../skills/astrid-dev-release/SKILL.md#how-a-release-runs)); delete this paragraph once the table is written. Role is `release`, `plan <PP>` or `fix #<issue>`, the astrid-dev issue the fix answers (for example `fix #721`); Cut at is the 40-character commit the branch was cut from, or `not yet cut`; State is `open` or `published` for a release row, and `open` or `merged` (contained in that repository's `release/<N>/main`) for a plan or fix row.
+One release branch per repository the release changes, `release/<N>/main`, which every plan and fix branch of the release merges into ([How a release runs](../skills/astrid-dev-release/SKILL.md#how-a-release-runs)); delete this paragraph once the table is written. Repository is a product repository or `astrid-dev`; every plan under Included plans has a `plan <PP>` row in each repository it changes, `astrid-dev` for a plan that changes only this repository. Role is `release`, `plan <PP>` or `fix #<issue>`, the astrid-dev issue the fix answers (for example `fix #721`); Cut at is the 40-character commit the branch was cut from, or `not yet cut`; State is `open` or `published` for a release row, and `open` or `merged` (contained in that repository's `release/<N>/main`) for a plan or fix row.
 
 | Repository | Branch | Role | Cut at | State |
 | --- | --- | --- | --- | --- |

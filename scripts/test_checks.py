@@ -190,6 +190,25 @@ class ProjectCatalogContractTests(unittest.TestCase):
                     self.assertTrue(any(all(part in line for part in fragments) for line in errors), errors)
             self.assertTrue(all("\n" not in line for line in errors))
 
+    def test_active_plans_must_be_in_an_unpublished_brief(self):
+        from test_records import ProjectRecordTests as Records
+        brief = ("# Release 14 — Local speed\n\n**Release:** 14\n**State:** {state}\n\n## Highlight\n\nA sentence.\n\n"
+                 "## Included plans\n\n- [Plan 01](../plans/01-alpha/plan.md) — Alpha.\n")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "01-alpha", Records.plan(Status="active"))
+            Records.write(root, "02-beta", Records.plan(Status="active"))
+            Records.write(root, "03-gamma", Records.plan(Status="queued"))
+            (root / "releases").mkdir()
+            (root / "releases/14.md").write_text(brief.format(state="Draft"), encoding="utf-8")
+            errors = self.errors(root, "active-plans-in-releases")
+            self.assertEqual(len(errors), 1, errors)
+            for part in ("plans/02-beta/plan.md", "active", "in no unpublished release brief",
+                         "line under a brief's Included plans", "owner's decision", "does not run until then"):
+                self.assertIn(part, errors[0])
+            (root / "releases/14.md").write_text(brief.format(state="Final"), encoding="utf-8")
+            self.assertEqual(len(self.errors(root, "active-plans-in-releases")), 2)
+
     def test_catalog_reports_each_malformed_priority_line(self):
         from test_records import ProjectRecordTests as Records
         with tempfile.TemporaryDirectory() as directory:

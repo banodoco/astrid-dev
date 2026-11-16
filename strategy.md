@@ -53,6 +53,7 @@ On the way: [Release 12 — Reliable updates](releases/12.md), [Release 13 — O
 - [Plan 34 — Real-GPU proof of generation](plans/34-real-gpu-proof/plan.md) — [Release 13](releases/13.md): Live GPU proof on the frozen candidate.
 - [Plan 55 — Local speed](plans/55-local-speed/plan.md) — [Release 14](releases/14.md): the design, the tasks and the standing speed test.
 - [Plan 52 — Issue intake](plans/52-issue-intake/plan.md) — [Release 14](releases/14.md): its last three tasks: one place for user and tester reports.
+- [Plan 53 — Vision aspirations](plans/53-vision-aspirations/plan.md) — [Release 14](releases/14.md): one short reference under the vision for each part of Astrid, and every gap measured against it.
 - [Plan 39 — All three mains green](plans/39-green-mains/plan.md) — [Release 15](releases/15.md): every workflow green and kept green.
 - [Plan 50 — Recorded boundaries and an offline generation harness](plans/50-recorded-boundaries/plan.md) — [Release 15](releases/15.md): rented-machine failures found on a CPU.
 - [Plan 30 — Update everywhere: remaining setups](plans/30-update-everywhere/plan.md) — [Release 16](releases/16.md): less common setups.

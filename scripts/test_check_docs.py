@@ -179,6 +179,19 @@ class StrategyTests(unittest.TestCase):
         for topic in ("main", "plan-9", "Bad_Topic"):
             self.assertBranchError("lowercase slug", rows=self.BRANCH_ROWS.replace("tester-fixes", topic))
 
+    def test_branches_repository_may_be_astrid_dev(self):
+        rows = self.BRANCH_ROWS.replace("astrid-agent", "astrid-dev")
+        self.assertEqual(release_errors("14.md", self.branch_page(rows=rows)), [])
+
+    def test_every_included_plan_has_a_plan_row(self):
+        without = "".join(line + "\n" for line in self.BRANCH_ROWS.splitlines() if "plan 40" not in line)
+        self.assertBranchError("Included plan 40 has no `plan 40` row", rows=without)
+        self.assertBranchError("astrid-dev for a plan that changes only this repository", rows=without)
+        only_dev = without + ("| astrid-dev | `release/14/main` | release | not yet cut | open |\n"
+                              "| astrid-dev | `release/14/plan-40` | plan 40 | not yet cut | open |\n")
+        self.assertEqual(release_errors("14.md", self.branch_page(rows=only_dev)), [])
+        self.assertEqual(release_errors("13.md", self.RELEASE), [])
+
     def test_fix_role_names_an_issue(self):
         self.assertBranchError("names its issue", rows=self.BRANCH_ROWS.replace("fix #721", "fix"))
         for role in ("fix 721", "fix #", "fix #x1", "fix#721"):
