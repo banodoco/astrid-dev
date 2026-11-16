@@ -98,6 +98,13 @@ Settled from code at Agent `5eac07e3f` and VibeComfy `e65f4941`:
 
 None. D1–D3 were decided on 8 Nov (owner decisions 4–6 above).
 
+## Closed pull request #276: completion evidence draft (16 Nov 2026)
+
+astrid-dev pull request #276 ("Plan 32 completion evidence (draft)"), branch `manager/plan32-completion-prep`, head `0fbc0ed8fb37991ec6cf687ff2ce1db86599d3d5`, was closed on 16 Nov 2026 because it cannot merge today: Plan 32 is `queued`, the draft's own assessment is `Completion: No`, and it conflicts with `main` in `vision/gaps/F-003-creative-execution.md` and `vision/gaps/F-008-portable-generation.md`. The branch is kept.
+
+- **What it holds:** the CPU proof record for the integrated Agent candidate `99724131d2c3eff11867a189986c4ba147e5a81b` on `int/32-one-generation-path` (test-only change from `26eeaff4f`), the CI comparison against Agent main `a105de3a` in `evidence/tests/astrid-agent/26eeaff4f/summary.md`, new Source identities text for this file, a Plan 39 row G2a (profile Agent unit shards 5 and 7), a strategy decision of 10 Nov about the Release 12 runner freeze and Agent main hold, and rewrites of the F-003 and F-008 gap pages.
+- **Facts still missing:** final-head CI (run 42806140448 was cancelled for the Release 12 runner freeze); whole-suite pass or no-regression result; native Windows proof of the swap-back recovery repair; actual-main reconciliation after Release 12 publishes; the completion decision itself.
+
 ## References
 
 - Routing map: `merge-run/review/generation-routing-map.md` in `banodoco/astrid-overnight-2026-11-05`, branch `merge-run/2026-11-07`.

@@ -22,6 +22,13 @@
 
 Set when Plan 33 lands: the Agent, Runtime, VibeComfy and lifecycle SHAs of its landing candidate, the storage volume id and its datacenter.
 
+## Closed pull request #260: first GPU validation run record (16 Nov 2026)
+
+astrid-dev pull request #260 ("Record Plan 34 first GPU validation", draft), branch `plan34/gpu-validation-2026-11-10`, head `730e7865173737615dcec8d1cf2494ec918ee032`, was closed on 16 Nov 2026 because it cannot merge today: Plan 34 is `queued`, and the record on the branch is an interim one ("paused for handoff") whose pull request text still says no GPU cell has passed. The branch is kept.
+
+- **What it holds:** `validation/gpu/2026-11-10-cc084ebd9.md` (the run of 10 Nov 2026: revisions, 18 pods and their release, censuses, spend), `validation/gpu/2026-11-10-sfx-candidate.md` (the SFX candidate pin audit) and the synthetic fixtures under `validation/gpu/fixtures/plan34-synthetic/`. By its own account: image and music passed, audio sound effects and text-to-speech failed, and i2v, v2v and video-edit were not run.
+- **Facts still missing:** results for the cells not run; the final pod census and final spend and balance reconciliation; a final run record (records are add-only, so a completed run needs its own file); the owner's go and budget that the plan still waits on.
+
 ## References
 
 - [Plan 33](../33-unblock-live-generation/plan.md): the candidate under test.

@@ -180,6 +180,10 @@ All eight are decided (14 Nov 2026). OD3 and OD6–OD8 were relayed by the advis
 | astrid-app | `cand/29-r12` `3274a9c07` and `origin/main` `57e200b45` (read-only) | App `main` at the start of P2.1, after Plan 29's orchestrator agrees | one App branch for phase 2 | the next ordinary App release, through the release process |
 | astrid-dev | `origin/main` (refreshed by `plan20/spec-refresh`; `7e7f60d` was the first planning base) | — | `plan20/spec-refresh` | `main` through a scope PR |
 
+## Note: VibeComfy pull request #166 (16 Nov 2026)
+
+VibeComfy pull request #166 "Reconcile model picker paths with declared custody" (branch `plan20/model-reference-custody`, head `af5cb429bb43b405ed8780e760760a645c7c3920`, 6 files) is Plan 20 work that is not on VibeComfy `release/14/main`. It was closed because it targeted `main` and Plan 20 has no release branch to take it yet. When Plan 20's remaining work is placed in a release, its manager brings these commits into the plan branch.
+
 ## References
 
 - [Plan 32](../32-generation-placement-targets/plan.md): S2, T5, T5d and T6d are consumed. [Plan 12](../12-multiple-inference-routes/plan.md): later Wan2GP rows. [Plan 29](../29-update-and-release/plan.md): owns release 12. [Plan 35](../35-one-home-for-user-state/plan.md): App-side choice state after install. [Plan 15](../15-openshell-safe-execution/plan.md) and [Plan 16](../16-streamlined-agent-experience/plan.md): out of scope.
