@@ -3,8 +3,9 @@
 16 November 2026. This records the canonical scripts and coordinated product
 submissions for [G0](../tasks.md), under the
 [Release 14 scope](../plan.md#release-14-scope). Implementation and local G0
-acceptance are complete in all three submissions. Their integration remains
-pending, so the task's merged-completion checkbox stays open.
+acceptance and coordinated integration are complete in all three repositories.
+All three PRs merged into `release/14/plan-39` on 16 November 2026; G0 is
+complete. The merge receipts and current CI result are recorded below.
 
 ## Source and scope
 
@@ -12,9 +13,10 @@ pending, so the task's merged-completion checkbox stays open.
 - Implementation: `5fb12b7908d0a0e771e989f9f1f1d51b993788df`, tree
   `71fc701d644a55480b65b80c3065cc36fd840855`.
 - The original assignment authorized astrid-dev `p39/g0` only. The owner later
-  explicitly authorized the coordinated Runtime/App submissions. All remote
-  writes are to `p39/g0` in those three repositories; no release branch or
-  `main` was pushed or merged.
+  explicitly authorized the coordinated Runtime/App submissions, then the three
+  plan-branch merges after independent verification and record repair. Task
+  branches were `p39/g0`; integration is into `release/14/plan-39` only.
+  Neither `release/14/main` nor public `main` was promoted.
 - Initial local validation: Linux, Python 3.13.5; fresh detached checkouts with
   only the proposed worker scripts copied into `scripts/worker-env/`. Runtime
   setup puts the Python venv, fetched Agent and Node 22 beside the checkout in
@@ -227,7 +229,7 @@ command exit: 0
 ```
 
 [Draft PR #762](https://github.com/banodoco/astrid-dev/pull/762) targets
-`release/14/plan-39` from `p39/g0`; it is not merged. Its initial hosted
+`release/14/plan-39` from `p39/g0`; it was unmerged at this earlier checkpoint. Its initial hosted
 [Documentation integrity run](https://github.com/banodoco/astrid-dev/actions/runs/43918877531)
 on `f652b7361f80f43b1b14c5cb20b7aa722b59841c` ran 417 validator tests and
 failed three, all caused by the existing duplicate Release 14 branch entries:
@@ -288,9 +290,9 @@ Fresh checkouts were fetched from GitHub for the following proof.
 | [Runtime PR #52](https://github.com/banodoco/astrid-runtime/pull/52) | `dff3f116053d9e64e761509bfe35d77c1f6b96ad` | `2537fed24385ec1c24f48a812e09af4bb63fb794` | Three worker scripts only |
 | [App PR #278](https://github.com/banodoco/astrid-app/pull/278) | `9dc7a313e90b85c0f855f20be2fd8d037436fe1c` | `0b6ef16152dc3fa11246ccc2007da630c66d1a1a` | Two worker scripts only |
 
-Both drafts target `release/14/plan-39` from `p39/g0` and link the canonical
+At this submission checkpoint, both drafts targeted `release/14/plan-39` from `p39/g0` and linked the canonical
 [astrid-dev PR #762](https://github.com/banodoco/astrid-dev/pull/762). They have
-not been merged. The canonical implementation and all four script blobs remain
+not been merged at that checkpoint. The canonical implementation and all four script blobs remain
 unchanged from `d9f6abcec4bc05781adbd29529a5d421a5728f66`; this follow-up changes
 only G0's task progress and evidence.
 
@@ -435,3 +437,33 @@ checks and a separate read-only helper for the merged-work audit and focused
 source review. The review's one compiler-status finding was fixed and its
 failure case checked. Exact inherited session model ID/effort was not exposed;
 the available helper identity and this limitation are recorded in local run state.
+
+## Coordinated integration completed
+
+The manager reviewed the scripts, literal copies and modes, current records,
+completed CI and exact-source proof. The astrid-dev task branch incorporated
+current plan base `013e60390882ab9e697009f64bff2210a36391a1` by additive merge
+in `9e5ca2beae40cc6f1489ab309c387e43a60abf6e`; its tree
+`d59995f86156124637b466b0812e5880df93ef50` matches the locally checked tree.
+`python3 scripts/astrid_dev.py check` and `git diff --check` passed. The new
+[Documentation integrity run 43930646037](https://github.com/banodoco/astrid-dev/actions/runs/43930646037)
+completed successfully, including documentation validation and the App vision
+consumer contract. All three PRs were marked ready before the merge batch.
+
+| Repository | PR | Reviewed head | Merge into `release/14/plan-39` |
+| --- | --- | --- | --- |
+| astrid-dev | [#762](https://github.com/banodoco/astrid-dev/pull/762) | `9e5ca2beae40cc6f1489ab309c387e43a60abf6e` | `60e944ce8c48a71d5ae2949cb6f68a52653acdab` |
+| Runtime | [#52](https://github.com/banodoco/astrid-runtime/pull/52) | `dff3f116053d9e64e761509bfe35d77c1f6b96ad` | `e3a87af74bb47ad8012bacf011bce1261687d3ba` |
+| App | [#278](https://github.com/banodoco/astrid-app/pull/278) | `9dc7a313e90b85c0f855f20be2fd8d037436fe1c` | `c23d0dfb59dc73394f47f11884df18c8102fc365` |
+
+GitHub confirmed all three merges. Fresh git fetches verified all three plan
+heads; Runtime and App merge trees have no diff from their reviewed task heads.
+The five canonical copy comparisons were silent and all modes matched before
+the batch. No script changed during record repair or integration, so the
+independently verified exact-commit smoke proof carries forward unchanged.
+
+Plan 38 W0 credits its reused delivery through G0. Plan 31 RL-0 and Plan 39 G0
+are ticked with these receipts. Runtime's broad CI and the additional macOS
+live-watchdog failure remain red/unresolved as described above; completing G0
+does not claim otherwise. G1, SF3a and GL continue concurrently, with the next
+owner checkpoint at the end of wave 0.
