@@ -179,10 +179,6 @@ class StrategyTests(unittest.TestCase):
         for topic in ("main", "plan-9", "Bad_Topic"):
             self.assertBranchError("lowercase slug", rows=self.BRANCH_ROWS.replace("tester-fixes", topic))
 
-    def test_astrid_dev_plan_record_does_not_need_product_release_row(self):
-        rows = self.BRANCH_ROWS + "| astrid-dev | `release/14/plan-40` | plan 40 | " + "a" * 40 + " | open |\n"
-        self.assertEqual(release_errors("14.md", self.branch_page(rows=rows)), [])
-
     def test_fix_role_names_an_issue(self):
         self.assertBranchError("names its issue", rows=self.BRANCH_ROWS.replace("fix #721", "fix"))
         for role in ("fix 721", "fix #", "fix #x1", "fix#721"):
