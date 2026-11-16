@@ -4,13 +4,13 @@
 
 **Goal:** A creator and an agent can finish Into the Minkhole in Astrid and repeat its voice-conditioned editing workflow on another timeline.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Hannah
 
 **Estimate:** 30–45 engineering days, pending pilot and source recovery.
 
-**Waiting on:** Owner's scope and release confirmation, review-round agreement, and run authorization.
+**Waiting on:** D1–D5 remain open; owner go is required for creative reviews, pull requests, merges, publication/release, and spend beyond the authorized RunPod ceiling.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
