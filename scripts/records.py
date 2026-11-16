@@ -281,6 +281,81 @@ def release_issue_block(text: str) -> dict:
             "date": stamp.group(1) or stamp.group(2), "rows": rows}
 
 
+PRODUCT_REPOSITORIES = ("astrid-agent", "astrid-runtime", "astrid-app", "VibeComfy", "astrid-pinokio")
+BRANCH_FIRST_RELEASE = 14
+BRANCH_COLUMNS = ["Repository", "Branch", "Role", "Cut at", "State"]
+BRANCH_STATES = {"release": ("open", "published"), "plan": ("open", "merged"), "fix": ("open", "merged")}
+BRANCH_FIX_TOPIC = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+
+
+def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
+    """Check the structure of the Branches table; never claims a branch exists."""
+    content = section(text, "Branches")
+    if not content:
+        return ["missing or empty ## Branches"]
+    lines = [line.strip() for line in content.splitlines() if line.strip().startswith("|")]
+    blocks, previous = 0, None
+    for line in content.splitlines():
+        is_row = line.strip().startswith("|")
+        blocks += is_row and previous is not True
+        previous = is_row
+    if blocks != 1:
+        return ["Branches must contain exactly one table"]
+    cells = [[c.strip() for c in line.strip().strip("|").split("|")] for line in lines]
+    if cells[0] != BRANCH_COLUMNS:
+        return ["Branches header must be exactly: " + " | ".join(BRANCH_COLUMNS)]
+    if len(cells) < 2 or cells[1] != ["---"] * 5:
+        return ["Branches table needs a --- separator row under the header"]
+    errors: list[str] = []
+    prefix = f"release/{number}/"
+    seen, release_repos, other_repos = set(), set(), set()
+    for row in cells[2:]:
+        if len(row) != 5:
+            errors.append(f"Branches row `{'|'.join(row)}`: needs exactly five columns")
+            continue
+        repo, branch_cell, role, cut, state = row
+        label = f"Branches row {repo} {branch_cell}"
+        if repo not in PRODUCT_REPOSITORIES:
+            errors.append(f"{label}: Repository must be one of {', '.join(PRODUCT_REPOSITORIES)}")
+        quoted = re.fullmatch(r"`([^`]+)`", branch_cell)
+        branch = quoted.group(1) if quoted else None
+        if not branch:
+            errors.append(f"{label}: Branch must be written in backticks")
+        elif not branch.startswith(prefix):
+            errors.append(f"{label}: Branch must start with {prefix}")
+        if (repo, branch) in seen:
+            errors.append(f"{label}: duplicate repository and branch")
+        seen.add((repo, branch))
+        kind = "plan" if role.startswith("plan ") else role
+        if kind not in BRANCH_STATES or (kind == "plan" and not re.fullmatch(r"plan \d+", role)):
+            errors.append(f"{label}: Role must be release, plan <PP> or fix")
+            continue
+        repeated = kind == "release" and repo in release_repos
+        (release_repos if kind == "release" else other_repos).add(repo)
+        if kind == "release":
+            if branch and branch != prefix + "main":
+                errors.append(f"{label}: a release row's branch must be exactly {prefix}main")
+            if repeated:
+                errors.append(f"{label}: at most one release row per repository")
+        elif kind == "plan":
+            plan = role.split()[1]
+            if plan not in plan_numbers:
+                errors.append(f"{label}: plan {plan} is not one of this page's Included plans")
+            if branch and branch != f"{prefix}plan-{plan}":
+                errors.append(f"{label}: a plan row's branch must be exactly {prefix}plan-{plan}")
+        elif branch and branch.startswith(prefix):
+            topic = branch[len(prefix):]
+            if not BRANCH_FIX_TOPIC.fullmatch(topic) or topic == "main" or topic.startswith("plan-"):
+                errors.append(f"{label}: a fix row's branch must be {prefix}<topic>, a lowercase slug that is not main and does not start with plan-")
+        if not (re.fullmatch(r"[0-9a-f]{40}", cut) or cut == "not yet cut"):
+            errors.append(f"{label}: Cut at must be 40 lowercase hex characters or not yet cut")
+        if state not in BRANCH_STATES[kind]:
+            errors.append(f"{label}: State for a {kind} row must be {' or '.join(BRANCH_STATES[kind])}")
+    for repo in sorted(other_repos - release_repos):
+        errors.append(f"Branches repository {repo}: has a plan or fix row but no release row")
+    return list(dict.fromkeys(errors))
+
+
 def release_brief(text: str, *, strict: bool = True) -> dict:
     """Read a brief; non-strict mode retains errors for multi-error validators."""
     header = re.split(r'^## ', text, maxsplit=1, flags=re.M)[0]
