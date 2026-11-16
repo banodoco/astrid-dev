@@ -22,7 +22,7 @@
 
 - **D1 — Release inclusion:** Decided 16 November 2026: yes, include in Release 14 (“add it to the release”). The release manager adds Plan 59 to the Included plans list in `releases/14.md`.
 - **D2 — Shared appearance and migration:** Decided 16 November 2026: one placement function owned by the composition package is called by export rendering, editor preview and editing handles; delete their local copies. Fit is authored per clip, falling back to its track. Replace the implicit “geometry or crop means cover” rule by writing the choice explicitly once when an old project is opened.
-- **D3 — Shipped composition package source:** Open pending the investigation into where the shipped 0.0.17 package source is. The first step is establishing that source location; then settle how its shared implementation is maintained.
+- **D3 — Shipped composition package source:** Resolved in substance (16 November 2026): exact 0.0.17 source recovered byte for byte at AstridPseudon/timeline-hub commit `14628ad5d`. `banodoco/timeline-composition` branch `release/14/plan-59` at `2c0740a` merges that lineage with staging as 0.0.18, adds a placement oracle against 0.0.17, stamps the source commit into packed `package.json`, and adds CI. The package now builds from its owning repository. Owner decisions remain: whether this branch becomes `main`, the missing license field, and which stray branches and copies to delete. Only the owner deletes those branches/copies.
 - **D4 — Budget:** Decided 16 November 2026: at most $2/hour; $3 pilot, $6 experiments, $4 retries, $3 fresh-agent trial, $9 reserve; $25 total. No other paid resource.
 - **D5 — Review:** Decided 16 November 2026: one review stop is fine.
 

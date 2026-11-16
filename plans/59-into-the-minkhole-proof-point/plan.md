@@ -10,7 +10,7 @@
 
 **Estimate:** TBD; the work advances one creative task at a time.
 
-**Waiting on:** D3, locating the shipped 0.0.17 composition package source; its investigation is in progress.
+**Waiting on:** Owner decisions recorded under D3: whether `release/14/plan-59` in timeline-composition becomes `main`, the missing license field, and which stray branches and copies the owner deletes.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -41,7 +41,7 @@ Use the loop in [tasks.md](tasks.md): take the next creative task, attempt it wi
 
 ## Interfaces and handoff
 
-Consume the supplied timeline-v1 archives and the actual Release 14 source heads recorded at dispatch. Produce a finished edit in Astrid and a skill/runbook that lets a weaker agent repeat it on another timeline. Record exact revisions, artifacts and proof in the live task record as they become available. The composition package's source custody remains open until its single-source sizing is complete.
+Consume the supplied timeline-v1 archives and the actual Release 14 source heads recorded at dispatch. Produce a finished edit in Astrid and a skill/runbook that lets a weaker agent repeat it on another timeline. Record exact revisions, artifacts and proof in the live task record as they become available. The composition source has been recovered and its owning repository builds the package; owner decisions and consumer adoption remain open.
 
 ## Completion
 
