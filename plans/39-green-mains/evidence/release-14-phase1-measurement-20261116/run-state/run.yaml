@@ -747,3 +747,37 @@ qualification_continuation_20261116_2244:
     authentication_retry: false
     astrid_dev_only: p39/g1
   next: Collect only completed attempt-1 job XML and logs at exact head, compare exact IDs, and preserve contract/review gates before any further repair.
+
+qualification_continuation_later_read_20261116_2249:
+  source: agent/merged-head-6bbda788/partial-qualification-20261116.md
+  CI_unit_shard_3:
+    id: 133651924518
+    status: completed_failure
+    run_id: 43967861168
+    attempt: 1
+    head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    tests: 1865
+    failures: 31
+    errors: 0
+    passed: 1834
+    shared_old_exact_IDs: 1857
+    shared_pass_to_pass: 1826
+    shared_failure_to_failure: 31
+    old_only_pass_IDs: 4
+    current_only_pass_IDs: 8
+    artifact_id: 14279162456
+    artifact_zip_sha256: 6bb5af87d04b19801da97ecb6b109238d3e321979f0ec3fd40838ce1771e7f3f
+    junit_xml_sha256: 643987abce5a08925a9ecba818036c6bd5a12ad95ce2ba2ec8f786051ac36006
+  K1a_windows_selector:
+    status: proven_missing_coverage_from_actual_XML_not_fixed
+    evidence: diagnosis/agent/k1a-windows-selector-hosted-check-20261116.md
+    finished_windows_job: 133651924610
+    artifact_id: 14276253359
+    actual_passed_testcases: 112
+    target_native_testcases_in_artifact: 0
+    product_change: none
+    independent_review: not_performed
+    next: exact_selectors_plus_proof_and_independent_review_not_yet_authorized_as_accepted
+  CI_pending_unit_shards: [1, 2, 4, 5, 6, 7]
+  Lanes_pending_integration_shards: [3, 4]
+  no_cancel_rerun_or_public_branch_mutation: true
