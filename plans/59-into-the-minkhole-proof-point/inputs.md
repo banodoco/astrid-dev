@@ -4,11 +4,11 @@
 
 ## Planning evidence
 
-**Scope decision:** Hannah's direction in the accountable session on 16 November 2026: deliver the video and, more importantly, a reusable workflow a weaker agent can run. Work through Astrid's tools; fix blockers at cause or file useful work that is too large; return creative choices to the owner. Owner direction: `/tmp/claude-0/-home-user/147d9c2d-d162-594a-abc0-e50a18b46d5e/scratchpad/work/owner-direction.md`. The [source brief](https://github.com/peteromallet/minkhole-h3av-handover) is also a source record.
+**Scope decision:** Hannah's direction in the accountable session on 16 November 2026: deliver the video and, more importantly, a reusable workflow a weaker agent can run. Work through Astrid's tools; fix blockers at cause or file useful work that is too large; return creative choices to the owner. The [source brief](https://github.com/peteromallet/minkhole-h3av-handover) is also a source record.
 
-**Prior art:** Existing timeline transfer, rendering and H3 tools are the starting points. In the current findings, Release 14 rejects the rough-cut archive; issue [#346](https://github.com/banodoco/astrid-agent/issues/346) has a fix on a Release 15 branch, being brought into `release/14/plan-59`. Preview/export disagree, fit is track-level, and clip crop is not editable. The candidate appearance design is the composition package as the shared source for preview, export and composed visualize; it is being sized now. Earlier investigations also found no generic source-footage word transcription proof and no live GPU voice result. Reassess issues and source heads when each task begins.
+**Prior art:** Existing timeline transfer, rendering and H3 tools are the starting points. In the current findings, Release 14 rejects the rough-cut archive; issue [#346](https://github.com/banodoco/astrid-agent/issues/346) has a fix on a Release 15 branch, being brought into `release/14/plan-59`. Preview/export disagree, fit is track-level, and clip crop is not editable. The composition source is consolidated on `banodoco/timeline-composition` branch `release/14/plan-59`. A C2 candidate with one placement function was independently reviewed; five must-fix findings are being fixed, followed by an owner sample of before/after Matrix frames. Earlier investigations also found no generic source-footage word transcription proof and no live GPU voice result. Reassess issues and source heads when each task begins.
 
-**Approach:** Keep this as a live work loop rather than a fixed implementation plan. Start from the next creative result; extend the Astrid capability that owns each blocker; file a durable issue when the fix is too large for this run. The composition package is the proposed shared appearance source; D3 stays open until sizing.
+**Approach:** Keep this as a live work loop rather than a fixed implementation plan. Start from the next creative result; extend the Astrid capability that owns each blocker; file a durable issue when the fix is too large for this run. The composition package is the shared appearance source; D3 records its current source home.
 
 **Challenge:** Keep the task list intentionally short and mutable: only C1 is detailed; later creative tasks are one line each. A retrospective blocker log captures cause, decision, landing place and proof without maintaining a second backlog.
 
@@ -26,6 +26,8 @@
 - **D4 — Budget:** Decided 16 November 2026: at most $2/hour; $3 pilot, $6 experiments, $4 retries, $3 fresh-agent trial, $9 reserve; $25 total. No other paid resource.
 - **D5 — Review:** Decided 16 November 2026: one review stop is fine.
 
+**Parallel work:** Automatic source conform is on `p59/h3-conform`; RunPod rental waits for independent review of a creation-time lifetime bound. Hivemind source CLI fixes are on `p59/hivemind-source-cli`, under review.
+
 ## Source identities
 
 Plan source: astrid-dev branch `release/14/plan-59`, based on Release 14. Product work uses each repository's `release/14/main` and its `release/14/plan-59` branch, with task branches as needed. At each task start, record actual base and dependency SHAs, dirty state and retained changes. Inspected planning snapshots: Agent `ab95803ce28fa51eec937b4074f5ec0f0439b98a`, Runtime `2537fed24385ec1c24f48a812e09af4bb63fb794`, App `0b6ef16152dc3fa11246ccc2007da630c66d1a1a`, VibeComfy `aee8bd825c619cfb516feb63d38f500aa4ddb4d7`, composition source `67b8aa3d0d6831d3e3504a340ff583c3da253707`. These are inspection snapshots, not dispatch pins.
@@ -34,4 +36,4 @@ The supplied rough-cut archive SHA-256 is `50e7bf1262f0b89bd95dcce5ee0edebf80eea
 
 ## References
 
-[Source brief and archive instructions](https://github.com/peteromallet/minkhole-h3av-handover) · [Release 14](../../releases/14.md) · Owner direction: `/tmp/claude-0/-home-user/147d9c2d-d162-594a-abc0-e50a18b46d5e/scratchpad/work/owner-direction.md`
+[Source brief and archive instructions](https://github.com/peteromallet/minkhole-h3av-handover) · [Release 14](../../releases/14.md)

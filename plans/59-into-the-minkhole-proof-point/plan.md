@@ -41,7 +41,7 @@ Use the loop in [tasks.md](tasks.md): take the next creative task, attempt it wi
 
 ## Interfaces and handoff
 
-Consume the supplied timeline-v1 archives and the actual Release 14 source heads recorded at dispatch. Produce a finished edit in Astrid and a skill/runbook that lets a weaker agent repeat it on another timeline. Record exact revisions, artifacts and proof in the live task record as they become available. The composition source has been recovered and its owning repository builds the package; owner decisions and consumer adoption remain open.
+Consume the supplied timeline-v1 archives and the actual Release 14 source heads recorded at dispatch. Produce a finished edit in Astrid and a skill/runbook that lets a weaker agent repeat it on another timeline. Record exact revisions, artifacts and proof in the live task record as they become available. The composition source has been recovered and consolidated on `banodoco/timeline-composition` branch `release/14/plan-59`; a C2 candidate with one placement function is under review, five must-fix findings are being fixed, and an owner sample of before/after Matrix frames follows.
 
 ## Completion
 
