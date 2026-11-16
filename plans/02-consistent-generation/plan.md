@@ -1,5 +1,17 @@
 # Consistent generation path
 
+**Project:** Consistent generation path
+
+**Goal:** Make supported generation choose consistent defaults and set up a compatible, pinned stack, proven on fixtures and a fresh Linux install; real model inference is not proven here.
+
+**Status:** done
+
+**Owner:** @AstridPseudon
+
+**Estimate:** 4–5 days after Plan 01 (includes the RunPod dry-run work, the installed-package test and the final rebase), plus a Linux x86_64 environment
+
+**Waiting on:** —
+
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

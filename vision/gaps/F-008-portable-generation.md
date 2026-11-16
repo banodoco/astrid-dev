@@ -1,22 +1,12 @@
 # F-008 — Generation isn't yet one portable, extensible path across machines and inference engines
 
-**Applies to:** [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (primary) · [Local-first, cloud-capable](../principles/local-first-cloud-capable.md) (supporting) · [Open by design](../principles/open-by-design.md) (supporting) · [Agent-Powered Liquid Software](../pillars/liquid-software.md) (supporting) · **Assessment:** Open; path review and live RunPod attempts (2026-11-08).
+**Aspiration:** [One generation path, any engine, any machine](../principles/eliminate-needless-technical-wrangling.md#one-generation-path-any-engine-any-machine) (primary) · [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (supporting) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · [A small, dependable foundation](../pillars/liquid-software.md#a-small-dependable-foundation) (supporting) · **Assessment:** Open; path review and live RunPod attempts (2026-11-08).
 
 ## Desired state
 
-Any generation, in any modality (image, edit, video, voice, music, sound effects and composed workflows such as h3_av), runs through **one path**:
-1. Declare what the request needs: custom nodes and models.
-2. Choose where it runs once: this machine and a chosen local GPU, a user's own server, or a rented GPU machine such as RunPod. There is a default the creator sets and can change per generation.
-3. Optionally bring that machine in line with the needs (align, only check, or trust what is there).
-4. Run it on the chosen inference engine. ComfyUI through VibeComfy comes first; others such as Wan2GP follow.
-5. Get the result back.
+The [generation aspiration](../principles/eliminate-needless-technical-wrangling.md#one-generation-path-any-engine-any-machine) is proven for every supported slot, including composed workflows such as h3_av, across local GPUs, a user's server and rented machines. Requests declare custom-node and model requirements and support align, check and trust modes; results return to the creator.
 
-A rented machine behaves like any other machine: it runs the same path. It can be reused while warm, and it keeps models on attached storage so they are downloaded once. **Every level is a replaceable piece**, extended through a declared contract rather than a core change:
-- **workflows:** a VibeComfy plugin adds templates such as h3_av;
-- **engines:** ComfyUI, Wan2GP;
-- **machines and providers:** local GPU, a user's server, RunPod, another rented-GPU provider.
-
-Adding one reuses the rest of the path rather than adding per-modality or per-pack routes.
+ComfyUI through VibeComfy is the first engine, with Wan2GP providing the second-engine proof. Rented machines can be reused while warm and retain models on attached storage, so a second job does not download them again. A new workflow, engine or provider meets its declared contract without a new route through Astrid's core.
 
 ## Current state
 

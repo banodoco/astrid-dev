@@ -1,4 +1,4 @@
-# Inputs — Agent-powered liquid workspace
+# Inputs — Portable, resizable creative components
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
@@ -12,4 +12,4 @@
 
 ## Preconditions / unknowns
 
-Exact active branch/SHAs and retained code to preserve, target integration branch, compatible Plan 04/06/18 outputs, approved trusted extension posture, source-specific gesture/size assertions, 2D layout library decision, and chosen second-domain component. No claim that arbitrary docking, agent workspace commands or native spatial desktop currently exist.
+Exact active branch/SHAs and retained code to preserve, target integration branch, compatible Plan 04/06/18 outputs, source-specific gesture/size assertions, 2D layout library decision, and chosen second-domain component. Typed component connections and agent workspace operations are separately scoped in Plans 45 and 46. No claim that arbitrary docking, agent workspace commands or native spatial desktop currently exist.

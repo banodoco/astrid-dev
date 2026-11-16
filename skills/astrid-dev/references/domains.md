@@ -4,7 +4,7 @@
 
 | Question / domain | Canonical owner and first places to inspect |
 | --- | --- |
-| Vision, missing outcomes, contribution priority | [Astrid Dev vision](../../../vision/README.md), [gaps](../../../vision/README.md), [project catalog](../../../plans/index.md). Status and ownership are *only* in the catalog |
+| Vision, missing outcomes, contribution priority | [Astrid Dev vision](../../../vision/README.md), [gaps](../../../vision/README.md), [project catalog](../../../plans/index.md). Status and ownership are *only* in each plan's `plan.md`; the catalog shows them |
 | Project planning, task proof, run/review policy | [Project format](../../../docs/project-format.md), [planning skill](../../astrid-dev-plan/SKILL.md), [shared run contract](../../astrid-dev-shared/run-contract.md). PR evidence rules: [Astrid development skill](../../../skills/astrid-dev/SKILL.md) |
 | Authoritative projects, timelines, media, jobs, permissions | [astrid-runtime](https://github.com/banodoco/astrid-runtime), its API contracts and project/task authority |
 | Agent CLI, models, creative packs, installer, MCP | [astrid-agent](https://github.com/banodoco/astrid-agent); its current [execution map](https://github.com/banodoco/astrid-agent/blob/main/docs/reference/where-things-run.md) and [setup guide](https://github.com/banodoco/astrid-agent/blob/main/docs/setup/SKILL.md) |

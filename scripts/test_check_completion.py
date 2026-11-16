@@ -1,10 +1,10 @@
 """Focused, synthetic tests for the plan-completion decision gate."""
+import re
 import tempfile
 import unittest
 from pathlib import Path
 
-from check_completion import assess_completion, check_pr, strategy_errors, transitions_to_done
-from check_docs import DIVIDER, HEADER
+from check_completion import assess_completion, check_pr, transitions_to_done
 
 PLAN = ("# Zero-to-first-image\n\n"
         "**Vision gaps:** [Creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).\n\n"
@@ -17,14 +17,14 @@ Completion: Yes — A real image reached the timeline in the supported environme
 Implementation PRs: https://github.com/banodoco/astrid-agent/pull/123
 Integrated candidate: abcdef0123456789abcdef0123456789abcdef01
 Unproven: Other inference providers and machines are unqualified.
-Models used: openai/gpt-6 — implementation, self-reported.
+Routes used: N for the build tasks, S for review.
 Gap F-003: Partially evidenced — One complete route works, but not all inference backends or machines.
 """
 
 
-def catalog(status: str) -> str:
-    row = f"| First image | Build a flow | {status} | Owner | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |"
-    return HEADER + "\n" + DIVIDER + "\n" + row + "\n"
+def catalog(status: str) -> dict[str, str]:
+    """The completion gate receives folder-to-status maps, never page text."""
+    return {"20-zero-to-first-image": status}
 
 
 class CompletionGateTests(unittest.TestCase):
@@ -43,7 +43,7 @@ class CompletionGateTests(unittest.TestCase):
         self.assertEqual(transitions_to_done(catalog("queued"), catalog("active")), [])
 
     def test_missing_receipt_fails(self):
-        issues = check_pr(catalog("active"), catalog("done"), "", self.root)
+        issues = check_pr(["20-zero-to-first-image/plan.md"], "", self.root)
         self.assertEqual(len(issues), 1)
         self.assertIn("missing", issues[0])
 
@@ -52,18 +52,18 @@ class CompletionGateTests(unittest.TestCase):
 Evidence: https://github.com/example/repo/actions/runs/123
 Completion: Yes — The plan completion criteria were tested on the reviewed source.
 """
-        issues = check_pr(catalog("active"), catalog("done"), body, self.root)
+        issues = check_pr(["20-zero-to-first-image/plan.md"], body, self.root)
         self.assertTrue(any("F-003" in issue for issue in issues))
 
     def test_valid_assessment_passes(self):
-        self.assertEqual(check_pr(catalog("active"), catalog("done"), RECEIPT, self.root), [])
+        self.assertEqual(check_pr(["20-zero-to-first-image/plan.md"], RECEIPT, self.root), [])
 
     def test_placeholder_evidence_fails(self):
         body = RECEIPT.replace(
             "[real task run](https://github.com/banodoco/astrid-agent/actions/runs/123)",
             "a run happened")
         self.assertTrue(any("Evidence" in error for error in
-                            check_pr(catalog("active"), catalog("done"), body, self.root)))
+                            check_pr(["20-zero-to-first-image/plan.md"], body, self.root)))
 
     def test_future_project_ids_and_concise_reasons(self):
         future = RECEIPT.replace("Plan 20", "Plan 100").replace(
@@ -92,8 +92,50 @@ Implementation PRs: None — Communication-only project.
 Integrated candidate: None — Reviewed documentation and non-code assets.
 Unproven: None within the recorded communication deliverable.
 Gap impact: None — It is a communication deliverable, not proof that a gap was closed.
-Models used: Unknown — Historical run did not record model identity.
+Routes used: Unknown — Historical run did not record routes.
 """), [])
+
+    def test_completion_form_examples_pass_for_gap_and_enabler(self):
+        form_path = (
+            Path(__file__).resolve().parent.parent
+            / ".github/PULL_REQUEST_TEMPLATE/project-completion.md"
+        )
+        form = form_path.read_text(encoding="utf-8")
+        filled = form.replace("plans/<NN-project-name>/plan.md", "plans/20-zero-to-first-image/plan.md")
+        filled = filled.replace("Plan NN", "Plan 20")
+        examples = {
+            "Evidence": "https://github.com/example/repo/actions/runs/123",
+            "Completion": "Yes — The project meets its stated completion criteria.",
+            "Implementation PRs": "None — No implementation PRs were needed.",
+            "Integrated candidate": "None — The project has no code candidate.",
+            "Routes used": "Unknown — The historical run did not record routes.",
+            "Unproven": "None within the stated project scope.",
+            "Gap impact": "None — This project does not change a vision gap.",
+            "Strategy": "Reviewed — the release brief for Release 14 gained this plan's line.",
+        }
+        for label, example in examples.items():
+            filled, count = re.subn(
+                rf"(?m)^({re.escape(label)}: ).+$",
+                lambda match: match.group(1) + example,
+                filled,
+            )
+            self.assertEqual(count, 1, f"form should contain one {label} label")
+
+        gap_form = re.sub(
+            r"(?m)^Gap F-XXX:.*$",
+            "Gap F-003: Partially evidenced — One route is proven; other routes remain untested.",
+            filled,
+        )
+        self.assertEqual(assess_completion("20-zero-to-first-image/plan.md", PLAN, gap_form), [])
+
+        enabler_form = filled.replace("Plan 20", "Plan 21")
+        enabler_form = re.sub(r"(?m)^Gap F-XXX:.*\n?", "", enabler_form)
+        enabler_form = re.sub(
+            r"(?m)^Gap impact:.*$",
+            "Gap impact: None — This documentation project does not change a vision gap.",
+            enabler_form,
+        )
+        self.assertEqual(assess_completion("21-site/plan.md", ENABLER, enabler_form), [])
 
     def test_completion_requires_cross_repo_review_context(self):
         bad = RECEIPT.replace(
@@ -106,35 +148,196 @@ Models used: Unknown — Historical run did not record model identity.
         self.assertTrue(any("Integrated candidate" in x for x in
                             assess_completion("20-zero-to-first-image/plan.md", PLAN, bad)))
 
-    def test_new_catalog_during_migration_is_not_transition(self):
-        self.assertEqual(check_pr(None, catalog("done"), "", self.root), [])
+    def test_new_done_folder_requires_assessment_without_old_catalog(self):
+        # A new done folder requires an assessment, even without an old catalog.
+        required = transitions_to_done({}, catalog("done"))
+        self.assertEqual(required, ["20-zero-to-first-image/plan.md"])
+        self.assertTrue(any("missing" in error for error in check_pr(required, "", self.root)))
 
-    def test_model_use_is_explicit_but_unknown_is_honest(self):
-        missing = RECEIPT.replace("Models used: openai/gpt-6 — implementation, self-reported.\n", "")
-        self.assertTrue(any("Models used" in x for x in
-                            assess_completion("20-zero-to-first-image/plan.md", PLAN, missing)))
-        unknown = RECEIPT.replace(
-            "Models used: openai/gpt-6 — implementation, self-reported.",
-            "Models used: Unknown — The agent runtime did not disclose its model identity.")
-        self.assertEqual(assess_completion("20-zero-to-first-image/plan.md", PLAN, unknown), [])
-        vague = RECEIPT.replace(
-            "Models used: openai/gpt-6 — implementation, self-reported.",
-            "Models used: Some models were used")
-        self.assertTrue(any("provider/model" in x for x in
-                            assess_completion("20-zero-to-first-image/plan.md", PLAN, vague)))
+    def test_route_use_is_explicit_but_unknown_is_honest(self):
+        line = "Routes used: N for the build tasks, S for review.\n"
+        check = lambda r: assess_completion("20-zero-to-first-image/plan.md", PLAN, r)
+        missing = RECEIPT.replace(line, "")
+        self.assertTrue(any("Routes used" in x for x in check(missing)))
+        unknown = RECEIPT.replace(line.strip(),
+            "Routes used: Unknown — The agent runtime did not disclose its route.")
+        self.assertEqual(check(unknown), [])
+        empty_unknown = RECEIPT.replace(line.strip(), "Routes used: Unknown — TBD")
+        self.assertTrue(any("route provenance" in x for x in check(empty_unknown)))
+        self.assertEqual(check(RECEIPT.replace(line.strip(), "Routes used: S review")), [])
+        self.assertEqual(check(RECEIPT.replace(line.strip(), "Routes used: T for the copy pass")), [])
+        override = RECEIPT.replace(line.strip(),
+            "Routes used: N for builds, X for UR-13n (override: <name>)")
+        self.assertEqual(check(override), [])
+        linked = RECEIPT.replace(line.strip(),
+            "Routes used: https://github.com/banodoco/astrid-dev/pull/9")
+        self.assertEqual(check(linked), [])
+        vague = RECEIPT.replace(line.strip(), "Routes used: Some models were used")
+        self.assertTrue(any("needs a route" in x for x in check(vague)))
 
     def test_existing_done_is_not_rechecked(self):
-        self.assertEqual(check_pr(catalog("done"), catalog("done"), "", self.root), [])
+        self.assertEqual(check_pr(transitions_to_done(catalog("done"), catalog("done")), "", self.root), [])
+
+
+class UnfilledCompletionFormTests(unittest.TestCase):
+    """The form file itself, with only its plan number set, must not pass for any field whose rule
+    can tell an answer from a hint. Tests marked "needs CU-17b" fail until the hints are rewritten
+    and the placeholder test strips the dash."""
+
+    FORM = (Path(__file__).resolve().parent.parent
+            / ".github/PULL_REQUEST_TEMPLATE/project-completion.md")
+    PLAN_PATH = "20-zero-to-first-image/plan.md"
+
+    def unfilled(self) -> list[str]:
+        form = self.FORM.read_text(encoding="utf-8")
+        form = form.replace("plans/<NN-project-name>/plan.md", "plans/20-zero-to-first-image/plan.md")
+        return assess_completion(self.PLAN_PATH, PLAN, form.replace("Plan NN", "Plan 20"))
+
+    def test_unfilled_form_fails_evidence(self):  # needs CU-17b
+        self.assertTrue(any("Evidence" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_completion(self):  # needs CU-17b
+        self.assertTrue(any("Completion needs" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_implementation_prs(self):  # needs CU-17b
+        self.assertTrue(any("Implementation PRs" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_integrated_candidate(self):
+        self.assertTrue(any("Integrated candidate" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_routes_used(self):  # needs CU-17b
+        self.assertTrue(any("Routes used" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unfilled_form_fails_the_gap_line(self):
+        # The hint's placeholder id (F-XXX) is not the plan's linked gap, so F-003 has no disposition.
+        self.assertTrue(any("F-003" in x for x in self.unfilled()), self.unfilled())
+
+    def test_unproven_is_the_listed_exception(self):
+        # Its rule only rejects empty or one-word placeholders, so it cannot tell an answer from a hint.
+        self.assertFalse(any("Unproven" in x for x in self.unfilled()), self.unfilled())
+
+
+class NoneWithPlaceholderTests(unittest.TestCase):
+    """`None — <placeholder>` is not a reason; `None — <reason>` is."""
+
+    PLAN_PATH = "20-zero-to-first-image/plan.md"
+    FIELDS = (("Implementation PRs", "https://github.com/banodoco/astrid-agent/pull/123"),
+              ("Integrated candidate", "abcdef0123456789abcdef0123456789abcdef01"))
+
+    def issues_for(self, field: str, value: str) -> list[str]:
+        original = dict(self.FIELDS)[field]
+        body = RECEIPT.replace(f"{field}: {original}", f"{field}: {value}")
+        self.assertNotEqual(body, RECEIPT)
+        return [x for x in assess_completion(self.PLAN_PATH, PLAN, body) if field in x]
+
+    def test_none_then_a_placeholder_word_fails(self):  # needs CU-17b
+        for field, _ in self.FIELDS:
+            for word in ("TBD", "todo"):
+                with self.subTest(field=field, word=word):
+                    self.assertTrue(self.issues_for(field, f"None — {word}"))
+
+    def test_none_then_a_reason_passes(self):
+        for field, _ in self.FIELDS:
+            with self.subTest(field=field):
+                self.assertEqual(self.issues_for(field, "None — Communication-only project."), [])
+
+    def test_none_with_any_separator_then_a_placeholder_fails(self):
+        for field, _ in self.FIELDS:
+            for separator in ("—", ":", "-"):
+                for word in ("TBD", "todo"):
+                    with self.subTest(field=field, separator=separator, word=word):
+                        self.assertTrue(self.issues_for(field, f"None{separator} {word}"))
+
+    def test_none_with_any_separator_then_a_reason_passes(self):
+        for field, _ in self.FIELDS:
+            for separator in ("—", ":", "-"):
+                with self.subTest(field=field, separator=separator):
+                    self.assertEqual(
+                        self.issues_for(field, f"None{separator} Communication-only project."), [])
 
 
 
 
-class StrategyGateTests(unittest.TestCase):
-    def test_completion_without_strategy_update_fails(self):
-        self.assertEqual(len(strategy_errors({"plans/index.md", "vision/gaps/F-001-platform-reliability.md"})), 1)
+class ProjectStatusTests(unittest.TestCase):
+    def test_working_tree_always_uses_fields_even_with_a_hand_written_catalog(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "20-zero-to-first-image", Records.plan(Status="done"))
+            (root / "plans/index.md").write_text(
+                "| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |\n"
+                "|---|---|---|---|---:|---|---|\n"
+                "| Image | Goal | active | Ada | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n",
+                encoding="utf-8")
+            self.assertEqual(project_statuses(root), {"20-zero-to-first-image": "done"})
+            (root / "plans/index.md").write_text("hand-edited page\n", encoding="utf-8")
+            self.assertEqual(project_statuses(root), {"20-zero-to-first-image": "done"})
 
-    def test_completion_with_strategy_update_passes(self):
-        self.assertEqual(strategy_errors({"plans/index.md", "strategy.md"}), [])
+    def test_unreadable_base_status_counts_as_not_done(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.git(root, "init", "-q")
+            Records.git(root, "config", "user.name", "Contract test")
+            Records.git(root, "config", "user.email", "contract@example.invalid")
+            Records.write(root, "20-zero-to-first-image", Records.plan().replace("**Status:** queued\n", ""))
+            # One unreadable record must not discard another project's done status.
+            Records.write(root, "21-existing", Records.plan(Status="done"))
+            (root / "plans/index.md").write_text(
+                "# Hand-written title\n\n<!-- plan-catalog:start -->\n"
+                "<!-- Generated by Astrid Dev view: plan-catalog; sources: plans/*/plan.md, plans/priority.md. Do not edit. -->\n"
+                "<!-- plan-catalog:end -->\n", encoding="utf-8")
+            Records.git(root, "add", ".")
+            Records.git(root, "commit", "-qm", "missing base status")
+            base = Records.git(root, "rev-parse", "HEAD")
+            Records.write(root, "20-zero-to-first-image", Records.plan(Status="done"))
+            self.assertEqual(transitions_to_done(project_statuses(root, base), project_statuses(root)),
+                             ["20-zero-to-first-image/plan.md"])
+
+    def test_unreadable_revision_fails_closed_and_requests_fetch_of_pr_base(self):
+        from check_completion import project_statuses
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.git(root, "init", "-q")
+            with self.assertRaisesRegex(ValueError, r"(?i)fetch the PR base"):
+                project_statuses(root, "unavailable-base")
+
+
+
+class CompletionRecordIntegrationTests(unittest.TestCase):
+    def test_catalog_page_alone_cannot_skip_or_satisfy_completion(self):
+        from unittest.mock import patch
+        import check_completion as gate
+        import checks
+        for before, after, completes in (({"20-zero-to-first-image": "active"}, {"20-zero-to-first-image": "done"}, True),
+                                         ({"20-zero-to-first-image": "done"}, {"20-zero-to-first-image": "done"}, False),
+                                         ({}, {"20-zero-to-first-image": "done"}, True),
+                                         ({"20-zero-to-first-image": "active"}, {"20-zero-to-first-image": "active"}, False)):
+            with self.subTest(before=before, after=after), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                project = root / "plans/20-zero-to-first-image"
+                project.mkdir(parents=True)
+                (project / "plan.md").write_text(PLAN, encoding="utf-8")
+                (root / "plans/index.md").write_text("arbitrary hand edit\n", encoding="utf-8")
+                body = root / "body.txt"
+                body.write_text("", encoding="utf-8")
+                revisions = []
+                def statuses(actual_root, revision=None):
+                    self.assertEqual(actual_root, root)
+                    self.assertIn(revision, (None, "base"))
+                    revisions.append(revision)
+                    return before if revision else after
+                with patch.object(gate, "project_statuses", side_effect=statuses) as reader:
+                    errors = checks._completion_impl(checks.Context(root, "base", body_file=body))
+                self.assertEqual(reader.call_count, 2)
+                self.assertCountEqual(revisions, ["base", None])
+                if completes:
+                    self.assertTrue(any("missing '## Completion assessment" in error for error in errors), errors)
+                else:
+                    self.assertEqual(errors, [])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,355 @@
+{
+  "batch": "013",
+  "side": "r10",
+  "modules": [
+    "tests/core/execution/test_pidfd_callers.py",
+    "tests/core/execution/test_pipe_io.py",
+    "tests/core/execution/test_pipeline_step.py",
+    "tests/core/execution/test_platform_boundary.py"
+  ],
+  "pins_and_python": [
+    "72462b04fa036736eb7fc9cb654def5f4ea2158c",
+    "52ec0578963847693a0df758d9bc1d55325f518f",
+    "e2905d068d5851b9c32856d32b8251852a01d6dd",
+    "96360a27a53c4608f780f7b370f747a2aa3c7ca8",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T07:51:37Z",
+  "end_utc": "2026-11-11T07:51:58Z",
+  "exit": 1,
+  "summary": "================= 1 failed, 77 passed, 2 deselected in 19.86s ==================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_launch_refuses_when_the_probe_cannot_signal[None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_launch_refuses_when_the_probe_cannot_signal[Runtime cannot stop processes safely here (pidfd: enosys, ...); install with --sandbox]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_retains_runtime_pidfd_and_preserves_signal_fences[allowed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_retains_runtime_pidfd_and_preserves_signal_fences[denied]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_open_failure_cannot_acquire_signal_authority[38]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_open_failure_cannot_acquire_signal_authority[1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_open_failure_cannot_acquire_signal_authority[3]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_birth_drift_after_open_closes_unadmitted_handle",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_post_open_failure_closes_untransferred_handle[identity-register]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_post_open_failure_closes_untransferred_handle[identity-bind-launch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_post_open_failure_closes_untransferred_handle[inheritability-register]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_custody_post_open_failure_closes_untransferred_handle[inheritability-bind-launch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_strict_custody_never_falls_back_when_pidfd_open_is_missing",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_held_launch_is_signalled_through_its_popen",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_binds_runtime_identity_and_signals_through_runtime",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:99;boot:boot;pidns:1234]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:another-boot;pidns:1234]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;pidns:1234]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:boot]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:;pidns:1234]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:boot;pidns:]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:boot;pidns:unknown]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:boot;pidns:0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:another-boot;boot:boot;pidns:1234]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[proc-start-ticks:77;boot:boot;pidns:1234;pidns:5678]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_unproved_scope_is_not_admitted[None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_retained_scope_change_prevents_runtime_signal[proc-start-ticks:77;boot:another-boot;pidns:1234]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_retained_scope_change_prevents_runtime_signal[proc-start-ticks:77;boot:boot;pidns:5678]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_retained_scope_change_prevents_runtime_signal[proc-start-ticks:77;pidns:1234]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_retained_scope_change_prevents_runtime_signal[proc-start-ticks:77;boot:boot]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_retained_scope_change_prevents_runtime_signal[proc-start-ticks:77]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_unreadable_runtime_identity_never_signals[registration]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_unreadable_runtime_identity_never_signals[signal]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_signal_to_an_exited_descendant_is_not_an_error",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_custody_stops_a_real_tree_without_pidfds",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pidfd_callers.py::test_sandbox_descendant_with_another_start_time_is_not_admitted",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_silent_child_read_deadline_does_not_wait_for_eof",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_cancellation_while_waiting_for_the_rest_of_a_partial_read",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_original_exit_does_not_discard_buffered_output_and_eof_is_sticky",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_full_stdout_and_stderr_are_drained_without_deadlock",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_blocked_writer_keeps_deadline_and_cancellation_responsive[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_blocked_writer_keeps_deadline_and_cancellation_responsive[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_writer_handles_large_request_while_both_response_pipes_are_full",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_reader_error_is_preserved_after_queued_bytes",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_writer_preserves_broken_pipe_error_after_child_exit",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_completed_write_does_not_recheck_child_liveness",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_all_workers_are_joined_when_one_close_fails",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_close_reports_a_blocked_read_with_a_bounded_join",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_close_unblocks_a_reader_waiting_on_a_full_queue",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_wan_partial_frames_survive_observation_timeout_and_coalesced_frames",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_wan_fence_interrupts_a_silent_read",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_remotion_parser_reads_fragmented_json_until_eof",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_cdp_partial_nul_frames_survive_deadline_and_buffered_child_exit",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_remotion_exchange_shares_write_and_response_deadline",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_remotion_guard_interrupts_a_response_read",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_remotion_census_failure_retains_custody_but_joins_pipe_workers",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_wan_census_failure_retains_custody_but_joins_pipe_workers",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pipe_io.py::test_retired_remotion_child_never_reuses_failed_pipe_workers",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_agent_native_process_and_lock_boundary",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import fcntl as locks; locks.flock(3, 2)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[from fcntl import flock as lock; lock(3, 2)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import os as native; native.killpg(42, 9)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[from os import getuid as user; user()]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import os; os.setsid()]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import signal as native; native.SIGKILL]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[from signal import SIGUSR1 as dump; dump]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import subprocess as sp; sp.Popen(['cmd'], start_new_session=True)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import subprocess as sp; sp.Popen(['cmd'], **{'start_new_session': True})]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[from runtime_protocol.dirfd import filesystem as os; os.getuid()]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import os as native; native.pidfd_open(42)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[from os import pidfd_open as pin; pin(42)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[from runtime_protocol.dirfd import filesystem as native; native.pidfd_open(42)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import signal as native; native.pidfd_send_signal(3, 15)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[from signal import pidfd_send_signal as send; send(3, 15)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import os as native; hasattr(native, 'pidfd_open')]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_detects_aliases_and_nonportable_operations[import signal as native; getattr(native, 'pidfd_send_signal', None)]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_boundary.py::test_boundary_accepts_runtime_primitives",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_platform_boundary.py::test_agent_native_process_and_lock_boundary - AssertionError: {'astrid/core/generation/engine_custody.py': ['124: os.getuid', '267: raw subprocess process control'], 'astrid/core/generation/engine_endpoint.py': ['273: os.getuid', '280: os.getuid'], 'astrid/core/generation/engine_readiness.py': ['381: os.getuid', '390: os.getuid'], 'astrid/installer/app_update.py': ['414: raw subprocess process control'], ...}"
+  ],
+  "source_log_sha256": "4b19dfb1eeb64e93bd96125d09b3049285b6bca0d6e18b3e218b6dfbe311c195",
+  "source_receipt_sha256": {
+    "start.txt": "eb916b9ee711a234fafaf8ab32389f195baa7125d459438277ccd5e3aadc7c5b",
+    "end.txt": "0c336bce80066c2bc2debec7f5be1de2a306a4274eeb5868dac78677efd1f2ab",
+    "module.txt": "40ad6169afd5a6c2e082e012764b3de3e163186b37f28efd6840485459463a9b",
+    "pins.txt": "99e5957b6c4308a5af009b44fe97f92335fbf916c03847b98cd0199e5174006e",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "32233c209707b0fb76cc9b4efddfda78f7c702bfb027eb85f0d4ef94fe794be0",
+    "SHA256SUMS": "346b3dbe0f80b8e567879a8eea3275d3f383eef6ea856d4bfde26df8a2d68ea9"
+  }
+}

@@ -71,6 +71,9 @@ From the owner, 7 Nov 2026 (session chat):
 12. **UR-13j in Release 10, cut down:** keep only one shared, attempt-bound check for a finished worker with a non-zero exit. It derives failed or recovery-needed, the status GET reports it read-only, and only the locked POST reconciler and the install-line sweep persist it. It goes into Release 10 only if it is ready when #304, Runtime #36 and #37 merge; otherwise it moves to Plan 30 with the limit recorded (owner, 8 Nov 2026).
 13. **Completion amended:** the fully local and Pinokio hosted rows and removing the systemd floor belong to Plan 30, which already owns them. Plan 29 adds two proofs on the release candidate: the release0-to-release1 legs are re-aimed to installed Release 9, then the install command, then the release candidate, with no new CI row; and one fresh row drives Update now with a real browser click in the candidate's hosted App, not a direct POST (owner, 8 Nov 2026).
 14. **Release candidate, protection and rollback:** the final run is the release candidate itself, composed exactly as it will be published, and review round 2 runs on the same SHAs. The owner turns on branch protection later; until then Release 10 still goes to `main` through a PR that `release-guard` checks. Rollback is roll-forward only: a Release 11 may re-pin the Release 9 tuple, which has the same schema digest (owner, 8 Nov 2026).
+15. **Go for Release 10:** publish to `main` once the release candidate's three fresh rows, UR-13m and UR-13n pass with their receipts and review round 2 leaves no blocking finding. The release is the frozen candidate in `run.yaml`, patch and not required, and goes through a PR that `release-guard` checks. Any blocking finding or failing proof stops it, and it comes back to the owner (owner, 8 Nov 2026).
+16. **Fix R2.4 before Release 10, defer R2.2, R2.3 and R2.5** (owner, 8 Nov 2026: "YES PLEASE FIX IT"). R2.4 is status polls starting the update helper on every poll on macOS and Windows. R2.6 merges back into `int` at publish, as before.
+17. **Patch lane:** a small fix ships as a *patch release* on top of the served tuple: the next integer, shown as a patch version, with change-directed evidence and carried-over evidence for unchanged components, as defined in the [Release skill](../../skills/astrid-dev-release/SKILL.md) (Patch release). Release numbers stay integers; `0.0.N` is how users see them (Plan 31 RL-3). The Release 1 → 12 update fix (Plan 09 IU-14) is folded into Release 13 rather than shipped as a patch, because no one depends on it sooner (owner, 12 Nov 2026).
 
 ## Source identities
 
@@ -79,3 +82,21 @@ Record exact base and donor SHAs at task start. Known donor: Agent `b97c43db8` (
 ## References
 
 The maps and the review are working notes from the planning session. Their findings are summarised above, and each task card names the code it changes.
+
+## Reopened decisions 8 Nov 2026 (field failure)
+
+- **Withdrawn:** the completion claim in astrid-dev #137 is withdrawn. The owner's field report showed that `install --update` on a machine that completed the Release 1 storage handoff exits 0 and installs nothing (verified in the review on `advisor/plan29-field-failure-review`).
+- **Release 11 (0.0.11, patch) gate:** CI passes with the field state as a fixture and as the re-aimed journey leg; the owner publishes with her go; then she runs the standard App command and uses Update now. If that doesn't end "Astrid updated", the fix goes out forward at once.
+- **Pending owner decision:** rollback stays available only until the first successful update after a handoff. Pruning of retained R0 data waits for it.
+
+## Owner decision 17 (9 Nov 2026, Hannah): UX pass before Release 11
+
+One independent UX pass over every install, update, update-failure and repair path, in the App (page and Settings), the installer terminal and the diagnostics file, on mac, Linux and Windows. Rules:
+1. Every path offers both "Copy instructions for your agent" and manual steps a person can follow themselves.
+2. Every failure is descriptive, says plainly what happened, and points to where the full story is (Download diagnostics, and the install log path), clear to both a human and an agent.
+3. Minimal and elegant. Never dump detail on the user; point to it.
+4. Never lie. Exit 0 and success copy only when it is true.
+5. Fix small things directly, as commits on int via PR. Propose anything big as a task card instead of doing it.
+
+Its fixes ride in the Release 11 candidate. The pass is UR-15j, run after UR-15, UR-15a, UR-15b, UR-15c, UR-15f and the Runtime and App PRs are on int, and before Release 11 is composed.
+

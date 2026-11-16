@@ -1,5 +1,17 @@
 # 28 — Contributor ownership: respect prior grants and design Astrid's model
 
+**Project:** Contributor ownership: preserve legacy grants, design Astrid model
+
+**Goal:** Reconcile Banodoco's published allocations and promises, then design a transparent, legally reviewed contributor-ownership model for the Astrid collective without silently erasing earlier commitments.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** historical ledger reconciliation; owner scope decision; qualified legal/tax review
+
 **Start:** [Astrid development skill](../../skills/astrid-dev/SKILL.md). Status, owner and priority belong only in the [catalog](../index.md).
 
 **Vision gaps:** [CA-002 — Contributor ownership](../../vision/gaps/CA-002-contributor-ownership.md) (primary).

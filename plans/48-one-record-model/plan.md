@@ -1,0 +1,124 @@
+# One model for astrid-dev's records, checks and generated pages
+
+**Project:** One model for astrid-dev's records, checks and generated pages
+
+**Goal:** Anyone can see, in one place each, what kinds of record exist, what is checked and when, and which files are generated; plans define the catalog instead of the catalog defining plans, and adding a check, page or field is one entry in one file.
+
+**Status:** done
+
+**Owner:** Plan 48 manager
+
+**Estimate:** 0: the committed scope is complete; track C and phase 4 were never committed and are not estimated here
+
+**Waiting on:** —
+
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+
+**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary).
+
+**Contributes to closure:** CA-005: one command lists every check and generated page; a project lands by adding only its own folder; one source per fact; a fresh agent extends it from the guide; refusals work.
+
+## Outcome and scope
+
+A contributor or agent can answer four questions about astrid-dev from one place each, and they stay true with a hundred plans in flight:
+
+1. **What kinds of record exist, and what shape is each?** (project, gap, release, ledger entry, review form.)
+2. **What is checked, and when?** One command lists every check and runs them the same way locally and in CI.
+3. **Which files are written by hand and which are generated?** A project's facts live in the project; the catalog is generated from the plans, and every generated file is marked.
+4. **How do I add a check, a view or a field?** One documented place, one entry.
+
+**Committed, in two phases:**
+
+- **Phase 1: one model, one command.** One shared record helper, a registry of checks behind one command, and one standard way to generate a page or a marked region. The existing vision README and root summary move onto it. One rule changes on purpose (PR checks read the working tree, so local and CI agree); every other verdict stays the same and the public feed is byte-identical.
+- **Phase 2: plans define the list.** Status, owner, estimate and waiting-on move into each project's own `plan.md`, with its catalog name and one-line goal, and `plans/index.md` becomes a generated view. Priority gets its own small ordered file. The completion gate, review intake and the claim bot read the project file. A job on `main` refreshes generated pages, so a PR need not contain them. Project numbers are checked unique.
+
+**Proposed, not committed (owner decision D7):**
+
+*Owner decision, 11 Nov 2026 (D7, D9):* queued to run after Phase 2: the one-line form fix (PM-13h), Phase 3's pack-shape track (A) and its lifecycle track (B) without the status gate, and one review round (R3). Those ran and are on `main` (12 Nov 2026; the integrated PR is 539). **Not built and not accepted: Phase 3's form track (C) and all of Phase 4.** They stay proposals that a later plan may take up, with no run authorized; completing this plan does not do them.
+
+- **Phase 3: one pack shape, a declared lifecycle, generated review forms.** Three tracks that do not depend on each other:
+  - **A, pack shape.** The three templates are the declaration. A new pack must match them. Existing packs are never checked.
+  - **B, lifecycle.** The six statuses and what entering each requires are declared in one file that every reader uses. As a separate, droppable step, the allowed moves between them are declared too and any other move fails.
+  - **C, the completion form.** It is generated from a definition, and the completion gate takes its labels from the same definition. The gate's rules stay as they are.
+- **Phase 4: one evidence shape.** One envelope (claim, exact candidate, command, environment, result, receipt, limits, routes) in the implementation review form and in the GPU validation record. CI confirms it is complete, never that it is true. The completion assessment keeps its own lines.
+
+Both phases are specified to task level in [tasks.md](tasks.md) at the owner's request of 11 Nov 2026; that request is not acceptance. Two independent critiques recommend cutting most of this until a recorded failure asks for it, keeping at most a one-line fix to the completion form and the pack-shape check; see [the first](inputs.md#critique) and [the second](inputs.md#second-critique).
+
+**Boundaries:**
+
+- No new record types, statuses, approvals or roles. This consolidates what exists ([principle 8](../../docs/contribution-design-principles.md)).
+- No dependencies beyond the Python standard library, and no new file format: fields stay in the two syntaxes the repository already uses.
+- CI still checks structure, links and transitions only. Whether evidence proves a claim stays a reviewer's judgment ([principle 7](../../docs/contribution-design-principles.md)).
+- Product repositories are not changed. The public feed's shape is not changed.
+- Phase 2 adds six header lines to every pack in one change (the four moved fields, the catalog name and the goal). Nothing else in any existing pack is touched, and nothing else in a pack with a live run (Plans 20, 29, 32 and 40-machine-lifetime-controls today) until its run ends.
+- The strategy release table stays with [Plan 31](../31-releases-from-astrid-dev/plan.md), which already owns `strategy.md` and the release template.
+
+**Deferred:** generating the strategy release table (Plan 31); a public evidence trail on the vision page ([Plan 44](../44-vision-execution-trail/plan.md) owns it and can consume Phase 4's envelope); moving raw logs out of the repository; allocating project numbers automatically.
+
+## Existing work and decision
+
+This grows from three things already in the repository, not from a new design:
+
+- **Shared parsers, partly done.** `scripts/project_contract.py` calls itself "the one interpretation used by validation, completion and publishing"; `vision_subject.py`, `gap_relationships.py`, `catalog_rows` and `contribution_api.py` are each shared by several scripts. The rest of the parsing is repeated per script.
+- **One generated-page pipeline.** `scripts/export_public_vision.py` generates `vision/README.md`, the root README summary and the public feed, with a stale check in CI and a publish step on `main`. It is specific to the vision and cannot be reused for a second page.
+- **[Plan 31](../31-releases-from-astrid-dev/plan.md)** designs a typed release record, a draft-to-final gate and a second generated-only branch. That is this project's lifecycle and view ideas for one record type.
+
+The smallest sound approach is to finish the shared layer those three imply, then move the catalog onto it. The findings, alternatives, critique and open owner decisions are in [inputs.md](inputs.md#planning-evidence). Phase 1's scope is accepted; the rest is not.
+
+## Sequence and readiness
+
+Phases run in order; each leaves the repository working and is useful if later phases never start. Phase 1 carries most of the value for contributors adding checks or pages; Phase 2 removes the shared file every plan change edits today.
+
+1. **Phase 1** (PM-0 to PM-5t, then one review round, R1). Accepted and authorized.
+2. **Phase 2** (PM-10 to C-2). Re-planned on 11 Nov 2026 against the code Phase 1 built, with Codex doing most of it inside a hosting Claude session, and run from 12 Nov 2026 under the owner's delegation. It changes how a project is claimed and where status is edited, so the migration, the gates and bots that read status, and the docs reached `main` in one PR (C-1, PR 533), following a written [cut-over order](tasks.md#phase-2-cut-over-order). The renumbering, the extension guide and the refresh job followed as their own small PRs; the refresh job waited for the owner's settings and went live in C-2 (PR 544, D16).
+3. **One review stop and two review rounds** close the committed scope: RS1 on the two tests-first contracts before anything is built on them, R2 on the integrated head before the cut-over, and R8 on the refresh job before it goes live.
+4. **Phases 3 and 4** (PM-11a to R4) only if D7 accepts them, each closed by its own review round (R3, R4). D7 and D9 accepted part: PM-13h, track A and track B without its gate, closed by R3; all three landed with PR 539. Track C (PM-13a to PM-13t) and Phase 4 (PM-14a to R4) were not accepted, are not built, and have no review round. Phase 4 needs the form track.
+
+**Readiness and constraints:**
+
+- **Release 12** managers depend on the current checks daily. Phase 1 started on the owner's go, landed on its integration branch, kept the old check commands working, and reached `main` in one PR (PR 515). Phase 2 first waited for Release 12 to publish; on 12 Nov 2026 the owner said to cut over without waiting (see the cut-over go in [inputs.md](inputs.md#owner-decisions)).
+- **Plan 31** adds its own checker and publisher to the same scripts. Sequence Phase 1 before Plan 31's RL-1a to RL-1c so Plan 31 registers checks and views instead of adding a fourth one-off (owner decision D5). Whichever lands second re-plans its task cards against the other's result.
+- **Phase 2's refresh on `main`** needs a bot identity allowed to push generated files past `main`'s pull-request rule (owner row O-1, D17). `main` itself is now protected by a ruleset.
+- **A stale PR must fail loudly at the cut-over.** `main` does not require branches to be up to date, so the generated table is laid out so that any open PR still editing a catalog row conflicts and cannot merge (D15).
+- D14 to D17 were decided on 12 Nov 2026 (in [inputs.md](inputs.md#owner-decisions)); D8 is still recorded there as open in part: no acceptance of CA-005's wording is recorded.
+
+Tasks, routes, scopes and proofs are in [tasks.md](tasks.md); the rows of the track C and Phase 4 cards there are still open and stay so.
+
+## Interfaces and handoff
+
+**Consumes:** the current scripts, workflows, templates and skills at the astrid-dev revision recorded when each task starts; the App's `vision:check` parser through the existing `vision-consumer-contract` job.
+
+**Produces, for other projects to build on:**
+
+- `python3 scripts/astrid_dev.py check | list | sync`: the one entry point CI and contributors run.
+- A record helper other scripts import (sections, fields, tables, project records).
+- A view mechanism Plan 31 can use for its release manifest and strategy table, and Plan 44 for its trail.
+- Built from Phase 3 (tracks A and B): `scripts/pack_shape.py` (the shape read from the templates) and `scripts/lifecycle.py` (statuses and what each requires; the allowed moves were dropped, D10). Not built (track C): `scripts/forms.py`, the completion form.
+- Not built, Phase 4 was not accepted: `scripts/evidence.py`, whose `parse` would return the envelopes in a text, for Plan 44 and the GPU validation skill to cite.
+- `docs/checks.md` and `docs/extending.md`: the generated list of every check and view, and the one page on adding a check, view or field.
+
+**Limits:** the public feed (`vision.json`) keeps `schemaVersion: 1` and its exact shape; any change there is out of scope and would need the App's agreement.
+
+## Completion
+
+Shown on the integrated astrid-dev candidate, with exact SHAs:
+
+- **Listable:** `astrid_dev.py list` prints every check and view with its trigger; `docs/checks.md` is generated from it and CI fails if it is stale.
+- **Same everywhere:** the documentation workflow runs only `astrid_dev.py check`; the same command on a clean checkout of the same commit gives the same result.
+- **One source per fact:** the catalog and the vision README are generated, no generated file is its own source, and each generated file or region carries the standard marker.
+- **Plans define the list:** a PR adding only a valid `plans/NN-name/` folder appears in the generated catalog with no edit to any shared file; two such PRs opened from the same base both merge without conflict.
+- **Gates still bite:** a PR that changes a project's status to `done` in its `plan.md` without a completion assessment fails, exactly as an index edit does today.
+- **Extensible in one place:** adding a new check, a new view and a new project field are each demonstrated as a change to one file plus its test, following `docs/extending.md`.
+- **Negative cases:** a hand edit to a generated file fails; a PR opened before the cut-over that edits a catalog row cannot merge; a duplicate project number fails; a claim for another person's handle, or one that changes any other line, is refused.
+- **Refreshed on `main`:** shown in a scratch repository with the same rules, then once on astrid-dev: the job's commit touches only declared generated files, and the feed is published for it.
+- **Unchanged:** the public feed is byte-identical before and after Phase 1, and is byte-identical across Phase 2's cut-over, and afterwards differs only by the one renumbered project's id and link; the App's parser accepts it.
+
+**If Phases 3 and 4 are accepted,** also shown on their integrated candidates. What was accepted (D7, D9) is tracks A and B, so their two lines (Shape, Lifecycle) apply to this plan's completion; the Form and Envelope lines are for track C and Phase 4, which were not accepted and are not shown, and the last line (Unchanged) is shown for tracks A and B only:
+
+- **Shape:** a new pack copied from the templates passes; the same pack with one template heading removed fails, naming the file and the heading; a changed or renamed old pack is never failed.
+- **Lifecycle:** adding a status is one entry in `scripts/lifecycle.py`, shown by a test that adds one; a move to `done` without a completion assessment still fails; if PM-12c is kept, a status change the declaration does not allow fails.
+- **Form:** editing the generated completion form by hand fails; it holds every label its gate asks for; with only its plan number filled in, it fails on every field whose rule can tell an answer from a hint.
+- **Envelope:** an incomplete envelope fails in an implementation review request and in a new GPU record; a complete envelope that is false passes, and the form and the skill say so.
+- **Unchanged:** no verdict that existed before either phase changes. For the completion gate that is shown by exact output over a pinned set of descriptions, before and after. For tracks A and B the check at R3 was that `scripts/fixtures/golden.txt` gained exactly one line and the existing tests passed, with one assertion changed on purpose (R3.4, before and after in its commit); the pinned-description corpus belongs to track C (PM-13a) and does not exist.
+
+**Limits of this proof:** it shows structure, not that contributors find it clearer. One fresh agent adding a check and a view from `docs/extending.md` alone, with its confusions recorded, is the only readability evidence. Completion does not close CA-005: that also needs reassessment after a real period of many contributors working at once.

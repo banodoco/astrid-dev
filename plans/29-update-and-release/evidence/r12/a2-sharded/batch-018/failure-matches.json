@@ -1,0 +1,29 @@
+[
+  {
+    "batch": "018",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_task_scope.py::test_leader_exits_before_helper - AssertionError: assert 'unresolved' == 'settled'",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "018",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_task_scope.py::test_startup_kills_recorded_live_group_from_a_crashed_host - assert False",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "018",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_task_scope.py::test_managed_stdin_eof_waits_for_host_task_tree_cleanup - assert False",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  }
+]

@@ -3,7 +3,7 @@ Review request: scope
 
 ## New project — scope review
 
-**Proposal issue:** Link the original proposal or explain why the PR itself is the initial proposal.
+**Idea issue:** Link the original proposal or explain why the PR itself is the initial proposal.
 
 **Outcome and gap:** Link the canonical new `plan.md`, nearest existing gap and the work this builds on.
 

@@ -1,0 +1,7 @@
+# A2 comparison: completed batch 011
+
+Four JSON receipts contain exact outcome IDs and statuses, Agent/Runtime/VibeComfy/lifecycle SHAs, Python and Node/esbuild versions and executable SHA-256 values, start/end times, exit and terminal summaries, failure-summary lines, and hashes of original receipts and full logs. Raw logs, environment, and credentials are excluded; test IDs can contain literal synthetic parameters. `failure-matches.json` compares exact summary lines; details remain in original local receipts.
+
+R10 selected 86 IDs, R11/base/candidate 89 each. All four produced two failures and one error with identical summary lines: a missing qwen model, unavailable Darwin audit-token custody, and an undeclared Darwin-native skip. No pytest timeout was reported. R11 here is the authorized clean-host rerun: an earlier overlapping receipt is preserved separately in `/workspace/r12-a2-resume/sharded/history/011/r11-overlap-054455` and excluded from these results. Group boundaries restart session fixtures and may miss cross-group ordering effects; this is not full-suite equivalent. Batch 011 is partial evidence, not an A2 verdict.
+
+Source manifest SHA-256: `885b264862a0e6e90698ed8a76a6b5b30e2dbeb1f3846ea96b356913b1a9e771`. Exact absent IDs, manifest and source receipts are under `/workspace/r12-a2-resume/sharded/`. Targeted scan found no common GitHub token, OpenAI key, JWT, or long bearer-token patterns; this does not prove all possible secrets absent.

@@ -9,28 +9,58 @@ Setup and test scripts that any Astrid project's worker can run in a **single-re
 - **Public repositories and PyPI only.** Nothing private, no credentials, no cloud resources.
 - **Exit 3 means an environment problem,** never a test result.
 
-## Copy them into the product repository
+## Simplest: let the cloud environment run them
+
+Set the workers' cloud environment's setup script (Settings, Environments, Edit) to this one line, once:
+
+```bash
+git clone -q --depth 1 https://github.com/banodoco/astrid-dev /opt/astrid-dev && bash /opt/astrid-dev/env/cloud-setup.sh; exit 0
+```
+
+It runs before Claude starts, so no permission check applies. It installs four commands:
+- `astrid-agent-pytest`;
+- `astrid-agent-pytest-pod`;
+- `vibecomfy-pytest`;
+- `astrid-baseline-diff`.
+
+Each builds `<checkout>.env/` on its first run, from the checkout root, then runs pytest. A slow setup script is stopped (one was stopped at 5 minutes), so the build happens on the first test run, not at start-up.
+
+A worker runs no setup, and repositories need no copies of these scripts. Changes reach every new session through astrid-dev `main`.
+
+## Copy them into the product repository (when the environment can't run them)
 
 A single-repo cloud worker in auto mode refuses scripts cloned from another repository, even with an allow rule. Each product repository therefore carries its own copy under `scripts/worker-env/` (astrid-agent first, on Plan 33's integration branch), and workers call those copies. This folder is the canonical source; keep the copies in step.
 
 ## How a worker calls them
 
-Clone astrid-dev read-only to the fixed path `/home/user/astrid-dev`, then call each script by its **literal** path from the product checkout root. Each product repository's committed `.claude/settings.json` allows exactly these paths. A path built from a variable doesn't match an allow rule, so it is refused.
+Create the worker session on the product repository's integration branch, in **auto** or **Accept edits** mode. Prefer auto: it doesn't stall on harmless unlisted commands. Call each in-repo copy by its **literal** path from the checkout root. The repository's committed `.claude/settings.json` allows exactly these commands, and a path built from a variable doesn't match an allow rule.
 
 ```text
-git clone -q --depth 1 https://github.com/banodoco/astrid-dev /home/user/astrid-dev
-bash /home/user/astrid-dev/env/agent-setup.sh                  # astrid-agent checkout
-bash /home/user/astrid-dev/env/agent-pytest.sh -q <selectors>
-bash /home/user/astrid-dev/env/vc-setup.sh                     # VibeComfy checkout
-bash /home/user/astrid-dev/env/vc-pytest.sh -q <selectors>
-bash /home/user/astrid-dev/env/smoke.sh agent|vc <one selector>
+bash scripts/worker-env/agent-setup.sh                  # astrid-agent checkout
+bash scripts/worker-env/agent-pytest.sh -q <selectors>
+bash scripts/worker-env/agent-pytest-pod.sh <selectors>
+bash scripts/worker-env/smoke.sh agent <one selector>
 ```
+
+What a permission stress test showed (three auto-mode workers, astrid-agent int/33 at 187d692, 8 Nov 2026):
+- **Ran without a prompt:** the in-repo scripts, the allow-listed git commands, pipes, an env-var prefix, and harmless unlisted commands.
+- **Denied by the deny list:** force-push.
+- **Refused every time, despite the allow rule:** a script run from a `/home/user/astrid-dev` clone ("Code from External").
+- **Never use `cd`:** a `cd` changes the working directory for every later command in the session, so later literal paths fail.
 
 | File | What it does |
 |---|---|
 | `agent-setup.sh` | Builds a Python 3.13 venv with `-e .[dev]`, then git-fetches the Runtime (installed `--no-deps`, with its Python client) and VibeComfy at the checkout's pins. Needs `uv`, `git` and `ffmpeg`. |
 | `agent-pytest.sh` | Runs `pytest` in that environment with a wiped caller environment. Its arguments go to `pytest` verbatim. |
+| `agent-pytest-pod.sh` | The same run for selectors that need a RunPod pod (through `lifecycle/`, pinned in `astrid/packs/runpod/pins.json`). Installed as `astrid-agent-pytest-pod`. |
+| `cloud-setup.sh` | The cloud environment's setup script (see above). It installs the commands listed above and `astrid-baseline-diff`. Not run by workers. |
+| `runtime-fixture-preflight.py` | Internal: `cmp-run.sh` runs it before pytest on the Runtime custody selections, to check the fixture imports. Nothing else calls it. |
 | `vc-setup.sh`, `vc-pytest.sh` | The same pair for a VibeComfy checkout. |
+| `runtime-setup.sh`, `runtime-pytest.sh` | Builds a Python 3.13 Runtime test environment, installs `.[test]` and `packages/python`, then fetches and SHA-verifies the Agent commit in `tests/astrid-agent.pin`. |
+| `baseline-diff.py` | Sorts a candidate's test results against one or more baselines into regression, no-baseline, preexisting, fixed and missing. A **regression** ran and passed on at least one baseline and fails on the candidate. Feed it pytest logs run with `PYTEST_ADDOPTS=-rA`, for example `astrid-baseline-diff --baseline served-11=base.log --candidate cand.log --out <dir>`. It exits 1 when there are regressions. It writes `summary.md` and one id list per bucket, with one node id per line (the format of Plan 02's `shared-failure-exceptions.txt`). Stdlib only. Installed as `astrid-baseline-diff` by `cloud-setup.sh`, or copied to `scripts/worker-env/baseline-diff.py`. |
+| `cmp-run.sh` | Runs one Agent test set at one commit in its own worktree, with `-rA`, for a before/after comparison. Run one per commit in parallel, then compare the logs with `baseline-diff.py`. Falls back to these `env/` copies for commits without `scripts/worker-env/`. |
 | `smoke.sh` | Setup plus one named test. A manager runs it in one throwaway worker per repository before a run's first task, so environment problems surface once, in minutes. |
+
+`cmp-run.sh` recognizes selectors that include Runtime custody fixture tests (the D40 source and orchestrator custody tests, plus the stage1 external-orchestrator test that can reuse D40's fixture loader). For those selections only, it installs that checkout's already pinned Runtime source in editable mode and checks that `runtime_protocol` and both producer fixture modules import from that source tree before pytest starts. A failed or incomplete fixture setup exits 3 as an environment error. Older worktrees with no matching test file simply skip this preflight; the general Agent setup remains noneditable.
 
 Plan 02's original copies stay frozen in `plans/02-consistent-generation/env/` for its recorded proof. Use the copies here for new work.

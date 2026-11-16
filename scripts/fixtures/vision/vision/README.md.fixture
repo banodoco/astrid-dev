@@ -1,0 +1,82 @@
+# Astrid — A tool to unlock the collective artistic ambition of the open-source AI community
+
+<!-- Ambition and participation live here; pillar, principle and gap summaries are derived from their own documents. -->
+
+## Ambition
+
+Astrid aims to help individuals and the community as a whole pursue artistic work beyond what they thought possible.
+
+## Four pillars
+
+Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable characteristics.
+
+### [A Tool for Artistic Ambition](pillars/artistic-ambition.md)
+
+Astrid is designed to support serious, sustained artistic practice.
+
+### [Agent-Powered Liquid Software](pillars/liquid-software.md)
+
+Tools should adapt to creative work as people and agents create together.
+
+### [Intelligence That Compounds](pillars/compounding-intelligence.md)
+
+What anyone learns should become something everyone can build on.
+
+### [A Shared Creative Endeavor](pillars/shared-endeavour.md)
+
+We want to create the conditions for the community to do more together.
+
+## Four driving principles
+
+### [Local-first, cloud-capable](principles/local-first-cloud-capable.md)
+
+Everything should be designed to run fully locally, and cheaply and conveniently in the cloud.
+
+### [Completely open by design](principles/open-by-design.md)
+
+We want to open not just our code, but our knowledge, ideas, and even our ownership.
+
+### [In the creator's control](principles/in-the-creators-control.md)
+
+Creators should have final say over every part of their creative environments.
+
+### [Eliminate technical wrangling](principles/eliminate-needless-technical-wrangling.md)
+
+Technical wrangling should be work for your agents, not work that interrupts your art.
+
+## Gaps — 22 assessed outcomes
+
+Each gap describes a result that remains independently verifiable even if its proposed implementation changes. Follow its link for the full current assessment, sources and closure evidence. Project completion never closes a gap automatically.
+
+- **[AA-001 — Astrid hasn't yet proven it can sustain ambitious work end to end](gaps/AA-001-sustained-creative-work.md)** — Open. A real artist-led project is completed through repeated revision, with demonstrable continuity, editable results, preserved creative intent and serious creator/peer assessment.
+- **[CA-001 — Astrid doesn't yet have a culture where creatives thrive](gaps/CA-001-creative-challenge-culture.md)** — Open. Run a bounded challenge with clear artistic intent and fair participation; document artists' goals, feedback, completed work and whether it enabled more ambitious efforts.
+- **[CA-002 — No implemented contributor-ownership model](gaps/CA-002-contributor-ownership.md)** — Open. An explicit owner decision and qualified legal/tax review of a concrete model covering eligible contributions, grants/allocations, governance, vesting, changes over time, financing and participant protections; then evidence of its authorized implementation.
+- **[CA-003 — Our vision and execution aren't yet fully connected](gaps/CA-003-vision-experiments-progress.md)** — Partially evidenced. Publish a maintained public trail for at least three substantive decisions or experiments, each connecting the relevant vision and gap to the hypothesis, work attempted, evidence, outcome, resulting decision, and what remains unresolved.
+- **[CA-004 — Creators and agents can't yet find one another's contributions](gaps/CA-004-sharing-and-discovery.md)** — Open. An independent contributor publishes a versioned contribution; a creator and an agent separately discover it through relevant search, inspect identity, source, compatibility and trust signals, then follow a supported reuse path.
+- **[CA-005 — Many contributors and agents can't yet work in parallel through one clear process](gaps/CA-005-parallel-contribution.md)** — Open. - One command lists every check and every generated page, and gives the same result locally and in CI.
+- **[CI-001 — Agents don't yet reliably learn from creative work](gaps/CI-001-agent-learning-loop.md)** — Open. Two real agent sessions: the first retrieves applicable knowledge and produces an observed, locally retained result; a subsequent session demonstrably uses that finding.
+- **[CI-002 — Hivemind functionality isn't yet refined and interoperable](gaps/CI-002-federated-knowledge.md)** — Open. Two separately owned datasets can exchange a scoped, independently attributed reference or approved sanitized result, preserving revision identity, provenance and access decisions; denied, stale and revoked cases do not leak source content.
+- **[CI-003 — Hivemind doesn't yet learn from public internet resources](gaps/CI-003-public-source-ingestion.md)** — Open. Ingest an authorized sample of GitHub issues/discussions, Reddit posts and documentation with source identity and revisions.
+- **[F-001 — Reliability isn't proven across supported setups](gaps/F-001-platform-reliability.md)** — Partially evidenced. A declared and version-pinned OS/device/deployment matrix demonstrates clean installation, launch, stop, update, interruption recovery, rollback and removal with preserved work and meaningful negative tests.
+- **[F-002 — User control and recovery aren't fully proven](gaps/F-002-safe-user-control.md)** — Open. Representative real workflows show clear and enforceable grant/deny/revoke permissions, correctly scoped file/network/spend access, handling of concurrent edits, inspectable changes, refusal and undo/recovery after failed or conflicting operations.
+- **[F-003 — Creative execution isn't yet dependable end to end](gaps/F-003-creative-execution.md)** — Open. On a stated supported setup, run real creative generation or processing and inspect the resulting editable artifact for correct content, project identity, output settings and usable timeline/workspace integration.
+- **[F-004 — Pack installation and upgrades aren't yet proven under demanding conditions](gaps/F-004-pack-lifecycle.md)** — Open. Run meaningful frontend-only, backend-only and combined packs against real project data, including substantial interactive UI and long-running processing.
+- **[F-005 — Local-first projects can't yet use cloud execution seamlessly](gaps/F-005-local-files-cloud-assist.md)** — Open. With one approved provider/configuration and a declared local project, a user or their agent launches remote work (including image generation and a video render), watches status and costs, cancels/retries as appropriate, and receives correctly linked editable local artifacts with the **local database still authoritative**.
+- **[F-006 — Creators can't yet work in Astrid entirely from the cloud](gaps/F-006-fully-hosted-workspace.md)** — Open. A new user can open a hosted Astrid workspace in a browser, create a project, save and reopen across sessions/devices, run a generation and render, and observe durable, permission-scoped data; accounts are isolated.
+- **[F-007 — Running Astrid in a sandbox isn't yet a first-class option](gaps/F-007-first-class-sandbox.md)** — Open. On a declared supported platform, a user can choose the sandbox mode, start the required stack, perform an approved creative job, stop and restart, and recover their project.
+- **[F-008 — Generation isn't yet one portable, extensible path across machines and inference engines](gaps/F-008-portable-generation.md)** — Open. **Same request, different machines.** The same generation request, for every default slot plus h3_av, produces its result through the same code path on: - a local GPU; - a user's own ComfyUI; - a rented RunPod machine.
+- **[LS-001 — Creative components can't yet move freely](gaps/LS-001-portable-components.md)** — Open. Rearrange the **real** player, inspector and timeline; retain playback, editing, selection and recovery state; save/restore the layout.
+- **[LS-002 — Agents can't yet reconfigure the workspace](gaps/LS-002-agent-workspace-control.md)** — Open. An agent arranges the same real components as a user, binds the correct timeline/selection/clock, offers reversible operations, does not clobber user edits, and restores a prior workspace from a saved representation.
+- **[LS-003 — Frontend and backend extensions don't yet compose](gaps/LS-003-full-stack-contributions.md)** — Open. An installed/trusted music capability yields a typed beat-grid result used in a real timeline view and music control surface.
+- **[LS-004 — A creative ecosystem across modalities isn't yet established](gaps/LS-004-cross-modal-foundations.md)** — Open. On documented supported setups, creators and agents successfully make real work using video plus at least two non-video modality foundations, with preserved files and project control.
+- **[LS-005 — Agents can't yet reliably create and maintain their own tools](gaps/LS-005-agent-managed-tools.md)** — Open. For a real creative task, an agent creates or adapts a narrow tool, tests it, shows its source and permissions, and requests approval to activate it.
+
+## Projects and participation
+
+The [project catalog](../plans/index.md) owns current priority, status and accountability; project packs contain their own scope, sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) covers issues, claims, scope review, PRs, writing and completion. Individual gap records hold their own evidence and closure criteria.
+
+## Build Astrid with us
+
+You and your agents can contribute to Astrid's tools, knowledge and creative community.
+
+[Give these instructions to your agent](../README.md#want-to-contribute-give-this-to-your-agent)

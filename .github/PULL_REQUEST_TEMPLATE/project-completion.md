@@ -5,14 +5,15 @@ Review request: completion
 
 ## Completion assessment — Plan NN
 
-Evidence: https://github.com/owner/repo/actions/runs/NUMBER (real integrated proof)
-Completion: Yes — Explain which actual acceptance criteria were demonstrated.
-Implementation PRs: https://github.com/owner/repo/pull/NUMBER (include all required product PRs; or None — non-code work)
+Evidence: <URL of the real integrated proof, or its full 40-character commit SHA>
+Completion: <Yes or No> — <name the acceptance criteria that were demonstrated>
+Implementation PRs: <links to every required product PR, or a reason none is needed>
 Integrated candidate: Exact candidate SHA(s)/versioned receipt (or None — non-code work)
-Models used: provider/model-id — implementation or review, runtime-observed or self-reported (or Unknown — reason)
+Routes used: <each route the run used and the tasks it ran, plus any model override, or Unknown — reason>
 Unproven: Named remaining failures/unsupported scenarios (or None within the stated scope)
 Gap F-XXX: Unchanged — Replace with a justified disposition for **every actually linked gap**.
-Strategy: Updated — the strategy.md row and sequence changes, and the gap route changes, in this PR
+Gap impact: None — why this project changes no gap (keep this line only if the plan links no gap, and then delete the Gap line above)
+Strategy: Reviewed — describe any source changes to affected release briefs, authored strategy decisions and gap routes, or why none were needed
 
 ### Integrated result
 

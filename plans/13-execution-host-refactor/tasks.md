@@ -26,3 +26,11 @@ Before execution, each task needs a difficulty route, exact inputs and dependenc
 - **Focused checks:** Exact focused selectors TBD at setup; no broad suites.
 - **Done:** Both paths use the current Runtime support root, and the focused checks are recorded.
 - **Progress:** [ ]
+
+### Prepared-worker plumbing in `generic_host.py` (follow-up)
+
+- **Outcome / work:** once Plan 14's reachability audit shows the RunPod prepared-worker island dead, remove its readiness-profile plumbing from `generic_host.py` (44 references) and `actions/run/run.py:813-866` (36). Source: Plan 32 review, 9 Nov, at 7209ffcc7. Priority: Medium.
+- **Route:** N.
+- **Dependencies and inputs:** Plan 14's prepared-worker audit; the `generic_host` machine-path and engine-branch parts were not audited in the review (17,135 lines).
+- **Done:** no readiness-profile reference remains outside what the audit kept; focused checks recorded.
+- **Progress:** [ ]

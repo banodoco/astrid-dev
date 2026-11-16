@@ -1,5 +1,17 @@
 # 27 — Complete video rendering and export options
 
+**Project:** Complete video rendering and export options
+
+**Goal:** Let creators finish videos with simple presets and advanced control over output format, size, frame rate, quality and which clips, tracks or variants are included.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; audit existing export/render routes and supported formats
+
 **Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). Status, owner, priority and estimate belong only in the [plan catalog](../index.md).
 
 **Vision gaps:** [F-003 — Dependable end-to-end creative execution](../../vision/gaps/F-003-creative-execution.md) (primary); [F-002 — Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). This project would establish video-export capability within those broader gaps, not close either gap on its own.

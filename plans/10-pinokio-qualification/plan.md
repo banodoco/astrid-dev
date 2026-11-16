@@ -1,5 +1,17 @@
 # 10 — Pinokio qualification: engine controls, custody and fully-local
 
+**Project:** Pinokio qualification
+
+**Goal:** Engine Stop/Quit refusal veto, direct custody and fully-local mode, qualified natively.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** —
+
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary). [Supporting gap](../../vision/gaps/F-002-safe-user-control.md).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

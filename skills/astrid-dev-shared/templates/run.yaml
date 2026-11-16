@@ -18,6 +18,11 @@ models:
     model_id: ""
     reasoning_effort: ""
     availability: unverified
+  taste:
+    class: Astra/Opus-class
+    model_id: ""
+    reasoning_effort: ""
+    availability: unverified
   plan_judgment:
     class: Astra/Opus/Fable-class
     model_id: ""
@@ -39,6 +44,7 @@ roles:
   worker_normal: normal
   worker_very_hard: very_hard
   worker_super_hard: super_hard
+  worker_taste: taste
   plan_judgment: plan_judgment
   advisor: advisor
   completion_reviewer: completion_reviewer
@@ -46,6 +52,11 @@ environment:
   # The cloud environment workers are created in, and the smoke result per repository (env/smoke.sh).
   cloud_environment_id: ""
   smoke: {}   # e.g. astrid-agent: "ENV-PASS agent <selector> @ <sha>"
+# Failing test ids per repository and baseline, recorded before the first task
+# (Manage step 1). A regression ran and passed on a baseline and fails on the candidate.
+# Sorted by env/baseline-diff.py; each comparison is committed under plans/<project>/evidence/tests/<repo>/<candidate short SHA>/.
+# e.g. astrid-agent: {served-release-11: "a105de3a…", main: "<sha>", latest: "plans/<project>/evidence/tests/astrid-agent/<sha>/"}
+baseline: {}
 checkin:
   # Only when the owner asks for advisor check-ins; leave empty otherwise.
   every: ""   # for example 60m
@@ -56,12 +67,18 @@ source:
   sha: ""
   dirty_state: ""
   custody: ""
+  destination: ""   # release/<NN>/plan-<PP>
 review:
   # Copy the actual accepted policy and remaining counters; never reset them here.
   # This template is planning-only; it does not activate a review or execution.
   # For ordinary delivery, unless the owner or accepted plan selects another
   # policy, configure review rounds on the integrated candidate after scoped checks (max = the plan's agreed rounds;
   # total rounds; stop at uncontested PASS). Preserve existing runs' policy.
+  # Example review stop after a load-bearing part (only if the accepted plan sets one):
+  # - id: stop-contract
+  #   role: completion_reviewer
+  #   after: [T2, T3]   # the load-bearing tasks
+  #   max_rounds: 1
   # Example delivery stage:
   # - id: final
   #   role: completion_reviewer

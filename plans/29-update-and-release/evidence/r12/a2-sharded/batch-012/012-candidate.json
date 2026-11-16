@@ -1,0 +1,436 @@
+{
+  "batch": "012",
+  "side": "candidate",
+  "modules": [
+    "tests/core/execution/test_m1_13_pack_provenance.py",
+    "tests/core/execution/test_managed_tool_session.py",
+    "tests/core/execution/test_pack_host_cleanup_doctor.py"
+  ],
+  "pins_and_python": [
+    "ec48555d8298d155390ffbb37d1950c3e80b43a4",
+    "42ae24aff8d2cb854f874ce134161077a3ba3641",
+    "8d065a8fef3dd602d5462e27d8eca088cf4e8262",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T07:46:42Z",
+  "end_utc": "2026-11-11T07:51:32Z",
+  "exit": 0,
+  "summary": "================= 99 passed, 6 deselected in 288.80s (0:04:48) =================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_matching_run_receipt_has_equal_installed_and_observed_digests",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_changed_observed_file_is_visible_as_a_digest_mismatch",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_receipt_rejects_missing_observed_digest",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[success-updated-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[success-updated-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[success-removed-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[success-removed-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[failure-updated-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[failure-updated-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[failure-removed-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[failure-removed-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[timeout-updated-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[timeout-updated-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[timeout-removed-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_receipt_reuses_start_snapshot_after_collection_change[timeout-removed-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_task_only_receipt_omits_unknown_pack_provenance",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_unpinned_selected_pack_is_explicitly_folder_origin_and_unmodified",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[selected-action-replaced-between-digest-and-pin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[selected-action-replaced-during-digest-traversal]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[selected-action-removed-between-digest-and-pin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[selected-action-removed-during-digest-traversal]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[legacy-executor-replaced-between-digest-and-pin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[legacy-executor-replaced-during-digest-traversal]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[legacy-executor-removed-between-digest-and-pin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_collection_change_during_capture[legacy-executor-removed-during-digest-traversal]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_unknown_task_only_provenance_is_omitted_by_real_host",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_unpinned_selected_pack_origin_and_digest_are_written_by_real_host",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_change_after_last_capture_read[ordinary-edit-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_change_after_last_capture_read[ordinary-edit-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_change_after_last_capture_read[replacement-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_change_after_last_capture_read[replacement-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_change_after_last_capture_read[removal-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_change_after_last_capture_read[removal-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_capture_while_writable_mmap_is_open[selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_capture_while_writable_mmap_is_open[legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_when_selected_pack_lease_is_unavailable[selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_refuses_when_selected_pack_lease_is_unavailable[legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_releases_partial_selected_pack_leases_on_failure[selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_releases_partial_selected_pack_leases_on_failure[legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_terminal_serialization_does_not_reread_source_or_pin[selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_terminal_serialization_does_not_reread_source_or_pin[legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_reports_installed_and_observed_digest_mismatch[selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_real_host_reports_installed_and_observed_digest_mismatch[legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_retains_capture_mechanism_selected_at_construction[linux]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_retains_capture_mechanism_selected_at_construction[darwin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_host_retains_capture_mechanism_selected_at_construction[win32]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_host_executes_verified_copy_and_cleans_it[False-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_host_executes_verified_copy_and_cleans_it[False-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_host_executes_verified_copy_and_cleans_it[True-selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_host_executes_verified_copy_and_cleans_it[True-legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_host_refuses_change_after_admission[selected-action]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_host_refuses_change_after_admission[legacy-executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_capture_fails_closed_and_cleans_partial_copy[copy-write]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_capture_fails_closed_and_cleans_partial_copy[copy-error]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_capture_fails_closed_and_cleans_partial_copy[interrupt]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_capture_fails_closed_and_cleans_partial_copy[symlink]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_capture_fails_closed_and_cleans_partial_copy[writable-mmap]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_standalone_provenance_uses_verified_copy",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_python_action_and_dependency_use_snapshots[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_python_action_and_dependency_use_snapshots[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_worker_rejects_snapshot_different_from_retained_bytes",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_capture_cleans_read_only_source_copy",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_capture_reports_cleanup_failure",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_linux_selector_keeps_refusal_without_lease_api",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_copy_uses_the_digest_exclusion_rules",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_real_bundled_action_executes[darwin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_real_bundled_action_executes[win32]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_cleanup_precedes_success_publication[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_cleanup_precedes_success_publication[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_bundled_task_keeps_one_discovery_owner[darwin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_bundled_task_keeps_one_discovery_owner[win32]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[python-personal-darwin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[python-personal-win32]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[python-chiptune-darwin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[python-chiptune-win32]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[command-personal-darwin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[command-personal-win32]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[command-chiptune-darwin]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_m1_13_pack_provenance.py::test_portable_personal_task_keeps_one_discovery_owner[command-chiptune-win32]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_serial_admission_and_settlement_are_one_shot",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_compatible_binding_reuses_owned_session_without_replacement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_incompatible_binding_fences_and_releases_before_replacement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_execution_identity_change_replaces_same_process_session",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_uncertain_cancellation_fences_the_session",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_confirmed_cancellation_requires_adapter_evidence",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_release_failure_keeps_the_slot_poisoned",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_quiescent_replacement_retains_admission_history[none]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_quiescent_replacement_retains_admission_history[completed_intervening]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_quiescent_replacement_retains_admission_history[pending]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_quiescent_replacement_retains_admission_history[fenced]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_quiescent_replacement_retains_admission_history[binding]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_quiescent_replacement_retains_admission_history[adapter]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_quiescent_replacement_retains_admission_history[generation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_replacement_accepts_fresh_authorization_after_intervening_settlement",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_managed_tool_session.py::test_checked_replacement_release_failure_retains_poisoned_slot",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pack_host_cleanup_doctor.py::test_doctor_json_surfaces_unresolved_cleanup_latch",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pack_host_cleanup_doctor.py::test_doctor_text_prints_cleanup_line_only_with_latch",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pack_host_cleanup_doctor.py::test_doctor_reports_missing_remotion_install[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_pack_host_cleanup_doctor.py::test_doctor_reports_missing_remotion_install[False]",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [],
+  "source_log_sha256": "d47a33fe0c7ef5e77a51c3d4e1b9ba2d327f7cf9f9c4ba1e075c51a27568251a",
+  "source_receipt_sha256": {
+    "start.txt": "780530d4291d141183e92a26bbfbc23ac926d50176b6c9699b06530e1977e918",
+    "end.txt": "d8eccc5e71e5d0db14ff908fdf08d823fb4e9407d80d23f551ad055fb572cdb6",
+    "module.txt": "763572bb51d4803544c993a127784d33725e622528e4cf9195f5a422773a8aa5",
+    "pins.txt": "2cb64dbf19eb77cca05df65a74d46bf0f9f9be4a76f3705e50e8e41ab85932cf",
+    "exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "d0ce74225cc65e29470ca938bf5c400de790daaef9dabdd8f58f598f4d0ed482",
+    "SHA256SUMS": "5edac1a5d57b83bc22754640a46159cb9b7cc9e59a1ace1231a00784a7547543"
+  }
+}

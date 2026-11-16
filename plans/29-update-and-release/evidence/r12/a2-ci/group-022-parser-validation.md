@@ -1,0 +1,7 @@
+# Group 022 parser hypothesis and focused validation
+
+Source `59dd7b04a3bc48119641a3ce1411cd6fd19862b3` on non-triggering `handoff/r12-a2-continuation-131`. No CI or heavy pytest was started for this validation.
+
+Run 43025494178 reported pytest exit 0 and clear process census for three group 022 sides, followed by driver exit 3. The private raw pytest logs were not retained. In the frozen inventory, each affected side has the short IDs `tests/core/pack/test_install.py::test_reachable_revisions[tag]` and `tests/core/pack/test_install.py::test_reachable_revisions[head]`. Pytest's terminal reporter pads progress brackets to terminal width; the previous parser required exactly one preceding space. Multiple-space progress output would therefore make those IDs missing/malformed and produce the observed fail-closed path. This explains the symptoms but is not independently confirmed against the lost raw log.
+
+The candidate parser accepts one or more ASCII spaces before the exact percent bracket, retains exact frozen-ID matching, and rejects tabs, arbitrary suffixes and malicious newline/outcome injection. Incomplete diagnostics are fixed enum codes only. Coordinated lightweight regression window: sanitizer 12 tests, receipt guard 6, full-plan/driver 11, prior receipts 3, stages 6 and inventory 4; all 42 passed. No triggering branch was pushed. Review and a separately coordinated run remain required.

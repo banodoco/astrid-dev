@@ -4,14 +4,16 @@ The [contributor workflow](contribution-workflow.md) is public and works without
 
 ## Security boundary
 
-There are two deliberately separate GitHub workflows:
+The contribution workflows have separate responsibilities:
 
 | Workflow | Runs when | Permission | May do |
 | --- | --- | --- | --- |
-| [Review intake](../.github/workflows/review-intake.yml) | A PR opens or changes | `contents:read`, `pull-requests:read`, `issues:write` | Check an owner against the live catalog; label a valid request `needs-review`; comment. **Never merge, approve or deploy.** |
-| [Claim merger](../.github/workflows/claim-project.yml) | Unprivileged documentation CI succeeds on a PR | Dedicated repository-scoped GitHub App | Auto-merge **only** a validated owner-cell change for a queued, unassigned project. Never checkout or execute fork code. |
+| [Review intake](../.github/workflows/review-intake.yml) | A PR opens or changes | `contents:read`, `pull-requests:write`, `issues:write` | Check an owner against the project's `plan.md` on live `main`; label a valid request `needs-review`; comment. **Never merge, approve or deploy.** |
+| [Issue intake](../.github/workflows/issue-intake.yml) | An issue opens or is edited | `contents:read`, `issues:write` | Add the type label and `plan:`/`gap:` labels, nothing else; triage applies release candidate labels. |
+| [Claim merger](../.github/workflows/claim-project.yml) | Unprivileged documentation CI succeeds on a PR | Dedicated repository-scoped GitHub App | Auto-merge **only** a validated change to the Owner line of a queued, unassigned project's `plan.md`. Never checkout or execute fork code. |
+| [Planning auto-merge](../.github/workflows/auto-merge.yml) | A PR opens or changes | Dedicated repository-scoped GitHub App: `contents:write`, `pull-requests:write` | Enable squash auto-merge for eligible planning content; remove only this App's request when eligibility is lost. |
 
-The claim bot is disabled by default; if GitHub refuses to run a first-time contributor's CI until approved, claiming cannot skip that platform safeguard. Both workflows use trusted `main` code. Proposed code and PR metadata are untrusted input.
+The merge bots are disabled by default. They cannot skip GitHub's first-time contributor CI approval. All use trusted `main` code; PR code and metadata are untrusted input.
 
 ## One-time configuration
 
@@ -22,13 +24,17 @@ The claim bot is disabled by default; if GitHub refuses to run a first-time cont
 
 These settings cannot be created merely by merging workflow files. GitHub repository administrators must configure the ruleset/App and verify their permissions.
 
+## Planning auto-merge
+
+Enable squash merging and auto-merge in repository settings, keeping required checks and reviews on `main`. Install a dedicated App on this repository with **Contents: write** and **Pull requests: write**, without protection bypass; set secret `AUTO_MERGE_PRIVATE_KEY`, then variable `AUTO_MERGE_APP_ID`. An empty App ID skips the job. Reserve this App for this workflow: the API's `auto_merge.enabled_by` Bot login identifies its requests, but cannot distinguish workflows sharing an App. Requests enabled by people or other identities are preserved. The App token lets merges trigger the `main` push workflows for generated views and vision publication; the default `GITHUB_TOKEN` would suppress them. Verify eligibility, holds, required-check gating and both push workflows before relying on it.
+
 ## Adversarial smoke test before enabling claim merges
 
-From a second GitHub account, submit one owner-only claim PR from a fork against a queued unassigned project. Confirm that the merged catalog owner is the PR author, the source revision is correct, and the bot's reply links to the real plan. Then verify that *none* of the following can auto-merge:
+From a second GitHub account, submit one owner-only claim PR from a fork against a queued unassigned project. Confirm that the merged `**Owner:**` line in the project's `plan.md` names the PR author, the source revision is correct, and the bot's reply links to the real plan. Then verify that *none* of the following can auto-merge:
 
 - A claim for somebody else's `@handle`, or a blocked/active/already-owned project
 - Two projects in one PR, an edited goal/status, any changed workflow/code or an extra file
-- A stale PR after somebody else claims the **same project** or changes that project's scope/status. An unrelated project's catalog edit should **not** invalidate the claim; GitHub's normal merge must preserve both changes.
+- A stale PR after somebody else claims the **same project** or changes that project's `plan.md`. An edit to another project's `plan.md` should **not** invalidate the claim; GitHub's normal merge must preserve both changes.
 - A PR whose CI failed or did not run, or a PR with changing head SHA
 - A PR while `main` protection is absent
 
@@ -42,4 +48,4 @@ If protection, App credentials or GitHub Actions policies prevent claiming, the 
 
 **Cross-repository scope:** the current `needs-review` automation runs on **Astrid-dev PRs**. Implementation PRs in Runtime, Agent, App or other product repositories use their own native GitHub review/branch protections and the [common review submission](../templates/product-pr/review.md). Do not mistake this single-repository workflow for product-wide automated review. A final Astrid-dev completion PR links the externally reviewed and integrated work.
 
-Do not create a mandatory conversation issue for each project. Existing issues handle real questions and PRs carry work/review; durable decisions are captured in their authoritative project files.
+Do not create a mandatory conversation issue for each project; [Issues](contribution-workflow.md#issues) says where questions go.

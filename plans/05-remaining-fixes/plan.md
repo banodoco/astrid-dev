@@ -1,5 +1,17 @@
 # 05 — Release fixes integration
 
+**Project:** Release fixes integration
+
+**Goal:** Bring the accepted fixes together into a coherent release while preserving existing behavior.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** —
+
 **Vision role:** Foundational enabler — integrates previously accepted fixes without independently proving a new user-facing outcome.
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).

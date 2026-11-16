@@ -1,0 +1,389 @@
+{
+  "batch": "011",
+  "side": "r10",
+  "modules": [
+    "tests/core/execution/test_generic_host_verified_preparation_gr03.py",
+    "tests/core/execution/test_hivemind_destination_matcher.py",
+    "tests/core/execution/test_host_cleanup_ack_barrier.py",
+    "tests/core/execution/test_local_runtime_reconnect.py"
+  ],
+  "pins_and_python": [
+    "72462b04fa036736eb7fc9cb654def5f4ea2158c",
+    "52ec0578963847693a0df758d9bc1d55325f518f",
+    "e2905d068d5851b9c32856d32b8251852a01d6dd",
+    "96360a27a53c4608f780f7b370f747a2aa3c7ca8",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T05:44:38Z",
+  "end_utc": "2026-11-11T05:44:53Z",
+  "exit": 1,
+  "summary": "============= 2 failed, 83 passed, 1 deselected, 1 error in 13.86s =============",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_retained_host_prepares_frozen_recipe_without_admission",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_dispatch_freezes_real_installed_producer_recipe",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_wire_uses_retained_peer_and_preserves_ordinary_report[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_wire_uses_retained_peer_and_preserves_ordinary_report[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_request_binding_fails_closed[version-runtime.local-image-recipe/v99]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_request_binding_fails_closed[command-prepare_recipe]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_request_binding_fails_closed[operation_id-other]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_request_binding_fails_closed[channel_id-other]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_request_binding_fails_closed[owner_epoch-other]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_request_binding_fails_closed[request_id-]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_request_binding_fails_closed[request_id-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[model]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[model_root]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[target]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[profile]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[session]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[code]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[import_root]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[code_hash]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[trusted]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_request_cannot_select_producer_or_assert_authority[ready]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls3]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls4]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls5]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls6]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls7]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_controls_cannot_add_authority_or_unbounded_values[controls8]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[wrong_bytes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[wrong_object]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[bad_base64]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[bad_utf8]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[duplicate]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[extra_input]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[locator]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[wrong_name]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_managed_input_bytes_and_descriptor_are_verified_before_producer[wrong_filename]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[missing_peer]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[wrong_peer]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[unresolved]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[aborted]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[error]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[no_graph]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[no_activation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[no_claim_host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[wrong_host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[changed_graph]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[wrong_closure]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[wrong_module]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[wrong_protocol]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[session_mismatch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[config_mismatch]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_live_retained_authority_is_rechecked_before_preparation[model_bytes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[models_root]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[normalized_root]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[base_directory]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[extra_root]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[extra_config]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[custom_nodes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[argv_root]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[argv_extras]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[base_yaml]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_selected_model_root_cannot_be_redirected_by_session[cwd_yaml]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_producer_failure_propagates_without_admission_or_fallback",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_authority_drift_during_compilation_cannot_escape_as_prepared[model]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_authority_drift_during_compilation_cannot_escape_as_prepared[session]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_authority_drift_during_compilation_cannot_escape_as_prepared[peer]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_noncanonical_or_mutable_producer_result_is_rejected[{}\\n]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_noncanonical_or_mutable_producer_result_is_rejected[not json]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_noncanonical_or_mutable_producer_result_is_rejected[caller string]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_noncanonical_or_mutable_producer_result_is_rejected[recipe3]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_startup_profile_is_detached_and_cannot_be_replaced",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_host_cleanup_ack_barrier.py::test_native_exec_changes_token_without_changing_process_lifetime",
+      "outcome": "ERROR"
+    },
+    {
+      "id": "tests/core/execution/test_host_cleanup_ack_barrier.py::test_delayed_authenticated_cleanup_ack_precedes_host_exit_and_reap",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_host_cleanup_ack_barrier.py::test_failed_cleanup_ack_does_not_release_exit_barrier",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_host_cleanup_ack_barrier.py::test_real_private_peer_delayed_cleanup_ack_before_exit",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_idle_refresh_adopts_authenticated_runtime_and_keeps_attempt_fence[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_idle_refresh_adopts_authenticated_runtime_and_keeps_attempt_fence[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_refresh_refuses_a_different_realm_without_mutating_transport",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_unbound_client_rotates_bearer_but_keeps_explicit_endpoint",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_binding_keeps_protected_discovery_file_boundary",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_forked_slot_keeps_explicit_binding_and_refreshes_independently",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_host_refreshes_only_at_idle_registration_boundary[False-expected0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_local_runtime_reconnect.py::test_host_refreshes_only_at_idle_registration_boundary[True-expected1]",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "ERROR tests/core/execution/test_host_cleanup_ack_barrier.py::test_native_exec_changes_token_without_changing_process_lifetime - tests/core/execution/test_host_cleanup_ack_barrier.py::test_native_exec_changes_token_without_changing_process_lifetime: undeclared skip (Skipped: Darwin native audit-token lifecycle).",
+    "FAILED tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_dispatch_freezes_real_installed_producer_recipe - astrid.core.generation.backends.comfy_target.ComfyModelMissing: missing_model: qwen-image-2.1-turbo/t2i: unresolved roles {'diffusion': [], 'text_encoder': [], 'vae': []}; expected filenames: {'diffusion': ['qwen_image_2.1_turbo_int8_convrot.safetensors'], 'text_encoder': ['qwen3vl_8b_int8_convrot.safetensors'], 'vae': ['qwen_image_2.1_vae_bf16.safetensors']}; compatible catalog entries: z-image; run: astrid generate align --apply --consent user_env --entry qwen-image-2.1-turbo",
+    "FAILED tests/core/execution/test_host_cleanup_ack_barrier.py::test_real_private_peer_delayed_cleanup_ack_before_exit - astrid.core.execution.custody_broker.CustodyError: Darwin audit-token custody is unavailable"
+  ],
+  "source_log_sha256": "7fee6535dfaf263b981223ca044aa9b5be39fe5e3e0a1a56a5c43558d5cf735d",
+  "source_receipt_sha256": {
+    "start.txt": "d34f5af9de747c894f2dbca34cf0c90b3a8a4d8f995c8a15b4f910ee31d92b15",
+    "end.txt": "e200a6c21d76f48643a51e7ff6e67bf27674f6af6f2ba14c5ad94ac677d3d505",
+    "module.txt": "93bea683bbf54ab2b9526df78e60a045dabec7f1025ee474d1492539541b14bd",
+    "pins.txt": "99e5957b6c4308a5af009b44fe97f92335fbf916c03847b98cd0199e5174006e",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "8f1e805140a3d038b3def6146c2acb26bca855087400fa0cd4c55d29543819db",
+    "SHA256SUMS": "8ca3b5d042d7b1248ea951c21d11fd505bf7c86aa5109ad4e455c016eae204e2"
+  }
+}

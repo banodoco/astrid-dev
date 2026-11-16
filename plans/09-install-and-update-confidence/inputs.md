@@ -26,3 +26,12 @@ No dirty-work custody is specified in the source plan; establish and record cust
 ## Constraints
 
 Preserve user data and the last working version on failed or unsupported operations. Use real hosted tests for supported user paths; mocked coverage does not satisfy the OS/path matrix. Pinokio remains in Plan 07 and pack install/update/rollback remains in Plan 06 PK-9. Follow the shared [run contract](../../skills/astrid-dev-shared/run-contract.md) for identity, routes, checks, review, and publication. No plan authorizes execution; preserve existing authority and review limits.
+
+## Phase 2: upgrade-safe installed state
+
+| Source | What it establishes | Identity or link | Limits |
+|---|---|---|---|
+| User incident, 12 Nov | R1 (Agent `7247ea92`, Runtime `9fc53b77`) → R12 update fails: `PackValidationError: external pack id 'hivemind' conflicts with a core pack`, pack host exit 1, rollback | Sanitized install.log traceback; R12 Agent `0e1543e0` `astrid/core/pack/ownership.py:43` | One machine; the affected group is derived from code, not measured |
+| Release lineage | Login provisions a managed Hivemind in R1, R9 and R10; core Hivemind plus the fatal conflict exist in R2–R8, R11 and R12; R2–R8 were a parallel line merged at R11 | App `public/install-manifest.json` history; Agent `auth.py`, `source_setup.py`, `discovery.py` and `ownership.py` at each release SHA | — |
+| CI reproduction without login | R1 → R12 updates cleanly when no managed Hivemind exists | astrid-agent `scratch/r12-r1-update-repro` `377b7af1`, run 43214297253 | Seeded data only |
+| Reviews | Category, flaws and minimal design; R12 sign-in depends on the legacy checkout; dirty or deleted legacy copies also fail | Astra rounds 1–3, 14 Luna probes, Fable review (12 Nov); Fable reproduced the failure and confirmed a set-aside restores the host | Read-only reviews; the credential-store continuity of a new helper is unverified |
