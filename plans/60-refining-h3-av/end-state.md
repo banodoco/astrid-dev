@@ -8,6 +8,8 @@ For each kind of edit the Minkhole film needs there is one skill document. It ta
 
 Each skill is proven the same way. A fresh agent on the normal-task model gets the skill, the clip and the intended result, and nothing else. It rents a machine and does the edit end to end. Every place it stalls, guesses or needs help is recorded, and the tool or the skill is fixed at that place. Then another fresh agent tries, until one finishes unaided, and you review the take. Before any trial that rents a GPU, a fresh agent first passes a rehearsal that rents nothing: find the skill, write the request, get a ready dry run, and practise checking and placing with media that already exists. Tool work happens only when a skill needs it.
 
+The speed-up is one named setting: the Pika Labs 8-step Ref2VA file, without an A/B test. LightX2V remains an option only where its variant matches the base; CFG other than 1 is refused by name until a real CFG graph exists. Paid trials should examine the community leads on reference voice, Ref2VA joins and LightX2V loading as leads, not facts. A fuller check that each route follows its publisher’s intended reference-model use is underway. No rental begins until the creation-time deadline is independently reviewed; every machine must carry that deadline and the existing pod watchdog.
+
 The task skills, in order:
 
 1. **A character says a new line by continuing the shot.** The three Morpheus clips: shot 02c (the long "You keep running tools..." line), shot 01 ("You have two options."), and the cut back to Morpheus in shot 04 ("who knows how to do everything...").
@@ -31,7 +33,7 @@ It prepares the inputs, runs on a rented GPU, puts the protected parts of the or
 
 ## Three problems in the pack today
 
-1. **It rejects real footage.** The Morpheus pilot was refused before renting anything: the Matrix clip is 23.976 fps and 1920×800, and H3 accepted only exactly 24 fps and 1024×576. Its error told the agent to run an ffmpeg command by hand, and that command would stretch the picture. This is being fixed now, because the first skill cannot run without it.
+1. **It rejects real footage.** The Morpheus pilot was refused before renting anything: the Matrix clip is 23.976 fps and 1920×800, and H3 accepted only exactly 24 fps and 1024×576. Its error told the agent to run an ffmpeg command by hand, and that command would stretch the picture. Automatic source conform now exists on Plan 59 task branch `p59/h3-conform`; its reviewed integration remains part of RH-1.
 2. **It carries things that are not the product.** The LanPaint route cannot be reached by any request. An "audio only" mode is advertised and always errors. A "reference audio" setting is read by nothing. There are two request formats and two commands for the same operations.
 3. **Its documentation describes machinery, not choices.** The skill links to pages that do not exist, and the older guides describe the unreachable LanPaint route as the next thing to try.
 
@@ -154,11 +156,11 @@ A caution on how complete this is: the live work found six gaps on the first cli
 
 You decided on 16 November: the `astrid h3` command goes; any size in, with Fill by default; transcription is a skill reference; the duplicate parts of the second request format are retired; this is in Release 14 with one short review after the footage change and one at the end; a take is placed as a stored alternate above the shot, with a local draft only as fallback; and the stills are tried with one still first.
 
-**Money.** $25 is the hard total for everything, including the Minkhole plan's own fresh-agent trial on a different film. Nothing has been spent.
+**Money.** $25 is the hard total for everything, including the Minkhole plan's own fresh-agent trial on a different film. The pilot remains at $0 of its $3 allocation.
 
 - I no longer promise a number of trials. My earlier "12 trials at $1.50" assumed a trial fits in about an hour, and fetching the models alone (about 53.5 GB) could take that long on a fresh machine.
-- The pilot, already funded at $3, measures what a cold start really costs: setting up, fetching the models, the worker becoming ready, and one generation. The cap per trial and the number of trials are set from those numbers and the dollars left.
-- Every paid trial is preceded by a free rehearsal, so a rented hour is not spent discovering something a dry run would have shown.
+- The $3 pilot measures the cold cost before the ceiling is reset after the first real run.
+- Every paid trial is preceded by a free rehearsal. Failed trials count against the budget, and one ledger records rentals and release receipts.
 - Whether trials can start warm (reusing a machine, or models kept on storage) is not yet known. The account already shows about $0.03 an hour with nothing rented, which may be existing storage; that is being checked. Until it is known, assume every trial starts cold.
 - Money is spent in this order: the three Morpheus clips; the two takes with the picture kept; the cross-film trial; and the picture skills only from what remains.
 - A failed trial still spends. One ledger records every rental, failure and release.
