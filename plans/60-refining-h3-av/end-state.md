@@ -1,12 +1,12 @@
 # H3_AV: where it should end up
 
-Written 16 November 2026 from the Release 14 code, the node packs' own source, the live pilot notes and an independent critique. Nothing here has run on a GPU yet; what only a GPU run can settle is marked **open**.
+Written 16 November 2026 from the Release 14 code, the node packs' own source and the live pilot notes, and revised after two independent critiques and your decisions. Nothing here has run on a GPU yet; what only a GPU run can settle is marked **open**.
 
 ## How we get there: one skill per kind of task, proven by an agent
 
 For each kind of edit the Minkhole film needs there is one skill document. It takes an agent from "this clip, this intended result" to a reviewed take on the timeline: find the shot, know the words, choose the cut point, write the request, rent the GPU through Astrid, run, check, place, release the GPU.
 
-Each skill is proven the same way. A fresh agent on the normal-task model gets the skill, the clip and the intended result, and nothing else. It rents a machine and does the edit end to end. Every place it stalls, guesses or needs help is recorded, and the tool or the skill is fixed at that place. Then another fresh agent tries, until one finishes unaided, and you review the take. Tool work happens only when a skill needs it.
+Each skill is proven the same way. A fresh agent on the normal-task model gets the skill, the clip and the intended result, and nothing else. It rents a machine and does the edit end to end. Every place it stalls, guesses or needs help is recorded, and the tool or the skill is fixed at that place. Then another fresh agent tries, until one finishes unaided, and you review the take. Before any trial that rents a GPU, a fresh agent first passes a rehearsal that rents nothing: find the skill, write the request, get a ready dry run, and practise checking and placing with media that already exists. Tool work happens only when a skill needs it.
 
 The task skills, in order:
 
@@ -15,7 +15,7 @@ The task skills, in order:
 3. **Something inside the picture changes** (the pill, a reflection). Outlined now, run when the edit reaches its first picture change on real footage.
 4. **A still becomes a moving shot.** Outlined now; the two Neo reaction stills are the first candidates.
 
-You expected about three clips. The dialogue work is exactly three clips, all covered by the first skill. The rest of the film is a different kind of work: six of the nine shots are stills.
+You expected about three clips. Three clips have Morpheus speaking on screen, and the first skill covers all three. Three other lines ("You take the blue pill.", the creature line, "And see just how deep the minkhole goes.") are narration over pictures and stay as voiceover. Only the first two skills must be proven for this plan to be done. The rest of the film is a different kind of work: six of the nine shots are stills.
 
 ## What H3_AV is, and is not
 
@@ -61,23 +61,31 @@ They are the same operation. There is no separate voice route.
 
 ## New words on the same picture
 
-You asked whether the node packs can regenerate sound inside existing footage. **They already can, with the nodes we already pin, and without LanPaint.**
+You asked whether the node packs can regenerate sound inside existing footage. **The nodes we already pin support it. We still have to build the route, put its result back together and prove it; none of that exists today.** It needs no LanPaint and no pull request to anyone's node pack.
 
 - H3 keeps the picture and the sound as two separate streams, each with its own mask, and its sampler honours each mask separately.
-- The node pack behind our continuation graph has a node that sets a separate sound mask over time, and its documentation names "regenerate the sound while protecting the picture" as a use.
+- The node pack behind our continuation graph has a node that sets a separate sound mask. Its own example regenerates all of a clip's sound with the picture protected; a chosen span is something we construct.
 - Our masked edit already uses that pack and simply sets "regenerate sound" to zero. Nobody recorded why.
-- So the change is in our own graph: put a sound mask over the chosen span, and optionally a small picture mask around the mouth over the same span. No pull request to anyone's node pack is needed, and nothing newer upstream changes this.
 
-What LanPaint added on top is a special sampler that refines the edges of a regenerated span, and a blending step. That is why I would keep its graph a little longer, only as a worked example of edge handling, and delete it once the second skill's takes show our route is usable.
+What we build, precisely:
 
-**Open:** whether the new words are intelligible, in his voice, and clean at both ends of the span; and whether the lips need the mouth region regenerated to match. The second skill's two takes (picture fully kept; mouth region regenerated) answer that.
+- **The request** is the existing edit request with a sound change over a time span. The new line goes in the prompt; no new field.
+- **The sound mask** is built on the sound's own grid, 40 steps a second, so nothing is approximated from the 24-a-second picture. A span edge that falls between steps moves inward by less than 25 ms, and the dry run says so.
+- **"Picture kept"** means the decoded picture of the result equals the picture we started from. The model decodes and re-encodes on the way, so we take the picture from the original when nothing in it may change, and the existing check compares the decoded frames. It does not mean the original file's bytes.
+- **The join** is a 20 ms fade at each end, entirely inside the span you allowed. Sound outside the span is untouched, and the check enforces exactly that.
+
+What LanPaint added on top is a special sampler that refines the edges of a regenerated span. Its graph is kept, only as a worked example of edge handling, until the second skill's takes show our route is usable; then it is deleted.
+
+The second skill makes two takes: sound only with the picture fully kept, and sound plus a small mouth region. The first proves the mechanics; unchanged lips may not suit the line. The skill is done when you accept one of the two.
+
+**Open:** whether the new words are intelligible, in his voice, and clean at both ends of the span; and whether the lips need the mouth region regenerated to match.
 
 ## Any size
 
 - **In:** footage of any size, shape and frame rate is accepted and conformed, with Fill or Fit stated and never a stretch.
-- **Out:** the canvas is no longer fixed at 1024×576. The request states the shape it wants, usually the shape of where the take is going, and the pack picks the nearest size the model accepts. The model's own nodes take any width and height in steps of 32, so the canvas sides are multiples of 32, within the pixel budget we use today.
+- **Out:** the canvas is no longer fixed at 1024×576. The request states the shape it wants, usually the shape of where the take is going. The model's own nodes take any width and height in steps of 32, so one rule picks the size: the nearest shape whose sides are both multiples of 32, within the pixel budget we use today. The dry run reports the size it chose. 16:9 still gives 1024×576, and the Morpheus pilot asks for 16:9 explicitly.
 - **Fixed, because the model fixes them:** 24 frames a second, and frame counts on the model's own grid.
-- **Open:** how well the model does on shapes other than 16:9. Nothing we could read says.
+- **Open:** how well the model does on shapes other than 16:9. Nothing we could read says, and it stays unproven unless money remains for a run on one.
 
 ## Knowing the words, and asking Hivemind
 
@@ -107,15 +115,17 @@ Each topic has one home; the task skills link to the shared pages instead of rep
 
 ## Does this cover the whole Minkhole edit?
 
-It had not been checked; the first draft was built around one Morpheus line. The plan now carries a table of every need (each line, each picture change, each join, each still, and the handover brief's five techniques) against every step a task needs from the tooling.
+It had not been checked; the first draft was built around one Morpheus line. The plan now carries a table of the film's needs (each on-screen line, the narration, each picture change, the joins, the stills, and the handover brief's five techniques) against every step a task needs from the tooling.
 
-Of 118 step-needs: 37 work today, 52 are fixed by this plan, 20 are being done under the Minkhole plan, and **9 are covered by nothing**. 30 can only be settled by a GPU run.
+The table is an inventory of methods and gaps. It is not a share of the film delivered. Of its 119 cells, 53 work today, 53 are fixed by this plan, 5 belong to tasks in the Minkhole plan, and **8 are covered by nothing**. 16 can only be settled by a GPU run, and none has had one.
+
+Said plainly: this plan qualifies the three speaking-face clips. **The still-heavy majority of the cut remains unqualified**: six of the nine shots are stills, and three of those are sequences of several images (four in the opening, three for the red pill, six in the close). A reference image guides a generated shot; it is not guaranteed to be its first frame.
 
 What nothing covers:
 
-- **Motion from one still to another** (the opening, the hand reveal, the pickup). This is the largest gap: no H3 request expresses it. It is a decision for you before anything is built.
-- **Word timings**, for cut points such as "who knows".
-- **Two regions changed differently in one request** (the two glasses reflections). Two passes, one after the other, is the route the skill will teach.
+- **Motion from one still to another** (the opening, the hand reveal, the reflection change, the pickup, the run, the logo). The largest gap: no H3 request expresses it. You decided to try one still first and decide this afterwards; until then those shots stay as stills. An older stand-alone end-frame workflow exists and is where that work would start.
+- **Word timings**, for cut points such as "who knows". By ear for now.
+- **Two regions changed differently in one request.** The film does not need it: the glasses shot changes the left reflection and protects the right one, which is one edit.
 - **A voice or video reference separate from the start clip.** Only worth building if the first takes show the voice does not hold.
 - **Comparing takes side by side.** Listening and pulled frames for now.
 
@@ -132,18 +142,23 @@ A caution on how complete this is: the live work found six gaps on the first cli
 | Passing one workflow's result to H3 | Connect: H3 accepts the handles Astrid already has |
 | New sound inside existing footage | Small tool: a sound mask in our own graph, on nodes already pinned |
 | Finding the H3 entry when VibeComfy is not set up | Small fix: say what is missing instead of "unknown entry" |
-| Placing a take on the timeline | Already exists (add and trim on the timeline); skill only |
+| Placing a take on the timeline | The commands exist (add, then trim); the full method, including silencing the old voiceover over just that span, is rehearsed at no GPU cost before the first paid trial |
 | Where words live | Already exists (a transcript attached to the media) |
 | Word timings; masks from a description | General to Astrid, under the Minkhole plan; not H3's |
 | Longer voice context; a separate voice reference | **Open** until the first takes |
 | The `astrid h3` command, "audio only", the unused reference-audio setting, dead links, the old guides | Delete (the guides only after their Minkhole script and shot notes are saved in the Minkhole plan) |
 | The LanPaint graph | Delete after the second skill's takes |
-| The second request format | One format is documented. The character swap keeps the second, as experimental. The rest of it duplicates the first: your decision whether to retire it now (recommended) |
+| The second request format | One format is documented. The character swap keeps the second, as experimental. The rest of it duplicates the first and is retired, as you decided |
 
-## Decisions still with you
+## What you decided, and the money
 
-1. **Retire the duplicate parts of the second request format** now, or leave them undocumented. I recommend retiring them.
-2. **Release 14 and reviews:** include this beside the Minkhole plan, with one short review after the footage change and one at the end. I recommend yes.
-3. **How a take is placed for your review:** a stored alternate above the shot (recommended), or a local draft.
-4. **Money for the trials:** inside your $25, a ceiling of $1.50 per agent trial (about an hour of the GPU that quotes $1.39 an hour), which buys 12 trials after the $3 pilot, with $4 in reserve. The ceiling is reset once the first run shows what a trial really costs.
-5. **The stills:** use H3 only where one still is enough and decide the rest after the first try (recommended); build start-to-end motion into H3; or leave the stills as they are.
+You decided on 16 November: the `astrid h3` command goes; any size in, with Fill by default; transcription is a skill reference; the duplicate parts of the second request format are retired; this is in Release 14 with one short review after the footage change and one at the end; a take is placed as a stored alternate above the shot, with a local draft only as fallback; and the stills are tried with one still first.
+
+**Money.** $25 is the hard total for everything, including the Minkhole plan's own fresh-agent trial on a different film. Nothing has been spent.
+
+- I no longer promise a number of trials. My earlier "12 trials at $1.50" assumed a trial fits in about an hour, and fetching the models alone (about 53.5 GB) could take that long on a fresh machine.
+- The pilot, already funded at $3, measures what a cold start really costs: setting up, fetching the models, the worker becoming ready, and one generation. The cap per trial and the number of trials are set from those numbers and the dollars left.
+- Every paid trial is preceded by a free rehearsal, so a rented hour is not spent discovering something a dry run would have shown.
+- Whether trials can start warm (reusing a machine, or models kept on storage) is not yet known. The account already shows about $0.03 an hour with nothing rented, which may be existing storage; that is being checked. Until it is known, assume every trial starts cold.
+- Money is spent in this order: the three Morpheus clips; the two takes with the picture kept; the cross-film trial; and the picture skills only from what remains.
+- A failed trial still spends. One ledger records every rental, failure and release.
