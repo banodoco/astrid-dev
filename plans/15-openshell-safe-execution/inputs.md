@@ -8,6 +8,10 @@
 - [PR #109 sandbox setup document](https://github.com/matlowai/astrid-agent/blob/20530b07d7f225f85b2be5bb51c83325db810aed/docs/setup/openshell-sandbox.md) records a Linux path, policy checks, account login, and service permissions. Its platform claims are historical, not current qualification. It also identifies host-folder sharing and host ComfyUI access as potential isolation weaknesses; inspect and disclose such exceptions.
 - Merged dependencies: [Runtime #8](https://github.com/banodoco/astrid-runtime/pull/8), [Runtime #9](https://github.com/banodoco/astrid-runtime/pull/9), and [VibeComfy #160](https://github.com/banodoco/VibeComfy/pull/160). Verify candidate integration instead of assuming fork pins contain them.
 
+## Decisions
+
+- 2026-11-16: the owner said the OpenShell work is wanted. [Agent PR #109](https://github.com/banodoco/astrid-agent/pull/109) (head `20530b07d7f225f85b2be5bb51c83325db810aed`) was closed and stays this plan's recorded starting point. Its general fixes that are not specific to the sandbox are tracked as their own issue, [#746](https://github.com/banodoco/astrid-dev/issues/746), so they do not wait for this plan.
+
 ## At implementation start
 
 Current repositories, base branches and SHAs, retained changes, verified predecessor inputs, fresh candidate branches, and intended `pre-main` destinations: **TBD**. Record actual identities before work; historical evidence does not establish them. Define task dependencies and selectors from inspected source. Follow the existing branch, execution, and publication limits in the [shared run contract](../../skills/astrid-dev-shared/run-contract.md).
