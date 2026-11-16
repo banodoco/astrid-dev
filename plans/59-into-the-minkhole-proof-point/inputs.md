@@ -6,7 +6,7 @@
 
 **Scope decision:** Hannah's direction in the accountable session on 16 November 2026: deliver the video and, more importantly, a reusable workflow a weaker agent can run. Work through Astrid's tools; fix blockers at cause or file useful work that is too large; return creative choices to the owner. The [source brief](https://github.com/peteromallet/minkhole-h3av-handover) is also a source record.
 
-**Prior art:** Existing timeline transfer, rendering and H3 tools are the starting points. In the current findings, Release 14 rejects the rough-cut archive; issue [#346](https://github.com/banodoco/astrid-agent/issues/346) has a fix on a Release 15 branch, being brought into `release/14/plan-59`. Preview/export disagree, fit is track-level, and clip crop is not editable. The composition source is consolidated on `banodoco/timeline-composition` branch `release/14/plan-59`. A C2 candidate with one placement function was independently reviewed; five must-fix findings are being fixed, followed by an owner sample of before/after Matrix frames. Earlier investigations also found no generic source-footage word transcription proof and no live GPU voice result. Reassess issues and source heads when each task begins.
+**Prior art:** Existing timeline transfer, rendering and H3 tools are the starting points. In the current findings, Release 14 rejects the rough-cut archive; issue [#346](https://github.com/banodoco/astrid-agent/issues/346) has a fix on a Release 15 branch, being brought into `release/14/plan-59`. Preview/export disagree, fit is track-level, and clip crop is not editable. The composition source is consolidated on `banodoco/timeline-composition` branch `release/14/plan-59`. The owner approved the crop on 16 November after editor preview, composed frame and export agreed on the cut; four independent reviews completed and the fix is merged. The approved Astrid archive is on the working machine, and its permanent home remains an owner decision. Timed-word transcription is now built and merged, with offline proof only; it has not run on a real machine. The first H3 take is composed and structurally verified, but its words and creative quality await the owner. Reassess issues and source heads when each task begins.
 
 **Approach:** Keep this as a live work loop rather than a fixed implementation plan. Start from the next creative result; extend the Astrid capability that owns each blocker; file a durable issue when the fix is too large for this run. The composition package is the shared appearance source; D3 records its current source home.
 
@@ -26,7 +26,7 @@
 - **D4 — Budget:** Decided 16 November 2026: at most $2/hour; $3 pilot, $6 experiments, $4 retries, $3 fresh-agent trial, $9 reserve; $25 total. No other paid resource.
 - **D5 — Review:** Decided 16 November 2026: one review stop is fine.
 
-**Parallel work:** Automatic source conform is on `p59/h3-conform`; RunPod rental waits for independent review of a creation-time lifetime bound. Hivemind source CLI fixes are on `p59/hivemind-source-cli`, under review.
+**Parallel work:** Automatic source conform is in Plan 60 RH-1. The first GPU take exercised the creation-time deadline and watchdog; the provider accepted the deadline and the watchdog acknowledged it, but provider termination was not observed because the machine was released first. Hivemind fixes are reviewed and merged.
 
 ## Source identities
 

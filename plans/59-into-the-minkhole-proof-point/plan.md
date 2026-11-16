@@ -41,7 +41,20 @@ Use the loop in [tasks.md](tasks.md): take the next creative task, attempt it wi
 
 ## Interfaces and handoff
 
-Consume the supplied timeline-v1 archives and the actual Release 14 source heads recorded at dispatch. Produce a finished edit in Astrid and a skill/runbook that lets a weaker agent repeat it on another timeline. Record exact revisions, artifacts and proof in the live task record as they become available. The composition source has been recovered and consolidated on `banodoco/timeline-composition` branch `release/14/plan-59`; a C2 candidate with one placement function is under review, five must-fix findings are being fixed, and an owner sample of before/after Matrix frames follows.
+Consume the supplied timeline-v1 archives and the actual Release 14 source heads recorded at dispatch. Produce a finished edit in Astrid and a skill/runbook that lets a weaker agent repeat it on another timeline. Record exact revisions, artifacts and proof in the live task record as they become available. The approved C2 cut is on the working machine as an Astrid archive; its permanent home is still an owner decision. The six product repositories now have `release/14/plan-59` branches on origin; their heads are listed below.
+
+## Branches
+
+One plan branch per product repository, `release/14/plan-59`; all six are on origin with the plan work integrated.
+
+| Repository | Branch | Role | Cut at | Head | State |
+| --- | --- | --- | --- | --- |
+| astrid-agent | `release/14/plan-59` | plan 59 | `ab95803ce28fa51eec937b4074f5ec0f0439b98a` | `cdc6618b7` | open |
+| astrid-app | `release/14/plan-59` | plan 59 | `0b6ef16152dc3fa11246ccc2007da630c66d1a1a` | `f3619a18a` | open |
+| astrid-runtime | `release/14/plan-59` | plan 59 | `2537fed24385ec1c24f48a812e09af4bb63fb794` | `e6106ac07` | open |
+| timeline-composition | `release/14/plan-59` | plan 59 | `67b8aa3d0d6831d3e3504a340ff583c3da253707` | `e628744bf` | open |
+| VibeComfy | `release/14/plan-59` | plan 59 | `aee8bd825c619cfb516feb63d38f500aa4ddb4d7` | `79143f24e` | open |
+| runpod-lifecycle | `release/14/plan-59` | plan 59 | `7f0b025e9391baac9f5c2fb7393617ea6fef0704` | `93beec314` | open |
 
 ## Completion
 
