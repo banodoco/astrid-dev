@@ -1,0 +1,10 @@
+
+------------------- left out of this run by lane (6 entries) -------------------
+[pack_build_tools] NO CI job runs this lane (manual: run it by hand with -m pack_build_tools)
+  DESELECTED tests/pack_builder/test_pack_build.py::PackBuildTests::test_bad_source_and_unsafe_imports_fail_closed
+  DESELECTED tests/pack_builder/test_pack_build.py::PackBuildTests::test_css_assets_are_enumerated_and_relative
+  DESELECTED tests/pack_builder/test_pack_build.py::PackBuildTests::test_lock_and_request_refusals
+  DESELECTED tests/pack_builder/test_pack_build.py::PackBuildTests::test_real_pack_reproducible_and_graph_bound
+  DESELECTED tests/pack_builder/test_pack_build.py::PackBuildTests::test_symlink_import_is_refused
+  DESELECTED tests/pack_builder/test_pack_build.py::PackBuildTests::test_unicode_case_collision_is_refused
+6 deselected in 0.11s

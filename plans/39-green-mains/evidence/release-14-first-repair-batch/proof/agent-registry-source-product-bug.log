@@ -1,0 +1,294 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_source_probe_prefers_caller_tree_already_on_search_path[False] ______
+
+environment = {'PYTHONPATH': '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_p...h/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_probe_prefers_call0/site-packages'}
+python = '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv/bin/python'
+
+    def _registry_probe(environment: Mapping[str, str], python: str, *, generator: bool = False,
+                        installed_source: tuple[str, str] | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+        from astrid.packs.rendering.rendering.renderers.remotion import run
+        installed = installed_source is not None or _installed_registry_profile(environment)
+        if installed and environment.get('PYTHONPATH'):
+            raise RemotionValidationError('installed registry discovery refuses PYTHONPATH')
+        if installed and environment.get(ASTRID_PACKS_PATH):
+            raise RemotionValidationError('installed registry discovery refuses explicit pack roots')
+        if installed:
+            cwd = Path(tempfile.gettempdir()).resolve()
+            try:
+                argv = _registry_origin.installed_argv(python, __file__, installed_source=installed_source)
+            except FileNotFoundError as exc:
+                raise RemotionValidationError('installed registry generator carrier is unavailable') from exc
+            except (OSError, ValueError) as exc:
+                raise RemotionValidationError('installed registry launch source binding is unavailable') from exc
+            environment = {**environment, 'ASTRID_HOST_EXECUTION_PROFILE': 'installed'}
+        else:
+            script_directory = REPO_ROOT / 'scripts' if generator else Path(run.__file__).resolve().parents[2]
+            # Bind imports to the caller's product tree even when it is already
+            # later on sys.path (for example, an installed wheel behind a checkout
+            # supplied in PYTHONPATH). Keep the remaining discovery paths intact.
+            source = ('import sys,json; sys.path[0]=sys.argv[2]; '
+                      'sys.path.insert(0,sys.argv[1]) if sys.argv[1] not in sys.path else None; '
+                      'from astrid.core.rendering.remotion_runtime import _registry_observation; '
+                      'print(json.dumps(_registry_observation(),sort_keys=True))')
+            cwd = REPO_ROOT if generator else script_directory
+            argv = [python, '-X', 'utf8', '-c', source, str(REPO_ROOT), str(script_directory)]
+        result, receipt = _owned_registry_probe(argv, cwd=cwd, env=environment, phase='registry_discovery')
+        try:
+            _require_completed_probe(receipt, phase='registry_discovery')
+        except RemotionValidationError as error:
+            _keep_probe_stderr(error, result, phase='registry_discovery')
+            raise
+        try:
+            observation = json.loads(result.stdout)
+            if result.returncode or observation['startup']['executable'] != python:
+                raise ValueError('registry source/interpreter differs')
+            if installed:
+                _registry_origin.validate_observation(observation, __file__, cwd, installed_source)
+            elif observation['runtime_origin'] != str(Path(__file__).resolve()):
+>               raise ValueError('registry source/interpreter differs')
+E               ValueError: registry source/interpreter differs
+
+astrid/core/rendering/remotion_runtime.py:896: ValueError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_probe_prefers_call0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc9e647a190>
+generator = False
+
+    @pytest.mark.parametrize('generator', [False, True])
+    def test_source_probe_prefers_caller_tree_already_on_search_path(tmp_path, monkeypatch, generator):
+        selected, checkout = tmp_path / 'site-packages', tmp_path / 'checkout'
+        for root in (selected, checkout):
+            for package in ('astrid', 'astrid/core', 'astrid/core/rendering'):
+                init = root / package / '__init__.py'
+                init.parent.mkdir(parents=True, exist_ok=True)
+                init.write_text('')
+            module = root / 'astrid/core/rendering/remotion_runtime.py'
+            module.write_text(
+                'import sys\n'
+                'def _registry_observation():\n'
+                f'    return {{"runtime_origin": __file__, "startup": {{"executable": sys.executable}}, '
+                f'"state": {{"hash": "a", "content_hashes": {dict.fromkeys(runtime._REGISTRY_KINDS, "b" * 64)!r}}}}}\n'
+            )
+        (selected / 'scripts').mkdir()
+        monkeypatch.delenv('ASTRID_HOST_EXECUTION_PROFILE', raising=False)
+        monkeypatch.setattr(runtime, 'REPO_ROOT', selected)
+        monkeypatch.setattr(runtime, '__file__', str(selected / 'astrid/core/rendering/remotion_runtime.py'))
+    
+        def owned(argv, *, cwd, env, phase):
+            return subprocess.run(argv, cwd=cwd, env=env, capture_output=True, text=True), _completed_probe_receipt()
+    
+        monkeypatch.setattr(runtime, '_owned_registry_probe', owned)
+        environment = {'PYTHONPATH': os.pathsep.join((str(checkout), str(selected)))}
+>       observation, _ = runtime._registry_probe(environment, sys.executable, generator=generator)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/rendering/test_remotion_registry_context_key.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = {'PYTHONPATH': '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_p...h/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_probe_prefers_call0/site-packages'}
+python = '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv/bin/python'
+
+    def _registry_probe(environment: Mapping[str, str], python: str, *, generator: bool = False,
+                        installed_source: tuple[str, str] | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+        from astrid.packs.rendering.rendering.renderers.remotion import run
+        installed = installed_source is not None or _installed_registry_profile(environment)
+        if installed and environment.get('PYTHONPATH'):
+            raise RemotionValidationError('installed registry discovery refuses PYTHONPATH')
+        if installed and environment.get(ASTRID_PACKS_PATH):
+            raise RemotionValidationError('installed registry discovery refuses explicit pack roots')
+        if installed:
+            cwd = Path(tempfile.gettempdir()).resolve()
+            try:
+                argv = _registry_origin.installed_argv(python, __file__, installed_source=installed_source)
+            except FileNotFoundError as exc:
+                raise RemotionValidationError('installed registry generator carrier is unavailable') from exc
+            except (OSError, ValueError) as exc:
+                raise RemotionValidationError('installed registry launch source binding is unavailable') from exc
+            environment = {**environment, 'ASTRID_HOST_EXECUTION_PROFILE': 'installed'}
+        else:
+            script_directory = REPO_ROOT / 'scripts' if generator else Path(run.__file__).resolve().parents[2]
+            # Bind imports to the caller's product tree even when it is already
+            # later on sys.path (for example, an installed wheel behind a checkout
+            # supplied in PYTHONPATH). Keep the remaining discovery paths intact.
+            source = ('import sys,json; sys.path[0]=sys.argv[2]; '
+                      'sys.path.insert(0,sys.argv[1]) if sys.argv[1] not in sys.path else None; '
+                      'from astrid.core.rendering.remotion_runtime import _registry_observation; '
+                      'print(json.dumps(_registry_observation(),sort_keys=True))')
+            cwd = REPO_ROOT if generator else script_directory
+            argv = [python, '-X', 'utf8', '-c', source, str(REPO_ROOT), str(script_directory)]
+        result, receipt = _owned_registry_probe(argv, cwd=cwd, env=environment, phase='registry_discovery')
+        try:
+            _require_completed_probe(receipt, phase='registry_discovery')
+        except RemotionValidationError as error:
+            _keep_probe_stderr(error, result, phase='registry_discovery')
+            raise
+        try:
+            observation = json.loads(result.stdout)
+            if result.returncode or observation['startup']['executable'] != python:
+                raise ValueError('registry source/interpreter differs')
+            if installed:
+                _registry_origin.validate_observation(observation, __file__, cwd, installed_source)
+            elif observation['runtime_origin'] != str(Path(__file__).resolve()):
+                raise ValueError('registry source/interpreter differs')
+            hashes = observation['state']['content_hashes']
+            if (set(hashes) != set(_REGISTRY_KINDS) or not observation['state'].get('hash')
+                    or any(not re.fullmatch('[0-9a-f]{64}', value) for value in hashes.values())):
+                raise ValueError('registry state is incomplete')
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            error = RemotionValidationError('owned registry discovery failed')
+            error.probe_receipt = receipt
+>           raise error from exc
+E           astrid.core.rendering.remotion_runtime.RemotionValidationError: owned registry discovery failed
+
+astrid/core/rendering/remotion_runtime.py:904: RemotionValidationError
+______ test_source_probe_prefers_caller_tree_already_on_search_path[True] ______
+
+environment = {'PYTHONPATH': '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_p...h/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_probe_prefers_call1/site-packages'}
+python = '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv/bin/python'
+
+    def _registry_probe(environment: Mapping[str, str], python: str, *, generator: bool = False,
+                        installed_source: tuple[str, str] | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+        from astrid.packs.rendering.rendering.renderers.remotion import run
+        installed = installed_source is not None or _installed_registry_profile(environment)
+        if installed and environment.get('PYTHONPATH'):
+            raise RemotionValidationError('installed registry discovery refuses PYTHONPATH')
+        if installed and environment.get(ASTRID_PACKS_PATH):
+            raise RemotionValidationError('installed registry discovery refuses explicit pack roots')
+        if installed:
+            cwd = Path(tempfile.gettempdir()).resolve()
+            try:
+                argv = _registry_origin.installed_argv(python, __file__, installed_source=installed_source)
+            except FileNotFoundError as exc:
+                raise RemotionValidationError('installed registry generator carrier is unavailable') from exc
+            except (OSError, ValueError) as exc:
+                raise RemotionValidationError('installed registry launch source binding is unavailable') from exc
+            environment = {**environment, 'ASTRID_HOST_EXECUTION_PROFILE': 'installed'}
+        else:
+            script_directory = REPO_ROOT / 'scripts' if generator else Path(run.__file__).resolve().parents[2]
+            # Bind imports to the caller's product tree even when it is already
+            # later on sys.path (for example, an installed wheel behind a checkout
+            # supplied in PYTHONPATH). Keep the remaining discovery paths intact.
+            source = ('import sys,json; sys.path[0]=sys.argv[2]; '
+                      'sys.path.insert(0,sys.argv[1]) if sys.argv[1] not in sys.path else None; '
+                      'from astrid.core.rendering.remotion_runtime import _registry_observation; '
+                      'print(json.dumps(_registry_observation(),sort_keys=True))')
+            cwd = REPO_ROOT if generator else script_directory
+            argv = [python, '-X', 'utf8', '-c', source, str(REPO_ROOT), str(script_directory)]
+        result, receipt = _owned_registry_probe(argv, cwd=cwd, env=environment, phase='registry_discovery')
+        try:
+            _require_completed_probe(receipt, phase='registry_discovery')
+        except RemotionValidationError as error:
+            _keep_probe_stderr(error, result, phase='registry_discovery')
+            raise
+        try:
+            observation = json.loads(result.stdout)
+            if result.returncode or observation['startup']['executable'] != python:
+                raise ValueError('registry source/interpreter differs')
+            if installed:
+                _registry_origin.validate_observation(observation, __file__, cwd, installed_source)
+            elif observation['runtime_origin'] != str(Path(__file__).resolve()):
+>               raise ValueError('registry source/interpreter differs')
+E               ValueError: registry source/interpreter differs
+
+astrid/core/rendering/remotion_runtime.py:896: ValueError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_probe_prefers_call1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc9e61c6650>
+generator = True
+
+    @pytest.mark.parametrize('generator', [False, True])
+    def test_source_probe_prefers_caller_tree_already_on_search_path(tmp_path, monkeypatch, generator):
+        selected, checkout = tmp_path / 'site-packages', tmp_path / 'checkout'
+        for root in (selected, checkout):
+            for package in ('astrid', 'astrid/core', 'astrid/core/rendering'):
+                init = root / package / '__init__.py'
+                init.parent.mkdir(parents=True, exist_ok=True)
+                init.write_text('')
+            module = root / 'astrid/core/rendering/remotion_runtime.py'
+            module.write_text(
+                'import sys\n'
+                'def _registry_observation():\n'
+                f'    return {{"runtime_origin": __file__, "startup": {{"executable": sys.executable}}, '
+                f'"state": {{"hash": "a", "content_hashes": {dict.fromkeys(runtime._REGISTRY_KINDS, "b" * 64)!r}}}}}\n'
+            )
+        (selected / 'scripts').mkdir()
+        monkeypatch.delenv('ASTRID_HOST_EXECUTION_PROFILE', raising=False)
+        monkeypatch.setattr(runtime, 'REPO_ROOT', selected)
+        monkeypatch.setattr(runtime, '__file__', str(selected / 'astrid/core/rendering/remotion_runtime.py'))
+    
+        def owned(argv, *, cwd, env, phase):
+            return subprocess.run(argv, cwd=cwd, env=env, capture_output=True, text=True), _completed_probe_receipt()
+    
+        monkeypatch.setattr(runtime, '_owned_registry_probe', owned)
+        environment = {'PYTHONPATH': os.pathsep.join((str(checkout), str(selected)))}
+>       observation, _ = runtime._registry_probe(environment, sys.executable, generator=generator)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/rendering/test_remotion_registry_context_key.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = {'PYTHONPATH': '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_p...h/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794852671161070624/test_source_probe_prefers_call1/site-packages'}
+python = '/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv/bin/python'
+
+    def _registry_probe(environment: Mapping[str, str], python: str, *, generator: bool = False,
+                        installed_source: tuple[str, str] | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+        from astrid.packs.rendering.rendering.renderers.remotion import run
+        installed = installed_source is not None or _installed_registry_profile(environment)
+        if installed and environment.get('PYTHONPATH'):
+            raise RemotionValidationError('installed registry discovery refuses PYTHONPATH')
+        if installed and environment.get(ASTRID_PACKS_PATH):
+            raise RemotionValidationError('installed registry discovery refuses explicit pack roots')
+        if installed:
+            cwd = Path(tempfile.gettempdir()).resolve()
+            try:
+                argv = _registry_origin.installed_argv(python, __file__, installed_source=installed_source)
+            except FileNotFoundError as exc:
+                raise RemotionValidationError('installed registry generator carrier is unavailable') from exc
+            except (OSError, ValueError) as exc:
+                raise RemotionValidationError('installed registry launch source binding is unavailable') from exc
+            environment = {**environment, 'ASTRID_HOST_EXECUTION_PROFILE': 'installed'}
+        else:
+            script_directory = REPO_ROOT / 'scripts' if generator else Path(run.__file__).resolve().parents[2]
+            # Bind imports to the caller's product tree even when it is already
+            # later on sys.path (for example, an installed wheel behind a checkout
+            # supplied in PYTHONPATH). Keep the remaining discovery paths intact.
+            source = ('import sys,json; sys.path[0]=sys.argv[2]; '
+                      'sys.path.insert(0,sys.argv[1]) if sys.argv[1] not in sys.path else None; '
+                      'from astrid.core.rendering.remotion_runtime import _registry_observation; '
+                      'print(json.dumps(_registry_observation(),sort_keys=True))')
+            cwd = REPO_ROOT if generator else script_directory
+            argv = [python, '-X', 'utf8', '-c', source, str(REPO_ROOT), str(script_directory)]
+        result, receipt = _owned_registry_probe(argv, cwd=cwd, env=environment, phase='registry_discovery')
+        try:
+            _require_completed_probe(receipt, phase='registry_discovery')
+        except RemotionValidationError as error:
+            _keep_probe_stderr(error, result, phase='registry_discovery')
+            raise
+        try:
+            observation = json.loads(result.stdout)
+            if result.returncode or observation['startup']['executable'] != python:
+                raise ValueError('registry source/interpreter differs')
+            if installed:
+                _registry_origin.validate_observation(observation, __file__, cwd, installed_source)
+            elif observation['runtime_origin'] != str(Path(__file__).resolve()):
+                raise ValueError('registry source/interpreter differs')
+            hashes = observation['state']['content_hashes']
+            if (set(hashes) != set(_REGISTRY_KINDS) or not observation['state'].get('hash')
+                    or any(not re.fullmatch('[0-9a-f]{64}', value) for value in hashes.values())):
+                raise ValueError('registry state is incomplete')
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            error = RemotionValidationError('owned registry discovery failed')
+            error.probe_receipt = receipt
+>           raise error from exc
+E           astrid.core.rendering.remotion_runtime.RemotionValidationError: owned registry discovery failed
+
+astrid/core/rendering/remotion_runtime.py:904: RemotionValidationError
+=========================== short test summary info ============================
+FAILED tests/core/rendering/test_remotion_registry_context_key.py::test_source_probe_prefers_caller_tree_already_on_search_path[False]
+FAILED tests/core/rendering/test_remotion_registry_context_key.py::test_source_probe_prefers_caller_tree_already_on_search_path[True]
+2 failed in 1.44s

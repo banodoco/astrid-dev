@@ -1,0 +1,55 @@
+Ruff findings: current=2006 baseline=2008
+Ruff improved by 2.
+Reported, not blocking:
+  astrid/installer/runtime_lifecycle.py | F401: baseline=0 current=1
+  astrid/installer/runtime_lifecycle.py | I001: baseline=0 current=1
+Ratchet down available: astrid/core/execution/_child_bridge.py | BLE001: baseline=4 current=2
+Ratchet down available: astrid/core/execution/generic_host.py | BLE001: baseline=80 current=79
+Ratchet down available: astrid/core/execution/generic_host.py | I001: baseline=13 current=2
+Ratchet down available: astrid/core/execution/orchestrator/runner.py | BLE001: baseline=1 current=0
+Ratchet down available: astrid/core/gateway/dispatch.py | I001: baseline=4 current=0
+Ratchet down available: astrid/core/generation/_engine_target_files.py | I001: baseline=1 current=0
+Ratchet down available: astrid/core/generation/backends/registry.py | I001: baseline=1 current=0
+Ratchet down available: astrid/core/generation/backends/vibecomfy.py | BLE001: baseline=4 current=3
+Ratchet down available: astrid/core/generation/backends/vibecomfy_workflow.py | I001: baseline=2 current=0
+Ratchet down available: astrid/core/generation/cli.py | BLE001: baseline=1 current=0
+Ratchet down available: astrid/core/generation/engine_execution.py | I001: baseline=2 current=1
+Ratchet down available: astrid/core/generation/engine_install_task.py | F401: baseline=1 current=0
+Ratchet down available: astrid/core/generation/engine_readiness.py | I001: baseline=5 current=0
+Ratchet down available: astrid/core/generation/engine_recipe.py | E701: baseline=41 current=27
+Ratchet down available: astrid/core/generation/engine_recipe.py | E702: baseline=1 current=0
+Ratchet down available: astrid/core/generation/engine_runner_target.py | I001: baseline=1 current=0
+Ratchet down available: astrid/core/generation/entries.py | BLE001: baseline=1 current=0
+Ratchet down available: astrid/core/generation/preflight.py | E731: baseline=1 current=0
+Ratchet down available: astrid/core/generation/preflight.py | I001: baseline=7 current=6
+Ratchet down available: astrid/core/pack/validate_first_party.py | I001: baseline=1 current=0
+Ratchet down available: astrid/installer/backend.py | I001: baseline=1 current=0
+Ratchet down available: astrid/installer/cli.py | I001: baseline=1 current=0
+Ratchet down available: astrid/installer/core.py | I001: baseline=1 current=0
+Ratchet down available: astrid/installer/tools.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/h3_av/actions/compile/compile.py | F841: baseline=1 current=0
+Ratchet down available: astrid/packs/h3_av/actions/compose/run.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/h3_av/actions/prepare/run.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/h3_av/actions/transform/run.py | BLE001: baseline=7 current=0
+Ratchet down available: astrid/packs/h3_av/actions/transform/run.py | E731: baseline=2 current=0
+Ratchet down available: astrid/packs/h3_av/actions/verify/run.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/h3_av/actions/verify/verify.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/h3_av/cli.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/h3_av/shared/input_bundle.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/rendering/actions/sprite_sheet/upscale.py | F821: baseline=4 current=0
+Ratchet down available: astrid/packs/runpod/h3_release.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/runpod/installed_session.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/runpod/remote_placement.py | E741: baseline=2 current=0
+Ratchet down available: astrid/packs/runpod/remote_placement.py | I001: baseline=2 current=0
+Ratchet down available: astrid/packs/runpod/target_selection.py | BLE001: baseline=7 current=0
+Ratchet down available: astrid/packs/runpod/target_selection.py | I001: baseline=1 current=0
+Ratchet down available: astrid/packs/runpod/worker_owner.py | BLE001: baseline=6 current=0
+Ratchet down available: astrid/packs/runpod/worker_owner.py | I001: baseline=4 current=0
+Ratchet down available: astrid/packs/runpod/worker_preparation.py | BLE001: baseline=6 current=5
+Ratchet down available: astrid/packs/runpod/worker_preparation.py | F401: baseline=1 current=0
+Ratchet down available: astrid/packs/runpod/worker_preparation.py | I001: baseline=2 current=0
+Ratchet down available: astrid/packs/vibecomfy/actions/run/run.py | I001: baseline=5 current=3
+Ratchet down available: astrid/packs/vibecomfy/endpoint_checkout.py | I001: baseline=3 current=0
+Ratchet down available: astrid/packs/vibecomfy/local_server_engine.py | I001: baseline=2 current=0
+Ratchet down available: astrid/packs/vibecomfy/production_engine.py | I001: baseline=1 current=0
+Ratchet down available: astrid/sdk/generation.py | I001: baseline=13 current=1

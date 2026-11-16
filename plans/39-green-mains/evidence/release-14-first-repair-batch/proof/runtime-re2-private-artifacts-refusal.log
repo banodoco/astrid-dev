@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________ test_private_init_and_commit_neighbors ____________________
+
+    def test_private_init_and_commit_neighbors():
+        configured = os.environ.get('ASTRID_PRIVATE_QUALIFICATION_ROOT')
+>       assert configured, 'set ASTRID_PRIVATE_QUALIFICATION_ROOT to the private qualification artifacts'
+E       AssertionError: set ASTRID_PRIVATE_QUALIFICATION_ROOT to the private qualification artifacts
+E       assert None
+
+tests/qualify_absent_head_repair.py:17: AssertionError
+=============================== warnings summary ===============================
+../../../../../tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14
+  /tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/qualify_absent_head_repair.py::test_private_init_and_commit_neighbors
+1 failed, 1 warning in 0.11s

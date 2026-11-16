@@ -1,0 +1,26 @@
+E                                                                        [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_catalog_scope_and_worker_renderer_authority_are_unchanged[create_project_reference] _
+
+astrid_importable = PosixPath('/tmp/p39-agent-b05')
+
+    @pytest.fixture
+    def restore_provider(astrid_importable):
+        # Restore semantics select the real provider explicitly via ASTRID_CHECKOUT.
+        # Agent stays out of neutral Runtime startup and default collection.
+>       from astrid.sdk.timeline import commit as agent
+E       ImportError: cannot import name 'commit' from 'astrid.sdk.timeline' (/tmp/p39-agent-b05/astrid/sdk/timeline/__init__.py)
+
+tests/test_shot_composition_runtime.py:123: ImportError
+=============================== warnings summary ===============================
+../../../../../tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14
+  /tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_project_reference_catalog.py::test_catalog_scope_and_worker_renderer_authority_are_unchanged[create_project_reference]
+1 warning, 1 error in 0.48s

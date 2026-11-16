@@ -1,0 +1,27 @@
+E                                                                        [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_catalog_scope_and_worker_renderer_authority_are_unchanged[create_project_reference] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f450d7031a0>
+
+    @pytest.fixture
+    def astrid_importable(monkeypatch):
+        """Import ``astrid`` from the checkout; its third-party dependencies come from the interpreter."""
+>       monkeypatch.syspath_prepend(str(astrid_checkout()))
+                                        ^^^^^^^^^^^^^^^^^
+
+tests/astrid_checkout.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def astrid_checkout() -> Path:
+        root = Path(os.environ.get("ASTRID_CHECKOUT") or RUNTIME_ROOT.parent / "astrid").resolve()
+        if not (root / "astrid" / "core" / "execution" / "generic_host.py").is_file():
+>           raise AssertionError(
+                f"Astrid checkout is unavailable: {root} (set ASTRID_CHECKOUT to the Astrid repository root)"
+            )
+E           AssertionError: Astrid checkout is unavailable: /workspace/scratch/cd53b069f320/p39-repair/astrid (set ASTRID_CHECKOUT to the Astrid repository root)
+
+tests/astrid_checkout.py:22: AssertionError
+=========================== short test summary info ============================
+ERROR tests/test_project_reference_catalog.py::test_catalog_scope_and_worker_renderer_authority_are_unchanged[create_project_reference]
+1 error in 1.50s

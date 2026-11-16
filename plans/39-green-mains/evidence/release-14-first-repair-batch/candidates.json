@@ -1,0 +1,87 @@
+{
+  "status": "reviewed local first-batch candidates; no completed phase or hosted-green claim",
+  "astrid_dev_base": "2770aa79e8d9325c7891294609c746963cc4776e",
+  "authorized_remote_branch": "banodoco/astrid-dev:p39/g1",
+  "candidates": [
+    {
+      "repository": "banodoco/astrid-agent",
+      "base_sha": "ab95803ce28fa51eec937b4074f5ec0f0439b98a",
+      "local_candidate_sha": "9e41487ac6d942930d4c699e24fd378c0a0fbaf0",
+      "patch": "patches/astrid-agent.patch",
+      "patch_sha256": "c9e34a3c32a49da9b8b91ed3a68cd3721b3e2bb30c401356eeb5e86d918f3819",
+      "changed_files": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/lanes.yml",
+        "scripts/reshape/compare_structure_baseline.py",
+        "scripts/reshape/count_baseline.py",
+        "tests/lanes.py",
+        "tests/reshape/test_compare_baselines.py",
+        "tests/test_release_branch_workflows.py",
+        "tests/test_skip_guard.py",
+        "tests/test_skip_policy.py"
+      ],
+      "stat": "9 files changed, 393 insertions(+), 41 deletions(-)",
+      "remote_publication": "not authorized; no product remote write"
+    },
+    {
+      "repository": "banodoco/astrid-runtime",
+      "base_sha": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "local_candidate_sha": "71708140bec9e2ffaf5c43e96136292ef6883402",
+      "patch": "patches/astrid-runtime.patch",
+      "patch_sha256": "837c203cd76aea411b7a46b7414b18d104b05f56c7ac71c5308861d7cd7c8f53",
+      "changed_files": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/nightly.yml",
+        "tests/lanes.py",
+        "tests/qualify_absent_head_repair.py",
+        "tests/seccomp/container-entrypoint.py",
+        "tests/seccomp/run-suite.sh",
+        "tests/test_skip_registry.py",
+        "tests/test_snapshot_legacy_certification.py",
+        "tests/test_timeline_bundle2_contract.py",
+        "tests/test_timeline_clip_replacement.py",
+        "tests/test_timeline_commit_contract.py",
+        "tests/test_v33_protected_acceptance.py"
+      ],
+      "stat": "12 files changed, 490 insertions(+), 40 deletions(-)",
+      "remote_publication": "not authorized; no product remote write"
+    },
+    {
+      "repository": "banodoco/astrid-app",
+      "base_sha": "0b6ef16152dc3fa11246ccc2007da630c66d1a1a",
+      "local_candidate_sha": "d10c96636291410a24f308051141105b38158e92",
+      "patch": "patches/astrid-app.patch",
+      "patch_sha256": "428f41f95ea02dadf07d7122affbe8aaaba94b717279ab830dd43be2e85444b5",
+      "changed_files": [
+        ".github/workflows/lanes.yml",
+        ".github/workflows/test.yml",
+        "config/testing/vitest.config.ts",
+        "scripts/installer/pin.mjs",
+        "scripts/installer/release-guard.mjs",
+        "scripts/installer/release.test.mjs",
+        "scripts/quality/check-known-failures.mjs",
+        "scripts/quality/check-known-failures.test.mjs"
+      ],
+      "stat": "8 files changed, 191 insertions(+), 53 deletions(-)",
+      "remote_publication": "not authorized; no product remote write"
+    }
+  ],
+  "verification": {
+    "patches": "git apply --reverse --check passed against each clean local candidate",
+    "independent_review": "no unresolved blocking code findings in local candidate scope; four findings corrected; not RS1",
+    "report_review": "relative links and patch hashes checked; mypy-total wording corrected",
+    "dev_strategy_tests": {
+      "command": "python3 -m unittest test_check_docs.StrategyTests",
+      "cwd": "scripts",
+      "exit_code": 0,
+      "passed": 24
+    },
+    "dev_docs": {
+      "command": "python3 scripts/check_docs.py",
+      "exit_code": 0
+    },
+    "inputs_md": "unchanged",
+    "hosted_candidate_runs": "none",
+    "remote_product_writes": "none"
+  }
+}

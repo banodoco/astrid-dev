@@ -1,0 +1,41 @@
+E                                                                        [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_native_clip_swap_is_atomic_cas_and_exactly_replayable _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-34/test_native_clip_swap_is_atomi0')
+
+    @pytest.fixture
+    def native_editing(tmp_path):
+>       editing = _native_editing(tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_timeline_clip_replacement.py:259: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_timeline_clip_replacement.py:239: in _native_editing
+    native = _native_imports()
+             ^^^^^^^^^^^^^^^^^
+tests/test_timeline_clip_replacement.py:112: in _native_imports
+    _native_agent_source()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _native_agent_source():
+        """Use the frozen ordinary Agent source when the integration runner lacks it."""
+        configured = Path(os.environ.get("ASTRID_CHECKOUT", ""))
+        source = configured if (configured / "astrid/sdk/timeline/native_occurrence_create.py").exists() else _PREPARED_AGENT
+        if not (source / "astrid/sdk/timeline/native_occurrence_create.py").exists():
+>           pytest.fail("frozen ordinary Agent source is unavailable")
+E           Failed: frozen ordinary Agent source is unavailable
+
+tests/test_timeline_clip_replacement.py:105: Failed
+=============================== warnings summary ===============================
+../../../../tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14
+  /tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_timeline_clip_replacement.py::test_native_clip_swap_is_atomic_cas_and_exactly_replayable
+1 warning, 1 error in 0.74s

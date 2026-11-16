@@ -1,0 +1,828 @@
+From 71708140bec9e2ffaf5c43e96136292ef6883402 Mon Sep 17 00:00:00 2001
+From: ChatGPT <noreply@openai.com>
+Date: Mon, 16 Nov 2026 18:18:34 +0000
+Subject: [PATCH] fix(ci): provision Runtime test dependencies and preserve
+ results
+
+---
+ .github/workflows/ci.yml                    | 154 +++++++++++++++++++-
+ .github/workflows/nightly.yml               |  25 +++-
+ tests/lanes.py                              |  66 ++++++++-
+ tests/qualify_absent_head_repair.py         |  27 +++-
+ tests/seccomp/container-entrypoint.py       |  81 ++++++++++
+ tests/seccomp/run-suite.sh                  |  69 +++++++--
+ tests/test_skip_registry.py                 |  67 +++++++++
+ tests/test_snapshot_legacy_certification.py |  14 +-
+ tests/test_timeline_bundle2_contract.py     |   3 +-
+ tests/test_timeline_clip_replacement.py     |  13 +-
+ tests/test_timeline_commit_contract.py      |   3 +-
+ tests/test_v33_protected_acceptance.py      |   8 +-
+ 12 files changed, 490 insertions(+), 40 deletions(-)
+ create mode 100644 tests/seccomp/container-entrypoint.py
+
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 326d305a0b06668de82c4b2c5bb236ff5bb86638..94740585df65316a2ccdf235e917bff6256e099a 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -95,12 +95,16 @@ jobs:
+ 
+   unit:
+     runs-on: ${{ matrix.os }}
++    env:
++      ASTRID_CHECKOUT: ${{ github.workspace }}/../astrid-agent
+     strategy:
+       fail-fast: false
+       matrix:
+         os: [ubuntu-latest, macos-latest]
+     steps:
+       - uses: actions/checkout@v4
++        with:
++          fetch-depth: 0
+       - name: Restore pip cache (C-08)
+         id: c08-runtime-ci-4
+         uses: actions/cache/restore@v4
+@@ -110,6 +114,46 @@ jobs:
+       - uses: actions/setup-python@v5
+         with:
+           python-version: "3.11"
++      - name: Select pinned Agent revision
++        id: astrid-pin
++        env:
++          AGENT_OVERRIDE: ${{ inputs.agent_sha }}
++        shell: bash
++        run: |
++          sha="${AGENT_OVERRIDE:-$(cat tests/astrid-agent.pin)}"
++          if [[ ! "$sha" =~ ^[0-9a-fA-F]{40}$ ]]; then
++            echo "Agent revision must be a full 40-character commit SHA" >&2
++            exit 1
++          fi
++          echo "sha=$sha" >> "$GITHUB_OUTPUT"
++      - name: Fetch Agent history required by archive tests
++        shell: bash
++        env:
++          AGENT_SHA: ${{ steps.astrid-pin.outputs.sha }}
++          HISTORICAL_AGENT_SHA: 321cef4b8c89a4a938cb9ede41ba6a5444cf1b62
++        run: |
++          git init --quiet "$ASTRID_CHECKOUT"
++          git -C "$ASTRID_CHECKOUT" remote add origin https://github.com/banodoco/astrid-agent
++          git -C "$ASTRID_CHECKOUT" fetch --no-tags origin "$AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" fetch --no-tags origin "$HISTORICAL_AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" checkout --detach --quiet "$AGENT_SHA"
++          test "$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)" = "$AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" cat-file -e "$HISTORICAL_AGENT_SHA^{commit}"
++      - name: Record effective Runtime and Agent checkouts
++        shell: bash
++        run: |
++          runtime_sha=$(git rev-parse HEAD)
++          agent_sha=$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)
++          echo "Runtime: $runtime_sha"
++          echo "Agent: $agent_sha"
++          printf 'Runtime: `%s`\nAgent: `%s`\n' "$runtime_sha" "$agent_sha" >> "$GITHUB_STEP_SUMMARY"
++      - uses: actions/setup-node@v4
++        with:
++          node-version: "22"
++      - run: npm ci
++        working-directory: packages/typescript
++      - name: Add locked TypeScript compiler to PATH
++        run: echo "$GITHUB_WORKSPACE/packages/typescript/node_modules/.bin" >> "$GITHUB_PATH"
+       - name: Install system media tools
+         if: runner.os == 'Linux'
+         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+@@ -118,7 +162,17 @@ jobs:
+         if: runner.os == 'macOS'
+         run: brew install ffmpeg
+       - run: python -m pip install -e '.[test]'
+-      - run: python -m pytest -q -n 2
++      - run: python -m pip install -e "$ASTRID_CHECKOUT"
++      - run: python -m pytest -q -n 2 -rA --junitxml=test-results-unit.xml
++
++      - name: Upload unit test results
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: test-results-unit-default-${{ matrix.os }}
++          path: test-results-unit.xml
++          if-no-files-found: error
++          retention-days: 90
+ 
+       - name: Save pip cache on main or int branches (C-08)
+         if: ${{ always() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/int/') || (startsWith(github.ref, 'refs/heads/release/') && endsWith(github.ref, '/main'))) && steps.c08-runtime-ci-4.outputs.cache-hit != 'true' }}
+@@ -185,6 +239,8 @@ jobs:
+ 
+   boundary:
+     runs-on: ubuntu-latest
++    env:
++      ASTRID_CHECKOUT: ${{ github.workspace }}/../astrid-agent
+     steps:
+       - uses: actions/checkout@v4
+       - name: Restore pip cache (C-08)
+@@ -196,10 +252,41 @@ jobs:
+       - uses: actions/setup-python@v5
+         with:
+           python-version: "3.11"
++      - name: Select pinned Agent revision
++        id: astrid-pin
++        env:
++          AGENT_OVERRIDE: ${{ inputs.agent_sha }}
++        shell: bash
++        run: |
++          sha="${AGENT_OVERRIDE:-$(cat tests/astrid-agent.pin)}"
++          if [[ ! "$sha" =~ ^[0-9a-fA-F]{40}$ ]]; then
++            echo "Agent revision must be a full 40-character commit SHA" >&2
++            exit 1
++          fi
++          echo "sha=$sha" >> "$GITHUB_OUTPUT"
++      - name: Checkout pinned Agent
++        shell: bash
++        env:
++          AGENT_SHA: ${{ steps.astrid-pin.outputs.sha }}
++        run: |
++          git init --quiet "$ASTRID_CHECKOUT"
++          git -C "$ASTRID_CHECKOUT" remote add origin https://github.com/banodoco/astrid-agent
++          git -C "$ASTRID_CHECKOUT" fetch --depth=1 --no-tags origin "$AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" checkout --detach --quiet FETCH_HEAD
++          test "$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)" = "$AGENT_SHA"
++      - name: Record effective Runtime and Agent checkouts
++        shell: bash
++        run: |
++          runtime_sha=$(git rev-parse HEAD)
++          agent_sha=$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)
++          echo "Runtime: $runtime_sha"
++          echo "Agent: $agent_sha"
++          printf 'Runtime: `%s`\nAgent: `%s`\n' "$runtime_sha" "$agent_sha" >> "$GITHUB_STEP_SUMMARY"
+       - uses: actions/setup-node@v4
+         with:
+           node-version: "22"
+       - run: python -m pip install -e '.[test]'
++      - run: python -m pip install -e "$ASTRID_CHECKOUT"
+       - run: python -m pytest -q tests/test_second_client_e2e.py -m ""
+ 
+       - name: Save pip cache on main or int branches (C-08)
+@@ -213,9 +300,62 @@ jobs:
+     # Sandbox mode under a seccomp profile that denies what NVIDIA OpenShell's
+     # does: pidfd_open (ENOSYS), pidfd_send_signal and process-group kill (EPERM).
+     runs-on: ubuntu-latest
++    env:
++      ASTRID_CHECKOUT: ${{ github.workspace }}/../astrid-agent
+     steps:
+       - uses: actions/checkout@v4
+-      - run: sh tests/seccomp/run-suite.sh
++        with:
++          fetch-depth: 0
++      - name: Select pinned Agent revision
++        id: astrid-pin
++        env:
++          AGENT_OVERRIDE: ${{ inputs.agent_sha }}
++        shell: bash
++        run: |
++          sha="${AGENT_OVERRIDE:-$(cat tests/astrid-agent.pin)}"
++          if [[ ! "$sha" =~ ^[0-9a-fA-F]{40}$ ]]; then
++            echo "Agent revision must be a full 40-character commit SHA" >&2
++            exit 1
++          fi
++          echo "sha=$sha" >> "$GITHUB_OUTPUT"
++      - name: Fetch Agent history required by archive tests
++        shell: bash
++        env:
++          AGENT_SHA: ${{ steps.astrid-pin.outputs.sha }}
++          HISTORICAL_AGENT_SHA: 321cef4b8c89a4a938cb9ede41ba6a5444cf1b62
++        run: |
++          git init --quiet "$ASTRID_CHECKOUT"
++          git -C "$ASTRID_CHECKOUT" remote add origin https://github.com/banodoco/astrid-agent
++          git -C "$ASTRID_CHECKOUT" fetch --no-tags origin "$AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" fetch --no-tags origin "$HISTORICAL_AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" checkout --detach --quiet "$AGENT_SHA"
++          test "$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)" = "$AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" cat-file -e "$HISTORICAL_AGENT_SHA^{commit}"
++      - name: Record effective Runtime and Agent checkouts
++        shell: bash
++        run: |
++          runtime_sha=$(git rev-parse HEAD)
++          agent_sha=$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)
++          echo "Runtime: $runtime_sha"
++          echo "Agent: $agent_sha"
++          printf 'Runtime: `%s`\nAgent: `%s`\n' "$runtime_sha" "$agent_sha" >> "$GITHUB_STEP_SUMMARY"
++      - name: Prepare sandbox test results directory
++        shell: bash
++        run: |
++          mkdir -p "$RUNNER_TEMP/runtime-sandbox-results"
++          chmod 777 "$RUNNER_TEMP/runtime-sandbox-results"
++      - name: Run sandbox process-control tests
++        env:
++          ASTRID_TEST_RESULTS_DIR: ${{ runner.temp }}/runtime-sandbox-results
++        run: sh tests/seccomp/run-suite.sh -rA --junitxml=/results/junit.xml
++      - name: Upload sandbox process-control results
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: test-results-sandbox-process-control-default-ubuntu-latest
++          path: ${{ runner.temp }}/runtime-sandbox-results/junit.xml
++          if-no-files-found: error
++          retention-days: 90
+ 
+   portability-lifecycle:
+     env:
+@@ -271,7 +411,7 @@ jobs:
+       - run: python -m pip install -e packages/python
+       - run: python -m pip install -e "$ASTRID_CHECKOUT"
+       - run: >-
+-          python -m pytest -q -m ""
++          python -m pytest -q -rA --junitxml=test-results-portability-lifecycle.xml -m ""
+           tests/test_platform.py
+           tests/test_platform_signaling.py
+           tests/test_platform_windows.py
+@@ -290,6 +430,14 @@ jobs:
+           tests/test_foreground.py
+           tests/test_native_custody.py
+           tests/test_portable_lifecycle.py
++      - name: Upload portability lifecycle test results
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: test-results-portability-lifecycle-default-${{ matrix.os }}
++          path: astrid-runtime/test-results-portability-lifecycle.xml
++          if-no-files-found: error
++          retention-days: 90
+       - name: Save pip cache on main or int branches (C-08)
+         if: ${{ always() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/int/') || (startsWith(github.ref, 'refs/heads/release/') && endsWith(github.ref, '/main'))) && steps.c08-runtime-ci-1.outputs.cache-hit != 'true' }}
+         uses: actions/cache/save@v4
+diff --git a/.github/workflows/nightly.yml b/.github/workflows/nightly.yml
+index d828c3096a4f469804074bf8b0c1a4cf0f2ccc3f..7dd711808a2cec66d238c9bcb90f8eea35770e00 100644
+--- a/.github/workflows/nightly.yml
++++ b/.github/workflows/nightly.yml
+@@ -17,6 +17,8 @@ jobs:
+       ASTRID_CHECKOUT: ${{ github.workspace }}/astrid-agent
+     steps:
+       - uses: actions/checkout@v4
++        with:
++          fetch-depth: 0
+       - name: Restore pip cache (C-08)
+         id: c08-runtime-nightly-1
+         uses: actions/cache/restore@v4
+@@ -44,11 +46,24 @@ jobs:
+           repository: banodoco/astrid-agent
+           ref: ${{ steps.astrid-pin.outputs.sha }}
+           path: astrid-agent
++          fetch-depth: 0
++      - name: Fetch Agent history required by archive tests
++        shell: bash
++        env:
++          AGENT_SHA: ${{ steps.astrid-pin.outputs.sha }}
++          HISTORICAL_AGENT_SHA: 321cef4b8c89a4a938cb9ede41ba6a5444cf1b62
++        run: |
++          git -C "$ASTRID_CHECKOUT" fetch --no-tags origin "$HISTORICAL_AGENT_SHA"
++          test "$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)" = "$AGENT_SHA"
++          git -C "$ASTRID_CHECKOUT" cat-file -e "$HISTORICAL_AGENT_SHA^{commit}"
+       - name: Record effective checkouts
+         shell: bash
++        env:
++          AGENT_SHA: ${{ steps.astrid-pin.outputs.sha }}
+         run: |
+           runtime_sha=$(git rev-parse HEAD)
+           agent_sha=$(git -C "$ASTRID_CHECKOUT" rev-parse HEAD)
++          test "$agent_sha" = "$AGENT_SHA"
+           echo "Runtime: $runtime_sha"
+           echo "Agent: $agent_sha"
+           printf 'Runtime: `%s`\nAgent: `%s`\n' "$runtime_sha" "$agent_sha" >> "$GITHUB_STEP_SUMMARY"
+@@ -56,7 +71,15 @@ jobs:
+         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+       - run: python -m pip install -e '.[test]'
+       - run: python -m pip install -e "$ASTRID_CHECKOUT"
+-      - run: python -m pytest -q -m integration
++      - run: python -m pytest -q -rA --junitxml=test-results-nightly-integration.xml -m integration
++      - name: Upload nightly integration test results
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: test-results-nightly-integration-default-ubuntu-latest
++          path: test-results-nightly-integration.xml
++          if-no-files-found: error
++          retention-days: 90
+       - name: Save pip cache on main or int branches (C-08)
+         if: ${{ always() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/int/') || (startsWith(github.ref, 'refs/heads/release/') && endsWith(github.ref, '/main'))) && steps.c08-runtime-nightly-1.outputs.cache-hit != 'true' }}
+         uses: actions/cache/save@v4
+diff --git a/tests/lanes.py b/tests/lanes.py
+index ec8d0464d728341d6876f65ffd9951f44f5142e1..9edf873fbfd4cb7084d200d418645f3481f293f3 100644
+--- a/tests/lanes.py
++++ b/tests/lanes.py
+@@ -17,7 +17,9 @@ import re
+ import sys
+ from collections.abc import Callable
+ from dataclasses import dataclass
++from datetime import date, timedelta
+ from typing import NamedTuple
++from urllib.parse import urlparse
+ 
+ import pytest
+ 
+@@ -41,7 +43,8 @@ LANE_MARKERS = {
+ # is false. Test modules never call pytest's skip APIs (tests/test_skip_policy.py);
+ # they use the ``requires_*`` marks below. The guard further down fails the run
+ # on any skip whose reason does not carry a registered ``[declared:NAME]`` tag,
+-# on any xfail, and prints every skip by test name.
++# on any xfail that does not match an exact strict declaration, and prints every
++# skip by test name.
+ #
+ # ``skip_when`` is executable: a Python expression over ``sys_platform`` and
+ # ``os_name`` that is true on the hosts where the test is skipped. The mark is
+@@ -118,6 +121,9 @@ class DeclaredXfail:
+     reason: str
+     raises: str
+     strict: bool = True
++    issue: str | None = None
++    owner: str | None = None
++    expires: str | None = None
+ 
+ 
+ def _xfail_reason(name: str, reason: str) -> str:
+@@ -208,6 +214,64 @@ DECLARED_XFAILS = {
+     ),
+ }
+ 
++MAX_DECLARED_XFAIL_TESTS = 10
++MAX_XFAIL_DAYS = 14
++
++
++def declared_xfail_errors(
++    declarations: dict[str, DeclaredXfail] | None = None, *, today: date | None = None
++) -> list[str]:
++    """Return policy violations without changing the registry or blocking collection."""
++    entries = DECLARED_XFAILS if declarations is None else declarations
++    today = date.today() if today is None else today
++    errors: list[str] = []
++    quarantined_count = sum(len(entry.nodeids) for entry in entries.values())
++    if quarantined_count > MAX_DECLARED_XFAIL_TESTS:
++        errors.append(
++            f"{quarantined_count} quarantined test node IDs exceed the limit of {MAX_DECLARED_XFAIL_TESTS}"
++        )
++
++    seen: set[str] = set()
++    for name, entry in entries.items():
++        prefix = f"{name}: "
++        if not entry.nodeids:
++            errors.append(f"{prefix}missing exact test node ID")
++        for nodeid in entry.nodeids:
++            if "::" not in nodeid or not nodeid.strip():
++                errors.append(f"{prefix}invalid exact test node ID {nodeid!r}")
++            if nodeid in seen:
++                errors.append(f"{prefix}duplicate test node ID {nodeid!r}")
++            seen.add(nodeid)
++        if not entry.reason.strip():
++            errors.append(f"{prefix}missing reason")
++        if not entry.raises.strip():
++            errors.append(f"{prefix}missing exception contract")
++        if entry.strict is not True:
++            errors.append(f"{prefix}strict must be true")
++
++        if not isinstance(entry.issue, str) or not entry.issue.strip():
++            errors.append(f"{prefix}missing issue URL")
++        else:
++            parsed_issue = urlparse(entry.issue)
++            if (
++                parsed_issue.scheme != "https"
++                or not parsed_issue.netloc
++                or not re.search(r"/issues/\d+/?$", parsed_issue.path)
++            ):
++                errors.append(f"{prefix}invalid issue URL")
++        if not isinstance(entry.owner, str) or not entry.owner.strip():
++            errors.append(f"{prefix}missing owner")
++        if not isinstance(entry.expires, str) or not entry.expires.strip():
++            errors.append(f"{prefix}missing expiry")
++        else:
++            try:
++                expiry = date.fromisoformat(entry.expires)
++            except ValueError:
++                expiry = None
++            if expiry is None or expiry <= today or expiry > today + timedelta(days=MAX_XFAIL_DAYS):
++                errors.append(f"{prefix}expiry must be a future ISO date within {MAX_XFAIL_DAYS} days")
++    return errors
++
+ 
+ def _exception_name(exception_type) -> str | None:
+     if exception_type is None:
+diff --git a/tests/qualify_absent_head_repair.py b/tests/qualify_absent_head_repair.py
+index c3c0b08b9036c6294a77836094c55493221acccc..71ffe443d87b50486135c122fb6f7f21919f60f7 100644
+--- a/tests/qualify_absent_head_repair.py
++++ b/tests/qualify_absent_head_repair.py
+@@ -1,15 +1,28 @@
+-"""Explicit central qualification against frozen private init artifacts."""
++"""Manual qualification against explicitly supplied private init artifacts.
++
++ASTRID_PRIVATE_QUALIFICATION_ROOT must contain prepare-private.py. The Agent
++source is selected by tests.astrid_checkout, exactly as in the integration lane.
++The private artifacts are not part of the repository or ordinary CI coverage.
++"""
+ import os
+ from pathlib import Path
+ import subprocess
++import sys
+ 
+-WORKER = Path('/tmp/claude-0/-home-user-repo/7dc61be1-7066-52e0-a5d0-94f90e61430a/scratchpad/orch/workers/rt-m2-absent-head-shell-repair')
++from tests.astrid_checkout import astrid_checkout
+ 
+ 
+ def test_private_init_and_commit_neighbors():
+-    python = '/home/user/work/venv-agent/bin/python'
+-    subprocess.run([python, str(WORKER / 'prepare-private.py'), str(Path.cwd())], check=True)
+-    candidate = WORKER / 'runtime-private'
++    configured = os.environ.get('ASTRID_PRIVATE_QUALIFICATION_ROOT')
++    assert configured, 'set ASTRID_PRIVATE_QUALIFICATION_ROOT to the private qualification artifacts'
++    worker = Path(configured).resolve()
++    prepare = worker / 'prepare-private.py'
++    assert prepare.is_file(), f'private qualification preparation script is unavailable: {prepare}'
++    agent = astrid_checkout()
++    python = sys.executable
++    runtime = Path(__file__).resolve().parents[1]
++    subprocess.run([python, str(prepare), str(runtime)], check=True)
++    candidate = worker / 'runtime-private'
+     result = subprocess.run([
+         python, '-m', 'pytest', '-q', '-ra', '-o', 'addopts=', '-p', 'no:cacheprovider', '--runxfail',
+         'tests/test_timeline_pristine_initialize_integration.py',
+@@ -18,7 +31,7 @@ def test_private_init_and_commit_neighbors():
+         'tests/test_timeline_commit_integration.py',
+         'tests/test_timeline_projection_occupancy.py::test_actual_provider_historical_slot_rematerializes_after_verified_restore',
+     ], cwd=candidate, env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONPATH': str(candidate),
+-                           'ASTRID_CHECKOUT': str(WORKER.parent / 'rt-m2-init-current-private-qualification/agent-source')},
++                           'ASTRID_CHECKOUT': str(agent)},
+         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+-    (WORKER / 'central-private.log').write_text(result.stdout)
++    (worker / 'central-private.log').write_text(result.stdout)
+     assert result.returncode == 0, result.stdout
+diff --git a/tests/seccomp/container-entrypoint.py b/tests/seccomp/container-entrypoint.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..6400a011655a767a83cfacbabd7f704913ce1a4b
+--- /dev/null
++++ b/tests/seccomp/container-entrypoint.py
+@@ -0,0 +1,81 @@
++"""Prepare a disposable sandbox container and run its selected pytest command."""
++from __future__ import annotations
++
++import os
++from pathlib import Path
++import pwd
++import shutil
++import subprocess
++import sys
++
++
++def run(
++    command: list[str], *, env: dict[str, str] | None = None,
++    preexec_fn=None,
++    cwd: Path | None = None,
++) -> None:
++    subprocess.run(command, check=True, env=env, preexec_fn=preexec_fn, cwd=cwd)
++
++
++def chown_tree(root: Path, uid: int, gid: int) -> None:
++    for path in (root, *root.rglob("*")):
++        os.chown(path, uid, gid, follow_symlinks=False)
++
++
++def main() -> int:
++    if os.geteuid() != 0:
++        raise SystemExit("sandbox container entrypoint must start as root")
++
++    run(["apt-get", "update", "-qq"])
++    run(["apt-get", "install", "-y", "-qq", "ffmpeg", "nodejs", "npm"])
++    run(["useradd", "-m", "ci"])
++    ci = pwd.getpwnam("ci")
++
++    def drop_privileges() -> None:
++        os.setgroups([])
++        os.setgid(ci.pw_gid)
++        os.setuid(ci.pw_uid)
++
++    workspace = Path("/home/ci/w")
++    virtualenv = Path("/home/ci/v")
++    agent_checkout = Path("/home/ci/astrid-agent")
++    shutil.copytree("/src", workspace, symlinks=True)
++    chown_tree(workspace, ci.pw_uid, ci.pw_gid)
++
++    env = os.environ.copy()
++    env.update(HOME=ci.pw_dir, USER=ci.pw_name, LOGNAME=ci.pw_name)
++    if agent_mount := env.pop("ASTRID_AGENT_MOUNT", ""):
++        source = Path(agent_mount)
++        if not (source / ".git").is_dir() or not (source / "astrid/core/execution/generic_host.py").is_file():
++            raise SystemExit(f"mounted Agent source is missing its checkout or .git history: {source}")
++        shutil.copytree(source, agent_checkout, symlinks=True)
++        chown_tree(agent_checkout, ci.pw_uid, ci.pw_gid)
++        env["ASTRID_CHECKOUT"] = str(agent_checkout)
++
++    run([sys.executable, "-m", "venv", str(virtualenv)], preexec_fn=drop_privileges)
++    python = virtualenv / "bin/python"
++    run(
++        [str(python), "-m", "pip", "install", "-q", "-e", ".[test]", "-e", "packages/python"],
++        env=env, preexec_fn=drop_privileges, cwd=workspace,
++    )
++    run(["npm", "ci"], env=env, preexec_fn=drop_privileges, cwd=workspace / "packages/typescript")
++    if env.get("ASTRID_CHECKOUT"):
++        run(
++            [str(python), "-m", "pip", "install", "-q", env["ASTRID_CHECKOUT"]],
++            env=env, preexec_fn=drop_privileges, cwd=workspace,
++        )
++
++    if Path("/results").is_dir():
++        os.chown("/results", ci.pw_uid, ci.pw_gid)
++
++    command = [
++        str(python), "-m", "pytest", "-q", "-n", "2", "--process-control=sandbox",
++        "-m", "not integration and not darwin_native and not live and not needs_real_pidfd",
++        *sys.argv[1:],
++    ]
++    result = subprocess.run(command, cwd=workspace, env=env, preexec_fn=drop_privileges, check=False)
++    return result.returncode
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/tests/seccomp/run-suite.sh b/tests/seccomp/run-suite.sh
+index 8040e3d3b0fabd29d35887d65c2e3e9e8dff652e..f65e80572f3012150e7ed5e4ce7ca9be3a56cd67 100755
+--- a/tests/seccomp/run-suite.sh
++++ b/tests/seccomp/run-suite.sh
+@@ -1,17 +1,64 @@
+ #!/bin/sh
+ # Run the test suite in sandbox process-control mode inside a container whose
+-# seccomp profile denies what OpenShell's does (see README.md). CI's
++# seccomp profile denies what NVIDIA OpenShell's does (see README.md). CI's
+ # sandbox-process-control job runs this; extra arguments go to pytest.
++# Optional ASTRID_CHECKOUT is mounted read-only, then copied into the owned
++# workspace with its .git history. Optional ASTRID_TEST_RESULTS_DIR is mounted
++# read/write at /results for JUnit output.
+ #   sh tests/seccomp/run-suite.sh [pytest args...]
+ set -eu
+ root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd -P)
+-exec docker run --rm --security-opt "seccomp=$root/tests/seccomp/openshell-like.json" \
+-    -v "$root":/src:ro python:3.11 sh -ec '
+-        apt-get update -qq && apt-get install -y -qq ffmpeg nodejs npm >/dev/null
+-        useradd -m ci
+-        cp -a /src /home/ci/w && chown -R ci /home/ci/w
+-        exec su ci -c "cd /home/ci/w && python -m venv /home/ci/v \
+-            && /home/ci/v/bin/pip install -q -e .[test] -e packages/python \
+-            && /home/ci/v/bin/python -m pytest -q -n 2 --process-control=sandbox \
+-               -m \"not integration and not darwin_native and not live and not needs_real_pidfd\" $*"
+-    ' sh "$@"
++agent_checkout=${ASTRID_CHECKOUT:-}
++results_dir=${ASTRID_TEST_RESULTS_DIR:-}
++
++if [ -n "$agent_checkout" ]; then
++    case "$agent_checkout" in
++        /*) ;;
++        *) echo "ASTRID_CHECKOUT must be an absolute path" >&2; exit 2 ;;
++    esac
++    agent_checkout=$(CDPATH= cd -- "$agent_checkout" && pwd -P) || {
++        echo "ASTRID_CHECKOUT is not a readable directory: $ASTRID_CHECKOUT" >&2
++        exit 2
++    }
++    if [ ! -f "$agent_checkout/astrid/core/execution/generic_host.py" ]; then
++        echo "ASTRID_CHECKOUT does not contain the pinned Astrid source: $agent_checkout" >&2
++        exit 2
++    fi
++fi
++
++if [ -n "$results_dir" ]; then
++    case "$results_dir" in
++        /*) ;;
++        *) echo "ASTRID_TEST_RESULTS_DIR must be an absolute path" >&2; exit 2 ;;
++    esac
++    mkdir -p "$results_dir"
++    results_dir=$(CDPATH= cd -- "$results_dir" && pwd -P) || {
++        echo "ASTRID_TEST_RESULTS_DIR is not a writable directory: $ASTRID_TEST_RESULTS_DIR" >&2
++        exit 2
++    }
++    if [ ! -w "$results_dir" ]; then
++        echo "ASTRID_TEST_RESULTS_DIR is not writable: $results_dir" >&2
++        exit 2
++    fi
++fi
++
++python3 - "$root" "$agent_checkout" "$results_dir" "$@" <<'PY'
++import subprocess
++import sys
++
++root, agent_checkout, results_dir, *pytest_args = sys.argv[1:]
++cmd = [
++    "docker", "run", "--rm",
++    "--security-opt", f"seccomp={root}/tests/seccomp/openshell-like.json",
++    "-v", f"{root}:/src:ro",
++]
++if agent_checkout:
++    cmd.extend((
++        "--mount", f"type=bind,source={agent_checkout},target=/astrid-agent,readonly",
++        "-e", "ASTRID_AGENT_MOUNT=/astrid-agent",
++    ))
++if results_dir:
++    cmd.extend(("--mount", f"type=bind,source={results_dir},target=/results"))
++cmd.extend(("python:3.11", "python", "/src/tests/seccomp/container-entrypoint.py", *pytest_args))
++raise SystemExit(subprocess.run(cmd, check=False).returncode)
++PY
+diff --git a/tests/test_skip_registry.py b/tests/test_skip_registry.py
+index a7a4a59aa2e4bbe78f77385128a5f4f1b80f8533..6dd3342020c91aea8c88f7c793e03702e7d1d829 100644
+--- a/tests/test_skip_registry.py
++++ b/tests/test_skip_registry.py
+@@ -15,6 +15,7 @@ import sys
+ import textwrap
+ import tomllib
+ from dataclasses import dataclass, field
++from datetime import date, timedelta
+ from pathlib import Path
+ 
+ import pytest
+@@ -32,6 +33,72 @@ _this = sys.modules[__name__]
+ AUTOMATIC_TRIGGERS = {"push", "pull_request", "schedule"}
+ 
+ 
++def _valid_xfail(
++    name: str = "known-gap", nodeids: tuple[str, ...] = ("tests/test_example.py::test_gap",)
++) -> lanes.DeclaredXfail:
++    return lanes.DeclaredXfail(
++        name=name,
++        nodeids=nodeids,
++        reason="Synthetic test declaration",
++        raises="builtins.RuntimeError",
++        strict=True,
++        issue="https://example.invalid/issues/123",
++        owner="test-owner",
++        expires=(date.today() + timedelta(days=7)).isoformat(),
++    )
++
++
++def test_declared_xfail_registry_has_required_metadata_and_is_within_cap() -> None:
++    errors = lanes.declared_xfail_errors()
++    assert not errors, "invalid declared xfail registry: " + "; ".join(errors)
++
++
++def test_xfail_validator_accepts_a_valid_exact_declaration() -> None:
++    assert lanes.declared_xfail_errors({"known-gap": _valid_xfail()}) == []
++
++
++@pytest.mark.parametrize(
++    ("field", "message"),
++    [("issue", "missing issue URL"), ("owner", "missing owner"), ("expires", "missing expiry")],
++)
++def test_xfail_validator_rejects_missing_metadata(field: str, message: str) -> None:
++    from dataclasses import replace
++
++    declaration = replace(_valid_xfail(), **{field: None})
++
++    errors = lanes.declared_xfail_errors({"known-gap": declaration})
++
++    assert any(message in error for error in errors)
++
++
++@pytest.mark.parametrize("days", [-1, lanes.MAX_XFAIL_DAYS + 1])
++def test_xfail_validator_rejects_expiry_outside_the_allowed_window(days: int) -> None:
++    from dataclasses import replace
++
++    declaration = replace(_valid_xfail(), expires=(date.today() + timedelta(days=days)).isoformat())
++
++    errors = lanes.declared_xfail_errors({"known-gap": declaration})
++
++    assert any("expiry must be a future ISO date within" in error for error in errors)
++
++
++def test_xfail_validator_rejects_non_strict_declarations() -> None:
++    from dataclasses import replace
++
++    declaration = replace(_valid_xfail(), strict=False)
++
++    assert any("strict must be true" in error for error in lanes.declared_xfail_errors({"known-gap": declaration}))
++
++
++def test_xfail_limit_counts_exact_node_ids_even_when_grouped() -> None:
++    nodeids = tuple(f"tests/test_example.py::test_gap_{index}" for index in range(11))
++    declaration = _valid_xfail(nodeids=nodeids)
++
++    errors = lanes.declared_xfail_errors({"grouped": declaration})
++
++    assert any("11 quarantined test node IDs exceed the limit of 10" in error for error in errors)
++
++
+ # --- workflows -----------------------------------------------------------------
+ 
+ @dataclass
+diff --git a/tests/test_snapshot_legacy_certification.py b/tests/test_snapshot_legacy_certification.py
+index 57c06c3fe8816877252db05b140749b853ec6126..7ffc08a97fadf6b4761d55307c85e9c0b547a550 100644
+--- a/tests/test_snapshot_legacy_certification.py
++++ b/tests/test_snapshot_legacy_certification.py
+@@ -28,10 +28,16 @@ class LegacyGenuineUncertified(AssertionError):
+ 
+ 
+ def _archive(repo, revision, target, *paths):
+-    archive = subprocess.run(
+-        ["git", "-C", str(repo), "archive", revision, *paths],
+-        check=True, capture_output=True,
+-    )
++    try:
++        archive = subprocess.run(
++            ["git", "-C", str(repo), "archive", revision, *paths],
++            check=True, capture_output=True,
++        )
++    except subprocess.CalledProcessError as exc:
++        raise RuntimeError(
++            f"cannot archive required commit {revision} from {repo}; fetch this SHA "
++            f"or full history with `git -C {repo} fetch origin {revision}`"
++        ) from exc
+     target.mkdir()
+     with tarfile.open(fileobj=io.BytesIO(archive.stdout)) as source:
+         source.extractall(target, filter="data")
+diff --git a/tests/test_timeline_bundle2_contract.py b/tests/test_timeline_bundle2_contract.py
+index f6e9bcf100b0b15f08be3b5f6dbef418151589e5..3da608dc124209e701fd65de6a54c28bf5bf4641 100644
+--- a/tests/test_timeline_bundle2_contract.py
++++ b/tests/test_timeline_bundle2_contract.py
+@@ -17,6 +17,7 @@ from runtime_protocol.timeline_commit_validation import validate_commit_value
+ 
+ service = support.service
+ ROOT = Path(__file__).resolve().parents[1]
++TSC = ROOT / "packages/typescript/node_modules/.bin/tsc"
+ DIGEST = "sha256:" + "a" * 64
+ PIN = {"document_id": "pack", "version": 1, "content_digest": DIGEST}
+ MEDIA = {"asset": "asset", "generation_id": "g", "variant_id": "v",
+@@ -90,6 +91,6 @@ def test_python_package_exports_native_args_and_nested_row_type():
+ 
+ def test_typescript_package_exports_native_args_and_open_rows():
+     subprocess.run([
+-        "tsc", "--noEmit", "--strict", "--module", "NodeNext", "--target", "ES2022",
++        str(TSC), "--noEmit", "--strict", "--module", "NodeNext", "--target", "ES2022",
+         str(ROOT / "tests/fixtures/timeline-bundle2-types.mts"),
+     ], check=True)
+diff --git a/tests/test_timeline_clip_replacement.py b/tests/test_timeline_clip_replacement.py
+index 189af9ada90db61896cdc9e63091d7e36663acc3..9dc05132455b6c1d0349869d7c49e3361c1520e4 100644
+--- a/tests/test_timeline_clip_replacement.py
++++ b/tests/test_timeline_clip_replacement.py
+@@ -2,7 +2,6 @@ from __future__ import annotations
+ 
+ import copy
+ import json
+-import os
+ import shutil
+ import subprocess
+ import sys
+@@ -20,6 +19,7 @@ from runtime_protocol.store import RealmStore
+ from runtime_protocol.errors import ConflictError, NotFoundError, RetiredRouteError, RuntimeErrorBase, ValidationError
+ from runtime_protocol.service import RuntimeService
+ from runtime_protocol.timeline_commit_port import CommitUnavailable
++from tests.astrid_checkout import astrid_checkout
+ 
+ 
+ # Direct replace_timeline_clip is retired (ledger D04; refusal asserted in
+@@ -91,18 +91,11 @@ def _service_fixture(tmp_path, *, clip_type: str | None = None):
+ NATIVE_OWNER = "occurrence:native-occurrence"
+ NATIVE_TARGET = NATIVE_OWNER + "/clip:native-clip"
+ NATIVE_PARENT_TARGET = "parent/clip:native-parent-clip"
+-_PREPARED_AGENT = Path(
+-    "/tmp/claude-0/-home-user-repo/7dc61be1-7066-52e0-a5d0-94f90e61430a/"
+-    "scratchpad/orch/workers/rt-m2-next-ordinary-official-prep/agent-final-source"
+-)
+ 
+ 
+ def _native_agent_source():
+-    """Use the frozen ordinary Agent source when the integration runner lacks it."""
+-    configured = Path(os.environ.get("ASTRID_CHECKOUT", ""))
+-    source = configured if (configured / "astrid/sdk/timeline/native_occurrence_create.py").exists() else _PREPARED_AGENT
+-    if not (source / "astrid/sdk/timeline/native_occurrence_create.py").exists():
+-        pytest.fail("frozen ordinary Agent source is unavailable")
++    """Use the same explicit Agent checkout as the other integration fixtures."""
++    source = astrid_checkout()
+     if str(source) not in sys.path:
+         sys.path.insert(0, str(source))
+     return source
+diff --git a/tests/test_timeline_commit_contract.py b/tests/test_timeline_commit_contract.py
+index ae39a37ac486678df15303a1dc071a0d55493185..e39e3c5baa77eb590fc2b1d0391026528a07705b 100644
+--- a/tests/test_timeline_commit_contract.py
++++ b/tests/test_timeline_commit_contract.py
+@@ -23,6 +23,7 @@ from runtime_protocol.timeline_commit import (
+ )
+ 
+ ROOT = Path(__file__).resolve().parents[1]
++TSC = ROOT / "packages/typescript/node_modules/.bin/tsc"
+ SCHEMA = json.loads((ROOT / "contract/schemas/timeline-commit.json").read_text())
+ DIGEST = "sha256:" + "a" * 64
+ 
+@@ -762,7 +763,7 @@ def test_generated_typescript_commit_contract(tmp_path):
+     output = tmp_path / "client"
+     subprocess.run(
+         [
+-            "tsc",
++            str(TSC),
+             "-p",
+             str(ROOT / "packages/typescript/tsconfig.json"),
+             "--outDir",
+diff --git a/tests/test_v33_protected_acceptance.py b/tests/test_v33_protected_acceptance.py
+index db364e8bfc51fd2e266b6acb604a306e6a0ef560..d42aae7b2b84d79326c9302a3308bb75f189011d 100644
+--- a/tests/test_v33_protected_acceptance.py
++++ b/tests/test_v33_protected_acceptance.py
+@@ -42,7 +42,13 @@ def tree(root):
+ 
+ 
+ def extract_executable(ref, destination):
+-    raw = subprocess.check_output(["git", "archive", ref], cwd=REPO)
++    try:
++        raw = subprocess.check_output(["git", "archive", ref], cwd=REPO)
++    except subprocess.CalledProcessError as exc:
++        raise RuntimeError(
++            f"cannot archive required commit {ref} from {REPO}; fetch this SHA "
++            f"or full history with `git -C {REPO} fetch origin {ref}`"
++        ) from exc
+     destination.mkdir()
+     with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
+         archive.extractall(destination, filter="data")

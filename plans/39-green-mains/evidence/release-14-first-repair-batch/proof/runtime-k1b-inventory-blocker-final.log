@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_declared_xfail_registry_has_required_metadata_and_is_within_cap _____
+
+    def test_declared_xfail_registry_has_required_metadata_and_is_within_cap() -> None:
+        errors = lanes.declared_xfail_errors()
+>       assert not errors, "invalid declared xfail registry: " + "; ".join(errors)
+E       AssertionError: invalid declared xfail registry: 20 quarantined test node IDs exceed the limit of 10; runtime-domains-publication: missing issue URL; runtime-domains-publication: missing owner; runtime-domains-publication: missing expiry; runtime-domains-update: missing issue URL; runtime-domains-update: missing owner; runtime-domains-update: missing expiry; runtime-exact-idempotency: missing issue URL; runtime-exact-idempotency: missing owner; runtime-exact-idempotency: missing expiry; second-client-core: missing issue URL; second-client-core: missing owner; second-client-core: missing expiry; snapshot-legacy-certification: missing issue URL; snapshot-legacy-certification: missing owner; snapshot-legacy-certification: missing expiry; stage1-runtime-contract: missing issue URL; stage1-runtime-contract: missing owner; stage1-runtime-contract: missing expiry; timeline-clip-replacement: missing issue URL; timeline-clip-replacement: missing owner; timeline-clip-replacement: missing expiry; timeline-public-s2-historical-audio: missing issue URL; timeline-public-s2-historical-audio: missing owner; timeline-public-s2-historical-audio: missing expiry; installed-pair-source-closure: missing issue URL; installed-pair-source-closure: missing owner; installed-pair-source-closure: missing expiry; p1-top-level-text-hook: missing issue URL; p1-top-level-text-hook: missing owner; p1-top-level-text-hook: missing expiry
+E       assert not ['20 quarantined test node IDs exceed the limit of 10', 'runtime-domains-publication: missing issue URL', 'runtime-dom...ublication: missing expiry', 'runtime-domains-update: missing issue URL', 'runtime-domains-update: missing owner', ...]
+
+tests/test_skip_registry.py:53: AssertionError
+=============================== warnings summary ===============================
+../../../../../tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14
+  /tmp/p39-runtime-env-b05/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_skip_registry.py::test_declared_xfail_registry_has_required_metadata_and_is_within_cap
+1 failed, 1 warning in 0.12s

@@ -1,0 +1,29 @@
+✔ an install tuple change with release +1 passes the guard (2.995293ms)
+✔ an install tuple change without release +1 fails the guard (2.813896ms)
+✔ a bootstrap byte change needs release +1: refused at the same release, passes at +1 (0.656004ms)
+✔ a release change without a tuple change fails the guard, up or down (0.562838ms)
+✔ no tuple change and no release change passes, including a valid required floor (0.46921ms)
+✔ a pure reformat or key reorder of the manifest is not a tuple change (0.234385ms)
+✔ a base manifest without release reads as release 0 (0.563589ms)
+✔ the head manifest must declare an integer release (0.248455ms)
+✔ required must satisfy 0 <= required.release <= release and carry a non-empty reason (0.855899ms)
+✔ pin --require sets required.release to the manifest own release and never writes release (1.062672ms)
+✔ the CLI compares committed base and head refs and exits non-zero on refusal (589.187867ms)
+✔ readSnapshot rejects a ref that is not a commit (4.386018ms)
+✔ the served canary reports release and bootstrap-byte mismatches and accepts a matching deployment (0.894555ms)
+✔ a floor pinned before release is bumped is refused, and a floor at the published release passes (0.478503ms)
+✔ the App runtime.lock.json source_commit must be the runtime.sha the manifest pins (0.863008ms)
+✔ manifest pins agree with both App locks and reject a one-sided pin change (0.457393ms)
+✔ the pin check refuses a manifest runtime.sha that disagrees with the Agent runtime.lock.json (0.548496ms)
+✔ a coherent served tuple is independent of the current checkout locks (1.61925ms)
+✔ the CLI with --pins refuses a head whose runtime.sha disagrees with the App runtime.lock.json (168.818933ms)
+✔ the --pins CLI compares against lock files at the selected head ref (138.045864ms)
+✔ a later push to main never cancels the release guard for an earlier one (4.104465ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1028.786584

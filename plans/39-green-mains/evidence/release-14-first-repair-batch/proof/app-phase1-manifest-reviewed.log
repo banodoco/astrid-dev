@@ -1,0 +1,16 @@
+(node:17) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ every production manifest download has its own exact SHA256 digest (9.60424ms)
+✔ both bootstraps agree with the manifest uv and Python pins (3.543074ms)
+✔ manifest pins its agent Runtime and schema digest (11579.012148ms)
+✔ --check refuses a manifest whose lifecycle block is missing (4961.378119ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16739.78287
