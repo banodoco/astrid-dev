@@ -1,0 +1,214 @@
+{
+  "summary_ms": {
+    "python": {
+      "median": 10.1152835,
+      "max": 14.896839
+    },
+    "native": {
+      "median": 0.6699575,
+      "max": 1.21583
+    }
+  },
+  "records": [
+    {
+      "kind": "python",
+      "sample": 0,
+      "wall_ms": 7.796662
+    },
+    {
+      "kind": "python",
+      "sample": 1,
+      "wall_ms": 10.654856
+    },
+    {
+      "kind": "python",
+      "sample": 2,
+      "wall_ms": 10.191857
+    },
+    {
+      "kind": "python",
+      "sample": 3,
+      "wall_ms": 10.390623
+    },
+    {
+      "kind": "python",
+      "sample": 4,
+      "wall_ms": 8.370887
+    },
+    {
+      "kind": "python",
+      "sample": 5,
+      "wall_ms": 10.03871
+    },
+    {
+      "kind": "python",
+      "sample": 6,
+      "wall_ms": 8.695629
+    },
+    {
+      "kind": "python",
+      "sample": 7,
+      "wall_ms": 9.66906
+    },
+    {
+      "kind": "python",
+      "sample": 8,
+      "wall_ms": 9.137467
+    },
+    {
+      "kind": "python",
+      "sample": 9,
+      "wall_ms": 14.896839
+    },
+    {
+      "kind": "python",
+      "sample": 10,
+      "wall_ms": 8.839084
+    },
+    {
+      "kind": "python",
+      "sample": 11,
+      "wall_ms": 8.334523
+    },
+    {
+      "kind": "python",
+      "sample": 12,
+      "wall_ms": 11.171334
+    },
+    {
+      "kind": "python",
+      "sample": 13,
+      "wall_ms": 9.035817
+    },
+    {
+      "kind": "python",
+      "sample": 14,
+      "wall_ms": 10.732226
+    },
+    {
+      "kind": "python",
+      "sample": 15,
+      "wall_ms": 13.250028
+    },
+    {
+      "kind": "python",
+      "sample": 16,
+      "wall_ms": 10.323623
+    },
+    {
+      "kind": "python",
+      "sample": 17,
+      "wall_ms": 10.998427
+    },
+    {
+      "kind": "python",
+      "sample": 18,
+      "wall_ms": 8.772385
+    },
+    {
+      "kind": "python",
+      "sample": 19,
+      "wall_ms": 11.347357
+    },
+    {
+      "kind": "native",
+      "sample": 0,
+      "wall_ms": 1.046558
+    },
+    {
+      "kind": "native",
+      "sample": 1,
+      "wall_ms": 0.736817
+    },
+    {
+      "kind": "native",
+      "sample": 2,
+      "wall_ms": 0.665461
+    },
+    {
+      "kind": "native",
+      "sample": 3,
+      "wall_ms": 0.517941
+    },
+    {
+      "kind": "native",
+      "sample": 4,
+      "wall_ms": 0.791708
+    },
+    {
+      "kind": "native",
+      "sample": 5,
+      "wall_ms": 0.581375
+    },
+    {
+      "kind": "native",
+      "sample": 6,
+      "wall_ms": 0.507896
+    },
+    {
+      "kind": "native",
+      "sample": 7,
+      "wall_ms": 0.499503
+    },
+    {
+      "kind": "native",
+      "sample": 8,
+      "wall_ms": 0.500545
+    },
+    {
+      "kind": "native",
+      "sample": 9,
+      "wall_ms": 0.428588
+    },
+    {
+      "kind": "native",
+      "sample": 10,
+      "wall_ms": 0.438082
+    },
+    {
+      "kind": "native",
+      "sample": 11,
+      "wall_ms": 0.49689
+    },
+    {
+      "kind": "native",
+      "sample": 12,
+      "wall_ms": 1.21583
+    },
+    {
+      "kind": "native",
+      "sample": 13,
+      "wall_ms": 0.721133
+    },
+    {
+      "kind": "native",
+      "sample": 14,
+      "wall_ms": 0.851337
+    },
+    {
+      "kind": "native",
+      "sample": 15,
+      "wall_ms": 0.674454
+    },
+    {
+      "kind": "native",
+      "sample": 16,
+      "wall_ms": 0.534706
+    },
+    {
+      "kind": "native",
+      "sample": 17,
+      "wall_ms": 0.775033
+    },
+    {
+      "kind": "native",
+      "sample": 18,
+      "wall_ms": 0.846029
+    },
+    {
+      "kind": "native",
+      "sample": 19,
+      "wall_ms": 0.839649
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "run": "2026-11-15-local-speed",
+  "accountable_manager": "chatgpt-workspace-6ee41b0f0cca/root",
+  "base_agent": "cb1a590e0008dde7e3fc2d3fbf341ef98401b32a",
+  "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+  "vibecomfy_agent_pin_unchanged": "dba38f8644c46f652376f2cd5112ea161e40f09b",
+  "base_git_blobs": {
+    "astrid/core/generation/backends/comfy_target.py": "fec01b40cd2d99de2012f787bc18e7506e289793",
+    "tests/core/generation/backends/test_comfy_target.py": "cac2f69f489da0afb9eb968b21ccd78b69a9bdc4",
+    "tests/core/generation/test_output_delivery.py": "dd2366b350093c2b9c002225fcefd7fec7496b77",
+    ".github/workflows/lanes.yml": "074bb82c4e157aef5cd4423ef5831fbbad1f955f"
+  },
+  "patch_sha256": "997481bdf3dc33e51bb540993f786bd837ec94c4ce6cc0944f5f04aeed6b43cb",
+  "merged": false,
+  "pushed": false,
+  "rs1_rounds_used": 0,
+  "final_r_rounds_used": 0,
+  "spend": 0
+}
