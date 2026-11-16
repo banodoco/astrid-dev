@@ -132,7 +132,7 @@ class StrategyTests(unittest.TestCase):
     BRANCH_HEAD = "## Branches\n\n| Repository | Branch | Role | Cut at | State |\n| --- | --- | --- | --- | --- |\n"
     BRANCH_ROWS = ("| astrid-agent | `release/14/main` | release | not yet cut | open |\n"
                    "| astrid-agent | `release/14/plan-40` | plan 40 | not yet cut | open |\n"
-                   "| astrid-agent | `release/14/tester-fixes` | fix | " + "a" * 40 + " | merged |\n")
+                   "| astrid-agent | `release/14/tester-fixes` | fix #721 | " + "a" * 40 + " | merged |\n")
 
     def branch_page(self, rows=None, head=None, section=True):
         body = self.RELEASE.replace("Release 13", "Release 14").replace("**Release:** 13", "**Release:** 14")
@@ -171,6 +171,11 @@ class StrategyTests(unittest.TestCase):
         self.assertBranchError("exactly release/14/plan-40", rows=self.BRANCH_ROWS.replace("plan-40", "plan-4"))
         for topic in ("main", "plan-9", "Bad_Topic"):
             self.assertBranchError("lowercase slug", rows=self.BRANCH_ROWS.replace("tester-fixes", topic))
+
+    def test_fix_role_names_an_issue(self):
+        self.assertBranchError("names its issue", rows=self.BRANCH_ROWS.replace("fix #721", "fix"))
+        for role in ("fix 721", "fix #", "fix #x1", "fix#721"):
+            self.assertBranchError("Role must be", rows=self.BRANCH_ROWS.replace("fix #721", role))
 
     def test_branches_cut_and_state(self):
         self.assertBranchError("Cut at", rows=self.BRANCH_ROWS.replace("a" * 40, "A" * 40))

@@ -326,9 +326,13 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
         if (repo, branch) in seen:
             errors.append(f"{label}: duplicate repository and branch")
         seen.add((repo, branch))
-        kind = "plan" if role.startswith("plan ") else role
-        if kind not in BRANCH_STATES or (kind == "plan" and not re.fullmatch(r"plan \d+", role)):
-            errors.append(f"{label}: Role must be release, plan <PP> or fix")
+        kind = "plan" if role.startswith("plan ") else "fix" if role.startswith("fix") else role
+        if role == "fix":
+            errors.append(f"{label}: a fix branch names its issue; Role must be fix #<issue>")
+            continue
+        if kind not in BRANCH_STATES or (kind == "plan" and not re.fullmatch(r"plan \d+", role)) \
+                or (kind == "fix" and not re.fullmatch(r"fix #\d+", role)):
+            errors.append(f"{label}: Role must be release, plan <PP> or fix #<issue>")
             continue
         repeated = kind == "release" and repo in release_repos
         (release_repos if kind == "release" else other_repos).add(repo)

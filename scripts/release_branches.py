@@ -116,6 +116,19 @@ def ancestor_check(clones: dict[str, Path], api):
     return check
 
 
+def api_issue_exists(api):
+    """An issue-existence oracle over the GitHub API; 404 is False, anything else unanswerable."""
+    def exists(number: int) -> bool:
+        try:
+            api("GET", f"/repos/{OWNER}/astrid-dev/issues/{number}")
+        except urllib.error.HTTPError as exc:
+            if exc.code == 404:
+                return False
+            raise NotVerified(f"GitHub issue lookup failed: HTTP {exc.code}") from exc
+        return True
+    return exists
+
+
 def ancestry(report: Report, label: str, check, repo: str, inner: str, outer: str | None,
              what: str, wrong: str) -> None:
     """Record one ancestry claim: flagged when false, not verified when it cannot be answered."""
@@ -131,12 +144,22 @@ def ancestry(report: Report, label: str, check, repo: str, inner: str, outer: st
         report.flagged.append(f"{label}: {exc}")
 
 
-def verify(text: str, number: int, remote=ls_remote, check=None) -> Report:
+def verify(text: str, number: int, remote=ls_remote, check=None, issue_exists=None) -> Report:
     """Check the table against the repositories. `remote` and `check` are injectable for tests."""
     rows = release_rows(text, number)
     read_heads(rows, remote)
     check = check or ancestor_check({}, None)
     report = Report(rows=rows)
+    for row in rows:
+        if row["role"].startswith("fix #"):
+            label, issue = f"{row['repo']} {row['branch']}", int(row["role"][5:])
+            try:
+                if issue_exists is None:
+                    raise NotVerified("no GH_TOKEN")
+                if not issue_exists(issue):
+                    report.flagged.append(f"{label}: issue #{issue} does not exist in {OWNER}/astrid-dev")
+            except NotVerified as exc:
+                report.unverified.append(f"{label}: issue #{issue} not verified ({exc})")
     heads = {(row["repo"], row["branch"]): row["head"] for row in rows}
     release_main = {row["repo"]: row["head"] for row in rows if row["role"] == "release"}
     for row in rows:
@@ -202,7 +225,8 @@ def main(argv=None) -> int:
             print(table(rows))
             return 0
         api = request if os.environ.get("GH_TOKEN") else None
-        report = verify(text, args.number, check=ancestor_check(parse_clones(args.clone), api))
+        report = verify(text, args.number, check=ancestor_check(parse_clones(args.clone), api),
+                        issue_exists=api_issue_exists(api) if api else None)
         print(table(report.rows))
         print()
         for line in report.flagged:
