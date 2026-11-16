@@ -282,6 +282,9 @@ def release_issue_block(text: str) -> dict:
 
 
 PRODUCT_REPOSITORIES = ("astrid-agent", "astrid-runtime", "astrid-app", "VibeComfy", "astrid-pinokio")
+# The astrid-dev plan branch records the plan's own live record. It is not a
+# product release branch and therefore does not require a `release/<N>/main` row.
+PLAN_RECORD_REPOSITORY = "astrid-dev"
 BRANCH_FIRST_RELEASE = 14
 BRANCH_COLUMNS = ["Repository", "Branch", "Role", "Cut at", "State"]
 BRANCH_STATES = {"release": ("open", "published"), "plan": ("open", "merged"), "fix": ("open", "merged")}
@@ -315,8 +318,9 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
             continue
         repo, branch_cell, role, cut, state = row
         label = f"Branches row {repo} {branch_cell}"
-        if repo not in PRODUCT_REPOSITORIES:
-            errors.append(f"{label}: Repository must be one of {', '.join(PRODUCT_REPOSITORIES)}")
+        if repo not in (*PRODUCT_REPOSITORIES, PLAN_RECORD_REPOSITORY):
+            allowed = (*PRODUCT_REPOSITORIES, PLAN_RECORD_REPOSITORY)
+            errors.append(f"{label}: Repository must be one of {', '.join(allowed)}")
         quoted = re.fullmatch(r"`([^`]+)`", branch_cell)
         branch = quoted.group(1) if quoted else None
         if not branch:
@@ -355,7 +359,7 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
             errors.append(f"{label}: Cut at must be 40 lowercase hex characters or not yet cut")
         if state not in BRANCH_STATES[kind]:
             errors.append(f"{label}: State for a {kind} row must be {' or '.join(BRANCH_STATES[kind])}")
-    for repo in sorted(other_repos - release_repos):
+    for repo in sorted(other_repos - release_repos - {PLAN_RECORD_REPOSITORY}):
         errors.append(f"Branches repository {repo}: has a plan or fix row but no release row")
     return list(dict.fromkeys(errors))
 

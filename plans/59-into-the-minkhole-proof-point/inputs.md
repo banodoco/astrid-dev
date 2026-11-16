@@ -16,13 +16,13 @@
 
 **Review rounds:** One owner review stop for the finished creative result; taste choices are brought back as they arise.
 
-**Run start:** Started 16 November 2026 by Hannah in accountable session `session_011EzfW4BJ221kXBNRB4xQcG`. The session may dispatch work on the loop, create and push Release 14 plan/task branches, file listed issues after duplicate search, and use RunPod within the stated $25 total ceiling and split. Owner review is required for taste choices and the final result; normal pull request, merge and publication authority follows the release workflow. Advisor: none.
+**Run start:** Started 16 November 2026 by Hannah in accountable session `session_011EzfW4BJ221kXBNRB4xQcG`. On 16 November, the owner extended this session's authority to update the plan, release brief and records, and to file astrid-dev issues without asking first. The session may dispatch work on the loop, create and push Release 14 plan/task branches, file listed issues after duplicate search, and use RunPod within the stated $25 total ceiling and split. Pull requests, merges into `release/14/main`, creative reviews and spend beyond $25 still require the owner's go. Advisor: none.
 
 ## Owner decisions
 
 - **D1 — Release inclusion:** Decided 16 November 2026: yes, include in Release 14 (“add it to the release”). The release manager adds Plan 59 to the Included plans list in `releases/14.md`.
-- **D2 — Appearance ground truth:** Decided 16 November 2026: where preview and export disagree, preview is ground truth. The owner suspects the deeper fix is the composition package as the single source of truth.
-- **D3 — Compositor source maintenance:** Open until the single-source sizing is in.
+- **D2 — Shared appearance and migration:** Decided 16 November 2026: one placement function owned by the composition package is called by export rendering, editor preview and editing handles; delete their local copies. Fit is authored per clip, falling back to its track. Replace the implicit “geometry or crop means cover” rule by writing the choice explicitly once when an old project is opened.
+- **D3 — Shipped composition package source:** Open pending the investigation into where the shipped 0.0.17 package source is. The first step is establishing that source location; then settle how its shared implementation is maintained.
 - **D4 — Budget:** Decided 16 November 2026: at most $2/hour; $3 pilot, $6 experiments, $4 retries, $3 fresh-agent trial, $9 reserve; $25 total. No other paid resource.
 - **D5 — Review:** Decided 16 November 2026: one review stop is fine.
 

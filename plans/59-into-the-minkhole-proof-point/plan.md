@@ -10,7 +10,7 @@
 
 **Estimate:** TBD; the work advances one creative task at a time.
 
-**Waiting on:** D3, how the compositor source is maintained, until single-source sizing is in.
+**Waiting on:** D3, locating the shipped 0.0.17 composition package source; its investigation is in progress.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
