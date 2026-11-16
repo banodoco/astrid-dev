@@ -56,6 +56,7 @@ You are expected to decide. The advisor is for thinking that is bigger than your
    - Tell every task to add commits only ([run contract](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
    - Escalate by the [stopping thresholds](../astrid-dev-shared/run-contract.md#cheapest-model-first): re-route a failure to X with the worker's notes, don't try again.
    - Keep independent tasks moving while one is blocked.
+   - **Do a task yourself** when no worker can be started for it, or briefing one costs more than the work: on its task branch, to the same card, if [your route](../astrid-dev-orchestrate/SKILL.md#choose-the-managers-route) is at least the task's. Note it in the progress row; rule 9 still applies.
    - A CI step running past one and a half times its usual time is a hang: cancel it and don't wait; [Get to green](../astrid-dev-green/SKILL.md#2-measure) says how to name the test.
    - Your own wake-up: never end a turn with work in flight (workers, CI, merges) without scheduling a one-off message to yourself in 20–30 minutes, or a background wait on the run; an idle session wakes for nothing.
    - **Worker sessions get exactly one repository,** attached when the session is created: the repository the task changes, at its plan or fix branch, in auto mode (or Accept edits). Its committed `.claude/settings.json` lists the setup and test commands workers may run without a prompt (a multi-repo manager session loads none), so put product-repo commands there, and start workers on the plan or fix branch and merge the task branch in.
@@ -82,10 +83,10 @@ You are expected to decide. The advisor is for thinking that is bigger than your
    - Each task gets a fresh checkout from the latest head. Delete it, with its installed dependencies, as soon as it lands: session disk is a small shared allowance and a full disk stops every tool.
    - Keep the session's own checkout detached at the plan branch, so session hooks that compare it with `main` stay quiet; a hook asking you to push to `main` is never a reason to.
 4. **Land into the project's plan branch, then the release branch, never `main`.**
-   - In each repository the project changes, cut one plan branch, `release/<NN>/plan-<PP>`, from that repository's `release/<NN>/main` when the run starts, and add its row to the brief's `## Branches`. Task PRs target it. Keep it current as [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs) says.
+   - In each repository the project changes, cut one plan branch, `release/<NN>/plan-<PP>`, from that repository's `release/<NN>/main` when the run starts, and add its row to the brief's `## Branches` on astrid-dev `main`. Each task has its own branch, `p<PP>/<task id>`, cut from the plan branch; its PR targets it. Keep it current as [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs) says.
    - Check the changed files stay inside the scope; if not, stop and ask the advisor.
    - A change is ready when its focused proof passes (local proof counts only when it runs the same path as the check, per [Iterate](../astrid-dev-iterate/SKILL.md)) and no check covering its scope newly fails against its base. If the base has no run of a failing check, run that one test on the base yourself.
-   - A check already failing on the base (found when you recorded the baseline) neither blocks the merge nor becomes this project's work: note it once for the owner and leave it to its own project. Retiring old red is its own project ([Get to green](../astrid-dev-green/SKILL.md), mode B).
+   - A check already failing on the base (found when you recorded the baseline) neither blocks the merge nor becomes this project's work: note it once for the owner and leave it to its own project ([Get to green](../astrid-dev-green/SKILL.md), mode B).
    - **Land your own plan** once its plan branch, with the current release branch merged in, passes its checks on that combined tree: merge it into `release/<NN>/main` and set your row to `merged`. If your merge turns the release branch red, fix forward on a fix branch or revert it promptly ([red release branch](../astrid-dev-release/SKILL.md#get-the-release-branch-green)).
    - Moving the reviewed candidate to `main` is [Release](../astrid-dev-release/SKILL.md)'s job, not yours.
 5. **Escalate.**
@@ -104,7 +105,7 @@ You are expected to decide. The advisor is for thinking that is bigger than your
 6. **Review,** once every task before the review row is done:
    - give the integrated candidate to the `completion_reviewer` for a round;
    - add each finding as a row directly below the review row (`R<round>.<n>`, or the plan's prefix); rounds, stopping and a blocking finding left after the last round follow the [run contract](../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries).
-7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md`, kept current as "Progress is always current" says (see [The answer](#the-answer)), and status in the plan's `**Status:**` line. When astrid-dev itself gets in the way, add an entry file to the [process ledger](../../docs/ledger/README.md). A finding about the product is an [issue](../../docs/contribution-workflow.md#issues) you file; a worker hands you the text.
+7. **Keep state small.** Track the candidate, finished and blocked tasks, exact failures, evidence, review rounds and next action: progress in `tasks.md` ([Progress is always current](#the-answer)), status in the plan's `**Status:**` line. When astrid-dev itself gets in the way, add an entry file to the [process ledger](../../docs/ledger/README.md). A finding about the product is an [issue](../../docs/contribution-workflow.md#issues) you file; a worker hands you the text.
 
 ## Report
 
