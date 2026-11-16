@@ -75,13 +75,13 @@ The 35 to 47 worker-days do not divide by the number of workers, because four st
 
 | Wave | Workers | Work | Elapsed |
 | --- | --- | --- | --- |
-| 0 | 1 to 3 | G0 and G1 redone on `release/14/main`; SF3a in the three repositories; the gate change above | about 1 day |
-| 1 | about 10 | The wiring cards, all independent: RE1 to RE4 in the Runtime, AE2 and the journey's install source in the Agent, the fake Runtime's routes in the App, K1a to K1c | 1 to 2 days |
+| 0 | 1 to 3 | G0 and G1 redone on `release/14/main`; SF3a in the three repositories; GL, the gate change above | about 1 day |
+| 1 | about 10 | The wiring cards, all independent: RE1 to RE4 in the Runtime, AE2 in the Agent, K1a to K1c, and AE1 and PE1 confirmed fixed | 1 to 2 days |
 | stop | 1 | G2, then the one review round RS1 | about 1 day |
-| 2 | 10 to 15 | One worker per cause from G2's clusters, the three repositories at once; K2 and K3 beside them | 4 to 7 days, set by the Agent's count |
+| 2 | 10 to 15 | One worker per cause from G2's clusters, the three repositories at once, with the Windows journey (AT4) and the App's fake Runtime (PT2) among them; K2, K3, SF3b and SF3c beside them | 4 to 7 days, set by the Agent's count |
 | 3 | 1 | Three green nights, then the final review R | 3 days at least |
 
-That is 10 to 14 days elapsed, as the [estimate](tasks.md#estimate) says. More workers shorten wave 2 only; more CI capacity shortens every wave. The rule in the estimate still holds: if G2 shows more than 60 distinct Agent causes, the manager splits AT1 and re-estimates before going on.
+The rows in each wave are listed in [tasks.md](tasks.md#release-14-waves). That is 10 to 14 days elapsed, as the [estimate](tasks.md#estimate) says. More workers shorten wave 2 only; more CI capacity shortens every wave. The rule in the estimate still holds: if G2 shows more than 60 distinct Agent causes, the manager splits AT1 and re-estimates before going on.
 
 ### Issues
 
