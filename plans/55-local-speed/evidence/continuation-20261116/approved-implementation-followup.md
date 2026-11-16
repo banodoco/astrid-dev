@@ -109,3 +109,54 @@ checkpoint. CPU work remains authorised; GPU proof and the final review
 stay open. No unspecified re-pin, publication or product-main merge follows
 from this addendum. Routes used: Unknown — original bindings unavailable;
 direct bounded manager work, not an independent reviewer.
+
+## E5 — Subsequent strict decoder and observer test corrections
+
+The existing Agent #359 observer candidate at `74ed3d7b838a0ced901a12c707b7d3ee2a4cd4eb`
+failed a new calibration on both hosted OSes in run
+[43942400532](https://github.com/banodoco/astrid-agent/actions/runs/43942400532):
+**81 passed, one failed, two deselected per OS**. Its new negative-fd test
+called `os.fsync(-1)`, which Python rejected with `ValueError` *before*
+the C-level `c_exception` the test was designed to observe.
+The narrowly corrected test uses a once-valid, now-closed descriptor and
+retains the same attempted/error/no-success assertions. The exact test blob
+`43d15e9f8eff04492130a1168bcc6e4efbd2cb4f` passed its real
+ProcessObserver oracle on both OSes in
+[43950915734](https://github.com/banodoco/astrid-agent/actions/runs/43950915734).
+Appended only that tested file to #359 by expected-head fast-forward as
+`d083878970ef1ac04ff11426b8c716397d675a6d`; the new full meter
+[43951310565](https://github.com/banodoco/astrid-agent/actions/runs/43951310565)
+is separately pending and must not be assumed green. Neither source observer
+nor real product behavior was relaxed.
+
+The first actual offline Windows replay
+[43945137375](https://github.com/banodoco/astrid-agent/actions/runs/43945137375)
+verified the existing archived ETL/proof, passed seven decoder tests and
+**completed tracerpt conversion (exit 0, about 8m42s)** after the previous
+180-second limit. Subsequent strict `trace_etw` parsing of its large decoded
+XML was cancelled at the 35-minute job bound during `ET.iterparse`.
+Original replay artifact `14267022761`, SHA-256
+`d86cdd9568d3debb2be8f2bc062d080c8d9b0320a0ac33cca07bfe45be7f4d8b`.
+The original generation/counter JUnit says two passing tests; **native
+counts remain NO-RESULT** because parsing did not complete.
+
+The decoder branch `p55/windows-trace-decode-20261116` adds a strict
+streaming-memory correction: after each fully parsed Event is yielded,
+remove that Event from its parent rather than retaining unlimited empty
+siblings. Commit `c07c5166a8d17600d7cb609f1691584ff5103717`
+changes the reader, and `18518e0e285f8ccc75b2d7ed9231786d60a649bc`
+adds a 512-event nested-parent retention oracle. This is NOT event
+sampling; loss accounting, flush start/OpEnd pairing, caller intervals and
+strict unknown-as-unknown attribution remain unchanged. Independent hosted
+[43952611444](https://github.com/banodoco/astrid-agent/actions/runs/43952611444)
+succeeded on both OSes: **14 native-reader pytest cases and eight decoder
+oracles per OS**. Actual archived-ETL replay
+[43951926641](https://github.com/banodoco/astrid-agent/actions/runs/43951926641)
+is pending as a separate load-bearing check. No native count is inferred
+from parser-only tests. Preserve the original artifact SHA discrepancy in E3.
+
+Neither decoder branch nor its proof-only workflow is merged into #359
+while #359's qualifying meter is in flight. All commits are additive; the
+old ignored run state is still absent. No task completion, speed promise,
+GPU action, publication, re-pin, additional review round or expenditure
+is claimed. D10–D13 remain approved.
