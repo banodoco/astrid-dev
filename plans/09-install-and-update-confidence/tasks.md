@@ -4,6 +4,8 @@
 
 The project is planned, not dispatched. Exact test selectors are not present in the source plan; identify them during task setup. Do not run broad or auto-discovered suites. Task progress is the single `[ ]` record in each index row/card.
 
+The separately paused [legacy-to-standalone conversion draft](legacy-conversion/tasks.md) records its own proposed task cards and intersects IU-1 and IU-13. Its cards are not part of this index's current dispatch or completion set; reconcile the shared work before either run uses them.
+
 ## Task index
 
 | ID / outcome | Route | Depends on | Progress |
