@@ -29,4 +29,16 @@ def plan_gap_ids(plan_text: str) -> list[str]:
         raise ValueError("Vision gaps declaration needs a gap document link")
     if len(ids) != len(set(ids)):
         raise ValueError("duplicate gap IDs in plan declaration")
+    # The first linked gap is the one project owns. Other gaps may inform
+    # dependencies, but the public vision renders this project only once.
+    primary_count = len(re.findall(r"\(primary\)", gaps[0]))
+    if primary_count != 1:
+        raise ValueError("project must declare exactly one primary vision gap")
+    first_link = GAP_LINK.search(gaps[0])
+    first_primary = re.search(r"\(primary\)", gaps[0])
+    second_link = list(GAP_LINK.finditer(gaps[0]))
+    if first_link is None or first_primary is None or first_primary.start() < first_link.end():
+        raise ValueError("primary gap must follow the first gap link")
+    if len(second_link) > 1 and first_primary.start() > second_link[1].start():
+        raise ValueError("primary gap must be the first linked gap")
     return ids

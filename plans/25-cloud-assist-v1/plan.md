@@ -1,5 +1,17 @@
 # 25 — Cloud-assisted Astrid V1 (local files)
 
+**Project:** Cloud-assisted Astrid V1 (local files)
+
+**Goal:** Keep the project database and files local while approved cloud agents, generation APIs and a remote video renderer perform work, returning editable results with consent, cost controls and recovery.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; approved providers and cost limits; local-file custody contract
+
 **Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and review [tasks](tasks.md) and [inputs](inputs.md). Priority, owner, estimate and status live **only** in [plans/index.md](../index.md).
 
 **Vision gaps:** [F-005 — Local projects cannot yet use coherent cloud execution](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary); [F-003 — dependable creative execution](../../vision/gaps/F-003-creative-execution.md) and [F-002 — safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). Do not claim those cross-cutting gaps closed on V1 alone.

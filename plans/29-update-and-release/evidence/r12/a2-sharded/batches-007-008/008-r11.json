@@ -1,0 +1,194 @@
+{
+  "batch": "008",
+  "side": "r11",
+  "modules": [
+    "tests/core/execution/test_generic_host_activation.py"
+  ],
+  "pins_and_python": [
+    "a105de3a4852cb61b9647dfe2c920118bd29f272",
+    "4f5477cb0f5b03d28bec991a1fe34edcd8fc309f",
+    "e65f4941d09b1cb4d1dd5aae6171c73e648706f4",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T05:38:59Z",
+  "end_utc": "2026-11-11T05:39:01Z",
+  "exit": 0,
+  "summary": "============================== 39 passed in 1.51s ==============================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_waits_for_owner_receipt_before_final_ack",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[callback]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[disconnect]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[malformed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[activation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[incarnation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[credential]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[pid]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[birth]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[operation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[channel]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[duplicate]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_failed_or_mismatched_receipt_without_ack[out_of_order]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_rejects_fragment_of_duplicate_receipt_without_ack",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_machine_receiver_cannot_downgrade_to_legacy_ack",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_local_receiver_continues_same_incarnation_when_final_ack_send_is_lost",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_accepts_one_same_process_grant_before_continuing",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_remote_socket_receiver_uses_same_private_activation_frame",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_remote_socket_receiver_rejects_overlong_unix_path",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_remote_socket_receiver_refuses_windows_before_socket_creation",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-wrong private channel0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-wrong private channel1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-version]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-incarnation]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-digest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-process identity0]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-process identity1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_rejects_wrong_or_stale_grant[<lambda>-credential]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_targeted_direct_launch_refuses_before_bootstrap",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_parked_host_times_out_without_reading_a_credential",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_activated_host_waits_for_runtime_to_enable_disabled_bearer",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_disabled_bearer_never_passes_public_health",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_authenticated_readiness_rejects_foreign_or_incomplete_handshake[actor_id-foreign-host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_authenticated_readiness_rejects_foreign_or_incomplete_handshake[scopes-value1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_authenticated_readiness_rejects_foreign_or_incomplete_handshake[scopes-value2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_authenticated_readiness_rejects_foreign_or_incomplete_handshake[realm_id-]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_authenticated_readiness_rejects_foreign_or_incomplete_handshake[schema_digest-sha256:foreign]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_generic_host_activation.py::test_authenticated_readiness_rejects_foreign_or_incomplete_handshake[protocol-foreign.v1]",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [],
+  "source_log_sha256": "5aa940bfcda3895fc8ff4455a105db978dac4d1396c2e36dde59f04f80bcef69",
+  "source_receipt_sha256": {
+    "start.txt": "fba97a61e900532b9d231935f2b3da63184f4008f781646de86b70d450ded633",
+    "end.txt": "9d45464d360a61d680983525c1e5b8a2693a9eb7a4380e96a52c5d7cc6c059dc",
+    "module.txt": "6dff99ba735c953d2aa629c2c9f21b76b0afd679531c8cd32f127933f5d7b1ca",
+    "pins.txt": "e719eecfc1d208291853f687fcd3ab348897aded4a80c14cde0b2d46925b2136",
+    "exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "5b4c319b46e8298c0cf2dd41bb5590621ff0e28783468c8f92c65c2c05c44664",
+    "SHA256SUMS": "0c92ffba365e1867c444f95a695559b0e18cde42f02e334e26da3f179bfe4fe7"
+  }
+}

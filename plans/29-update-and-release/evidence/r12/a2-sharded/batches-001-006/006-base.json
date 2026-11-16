@@ -1,0 +1,360 @@
+{
+  "batch": "006",
+  "side": "base",
+  "modules": [
+    "tests/core/execution/test_fail_closed_g28.py"
+  ],
+  "pins_and_python": [
+    "313bbd46f1e24bfe635655d78b27ab0b321145d5",
+    "42ae24aff8d2cb854f874ce134161077a3ba3641",
+    "e65f4941d09b1cb4d1dd5aae6171c73e648706f4",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T05:12:55Z",
+  "end_utc": "2026-11-11T05:14:24Z",
+  "exit": 1,
+  "summary": "=================== 1 failed, 79 passed in 88.26s (0:01:28) ====================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[failure_handler]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[system_exit]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[allocate]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[heartbeat]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[pump_start]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[error_string]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[error_properties]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[error_normalizer]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[normalized_attributes]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_fault_reaches_terminal_state_and_receipt[failure_rpc]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[preflight]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[contract_preflight]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[materialize]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[harvest]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[settlement]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[authority]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[contract]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[busy]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[claim_deadline]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_cancellation_records_terminal_state_and_receipt[local]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_cancellation_records_terminal_state_and_receipt[runtime]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_cancel_completion_error_propagates_and_retains_pending_evidence[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_cancel_completion_error_propagates_and_retains_pending_evidence[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[task_read]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[queued]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[successor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[fence]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[heartbeat]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[expired]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[resource_expired]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[null_expiry]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[invalid_expiry]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_is_failure_with_terminal_receipt[naive_expiry]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_lease_loss_keeps_last_successful_heartbeat_receipt",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_renewal_requires_semantic_progress_and_never_begins_after_deadline[mapping]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_renewal_requires_semantic_progress_and_never_begins_after_deadline[resource]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_failure_rpc_uses_claimed_epoch_and_private_bounded_transport",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_real_runtime_fenced_terminal_state_and_result[executor]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_real_runtime_fenced_terminal_state_and_result[cancelled]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_real_runtime_fenced_terminal_state_and_result[lease_lost]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_real_runtime_fenced_terminal_state_and_result[lease_expired]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_failure_receipt_exists_before_optional_output_harvest_returns",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_heartbeat_contention_cannot_wait_past_the_deadline",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_heartbeat_short_contention_preserves_normal_serialization",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_claim_setup_failure_uses_same_terminal_receipt_boundary[heartbeat]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_claim_setup_failure_uses_same_terminal_receipt_boundary[task_read]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_claim_setup_failure_uses_same_terminal_receipt_boundary[contract]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_claim_setup_failure_uses_same_terminal_receipt_boundary[handoff_identity]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_claim_setup_failure_uses_same_terminal_receipt_boundary[shutdown]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_claim_forwards_immutable_deadline_to_existing_attempt[mapping]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_claim_forwards_immutable_deadline_to_existing_attempt[resource]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_absolute_deadline_bounds_all_existing_lifetime_phases[setup]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_absolute_deadline_bounds_all_existing_lifetime_phases[execution]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_absolute_deadline_bounds_all_existing_lifetime_phases[collection]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_malformed_claim_deadline_fails_with_terminal_receipt[not-a-timestamp]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_malformed_claim_deadline_fails_with_terminal_receipt[2026-10-29T12:00:00]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_malformed_claim_deadline_fails_with_terminal_receipt[42]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_provider_setup_failure_preserves_g21_error_metadata",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_silent_owner_renews_across_multiple_ttls_without_progress_credit",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_silent_owner_renewal_cannot_extend_immutable_absolute_deadline",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_changed_owner_stops_before_liveness_or_publication[change0-attempt_changed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_changed_owner_stops_before_liveness_or_publication[change1-fence_changed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_changed_owner_stops_before_liveness_or_publication[change2-task_state_changed]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_transient_transport_recovers_inside_last_acknowledged_validity[False-read]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_transient_transport_recovers_inside_last_acknowledged_validity[False-heartbeat]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_transient_transport_recovers_inside_last_acknowledged_validity[True-read]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_transient_transport_recovers_inside_last_acknowledged_validity[True-heartbeat]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_initial_transport_fault_can_recover_within_acknowledged_claim_validity",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_sustained_transport_stops_at_last_acknowledged_expiry[read]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_sustained_transport_stops_at_last_acknowledged_expiry[heartbeat]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_heartbeat_acknowledgement_after_prior_expiry_cannot_restore_ownership",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_typed_rejection_is_definitive_despite_remaining_validity[lease_fenced]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_typed_rejection_is_definitive_despite_remaining_validity[forbidden]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_typed_rejection_is_definitive_despite_remaining_validity[invalid_response]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_task_read_cannot_extend_last_acknowledged_lease_validity",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_periodic_liveness_requires_an_independent_finite_deadline",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_adapter_caps_each_transport_and_lock_wait_to_remaining_validity[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_adapter_caps_each_transport_and_lock_wait_to_remaining_validity[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_fail_closed_g28.py::test_hung_command_is_stopped_and_reaped_by_unchanged_absolute_deadline",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_fail_closed_g28.py::test_stalled_stage_deadline_publishes_before_stage_returns[settlement] - AssertionError: assert 'running' == 'failed'"
+  ],
+  "source_log_sha256": "6a5d496fe2629a7fff608d0aa188991e3ddaadce65efd163ce45cfb5983e2a72",
+  "source_receipt_sha256": {
+    "start.txt": "6e4834e7fc2279014bcab2ac252c690a3d3b39f9d5f77415e7d6a4124c5adccd",
+    "end.txt": "7b08344fbb68e5637007532590bfa2b0e80ea5548f2e430bd89e01aef1188afb",
+    "module.txt": "fa70894bad15f1e4e3527b5f0d2a4614c11d34b58ca3f7a1e7181c895164af79",
+    "pins.txt": "ccde53e93428ccaf574f64fb1caf2979cf6f7e4334fe2b42d19dbbfdc01c4bde",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "d637c4c7b90dde0435dd5f8de65661a6ce02441300b726f71ee376700e7d364b",
+    "SHA256SUMS": "319087bbe0424e17326abb3f8dea2bb4e380fcbee7f6cf30028b0c9ed26ac819"
+  }
+}

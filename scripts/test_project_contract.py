@@ -18,6 +18,17 @@ class ProjectContractTests(unittest.TestCase):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 plan_gap_ids(text)
 
+    def test_primary_gap_must_be_first_and_unique(self):
+        first = "[One](../../vision/gaps/F-001-platform-reliability.md)"
+        second = "[Two](../../vision/gaps/F-002-safe-user-control.md)"
+        for entry in [
+            "**Vision gaps:** " + first + " (supporting).\n",
+            "**Vision gaps:** " + first + " (primary) " + second + " (primary).\n",
+            "**Vision gaps:** " + first + " (supporting) " + second + " (primary).\n",
+        ]:
+            with self.subTest(entry=entry), self.assertRaises(ValueError):
+                plan_gap_ids(entry)
+
     def test_project_ids_scale(self):
         self.assertEqual(project_number("plans/01-first/plan.md"), "01")
         self.assertEqual(project_number("plans/100-many/plan.md"), "100")

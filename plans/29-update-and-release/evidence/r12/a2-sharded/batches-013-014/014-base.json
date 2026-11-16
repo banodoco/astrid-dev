@@ -1,0 +1,212 @@
+{
+  "batch": "014",
+  "side": "base",
+  "modules": [
+    "tests/core/execution/test_platform_helpers.py",
+    "tests/core/execution/test_private_network_command.py"
+  ],
+  "pins_and_python": [
+    "313bbd46f1e24bfe635655d78b27ab0b321145d5",
+    "42ae24aff8d2cb854f874ce134161077a3ba3641",
+    "e65f4941d09b1cb4d1dd5aae6171c73e648706f4",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T07:57:42Z",
+  "end_utc": "2026-11-11T07:58:06Z",
+  "exit": 1,
+  "summary": "=================== 4 failed, 35 passed, 3 skipped in 22.45s ===================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_owner_check_uses_handle_not_stat_uid",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_posix_owner_check_preserves_permissions[384-True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_posix_owner_check_preserves_permissions[416-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_posix_owner_check_preserves_permissions[438-False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_scope_spawn_delegates_to_runtime",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_task_stop_closes_job_without_posix_census",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_attempt_directory_is_private_from_creation[False]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_attempt_directory_is_private_from_creation[True]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_task_stop_reports_job_failure",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_orphan_recovery_preserves_unresolved_obligations[still-live]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_orphan_recovery_preserves_unresolved_obligations[observation-error]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_isolated_custody_wrapper_imports_runtime_without_site_initialization",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_owned_launch_retains_job_and_bypasses_pidfd",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_cleanup_accepts_exited_leader_and_drained_job",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_cleanup_rejects_live_job_descendants",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_cleanup_requires_a_job",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_cleanup_checks_leader_exit_before_job",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_recovered_group_refuses_missing_or_reused_birth[None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_recovered_group_refuses_missing_or_reused_birth[old]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_recovered_group_signals_only_runtime_bound_members",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_recovered_group_refuses_member_drift_before_any_signal[birth]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_recovered_group_refuses_member_drift_before_any_signal[group]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_recovered_group_refuses_member_drift_before_any_signal[missing]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_linux_recovery_uses_runtime_walk_with_checked_leader",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_linux_recovery_refuses_a_replaced_leader_before_any_signal",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_linux_recovery_without_its_leader_walks_members_only[reaped]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_linux_recovery_without_its_leader_walks_members_only[left-group]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_linux_recovery_of_an_empty_group_stays_quiet",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_linux_recovery_stops_a_real_group_whose_leader_was_reaped",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_scope_job_kills_descendants_after_leader_exit",
+      "outcome": "SKIPPED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_lock_and_owner_permissions_are_native",
+      "outcome": "SKIPPED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_windows_scope_dies_when_owner_process_exits",
+      "outcome": "SKIPPED"
+    },
+    {
+      "id": "tests/core/execution/test_platform_helpers.py::test_capability_children_configure_from_the_hosts_support_root",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[None--m]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[None--c]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_policy--m]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_policy--c]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_hook--m]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_hook--c]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[changed_hook--m]",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[changed_hook--c]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_private_network_command.py::test_private_network_command_rejects_other_interpreter",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[None--m] - astrid.core.execution.generic_host.HostError: external command module is outside selected pack namespace",
+    "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_policy--m] - AssertionError: Regex pattern did not match.",
+    "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[missing_hook--m] - AssertionError: Regex pattern did not match.",
+    "FAILED tests/core/execution/test_private_network_command.py::test_private_leaf_command_installs_network_before_pack_code[changed_hook--m] - AssertionError: Regex pattern did not match."
+  ],
+  "source_log_sha256": "d5b21133cb4eed9e7fcf05ae147a21aa9c33089a1f968ef5dab1cac1e4c8d625",
+  "source_receipt_sha256": {
+    "start.txt": "9f456496b59eac37582fe7174793ed6ef8efbcbfa20e3a846b88619541bf1759",
+    "end.txt": "8db69a015c18a0eb8524a16466c09fb912180ad8b75464e19438523510704052",
+    "module.txt": "ecf4803f69367e41a105ebd7c4ef9173b3fca5c5854d96c71a3e7fb41c225e60",
+    "pins.txt": "ccde53e93428ccaf574f64fb1caf2979cf6f7e4334fe2b42d19dbbfdc01c4bde",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "482665343e7cce9d707debb522fba87deae24d8c4e7a3694e0b78f8dffdb904e",
+    "SHA256SUMS": "750e05002588dcecf09c6c801f88b5c0f817a9de0381764c07f42cea197d31b6"
+  }
+}

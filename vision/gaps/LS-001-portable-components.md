@@ -1,6 +1,6 @@
 # LS-001 — Creative components can't yet move freely
 
-**Applies to:** [Agent-Powered Liquid Software](../pillars/liquid-software.md) (primary) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
+**Aspiration:** [Live tool composition](../pillars/liquid-software.md#live-tool-composition) (primary) · [Control at every layer](../principles/in-the-creators-control.md#control-at-every-layer) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
 
 ## Desired state
 
@@ -12,7 +12,7 @@ The [App source map](../../plans/24-liquid-workspace/inputs.md) identifies actua
 
 ## Gap
 
-Component definitions, instances, presentation/lifecycle and positioning are not yet proven independently composable across workspace layouts and domains.
+Component definitions, instances, presentation lifecycle, resizing and positioning are not yet proven independently portable across workspace layouts and creative domains. Responsive behavior and stable state during docking, nesting and container resizing are essential parts of this gap.
 
 ## Closure evidence
 

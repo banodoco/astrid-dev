@@ -1,5 +1,17 @@
 # Update everywhere: remaining setups
 
+**Project:** Update everywhere: remaining setups
+
+**Goal:** Finish Plan 29 for less common setups: Linux with systemd below 254, typed update contracts, refused cards, and update proof for Pinokio and fully local.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** 7–9
+
+**Waiting on:** Plan 29
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).

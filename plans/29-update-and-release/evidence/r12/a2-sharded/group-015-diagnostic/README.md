@@ -1,0 +1,7 @@
+# A2 group 015: isolated four-revision diagnostic
+
+Four sanitized JSON receipts contain the exact test selector, pinned Agent/Runtime/VibeComfy/lifecycle SHAs, Python version, Node/esbuild versions and binary hashes, timestamps, exit, pytest and failure summaries, and source receipt/log hashes. Raw logs, environment and credentials are excluded. On a coordinated host, the exact single test failed on all four revisions with the identical summary `CustodyError: initial custody observer census timed out`: R10 3.68s, R11 52.01s, base 146.53s, candidate 5.90s. Each had unchanged 600-second signal timeout and `faulthandler_timeout=300`; no 300-second traceback fired. No full grouped comparison follows from these isolated results, and they do not establish the cause of the earlier 600-second hang.
+
+The original overlapping group 015 R10 receipt remains at `/workspace/r12-a2-resume/sharded/history/015/r10-overlap-075841` and is excluded pending disposition. Full diagnostic receipts and logs are `/workspace/r12-a2-resume/sharded/diagnostics/diag-015-0839/r10` and `/workspace/r12-a2-resume/sharded/diagnostics/diag-015-other/{r11,base,candidate}`. All four exact IDs were present in frozen inventories, and each receipt's checksums, pin/toolchain values, terminal summary and 600-second timeout were verified. This is partial local evidence, not an A2 verdict.
+
+A targeted scan found no common GitHub token, OpenAI key, JWT, or long bearer-token patterns; this does not prove all possible secrets absent.

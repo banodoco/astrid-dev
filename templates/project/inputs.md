@@ -16,9 +16,17 @@ A compact record for a **new project's** decision. Bugs and small fixes use thei
 
 **Proof and limits:** Pending — Acceptance evidence and supported contexts are not yet known. Next: specify observable results, meaningful failure cases and unresolved assumptions.
 
+**Review rounds:** Pending — None for a simple, bounded project; otherwise recommend a number and say why ([guide](../../skills/astrid-dev-shared/run-contract.md#review-and-promotion-boundaries)). Next: the owner confirms.
+
+**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../skills/astrid-dev-shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one.
+
+## Owner decisions
+
+Number each decision the owner must make (`D1`, `D2`, …) with the options and your recommendation; when decided, add the date and the choice. If there are none, write `None` and keep the heading.
+
 ## Source identities
 
-Before code work, record the actual repository/ref/SHA, retained changes, base versus donors, and intended integration destination. Never guess or confuse historical snapshots with the current source.
+Before code work, record the actual repository/ref/SHA, retained changes, base versus donors, and intended integration destination: for a plan in Release 14 or later, the branch `release/<NN>/plan-<PP>` in each repository the plan changes, cut from that repository's `release/<NN>/main`. Never guess or confuse historical snapshots with the current source.
 
 ## References
 

@@ -1,0 +1,10 @@
+[
+  {
+    "batch": "007",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_generic_host_actions_v3.py::test_python_action_receives_original_host_bridge_before_import - AssertionError: assert [] == ['unrelated.calculate']",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  }
+]

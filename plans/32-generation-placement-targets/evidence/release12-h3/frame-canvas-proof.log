@@ -1,0 +1,25 @@
+expression max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17
+timing source=24 output=25 new=1 workflow=2.33333333333 node102=56 trim=16
+timing source=24 output=26 new=2 workflow=2.33333333333 node102=56 trim=15
+timing source=24 output=41 new=17 workflow=2.33333333333 node102=56 trim=0
+timing source=24 output=42 new=18 workflow=3.04166666667 node102=73 trim=16
+timing source=24 output=48 new=24 workflow=3.04166666667 node102=73 trim=10
+timing source=24 output=120 new=96 workflow=5.875 node102=141 trim=6
+timing source=24 output=240 new=216 workflow=10.8333333333 node102=260 trim=5
+timing source=24 output=362 new=338 workflow=15.7916666667 node102=379 trim=2
+exhaustive source=24 output=25..362: 338 frame-aligned cases passed; max raw=379
+resolution node1024 960 544
+[H3 Motion Context] Source crop /32: 1024x576 -> 1024x576 (left=0, top=0)
+canvas source=1024x576 crop=1024x576 selected=1024x576
+[H3 Motion Context] Source crop /32: 1920x1080 -> 1920x1056 (left=0, top=12)
+canvas source=1920x1080 crop=1920x1056 selected=1920x1056
+[H3 Motion Context] Source crop /32: 641x479 -> 640x448 (left=0, top=15)
+canvas source=641x479 crop=640x448 selected=640x448
+[H3 Motion Context] Source crop /32: 32x32 -> 32x32 (left=0, top=0)
+canvas source=32x32 crop=32x32 selected=32x32
+[H3 Motion Context] Source crop /32: 16385x8193 -> 16384x8192 (left=0, top=0)
+canvas source=16385x8193 crop=16384x8192 selected=16384x8192
+[H3 Motion Context] Source crop /32: 16416x8192 -> 16416x8192 (left=0, top=0)
+canvas source=16416x8192 returns 16416x8192, above ee71 H3 width max=16384 (unbounded fake; actual loader limits not proven)
+canvas source=31x100 refused as too small
+ok: extracted source methods, faked evaluator/io/image; no registration, actual media, GPU or installed-node claim

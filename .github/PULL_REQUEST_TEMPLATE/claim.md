@@ -3,8 +3,8 @@
 - **Project:** Link the exact [queued, unassigned project](https://github.com/banodoco/astrid-dev/blob/main/plans/index.md).
 - **Owner:** Your own authenticated GitHub `@username`.
 
-Change **only one Owner cell** in `plans/index.md` from `Unassigned` to your own `@username`. Do not change status, priority, waiting-on, estimate, scope or other files. The safe claim bot may auto-merge this PR after CI **only when branch protection and its GitHub App are configured**.
+Change **only the Owner line** in that project's `plans/<id>/plan.md`, from `**Owner:** Unassigned` to `**Owner:** @username` with your own username. Do not change status, priority, waiting-on, estimate, scope or any other file; the catalog refreshes itself on `main` after merge. Once CI passes, the claim bot merges this PR where it is turned on; otherwise a maintainer does.
 
-Claiming records accountability. It does not authorize code execution, costs, merging other PRs or publication. After claiming, check the plan's scope and waiting-on field; request a start decision when needed. To return non-active work, request a reviewed PR back to `Unassigned`. For active work, first arrange a reviewed pause or handoff; an active project must retain an owner.
+Claiming records accountability. It does not authorize code execution, costs, merging other PRs or publication. [After claiming](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#after-claiming-start-pause-or-hand-back) covers the next steps.
 
-[Claiming and next steps](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#claim-a-project-without-waiting-for-a-maintainer)
+[Claiming and next steps](https://github.com/banodoco/astrid-dev/blob/main/docs/contribution-workflow.md#claim-a-project)

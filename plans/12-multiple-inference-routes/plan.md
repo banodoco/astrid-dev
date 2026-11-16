@@ -1,5 +1,17 @@
 # Wan2GP as a second engine on the one generation path
 
+**Project:** Wan2GP as a second engine on the one generation path
+
+**Goal:** Add Wan2GP as the second engine on Plan 32's one generation path, sharing placement, lease and the remote-machine route, with only its own setup and run step.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; Plan 32 T6 (scoping and the Linux recipe can start alongside Plan 32 T2)
+
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
 
 **Contributes to closure:** F-008 step 3: a second engine (Wan2GP) on the same path. Milestone C.
@@ -16,6 +28,7 @@
   - a Linux recipe (today the only recipe is Windows cu128) and a filled models lock (empty today);
   - running it locally and on a RunPod machine through Plan 32's route, with model load and unload inside the engine's `execute`, and models pre-fetched into the storage volume;
   - `wan2gp.generate_video` as an explicit-only video entry (MiniMax H3 stays the default).
+  - **Per-project generation settings, and Wan2GP rows (owner, 9 Nov).** Plan 32 T6d puts the user's generation settings (the Placement default and the default-entry pins) in the Runtime's per-user store, `/v1/app-state/user/generation`, in an engine-neutral shape (entries named by `{pack, entry}`, engines and machines by contribution id). This plan adds the per-project scope: a Runtime project document kind for the same shape, resolved as request → project → user → pack default, with checkout and checkin per project. It replaces the project `vibecomfy.toml` override for Astrid settings. Wan2GP adds only rows (its entries and `engine: wan2gp.<contribution>`), with no new settings shape.
 - **External process ownership:** attaching to an external server does not transfer ownership of its process or GPU. Never stop or kill a user's server or unload models the route did not load or own.
 - **Deferred:** an attached, user-owned Wan2GP instance. It has no endpoint or object_info equivalent, so it waits until one is defined. Also deferred: other inference backends.
 - **Still undecided:** hardware and models for the real inference proof; whether the Wan2GP pack is installed by default.

@@ -1,6 +1,7 @@
 name: Route contributor review requests
 
-# pull_request_target runs only trusted main code with issues:write.
+# pull_request_target runs only trusted main code with issues:write and pull-requests:write
+# (adding a label to a pull request is refused with a 403 without pull-requests:write).
 # The contributed PR is inspected only through API metadata, never checked out.
 on:
   pull_request_target:
@@ -8,8 +9,13 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
   issues: write
+
+# Replace older PR runs; any non-PR run gets its own group, never a main queue.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number) || format('run-{0}-{1}', github.run_id, github.run_attempt) }}
+  cancel-in-progress: true
 
 jobs:
   review-intake:

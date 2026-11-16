@@ -1,5 +1,17 @@
 # One generation path: requirements, placement, alignment, run, retrieve
 
+**Project:** One generation path
+
+**Goal:** Every generation, any modality and any place, follows one path: one requirements manifest, placement decided once, optional align/check/trust, and RunPod as a rented machine running the same local path, with one run and one retrieve.
+
+**Status:** queued
+
+**Owner:** @AstridPseudon
+
+**Estimate:** about 8–11 days
+
+**Waiting on:** —
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary) · [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (supporting).
@@ -33,6 +45,7 @@ The short-term unblock (the inventory wire, the sfx and h3_av routing, warm reus
   - deleting every superseded route;
   - one meaning per term.
 - **Not included:** multi-pass h3 requests, prepared or qualified workers, resuming a parent job; VibeComfy ops and router as an Astrid call path; new providers; Wan2GP ([Plan 12](../12-multiple-inference-routes/plan.md) consumes this plan); splitting `generic_host` ([Plan 13](../13-execution-host-refactor/plan.md)).
+- **Follow-up (owner, 9 Nov): providers on the one path.** fal, OpenAI and Wavespeed (`astrid/core/generation/backends/{fal,openai,wavespeed}.py`) stay a separate `--backend cloud` route in this plan. The follow-up makes a provider a placement kind with only an `execute` step: nothing to align, no machine to rent, outputs in the job directory, and the same `generate(entry, inputs, placement)`. It is planned with astrid-dev-plan when this plan completes. It also takes modality as data (the aliases call `generate`; `_MediaKind`'s ten callables at `astrid/sdk/generation.py:895-931,1680-1706,1818-1846` become entry data) so the facade is changed once (Plan 32 review, 9 Nov, at 7209ffcc7; Medium).
 
 ## Design
 
@@ -108,12 +121,12 @@ All of it is CPU only. The live proof (T7) is a later pass of [Plan 34](../34-re
 - A RunPod job fetches only its manifest's missing models. With the storage volume mounted, a warm cache fetches nothing.
 - `align`, `check` and `trust` behave the same locally and on RunPod, because on RunPod they run on the machine itself.
 - The controller never checks model files for a RunPod job (grep: no generation bridge, no inventory channel).
-- The dry run equals the live run.
+- The dry run equals the live run. Proof (owner, 9 Nov): `test_dry_run_equals_live_run`. For every default slot and h3_av on the CPU stand-in, the dry run's built graph, bindings and requirements manifest equal the live run's.
 - No orphaned machine exists, and warm machines are reused within their lease.
 - A remote job's progress reaches the local run while it runs, and cancelling it releases the machine.
 - Scale is the host's concurrency times its live leases. A pod-side Runtime worker is out of scope: the Runtime binds only to loopback (`runtime_protocol/daemon.py:64-66`).
 - A test machine contribution runs a job through the same `generation.machine` contract.
-- `grep -ri h3 astrid/core astrid/sdk` returns nothing (about 156 lines today).
+- `grep -ri h3 astrid/core astrid/sdk` returns no h3_av-specific line (about 156 lines today). Allowlisted, because they are not h3_av (owner, 9 Nov): the HTML `<h3>` tag in hivemind `ingest_article`, the hivemind SKILL channel name, and the `minimax-h3` vendor model entry in `model_catalog`, meaning its id and its own vendor endpoint paths (`minimax/h3/text-to-video`, `minimax/h3/reference-to-video`; clarified 10 Nov: these are the provider's API routes, not h3_av). Any other hit must go.
 - All of the above is CPU evidence (owner, 8 Nov). Not proven by this plan: real inference, real model downloads, RunPod capacity and the volume on a real pod. The live proof (T7) is a later pass of [Plan 34](../34-real-gpu-proof/plan.md) (real-GPU proof), which follows Plan 33.
 
 The proof does not cover new providers, Wan2GP or the `generic_host` split. [F-003](../../vision/gaps/F-003-creative-execution.md) does not close automatically.

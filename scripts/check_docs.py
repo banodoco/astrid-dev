@@ -1,54 +1,27 @@
-#!/usr/bin/env python3
 """Validate Astrid Dev's documentation index and local links (stdlib only)."""
 from __future__ import annotations
 
-import argparse
+import json
 import re
 from pathlib import Path
 from urllib.parse import unquote
 
 from gap_relationships import parse_gap_relationships
+import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
+from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
+                     is_placeholder, key_value_lines, read_text, release_brief, release_branch_errors, release_fix_issue_errors, BRANCH_FIRST_RELEASE, section as record_section)
+from vision_subject import parse_subject
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = Path('plans/index.md')
 README = Path('README.md')
-HEADER = '| Project | Goal | Status | Owner | Estimate | Waiting on | Plan |'
-DIVIDER = '|---|---|---|---|---:|---|---|'
-STATUSES = {'queued', 'active', 'blocked', 'paused', 'done', 'cancelled'}
-VISIBLE = {'queued', 'active', 'blocked', 'paused'}
 LINK = re.compile(r'(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)')
-PLAN_LINK = re.compile(r'\[[^\]]+\]\(([^)]+/plan\.md)\)')
 GAP_NAME = re.compile(r'([A-Z]{1,3}-\d{3})-[a-z0-9-]+\.md')
 
 
 def read(root: Path, path: Path) -> str:
-    return (root / path).read_text(encoding='utf-8')
-
-
-def catalog_rows(text: str) -> list[list[str]]:
-    """Parse exactly one canonical seven-column Markdown table."""
-    lines = text.splitlines()
-    heads = [i for i, line in enumerate(lines) if line.strip() == HEADER]
-    if len(heads) != 1 or lines[heads[0] + 1].strip() != DIVIDER:
-        raise ValueError('plans/index.md needs one canonical plan table')
-    rows: list[list[str]] = []
-    for line in lines[heads[0] + 2:]:
-        if not line.startswith('|'):
-            break
-        cells = [cell.strip() for cell in line.strip().strip('|').split('|')]
-        if len(cells) != 7 or not all(cells):
-            raise ValueError(f'malformed plan row: {line}')
-        if cells[2] not in STATUSES:
-            raise ValueError(f'invalid status {cells[2]!r} in {cells[0]}')
-        if not PLAN_LINK.fullmatch(cells[6]):
-            raise ValueError(f'plan cell must be a single plan.md link: {cells[6]}')
-        rows.append(cells)
-    if not rows:
-        raise ValueError('plan catalog is empty')
-    if any(r[2] in VISIBLE for r in rows[next((i for i, r in enumerate(rows) if r[2] not in VISIBLE), len(rows)):]):
-        raise ValueError('done/cancelled rows must follow prioritized nonterminal rows')
-    return rows
+    return read_text(root, path)
 
 
 def local_links(root: Path, path: Path) -> list[str]:
@@ -71,7 +44,7 @@ def unnamed_active_owners(rows: list[list[str]]) -> list[str]:
     return [
         f"active project needs a named accountable owner: {row[0]}"
         for row in rows
-        if row[2] == 'active' and row[3].strip().lower() in {'unassigned', 'tbd', 'none', '—', '-'}
+        if row[2] in lifecycle.requiring("named-owner") and is_placeholder(row[3], PLACEHOLDERS_ACTIVE_OWNER, trim=None)
     ]
 
 
@@ -80,7 +53,7 @@ def obsolete_template_paths(root: Path) -> list[str]:
     """Reject stale project paths in Markdown, including GitHub's absolute form links."""
     issues: list[str] = []
     for path in root.rglob("*.md"):
-        if ".git" not in path.relative_to(root).parts and "strategy/projects/" in path.read_text(encoding="utf-8"):
+        if ".git" not in path.relative_to(root).parts and "strategy/projects/" in read(root, path.relative_to(root)):
             issues.append(f"{path.relative_to(root)}: obsolete strategy/projects path; use plans/")
     for obsolete in ("templates/bug-issue.md", "templates/bug-pr.md", "templates/review-submission.md"):
         if (root / obsolete).exists():
@@ -88,16 +61,8 @@ def obsolete_template_paths(root: Path) -> list[str]:
     return issues
 
 ROUTE_PLAN = re.compile(r"\[Plan (\d{2})\]\(\.\./\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)")
-ROUTE_STATUS = re.compile(r"\b(active|queued|blocked|paused|done|cancelled)\b", re.I)
-
-
 def gap_section(text: str, title: str) -> str | None:
-    match = re.search(r"^## " + re.escape(title) + r"\s*$", text, re.M)
-    if not match:
-        return None
-    tail = text[match.end():]
-    end = re.search(r"^## ", tail, re.M)
-    return (tail[:end.start()] if end else tail).strip()
+    return record_section(text, title, missing='none', boundary=r'^## ', strip=True)
 
 
 def route_issues(name: str, gap_id: str, text: str, plans: dict[str, str]) -> list[str]:
@@ -118,8 +83,9 @@ def route_issues(name: str, gap_id: str, text: str, plans: dict[str, str]) -> li
     body = rows[1:] if rows else []
     if not body:
         issues.append(f"{name}: Route to closure needs at least one step row")
+    route_status = re.compile(lifecycle.route_pattern())
     for line in body:
-        for match in ROUTE_STATUS.finditer(line):
+        for match in route_status.finditer(line):
             issues.append(f"{name}: route row carries status/ownership word '{match.group(1)}'; the catalog owns it")
         for _, folder in ROUTE_PLAN.findall(line):
             plan = plans.get(folder)
@@ -151,11 +117,10 @@ def ledger_entry_errors(name: str, text: str, entries: set[str]) -> list[str]:
     label = f'docs/ledger/{name}'
     header, _, body = text.partition('\n\n')
     fields: dict[str, str] = {}
-    for line in header.splitlines():
-        key, sep, value = line.partition(':')
+    for key, sep, value in key_value_lines(header):
         if not sep or key.strip() not in LEDGER_FIELDS or key.strip() in fields:
             return [f'{label}: header must be exactly Date, Kind, Source and Resolved by lines, then a blank line']
-        fields[key.strip()] = value.strip()
+        fields[key.strip()] = value
     errors = [f'{label}: missing header field {f}:' for f in LEDGER_FIELDS if not fields.get(f)]
     if fields.get('Kind') and fields['Kind'] not in LEDGER_KINDS:
         errors.append(f'{label}: Kind must be one of {", ".join(sorted(LEDGER_KINDS))}')
@@ -180,161 +145,148 @@ def ledger_errors(root: Path) -> list[str]:
     entries = {p.name for p in files}
     errors: list[str] = []
     for file in files:
-        errors.extend(ledger_entry_errors(file.name, file.read_text(encoding='utf-8'), entries))
+        errors.extend(ledger_entry_errors(file.name, read(root, file.relative_to(root)), entries))
     return errors
 
 
 STRATEGY = Path('strategy.md')
-STRATEGY_HEADER = '| Order | When | Gap | Plans | What creators get | Waiting on |'
-STRATEGY_WHEN = {'Now', 'Next', 'Later'}
-STRATEGY_SECTIONS = ('## Focus now', '## Sequence', '## Not now', '## Decisions')
-GAP_LINK = re.compile(r'\[[^\]]+\]\((?:\.\./)*vision/gaps/[A-Z]{1,3}-\d{3}-[a-z0-9-]+\.md\)')
-ANY_PLAN_LINK = re.compile(r'\[[^\]]+\]\((?:\.\./)*plans/[^)]+/plan\.md\)')
+STRATEGY_SECTIONS = ('## Focus now', '## Versions', '## Not now', '## Decisions')
+VERSION_HEADING = re.compile(r'^(#{3,4}) Version (\d+)\.(\d+)\s*$', re.M)
+# Not records.named_field_matches: its `\s*` after the label can cross a newline, so an empty
+# `**Aim:**` would capture the next line as its value.
+VERSION_FIELD = re.compile(r'^\*\*(Aim):\*\*[ \t]*(.*)$', re.M)
+VERSION_OPEN = 'Open'
 
 
-def strategy_errors(text: str) -> list[str]:
-    """strategy.md has its sections, a review date and a structured sequence table."""
-    errors = [f'strategy.md: missing section {name}' for name in STRATEGY_SECTIONS
-              if not re.search(rf'^{re.escape(name)}\s*$', text, re.M)]
+def release_errors(filename: str, body: str) -> list[str]:
+    """A release brief is valid as a draft, without publication pins."""
+    issues = []
+    stem = Path(filename).stem
+    brief = release_brief(body, strict=False)
+    if not stem.isdigit() or not re.fullmatch(r'[1-9]\d*', brief['number'] or '') or brief['number'] != stem:
+        issues.append(f'releases/{filename}: Release must equal the numeric filename')
+    if brief['title_number'] != stem:
+        issues.append(f'releases/{filename}: title must be # Release {stem} — <title>')
+    state = brief['state'] if brief['state'] in ('Draft', 'Final') else None
+    if not state:
+        issues.append(f'releases/{filename}: State must be Draft or Final')
+    sections = brief['sections']
+    for name, content in sections.items():
+        if not content:
+            issues.append(f'releases/{filename}: missing or empty ## {name}')
+    highlight = sections['Highlight'].splitlines()
+    if highlight and (len(highlight) != 1 or len(highlight[0]) < 15):
+        issues.append(f'releases/{filename}: Highlight must be one substantive sentence on one line')
+    plans = brief['plan_links']
+    none_yet = sections['Included plans'] == 'None yet' and state == 'Draft'
+    if not plans and not none_yet:
+        issues.append(f'releases/{filename}: Included plans must link project plan.md files')
+    if len({folder for _, folder in plans}) != len(plans):
+        issues.append(f'releases/{filename}: duplicated included plan')
+    if any(number != folder[:2] for number, folder in plans):
+        issues.append(f'releases/{filename}: included plan number does not match its link')
+    for error in brief['errors']:
+        # Preserve the existing no-links diagnostic without adding a duplicate.
+        if error.startswith('Included plans') and not plans:
+            continue
+        issues.append(f'releases/{filename}: {error}')
+    if stem.isdigit() and int(stem) >= BRANCH_FIRST_RELEASE:
+        issues.extend(f'releases/{filename}: {e}' for e in release_branch_errors(
+            body, stem, [number for number, _ in plans]))
+        issues.extend(f'releases/{filename}: {e}' for e in release_fix_issue_errors(body, stem))
+    if state == 'Final' and brief['issues_present'] and not brief['issues_frozen']:
+        issues.append(f'releases/{filename}: Final Issues block must be frozen')
+    if state:
+        if state == 'Draft':
+            if 'Not pinned.' not in sections['Publication']:
+                issues.append(f'releases/{filename}: draft publication must say Not pinned.')
+        else:
+            payload = re.search(r'^\x60{3}json\s*\n(\{.*?\})\s*\n\x60{3}', sections['Publication'], re.S | re.M)
+            if not payload:
+                issues.append(f'releases/{filename}: final publication needs a JSON payload')
+            else:
+                try:
+                    record = json.loads(payload.group(1))
+                    required = {'version', 'kind', 'required', 'app', 'agent', 'runtime', 'runtime_schema_digest', 'tools'}
+                    if not isinstance(record, dict) or not required <= record.keys():
+                        issues.append(f'releases/{filename}: final payload missing manifest fields')
+                except json.JSONDecodeError:
+                    issues.append(f'releases/{filename}: invalid JSON publication payload')
+    return issues
+
+
+def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> list[str]:
+    """Validate authored structure and release kinds, excluding generated regions."""
+    errors = []
+    for version in [*(f'0.{n}' for n in range(1, 10)), '1.0']:
+        start, end = f'<!-- strategy-{version}:start -->', f'<!-- strategy-{version}:end -->'
+        if text.count(start) != 1 or text.count(end) != 1 or text.find(start) > text.find(end):
+            errors.append(f'strategy.md: needs exactly one ordered {start} and {end} pair')
+        else:
+            text = text[:text.index(start)] + text[text.index(end) + len(end):]
+    errors.extend(f'strategy.md: missing section {name}' for name in STRATEGY_SECTIONS
+                  if not heading_present(text, rf'^{re.escape(name)}\s*$'))
     if not re.search(r'^\*\*Last reviewed:\*\* \d{4}-\d{2}-\d{2}', text, re.M):
         errors.append('strategy.md: needs a "**Last reviewed:** YYYY-MM-DD" line')
-    lines = text.splitlines()
-    heads = [i for i, line in enumerate(lines) if line.strip() == STRATEGY_HEADER]
-    if len(heads) != 1:
-        return errors + ['strategy.md: needs one sequence table with the canonical header']
-    rows = []
-    for line in lines[heads[0] + 2:]:
-        if not line.startswith('|'):
-            break
-        rows.append([cell.strip() for cell in line.strip().strip('|').split('|')])
-    if not rows:
-        errors.append('strategy.md: the sequence table is empty')
-    for cells in rows:
-        if len(cells) != 6:
-            errors.append(f'strategy.md: malformed sequence row: {"|".join(cells)}')
+    if release_docs is not None:
+        ordered = sorted(((int(Path(name).stem), release_brief(body, strict=False))
+                          for name, body in release_docs.items() if Path(name).stem.isdigit()))
+        if sum(brief['kind'] == 'minor' for _, brief in ordered) > 9:
+            errors.append('strategy.md: release briefs declare more than nine minor releases')
+        if any(brief['kind'] == 'major' and i != len(ordered) - 1
+               for i, (_, brief) in enumerate(ordered)):
+            errors.append('strategy.md: a major release brief must be last')
+    return errors + version_errors(text)
+
+
+def version_errors(text: str) -> list[str]:
+    """Validate one major aim and its nine ordered minor aims or Open values."""
+    body = record_section(text, 'Versions', missing='none', boundary=r'^## ', strip=False)
+    if body is None:
+        return []
+    errors = []
+    heads = list(VERSION_HEADING.finditer(body))
+    blocks = []
+    for index, match in enumerate(heads):
+        end = heads[index + 1].start() if index + 1 < len(heads) else len(body)
+        fields: dict[str, str] = {}
+        for name, value in VERSION_FIELD.findall(body[match.end():end]):
+            if name in fields:
+                errors.append(f"strategy.md: version {match.group(2)}.{match.group(3)}: duplicate field '{name}'")
+            fields[name] = value.strip()
+        blocks.append((len(match.group(1)), int(match.group(2)), int(match.group(3)), fields))
+    majors = [(major, minor) for level, major, minor, _ in blocks if level == 3]
+    if not majors:
+        return ['strategy.md: Versions needs at least one major version heading (### Version N.0)']
+    if len(majors) > 1:
+        errors.append('strategy.md: Versions must contain exactly one major version heading')
+    current = None
+    expected_minor = 1
+    for level, major, minor, fields in blocks:
+        name = f'{major}.{minor}'
+        aim = fields.get('Aim', '')
+        if not aim:
+            errors.append(f'strategy.md: version {name} needs an "**Aim:**" sentence')
+        if level == 3:
+            if minor != 0 or major < 1:
+                errors.append(f'strategy.md: major version heading must be N.0: {name}')
+            if current is not None:
+                if expected_minor != 10:
+                    errors.append(f'strategy.md: version {current}.0 must contain versions '
+                                  f'{current - 1}.1 to {current - 1}.9 in order')
+                if major != current + 1:
+                    errors.append(f'strategy.md: major version {name} must follow {current}.0')
+            if aim == VERSION_OPEN:
+                errors.append(f'strategy.md: major version {name} needs a real aim, not "{VERSION_OPEN}"')
+            current, expected_minor = major, 1
             continue
-        order, when, gap, plans, gets, waiting = cells
-        label = f'strategy.md row {order}'
-        if not order.isdigit():
-            errors.append(f'{label}: Order must be a number')
-        if when not in STRATEGY_WHEN:
-            errors.append(f'{label}: When must be Now, Next or Later')
-        if not GAP_LINK.search(gap):
-            errors.append(f'{label}: Gap must link a vision/gaps file')
-        if not ANY_PLAN_LINK.search(plans) and '(proposed)' not in plans:
-            errors.append(f'{label}: Plans must link a plan.md, or say "(proposed)"')
-        if not gets or not waiting:
-            errors.append(f'{label}: What creators get and Waiting on must be filled')
+        if current is None:
+            errors.append(f'strategy.md: version {name} is outside a major version')
+            continue
+        if major != current - 1 or minor != expected_minor:
+            errors.append(f'strategy.md: expected version {current - 1}.{expected_minor} here, found {name}')
+        expected_minor = minor + 1
+    if current is not None and expected_minor != 10:
+        errors.append(f'strategy.md: version {current}.0 must contain versions '
+                      f'{current - 1}.1 to {current - 1}.9 in order')
     return errors
-
-
-def check(root: Path) -> tuple[list[str], list[str]]:
-    errors: list[str] = []
-    warnings: list[str] = []
-    try:
-        rows = catalog_rows(read(root, CATALOG))
-    except (OSError, ValueError, IndexError) as exc:
-        return [f'plan catalog: {exc}'], []
-
-    try:
-        errors.extend(strategy_errors(read(root, STRATEGY)))
-    except OSError as exc:
-        errors.append(f'strategy.md: {exc}')
-    indexed: set[Path] = set()
-    for row in rows:
-        dest = PLAN_LINK.fullmatch(row[6]).group(1)
-        plan = Path('plans') / dest
-        if plan in indexed:
-            errors.append(f'duplicate plan catalog entry: {plan}')
-        indexed.add(plan)
-        if len(plan.parts) != 3 or plan.parts[2] != 'plan.md' or not PLAN_FOLDER.fullmatch(plan.parts[1]):
-            errors.append(f'invalid catalog plan path: {plan}')
-        if not (root / plan).is_file():
-            errors.append(f'catalog plan missing: {plan}')
-    errors.extend(unnamed_active_owners(rows))
-    actual = set(Path('plans') / p.parent.name / 'plan.md' for p in (root / 'plans').glob('*/plan.md'))
-    for missing in sorted(actual - indexed):
-        errors.append(f'plan folder absent from catalog: {missing}')
-    for extra in sorted(indexed - actual):
-        errors.append(f'catalog references non-plan: {extra}')
-
-    gaps = sorted((root / 'vision/gaps').glob('*.md'))
-    gap_ids = set()
-    for file in gaps:
-        match = GAP_NAME.fullmatch(file.name)
-        if not match:
-            errors.append(f'bad gap filename: {file.name}')
-            continue
-        gap_id = match.group(1)
-        if gap_id in gap_ids:
-            errors.append(f'duplicate gap ID: {gap_id}')
-        gap_ids.add(gap_id)
-        text = file.read_text(encoding='utf-8')
-        if not text.startswith(f'# {gap_id} —'):
-            errors.append(f'{file.name}: title must start with gap ID')
-        for field in ['**Applies to:**', '**Assessment:**', '## Desired state', '## Current state', '## Gap', '## Closure evidence', '## Sources and reassessment']:
-            if field not in text:
-                errors.append(f'{file.name}: missing {field}')
-        applies = next((s for s in text.splitlines() if s.startswith('**Applies to:**')), '')
-        try:
-            parse_gap_relationships(applies)
-        except ValueError as exc:
-            errors.append(f'{file.name}: {exc}')
-        plan_texts = {p.parent.name: p.read_text(encoding='utf-8') for p in (root / 'plans').glob('*/plan.md')}
-        errors.extend(route_issues(file.name, gap_id, text, plan_texts))
-
-    for plan in sorted(actual):
-        for name in ('plan.md', 'tasks.md', 'inputs.md'):
-            if not (root / plan.parent / name).is_file():
-                errors.append(f'{plan.parent}: missing {name}')
-        body = read(root, plan)
-        try:
-            refs = plan_gap_ids(body)
-            for gap in refs:
-                if gap not in gap_ids:
-                    errors.append(f'{plan}: unknown vision gap {gap}')
-        except ValueError as exc:
-            errors.append(f'{plan}: {exc}')
-    mandatory = [README, CATALOG, Path('vision/README.md'),
-                 Path('CONTRIBUTING.md'),
-                 Path('templates/project/plan.md'), Path('docs/project-format.md'),
-                 Path('docs/contribution-design-principles.md'),
-                 Path('docs/contribution-workflow.md'), Path('docs/contribution-automation-setup.md'),
-                 Path('templates/product-pr/review.md')]
-    for stale in ('AGENTS.md', 'visions', 'vision/vision.md', 'vision/principles.md', 'vision/gaps.md'):
-        if (root / stale).exists():
-            errors.append(f'obsolete source must be removed: {stale}')
-    expected_principles = {'local-first-cloud-capable', 'open-by-design', 'in-the-creators-control', 'eliminate-needless-technical-wrangling'}
-    actual_principles = {p.stem for p in (root / 'vision/principles').glob('*.md')}
-    if actual_principles != expected_principles:
-        errors.append(f'expected four canonical principle pages, got {sorted(actual_principles)}')
-    errors.extend(obsolete_template_paths(root))
-    errors.extend(ledger_errors(root))
-    # Every Markdown file must be current. No grandfathered dead references.
-    # Product evidence and old task cards must either have valid local links
-    # or be removed/replaced by their authoritative project source.
-    mandatory += [p.relative_to(root) for p in root.rglob("*.md")
-                  if ".git" not in p.relative_to(root).parts]
-    for path in sorted(set(mandatory)):
-        errors.extend(local_links(root, path))
-
-    return errors, warnings
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    args = parser.parse_args()
-    errors, warnings = check(ROOT)
-    for issue in warnings:
-        print(f'WARN {issue}')
-    for issue in errors:
-        print(f'ERROR {issue}')
-    if errors:
-        print(f'Document validation failed with {len(errors)} error(s).')
-        return 1
-    print('Documentation structure, project catalog and every Markdown local link: OK')
-    return 0
-
-
-if __name__ == '__main__':
-    raise SystemExit(main())

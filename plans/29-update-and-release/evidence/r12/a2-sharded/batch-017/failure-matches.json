@@ -1,0 +1,368 @@
+[
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_existing_orchestrator_invocation_uses_owner_capture - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[custody_scope] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[owner_epoch] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[channel_id] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[operation_id] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_retained_authority_refused_before_discovery[profile] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[revision] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[definition] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[path] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[inventory] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_wrong_source_authority_refused_before_execution[revoked] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_capture_survives_last_check_to_import_mutation - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_ungranted_orchestrator_never_reaches_dynamic_discovery - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_owner_grant_for_wrong_definition_is_refused_before_execution - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_orchestrator_custody_d40.py::test_selected_module_cannot_fall_back_to_installed_source[json] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_real_producer_calls_consumer_before_cli_and_requires_retained_preparation - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[scope] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[profile] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[definition] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[revision] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[root] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[bytes] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[ancestor] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_mutation_before_discovery_or_selection_fails_closed[symlink] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_selection_rejects_caller_handles_and_duplicate_consumption - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_owner_grants_cannot_authorize_package_collisions[astrid.py] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_owner_grants_cannot_authorize_package_collisions[runtime_protocol.py] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_owner_grants_cannot_authorize_package_collisions[astrid_runtime_client.py] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_capture_after_bind_mutation_is_rejected_before_execution - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_command_loader_executes_captured_descendants_after_last_check - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_production_python_action_uses_private_descriptor[False] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_production_python_action_uses_private_descriptor[True] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_production_command_executes_only_capture_after_last_check[False-command] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_production_command_executes_only_capture_after_last_check[True-command] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_revoked_owner_custody_never_becomes_a_source_grant - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_source_mutation_before_consumer_is_rejected - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[{}] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[null] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[[]] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[{broken] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_malformed_capture_never_reaches_discovery[42] - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_wrong_source_root_cannot_fall_back_to_live_execution - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_task_claims_cannot_write_runtime_owner_grants - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_package_main_uses_captured_loader - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "ERROR tests/core/execution/test_runtime_source_custody_d40.py::test_standalone_runtime_launcher_keeps_its_own_private_handle_class - AttributeError: module 'runtime_protocol.external_pack_sources' has no attribute '_write_owner_grants'",
+    "exact_matching_baselines": [
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_remotion_host_session.py::test_two_public_command_workers_settle_task_leases_then_host_drains_original - astrid.core.execution.custody_broker.CustodyError: host graph cleanup remains unresolved",
+    "exact_matching_baselines": [
+      "r10",
+      "r11",
+      "base"
+    ]
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_render_scope_launch.py::test_native_render_scope_collects_completed_child[capability] - astrid.core.execution.generic_host.CommandCleanupUnresolved: render launch custody unresolved: CustodyError",
+    "exact_matching_baselines": []
+  },
+  {
+    "batch": "017",
+    "candidate_failure_summary": "FAILED tests/core/execution/test_render_scope_launch.py::test_native_render_scope_cancels_detached_renderer_tree - astrid.core.execution.generic_host.CommandCleanupUnresolved: render launch custody unresolved: CustodyError",
+    "exact_matching_baselines": [
+      "r10"
+    ]
+  }
+]

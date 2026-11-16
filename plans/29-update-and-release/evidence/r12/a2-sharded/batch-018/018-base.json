@@ -1,0 +1,147 @@
+{
+  "batch": "018",
+  "side": "base",
+  "modules": [
+    "tests/core/execution/test_selected_root_map_composition.py",
+    "tests/core/execution/test_target_adapter.py",
+    "tests/core/execution/test_task_scope.py",
+    "tests/core/execution/test_terminal_evidence_transport_f05.py",
+    "tests/core/execution/test_terminal_result.py"
+  ],
+  "pins_and_python": [
+    "313bbd46f1e24bfe635655d78b27ab0b321145d5",
+    "42ae24aff8d2cb854f874ce134161077a3ba3641",
+    "e65f4941d09b1cb4d1dd5aae6171c73e648706f4",
+    "f2948817eeb94af8dee76be21f6d673724f1606e",
+    "Python 3.11.17"
+  ],
+  "toolchain": [
+    "v22.22.0",
+    "0.27.7",
+    "1bec56ef7cfa9a76f3e0b7c0a87f220eb73f23102b9c0b4c7529a3f7c3ce7c31  /workspace/r12-a2-resume/node-toolchain/node-v22.22.0-linux-x64/bin/node",
+    "c638273fcf95573ca74af586677800b4dd874c55f8f945adb54316d6902ba14b  /workspace/r12-a2-resume/node-toolchain/esbuild-0.27.7/bin/esbuild"
+  ],
+  "start_utc": "2026-11-11T10:32:58Z",
+  "end_utc": "2026-11-11T10:34:56Z",
+  "exit": 1,
+  "summary": "=================== 4 failed, 21 passed in 115.83s (0:01:55) ===================",
+  "outcomes": [
+    {
+      "id": "tests/core/execution/test_selected_root_map_composition.py::test_parent_command_python_grandchild_use_selected_map_and_exact_origins",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_selected_root_map_composition.py::test_external_pack_sharing_bundled_id_is_refused[loader]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_selected_root_map_composition.py::test_external_pack_sharing_bundled_id_is_refused[namespace]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_selected_root_map_composition.py::test_external_pack_sharing_bundled_id_is_refused[host]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_target_adapter.py::test_local_adapter_fences_profile_revision_identity",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_group_with_grandchildren_is_killed_at_teardown",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_kill_escalation_for_term_ignorers",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_cancel_midrun_leaves_nothing",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_leader_exits_before_helper",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_setsid_escapee_is_reported_unresolved_and_not_signalled",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_journal_records_scope_owner_only_and_clears_on_settle",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_startup_kills_recorded_live_group_from_a_crashed_host",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_managed_stdin_eof_waits_for_host_task_tree_cleanup",
+      "outcome": "FAILED"
+    },
+    {
+      "id": "tests/core/execution/test_task_scope.py::test_startup_never_signals_a_recorded_pid_now_owned_by_an_unrelated_process",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_failure_forwards_outputs_and_flat_result_and_checks_readback",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_cancel_evidence_carries_complete_fence_and_unknown_stop",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_cancel_replay_reads_durable_result_after_observed_stop_clears_attempt",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_failure_lost_ack_uses_durable_readback_without_replaying",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_failure_retries_same_idempotent_write_if_readback_is_not_yet_visible",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_evidence_transport_f05.py::test_published_generated_signature_preserves_failure_and_cancellation_wire_evidence",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_receipt_has_explicit_stable_wire_fields[succeeded-True-0-True-settlement0-effect0-None]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_receipt_has_explicit_stable_wire_fields[partial-False-cost1-False-None-effect1-error1]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_receipt_has_explicit_stable_wire_fields[failed-False-None-False-settlement2-None-error2]",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_serializer_accepts_standalone_orchestrator_result",
+      "outcome": "PASSED"
+    },
+    {
+      "id": "tests/core/execution/test_terminal_result.py::test_terminal_receipt_preserves_typed_runtime_settlement",
+      "outcome": "PASSED"
+    }
+  ],
+  "failure_summary_lines": [
+    "FAILED tests/core/execution/test_selected_root_map_composition.py::test_parent_command_python_grandchild_use_selected_map_and_exact_origins - subprocess.TimeoutExpired: Command '['/workspace/r12-a2-resume/base.env/venv/bin/python', '-I', '-B', '-c', \"import sys,json;sys.path[:0]=json.loads(sys.argv[1]);\\n\\nimport importlib, os, socket, runtime_protocol\\nfrom pathlib import Path\\nfrom astrid.core.execution.generic_host import GenericPackHost, HostError\\nfrom astrid.core.pack.imports import install_pack_imports\\nroots = json.loads(sys.argv[2])\\nhost = GenericPackHost(pack_roots=[*roots.values(), sys.argv[5]])\\n# Discovery may read the configured unrelated root (open M1-15b scope).\\n# After discovery, even map construction must leave that root unread.\\nhost.discover()\\n\\nimport os, sys\\nfrom pathlib import Path\\ndef deny_unselected(event, args):\\n    if event in {'open', 'os.listdir', 'os.scandir'} and args and isinstance(args[0], (str, bytes, os.PathLike)):\\n        path = Path(os.fsdecode(args[0])).absolute()\\n        assert not any(path.is_relative_to(Path(root)) for root in ['/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/ambient', '/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/unselected', '/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/unrelated_collection']), (event, str(path))\\nsys.addaudithook(deny_unselected)\\n\\ndefinition, admission = host.admit('executor', 'map_parent.parent')\\nselected = admission['selected_pack_map']\\nassert set(selected) == set(roots)\\nattempt = Path(sys.argv[3]) / 'parent-attempt'\\nresult = host.invoke_capability(capability_kind='executor', capability_id='map_parent.parent',\\n    request={'inputs': {}, 'out': str(attempt / 'outputs'), 'project': 'demo',\\n             'project_was_auto_resolved': True, 'python_exec': sys.executable, 'invocation': 'runtime'},\\n    attempt=attempt, definition=definition, admission=admission)\\npython_parent = result.payload['action_result']\\n# Poison ambient inputs after discovery. Parent imports and both descendants\\n# must use the admission map instead of these same-ID external decoys.\\nos.environ['ASTRID_PACKS_PATH'] = sys.argv[4]\\nsys.path.insert(0, sys.argv[4])\\ninstall_pack_imports('map_parent', Path(roots['map_parent']),\\n    source_digest=selected['map_parent']['source_digest'], selected_map=selected)\\nparent = importlib.import_module('astrid.packs.map_parent.api').facts()\\n_, command_admission = host.admit('executor', 'map_parent.command')\\nattempt = Path(sys.argv[3]) / 'command-attempt'\\n(attempt / 'outputs').mkdir(parents=True)\\n# Same real socket descriptor pattern as the private-child-command test.\\nparent_socket, inherited = socket.socketpair()\\nclass Bridge:\\n    def inherited_fd(self):\\n        return inherited.fileno()\\n    def launched(self):\\n        inherited.close()\\ntry:\\n    command_result = host._run_command_definition(host.capabilities['map_parent.command'], {},\\n        attempt / 'outputs', attempt, admission=command_admission, child_bridge=Bridge())\\n    inherited.close()\\n    parent_socket.settimeout(2)\\n    assert parent_socket.recv(1) == b''\\nfinally:\\n    inherited.close()\\n    parent_socket.close()\\n# A transitive dependency edit invalidates an old admission before any action\\n# executes, even though the selected parent's own source digest is unchanged.\\nleaf = Path(roots['map_leaf']) / 'api.py'\\nleaf.write_text(leaf.read_text() + '\\\\n# edited dependency\\\\n')\\ntry:\\n    host.invoke_capability(capability_kind='executor', capability_id='map_parent.parent',\\n        request={'inputs': {}}, attempt=Path(sys.argv[3]) / 'stale-attempt',\\n        definition=definition, admission=admission)\\nexcept HostError as exc:\\n    assert 'source digest changed' in str(exc)\\nelse:\\n    raise AssertionError('old transitive dependency admission executed')\\n_, fresh = host.admit('executor', 'map_parent.parent')\\nassert fresh['selected_pack_map']['map_leaf'] != selected['map_leaf']\\nassert fresh['source_digest'] == admission['source_digest']\\nassert command_result.returncode == 0\\nprint(json.dumps({'parent': parent, 'python_parent': python_parent,\\n                  **json.loads((attempt / 'task-stdout-tail.log').read_text())}))\\n\", '[\"/workspace/r12-a2-resume/base\", \"/workspace/r12-a2-resume/base.env/runtime\"]', '{\"map_parent\": \"/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/collection_map_parent/map_parent\", \"map_dependency\": \"/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/collection_map_dependency/map_dependency\", \"map_leaf\": \"/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/collection_map_leaf/map_leaf\"}', '/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0', '/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/ambient', '/workspace/r12-a2-resume/base.env/basetemp/shard-018-bounded-0955/test_parent_command_python_gra0/unrelated_collection/map_unrelated']' timed out after 45 seconds",
+    "FAILED tests/core/execution/test_task_scope.py::test_leader_exits_before_helper - AssertionError: assert 'unresolved' == 'settled'",
+    "FAILED tests/core/execution/test_task_scope.py::test_startup_kills_recorded_live_group_from_a_crashed_host - assert False",
+    "FAILED tests/core/execution/test_task_scope.py::test_managed_stdin_eof_waits_for_host_task_tree_cleanup - assert False"
+  ],
+  "source_log_sha256": "6902b6cc646313f4d50378683a2ae9e088cfc756a405434a40c2bfc7f04b58e3",
+  "source_receipt_sha256": {
+    "start.txt": "74b8fa6973e37e7f3376f8745f0a78d12f876e113ab4af20d69f64143d46bcc3",
+    "end.txt": "e86900c7a3ee06f74cd924e3e87537cd7ac1d54991ee60c117ec0215b24db2e1",
+    "module.txt": "fee077fc99fbc44a0dcbc6d5e4f22f40b6bcc809e0584dd3b045baef5fa995b5",
+    "pins.txt": "ccde53e93428ccaf574f64fb1caf2979cf6f7e4334fe2b42d19dbbfdc01c4bde",
+    "exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "toolchain.txt": "273375576c0b269cb0d77d2eeb63ab0a872c2cd50f079af8f1fc85f6108fc593",
+    "command.txt": "ec2067bf53b054c1576b0be4d12fd256a5511f1bda45fb4393f31f42899e71b4",
+    "SHA256SUMS": "22d5ce938d100d0b601e80a40b23de19cbfcec723601596096648024cb17e8ae"
+  }
+}

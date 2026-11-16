@@ -5,13 +5,14 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
 from pathlib import Path
 from urllib.parse import quote
 
-from check_docs import CATALOG, PLAN_LINK, ROOT, catalog_rows, read
-from gap_relationships import parse_gap_relationships
+from check_docs import ROOT, read
+from gap_relationships import gap_metadata, parse_gap_aspirations, parse_gap_relationships
 from project_contract import plan_gap_ids
+from records import PLAN_CELL, git_output, heading as record_heading, section as record_section
+from vision_subject import parse_subject, render_subject_markdown
 
 REPO_URL = "https://github.com/banodoco/astrid-dev"
 PILLAR = re.compile(r"^### \[([^\]]+)\]\((pillars/[^)]+\.md)\)\s*$", re.M)
@@ -23,19 +24,11 @@ REVISION = re.compile(r"^[a-f0-9]{40}$", re.I)
 
 
 def heading(text: str, prefix: str = "# ") -> str:
-    match = re.search(rf"^{re.escape(prefix)}(.+)$", text, re.M)
-    if not match:
-        raise ValueError(f"missing heading: {prefix}")
-    return match.group(1).strip()
+    return record_heading(text, prefix, missing="error") or ""
 
 
 def section(text: str, title: str) -> str:
-    match = re.search(rf"^## {re.escape(title)}\s*$", text, re.M)
-    if not match:
-        raise ValueError(f"missing section: {title}")
-    tail = text[match.end():]
-    next_section = re.search(r"^## ", tail, re.M)
-    return tail[:next_section.start()].strip() if next_section else tail.strip()
+    return record_section(text, title, missing="error", boundary=r"^## ", strip=True) or ""
 
 
 def slug(text: str) -> str:
@@ -64,6 +57,20 @@ def rewrite_links(text: str, source: Path, revision: str, root: Path) -> str:
     return MD_LINK.sub(replace, text)
 
 
+def project_subject(text: str, path: Path, revision: str, root: Path) -> dict:
+    """One canonical Markdown shape for pillars and principles alike."""
+    parsed = parse_subject(text, path.as_posix())
+    return {
+        "statement": parsed["statement"],
+        "explanationMarkdown": rewrite_links(parsed["explanationMarkdown"], path, revision, root),
+        "characteristics": [
+            {**c, "detailsMarkdown": rewrite_links(c["detailsMarkdown"], path, revision, root)}
+            for c in parsed["characteristics"]
+        ],
+        "bodyMarkdown": rewrite_links(render_subject_markdown(parsed), path, revision, root),
+    }
+
+
 def canonical_agent_prompt(root: Path) -> str:
     """Extract the exact copyable instruction block from the public root README."""
     contribution = section(read(root, Path("README.md")), "Want to contribute? Give this to your agent.")
@@ -73,44 +80,43 @@ def canonical_agent_prompt(root: Path) -> str:
     return blocks[0].strip()
 
 
+INTRO_FILE = Path("vision/intro.md")  # hand-written Ambition and "Build Astrid with us" text
+
+
 def build(root: Path, revision: str) -> dict:
     if not REVISION.fullmatch(revision):
         raise ValueError("revision must be an immutable 40-character commit SHA")
-    vision_file = Path("vision/README.md")
-    vision = read(root, vision_file)
-    if not vision.startswith("# Astrid — "):
-        raise ValueError("vision README must have '# Astrid — <headline>'")
-    title = heading(vision).removeprefix("Astrid — ")
-    intro = section(vision, "Ambition")
-    pillar_index = section(vision, "Four pillars")
+    intro_text = read(root, INTRO_FILE)
+    if not intro_text.startswith("# Astrid — "):
+        raise ValueError("vision intro must have '# Astrid — <headline>'")
+    title = heading(intro_text).removeprefix("Astrid — ")
+    intro = section(intro_text, "Ambition")
+    pillar_index = section(intro_text, "Four pillars")
     pillars = []
     for m in PILLAR.finditer(pillar_index):
         name, relative_path = m.groups()
-        descriptor = next((line.strip() for line in pillar_index[m.end():].splitlines() if line.strip()), '')
         path = Path("vision") / relative_path
         body = read(root, path)
         if heading(body) != f"Pillar {len(pillars)+1} — {name}":
-            raise ValueError(f"{path}: heading must match README and order")
-        details = body.split("\n", 1)[1].strip()
-        details = re.split(r"^\*\*(?:Gap|Gaps|References):\*\*", details, maxsplit=1, flags=re.M)[0].strip()
+            raise ValueError(f"{path}: heading must match intro and order")
+        structured = project_subject(body, path, revision, root)
         pillars.append({
-            "id": path.stem, "title": name, "descriptor": descriptor,
-            "bodyMarkdown": rewrite_links(details, path, revision, root),
+            "id": path.stem, "title": name, "descriptor": structured["statement"],
+            **structured,
         })
     if len(pillars) != 4 or len({p["id"] for p in pillars}) != 4:
         raise ValueError("the vision must reference four distinct pillars")
 
     principles = []
-    for m in PRINCIPLE.finditer(section(vision, "Four driving principles")):
+    for m in PRINCIPLE.finditer(section(intro_text, "Four driving principles")):
         name, relative_path = m.groups()
         path = Path("vision") / relative_path
         source = read(root, path)
         if heading(source) != name:
-            raise ValueError(f"{path}: principle heading must match README")
-        details = source.split("\n", 1)[1].strip()
+            raise ValueError(f"{path}: principle heading must match the intro")
         principles.append({
             "id": path.stem, "title": name,
-            "bodyMarkdown": rewrite_links(details, path, revision, root),
+            **project_subject(source, path, revision, root),
         })
     if len(principles) != 4 or len({p["id"] for p in principles}) != 4:
         raise ValueError("the vision must reference four distinct principles")
@@ -128,11 +134,12 @@ def build(root: Path, revision: str) -> dict:
         if gap_id in seen:
             raise ValueError(f"duplicate gap ID: {gap_id}")
         seen.add(gap_id)
-        metadata = next((x for x in contents.splitlines() if x.startswith("**Applies to:**")), "")
+        metadata = gap_metadata(contents)
         assessment = metadata.split("**Assessment:**", 1)
         if len(assessment) != 2 or not (status := STATUS.match(assessment[1].strip())):
             raise ValueError(f"{path}: Assessment must begin with an allowed status")
-        relationships, primary_relationship = parse_gap_relationships(metadata)
+        relationships, primary_relationship = parse_gap_relationships(metadata, root / "vision")
+        aspiration_refs, primary_aspiration = parse_gap_aspirations(metadata, root / "vision")
         for relationship in relationships:
             if relationship not in valid_anchors:
                 raise ValueError(f"{path}: unknown vision relationship {relationship}")
@@ -141,7 +148,9 @@ def build(root: Path, revision: str) -> dict:
                "assessment": status.group(1).lower(),
                "assessmentDetail": assessment[1].strip(),
                "appliesTo": relationships,
-               "primaryAppliesTo": primary_relationship}
+               "primaryAppliesTo": primary_relationship,
+               "aspiration": primary_aspiration,
+               "supportingAspirations": aspiration_refs[1:]}
         for source_title, out_key in [
             ("Desired state", "desiredMarkdown"),
             ("Current state", "currentMarkdown"),
@@ -155,9 +164,13 @@ def build(root: Path, revision: str) -> dict:
         gaps.append(gap)
 
     projects = []
-    for i, row in enumerate(catalog_rows(read(root, CATALOG))):
+    from records import projects as project_records
+    from views import rebase_links
+    for i, row in enumerate(project_records(root)):
+        link = row[6]
+        plan = Path("plans") / PLAN_CELL.fullmatch(link).group(1)
+        row = [rebase_links(value, plan.parent, Path("plans")) for value in row[:6]] + [link]
         name, goal, status, owner, estimate, waiting, link = row
-        plan = Path("plans") / PLAN_LINK.fullmatch(link).group(1)
         plan_text = read(root, plan)
         linked = plan_gap_ids(plan_text)
         if any(gap not in seen for gap in linked):
@@ -166,14 +179,14 @@ def build(root: Path, revision: str) -> dict:
             "id": plan.parent.name, "title": name, "goalMarkdown": goal,
             "status": status, "owner": owner, "estimate": estimate,
             "waitingOn": waiting, "priorityOrder": i + 1,
-            "gapIds": linked, "githubUrl": f"{REPO_URL}/blob/{revision}/{plan.as_posix()}",
+            "gapIds": linked, "primaryGapId": linked[0] if linked else None, "githubUrl": f"{REPO_URL}/blob/{revision}/{plan.as_posix()}",
         })
 
     return {
         "schemaVersion": 1,
         "source": {"repository": "banodoco/astrid-dev", "revision": revision},
-        "vision": {"title": title, "introMarkdown": rewrite_links(intro, vision_file, revision, root),
-                   "contributeMarkdown": rewrite_links(section(vision, "Build Astrid with us"), vision_file, revision, root),
+        "vision": {"title": title, "introMarkdown": rewrite_links(intro, INTRO_FILE, revision, root),
+                   "contributeMarkdown": rewrite_links(section(intro_text, "Build Astrid with us"), INTRO_FILE, revision, root),
                    "agentPrompt": canonical_agent_prompt(root)},
         "pillars": pillars, "principles": principles, "gaps": gaps, "projects": projects,
     }
@@ -188,13 +201,17 @@ def render_readme(root: Path, page: dict) -> str:
     maintained by an author.
     """
     vision_root = Path("vision")
-    vision_text = read(root, vision_root / "README.md")
-    intro = section(vision_text, "Ambition")
-    contribution = section(vision_text, "Build Astrid with us")
+    intro_text = read(root, INTRO_FILE)
+    intro = section(intro_text, "Ambition")
+    contribution = section(intro_text, "Build Astrid with us")
+    from views import VIEWS
+    marker = next(view.marker for view in VIEWS if view.name == "public-vision")
     lines = [
-        "# Astrid — " + page["vision"]["title"],
+        marker,
         "",
-        "<!-- Ambition and participation live here; pillar, principle and gap summaries are derived from their own documents. -->",
+        "# " + heading(intro_text),
+        "",
+        "<!-- Ambition, participation and the principle list come from intro.md; pillar, principle and gap summaries are derived from their own documents. -->",
         "",
         "## Ambition",
         "",
@@ -202,30 +219,23 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Four pillars",
         "",
+        "Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable aspirations.",
+        "",
     ]
     for pillar in page["pillars"]:
-        path = vision_root / "pillars" / (pillar["id"] + ".md")
-        body = read(root, path)
-        tagline = next((line for line in body.splitlines()
-                        if line.startswith("**") and line.endswith("**")), "")
         lines.extend([
             f"### [{pillar['title']}](pillars/{pillar['id']}.md)",
             "",
-            pillar["descriptor"],
-            "",
-            tagline,
+            pillar["statement"],
             "",
         ])
 
     lines.extend(["## Four driving principles", ""])
     for principle in page["principles"]:
-        title = principle["title"]
-        path = vision_root / "principles" / (principle["id"] + ".md")
-        body = read(root, path).split("\n", 1)[1].strip()
         lines.extend([
-            f"### [{title}](principles/{principle['id']}.md)",
+            f"### [{principle['title']}](principles/{principle['id']}.md)",
             "",
-            body,
+            principle["statement"],
             "",
         ])
 
@@ -256,9 +266,10 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Projects and participation",
         "",
-        "The [project catalog](../plans/index.md) owns current priority, "
-        "status and accountability; project packs contain their own scope, "
-        "sources, tasks and proof. [How to contribute](../docs/contribution-workflow.md) "
+        "Each project pack holds its own status, owner and estimate (at the "
+        "top of its `plan.md`) and its scope, sources, tasks and proof; "
+        "[plans/priority.md](../plans/priority.md) sets the order, and the "
+        "[project catalog](../plans/index.md) lists every project. [How to contribute](../docs/contribution-workflow.md) "
         "covers issues, claims, scope review, PRs, writing and completion. "
         "Individual gap records hold their own evidence and closure criteria.",
         "",
@@ -291,34 +302,20 @@ def render_root_readme(source: str, page: dict) -> str:
         raise ValueError("README.md needs exactly one vision summary marker pair")
     before, remainder = source.split(ROOT_SUMMARY_START, 1)
     _, after = remainder.split(ROOT_SUMMARY_END, 1)
-    return before + ROOT_SUMMARY_START + "\n" + render_root_summary(page) + "\n" + ROOT_SUMMARY_END + after
+    marker = ""
+    if "<!-- Generated by Astrid Dev view: root-vision-summary;" in source:
+        marker = next(line for line in source.splitlines() if line.startswith("<!-- Generated by Astrid Dev view: root-vision-summary;")) + "\n"
+    return before + ROOT_SUMMARY_START + "\n" + marker + render_root_summary(page) + "\n" + ROOT_SUMMARY_END + after
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--revision", help="40-character Astrid Dev revision (defaults to local HEAD)")
     parser.add_argument("--output", type=Path, help="optional JSON output; omit for validation only")
-    parser.add_argument("--sync-readme", action="store_true", help="regenerate vision/README.md from canonical sources")
     args = parser.parse_args()
-    revision = args.revision or subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
-    ).strip()
+    revision = args.revision or git_output(ROOT, "rev-parse", "HEAD").strip()
     try:
         result = build(ROOT, revision)
-        expected_readme = render_readme(ROOT, result)
-        readme = ROOT / "vision/README.md"
-        root_readme = ROOT / "README.md"
-        root_text = root_readme.read_text(encoding="utf-8")
-        expected_root_text = render_root_readme(root_text, result)
-        if args.sync_readme:
-            readme.write_text(expected_readme, encoding="utf-8")
-            if root_text != expected_root_text:
-                root_readme.write_text(expected_root_text, encoding="utf-8")
-        else:
-            if readme.read_text(encoding="utf-8") != expected_readme:
-                raise ValueError("vision/README.md is stale; run python3 scripts/export_public_vision.py --sync-readme")
-            if root_text != expected_root_text:
-                raise ValueError("README.md vision summary is stale; run python3 scripts/export_public_vision.py --sync-readme")
     except (ValueError, OSError) as exc:
         print(f"ERROR public vision content: {exc}")
         return 1

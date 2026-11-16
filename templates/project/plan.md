@@ -1,8 +1,20 @@
 # <Project name>
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
+**Project:** The project's name as the catalog and the public vision page show it.
 
-**Vision gaps:** Link the relevant [existing gap](../../vision/README.md), with its primary and truly useful supporting relationships, or state **Vision role: Foundational enabler** with a reason. A small bug or maintenance fix belongs in an issue.
+**Goal:** One sentence on what creators get when this is done.
+
+**Status:** `queued`, `active`, `blocked`, `paused`, `done` or `cancelled`.
+
+**Owner:** Who is accountable now; `Unassigned` until someone claims it.
+
+**Estimate:** Engineering days left, or `TBD`.
+
+**Waiting on:** What the project waits for, or `—`.
+
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+
+**Vision gaps:** Link the relevant [existing gap](../../vision/gaps/F-001-platform-reliability.md) (primary), with any other truly useful supporting gaps linked after it, or, for no gap, replace this line with `**Vision role:** Foundational enabler — <reason>`. A small bug or maintenance fix belongs in an issue.
 
 **Contributes to closure:** When a gap's Route to closure names this plan, state the gap ID and the closure-evidence items this plan delivers, for example `F-008: every default slot runs live on RunPod`. Otherwise omit this line.
 

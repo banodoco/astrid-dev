@@ -1,5 +1,17 @@
 # 22 — Hivemind protocol: local and collective knowledge
 
+**Project:** Hivemind protocol
+
+**Goal:** Reconcile the Hivemind protocol proposal with real knowledge records, then prove independent private/community datasets can exchange permitted evidence.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** scope agreement; Hivemind source review
+
 **Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), use the [shared run contract](../../skills/astrid-dev-shared/run-contract.md), and inspect [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate are in the [project queue](../../README.md).
 
 **Vision gaps:** [CI-002 — Independently owned, interoperable Hiveminds](../../vision/gaps/CI-002-federated-knowledge.md) (primary). This plan provides the protocol and dataset proof; routine agent use is addressed separately.

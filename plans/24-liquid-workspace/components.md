@@ -1,6 +1,6 @@
 # Component and extension reference
 
-**Status:** Proposed component vocabulary and acceptance examples for [Plan 24](plan.md), informed by the [Liquid Software pillar](../../vision/pillars/liquid-software.md). **Not an API specification:** “Existing” paths are source anchors, whereas “Desired” behaviors are proposed. Verify source again before implementation.
+**Status:** Proposed vocabulary and acceptance examples for [Plan 24's portable UI foundation](plan.md), [Plan 45's typed connections](../45-component-connections/plan.md) and [Plan 46's agent workspace operations](../46-agent-workspace-operations/plan.md), informed by the [Liquid Software pillar](../../vision/pillars/liquid-software.md). **Not an API specification:** “Existing” paths are source anchors, whereas “Desired” behaviors are proposed. Verify source again before implementation.
 
 ## Objects and their roles
 

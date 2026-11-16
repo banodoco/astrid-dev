@@ -1,11 +1,13 @@
 # <ID> — <the missing outcome, stated as what isn't yet true>
 
-**Applies to:** <link to the primary principle or pillar> (primary) · <link to a justified supporting one> (supporting) · **Assessment:** Open / Partially evidenced / Closed / Needs recheck; <evidence and date>.
+**Aspiration:** <link to the primary aspiration's heading> (primary) · <link to a justified supporting aspiration's heading> (supporting) · **Assessment:** Open / Partially evidenced / Closed / Needs recheck; <evidence and date>.
 
 <!--
 Copy to vision/gaps/<ID>-<short-name>.md. The gap skill (skills/astrid-dev-gap/SKILL.md) explains each section.
+Choose one primary aspiration and any justified supporting aspirations; omit the supporting entry when none fits.
+See docs/contribution-workflow.md#define-or-reassess-a-vision-gap for the rule.
 A gap names a result that would still matter if today's proposed project were replaced.
-Never put project status, owners or estimates here: the plan catalog owns those.
+Never put project status, owners or estimates here: each plan's plan.md owns those.
 -->
 
 ## Desired state
@@ -36,7 +38,7 @@ Without plans, write: "No route yet — Next: <the action that would produce one
 
 ## Route to closure
 
-Optional until a plan serves this gap. Write one row per step, in order. Every closure-evidence item above appears in some row, or in an `unplanned` row, so missing coverage is visible. No statuses, owners, estimates or tasks; the catalog and each plan own those.
+Optional until a plan serves this gap. Write one row per step, in order. Every closure-evidence item above appears in some row, or in an `unplanned` row, so missing coverage is visible. No statuses, owners, estimates or tasks; each plan owns those.
 
 | Step | Plan | Contributes (closure evidence it delivers) | Milestone |
 |---|---|---|---|

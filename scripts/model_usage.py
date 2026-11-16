@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record the route (N, X or S) that ran each piece of work; summarize for PR review.
+"""Record the route (N, X, S or T) that ran each piece of work; summarize for PR review.
 
 Append-only local JSONL under .otto/ (gitignored). Optional provider/model-id stay
 local and are never summarized. This records provided facts; it cannot
@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 BASIS = ("runtime-observed", "self-reported")
-ROUTES = ("N", "X", "S")
+ROUTES = ("N", "X", "S", "T")
 ROLES = ("planning", "research", "implementation", "testing", "review", "other")
 FILE = "model-usage.jsonl"
 
@@ -24,7 +24,7 @@ def make_record(route: str, role: str, task: str, basis: str,
                 effort: str = "unknown", receipt: str = "",
                 tokens: int | None = None) -> dict:
     if route not in ROUTES:
-        raise ValueError("route must be one of N, X or S")
+        raise ValueError("route must be one of N, X, S or T")
     if not task or not task.strip():
         raise ValueError("task must be named")
     if role not in ROLES or basis not in BASIS:

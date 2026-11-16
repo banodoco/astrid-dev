@@ -1,5 +1,17 @@
 # 04 — Refined concurrent editing
 
+**Project:** Refined concurrent editing
+
+**Goal:** Keep users in control: agent edits must respect user edits, surface conflicts, and retry safely without silently overwriting changes.
+
+**Status:** queued
+
+**Owner:** Unassigned
+
+**Estimate:** TBD
+
+**Waiting on:** —
+
 **Vision gaps:** [Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (primary).
 
 **Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
