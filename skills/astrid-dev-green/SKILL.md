@@ -89,7 +89,7 @@ For each side, and each workflow in scope:
    - a cause spans about ten files or more;
    - the same signature comes back after two batches.
 5. **A real bug** gets its own fix card. A test that can't be fixed in its card follows the [quarantine rule](../../plans/39-green-mains/plan.md#quarantine-rule), and only once that rule's guard exists in the repository. The Agent's guard fails every xfail today (`tests/lanes.py`).
-6. **Fix where the change will ship:** a fix branch under the release in progress, or a fix release for the published one ([which](../astrid-dev-release/SKILL.md#how-a-release-runs), step 7).
+6. **Fix where the change will ship:** a fix branch under the release in progress, or a fix release for the published one ([which](../astrid-dev-release/SKILL.md#how-a-release-runs), step 5).
 
 ## Using GitHub Actions
 

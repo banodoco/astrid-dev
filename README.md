@@ -1,6 +1,6 @@
 # Astrid development workspace
 
-Astrid Dev connects our creative ambition to practical contributions. Our [contribution design principles](docs/contribution-design-principles.md) keep that work rigorous and simple.
+Astrid Dev connects our creative ambition to practical contributions. To read the thinking behind how it works, start with the [design principles](docs/contribution-design-principles.md): make good contributions easy, poor decisions difficult, and results independently verifiable, with the least machinery necessary.
 
 ## What we're building
 
@@ -37,8 +37,20 @@ Contributing without an agent? See [CONTRIBUTING.md](CONTRIBUTING.md). Noticed s
 
 Moving an older Pinokio installation? See the [Version 0 standalone migration guide](docs/version-0-standalone-migration.md).
 
-## From vision to projects
+## From vision to releases
 
-The vision defines the destination, while projects in the [plan catalog](plans/index.md) are attempts to close the gaps between our current state and that goal. Completing a plan doesn't automatically close a gap; it informs our [reassessment](docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
+The vision sets the destination; gaps measure the distance to it; projects, the plans in the [plan catalog](plans/index.md), close gaps; and releases ship projects and fixes, each as one branch per repository, tested and published as one set. Completing a plan doesn't automatically close a gap; it informs our [reassessment](docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
 
-**[Strategy](strategy.md)** shows the direction of releases and versions; see [how the documents fit together](docs/contribution-workflow.md#review-the-strategy). The [plan catalog](plans/index.md) shows ownership, status, priority and estimate.
+## Where to read more
+
+| To find | Read |
+| --- | --- |
+| The destination, pillars, principles and gaps | [Vision](vision/README.md) |
+| Where releases and versions lead | [Strategy](strategy.md) |
+| Each project's owner, status, priority and estimate | [Plan catalog](plans/index.md) |
+| What each release holds: plans, issues, branches | [Release briefs](releases/) |
+| The order a release runs in | [How a release runs](skills/astrid-dev-release/SKILL.md#how-a-release-runs) |
+| Routes, issues and review | [Contribution workflow](docs/contribution-workflow.md) |
+| The thinking behind it | [Design principles](docs/contribution-design-principles.md) |
+| How an agent contributes | [Contributor skill](skills/astrid-dev/SKILL.md) |
+| What a word means | [Glossary](skills/astrid-dev-shared/glossary.md) |

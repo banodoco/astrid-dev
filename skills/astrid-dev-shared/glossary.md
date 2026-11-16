@@ -56,7 +56,7 @@ One meaning per word; two meanings, two terms.
 
 **test run:** one execution of tests.
 
-**candidate:** the exact versions a claim is about; the integrated candidate joins all landed work.
+**candidate:** the exact versions a claim is about. A release's **integrated candidate** is the frozen head of its release branch in each repository; nothing is composed or selected from other branches.
 
 **round:** one review of the integrated candidate.
 
@@ -68,15 +68,17 @@ One meaning per word; two meanings, two terms.
 
 **cut line:** the date by which a release's plans must be done, and what ships without any that is not.
 
-**release:** a numbered integration across repositories; its **release brief** holds the plan. [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs) is its one account.
+**release:** a numbered set of work across repositories, one release branch per repository that everything merges into; its **release brief** holds the plan. [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs) is its one account.
 
-**release branch:** `release/<NN>/main`, a release's one canonical branch in each repository it changes; tester builds and the candidate, the frozen head of it, come from it.
+**release branch:** `release/<NN>/main`, a release's one canonical branch in each repository it changes; plan and fix branches merge into it, tester builds and the candidate come from it, and publication fast-forwards `main` to it.
 
 **plan branch:** `release/<NN>/plan-<PP>`, where a plan's work lands inside its release.
 
 **fix branch:** `release/<NN>/<topic>`, where work outside a plan lands inside its release; its brief row's Role is `fix #<issue>`, the astrid-dev issue it answers.
 
 **tester build:** a pre-release install manifest naming one exact commit on a release branch, for outside testers.
+
+**served release:** the published release that the App's install manifest at `astrid.haus` currently serves; its number is the served number.
 
 **integration branch:** retired: an `int/…` branch of Release 13 and earlier. Release 14 on uses release, plan and fix branches.
 
@@ -108,4 +110,6 @@ One meaning per word; two meanings, two terms.
 
 **kind:** a release’s declared version step: `patch`, `minor` or `major`; an absent declaration defaults to `patch`.
 
-**standing lane:** the continuing place in a release for fixes and small plans arising from actual usage and user reports, alongside its theme.
+**lane:** one stream of work within a release, run in its own session with its brief in `releases/<N>/briefs/`.
+
+**standing lane:** the continuing lane of a release for fixes and small plans arising from actual usage and user reports, alongside its theme.
