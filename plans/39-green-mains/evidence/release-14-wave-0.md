@@ -51,8 +51,8 @@ Python release-wheel jobs passed on the measured Agent head.
 
 | Workflow | Exact-head evidence | Baseline result / gap |
 | --- | --- | --- |
-| Agent CI | [43888589837](https://github.com/banodoco/astrid-agent/actions/runs/43888589837) | Failing shards and fast checks; shard 6's job log is inaccessible. Darwin native was cancelled. |
-| Agent Lanes | [43888589840](https://github.com/banodoco/astrid-agent/actions/runs/43888589840) | Opt-in and integration shards 1, 2, 4 failed; installed wheel passed; shard 3 still nonterminal at the 18:51 UTC observation. |
+| Agent CI | [43888589837](https://github.com/banodoco/astrid-agent/actions/runs/43888589837) | Failing shards and fast checks; shard 6 log recovered in this follow-up (247 failed, 4,913 passed, 6 skipped, 4 errors, 92 successful subtests, 26,330 deselected). Darwin native was cancelled. |
+| Agent Lanes | [43888589840](https://github.com/banodoco/astrid-agent/actions/runs/43888589840) | Opt-in and all four integration shards failed; installed wheel passed. Shard 3 finished at 19:36:23 UTC: 81 failed, 372 passed, 1 skipped, 62 errors, 32,163 deselected; read-only [job 133451219876](https://github.com/banodoco/astrid-agent/actions/runs/43888589840/job/133451219876). |
 | Agent Chat service | [43888589704](https://github.com/banodoco/astrid-agent/actions/runs/43888589704) | Passed. |
 | Agent Windows task host journey | [43888589737](https://github.com/banodoco/astrid-agent/actions/runs/43888589737) | Both hosts fail at unsupported `astrid packs list --json`; A-h. |
 | Runtime CI | [43888599361](https://github.com/banodoco/astrid-runtime/actions/runs/43888599361) | Five failed jobs. Sandbox IDs/counts are retained; most extracted error messages are unavailable and are marked unknown/new. |
@@ -68,7 +68,7 @@ pre-existing Agent structure findings remain with cause-specific triage for
 [astrid-dev #647](https://github.com/banodoco/astrid-dev/issues/647). GL changes
 the gate policy; it does not accept those findings into the baseline.
 
-## GL: reviewed behavior and focused proof
+The previously unavailable exact-head Agent unit-shard-6 log became readable on 16 November: [job 133426797162](https://github.com/banodoco/astrid-agent/actions/runs/43888589837/job/133426797162), with 247 failures and 4 errors in its pytest final summary. This restores the missing log access, **not** a green test result or a completed G1: exact-head Runtime Nightly and App Direct Journey have no runs, and unreconciled Runtime signature details are still explicitly unknown. The original G1 inventory in non-git receipts retains its observed-at timestamp and was not retrospectively edited to claim full coverage.\n\n## GL: reviewed behavior and focused proof
 
 [Agent #366](https://github.com/banodoco/astrid-agent/pull/366) merged at
 `347dc197ec040d644a8120646966c58bbea7873a`. Ruff and mypy count reductions pass
@@ -195,6 +195,21 @@ duration artifact configuration is unchanged; actual unit duration uploads
 also await those jobs. A failed test-result artifact can satisfy SF3a
 reporting proof; it never means that its test passed or that Release 14 is
 qualified.
+
+## Wave-0 qualification follow-up (16 November, 20:07 UTC)
+
+Agent's exact-head [CI 43934820640](https://github.com/banodoco/astrid-agent/actions/runs/43934820640) now has completed, independently downloaded JUnit archives for unit shards **3, 4, 5 and 8**, with their unchanged three-day duration archives. Each ZIP SHA-256 agrees with GitHub's advertised artifact digest, and each test suite aggregate agrees with its job's logged XML summary:
+
+| Shard | JUnit artifact | Tests / testcase elements | Failures | Errors | Skips | Pytest result | Duration artifact |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | `14263779551` | 1,861 / 1,861 | 31 | 0 | 0 | 1,830 passed; 31 failed | `14263564649` |
+| 4 | `14265361873` | 2,061 / 2,061 | 28 | 19 | 0 | 2,014 passed; 28 failed; 19 errors | `14264457941` |
+| 5 | `14265381355` | 2,416 / 2,416 | 95 | 107 | 0 | 2,214 passed; 95 failed; 107 errors | `14265226633` |
+| 8 | `14265546026` | 4,114 / 3,912 | 97 | 2 | 25 | 3,788 passed; 97 failed; 2 errors; 25 skipped; **202 subtests passed** | `14265361415` |
+
+Shard 8's 202 successful subtests contribute to the XML suite aggregate without separate testcase elements; the different numbers are intentional and reconcile. These were **failed product test jobs**, not passing checks. Their report-summary and upload steps succeeded. The JUnit files expire on 14 February 2027; duration files on 19 November 2026. Agent Lanes shard 2 `14262871202` additionally has 516 tests, 78 failures, 172 errors, 266 passed; its result XML and logged count reconcile, with expiry 14 February 2027. Integration shards 3/4 and unit shards 1/2/6/7 remain **not qualified** until their exact-run jobs finish and both types of unit artifact have been checked.
+
+Branch custody observation: Runtime `release/14/plan-39` was subsequently advanced by two commits to `4fe2c0b8`, and App by two to `e94d7ab5`. Those newer trees are **not** the exact heads qualified by the Runtime/App SF3a receipts above (`16d5734a` and `15249284`). This records concurrent changes without resetting them, replacing the exact-head proof, or asserting that later tests passed. No new Agent, Runtime, App or `release/14/main` commit was made in this records follow-up.
 
 Routes used: N workers for G1, GL and SF3a, with manager review and integration.
 No outside per-task verification gate was added, as the owner instructed.
