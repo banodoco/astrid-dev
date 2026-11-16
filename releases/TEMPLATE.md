@@ -22,6 +22,14 @@ Describe the intended sequence, key trade-offs, dependencies, qualification, and
 
 Delete this paragraph once the list is written; only plan bullets or `None yet` may stay in this section. Replace the example with one bullet for each real `plans/<id>/plan.md` link, or write `None yet` for a draft with no plans. List only plans intended for this release. Kind may be omitted (default `patch`), or set to `minor` or `major`. Each plan's own `plan.md` holds its status, owner and estimate, and `plans/priority.md` holds the order; the [plan catalog](../plans/index.md) is generated from them.
 
+## Branches
+
+From Release 14 each release has one branch per product repository, `release/<N>/main`, and every plan or fix branch of the release merges into it; delete this paragraph once the table is written. Role is `release`, `plan <PP>` or `fix`; Cut at is the 40-character commit the branch was cut from, or `not yet cut`; State is `open` or `published` for a release row, and `open` or `merged` (contained in that repository's `release/<N>/main`) for a plan or fix row.
+
+| Repository | Branch | Role | Cut at | State |
+| --- | --- | --- | --- | --- |
+| astrid-agent | `release/<N>/main` | release | not yet cut | open |
+
 ## Included pull requests
 
 Optional. Open pull requests brought into this release that belong to no listed plan, usually from outside contributors: one line each with the link and what it contributes. The [Release skill](../skills/astrid-dev-release/SKILL.md#take-stock-of-open-pull-requests) says how they are chosen and ordered. Remove this section if there are none.

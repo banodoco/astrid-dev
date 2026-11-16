@@ -10,7 +10,7 @@ from gap_relationships import parse_gap_relationships
 import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
 from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
-                     is_placeholder, key_value_lines, read_text, release_brief, section as record_section)
+                     is_placeholder, key_value_lines, read_text, release_brief, release_branch_errors, BRANCH_FIRST_RELEASE, section as record_section)
 from vision_subject import parse_subject
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -190,6 +190,9 @@ def release_errors(filename: str, body: str) -> list[str]:
         if error.startswith('Included plans') and not plans:
             continue
         issues.append(f'releases/{filename}: {error}')
+    if stem.isdigit() and int(stem) >= BRANCH_FIRST_RELEASE:
+        issues.extend(f'releases/{filename}: {e}' for e in release_branch_errors(
+            body, stem, [number for number, _ in plans]))
     if state == 'Final' and brief['issues_present'] and not brief['issues_frozen']:
         issues.append(f'releases/{filename}: Final Issues block must be frozen')
     if state:

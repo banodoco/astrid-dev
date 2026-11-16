@@ -67,6 +67,7 @@ source:
   sha: ""
   dirty_state: ""
   custody: ""
+  destination: ""   # release/<NN>/plan-<PP>
 review:
   # Copy the actual accepted policy and remaining counters; never reset them here.
   # This template is planning-only; it does not activate a review or execution.

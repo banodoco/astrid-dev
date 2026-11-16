@@ -26,7 +26,7 @@ Number each decision the owner must make (`D1`, `D2`, …) with the options and 
 
 ## Source identities
 
-Before code work, record the actual repository/ref/SHA, retained changes, base versus donors, and intended integration destination. Never guess or confuse historical snapshots with the current source.
+Before code work, record the actual repository/ref/SHA, retained changes, base versus donors, and intended integration destination: for a plan in Release 14 or later, the branch `release/<NN>/plan-<PP>` in each repository the plan changes, cut from that repository's `release/<NN>/main`. Never guess or confuse historical snapshots with the current source.
 
 ## References
 

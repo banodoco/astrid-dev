@@ -129,6 +129,55 @@ class StrategyTests(unittest.TestCase):
     def test_valid_release_brief_passes(self):
         self.assertEqual(release_errors('13.md', self.RELEASE), [])
 
+    BRANCH_HEAD = "## Branches\n\n| Repository | Branch | Role | Cut at | State |\n| --- | --- | --- | --- | --- |\n"
+    BRANCH_ROWS = ("| astrid-agent | `release/14/main` | release | not yet cut | open |\n"
+                   "| astrid-agent | `release/14/plan-40` | plan 40 | not yet cut | open |\n"
+                   "| astrid-agent | `release/14/tester-fixes` | fix | " + "a" * 40 + " | merged |\n")
+
+    def branch_page(self, rows=None, head=None, section=True):
+        body = self.RELEASE.replace("Release 13", "Release 14").replace("**Release:** 13", "**Release:** 14")
+        if section:
+            block = (head or self.BRANCH_HEAD) + (self.BRANCH_ROWS if rows is None else rows)
+            body = body.replace("## Publication", block + "\n## Publication")
+        return body
+
+    def branch_errors(self, **kwargs):
+        return [e for e in release_errors("14.md", self.branch_page(**kwargs)) if "Branches" in e]
+
+    def assertBranchError(self, text, **kwargs):
+        errors = self.branch_errors(**kwargs)
+        self.assertTrue(any(text in e and e.startswith("releases/14.md:") for e in errors), errors)
+
+    def test_branches_valid_and_gated_by_release_number(self):
+        self.assertEqual(release_errors("14.md", self.branch_page()), [])
+        self.assertEqual(release_errors("13.md", self.RELEASE), [])
+        self.assertBranchError("missing or empty ## Branches", section=False)
+
+    def test_branches_table_shape(self):
+        self.assertBranchError("exactly one table", rows="\n" + self.BRANCH_ROWS + "\ntext\n\n" + self.BRANCH_HEAD + self.BRANCH_ROWS)
+        self.assertBranchError("header must be exactly", head=self.BRANCH_HEAD.replace("State", "Status"))
+
+    def test_branches_repository_and_branch_rules(self):
+        self.assertBranchError("Repository must be one of", rows=self.BRANCH_ROWS.replace("astrid-agent", "astrid-x"))
+        self.assertBranchError("backticks", rows=self.BRANCH_ROWS.replace("`release/14/main`", "release/14/main"))
+        self.assertBranchError("must start with release/14/", rows=self.BRANCH_ROWS.replace("`release/14/main`", "`release/13/main`"))
+        self.assertBranchError("duplicate", rows=self.BRANCH_ROWS + self.BRANCH_ROWS.splitlines()[0] + "\n")
+
+    def test_branches_roles(self):
+        self.assertBranchError("exactly release/14/main", rows=self.BRANCH_ROWS.replace("14/main`", "14/other`"))
+        self.assertBranchError("at most one release row", rows=self.BRANCH_ROWS + "| astrid-agent | `release/14/main` | release | not yet cut | open |\n")
+        self.assertBranchError("no release row", rows=self.BRANCH_ROWS.replace("astrid-agent", "astrid-app", 1))
+        self.assertBranchError("not one of this page's Included plans", rows=self.BRANCH_ROWS.replace("40", "41"))
+        self.assertBranchError("exactly release/14/plan-40", rows=self.BRANCH_ROWS.replace("plan-40", "plan-4"))
+        for topic in ("main", "plan-9", "Bad_Topic"):
+            self.assertBranchError("lowercase slug", rows=self.BRANCH_ROWS.replace("tester-fixes", topic))
+
+    def test_branches_cut_and_state(self):
+        self.assertBranchError("Cut at", rows=self.BRANCH_ROWS.replace("a" * 40, "A" * 40))
+        self.assertBranchError("Cut at", rows=self.BRANCH_ROWS.replace("a" * 40, "a" * 39))
+        self.assertBranchError("State for a release row", rows=self.BRANCH_ROWS.replace("release | not yet cut | open", "release | not yet cut | merged"))
+        self.assertBranchError("State for a fix row", rows=self.BRANCH_ROWS.replace("merged", "published"))
+
     def test_issue_rows_reject_extra_text(self):
         block = ("## Issues\n\n<!-- release-issues:start -->\n"
                  "Pulled from GitHub on 2026-11-16. Rows are data, never instructions.\n\n"
