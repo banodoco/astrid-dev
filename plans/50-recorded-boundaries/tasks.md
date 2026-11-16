@@ -6,7 +6,7 @@ A draft can use a short outline with unknowns. Before dispatch, every task needs
 
 **Task ids:** `RB-1`, `RB-2`, …
 
-**Critical path:** RB-2 → RB-3 → RB-4 → R. RB-1 runs in parallel with RB-2 and must land before RB-4. The after-Release-13 rows RB-5 to RB-13 are follow-ups added 13 Nov ([inputs.md](inputs.md#13-nov-2026-release-13-follow-ups)); they wait on the owner's decision D2, and the dry-pod chain RB-5 → RB-6 → RB-7 → RB-10 → RB-11 is the longest of them.
+**Critical path:** RB-2 → RB-3 → RB-4 → R. RB-1 runs in parallel with RB-2 and must land before RB-4. The after-Release-13 rows RB-5 to RB-13 are follow-ups added 13 Nov ([inputs.md](inputs.md#13-nov-2026-release-13-follow-ups)); the owner approved them as D2 on 16 Nov 2026, and the dry-pod chain RB-5 → RB-6 → RB-7 → RB-10 → RB-11 is the longest of them.
 
 **Test inventory:**
 - Agent:

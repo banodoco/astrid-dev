@@ -71,7 +71,7 @@ Recorded RunPod shapes, plus the real Runtime in a runnable journey, is the smal
 - **D2. Release 13 follow-ups (13 Nov).** Add RB-5 to RB-13 to this plan as the post-Release-13 work, and mark the "real pod agent and no-op CPU engine" follow-up superseded.
   - Options: **(a)** accept as written; **(b)** accept the dry-pod rows only and keep the lease rows with the machines plan; **(c)** decline.
   - **Recommendation: (a).** The rows are copied from two plans that already name their scope and proof.
-  - Pending.
+  - **Approved by the owner, 16 Nov 2026**, on the pull request that adds these rows. Answer: (a), accept as written.
 - **Inherited, not pending:** machines are released on host shutdown or restart (Plan 40 D12; D13 keeps it). Keeping them needs Plan 40's deferred pod-side cap.
 
 ## 13 Nov 2026: Release 13 follow-ups
@@ -90,7 +90,7 @@ Both are on the branch `r13-progress/decision-log` and reach `main` with the Rel
 - The Release 13 slices of both plans (DP-1 to DP-3, T1 to T5) are not rows here; RB-5, RB-6 and RB-11 depend on them.
 - Route, owner lane, scope, dependencies and proof are copied from the source plans. Where a source gives none (RB-11 route, RB-12 and RB-13 proof files) the row says so.
 
-**Owner decision: Pending.** D2 below. The owner approves on the PR that adds these rows.
+**Owner decision:** D2 approved by the owner on 16 Nov 2026 (see [Owner decisions](#owner-decisions)).
 
 ## Source identities
 
