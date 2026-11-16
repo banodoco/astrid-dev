@@ -109,3 +109,60 @@ checkpoint. CPU work remains authorised; GPU proof and the final review
 stay open. No unspecified re-pin, publication or product-main merge follows
 from this addendum. Routes used: Unknown — original bindings unavailable;
 direct bounded manager work, not an independent reviewer.
+
+## E5 — Newest completed attached-meter run and bounded-memory Windows replay
+
+Observed on 16 November 2026 from GitHub's finished job steps and actual
+job logs, not from the previous queued statuses. Agent #359's current task
+head is `d083878970ef1ac04ff11426b8c716397d675a6d`; the append-only
+commit repaired the invalid `os.fsync(-1)` observer oracle using a real
+closed descriptor. The focused C-error oracle passed on Linux and Windows
+in [run 43950915734](https://github.com/banodoco/astrid-agent/actions/runs/43950915734).
+
+The subsequent two-platform [meter run 43951310565](https://github.com/banodoco/astrid-agent/actions/runs/43951310565)
+**finished**:
+
+- Linux job `133594213925` **succeeded**. The actual attached SDK/CLI
+  stand-in meter returned `status: PASS`, with two latency cases and no
+  failures/errors/skips, valid output and task records, and explicitly
+  `budget_certified: false`. The native calibration counted nine successful
+  flushes (one fsync, eight fdatasync), zero failed, no coverage gaps.
+  Original artifact `14272385237`, upload-log SHA-256
+  `e9318173bb0f4e4468b4382fe8e9efea7db0f3e6d1baffaa032c876cdd920565`.
+- Windows job `133594213473` **failed**. The repaired observer, positive and
+  negative secure-directory oracles, UTF-8 schema handling and native
+  calibration all passed. The attached meter then returned
+  `decode_exit: 124`: the native tracerpt conversion again hit its existing
+  180-second limit. It is **NO-RESULT for completed native generation counts**,
+  not a security failure or an acceptable speed sample. Original artifact
+  `14269207422`, upload-log SHA-256
+  `c247c7ab2668c7910e541af0b4ccc811c6f242c768ce6650b803d8dc0025c86d`.
+
+The first offline [replay 43945137375](https://github.com/banodoco/astrid-agent/actions/runs/43945137375)
+converted the original saved Windows ETL in about 8m42s inside the separate
+900-second deadline, but GitHub cancelled its strict XML iteration at the
+35-minute job limit. It returned no native counts. That exposed a bounded-memory
+parser defect: cleared Event objects were still attached to their parent.
+The support branch `p55/windows-trace-decode-20261116`, head
+`18518e0e285f8ccc75b2d7ed9231786d60a649bc`, removes each Event only
+*after* its complete decode/yield. Full-scan loss checks, completed-flush
+pairing and unknown-owner refusal remain unchanged. The actual existing
+native-reader checks (14) and new decoder/streaming oracles (8) passed on
+**both** Linux and Windows in [43952611444](https://github.com/banodoco/astrid-agent/actions/runs/43952611444).
+
+The load-bearing replay of the retained ETL
+[43951926641](https://github.com/banodoco/astrid-agent/actions/runs/43951926641)
+was still running in its strict attribution step at this checkpoint. Do not
+merge the decoder or claim native counts based on the unit checks; collect that
+exact job first. The parser support branch diverges from Agent #359 only by
+its own four additive commits versus #359's separately appended oracle fix;
+normal merge after both run gates preserves both histories, never rebase/force.
+
+The confirmed facts have also been posted to the existing
+[Agent #359 discussion](https://github.com/banodoco/astrid-agent/pull/359#issuecomment-6929082945).
+The earlier conflicting reported artifact identities in E3 remain preserved;
+these newer artifact SHA values are the exact upload-log values, **not a claim
+of equality to either earlier downloaded copy**. No current D1 warm-model
+speed commitment has been proven, no task completion is ticked, and RS1/R
+remain 0/1 with spend zero and Plan 54 queued. This is additional evidence,
+not an independent reviewer or a permission/re-pin/product-main authorization.
