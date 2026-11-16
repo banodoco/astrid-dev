@@ -4,6 +4,26 @@
 
 **Run states:** [CI 43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168) completed **failure**; 8/8 unit shards plus Darwin failed, the aggregate `unit` job failed, fast checks/boundary/Windows native/release wheels 3.11 and 3.12 **passed**, and landing reference was skipped. [Lanes 43967861160](https://github.com/banodoco/astrid-agent/actions/runs/43967861160) was **in progress**: opt-in and integration shards 1, 2 and 4 failed, installed wheel passed, integration shard 3 still running. Do not invent its summary or XML.
 
+## Exact outer pytest summary lines for every finished failing test job
+
+These are the terminal summary lines extracted from each *completed* attempt-1 job log, separate from XML test-count totals. The still-running Lanes shard 3 has no outer summary yet.
+
+| Job | Literal outer summary (minus GitHub log timestamp and delimiter) |
+|---|---|
+| CI Darwin | `14 failed, 40 passed, 30933 deselected, 2 warnings, 1 error in 437.15s (0:07:17)` |
+| CI unit 1 | `43 failed, 5227 passed, 3 skipped, 26182 deselected, 346 warnings, 54 errors, 153 subtests passed in 5474.98s (1:31:14)` |
+| CI unit 2 | `80 failed, 3862 passed, 19 skipped, 27497 deselected, 2 warnings, 51 errors, 26 subtests passed in 3587.11s (0:59:47)` |
+| CI unit 3 | `31 failed, 1834 passed, 29644 deselected, 2 warnings in 2099.38s (0:34:59)` |
+| CI unit 4 | `28 failed, 2007 passed, 29455 deselected, 2 warnings, 19 errors in 3514.64s (0:58:34)` |
+| CI unit 5 | `95 failed, 2213 passed, 29094 deselected, 10 warnings, 107 errors in 2369.72s (0:39:29)` |
+| CI unit 6 | `247 failed, 4943 passed, 6 skipped, 26342 deselected, 59 warnings, 4 errors, 92 subtests passed in 4983.60s (1:23:03)` |
+| CI unit 7 | `250 failed, 5636 passed, 4 skipped, 25459 deselected, 2 warnings, 160 errors, 113 subtests passed in 3470.90s (0:57:50)` |
+| CI unit 8 | `94 failed, 3668 passed, 23 skipped, 27722 deselected, 5 warnings, 2 errors, 202 subtests passed in 1638.02s (0:27:18)` |
+| Lanes opt-in | `12 failed, 19 passed, 30959 deselected, 2 warnings in 189.62s (0:03:09)` |
+| Lanes integration 1 | `37 failed, 479 passed, 31868 deselected, 13 warnings in 1095.70s (0:18:15)` |
+| Lanes integration 2 | `77 failed, 267 passed, 31868 deselected, 22 warnings, 172 errors in 1870.91s (0:31:10)` |
+| Lanes integration 4 | `99 failed, 391 passed, 31868 deselected, 9 warnings, 26 errors in 4719.75s (1:18:39)` |
+
 Actual downloaded ZIPs and decompressed JUnit XML were independently SHA-256 checked. ZIP hashes agree with GitHub's recorded `sha256:` digests. The JUnit totals are **tests/failures/errors/skipped**, not unique failure causes; full literal messages are grouped per job by exact XML `message` string, including differences in multiline text. Subtests in pytest `tests` totals do not always have separate XML testcase IDs.
 
 | Finished job | JUnit T/F/E/S | Distinct full XML literal messages | Actual artifact ID | ZIP SHA-256 | Inner XML SHA-256 |
