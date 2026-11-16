@@ -1,0 +1,89 @@
+{
+  "run": "2026-11-15-local-speed",
+  "repository": "banodoco/astrid-agent",
+  "task_head": "dbf713822ced58f4e48416ddf32bece2af8430fd",
+  "ci_run_id": 43918996289,
+  "job_id": 133480864758,
+  "sources": {
+    "agent": "62f9d67e0a06b0b101be6f4b62f0806a00580e9f",
+    "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+    "vibecomfy": "dba38f8644c46f652376f2cd5112ea161e40f09b",
+    "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+  },
+  "artifact_id": 14254042311,
+  "archive_sha256": "5e349b655b203c2d010647a045e0d040487ba8590a762d86450f00ff292215e8",
+  "original_summary_member": "plan55-meter-proof/summary.json",
+  "original_summary_sha256": "207c1865902d8004fb890f6f3a4950c12705ea51798973f748baa4d686477c50",
+  "kind": "derived_index_not_raw_summary_or_full_trace",
+  "meter_result": "PASS",
+  "budget_certified": false,
+  "samples_per_caller": 1,
+  "cases": {
+    "resident_sdk": {
+      "uninstrumented_wall_seconds": 22.27975070599996,
+      "http_requests": 13,
+      "process_starts": {
+        "external": 7,
+        "pack_worker": 1
+      },
+      "workflow_compile": 8,
+      "bundle_compile": 2,
+      "bundle_emission": 3,
+      "output_hash_streams": 25,
+      "output_hash_bytes": 2050,
+      "native_flushes": 166,
+      "observer_gaps": [],
+      "output_bytes": 82,
+      "output_dimensions": [
+        16,
+        16
+      ],
+      "latency_task_ids": {
+        "warmup_task_id": "24964df98b7a4bd6a99465d55d1e8b6a",
+        "measured_task_id": "e1e4e6f1a9e548b5a6b54f0b3f05c236"
+      },
+      "counter_task_ids": {
+        "warmup_task_id": "6e21bbc595b64d2aa6bc6a4f1729d057",
+        "measured_task_id": "e68e4cfc1af24890b0c512146c621b81"
+      }
+    },
+    "fresh_python_cli": {
+      "uninstrumented_wall_seconds": 16.82919231400001,
+      "http_requests": 13,
+      "process_starts": {
+        "cli": 1,
+        "external": 7,
+        "pack_worker": 1
+      },
+      "workflow_compile": 8,
+      "bundle_compile": 2,
+      "bundle_emission": 3,
+      "output_hash_streams": 25,
+      "output_hash_bytes": 2050,
+      "native_flushes": 162,
+      "observer_gaps": [],
+      "output_bytes": 82,
+      "output_dimensions": [
+        16,
+        16
+      ],
+      "latency_task_ids": {
+        "warmup_task_id": "f4c012dee1f34aac8e5d8da00586c096",
+        "measured_task_id": "f067d658c1194957bdf614a5753801d5"
+      },
+      "counter_task_ids": {
+        "warmup_task_id": "88a8e0ed6eda4d98b7eb096094ae1d24",
+        "measured_task_id": "c77bd9550215496ea570bcc65351aaf2"
+      }
+    }
+  },
+  "limitations": [
+    "Timing and counts are from separate runs; instrumented time is not performance evidence",
+    "82-byte 16x16 PNG, not the one-megapixel D1 workload",
+    "One measured second job per caller, not medians, tolerance or a speedup",
+    "Counters include process-wide background activity inside the interval",
+    "Python SHA-256 entrypoints do not cover arbitrary native hashing",
+    "Windows generation remains NO-RESULT on the recorded permission hold",
+    "No completed LS-2, independent review, merge or permission waiver"
+  ]
+}

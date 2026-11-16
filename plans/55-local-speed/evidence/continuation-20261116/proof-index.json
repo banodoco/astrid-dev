@@ -1,0 +1,100 @@
+{
+  "run": "2026-11-15-local-speed",
+  "accountable_manager": "chatgpt-workspace-6ee41b0f0cca/root",
+  "date": "2026-11-16",
+  "proof_kind": "focused_manager_checks_on_recovered_sources_not_independent_review",
+  "source_repository": "banodoco/astrid-agent",
+  "baseline": "cb1a590e0008dde7e3fc2d3fbf341ef98401b32a",
+  "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+  "environment": {
+    "python": "3.13.5",
+    "pytest": "9.0.2",
+    "pytest_timeout_installed": false,
+    "limits": "external command/subprocess timeouts; actual log warning retained"
+  },
+  "candidates": {
+    "report_capture": {
+      "commit": "dbf713822ced58f4e48416ddf32bece2af8430fd",
+      "selector": "tests/core/generation/test_local_speed_report_capture.py",
+      "passed": 14,
+      "exit": 0,
+      "external_timeout_seconds": 90
+    },
+    "fingerprint": {
+      "commit": "33f269e424c6a04f3c49b1c8ae7ca750a71db373",
+      "selector": "tests/core/pack/test_discovery_fingerprint_walk.py",
+      "baseline_passed": 16,
+      "candidate_passed": 16,
+      "baseline_exit": 0,
+      "candidate_exit": 0
+    },
+    "existing_scope_case": {
+      "selector": "tests/core/generation/test_discovery_scope.py::test_cli_scope_is_per_dry_run_and_is_reset_on_failure",
+      "baseline_exit": 1,
+      "candidate_exit": 1,
+      "reported_cause": "expected 1 manifest, observed demo and bundled hivemind (2)"
+    }
+  },
+  "commands": {
+    "report_capture": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-rA",
+      "tests/core/generation/test_local_speed_report_capture.py",
+      "--junitxml=report-capture-final.xml"
+    ],
+    "fingerprint": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-rA",
+      "tests/core/pack/test_discovery_fingerprint_walk.py",
+      "--junitxml=<side>.xml"
+    ],
+    "existing_scope_case": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-rA",
+      "tests/core/generation/test_discovery_scope.py::test_cli_scope_is_per_dry_run_and_is_reset_on_failure"
+    ],
+    "baseline_diff": "python3 -I env/baseline-diff.py --baseline cb1a590e=ls12-baseline-focused.log,ls12-baseline-single.log --candidate ls12-candidate.log,ls12-candidate-existing-case.log --out <output>",
+    "working_directory": "Agent source root for pytest; dev source root for normalized comparator recipe",
+    "pytest_environment": "PYTHONPATH=<Runtime>:<Runtime>/packages/python ASTRID_RUNTIME_CHECKOUT=<Runtime> PYTHONDONTWRITEBYTECODE=1 PYTEST_ADDOPTS=-rA"
+  },
+  "comparison": {
+    "tool": "env/baseline-diff.py",
+    "tool_sha256": "3eb82eb336aa58ab95fc2eb68462c9dc1167030eff3dd54b8117cf2fba3cd709",
+    "exit": 0,
+    "baseline_ids": 17,
+    "candidate_ids": 17,
+    "regressions": 0,
+    "preexisting": 1,
+    "missing": 0,
+    "path": "../tests/astrid-agent/33f269e4/summary.md"
+  },
+  "raw_logs": {
+    "report-capture-final.log": "6e665ff12a2de77e14b46771610d34031e895d861db5518640c31b7e96ae366a",
+    "ls12-baseline-focused.log": "8a00b363ef295ab96499243ff53f4a93a157c5f0b3d1431485cbdb488fa2541b",
+    "ls12-candidate.log": "3d99f2e6a93a2d902ac767c133513f160dd91acfed91b8793cfa03f5e1d1ef63",
+    "ls12-baseline-single.log": "a5bf9e10834b6246d330b97c9ffbc55a5e2a9752df327a6b6ae77be4d81bd0fe",
+    "ls12-candidate-existing-case.log": "03e145beb3acd0a461976c9ec4c522f0115cbad83f1a67a468d41e013d80533d"
+  },
+  "raw_storage": "local-checks.txt retains complete named logs between delimiters; individual originals and JUnit also in owner bundle",
+  "microbenchmark": {
+    "file": "ls12-fingerprint-benchmark.json",
+    "sha256": "b9212e613752b1311f9fadf0214f23fa55e4617bbf9fbd5b58dc8128cacfa9df",
+    "scope": "20 alternating pairs of bundled-tree fingerprint calls; not generation speed"
+  },
+  "limitations": [
+    "No task completion or speed target established",
+    "Full affected-file proof and independent check remain outstanding",
+    "Interrupted wider-file attempt is NO-RESULT; only the isolated matching failure is classified",
+    "No product or dependency repin, scope approval, permission retry or review round"
+  ],
+  "local_checks_sha256": "23a8c48a9e4c460c84f34f33a925f32eb5a975f55d1f5964620ee7a0d72cb7d6"
+}

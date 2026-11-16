@@ -1,0 +1,198 @@
+Plan 55 bounded local checks — raw output, 16 November 2026
+Each section below is the complete original named log. Test durations are not speed evidence.
+
+===== BEGIN report-capture-final.log =====
+..............                                                           [100%]
+=============================== warnings summary ===============================
+../../../../opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428
+  /opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428: PytestConfigWarning: Unknown config option: timeout
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_report_split_at_any_boundary_is_retained[1]
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_report_split_at_any_boundary_is_retained[5]
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_report_split_at_any_boundary_is_retained[27]
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_report_split_at_any_boundary_is_retained[42]
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_interleaved_workers_are_not_spliced_together
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_unrelated_very_large_logs_are_discarded_and_next_report_survives
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_oversized_telemetry_is_a_gap_not_silent_success
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_truncated_telemetry_is_a_gap
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_report_limit_is_a_gap
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_invalid_utf8_is_a_gap
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_actual_host_drain_is_unchanged_and_cleanup_does_not_lose_report
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_original_drain_failure_is_not_hidden
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_stdout_is_not_accepted_as_worker_telemetry
+PASSED tests/core/generation/test_local_speed_report_capture.py::test_stream_limit_is_a_gap_without_unbounded_state
+14 passed, 1 warning in 1.72s
+===== END report-capture-final.log =====
+
+===== BEGIN ls12-baseline-focused.log =====
+................                                                         [100%]
+=============================== warnings summary ===============================
+../../../../opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428
+  /opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428: PytestConfigWarning: Unknown config option: timeout
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[tree]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[empty]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[file]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[missing]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[relative]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[same-size-restored-time]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[add-file]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[remove-file]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[rename]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[add-directory]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[change-hidden]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[kind-change]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_symlink_and_broken_symlink_are_not_followed
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_root_symlink_preserves_reference_semantics
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_all_regular_files_are_rehashed_each_call
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_contents_unreadable_still_raise
+16 passed, 1 warning in 0.64s
+===== END ls12-baseline-focused.log =====
+
+===== BEGIN ls12-candidate.log =====
+................                                                         [100%]
+=============================== warnings summary ===============================
+../../../../opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428
+  /opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428: PytestConfigWarning: Unknown config option: timeout
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[tree]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[empty]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[file]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[missing]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_exact_reference_digest[relative]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[same-size-restored-time]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[add-file]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[remove-file]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[rename]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[add-directory]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[change-hidden]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_every_content_and_name_change_is_detected[kind-change]
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_symlink_and_broken_symlink_are_not_followed
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_root_symlink_preserves_reference_semantics
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_all_regular_files_are_rehashed_each_call
+PASSED tests/core/pack/test_discovery_fingerprint_walk.py::test_contents_unreadable_still_raise
+16 passed, 1 warning in 0.61s
+===== END ls12-candidate.log =====
+
+===== BEGIN ls12-baseline-single.log =====
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.2, pluggy-1.6.0 -- /opt/pyvenv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.13.5', 'Platform': 'Linux-6.18.57-x86_64-with-glibc2.41', 'Packages': {'pytest': '9.0.2', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.13.0', 'ddtrace': '4.4.0', 'Faker': '40.1.2', 'asyncio': '1.3.0', 'cov': '7.0.0', 'json-report': '1.5.0', 'metadata': '3.1.1'}, 'PLATFORM': 'linux/amd64', 'CI': 'true'}
+rootdir: /mnt/data/plan55-followthrough/agent
+configfile: pyproject.toml
+plugins: anyio-4.13.0, ddtrace-4.4.0, Faker-40.1.2, asyncio-1.3.0, cov-7.0.0, json-report-1.5.0, metadata-3.1.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/core/generation/test_discovery_scope.py::test_cli_scope_is_per_dry_run_and_is_reset_on_failure FAILED [100%]
+
+=================================== FAILURES ===================================
+____________ test_cli_scope_is_per_dry_run_and_is_reset_on_failure _____________
+
+corpus = PosixPath('/tmp/pytest-of-root/pytest-1/test_cli_scope_is_per_dry_run_0/source')
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_cli_scope_is_per_dry_run_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f95aacf1e00>
+capsys = <_pytest.capture.CaptureFixture object at 0x7f95aad6a270>
+
+    def test_cli_scope_is_per_dry_run_and_is_reset_on_failure(corpus, tmp_path, monkeypatch, capsys):
+        _pack(corpus, "demo")
+        calls = []
+        original = loader.load_pack_manifest
+    
+        def load(*args, **kwargs):
+            calls.append(args[0])
+            return original(*args, **kwargs)
+    
+        monkeypatch.setattr(loader, "load_pack_manifest", load)
+    
+        def command(argv):
+            for _ in range(2):
+                discovery.discover_pack_metadata(project_root=tmp_path)
+            if "fail" in argv:
+                raise RuntimeError("failed request")
+            return 0
+    
+        monkeypatch.setattr(cli, "_main", command)
+        assert cli.main(["--dry-run"]) == 0
+>       assert len(calls) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([PosixPath('/tmp/pytest-of-root/pytest-1/test_cli_scope_is_per_dry_run_0/source/demo/pack.yaml'), PosixPath('/mnt/data/plan55-followthrough/agent/astrid/core/hivemind/pack.yaml')])
+
+tests/core/generation/test_discovery_scope.py:72: AssertionError
+=============================== warnings summary ===============================
+../../../../opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428
+  /opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428: PytestConfigWarning: Unknown config option: timeout
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/core/generation/test_discovery_scope.py::test_cli_scope_is_per_dry_run_and_is_reset_on_failure - AssertionError: assert 2 == 1
+ +  where 2 = len([PosixPath('/tmp/pytest-of-root/pytest-1/test_cli_scope_is_per_dry_run_0/source/demo/pack.yaml'), PosixPath('/mnt/data/plan55-followthrough/agent/astrid/core/hivemind/pack.yaml')])
+========================= 1 failed, 1 warning in 1.55s =========================
+===== END ls12-baseline-single.log =====
+
+===== BEGIN ls12-candidate-existing-case.log =====
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_cli_scope_is_per_dry_run_and_is_reset_on_failure _____________
+
+corpus = PosixPath('/tmp/pytest-of-root/pytest-2/test_cli_scope_is_per_dry_run_0/source')
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_cli_scope_is_per_dry_run_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f06cd4e9e00>
+capsys = <_pytest.capture.CaptureFixture object at 0x7f06cd60e120>
+
+    def test_cli_scope_is_per_dry_run_and_is_reset_on_failure(corpus, tmp_path, monkeypatch, capsys):
+        _pack(corpus, "demo")
+        calls = []
+        original = loader.load_pack_manifest
+    
+        def load(*args, **kwargs):
+            calls.append(args[0])
+            return original(*args, **kwargs)
+    
+        monkeypatch.setattr(loader, "load_pack_manifest", load)
+    
+        def command(argv):
+            for _ in range(2):
+                discovery.discover_pack_metadata(project_root=tmp_path)
+            if "fail" in argv:
+                raise RuntimeError("failed request")
+            return 0
+    
+        monkeypatch.setattr(cli, "_main", command)
+        assert cli.main(["--dry-run"]) == 0
+>       assert len(calls) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([PosixPath('/tmp/pytest-of-root/pytest-2/test_cli_scope_is_per_dry_run_0/source/demo/pack.yaml'), PosixPath('/mnt/data/plan55-followthrough/agent/astrid/core/hivemind/pack.yaml')])
+
+tests/core/generation/test_discovery_scope.py:72: AssertionError
+=============================== warnings summary ===============================
+../../../../opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428
+  /opt/pyvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1428: PytestConfigWarning: Unknown config option: timeout
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/core/generation/test_discovery_scope.py::test_cli_scope_is_per_dry_run_and_is_reset_on_failure - AssertionError: assert 2 == 1
+ +  where 2 = len([PosixPath('/tmp/pytest-of-root/pytest-2/test_cli_scope_is_per_dry_run_0/source/demo/pack.yaml'), PosixPath('/mnt/data/plan55-followthrough/agent/astrid/core/hivemind/pack.yaml')])
+1 failed, 1 warning in 1.38s
+===== END ls12-candidate-existing-case.log =====
+

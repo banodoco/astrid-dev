@@ -1,0 +1,420 @@
+{
+  "url": "http://127.0.0.1:18188",
+  "samples": 20,
+  "summary_ms": {
+    "fill_ms": {
+      "median": 0.008543,
+      "max": 0.027081
+    },
+    "post_validation_ms": {
+      "median": 0.2061515,
+      "max": 0.842795
+    },
+    "post_response_to_start_observed_ms": {
+      "median": 1.1038985000000001,
+      "max": 1.226726
+    },
+    "execution_ms": {
+      "median": 0.0036905,
+      "max": 0.009574
+    },
+    "history_ready_after_success_ms": {
+      "median": 0.001182,
+      "max": 0.030295
+    },
+    "history_fetch_ms": {
+      "median": 0.2810735,
+      "max": 0.997875
+    },
+    "output_fetch_hash_ms": {
+      "median": 0.1725915,
+      "max": 0.505342
+    },
+    "wall_ms": {
+      "median": 1.852149,
+      "max": 2.465169
+    }
+  },
+  "records": [
+    {
+      "sample": 0,
+      "prompt_id": "81c4570e-8d2b-424b-b79f-72bb8b995b64",
+      "fill_ms": 0.018487,
+      "post_validation_ms": 0.842795,
+      "post_response_to_start_observed_ms": 1.038065,
+      "execution_ms": 0.009574,
+      "history_ready_after_success_ms": 0.002244,
+      "history_fetch_ms": 0.317192,
+      "output_fetch_hash_ms": 0.236812,
+      "wall_ms": 2.465169,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 1,
+      "prompt_id": "ac199ff1-aa08-4b2d-83e5-fc885d7a3902",
+      "fill_ms": 0.012669,
+      "post_validation_ms": 0.300517,
+      "post_response_to_start_observed_ms": 1.15867,
+      "execution_ms": 0.007872,
+      "history_ready_after_success_ms": 0.001803,
+      "history_fetch_ms": 0.326966,
+      "output_fetch_hash_ms": 0.184555,
+      "wall_ms": 1.993052,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "prompt_id": "3a15785d-2791-4eb1-b247-c6d58a3ee8f2",
+      "fill_ms": 0.011917,
+      "post_validation_ms": 0.235911,
+      "post_response_to_start_observed_ms": 1.125336,
+      "execution_ms": 0.004947,
+      "history_ready_after_success_ms": 0.001152,
+      "history_fetch_ms": 0.344803,
+      "output_fetch_hash_ms": 0.262451,
+      "wall_ms": 1.986517,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 3,
+      "prompt_id": "8fc86a53-8768-49bd-beab-4decd2157e7b",
+      "fill_ms": 0.010136,
+      "post_validation_ms": 0.231724,
+      "post_response_to_start_observed_ms": 1.143593,
+      "execution_ms": 0.004707,
+      "history_ready_after_success_ms": 0.001442,
+      "history_fetch_ms": 0.317553,
+      "output_fetch_hash_ms": 0.16183,
+      "wall_ms": 1.870985,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 4,
+      "prompt_id": "f4d11df9-cc0c-4bfc-9233-7e324442454e",
+      "fill_ms": 0.009214,
+      "post_validation_ms": 0.205545,
+      "post_response_to_start_observed_ms": 1.103503,
+      "execution_ms": 0.004156,
+      "history_ready_after_success_ms": 0.001182,
+      "history_fetch_ms": 0.243703,
+      "output_fetch_hash_ms": 0.143463,
+      "wall_ms": 1.710766,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 5,
+      "prompt_id": "d6b3ddc2-fd13-44ac-8a2f-1d478bf880ba",
+      "fill_ms": 0.009194,
+      "post_validation_ms": 0.317673,
+      "post_response_to_start_observed_ms": 1.031175,
+      "execution_ms": 0.003655,
+      "history_ready_after_success_ms": 0.001072,
+      "history_fetch_ms": 0.192857,
+      "output_fetch_hash_ms": 0.118847,
+      "wall_ms": 1.674473,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 6,
+      "prompt_id": "f8d7c7e6-306c-4829-b0c5-c1ccf0171e3e",
+      "fill_ms": 0.027081,
+      "post_validation_ms": 0.16843,
+      "post_response_to_start_observed_ms": 1.066247,
+      "execution_ms": 0.002995,
+      "history_ready_after_success_ms": 0.000961,
+      "history_fetch_ms": 0.438283,
+      "output_fetch_hash_ms": 0.176402,
+      "wall_ms": 1.880399,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 7,
+      "prompt_id": "7ddb6963-9e48-44b6-b118-a3806aba82a7",
+      "fill_ms": 0.007851,
+      "post_validation_ms": 0.419515,
+      "post_response_to_start_observed_ms": 1.087258,
+      "execution_ms": 0.003185,
+      "history_ready_after_success_ms": 0.001001,
+      "history_fetch_ms": 0.218045,
+      "output_fetch_hash_ms": 0.191485,
+      "wall_ms": 1.92834,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 8,
+      "prompt_id": "a2b11f9d-d934-4d61-942b-3309a87c41d5",
+      "fill_ms": 0.008072,
+      "post_validation_ms": 0.353056,
+      "post_response_to_start_observed_ms": 1.078906,
+      "execution_ms": 0.003435,
+      "history_ready_after_success_ms": 0.001422,
+      "history_fetch_ms": 0.209983,
+      "output_fetch_hash_ms": 0.140629,
+      "wall_ms": 1.795503,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 9,
+      "prompt_id": "3c4560ac-23a7-414a-95d0-85b067fade7f",
+      "fill_ms": 0.007531,
+      "post_validation_ms": 0.1479,
+      "post_response_to_start_observed_ms": 1.13535,
+      "execution_ms": 0.003175,
+      "history_ready_after_success_ms": 0.000951,
+      "history_fetch_ms": 0.235621,
+      "output_fetch_hash_ms": 0.133279,
+      "wall_ms": 1.663807,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 10,
+      "prompt_id": "2303131b-b3c8-4c09-a812-d59f432697de",
+      "fill_ms": 0.007411,
+      "post_validation_ms": 0.151015,
+      "post_response_to_start_observed_ms": 1.103222,
+      "execution_ms": 0.008362,
+      "history_ready_after_success_ms": 0.001122,
+      "history_fetch_ms": 0.997875,
+      "output_fetch_hash_ms": 0.177514,
+      "wall_ms": 2.446521,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 11,
+      "prompt_id": "43b50d30-6bf6-4d5b-9ce5-71f78fb3020f",
+      "fill_ms": 0.007571,
+      "post_validation_ms": 0.181871,
+      "post_response_to_start_observed_ms": 1.147798,
+      "execution_ms": 0.003726,
+      "history_ready_after_success_ms": 0.001202,
+      "history_fetch_ms": 0.240457,
+      "output_fetch_hash_ms": 0.123785,
+      "wall_ms": 1.70641,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 12,
+      "prompt_id": "3196515c-96fa-4605-bab0-abde4f01100f",
+      "fill_ms": 0.007662,
+      "post_validation_ms": 0.197233,
+      "post_response_to_start_observed_ms": 1.117754,
+      "execution_ms": 0.003605,
+      "history_ready_after_success_ms": 0.030075,
+      "history_fetch_ms": 0.204094,
+      "output_fetch_hash_ms": 0.505342,
+      "wall_ms": 2.065765,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 13,
+      "prompt_id": "b279aa69-4910-4435-8a7f-0e96b113a57e",
+      "fill_ms": 0.008032,
+      "post_validation_ms": 0.191174,
+      "post_response_to_start_observed_ms": 1.090333,
+      "execution_ms": 0.003265,
+      "history_ready_after_success_ms": 0.001102,
+      "history_fetch_ms": 0.303706,
+      "output_fetch_hash_ms": 0.263603,
+      "wall_ms": 1.861215,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 14,
+      "prompt_id": "75770968-6455-4461-b2f1-6c967bed516d",
+      "fill_ms": 0.009364,
+      "post_validation_ms": 0.226687,
+      "post_response_to_start_observed_ms": 1.226726,
+      "execution_ms": 0.003936,
+      "history_ready_after_success_ms": 0.001182,
+      "history_fetch_ms": 0.23486,
+      "output_fetch_hash_ms": 0.168781,
+      "wall_ms": 1.871536,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 15,
+      "prompt_id": "4999d187-830b-41bd-aa37-3a492dc685d0",
+      "fill_ms": 0.008383,
+      "post_validation_ms": 0.176362,
+      "post_response_to_start_observed_ms": 1.098496,
+      "execution_ms": 0.003435,
+      "history_ready_after_success_ms": 0.001101,
+      "history_fetch_ms": 0.330512,
+      "output_fetch_hash_ms": 0.135101,
+      "wall_ms": 1.75339,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 16,
+      "prompt_id": "2c46f6fe-0774-4544-a3d9-8f54d6ebb9af",
+      "fill_ms": 0.007791,
+      "post_validation_ms": 0.191035,
+      "post_response_to_start_observed_ms": 1.129912,
+      "execution_ms": 0.003104,
+      "history_ready_after_success_ms": 0.030295,
+      "history_fetch_ms": 0.266747,
+      "output_fetch_hash_ms": 0.128552,
+      "wall_ms": 1.757436,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 17,
+      "prompt_id": "465504e5-271d-423c-a7b8-82c190db4a3d",
+      "fill_ms": 0.007531,
+      "post_validation_ms": 0.17456,
+      "post_response_to_start_observed_ms": 1.152881,
+      "execution_ms": 0.004307,
+      "history_ready_after_success_ms": 0.001382,
+      "history_fetch_ms": 0.27516,
+      "output_fetch_hash_ms": 0.203813,
+      "wall_ms": 1.819634,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 18,
+      "prompt_id": "b4674df6-7d26-4136-af86-34572ecce0d6",
+      "fill_ms": 0.009895,
+      "post_validation_ms": 0.22224,
+      "post_response_to_start_observed_ms": 1.096493,
+      "execution_ms": 0.003405,
+      "history_ready_after_success_ms": 0.001212,
+      "history_fetch_ms": 0.341898,
+      "output_fetch_hash_ms": 0.16794,
+      "wall_ms": 1.843083,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    },
+    {
+      "sample": 19,
+      "prompt_id": "903dfa54-a6f6-4a6b-a2a3-a7ac7ee17557",
+      "fill_ms": 0.008703,
+      "post_validation_ms": 0.206758,
+      "post_response_to_start_observed_ms": 1.104294,
+      "execution_ms": 0.003966,
+      "history_ready_after_success_ms": 0.001071,
+      "history_fetch_ms": 0.286987,
+      "output_fetch_hash_ms": 0.212066,
+      "wall_ms": 1.823845,
+      "outputs": [
+        {
+          "sha256": "3002c3540da35856389a5988ebf44867efe0a856e8be3902735dc7f6edc14ff9",
+          "bytes": 19,
+          "filename": "test.bin"
+        }
+      ]
+    }
+  ]
+}
