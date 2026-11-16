@@ -97,7 +97,7 @@ Record what the scan found against what is really there, and the `defaults` outp
 & $astrid generate fetch-models qwen-image-2.1-turbo t2i --comfy-url $url --apply <plan_sha256> --json
 ```
 
-Record the plan (files, sizes, folder) in your list of added files. If the download is interrupted, run it again; it resumes.
+Record the plan (files, sizes, folder and confirmation hash) in your list of added files. If a download is interrupted, record the error and which files finished; keep those completed files. The published Release 13 build does not resume partial files, and its original confirmation hash may no longer be valid after a file finishes. Resuming partial files and safely reusing the same confirmed plan are Release 14 fixes tracked in [#722](https://github.com/banodoco/astrid-dev/issues/722); do not assume they are present in the Release 13 build tested here.
 
 ```powershell
 # A: image from text
