@@ -8,7 +8,7 @@ For each kind of edit the Minkhole film needs there is one skill document. It ta
 
 Each skill is proven the same way. A fresh agent on the normal-task model gets the skill, the clip and the intended result, and nothing else. It rents a machine and does the edit end to end. Every place it stalls, guesses or needs help is recorded, and the tool or the skill is fixed at that place. Then another fresh agent tries, until one finishes unaided, and you review the take. Before any trial that rents a GPU, a fresh agent first passes a rehearsal that rents nothing: find the skill, write the request, get a ready dry run, and practise checking and placing with media that already exists. Tool work happens only when a skill needs it.
 
-The speed-up is one named setting: the Pika Labs 8-step Ref2VA file, without an A/B test. LightX2V remains an option only where its variant matches the base; CFG other than 1 is refused by name until a real CFG graph exists. Paid trials should examine the community leads on reference voice, Ref2VA joins and LightX2V loading as leads, not facts. A fuller check that each route follows its publisher’s intended reference-model use is underway. No rental begins until the creation-time deadline is independently reviewed; every machine must carry that deadline and the existing pod watchdog.
+The speed-up is one named setting: the Pika Labs 8-step Ref2VA file, without an A/B test. LightX2V remains an option only where its variant matches the base; CFG other than 1 is refused by name until a real CFG graph exists. Paid trials should examine the community leads on reference voice, Ref2VA joins and LightX2V loading as leads, not facts. A check against the publishers' documentation found the reference base is the right one for every route; the documented way to carry a voice (a reference audio clip, or a reference video with its sound) is exposed only on character swap, which is the gap the voice skill has to close. No rental begins until the creation-time deadline is independently reviewed; every machine must carry that deadline and the existing pod watchdog.
 
 The task skills, in order:
 
@@ -159,8 +159,8 @@ You decided on 16 November: the `astrid h3` command goes; any size in, with Fill
 **Money.** $25 is the hard total for everything, including the Minkhole plan's own fresh-agent trial on a different film. The pilot remains at $0 of its $3 allocation.
 
 - I no longer promise a number of trials. My earlier "12 trials at $1.50" assumed a trial fits in about an hour, and fetching the models alone (about 53.5 GB) could take that long on a fresh machine.
-- The $3 pilot measures the cold cost before the ceiling is reset after the first real run.
-- Every paid trial is preceded by a free rehearsal. Failed trials count against the budget, and one ledger records rentals and release receipts.
+- The pilot, funded at $3, measures what a cold start really costs: setting up, fetching the models, the worker becoming ready, and one generation. The cap per trial and the number of trials are set from those numbers and the dollars left.
+- Every paid trial is preceded by a free rehearsal, so a rented hour is not spent discovering something a dry run would have shown. A failed trial still spends, and one ledger records every rental and release receipt.
 - Whether trials can start warm (reusing a machine, or models kept on storage) is not yet known. The account already shows about $0.03 an hour with nothing rented, which may be existing storage; that is being checked. Until it is known, assume every trial starts cold.
 - Money is spent in this order: the three Morpheus clips; the two takes with the picture kept; the cross-film trial; and the picture skills only from what remains.
 - A failed trial still spends. One ledger records every rental, failure and release.
