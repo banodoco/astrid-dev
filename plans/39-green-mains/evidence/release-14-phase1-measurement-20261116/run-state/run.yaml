@@ -627,3 +627,123 @@ next_followup:
   one_off: true
   purpose: Check exact merged-head Agent CI/Lanes and continue within existing authority and holds
   verified_from_tool_result: true
+
+qualification_continuation_20261116_2244:
+  state: active_incomplete
+  phase: provisional_exact_head_post_PR369
+  formal_G1: incomplete
+  formal_G2: incomplete
+  RS1_consumed_rounds: 0
+  RS1_max_rounds: 1
+  evidence: agent/merged-head-6bbda788/partial-qualification-20261116.md
+  agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI:
+    run_id: 43967861168
+    attempt: 1
+    partial: true
+    finished_failing_jobs:
+      darwin_native:
+        id: 133651924059
+        tests: 55
+        failures: 14
+        errors: 1
+        old_exact_IDs: 55
+        new_pass_to_failure: 1
+        artifact_id: 14277714424
+        artifact_zip_sha256: 06a2bac5da6c594ded3ca0f5dec3f0237fc6d02bff165cebd39d39450c386df0
+        junit_xml_sha256: 07bd706c3faced716a9a421820e8da6a2bddf099af6fdc7d1347fa574483b984
+        literal_xml_message_groups: 12
+      unit_shard_8:
+        id: 133651924880
+        tests: 3989
+        direct_testcase_IDs: 3787
+        failures: 94
+        errors: 2
+        skipped: 23
+        exact_shared_IDs: 3752
+        exact_failure_to_pass: 2
+        old_only_IDs: 160
+        current_only_IDs: 35
+        new_pass_to_failure_among_shared: 0
+        artifact_id: 14278249808
+        artifact_zip_sha256: 035eb0316e0ca3b3294b4eeb5ac205d78bdd0ce754b86628d090fd253ca7d891
+        junit_xml_sha256: adb00f44093c9f0656c1b050b4e712e83a5e31203fd72f89224af0d598885c42
+        literal_xml_message_groups: 63
+    finished_success_jobs:
+    - fast checks
+    - boundary
+    - windows-native-and-installer
+    - release wheel / Python 3.11
+    - release wheel / Python 3.12
+    running_at_last_poll:
+    - unit shard 1
+    - unit shard 2
+    - unit shard 3
+    - unit shard 4
+    - unit shard 5
+    - unit shard 6
+    - unit shard 7
+    skipped:
+    - landing reference
+  Lanes:
+    run_id: 43967861160
+    attempt: 1
+    partial: true
+    finished_failing_jobs:
+      opt_in:
+        id: 133651923592
+        failures: 12
+        passed: 19
+        xml_artifact: not_found_in_first_page_inventory
+        log: available
+      integration_1:
+        id: 133651923670
+        failures: 37
+        passed: 479
+        errors: 0
+        exact_shared_IDs: 516
+        old_pass_to_failure: 1
+        artifact_id: 14277479708
+        artifact_zip_sha256: 33674c246e51d362e7b526f7a8f38ff643b2585a6272e39d9efd949c8d2b571f
+        junit_xml_sha256: 94fb374cce6ea7e5694fe4cb48ec7ce51bdc519a7de437f425e89568f00c4055
+        literal_xml_message_groups: 6
+      integration_2:
+        id: 133651924063
+        failures: 77
+        passed: 267
+        errors: 172
+        exact_shared_IDs: 516
+        old_failure_to_pass: 1
+        artifact_id: 14278972799
+        artifact_zip_sha256: 4f26e9f301570707244087dfa9e65b13b2966daa1d1539fbf3c2f3a07829714e
+        junit_xml_sha256: 17f03f1f12be6a7809a310d29f822aa12997cb0cd049252cd7ab77a9cb246991
+        literal_message_group_inventory: pending_full_reconciliation
+    finished_success_jobs:
+    - installed wheel
+    running_at_last_poll:
+    - integration shard 3
+    - integration shard 4
+  observed_new_exact_red:
+    darwin_text_card_reconciliation_deadline: diagnosis_only_no_regression_attribution
+    integration_1_owned_pipe_fd_flags_2049_vs_1: diagnosis_only_no_assertion_relaxation
+  K1a:
+    previous_full_policy: 22_passed_1_failed_19_direct_gates
+    remaining: kept_without_new_marker_suppression
+    independently_reviewed_new_product_changes: none
+  K1b:
+    runtime_clip: uncommitted_25_passed_2_failed_owner_contract_hold
+    runtime_pr56: orphan_declaration_only_draft_not_clip_patch
+  ownership:
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+  remote_actions_this_checkpoint:
+    product_push: false
+    product_PR: false
+    product_merge: false
+    cancelled_rerun_runs: false
+    manual_dispatch: false
+    authentication_retry: false
+    astrid_dev_only: p39/g1
+  next: Collect only completed attempt-1 job XML and logs at exact head, compare exact IDs, and preserve contract/review gates before any further repair.
