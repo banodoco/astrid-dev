@@ -62,3 +62,21 @@ Runtime strengthened clip test remains **25P/2F** and **uncommitted**; replay ve
 ## Later completed job (same exact head and attempt, 22:49:52 UTC)
 
 CI **unit shard 3** [job 133651924518](https://github.com/banodoco/astrid-agent/actions/runs/43967861168/job/133651924518) finished **failure**: literal summary `31 failed, 1834 passed, 29644 deselected, 2 warnings in 2099.38s (0:34:59)`; JUnit `unit-shard.xml: tests=1865 failures=31 errors=0 skipped=0`. Downloaded [artifact 14279162456](https://github.com/banodoco/astrid-agent/actions/runs/43967861168/artifacts/14279162456); verified ZIP SHA-256 `6bb5af87d04b19801da97ecb6b109238d3e321979f0ec3fd40838ce1771e7f3f` (GitHub digest agrees), inner XML SHA-256 `643987abce5a08925a9ecba818036c6bd5a12ad95ce2ba2ec8f786051ac36006`. Exact old [artifact 14263779551](https://github.com/banodoco/astrid-agent/actions/runs/43934820640/artifacts/14263779551): 1,857 IDs shared, **1,826 pass→pass, 31 failure→failure, zero red/pass transitions**. Old-only four IDs and current-only eight IDs are **all passes**, showing shard-membership drift; neither is called a regression. Full literal error messages remain in this XML/log, not inferred from its aggregate count. At this later check, six CI unit shards and two Lanes integration shards remained in progress. The earlier point-in-time list above is deliberately left intact.
+
+## Subsequent full-literal group reconciliation from downloaded XML
+
+The counts below are **per-job exact full-message strings**, not independent causal defects and not merged across jobs; artifacts and their verified hashes appear above. The XML payload is the authority for each full literal message (including line-breaks and parameter-specific differences).
+
+| Finished job | Failure/error XML records | Distinct full literal messages | Distinct first-line prefixes |
+|---|---:|---:|---:|
+| CI darwin native | 15 | 12 | not separately relied on |
+| CI unit shard 3 | 31 | **10** | 9 |
+| CI unit shard 8 | 96 | 63 | 62 |
+| Lanes integration shard 1 | 37 | 6 | 6 |
+| Lanes integration shard 2 | 249 | **51** | 50 |
+
+For **integration shard 2**, the largest literal-message categories include 78 errors `CommandError: replacement changes provider-managed edges` during setup, 44 `FileNotFoundError` records referring to a missing scratchpad input, 21 `RuntimeErrorBase: candidate.timing: legacy word anchor is missing`, and additional distinct timing, selected-source SHA, element-pack, and merge/rebase assertion messages. These are explanatory groupings; the **51** full-message groups are enumerated by the actual attached JUnit, not conflated with these headings. All **516** direct test IDs are the same as its prior-plan run; 172 error IDs and 77 failure IDs remain red in common, with exactly one shared failure now passing.
+
+For **unit shard 3**, 31 red XML records fall into **10** full literal groups. Examples include 15 `CommitRejected: fork native binding schema changed`, six `subprocess.CalledProcessError` cases involving `git show` of an unavailable recorded source object, and two regex mismatches; other failed assertions retain their parameter-specific full messages in the artifact. All **31 exact failing IDs** were failing in the corresponding prior-plan job; no shared prior pass became red. Different shard memberships (four old-only passes, eight new-only passes) must not be counted as regressions.
+
+These additions do not alter the frozen G1 totals or formal acceptance: G1/G2 incomplete, RS1 **0/1**, other jobs unfinished.
