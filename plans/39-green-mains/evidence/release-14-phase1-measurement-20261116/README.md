@@ -5,6 +5,12 @@
 
 These are **provisional post-batch observations**, separate from the frozen G1 table below. G1 evidence and phase-1 acceptance remain incomplete; formal G2 is not closed and RS1 remains **0/1**. This session has made no push or merge to `release/14/main` or public `main`.
 
+### Merged-head Agent CI/Lanes continuation checkpoint
+
+A later read of Agent commit `6bbda788` (reviewed tree `c0a0cc55`) found completed failure jobs in attempt-1 CI/Lanes alongside unfinished shards. The [new partial qualification record](agent/merged-head-6bbda788/partial-qualification-20261116.md) preserves exact completed-job summaries, GitHub artifact IDs, verified ZIP and XML SHA-256 hashes, message counts, and old-versus-new *exact testcase-ID* comparisons. At this checkpoint, Darwin has 14 failures/1 error and one prior-pass-to-failure ID; CI unit shard 8 has 94 failures/2 errors and two shared prior-failures now passing; Lanes opt-in is 12 failures; integration 1 is 37 failures (one previous pass now red), and integration 2 is 77 failures/172 errors (one previous failure now passing). Previous and current shard membership differ, so absent prior IDs are **not** called regressions.
+
+**These are provisional findings, not an accepted full-run G2.** CI shards 1–7 and Lanes shards 3–4 were still active at that poll. The two new exact-red tests require source/runner triage; no assertions were relaxed. Plan 38/55 remain WAITING, the Runtime replay/history owner rule is unaltered, Release 15 is excluded, and formal RS1 remains **0/1**. All updates in this continuation were confined to `astrid-dev` `p39/g1`.
+
 ### Current release heads
 
 At the 22:11 UTC ref check on 16 November, Agent's release head had moved externally. Runtime and App still matched the frozen baseline. A workflow result at an older head does not qualify the new head.
