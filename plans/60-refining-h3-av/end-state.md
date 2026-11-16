@@ -1,6 +1,6 @@
 # H3_AV: where it should end up
 
-Written 16 November 2026 from the Release 14 code, four focused explorations and the live pilot notes. Nothing here has been proven on a GPU yet; the items that depend on the pilot are marked **open**.
+Written 16 November 2026 from the Release 14 code, four focused explorations and the live pilot notes, and revised the same day after an independent critique. Nothing here has been proven on a GPU yet; the items that depend on the pilot are marked **open**.
 
 ## What H3_AV is, and is not
 
@@ -27,11 +27,11 @@ Astrid already has the mechanism: any result is stored media, and a later step c
 The Morpheus shot, as it should work:
 
 1. **Find the shot.** `timelines show` says the clip uses the Matrix media, source time 81.05–84.30 s.
-2. **Know the words** (when transcription exists): transcribe that media once, read the words and times, and pick a cut point at a pause.
+2. **Know the words.** Today: listen, and pick a cut point at a pause. Once transcription exists: transcribe that media once and read the words and times.
 3. **Ask for the edit.** One request: continue this media from this range, he says the new line, total length. The source is named by handle and range; H3 cuts and conforms it itself.
 4. **Run it.** `astrid generate video --entry h3` on the rented GPU. The take comes back as stored media.
-5. **Check it.** Pull clean frames, transcribe the take and compare with the intended line, then you listen.
-6. **Place it.** `timelines edit --swap-asset` with the take's handle, trimmed so only the new part shows.
+5. **Check it.** Pull clean frames at the cut point and listen against the written line. Later, transcribe the take and compare.
+6. **Place it.** Add the take as its own clip above the shot with the existing timeline commands, showing only the newly generated part, at normal speed, with the temporary voiceover silent over it. The original stays untouched underneath.
 
 A mask works the same way later: a mask workflow's output handle goes into the request where a mask file goes today.
 
@@ -40,9 +40,11 @@ A mask works the same way later: a mask workflow's output handle goes into the r
 They are the same operation. There is no separate voice route.
 
 - The model hears the **last 39 frames (about 1.6 seconds)** of sound before the cut point. That is the only voice sample it gets. A longer starting clip does not lengthen it.
-- So "continue the voice" means: choose a start whose last 1.6 seconds are that person speaking clearly, and allow sound to be generated after it. The kept start still contains his original words, so on the timeline you use only the newly generated part.
+- So "continue the voice" means: choose a start of at least 39 frames whose last 1.6 seconds are that person speaking clearly, and allow sound to be generated after it. The graph needs that many; the "two options" source clip, at about 1.5 seconds, is too short as it stands. The kept start still contains his original words, so on the timeline you use only the newly generated part.
 - Continuation takes no voice or video reference. One of the two request formats lets you write one, and the code then rejects it.
-- **Open:** whether 1.6 seconds holds Morpheus's voice across a full line. If it does not, the timing code already allows for longer context (90 or 141 frames). Whether the model graph accepts that is untested, so it is something to try only if the pilot shows the need.
+- **Open:** whether 1.6 seconds holds Morpheus's voice across a full line, and whether the long target line fits in the 6.75 seconds generated for it. The graph's context is fixed at 39 frames today. A longer window would be a change to the graph, to be considered only if the pilot shows the need.
+
+**One limit to know before you choose a shot.** Continuation regenerates the whole picture after the cut point. Changing the words while keeping the exact picture (same pose, same camera, only the mouth and voice change) is **not supported today**: the masked edit keeps the original sound. The plan records this as a follow-up and does not pretend continuation covers it.
 
 There were two versions of the same thing in three places: two request formats that compile to the same graphs, two commands, and old guides naming a "Seitanism extension workflow" that is in fact the packaged continuation graph.
 
@@ -50,7 +52,7 @@ There were two versions of the same thing in three places: two request formats t
 
 Your understanding is right. A commit on 28 October replaced it for masked picture edits with H3's own masking nodes. Since then no request can reach it, the skill says so, and tests fail if a masked edit uses LanPaint nodes. What remains is an unreachable helper, a packaged workflow that was never run on a GPU, and a test of that helper.
 
-One honest cost: LanPaint was the only graph that could regenerate **sound** inside existing footage. Nothing replaces that today. For new dialogue the route is continuation. If you later need to change words while keeping the exact picture, that should be built on the native nodes, not revived from LanPaint.
+One honest cost: LanPaint was the only graph that could regenerate **sound** inside existing footage. It never ran on a GPU, so removing it removes no working route, but nothing replaces the idea today. For new dialogue the route is continuation. If you later need to change words while keeping the exact picture, that should be built on the native nodes, not revived from LanPaint.
 
 ## The skills
 
@@ -74,24 +76,25 @@ Transcription and masking get a paragraph each in "audiovisual editing" until th
 | Choosing continue, region change or generate | Skill |
 | Choosing the start clip and the cut point | Skill |
 | Judging voice, lips and continuity; when to retry or ask you | Skill |
-| Checking the spoken words | Skill, using transcription |
+| Checking the spoken words | Skill: listening against the written line now, transcription when it exists |
 | Giving H3 real footage (any frame rate, size, range) | Small tool: H3 prepares its own source, with Fill or Fit stated |
 | Passing one workflow's result to H3 | Connect: H3 accepts the handles Astrid already has |
 | Finding the H3 entry when VibeComfy is not set up | Small fix: say what is missing instead of "unknown entry" |
-| Placing a take on the timeline | Already exists (`timelines edit`); skill only |
+| Placing a take on the timeline | Already exists (add and trim on the timeline); skill only. Your choice: a stored alternate (recommended) or a local review draft |
 | Where words live | Already exists (a transcript attached to the media); connect |
 | Producing words from any clip | Small tool, general to Astrid, not H3's |
 | Producing a mask from a description | Small tool, general to Astrid, not H3's; only when a shot needs it |
 | Longer voice context | **Open** until the pilot |
+| Changing words while keeping the exact picture | Not supported today; recorded as a follow-up |
 | LanPaint route, the `astrid h3` command, "audio only", the unused reference-audio setting, dead links, the old speech guide | Delete |
-| The second request format | Keep only what the character swap needs; document one format |
+| The second request format | One format is documented for the three operations. The character swap keeps the second format, documented separately as experimental. The rest of the second format works but duplicates the first: your decision whether to retire it now (recommended) or leave it undocumented |
 
 ## Order to build in
 
-1. **H3 accepts real footage by handle and range.** This is what blocks the Morpheus pilot today.
-2. **The Morpheus pilot on a GPU**, and you hear it. It settles the voice question.
+1. **H3 accepts real footage by handle and range.** This is what blocks the Morpheus pilot today. A short independent review of this change comes before any paid run builds on it.
+2. **The Morpheus pilot on a GPU**, and you hear it and accept or reject it. It settles the voice question. A rejected take is an unfinished result, not a finished step.
 3. **Remove what is not the product.**
 4. **Write the skills**, first from the code, then again from what the Morpheus shot taught.
 5. **Someone else's similar shot:** a fresh, weaker agent with only the skills, on a different clip.
 
-Transcription comes in alongside step 2 because the Minkhole work needs it to find cut points and check takes. Masks come when the first picture change (the pill, the glasses) needs one.
+Nothing here waits for transcription or automatic masks. Until the Minkhole work provides them, words are checked by listening and masks are supplied by hand; when they arrive, this path uses them.
