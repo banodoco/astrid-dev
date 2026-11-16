@@ -79,6 +79,14 @@ From the owner, 7 Nov 2026 (session chat):
 
 Record exact base and donor SHAs at task start. Known donor: Agent `b97c43db8` (`reconcile` handler, unmerged).
 
+## Closed pull request #178: Release 11 and Release 12 candidate record (16 Nov 2026)
+
+astrid-dev pull request #178 ("Plan 29: record Release 11 (Plan 33) and the Release 12 candidate; decisions 18 and 19"), branch `progress/29-release-12-record`, head `5c1f1393d8b435ba16722359840704d0c95d3003`, was closed on 16 Nov 2026 because it cannot merge today: its check fails, its Release 11 row in `plans/releases.md` reads "version not recorded" with shortened commit ids, and it conflicts with `plans/29-update-and-release/tasks.md` on `main`. The branch is kept.
+
+- **What it holds:** a Release 11 log row (Plan 33's publish, 01:48Z, 9 Nov 2026), a Release 12 candidate record in Plan 29 `tasks.md` (candidate heads, int merges, carried open pull requests, red-check findings, Plan 30 cards), owner decisions 18 and 19 (9 Nov 2026, Hannah, given to M-INT at 07:44Z) in this file, and Plan 30 rows UR-19 to UR-31.
+- **Facts still missing (nobody wrote them down):** the Release 11 version, kind, required flag and owner go; full commit ids (the branch has 8-character ids only); the exact minute of Hannah's go on the int merges (recorded as 07:xx UTC); the failing check names and Plan 33 attribution for Agent #328 and Runtime #44 and #45; whether any UR-15 work is in the Release 12 candidate; Release 12's version number; Pinokio `d15c58b5` (not verified); whether the commit for decision 18 exists on App `cand/29-r12`.
+- **Owner decisions 18 and 19:** read them from the branch's version of this file until a pull request records them with their sources. Decision 19 answers the pruning question of UR-15e; it is not a publish go.
+
 ## References
 
 The maps and the review are working notes from the planning session. Their findings are summarised above, and each task card names the code it changes.
