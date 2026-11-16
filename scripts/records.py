@@ -281,7 +281,7 @@ def release_issue_block(text: str) -> dict:
             "date": stamp.group(1) or stamp.group(2), "rows": rows}
 
 
-PRODUCT_REPOSITORIES = ("astrid-agent", "astrid-runtime", "astrid-app", "VibeComfy", "astrid-pinokio")
+BRANCH_REPOSITORIES = ("astrid-agent", "astrid-runtime", "astrid-app", "VibeComfy", "astrid-pinokio", "astrid-dev")
 BRANCH_FIRST_RELEASE = 14
 BRANCH_COLUMNS = ["Repository", "Branch", "Role", "Cut at", "State"]
 BRANCH_STATES = {"release": ("open", "published"), "plan": ("open", "merged"), "fix": ("open", "merged")}
@@ -308,15 +308,15 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
         return ["Branches table needs a --- separator row under the header"]
     errors: list[str] = []
     prefix = f"release/{number}/"
-    seen, release_repos, other_repos = set(), set(), set()
+    seen, release_repos, other_repos, planned = set(), set(), set(), set()
     for row in cells[2:]:
         if len(row) != 5:
             errors.append(f"Branches row `{'|'.join(row)}`: needs exactly five columns")
             continue
         repo, branch_cell, role, cut, state = row
         label = f"Branches row {repo} {branch_cell}"
-        if repo not in PRODUCT_REPOSITORIES:
-            errors.append(f"{label}: Repository must be one of {', '.join(PRODUCT_REPOSITORIES)}")
+        if repo not in BRANCH_REPOSITORIES:
+            errors.append(f"{label}: Repository must be one of {', '.join(BRANCH_REPOSITORIES)}")
         quoted = re.fullmatch(r"`([^`]+)`", branch_cell)
         branch = quoted.group(1) if quoted else None
         if not branch:
@@ -343,6 +343,7 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
                 errors.append(f"{label}: at most one release row per repository")
         elif kind == "plan":
             plan = role.split()[1]
+            planned.add(plan)
             if plan not in plan_numbers:
                 errors.append(f"{label}: plan {plan} is not one of this page's Included plans")
             if branch and branch != f"{prefix}plan-{plan}":
@@ -357,7 +358,19 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
             errors.append(f"{label}: State for a {kind} row must be {' or '.join(BRANCH_STATES[kind])}")
     for repo in sorted(other_repos - release_repos):
         errors.append(f"Branches repository {repo}: has a plan or fix row but no release row")
+    for plan in plan_numbers:
+        if plan not in planned:
+            errors.append(f"Branches: Included plan {plan} has no `plan {plan}` row; every included plan has a plan row "
+                          "in each repository it changes, astrid-dev for a plan that changes only this repository (owner's decision)")
     return list(dict.fromkeys(errors))
+
+
+def active_plan_errors(active: dict[str, str], briefs) -> list[str]:
+    """An active plan (folder by plan number) must be listed by a brief whose State is not Final."""
+    joined = {number for brief in briefs if brief["state"] != "Final" for number, _ in brief["plan_links"]}
+    return [f"plans/{folder}/plan.md: Status is active but plan {number} is in no unpublished release brief; "
+            "a plan joins a release by its line under a brief's Included plans (owner's decision) and does not run until then"
+            for number, folder in sorted(active.items()) if number not in joined]
 
 
 def release_fix_issue_errors(text: str, number: str) -> list[str]:

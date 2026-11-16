@@ -27,3 +27,4 @@ route-plan-backlink-mismatch: public vision content: duplicate gap IDs in plan d
 route-status-word: F-008-portable-generation.md: route row carries status/ownership word 'active'; the catalog owns it
 strategy-missing-section-and-bad-release-link: strategy.md: missing section ## Not now
 unnamed-active-owner: active project needs a named accountable owner: Synthetic fixture
+unnamed-active-owner: plans/99-fixture/plan.md: Status is active but plan 99 is in no unpublished release brief; a plan joins a release by its line under a brief's Included plans (owner's decision) and does not run until then

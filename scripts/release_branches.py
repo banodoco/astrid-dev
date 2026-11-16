@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from contribution_api import request
-from records import (BRANCH_FIRST_RELEASE, PRODUCT_REPOSITORIES, release_branch_errors, release_brief,
+from records import (BRANCH_FIRST_RELEASE, BRANCH_REPOSITORIES, release_branch_errors, release_brief,
                      section, split_table_row)
 
 OWNER = "banodoco"
@@ -176,7 +176,7 @@ def verify(text: str, number: int, remote=ls_remote, check=None, issue_exists=No
         else:
             ancestry(report, label, check, row["repo"], row["cut"], row["head"], "Cut at check",
                      f"Cut at {short(row['cut'])} is not an ancestor of the branch head")
-    for repo in PRODUCT_REPOSITORIES:
+    for repo in BRANCH_REPOSITORIES:
         for ref in remote(repo_url(repo), f"refs/heads/release/{number}/*"):
             branch = ref.removeprefix("refs/heads/")
             if (repo, branch) not in heads:
@@ -198,8 +198,8 @@ def parse_clones(values: list[str]) -> dict[str, Path]:
     clones = {}
     for value in values:
         repo, _, path = value.partition("=")
-        if repo not in PRODUCT_REPOSITORIES or not path:
-            raise ValueError(f"--clone must be REPOSITORY=PATH with REPOSITORY one of {', '.join(PRODUCT_REPOSITORIES)}")
+        if repo not in BRANCH_REPOSITORIES or not path:
+            raise ValueError(f"--clone must be REPOSITORY=PATH with REPOSITORY one of {', '.join(BRANCH_REPOSITORIES)}")
         clones[repo] = Path(path)
     return clones
 

@@ -70,7 +70,7 @@ One meaning per word; two meanings, two terms.
 
 **release:** a numbered integration across repositories; its **release brief** holds the plan. [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs) is its one account.
 
-**release branch:** `release/<NN>/main`, a release's one canonical branch in each product repository; tester builds and the candidate, the frozen head of it, come from it.
+**release branch:** `release/<NN>/main`, a release's one canonical branch in each repository it changes; tester builds and the candidate, the frozen head of it, come from it.
 
 **plan branch:** `release/<NN>/plan-<PP>`, where a plan's work lands inside its release.
 
