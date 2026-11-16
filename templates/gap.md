@@ -1,9 +1,11 @@
 # <ID> — <the missing outcome, stated as what isn't yet true>
 
-**Applies to:** <link to the primary principle or pillar> (primary) · <link to a justified supporting one> (supporting) · **Assessment:** Open / Partially evidenced / Closed / Needs recheck; <evidence and date>.
+**Aspiration:** <link to the primary aspiration's heading> (primary) · <link to a justified supporting aspiration's heading> (supporting) · **Assessment:** Open / Partially evidenced / Closed / Needs recheck; <evidence and date>.
 
 <!--
 Copy to vision/gaps/<ID>-<short-name>.md. The gap skill (skills/astrid-dev-gap/SKILL.md) explains each section.
+Choose one primary aspiration and any justified supporting aspirations; omit the supporting entry when none fits.
+See docs/contribution-workflow.md#define-or-reassess-a-vision-gap for the rule.
 A gap names a result that would still matter if today's proposed project were replaced.
 Never put project status, owners or estimates here: each plan's plan.md owns those.
 -->

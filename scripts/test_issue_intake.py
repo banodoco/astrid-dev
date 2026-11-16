@@ -161,6 +161,17 @@ class AboutTests(unittest.TestCase):
             self.assertEqual(about_labels("### What I saw\n\nx\n\n### About\n\nF-008\n\n### Astrid version\n\nPlan 33", root),
                              ["gap:F-008"])
 
+    def test_a_bold_about_line_counts_and_a_bold_about_in_a_sentence_does_not(self):
+        holder, root = tree(plans=["32", "33"], gaps=["F-008"])
+        with holder:
+            self.assertEqual(about_labels("**About:** Plan 32 (retire old red). F-008.\n\nPlan 33 is elsewhere", root),
+                             ["plan:32", "gap:F-008"])
+            self.assertEqual(about_labels("x\n**About:**Plan 33" + FOOTER, root), ["plan:33"])
+            for body in ("I read the **About:** Plan 32 line", "Plan 32 **About:** Plan 33", "About: Plan 32",
+                         "x\n\n---\n**About:** Plan 32", "**About** Plan 32"):
+                with self.subTest(body=body):
+                    self.assertEqual(about_labels(body, root), [])
+
     def test_a_footer_does_not_add_labels(self):
         holder, root = tree(plans=["32"])
         with holder:

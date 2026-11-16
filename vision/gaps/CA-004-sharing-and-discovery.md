@@ -1,6 +1,6 @@
 # CA-004 — Creators and agents can't yet find one another's contributions
 
-**Applies to:** [A Shared Creative Endeavor](../pillars/shared-endeavour.md) (primary) · [Intelligence That Compounds](../pillars/compounding-intelligence.md) (supporting) · **Assessment:** Open; initial assessment (2026-11-10); not implementation proof.
+**Aspiration:** [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (primary) · [An ecosystem of wisdom grounded in real work](../pillars/compounding-intelligence.md#an-ecosystem-of-wisdom-grounded-in-real-work) (supporting) · **Assessment:** Open; initial assessment (2026-11-10); not implementation proof.
 
 ## Desired state
 

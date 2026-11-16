@@ -2,7 +2,8 @@
 """Label new and edited issues; post, edit, close and remove nothing.
 
 Trusted code from main. The issue's title and body are data: the type label comes from the
-title's first word, and each real plan or gap ID under "### About" becomes a label. An ID is
+title's first word, and each real plan or gap ID under "### About", or on a line that starts
+"**About:**", becomes a label. An ID is
 real when main (the checkout this runs from) has its plan folder or gap file: no API call.
 """
 from __future__ import annotations
@@ -21,6 +22,7 @@ TYPE_TITLE = re.compile(r"^\s*(?:(" + "|".join(TYPES) + r")\s*:|\[(bug)\])", re.
 # The section ends at the next heading, a line that is only "---" (the footer a session's
 # GitHub access appends), or the end of the body.
 ABOUT = re.compile(r"^###[ \t]+About[ \t]*\n(.*?)(?=^#{1,6}[ \t]|^---[ \t]*$|\Z)", re.I | re.M | re.S)
+BOLD_ABOUT = re.compile(r"^\*\*About:\*\*[ \t]*(.*)$", re.I | re.M)  # the rest of that line, before any footer
 PLAN_ID = re.compile(r"\bPlan\s+(\d{2,})\b", re.I | re.A)
 GAP_ID = re.compile(r"\b([A-Z]{1,3}-\d{3})\b", re.A)
 MAX_ABOUT_LABELS = 5
@@ -33,7 +35,9 @@ def type_label(title: str) -> str | None:
 
 def about_labels(body: str, root: Path = ROOT) -> list[str]:
     labels = []
-    for section in ABOUT.findall(body.replace("\r\n", "\n")):
+    text = body.replace("\r\n", "\n")
+    sections = ABOUT.findall(text) + BOLD_ABOUT.findall(re.split(r"^---[ \t]*$", text, maxsplit=1, flags=re.M)[0])
+    for section in sections:
         found = [("plan", f"plans/{n}-*/plan.md", n) for n in PLAN_ID.findall(section)]
         found += [("gap", f"vision/gaps/{g}-*.md", g) for g in GAP_ID.findall(section)]
         for kind, pattern, ident in found:

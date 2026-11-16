@@ -10,8 +10,7 @@ from gap_relationships import parse_gap_relationships
 import lifecycle
 from project_contract import PLAN_FOLDER, plan_gap_ids
 from records import (PLACEHOLDERS_ACTIVE_OWNER, heading_present,
-                     is_placeholder, key_value_lines, read_text, section as record_section,
-                     split_table_row)
+                     is_placeholder, key_value_lines, read_text, release_brief, release_branch_errors, release_fix_issue_errors, BRANCH_FIRST_RELEASE, section as record_section)
 from vision_subject import parse_subject
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -151,46 +150,54 @@ def ledger_errors(root: Path) -> list[str]:
 
 
 STRATEGY = Path('strategy.md')
-STRATEGY_HEADER = '| Release | Highlight | Plans | Why this order |'
-STRATEGY_SECTIONS = ('## Focus now', '## Sequence', '## Not now', '## Decisions')
-RELEASE_ROW = re.compile(r'\[Release ([1-9]\d*) \((draft|final)\)\]\(releases/([1-9]\d*)\.md\)')
-RELEASE_PLAN = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
-STRATEGY_PLAN = re.compile(r'\[Plan (\d+)\]\(plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
-RELEASE_SECTIONS = ('Highlight', 'Intent', 'Approach', 'Included plans', 'Publication')
-
-
-def release_section(body: str, name: str) -> str:
-    return record_section(body, name, missing='empty', boundary=r'^## ', strip=True) or ''
+STRATEGY_SECTIONS = ('## Focus now', '## Versions', '## Not now', '## Decisions')
+VERSION_HEADING = re.compile(r'^(#{3,4}) Version (\d+)\.(\d+)\s*$', re.M)
+# Not records.named_field_matches: its `\s*` after the label can cross a newline, so an empty
+# `**Aim:**` would capture the next line as its value.
+VERSION_FIELD = re.compile(r'^\*\*(Aim):\*\*[ \t]*(.*)$', re.M)
+VERSION_OPEN = 'Open'
 
 
 def release_errors(filename: str, body: str) -> list[str]:
     """A release brief is valid as a draft, without publication pins."""
     issues = []
     stem = Path(filename).stem
-    match = re.search(r'^\*\*Release:\*\* ([1-9]\d*)$', body, re.M)
-    if not stem.isdigit() or not match or match.group(1) != stem:
+    brief = release_brief(body, strict=False)
+    if not stem.isdigit() or not re.fullmatch(r'[1-9]\d*', brief['number'] or '') or brief['number'] != stem:
         issues.append(f'releases/{filename}: Release must equal the numeric filename')
-    if not re.search(r'^# Release ' + re.escape(stem) + r' — \S.+$', body, re.M):
+    if brief['title_number'] != stem:
         issues.append(f'releases/{filename}: title must be # Release {stem} — <title>')
-    state = re.search(r'^\*\*State:\*\* (Draft|Final)$', body, re.M)
+    state = brief['state'] if brief['state'] in ('Draft', 'Final') else None
     if not state:
         issues.append(f'releases/{filename}: State must be Draft or Final')
-    sections = {name: release_section(body, name) for name in RELEASE_SECTIONS}
+    sections = brief['sections']
     for name, content in sections.items():
         if not content:
             issues.append(f'releases/{filename}: missing or empty ## {name}')
     highlight = sections['Highlight'].splitlines()
     if highlight and (len(highlight) != 1 or len(highlight[0]) < 15):
         issues.append(f'releases/{filename}: Highlight must be one substantive sentence on one line')
-    plans = RELEASE_PLAN.findall(sections['Included plans'])
-    if not plans:
+    plans = brief['plan_links']
+    none_yet = sections['Included plans'] == 'None yet' and state == 'Draft'
+    if not plans and not none_yet:
         issues.append(f'releases/{filename}: Included plans must link project plan.md files')
     if len({folder for _, folder in plans}) != len(plans):
         issues.append(f'releases/{filename}: duplicated included plan')
     if any(number != folder[:2] for number, folder in plans):
         issues.append(f'releases/{filename}: included plan number does not match its link')
+    for error in brief['errors']:
+        # Preserve the existing no-links diagnostic without adding a duplicate.
+        if error.startswith('Included plans') and not plans:
+            continue
+        issues.append(f'releases/{filename}: {error}')
+    if stem.isdigit() and int(stem) >= BRANCH_FIRST_RELEASE:
+        issues.extend(f'releases/{filename}: {e}' for e in release_branch_errors(
+            body, stem, [number for number, _ in plans]))
+        issues.extend(f'releases/{filename}: {e}' for e in release_fix_issue_errors(body, stem))
+    if state == 'Final' and brief['issues_present'] and not brief['issues_frozen']:
+        issues.append(f'releases/{filename}: Final Issues block must be frozen')
     if state:
-        if state.group(1) == 'Draft':
+        if state == 'Draft':
             if 'Not pinned.' not in sections['Publication']:
                 issues.append(f'releases/{filename}: draft publication must say Not pinned.')
         else:
@@ -209,60 +216,77 @@ def release_errors(filename: str, body: str) -> list[str]:
 
 
 def strategy_errors(text: str, release_docs: dict[str, str] | None = None) -> list[str]:
-    """Validate a release-led strategy against its canonical release briefs."""
-    errors = [f'strategy.md: missing section {name}' for name in STRATEGY_SECTIONS
-              if not heading_present(text, rf'^{re.escape(name)}\s*$')]
+    """Validate authored structure and release kinds, excluding generated regions."""
+    errors = []
+    for version in [*(f'0.{n}' for n in range(1, 10)), '1.0']:
+        start, end = f'<!-- strategy-{version}:start -->', f'<!-- strategy-{version}:end -->'
+        if text.count(start) != 1 or text.count(end) != 1 or text.find(start) > text.find(end):
+            errors.append(f'strategy.md: needs exactly one ordered {start} and {end} pair')
+        else:
+            text = text[:text.index(start)] + text[text.index(end) + len(end):]
+    errors.extend(f'strategy.md: missing section {name}' for name in STRATEGY_SECTIONS
+                  if not heading_present(text, rf'^{re.escape(name)}\s*$'))
     if not re.search(r'^\*\*Last reviewed:\*\* \d{4}-\d{2}-\d{2}', text, re.M):
         errors.append('strategy.md: needs a "**Last reviewed:** YYYY-MM-DD" line')
-    lines = text.splitlines()
-    heads = [i for i, line in enumerate(lines) if line.strip() == STRATEGY_HEADER]
-    if len(heads) != 1:
-        return errors + ['strategy.md: needs one release sequence table with the canonical header']
-    rows = []
-    for line in lines[heads[0] + 2:]:
-        if not line.startswith('|'):
-            break
-        rows.append(split_table_row(line))
-    if not rows:
-        errors.append('strategy.md: the release sequence table is empty')
-    referenced = set()
-    previous = -1
-    for cells in rows:
-        if len(cells) != 4:
-            errors.append(f'strategy.md: malformed sequence row: {"|".join(cells)}')
-            continue
-        release, highlight, plans, why = cells
-        match = RELEASE_ROW.fullmatch(release)
-        if not match or match.group(1) != match.group(3):
-            errors.append(f'strategy.md: release needs a matching link to releases/<N>.md: {release}')
-            continue
-        number, state, file_number = match.groups()
-        if int(number) <= previous:
-            errors.append(f'strategy.md: release {number} must follow ascending order')
-        previous = int(number)
-        key = f'{file_number}.md'
-        if key in referenced:
-            errors.append(f'strategy.md: duplicate release {number}')
-        referenced.add(key)
-        if not highlight or not why:
-            errors.append(f'strategy.md: release {number} needs Highlight and Why this order')
-        plan_refs = STRATEGY_PLAN.findall(plans)
-        if not plan_refs:
-            errors.append(f'strategy.md: release {number} needs at least one linked plan')
-        if release_docs is not None:
-            body = release_docs.get(key)
-            if body is None:
-                errors.append(f'strategy.md: no release document {key}')
-                continue
-            actual_state = re.search(r'^\*\*State:\*\* (Draft|Final)$', body, re.M)
-            if not actual_state or actual_state.group(1).lower() != state:
-                errors.append(f'strategy.md: release {number} state differs from its document')
-            if highlight != release_section(body, 'Highlight'):
-                errors.append(f'strategy.md: release {number} highlight differs from its document')
-            actual_plans = set(RELEASE_PLAN.findall(release_section(body, 'Included plans')))
-            if set(plan_refs) != actual_plans or len(plan_refs) != len(actual_plans):
-                errors.append(f'strategy.md: release {number} plan links differ from its document')
     if release_docs is not None:
-        for missing in sorted(release_docs.keys() - referenced):
-            errors.append(f'strategy.md: releases/{missing} has no roadmap row')
+        ordered = sorted(((int(Path(name).stem), release_brief(body, strict=False))
+                          for name, body in release_docs.items() if Path(name).stem.isdigit()))
+        if sum(brief['kind'] == 'minor' for _, brief in ordered) > 9:
+            errors.append('strategy.md: release briefs declare more than nine minor releases')
+        if any(brief['kind'] == 'major' and i != len(ordered) - 1
+               for i, (_, brief) in enumerate(ordered)):
+            errors.append('strategy.md: a major release brief must be last')
+    return errors + version_errors(text)
+
+
+def version_errors(text: str) -> list[str]:
+    """Validate one major aim and its nine ordered minor aims or Open values."""
+    body = record_section(text, 'Versions', missing='none', boundary=r'^## ', strip=False)
+    if body is None:
+        return []
+    errors = []
+    heads = list(VERSION_HEADING.finditer(body))
+    blocks = []
+    for index, match in enumerate(heads):
+        end = heads[index + 1].start() if index + 1 < len(heads) else len(body)
+        fields: dict[str, str] = {}
+        for name, value in VERSION_FIELD.findall(body[match.end():end]):
+            if name in fields:
+                errors.append(f"strategy.md: version {match.group(2)}.{match.group(3)}: duplicate field '{name}'")
+            fields[name] = value.strip()
+        blocks.append((len(match.group(1)), int(match.group(2)), int(match.group(3)), fields))
+    majors = [(major, minor) for level, major, minor, _ in blocks if level == 3]
+    if not majors:
+        return ['strategy.md: Versions needs at least one major version heading (### Version N.0)']
+    if len(majors) > 1:
+        errors.append('strategy.md: Versions must contain exactly one major version heading')
+    current = None
+    expected_minor = 1
+    for level, major, minor, fields in blocks:
+        name = f'{major}.{minor}'
+        aim = fields.get('Aim', '')
+        if not aim:
+            errors.append(f'strategy.md: version {name} needs an "**Aim:**" sentence')
+        if level == 3:
+            if minor != 0 or major < 1:
+                errors.append(f'strategy.md: major version heading must be N.0: {name}')
+            if current is not None:
+                if expected_minor != 10:
+                    errors.append(f'strategy.md: version {current}.0 must contain versions '
+                                  f'{current - 1}.1 to {current - 1}.9 in order')
+                if major != current + 1:
+                    errors.append(f'strategy.md: major version {name} must follow {current}.0')
+            if aim == VERSION_OPEN:
+                errors.append(f'strategy.md: major version {name} needs a real aim, not "{VERSION_OPEN}"')
+            current, expected_minor = major, 1
+            continue
+        if current is None:
+            errors.append(f'strategy.md: version {name} is outside a major version')
+            continue
+        if major != current - 1 or minor != expected_minor:
+            errors.append(f'strategy.md: expected version {current - 1}.{expected_minor} here, found {name}')
+        expected_minor = minor + 1
+    if current is not None and expected_minor != 10:
+        errors.append(f'strategy.md: version {current}.0 must contain versions '
+                      f'{current - 1}.1 to {current - 1}.9 in order')
     return errors

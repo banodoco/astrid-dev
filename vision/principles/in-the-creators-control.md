@@ -2,13 +2,13 @@
 
 ## Statement
 
-Creators should have final say over every part of their creative environments.
+Creators have the final say over their creative environments.
 
 ## Explanation
 
 Astrid should make it possible to choose features and services, control agent permissions, and decide what stays private or becomes shared. Even core workings should be adaptable, without requiring artists to become experts in the underlying technology.
 
-## Characteristics
+## Aspirations
 
 ### Control at every layer
 

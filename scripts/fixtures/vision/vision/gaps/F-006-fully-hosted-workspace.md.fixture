@@ -1,6 +1,6 @@
 # F-006 — Creators can't yet work in Astrid entirely from the cloud
 
-**Applies to:** [Local-first, cloud-capable](../principles/local-first-cloud-capable.md) (primary) · [Eliminate needless technical wrangling](../principles/eliminate-needless-technical-wrangling.md) (supporting) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open; no qualified fully hosted project/database/media lifecycle.
+**Aspiration:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary) · [Agents handle the setup](../principles/eliminate-needless-technical-wrangling.md#agents-handle-the-setup) (supporting) · [Control at every layer](../principles/in-the-creators-control.md#control-at-every-layer) (supporting) · **Assessment:** Open; no qualified fully hosted project/database/media lifecycle.
 
 ## Desired state
 

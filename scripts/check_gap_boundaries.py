@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 
 from check_docs import ROOT
-from gap_relationships import parse_gap_relationships
+from gap_relationships import VISION, gap_metadata, parse_gap_relationships
 from records import (PLACEHOLDERS_GAP, field_match, git_result, git_show,
                      is_placeholder, matching_sections, read_text,
                      section as record_section, section_after_match)
@@ -36,7 +36,7 @@ def boundary_signature(text: str) -> tuple[str, ...]:
     the outcome does not require a second architecture review.
     """
     title = re.search(r"^# (.+)$", text, re.M)
-    applies = re.search(r"^\*\*Applies to:\*\*[ \t]*(.*)$", text, re.M)
+    applies = re.search(r"^\*\*(?:Applies to|Aspiration):\*\*[ \t]*(.*)$", text, re.M)
     return (
         title.group(1).strip() if title else "",
         re.sub(r"\.\./principles\.md#([a-z0-9-]+)", r"../principles/\1.md", applies.group(1).split("**Assessment:**", 1)[0].strip()) if applies else "",
@@ -46,8 +46,43 @@ def boundary_signature(text: str) -> tuple[str, ...]:
     )
 
 
-def needs_boundary_review(before: str | None, after: str | None) -> bool:
-    return before is None or after is None or boundary_signature(before) != boundary_signature(after)
+def _legacy_elements(text: str) -> tuple[list[str], str]:
+    """Read historical element-only metadata solely for the migration comparison."""
+    lines = [line for line in text.splitlines() if line.startswith(("**Applies to:**", "**Aspiration:**"))]
+    if len(lines) != 1 or not lines[0].startswith("**Applies to:**") or "**Assessment:**" not in lines[0]:
+        raise ValueError("not an element-only historical gap")
+    raw = lines[0].split("**Assessment:**", 1)[0].removeprefix("**Applies to:**").strip().removesuffix("·").strip()
+    refs, primary = [], []
+    for token in raw.split("·"):
+        match = re.fullmatch(r"\[[^\]\n]+\]\(\.\./(pillars|principles)/([a-z0-9-]+)\.md\)\s+\((primary|supporting)\)", token.strip())
+        if not match:
+            raise ValueError("invalid historical relationship")
+        folder, ident, role = match.groups()
+        ref = ("pillar:" if folder == "pillars" else "principle:") + ident
+        if ref in refs:
+            raise ValueError("duplicate historical relationship")
+        refs.append(ref)
+        if role == "primary":
+            primary.append(ref)
+    if len(primary) != 1 or not refs or refs[0] != primary[0]:
+        raise ValueError("invalid historical primary")
+    return refs, primary[0]
+
+
+def needs_boundary_review(before: str | None, after: str | None, vision_root: Path = VISION) -> bool:
+    if before is None or after is None:
+        return True
+    old, new = boundary_signature(before), boundary_signature(after)
+    if old == new:
+        return False
+    if old[:1] + old[2:] != new[:1] + new[2:]:
+        return True
+    try:
+        old_refs, old_primary = _legacy_elements(before)
+        new_refs, new_primary = parse_gap_relationships(gap_metadata(after), vision_root)
+    except ValueError:
+        return True
+    return old_primary != new_primary or set(old_refs[1:]) != set(new_refs[1:])
 
 
 def git(root: Path, *args: str, must_succeed: bool = True) -> subprocess.CompletedProcess[str]:
@@ -104,7 +139,7 @@ def affected_gaps(base: str, root: Path) -> set[str]:
         if Path(old_path).name != Path(new_path).name:
             required.add(gap_id)
             continue
-        if needs_boundary_review(before_file(root, base, old_path), after_file(root, new_path)):
+        if needs_boundary_review(before_file(root, base, old_path), after_file(root, new_path), root / "vision"):
             required.add(gap_id)
     return required
 
@@ -143,8 +178,8 @@ def assess_boundary(
     relationships = {}
     for field in ("Primary connection", "Supporting connections"):
         match = field_match(
-            text, field, value_pattern=r"(None|(?:(?:pillar|principle):[a-z0-9-]+"
-              r"(?:,\s*(?:pillar|principle):[a-z0-9-]+)*))"
+            text, field, value_pattern=r"(None|(?:(?:pillar|principle):[a-z0-9-]+(?:/[a-z0-9-]+)?"
+              r"(?:,\s*(?:pillar|principle):[a-z0-9-]+(?:/[a-z0-9-]+)?)*))"
               r"\s+[—:-]\s*(.+)", flags=re.I | re.M,
         )
         if not match or not has_real_reason(match.group(2)):
