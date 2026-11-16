@@ -1,6 +1,6 @@
 # H3_AV: where it should end up
 
-Written 16 November 2026 from the Release 14 code, the node packs' own source and the live pilot notes, and revised after two independent critiques and your decisions. Nothing here has run on a GPU yet; what only a GPU run can settle is marked **open**.
+Written 16 November 2026 from the Release 14 code, the node packs' own source and the live pilot notes, and revised after two independent critiques, the owner's decisions and the first real continuation run. The run produced a composed, structurally verified take; spoken words and creative quality remain open.
 
 ## How we get there: one skill per kind of task, proven by an agent
 
@@ -8,7 +8,7 @@ For each kind of edit the Minkhole film needs there is one skill document. It ta
 
 Each skill is proven the same way. A fresh agent on the normal-task model gets the skill, the clip and the intended result, and nothing else. It rents a machine and does the edit end to end. Every place it stalls, guesses or needs help is recorded, and the tool or the skill is fixed at that place. Then another fresh agent tries, until one finishes unaided, and you review the take. Before any trial that rents a GPU, a fresh agent first passes a rehearsal that rents nothing: find the skill, write the request, get a ready dry run, and practise checking and placing with media that already exists. Tool work happens only when a skill needs it.
 
-The speed-up is one named setting: the Pika Labs 8-step Ref2VA file, without an A/B test. LightX2V remains an option only where its variant matches the base; CFG other than 1 is refused by name until a real CFG graph exists. Paid trials should examine the community leads on reference voice, Ref2VA joins and LightX2V loading as leads, not facts. A check against the publishers' documentation found the reference base is the right one for every route; the documented way to carry a voice (a reference audio clip, or a reference video with its sound) is exposed only on character swap, which is the gap the voice skill has to close. No rental begins until the creation-time deadline is independently reviewed; every machine must carry that deadline and the existing pod watchdog.
+The speed-up is one named setting: the Pika Labs 8-step Ref2VA file, without an A/B test. LightX2V remains an option only where its variant matches the base; CFG other than 1 is refused by name until a real CFG graph exists. Paid trials should examine the community leads on reference voice, Ref2VA joins and LightX2V loading as leads, not facts. A check against the publishers' documentation found the reference base is the right one for every route; the documented way to carry a voice (a reference audio clip, or a reference video with its sound) is exposed only on character swap, which is the gap the voice skill has to close. The continuation used the Ref2VA-compatible Pika 8-step setting; its request had no reference images. Model integrity verification completed. The provider accepted the creation-time deadline and the watchdog acknowledged it. Provider termination was not observed because the machine was released first. Every rental still requires the deadline and acknowledged watchdog.
 
 The task skills, in order:
 
@@ -119,7 +119,7 @@ Each topic has one home; the task skills link to the shared pages instead of rep
 
 It had not been checked; the first draft was built around one Morpheus line. The plan now carries a table of the film's needs (each on-screen line, the narration, each picture change, the joins, the stills, and the handover brief's five techniques) against every step a task needs from the tooling.
 
-The table is an inventory of methods and gaps. It is not a share of the film delivered. Of its 119 cells, 53 work today, 53 are fixed by this plan, 5 belong to tasks in the Minkhole plan, and **8 are covered by nothing**. 16 can only be settled by a GPU run, and none has had one.
+The table is an inventory of methods and gaps. It is not a share of the film delivered. Of its 119 cells, 53 work today, 53 are fixed by this plan, 5 belong to tasks in the Minkhole plan, and **8 are covered by nothing**. Sixteen label claims that need live GPU evidence; the continuation pilot has exercised only its own route.
 
 Said plainly: this plan qualifies the three speaking-face clips. **The still-heavy majority of the cut remains unqualified**: six of the nine shots are stills, and three of those are sequences of several images (four in the opening, three for the red pill, six in the close). A reference image guides a generated shot; it is not guaranteed to be its first frame.
 
@@ -156,10 +156,10 @@ A caution on how complete this is: the live work found six gaps on the first cli
 
 You decided on 16 November: the `astrid h3` command goes; any size in, with Fill by default; transcription is a skill reference; the duplicate parts of the second request format are retired; this is in Release 14 with one short review after the footage change and one at the end; a take is placed as a stored alternate above the shot, with a local draft only as fallback; and the stills are tried with one still first.
 
-**Money.** $25 is the hard total for everything, including the Minkhole plan's own fresh-agent trial on a different film. The pilot remains at $0 of its $3 allocation.
+**Money.** $25 is the hard total for everything, including the Minkhole plan's own fresh-agent trial on a different film. The pilot spent about $0.88 of its $3 allocation across two rentals. The first rental produced no generation; the second produced a composed, structurally verified 10-second take.
 
 - I no longer promise a number of trials. My earlier "12 trials at $1.50" assumed a trial fits in about an hour, and fetching the models alone (about 53.5 GB) could take that long on a fresh machine.
-- The pilot, funded at $3, measures what a cold start really costs: setting up, fetching the models, the worker becoming ready, and one generation. The cap per trial and the number of trials are set from those numbers and the dollars left.
+- The pilot measurement, including elapsed time, rental spend, upload and cached model details, is recorded under D8 in [inputs](inputs.md#owner-decisions). Caps are set from those measurements and the dollars left; there is no promised number of trials.
 - Every paid trial is preceded by a free rehearsal, so a rented hour is not spent discovering something a dry run would have shown. A failed trial still spends, and one ledger records every rental and release receipt.
 - Whether trials can start warm (reusing a machine, or models kept on storage) is not yet known. The account already shows about $0.03 an hour with nothing rented, which may be existing storage; that is being checked. Until it is known, assume every trial starts cold.
 - Money is spent in this order: the three Morpheus clips; the two takes with the picture kept; the cross-film trial; and the picture skills only from what remains.
