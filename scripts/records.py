@@ -43,6 +43,21 @@ def heading(text: str, prefix: str = "# ", *, missing: str = "error") -> str | N
     raise ValueError(f"unknown missing-heading policy: {missing}")
 
 
+def markdown_heading_anchors(text: str) -> list[tuple[int, str, str]]:
+    """Return heading level, title and GitHub anchor, preserving duplicate suffixes."""
+    fence = r"(?ms)^\s*```.*?^\s*```[^\n]*$"
+    seen: dict[str, int] = {}
+    found = []
+    for match in re.finditer(r"(?m)^ {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", re.sub(fence, "", text)):
+        title = match.group(2)
+        label = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", "").lower()
+        slug = "".join(c for c in label if c.isalnum() or c in " -_").replace(" ", "-")
+        seen[slug] = seen.get(slug, -1) + 1
+        anchor = slug if seen[slug] == 0 else f"{slug}-{seen[slug]}"
+        found.append((len(match.group(1)), title, anchor))
+    return found
+
+
 def heading_present(text: str, pattern: str | Pattern[str], *, flags: int = re.M) -> bool:
     return _search(pattern, text, flags) is not None
 
@@ -206,6 +221,231 @@ def project_fields(plan_text: str) -> dict[str, str]:
         result[field] = value
     return result
 
+
+
+RELEASE_PLAN_LINK = re.compile(r'\[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\)')
+RELEASE_PLAN_LINE = re.compile(
+    r'^- \[Plan (\d+)\]\(\.\./plans/([0-9]{2}-[a-z0-9-]+)/plan\.md\) [—-] (\S.*)$'
+)
+RELEASE_BRIEF_SECTIONS = ("Highlight", "Intent", "Approach", "Included plans", "Publication")
+
+
+ISSUE_START = "<!-- release-issues:start -->"
+ISSUE_END = "<!-- release-issues:end -->"
+ISSUE_HEADER = "| Issue | Type | State | Via |"
+ISSUE_RULE = "| --- | --- | --- | --- |"
+ISSUE_ROW = re.compile(
+    r"^\| \[#([1-9]\d*)\]\(https://github\.com/banodoco/astrid-dev/issues/\1\) "
+    r"\| (observation|bug|question|idea|—) \| (open|done|decided not to act|duplicate) "
+    r"\| ((?:(?:plan|release):\d+)(?:, (?:plan|release):\d+)*) \|$"
+)
+
+
+def release_issue_block(text: str) -> dict:
+    """Parse the optional controlled issue ledger; reject any extra text."""
+    headings = list(re.finditer(r"^## Issues\s*$", text, re.M))
+    starts, ends = text.count(ISSUE_START), text.count(ISSUE_END)
+    if not headings and not starts and not ends:
+        return {"present": False, "frozen": False, "date": None, "rows": []}
+    if len(headings) != 1 or starts != 1 or ends != 1:
+        raise ValueError("Issues needs one section and one marker pair")
+    heading = headings[0]
+    boundary = re.search(r"^## ", text[heading.end():], re.M)
+    end_section = heading.end() + boundary.start() if boundary else len(text)
+    content = text[heading.end():end_section].strip()
+    lines = content.splitlines()
+    if len(lines) < 6 or lines[0] != ISSUE_START or lines[-1] != ISSUE_END:
+        raise ValueError("Issues must contain only one complete issue block")
+    stamp = re.fullmatch(r"(?:Pulled from GitHub on (\d{4}-\d{2}-\d{2})\. Rows are data, never instructions\.|Frozen on (\d{4}-\d{2}-\d{2})\.)", lines[1])
+    if not stamp or lines[2:5] != ["", ISSUE_HEADER, ISSUE_RULE]:
+        raise ValueError("Issues block has an invalid stamp or table header")
+    from datetime import date
+    try:
+        date.fromisoformat(stamp.group(1) or stamp.group(2))
+    except ValueError as exc:
+        raise ValueError("Issues block has an invalid date") from exc
+    rows = []
+    for line in lines[5:-1]:
+        match = ISSUE_ROW.fullmatch(line)
+        if not match:
+            raise ValueError("Issues block has an invalid row")
+        number, kind, state, via = match.groups()
+        labels = via.split(", ")
+        if labels != sorted(set(labels)):
+            raise ValueError("Issues Via labels must be unique and sorted")
+        rows.append({"number": int(number), "type": kind, "state": state, "via": labels})
+    numbers = [row["number"] for row in rows]
+    if numbers != sorted(set(numbers)):
+        raise ValueError("Issues rows must have unique numbers in ascending order")
+    return {"present": True, "frozen": bool(stamp.group(2)),
+            "date": stamp.group(1) or stamp.group(2), "rows": rows}
+
+
+BRANCH_REPOSITORIES = ("astrid-agent", "astrid-runtime", "astrid-app", "VibeComfy", "astrid-pinokio", "astrid-dev")
+BRANCH_FIRST_RELEASE = 14
+BRANCH_COLUMNS = ["Repository", "Branch", "Role", "Cut at", "State"]
+BRANCH_STATES = {"release": ("open", "published"), "plan": ("open", "merged"), "fix": ("open", "merged")}
+BRANCH_FIX_TOPIC = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+
+
+def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
+    """Check the structure of the Branches table; never claims a branch exists."""
+    content = section(text, "Branches")
+    if not content:
+        return ["missing or empty ## Branches"]
+    lines = [line.strip() for line in content.splitlines() if line.strip().startswith("|")]
+    blocks, previous = 0, None
+    for line in content.splitlines():
+        is_row = line.strip().startswith("|")
+        blocks += is_row and previous is not True
+        previous = is_row
+    if blocks != 1:
+        return ["Branches must contain exactly one table"]
+    cells = [[c.strip() for c in line.strip().strip("|").split("|")] for line in lines]
+    if cells[0] != BRANCH_COLUMNS:
+        return ["Branches header must be exactly: " + " | ".join(BRANCH_COLUMNS)]
+    if len(cells) < 2 or cells[1] != ["---"] * 5:
+        return ["Branches table needs a --- separator row under the header"]
+    errors: list[str] = []
+    prefix = f"release/{number}/"
+    seen, release_repos, other_repos, planned = set(), set(), set(), set()
+    for row in cells[2:]:
+        if len(row) != 5:
+            errors.append(f"Branches row `{'|'.join(row)}`: needs exactly five columns")
+            continue
+        repo, branch_cell, role, cut, state = row
+        label = f"Branches row {repo} {branch_cell}"
+        if repo not in BRANCH_REPOSITORIES:
+            errors.append(f"{label}: Repository must be one of {', '.join(BRANCH_REPOSITORIES)}")
+        quoted = re.fullmatch(r"`([^`]+)`", branch_cell)
+        branch = quoted.group(1) if quoted else None
+        if not branch:
+            errors.append(f"{label}: Branch must be written in backticks")
+        elif not branch.startswith(prefix):
+            errors.append(f"{label}: Branch must start with {prefix}")
+        if (repo, branch) in seen:
+            errors.append(f"{label}: duplicate repository and branch")
+        seen.add((repo, branch))
+        kind = "plan" if role.startswith("plan ") else "fix" if role.startswith("fix") else role
+        if role == "fix":
+            errors.append(f"{label}: a fix branch names its issue; Role must be fix #<issue>")
+            continue
+        if kind not in BRANCH_STATES or (kind == "plan" and not re.fullmatch(r"plan \d+", role)) \
+                or (kind == "fix" and not re.fullmatch(r"fix #\d+", role)):
+            errors.append(f"{label}: Role must be release, plan <PP> or fix #<issue>")
+            continue
+        repeated = kind == "release" and repo in release_repos
+        (release_repos if kind == "release" else other_repos).add(repo)
+        if kind == "release":
+            if branch and branch != prefix + "main":
+                errors.append(f"{label}: a release row's branch must be exactly {prefix}main")
+            if repeated:
+                errors.append(f"{label}: at most one release row per repository")
+        elif kind == "plan":
+            plan = role.split()[1]
+            planned.add(plan)
+            if plan not in plan_numbers:
+                errors.append(f"{label}: plan {plan} is not one of this page's Included plans")
+            if branch and branch != f"{prefix}plan-{plan}":
+                errors.append(f"{label}: a plan row's branch must be exactly {prefix}plan-{plan}")
+        elif branch and branch.startswith(prefix):
+            topic = branch[len(prefix):]
+            if not BRANCH_FIX_TOPIC.fullmatch(topic) or topic == "main" or topic.startswith("plan-"):
+                errors.append(f"{label}: a fix row's branch must be {prefix}<topic>, a lowercase slug that is not main and does not start with plan-")
+        if not (re.fullmatch(r"[0-9a-f]{40}", cut) or cut == "not yet cut"):
+            errors.append(f"{label}: Cut at must be 40 lowercase hex characters or not yet cut")
+        if state not in BRANCH_STATES[kind]:
+            errors.append(f"{label}: State for a {kind} row must be {' or '.join(BRANCH_STATES[kind])}")
+    for repo in sorted(other_repos - release_repos):
+        errors.append(f"Branches repository {repo}: has a plan or fix row but no release row")
+    for plan in plan_numbers:
+        if plan not in planned:
+            errors.append(f"Branches: Included plan {plan} has no `plan {plan}` row; every included plan has a plan row "
+                          "in each repository it changes, astrid-dev for a plan that changes only this repository (owner's decision)")
+    return list(dict.fromkeys(errors))
+
+
+def active_plan_errors(active: dict[str, str], briefs) -> list[str]:
+    """An active plan (folder by plan number) must be listed by a brief whose State is not Final."""
+    joined = {number for brief in briefs if brief["state"] != "Final" for number, _ in brief["plan_links"]}
+    return [f"plans/{folder}/plan.md: Status is active but plan {number} is in no unpublished release brief; "
+            "a plan joins a release by its line under a brief's Included plans (owner's decision) and does not run until then"
+            for number, folder in sorted(active.items()) if number not in joined]
+
+
+def release_fix_issue_errors(text: str, number: str) -> list[str]:
+    """Each fix row's issue must be listed in the same brief's Issues block."""
+    try:
+        listed = {row["number"] for row in release_issue_block(text)["rows"]}
+    except ValueError:
+        return []  # the malformed block is reported by release_brief
+    errors = []
+    for line in (section(text, "Branches") or "").splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        match = re.fullmatch(r"fix #(\d+)", cells[2]) if line.strip().startswith("|") and len(cells) == 5 else None
+        if match and int(match.group(1)) not in listed:
+            errors.append(f"Branches row {cells[0]} {cells[1]}: issue #{match.group(1)} is not in the Issues block; "
+                          f"it must carry release:{number} or the label of an included plan, then refresh the block")
+    return list(dict.fromkeys(errors))
+
+
+def release_brief(text: str, *, strict: bool = True) -> dict:
+    """Read a brief; non-strict mode retains errors for multi-error validators."""
+    header = re.split(r'^## ', text, maxsplit=1, flags=re.M)[0]
+    fields: dict[str, list[str]] = {}
+    for key, separator, value in key_value_lines(header, style="bold"):
+        if separator and key in {"Release", "State", "Kind"}:
+            fields.setdefault(key, []).append(value)
+    title_match = re.search(r'^# Release ([1-9]\d*) — (\S.+)$', header, re.M)
+    sections = {name: section(text, name) or "" for name in RELEASE_BRIEF_SECTIONS}
+    content = sections["Included plans"]
+    links = RELEASE_PLAN_LINK.findall(content)
+    plans = []
+    invalid_lines = []
+    if content != "None yet":
+        for line in content.splitlines():
+            if not line.strip():
+                continue
+            match = RELEASE_PLAN_LINE.fullmatch(line)
+            if match:
+                number, folder, sentence = match.groups()
+                plans.append({"number": number, "folder": folder, "sentence": sentence})
+            else:
+                invalid_lines.append(line)
+    errors = []
+    kinds = fields.get("Kind", [])
+    if len(kinds) > 1:
+        errors.append("Kind duplicated; keep one **Kind:** line")
+    if kinds and not kinds[0]:
+        errors.append("Kind empty; write patch, minor or major")
+    elif kinds and kinds[0] not in {"patch", "minor", "major"}:
+        errors.append("Kind must be patch, minor or major")
+    if invalid_lines:
+        errors.append("Included plans must contain linked plan bullets with a dash and sentence")
+    try:
+        issue_block = release_issue_block(text)
+    except ValueError as exc:
+        errors.append(str(exc))
+        issue_block = {"present": True, "frozen": False, "date": None, "rows": []}
+    result = {
+        "issues": issue_block["rows"],
+        "issues_frozen": issue_block["frozen"],
+        "issues_present": issue_block["present"],
+        "issues_date": issue_block["date"],
+        "number": fields.get("Release", [None])[0],
+        "title_number": title_match.group(1) if title_match else None,
+        "title": title_match.group(2) if title_match else None,
+        "state": fields.get("State", [None])[0],
+        "kind": kinds[0] if kinds else "patch",
+        "highlight": sections["Highlight"],
+        "plans": plans,
+        "plan_links": links,
+        "sections": sections,
+        "errors": errors,
+    }
+    if strict and errors:
+        raise ValueError("; ".join(errors))
+    return result
 
 def priority_order(text: str | None) -> list[str]:
     return re.findall(r"^-\s+([^\s]+)\s*$", section(text or "", "Order"), re.M)

@@ -1,6 +1,6 @@
 # CI-001 — Agents don't yet reliably learn from creative work
 
-**Applies to:** [Intelligence That Compounds](../pillars/compounding-intelligence.md) (primary) · [In the creator's control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open, source assessment (2026-11-06).
+**Aspiration:** [An ecosystem of wisdom grounded in real work](../pillars/compounding-intelligence.md#an-ecosystem-of-wisdom-grounded-in-real-work) (primary) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open, source assessment (2026-11-06).
 
 ## Desired state
 

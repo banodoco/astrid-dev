@@ -764,5 +764,150 @@ class RootStatementTests(unittest.TestCase):
         self.assertIn(f"<!-- vision-statement:end -->\n\n{sentence}\n\n<!-- vision-summary:start -->", readme)
 
 
+class StrategyViewTests(unittest.TestCase):
+    def test_two_versions_roll_up_and_preserve_prose(self):
+        import views
+        from test_check_docs import StrategyTests
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'releases').mkdir()
+            from test_records import ProjectRecordTests
+            ProjectRecordTests.write(root, '40-machine-lifetime-controls', ProjectRecordTests.plan(Project='Machine lifetime controls'))
+            (root / 'strategy.md').write_text(StrategyTests.GOOD, encoding='utf-8')
+            def brief(n, kind, sentence):
+                return (StrategyTests.RELEASE.replace('Release 13', f'Release {n}').replace('**Release:** 13', f'**Release:** {n}')
+                        .replace('**State:** Draft', f'**State:** Draft\n**Kind:** {kind}')
+                        .replace('Include spend control.', sentence))
+            for n, kind in ((1, 'patch'), (2, 'minor'), (3, 'patch'), (4, 'minor')):
+                (root / f'releases/{n}.md').write_text(brief(n, kind, f'Contribution {n}.'), encoding='utf-8')
+            prior = views.VIEWS
+            try:
+                views.VIEWS = tuple(v for v in prior if v.name.startswith('strategy-'))
+                self.assertEqual(sync(root), ['strategy.md'])
+                self.assertEqual(sync(root), [])
+                text = (root / 'strategy.md').read_text(encoding='utf-8')
+                first = text.split('<!-- strategy-0.1:start -->')[1].split('<!-- strategy-0.1:end -->')[0]
+                second = text.split('<!-- strategy-0.2:start -->')[1].split('<!-- strategy-0.2:end -->')[0]
+                self.assertIn('Release 1 — GPU control', first)
+                self.assertIn('Release 2](releases/2.md)', first)
+                self.assertIn('[Release 1](releases/1.md): Contribution 1; [Release 2](releases/2.md): Contribution 2.', first)
+                self.assertEqual(first.count('[Plan 40 — Machine lifetime controls]'), 1)
+                self.assertIn('[Release 3](releases/3.md): Contribution 3; [Release 4](releases/4.md): Contribution 4.', second)
+                self.assertIn('**Aim:** Fast.', text)
+                (root / 'strategy.md').write_text(text.replace('Contribution 1;', 'Edited;'), encoding='utf-8')
+                self.assertTrue(check_view(views.VIEWS[0], root))
+                (root / 'strategy.md').write_text(text.replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
+                self.assertIn('restore', check_view(views.VIEWS[0], root)[0])
+            finally:
+                views.VIEWS = prior
+
+    def test_frozen_issue_counts_use_reader_fields(self):
+        from unittest.mock import patch
+        import records
+        import views
+        from test_check_docs import StrategyTests
+        from test_records import ProjectRecordTests
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'releases').mkdir()
+            (root / 'strategy.md').write_text(StrategyTests.GOOD, encoding='utf-8')
+            ProjectRecordTests.write(root, '40-machine-lifetime-controls', ProjectRecordTests.plan(Project='Machine lifetime controls'))
+            (root / 'releases/13.md').write_text(StrategyTests.RELEASE, encoding='utf-8')
+            original = records.release_brief
+            def reader(text, **kwargs):
+                brief = original(text, **kwargs)
+                brief.update(issues=[{'number': 1}, {'number': 2}], issues_frozen=True,
+                             issues_present=True, issues_date='2026-11-15')
+                return brief
+            with patch.object(records, 'release_brief', side_effect=reader):
+                rendered = views._strategy(root, '0.1')
+            self.assertIn('[Release 13 issues](releases/13.md#issues): 2', rendered)
+            # A blank line separates the counts from the plan bullets above them.
+            self.assertIn('.\n\n[Release 13 issues](releases/13.md#issues): 2', rendered)
+
+    def test_normal_check_reports_missing_marker_before_sync(self):
+        import astrid_dev
+        source = Path(__file__).resolve().parent.parent
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'repo'
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            target = root / 'strategy.md'
+            target.write_text(target.read_text().replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                code = astrid_dev.main(['check'], root=root)
+            self.assertEqual(code, 1)
+            self.assertIn('strategy-0.1:end', output.getvalue())
+            self.assertNotIn('Traceback', output.getvalue())
+
+    def test_sync_reports_missing_marker_as_one_error_line(self):
+        import astrid_dev
+        source = Path(__file__).resolve().parent.parent
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'repo'
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            target = root / 'strategy.md'
+            target.write_text(target.read_text(encoding='utf-8').replace('<!-- strategy-0.1:end -->', ''), encoding='utf-8')
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                code = astrid_dev.main(['sync'], root=root)
+            self.assertEqual(code, 1)
+            self.assertTrue(output.getvalue().startswith(
+                'ERROR sync: view strategy-0.1: target must contain exactly one ordered'), output.getvalue())
+            self.assertEqual(output.getvalue().count('\n'), 1)
+            self.assertNotIn('Traceback', output.getvalue())
+
+    def test_major_membership_and_next_version(self):
+        from views import release_membership
+        briefs = [{'number': str(n), 'kind': kind} for n, kind in
+                  ((1, 'minor'), (2, 'patch'), (3, 'major'))]
+        self.assertEqual([b['number'] for b in release_membership(briefs)['1.0']], ['2', '3'])
+        self.assertEqual([b['number'] for b in release_membership(briefs[:2])['0.2']], ['2'])
+
+    def test_after_ninth_minor_patches_belong_to_major_with_or_without_it(self):
+        from views import release_membership
+        minors = [{'number': str(n), 'kind': 'minor'} for n in range(1, 10)]
+        patches = [{'number': '10', 'kind': 'patch'}, {'number': '11', 'kind': 'patch'}]
+        for tail in (patches, patches + [{'number': '12', 'kind': 'major'}]):
+            membership = release_membership(minors + tail)
+            self.assertEqual([b['number'] for b in membership['1.0']], [b['number'] for b in tail])
+            self.assertNotIn('0.10', membership)
+
+    def test_major_renders_all_contributions_and_frozen_counts(self):
+        from unittest.mock import patch
+        import records
+        import views
+        from test_check_docs import StrategyTests
+        from test_records import ProjectRecordTests
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'releases').mkdir()
+            (root / 'strategy.md').write_text(StrategyTests.GOOD, encoding='utf-8')
+            ProjectRecordTests.write(root, '40-machine-lifetime-controls', ProjectRecordTests.plan(Project='Machine lifetime controls'))
+            self.assertIn('No release yet.', views._strategy(root, '1.0'))
+            for n, kind in ((1, 'minor'), (2, 'patch'), (3, 'major')):
+                brief = (StrategyTests.RELEASE.replace('Release 13', f'Release {n}')
+                         .replace('**Release:** 13', f'**Release:** {n}')
+                         .replace('**State:** Draft', f'**State:** Draft\n**Kind:** {kind}')
+                         .replace('Include spend control.', f'Contribution {n}.'))
+                (root / f'releases/{n}.md').write_text(brief, encoding='utf-8')
+            original = records.release_brief
+            def reader(text, **kwargs):
+                brief = original(text, **kwargs)
+                brief.update(issues=[{'number': 1}, {'number': 2}], issues_frozen=True)
+                return brief
+            with patch.object(records, 'release_brief', side_effect=reader):
+                rendered = views._strategy(root, '1.0').split('<!-- strategy-1.0:start -->')[1].split('<!-- strategy-1.0:end -->')[0]
+            self.assertIn('[Release 3](releases/3.md) — GPU control (Draft): Creators can control rented GPU machine lifetime.', rendered)
+            self.assertIn('On the way: [Release 2 — GPU control](releases/2.md)', rendered)
+            self.assertEqual(rendered.count('[Plan 40 — Machine lifetime controls]'), 1)
+            self.assertIn('[Release 2](releases/2.md): Contribution 2; [Release 3](releases/3.md): Contribution 3.', rendered)
+            self.assertEqual(rendered.count('Contribution 2'), 1)
+            self.assertEqual(rendered.count('Contribution 3'), 1)
+            self.assertNotIn('Contribution 1', rendered)
+            self.assertIn('[Release 2 issues](releases/2.md#issues): 2', rendered)
+            self.assertIn('[Release 3 issues](releases/3.md#issues): 2', rendered)
+
+
 if __name__ == "__main__":
     unittest.main()

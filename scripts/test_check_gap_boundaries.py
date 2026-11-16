@@ -191,5 +191,29 @@ class GapBoundaryGateTests(unittest.TestCase):
             git("commit", "-qm", "material outcome change")
             self.assertEqual(affected_gaps(base, root), {"F-005"})
 
+
+    def test_like_for_like_aspiration_migration_alone_needs_no_record(self):
+        old = "**Applies to:** [Local-first](../principles/local-first-cloud-capable.md) (primary) · [Control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open"
+        new = "**Aspiration:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open"
+        self.assertFalse(needs_boundary_review(old, new))
+        self.assertTrue(needs_boundary_review(old, new.split(" · [Explicit")[0] + " · **Assessment:** Open"))
+        moved = new.replace("[Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice)", "[Live tool composition](../pillars/liquid-software.md#live-tool-composition)")
+        self.assertTrue(needs_boundary_review(old, moved))
+        added = new.replace(" · **Assessment:**", " · [Live tool composition](../pillars/liquid-software.md#live-tool-composition) (supporting) · **Assessment:**")
+        self.assertTrue(needs_boundary_review(old, added))
+        # Once migrated, even an aspiration change within one element is material.
+        changed = new.replace("[Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy)", "[Control at every layer](../principles/in-the-creators-control.md#control-at-every-layer)")
+        self.assertTrue(needs_boundary_review(new, changed))
+        self.assertTrue(needs_boundary_review(old + "\n## Desired state\nOld result", new + "\n## Desired state\nNew result"))
+
+    def test_aspiration_refs_are_accepted_and_matched_in_boundary_records(self):
+        primary = "principle:local-first-cloud-capable/everything-local-or-cloud-by-choice"
+        supporting = "principle:in-the-creators-control/explicit-permissions-and-privacy"
+        record = RECEIPT.replace("principle:local-first-cloud-capable —", primary + " —").replace("principle:in-the-creators-control —", supporting + " —")
+        self.assertEqual(assess_boundary("F-005", record, ([primary, supporting], primary)), [])
+        wrong = record.replace("/explicit-permissions-and-privacy", "/control-at-every-layer")
+        self.assertTrue(any("differ" in issue for issue in assess_boundary("F-005", wrong, ([primary, supporting], primary))))
+
+
 if __name__ == "__main__":
     unittest.main()

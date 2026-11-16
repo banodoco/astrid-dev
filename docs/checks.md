@@ -4,7 +4,8 @@
 - `plan-catalog always Parse the plan catalog`
 - `unique-project-numbers always Require unique project numbers`
 - `release-documents always Validate release documents`
-- `strategy-consistency always Validate strategy consistency`
+- `active-plans-in-releases always Require every active plan in an unpublished release brief`
+- `strategy-consistency always Validate strategy structure and release kinds`
 - `catalog-paths always Validate catalog paths`
 - `gap-structure always Validate gap structure`
 - `plan-files always Validate plan files`

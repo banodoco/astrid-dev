@@ -118,7 +118,7 @@ class RegisteredRuleTests(unittest.TestCase):
                 "| First image | Build a flow | active | Owner | TBD | — | [Plan 20](20-zero-to-first-image/plan.md) |\n")
             gap = root / "vision/gaps/F-005-local-files-cloud-assist.md"
             gap.parent.mkdir(parents=True, exist_ok=True)
-            gap_text = ORIGINAL.replace("[Local-first](../principles/local-first-cloud-capable.md)", "[Local-first](../principles/local-first-cloud-capable.md) (primary)")
+            gap_text = ORIGINAL.replace("**Applies to:** [Local-first](../principles/local-first-cloud-capable.md)", "**Aspiration:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary)")
             gap.write_text(gap_text)
             git("add", ".")
             git("commit", "-qm", "base")
@@ -135,11 +135,11 @@ class RegisteredRuleTests(unittest.TestCase):
                 with self.subTest(expected=expected):
                     self.assertEqual(code, 1, output)
                     self.assertIn(expected, output)
-            malformed = ORIGINAL.replace("An outcome is not yet available", "A changed outcome")
+            malformed = gap_text.replace(" (primary)", "")
             gap.write_text(malformed)
             code, output = invoke(["check", "--base", base, "--body-file", str(body)], root=root)
             self.assertEqual(code, 1, output)
-            self.assertRegex(output, r"ERROR [^:]+: gap boundary gate: invalid gap relationship or role:")
+            self.assertRegex(output, r"ERROR [^:]+: gap boundary gate: invalid gap aspiration or role:")
 
 
 class ProjectCatalogContractTests(unittest.TestCase):
@@ -189,6 +189,25 @@ class ProjectCatalogContractTests(unittest.TestCase):
                 with self.subTest(fragments=fragments):
                     self.assertTrue(any(all(part in line for part in fragments) for line in errors), errors)
             self.assertTrue(all("\n" not in line for line in errors))
+
+    def test_active_plans_must_be_in_an_unpublished_brief(self):
+        from test_records import ProjectRecordTests as Records
+        brief = ("# Release 14 — Local speed\n\n**Release:** 14\n**State:** {state}\n\n## Highlight\n\nA sentence.\n\n"
+                 "## Included plans\n\n- [Plan 01](../plans/01-alpha/plan.md) — Alpha.\n")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            Records.write(root, "01-alpha", Records.plan(Status="active"))
+            Records.write(root, "02-beta", Records.plan(Status="active"))
+            Records.write(root, "03-gamma", Records.plan(Status="queued"))
+            (root / "releases").mkdir()
+            (root / "releases/14.md").write_text(brief.format(state="Draft"), encoding="utf-8")
+            errors = self.errors(root, "active-plans-in-releases")
+            self.assertEqual(len(errors), 1, errors)
+            for part in ("plans/02-beta/plan.md", "active", "in no unpublished release brief",
+                         "line under a brief's Included plans", "owner's decision", "does not run until then"):
+                self.assertIn(part, errors[0])
+            (root / "releases/14.md").write_text(brief.format(state="Final"), encoding="utf-8")
+            self.assertEqual(len(self.errors(root, "active-plans-in-releases")), 2)
 
     def test_catalog_reports_each_malformed_priority_line(self):
         from test_records import ProjectRecordTests as Records

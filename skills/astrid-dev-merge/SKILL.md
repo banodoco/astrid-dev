@@ -27,12 +27,12 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
 
    Add a helper only when the change needs one (a migration, a user-data path, a performance claim). Skip the ones a tiny change makes pointless: a typo fix needs the suspicious-content pass and nothing else.
 3. **Critique it yourself.** You are the lead critic, on the high-judgment role. Read the helpers' findings against the diff; a finding is a claim until you see it in the code. Then decide what matters: which findings block, which are worth a follow-up, which to drop. Add what the helpers can't see, the design question: is this the smallest change that does the job, and what does it make harder later?
-4. **Check how it lands.** Does it conflict with an open PR, a live project's integration branch, or a release in its gate? If so, say which goes first. Ask the contributor, or merge the base in ([commits only](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
+4. **Check how it lands.** Does it conflict with an open PR, a live plan branch, or a release branch in its gate? If so, say which goes first. Ask the contributor, or merge the base in ([commits only](../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
 5. **Decide.**
    - **Merge** when nothing blocks, CI covering the change is green on the PR's current head, and the change is not in a category below. Use the repository's normal merge method and credit the contributor.
    - **Request changes** when something blocks and the contributor can fix it. Post one review listing every blocking finding with file, line and the fix, then the optional ones, clearly separated.
    - **Bring it to the owner,** with your recommendation, when the change touches security, credentials, user data, a migration, cost, deployment or release machinery, workflow files, or licensing; when the suspicious-content pass found anything; or when the right answer is "no" to a substantial contribution.
-6. **Record it.** Say on the PR what was checked and what wasn't run. If the PR belongs to a release, add it to that release brief's list. If the process itself got in the way, add a [ledger](../../docs/ledger/README.md) entry.
+6. **Record it.** Say on the PR what was checked and what wasn't run. If the PR belongs to a release, add it under `## Included pull requests` in that release brief, distinct from its `## Issues` list. If the process itself got in the way, add a [ledger](../../docs/ledger/README.md) entry.
 
 ## Never
 

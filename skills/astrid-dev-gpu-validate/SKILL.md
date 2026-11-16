@@ -64,7 +64,7 @@ Send each output to the owner. A slot that failed in Step 1 is marked `blocked (
 
 ## Failures
 
-Each failing cell goes to [Bug fixing](../astrid-dev-bugfix/SKILL.md): reproduce it on CPU where possible, fix it as a repair task through [Iterate](../astrid-dev-iterate/SKILL.md) on the owning plan's integration line, then re-run that cell live. Release the pod while the fix is made unless the fix is minutes away and the budget allows. **A run ends when every cell passes or the budget is spent.**
+Each failing cell goes to [Bug fixing](../astrid-dev-bugfix/SKILL.md): reproduce it on CPU where possible, fix it as a repair task through [Iterate](../astrid-dev-iterate/SKILL.md) on the owning plan's plan branch, then re-run that cell live. Release the pod while the fix is made unless the fix is minutes away and the budget allows. **A run ends when every cell passes or the budget is spent.**
 
 ## Evidence record
 

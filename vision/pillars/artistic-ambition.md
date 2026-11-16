@@ -8,7 +8,7 @@ Astrid is designed to support serious, sustained artistic practice.
 
 Everything should be built so that artists can define, direct, and understand their work. From early experimentation through sustained projects to finished pieces, Astrid should foster a deep, evolving partnership between the artist, their agents, and their tools—one that expands possibility while preserving the artist's intent and judgment.
 
-## Characteristics
+## Aspirations
 
 ### Artistic agency
 

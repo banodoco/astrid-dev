@@ -1,0 +1,6 @@
+scripts/test_check_completion.py::StrategyGateTests::test_completion_with_strategy_update_passes
+scripts/test_check_completion.py::StrategyGateTests::test_completion_without_strategy_update_fails
+scripts/test_check_docs.py::StrategyTests::test_plan_in_one_version_and_release_plans_belong_to_their_version
+scripts/test_check_docs.py::StrategyTests::test_release_requires_matching_roadmap_row
+scripts/test_check_docs.py::StrategyTests::test_summary_and_plans_must_match_document
+scripts/test_check_docs.py::StrategyTests::test_version_needs_an_aim_and_plans_or_is_open

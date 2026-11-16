@@ -70,6 +70,7 @@ For each side, and each workflow in scope:
    - **Missing:** cleared only by a recorded ruling, either a behaviour removed on purpose, or a rename that keeps the coverage ([the contract's ruling](../astrid-dev-shared/run-contract.md#checks-and-failure-repair)). A deleting commit alone doesn't clear it.
 4. **Find the introducing commit** by bisecting across the candidate's merges, which are named lanes. A failure in files an active lane owns goes to that lane: the test id, the commit, the first error and your best guess.
 5. Re-sort at each load-bearing run. The gate stands on the frozen candidate's qualifying run, with no blocking row left and no required job without a usable result.
+6. **To get a release branch green,** run this mode on the head of `release/<NN>/main` ([the stage](../astrid-dev-release/SKILL.md#get-the-release-branch-green)); a regression goes to the plan that brought it, and old red is mode B.
 
 ## 3B. Retire old red
 
@@ -88,7 +89,7 @@ For each side, and each workflow in scope:
    - a cause spans about ten files or more;
    - the same signature comes back after two batches.
 5. **A real bug** gets its own fix card. A test that can't be fixed in its card follows the [quarantine rule](../../plans/39-green-mains/plan.md#quarantine-rule), and only once that rule's guard exists in the repository. The Agent's guard fails every xfail today (`tests/lanes.py`).
-6. **Fix where the change will ship.** While a release candidate far ahead of `main` is in flight, ask the owner where to cut the work.
+6. **Fix where the change will ship:** a fix branch under the release in progress, or a fix release for the published one ([which](../astrid-dev-release/SKILL.md#how-a-release-runs), step 5).
 
 ## Using GitHub Actions
 
@@ -99,11 +100,13 @@ For each side, and each workflow in scope:
   - Fetch artifacts: [`fetch-artifacts.sh`](../astrid-dev-orchestrate/codex-in-claude-cloud/fetch-artifacts.sh).
   - Cancel your own run: `POST .../runs/<id>/cancel`.
 - **Timestamps.** A job log prefixes every line with a timestamp. Strip it with the regex `^\S+Z ` (for example, Python `re.sub`) before sorting, or the sorter finds nothing. Grep for the failing ids rather than reading whole logs. Logs and artifacts expire (test durations after 3 days, and some logs vanish), so commit the evidence when you take it.
-- **Know each workflow's trigger.** Read its `on:` block before relying on a run.
-  - In the Agent, `ci.yml` and `lanes.yml` run on pushes to `main`, `release-1` and `int/**`, and on dispatch; they don't run on pull requests.
-  - The Agent's `windows-journey.yml` runs on pull requests to `main` and on pushes to `windows/**`.
-  - Runtime CI runs on every push and every pull request.
-  - App pushes to `int/**` start its full workflows ([manage](../astrid-dev-manage/SKILL.md#steps)).
+- **Know each workflow's trigger.** Read its `on:` block before relying on a run. This is the one statement of what CI runs:
+  - A push to `release/*/main` runs the full workflows. Agent: CI (15 jobs, including Windows and macOS), Lanes, Chat and the Windows journey. App: Tests, E2E and Lanes.
+  - A pull request into `release/*/main` runs a fast subset. Agent: fast checks, unit shard 1 of 8, boundary, chat and the Windows journey. App: Tests, with the release guard only for pull requests into `main`.
+  - A push to a plan or fix branch starts nothing in the Agent or App unless a pull request is open.
+  - Runtime and VibeComfy run their full CI on every push and pull request.
+  - The installed journey (`journey.yml`) is not started by release branches: dispatch it with `branch=release/<NN>/main`.
+  - So the full suite first runs on the combined tree after a merge to the release branch, which is why [getting the release branch green](../astrid-dev-release/SKILL.md#get-the-release-branch-green) and its red-branch rule exist.
   - Before a gate, list every required workflow and where the candidate's run of each comes from.
 - **A scratch ref** is your own branch, started with `POST .../actions/workflows/<file>/dispatches`, the header `Content-Type: application/json` (the proxy refuses the call without it) and `{"ref": "<branch>"}`. Then find its run by listing runs for that branch. It never enters a candidate.
 - **Concurrency is set per workflow.** Read its `concurrency:` block. Where `cancel-in-progress` is on, a new run on the same group cancels the one in flight. The Agent's `ci.yml` groups by workflow and ref; manual journey dispatches never cancel each other. The coordination rule is [manage's](../astrid-dev-manage/SKILL.md#steps).

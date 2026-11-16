@@ -10,7 +10,7 @@
 
 **Estimate:** about 4.5 (Phase 1 about 2.7; Phase 2 about 1.8)
 
-**Waiting on:** the owner's mark-up of five aspirations and of the proposed supporting aspirations ([inputs.md](inputs.md#owner-decisions))
+**Waiting on:** final browser proof and publication; the owner delegated end-to-end implementation and main promotion on 13 November ([execution record](evidence/execution.md))
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

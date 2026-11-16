@@ -29,19 +29,48 @@ def _errors(root: Path) -> list[str]:
             for line in output.getvalue().splitlines()]
 
 
+@contextlib.contextmanager
+def _overlay(root: Path, overlay: dict[str, str]):
+    """Apply one fixture and restore every touched path on exit."""
+    previous: dict[Path, bytes | None] = {}
+    created_dirs: set[Path] = set()
+    try:
+        for relative, contents in overlay.items():
+            target = root / relative
+            if target not in previous:
+                previous[target] = target.read_bytes() if target.is_file() else None
+            missing = []
+            parent = target.parent
+            while parent != root and not parent.exists():
+                missing.append(parent)
+                parent = parent.parent
+            target.parent.mkdir(parents=True, exist_ok=True)
+            created_dirs.update(missing)
+            target.write_text(contents, encoding="utf-8")
+        yield
+    finally:
+        for target, contents in reversed(list(previous.items())):
+            if contents is None:
+                target.unlink(missing_ok=True)
+            else:
+                target.write_bytes(contents)
+        for directory in sorted(created_dirs, key=lambda path: len(path.parts), reverse=True):
+            try:
+                directory.rmdir()
+            except OSError:
+                pass
+
+
 def collect() -> list[str]:
     output = [f"real: {error}" for error in _errors(ROOT)]
-    for overlay_path in sorted(FIXTURES.glob("*/overlay.json")):
-        fixture = overlay_path.parent
-        with tempfile.TemporaryDirectory(prefix="astrid-golden-") as directory:
-            root = Path(directory) / "repo"
-            _copy_tree(root)
+    with tempfile.TemporaryDirectory(prefix="astrid-golden-") as directory:
+        root = Path(directory) / "repo"
+        _copy_tree(root)
+        for overlay_path in sorted(FIXTURES.glob("*/overlay.json")):
+            fixture = overlay_path.parent
             overlay = json.loads(overlay_path.read_text(encoding="utf-8"))
-            for relative, contents in overlay.items():
-                target = root / relative
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_text(contents, encoding="utf-8")
-            output.extend(f"{fixture.name}: {error}" for error in _errors(root))
+            with _overlay(root, overlay):
+                output.extend(f"{fixture.name}: {error}" for error in _errors(root))
     return sorted(output)
 
 
