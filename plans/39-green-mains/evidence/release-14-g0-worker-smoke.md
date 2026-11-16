@@ -24,7 +24,7 @@ coordinated submissions; G0 is not marked complete.
   a separate throwaway Runtime worktree. No Plan 55 or Plan 38 test was edited.
 
 The evidence-only follow-up carries the implementation proof forward: the four
-script blobs below are unchanged. No full CI or integrated release qualification
+script blobs below are unchanged. No full product CI or integrated release qualification
 is claimed.
 
 Git CLI push could not authenticate in this session. Publication uses the
@@ -69,6 +69,8 @@ the inspected Release 14 head. Neither inspected product release head has a
 | Five `cmp` checks against the proposed local Runtime/App copies | PASS; every comparison silent, exit 0 |
 | Agent/VC setup and pytest scripts versus the base | Byte-identical |
 | Agent/VC smoke dispatch versus the base, using stub sibling commands | 8 comparisons passed: success, setup failure, test failure, and selector containing spaces, for each mode; same arguments, output and exit status |
+| Real Agent setup and smoke on `ab95803ce28fa51eec937b4074f5ec0f0439b98a` | PASS, exit 0; one existing installer tool-probe test passed; `ENV-PASS` |
+| Real VibeComfy setup and smoke on `dba38f8644c46f652376f2cd5112ea161e40f09b` | PASS, exit 0; `tests/test_scope.py`: 13 passed, no failures/errors/skips; `ENV-PASS` |
 | Isolated failure probes using stubs | App npm exit 41 and Runtime compiler-version exit 42 each produce setup exit 3 |
 | `bash -n env/runtime-setup.sh env/runtime-pytest.sh env/app-setup.sh env/smoke.sh` and `git diff --check` | PASS |
 
@@ -159,10 +161,80 @@ ERROR release-documents: releases/14.md: Branches row astrid-app `release/14/pla
 ERROR release-documents: releases/14.md: Branches row astrid-dev `release/14/plan-39`: duplicate repository and branch
 ```
 
-Those Release 14 document entries are outside G0 and remain unchanged. Full
-Agent and VibeComfy product smoke runs were not performed: their unchanged
-helpers and the stubbed dispatch comparisons establish the narrower wrapper
-claim only. No hosted, macOS or Windows validation was performed.
+Those Release 14 document entries are outside G0 and remain unchanged. The
+follow-up below supplies real focused Agent and VibeComfy smoke runs as well.
+No full product suite, hosted product smoke, macOS or Windows validation was
+performed.
+
+## Follow-up: remaining smoke checks and review submission
+
+After the owner's request to keep going, the real Agent and VibeComfy setups
+were run against fresh source checkouts using the canonical scripts from
+`f652b7361f80f43b1b14c5cb20b7aa722b59841c`. Both checkouts remained clean.
+
+Agent source: `ab95803ce28fa51eec937b4074f5ec0f0439b98a`, the inspected
+`release/14/main` head. The existing tool-probe selector exercises no provider
+credentials or live services and is outside the excluded Plan 55/38 tests.
+
+```bash
+bash /workspace/scratch/0f74e42cf9ba/g0-validation/dev-followup/env/smoke.sh agent \
+  tests/test_installer_platforms.py::test_ffmpeg_probe_checks_every_required_encoder_and_analysis_filter
+```
+
+```text
+python=3.13.5
+runtime=6855dfa8df65cf8ae4c002b57134d6505493c17c
+vibecomfy=dba38f8644c46f652376f2cd5112ea161e40f09b
+lifecycle=7f0b025e9391baac9f5c2fb7393617ea6fef0704
+1 passed in 1.02s
+ENV-PASS agent tests/test_installer_platforms.py::test_ffmpeg_probe_checks_every_required_encoder_and_analysis_filter
+smoke_exit=0
+```
+
+VibeComfy source: `dba38f8644c46f652376f2cd5112ea161e40f09b`, matching the
+Agent's pin. The scope-identity test file is outside the excluded test inventory.
+
+```bash
+bash /workspace/scratch/0f74e42cf9ba/g0-validation/dev-followup/env/smoke.sh vc tests/test_scope.py
+```
+
+```text
+3.13.5 /workspace/scratch/0f74e42cf9ba/g0-validation/vc-smoke/vibecomfy/__init__.py
+13 passed in 1.46s
+ENV-PASS vc tests/test_scope.py
+command exit: 0
+```
+
+[Draft PR #762](https://github.com/banodoco/astrid-dev/pull/762) targets
+`release/14/plan-39` from `p39/g0`; it is not merged. Its initial hosted
+[Documentation integrity run](https://github.com/banodoco/astrid-dev/actions/runs/43918877531)
+on `f652b7361f80f43b1b14c5cb20b7aa722b59841c` ran 417 validator tests and
+failed three, all caused by the existing duplicate Release 14 branch entries:
+
+- `test_check_docs.StrategyTests.test_real_strategy_passes`
+- `test_golden.GoldenTests.test_real_tree_and_fixtures_match_golden_output`
+- `test_views.ViewTests.test_legacy_vision_failure_is_the_only_error_line`
+
+These exact three tests were rerun on both the untouched base
+`2770aa79e8d9325c7891294609c746963cc4776e` and the candidate, using:
+
+```bash
+PYTHONPATH=scripts python3 -m unittest \
+  test_check_docs.StrategyTests.test_real_strategy_passes \
+  test_golden.GoldenTests.test_real_tree_and_fixtures_match_golden_output \
+  test_views.ViewTests.test_legacy_vision_failure_is_the_only_error_line
+```
+
+Both runs exited 1 with the same three failures. Their full output is identical
+after normalizing only the checkout path and elapsed time. No validator, golden
+file or release record was changed to obtain a pass. This is confirmation of
+pre-existing CI failures, not a green CI claim.
+
+Authentication was also checked again: `gh auth status` reported no login and
+Git had no credential helper; the connected GitHub API was authenticated as
+`peteromallet` and successfully created the draft PR. That API remains the
+working route for updates solely to `p39/g0`; CLI credentials do not block this
+submission.
 
 ## Required coordinated copies
 
