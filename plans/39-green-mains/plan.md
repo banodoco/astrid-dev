@@ -4,9 +4,9 @@
 
 **Goal:** Every CI workflow on Agent, Runtime and App `main` is green and stays green: root causes fixed (never a loosened test), one strict-xfail quarantine rule with an owner and an expiry, a nightly report of new red, and releases that need every required check green on each pinned commit (through Plan 31's `release-contract`).
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** ChatGPT `/root` (Release 14 wave 0; run `release-14-g0-20261116`)
 
 **Estimate:** 22–31 (8–11 elapsed): phase 1 6.5, phase 2 13–21, phase 3 3.5
 

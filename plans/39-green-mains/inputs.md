@@ -2,6 +2,8 @@
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
+**Run start (16 November 2026):** ChatGPT `/root`, run `release-14-g0-20261116`, is accountable for the authorized Release 14 wave-0 work only. The owner authorized G0 records/copy integration and concurrent G1, SF3a and GL, with manager branch review and merges into `release/14/plan-39`. G0 is merged; wave-0 hosted qualification is in progress. The next owner checkpoint is wave-0 review before wave 1. The owner explicitly removed outside verification as a per-task gate. No release-main or public-main promotion is authorized by this bounded run. Current receipts are in [wave-0 evidence](evidence/release-14-wave-0.md); G1's changing counts stay in run state, not this planning evidence.
+
 ## Planning evidence
 
 **Scope decision:** Accepted — Hannah asked for this plan on 9 Nov 2026 in session https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9. It starts right after release 12 is published. The end state: every CI workflow on Agent, Runtime and App `main` is green and kept green, and the release rule changes from "no new red" to "everything green".
