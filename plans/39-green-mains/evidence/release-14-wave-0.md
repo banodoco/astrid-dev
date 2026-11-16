@@ -68,7 +68,9 @@ pre-existing Agent structure findings remain with cause-specific triage for
 [astrid-dev #647](https://github.com/banodoco/astrid-dev/issues/647). GL changes
 the gate policy; it does not accept those findings into the baseline.
 
-The previously unavailable exact-head Agent unit-shard-6 log became readable on 16 November: [job 133426797162](https://github.com/banodoco/astrid-agent/actions/runs/43888589837/job/133426797162), with 247 failures and 4 errors in its pytest final summary. This restores the missing log access, **not** a green test result or a completed G1: exact-head Runtime Nightly and App Direct Journey have no runs, and unreconciled Runtime signature details are still explicitly unknown. The original G1 inventory in non-git receipts retains its observed-at timestamp and was not retrospectively edited to claim full coverage.\n\n## GL: reviewed behavior and focused proof
+The previously unavailable exact-head Agent unit-shard-6 log became readable on 16 November: [job 133426797162](https://github.com/banodoco/astrid-agent/actions/runs/43888589837/job/133426797162), with 247 failures and 4 errors in its pytest final summary. This restores the missing log access, **not** a green test result or a completed G1: exact-head Runtime Nightly and App Direct Journey have no runs, and unreconciled Runtime signature details are still explicitly unknown. The original G1 inventory in non-git receipts retains its observed-at timestamp and was not retrospectively edited to claim full coverage.
+
+## GL: reviewed behavior and focused proof
 
 [Agent #366](https://github.com/banodoco/astrid-agent/pull/366) merged at
 `347dc197ec040d644a8120646966c58bbea7873a`. Ruff and mypy count reductions pass
