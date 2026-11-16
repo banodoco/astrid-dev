@@ -1,0 +1,100 @@
+{
+  "scope": "App CI XML",
+  "permanent_artifact_url_format": "https://github.com/{repo}/actions/runs/{run_id}/artifacts/{artifact_id}",
+  "artifacts": [
+    {
+      "artifact_zip": "app-14262849293.zip",
+      "zip_sha256": "5010e805e6245658226bf335b775885071c9d441b317e2805be968d85bbe86eb",
+      "zip_sha256_expected": "5010e805e6245658226bf335b775885071c9d441b317e2805be968d85bbe86eb",
+      "zip_hash_matches_expected": true,
+      "xml": "vitest-app.xml",
+      "xml_path": "p39-g2-evidence/app/xml-reconciliation/app-14262849293/vitest-app.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "vitest tests",
+        "tests": "20870",
+        "failures": "0",
+        "errors": "0",
+        "time": "514.95535961"
+      },
+      "suite_count": 1434,
+      "suite_attribute_totals": {
+        "tests": 20870,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "testcase_elements": 20870,
+      "testcase_status_elements": {
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "testcase_passed_by_residual": 20870,
+      "repo": "banodoco/astrid-app",
+      "run_id": 43938449477,
+      "job_id": 133579734809,
+      "attempt": 2,
+      "job_log_reused_from_attempt_1": 133549190737,
+      "junit_log_totals": {
+        "tests": 20870,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "xml_totals_match_log": true
+    },
+    {
+      "artifact_zip": "app-14262849293.zip",
+      "zip_sha256": "5010e805e6245658226bf335b775885071c9d441b317e2805be968d85bbe86eb",
+      "zip_sha256_expected": "5010e805e6245658226bf335b775885071c9d441b317e2805be968d85bbe86eb",
+      "zip_hash_matches_expected": true,
+      "xml": "vitest-sdk-boundary.xml",
+      "xml_path": "p39-g2-evidence/app/xml-reconciliation/app-14262849293/vitest-sdk-boundary.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "vitest tests",
+        "tests": "335",
+        "failures": "0",
+        "errors": "0",
+        "time": "0.064916468"
+      },
+      "suite_count": 1,
+      "suite_attribute_totals": {
+        "tests": 335,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "testcase_elements": 335,
+      "testcase_status_elements": {
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "testcase_passed_by_residual": 335,
+      "repo": "banodoco/astrid-app",
+      "run_id": 43938449477,
+      "job_id": 133579734809,
+      "attempt": 2,
+      "job_log_reused_from_attempt_1": 133549190737,
+      "junit_log_totals": {
+        "tests": 335,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "xml_totals_match_log": true
+    }
+  ],
+  "testcase_index_file": "testcase-index.json",
+  "notes": [
+    "Full testcase IDs are preserved separately in testcase-index.json.",
+    "Runtime unit and sandbox-process-control JUnit tests attributes include 60 passing subtests that are not separate <testcase> elements.",
+    "Runtime xfailed cases are represented as JUnit skipped elements.",
+    "Downloaded ZIP SHA-256 values were compared to the captured artifact digest records."
+  ],
+  "limitations": [
+    "JUnit XML contains only testcase elements; 60 passing subtests are reflected in aggregate counters and captured job logs but are not emitted as standalone testcase IDs."
+  ]
+}

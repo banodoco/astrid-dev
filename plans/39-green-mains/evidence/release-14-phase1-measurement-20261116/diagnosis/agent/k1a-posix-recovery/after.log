@@ -1,0 +1,10 @@
+......                                                                   [100%]
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_boundary_registration_launchd.py::test_launchd_sigkill_after_publication_link_replays[journal]
+PASSED tests/test_boundary_registration_launchd.py::test_launchd_sigkill_after_publication_link_replays[launcher]
+PASSED tests/test_boundary_registration_launchd.py::test_launchd_sigkill_after_publication_link_replays[definition]
+PASSED tests/test_installer_r0_stop.py::test_killed_after_disable_next_invocation_recovers
+PASSED tests/test_installer_r0_stop.py::test_launchd_sigkill_at_each_stop_step_then_recover[disable]
+PASSED tests/test_installer_r0_stop.py::test_launchd_sigkill_at_each_stop_step_then_recover[bootout]
+6 passed in 0.88s

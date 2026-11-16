@@ -1,0 +1,174 @@
+..............................................F...                       [100%]
+=================================== FAILURES ===================================
+_____________________ test_captures_match_real_r0_evidence _____________________
+tests/test_installer_r0_entry.py::test_captures_match_real_r0_evidence: undeclared skip (Skipped: local R0 evidence is not present).
+A skip must come from a lane in tests/lanes.py: mark the test with the lane's marker; do not call pytest.skip, skipif or importorskip. A dependency the package or lane provides is imported or run plainly.
+==================================== PASSES ====================================
+_ test_cli_refuses_installer_state_overlap_for_other_platform_layouts[darwin] __
+----------------------------- Captured stdout call -----------------------------
+Astrid couldn't finish. Your work is kept.
+The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_refuses_installer_sta0/home/.local/share; choose a separate directory.
+
+Astrid setup summary:
+  Startup: not confirmed.
+  Sign-in autostart: not confirmed.
+  Command/PATH: not reached in this run.
+  Skill destinations: not confirmed in this run.
+  Failure: ValueError
+  Skill copies recovery: to enable skill copies later, rerun the install line with --skill-copies on (replace this flag in the Way back line).
+  Maintenance: rerun the install line to repair or restart; add --update to update, or --uninstall to remove Astrid. Uninstall keeps the workspace unless --delete-data is added.
+  Way back: curl -fsSL https://astrid.haus/install | sh -s -- --yes --autostart on --command on --skills on --skill-copies off
+
+Astrid did NOT update: something on this computer is out of step with the installed release; run the install line to repair it.
+Astrid is still Release 0.
+Next: run the install command without --update to repair this installation, then update again.
+Details: see the error in this window.
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 692, in main
+    _check_installer_state(lock_path, *_provisional_roots(root, args.data_root, backend.service, mode))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 398, in _check_installer_state
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_refuses_installer_sta0/home/.local/share; choose a separate directory.
+__ test_cli_refuses_installer_state_overlap_for_other_platform_layouts[win32] __
+----------------------------- Captured stdout call -----------------------------
+Astrid couldn't finish. Your work is kept.
+The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_refuses_installer_sta0/home/AppData/Local/Astrid Installer; choose a separate directory.
+
+Astrid setup summary:
+  Startup: not confirmed.
+  Sign-in autostart: not confirmed.
+  Command/PATH: not reached in this run.
+  Skill destinations: not confirmed in this run.
+  Failure: ValueError
+  Skill copies recovery: to enable skill copies later, rerun the install line with --skill-copies on (replace this flag in the Way back line).
+  Maintenance: rerun the install line to repair or restart; add --update to update, or --uninstall to remove Astrid. Uninstall keeps the workspace unless --delete-data is added.
+  Way back: & ([scriptblock]::Create((irm https://astrid.haus/install.ps1))) --yes --autostart on --command on --skills on --skill-copies off
+
+Astrid did NOT update: something on this computer is out of step with the installed release; run the install line to repair it.
+Astrid is still Release 0.
+Next: run the install command without --update to repair this installation, then update again.
+Details: see the error in this window.
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 692, in main
+    _check_installer_state(lock_path, *_provisional_roots(root, args.data_root, backend.service, mode))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 398, in _check_installer_state
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_refuses_installer_sta0/home/AppData/Local/Astrid Installer; choose a separate directory.
+_ test_cli_rechecks_roots_under_installer_lock_before_manager_calls[selection] _
+----------------------------- Captured stdout call -----------------------------
+Astrid couldn't finish. Your work is kept.
+The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_rechecks_roots_under_0/home/.local/share; choose a separate directory.
+
+Astrid setup summary:
+  Startup: not confirmed.
+  Sign-in autostart: not confirmed.
+  Command/PATH: not reached in this run.
+  Skill destinations: not confirmed in this run.
+  Failure: ValueError
+  Skill copies recovery: to enable skill copies later, rerun the install line with --skill-copies on (replace this flag in the Way back line).
+  Maintenance: rerun the install line to repair or restart; add --update to update, or --uninstall to remove Astrid. Uninstall keeps the workspace unless --delete-data is added.
+  Way back: curl -fsSL https://astrid.haus/install | sh -s -- --yes --autostart on --command on --skills on --skill-copies off
+
+Astrid did NOT update: something on this computer is out of step with the installed release; run the install line to repair it.
+Astrid is still Release 0.
+Next: run the install command without --update to repair this installation, then update again.
+Details: see the error in this window.
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 719, in main
+    _check_installer_state(lock_path, *_provisional_roots(root, args.data_root, backend.service, mode))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 398, in _check_installer_state
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_rechecks_roots_under_0/home/.local/share; choose a separate directory.
+__ test_cli_rechecks_roots_under_installer_lock_before_manager_calls[intent] ___
+----------------------------- Captured stdout call -----------------------------
+Astrid couldn't finish. Your work is kept.
+The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_rechecks_roots_under_0/home/.local/share; choose a separate directory.
+
+Astrid setup summary:
+  Startup: not confirmed.
+  Sign-in autostart: not confirmed.
+  Command/PATH: not reached in this run.
+  Skill destinations: not confirmed in this run.
+  Failure: ValueError
+  Skill copies recovery: to enable skill copies later, rerun the install line with --skill-copies on (replace this flag in the Way back line).
+  Maintenance: rerun the install line to repair or restart; add --update to update, or --uninstall to remove Astrid. Uninstall keeps the workspace unless --delete-data is added.
+  Way back: curl -fsSL https://astrid.haus/install | sh -s -- --yes --autostart on --command on --skills on --skill-copies off
+
+Astrid did NOT update: something on this computer is out of step with the installed release; run the install line to repair it.
+Astrid is still Release 0.
+Next: run the install command without --update to repair this installation, then update again.
+Details: see the error in this window.
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 719, in main
+    _check_installer_state(lock_path, *_provisional_roots(root, args.data_root, backend.service, mode))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 398, in _check_installer_state
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The recovery marker must be outside the R0 roots. The selected directory contains protected installer state at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864979631363378/test_cli_rechecks_roots_under_0/home/.local/share; choose a separate directory.
+=========================== short test summary info ============================
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0755-missing-lock-recorded-root-data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0755-missing-lock-recorded-root-program]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0755-missing-lock-explicit-root-data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0755-missing-lock-explicit-root-program]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0555-existing-lock-recorded-root-data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0555-existing-lock-recorded-root-program]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0555-existing-lock-explicit-root-data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_state_overlap_preserves_roots[0555-existing-lock-explicit-root-program]
+PASSED tests/test_installer_r0_entry.py::test_cli_refuses_installer_state_overlap_for_other_platform_layouts[darwin]
+PASSED tests/test_installer_r0_entry.py::test_cli_refuses_installer_state_overlap_for_other_platform_layouts[win32]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_marker_data_is_protected_without_selection
+PASSED tests/test_installer_r0_entry.py::test_public_cli_retained_stop_roots_protect_installer_state[program_root]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_retained_stop_roots_protect_installer_state[data_root]
+PASSED tests/test_installer_r0_entry.py::test_cli_rechecks_roots_under_installer_lock_before_manager_calls[selection]
+PASSED tests/test_installer_r0_entry.py::test_cli_rechecks_roots_under_installer_lock_before_manager_calls[intent]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_lock_alias_preserves_source[symlink]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_installer_lock_alias_preserves_source[hardlink]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_nested_default_log_preserves_selected_roots[missing-log-data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_nested_default_log_preserves_selected_roots[missing-log-program]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_nested_default_log_preserves_selected_roots[existing-log-data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_nested_default_log_preserves_selected_roots[existing-log-program]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_busy_refusal_with_nested_log[data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_busy_refusal_with_nested_log[program]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_recovers_interrupted_stop_with_nested_read_only_source[data]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_recovers_interrupted_stop_with_nested_read_only_source[program]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_log_becoming_unwritable_cannot_block_manager_recovery
+PASSED tests/test_installer_r0_entry.py::test_public_cli_log_alias_into_source_is_console_only[file-symlink]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_log_alias_into_source_is_console_only[parent-symlink]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_log_alias_into_source_is_console_only[hardlink]
+PASSED tests/test_installer_r0_entry.py::test_real_cli_stops_restores_and_refuses_without_legacy_writes
+PASSED tests/test_installer_r0_entry.py::test_public_cli_busy_lock_refusal_reenables_and_preserves_both_roots
+PASSED tests/test_installer_r0_entry.py::test_sigkill_in_manager_stop_real_cli_rerun_recovers
+PASSED tests/test_installer_r0_entry.py::test_rerun_preserves_marker_and_does_not_restart_r0_with_r1[active]
+PASSED tests/test_installer_r0_entry.py::test_rerun_preserves_marker_and_does_not_restart_r0_with_r1[inactive]
+PASSED tests/test_installer_r0_entry.py::test_rerun_preserves_marker_and_does_not_restart_r0_with_r1[unknown]
+PASSED tests/test_installer_r0_entry.py::test_interrupted_registration_refuses_without_losing_roots[absent]
+PASSED tests/test_installer_r0_entry.py::test_interrupted_registration_refuses_without_losing_roots[active]
+PASSED tests/test_installer_r0_entry.py::test_interrupted_registration_refuses_without_losing_roots[inactive]
+PASSED tests/test_installer_r0_entry.py::test_interrupted_registration_refuses_without_losing_roots[unknown]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_collision_refuses_before_stop
+PASSED tests/test_installer_r0_entry.py::test_public_cli_wrong_manager_binding_refuses_before_stop
+PASSED tests/test_installer_r0_entry.py::test_legacy_journal_is_retained_without_replay
+PASSED tests/test_installer_r0_entry.py::test_completed_r1_handoff_cannot_fall_back_to_r0_data_or_label[selection]
+PASSED tests/test_installer_r0_entry.py::test_completed_r1_handoff_cannot_fall_back_to_r0_data_or_label[new-unit]
+PASSED tests/test_installer_r0_entry.py::test_installer_api_cannot_bypass_entry_boundary
+PASSED tests/test_installer_r0_entry.py::test_legacy_adopt_journal_never_authorizes_destination_reuse
+PASSED tests/test_installer_r0_entry.py::test_public_cli_windows_r0_refuses_with_exact_line_before_any_change[update]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_windows_r0_refuses_with_exact_line_before_any_change[install]
+PASSED tests/test_installer_r0_entry.py::test_public_cli_windows_r0_refusal_keeps_the_legacy_selection_r0_reads
+FAILED tests/test_installer_r0_entry.py::test_captures_match_real_r0_evidence
+1 failed, 49 passed in 38.66s

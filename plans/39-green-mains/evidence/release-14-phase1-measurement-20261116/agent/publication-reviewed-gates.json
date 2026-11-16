@@ -1,0 +1,12 @@
+{
+  "repository": "banodoco/astrid-agent",
+  "branch": "p39/phase1-results-wiring",
+  "local_commit": "7e78fd7846b3271d30ed5f32900d68d9ecbee921",
+  "published_commit": "d494a932016c2de8da13a98ee186dd2ac1be7d06",
+  "tree": "6f7300217cb10eef031ef885bf99b7dbb40f9d4b",
+  "previous_published_commit": "905b03b9183d753188a7081b79d1e02f6f42c525",
+  "pr": 369,
+  "merged": false,
+  "verified_tree": true,
+  "verified_ref": true
+}

@@ -1,0 +1,6 @@
+tests/core/generation/test_engine_readiness.py: AST identical outside exact module OS gate; no import removal
+tests/test_boundary_handoff.py: AST identical outside exact module OS gate; no import removal
+tests/test_boundary_registration.py: AST identical outside exact module OS gate; no import removal
+tests/test_installer_r0_entry.py: AST identical outside exact module OS gate; no import removal
+tests/test_installer_update_legacy_record.py: AST identical outside exact module OS gate; no import removal
+tests/test_update_from_field_states.py: AST identical outside exact module OS gate; no import removal

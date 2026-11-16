@@ -1,0 +1,290 @@
+{
+  "scope": "Runtime CI XML",
+  "permanent_artifact_url_format": "https://github.com/{repo}/actions/runs/{run_id}/artifacts/{artifact_id}",
+  "artifacts": [
+    {
+      "artifact_zip": "ci-portability-macos-14264336834.zip",
+      "zip_sha256": "4bf75da79780ac07215740d701a44e0b6eb7de900dc11b875720714dd202c197",
+      "zip_sha256_expected": "4bf75da79780ac07215740d701a44e0b6eb7de900dc11b875720714dd202c197",
+      "zip_hash_matches_expected": true,
+      "xml": "portability-lifecycle.xml",
+      "xml_path": "p39-g2-evidence/runtime/xml-reconciliation/ci-portability-macos-14264336834/portability-lifecycle.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "pytest tests"
+      },
+      "suite_count": 1,
+      "suite_attribute_totals": {
+        "tests": 662,
+        "failures": 8,
+        "errors": 0,
+        "skipped": 59
+      },
+      "testcase_elements": 662,
+      "testcase_status_elements": {
+        "failure": 8,
+        "error": 0,
+        "skipped": 59
+      },
+      "testcase_passed_by_residual": 595,
+      "repo": "banodoco/astrid-runtime",
+      "run_id": 43938386357,
+      "job_id": 133548963837,
+      "attempt": 1,
+      "pytest_log_totals": {
+        "failed": 8,
+        "passed": 595,
+        "skipped": 59,
+        "errors": 0
+      },
+      "junit_log_totals": {
+        "tests": 662,
+        "failures": 8,
+        "errors": 0,
+        "skipped": 59
+      },
+      "xml_totals_match_log": true,
+      "github_artifact_digest": "4bf75da79780ac07215740d701a44e0b6eb7de900dc11b875720714dd202c197",
+      "artifact_digest_matches_github_metadata": true
+    },
+    {
+      "artifact_zip": "ci-portability-ubuntu-14263697451.zip",
+      "zip_sha256": "d64fb4bf208a6d41fc7ee510da49366dfdf1b58702bc77018b6ed01e9582325f",
+      "zip_sha256_expected": "d64fb4bf208a6d41fc7ee510da49366dfdf1b58702bc77018b6ed01e9582325f",
+      "zip_hash_matches_expected": true,
+      "xml": "portability-lifecycle.xml",
+      "xml_path": "p39-g2-evidence/runtime/xml-reconciliation/ci-portability-ubuntu-14263697451/portability-lifecycle.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "pytest tests"
+      },
+      "suite_count": 1,
+      "suite_attribute_totals": {
+        "tests": 662,
+        "failures": 7,
+        "errors": 0,
+        "skipped": 45
+      },
+      "testcase_elements": 662,
+      "testcase_status_elements": {
+        "failure": 7,
+        "error": 0,
+        "skipped": 45
+      },
+      "testcase_passed_by_residual": 610,
+      "repo": "banodoco/astrid-runtime",
+      "run_id": 43938386357,
+      "job_id": 133548963714,
+      "attempt": 1,
+      "pytest_log_totals": {
+        "failed": 7,
+        "passed": 610,
+        "skipped": 45,
+        "errors": 0
+      },
+      "junit_log_totals": {
+        "tests": 662,
+        "failures": 7,
+        "errors": 0,
+        "skipped": 45
+      },
+      "xml_totals_match_log": true,
+      "github_artifact_digest": "d64fb4bf208a6d41fc7ee510da49366dfdf1b58702bc77018b6ed01e9582325f",
+      "artifact_digest_matches_github_metadata": true
+    },
+    {
+      "artifact_zip": "ci-process-control-14263048850.zip",
+      "zip_sha256": "844be74119a3918e0d68ecc27339f9f3c895df6d56985b9cdd5e5c52d27b5001",
+      "zip_sha256_expected": "844be74119a3918e0d68ecc27339f9f3c895df6d56985b9cdd5e5c52d27b5001",
+      "zip_hash_matches_expected": true,
+      "xml": "sandbox-process-control.xml",
+      "xml_path": "p39-g2-evidence/runtime/xml-reconciliation/ci-process-control-14263048850/sandbox-process-control.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "pytest tests"
+      },
+      "suite_count": 1,
+      "suite_attribute_totals": {
+        "tests": 9559,
+        "failures": 85,
+        "errors": 843,
+        "skipped": 39
+      },
+      "testcase_elements": 9499,
+      "testcase_status_elements": {
+        "failure": 85,
+        "error": 843,
+        "skipped": 39
+      },
+      "testcase_passed_by_residual": 8532,
+      "repo": "banodoco/astrid-runtime",
+      "run_id": 43938386357,
+      "job_id": 133548963680,
+      "attempt": 1,
+      "pytest_log_totals": {
+        "failed": 85,
+        "passed": 8532,
+        "skipped": 26,
+        "xfailed": 13,
+        "errors": 843,
+        "subtests_passed": 60
+      },
+      "junit_log_totals": {
+        "tests": 9559,
+        "failures": 85,
+        "errors": 843,
+        "skipped": 39
+      },
+      "xml_totals_match_log": true,
+      "github_artifact_digest": "844be74119a3918e0d68ecc27339f9f3c895df6d56985b9cdd5e5c52d27b5001",
+      "artifact_digest_matches_github_metadata": true
+    },
+    {
+      "artifact_zip": "ci-unit-macos-14265574916.zip",
+      "zip_sha256": "30a697a2d9d5977e8512c5b6f0cd7628f9fcbb5684f3d921fd316aad671a769e",
+      "zip_sha256_expected": "30a697a2d9d5977e8512c5b6f0cd7628f9fcbb5684f3d921fd316aad671a769e",
+      "zip_hash_matches_expected": true,
+      "xml": "unit.xml",
+      "xml_path": "p39-g2-evidence/runtime/xml-reconciliation/ci-unit-macos-14265574916/unit.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "pytest tests"
+      },
+      "suite_count": 1,
+      "suite_attribute_totals": {
+        "tests": 9635,
+        "failures": 76,
+        "errors": 839,
+        "skipped": 143
+      },
+      "testcase_elements": 9575,
+      "testcase_status_elements": {
+        "failure": 76,
+        "error": 839,
+        "skipped": 143
+      },
+      "testcase_passed_by_residual": 8517,
+      "repo": "banodoco/astrid-runtime",
+      "run_id": 43938386357,
+      "job_id": 133548963937,
+      "attempt": 1,
+      "pytest_log_totals": {
+        "failed": 76,
+        "passed": 8517,
+        "skipped": 130,
+        "xfailed": 13,
+        "errors": 839,
+        "subtests_passed": 60
+      },
+      "junit_log_totals": {
+        "tests": 9635,
+        "failures": 76,
+        "errors": 839,
+        "skipped": 143
+      },
+      "xml_totals_match_log": true,
+      "github_artifact_digest": "30a697a2d9d5977e8512c5b6f0cd7628f9fcbb5684f3d921fd316aad671a769e",
+      "artifact_digest_matches_github_metadata": true
+    },
+    {
+      "artifact_zip": "ci-unit-ubuntu-14263361597.zip",
+      "zip_sha256": "f8a105069721cbca8953445bad1428c524dc686b369bfc49a05e2c949573c891",
+      "zip_sha256_expected": "f8a105069721cbca8953445bad1428c524dc686b369bfc49a05e2c949573c891",
+      "zip_hash_matches_expected": true,
+      "xml": "unit.xml",
+      "xml_path": "p39-g2-evidence/runtime/xml-reconciliation/ci-unit-ubuntu-14263361597/unit.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "pytest tests"
+      },
+      "suite_count": 1,
+      "suite_attribute_totals": {
+        "tests": 9635,
+        "failures": 76,
+        "errors": 839,
+        "skipped": 39
+      },
+      "testcase_elements": 9575,
+      "testcase_status_elements": {
+        "failure": 76,
+        "error": 839,
+        "skipped": 39
+      },
+      "testcase_passed_by_residual": 8621,
+      "repo": "banodoco/astrid-runtime",
+      "run_id": 43938386357,
+      "job_id": 133548963731,
+      "attempt": 1,
+      "pytest_log_totals": {
+        "failed": 76,
+        "passed": 8621,
+        "skipped": 26,
+        "xfailed": 13,
+        "errors": 839,
+        "subtests_passed": 60
+      },
+      "junit_log_totals": {
+        "tests": 9635,
+        "failures": 76,
+        "errors": 839,
+        "skipped": 39
+      },
+      "xml_totals_match_log": true,
+      "github_artifact_digest": "f8a105069721cbca8953445bad1428c524dc686b369bfc49a05e2c949573c891",
+      "artifact_digest_matches_github_metadata": true
+    },
+    {
+      "artifact_zip": "nightly-14262378752.zip",
+      "zip_sha256": "f7e368f0492cfbaec9b9ee4a40de08fb6bc3510ddae43b6c7f3ab7d51d93bbf1",
+      "zip_sha256_expected": "f7e368f0492cfbaec9b9ee4a40de08fb6bc3510ddae43b6c7f3ab7d51d93bbf1",
+      "zip_hash_matches_expected": true,
+      "xml": "nightly-integration.xml",
+      "xml_path": "p39-g2-evidence/runtime/xml-reconciliation/nightly-14262378752/nightly-integration.xml",
+      "root_tag": "testsuites",
+      "root_attributes": {
+        "name": "pytest tests"
+      },
+      "suite_count": 1,
+      "suite_attribute_totals": {
+        "tests": 667,
+        "failures": 39,
+        "errors": 571,
+        "skipped": 20
+      },
+      "testcase_elements": 667,
+      "testcase_status_elements": {
+        "failure": 39,
+        "error": 571,
+        "skipped": 20
+      },
+      "testcase_passed_by_residual": 37,
+      "repo": "banodoco/astrid-runtime",
+      "run_id": 43938386391,
+      "job_id": 133548961758,
+      "attempt": 1,
+      "pytest_log_totals": {
+        "failed": 39,
+        "passed": 37,
+        "skipped": 20,
+        "errors": 571
+      },
+      "junit_log_totals": {
+        "tests": 667,
+        "failures": 39,
+        "errors": 571,
+        "skipped": 20
+      },
+      "xml_totals_match_log": true
+    }
+  ],
+  "testcase_index_file": "testcase-index.json",
+  "notes": [
+    "Full testcase IDs are preserved separately in testcase-index.json.",
+    "Runtime unit and sandbox-process-control JUnit tests attributes include 60 passing subtests that are not separate <testcase> elements.",
+    "Runtime xfailed cases are represented as JUnit skipped elements.",
+    "Downloaded ZIP SHA-256 values were compared to the captured artifact digest records."
+  ],
+  "limitations": [
+    "JUnit XML contains only testcase elements; 60 passing subtests are reflected in aggregate counters and captured job logs but are not emitted as standalone testcase IDs."
+  ]
+}

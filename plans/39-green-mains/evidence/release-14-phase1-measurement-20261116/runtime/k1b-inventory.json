@@ -1,0 +1,256 @@
+{
+  "repo": "banodoco/astrid-runtime",
+  "head": {
+    "commit": "ac9e6d2e7f6a0a6961d7a2d924040f61832925d1",
+    "tree": "3fff009d7cb8c46a1a1df21f3f541596b98480bd"
+  },
+  "inspection": "Read-only source and history review; no workflow polling, tests, source edits, or remote mutations. The saved exact-head CI snapshot was queued; this card does not claim it completed.",
+  "quarantine_count": {
+    "groups": 10,
+    "node_ids": 20,
+    "limit": 10,
+    "overage": 10,
+    "issue_owner_expiry_missing": true
+  },
+  "declaring_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+  "declaration_source": "The exact-name/exact-node/strict/raises central DECLARED_XFAILS registry was introduced in the merge that forwarded Runtime upstream with the exact xfail guard. Individual test behavior and reason history is noted per group.",
+  "groups": [
+    {
+      "name": "runtime-domains-publication",
+      "node_count": 1,
+      "registry_line": 136,
+      "ids": [
+        "tests/test_runtime_domains.py::test_generated_python_client_timeline_publication_is_retired_pending_commit_replacement"
+      ],
+      "current_body": "tests/test_runtime_domains.py:272-290. Creates project/timeline, exercises legacy PATCH /v1/timelines/{id} through an exact RetiredTimelinePublication sentinel requiring 410 retired_route, the fixed legacy timeline-write refusal message and details.reason=timeline_commit_required; intended path asserts saved version/shot and stale version 409.",
+      "behavior_history_commit": "42ff8ff13e2f9a80e36bb25592e15476ace9e121",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "b_stale_retired_api_test_to_port",
+      "ownership": {
+        "plan38": "No exact node ID match found in Plan 38 inventory.",
+        "plan55": "No exact path/node ID listed. Plan 55 states Runtime task-lifecycle and publication tests broadly; this is timeline document publication and cannot be assigned from that wording alone."
+      },
+      "followup": "RT4 cause card: keep the old route's exact 410 refusal assertion; port saved timeline mutation/replay and stale-version 409 behavior to the current commit API and retain the assertions. If the current contract has no replacement, record that capability gap rather than relaxing the test."
+    },
+    {
+      "name": "runtime-domains-update",
+      "node_count": 1,
+      "registry_line": 142,
+      "ids": [
+        "tests/test_runtime_domains.py::test_generated_direct_timeline_shot_reference_writers_remain_retired"
+      ],
+      "current_body": "tests/test_runtime_domains.py:564-600. Starts with legacy timeline update; if it were available, checks history/diff/archive/recover and direct shot/reference create, update, archive/recover behavior. The first retired writer raises _RetiredTimelineUpdate, so later body assertions are not reached under the xfail.",
+      "behavior_history_commit": "59d88ac4e109256451de73f91ae1ffd95b75f6eb (strict xfail on direct legacy shot writers); 42ff8ff13e2f9a80e36bb25592e15476ace9e121 adds exact refusal specialization and direct-reference refusal controls.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "b_stale_retired_api_test_to_port",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed; timeline archive/recover is not enough to infer Plan 55 task lifecycle ownership."
+      },
+      "followup": "RT4: split executable 410/no-write legacy refusal assertions from replacement-path history, archive/recover and shot/reference behavior; port positive behavior to retained commands while preserving 409/410 and no-write contracts."
+    },
+    {
+      "name": "runtime-exact-idempotency",
+      "node_count": 1,
+      "registry_line": 148,
+      "ids": [
+        "tests/test_runtime_exact_idempotency.py::test_timeline_shot_and_reference_creation_are_keyed_durable_and_non_overwriting"
+      ],
+      "current_body": "No current function or node body exists in tests/test_runtime_exact_idempotency.py. Commit 925a7dd1c intentionally removed the retired-only journey, stating that existing refusal controls replace it. The surviving tests/test_runtime_exact_idempotency.py::test_project_reference_creation_is_keyed_durable_and_non_overwriting keeps reference creation replay after restart, changed-payload 409, overwrite 409, and unchanged stored role.",
+      "behavior_history_commit": "59d88ac4e109256451de73f91ae1ffd95b75f6eb introduced the xfailed combined shot/reference idempotency journey; 925a7dd1c648a7632ba5b44a53566329ad947564 removed it in favor of existing refusal controls.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "b_stale_retired_api_test_to_port",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed."
+      },
+      "followup": "K1b registry cleanup card: after review, remove only the orphan exact ID from tests/lanes.py and the mirrored test_skip_guard pin; retain the live project-reference idempotency test and current explicit retired-route refusal controls. This yields one clear quarantine ID reduction without changing a current test body."
+    },
+    {
+      "name": "second-client-core",
+      "node_count": 1,
+      "registry_line": 154,
+      "ids": [
+        "tests/test_second_client_e2e.py::test_second_client_core_journey_is_executable"
+      ],
+      "current_body": "tests/test_second_client_e2e.py:61-87. Builds an independent TypeScript client/actor, passes explicit scoped credentials, runs the actor against the Runtime, and checks fixture protocol, product/realm/project/object/task identity and ordered steps. Commit note says its createProjectShot and legacy composition publication get 410.",
+      "behavior_history_commit": "59d88ac4e109256451de73f91ae1ffd95b75f6eb introduced strict xfail on the current actor journey; original journey added by 9b58138c8.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "b_stale_retired_api_test_to_port",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed; a task ID in an end-to-end flow does not establish Plan 55 ownership."
+      },
+      "followup": "RT4/RT6 cause card: port the independent actor's mutations/publication to the retained commit API, preserving explicit credentials, ordered journey assertions, and typed 410 legacy refusal controls."
+    },
+    {
+      "name": "snapshot-legacy-certification",
+      "node_count": 2,
+      "registry_line": 161,
+      "ids": [
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[genuine-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[genuine-inline]"
+      ],
+      "current_body": "tests/test_snapshot_legacy_certification.py:78-90, two parameterizations. It archives Runtime M1 4bb1d0f and Agent 321cef4, admits then reopens under current Runtime, and checks genuine legacy projection binding. For field=genuine, absence of canonical_source raises LegacyGenuineUncertified and is xfailed; other legacy fields must keep canonical_source absent.",
+      "behavior_history_commit": "5a78d1ea7a47a5aeda206fcebdd1a4e385e079b1 introduced the refusal behavior; 3b3ac10f54b887303d01c3932ed582f7a6c65083 attached PLAN 2026-10-20 ledger reference without changing test bodies.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "c_missing_cross_repo_capability_dependency (not a history/env failure)",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed."
+      },
+      "followup": "RT6 cause card with the Agent owner: decide and implement the project_capture re-projection contract at claim; retain uncertified/forged capture refusal assertions. The test pins old Runtime and Agent revisions, so history availability is also a precondition, but the current asserted failure is missing Agent project_capture capability, not a fetch error.",
+      "uncertainty": "This is an explicit deferred capability, not proven to be a regression. It does not exactly fit categories (a)-(d); labeled c-adjacent to keep the dependency gap visible instead of calling it environment noise."
+    },
+    {
+      "name": "stage1-runtime-contract",
+      "node_count": 1,
+      "registry_line": 169,
+      "ids": [
+        "tests/test_stage1_runtime_contract_completion.py::test_timeline_update_archive_recover_replay_the_same_committed_receipt"
+      ],
+      "current_body": "tests/test_stage1_runtime_contract_completion.py:57-70. Uses legacy update_timeline, asserts event receipt, same-key replay equality, then archive/recover event sequence. First legacy update raises RetiredRouteError under strict xfail.",
+      "behavior_history_commit": "c6a4167247ff276fe72fb3c83dd1e2b7d186732e marked and split the timeline update/archive/recover tail as an individual strict xfail after the writer retirement.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "b_stale_retired_api_test_to_port",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed. Timeline update receipts are not the exact task lifecycle/publication inventory."
+      },
+      "followup": "RT4: express receipt idempotency and archive/recover through the retained commit API; keep the existing refusal contract for the retired update endpoint."
+    },
+    {
+      "name": "timeline-clip-replacement",
+      "node_count": 10,
+      "registry_line": 176,
+      "ids": [
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_is_atomic_cas_and_exactly_replayable",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_cross_project_source",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_malformed_source_without_mutation",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_tampered_cas_without_mutation",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_wrong_stream_without_mutation",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_too_short_source_without_mutation",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_requires_source_to_reach_authored_end",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_generic_visual_media_requires_video_stream",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_replays_after_intervening_edit_and_reopen",
+        "tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_public_http_route"
+      ],
+      "body_summary": "tests/test_timeline_clip_replacement.py:749-918. Assertions cover atomic CAS/idempotency/replay, cross-project refusal, malformed/tampered CAS and no-write guarantees, wrong stream, too-short source and authored end, generic visual media stream type, replay after intervening edit/reopen, and HTTP route publication. All call retired replace_timeline_clip or /v1/timelines/main/replace-clip; current wrappers expect RetiredRouteError.",
+      "behavior_history_commit": "c6a4167247ff276fe72fb3c83dd1e2b7d186732e says all ten direct replace_timeline_clip tests were individually strict xfailed because D04/RT02 retired direct writer and no commit-path replacement existed then; later test additions include cd6e9c7d2, 1f75756cf, 3021a5b79, d05e6383f, 8227cf388, 5988a3b38, 4dd643808.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "b_stale_retired_api_test_to_port",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed; these are clip/timeline mutations, not an explicit Runtime task lifecycle list."
+      },
+      "followup": "One RT4 cause card over this single 10-node group is the smallest cardinality path to move 20 quarantine IDs down to the cap of 10. Port each positive and negative invariant to the retained timeline commit interface. The source has commit operations such as occurrence media swap but no direct replace-clip handler; confirm contract mapping first. If any invariant is unsupported, open a separate product-contract bug. Keep exact wrong-project/stream/tamper/length error distinctions, replay behavior, and no mutation on refusals. Do not replace the body with only an expected 410.",
+      "uncertainty": "The former direct endpoint /v1/timelines/{id}/replace-clip is currently retired. No evidence in this read-only review establishes a one-to-one retained command mapping for all ten scenarios."
+    },
+    {
+      "name": "timeline-public-s2-historical-audio",
+      "node_count": 1,
+      "registry_line": 192,
+      "ids": [
+        "tests/test_timeline_public_s2_mixed_cli_journey.py::test_public_cli_stale_trim_rebases_label_lost_ack_restart_retry_and_undo[historical-audio]"
+      ],
+      "current_body": "tests/test_timeline_public_s2_mixed_cli_journey.py:238-476, historical-audio parameter. Full journey checks public CLI trim versus concurrent independent SDK label, stale rebase, exactly-once/lost acknowledgement, restart retry and undo. The original audio clip is refused before POST with 'clip.trim applies to media clips'; xfail exception is HistoricalAudioCaptureGap.",
+      "behavior_history_commit": "4ea982d21 created the public S2 integration journey; 2ccaf3199 rewrote the reason to plain, privacy-safe contract evidence and says the matching marker remains on the test.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "a_candidate_product_behavior_gap (unconfirmed requirement owner)",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed; CLI audio film capture is outside the listed Runtime task lifecycle/publication inventory."
+      },
+      "followup": "Agent-side cause card: capture/represent the original audio film before POST and preserve the stale rebase, no-repeat POST on lost acknowledgement, restart, undo, and refusal contracts. No Runtime issue/owner evidence found; do not add K1b metadata by inference.",
+      "uncertainty": "This matches the test's stated intent and held requirement, but no linked product issue or owner was located; do not present as a proven regression against a released contract."
+    },
+    {
+      "name": "installed-pair-source-closure",
+      "node_count": 1,
+      "registry_line": 201,
+      "ids": [
+        "tests/test_installed_pack_custody_spawn.py::test_real_custody_spawn_launches_granted_installed_pack_and_refuses_ungranted"
+      ],
+      "current_body": "tests/test_installed_pack_custody_spawn.py:128-256. Installs granted/ungranted source packs; forges an ungranted capability record; starts installed Runtime/Agent host and checks granted execution plus ungranted refusal. Strict xfail raises only KnownSourceClosureMismatch for differing installed-pair digests.",
+      "behavior_history_commit": "49a062c7754038f83f9554004531dfa7ed4d15ad adds this exact strict xfail and explains the closure mismatch; 2ccaf3199 expands its reason and identifies Plan 38.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "d_waiting_owned_plan",
+      "ownership": {
+        "plan38": "Exact Plan 38 inventory match: tests/test_installed_pack_custody_spawn.py::test_real_custody_spawn_launches_granted_installed_pack_and_refuses_ungranted. Plan 38 inventory assigns closure parity to P2r/A3 and the custody spawn acceptance to E1. Mark behavior WAITING for Plan 38.",
+        "plan55": "No exact node ID match found."
+      },
+      "metadata_obligation": "Separate from test behavior, Plan 39 K1b still requires any retained quarantine declaration to carry issue URL, owner, expiry and strict exact node metadata. The Plan 38 test behavior being WAITING does not establish any of those three missing values. No issue/owner/expiry may be invented here.",
+      "followup": "No Plan 39 product fix card for test behavior before Plan 38 lands. Track K1b metadata provenance as a separate unresolved registry obligation; after Plan 38 passes, retire xfail only when the exact hosted test proves it."
+    },
+    {
+      "name": "p1-top-level-text-hook",
+      "node_count": 1,
+      "registry_line": 211,
+      "ids": [
+        "tests/test_timeline_visual_fields.py::test_supported_top_level_type_on_retains_original_roundtrip_expectations"
+      ],
+      "current_body": "tests/test_timeline_visual_fields.py:84-98. Commits top-level entrance {id:type-on,durationFrames:60,params:{durationFraction,showCaret,startFrame}} with use_agent_setter=False, then asserts exact stored object, clip_fields.read round-trip and clip_fields.describe='type-on 60f'.",
+      "behavior_history_commit": "09a106f0a preserves the original visual-field acceptance expectations and adds the exact strict xfail, with comment 'P1 must restore the top-level text hook before this original acceptance case can publish'.",
+      "declaration_commit": "afbd1c93922e581ad4fadd48e6fd162388666601",
+      "class": "a_candidate_product_behavior_gap",
+      "ownership": {
+        "plan38": "No exact node ID match found.",
+        "plan55": "No exact path/node ID listed."
+      },
+      "followup": "RT6 product bug card: restore top-level text-hook normalization/round-trip at the clip-field boundary; keep stored, read and human-description assertions."
+    }
+  ],
+  "proposed_minimal_cap_reduction": {
+    "current": 20,
+    "limit": 10,
+    "one_cause_card": "RT4 timeline commit-path port of the ten exact timeline-clip-replacement tests (single quarantine group)",
+    "ids_reduced": 10,
+    "remaining": 10,
+    "why_minimal": "One cause card resolves one registry group whose exact node count equals the ten-ID overage; fewer than ten IDs cannot meet the numerical cap. This is a proposed lower bound, not a claim the card is already feasible or sufficient for K1b metadata acceptance.",
+    "caveats": [
+      "The current direct replace-clip API is retired and a one-to-one replacement operation for all ten cases is not established by this read-only trace.",
+      "Removing xfail declarations alone does not preserve their positive and error-contract assertions.",
+      "Even after reducing the count to ten, every remaining strict xfail still lacks required issue URL, owner and expiry, so K1b would remain red unless provenance supplies metadata or behavior is repaired.",
+      "The stale exact ID absent from current file can be cleared separately because commit 925a7dd intentionally removed the test in favor of live refusal controls."
+    ]
+  },
+  "issues_search": {
+    "runtime_repo_queries": [
+      {
+        "query": "repo:banodoco/astrid-runtime is:issue RT02 timeline commit",
+        "matches": 0
+      },
+      {
+        "query": "repo:banodoco/astrid-runtime is:issue historical audio CLI",
+        "matches": 0
+      },
+      {
+        "query": "repo:banodoco/astrid-runtime is:issue timeline clip replacement",
+        "matches": 0
+      },
+      {
+        "query": "repo:banodoco/astrid-runtime is:issue top-level text-hook",
+        "matches": 0
+      }
+    ],
+    "dev_repo_queries": [
+      {
+        "query": "repo:banodoco/astrid-dev is:issue project_capture",
+        "matches": 0
+      },
+      {
+        "query": "repo:banodoco/astrid-dev is:issue historical audio timeline",
+        "matches": 0
+      },
+      {
+        "query": "repo:banodoco/astrid-dev is:issue top-level text timeline",
+        "matches": 0
+      },
+      {
+        "query": "repo:banodoco/astrid-dev is:issue Plan 38 closure",
+        "matches": 0
+      }
+    ],
+    "interpretation": "No matching issue records with owner/assignee metadata were returned by these exact GitHub issue searches. This is limited search evidence, not proof no issue exists elsewhere; no issue URL, owner, or expiry inferred."
+  }
+}

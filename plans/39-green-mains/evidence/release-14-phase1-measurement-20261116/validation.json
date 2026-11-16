@@ -1,0 +1,16 @@
+{
+  "documentation_check": {
+    "command": "python scripts/astrid_dev.py check",
+    "exit_code": 0
+  },
+  "JSON_and_gzip": "all parsed successfully",
+  "sha256_inventory": "all listed files verified against recorded bytes",
+  "whitespace_check": {
+    "command": "git diff --cached --check",
+    "exit_code": 2,
+    "findings": 516,
+    "classification": "Preserved raw logs/diffs/rendered error reports and Markdown hard-break whitespace. Evidence bytes are retained; no product source changed in this publication.",
+    "other_findings": []
+  },
+  "scope": "New evidence package and historical-package navigation link only; inputs.md/tasks.md unchanged"
+}

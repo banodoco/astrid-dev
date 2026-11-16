@@ -1,0 +1,3 @@
+# K1a — POSIX recovery gates
+
+N worker gpt-6-luna high; manager /root. Authorized only three existing fork guards in boundary_registration_launchd and installer_r0_stop. Existing Plan38/55 ownership audit and actual contract semantics checked. Pre-proof expanded the three named selectors to six exact cases (3+1+2); manager corrected the expected-four typo without rerunning the valid baseline. Both proofs6P0F, exact IDs and AST parity; symlink capability skip retained. Independent reviewer accepted fbe59a3/treec0a0cc55. Fullpolicy measured separately22P1F19remaining gates. Published and merged only into release/14/plan-39 inPR369. FormalRS1 remains0/1.

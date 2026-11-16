@@ -1,0 +1,12 @@
+{
+  "commit": "7e78fd7846b3271d30ed5f32900d68d9ecbee921",
+  "tree": "6f7300217cb10eef031ef885bf99b7dbb40f9d4b",
+  "command": [
+    "bash",
+    "scripts/worker-env/agent-pytest.sh",
+    "-q",
+    "tests/test_skip_policy.py"
+  ],
+  "PYTEST_ADDOPTS": "-rA",
+  "exit": 1
+}

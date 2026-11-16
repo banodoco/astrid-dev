@@ -1,0 +1,57 @@
+{
+  "snapshot_utc": "2026-11-16 current check",
+  "repo": "banodoco/astrid-app",
+  "workflow": "Tests",
+  "run_id": 43938449477,
+  "expected_head_sha": "e94d7ab53f22c03cec6856ae469d952912b4ad52",
+  "run_attempt": 1,
+  "run_url": "https://github.com/banodoco/astrid-app/actions/runs/43938449477",
+  "source": "GitHub connector github_fetch_workflow_run_jobs; run ID supplied by task brief; connector exposes jobs but not parent workflow-run metadata",
+  "jobs": [
+    {
+      "id": 133549190235,
+      "name": "release-tooling-macos",
+      "status": "queued",
+      "conclusion": null,
+      "run_id": 43938449477,
+      "html_url": "https://github.com/banodoco/astrid-app/actions/runs/43938449477/job/133549190235"
+    },
+    {
+      "id": 133549190636,
+      "name": "boundary",
+      "status": "queued",
+      "conclusion": null,
+      "run_id": 43938449477,
+      "html_url": "https://github.com/banodoco/astrid-app/actions/runs/43938449477/job/133549190636"
+    },
+    {
+      "id": 133549190737,
+      "name": "vitest",
+      "status": "queued",
+      "conclusion": null,
+      "run_id": 43938449477,
+      "html_url": "https://github.com/banodoco/astrid-app/actions/runs/43938449477/job/133549190737"
+    },
+    {
+      "id": 133549192665,
+      "name": "release-guard",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 43938449477,
+      "html_url": "https://github.com/banodoco/astrid-app/actions/runs/43938449477/job/133549192665"
+    },
+    {
+      "id": 133549193059,
+      "name": "landing reference",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 43938449477,
+      "html_url": "https://github.com/banodoco/astrid-app/actions/runs/43938449477/job/133549193059"
+    }
+  ],
+  "pr_commit_runs": [],
+  "pr_commit_runs_note": "github_fetch_commit_workflow_runs returned an empty list; connector wrapper documents that it filters to pull-request-triggered runs and only first page. This does not enumerate push, dispatch, or schedule runs.",
+  "completed_failure_logs": [],
+  "literal_error_message_counts": {},
+  "raw_hash": "e1a9af506aff466a85651a0c55a42f893786581e34b2cde3033fb7c2b73e4ca2"
+}

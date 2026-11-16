@@ -1,0 +1,6 @@
+PASS tests/core/pack/test_cli_manage.py::test_implicit_descriptor_refuses_writable_and_aliases: signature, body, and all decorators except POSIX marker identical
+PASS tests/core/pack/test_git_environment.py::test_planted_ssh_in_working_directory_never_runs: signature, body, and all decorators except POSIX marker identical
+PASS tests/core/pack/test_git_environment.py::test_recorded_git_that_lost_its_execute_bit_falls_back_to_absolute_path_lookup: signature, body, and all decorators except POSIX marker identical
+PASS tests/test_installer_pack_cleanup.py::test_posix_failed_removal_never_chmods_a_symlink_target_outside_the_tree: signature, body, and all decorators except POSIX marker identical
+PASS tests/test_installer_sources.py::test_missing_candidate_or_product_root_directory_is_named: signature, body, and all decorators except POSIX marker identical
+PASS tests/test_installer_sources.py::test_missing_runtime_lock_names_the_missing_path_not_aliasing: signature, body, and all decorators except POSIX marker identical

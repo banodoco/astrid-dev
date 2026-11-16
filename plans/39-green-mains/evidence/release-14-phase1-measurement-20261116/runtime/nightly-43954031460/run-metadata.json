@@ -1,0 +1,17 @@
+{
+  "id": 43954031460,
+  "name": "Nightly",
+  "run_number": 34,
+  "status": "completed",
+  "conclusion": "failure",
+  "run_attempt": 1,
+  "repository": "banodoco/astrid-runtime",
+  "head_branch": "release/14/plan-39",
+  "head_sha": "359e2d7e55369562ca9513557282ea8aff7645bc",
+  "tree_sha": "0291fadcde521650fdc71257a9ec2fd61b7226a4",
+  "event": "push",
+  "created_at": "2026-11-16T20:51:09Z",
+  "updated_at": "2026-11-16T20:57:49Z",
+  "workflow_path": ".github/workflows/nightly.yml",
+  "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43954031460"
+}

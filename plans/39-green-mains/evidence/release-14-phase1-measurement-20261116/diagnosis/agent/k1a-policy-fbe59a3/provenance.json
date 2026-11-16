@@ -1,0 +1,13 @@
+{
+  "commit": "fbe59a319d9419a875353c4176ff0bde749a9d75",
+  "tree": "c0a0cc55b363fa71a27fedcaa57b08076d9ae180",
+  "command": [
+    "bash",
+    "scripts/worker-env/agent-pytest.sh",
+    "-q",
+    "tests/test_skip_policy.py"
+  ],
+  "started_at": "2026-11-16T22:11:21.037923+00:00",
+  "exit_code": 1,
+  "completed_at": "2026-11-16T22:11:32.088924+00:00"
+}

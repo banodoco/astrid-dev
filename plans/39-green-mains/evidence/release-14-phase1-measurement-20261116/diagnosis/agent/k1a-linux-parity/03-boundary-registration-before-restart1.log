@@ -1,0 +1,1380 @@
+....................................................................F... [100%]
+=================================== FAILURES ===================================
+______ test_other_cli_operations_refuse_pending_registration[--uninstall] ______
+
+case = (<astrid.installer.backend.Backend object at 0x7f4c7e869130>, Version(root=PosixPath('/workspace/scratch/cd53b069f320/...h/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu0/manager.json'))
+mode = '--uninstall'
+
+    @pytest.mark.parametrize("mode", ["--uninstall", "--doctor"])
+    def test_other_cli_operations_refuse_pending_registration(case, mode):
+        backend, *_rest, manager = case
+        prepare(case)
+        state(manager, calls=[])
+        result = subprocess.run([sys.executable, "-m", "astrid", "install", "--root", str(backend.root), mode],
+                                capture_output=True, text=True, timeout=30)
+>       assert result.returncode == 1 and "registration needs recovery" in result.stdout
+E       assert (1 == 1 and 'registration needs recovery' in "Astrid couldn't finish. Your work is kept.\nAstrid was upgraded from an earlier version; automatic uninstall after an upgrade isn't supported yet. Both data folders were kept.\n")
+E        +  where 1 = CompletedProcess(args=['/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv/bin/python', '-m', 'astrid', ...ed from an earlier version; automatic uninstall after an upgrade isn\'t supported yet. Both data folders were kept.\n').returncode
+E        +  and   "Astrid couldn't finish. Your work is kept.\nAstrid was upgraded from an earlier version; automatic uninstall after an upgrade isn't supported yet. Both data folders were kept.\n" = CompletedProcess(args=['/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv/bin/python', '-m', 'astrid', ...ed from an earlier version; automatic uninstall after an upgrade isn\'t supported yet. Both data folders were kept.\n').stdout
+
+tests/test_boundary_registration.py:488: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+==================================== PASSES ====================================
+______ test_backend_publishes_disabled_distinct_service_then_cli_recovers ______
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_backend_publishes_disable0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_backend_publishes_disable0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_backend_publishes_disable0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_backend_publishes_disable0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+____ test_interrupted_publication_is_recovered_by_real_cli[False-launcher] _____
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+___ test_interrupted_publication_is_recovered_by_real_cli[False-definition] ____
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_is_recovered_by_real_cli[False-disabled-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_____ test_interrupted_publication_is_recovered_by_real_cli[True-launcher] _____
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+____ test_interrupted_publication_is_recovered_by_real_cli[True-definition] ____
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_is_recovered_by_real_cli[True-disabled-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_i0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_sigkill_after_link_publication_recovers_on_public_retries[False-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_sigkill_after_link_publication_recovers_on_public_retries[False-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_sigkill_after_link_publication_recovers_on_public_retries[False-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_sigkill_after_link_publication_recovers_on_public_retries[True-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_sigkill_after_link_publication_recovers_on_public_retries[True-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_sigkill_after_link_publication_recovers_on_public_retries[True-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_after_link_public0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[foreign-alias-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[foreign-alias-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[foreign-alias-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[extra-link-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[extra-link-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[extra-link-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[different-inode-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[different-inode-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[different-inode-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[symlink-alias-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[symlink-alias-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[symlink-alias-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-bytes-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-bytes-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-bytes-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-mode-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-mode-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-mode-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[missing-identity-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[missing-identity-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[missing-identity-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[invalid-identity-journal] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[invalid-identity-launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_interrupted_publication_refuses_unproven_aliases_without_mutation[invalid-identity-definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_interrupted_publication_r0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_______ test_completed_registration_refuses_foreign_hard_links[journal] ________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_______ test_completed_registration_refuses_foreign_hard_links[launcher] _______
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+______ test_completed_registration_refuses_foreign_hard_links[definition] ______
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_completed_registration_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_________________ test_old_single_link_journal_still_recovers __________________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_old_single_link_journal_s0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_old_single_link_journal_s0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_old_single_link_journal_s0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_old_single_link_journal_s0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+______________ test_sigkill_inside_manager_reload_then_cli_replay ______________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_inside_manager_re0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_inside_manager_re0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_inside_manager_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_sigkill_inside_manager_re0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[definition] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[launcher] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[dropins] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=/foreign/override.conf
+UnitFileState=enabled
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[fragment] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/foreign/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[unknown] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+manager unavailable
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[stop] __
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+injected R1 stop failure
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[lock] __
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[r0-unit] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[pointer] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[selection] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_uncertain_recovery_retain0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+__ test_recovery_replays_after_cleanup_interruption[after-definition-removal] __
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_____ test_recovery_replays_after_cleanup_interruption[after-r0-restored] ______
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=not-found
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_recovery_replays_after_cl0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+_________ test_b_does_not_accept_bare_destination_as_launch_authority __________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_b_does_not_accept_bare_de0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_b_does_not_accept_bare_de0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_b_does_not_accept_bare_de0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_b_does_not_accept_bare_de0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+____________ test_fixed_launcher_rejects_invalid_current[../escape] ____________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+____________ test_fixed_launcher_rejects_invalid_current[ leading] _____________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_______________ test_fixed_launcher_rejects_invalid_current[v1 ] _______________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_______________ test_fixed_launcher_rejects_invalid_current[-v1] _______________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_fixed_launcher_rejects_invalid_current[vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_rejects_in0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_ test_fixed_launcher_tracks_pointer_and_uses_staged_environment_profile_and_settings _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_tracks_poi0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_tracks_poi0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_tracks_poi0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_fixed_launcher_tracks_poi0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_______ test_programmatic_installer_cannot_bypass_registration_recovery ________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_programmatic_installer_ca0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_programmatic_installer_ca0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_programmatic_installer_ca0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_programmatic_installer_ca0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+_______ test_legacy_backend_registration_cannot_overwrite_r0_after_stop ________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_legacy_backend_registrati0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+______________ test_unqualified_windows_refuses_without_mutation _______________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_unqualified_windows_refus0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+_ test_registration_requires_bound_stop_and_realm_before_any_publication[running-r0] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_registration_requires_bou0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_registration_requires_bou0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+_ test_registration_requires_bound_stop_and_realm_before_any_publication[missing-intent] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_registration_requires_bou0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+_ test_registration_requires_bound_stop_and_realm_before_any_publication[wrong-realm] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_registration_requires_bou0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+_ test_registration_requires_bound_stop_and_realm_before_any_publication[existing-unit] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_registration_requires_bou0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_registration_requires_bou0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+_______ test_other_cli_operations_refuse_pending_registration[--doctor] ________
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu1/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu1/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu1/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_other_cli_operations_refu1/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+__ test_programmatic_operations_refuse_completed_selection_without_c[doctor] ___
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_programmatic_operations_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+_ test_programmatic_operations_refuse_completed_selection_without_c[uninstall] _
+---------------------------- Captured stdout setup -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794864750339550035/test_programmatic_operations_r0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=not-found
+ActiveState=inactive
+=========================== short test summary info ============================
+PASSED tests/test_boundary_registration.py::test_backend_publishes_disabled_distinct_service_then_cli_recovers
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_is_recovered_by_real_cli[False-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_is_recovered_by_real_cli[False-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_is_recovered_by_real_cli[False-disabled-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_is_recovered_by_real_cli[True-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_is_recovered_by_real_cli[True-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_is_recovered_by_real_cli[True-disabled-journal]
+PASSED tests/test_boundary_registration.py::test_sigkill_after_link_publication_recovers_on_public_retries[False-journal]
+PASSED tests/test_boundary_registration.py::test_sigkill_after_link_publication_recovers_on_public_retries[False-launcher]
+PASSED tests/test_boundary_registration.py::test_sigkill_after_link_publication_recovers_on_public_retries[False-definition]
+PASSED tests/test_boundary_registration.py::test_sigkill_after_link_publication_recovers_on_public_retries[True-journal]
+PASSED tests/test_boundary_registration.py::test_sigkill_after_link_publication_recovers_on_public_retries[True-launcher]
+PASSED tests/test_boundary_registration.py::test_sigkill_after_link_publication_recovers_on_public_retries[True-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[foreign-alias-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[foreign-alias-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[foreign-alias-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[extra-link-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[extra-link-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[extra-link-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[different-inode-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[different-inode-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[different-inode-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[symlink-alias-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[symlink-alias-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[symlink-alias-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-bytes-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-bytes-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-bytes-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-mode-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-mode-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[changed-mode-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[missing-identity-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[missing-identity-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[missing-identity-definition]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[invalid-identity-journal]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[invalid-identity-launcher]
+PASSED tests/test_boundary_registration.py::test_interrupted_publication_refuses_unproven_aliases_without_mutation[invalid-identity-definition]
+PASSED tests/test_boundary_registration.py::test_completed_registration_refuses_foreign_hard_links[journal]
+PASSED tests/test_boundary_registration.py::test_completed_registration_refuses_foreign_hard_links[launcher]
+PASSED tests/test_boundary_registration.py::test_completed_registration_refuses_foreign_hard_links[definition]
+PASSED tests/test_boundary_registration.py::test_old_single_link_journal_still_recovers
+PASSED tests/test_boundary_registration.py::test_sigkill_inside_manager_reload_then_cli_replay
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[definition]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[launcher]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[dropins]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[fragment]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[unknown]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[stop]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[lock]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[r0-unit]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[pointer]
+PASSED tests/test_boundary_registration.py::test_uncertain_recovery_retains_intent_and_data_without_restarting_r0[selection]
+PASSED tests/test_boundary_registration.py::test_recovery_replays_after_cleanup_interruption[after-definition-removal]
+PASSED tests/test_boundary_registration.py::test_recovery_replays_after_cleanup_interruption[after-r0-restored]
+PASSED tests/test_boundary_registration.py::test_b_does_not_accept_bare_destination_as_launch_authority
+PASSED tests/test_boundary_registration.py::test_fixed_launcher_rejects_invalid_current[../escape]
+PASSED tests/test_boundary_registration.py::test_fixed_launcher_rejects_invalid_current[ leading]
+PASSED tests/test_boundary_registration.py::test_fixed_launcher_rejects_invalid_current[v1 ]
+PASSED tests/test_boundary_registration.py::test_fixed_launcher_rejects_invalid_current[-v1]
+PASSED tests/test_boundary_registration.py::test_fixed_launcher_rejects_invalid_current[vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv]
+PASSED tests/test_boundary_registration.py::test_fixed_launcher_tracks_pointer_and_uses_staged_environment_profile_and_settings
+PASSED tests/test_boundary_registration.py::test_programmatic_installer_cannot_bypass_registration_recovery
+PASSED tests/test_boundary_registration.py::test_legacy_backend_registration_cannot_overwrite_r0_after_stop
+PASSED tests/test_boundary_registration.py::test_unqualified_windows_refuses_without_mutation
+PASSED tests/test_boundary_registration.py::test_registration_requires_bound_stop_and_realm_before_any_publication[running-r0]
+PASSED tests/test_boundary_registration.py::test_registration_requires_bound_stop_and_realm_before_any_publication[missing-intent]
+PASSED tests/test_boundary_registration.py::test_registration_requires_bound_stop_and_realm_before_any_publication[wrong-realm]
+PASSED tests/test_boundary_registration.py::test_registration_requires_bound_stop_and_realm_before_any_publication[existing-unit]
+PASSED tests/test_boundary_registration.py::test_other_cli_operations_refuse_pending_registration[--doctor]
+PASSED tests/test_boundary_registration.py::test_programmatic_operations_refuse_completed_selection_without_c[doctor]
+PASSED tests/test_boundary_registration.py::test_programmatic_operations_refuse_completed_selection_without_c[uninstall]
+FAILED tests/test_boundary_registration.py::test_other_cli_operations_refuse_pending_registration[--uninstall]
+1 failed, 71 passed in 76.26s (0:01:16)

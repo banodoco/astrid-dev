@@ -1,0 +1,304 @@
+F................F.........                                              [100%]
+=================================== FAILURES ===================================
+__________ test_native_clip_swap_is_atomic_cas_and_exactly_replayable __________
+
+self = <runtime_protocol.timeline_commit_execution.CommitExecutionCoordinator object at 0x7fcdc7de9400>
+context = {'request': {'api_version': 1, 'project_id': 'f9f96e0189ec49d1810b902371c0986b', 'timeline_id': 'film', 'base_revision...quest_hash': 'e3580b8dfe6b21e1abc5557cee85bc50e56b2a0582e424c21591940715e36143', 'idempotency_key': 'native-swap', ...}
+authorize = <function RuntimeService._timeline_authorize.<locals>.check at 0x7fcdc7e55080>
+diagnostic_request_id = 'c9a75e7ab3c34ca5c19615b5ea24f22c'
+public_request_id = None, idempotency_key = 'native-swap'
+
+    def _lookup(self, context, authorize, *, diagnostic_request_id=None, public_request_id=None,
+                idempotency_key=None):
+        from .errors import AuthorizationError, ForbiddenError
+        from .timeline_commit import CommitRejected
+    
+        try:
+>           return self.commit_store.lookup(context, authorize=authorize)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+runtime_protocol/timeline_commit_execution.py:491: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+runtime_protocol/timeline_commit_store.py:183: in evaluate
+    return evaluate(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:187: in evaluate
+    result = method(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:612: in lookup
+    return self._lookup(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:624: in _lookup
+    self._verify_accepted(row, edge, allow_archived=True)
+runtime_protocol/timeline_commit_store.py:189: in evaluate
+    self._check_history_objects()
+runtime_protocol/timeline_commit_store.py:427: in _check_history_objects
+    data = self._read_object(object_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:571: in _read_object
+    return ContentAddressedStore(self.store.cas_root).read(object_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_protocol.cas.ContentAddressedStore object at 0x7fcdc74b3980>
+digest = '0bac5caa6c6d3c020f650aab1c53e24d2008c45a5e2c623fe8a98afbb39bb6d6'
+
+    def read(self, digest: str) -> bytes:
+        with self.open(digest) as stream:
+            data = stream.read()
+        if hashlib.sha256(data).hexdigest() != digest:
+>           raise ConflictError("CAS object failed hash verification")
+E           runtime_protocol.errors.ConflictError: CAS object failed hash verification
+
+runtime_protocol/cas.py:192: ConflictError
+
+The above exception was the direct cause of the following exception:
+
+native_editing = namespace(native=namespace(CommandError=<class 'astrid.sdk.timeline._command_state.CommandError'>, capture_clip_set=<f...-4f6e1bc4e94043e914f3a3f04fbc8650cdd7dfd597d6587ae52b3efaf1931113', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+
+    @pytest.mark.integration
+    def test_native_clip_swap_is_atomic_cas_and_exactly_replayable(native_editing):
+        internal = native_editing.document["internal_timeline_revisions"][0]
+        payload = internal["payload"]
+        seeded_clips = copy.deepcopy(payload["clips"])
+        seeded_clips[0]["effects"] = [{"id": "grade"}]
+        sibling = {"id": "untouched", "track": "picture", "clipType": "text",
+                   "at": 0, "hold": 1, "text": "keep me"}
+        seeded_clips.append(sibling)
+        ref = "internal-revision:" + internal["revision_id"]
+        patch = {"schema_version": 1, "op": "doc.patch", "version": "1", "select": None,
+                 "created": [NATIVE_OWNER + "/clip:untouched"], "args": {"changes": [
+                     {"op": "set", "ref": ref, "path": ["clips"],
+                      "before": {"state": "present", "value": copy.deepcopy(payload["clips"])},
+                      "value": seeded_clips},
+                     {"op": "set", "ref": ref, "path": ["registry", "metadata"],
+                      "before": {"state": "absent"}, "value": {"keep": True}},
+                 ]}}
+        seeded = _native_commit(native_editing.service, native_editing.project,
+                                _native_body(native_editing.service, native_editing.project, [patch]),
+                                "native-preservation-seed")
+        native_editing.document = seeded["data"]["canonical_document"]
+        seeded_payload = _native_payload(native_editing.document, "internal")
+        assert seeded_payload["clips"][0]["effects"] == [{"id": "grade"}]
+        assert seeded_payload["clips"][1] == sibling
+        assert seeded_payload["registry"]["metadata"] == {"keep": True}
+        command = _native_swap(native_editing)
+        body = _native_body(native_editing.service, native_editing.project, [command])
+        before_document = copy.deepcopy(native_editing.document)
+        before_receipts = native_editing.service.store.conn.execute(
+            "SELECT COUNT(*) FROM command_idempotency WHERE command_kind='timeline.commit'",
+        ).fetchone()[0]
+        before_events = native_editing.service.store.conn.execute(
+            "SELECT COUNT(*) FROM timeline_events WHERE timeline_id='film'",
+        ).fetchone()[0]
+        first = _native_commit(native_editing.service, native_editing.project, body, "native-swap")
+        _assert_native_swap_result(native_editing, before_document, first)
+        result_payload = _native_payload(first["data"]["canonical_document"], "internal")
+        assert result_payload["clips"][0]["effects"] == [{"id": "grade"}]
+        assert result_payload["clips"][1] == sibling
+        assert result_payload["registry"]["metadata"] == {"keep": True}
+        assert native_editing.service.store.conn.execute(
+            "SELECT COUNT(*) FROM command_idempotency WHERE command_kind='timeline.commit'",
+        ).fetchone()[0] == before_receipts + 1
+        assert native_editing.service.store.conn.execute(
+            "SELECT COUNT(*) FROM timeline_events WHERE timeline_id='film'",
+        ).fetchone()[0] == before_events + 1
+        old_path = native_editing.service.cas.path_for(native_editing.old["object_id"].removeprefix("sha256:"))
+        old_bytes = old_path.read_bytes()
+        old_path.write_bytes(bytes([old_bytes[0] ^ 1]) + old_bytes[1:])
+>       assert _native_commit(native_editing.service, native_editing.project, body, "native-swap") == first
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_timeline_clip_replacement.py:339: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_timeline_clip_replacement.py:178: in _native_commit
+    return service.commit_timeline(
+runtime_protocol/service.py:498: in wrapped
+    return function(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_execution.py:214: in wrapped
+    result = function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/service.py:3164: in commit_timeline
+    return self._execute_timeline_commit(
+runtime_protocol/service.py:498: in wrapped
+    return function(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/service.py:3251: in _execute_timeline_commit
+    outcome = coordinator.execute(context, provider, port_factory, authorize=check,
+runtime_protocol/timeline_commit_execution.py:509: in execute
+    result = self._execute(context, provider, port_factory, authorize=authorize,
+runtime_protocol/timeline_commit_execution.py:534: in _execute
+    replay = self._lookup(context, authorize, diagnostic_request_id=diagnostic_request_id,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_protocol.timeline_commit_execution.CommitExecutionCoordinator object at 0x7fcdc7de9400>
+context = {'request': {'api_version': 1, 'project_id': 'f9f96e0189ec49d1810b902371c0986b', 'timeline_id': 'film', 'base_revision...quest_hash': 'e3580b8dfe6b21e1abc5557cee85bc50e56b2a0582e424c21591940715e36143', 'idempotency_key': 'native-swap', ...}
+authorize = <function RuntimeService._timeline_authorize.<locals>.check at 0x7fcdc7e55080>
+diagnostic_request_id = 'c9a75e7ab3c34ca5c19615b5ea24f22c'
+public_request_id = None, idempotency_key = 'native-swap'
+
+    def _lookup(self, context, authorize, *, diagnostic_request_id=None, public_request_id=None,
+                idempotency_key=None):
+        from .errors import AuthorizationError, ForbiddenError
+        from .timeline_commit import CommitRejected
+    
+        try:
+            return self.commit_store.lookup(context, authorize=authorize)
+        except (CommitRejected, AuthorizationError, ForbiddenError):
+            raise
+        except Exception as exc:
+            _emit_redacted_diagnostic(
+                diagnostic_request_id, exc, public_request_id=public_request_id,
+                idempotency_key=idempotency_key,
+            )
+>           raise CommitOutcomeUnknown() from exc
+E           runtime_protocol.timeline_commit_execution.CommitOutcomeUnknown: Timeline commit outcome unavailable; retry the exact request
+
+runtime_protocol/timeline_commit_execution.py:499: CommitOutcomeUnknown
+----------------------------- Captured stderr call -----------------------------
+runtime.timeline_commit.error {"event":"timeline_commit_error","exception_class_chain":["runtime_protocol.errors.ConflictError"],"frames":["sha256:6b7909999c90f1774ba81417901b9abfc363936e0a9982099089348cafd132eb:491:_lookup","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:183:evaluate","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:187:evaluate","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:612:lookup","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:624:_lookup","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:189:evaluate","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:427:_check_history_objects","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:571:_read_object","sha256:e82bbd12e99d222a3dd14087b339263ed61b3b4f6f937d7d4baa154deae3119b:192:read"],"idempotency_key_sha256":"6d6d3b6dac55d1862ba93d8213fcfa680df9cafe4a9c59d5dee3110ca60eef70","reason":"catchall:runtime_protocol.errors.ConflictError","request_id":"c9a75e7ab3c34ca5c19615b5ea24f22c"}
+_______ test_replace_timeline_clip_is_atomic_cas_and_exactly_replayable ________
+
+self = <runtime_protocol.timeline_commit_execution.CommitExecutionCoordinator object at 0x7fcdc75a58b0>
+context = {'request': {'api_version': 1, 'project_id': 'c0bee626df1d405a9328a454dc02d246', 'timeline_id': 'film', 'base_revision...quest_hash': 'a6ad0732357afcb835e8e0ce19bc86fbfe5e3438a53aa862a4e438c1eac197b0', 'idempotency_key': 'native-swap', ...}
+authorize = <function RuntimeService._timeline_authorize.<locals>.check at 0x7fcdc75a6520>
+diagnostic_request_id = '7c8870657d0fb027f38a18f471be1b2d'
+public_request_id = None, idempotency_key = 'native-swap'
+
+    def _lookup(self, context, authorize, *, diagnostic_request_id=None, public_request_id=None,
+                idempotency_key=None):
+        from .errors import AuthorizationError, ForbiddenError
+        from .timeline_commit import CommitRejected
+    
+        try:
+>           return self.commit_store.lookup(context, authorize=authorize)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+runtime_protocol/timeline_commit_execution.py:491: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+runtime_protocol/timeline_commit_store.py:183: in evaluate
+    return evaluate(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:187: in evaluate
+    result = method(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:612: in lookup
+    return self._lookup(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:624: in _lookup
+    self._verify_accepted(row, edge, allow_archived=True)
+runtime_protocol/timeline_commit_store.py:189: in evaluate
+    self._check_history_objects()
+runtime_protocol/timeline_commit_store.py:427: in _check_history_objects
+    data = self._read_object(object_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_store.py:571: in _read_object
+    return ContentAddressedStore(self.store.cas_root).read(object_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_protocol.cas.ContentAddressedStore object at 0x7fcdc74657c0>
+digest = '0bac5caa6c6d3c020f650aab1c53e24d2008c45a5e2c623fe8a98afbb39bb6d6'
+
+    def read(self, digest: str) -> bytes:
+        with self.open(digest) as stream:
+            data = stream.read()
+        if hashlib.sha256(data).hexdigest() != digest:
+>           raise ConflictError("CAS object failed hash verification")
+E           runtime_protocol.errors.ConflictError: CAS object failed hash verification
+
+runtime_protocol/cas.py:192: ConflictError
+
+The above exception was the direct cause of the following exception:
+
+native_editing = namespace(native=namespace(CommandError=<class 'astrid.sdk.timeline._command_state.CommandError'>, capture_clip_set=<f...-62139c83a6fe4638fe65ecbce65e7a0cae3f8387d01cb635279d797b68b21660', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+
+    def test_replace_timeline_clip_is_atomic_cas_and_exactly_replayable(native_editing):
+>       test_native_clip_swap_is_atomic_cas_and_exactly_replayable(native_editing)
+
+tests/test_timeline_clip_replacement.py:767: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_timeline_clip_replacement.py:339: in test_native_clip_swap_is_atomic_cas_and_exactly_replayable
+    assert _native_commit(native_editing.service, native_editing.project, body, "native-swap") == first
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_timeline_clip_replacement.py:178: in _native_commit
+    return service.commit_timeline(
+runtime_protocol/service.py:498: in wrapped
+    return function(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/timeline_commit_execution.py:214: in wrapped
+    result = function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/service.py:3164: in commit_timeline
+    return self._execute_timeline_commit(
+runtime_protocol/service.py:498: in wrapped
+    return function(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime_protocol/service.py:3251: in _execute_timeline_commit
+    outcome = coordinator.execute(context, provider, port_factory, authorize=check,
+runtime_protocol/timeline_commit_execution.py:509: in execute
+    result = self._execute(context, provider, port_factory, authorize=authorize,
+runtime_protocol/timeline_commit_execution.py:534: in _execute
+    replay = self._lookup(context, authorize, diagnostic_request_id=diagnostic_request_id,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_protocol.timeline_commit_execution.CommitExecutionCoordinator object at 0x7fcdc75a58b0>
+context = {'request': {'api_version': 1, 'project_id': 'c0bee626df1d405a9328a454dc02d246', 'timeline_id': 'film', 'base_revision...quest_hash': 'a6ad0732357afcb835e8e0ce19bc86fbfe5e3438a53aa862a4e438c1eac197b0', 'idempotency_key': 'native-swap', ...}
+authorize = <function RuntimeService._timeline_authorize.<locals>.check at 0x7fcdc75a6520>
+diagnostic_request_id = '7c8870657d0fb027f38a18f471be1b2d'
+public_request_id = None, idempotency_key = 'native-swap'
+
+    def _lookup(self, context, authorize, *, diagnostic_request_id=None, public_request_id=None,
+                idempotency_key=None):
+        from .errors import AuthorizationError, ForbiddenError
+        from .timeline_commit import CommitRejected
+    
+        try:
+            return self.commit_store.lookup(context, authorize=authorize)
+        except (CommitRejected, AuthorizationError, ForbiddenError):
+            raise
+        except Exception as exc:
+            _emit_redacted_diagnostic(
+                diagnostic_request_id, exc, public_request_id=public_request_id,
+                idempotency_key=idempotency_key,
+            )
+>           raise CommitOutcomeUnknown() from exc
+E           runtime_protocol.timeline_commit_execution.CommitOutcomeUnknown: Timeline commit outcome unavailable; retry the exact request
+
+runtime_protocol/timeline_commit_execution.py:499: CommitOutcomeUnknown
+----------------------------- Captured stderr call -----------------------------
+runtime.timeline_commit.error {"event":"timeline_commit_error","exception_class_chain":["runtime_protocol.errors.ConflictError"],"frames":["sha256:6b7909999c90f1774ba81417901b9abfc363936e0a9982099089348cafd132eb:491:_lookup","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:183:evaluate","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:187:evaluate","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:612:lookup","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:624:_lookup","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:189:evaluate","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:427:_check_history_objects","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:571:_read_object","sha256:e82bbd12e99d222a3dd14087b339263ed61b3b4f6f937d7d4baa154deae3119b:192:read"],"idempotency_key_sha256":"6d6d3b6dac55d1862ba93d8213fcfa680df9cafe4a9c59d5dee3110ca60eef70","reason":"catchall:runtime_protocol.errors.ConflictError","request_id":"7c8870657d0fb027f38a18f471be1b2d"}
+==================================== PASSES ====================================
+_______ test_rt02_native_occurrence_swap_rolls_back_before_restart_retry _______
+----------------------------- Captured stderr call -----------------------------
+runtime.timeline_commit.error {"event":"timeline_commit_error","exception_class_chain":["builtins.RuntimeError"],"frames":["sha256:4152644f60a069318f9307c6c63b49c097a2dea7432723b609a3b039067f8035:3251:_execute_timeline_commit","sha256:6b7909999c90f1774ba81417901b9abfc363936e0a9982099089348cafd132eb:509:execute","sha256:6b7909999c90f1774ba81417901b9abfc363936e0a9982099089348cafd132eb:594:_execute","sha256:6b7909999c90f1774ba81417901b9abfc363936e0a9982099089348cafd132eb:556:_execute","sha256:36dd22a1a056fa7e53caab989b89b979e5871558454034efd860556581b56941:1445:commit","sha256:e91e0c96a879eeff9dbf08b80741743aa23f13b9be47c993cbf778ac2d408114:694:accept","sha256:e91e0c96a879eeff9dbf08b80741743aa23f13b9be47c993cbf778ac2d408114:702:_accept","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:187:evaluate","sha256:091d7ff49ab285530dacc893b3306180ff5460c50e79cfc5aa85f3a0a58cd260:1909:accept","sha256:3c3c59df9b2cd8d7a80635e2c3d85c3720654061139e4a8de835ef2e33137fad:668:fail_after_persist"],"idempotency_key_sha256":"a3e57b1eb4b6dbdaa15c33d04559827b063a768960928995ae3349f5eca7ffc5","reason":"catchall:builtins.RuntimeError","request_id":"8015b609f845bdeb3e4b53b4ee151240"}
+=========================== short test summary info ============================
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rebases_after_disjoint_intervening_edit
+PASSED tests/test_timeline_clip_replacement.py::test_native_parent_clip_swap_route_refuses_parent_ownership_on_public013_schema
+PASSED tests/test_timeline_clip_replacement.py::test_native_parent_clip_swap_route_replaces_parent_media
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_cross_project_source_without_mutation
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_malformed_source_before_native_commit
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_tampered_cas_without_mutation
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_selected_source_corruption_between_capture_and_accept
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_wrong_stream_without_mutation
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_too_short_or_end_short_source[1]
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_too_short_or_end_short_source[3.5]
+PASSED tests/test_timeline_clip_replacement.py::test_native_generic_visual_media_requires_video_stream
+PASSED tests/test_timeline_clip_replacement.py::test_native_generic_visual_media_accepts_verified_image_swap
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_replays_after_intervening_edit_and_reopen
+PASSED tests/test_timeline_clip_replacement.py::test_rt02_project_shot_crud_native_replacement_retries_after_restart
+PASSED tests/test_timeline_clip_replacement.py::test_rt02_native_occurrence_swap_rolls_back_before_restart_retry
+PASSED tests/test_timeline_clip_replacement.py::test_native_clip_swap_public_http_route
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_cross_project_source
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_malformed_source_without_mutation
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_tampered_cas_without_mutation
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_wrong_stream_without_mutation
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_too_short_source_without_mutation
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_requires_source_to_reach_authored_end
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_generic_visual_media_requires_video_stream
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_replays_after_intervening_edit_and_reopen
+PASSED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_public_http_route
+FAILED tests/test_timeline_clip_replacement.py::test_native_clip_swap_is_atomic_cas_and_exactly_replayable
+FAILED tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_is_atomic_cas_and_exactly_replayable
+2 failed, 25 passed in 32.03s

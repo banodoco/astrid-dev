@@ -1,0 +1,10 @@
+Runtime test wrapper reads the prepared isolated environment at /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env.
+Actual worker interpreter provenance was captured directly with:
+/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/venv/bin/python -c 'import sys, platform; print(sys.executable); print(sys.version); print(platform.platform())'
+Installed Python package versions were captured with:
+/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/venv/bin/python -m pip freeze
+Runtime Node version was captured with:
+/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/node/node_modules/.bin/node --version
+TypeScript version was captured with:
+/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime/packages/typescript/node_modules/.bin/tsc --version
+No environment reset or dependency install was run.

@@ -1,0 +1,28 @@
+# K1a Linux-gate parity card evidence
+
+Repository: `/workspace/scratch/cd53b069f320/p39-repair/astrid-agent`
+
+Base: `372e39cd309e519857c1dbb2c86d71f7ef724232` (tree `aabdeab6b08f14bff2205186b9ae1aa2f1f16380`). Branch: `p39/k1a-posix-prerequisites`.
+
+Each complete proof has an exact `PYTEST_ADDOPTS=-rA bash scripts/worker-env/agent-pytest.sh -q --junitxml=<absolute path> <file>` invocation, stdout/stderr `.log`, actual exit `.exit`, and JUnit `.xml`. The row 3 registration proof was interrupted once by tool termination before a JUnit or exit file existed; its partial log is retained as `03-boundary-registration-before.interrupted.log`. The manager confirmed no pytest remained and authorized one replacement before proof. That result is `03-boundary-registration-before-restart1.{xml,log,exit}`. It was not a test-failure retry. Each row then received its one post proof. No other focused tests were run.
+
+`*.parity.txt` compares the exact JUnit `classname.name` node-ID multiset and each node's JUnit status plus full failure/error/skipped message and traceback. Explicit volatile normalization is implemented/documented in `compare_junit.py`: basetemp IDs (including abbreviated `emp/<digits>` paths), hex object addresses, explicit pid/process-id values, and monotonic `deadline=<number>` fields. JUnit elapsed-time attributes and elapsed pytest summary text are omitted. No assertion text, exception type, message, category, skip or deselection is ignored. All six comparisons report exact ID and status/signature parity with zero node differences. `ast-parity.log` records separate AST comparisons against saved Git-base source in `baseline/`, excluding only the module `pytestmark` gate. No import was removed; all `sys` imports remain referenced.
+
+## Six row results
+
+| Row | Module | Before → after exact counts and exit | Per-node parity | Remaining cause, unchanged |
+|---|---|---|---|---|
+| 1 | `tests/core/generation/test_engine_readiness.py` | 9 passed / 60 errors → same; exit 1 / 1 | 69 IDs equal; 60 setup-error and 9 pass signatures equal | All 60 errors occur during fixture setup with `CustodyUnresolved: Engine supervisor did not confirm command cleanup`; owner is reported alive, `pid_start_ticks`, lock held. Those bodies were not established as passing. |
+| 2 | `tests/test_boundary_handoff.py` | 79 passed / 1 failed → same; exit 1 / 1 | 80 IDs equal; all per-node results/signatures equal | `test_cli_handled_handoff_refuses_policy_change_and_reports_saved_policy`: assertion expects `Astrid did NOT update: the installer refused to continue`; actual output says `Astrid couldn't finish. Your work is kept.` Existing assertion/output mismatch remains visible. |
+| 3 | `tests/test_boundary_registration.py` | 71 passed / 1 failed → same; exit 1 / 1 | 72 IDs equal; all per-node results/signatures equal | `test_other_cli_operations_refuse_pending_registration[--uninstall]`: expected the pending-registration recovery wording, but output routes to the earlier-version automatic-uninstall refusal. |
+| 4 | `tests/test_installer_r0_entry.py` | 49 passed / 1 failed → same; exit 1 / 1 | 50 IDs equal; all per-node results/signatures equal | `test_captures_match_real_r0_evidence` attempts the existing direct skip because local R0 evidence is absent; lane validation reports it as an undeclared skip failure. The manual artifact gate is untouched. |
+| 5 | `tests/test_installer_update_legacy_record.py` | 10 passed / 1 failed → same; exit 1 / 1 | 11 IDs equal; all per-node results/signatures equal | `test_sweep_resolves_a_record_without_home_once_its_unit_has_finished`: expected state `failed`, got `recovery-needed`. |
+| 6 | `tests/test_update_from_field_states.py` | 44 passed / 4 failed → same; exit 1 / 1 | 48 IDs equal; all per-node results/signatures equal | Four message contract failures remain: `test_every_non_zero_outcome_ends_with_next_and_details`, plus `test_each_reason_has_its_own_next_step` for `error`, `installer-bug`, and `windows-upgrade-unsupported`; details/next-step wording differs from expected. Full signatures are in the paired XML/logs. |
+
+For rows 2, 3 and 6, the original symlink-environment traces recorded many additional setup failures involving `Managed paths cannot contain links` at the worker's `astrid-agent.env/venv` and, for rows 2/6, missing explicit pinned `runtime_checkout`. The environment layout was repaired outside this card, so those old logs are retained as history but are not used as the before state or parity baseline. The repaired-environment before proofs above resolve most such failures; the remaining assertion causes are preserved without edits. Row 1 remains a distinct custody setup failure. Row 4 remains its separate manual-evidence gate. Row 5 remains its state expectation mismatch.
+
+## Eligibility and scope
+
+`tests/lanes.py` defines `linux_native` as available on `sys.platform.startswith("linux")`, mapped to `unit-shard-ubuntu-latest`, with `default_off=False`. The prior gate values and the new lane preserve eligibility on supported Linux, macOS (`darwin`) and Windows (`win32`): the modules are selected on Linux and do not gain selection on native Darwin or Windows. Their bodies simulate Linux/systemd behavior; they do not assert native macOS/Windows behavior. The exact supported Linux coverage remains the ordinary Ubuntu unit lane. Other marks/gates are unchanged.
+
+Each test file changed by exactly its module-level OS gate. `sys` remains imported because it is used elsewhere in the modules. The R0 manual artifact skip remains; it still appears as an error under lane enforcement. This card accepts only selection, outcome and AST parity for six bounded gate migrations. Formal RS1 remains 0/1, and overall K1a remains incomplete.

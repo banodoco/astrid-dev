@@ -1,0 +1,45 @@
+diff --git a/tests/test_boundary_registration_launchd.py b/tests/test_boundary_registration_launchd.py
+index 5e16696e..eefe4dbc 100644
+--- a/tests/test_boundary_registration_launchd.py
++++ b/tests/test_boundary_registration_launchd.py
+@@ -149,7 +149,7 @@ def test_launchd_changed_r0_does_not_prevent_r1_stop(mac_case):
+     assert not manager.r1_loaded and not manager.enabled and tx.journal.exists()
+ 
+ 
+-@pytest.mark.skipif(not hasattr(os, "fork"), reason="POSIX SIGKILL publication cut")
++@pytest.mark.posix_native
+ @pytest.mark.parametrize("publication", ["journal", "launcher", "definition"])
+ def test_launchd_sigkill_after_publication_link_replays(mac_case, publication):
+     manager, tx, version, realm, destination = mac_case
+diff --git a/tests/test_installer_r0_stop.py b/tests/test_installer_r0_stop.py
+index 2a91491b..68b7a92f 100644
+--- a/tests/test_installer_r0_stop.py
++++ b/tests/test_installer_r0_stop.py
+@@ -289,11 +289,10 @@ def test_windows_unverified_task_refused_before_mutation(tmp_path):
+     assert manager.calls == []
+ 
+ 
++@pytest.mark.posix_native
+ def test_killed_after_disable_next_invocation_recovers(tmp_path):
+     import signal
+ 
+-    if not hasattr(os, "fork"):
+-        pytest.skip("POSIX process test")
+     manager, realm = setup_case(tmp_path, "linux")
+     before = snapshot(realm)
+     state = tmp_path / "manager-state"
+@@ -373,13 +372,12 @@ def test_registered_r1_refuses_before_r0_stop(tmp_path, system):
+     assert not r0_stop._marker_path(manager).exists()
+ 
+ 
++@pytest.mark.posix_native
+ @pytest.mark.parametrize("cut", ["disable", "bootout"])
+ def test_launchd_sigkill_at_each_stop_step_then_recover(tmp_path, cut):
+     import select
+     import signal
+ 
+-    if not hasattr(os, "fork"):
+-        pytest.skip("POSIX SIGKILL test")
+     manager, realm = setup_case(tmp_path, "darwin")
+     before = snapshot(realm)
+     state = tmp_path / "launchd-state.json"

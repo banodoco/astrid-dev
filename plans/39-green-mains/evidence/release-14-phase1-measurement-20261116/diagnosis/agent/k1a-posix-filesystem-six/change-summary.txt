@@ -1,0 +1,6 @@
+Changed six direct OS-only skip decorators to the existing pytest.mark.posix_native marker in four files. Test signatures, bodies, assertions, parameterization and other decorators were preserved. The separately held installed-schema test and its cleanup assertion are unchanged.
+
+Pre-change focused proof: 9 passed in 1.19s (exit 0).
+Post-change focused proof: 9 passed in 1.07s (exit 0).
+AST equivalence results: see ast-equivalence.txt; checker: ast_equivalence.py.
+Exact full command stdout, stderr, and exit statuses: before.* and after.*.

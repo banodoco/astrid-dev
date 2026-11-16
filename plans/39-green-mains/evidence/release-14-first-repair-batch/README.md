@@ -1,5 +1,9 @@
 # Release 14 Plan 39: first repair batch and cause assessment
 
+<!-- FOLLOWUP-MEASUREMENT -->
+**Later evidence:** [16 November phase-1 measurement and repair state](../release-14-phase1-measurement-20261116/README.md). The first-batch evidence below is a historical snapshot; the later package records completed hosted runs, current branch heads, further reviewed changes and unresolved holds.
+
+
 Recorded 16 November 2026. This is a review package for local candidates, not a claim that the repositories, phase 1, or Plan 39 are complete.
 
 ## Result and authorization

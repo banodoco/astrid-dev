@@ -1,0 +1,475 @@
+{
+  "run": {
+    "run_id": 43934820640,
+    "attempt": 1,
+    "repository": "banodoco/astrid-agent",
+    "head_sha": "b8f2692948d1b5987ee2938920f47aace0732792",
+    "head_branch": "release/14/plan-39",
+    "conclusion": "failure",
+    "permanent_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640"
+  },
+  "counts": {
+    "jobs_total": 16,
+    "failed_jobs": 9,
+    "other_jobs": 7,
+    "other_jobs_success": 5,
+    "other_jobs_skipped": 2,
+    "failed_jobs_with_raw_logs": 8,
+    "failed_jobs_xml_downloaded": 9,
+    "direct_failed_error_testcase_records": 1254,
+    "all_direct_testcase_records": 30697,
+    "current_plan55_waiting_exact_ids": 8,
+    "current_plan38_waiting_exact_ids": 0
+  },
+  "other_job_statuses": [
+    {
+      "job_id": 133536534486,
+      "name": "windows-native-and-installer",
+      "conclusion": "success",
+      "status": "completed",
+      "started_at": "2026-11-16T19:00:47Z",
+      "completed_at": "2026-11-16T19:06:07Z",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640/job/133536534486"
+    },
+    {
+      "job_id": 133536534666,
+      "name": "fast checks",
+      "conclusion": "success",
+      "status": "completed",
+      "started_at": "2026-11-16T19:01:44Z",
+      "completed_at": "2026-11-16T19:05:54Z",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640/job/133536534666"
+    },
+    {
+      "job_id": 133536534779,
+      "name": "release wheel / Python 3.11",
+      "conclusion": "success",
+      "status": "completed",
+      "started_at": "2026-11-16T19:05:47Z",
+      "completed_at": "2026-11-16T19:07:47Z",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640/job/133536534779"
+    },
+    {
+      "job_id": 133536534800,
+      "name": "boundary",
+      "conclusion": "success",
+      "status": "completed",
+      "started_at": "2026-11-16T19:12:51Z",
+      "completed_at": "2026-11-16T19:13:02Z",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640/job/133536534800"
+    },
+    {
+      "job_id": 133536534896,
+      "name": "release wheel / Python 3.12",
+      "conclusion": "success",
+      "status": "completed",
+      "started_at": "2026-11-16T19:08:57Z",
+      "completed_at": "2026-11-16T19:10:18Z",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640/job/133536534896"
+    },
+    {
+      "job_id": 133536537291,
+      "name": "landing reference",
+      "conclusion": "skipped",
+      "status": "completed",
+      "started_at": "2026-11-16T19:00:45Z",
+      "completed_at": "2026-11-16T19:00:45Z",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640/job/133536537291"
+    },
+    {
+      "job_id": 133612796426,
+      "name": "unit",
+      "conclusion": "skipped",
+      "status": "completed",
+      "started_at": "2026-11-16T21:06:23Z",
+      "completed_at": "2026-11-16T21:06:22Z",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43934820640/job/133612796426"
+    }
+  ],
+  "failed_jobs": [
+    {
+      "job_id": 133536534737,
+      "job_name": "unit shard 1 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14272652351,
+      "artifact_name": "test-results-unit-shard-1-Linux",
+      "artifact_sha256": "2bfa5394f426e498aae2e172d8886591760fa2a30aa9877568a5b91c9d6781c9",
+      "downloaded_zip_sha256": "2bfa5394f426e498aae2e172d8886591760fa2a30aa9877568a5b91c9d6781c9",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "= 44 failed, 5221 passed, 3 skipped, 26152 deselected, 346 warnings, 54 errors, 153 subtests passed in 5503.72s (1:31:43) =",
+      "log_summary_counts": {
+        "failed": 44,
+        "passed": 5221,
+        "skipped": 3,
+        "deselected": 26152,
+        "errors": 54,
+        "subtests_passed": 153
+      },
+      "xml_totals": {
+        "tests": 5475,
+        "failures": 44,
+        "errors": 54,
+        "skipped": 3
+      },
+      "xml_testcase_elements": 5322,
+      "junit_test_count_delta_vs_testcase_elements": 153,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 98,
+      "distinct_full_junit_message_count": 35
+    },
+    {
+      "job_id": 133536534935,
+      "job_name": "unit shard 2 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14267327250,
+      "artifact_name": "test-results-unit-shard-2-Linux",
+      "artifact_sha256": "6aacf03a00d5c496b60949cc95d18577e4efae6e52585779b4ee8bc9b93d8b07",
+      "downloaded_zip_sha256": "6aacf03a00d5c496b60949cc95d18577e4efae6e52585779b4ee8bc9b93d8b07",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "= 81 failed, 3862 passed, 19 skipped, 27461 deselected, 2 warnings, 51 errors, 26 subtests passed in 4524.03s (1:15:24) =",
+      "log_summary_counts": {
+        "failed": 81,
+        "passed": 3862,
+        "skipped": 19,
+        "deselected": 27461,
+        "errors": 51,
+        "subtests_passed": 26
+      },
+      "xml_totals": {
+        "tests": 4039,
+        "failures": 81,
+        "errors": 51,
+        "skipped": 19
+      },
+      "xml_testcase_elements": 4013,
+      "junit_test_count_delta_vs_testcase_elements": 26,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 132,
+      "distinct_full_junit_message_count": 101
+    },
+    {
+      "job_id": 133536534765,
+      "job_name": "unit shard 3 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14263779551,
+      "artifact_name": "test-results-unit-shard-3-Linux",
+      "artifact_sha256": "dfa83b30a15cd928dd96a745e6cfa3cd895248bd795dae6967c42c3e8bcdc5ae",
+      "downloaded_zip_sha256": "dfa83b30a15cd928dd96a745e6cfa3cd895248bd795dae6967c42c3e8bcdc5ae",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "== 31 failed, 1830 passed, 29613 deselected, 2 warnings in 3385.35s (0:56:25) ==",
+      "log_summary_counts": {
+        "failed": 31,
+        "passed": 1830,
+        "deselected": 29613
+      },
+      "xml_totals": {
+        "tests": 1861,
+        "failures": 31,
+        "errors": 0,
+        "skipped": 0
+      },
+      "xml_testcase_elements": 1861,
+      "junit_test_count_delta_vs_testcase_elements": 0,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 31,
+      "distinct_full_junit_message_count": 10
+    },
+    {
+      "job_id": 133536535002,
+      "job_name": "unit shard 4 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14265361873,
+      "artifact_name": "test-results-unit-shard-4-Linux",
+      "artifact_sha256": "88d840fc7568f5d424c8ecd8d30cf61b2bb4435e6f688c9507adbb21a2548c71",
+      "downloaded_zip_sha256": "88d840fc7568f5d424c8ecd8d30cf61b2bb4435e6f688c9507adbb21a2548c71",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "= 28 failed, 2014 passed, 29413 deselected, 2 warnings, 19 errors in 2632.55s (0:43:52) =",
+      "log_summary_counts": {
+        "failed": 28,
+        "passed": 2014,
+        "deselected": 29413,
+        "errors": 19
+      },
+      "xml_totals": {
+        "tests": 2061,
+        "failures": 28,
+        "errors": 19,
+        "skipped": 0
+      },
+      "xml_testcase_elements": 2061,
+      "junit_test_count_delta_vs_testcase_elements": 0,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 47,
+      "distinct_full_junit_message_count": 22
+    },
+    {
+      "job_id": 133536535000,
+      "job_name": "unit shard 5 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14265381355,
+      "artifact_name": "test-results-unit-shard-5-Linux",
+      "artifact_sha256": "d903d8a94d534de744adda2b24eb4539fd59d14b5b1b0ad4e4a5664c2fb01a41",
+      "downloaded_zip_sha256": "d903d8a94d534de744adda2b24eb4539fd59d14b5b1b0ad4e4a5664c2fb01a41",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "= 95 failed, 2214 passed, 29058 deselected, 10 warnings, 107 errors in 2570.51s (0:42:50) =",
+      "log_summary_counts": {
+        "failed": 95,
+        "passed": 2214,
+        "deselected": 29058,
+        "errors": 107
+      },
+      "xml_totals": {
+        "tests": 2416,
+        "failures": 95,
+        "errors": 107,
+        "skipped": 0
+      },
+      "xml_testcase_elements": 2416,
+      "junit_test_count_delta_vs_testcase_elements": 0,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 202,
+      "distinct_full_junit_message_count": 32
+    },
+    {
+      "job_id": 133536534814,
+      "job_name": "unit shard 6 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14266922439,
+      "artifact_name": "test-results-unit-shard-6-Linux",
+      "artifact_sha256": "6a774e23970cf32bf485f0c991a941ad711dd8d8161b214a5c9d2da73602eb8a",
+      "downloaded_zip_sha256": "6a774e23970cf32bf485f0c991a941ad711dd8d8161b214a5c9d2da73602eb8a",
+      "hash_matches": true,
+      "log_available": false,
+      "log_summary": null,
+      "log_summary_counts": null,
+      "xml_totals": {
+        "tests": 5287,
+        "failures": 247,
+        "errors": 4,
+        "skipped": 6
+      },
+      "xml_testcase_elements": 5162,
+      "junit_test_count_delta_vs_testcase_elements": 125,
+      "junit_failure_delta_vs_failure_testcase_elements": 30,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 221,
+      "distinct_full_junit_message_count": 162
+    },
+    {
+      "job_id": 133536534843,
+      "job_name": "unit shard 7 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14268951010,
+      "artifact_name": "test-results-unit-shard-7-Linux",
+      "artifact_sha256": "1aae277bae78cfee0555d9a5a6f94d4b237978cb0df86b8671895b35802e07ed",
+      "downloaded_zip_sha256": "1aae277bae78cfee0555d9a5a6f94d4b237978cb0df86b8671895b35802e07ed",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "= 250 failed, 5483 passed, 2 skipped, 25579 deselected, 2 warnings, 160 errors, 113 subtests passed in 5555.14s (1:32:35) =",
+      "log_summary_counts": {
+        "failed": 250,
+        "passed": 5483,
+        "skipped": 2,
+        "deselected": 25579,
+        "errors": 160,
+        "subtests_passed": 113
+      },
+      "xml_totals": {
+        "tests": 6008,
+        "failures": 250,
+        "errors": 160,
+        "skipped": 2
+      },
+      "xml_testcase_elements": 5895,
+      "junit_test_count_delta_vs_testcase_elements": 113,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 410,
+      "distinct_full_junit_message_count": 109
+    },
+    {
+      "job_id": 133536535034,
+      "job_name": "unit shard 8 / 8 (ubuntu-latest)",
+      "conclusion": "failure",
+      "artifact_id": 14265546026,
+      "artifact_name": "test-results-unit-shard-8-Linux",
+      "artifact_sha256": "10bad0075a95c6d8322eaa14a147190343e321bc4ecf8b9e9d39961cdcc3eac3",
+      "downloaded_zip_sha256": "10bad0075a95c6d8322eaa14a147190343e321bc4ecf8b9e9d39961cdcc3eac3",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "= 97 failed, 3788 passed, 25 skipped, 27562 deselected, 5 warnings, 2 errors, 202 subtests passed in 1915.02s (0:31:55) =",
+      "log_summary_counts": {
+        "failed": 97,
+        "passed": 3788,
+        "skipped": 25,
+        "deselected": 27562,
+        "errors": 2,
+        "subtests_passed": 202
+      },
+      "xml_totals": {
+        "tests": 4114,
+        "failures": 97,
+        "errors": 2,
+        "skipped": 25
+      },
+      "xml_testcase_elements": 3912,
+      "junit_test_count_delta_vs_testcase_elements": 202,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 99,
+      "distinct_full_junit_message_count": 64
+    },
+    {
+      "job_id": 133536535052,
+      "job_name": "darwin native",
+      "conclusion": "failure",
+      "artifact_id": 14260398808,
+      "artifact_name": "test-results-darwin-native-all-macOS",
+      "artifact_sha256": "ee1603c43c3655b22a0fc9bca4e3d35f8418be6b441c70c97fd11570baf569dd",
+      "downloaded_zip_sha256": "ee1603c43c3655b22a0fc9bca4e3d35f8418be6b441c70c97fd11570baf569dd",
+      "hash_matches": true,
+      "log_available": true,
+      "log_summary": "13 failed, 41 passed, 31235 deselected, 2 warnings, 1 error in 394.47s (0:06:34)",
+      "log_summary_counts": {
+        "failed": 13,
+        "passed": 41,
+        "deselected": 31235,
+        "errors": 1
+      },
+      "xml_totals": {
+        "tests": 55,
+        "failures": 13,
+        "errors": 1,
+        "skipped": 0
+      },
+      "xml_testcase_elements": 55,
+      "junit_test_count_delta_vs_testcase_elements": 0,
+      "junit_failure_delta_vs_failure_testcase_elements": 0,
+      "junit_error_delta_vs_error_testcase_elements": 0,
+      "junit_skip_delta_vs_skipped_testcase_elements": 0,
+      "direct_red_count": 14,
+      "distinct_full_junit_message_count": 11
+    }
+  ],
+  "plan38_55_selector_matches_explicit_in_task_docs": [],
+  "g1_plan_inventory_positive_claims_on_current_red_ids": [
+    {
+      "nodeid": "tests/core/execution/test_generic_host_actions_v3.py::test_python_action_receives_original_host_bridge_before_import",
+      "outcome": "FAILED",
+      "literal_message": "AssertionError: assert [] == ['unrelated.calculate']\n  \n  Right contains one more item: 'unrelated.calculate'\n  \n  Full diff:\n  + []\n  - [\n  -     'unrelated.calculate',\n  - ]",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: declared generic-host inventory"
+    },
+    {
+      "nodeid": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_uses_current_attempt_receipts_and_private_provenance",
+      "outcome": "FAILED",
+      "literal_message": "astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: ownership confirmation required for child bridge"
+    },
+    {
+      "nodeid": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[cancelled]",
+      "outcome": "FAILED",
+      "literal_message": "AssertionError: assert [] == ['upload']\n  \n  Right contains one more item: 'upload'\n  \n  Full diff:\n  + []\n  - [\n  -     'upload',\n  - ]",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: ownership confirmation required for child bridge"
+    },
+    {
+      "nodeid": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[lease]",
+      "outcome": "FAILED",
+      "literal_message": "AssertionError: assert [] == ['upload']\n  \n  Right contains one more item: 'upload'\n  \n  Full diff:\n  + []\n  - [\n  -     'upload',\n  - ]",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: ownership confirmation required for child bridge"
+    },
+    {
+      "nodeid": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[source]",
+      "outcome": "FAILED",
+      "literal_message": "AssertionError: assert [] == ['upload']\n  \n  Right contains one more item: 'upload'\n  \n  Full diff:\n  + []\n  - [\n  -     'upload',\n  - ]",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: ownership confirmation required for child bridge"
+    },
+    {
+      "nodeid": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_wiring_retains_exact_media_and_normal_submission",
+      "outcome": "FAILED",
+      "literal_message": "astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: ownership confirmation required for child bridge"
+    },
+    {
+      "nodeid": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_logical_key_preserved_at_wire_boundary",
+      "outcome": "FAILED",
+      "literal_message": "astrid.core.execution._child_bridge.ChildBridgeError: child admission carries no source digest; refusing before launch",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: ownership confirmation required for child bridge"
+    },
+    {
+      "nodeid": "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_dispatch_freezes_real_installed_producer_recipe",
+      "outcome": "FAILED",
+      "literal_message": "Failed: private producer submitted a provider request",
+      "job_id": 133426796979,
+      "source": "G1 audited-new-shards.json",
+      "plan38_inventory": "not established",
+      "plan55_inventory": "WAITING: declared generic-host inventory"
+    }
+  ],
+  "exact_current_waiting_ids_by_owner": {
+    "Plan38": [],
+    "Plan55": [
+      "tests/core/execution/test_generic_host_actions_v3.py::test_python_action_receives_original_host_bridge_before_import",
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_host_wiring_retains_exact_media_and_normal_submission",
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_iteration_video_logical_key_preserved_at_wire_boundary",
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[cancelled]",
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[lease]",
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_rechecks_between_upload_and_admission[source]",
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_prepared_submission_uses_current_attempt_receipts_and_private_provenance",
+      "tests/core/execution/test_generic_host_verified_preparation_gr03.py::test_private_dispatch_freezes_real_installed_producer_recipe"
+    ]
+  },
+  "ownership_method": "Only exact selectors explicitly named in Plan 38/55 inventories or a positive exact G1 inventory field count as owned. The G1 audited Agent table marks eight current Plan 55 red selectors WAITING; other G1 inventory values were not established. G1 summary rows alone do not supply ownership. No broad directory or task-family inference is used.",
+  "shard6_log_limitation": {
+    "job_id": 133536534814,
+    "saved_error_file": "job-133536534814-log-error.json",
+    "handling": "No retry made. XML artifact 14266922439 is the outcome source; XML aggregate counters include 125 extra test results, including 30 failure outcomes beyond direct testcase elements. XML has no separate IDs for these subtests."
+  },
+  "aggregate_junit_totals": {
+    "tests": 31316,
+    "failures": 886,
+    "errors": 398,
+    "skipped": 55
+  },
+  "aggregate_case_elements": 30697,
+  "aggregate_junit_test_delta_vs_case_elements": 619,
+  "aggregate_junit_pass_residual": 29977
+}

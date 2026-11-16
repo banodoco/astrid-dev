@@ -1,0 +1,10 @@
+......                                                                   [100%]
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/core/generation/test_model_verification_record.py::test_non_utf8_filename_hashes_then_reuses
+PASSED tests/core/pack/test_verified_relocations.py::test_forged_personal_relocation_is_rejected[public]
+PASSED tests/packs/runpod/test_failure_diagnostics.py::test_bounded_observer_rejects_malformed_or_late_child_frame[partial]
+PASSED tests/packs/runpod/test_failure_diagnostics.py::test_bounded_observer_rejects_malformed_or_late_child_frame[oversized]
+PASSED tests/packs/runpod/test_failure_diagnostics.py::test_partial_ipc_from_unkillable_caller_returns_with_pending_fence[False]
+PASSED tests/packs/runpod/test_failure_diagnostics.py::test_partial_ipc_from_unkillable_caller_returns_with_pending_fence[True]
+6 passed in 4.28s

@@ -1,0 +1,7 @@
+Python 3.13.5
+v22.23.5
+/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime/packages/typescript/node_modules/.bin/tsc
+/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime/packages/typescript/node_modules/typescript/bin/tsc
+Version 5.9.3
+Python AST: OK
+YAML parse: OK

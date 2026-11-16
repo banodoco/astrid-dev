@@ -1,0 +1,630 @@
+{
+  "job_id": 133536534262,
+  "label": "opt-in",
+  "artifact_id": null,
+  "log_file": "job-133536534262.log",
+  "xml_file": null,
+  "outer_summaries": [
+    "12 failed, 19 passed, 31261 deselected, 2 warnings in 137.00s (0:02:16)"
+  ],
+  "outcome_counts": {
+    "FAILED": 12,
+    "ERROR": 0,
+    "PASSED": 0,
+    "SKIPPED": 0
+  },
+  "records": [
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[None]",
+      "status": "FAILED",
+      "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-bytes]",
+      "status": "FAILED",
+      "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[saved-revision]",
+      "status": "FAILED",
+      "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[requested-frame]",
+      "status": "FAILED",
+      "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[render-digest]",
+      "status": "FAILED",
+      "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-path]",
+      "status": "FAILED",
+      "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_is_discoverable_via_discover",
+      "status": "FAILED",
+      "message": "AssertionError: editorial.arrange not found in discovery. Executor ids: ['generation.generate_audio', 'generation.generate_image', 'generation.generate_image_cloud_i2i', 'generation.generate_image_codex', 'generation.generate_image_edit', 'generation.generate_image_openai', 'generation.generate_image_upscale', 'generation.generate_speech', 'generation.generate_video', 'hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search', 'rendering.assemble_timeline', 'rendering.html_canvas_effect', 'rendering.render', 'rendering.sprite_sheet', 'rendering.timeline_export_plan', 'rendering.timeline_prepare_import', 'rendering.timeline_storyboard', 'runpod.claim', 'runpod.exec', 'runpod.keep', 'runpod.ls', 'runpod.provision', 'runpod.pull', 'runpod.release', 'runpod.session', 'runpod.setup', 'runpod.status', 'runpod.teardown', 'training.dataset_build', 'training.pool_build', 'training.pool_merge', 'training.search_loras', 'training.training_run', 'vibecomfy.character_animation', 'vibecomfy.edit', 'vibecomfy.import', 'vibecomfy.inspect', 'vibecomfy.run', 'vibecomfy.validate', 'vibecomfy.video_enhance', 'wan2gp.generate_video', 'wan2gp.validate_settings']",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "AssertionError: editorial.arrange not found in discovery. Executor ids: ['generation.generate_audio', 'generation.generate_image', 'generation.generate_image_cloud_i2i', 'generation.generate_image_codex', 'generation.generate_image_edit', 'generation.generate_image_openai', 'generation.generate_image_upscale', 'generation.generate_speech', 'generation.generate_video', 'hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search', 'rendering.assemble_timeline', 'rendering.html_canvas_effect', 'rendering.render', 'rendering.sprite_sheet', 'rendering.timeline_export_plan', 'rendering.timeline_prepare_import', 'rendering.timeline_storyboard', 'runpod.claim', 'runpod.exec', 'runpod.keep', 'runpod.ls', 'runpod.provision', 'runpod.pull', 'runpod.release', 'runpod.session', 'runpod.setup', 'runpod.status', 'runpod.teardown', 'training.dataset_build', 'training.pool_build', 'training.pool_merge', 'training.search_loras', 'training.training_run', 'vibecomfy.character_animation', 'vibecomfy.edit', 'vibecomfy.import', 'vibecomfy.inspect', 'vibecomfy.run', 'vibecomfy.validate', 'vibecomfy.video_enhance', 'wan2gp.generate_video', 'wan2gp.validate_settings']",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "AssertionError: editorial.arrange not found in discovery. Executor ids: ['generation.generate_audio', 'generation.generate_image', 'generation.generate_image_cloud_i2i', 'generation.generate_image_codex', 'generation.generate_image_edit', 'generation.generate_image_openai', 'generation.generate_image_upscale', 'generation.generate_speech', 'generation.generate_video', 'hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search', 'rendering.assemble_timeline', 'rendering.html_canvas_effect', 'rendering.render', 'rendering.sprite_sheet', 'rendering.timeline_export_plan', 'rendering.timeline_prepare_import', 'rendering.timeline_storyboard', 'runpod.claim', 'runpod.exec', 'runpod.keep', 'runpod.ls', 'runpod.provision', 'runpod.pull', 'runpod.release', 'runpod.session', 'runpod.setup', 'runpod.status', 'runpod.teardown', 'training.dataset_build', 'training.pool_build', 'training.pool_merge', 'training.search_loras', 'training.training_run', 'vibecomfy.character_animation', 'vibecomfy.edit', 'vibecomfy.import', 'vibecomfy.inspect', 'vibecomfy.run', 'vibecomfy.validate', 'vibecomfy.video_enhance', 'wan2gp.generate_video', 'wan2gp.validate_settings']",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "AssertionError: editorial.arrange not found in discovery. Executor ids: ['generation.generate_audio', 'generation.generate_image', 'generation.generate_image_cloud_i2i', 'generation.generate_image_codex', 'generation.generate_image_edit', 'generation.generate_image_openai', 'generation.generate_image_upscale', 'generation.generate_speech', 'generation.generate_video', 'hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search', 'rendering.assemble_timeline', 'rendering.html_canvas_effect', 'rendering.render', 'rendering.sprite_sheet', 'rendering.timeline_export_plan', 'rendering.timeline_prepare_import', 'rendering.timeline_storyboard', 'runpod.claim', 'runpod.exec', 'runpod.keep', 'runpod.ls', 'runpod.provision', 'runpod.pull', 'runpod.release', 'runpod.session', 'runpod.setup', 'runpod.status', 'runpod.teardown', 'training.dataset_build', 'training.pool_build', 'training.pool_merge', 'training.search_loras', 'training.training_run', 'vibecomfy.character_animation', 'vibecomfy.edit', 'vibecomfy.import', 'vibecomfy.inspect', 'vibecomfy.run', 'vibecomfy.validate', 'vibecomfy.video_enhance', 'wan2gp.generate_video', 'wan2gp.validate_settings']",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_is_inspectable_via_get_capability",
+      "status": "FAILED",
+      "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_provenance",
+      "status": "FAILED",
+      "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_safety_declaration",
+      "status": "FAILED",
+      "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_capability_schema_is_json_serializable",
+      "status": "FAILED",
+      "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_provenance_is_populated_on_editorial_arrange",
+      "status": "FAILED",
+      "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "detail": "",
+      "prior_g1": [
+        {
+          "match": "exact G1 ID",
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "triage": "exact prior G1 testcase ID recurrence",
+      "plan38": "No Plan 38 match unless explicit mapping in G1 row; inspect prior inventory",
+      "plan55": "No Plan 55 match unless explicit mapping in G1 row; inspect prior inventory",
+      "evidence": "raw pytest short summary; no XML artifact for this job",
+      "g1_triage_note": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "prior_g1_exact": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ],
+      "prior_g1_similar_test_ids_not_exact": []
+    }
+  ],
+  "full_literal_message_groups": [
+    {
+      "type": "",
+      "message": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+      "count": 6,
+      "nodeids": [
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[None]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-bytes]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[saved-revision]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[requested-frame]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[render-digest]",
+        "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-path]"
+      ]
+    },
+    {
+      "type": "",
+      "message": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+      "count": 5,
+      "nodeids": [
+        "tests/test_onboarding_parity.py::test_editorial_arrange_is_inspectable_via_get_capability",
+        "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_provenance",
+        "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_safety_declaration",
+        "tests/test_onboarding_parity.py::test_capability_schema_is_json_serializable",
+        "tests/test_onboarding_parity.py::test_provenance_is_populated_on_editorial_arrange"
+      ]
+    },
+    {
+      "type": "",
+      "message": "AssertionError: editorial.arrange not found in discovery. Executor ids: ['generation.generate_audio', 'generation.generate_image', 'generation.generate_image_cloud_i2i', 'generation.generate_image_codex', 'generation.generate_image_edit', 'generation.generate_image_openai', 'generation.generate_image_upscale', 'generation.generate_speech', 'generation.generate_video', 'hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search', 'rendering.assemble_timeline', 'rendering.html_canvas_effect', 'rendering.render', 'rendering.sprite_sheet', 'rendering.timeline_export_plan', 'rendering.timeline_prepare_import', 'rendering.timeline_storyboard', 'runpod.claim', 'runpod.exec', 'runpod.keep', 'runpod.ls', 'runpod.provision', 'runpod.pull', 'runpod.release', 'runpod.session', 'runpod.setup', 'runpod.status', 'runpod.teardown', 'training.dataset_build', 'training.pool_build', 'training.pool_merge', 'training.search_loras', 'training.training_run', 'vibecomfy.character_animation', 'vibecomfy.edit', 'vibecomfy.import', 'vibecomfy.inspect', 'vibecomfy.run', 'vibecomfy.validate', 'vibecomfy.video_enhance', 'wan2gp.generate_video', 'wan2gp.validate_settings']",
+      "count": 1,
+      "nodeids": [
+        "tests/test_onboarding_parity.py::test_editorial_arrange_is_discoverable_via_discover"
+      ]
+    }
+  ],
+  "limitations": "No XML artifact is available for opt-in; testcase IDs and messages were taken from the raw pytest short summary, and full assertion details may not be present there.",
+  "triage_method": "Exact G1 testcase match or same base ID with parameter variation only; otherwise new relative to G1. Plan 38/55 remain WAITING unless exact audited inventory row establishes ownership.",
+  "g1_exact_reconciliation": {
+    "baseline_source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+    "baseline_run": "G1 Lanes run 43888589840 at ab95803ce28fa51eec937b4074f5ec0f0439b98a; integration-4 uses late shard-4 supplement job 133451220087",
+    "exact_prior_failure_error_ids": 12,
+    "exact_id_transitions": {
+      "failed_persists_same_status": 12
+    },
+    "transition_groups": [
+      {
+        "prior_outcome": "FAILED",
+        "current_outcome": "FAILED",
+        "count": 12,
+        "ids": [
+          "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[None]",
+          "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[render-digest]",
+          "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[requested-frame]",
+          "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[saved-revision]",
+          "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-bytes]",
+          "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-path]",
+          "tests/test_onboarding_parity.py::test_capability_schema_is_json_serializable",
+          "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_provenance",
+          "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_safety_declaration",
+          "tests/test_onboarding_parity.py::test_editorial_arrange_is_discoverable_via_discover",
+          "tests/test_onboarding_parity.py::test_editorial_arrange_is_inspectable_via_get_capability",
+          "tests/test_onboarding_parity.py::test_provenance_is_populated_on_editorial_arrange"
+        ]
+      }
+    ],
+    "current_red_exact_prior_ids": 12,
+    "current_red_not_in_prior_red_ids": 0,
+    "current_red_not_in_prior_red_semantics": "No exact prior failed/error ID. This does not mean the test is new or previously passing; the saved baseline here contains red IDs only.",
+    "prior_red_ids_not_in_current_xml": 0
+  },
+  "prior_failure_error_records": [
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[None]",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-bytes]",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[saved-revision]",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[requested-frame]",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[render-digest]",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/integrations/test_c06_public_timeline_visualizer.py::test_saved_actual_filmstrip_v2_composed_capture_readback[sidecar-path]",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "Failed: provide the saved actual public C06 frame-index artifact for affected readback replay",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_is_discoverable_via_discover",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "AssertionError: editorial.arrange not found in discovery. Executor ids: ['generation.generate_audio', 'generation.generate_image', 'generation.generate_image_cloud_i2i', 'generation.generate_image_codex', 'generation.generate_image_edit', 'generation.generate_image_openai', 'generation.generate_image_upscale', 'generation.generate_speech', 'generation.generate_video', 'hivemind.contribute', 'hivemind.get_item', 'hivemind.ingest_article', 'hivemind.ingest_workflow', 'hivemind.ingest_youtube', 'hivemind.refresh_media', 'hivemind.search', 'rendering.assemble_timeline', 'rendering.html_canvas_effect', 'rendering.render', 'rendering.sprite_sheet', 'rendering.timeline_export_plan', 'rendering.timeline_prepare_import', 'rendering.timeline_storyboard', 'runpod.claim', 'runpod.exec', 'runpod.keep', 'runpod.ls', 'runpod.provision', 'runpod.pull', 'runpod.release', 'runpod.session', 'runpod.setup', 'runpod.status', 'runpod.teardown', 'training.dataset_build', 'training.pool_build', 'training.pool_merge', 'training.search_loras', 'training.training_run', 'vibecomfy.character_animation', 'vibecomfy.edit', 'vibecomfy.import', 'vibecomfy.inspect', 'vibecomfy.run', 'vibecomfy.validate', 'vibecomfy.video_enhance', 'wan2gp.generate_video', 'wan2gp.validate_settings']",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_is_inspectable_via_get_capability",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_provenance",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_editorial_arrange_handle_has_safety_declaration",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_capability_schema_is_json_serializable",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "nodeid": "tests/test_onboarding_parity.py::test_provenance_is_populated_on_editorial_arrange",
+      "prior_g1_outcome": "FAILED",
+      "current_outcome": "FAILED",
+      "prior_g1_records": [
+        {
+          "source": "p39-g1-evidence/agent-lanes/lanes-optin-parsed.json",
+          "outcome": "FAILED",
+          "signature": "astrid.sdk.exceptions.CapabilityNotFoundError: unknown executor 'editorial.arrange'; nearest matches: executor:training.pool_merge",
+          "triage": null,
+          "disposition": null
+        }
+      ]
+    }
+  ]
+}

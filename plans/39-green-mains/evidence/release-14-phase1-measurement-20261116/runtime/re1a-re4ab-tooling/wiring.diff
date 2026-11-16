@@ -1,0 +1,30 @@
+diff --git a/.github/workflows/nightly.yml b/.github/workflows/nightly.yml
+index 2d3a892..6199d06 100644
+--- a/.github/workflows/nightly.yml
++++ b/.github/workflows/nightly.yml
+@@ -77,6 +77,13 @@ jobs:
+           echo "Runtime: $runtime_sha"
+           echo "Agent: $agent_sha"
+           printf 'Runtime: `%s`\nAgent: `%s`\n' "$runtime_sha" "$agent_sha" >> "$GITHUB_STEP_SUMMARY"
++      - uses: actions/setup-node@v4
++        with:
++          node-version: "22"
++      - run: npm ci
++        working-directory: packages/typescript
++      - name: Add locked TypeScript compiler to PATH
++        run: echo "$GITHUB_WORKSPACE/packages/typescript/node_modules/.bin" >> "$GITHUB_PATH"
+       - name: Install system media tools
+         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+       - run: python -m pip install -e '.[test]'
+diff --git a/tests/seccomp/container-entrypoint.py b/tests/seccomp/container-entrypoint.py
+index 9617f18..8f19adb 100644
+--- a/tests/seccomp/container-entrypoint.py
++++ b/tests/seccomp/container-entrypoint.py
+@@ -73,6 +73,7 @@ def main() -> int:
+         "-m", "not integration and not darwin_native and not live and not needs_real_pidfd",
+         *sys.argv[1:],
+     ]
++    env["PATH"] = f"{workspace / 'packages/typescript/node_modules/.bin'}{os.pathsep}{env.get('PATH', '')}"
+     result = subprocess.run(command, cwd=workspace, env=env, preexec_fn=drop_privileges, check=False)
+     return result.returncode
+ 

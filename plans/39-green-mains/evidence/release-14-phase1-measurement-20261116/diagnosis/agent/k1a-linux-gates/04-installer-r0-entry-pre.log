@@ -1,0 +1,8 @@
+..............................................F...                       [100%]
+=================================== FAILURES ===================================
+_____________________ test_captures_match_real_r0_evidence _____________________
+tests/test_installer_r0_entry.py::test_captures_match_real_r0_evidence: undeclared skip (Skipped: local R0 evidence is not present).
+A skip must come from a lane in tests/lanes.py: mark the test with the lane's marker; do not call pytest.skip, skipif or importorskip. A dependency the package or lane provides is imported or run plainly.
+=========================== short test summary info ============================
+FAILED tests/test_installer_r0_entry.py::test_captures_match_real_r0_evidence
+1 failed, 49 passed in 37.49s

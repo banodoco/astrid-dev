@@ -1,0 +1,4 @@
+/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv/bin/python
+3.13.5 (main, Jul 23 2025, 00:37:22) [Clang 20.1.4 ]
+/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/venv
+/home/agent/.local/share/uv/python/cpython-3.13-linux-x86_64-gnu/lib/python3.13/ensurepip/__init__.py

@@ -1,0 +1,28 @@
+{
+  "commit": "cfabc7dabeceef6340809db22f895e7952fc8cfd",
+  "count": 22,
+  "remaining_gates": [
+    "tests/core/execution/test_host_cleanup_ack_barrier.py:16 pytest.mark.skipif",
+    "tests/core/generation/test_model_verification_record.py:590 pytest.skip",
+    "tests/core/generation/test_release_python.py:58 pytest.mark.skipif",
+    "tests/core/generation/test_release_python.py:498 pytest.mark.skipif",
+    "tests/core/pack/test_git_environment.py:289 pytest.skip",
+    "tests/core/pack/test_git_environment.py:369 pytest.skip",
+    "tests/core/pack/test_identity.py:56 pytest.skip",
+    "tests/scripts/test_pod_bootstrap.py:115 pytest.mark.skipif",
+    "tests/scripts/test_pod_session.py:41 pytest.skip",
+    "tests/test_boundary_registration_launchd.py:152 pytest.mark.skipif",
+    "tests/test_installed_wheel_smoke.py:25 pytest.skip",
+    "tests/test_installer_pinokio_activation.py:175 pytest.mark.skipif",
+    "tests/test_installer_r0_entry.py:618 pytest.skip",
+    "tests/test_installer_r0_stop.py:237 pytest.skip",
+    "tests/test_installer_r0_stop.py:296 pytest.skip",
+    "tests/test_installer_r0_stop.py:382 pytest.skip",
+    "tests/test_journey_diagnostic_checkpoint.py:242 pytest.skip",
+    "tests/test_journey_diagnostic_checkpoint.py:273 pytest.skip",
+    "tests/test_journey_diagnostic_checkpoint.py:304 pytest.mark.skipif",
+    "tests/test_journey_windows_acl_capture.py:29 pytest.skip",
+    "tests/test_journey_windows_acl_capture.py:69 pytest.mark.skipif",
+    "tests/test_journey_windows_acl_capture.py:114 pytest.skip"
+  ]
+}

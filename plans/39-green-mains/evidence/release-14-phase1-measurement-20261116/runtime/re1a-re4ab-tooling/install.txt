@@ -1,0 +1,11 @@
+Using Python 3.13.5 environment at: /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/venv
+Resolved 1 package in 4ms
+   Building astrid @ file:///workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent
+      Built astrid @ file:///workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent
+Prepared 1 package in 10.99s
+Uninstalled 1 package in 36ms
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 1 package in 313ms
+ ~ astrid==0.1.0 (from file:///workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent)

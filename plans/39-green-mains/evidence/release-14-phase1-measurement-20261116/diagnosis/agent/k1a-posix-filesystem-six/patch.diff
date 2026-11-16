@@ -1,0 +1,70 @@
+diff --git a/tests/core/pack/test_cli_manage.py b/tests/core/pack/test_cli_manage.py
+index 700b53a7..15822053 100644
+--- a/tests/core/pack/test_cli_manage.py
++++ b/tests/core/pack/test_cli_manage.py
+@@ -41,7 +41,7 @@ def test_selected_managed_descriptor_requires_exact_installed_context(tmp_path,
+     assert cli_manage._managed_toolchain() is None
+ 
+ 
+-@pytest.mark.skipif(os.name == 'nt', reason='POSIX mode and symlink checks')
++@pytest.mark.posix_native
+ def test_implicit_descriptor_refuses_writable_and_aliases(tmp_path, monkeypatch):
+     root, version, descriptor = managed(tmp_path, monkeypatch)
+     descriptor.chmod(0o666)
+diff --git a/tests/core/pack/test_git_environment.py b/tests/core/pack/test_git_environment.py
+index 474d7ca7..d954acfe 100644
+--- a/tests/core/pack/test_git_environment.py
++++ b/tests/core/pack/test_git_environment.py
+@@ -282,7 +282,7 @@ def test_planted_windows_ssh_in_working_directory_is_not_resolved(tmp_path: Path
+     assert env["PATH"] == str(real_ssh.parent)
+ 
+ 
+-@pytest.mark.skipif(os.name == "nt", reason="POSIX shell and planted executable")
++@pytest.mark.posix_native
+ def test_planted_ssh_in_working_directory_never_runs(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+     real_git = shutil.which("git")
+     if real_git is None:
+@@ -342,7 +342,7 @@ def test_unusable_recorded_git_falls_back_to_absolute_path_lookup(tmp_path: Path
+     assert found == str(real)
+ 
+ 
+-@pytest.mark.skipif(os.name == "nt", reason="POSIX execute permission")
++@pytest.mark.posix_native
+ def test_recorded_git_that_lost_its_execute_bit_falls_back_to_absolute_path_lookup(tmp_path: Path) -> None:
+     recorded = _executable(tmp_path / "Program Files" / "Git" / "cmd" / "git")
+     recorded.chmod(0o644)
+diff --git a/tests/test_installer_pack_cleanup.py b/tests/test_installer_pack_cleanup.py
+index 448be64b..2cc944fa 100644
+--- a/tests/test_installer_pack_cleanup.py
++++ b/tests/test_installer_pack_cleanup.py
+@@ -22,7 +22,7 @@ def _deny_readonly_unlink(monkeypatch, seen):
+     monkeypatch.setattr(os, "unlink", unlink)
+ 
+ 
+-@pytest.mark.skipif(os.name == "nt", reason="POSIX symlink semantics")
++@pytest.mark.posix_native
+ def test_posix_failed_removal_never_chmods_a_symlink_target_outside_the_tree(tmp_path, monkeypatch):
+     outside = tmp_path / "outside.txt"
+     outside.write_text("keep")
+diff --git a/tests/test_installer_sources.py b/tests/test_installer_sources.py
+index 92731bf8..9fab4216 100644
+--- a/tests/test_installer_sources.py
++++ b/tests/test_installer_sources.py
+@@ -841,7 +841,7 @@ def test_manifest_lifecycle_version_satisfies_pack_declaration():
+     assert LIFECYCLE_PIN["version"] == tools.LIFECYCLE_VERSION
+ 
+ 
+-@pytest.mark.skipif(os.name == "nt", reason="the POSIX secure step is not used on Windows")
++@pytest.mark.posix_native
+ def test_missing_runtime_lock_names_the_missing_path_not_aliasing(tmp_path):
+     from astrid.core.rendering._local_schema import READER_INPUTS, SCHEMA_RELATIVE_PATH
+     from astrid.installer import backend as backend_module
+@@ -859,7 +859,7 @@ def test_missing_runtime_lock_names_the_missing_path_not_aliasing(tmp_path):
+     assert str(caught.value) == "staged Agent is missing: runtime.lock.json"
+ 
+ 
+-@pytest.mark.skipif(os.name == "nt", reason="the POSIX secure step is not used on Windows")
++@pytest.mark.posix_native
+ @pytest.mark.parametrize("missing", ["candidate", "py", "lib", "site-packages"])
+ def test_missing_candidate_or_product_root_directory_is_named(tmp_path, missing):
+     """The message names the directory that is missing, never "py" for every one of them."""

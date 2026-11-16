@@ -1,0 +1,4 @@
+node_count_before=50 node_count_after=50 id_multiset_equal=True
+outcomes_and_signatures_equal=True node_differences=0
+before_statuses={'pass': 49, 'failure': 1}
+after_statuses={'pass': 49, 'failure': 1}

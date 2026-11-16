@@ -1,0 +1,15 @@
+{
+  "tests/test_boundary_registration_launchd.py": {
+    "module_ast_equal_after_gate_normalization": true,
+    "target_functions": [
+      "test_launchd_sigkill_after_publication_link_replays"
+    ]
+  },
+  "tests/test_installer_r0_stop.py": {
+    "module_ast_equal_after_gate_normalization": true,
+    "target_functions": [
+      "test_killed_after_disable_next_invocation_recovers",
+      "test_launchd_sigkill_at_each_stop_step_then_recover"
+    ]
+  }
+}

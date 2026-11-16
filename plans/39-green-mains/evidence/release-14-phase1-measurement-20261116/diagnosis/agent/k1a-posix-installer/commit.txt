@@ -1,0 +1,12 @@
+commit 6c06460d3e7b46001f9d57e5b011cb114bfa23d0
+Author:     Codex <codex@openai.com>
+AuthorDate: Mon Nov 16 19:41:27 2026 +0000
+Commit:     Codex <codex@openai.com>
+CommitDate: Mon Nov 16 19:41:27 2026 +0000
+
+    Mark POSIX installer tests with native lane
+
+ tests/installer/test_installed_lock_resolution.py | 3 +--
+ tests/installer/test_umask_0002_schema.py         | 3 +--
+ tests/test_installer_git_executable.py            | 6 +++---
+ 3 files changed, 5 insertions(+), 7 deletions(-)

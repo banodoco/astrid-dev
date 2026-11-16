@@ -1,0 +1,24 @@
+{
+  "query_url": "https://api.github.com/repos/banodoco/astrid-app/actions/runs?branch=release%2F14%2Fplan-39&head_sha=e94d7ab53f22c03cec6856ae469d952912b4ad52&per_page=100",
+  "repo": "banodoco/astrid-app",
+  "branch_filter": "release/14/plan-39",
+  "head_sha_filter": "e94d7ab53f22c03cec6856ae469d952912b4ad52",
+  "total_count": 1,
+  "workflow_runs": [
+    {
+      "id": 43938449477,
+      "name": "Tests",
+      "path": ".github/workflows/test.yml",
+      "head_branch": "release/14/plan-39",
+      "head_sha": "e94d7ab53f22c03cec6856ae469d952912b4ad52",
+      "event": "push",
+      "status": "queued",
+      "conclusion": null,
+      "run_attempt": 1,
+      "created_at": "2026-11-16T19:21:15Z",
+      "updated_at": "2026-11-16T19:21:15Z",
+      "tree_id": "c384a4bd35a68773ce6472ea730d8c76b55d4a6e",
+      "html_url": "https://github.com/banodoco/astrid-app/actions/runs/43938449477"
+    }
+  ]
+}

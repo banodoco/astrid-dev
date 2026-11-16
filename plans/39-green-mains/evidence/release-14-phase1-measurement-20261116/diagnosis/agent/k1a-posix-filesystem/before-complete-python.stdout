@@ -1,0 +1,21 @@
+....F.....                                                               [100%]
+=================================== FAILURES ===================================
+_______ test_stage_rejects_foreign_guarded_directory_before_declaration ________
+
+staged_installer = namespace(backend=<astrid.installer.backend.Backend object at 0x7ff4d1ba16a0>, root=PosixPath('/workspace/scratch/cd53...   "VideoArtifact",\n    "RenderResult",\n    "RendererError",\n    "BackendConfig",\n    "Attachment",\n]\n', 33204)})
+
+    def test_stage_rejects_foreign_guarded_directory_before_declaration(staged_installer):
+        if os.name == "nt":
+            pytest.skip("POSIX ownership")
+        state = staged_installer
+        state.damage_at = "foreign"
+        with pytest.raises(ValueError, match="foreign owner or type"):
+            state.backend.stage(state.manifest, state.root, state.data)
+>       candidate, = (state.root / "versions").iterdir()
+        ^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+tests/test_installer_installed_schema.py:419: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_installer_installed_schema.py::test_stage_rejects_foreign_guarded_directory_before_declaration
+1 failed, 9 passed in 17.46s

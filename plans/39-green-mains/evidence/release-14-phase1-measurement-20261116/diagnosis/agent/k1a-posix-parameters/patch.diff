@@ -1,0 +1,64 @@
+diff --git a/tests/core/generation/test_model_verification_record.py b/tests/core/generation/test_model_verification_record.py
+index fd95f966..b0285831 100644
+--- a/tests/core/generation/test_model_verification_record.py
++++ b/tests/core/generation/test_model_verification_record.py
+@@ -581,9 +581,8 @@ def test_prior_schema_record_is_a_miss(model, schema):
+     assert json.loads(saved.read_text())['schema'] == 'astrid.model-verification.v3'
+ 
+ 
++@pytest.mark.posix_native
+ def test_non_utf8_filename_hashes_then_reuses(tmp_path, monkeypatch):
+-    if os.name != 'posix':
+-        pytest.skip('requires POSIX surrogateescape filenames')
+     name = os.fsdecode(b'weight-\xff.bin')
+     try:
+         m = make_model(tmp_path, monkeypatch, name)
+diff --git a/tests/core/pack/test_verified_relocations.py b/tests/core/pack/test_verified_relocations.py
+index 5acdf5ec..24500799 100644
+--- a/tests/core/pack/test_verified_relocations.py
++++ b/tests/core/pack/test_verified_relocations.py
+@@ -159,7 +159,10 @@ def test_personal_relocation_always_rechecks_digest(personal_snapshot, verify_di
+         validate_selected_pack_map(selected, verify_digests=verify_digests, verified_relocations=relocations)
+ 
+ 
+-@pytest.mark.parametrize("forgery", ["original", "selection", "digest", "reused", "outside", "public"])
++@pytest.mark.parametrize("forgery", [
++    "original", "selection", "digest", "reused", "outside",
++    pytest.param("public", marks=pytest.mark.posix_native),
++])
+ def test_forged_personal_relocation_is_rejected(personal_snapshot, tmp_path, forgery):
+     from runtime_protocol import platform
+     import astrid.packs
+@@ -185,8 +188,6 @@ def test_forged_personal_relocation_is_rejected(personal_snapshot, tmp_path, for
+         shutil.copytree(snapshot, other)
+         selected["personal"]["root"] = relocations["personal"]["root"] = str(other)
+     else:
+-        if sys.platform == "win32":
+-            pytest.skip("POSIX permission forgery; native Windows DACL is checked by platform")
+         snapshot.parent.chmod(0o755)
+     with pytest.raises(ValueError, match="relocation|personal|snapshot"):
+         validate_selected_pack_map(selected, verified_relocations=relocations)
+diff --git a/tests/packs/runpod/test_failure_diagnostics.py b/tests/packs/runpod/test_failure_diagnostics.py
+index f3eddea0..df571dfc 100644
+--- a/tests/packs/runpod/test_failure_diagnostics.py
++++ b/tests/packs/runpod/test_failure_diagnostics.py
+@@ -316,8 +316,8 @@ def test_bounded_observer_has_no_token_in_process_metadata():
+ 
+ 
+ @pytest.mark.parametrize('mode', [
+-    pytest.param('partial', marks=pytest.mark.skipif(sys.platform == 'win32', reason='raw pipe FD is POSIX-only')),
+-    pytest.param('oversized', marks=pytest.mark.skipif(sys.platform == 'win32', reason='raw pipe FD is POSIX-only')),
++    pytest.param('partial', marks=pytest.mark.posix_native),
++    pytest.param('oversized', marks=pytest.mark.posix_native),
+     'late', 'eof',
+ ])
+ def test_bounded_observer_rejects_malformed_or_late_child_frame(tmp_path, monkeypatch, mode):
+@@ -338,7 +338,7 @@ def test_bounded_observer_rejects_malformed_or_late_child_frame(tmp_path, monkey
+     assert {child.pid for child in multiprocessing.active_children()} == before
+ 
+ 
+-@pytest.mark.skipif(sys.platform == 'win32', reason='raw partial-frame pipe writing is POSIX-only')
++@pytest.mark.posix_native
+ @pytest.mark.parametrize('early_abort', [False, True])
+ def test_partial_ipc_from_unkillable_caller_returns_with_pending_fence(monkeypatch, early_abort):
+     import multiprocessing

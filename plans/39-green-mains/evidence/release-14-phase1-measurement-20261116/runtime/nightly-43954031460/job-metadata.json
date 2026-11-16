@@ -1,0 +1,30 @@
+{
+  "id": 133603706731,
+  "run_id": 43954031460,
+  "name": "integration",
+  "status": "completed",
+  "conclusion": "failure",
+  "steps": [
+    {
+      "number": 14,
+      "name": "Run python -m pip install -e \"$ASTRID_CHECKOUT\"",
+      "conclusion": "success"
+    },
+    {
+      "number": 15,
+      "name": "Run nightly integration tests",
+      "conclusion": "failure"
+    },
+    {
+      "number": 16,
+      "name": "Summarize test result XML",
+      "conclusion": "success"
+    },
+    {
+      "number": 17,
+      "name": "Upload test results",
+      "conclusion": "success"
+    }
+  ],
+  "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43954031460/job/133603706731"
+}

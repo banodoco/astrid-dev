@@ -1,0 +1,6 @@
+{
+  "count_correction": "The card said expected four, but all named selectors contain six parameterized node IDs; root confirmed all six exact cases govern.",
+  "before_after_nodeids_equal": true,
+  "count": 6,
+  "all_passed": true
+}

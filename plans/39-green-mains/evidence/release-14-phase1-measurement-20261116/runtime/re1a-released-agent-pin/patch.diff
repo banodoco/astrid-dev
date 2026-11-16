@@ -1,0 +1,7 @@
+diff --git a/tests/astrid-agent.pin b/tests/astrid-agent.pin
+index 1d6b4fe..40aa65f 100644
+--- a/tests/astrid-agent.pin
++++ b/tests/astrid-agent.pin
+@@ -1 +1 @@
+-b05ac03a5bcab278bccf99d85b49f4037b5dec10
++0e1543e0da2215db9cb3320cfd1083174c3c62a9

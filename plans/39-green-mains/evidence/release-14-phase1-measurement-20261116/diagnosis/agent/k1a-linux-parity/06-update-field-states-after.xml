@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="48" time="37.849" timestamp="2026-11-16T21:38:39.640230+00:00" hostname="b10e5ff1e026"><testcase classname="tests.test_update_from_field_states" name="test_handed_off_release1_update_reaches_the_target_release" time="1.729" /><testcase classname="tests.test_update_from_field_states" name="test_update_that_installs_nothing_fails_its_post_condition" time="1.403" /><testcase classname="tests.test_update_from_field_states" name="test_install_line_on_handed_off_install_repairs_and_applies_choices" time="1.547" /><testcase classname="tests.test_update_from_field_states" name="test_rollback_after_normalisation_restores_r0_and_keeps_both_roots" time="1.508" /><testcase classname="tests.test_update_from_field_states" name="test_install_line_clears_a_rolled_back_handoff_once_the_r1_copy_is_preserved" time="1.659" /><testcase classname="tests.test_update_from_field_states" name="test_rollback_after_a_post_handoff_update_refuses_without_changes" time="1.831" /><testcase classname="tests.test_update_from_field_states" name="test_resolver_reports_the_field_state" time="1.193" /><testcase classname="tests.test_update_from_field_states" name="test_recovery_only_not_updated_headline_is_clear_and_never_bare_did_not_finish" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_exit_code_contract_read_by_bootstraps_pinokio_and_journeys" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_plain_install_that_recovers_an_interrupted_update_is_repaired" time="1.095" /><testcase classname="tests.test_update_from_field_states" name="test_update_that_only_recovers_an_interrupted_update_is_not_updated" time="1.144" /><testcase classname="tests.test_update_from_field_states" name="test_known_r0_leftover_is_stopped_its_files_kept_and_the_update_proceeds" time="1.400" /><testcase classname="tests.test_update_from_field_states" name="test_unknown_second_runtime_is_refused_before_anything_is_stopped" time="1.349" /><testcase classname="tests.test_update_from_field_states" name="test_real_live_probe_reads_runtime_health_identity" time="2.251" /><testcase classname="tests.test_update_from_field_states" name="test_launcher_admits_r1_when_normalisation_was_cut_between_marker_and_selection" time="1.137" /><testcase classname="tests.test_update_from_field_states" name="test_restore_archive_cut_between_link_and_unlink_is_finished_by_the_next_run" time="1.343" /><testcase classname="tests.test_update_from_field_states" name="test_a_failing_run_after_a_success_leaves_no_stale_receipt" time="1.663" /><testcase classname="tests.test_update_from_field_states" name="test_a_finished_local_update_journal_reads_as_direct" time="1.219" /><testcase classname="tests.test_update_from_field_states" name="test_local_update_operates_the_r1_label_after_normalisation" time="1.170" /><testcase classname="tests.test_update_from_field_states" name="test_retained_versions_keep_every_version_when_the_move_cannot_be_read" time="1.325" /><testcase classname="tests.test_update_from_field_states" name="test_update_whose_runtime_was_not_restarted_reports_runtime_not_running" time="1.151" /><testcase classname="tests.test_update_from_field_states" name="test_handle_refuses_an_unnormalised_complete_journal_without_changes" time="1.422" /><testcase classname="tests.test_update_from_field_states" name="test_normalisation_replaces_the_release1_launcher_before_rewriting_records" time="1.549" /><testcase classname="tests.test_update_from_field_states" name="test_normalisation_that_cannot_replace_the_launcher_changes_nothing" time="1.125" /><testcase classname="tests.test_update_from_field_states" name="test_release1_launcher_refuses_normalised_records" time="1.199" /><testcase classname="tests.test_update_from_field_states" name="test_every_non_zero_outcome_ends_with_next_and_details" time="0.002"><failure message="AssertionError: assert 'Details: see... this window.' == 'Details: sho...as not used).'&#10;  &#10;  - Details: shown above in this window (the installer log was not used).&#10;  + Details: see the error in this window.">def test_every_non_zero_outcome_ends_with_next_and_details():
+        """A Release 1 Runtime cannot show the receipt in the App: the terminal must say what to do."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        log = "/home/hannah/Library/Logs/Astrid Runtime/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            for reason in (*REASONS, None):
+                outcome = Outcome(kind, 1, 1, 2, reason, "update", log)
+                lines = outcome.headline()
+                assert outcome.exit_code != 0, (kind, reason)
+                assert lines[-2].startswith("Next: ") and lines[-1] == f"Details: {log}", (kind, reason, lines)
+                assert sum(line.startswith("Next: ") for line in lines) == 1
+            rolled = Outcome("rolled-back", 1, 1, 2, "error", "update", log).headline()
+            assert rolled[-3].startswith("Run the same command again")
+        console = Outcome("failed", None, None, 2, "error").headline()
+&gt;       assert console[-1] == "Details: shown above in this window (the installer log was not used)."
+E       AssertionError: assert 'Details: see... this window.' == 'Details: sho...as not used).'
+E         
+E         - Details: shown above in this window (the installer log was not used).
+E         + Details: see the error in this window.
+
+tests/test_update_from_field_states.py:597: AssertionError</failure></testcase><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[acknowledgement-unknown]" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[autostart-off]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[busy]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[consent-required]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[declined]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[disk-space]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[error]" time="0.001"><failure message="AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', 'Why: setup stopped with an ...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])&#10;assert ['Next: run t.../install.log'] == ['Next: open .../install.log']&#10;  &#10;  At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != 'Next: open astrid.haus &gt; Settings &gt; Updates &gt; Download diagnostics, and send it to support.'&#10;  Use -v to get more diff">reason = 'error'
+
+    @pytest.mark.parametrize("reason", sorted(EXPECTED_NEXT))
+    def test_each_reason_has_its_own_next_step(reason):
+        """Plan 29 R11 card 1: the Next line is the reason's own action; support only for bugs and errors."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        assert set(REASONS) == set(EXPECTED_NEXT)  # every reason in the enum is covered, none invented
+        log = "/tmp/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            lines = Outcome(kind, 1, 1, 2, reason, "update", log).headline()
+&gt;           assert lines[-2:] == [EXPECTED_NEXT[reason], f"Details: {log}"], (kind, lines)
+E           AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', 'Why: setup stopped with an ...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])
+E           assert ['Next: run t.../install.log'] == ['Next: open .../install.log']
+E             
+E             At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != 'Next: open astrid.haus &gt; Settings &gt; Updates &gt; Download diagnostics, and send it to support.'
+E             Use -v to get more diff
+
+tests/test_update_from_field_states.py:646: AssertionError</failure></testcase><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[installer-bug]" time="0.002"><failure message="AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', 'Why: the installer finished...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])&#10;assert ['Next: run t.../install.log'] == ['Next: open .../install.log']&#10;  &#10;  At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != 'Next: open astrid.haus &gt; Settings &gt; Updates &gt; Download diagnostics, and send it to support.'&#10;  Use -v to get more diff">reason = 'installer-bug'
+
+    @pytest.mark.parametrize("reason", sorted(EXPECTED_NEXT))
+    def test_each_reason_has_its_own_next_step(reason):
+        """Plan 29 R11 card 1: the Next line is the reason's own action; support only for bugs and errors."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        assert set(REASONS) == set(EXPECTED_NEXT)  # every reason in the enum is covered, none invented
+        log = "/tmp/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            lines = Outcome(kind, 1, 1, 2, reason, "update", log).headline()
+&gt;           assert lines[-2:] == [EXPECTED_NEXT[reason], f"Details: {log}"], (kind, lines)
+E           AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', 'Why: the installer finished...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])
+E           assert ['Next: run t.../install.log'] == ['Next: open .../install.log']
+E             
+E             At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != 'Next: open astrid.haus &gt; Settings &gt; Updates &gt; Download diagnostics, and send it to support.'
+E             Use -v to get more diff
+
+tests/test_update_from_field_states.py:646: AssertionError</failure></testcase><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[legacy-update-record]" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[needs-repair]" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[other-runtime-running]" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[pinokio-managed]" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[recovered-previous-version]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[refused]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[runtime-not-running]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[self-update-too-old]" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[source-checkout]" time="0.001" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[unsupported-service-manager]" time="0.002" /><testcase classname="tests.test_update_from_field_states" name="test_each_reason_has_its_own_next_step[windows-upgrade-unsupported]" time="0.002"><failure message="AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', &quot;Why: upgrading from an earl...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])&#10;assert ['Next: run t.../install.log'] == ['Next: this .../install.log']&#10;  &#10;  At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != &quot;Next: this Windows version can't be upgraded this way. Open astrid.haus &gt; Settings &gt; Updates &gt; Download diagnostics to see what is installed.&quot;&#10;  Use -v to get more diff">reason = 'windows-upgrade-unsupported'
+
+    @pytest.mark.parametrize("reason", sorted(EXPECTED_NEXT))
+    def test_each_reason_has_its_own_next_step(reason):
+        """Plan 29 R11 card 1: the Next line is the reason's own action; support only for bugs and errors."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        assert set(REASONS) == set(EXPECTED_NEXT)  # every reason in the enum is covered, none invented
+        log = "/tmp/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            lines = Outcome(kind, 1, 1, 2, reason, "update", log).headline()
+&gt;           assert lines[-2:] == [EXPECTED_NEXT[reason], f"Details: {log}"], (kind, lines)
+E           AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', "Why: upgrading from an earl...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])
+E           assert ['Next: run t.../install.log'] == ['Next: this .../install.log']
+E             
+E             At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != "Next: this Windows version can't be upgraded this way. Open astrid.haus &gt; Settings &gt; Updates &gt; Download diagnostics to see what is installed."
+E             Use -v to get more diff
+
+tests/test_update_from_field_states.py:646: AssertionError</failure></testcase><testcase classname="tests.test_update_from_field_states" name="test_local_update_normalises_a_finished_handoff_and_updates_r1" time="1.773" /><testcase classname="tests.test_update_from_field_states" name="test_local_update_refuses_when_the_handoff_cannot_be_normalised" time="0.972" /><testcase classname="tests.test_update_from_field_states" name="test_local_update_refuses_an_unfinished_handoff_without_changes" time="1.226" /></testsuite></testsuites>

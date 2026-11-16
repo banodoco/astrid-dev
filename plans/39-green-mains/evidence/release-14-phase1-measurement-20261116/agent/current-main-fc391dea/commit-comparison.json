@@ -1,0 +1,217 @@
+{
+  "commit": {
+    "sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+    "message": "Merge pull request #372 from banodoco/release/14/baseline-gates\n\nBaseline gates pass on an improvement (banodoco/astrid-dev#742)",
+    "author_date": "2026-11-16T21:07:56Z",
+    "committer_date": "2026-11-16T21:07:56Z",
+    "parents": [
+      "ce5fb85bd2afeb9266a2ba159b6be315c27e2b1f",
+      "52aa9a4f170c24760d1e2f5fb0450c67084c14a6"
+    ],
+    "verified": true
+  },
+  "comparison": {
+    "base": "ab95803ce28fa51eec937b4074f5ec0f0439b98a",
+    "merge_base": "ab95803ce28fa51eec937b4074f5ec0f0439b98a",
+    "ahead_by": 13,
+    "behind_by": 0,
+    "total_commits": 13,
+    "files_changed": 20,
+    "files": [
+      {
+        "filename": ".github/workflows/ci.yml",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2
+      },
+      {
+        "filename": "astrid/core/execution/generic_host.py",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2
+      },
+      {
+        "filename": "astrid/core/generation/asset_gaps.py",
+        "status": "modified",
+        "additions": 42,
+        "deletions": 1,
+        "changes": 43
+      },
+      {
+        "filename": "astrid/installer/backend.py",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4
+      },
+      {
+        "filename": "astrid/installer/core.py",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3
+      },
+      {
+        "filename": "astrid/installer/outcome.py",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 2,
+        "changes": 7
+      },
+      {
+        "filename": "astrid/installer/tools.py",
+        "status": "modified",
+        "additions": 59,
+        "deletions": 10,
+        "changes": 69
+      },
+      {
+        "filename": "scripts/reshape/baselines/README.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3
+      },
+      {
+        "filename": "scripts/reshape/compare_structure_baseline.py",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 5,
+        "changes": 10
+      },
+      {
+        "filename": "scripts/reshape/count_baseline.py",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 10,
+        "changes": 15
+      },
+      {
+        "filename": "tests/core/execution/test_producer_evidence_transport_f06.py",
+        "status": "modified",
+        "additions": 43,
+        "deletions": 1,
+        "changes": 44
+      },
+      {
+        "filename": "tests/core/generation/test_attached_model_download.py",
+        "status": "modified",
+        "additions": 92,
+        "deletions": 0,
+        "changes": 92
+      },
+      {
+        "filename": "tests/reshape/test_compare_baselines.py",
+        "status": "modified",
+        "additions": 107,
+        "deletions": 8,
+        "changes": 115
+      },
+      {
+        "filename": "tests/test_handoff_sentence.py",
+        "status": "modified",
+        "additions": 17,
+        "deletions": 3,
+        "changes": 20
+      },
+      {
+        "filename": "tests/test_installer_shim.py",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 2,
+        "changes": 5
+      },
+      {
+        "filename": "tests/test_installer_sources.py",
+        "status": "modified",
+        "additions": 33,
+        "deletions": 2,
+        "changes": 35
+      },
+      {
+        "filename": "tests/test_installer_version_ids.py",
+        "status": "added",
+        "additions": 52,
+        "deletions": 0,
+        "changes": 52
+      },
+      {
+        "filename": "tests/test_installer_windows_paths.py",
+        "status": "modified",
+        "additions": 62,
+        "deletions": 5,
+        "changes": 67
+      },
+      {
+        "filename": "tests/test_windows_path_budget.py",
+        "status": "added",
+        "additions": 261,
+        "deletions": 0,
+        "changes": 261
+      },
+      {
+        "filename": "tests/test_windows_storage_path_budget.py",
+        "status": "added",
+        "additions": 114,
+        "deletions": 0,
+        "changes": 114
+      }
+    ],
+    "commits": [
+      {
+        "sha": "6c7c0d1dcc40f4ba97c45c0354c9cc9d15335e85",
+        "message": "Verify confirmed model files on download rerun (#722)"
+      },
+      {
+        "sha": "c73043bf84362442340c5a423b417d0c4f9c9064",
+        "message": "Shorten content-addressed generation manifest paths (#671)"
+      },
+      {
+        "sha": "1e17fc09a547753124d24b9cfcadad9358129989",
+        "message": "Shorten installation directories and project VibeComfy source (#672)"
+      },
+      {
+        "sha": "51a74074fb90f07d9a6164dc61e66076d8d8d698",
+        "message": "Test default Windows path budgets (#673)"
+      },
+      {
+        "sha": "a83b03829cef8ecb7ecbc71561274ae9c6c1ad74",
+        "message": "Allow baseline gates to pass on improvements"
+      },
+      {
+        "sha": "52aa9a4f170c24760d1e2f5fb0450c67084c14a6",
+        "message": "Allow resolved structure entries in baseline test"
+      },
+      {
+        "sha": "a525e87e4bf66558af627cb3773ae4740f78a6b9",
+        "message": "Respect unattended installs and show runnable setup hints (#723)"
+      },
+      {
+        "sha": "e16ee112d537139d17e72ff2945118a375ce0080",
+        "message": "Merge pull request #363 from banodoco/release/14/short-result-manifest"
+      },
+      {
+        "sha": "f81bc15f51a2053da8659726a0ee7d448304c498",
+        "message": "Merge pull request #370 from banodoco/release/14/installer-browser-control"
+      },
+      {
+        "sha": "b68d5f82166b775b3946650f728d28b8ca289089",
+        "message": "Merge pull request #364 from banodoco/release/14/short-install-paths"
+      },
+      {
+        "sha": "e5aceaffbeac1dc30358171b92b7b827d5a31881",
+        "message": "Merge pull request #365 from banodoco/release/14/windows-path-budget"
+      },
+      {
+        "sha": "ce5fb85bd2afeb9266a2ba159b6be315c27e2b1f",
+        "message": "Merge pull request #362 from banodoco/release/14/download-rerun"
+      },
+      {
+        "sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+        "message": "Merge pull request #372 from banodoco/release/14/baseline-gates"
+      }
+    ]
+  }
+}

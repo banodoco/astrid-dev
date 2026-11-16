@@ -1,0 +1,6 @@
+Before reference: /workspace/scratch/cd53b069f320/p39-g2-evidence/agent/k1a-posix-filesystem/before-complete-python.stdout. The retained seven-gate run reported 9 passed and 1 failed when unpacking versions.iterdir() after the expected foreign-owner ValueError.
+
+Product commit 896544e9558bf9b3a30d3eb9f6815b9082deb28f explicitly describes removing the candidate folder left by failed prepare. Its backend diff and current Backend.stage show creation of a candidate, delegation to _stage, removal of that candidate on failure, and re-raising the original error. The fixture records product_root within that candidate before simulating foreign ownership; the test derives the candidate from that provenance. It retains the ValueError message, services.json and profile.json absence, and absence of service_declaration calls, and asserts candidate cleanup and unchanged bytes and modes of the external hardlinked cache. The module already has the linux_native mark, making the inner Windows skip redundant.
+
+Focused command: bash scripts/worker-env/agent-pytest.sh -q tests/test_installer_installed_schema.py::test_stage_rejects_foreign_guarded_directory_before_declaration
+See after.stdout, after.stderr and after.exit. No broad suite was run.

@@ -1,0 +1,19 @@
+Attempt 1:
+Command: git -C /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent fetch --no-tags /workspace/scratch/cd53b069f320/p39-repair/astrid-agent 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+Result: exit 128
+Output: remote: warning: lazy fetching disabled; some objects may not be available
+remote: fatal: could not fetch 6ef10e062bf0825ddcdb5668ca3acfd59b74a286 from promisor remote
+remote: error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption on the remote side.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: protocol error: bad pack header
+
+Attempt 2:
+Command: GIT_NO_LAZY_FETCH=1 git -C /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent fetch --no-tags --depth=1 /workspace/scratch/cd53b069f320/p39-repair/astrid-agent 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+Result: exit 128
+Output: remote: warning: lazy fetching disabled; some objects may not be available
+remote: fatal: could not fetch 8b047b6ee6b166ee516370a1fe9661088cfd9df6 from promisor remote
+error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption on the remote side.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: protocol error: bad pack header

@@ -1,0 +1,9 @@
+Repository: /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime
+Branch: p39/re1a-released-agent-pin
+Base: ac9e6d2e7f6a0a6961d7a2d924040f61832925d1
+Commit: eeb84ef511272e772250cb1b5da2414fc16c00ac
+Tree: 2f5a647cf1d7496d8de65bc05da9c0946fe77a3a
+Commit summary: test: pin Runtime tests to Release 12 Agent
+Committed source files: tests/astrid-agent.pin only
+Post-commit working tree: clean
+Remote operations: none

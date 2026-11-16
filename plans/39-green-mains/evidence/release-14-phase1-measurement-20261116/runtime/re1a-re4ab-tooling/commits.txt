@@ -1,0 +1,25 @@
+commit a05d360c50b35c6803d710909c87b51daf5e84b2
+Author:     Codex <codex@openai.com>
+AuthorDate: Mon Nov 16 20:45:38 2026 +0000
+Commit:     Codex <codex@openai.com>
+CommitDate: Mon Nov 16 20:45:38 2026 +0000
+
+    Wire locked TypeScript compiler into integration environments
+
+ .github/workflows/nightly.yml         | 7 +++++++
+ tests/seccomp/container-entrypoint.py | 1 +
+ 2 files changed, 8 insertions(+)
+
+commit eeb84ef511272e772250cb1b5da2414fc16c00ac
+Author:     Codex <codex@openai.com>
+AuthorDate: Mon Nov 16 20:40:42 2026 +0000
+Commit:     Codex <codex@openai.com>
+CommitDate: Mon Nov 16 20:40:42 2026 +0000
+
+    test: pin Runtime tests to Release 12 Agent
+
+ tests/astrid-agent.pin | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+a05d360c50b35c6803d710909c87b51daf5e84b2
+0291fadcde521650fdc71257a9ec2fd61b7226a4
+## p39/re1a-re4ab-tooling

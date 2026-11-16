@@ -1,0 +1,252 @@
+{
+  "repository": "banodoco/astrid-runtime",
+  "head_sha": "359e2d7e55369562ca9513557282ea8aff7645bc",
+  "tree_sha": "0291fadcde521650fdc71257a9ec2fd61b7226a4",
+  "run_id": 43954031461,
+  "attempt": 1,
+  "prior_head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+  "prior_run_id": 43938386357,
+  "classification": "provisional post-batch measurement; phase1/G2/RS1 incomplete",
+  "failed_job_count": 5,
+  "failure_error_records": 1489,
+  "literal_per_job_message_groups": 166,
+  "transition_counts_per_job_occurrence": {
+    "failure->failure": 198,
+    "passed->passed": 26875,
+    "skipped->skipped": 286,
+    "error->error": 1105,
+    "error->failure": 186,
+    "error->passed": 1230,
+    "failure->passed": 54,
+    "xfailed->xfailed": 39
+  },
+  "all_same_testcase_sets": true,
+  "jobs": [
+    {
+      "job_id": 133603709482,
+      "prior_job_id": 133548963714,
+      "name": "portability-lifecycle (ubuntu-latest)",
+      "summary": "7 failed, 610 passed, 45 skipped in 44.07s",
+      "artifact_id": 14269247265,
+      "artifact_sha256": "589b291e350968f12af548beeb5f61edccd006fbdbb64331cc05ce07ead64daa",
+      "xml_totals": {
+        "tests": 662,
+        "failures": 7,
+        "errors": 0,
+        "skipped": 45
+      },
+      "testcase_records": 662,
+      "passing_subtests_in_root_total": 0,
+      "status_counts": {
+        "passed": 610,
+        "skipped": 45,
+        "failure": 7
+      },
+      "old_xml_totals": {
+        "tests": 662,
+        "failures": 7,
+        "errors": 0,
+        "skipped": 45
+      },
+      "same_testcase_ids": true,
+      "common_testcase_ids": 662,
+      "added_ids": [],
+      "removed_ids": [],
+      "transitions": {
+        "failure->failure": 7,
+        "passed->passed": 610,
+        "skipped->skipped": 45
+      },
+      "distinct_literal_message_groups": 7,
+      "ownership_waiting": {
+        "plan38": 0,
+        "plan55": 0
+      }
+    },
+    {
+      "job_id": 133603709490,
+      "prior_job_id": 133548963731,
+      "name": "unit (ubuntu-latest)",
+      "summary": "119 failed, 9050 passed, 26 skipped, 13 xfailed, 367 errors, 60 subtests passed in 806.59s (0:13:26)",
+      "artifact_id": 14272675371,
+      "artifact_sha256": "0a259726f0f455488591f9a62e31e7a3e27628961afe24fc0ba160dffd0b3afd",
+      "xml_totals": {
+        "tests": 9635,
+        "failures": 119,
+        "errors": 367,
+        "skipped": 39
+      },
+      "testcase_records": 9575,
+      "passing_subtests_in_root_total": 60,
+      "status_counts": {
+        "passed": 9050,
+        "failure": 119,
+        "skipped": 26,
+        "error": 367,
+        "xfailed": 13
+      },
+      "old_xml_totals": {
+        "tests": 9635,
+        "failures": 76,
+        "errors": 839,
+        "skipped": 39
+      },
+      "same_testcase_ids": true,
+      "common_testcase_ids": 9575,
+      "added_ids": [],
+      "removed_ids": [],
+      "transitions": {
+        "error->error": 367,
+        "error->failure": 62,
+        "error->passed": 410,
+        "failure->failure": 57,
+        "failure->passed": 19,
+        "passed->passed": 8621,
+        "skipped->skipped": 26,
+        "xfailed->xfailed": 13
+      },
+      "distinct_literal_message_groups": 49,
+      "ownership_waiting": {
+        "plan38": 5,
+        "plan55": 1
+      }
+    },
+    {
+      "job_id": 133603709503,
+      "prior_job_id": 133548963680,
+      "name": "sandbox-process-control",
+      "summary": "132 failed, 8957 passed, 26 skipped, 13 xfailed, 371 errors, 60 subtests passed in 1033.01s (0:17:13)",
+      "artifact_id": 14272008264,
+      "artifact_sha256": "d2e89b90a46ba65471489607dfd9f0eeb0b1aad1382cd85456c7d43856b0397d",
+      "xml_totals": {
+        "tests": 9559,
+        "failures": 132,
+        "errors": 371,
+        "skipped": 39
+      },
+      "testcase_records": 9499,
+      "passing_subtests_in_root_total": 60,
+      "status_counts": {
+        "passed": 8957,
+        "failure": 132,
+        "skipped": 26,
+        "error": 371,
+        "xfailed": 13
+      },
+      "old_xml_totals": {
+        "tests": 9559,
+        "failures": 85,
+        "errors": 843,
+        "skipped": 39
+      },
+      "same_testcase_ids": true,
+      "common_testcase_ids": 9499,
+      "added_ids": [],
+      "removed_ids": [],
+      "transitions": {
+        "error->error": 371,
+        "error->failure": 62,
+        "error->passed": 410,
+        "failure->failure": 70,
+        "failure->passed": 15,
+        "passed->passed": 8532,
+        "skipped->skipped": 26,
+        "xfailed->xfailed": 13
+      },
+      "distinct_literal_message_groups": 55,
+      "ownership_waiting": {
+        "plan38": 17,
+        "plan55": 1
+      }
+    },
+    {
+      "job_id": 133603709524,
+      "prior_job_id": 133548963837,
+      "name": "portability-lifecycle (macos-latest)",
+      "summary": "8 failed, 595 passed, 59 skipped in 56.28s",
+      "artifact_id": 14272245594,
+      "artifact_sha256": "a849a82b005909491455f5d27421d5c29fcc7460eb92cca3c1fbac809e4abdfd",
+      "xml_totals": {
+        "tests": 662,
+        "failures": 8,
+        "errors": 0,
+        "skipped": 59
+      },
+      "testcase_records": 662,
+      "passing_subtests_in_root_total": 0,
+      "status_counts": {
+        "passed": 595,
+        "skipped": 59,
+        "failure": 8
+      },
+      "old_xml_totals": {
+        "tests": 662,
+        "failures": 8,
+        "errors": 0,
+        "skipped": 59
+      },
+      "same_testcase_ids": true,
+      "common_testcase_ids": 662,
+      "added_ids": [],
+      "removed_ids": [],
+      "transitions": {
+        "failure->failure": 8,
+        "passed->passed": 595,
+        "skipped->skipped": 59
+      },
+      "distinct_literal_message_groups": 8,
+      "ownership_waiting": {
+        "plan38": 0,
+        "plan55": 0
+      }
+    },
+    {
+      "job_id": 133603709671,
+      "prior_job_id": 133548963937,
+      "name": "unit (macos-latest)",
+      "summary": "118 failed, 8947 passed, 130 skipped, 13 xfailed, 367 errors, 60 subtests passed in 1140.82s (0:19:00)",
+      "artifact_id": 14272906578,
+      "artifact_sha256": "2845fb4a0ae40aac18e220cefcde4e459e6dadec53dd90df0d5d17d2f81493f3",
+      "xml_totals": {
+        "tests": 9635,
+        "failures": 118,
+        "errors": 367,
+        "skipped": 143
+      },
+      "testcase_records": 9575,
+      "passing_subtests_in_root_total": 60,
+      "status_counts": {
+        "passed": 8947,
+        "skipped": 130,
+        "failure": 118,
+        "error": 367,
+        "xfailed": 13
+      },
+      "old_xml_totals": {
+        "tests": 9635,
+        "failures": 76,
+        "errors": 839,
+        "skipped": 143
+      },
+      "same_testcase_ids": true,
+      "common_testcase_ids": 9575,
+      "added_ids": [],
+      "removed_ids": [],
+      "transitions": {
+        "error->error": 367,
+        "error->failure": 62,
+        "error->passed": 410,
+        "failure->failure": 56,
+        "failure->passed": 20,
+        "passed->passed": 8517,
+        "skipped->skipped": 130,
+        "xfailed->xfailed": 13
+      },
+      "distinct_literal_message_groups": 47,
+      "ownership_waiting": {
+        "plan38": 0,
+        "plan55": 1
+      }
+    }
+  ]
+}

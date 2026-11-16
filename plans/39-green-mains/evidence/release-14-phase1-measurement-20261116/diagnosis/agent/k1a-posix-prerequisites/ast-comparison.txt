@@ -1,0 +1,4 @@
+tests/core/generation/test_vibecomfy_runtime_root.py::test_default_platform_is_the_host_platform: parameters unchanged; assertions/body unchanged
+tests/core/pack/test_nofollow_fallback.py::test_group_lock_refuses_linked_lock_file_with_real_nofollow: parameters unchanged; assertions/body unchanged
+tests/core/pack/test_transaction_windows.py::test_windows_lock_covers_renames_journal_and_backup_retirement: parameters unchanged; assertions/body unchanged except the authorized import gate replacement
+tests/test_omp_agent.py::test_installed_launcher_dispatches_generate_json: parameters unchanged; assertions/body unchanged

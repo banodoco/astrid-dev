@@ -1,0 +1,30 @@
+{
+  "tests/core/generation/test_model_verification_record.py": {
+    "module_ast_equal_after_gate_normalization": true,
+    "target_functions": [
+      "test_non_utf8_filename_hashes_then_reuses"
+    ]
+  },
+  "tests/core/pack/test_verified_relocations.py": {
+    "module_ast_equal_after_gate_normalization": true,
+    "target_functions": [
+      "test_forged_personal_relocation_is_rejected"
+    ]
+  },
+  "tests/packs/runpod/test_failure_diagnostics.py": {
+    "module_ast_equal_after_gate_normalization": true,
+    "target_functions": [
+      "test_bounded_observer_rejects_malformed_or_late_child_frame",
+      "test_partial_ipc_from_unkillable_caller_returns_with_pending_fence"
+    ]
+  },
+  "verified_relocations_parameter_ids": [
+    "original",
+    "selection",
+    "digest",
+    "reused",
+    "outside",
+    "public"
+  ],
+  "verified_relocations_public_parameter_mark": "pytest.mark.posix_native"
+}

@@ -1,0 +1,25 @@
+xxxxxxxxxx                                                               [100%]ERROR: no test passed in this run; a run that executes nothing is a failure
+
+declared xfails (10):
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_generic_visual_media_requires_video_stream: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_is_atomic_cas_and_exactly_replayable: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_public_http_route: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_cross_project_source: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_malformed_source_without_mutation: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_tampered_cas_without_mutation: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_too_short_source_without_mutation: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_wrong_stream_without_mutation: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_replays_after_intervening_edit_and_reopen: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+  XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_requires_source_to_reach_authored_end: [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+=========================== short test summary info ============================
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_is_atomic_cas_and_exactly_replayable - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_cross_project_source - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_malformed_source_without_mutation - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_tampered_cas_without_mutation - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_wrong_stream_without_mutation - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_rejects_too_short_source_without_mutation - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_requires_source_to_reach_authored_end - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_generic_visual_media_requires_video_stream - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_replays_after_intervening_edit_and_reopen - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+XFAIL tests/test_timeline_clip_replacement.py::test_replace_timeline_clip_public_http_route - [declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement
+17 deselected, 10 xfailed in 5.84s

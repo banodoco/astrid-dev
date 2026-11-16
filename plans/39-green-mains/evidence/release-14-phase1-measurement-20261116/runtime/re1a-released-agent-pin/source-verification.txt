@@ -1,0 +1,9 @@
+Public source: https://github.com/banodoco/astrid-agent
+Requested exact SHA: 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+Canonical fetch command: git -C /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent fetch --depth=1 https://github.com/banodoco/astrid-agent 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+Fetch result: exit 0; FETCH_HEAD = 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+Checkout command: git -C /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent checkout --detach 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+Installed Agent checkout HEAD: 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+Installed Agent checkout status: clean, detached HEAD
+Installed import provenance: /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent/astrid/__init__.py (editable install points at this checkout)
+The editable environment checkout was moved from the original pin to the exact SHA. No Python package install or Runtime setup was run.

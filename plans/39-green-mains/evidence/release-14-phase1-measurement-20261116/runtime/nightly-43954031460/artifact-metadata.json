@@ -1,0 +1,11 @@
+{
+  "id": 14269133531,
+  "name": "test-results-nightly-integration-all-Linux",
+  "run_id": 43954031460,
+  "repository": "banodoco/astrid-runtime",
+  "size_in_bytes": 142800,
+  "digest_from_github": "sha256:647bdf2354060ba5e35b8e5d08018289c685370b19f7e10bc425c5a99a9ce177",
+  "downloaded_sha256": "647bdf2354060ba5e35b8e5d08018289c685370b19f7e10bc425c5a99a9ce177",
+  "digest_matches": true,
+  "permanent_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43954031460/artifacts/14269133531"
+}

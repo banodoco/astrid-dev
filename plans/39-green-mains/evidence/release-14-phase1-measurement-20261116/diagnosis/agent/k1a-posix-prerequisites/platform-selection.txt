@@ -1,0 +1,7 @@
+Existing POSIX marks resolve in tests/lanes.py as available when os.name == "posix"; the configured CI job is Ubuntu. This preserves the relevant current host selection for these tests on supported targets: Linux and macOS are eligible, Windows (os.name == "nt") is excluded.
+
+The real O_NOFOLLOW target needs the native flag. On this run it is Linux CPython 3.12.14: sys.platform=linux, os.name=posix, os.O_NOFOLLOW=131072. CPython 3.12 os docs document O_NOFOLLOW among Unix platform extensions and state such extensions are absent when the C library does not define them. Apple's open(2) documentation also defines O_NOFOLLOW. Thus supported Linux/macOS CPython targets provide the real flag; no capability mismatch was found.
+
+Sources:
+- CPython 3.12 os docs: https://docs.python.org/3.12/library/os.html#os.O_NOFOLLOW
+- Apple open(2): https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/open.2.html

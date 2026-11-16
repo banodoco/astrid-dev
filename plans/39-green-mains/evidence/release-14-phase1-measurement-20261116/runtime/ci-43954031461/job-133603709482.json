@@ -1,0 +1,537 @@
+{
+  "provenance": {
+    "repository": "banodoco/astrid-runtime",
+    "head_sha": "359e2d7e55369562ca9513557282ea8aff7645bc",
+    "tree_sha": "0291fadcde521650fdc71257a9ec2fd61b7226a4",
+    "branch": "release/14/plan-39",
+    "run_id": 43954031461,
+    "run_attempt": 1,
+    "event": "push",
+    "job_id": 133603709482,
+    "job_name": "portability-lifecycle (ubuntu-latest)",
+    "job_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43954031461/job/133603709482",
+    "conclusion": "failure",
+    "started_at": "2026-11-16T20:51:12Z",
+    "completed_at": "2026-11-16T20:52:36Z",
+    "raw_log_file": "job-133603709482.log",
+    "raw_log_sha256": "36327910022c906f94aa3c9bdb5e38e232d86d29cddfe25ecf74d398cf442cd7",
+    "raw_log_bytes": 246502
+  },
+  "measurement_status": "post-batch measurement / provisional G2; phase-1 acceptance pending; formal RS1 0/1",
+  "pytest_summary": "7 failed, 610 passed, 45 skipped in 44.07s",
+  "pytest_counts": {
+    "failed": 7,
+    "passed": 610,
+    "skipped": 45
+  },
+  "pytest_summary_log_line": 2042,
+  "junit_summary": {
+    "literal": "portability-lifecycle.xml: tests=662 failures=7 errors=0 skipped=45",
+    "log_line": 2072,
+    "tests": 662,
+    "failures": 7,
+    "errors": 0,
+    "skipped": 45
+  },
+  "counting_method": {
+    "outer_short_summary_log_line": 1356,
+    "matched_outer_detail_blocks": 7,
+    "unmatched": [],
+    "ambiguous": [],
+    "message_format": "Timestamp/ANSI/BOM framing removed. Continuation lines and literal values are preserved. Summary used when populated; otherwise last contiguous E-line group in matched outer detail block. Common pytest E-line indentation removed, no path/value normalization. Captured nested test output never counted."
+  },
+  "outcome_counts": {
+    "FAILED": 7
+  },
+  "distinct_literal_message_count": 7,
+  "triage_counts": {
+    "R-k / RT7": 7
+  },
+  "ownership_waiting": {
+    "plan38": 0,
+    "plan55": 0
+  },
+  "distinct_literal_messages": [
+    {
+      "literal_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "count": 1,
+      "outcomes": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "ownership_counts": {
+        "No exact hold established; no fix authorized by measurement": 1
+      },
+      "nodeids": [
+        "tests/test_profile_services.py::test_installed_run_and_up_supervise_declared_service_and_report_status[run]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "count": 1,
+      "outcomes": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "ownership_counts": {
+        "No exact hold established; no fix authorized by measurement": 1
+      },
+      "nodeids": [
+        "tests/test_profile_services.py::test_installed_run_and_up_supervise_declared_service_and_report_status[up]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: b'{\"code\": \"conflict\", \"details\": {\"reason\": \"selection-or-inputs-invalid\"}, \"message\": \"The selected installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}'\nassert 409 == 202\n +  where 409 = Reply(status=409, headers={'date': 'Mon, 16 Nov 2026 20:52:27 GMT', 'cache-control': 'no-store', 'content-type': 'appl...d installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}').status",
+      "count": 1,
+      "outcomes": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "ownership_counts": {
+        "No exact hold established; no fix authorized by measurement": 1
+      },
+      "nodeids": [
+        "tests/test_portable_lifecycle.py::test_real_post_worker_finishes_after_runtime_daemon_process_is_killed"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_runt0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "count": 1,
+      "outcomes": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "ownership_counts": {
+        "No exact hold established; no fix authorized by measurement": 1
+      },
+      "nodeids": [
+        "tests/test_portable_lifecycle.py::test_installed_foreground_runtime_owns_discovery_door_and_stops_cleanly"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_use_0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "count": 1,
+      "outcomes": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "ownership_counts": {
+        "No exact hold established; no fix authorized by measurement": 1
+      },
+      "nodeids": [
+        "tests/test_portable_lifecycle.py::test_installed_foreground_use_down_then_up_again"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "count": 1,
+      "outcomes": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "ownership_counts": {
+        "No exact hold established; no fix authorized by measurement": 1
+      },
+      "nodeids": [
+        "tests/test_portable_lifecycle.py::test_installed_up_wait_and_down_stop_the_exact_discovered_owner"
+      ]
+    },
+    {
+      "literal_message": "assert '60133' in \"runtime daemon exited during startup: no module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_reports_occu0/state/astrid-runtime/logs/runtime.log).\"\n +  where '60133' = str(60133)",
+      "count": 1,
+      "outcomes": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "ownership_counts": {
+        "No exact hold established; no fix authorized by measurement": 1
+      },
+      "nodeids": [
+        "tests/test_portable_lifecycle.py::test_installed_up_reports_occupied_browser_door_without_claiming_owner"
+      ]
+    }
+  ],
+  "outer_outcomes": [
+    {
+      "outcome": "FAILED",
+      "nodeid": "tests/test_profile_services.py::test_installed_run_and_up_supervise_declared_service_and_report_status[run]",
+      "summary_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "outer_summary_line": 2008,
+      "detail_header": "test_installed_run_and_up_supervise_declared_service_and_report_status[run]",
+      "detail_line_range": [
+        862,
+        943
+      ],
+      "detail_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "detail_all_e_lines": [
+        "E               AssertionError: foreground Runtime exited 1: {",
+        "E                 \"error\": \"No module named 'astrid'\",",
+        "E                 \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe0/state/astrid-runtime/logs/runtime.log\",",
+        "E                 \"ok\": false",
+        "E               }"
+      ],
+      "literal_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "message_source": "outer short summary (including continuations)",
+      "plan38_waiting": null,
+      "plan55_waiting": null,
+      "ownership_status": "No exact hold established; no fix authorized by measurement",
+      "triage": "R-k / RT7",
+      "classification_note": "Portability lifecycle failure; cause requires focused investigation"
+    },
+    {
+      "outcome": "FAILED",
+      "nodeid": "tests/test_profile_services.py::test_installed_run_and_up_supervise_declared_service_and_report_status[up]",
+      "summary_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "outer_summary_line": 2013,
+      "detail_header": "test_installed_run_and_up_supervise_declared_service_and_report_status[up]",
+      "detail_line_range": [
+        944,
+        994
+      ],
+      "detail_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n\nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "detail_all_e_lines": [
+        "E               AssertionError: {",
+        "E                   \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",",
+        "E                   \"ok\": false",
+        "E                 }",
+        "E                 ",
+        "E               assert 1 == 0",
+        "E                +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode"
+      ],
+      "literal_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_run_and_up_supe1/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "message_source": "outer short summary (including continuations)",
+      "plan38_waiting": null,
+      "plan55_waiting": null,
+      "ownership_status": "No exact hold established; no fix authorized by measurement",
+      "triage": "R-k / RT7",
+      "classification_note": "Portability lifecycle failure; cause requires focused investigation"
+    },
+    {
+      "outcome": "FAILED",
+      "nodeid": "tests/test_portable_lifecycle.py::test_real_post_worker_finishes_after_runtime_daemon_process_is_killed",
+      "summary_message": "AssertionError: b'{\"code\": \"conflict\", \"details\": {\"reason\": \"selection-or-inputs-invalid\"}, \"message\": \"The selected installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}'\nassert 409 == 202\n +  where 409 = Reply(status=409, headers={'date': 'Mon, 16 Nov 2026 20:52:27 GMT', 'cache-control': 'no-store', 'content-type': 'appl...d installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}').status",
+      "outer_summary_line": 2020,
+      "detail_header": "test_real_post_worker_finishes_after_runtime_daemon_process_is_killed",
+      "detail_line_range": [
+        995,
+        1155
+      ],
+      "detail_message": "AssertionError: b'{\"code\": \"conflict\", \"details\": {\"reason\": \"selection-or-inputs-invalid\"}, \"message\": \"The selected installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}'\nassert 409 == 202\n +  where 409 = Reply(status=409, headers={'date': 'Mon, 16 Nov 2026 20:52:27 GMT', 'cache-control': 'no-store', 'content-type': 'appl...d installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}').status",
+      "detail_all_e_lines": [
+        "E           AssertionError: b'{\"code\": \"conflict\", \"details\": {\"reason\": \"selection-or-inputs-invalid\"}, \"message\": \"The selected installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}'",
+        "E           assert 409 == 202",
+        "E            +  where 409 = Reply(status=409, headers={'date': 'Mon, 16 Nov 2026 20:52:27 GMT', 'cache-control': 'no-store', 'content-type': 'appl...d installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}').status"
+      ],
+      "literal_message": "AssertionError: b'{\"code\": \"conflict\", \"details\": {\"reason\": \"selection-or-inputs-invalid\"}, \"message\": \"The selected installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}'\nassert 409 == 202\n +  where 409 = Reply(status=409, headers={'date': 'Mon, 16 Nov 2026 20:52:27 GMT', 'cache-control': 'no-store', 'content-type': 'appl...d installation or update inputs do not match this running Astrid.\", \"request_id\": \"2e14863258484cdbbb1b7f0831e5a15d\"}').status",
+      "message_source": "outer short summary (including continuations)",
+      "plan38_waiting": null,
+      "plan55_waiting": null,
+      "ownership_status": "No exact hold established; no fix authorized by measurement",
+      "triage": "R-k / RT7",
+      "classification_note": "Portability lifecycle failure; cause requires focused investigation"
+    },
+    {
+      "outcome": "FAILED",
+      "nodeid": "tests/test_portable_lifecycle.py::test_installed_foreground_runtime_owns_discovery_door_and_stops_cleanly",
+      "summary_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_runt0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "outer_summary_line": 2023,
+      "detail_header": "test_installed_foreground_runtime_owns_discovery_door_and_stops_cleanly",
+      "detail_line_range": [
+        1156,
+        1198
+      ],
+      "detail_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_runt0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "detail_all_e_lines": [
+        "E               AssertionError: foreground Runtime exited 1: {",
+        "E                 \"error\": \"No module named 'astrid'\",",
+        "E                 \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_runt0/state/astrid-runtime/logs/runtime.log\",",
+        "E                 \"ok\": false",
+        "E               }"
+      ],
+      "literal_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_runt0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "message_source": "outer short summary (including continuations)",
+      "plan38_waiting": null,
+      "plan55_waiting": null,
+      "ownership_status": "No exact hold established; no fix authorized by measurement",
+      "triage": "R-k / RT7",
+      "classification_note": "Portability lifecycle failure; cause requires focused investigation"
+    },
+    {
+      "outcome": "FAILED",
+      "nodeid": "tests/test_portable_lifecycle.py::test_installed_foreground_use_down_then_up_again",
+      "summary_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_use_0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "outer_summary_line": 2028,
+      "detail_header": "test_installed_foreground_use_down_then_up_again",
+      "detail_line_range": [
+        1199,
+        1245
+      ],
+      "detail_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_use_0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "detail_all_e_lines": [
+        "E               AssertionError: foreground Runtime exited 1: {",
+        "E                 \"error\": \"No module named 'astrid'\",",
+        "E                 \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_use_0/state/astrid-runtime/logs/runtime.log\",",
+        "E                 \"ok\": false",
+        "E               }"
+      ],
+      "literal_message": "AssertionError: foreground Runtime exited 1: {\n  \"error\": \"No module named 'astrid'\",\n  \"log\": \"/tmp/pytest-of-runner/pytest-0/test_installed_foreground_use_0/state/astrid-runtime/logs/runtime.log\",\n  \"ok\": false\n}",
+      "message_source": "outer short summary (including continuations)",
+      "plan38_waiting": null,
+      "plan55_waiting": null,
+      "ownership_status": "No exact hold established; no fix authorized by measurement",
+      "triage": "R-k / RT7",
+      "classification_note": "Portability lifecycle failure; cause requires focused investigation"
+    },
+    {
+      "outcome": "FAILED",
+      "nodeid": "tests/test_portable_lifecycle.py::test_installed_up_wait_and_down_stop_the_exact_discovered_owner",
+      "summary_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "outer_summary_line": 2033,
+      "detail_header": "test_installed_up_wait_and_down_stop_the_exact_discovered_owner",
+      "detail_line_range": [
+        1246,
+        1275
+      ],
+      "detail_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n\nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "detail_all_e_lines": [
+        "E           AssertionError: {",
+        "E               \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",",
+        "E               \"ok\": false",
+        "E             }",
+        "E             ",
+        "E           assert 1 == 0",
+        "E            +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode"
+      ],
+      "literal_message": "AssertionError: {\n    \"error\": \"Runtime daemon exited during startup: No module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\n    \"ok\": false\n  }\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/tmp/pytest-of-runner/pytest-0/stage1-runtime0/venv/bin/python', '-m', 'astrid_runtime.cli', '...ner/pytest-0/test_installed_up_wait_and_dow0/state/astrid-runtime/logs/runtime.log).\",\\n  \"ok\": false\\n}\\n', stderr='').returncode",
+      "message_source": "outer short summary (including continuations)",
+      "plan38_waiting": null,
+      "plan55_waiting": null,
+      "ownership_status": "No exact hold established; no fix authorized by measurement",
+      "triage": "R-k / RT7",
+      "classification_note": "Portability lifecycle failure; cause requires focused investigation"
+    },
+    {
+      "outcome": "FAILED",
+      "nodeid": "tests/test_portable_lifecycle.py::test_installed_up_reports_occupied_browser_door_without_claiming_owner",
+      "summary_message": "assert '60133' in \"runtime daemon exited during startup: no module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_reports_occu0/state/astrid-runtime/logs/runtime.log).\"\n +  where '60133' = str(60133)",
+      "outer_summary_line": 2040,
+      "detail_header": "test_installed_up_reports_occupied_browser_door_without_claiming_owner",
+      "detail_line_range": [
+        1276,
+        1305
+      ],
+      "detail_message": "assert '60133' in \"runtime daemon exited during startup: no module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_reports_occu0/state/astrid-runtime/logs/runtime.log).\"\n +  where '60133' = str(60133)",
+      "detail_all_e_lines": [
+        "E           assert '60133' in \"runtime daemon exited during startup: no module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_reports_occu0/state/astrid-runtime/logs/runtime.log).\"",
+        "E            +  where '60133' = str(60133)"
+      ],
+      "literal_message": "assert '60133' in \"runtime daemon exited during startup: no module named 'astrid' (see /tmp/pytest-of-runner/pytest-0/test_installed_up_reports_occu0/state/astrid-runtime/logs/runtime.log).\"\n +  where '60133' = str(60133)",
+      "message_source": "outer short summary (including continuations)",
+      "plan38_waiting": null,
+      "plan55_waiting": null,
+      "ownership_status": "No exact hold established; no fix authorized by measurement",
+      "triage": "R-k / RT7",
+      "classification_note": "Portability lifecycle failure; cause requires focused investigation"
+    }
+  ],
+  "skip_reason_rows": [
+    {
+      "literal": "SKIPPED [1] tests/test_platform.py:367: [declared:windows-token-process-times] Windows token and process-time APIs",
+      "outer_summary_line": 1967
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform.py:398: [declared:windows-job-object] Windows Job Object integration",
+      "outer_summary_line": 1968
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:51: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1969
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:58: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1970
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:75: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1971
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:92: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1972
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:112: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1973
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:122: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1974
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:140: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1975
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:157: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1976
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_windows.py:204: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1977
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_worker_handoff.py:390: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1978
+    },
+    {
+      "literal": "SKIPPED [3] tests/test_windows_worker_handoff.py:445: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1979
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_worker_handoff.py:655: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1980
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_worker_handoff.py:686: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1981
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_worker_handoff.py:768: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1982
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_worker_handoff.py:877: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1983
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_worker_handoff.py:929: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1984
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_worker_handoff.py:994: [declared:windows-process-and-lock-apis] native Windows process and lock APIs",
+      "outer_summary_line": 1985
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_filesystem.py:49: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1986
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_filesystem.py:88: [declared:windows-reparse-point-rejection] exercises Windows reparse-point rejection",
+      "outer_summary_line": 1987
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_platform_filesystem.py:101: [declared:windows-sqlite-backup] exercises Windows SQLite backup snapshots",
+      "outer_summary_line": 1988
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_dirfd_windows.py:293: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1989
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_dirfd_windows.py:318: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1990
+    },
+    {
+      "literal": "SKIPPED [2] tests/test_dirfd_windows.py:343: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1991
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_dirfd_windows.py:358: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1992
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_dirfd_windows.py:428: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1993
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_dirfd_windows.py:583: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1994
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_dirfd_windows.py:631: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1995
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_filesystem_native.py:40: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1996
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_filesystem_native.py:64: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1997
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_windows_filesystem_native.py:98: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1998
+    },
+    {
+      "literal": "SKIPPED [2] tests/test_windows_filesystem_native.py:114: [declared:windows-dirfd-adapter] exercises the native Windows dir-fd adapter",
+      "outer_summary_line": 1999
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_service_stop.py:62: [declared:windows-job-object] Windows Job Object integration",
+      "outer_summary_line": 2000
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_service_stop.py:87: [declared:windows-job-object] Windows Job Object integration",
+      "outer_summary_line": 2001
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_m1_review.py:228: [declared:windows-security] native Windows socket exclusivity and file DACL APIs",
+      "outer_summary_line": 2002
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_m1_review.py:243: [declared:windows-security] native Windows socket exclusivity and file DACL APIs",
+      "outer_summary_line": 2003
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_m1_review.py:258: [declared:windows-security] native Windows socket exclusivity and file DACL APIs",
+      "outer_summary_line": 2004
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_m1_review.py:283: [declared:windows-security] native Windows socket exclusivity and file DACL APIs",
+      "outer_summary_line": 2005
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_m1_review.py:293: [declared:windows-security] native Windows socket exclusivity and file DACL APIs",
+      "outer_summary_line": 2006
+    },
+    {
+      "literal": "SKIPPED [1] tests/test_m1_review.py:308: [declared:windows-security] native Windows socket exclusivity and file DACL APIs",
+      "outer_summary_line": 2007
+    }
+  ],
+  "xfail_rows": [],
+  "limitations": [
+    "One hosted attempt is measurement, not root-cause proof.",
+    "The exact G1 Plan 38/55 holds are retained; newly diagnosed lifecycle/publication contracts require ownership review before any fix. No broad file family is automatically assigned to Plan 39.",
+    "Pytest may abbreviate its own long values. Full captured logs and detailed E-lines remain available.",
+    "Downloaded XML and archive digest verified; passing subtests appear in suite totals but have no separate testcase element."
+  ],
+  "junit_artifact": {
+    "id": 14269247265,
+    "name": "test-results-portability-lifecycle-all-ubuntu-latest",
+    "digest": "sha256:589b291e350968f12af548beeb5f61edccd006fbdbb64331cc05ce07ead64daa",
+    "size_in_bytes": 17998,
+    "expired": false,
+    "downloaded": true,
+    "verified_sha256": "589b291e350968f12af548beeb5f61edccd006fbdbb64331cc05ce07ead64daa",
+    "xml_file": "xml-14269247265/portability-lifecycle.xml",
+    "testcase_count": 662,
+    "all_failed_ids_reconciled": true
+  },
+  "ownership_review_candidates": []
+}

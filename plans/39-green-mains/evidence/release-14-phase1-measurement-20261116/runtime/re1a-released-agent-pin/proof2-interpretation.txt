@@ -1,0 +1,3 @@
+Candidate output: 17 deselected, 10 xfailed in 5.84s; process exit status 1 because pytest reports "no test passed in this run".
+All ten collected replacement cases reached the existing declared xfail marker for ledger D04 (direct clip replacement retired; awaiting commit-path replacement). There were no setup errors or missing-import failures. There were zero passes, so this is not behavioral success evidence. The xfails are expected pre-existing markers in tests/test_timeline_clip_replacement.py; no assertions or markers were modified.
+Baseline evidence p39-g1-evidence/runtime-re2-candidate.log showed one setup error for missing `astrid.sdk.timeline.capture`. That import error is removed by the new Agent pin, while replacement behavior remains explicitly xfailed.

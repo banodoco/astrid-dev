@@ -1,0 +1,13 @@
+.........                                                                [100%]
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_timeline_legacy_authority.py::test_service_legacy_family_refuses_without_writes[tracked-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_service_legacy_family_refuses_without_writes[fresh-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_service_legacy_family_refuses_without_writes[unused-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_service_refusal_precedes_accepted_retry_lookup[tracked-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_service_refusal_precedes_accepted_retry_lookup[fresh-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_service_refusal_precedes_accepted_retry_lookup[unused-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_http_authenticated_legacy_family_refuses_without_writes[tracked-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_http_authenticated_legacy_family_refuses_without_writes[fresh-replace_timeline_clip]
+PASSED tests/test_timeline_legacy_authority.py::test_http_authenticated_legacy_family_refuses_without_writes[unused-replace_timeline_clip]
+9 passed, 71 deselected in 4.12s

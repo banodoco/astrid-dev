@@ -1,0 +1,112 @@
+{
+  "measured_at_utc": "2026-11-16T20:35:39.716863+00:00",
+  "repository": "banodoco/astrid-runtime",
+  "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+  "run_id": 43938386357,
+  "attempt": 1,
+  "scope": "all five failed jobs",
+  "total_outer_failures_errors": 2773,
+  "outcomes": {
+    "ERROR": 2521,
+    "FAILED": 252
+  },
+  "per_job_literal_message_groups": 170,
+  "triage_counts": {
+    "R-m": 44,
+    "new \u2014 RE1/RE2 API compatibility": 1673,
+    "R-e / RT2": 372,
+    "R-d / RT1": 540,
+    "R-j / RT6": 97,
+    "R-j / K1b follow-up": 15,
+    "R-g": 3,
+    "R-h": 3,
+    "R-i / RT5": 3,
+    "R-f / RE4": 4,
+    "R-j / Plan 55": 3,
+    "R-k / RT7": 15,
+    "new \u2014 unclassified": 1
+  },
+  "established_waiting_outcomes": {
+    "plan38": 44,
+    "plan55": 3
+  },
+  "additional_plan55_ownership_review_hold_outcomes": 9,
+  "files": {
+    "job-133548963837.md": {
+      "bytes": 5820,
+      "sha256": "05dcb418694521eb9955f19f318a6e8eb89fd593b7375643361f3ff42ece035f"
+    },
+    "job-133548963680.log": {
+      "bytes": 4757182,
+      "sha256": "936910c77c78349a7245ad2bdce4e9323ed79d7b2835e3136c4191f445ae092b"
+    },
+    "job-133548963680.md": {
+      "bytes": 21975,
+      "sha256": "7a2952519830ac113fecbc1fb32ddcef3602204267a8cd74f943bbe32a64b90b"
+    },
+    "parse_ci.py": {
+      "bytes": 15113,
+      "sha256": "e2992d68b0c9e6f1d703997c109dc797f2788a69ff1cb266d42f9eac3cdbdf5c"
+    },
+    "job-133548963731.log": {
+      "bytes": 4718444,
+      "sha256": "4eaaa03e9f02f8b6a349f1d1a30a47482cd435d277624c31d24185dc4dde0111"
+    },
+    "job-133548963937.json": {
+      "bytes": 1481528,
+      "sha256": "af76f0e8178b645bde7573dab30c396375b6c3503c281dad343c1562d4a87546"
+    },
+    "job-133548963714.md": {
+      "bytes": 5431,
+      "sha256": "cea64bd77414c7e162a95a76d6a6f51f0b242777230303e43be1a1c3a43c36bb"
+    },
+    "jobs-attempt-1.json": {
+      "bytes": 48868,
+      "sha256": "641f6f8865be833674e8efa408ed85ac1e64cbc6499b98098f77925eb89b4115"
+    },
+    "job-133548963731.json": {
+      "bytes": 1464787,
+      "sha256": "de5f2be1831dafe69f8cc103ed4571cb4068f657cc0832bdbd95da43175831d7"
+    },
+    "job-133548963714.log": {
+      "bytes": 217894,
+      "sha256": "55cb4aa03344282eee1a07f2389cbdffbd03a060cc34e32fce59501c5a845aa6"
+    },
+    "job-133548963937.log": {
+      "bytes": 4763445,
+      "sha256": "bbb78f5f96989b01df1fde0076b0d12dd246811c02c6fc2181308173d5d86232"
+    },
+    "artifacts.json": {
+      "bytes": 4520,
+      "sha256": "d872b55e216dc4e3e721494b03dfda654f7e2bbe57e4c66bd59ee70f85fa2174"
+    },
+    "job-133548963937.md": {
+      "bytes": 20746,
+      "sha256": "b061dca2c883b85a62d4c1279ddb9b0e5524a7648eb54dca2298c2f7d740e046"
+    },
+    "job-133548963731.md": {
+      "bytes": 21169,
+      "sha256": "9798e442ffc4848a91095b54c1d469323b4b32eed2f2054716ec6cbb80ca144c"
+    },
+    "run-metadata.json": {
+      "bytes": 14153,
+      "sha256": "df984c716ac834b08248a2a3b57072ab58e80820bd6d10621f68e5f24decc7d4"
+    },
+    "job-133548963837.log": {
+      "bytes": 222077,
+      "sha256": "c5e41a5bf94a8eb3a350a037afd2efd786813900a56b80f61d642171f006899b"
+    },
+    "job-133548963837.json": {
+      "bytes": 37228,
+      "sha256": "0dbc2fe1a4fb16aaaaf669110608e41a44df953bf8ae33438539223920ca6cda"
+    },
+    "job-133548963680.json": {
+      "bytes": 1364324,
+      "sha256": "81883155ce1cc96832763e5e016a49fcae2c6b2113cf16fb6b6ab5624e23b0fd"
+    },
+    "job-133548963714.json": {
+      "bytes": 32865,
+      "sha256": "b0275caaa039171c58e040e6c5a1160eb855ef6e95ec31c03d4f336ccdadee6a"
+    }
+  }
+}

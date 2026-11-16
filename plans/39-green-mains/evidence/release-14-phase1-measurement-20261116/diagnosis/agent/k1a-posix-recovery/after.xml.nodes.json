@@ -1,0 +1,11 @@
+{
+  "count": 6,
+  "nodeids": [
+    "tests.test_boundary_registration_launchd::test_launchd_sigkill_after_publication_link_replays[journal]",
+    "tests.test_boundary_registration_launchd::test_launchd_sigkill_after_publication_link_replays[launcher]",
+    "tests.test_boundary_registration_launchd::test_launchd_sigkill_after_publication_link_replays[definition]",
+    "tests.test_installer_r0_stop::test_killed_after_disable_next_invocation_recovers",
+    "tests.test_installer_r0_stop::test_launchd_sigkill_at_each_stop_step_then_recover[disable]",
+    "tests.test_installer_r0_stop::test_launchd_sigkill_at_each_stop_step_then_recover[bootout]"
+  ]
+}

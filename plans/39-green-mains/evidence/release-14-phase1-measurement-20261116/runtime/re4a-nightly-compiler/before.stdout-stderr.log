@@ -1,0 +1,103 @@
+EEE                                                                      [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_durable_lost_ack_rebind_exact_retry_and_dispose[response] _
+
+film = namespace(fixture=FilmFixture(source_root=PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/bas...53d3a95deb3f49', '5331e195b11d5edeaa73c54075ce58a8d3150806ecd5a56142863dc54fc483dc', '2026-10-19T23:31:30.901+00:00')])
+astrid_importable = PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe896756b10>
+
+    @pytest.fixture
+    def agent(film, astrid_importable, monkeypatch):
+        class RendererUnavailable:
+            def find_spec(self, fullname, path=None, target=None):
+                if (fullname.startswith(("astrid.packs.rendering", "astrid.core.rendering",
+                                         "astrid.sdk.authoring_render_preview",
+                                         "astrid.core.timeline.compatibility", "composition",
+                                         "remotion", "node")) or "scene" in fullname):
+                    raise AssertionError("save imported renderer: " + fullname)
+    
+        blocker = RendererUnavailable()
+        monkeypatch.setattr(sys, "meta_path", [blocker, *sys.meta_path])
+    
+        def unavailable(*args, **kwargs):
+            raise AssertionError("save evaluated a scene")
+    
+        # The seed publication happened before rendering became unavailable.
+        import runtime_protocol.service as service_module
+        import runtime_protocol.visual_seam as visual_seam
+        monkeypatch.setattr(service_module, "evaluate_closure", unavailable)
+        monkeypatch.setattr(visual_seam, "evaluate_closure", unavailable)
+    
+>       from astrid.sdk.timeline.capture import capture_move, capture_track_create
+E       ModuleNotFoundError: No module named 'astrid.sdk.timeline.capture'
+
+tests/test_timeline_commit_integration.py:105: ModuleNotFoundError
+_ ERROR at setup of test_durable_lost_ack_rebind_exact_retry_and_dispose[body] _
+
+film = namespace(fixture=FilmFixture(source_root=PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/bas...53d3a95deb3f49', '5331e195b11d5edeaa73c54075ce58a8d3150806ecd5a56142863dc54fc483dc', '2026-10-19T23:31:30.901+00:00')])
+astrid_importable = PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe896f836f0>
+
+    @pytest.fixture
+    def agent(film, astrid_importable, monkeypatch):
+        class RendererUnavailable:
+            def find_spec(self, fullname, path=None, target=None):
+                if (fullname.startswith(("astrid.packs.rendering", "astrid.core.rendering",
+                                         "astrid.sdk.authoring_render_preview",
+                                         "astrid.core.timeline.compatibility", "composition",
+                                         "remotion", "node")) or "scene" in fullname):
+                    raise AssertionError("save imported renderer: " + fullname)
+    
+        blocker = RendererUnavailable()
+        monkeypatch.setattr(sys, "meta_path", [blocker, *sys.meta_path])
+    
+        def unavailable(*args, **kwargs):
+            raise AssertionError("save evaluated a scene")
+    
+        # The seed publication happened before rendering became unavailable.
+        import runtime_protocol.service as service_module
+        import runtime_protocol.visual_seam as visual_seam
+        monkeypatch.setattr(service_module, "evaluate_closure", unavailable)
+        monkeypatch.setattr(visual_seam, "evaluate_closure", unavailable)
+    
+>       from astrid.sdk.timeline.capture import capture_move, capture_track_create
+E       ModuleNotFoundError: No module named 'astrid.sdk.timeline.capture'
+
+tests/test_timeline_commit_integration.py:105: ModuleNotFoundError
+__________ ERROR at setup of test_real_credentials_and_scope_refusals __________
+
+film = namespace(fixture=FilmFixture(source_root=PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/bas...53d3a95deb3f49', '5331e195b11d5edeaa73c54075ce58a8d3150806ecd5a56142863dc54fc483dc', '2026-10-19T23:31:30.901+00:00')])
+astrid_importable = PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/agent')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe8966932f0>
+
+    @pytest.fixture
+    def agent(film, astrid_importable, monkeypatch):
+        class RendererUnavailable:
+            def find_spec(self, fullname, path=None, target=None):
+                if (fullname.startswith(("astrid.packs.rendering", "astrid.core.rendering",
+                                         "astrid.sdk.authoring_render_preview",
+                                         "astrid.core.timeline.compatibility", "composition",
+                                         "remotion", "node")) or "scene" in fullname):
+                    raise AssertionError("save imported renderer: " + fullname)
+    
+        blocker = RendererUnavailable()
+        monkeypatch.setattr(sys, "meta_path", [blocker, *sys.meta_path])
+    
+        def unavailable(*args, **kwargs):
+            raise AssertionError("save evaluated a scene")
+    
+        # The seed publication happened before rendering became unavailable.
+        import runtime_protocol.service as service_module
+        import runtime_protocol.visual_seam as visual_seam
+        monkeypatch.setattr(service_module, "evaluate_closure", unavailable)
+        monkeypatch.setattr(visual_seam, "evaluate_closure", unavailable)
+    
+>       from astrid.sdk.timeline.capture import capture_move, capture_track_create
+E       ModuleNotFoundError: No module named 'astrid.sdk.timeline.capture'
+
+tests/test_timeline_commit_integration.py:105: ModuleNotFoundError
+=========================== short test summary info ============================
+ERROR tests/test_operation_handle_integration.py::test_durable_lost_ack_rebind_exact_retry_and_dispose[response]
+ERROR tests/test_operation_handle_integration.py::test_durable_lost_ack_rebind_exact_retry_and_dispose[body]
+ERROR tests/test_operation_handle_integration.py::test_real_credentials_and_scope_refusals
+3 errors in 3.37s

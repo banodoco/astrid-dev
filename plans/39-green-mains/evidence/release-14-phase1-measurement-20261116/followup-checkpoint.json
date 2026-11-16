@@ -1,0 +1,9 @@
+{
+  "scheduled": true,
+  "title": "Continue Plan39 qualification",
+  "next_run_time": "2026-11-16T14:44:16-08:00",
+  "next_run_time_utc": "2026-11-16T22:44:16Z",
+  "one_off": true,
+  "purpose": "Check exact merged-head Agent CI/Lanes and continue within existing authority and holds",
+  "verified_from_tool_result": true
+}

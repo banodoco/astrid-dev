@@ -1,0 +1,711 @@
+{
+  "run_id": 43954031460,
+  "distinct_full_literal_messages": 46,
+  "messages": [
+    {
+      "literal_message": "Failed: DID NOT RAISE RuntimeErrorBase",
+      "count": 34,
+      "outcome_counts": {
+        "FAILED": 34
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 34
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_integration.py::test_agent_provider_refuses_top_level_type_on_without_publication",
+        "tests/test_timeline_commit_integration.py::test_agent_provider_refuses_animation_in_unsupported_phase_without_publication",
+        "tests/test_timeline_commit_integration.py::test_unsupported_visual_fields_refuse_before_publication[entrance-value0]",
+        "tests/test_timeline_commit_integration.py::test_unsupported_visual_fields_refuse_before_publication[entrance-value1]",
+        "tests/test_timeline_commit_integration.py::test_unsupported_visual_fields_refuse_before_publication[entrance-value2]",
+        "tests/test_timeline_commit_integration.py::test_unsupported_visual_fields_refuse_before_publication[transition-value3]",
+        "tests/test_timeline_commit_integration.py::test_visual_candidate_is_refused_before_publication_when_builtin_phase_is_unsupported",
+        "tests/test_timeline_history_assembly.py::test_unverified_dependencies_cannot_escape_the_graph[queued-row]",
+        "tests/test_timeline_history_assembly.py::test_unverified_dependencies_cannot_escape_the_graph[indirect-cycle]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[metadata-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[parent-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[event-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[file-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[abi-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[ledger-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[records-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[source-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[closure-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[owner-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[realm-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[sequence-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[pin-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[queued-cycle-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_inputs_changed_after_ancestor_check[deleted-row-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_retained_inputs_changed_after_check[transcript-content-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_retained_inputs_changed_after_check[transcript-binding-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_retained_inputs_changed_after_check[transcript-link-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_retained_inputs_changed_after_check[config-content-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_retained_inputs_changed_after_check[config-binding-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_retained_inputs_changed_after_check[config-link-collection]",
+        "tests/test_timeline_history_assembly.py::test_provider_refuses_mutation_after_dependent_history_reads[head]",
+        "tests/test_timeline_visual_fields.py::test_visual_fields_on_audio_track_are_refused_before_publication[entrance-value0]",
+        "tests/test_timeline_visual_fields.py::test_visual_fields_on_audio_track_are_refused_before_publication[exit-value1]",
+        "tests/test_timeline_visual_fields.py::test_visual_fields_on_audio_track_are_refused_before_publication[transition-value2]"
+      ]
+    },
+    {
+      "literal_message": "assert 33 == 31",
+      "count": 21,
+      "outcome_counts": {
+        "FAILED": 21
+      },
+      "triage_counts": {
+        "R-j / RT6": 9,
+        "R-n (new; RE1/RE2)": 12
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_crash.py::test_real_process_death_at_acceptance_boundary[pre-commit]",
+        "tests/test_timeline_commit_crash.py::test_real_process_death_at_acceptance_boundary[pre-restore]",
+        "tests/test_timeline_commit_crash.py::test_real_process_death_at_acceptance_boundary[before-commit]",
+        "tests/test_timeline_commit_crash.py::test_real_process_death_at_acceptance_boundary[before-restore]",
+        "tests/test_timeline_commit_crash.py::test_real_process_death_at_acceptance_boundary[after-commit]",
+        "tests/test_timeline_commit_crash.py::test_real_process_death_at_acceptance_boundary[after-restore]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[transcript-pre-commit]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[transcript-pre-restore]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[transcript-before-commit]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[transcript-before-restore]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[transcript-after-commit]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[transcript-after-restore]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[config-pre-commit]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[config-pre-restore]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[config-before-commit]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[config-before-restore]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[config-after-commit]",
+        "tests/test_timeline_commit_crash.py::test_retained_inputs_process_death[config-after-restore]",
+        "tests/test_timeline_commit_crash.py::test_host_boundary_first_capture_process_death[pre-transcript]",
+        "tests/test_timeline_commit_crash.py::test_host_boundary_first_capture_process_death[before-transcript]",
+        "tests/test_timeline_commit_crash.py::test_host_boundary_first_capture_process_death[after-transcript]"
+      ]
+    },
+    {
+      "literal_message": "RuntimeError: cannot archive required commit 321cef4b8c89a4a938cb9ede41ba6a5444cf1b62 from /home/runner/work/astrid-runtime/astrid-runtime/astrid-agent; fetch this SHA or full history with `git -C /home/runner/work/astrid-runtime/astrid-runtime/astrid-agent fetch origin 321cef4b8c89a4a938cb9ede41ba6a5444cf1b62`",
+      "count": 20,
+      "outcome_counts": {
+        "ERROR": 20
+      },
+      "triage_counts": {
+        "R-c / RE3": 20
+      },
+      "testcase_ids": [
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[genuine-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[genuine-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[genuine-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[genuine-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[native-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[native-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[native-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[native-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[config-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[config-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[config-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[config-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[registry-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[registry-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[registry-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[registry-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[expansion-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[expansion-ref]",
+        "tests/test_snapshot_legacy_certification.py::test_already_admitted_capture_after_upgrade[expansion-inline]",
+        "tests/test_snapshot_legacy_certification.py::test_exact_legacy_capture_retry_after_upgrade[expansion-inline]"
+      ]
+    },
+    {
+      "literal_message": "RuntimeError: process control is already strict; refusing to change it to sandbox",
+      "count": 6,
+      "outcome_counts": {
+        "ERROR": 5,
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-o (new; unclassified)": 6
+      },
+      "testcase_ids": [
+        "tests/test_runtime_boundary.py::test_separate_failed_start_preserves_live_discovery",
+        "tests/test_runtime_boundary.py::test_foreign_pid_observation_cannot_reclaim_live_publication",
+        "tests/test_runtime_boundary.py::test_down_without_discovery_cannot_report_live_owner_stopped[False]",
+        "tests/test_runtime_boundary.py::test_down_without_discovery_cannot_report_live_owner_stopped[True]",
+        "tests/test_runtime_boundary.py::test_failed_candidate_pid_alias_cannot_retire_live_publication",
+        "tests/test_astrid_product_down.py::test_down_waits_for_selected_generic_host_exit"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'reason': 'r...blication_id'} == {'reason': 'r...3f91bd4312ea'}",
+      "count": 5,
+      "outcome_counts": {
+        "FAILED": 5
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 5
+      },
+      "testcase_ids": [
+        "tests/test_render_historical_admission.py::test_corrupt_retained_dependency_refuses_without_writes",
+        "tests/test_render_historical_admission.py::test_retained_integrity_is_checked_before_any_publication[missing]",
+        "tests/test_render_historical_admission.py::test_retained_integrity_is_checked_before_any_publication[same-size]",
+        "tests/test_render_historical_admission.py::test_retained_integrity_is_checked_before_any_publication[custody]",
+        "tests/test_render_historical_admission.py::test_retained_integrity_is_checked_before_any_publication[size]"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.ConflictError: v33 provider/baseline verification is pending; requests and fresh pins are fenced",
+      "count": 5,
+      "outcome_counts": {
+        "ERROR": 1,
+        "FAILED": 4
+      },
+      "triage_counts": {
+        "R-d / RT1": 4,
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_public_s2_mixed_cli_journey.py::test_public_cli_stale_trim_rebases_label_lost_ack_restart_retry_and_undo[historical-audio]",
+        "tests/test_timeline_commit_crash.py::test_host_boundary_first_capture_process_death[pre-config]",
+        "tests/test_timeline_commit_crash.py::test_host_boundary_first_capture_process_death[before-config]",
+        "tests/test_timeline_commit_crash.py::test_host_boundary_first_capture_process_death[after-config]",
+        "tests/test_timeline_commit_restore_integration.py::test_original_restore_behaviour_with_real_agent[declared-media]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: Regex pattern did not match.",
+      "count": 3,
+      "outcome_counts": {
+        "FAILED": 3
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 3
+      },
+      "testcase_ids": [
+        "tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_tampered_cas_without_mutation",
+        "tests/test_timeline_clip_replacement.py::test_native_clip_swap_rejects_selected_source_corruption_between_capture_and_accept",
+        "tests/test_timeline_clip_replacement.py::test_native_generic_visual_media_requires_video_stream"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert False",
+      "count": 3,
+      "outcome_counts": {
+        "FAILED": 3
+      },
+      "triage_counts": {
+        "R-o (new; unclassified)": 3
+      },
+      "testcase_ids": [
+        "tests/test_update_jobs.py::test_authenticated_update_route_runs_selected_agent_platform_adapter[linux]",
+        "tests/test_update_jobs.py::test_authenticated_update_route_runs_selected_agent_platform_adapter[darwin]",
+        "tests/test_update_jobs.py::test_authenticated_update_route_runs_selected_agent_platform_adapter[win32]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: foreground Runtime exited 1: {",
+      "count": 3,
+      "outcome_counts": {
+        "FAILED": 3
+      },
+      "triage_counts": {
+        "R-k / RT7": 3
+      },
+      "testcase_ids": [
+        "tests/test_portable_lifecycle.py::test_installed_foreground_runtime_owns_discovery_door_and_stops_cleanly",
+        "tests/test_portable_lifecycle.py::test_installed_foreground_use_down_then_up_again",
+        "tests/test_profile_services.py::test_installed_run_and_up_supervise_declared_service_and_report_status[run]"
+      ]
+    },
+    {
+      "literal_message": "astrid.core.timeline.clip_fields.ClipFieldError: entrance has unknown key 'durationFrames'; allowed: type, duration",
+      "count": 3,
+      "outcome_counts": {
+        "FAILED": 3
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 3
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_integration.py::test_agent_written_visual_fields_validate_and_read_back_from_published_revision",
+        "tests/test_timeline_visual_fields.py::test_visual_field_provider_acceptance_and_refusal_regressions",
+        "tests/test_timeline_visual_fields.py::test_visual_field_provider_preserves_opaque_custom_data"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.timeline_commit_port.CommitUnavailable: Timeline commit outcome unavailable; retry the exact request",
+      "count": 3,
+      "outcome_counts": {
+        "FAILED": 3
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 3
+      },
+      "testcase_ids": [
+        "tests/test_timeline_history_assembly.py::test_provider_history_lookup_authenticates_each_graph_node_once[2]",
+        "tests/test_timeline_history_assembly.py::test_provider_history_lookup_authenticates_each_graph_node_once[4]",
+        "tests/test_timeline_history_assembly.py::test_provider_history_lookup_authenticates_each_graph_node_once[8]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'clips': [{'...': 'visual'}]} == {'clips': [{'...': 'visual'}]}",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 2
+      },
+      "testcase_ids": [
+        "tests/test_timeline_clip_replacement.py::test_native_clip_swap_is_atomic_cas_and_exactly_replayable",
+        "tests/test_timeline_clip_replacement.py::test_native_clip_swap_public_http_route"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'schema_vers...y': {}}}, ...} == {'schema_vers...fc261c'}, ...}",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 2
+      },
+      "testcase_ids": [
+        "tests/test_timeline_absent_head_repair_integration.py::test_repair_exact_bootstrap_retry_restart_and_edit_undo[absent]",
+        "tests/test_timeline_absent_head_repair_integration.py::test_repair_exact_bootstrap_retry_restart_and_edit_undo[null]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: {",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-k / RT7": 2
+      },
+      "testcase_ids": [
+        "tests/test_portable_lifecycle.py::test_installed_up_wait_and_down_stop_the_exact_discovered_owner",
+        "tests/test_profile_services.py::test_installed_run_and_up_supervise_declared_service_and_report_status[up]"
+      ]
+    },
+    {
+      "literal_message": "AttributeError: 'NoneType' object has no attribute 'client'",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 2
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_integration.py::test_real_mixed_helper_commit_undo_is_exact_or_refuses_overlap[immediate]",
+        "tests/test_timeline_commit_integration.py::test_real_mixed_helper_commit_undo_is_exact_or_refuses_overlap[later-overlap]"
+      ]
+    },
+    {
+      "literal_message": "astrid.sdk.timeline._command_state.CommandError: shot item source is unavailable",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 2
+      },
+      "testcase_ids": [
+        "tests/test_capture_candidate_binding.py::test_real_structural_drafts_keep_certification[inline-recorded_clone]",
+        "tests/test_capture_candidate_binding.py::test_real_structural_drafts_keep_certification[ref-recorded_clone]"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.ConflictError: migrated realm requires fresh Timeline provider registration before readiness",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 2
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_restore_integration.py::test_original_restore_behaviour_with_real_agent[history-http]",
+        "tests/test_timeline_commit_restore_integration.py::test_original_restore_behaviour_with_real_agent[stale-head-http]"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.RuntimeErrorBase: candidate.shots['shot-1'].internal_timeline.clips['clip-1'].elementRef: historical text binding requires an unchanged declaration and source",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 2
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_restore_integration.py::test_real_restore_retained_inputs_inverse_redo_and_restart_retry[transcript]",
+        "tests/test_timeline_commit_restore_integration.py::test_real_restore_retained_inputs_inverse_redo_and_restart_retry[config]"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.RuntimeErrorBase: candidate.timing: legacy word anchor is missing",
+      "count": 2,
+      "outcome_counts": {
+        "FAILED": 2
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 2
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_input_integration.py::test_retained_input_real_move_inverse_replay_after_restart[transcript]",
+        "tests/test_timeline_commit_input_integration.py::test_retained_input_real_move_inverse_replay_after_restart[config]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert '55871' in 'requested runtime identity could not be verified.'",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "testcase_ids": [
+        "tests/test_portable_lifecycle.py::test_installed_up_reports_occupied_browser_door_without_claiming_owner"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert 'None' == 'type-on 60f'",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_visual_fields.py::test_supported_top_level_type_on_retains_original_roundtrip_expectations"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert 'merged' == 'rebased'",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_clip_replacement.py::test_native_clip_swap_rebases_after_disjoint_intervening_edit"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert [{'blendMode'...e': 'output'}] == [{'id': 'pict...None, False]}]",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_ordinary_http.py::test_ordinary_http_empty_bootstrap_must_be_reachable"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'authority':...1], ...}, ...} == {'ref': {'dig...9d82600167'}}}",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_capture_candidate_binding.py::test_real_candidate_reaches_verified_host_without_mutating_inputs[parent-ref]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'authority':...1], ...}, ...} == {'ref': {'dig...b964bcd37b'}}}",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_capture_candidate_binding.py::test_real_candidate_reaches_verified_host_without_mutating_inputs[child-ref]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'authority':...1], ...}, ...} == {'ref': {'dig...d74c467852'}}}",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_capture_candidate_binding.py::test_real_candidate_reaches_verified_host_without_mutating_inputs[parent-inline]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'authority':...1], ...}, ...} == {'ref': {'dig...f58603befa'}}}",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_capture_candidate_binding.py::test_real_candidate_reaches_verified_host_without_mutating_inputs[child-inline]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'status': 'c...: ['at'], ...} == {'status': 'c...155681'}, ...}",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_input_integration.py::test_move_from_corrupt_local_timing_cache_conflicts_without_writes[transcript]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: assert {'status': 'c...: ['at'], ...} == {'status': 'c...46a51b'}, ...}",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_input_integration.py::test_move_from_corrupt_local_timing_cache_conflicts_without_writes[config]"
+      ]
+    },
+    {
+      "literal_message": "AssertionError: b'{\"code\": \"conflict\", \"details\": {\"reason\": \"selection-or-inputs-invalid\"}, \"message\": \"The selected installation or update inputs do not match this running Astrid.\", \"request_id\": \"08ca3992e9ca44fc89576808081e9643\"}'",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-k / RT7": 1
+      },
+      "testcase_ids": [
+        "tests/test_portable_lifecycle.py::test_real_post_worker_finishes_after_runtime_daemon_process_is_killed"
+      ]
+    },
+    {
+      "literal_message": "AttributeError: <module 'astrid_runtime.custody_broker' from '/home/runner/work/astrid-runtime/astrid-runtime/astrid_runtime/custody_broker.py'> has no attribute 'DARWIN_CUSTODY_SOCKET_PARENT'",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-j / RT6 (new signature)": 1
+      },
+      "testcase_ids": [
+        "tests/test_astrid_activation_join.py::test_runtime_relay_to_generic_host_successor_finalization_cpu"
+      ]
+    },
+    {
+      "literal_message": "Failed: DID NOT RAISE CommitRejected",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_redo_restoration_boundary.py::test_redo_requires_exact_source_restoration_and_absent_owner_guard[read-path]"
+      ]
+    },
+    {
+      "literal_message": "Failed: DID NOT RAISE ConflictError",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_render_historical_admission.py::test_archived_timeline_refuses_first_admission_and_replay[True]"
+      ]
+    },
+    {
+      "literal_message": "IndexError: list index out of range",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_runtime_pack_startup.py::test_foreground_uses_source_profile_installed_packs_without_callback"
+      ]
+    },
+    {
+      "literal_message": "KeyError: 'required_bytes'",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_render_historical_admission.py::test_historical_late_admission_refusal_writes_no_snapshot[storage]"
+      ]
+    },
+    {
+      "literal_message": "KeyError: 'source_checkout_closure'",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "new — unclassified": 1
+      },
+      "testcase_ids": [
+        "tests/test_verified_host_launch.py::test_nine_component_measurement_parity_without_importing_astrid"
+      ]
+    },
+    {
+      "literal_message": "assert 0 == 7",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-o (new; unclassified)": 1
+      },
+      "testcase_ids": [
+        "tests/test_runtime_pack_startup.py::test_real_cli_child_reads_persisted_admissions_and_restarts[profile]"
+      ]
+    },
+    {
+      "literal_message": "astrid.sdk.workspace_client.WorkspaceClientError: legacy timeline writes are retired; submit EditCommands through commitTimeline",
+      "count": 1,
+      "outcome_counts": {
+        "ERROR": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_public_s2_mixed_cli_journey.py::test_public_cli_stale_trim_rebases_label_lost_ack_restart_retry_and_undo[literal-media]"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.ConflictError: realm failed integrity checks",
+      "count": 1,
+      "outcome_counts": {
+        "ERROR": 1
+      },
+      "triage_counts": {
+        "R-j / RT6": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_acceptance.py::test_real_provider_two_projects_keep_local_ids_and_commit_authority_isolated"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.ConflictError: v33 provider registration is required for this process before requests and fresh pins",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_shot_candidate_promotion.py::test_catalog_promotion_preserves_accepted_film_and_retries_before_live_guards"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.RuntimeErrorBase: candidate.shots['shot-3'].internal_timeline.clips['clip-3']: timeline interval must fit the occurrence's half-open bounds",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_shot_candidate_promotion.py::test_catalog_promotion_prevents_native_overwrite_after_historical_reuse"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.RuntimeErrorBase: candidate.shots['shot-placement-96f3e4829dd24d83fda944c26dc090557c5c7ee3a8b0724f5255511d2da50e46'].internal_timeline.clips['clip-3']: timeline interval must fit the occurrence's half-open bounds",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_projection_occupancy.py::test_actual_provider_historical_slot_rematerializes_after_verified_restore"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.RuntimeErrorBase: revision content digest mismatch",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-n (new; RE1/RE2)": 1
+      },
+      "testcase_ids": [
+        "tests/test_timeline_commit_restore_integration.py::test_original_restore_behaviour_with_real_agent[tampered-child]"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.errors.ValidationError: canonical capture projection provider is unavailable",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-o (new; unclassified)": 1
+      },
+      "testcase_ids": [
+        "tests/test_spec_reference.py::test_visualize_task_hydrates_exact_saved_revision_and_refuses_missing_source"
+      ]
+    },
+    {
+      "literal_message": "runtime_protocol.source_identity.SourceIdentityError: untracked source directory is unsupported: /home/runner/work/astrid-runtime/astrid-runtime/astrid-agent",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-o (new; unclassified)": 1
+      },
+      "testcase_ids": [
+        "tests/test_foreground_authoring_integration.py::test_foreground_boundary_creates_timeline_and_commits"
+      ]
+    },
+    {
+      "literal_message": "subprocess.CalledProcessError: Command '['git', '-C', '/home/user/work/wt/agt-pin-6efc8150', 'rev-parse', 'HEAD']' returned non-zero exit status 128.",
+      "count": 1,
+      "outcome_counts": {
+        "FAILED": 1
+      },
+      "triage_counts": {
+        "R-b / RE2": 1
+      },
+      "testcase_ids": [
+        "tests/test_wc10_installed_launcher.py::test_wc10_installed_normal_launcher_provider_bootstrap"
+      ]
+    }
+  ]
+}

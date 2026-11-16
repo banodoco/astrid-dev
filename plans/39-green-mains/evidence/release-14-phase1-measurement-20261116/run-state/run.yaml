@@ -1,0 +1,629 @@
+mode: implementation
+accountable_session: /root
+authorization: User follow-up authorizes diagnosing and fixing all in-scope Release 14 Plan 39 failures, including
+  justified test correction/removal and product fixes. User replied yes to publishing isolated Agent/Runtime/App
+  task branches, opening PRs into release/14/plan-39, and merging reviewed batches there for hosted CI and
+  continued repairs.
+boundaries:
+  excluded:
+  - Plan 38 owned tests
+  - Plan 55 owned tests
+  - Release 15 deferred tasks
+  inputs_md: unchanged
+  remote_writes: astrid-dev p39/g1; isolated product task branches and reviewed PR merges into release/14/plan-39
+    explicitly authorized; no release/14/main or public main promotion
+models:
+  normal:
+    class: N
+    model_id: gpt-6-luna
+    reasoning_effort: high
+    availability: available
+  very_hard:
+    class: X
+    model_id: gpt-6.1-terra
+    reasoning_effort: high
+    availability: available
+  super_hard:
+    class: S
+    model_id: gpt-6-sol
+    reasoning_effort: high
+    availability: available
+  judgment:
+    class: judgment
+    model_id: gpt-6-astra
+    reasoning_effort: high
+    availability: available
+roles:
+  worker_normal: normal
+  worker_very_hard: very_hard
+  worker_super_hard: super_hard
+  plan_judgment: judgment
+  advisor: judgment
+  completion_reviewer: judgment
+manager_provenance: GPT-6 Astra Pro coordinating session; exact inherited reasoning effort not exposed
+environment:
+  smoke:
+    astrid-agent: focused worker-env commands used; not a new G0 acceptance claim
+    astrid-runtime: G0 canonical wrappers integrated; RE4 full two-file proof 110 passed at reviewed tree 3fff.
+      The old header reported ambient Python 3.12.14; wrapper interpreter identity was not captured then. Later
+      qualified pin/compiler proof explicitly records Python 3.13.5 and exact installed Agent provenance.
+    astrid-app: G0 canonical wrapper integrated; hosted Tests successful at e94d7ab, attempt2 retains successful
+      attempt1 Vitest result
+  docker: unavailable
+  full_suites: hosted only; not run locally
+  agent_layout_correction:
+    python: 3.13.5
+    reason: Task-created venv directory symlink caused genuine installer managed-path refusals
+    action: The same complete environment is now the real venv directory; only environment entrypoint prefixes
+      adjusted
+    dependency_inventory_unchanged: true
+    dependency_inventory_sha256: 63d2241b36576bc935fde2c7d6c003c9d09103585a6ae06f3b4779fbf6b32734
+    evidence: p39-g2-evidence/agent/environment-layout-correction/result.json
+    product_changes: false
+baseline:
+  report: /workspace/scratch/cd53b069f320/p39-g1-evidence/final-report-data.json
+  captured_at: 2026-11-16 17:26 UTC
+  status: incomplete_evidence_not_marked_done
+  counts:
+    jobs: 52
+    failed: 27
+    passed: 17
+    running: 2
+    cancelled: 1
+    skipped: 5
+    failure_error_records: 4935
+    per_job_message_groups: 810
+  ownership_waiting:
+    agent_plan55: 45
+    runtime_plan55: 3
+    runtime_plan38: 44
+    ownership_unresolved: 1
+  run_ids:
+    astrid-agent:
+      CI: 43888589837
+      Lanes: 43888589840
+      Chat service: 43888589704
+      Windows task host journey: 43888589737
+    astrid-runtime:
+      CI: 43888599361
+      Nightly: null
+    astrid-app:
+      Tests: 43883626058
+      Lanes: 43883625781
+      E2E: 43883625971
+      Direct Journey: null
+  assumptions:
+    A-e: 'refuted as active lint debt cause: Ruff count decreased 2008 -> 2006, equality gate failed'
+    A-f: fixed in completed Windows native/installer job; separate journey still fails
+    A-g: fixed in both completed wheel smoke jobs
+  release_main_heads_rechecked_at: 2026-11-16 22:11 UTC (minute precision)
+  release_main_heads_unchanged: false
+  current_release_main_heads:
+    astrid-agent: fc391dea696ec5799db222799a34f9de6a69659b
+    astrid-runtime: 2537fed24385ec1c24f48a812e09af4bb63fb794
+    astrid-app: 0b6ef16152dc3fa11246ccc2007da630c66d1a1a
+  current_agent_head_change:
+    observed: Read-only ref observation; this session did not push or merge release/14/main
+    evidence: agent/current-main-fc391dea/README.md
+    runs:
+      CI: 43956915061
+      Lanes: 43956915056
+      Chat service: 43956914843
+      Windows task host journey: 43956914988
+    status_at_2155: CI and Lanes pending; Chat success; Windows journey failure
+    frozen_G1_unchanged: true
+source:
+  astrid-dev:
+    ref: p39/g1
+    sha: 2770aa79e8d9325c7891294609c746963cc4776e
+    custody: fresh clone
+    dirty_state: clean at start
+  astrid-agent:
+    ref: release/14/main
+    sha: ab95803ce28fa51eec937b4074f5ec0f0439b98a
+    custody: fresh clone
+    dirty_state: clean at start
+    destination: local p39/g1
+  astrid-runtime:
+    ref: release/14/main
+    sha: 2537fed24385ec1c24f48a812e09af4bb63fb794
+    custody: fresh clone
+    dirty_state: clean at start
+    destination: local p39/g1
+  astrid-app:
+    ref: release/14/main
+    sha: 0b6ef16152dc3fa11246ccc2007da630c66d1a1a
+    custody: fresh clone
+    dirty_state: clean at start
+    destination: local p39/g1
+existing_work:
+  G0: 'complete and integrated: devPR762,RuntimePR52,AppPR278; closure devPR766'
+  GL: AgentPR366 merged at347dc197ec040d644a8120646966c58bbea7873a; retain acceptedGLfiles,dropduplicateunpublishedGLdelta
+review:
+  stages:
+  - id: RS1
+    role: completion_reviewer
+    after: G2
+    max_rounds: 1
+  consumed_rounds:
+    RS1: 0
+  pre_publication:
+    reviewer: /root/phase1_review
+    model: gpt-6-astra
+    reasoning_effort: high
+    status: four findings resolved; no unresolved blocking code finding within reviewed scope
+    formal_RS1: false
+  formal_RS1_consumed_rounds: 0
+  integrated_prepublication:
+  - repository: astrid-runtime
+    sha: ac9e6d2e7f6a0a6961d7a2d924040f61832925d1
+    reviewer: /root/phase1_review
+    verdict: no blockers after exact restoration of eight mistakenly reverted files
+  - repository: astrid-agent
+    sha: ba0bec4a803c959d476887fbcf51f8594e312ff7
+    reviewer: /root/phase1_review
+    verdict: no blockers; accepted plan baseline ratchets retained
+  readiness_advice:
+    advisor: /root/phase_gate_advice
+    formal_RS1: false
+    ruling: provisional measurement now; K1a/K1b acceptance follow-up cause cards permitted before RS1 to break
+      dependencies; own card acceptance must be met; no promotion authorization
+status: Runtime and App reviewed batches integrated and measured. Agent PR369 now merged at6bbda788 with exact
+  reviewed tree; new CI/Lanes active. Full policy retains19direct gates. Strengthened Runtime clip port held
+  solely on replay/history-contract decision after independent coverage rereview. Formal G1/G2/RS1 incomplete.
+candidates:
+- repository: banodoco/astrid-agent
+  base_sha: ab95803ce28fa51eec937b4074f5ec0f0439b98a
+  local_candidate_sha: 9e41487ac6d942930d4c699e24fd378c0a0fbaf0
+  patch: patches/astrid-agent.patch
+  patch_sha256: c9e34a3c32a49da9b8b91ed3a68cd3721b3e2bb30c401356eeb5e86d918f3819
+  changed_files:
+  - .github/workflows/ci.yml
+  - .github/workflows/lanes.yml
+  - scripts/reshape/compare_structure_baseline.py
+  - scripts/reshape/count_baseline.py
+  - tests/lanes.py
+  - tests/reshape/test_compare_baselines.py
+  - tests/test_release_branch_workflows.py
+  - tests/test_skip_guard.py
+  - tests/test_skip_policy.py
+  stat: 9 files changed, 393 insertions(+), 41 deletions(-)
+  remote_publication: superseded by integrated_publication below
+  snapshot: original first-batch candidate before publication authorization and later integrations; historical
+    only
+- repository: banodoco/astrid-runtime
+  base_sha: 2537fed24385ec1c24f48a812e09af4bb63fb794
+  local_candidate_sha: 71708140bec9e2ffaf5c43e96136292ef6883402
+  patch: patches/astrid-runtime.patch
+  patch_sha256: 837c203cd76aea411b7a46b7414b18d104b05f56c7ac71c5308861d7cd7c8f53
+  changed_files:
+  - .github/workflows/ci.yml
+  - .github/workflows/nightly.yml
+  - tests/lanes.py
+  - tests/qualify_absent_head_repair.py
+  - tests/seccomp/container-entrypoint.py
+  - tests/seccomp/run-suite.sh
+  - tests/test_skip_registry.py
+  - tests/test_snapshot_legacy_certification.py
+  - tests/test_timeline_bundle2_contract.py
+  - tests/test_timeline_clip_replacement.py
+  - tests/test_timeline_commit_contract.py
+  - tests/test_v33_protected_acceptance.py
+  stat: 12 files changed, 490 insertions(+), 40 deletions(-)
+  remote_publication: superseded by integrated_publication below
+  snapshot: original first-batch candidate before publication authorization and later integrations; historical
+    only
+- repository: banodoco/astrid-app
+  base_sha: 0b6ef16152dc3fa11246ccc2007da630c66d1a1a
+  local_candidate_sha: d10c96636291410a24f308051141105b38158e92
+  patch: patches/astrid-app.patch
+  patch_sha256: 428f41f95ea02dadf07d7122affbe8aaaba94b717279ab830dd43be2e85444b5
+  changed_files:
+  - .github/workflows/lanes.yml
+  - .github/workflows/test.yml
+  - config/testing/vitest.config.ts
+  - scripts/installer/pin.mjs
+  - scripts/installer/release-guard.mjs
+  - scripts/installer/release.test.mjs
+  - scripts/quality/check-known-failures.mjs
+  - scripts/quality/check-known-failures.test.mjs
+  stat: 8 files changed, 191 insertions(+), 53 deletions(-)
+  remote_publication: superseded by integrated_publication below
+  snapshot: original first-batch candidate before publication authorization and later integrations; historical
+    only
+acceptance_blockers:
+- 'G1 is incomplete: old Darwin cancelled, old Agent Lanes3 and unit6 full logs unavailable, exact-head old
+  Runtime Nightly and App Direct Journey absent. Agent release main moved to fc391dea; new CI/Lanes pending
+  at last observation.'
+- K1a full policy at reviewed localfbe59a3:22passed,1failed,19remaining direct gates. Plan38 native-token gate
+  remains waiting; every remaining exact gate has an evidence-backed assessment.
+- K1a hosted cancelled-shard negative proof remains open. PR369 is merged after prior-plan Lanes completion;
+  new exact-head CI43967861168 and Lanes43967861160 are not yet qualified.
+- K1b integrated inventory remains 20 exact IDs; draft PR56 removes one orphan declaration for 19. Cap10 and
+  authentic issue/owner/expiry metadata still unresolved; Plan38 installed-pair contract remains waiting.
+- Strengthened Runtime clip port remains25P2F after all three independent coverage findings are closed. Earlier
+  exact retry and later mandatory-history integrity guarantees conflict; explicit owner rule required. Unexecuted
+  atomic tail remains unproved.
+- RE2 private qualification artifacts unavailable. RE3 exact historical Agent321cef object unavailable from
+  origin; 20 current Nightly archive errors remain, with no replacement or skip.
+- Runtime current CI retains 1489 failure/error occurrences; Nightly retains149. Newly reached assertions are
+  not automatically regressions. One Nightly prior pass becomes stale source-location failure under Plan38
+  closure-contract hold.
+- Agent prior-plan CI and Lanes fully inventoried. Shard6 CI has30failed subtests without standalone IDs and
+  unavailable raw log; Lanes3 log Transport closed, with actual XML providing143redIDs/64messagegroups but
+  no outer summary. OldG1shard3 comparison is unavailable.
+- App Lanes/E2E/Direct Journey exact plan-head runs absent. Secure sign-in aborted by user; no manual dispatch
+  performed; connector has no dispatch operation.
+- Formal G2 prerequisite acceptance incomplete; all post-batch measurements provisional; RS1 remains0/1. Other
+  phase2 implementation remains held by the readiness ruling.
+cause_assessment:
+  product_bug: 'AT1 registry source precedence: 2 exact failures, issue757; future separate S bug card after
+    G2/RS1'
+  stale_test: RT6 media descriptors intentionally became association-specific in a1f7fa4972c579c5673e01e6a83171036512029d;
+    no test correction yet
+  test_harness: PT2 fake Runtime lacks current inventory/commit routes and helper drives retired writer; browser
+    confirmation pending
+  unresolved: Agent clip entrance DID NOT RAISE needs contract trace
+  stale_pin: RE1 pin advanced from R1 b05 to published R12 0e1543; exact installed noneditable Agent verified.
+    New Nightly clears458 of551 previous API-compatibility red IDs; remaining outcomes individually retained.
+  compiler_environment: PR55 provisions the locked TypeScript compiler and sandbox PATH. All three old Nightly
+    compiler setup errors pass; hosted CI is complete and XML-reconciled.
+  stale_source_location_waiting_plan38: New Nightly sole pass-to-failure selector extracts source_checkout_closure
+    from generic_host, but intentional Agent4e6e8c9 moved it to source_identity. Observed KeyError is a stale
+    test assumption; closure parity contract belongs to Plan38, so unchanged/waiting.
+  replay_contract_conflict:
+    status: Waiting for explicit owner rule; no safe source-supported implementation or test change accepted
+    old_expectation_commit: 3021a5b79102e9c0873f70df46f5a686bd1276ff
+    later_integrity_commit: 43407a1820116b73b4db014b938872534eeeeb5f
+    contract: contract/commit-v2.md
+    observed: Exact accepted retry after corruption of old CAS history returns 503 CommitOutcomeUnknown/runtime_unavailable;
+      no duplicate acceptance. Two atomic IDs fail the same preserved assertion.
+    recommended_rule: Preserve integrity refusal and explicitly define exact replay as requiring verifiable
+      winner history; public status/recovery wording also needs a contract ruling
+    alternative: Independently authenticated receipt proof, without bypassing authorization or history integrity
+      checks
+    evidence: runtime/k1b-replay-contract/assessment.md
+  windows_journey: 'A-h/AT4 stale harness entrypoint: driverpython-m-astrid is gateway; installedAgent981419
+    consoleastrid supports packslist/add. Driverfc391 differs from installedmanifestpin. Narrow console-executable
+    correction not implemented/qualified; downstream SDK/host/settlement assertions unexecuted.'
+package: plans/39-green-mains/evidence/release-14-phase1-measurement-20261116/README.md (publication candidate;
+  snapshot cannot embed its own final commit SHA)
+remote_actions:
+  product_pushes: true
+  product_prs:
+  - 369
+  - 54
+  - 55
+  - 56
+  - 280
+  merges:
+  - astrid-runtime#54
+  - astrid-runtime#55
+  - astrid-app#280
+  - astrid-agent#369
+  workflow_dispatches: []
+  dev_publication:
+    branch: p39/g1
+    commit: 77c06a0d965505268d3aaaa73575562f2e121831
+    tree: ab7ca21a1264c286d63299ecb6bb90000d2dc9e0
+    parent: 2770aa79e8d9325c7891294609c746963cc4776e
+    verified: true
+    scope: evidence package and duplicate release-record cleanup only
+  cancelled_own_superseded_runs:
+  - repository: astrid-runtime
+    run_id: 43937544172
+    reason: queued PR run superseded by merged plan-head measurement
+    verified: browser status cancelled
+baseline_supplements:
+- run_id: 43888589840
+  job_id: 133451220087
+  head_sha: ab95803ce28fa51eec937b4074f5ec0f0439b98a
+  completed_at: '2026-11-16T17:52:43Z'
+  summary: = 99 failed, 391 passed, 32163 deselected, 8 warnings, 26 errors in 4064.38s (1:07:44) =
+  failures: 99
+  errors: 26
+  full_message_groups: 55
+  first_line_signatures: 43
+  triage: 'new: A-b / AT1 unclassified; no fix or proven root cause yet'
+  plan38_exact_matches: 0
+  plan55_exact_matches: 0
+  remaining: shard3 still running; frozen baseline counts unchanged
+  ledger: plans/39-green-mains/evidence/release-14-first-repair-batch/baseline-supplement/lanes-integration-4-133451220087.json
+next_blocker: Complete new Agent qualification, continue independent K1 causes and resolve explicit replay/history
+  contract rule. Preserve Plan38/55, source-artifact/access holds and no release promotion.
+integrated_publication:
+  astrid-agent:
+    pr: 369
+    url: https://github.com/banodoco/astrid-agent/pull/369
+    local_head: fbe59a319d9419a875353c4176ff0bde749a9d75
+    remote_head: 72e7ed279c4623964c4584a098b48a9dab5bea12
+    tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+    base: b8f2692948d1b5987ee2938920f47aace0732792
+    status: Merged PR369 only after prior-plan Lanes completed; exact merge tree equals reviewed tree. New
+      CI43967861168 queued and Lanes43967861160 in progress at22:13UTC. Local full policy22P1F,19remaining
+      direct gates.
+    merge_sha: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  astrid-runtime:
+    pr: 55
+    url: https://github.com/banodoco/astrid-runtime/pull/55
+    local_head: a05d360c50b35c6803d710909c87b51daf5e84b2
+    remote_head: e7e7d523b5240a1c23a759ba07d7187bdcd7933f
+    tree: 0291fadcde521650fdc71257a9ec2fd61b7226a4
+    base: 4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce
+    merge_sha: 359e2d7e55369562ca9513557282ea8aff7645bc
+    status: Merged; exact merge tree equals reviewed local tree; new CI43954031461 and Nightly43954031460 measure
+      it.
+  astrid-app:
+    pr: 280
+    url: https://github.com/banodoco/astrid-app/pull/280
+    local_head: 4928c26eb9216042361a9dc5967173ca7a57d968
+    remote_head: d4bf25f1682896a957115e0e3792453d4bdb046d
+    tree: c384a4bd35a68773ce6472ea730d8c76b55d4a6e
+    base: 152492846f622f84f03dd5223ff1b5c8d880dfa2
+    merge_sha: e94d7ab53f22c03cec6856ae469d952912b4ad52
+    status: merged; merge tree matches reviewed tree
+manual_dispatch_limitation: Local browser disconnected; cloud browser requested secure sign-in, user aborted.
+  No manual workflow was dispatched. Do not retry authentication without user request. Existing GitHub connector
+  remains usable but lacks dispatch operation.
+provisional_g2:
+  classification: post-batch measurement; phase-1 acceptance pending; not formal G2 or RS1
+  runtime:
+    head: 4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce
+    CI:
+      run_id: 43938386357
+      attempt: 1
+      status: failure
+      failing_jobs: 5
+      failure_error_records: 2773
+      literal_per_job_message_groups: 170
+      plan38_exact_waiting: 44
+      plan55_exact_waiting: 3
+      plan55_review_waiting: 9
+      evidence: p39-g2-evidence/runtime/ci-43938386357/measurement.json
+      xml_reconciled: true
+    Nightly:
+      run_id: 43938386391
+      attempt: 1
+      status: failure
+      summary: 39failed37passed20skipped9596deselected571errors
+      failure_error_records: 610
+      junit_tests: 667
+      evidence: p39-g2-evidence/runtime/nightly-43938386391-job-133548961758.json
+      xml_reconciled: true
+  app:
+    head: e94d7ab53f22c03cec6856ae469d952912b4ad52
+    Tests:
+      run_id: 43938449477
+      attempt: 2
+      status: success
+      vitest_job: 133579734809
+      reused_attempt1_vitest_job: 133549190737
+      vitest_tests: 21205
+      vitest_failures: 0
+      vitest_errors: 0
+      vitest_skipped: 0
+      artifact_id: 14262849293
+      xml_reconciled: true
+      artifact_sha256: 5010e805e6245658226bf335b775885071c9d441b317e2805be968d85bbe86eb
+    missing_workflows:
+    - Lanes
+    - E2E
+    - Direct Journey
+  agent:
+    head: b8f2692948d1b5987ee2938920f47aace0732792
+    CI: 43934820640
+    Lanes: 43934820639
+    status: Prior-plan CI and Lanes completed failure; new reviewed candidate merged at6bbda788 and has new
+      exact-head CI/Lanes runs. Old measurements remain separate.
+    fast_checks:
+      job_id: 133536534666
+      status: success
+      ruff_current: 2006
+      ruff_baseline: 2006
+      note: 79preexisting structure additions are default-unit debt,not a failing fast-check result
+    measurement:
+      run_id: 43934820640
+      attempt: 1
+      status: failure
+      junit_tests: 31316
+      junit_failures: 886
+      junit_errors: 398
+      junit_skipped: 55
+      direct_testcase_elements: 30697
+      direct_failure_error_rows: 1254
+      failing_subtests_without_individual_ids: 30
+      xml_archives_verified: 9
+      evidence: p39-g2-evidence/agent/ci-43934820640/README.md
+    lanes_measurement:
+      run_id: 43934820639
+      attempt: 1
+      status: completed failure at22:07:55UTC; all five failed jobs measured
+      failed_jobs_measured: 5
+      passed_jobs: 1
+      running_job: null
+      failure_error_records: 566
+      distinct_per_job_message_groups: 179
+      exact_prior_G1_red_ids: 423
+      late_G1_shard4_supplement_included: true
+      plan55_integration1_waiting: 27
+      evidence: agent/lanes-43934820639/reconciliation/README.md
+      last_completed_job: 133536534907
+      scope: all five failed jobs; opt-in log only, integration1/2/4 log+XML, integration3 XML only
+      last_shard:
+        job_id: 133536534907
+        artifact_id: 14277921134
+        artifact_sha256: 88e987ceeff7e87ba3d45b31c2a2ded5029d90f791a78e17355ac465b63544be
+        passed: 372
+        failed: 81
+        errors: 62
+        skipped: 1
+        literal_message_groups: 64
+        outer_summary: unavailable; raw-log Transport closed on one request
+        comparison: priorG1shard3 missing;143redIDs are not proven new regressions
+  runtime_followup:
+    head: 359e2d7e55369562ca9513557282ea8aff7645bc
+    tree: 0291fadcde521650fdc71257a9ec2fd61b7226a4
+    CI:
+      run_id: 43954031461
+      attempt: 1
+      status: failure
+      failure_error_records: 1489
+      literal_per_job_message_groups: 166
+      xml_reconciled: true
+      all_same_testcase_sets: true
+      transitions_per_job_occurrence:
+        failure->failure: 198
+        passed->passed: 26875
+        skipped->skipped: 286
+        error->error: 1105
+        error->failure: 186
+        error->passed: 1230
+        failure->passed: 54
+        xfailed->xfailed: 39
+      evidence: p39-g2-evidence/runtime/ci-43954031461/README.md
+    Nightly:
+      run_id: 43954031460
+      attempt: 1
+      job_id: 133603706731
+      status: failure
+      summary: 121 failed,498 passed,20 skipped,9596 deselected,28 errors
+      junit_tests: 667
+      failure_error_records: 149
+      artifact_id: 14269133531
+      artifact_sha256: 647bdf2354060ba5e35b8e5d08018289c685370b19f7e10bc425c5a99a9ce177
+      xml_reconciled: true
+      same_ids_as_prior: 667
+      transitions:
+        error_to_pass: 454
+        failure_to_pass: 8
+        error_to_failure: 89
+        error_to_error: 28
+        failure_to_failure: 31
+        pass_to_failure: 1
+        pass_to_pass: 36
+        skip_to_skip: 20
+      evidence: p39-g2-evidence/runtime/nightly-43954031460/comparison.md
+      full_XML_message_groups: 53
+  agent_followup:
+    head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+    CI:
+      run_id: 43967861168
+      attempt: 1
+      status: queued at22:13UTC
+    Lanes:
+      run_id: 43967861160
+      attempt: 1
+      status: in_progress at22:13UTC
+    classification: new exact merged-head qualification; no result claimed
+integrated_publication_history:
+  astrid-runtime-first-batch:
+    pr: 54
+    url: https://github.com/banodoco/astrid-runtime/pull/54
+    local_head: ac9e6d2e7f6a0a6961d7a2d924040f61832925d1
+    remote_head: d129246dae1799470910d3b963c9f07e8cdd9fae
+    tree: 3fff009d7cb8c46a1a1df21f3f541596b98480bd
+    base: 16d5734a7a7fac6fcecca6d695533370129aba7a
+    merge_sha: 4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce
+    status: merged; merge tree matches reviewed tree
+local_followups:
+  astrid-agent:
+    head: fbe59a319d9419a875353c4176ff0bde749a9d75
+    tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+    published: true
+    cards:
+    - commit: 16ef29bf8cd9d9df82c6f2a892feff3dffc44d70
+      gates: 4
+      proof: 4 passes before and after
+      review: no blocker
+    - commit: 372e39cd309e519857c1dbb2c86d71f7ef724232
+      gates: 3
+      proof: 6 selected cases pass before and after
+      review: no blockers; independent review accepted exact three-line gate batch
+    - commit: 7e78fd7846b3271d30ed5f32900d68d9ecbee921
+      gates: 6
+      proof: '330 exact IDs each side: 262 passed, 8 failed, 60 errors; complete signature parity; all completed
+        proofs exit 1'
+      review: Independent Astra review accepted equivalent gate changes only; no behavioral failures hidden
+    - commit: cfabc7dabeceef6340809db22f895e7952fc8cfd
+      gates: 5
+      proof: 6 exact cases passed before/after
+      review: independent accepted
+    - commit: fbe59a319d9419a875353c4176ff0bde749a9d75
+      gates: 3
+      proof: 6 exact cases passed before/after; manager corrected expected count to actual3+1+2 parameter expansion
+      review: independent accepted
+    remote_head: 72e7ed279c4623964c4584a098b48a9dab5bea12
+    policy:
+      command: bash scripts/worker-env/agent-pytest.sh -q tests/test_skip_policy.py
+      summary: 22 passed, 1 failed in 8.63s
+      exit_code: 1
+      remaining_direct_gates: 19
+      evidence: diagnosis/agent/k1a-policy-fbe59a3/
+    merge_sha: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  astrid-runtime:
+    head: 2777051c06c3d15e14d3e8d13de26b19f875c4bc
+    tree: 2749ee50447b2082b198cf561c895796a6d09444
+    published: true
+    card: Remove orphan declaration for test already deleted in925a7dd; no live test removed
+    proof: 6 passed before and after
+    review: no blocker
+    quarantine_count: 19
+    remote_head: 3833e205d745b668fa6cdc4e6670fd4558503cf4
+    pr: 56
+    url: https://github.com/banodoco/astrid-runtime/pull/56
+    status: Draft, unmerged, next reviewed batch only; no partial clip patch included
+hosted_archive:
+  path: /workspace/scratch/cd53b069f320/Release14-Plan39-Hosted-Evidence-20261116.zip
+  raw_files: 112
+  uncompressed_bytes: 220113841
+  archive_bytes: 24491929
+  sha256: 5f37945a6f1b1b9f44b4509f48f4bec92b79423b8577be16d1a6544f19cf466e
+  local_path: /workspace/scratch/cd53b069f320/Release14-Plan39-Hosted-Evidence-20261116.zip
+  library_file_id: libfile_fde3_f-3bf50906ce5c819199b0850de740fff6_6b5886b89d0881919e73a1e3270986c8
+  file_id: file_000000007f708246a1ee7100e6de438e
+  version: null
+  filename: Release14-Plan39-Hosted-Evidence-20261116.zip
+  url: https://chatgpt.com/library?file_id=libfile_fde3_f-3bf50906ce5c819199b0850de740fff6_6b5886b89d0881919e73a1e3270986c8&account_id=personal
+active_cards:
+- new-Agent-head-hosted-qualification
+local_uncommitted_work:
+  astrid-runtime:
+    branch: p39/k1b-clip-contract
+    base: 2777051c06c3d15e14d3e8d13de26b19f875c4bc
+    path: tests/test_timeline_clip_replacement.py
+    status: Strengthened test-only partial port;25passed2failed on unchanged replay contract. Independent rereview
+      closed all three coverage findings; overall HOLD for contract decision and unexecuted atomic tail.
+    before_A: 6 failed, 11 passed, 10 strict xfailed
+    before_B_corrected: 9 passed, 71 deselected
+    after_A: 25 passed, 2 failed
+    post_B_and_guard_C: Post B completed:9passed71deselected. Guard C not run because declaration/mirror removal
+      remains held.
+    registry_entries: ten clip entries and mirror retained
+    evidence: runtime/k1b-clip-contract-strengthened/
+    post_B: 9 passed, 71 deselected
+    intermediate_corrected_proof: 19 passed, 8 failed due fixture bounds and public adapter exception assertions;
+      retained, corrected proof returns25P2F
+    review: Independent rereview closed all three coverage findings; overall HOLD for two unchanged old-history-corruption
+      replay failures and unexecuted atomic tail
+    patch_sha256: 5ff1ff46ad12d17e4059c6ca38cf186980896db34fc481da374d51a9d49489f5
+late_agent_archive:
+  path: /workspace/scratch/cd53b069f320/Release14-Plan39-Late-Agent-Evidence-20261116.zip
+  raw_files: 18
+  archive_bytes: 5399989
+  uncompressed_bytes: 36306023
+  sha256: c8d2bc07bbf84e98350b9275cbd777bde436728e75ca854ebbae3fad2943fe18
+  local_path: /workspace/scratch/cd53b069f320/Release14-Plan39-Late-Agent-Evidence-20261116.zip
+  library_file_id: libfile_fde3_f-8c2f44b6a13c819180f448e4b5202a82_6b5886b89d0881919e73a1e3270986c8
+  file_id: file_0000000078b481f4b7c3e86ac7a4d26a
+  filename: Release14-Plan39-Late-Agent-Evidence-20261116.zip
+  version: 0
+  url: https://chatgpt.com/library?file_id=libfile_fde3_f-8c2f44b6a13c819180f448e4b5202a82_6b5886b89d0881919e73a1e3270986c8&account_id=personal
+next_followup:
+  scheduled: true
+  title: Continue Plan39 qualification
+  next_run_time: '2026-11-16T14:44:16-08:00'
+  next_run_time_utc: '2026-11-16T22:44:16Z'
+  one_off: true
+  purpose: Check exact merged-head Agent CI/Lanes and continue within existing authority and holds
+  verified_from_tool_result: true

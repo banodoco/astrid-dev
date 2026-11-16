@@ -1,0 +1,125 @@
+{
+  "observed_at": "2026-11-16 22:14:41 UTC",
+  "repositories": [
+    {
+      "repo": "astrid-runtime",
+      "head_sha": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "source_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs?head_sha=2537fed24385ec1c24f48a812e09af4bb63fb794&per_page=100",
+      "total_count": 1,
+      "runs": [
+        {
+          "id": 43888599361,
+          "name": "CI",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "failure",
+          "head_sha": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-runtime/actions/runs/43888599361",
+          "created_at": "2026-11-16T14:42:42Z",
+          "updated_at": "2026-11-16T15:53:29Z"
+        }
+      ]
+    },
+    {
+      "repo": "astrid-app",
+      "head_sha": "0b6ef16152dc3fa11246ccc2007da630c66d1a1a",
+      "source_url": "https://api.github.com/repos/banodoco/astrid-app/actions/runs?head_sha=0b6ef16152dc3fa11246ccc2007da630c66d1a1a&per_page=100",
+      "total_count": 3,
+      "runs": [
+        {
+          "id": 43883625781,
+          "name": "Lanes",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "failure",
+          "head_sha": "0b6ef16152dc3fa11246ccc2007da630c66d1a1a",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-app/actions/runs/43883625781",
+          "created_at": "2026-11-16T14:14:21Z",
+          "updated_at": "2026-11-16T14:19:20Z"
+        },
+        {
+          "id": 43883626058,
+          "name": "Tests",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "0b6ef16152dc3fa11246ccc2007da630c66d1a1a",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-app/actions/runs/43883626058",
+          "created_at": "2026-11-16T14:14:21Z",
+          "updated_at": "2026-11-16T14:29:29Z"
+        },
+        {
+          "id": 43883625971,
+          "name": "E2E",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "failure",
+          "head_sha": "0b6ef16152dc3fa11246ccc2007da630c66d1a1a",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-app/actions/runs/43883625971",
+          "created_at": "2026-11-16T14:14:21Z",
+          "updated_at": "2026-11-16T15:35:03Z"
+        }
+      ]
+    },
+    {
+      "repo": "astrid-agent",
+      "head_sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+      "source_url": "https://api.github.com/repos/banodoco/astrid-agent/actions/runs?head_sha=fc391dea696ec5799db222799a34f9de6a69659b&per_page=100",
+      "total_count": 4,
+      "runs": [
+        {
+          "id": 43956914843,
+          "name": "Chat service",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-agent/actions/runs/43956914843",
+          "created_at": "2026-11-16T21:07:59Z",
+          "updated_at": "2026-11-16T21:17:40Z"
+        },
+        {
+          "id": 43956914988,
+          "name": "Windows task host journey",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "failure",
+          "head_sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-agent/actions/runs/43956914988",
+          "created_at": "2026-11-16T21:07:59Z",
+          "updated_at": "2026-11-16T21:26:04Z"
+        },
+        {
+          "id": 43956915061,
+          "name": "CI",
+          "attempt": 1,
+          "status": "pending",
+          "conclusion": null,
+          "head_sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-agent/actions/runs/43956915061",
+          "created_at": "2026-11-16T21:07:59Z",
+          "updated_at": "2026-11-16T21:08:01Z"
+        },
+        {
+          "id": 43956915056,
+          "name": "Lanes",
+          "attempt": 1,
+          "status": "pending",
+          "conclusion": null,
+          "head_sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+          "head_branch": "release/14/main",
+          "url": "https://github.com/banodoco/astrid-agent/actions/runs/43956915056",
+          "created_at": "2026-11-16T21:07:59Z",
+          "updated_at": "2026-11-16T21:08:01Z"
+        }
+      ]
+    }
+  ]
+}

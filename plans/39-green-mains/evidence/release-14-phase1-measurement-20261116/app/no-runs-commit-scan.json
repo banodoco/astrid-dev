@@ -1,0 +1,14 @@
+{
+  "snapshot_context": "Release 14 Plan 39 App exact-head check",
+  "repo": "banodoco/astrid-app",
+  "head_sha": "e94d7ab53f22c03cec6856ae469d952912b4ad52",
+  "connector_call": "github_fetch_commit_workflow_runs",
+  "result": [],
+  "result_interpretation": "No pull-request-triggered workflow runs were returned for this commit. The connector wrapper documents PR-trigger filtering only and first-page results; it cannot prove absence of push, workflow_dispatch, or schedule runs for Lanes, E2E, or Direct Journey.",
+  "target_workflows_requested_for_confirmation": [
+    "Lanes",
+    "E2E",
+    "Direct Journey"
+  ],
+  "raw_hash": "e6b319125f18f6388dd571a9e6b17c7732c8299e8cf98f73fbd71d07a3939951"
+}

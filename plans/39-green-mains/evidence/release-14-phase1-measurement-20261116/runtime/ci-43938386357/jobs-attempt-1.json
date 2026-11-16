@@ -1,0 +1,1436 @@
+{
+  "total_count": 10,
+  "jobs": [
+    {
+      "id": 133548963269,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN1xQ",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963269",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963269",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:22:47Z",
+      "completed_at": "2026-11-16T19:28:22Z",
+      "name": "darwin-native",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:22:48Z",
+          "completed_at": "2026-11-16T19:22:49Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:22:49Z",
+          "completed_at": "2026-11-16T19:22:52Z"
+        },
+        {
+          "name": "Restore pip cache (C-08)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:22:52Z",
+          "completed_at": "2026-11-16T19:22:52Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:22:52Z",
+          "completed_at": "2026-11-16T19:22:52Z"
+        },
+        {
+          "name": "Run brew install ffmpeg",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:22:52Z",
+          "completed_at": "2026-11-16T19:23:27Z"
+        },
+        {
+          "name": "Run python -m pip install '.[test]'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T19:23:27Z",
+          "completed_at": "2026-11-16T19:23:34Z"
+        },
+        {
+          "name": "Checkout published Agent alongside Runtime (darwin spawn test needs the Agent)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T19:23:34Z",
+          "completed_at": "2026-11-16T19:23:39Z"
+        },
+        {
+          "name": "Install the Agent's locked dependencies, then the Agent non-editably",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T19:23:39Z",
+          "completed_at": "2026-11-16T19:24:19Z"
+        },
+        {
+          "name": "Run python -m pytest -q -m darwin_native",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T19:24:19Z",
+          "completed_at": "2026-11-16T19:28:14Z"
+        },
+        {
+          "name": "Save pip cache on main or int branches (C-08)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2026-11-16T19:28:14Z",
+          "completed_at": "2026-11-16T19:28:14Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-16T19:28:14Z",
+          "completed_at": "2026-11-16T19:28:15Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-16T19:28:15Z",
+          "completed_at": "2026-11-16T19:28:16Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-16T19:28:16Z",
+          "completed_at": "2026-11-16T19:28:20Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963269",
+      "labels": [
+        "macos-latest"
+      ],
+      "runner_id": 1000042028,
+      "runner_name": "GitHub Actions 1000042028",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548963680,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN3YA",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963680",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963680",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:33:04Z",
+      "completed_at": "2026-11-16T19:46:24Z",
+      "name": "sandbox-process-control",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:33:05Z",
+          "completed_at": "2026-11-16T19:33:05Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:33:05Z",
+          "completed_at": "2026-11-16T19:33:07Z"
+        },
+        {
+          "name": "Select pinned Agent revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:33:07Z",
+          "completed_at": "2026-11-16T19:33:07Z"
+        },
+        {
+          "name": "Checkout pinned Agent",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:33:07Z",
+          "completed_at": "2026-11-16T19:33:13Z"
+        },
+        {
+          "name": "Record effective Runtime and Agent checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:33:13Z",
+          "completed_at": "2026-11-16T19:33:13Z"
+        },
+        {
+          "name": "Run sandbox process-control tests",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 6,
+          "started_at": "2026-11-16T19:33:13Z",
+          "completed_at": "2026-11-16T19:46:20Z"
+        },
+        {
+          "name": "Summarize test result XML",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T19:46:20Z",
+          "completed_at": "2026-11-16T19:46:20Z"
+        },
+        {
+          "name": "Upload test results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T19:46:20Z",
+          "completed_at": "2026-11-16T19:46:22Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-16T19:46:22Z",
+          "completed_at": "2026-11-16T19:46:22Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-16T19:46:22Z",
+          "completed_at": "2026-11-16T19:46:22Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963680",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042048,
+      "runner_name": "GitHub Actions 1000042048",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548963714,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN3gg",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963714",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963714",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:52:12Z",
+      "completed_at": "2026-11-16T19:54:05Z",
+      "name": "portability-lifecycle (ubuntu-latest)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:52:13Z",
+          "completed_at": "2026-11-16T19:52:14Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:52:14Z",
+          "completed_at": "2026-11-16T19:52:17Z"
+        },
+        {
+          "name": "Restore pip cache (C-08)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:52:17Z",
+          "completed_at": "2026-11-16T19:52:20Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:52:20Z",
+          "completed_at": "2026-11-16T19:52:20Z"
+        },
+        {
+          "name": "Select Agent revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:52:20Z",
+          "completed_at": "2026-11-16T19:52:20Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T19:52:20Z",
+          "completed_at": "2026-11-16T19:52:23Z"
+        },
+        {
+          "name": "Record effective checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T19:52:23Z",
+          "completed_at": "2026-11-16T19:52:23Z"
+        },
+        {
+          "name": "Run python -m pip install -e '.[test]'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T19:52:23Z",
+          "completed_at": "2026-11-16T19:52:31Z"
+        },
+        {
+          "name": "Run python -m pip install -e packages/python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T19:52:31Z",
+          "completed_at": "2026-11-16T19:52:32Z"
+        },
+        {
+          "name": "Run python -m pip install -e \"$ASTRID_CHECKOUT\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T19:52:32Z",
+          "completed_at": "2026-11-16T19:52:47Z"
+        },
+        {
+          "name": "Run portability lifecycle tests",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 11,
+          "started_at": "2026-11-16T19:52:47Z",
+          "completed_at": "2026-11-16T19:54:00Z"
+        },
+        {
+          "name": "Summarize test result XML",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T19:54:00Z",
+          "completed_at": "2026-11-16T19:54:00Z"
+        },
+        {
+          "name": "Upload test results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T19:54:00Z",
+          "completed_at": "2026-11-16T19:54:02Z"
+        },
+        {
+          "name": "Save pip cache on main or int branches (C-08)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 14,
+          "started_at": "2026-11-16T19:54:02Z",
+          "completed_at": "2026-11-16T19:54:02Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-11-16T19:54:02Z",
+          "completed_at": "2026-11-16T19:54:02Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 27,
+          "started_at": "2026-11-16T19:54:02Z",
+          "completed_at": "2026-11-16T19:54:02Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-11-16T19:54:02Z",
+          "completed_at": "2026-11-16T19:54:02Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-11-16T19:54:02Z",
+          "completed_at": "2026-11-16T19:54:02Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963714",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042075,
+      "runner_name": "GitHub Actions 1000042075",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548963731,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN3kw",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963731",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963731",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:35:15Z",
+      "completed_at": "2026-11-16T19:46:41Z",
+      "name": "unit (ubuntu-latest)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:35:15Z",
+          "completed_at": "2026-11-16T19:35:16Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:35:16Z",
+          "completed_at": "2026-11-16T19:35:19Z"
+        },
+        {
+          "name": "Restore pip cache (C-08)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:35:19Z",
+          "completed_at": "2026-11-16T19:35:20Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:35:20Z",
+          "completed_at": "2026-11-16T19:35:20Z"
+        },
+        {
+          "name": "Select pinned Agent revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:35:20Z",
+          "completed_at": "2026-11-16T19:35:20Z"
+        },
+        {
+          "name": "Checkout pinned Agent",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T19:35:20Z",
+          "completed_at": "2026-11-16T19:35:27Z"
+        },
+        {
+          "name": "Record effective Runtime and Agent checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T19:35:27Z",
+          "completed_at": "2026-11-16T19:35:27Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T19:35:27Z",
+          "completed_at": "2026-11-16T19:35:27Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T19:35:27Z",
+          "completed_at": "2026-11-16T19:35:28Z"
+        },
+        {
+          "name": "Add locked TypeScript compiler to PATH",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T19:35:28Z",
+          "completed_at": "2026-11-16T19:35:28Z"
+        },
+        {
+          "name": "Install system media tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T19:35:28Z",
+          "completed_at": "2026-11-16T19:35:46Z"
+        },
+        {
+          "name": "Install system media tools (macOS)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12,
+          "started_at": "2026-11-16T19:35:46Z",
+          "completed_at": "2026-11-16T19:35:46Z"
+        },
+        {
+          "name": "Run python -m pip install -e '.[test]'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T19:35:46Z",
+          "completed_at": "2026-11-16T19:35:49Z"
+        },
+        {
+          "name": "Run python -m pip install -e \"$ASTRID_CHECKOUT\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-16T19:35:49Z",
+          "completed_at": "2026-11-16T19:36:00Z"
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 15,
+          "started_at": "2026-11-16T19:36:00Z",
+          "completed_at": "2026-11-16T19:46:36Z"
+        },
+        {
+          "name": "Summarize test result XML",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-16T19:46:36Z",
+          "completed_at": "2026-11-16T19:46:36Z"
+        },
+        {
+          "name": "Upload test results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-16T19:46:36Z",
+          "completed_at": "2026-11-16T19:46:38Z"
+        },
+        {
+          "name": "Save pip cache on main or int branches (C-08)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 18,
+          "started_at": "2026-11-16T19:46:38Z",
+          "completed_at": "2026-11-16T19:46:38Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 34,
+          "started_at": "2026-11-16T19:46:38Z",
+          "completed_at": "2026-11-16T19:46:38Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 35,
+          "started_at": "2026-11-16T19:46:38Z",
+          "completed_at": "2026-11-16T19:46:38Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-11-16T19:46:38Z",
+          "completed_at": "2026-11-16T19:46:38Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-11-16T19:46:38Z",
+          "completed_at": "2026-11-16T19:46:38Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963731",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042050,
+      "runner_name": "GitHub Actions 1000042050",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548963772,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN3vA",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963772",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963772",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:45:43Z",
+      "completed_at": "2026-11-16T19:45:52Z",
+      "name": "typescript-client",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:45:43Z",
+          "completed_at": "2026-11-16T19:45:44Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:45:44Z",
+          "completed_at": "2026-11-16T19:45:45Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:45:45Z",
+          "completed_at": "2026-11-16T19:45:46Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:45:46Z",
+          "completed_at": "2026-11-16T19:45:47Z"
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:45:47Z",
+          "completed_at": "2026-11-16T19:45:50Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T19:45:50Z",
+          "completed_at": "2026-11-16T19:45:50Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T19:45:50Z",
+          "completed_at": "2026-11-16T19:45:50Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T19:45:50Z",
+          "completed_at": "2026-11-16T19:45:50Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963772",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042056,
+      "runner_name": "GitHub Actions 1000042056",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548963837,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN3_Q",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963837",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963837",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:54:08Z",
+      "completed_at": "2026-11-16T19:55:16Z",
+      "name": "portability-lifecycle (macos-latest)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:54:09Z",
+          "completed_at": "2026-11-16T19:54:10Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:54:10Z",
+          "completed_at": "2026-11-16T19:54:12Z"
+        },
+        {
+          "name": "Restore pip cache (C-08)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:54:12Z",
+          "completed_at": "2026-11-16T19:54:13Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:54:13Z",
+          "completed_at": "2026-11-16T19:54:13Z"
+        },
+        {
+          "name": "Select Agent revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:54:13Z",
+          "completed_at": "2026-11-16T19:54:13Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T19:54:13Z",
+          "completed_at": "2026-11-16T19:54:17Z"
+        },
+        {
+          "name": "Record effective checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T19:54:17Z",
+          "completed_at": "2026-11-16T19:54:17Z"
+        },
+        {
+          "name": "Run python -m pip install -e '.[test]'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T19:54:17Z",
+          "completed_at": "2026-11-16T19:54:21Z"
+        },
+        {
+          "name": "Run python -m pip install -e packages/python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T19:54:21Z",
+          "completed_at": "2026-11-16T19:54:22Z"
+        },
+        {
+          "name": "Run python -m pip install -e \"$ASTRID_CHECKOUT\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T19:54:22Z",
+          "completed_at": "2026-11-16T19:54:34Z"
+        },
+        {
+          "name": "Run portability lifecycle tests",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 11,
+          "started_at": "2026-11-16T19:54:34Z",
+          "completed_at": "2026-11-16T19:55:12Z"
+        },
+        {
+          "name": "Summarize test result XML",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T19:55:12Z",
+          "completed_at": "2026-11-16T19:55:12Z"
+        },
+        {
+          "name": "Upload test results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T19:55:12Z",
+          "completed_at": "2026-11-16T19:55:13Z"
+        },
+        {
+          "name": "Save pip cache on main or int branches (C-08)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 14,
+          "started_at": "2026-11-16T19:55:13Z",
+          "completed_at": "2026-11-16T19:55:13Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-11-16T19:55:13Z",
+          "completed_at": "2026-11-16T19:55:13Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 27,
+          "started_at": "2026-11-16T19:55:13Z",
+          "completed_at": "2026-11-16T19:55:13Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-11-16T19:55:13Z",
+          "completed_at": "2026-11-16T19:55:14Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-11-16T19:55:14Z",
+          "completed_at": "2026-11-16T19:55:14Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963837",
+      "labels": [
+        "macos-latest"
+      ],
+      "runner_id": 1000042076,
+      "runner_name": "GitHub Actions 1000042076",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548963918,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN4Tg",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963918",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963918",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:55:02Z",
+      "completed_at": "2026-11-16T19:55:42Z",
+      "name": "boundary",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:55:03Z",
+          "completed_at": "2026-11-16T19:55:04Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:55:04Z",
+          "completed_at": "2026-11-16T19:55:06Z"
+        },
+        {
+          "name": "Restore pip cache (C-08)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:55:06Z",
+          "completed_at": "2026-11-16T19:55:07Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:55:07Z",
+          "completed_at": "2026-11-16T19:55:07Z"
+        },
+        {
+          "name": "Select pinned Agent revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:55:07Z",
+          "completed_at": "2026-11-16T19:55:07Z"
+        },
+        {
+          "name": "Checkout pinned Agent",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T19:55:07Z",
+          "completed_at": "2026-11-16T19:55:11Z"
+        },
+        {
+          "name": "Record effective Runtime and Agent checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T19:55:11Z",
+          "completed_at": "2026-11-16T19:55:11Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T19:55:11Z",
+          "completed_at": "2026-11-16T19:55:12Z"
+        },
+        {
+          "name": "Run python -m pip install -e '.[test]'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T19:55:12Z",
+          "completed_at": "2026-11-16T19:55:16Z"
+        },
+        {
+          "name": "Run python -m pip install -e \"$ASTRID_CHECKOUT\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T19:55:16Z",
+          "completed_at": "2026-11-16T19:55:33Z"
+        },
+        {
+          "name": "Run python -m pytest -q tests/test_second_client_e2e.py -m \"\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T19:55:33Z",
+          "completed_at": "2026-11-16T19:55:39Z"
+        },
+        {
+          "name": "Save pip cache on main or int branches (C-08)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12,
+          "started_at": "2026-11-16T19:55:39Z",
+          "completed_at": "2026-11-16T19:55:39Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-11-16T19:55:39Z",
+          "completed_at": "2026-11-16T19:55:39Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-11-16T19:55:39Z",
+          "completed_at": "2026-11-16T19:55:39Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-16T19:55:39Z",
+          "completed_at": "2026-11-16T19:55:40Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-11-16T19:55:40Z",
+          "completed_at": "2026-11-16T19:55:40Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963918",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042078,
+      "runner_name": "GitHub Actions 1000042078",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548963937,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN4YQ",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548963937",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548963937",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T20:05:46Z",
+      "completed_at": "2026-11-16T20:23:55Z",
+      "name": "unit (macos-latest)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T20:05:47Z",
+          "completed_at": "2026-11-16T20:05:49Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T20:05:49Z",
+          "completed_at": "2026-11-16T20:05:54Z"
+        },
+        {
+          "name": "Restore pip cache (C-08)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T20:05:54Z",
+          "completed_at": "2026-11-16T20:05:55Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T20:05:55Z",
+          "completed_at": "2026-11-16T20:05:56Z"
+        },
+        {
+          "name": "Select pinned Agent revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T20:05:56Z",
+          "completed_at": "2026-11-16T20:05:56Z"
+        },
+        {
+          "name": "Checkout pinned Agent",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T20:05:56Z",
+          "completed_at": "2026-11-16T20:06:16Z"
+        },
+        {
+          "name": "Record effective Runtime and Agent checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T20:06:16Z",
+          "completed_at": "2026-11-16T20:06:16Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T20:06:16Z",
+          "completed_at": "2026-11-16T20:06:17Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T20:06:17Z",
+          "completed_at": "2026-11-16T20:06:19Z"
+        },
+        {
+          "name": "Add locked TypeScript compiler to PATH",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T20:06:19Z",
+          "completed_at": "2026-11-16T20:06:19Z"
+        },
+        {
+          "name": "Install system media tools",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11,
+          "started_at": "2026-11-16T20:06:19Z",
+          "completed_at": "2026-11-16T20:06:19Z"
+        },
+        {
+          "name": "Install system media tools (macOS)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T20:06:19Z",
+          "completed_at": "2026-11-16T20:06:49Z"
+        },
+        {
+          "name": "Run python -m pip install -e '.[test]'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T20:06:49Z",
+          "completed_at": "2026-11-16T20:06:54Z"
+        },
+        {
+          "name": "Run python -m pip install -e \"$ASTRID_CHECKOUT\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-16T20:06:54Z",
+          "completed_at": "2026-11-16T20:07:19Z"
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 15,
+          "started_at": "2026-11-16T20:07:19Z",
+          "completed_at": "2026-11-16T20:23:48Z"
+        },
+        {
+          "name": "Summarize test result XML",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-16T20:23:48Z",
+          "completed_at": "2026-11-16T20:23:49Z"
+        },
+        {
+          "name": "Upload test results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-16T20:23:49Z",
+          "completed_at": "2026-11-16T20:23:50Z"
+        },
+        {
+          "name": "Save pip cache on main or int branches (C-08)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 18,
+          "started_at": "2026-11-16T20:23:50Z",
+          "completed_at": "2026-11-16T20:23:50Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 34,
+          "started_at": "2026-11-16T20:23:50Z",
+          "completed_at": "2026-11-16T20:23:50Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 35,
+          "started_at": "2026-11-16T20:23:50Z",
+          "completed_at": "2026-11-16T20:23:50Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-11-16T20:23:50Z",
+          "completed_at": "2026-11-16T20:23:51Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-11-16T20:23:51Z",
+          "completed_at": "2026-11-16T20:23:53Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548963937",
+      "labels": [
+        "macos-latest"
+      ],
+      "runner_id": 1000042102,
+      "runner_name": "GitHub Actions 1000042102",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548964030,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN4vg",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548964030",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548964030",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:30:32Z",
+      "completed_at": "2026-11-16T19:33:16Z",
+      "name": "windows-realm-publication",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T19:30:33Z",
+          "completed_at": "2026-11-16T19:30:34Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T19:30:34Z",
+          "completed_at": "2026-11-16T19:30:40Z"
+        },
+        {
+          "name": "Restore pip cache (C-08)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T19:30:40Z",
+          "completed_at": "2026-11-16T19:30:47Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T19:30:47Z",
+          "completed_at": "2026-11-16T19:30:47Z"
+        },
+        {
+          "name": "Checkout published Agent alongside Runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T19:30:47Z",
+          "completed_at": "2026-11-16T19:30:52Z"
+        },
+        {
+          "name": "Record effective Runtime and Agent checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T19:30:52Z",
+          "completed_at": "2026-11-16T19:30:52Z"
+        },
+        {
+          "name": "Run python -m pip install -e '.[test]'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T19:30:52Z",
+          "completed_at": "2026-11-16T19:31:11Z"
+        },
+        {
+          "name": "Run python -m pip install -e packages/python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T19:31:11Z",
+          "completed_at": "2026-11-16T19:31:15Z"
+        },
+        {
+          "name": "Install published Agent from sibling checkout",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T19:31:15Z",
+          "completed_at": "2026-11-16T19:32:17Z"
+        },
+        {
+          "name": "Verify Windows update backup daemon from a selected venv",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T19:32:17Z",
+          "completed_at": "2026-11-16T19:32:36Z"
+        },
+        {
+          "name": "Verify native realm creation, ownership, and rollback",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T19:32:36Z",
+          "completed_at": "2026-11-16T19:33:08Z"
+        },
+        {
+          "name": "Verify native Windows signal and foreground cleanup paths",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T19:33:08Z",
+          "completed_at": "2026-11-16T19:33:11Z"
+        },
+        {
+          "name": "Verify Runtime service cleanup receipt contract",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T19:33:11Z",
+          "completed_at": "2026-11-16T19:33:13Z"
+        },
+        {
+          "name": "Save pip cache on main or int branches (C-08)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 14,
+          "started_at": "2026-11-16T19:33:13Z",
+          "completed_at": "2026-11-16T19:33:13Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-11-16T19:33:13Z",
+          "completed_at": "2026-11-16T19:33:13Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-11-16T19:33:13Z",
+          "completed_at": "2026-11-16T19:33:15Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-11-16T19:33:15Z",
+          "completed_at": "2026-11-16T19:33:15Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548964030",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000042040,
+      "runner_name": "GitHub Actions 1000042040",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133548965036,
+      "run_id": 43938386357,
+      "workflow_name": "CI",
+      "head_branch": "release/14/plan-39",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/runs/43938386357",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUKxUws8AAAAfGCN8rA",
+      "head_sha": "4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce",
+      "url": "https://api.github.com/repos/banodoco/astrid-runtime/actions/jobs/133548965036",
+      "html_url": "https://github.com/banodoco/astrid-runtime/actions/runs/43938386357/job/133548965036",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-16T19:20:54Z",
+      "started_at": "2026-11-16T19:20:54Z",
+      "completed_at": "2026-11-16T19:20:53Z",
+      "name": "landing reference",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-runtime/check-runs/133548965036",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}

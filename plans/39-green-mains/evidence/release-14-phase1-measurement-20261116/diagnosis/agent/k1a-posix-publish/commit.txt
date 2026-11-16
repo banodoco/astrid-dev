@@ -1,0 +1,10 @@
+commit ab729c533ce8ee29118530c99447dd09fb45dc4e
+Author:     Codex <codex@openai.com>
+AuthorDate: Mon Nov 16 19:33:04 2026 +0000
+Commit:     Codex <codex@openai.com>
+CommitDate: Mon Nov 16 19:33:04 2026 +0000
+
+    Mark POSIX publication tests with native lane
+
+ tests/core/pack/test_windows_publish.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)

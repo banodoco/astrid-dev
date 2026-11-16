@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="10" tests="27" time="23.601" timestamp="2026-11-16T21:22:48.706002+00:00" hostname="b10e5ff1e026"><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_is_atomic_cas_and_exactly_replayable" time="3.089"><failure message="AssertionError: assert {'clips': [{'...': 'visual'}]} == {'clips': [{'...': 'visual'}]}&#10;  &#10;  Omitting 3 identical items, use -vv to show&#10;  Differing items:&#10;[+2 more lines; full report in element text]">native_editing = namespace(native=namespace(CommandError=&lt;class 'astrid.sdk.timeline._command_state.CommandError'&gt;, capture_clip_set=&lt;f...-0753be15f173c0766645ffeb3f8b7b8550aa83fe907859337fb4e994382178f6', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+
+    @pytest.mark.integration
+    def test_native_clip_swap_is_atomic_cas_and_exactly_replayable(native_editing):
+        command = _native_swap(native_editing)
+        body = _native_body(native_editing.service, native_editing.project, [command])
+        before_document = copy.deepcopy(native_editing.document)
+        before_receipts = native_editing.service.store.conn.execute(
+            "SELECT COUNT(*) FROM command_idempotency WHERE command_kind='timeline.commit'",
+        ).fetchone()[0]
+        before_events = native_editing.service.store.conn.execute(
+            "SELECT COUNT(*) FROM timeline_events WHERE timeline_id='film'",
+        ).fetchone()[0]
+        first = _native_commit(native_editing.service, native_editing.project, body, "native-swap")
+&gt;       _assert_native_swap_result(native_editing, before_document, first)
+
+tests/test_timeline_clip_replacement.py:339: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+editing = namespace(native=namespace(CommandError=&lt;class 'astrid.sdk.timeline._command_state.CommandError'&gt;, capture_clip_set=&lt;f...-0753be15f173c0766645ffeb3f8b7b8550aa83fe907859337fb4e994382178f6', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+before_document = {'dependency_manifest': {'documents': [], 'internal_timelines': [{'content_digest': 'sha256:02a0e3fcb2ca3779d426d0f4f9...c521a36afe061f750379aaf8094f63550d53d6874860aa9dcfd8236d51d5f'}, 'project_id': 'ce12384b28944337a5dc8d3caee5876a', ...}
+accepted = {'data': {'accepted_revision_id': 'authoring-parent-revision-894ef2a06b27d8fe030ce375c454f8423e6d593165f257c3f6407a3dc...mpotency_key': 'native-swap', 'request_hash': 'a7e9b66c6fb9c6092e02c71541b13cdb6d5e2c14426c2f55b65758fe9ef67998', ...}}
+parent_unchanged = True
+
+    def _assert_native_swap_result(editing, before_document, accepted, *, parent_unchanged=True):
+        data = accepted["data"]
+        assert data["status"] in {"accepted", "rebased"}
+        before_internal = _native_payload(before_document, "internal")
+        after_internal = _native_payload(data["canonical_document"], "internal")
+        expected_internal = copy.deepcopy(before_internal)
+        expected_internal["clips"][0]["asset"] = editing.new["asset"]
+        expected_internal["registry"]["assets"][editing.new["asset"]] = {
+            "generationId": editing.new["generation_id"],
+            "media_id": editing.new["object_id"],
+            "type": "video" if editing.new_verified["media_type"].startswith("video/") else "image",
+            "variantId": editing.new["variant_id"],
+        }
+&gt;       assert after_internal == expected_internal
+E       AssertionError: assert {'clips': [{'...': 'visual'}]} == {'clips': [{'...': 'visual'}]}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'registry': {'assets': {'initial-2dd9dcefcef786da8f44af96b1165e2db984adc0e90c353a42ba9b8d127e09ce': {'duration': 5.0,...1e74e', 'media_id': 'sha256:0bac5caa6c6d3c020f650aab1c53e24d2008c45a5e2c623fe8a98afbb39bb6d6', 'type': 'video', ...}}}} != {'registry': {'assets': {'initial-bfda5b99dfec3972fdf6e709ba24e350b7743879474f2b393c1e92bcb33a1cd5': {'duration': 5.0,...b39bb6d6', 'type': 'video', 'variantId': 'initial-2dd9dcefcef786da8f44af96b1165e2db984adc0e90c353a42ba9b8d127e09ce'}}}}
+E         Use -v to get more diff
+
+tests/test_timeline_clip_replacement.py:305: AssertionError</failure></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rebases_after_disjoint_intervening_edit" time="1.046"><failure message="AssertionError: assert 'merged' == 'rebased'&#10;  &#10;  - rebased&#10;  + merged">native_editing = namespace(native=namespace(CommandError=&lt;class 'astrid.sdk.timeline._command_state.CommandError'&gt;, capture_clip_set=&lt;f...-e0fe2c21719fb4913c9a4eb3840497ce62523634036024d59d602af65f656b7b', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+
+    @pytest.mark.integration
+    def test_native_clip_swap_rebases_after_disjoint_intervening_edit(native_editing):
+        before_document = copy.deepcopy(native_editing.document)
+        body = _native_body(
+            native_editing.service, native_editing.project, [_native_swap(native_editing)],
+        )
+        disjoint = native_editing.native.capture_clip_set(
+            native_editing.native.bundle_from_document(before_document), NATIVE_PARENT_TARGET,
+            values={"hold": 2},
+        )
+        intervening = _native_commit(
+            native_editing.service, native_editing.project,
+            _native_body(native_editing.service, native_editing.project, [disjoint]),
+            "native-disjoint-intervening",
+        )
+        accepted = _native_commit(
+            native_editing.service, native_editing.project, body, "native-disjoint-stale",
+        )
+&gt;       assert accepted["data"]["status"] == "rebased"
+E       AssertionError: assert 'merged' == 'rebased'
+E         
+E         - rebased
+E         + merged
+
+tests/test_timeline_clip_replacement.py:394: AssertionError</failure></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_native_parent_clip_swap_route_refuses_parent_ownership_on_public013_schema" time="0.847" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_parent_clip_swap_route_replaces_parent_media" time="0.925" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rejects_cross_project_source_without_mutation" time="1.012" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rejects_malformed_source_before_native_commit" time="0.718" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rejects_tampered_cas_without_mutation" time="0.701"><failure message="AssertionError: Regex pattern did not match.&#10;  Expected regex: 'immutable|changed|integrity|size'&#10;  Actual message: 'Timeline commit outcome unavailable; retry the exact request'">native_editing = namespace(native=namespace(CommandError=&lt;class 'astrid.sdk.timeline._command_state.CommandError'&gt;, capture_clip_set=&lt;f...-4a552e0d5e95f7fa65359bfb2e691e3ee21f2b0409a7c566b01ae6702e2ebb09', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+
+    @pytest.mark.integration
+    def test_native_clip_swap_rejects_tampered_cas_without_mutation(native_editing):
+        digest = native_editing.old["object_id"].removeprefix("sha256:")
+        path = native_editing.service.cas.path_for(digest)
+        original = path.read_bytes()
+        path.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+        command = _native_swap(native_editing)
+        before = _native_rows(native_editing.service)
+&gt;       with pytest.raises(RuntimeErrorBase, match="immutable|changed|integrity|size"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'immutable|changed|integrity|size'
+E         Actual message: 'Timeline commit outcome unavailable; retry the exact request'
+
+tests/test_timeline_clip_replacement.py:470: AssertionError</failure></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rejects_selected_source_corruption_between_capture_and_accept" time="0.835"><failure message="AssertionError: Regex pattern did not match.&#10;  Expected regex: 'immutable|changed|integrity|size'&#10;  Actual message: 'CAS object failed hash verification'">native_editing = namespace(native=namespace(CommandError=&lt;class 'astrid.sdk.timeline._command_state.CommandError'&gt;, capture_clip_set=&lt;f...-58a818bf8bd3b5bf02fba75232975f092c71cf2939618754595b8dedef968df7', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fd5125ec9d0&gt;
+
+    @pytest.mark.integration
+    def test_native_clip_swap_rejects_selected_source_corruption_between_capture_and_accept(native_editing, monkeypatch):
+        service = native_editing.service
+        digest = native_editing.new["object_id"].removeprefix("sha256:")
+        path = service.cas.path_for(digest)
+        before_rows = _native_rows(service)
+        before_head = service.get_project_timeline(native_editing.project, "film")
+        before_receipts = [tuple(row) for row in service.store.conn.execute(
+            "SELECT * FROM command_idempotency ORDER BY txn_id",
+        )]
+        original_verify = service._verify_child_object_bytes
+        corruption = {}
+    
+        def verify_then_corrupt(object_digest, size, *, label):
+            result = original_verify(object_digest, size, label=label)
+            if object_digest == digest and not corruption:
+                data = path.read_bytes()
+                corruption["bytes"] = bytes([data[0] ^ 1]) + data[1:]
+                path.write_bytes(corruption["bytes"])
+            return result
+    
+        monkeypatch.setattr(service, "_verify_child_object_bytes", verify_then_corrupt)
+        command = _native_swap(native_editing)
+&gt;       with pytest.raises(RuntimeErrorBase, match="immutable|changed|integrity|size"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'immutable|changed|integrity|size'
+E         Actual message: 'CAS object failed hash verification'
+
+tests/test_timeline_clip_replacement.py:499: AssertionError</failure></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rejects_wrong_stream_without_mutation" time="1.189" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rejects_too_short_or_end_short_source[1]" time="1.150" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_rejects_too_short_or_end_short_source[3.5]" time="1.001" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_generic_visual_media_requires_video_stream" time="1.104"><failure message="AssertionError: Regex pattern did not match.&#10;  Expected regex: 'image/video'&#10;  Actual message: 'media swap preserves media kind'">native_editing = namespace(native=namespace(CommandError=&lt;class 'astrid.sdk.timeline._command_state.CommandError'&gt;, capture_clip_set=&lt;f...-cda041414825fd9369ae4fd82c0b2c028345d4b05cd88e473610b748c8f9785f', 'shot_id': 'native-shot'}], 'timeline_id': 'film'})
+
+    @pytest.mark.integration
+    def test_native_generic_visual_media_requires_video_stream(native_editing):
+        audio, audio_verified = _native_import_media(native_editing.service, native_editing.project, alias="generic-audio", kind="audio")
+        document = copy.deepcopy(native_editing.document)
+        internal = document["internal_timeline_revisions"][0]
+        internal["payload"]["clips"][0]["clipType"] = "media"
+        internal["content_digest"] = native_editing.native.digest(internal["payload"])
+        manifest = document["dependency_manifest"]["internal_timelines"][0]
+        manifest["content_digest"] = internal["content_digest"]
+        bundle = native_editing.native.bundle_from_document(document)
+&gt;       with pytest.raises(native_editing.native.CommandError, match="image/video"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'image/video'
+E         Actual message: 'media swap preserves media kind'
+
+tests/test_timeline_clip_replacement.py:550: AssertionError</failure></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_native_generic_visual_media_accepts_verified_image_swap" time="0.801" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_replays_after_intervening_edit_and_reopen" time="1.157" /><testcase classname="tests.test_timeline_clip_replacement" name="test_rt02_project_shot_crud_native_replacement_retries_after_restart" time="0.905" /><testcase classname="tests.test_timeline_clip_replacement" name="test_rt02_native_occurrence_swap_rolls_back_before_restart_retry" time="1.213" /><testcase classname="tests.test_timeline_clip_replacement" name="test_native_clip_swap_public_http_route" time="1.490"><failure message="AssertionError: assert {'clips': [{'...': 'visual'}]} == {'clips': [{'...': 'visual'}]}&#10;  &#10;  Omitting 3 identical items, use -vv to show&#10;  Differing items:&#10;[+2 more lines; full report in element text]">tmp_path = PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-runtime.env/basetemp/1794864168265965879/test_native_clip_swap_public_h0')
+
+    @pytest.mark.integration
+    def test_native_clip_swap_public_http_route(tmp_path):
+        """The public commit route accepts the same native occurrence swap bundle."""
+        native = _native_imports()
+        RealmStore.initialize(tmp_path / "realm").close()
+        daemon = RuntimeDaemon(
+            tmp_path / "realm", support_root=tmp_path / "support", authoring_profile="astrid",
+        ).start()
+        try:
+            client = WorkspaceClient(daemon.endpoint, daemon.token)
+            project = client.create_project("Native HTTP", slug="native-http", idempotency_key="http-project")
+            project_id = project.project_id
+            client.create_timeline(project_id, "film", idempotency_key="http-bootstrap")
+    
+            imported = client.import_project_media(
+                project_id, _media_bytes(), media_type="video/mp4", filename="old.mp4",
+                duration_seconds=5, idempotency_key="http-old-media",
+            )
+            old = client.get_project_media_selection(project_id, {
+                "asset": imported["variant_id"], "generation_id": imported["generation_id"],
+                "variant_id": imported["variant_id"],
+            })
+            old_verified = client.get_project_verified_media(project_id, old)
+            imported_new = client.import_project_media(
+                project_id, _media_bytes(), media_type="video/mp4", filename="new.mp4",
+                duration_seconds=5, idempotency_key="http-new-media",
+            )
+            new = client.get_project_media_selection(project_id, {
+                "asset": imported_new["variant_id"], "generation_id": imported_new["generation_id"],
+                "variant_id": imported_new["variant_id"],
+            })
+            new_verified = client.get_project_verified_media(project_id, new)
+            empty = _native_empty_document(daemon.service, project_id)
+            bootstrap = _native_bootstrap_commands(native, empty, old, old_verified)
+            created = client.commit_timeline(
+                project_id, "film", _native_body(daemon.service, project_id, bootstrap),
+                idempotency_key="http-birth",
+            )
+            swap = native.capture_occurrence_swap_media(
+                native.bundle_from_document(created["data"]["canonical_document"]),
+                NATIVE_TARGET, old, new, verified_media=[old_verified, new_verified],
+            )
+            request = _native_body(daemon.service, project_id, [swap])
+            before_receipts = daemon.service.store.conn.execute(
+                "SELECT COUNT(*) FROM command_idempotency WHERE command_kind='timeline.commit'",
+            ).fetchone()[0]
+            before_events = daemon.service.store.conn.execute(
+                "SELECT COUNT(*) FROM timeline_events WHERE timeline_id='film'",
+            ).fetchone()[0]
+            accepted = client.commit_timeline(project_id, "film", request, idempotency_key="http-swap")
+&gt;           _assert_native_swap_result(
+                SimpleNamespace(service=daemon.service, new=new, new_verified=new_verified),
+                created["data"]["canonical_document"], accepted,
+            )
+
+tests/test_timeline_clip_replacement.py:730: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+editing = namespace(service=&lt;runtime_protocol.service.RuntimeService object at 0x7fd513070cd0&gt;, new={'asset': 'initial-101d8b240...afbb39bb6d6', 'variant_id': 'initial-101d8b24038bdd8831a2ce4bd010a0d61dcdba049fac01f10acfc552f9c40968'}, 'size': 2768})
+before_document = {'dependency_manifest': {'documents': [], 'internal_timelines': [{'content_digest': 'sha256:5102ef99ac696c7f5a0c3c16dc...6f29300ffd414a3f8779e3d62fb0139aed38d94b6b2d0f0457b1c1517616c'}, 'project_id': 'ccccbe6693fd46f283eb7be85a6a8174', ...}
+accepted = {'data': {'accepted_revision_id': 'authoring-parent-revision-f56f38ec57d8edee0d3e478c771845fb5309b58219be898ad74334120...eline.commit', 'created_at': '2026-11-16T21:23:08.143+00:00', 'event_ids': ['4'], 'idempotency_key': 'http-swap', ...}}
+parent_unchanged = True
+
+    def _assert_native_swap_result(editing, before_document, accepted, *, parent_unchanged=True):
+        data = accepted["data"]
+        assert data["status"] in {"accepted", "rebased"}
+        before_internal = _native_payload(before_document, "internal")
+        after_internal = _native_payload(data["canonical_document"], "internal")
+        expected_internal = copy.deepcopy(before_internal)
+        expected_internal["clips"][0]["asset"] = editing.new["asset"]
+        expected_internal["registry"]["assets"][editing.new["asset"]] = {
+            "generationId": editing.new["generation_id"],
+            "media_id": editing.new["object_id"],
+            "type": "video" if editing.new_verified["media_type"].startswith("video/") else "image",
+            "variantId": editing.new["variant_id"],
+        }
+&gt;       assert after_internal == expected_internal
+E       AssertionError: assert {'clips': [{'...': 'visual'}]} == {'clips': [{'...': 'visual'}]}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'registry': {'assets': {'initial-101d8b24038bdd8831a2ce4bd010a0d61dcdba049fac01f10acfc552f9c40968': {'duration': 5.0,...9a159', 'media_id': 'sha256:0bac5caa6c6d3c020f650aab1c53e24d2008c45a5e2c623fe8a98afbb39bb6d6', 'type': 'video', ...}}}} != {'registry': {'assets': {'initial-f927031200090fbb4979c3c0780cb680f778057163964278705b2027b6c70906': {'duration': 5.0,...b39bb6d6', 'type': 'video', 'variantId': 'initial-101d8b24038bdd8831a2ce4bd010a0d61dcdba049fac01f10acfc552f9c40968'}}}}
+E         Use -v to get more diff
+
+tests/test_timeline_clip_replacement.py:305: AssertionError</failure></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_is_atomic_cas_and_exactly_replayable" time="0.082"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_rejects_cross_project_source" time="0.084"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_rejects_malformed_source_without_mutation" time="0.078"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_rejects_tampered_cas_without_mutation" time="0.082"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_rejects_wrong_stream_without_mutation" time="0.068"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_rejects_too_short_source_without_mutation" time="0.066"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_requires_source_to_reach_authored_end" time="0.078"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_generic_visual_media_requires_video_stream" time="0.072"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_replays_after_intervening_edit_and_reopen" time="0.110"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase><testcase classname="tests.test_timeline_clip_replacement" name="test_replace_timeline_clip_public_http_route" time="0.618"><skipped type="pytest.xfail" message="[declared-xfail:timeline-clip-replacement] ledger D04: direct clip replacement retired; awaiting commit-path replacement" /></testcase></testsuite></testsuites>

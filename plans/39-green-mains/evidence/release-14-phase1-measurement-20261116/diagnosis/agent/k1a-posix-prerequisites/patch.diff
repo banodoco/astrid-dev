@@ -1,0 +1,62 @@
+diff --git a/tests/core/generation/test_vibecomfy_runtime_root.py b/tests/core/generation/test_vibecomfy_runtime_root.py
+index 16bc0d86..0039ef98 100644
+--- a/tests/core/generation/test_vibecomfy_runtime_root.py
++++ b/tests/core/generation/test_vibecomfy_runtime_root.py
+@@ -3,7 +3,6 @@ from __future__ import annotations
+ 
+ import hashlib
+ import re
+-import sys
+ from pathlib import Path, PurePosixPath, PureWindowsPath
+ 
+ import pytest
+@@ -25,7 +24,7 @@ def test_posix_keeps_the_runtime_folder_inside_the_outputs(tmp_path, platform_na
+     assert str(vibecomfy_runtime_root(tmp_path, platform_name=platform_name)) == str(tmp_path) + "/.vibecomfy-runtime"
+ 
+ 
+-@pytest.mark.skipif(sys.platform == "win32", reason="the unparameterised call is the host platform")
++@pytest.mark.posix_native
+ def test_default_platform_is_the_host_platform(tmp_path):
+     assert vibecomfy_runtime_root(tmp_path) == tmp_path / ".vibecomfy-runtime"
+ 
+diff --git a/tests/core/pack/test_nofollow_fallback.py b/tests/core/pack/test_nofollow_fallback.py
+index 13cd117e..b01a2e6b 100644
+--- a/tests/core/pack/test_nofollow_fallback.py
++++ b/tests/core/pack/test_nofollow_fallback.py
+@@ -81,7 +81,7 @@ def test_install_lock_opens_regular_lock_file_without_nofollow(tmp_path, monkeyp
+         assert (root / ".install.lock").is_file()
+ 
+ 
+-@pytest.mark.skipif(not hasattr(os, "O_NOFOLLOW"), reason="platform has the real flag only on POSIX")
++@pytest.mark.posix_native
+ def test_group_lock_refuses_linked_lock_file_with_real_nofollow(tmp_path):
+     root = tmp_path / "collection"
+     lock = tmp_path / ("." + root.name + ".transaction.lock")
+diff --git a/tests/core/pack/test_transaction_windows.py b/tests/core/pack/test_transaction_windows.py
+index 00ac6407..1bffe84d 100644
+--- a/tests/core/pack/test_transaction_windows.py
++++ b/tests/core/pack/test_transaction_windows.py
+@@ -313,8 +313,9 @@ def test_windows_crash_between_rename_and_journal_recovers(source, tmp_path, win
+     assert_resolved(root, forward=move >= 2)
+ 
+ 
++@pytest.mark.posix_native
+ def test_windows_lock_covers_renames_journal_and_backup_retirement(source, tmp_path, windows, monkeypatch):
+-    fcntl = pytest.importorskip("fcntl")
++    import fcntl
+ 
+     root = tmp_path / "packs"
+     seed(root)
+diff --git a/tests/test_omp_agent.py b/tests/test_omp_agent.py
+index a0c028cc..4ff936b0 100644
+--- a/tests/test_omp_agent.py
++++ b/tests/test_omp_agent.py
+@@ -494,7 +494,7 @@ def test_login_keeps_auth_route(monkeypatch) -> None:
+     assert calls == [["login"]]
+ 
+ 
+-@pytest.mark.skipif(os.name == "nt", reason="the POSIX fake interpreter uses a shebang")
++@pytest.mark.posix_native
+ def test_installed_launcher_dispatches_generate_json(tmp_path) -> None:
+     from astrid.installer.launcher import install
+ 

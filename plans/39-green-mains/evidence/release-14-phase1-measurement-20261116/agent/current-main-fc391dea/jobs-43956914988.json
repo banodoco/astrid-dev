@@ -1,0 +1,429 @@
+{
+  "total_count": 2,
+  "jobs": [
+    {
+      "id": 133618183570,
+      "run_id": 43956914988,
+      "workflow_name": "Windows task host journey",
+      "head_branch": "release/14/main",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-agent/actions/runs/43956914988",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOSOeWsc8AAAAfHEOtkg",
+      "head_sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+      "url": "https://api.github.com/repos/banodoco/astrid-agent/actions/jobs/133618183570",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43956914988/job/133618183570",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T21:15:16Z",
+      "started_at": "2026-11-16T21:15:18Z",
+      "completed_at": "2026-11-16T21:24:27Z",
+      "name": "Windows task host journey (pwsh.exe)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T21:15:19Z",
+          "completed_at": "2026-11-16T21:15:19Z"
+        },
+        {
+          "name": "Check out this Agent commit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T21:15:19Z",
+          "completed_at": "2026-11-16T21:15:28Z"
+        },
+        {
+          "name": "Resolve App ref",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T21:15:28Z",
+          "completed_at": "2026-11-16T21:15:29Z"
+        },
+        {
+          "name": "Set up the journey driver (not the installed Python)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T21:15:29Z",
+          "completed_at": "2026-11-16T21:15:29Z"
+        },
+        {
+          "name": "Resolve the pinned Runtime commit from the Agent lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T21:15:29Z",
+          "completed_at": "2026-11-16T21:15:29Z"
+        },
+        {
+          "name": "Check out the selected Runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T21:15:29Z",
+          "completed_at": "2026-11-16T21:15:32Z"
+        },
+        {
+          "name": "Check out the selected App installer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T21:15:32Z",
+          "completed_at": "2026-11-16T21:15:40Z"
+        },
+        {
+          "name": "Record checked-out refs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T21:15:40Z",
+          "completed_at": "2026-11-16T21:15:40Z"
+        },
+        {
+          "name": "Install py-spy in the journey driver environment",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T21:15:40Z",
+          "completed_at": "2026-11-16T21:15:46Z"
+        },
+        {
+          "name": "Install with the real App install.ps1 / pwsh.exe",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T21:15:46Z",
+          "completed_at": "2026-11-16T21:24:08Z"
+        },
+        {
+          "name": "Start Runtime through its installed Scheduled Task",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T21:24:08Z",
+          "completed_at": "2026-11-16T21:24:09Z"
+        },
+        {
+          "name": "Wait for health on 127.0.0.1:17340",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T21:24:09Z",
+          "completed_at": "2026-11-16T21:24:09Z"
+        },
+        {
+          "name": "Wait for pack-host running and its ready file",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T21:24:09Z",
+          "completed_at": "2026-11-16T21:24:12Z"
+        },
+        {
+          "name": "Run an installed-profile SDK invocation through settlement",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 14,
+          "started_at": "2026-11-16T21:24:12Z",
+          "completed_at": "2026-11-16T21:24:14Z"
+        },
+        {
+          "name": "Disable Scheduled Task restarts and run Runtime down",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-16T21:24:14Z",
+          "completed_at": "2026-11-16T21:24:16Z"
+        },
+        {
+          "name": "Verify no Astrid or Runtime processes remain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-16T21:24:16Z",
+          "completed_at": "2026-11-16T21:24:17Z"
+        },
+        {
+          "name": "Collect install logs, Runtime logs, health and process lists",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-16T21:24:17Z",
+          "completed_at": "2026-11-16T21:24:20Z"
+        },
+        {
+          "name": "Upload Windows task host journey evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-16T21:24:20Z",
+          "completed_at": "2026-11-16T21:24:21Z"
+        },
+        {
+          "name": "Post Check out the selected App installer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-11-16T21:24:21Z",
+          "completed_at": "2026-11-16T21:24:23Z"
+        },
+        {
+          "name": "Post Check out the selected Runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34,
+          "started_at": "2026-11-16T21:24:23Z",
+          "completed_at": "2026-11-16T21:24:24Z"
+        },
+        {
+          "name": "Post Set up the journey driver (not the installed Python)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 35,
+          "started_at": "2026-11-16T21:24:24Z",
+          "completed_at": "2026-11-16T21:24:24Z"
+        },
+        {
+          "name": "Post Check out this Agent commit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-11-16T21:24:24Z",
+          "completed_at": "2026-11-16T21:24:26Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-11-16T21:24:26Z",
+          "completed_at": "2026-11-16T21:24:26Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-agent/check-runs/133618183570",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000042197,
+      "runner_name": "GitHub Actions 1000042197",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133618184010,
+      "run_id": 43956914988,
+      "workflow_name": "Windows task host journey",
+      "head_branch": "release/14/main",
+      "run_url": "https://api.github.com/repos/banodoco/astrid-agent/actions/runs/43956914988",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOSOeWsc8AAAAfHEOvSg",
+      "head_sha": "fc391dea696ec5799db222799a34f9de6a69659b",
+      "url": "https://api.github.com/repos/banodoco/astrid-agent/actions/jobs/133618184010",
+      "html_url": "https://github.com/banodoco/astrid-agent/actions/runs/43956914988/job/133618184010",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T21:15:16Z",
+      "started_at": "2026-11-16T21:15:18Z",
+      "completed_at": "2026-11-16T21:26:03Z",
+      "name": "Windows task host journey (powershell.exe)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T21:15:19Z",
+          "completed_at": "2026-11-16T21:15:20Z"
+        },
+        {
+          "name": "Check out this Agent commit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T21:15:20Z",
+          "completed_at": "2026-11-16T21:15:32Z"
+        },
+        {
+          "name": "Resolve App ref",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T21:15:32Z",
+          "completed_at": "2026-11-16T21:15:33Z"
+        },
+        {
+          "name": "Set up the journey driver (not the installed Python)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T21:15:33Z",
+          "completed_at": "2026-11-16T21:15:33Z"
+        },
+        {
+          "name": "Resolve the pinned Runtime commit from the Agent lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T21:15:33Z",
+          "completed_at": "2026-11-16T21:15:33Z"
+        },
+        {
+          "name": "Check out the selected Runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T21:15:33Z",
+          "completed_at": "2026-11-16T21:15:37Z"
+        },
+        {
+          "name": "Check out the selected App installer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T21:15:37Z",
+          "completed_at": "2026-11-16T21:15:46Z"
+        },
+        {
+          "name": "Record checked-out refs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T21:15:46Z",
+          "completed_at": "2026-11-16T21:15:46Z"
+        },
+        {
+          "name": "Install py-spy in the journey driver environment",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T21:15:46Z",
+          "completed_at": "2026-11-16T21:15:54Z"
+        },
+        {
+          "name": "Install with the real App install.ps1 / powershell.exe",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T21:15:54Z",
+          "completed_at": "2026-11-16T21:25:43Z"
+        },
+        {
+          "name": "Start Runtime through its installed Scheduled Task",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T21:25:43Z",
+          "completed_at": "2026-11-16T21:25:44Z"
+        },
+        {
+          "name": "Wait for health on 127.0.0.1:17340",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T21:25:44Z",
+          "completed_at": "2026-11-16T21:25:44Z"
+        },
+        {
+          "name": "Wait for pack-host running and its ready file",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T21:25:44Z",
+          "completed_at": "2026-11-16T21:25:45Z"
+        },
+        {
+          "name": "Run an installed-profile SDK invocation through settlement",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 14,
+          "started_at": "2026-11-16T21:25:45Z",
+          "completed_at": "2026-11-16T21:25:47Z"
+        },
+        {
+          "name": "Disable Scheduled Task restarts and run Runtime down",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-16T21:25:47Z",
+          "completed_at": "2026-11-16T21:25:50Z"
+        },
+        {
+          "name": "Verify no Astrid or Runtime processes remain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-16T21:25:50Z",
+          "completed_at": "2026-11-16T21:25:51Z"
+        },
+        {
+          "name": "Collect install logs, Runtime logs, health and process lists",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-16T21:25:51Z",
+          "completed_at": "2026-11-16T21:25:53Z"
+        },
+        {
+          "name": "Upload Windows task host journey evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-16T21:25:53Z",
+          "completed_at": "2026-11-16T21:25:55Z"
+        },
+        {
+          "name": "Post Check out the selected App installer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-11-16T21:25:55Z",
+          "completed_at": "2026-11-16T21:25:57Z"
+        },
+        {
+          "name": "Post Check out the selected Runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34,
+          "started_at": "2026-11-16T21:25:57Z",
+          "completed_at": "2026-11-16T21:25:59Z"
+        },
+        {
+          "name": "Post Set up the journey driver (not the installed Python)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 35,
+          "started_at": "2026-11-16T21:25:59Z",
+          "completed_at": "2026-11-16T21:25:59Z"
+        },
+        {
+          "name": "Post Check out this Agent commit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-11-16T21:25:59Z",
+          "completed_at": "2026-11-16T21:26:02Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-11-16T21:26:02Z",
+          "completed_at": "2026-11-16T21:26:02Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/banodoco/astrid-agent/check-runs/133618184010",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000042198,
+      "runner_name": "GitHub Actions 1000042198",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

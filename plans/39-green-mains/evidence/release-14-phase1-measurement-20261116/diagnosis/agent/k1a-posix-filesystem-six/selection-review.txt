@@ -1,0 +1,10 @@
+Selection review
+================
+
+The six converted tests use the existing `posix_native` platform lane. In tests/lanes.py:132, that lane is available when os.name == "posix" and declares unit-shard-ubuntu-latest as its CI job. It is not default_off, so the default pytest marker expression in pyproject.toml:314 includes it.
+
+The Ubuntu unit-shard job sets ASTRID_CI_JOB=unit-shard-${matrix.os} (.github/workflows/ci.yml:223); the Ubuntu matrix entry therefore runs these tests in the standard default test selection. On Windows, `posix_native` becomes a declared platform skip under the shared lane/skip guard; the old `skipif(os.name == "nt")` also skipped them there. On Darwin, `os.name == "posix"`, so the lane is available, but the macOS CI command explicitly selects only `darwin_native or remotion or chrome or codex_cli` (.github/workflows/ci.yml:522), excluding these default-lane tests. The prior unmarked tests were excluded from that same explicit macOS selection as well. Thus this marker replacement keeps practical default CI selection intact and does not claim added Darwin CI coverage.
+
+No Git-availability direct skip was changed. In test_git_environment.py, the `real_git is None` skip remains in test_planted_ssh_in_working_directory_never_runs. No imports became unused: `os` remains used throughout all four files.
+
+Review scope was limited to these six target tests and the existing lane/CI selection declarations. No full skip-policy suite or broad test suite was run.

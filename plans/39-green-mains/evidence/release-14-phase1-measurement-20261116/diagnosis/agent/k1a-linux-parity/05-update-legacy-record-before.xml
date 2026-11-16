@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="11" time="0.726" timestamp="2026-11-16T21:37:14.333742+00:00" hostname="b10e5ff1e026"><testcase classname="tests.test_installer_update_legacy_record" name="test_describe_of_a_record_without_home_reproduces_its_stored_descriptor" time="0.043" /><testcase classname="tests.test_installer_update_legacy_record" name="test_sweep_keeps_a_record_without_home_active_while_its_unit_runs" time="0.005" /><testcase classname="tests.test_installer_update_legacy_record" name="test_sweep_resolves_a_record_without_home_once_its_unit_has_finished" time="0.009"><failure message="AssertionError: assert 'recovery-needed' == 'failed'&#10;  &#10;  - failed&#10;  + recovery-needed">tmp_path = PosixPath('/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865031877780146/test_sweep_resolves_a_record_w0')
+systemd = &lt;tests.test_installer_update_legacy_record.FakeSystemd object at 0x7f53ad7ba850&gt;
+
+    def test_sweep_resolves_a_record_without_home_once_its_unit_has_finished(tmp_path, systemd):
+        root, _record = release_nine_record(tmp_path, "active")
+        systemd.active_state = "inactive"
+    
+        [result] = update_job.sweep_owned_jobs(root)
+    
+&gt;       assert result["state"] == "failed"
+E       AssertionError: assert 'recovery-needed' == 'failed'
+E         
+E         - failed
+E         + recovery-needed
+
+tests/test_installer_update_legacy_record.py:107: AssertionError</failure></testcase><testcase classname="tests.test_installer_update_legacy_record" name="test_sweep_leaves_a_record_without_home_unchanged_when_the_check_is_uncertain" time="0.005" /><testcase classname="tests.test_installer_update_legacy_record" name="test_status_reports_a_record_without_home_as_stored[active-False]" time="0.004" /><testcase classname="tests.test_installer_update_legacy_record" name="test_status_reports_a_record_without_home_as_stored[inactive-False]" time="0.004" /><testcase classname="tests.test_installer_update_legacy_record" name="test_status_reports_a_record_without_home_as_stored[inactive-True]" time="0.004" /><testcase classname="tests.test_installer_update_legacy_record" name="test_reconcile_treats_a_record_without_home_as_active_while_its_unit_runs" time="0.007" /><testcase classname="tests.test_installer_update_legacy_record" name="test_reconcile_leaves_a_record_without_home_unchanged_when_liveness_is_unknown" time="0.004" /><testcase classname="tests.test_installer_update_legacy_record" name="test_reconcile_refuses_a_finished_record_without_home_at_the_selection_read" time="0.005" /><testcase classname="tests.test_installer_update_legacy_record" name="test_reconcile_helper_reports_the_legacy_record_reason" time="0.005" /></testsuite></testsuites>

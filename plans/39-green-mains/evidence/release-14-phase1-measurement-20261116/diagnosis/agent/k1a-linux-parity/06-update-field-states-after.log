@@ -1,0 +1,956 @@
+.........................F......FF..........F...                         [100%]
+=================================== FAILURES ===================================
+____________ test_every_non_zero_outcome_ends_with_next_and_details ____________
+
+    def test_every_non_zero_outcome_ends_with_next_and_details():
+        """A Release 1 Runtime cannot show the receipt in the App: the terminal must say what to do."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        log = "/home/hannah/Library/Logs/Astrid Runtime/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            for reason in (*REASONS, None):
+                outcome = Outcome(kind, 1, 1, 2, reason, "update", log)
+                lines = outcome.headline()
+                assert outcome.exit_code != 0, (kind, reason)
+                assert lines[-2].startswith("Next: ") and lines[-1] == f"Details: {log}", (kind, reason, lines)
+                assert sum(line.startswith("Next: ") for line in lines) == 1
+            rolled = Outcome("rolled-back", 1, 1, 2, "error", "update", log).headline()
+            assert rolled[-3].startswith("Run the same command again")
+        console = Outcome("failed", None, None, 2, "error").headline()
+>       assert console[-1] == "Details: shown above in this window (the installer log was not used)."
+E       AssertionError: assert 'Details: see... this window.' == 'Details: sho...as not used).'
+E         
+E         - Details: shown above in this window (the installer log was not used).
+E         + Details: see the error in this window.
+
+tests/test_update_from_field_states.py:597: AssertionError
+________________ test_each_reason_has_its_own_next_step[error] _________________
+
+reason = 'error'
+
+    @pytest.mark.parametrize("reason", sorted(EXPECTED_NEXT))
+    def test_each_reason_has_its_own_next_step(reason):
+        """Plan 29 R11 card 1: the Next line is the reason's own action; support only for bugs and errors."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        assert set(REASONS) == set(EXPECTED_NEXT)  # every reason in the enum is covered, none invented
+        log = "/tmp/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            lines = Outcome(kind, 1, 1, 2, reason, "update", log).headline()
+>           assert lines[-2:] == [EXPECTED_NEXT[reason], f"Details: {log}"], (kind, lines)
+E           AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', 'Why: setup stopped with an ...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])
+E           assert ['Next: run t.../install.log'] == ['Next: open .../install.log']
+E             
+E             At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != 'Next: open astrid.haus > Settings > Updates > Download diagnostics, and send it to support.'
+E             Use -v to get more diff
+
+tests/test_update_from_field_states.py:646: AssertionError
+____________ test_each_reason_has_its_own_next_step[installer-bug] _____________
+
+reason = 'installer-bug'
+
+    @pytest.mark.parametrize("reason", sorted(EXPECTED_NEXT))
+    def test_each_reason_has_its_own_next_step(reason):
+        """Plan 29 R11 card 1: the Next line is the reason's own action; support only for bugs and errors."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        assert set(REASONS) == set(EXPECTED_NEXT)  # every reason in the enum is covered, none invented
+        log = "/tmp/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            lines = Outcome(kind, 1, 1, 2, reason, "update", log).headline()
+>           assert lines[-2:] == [EXPECTED_NEXT[reason], f"Details: {log}"], (kind, lines)
+E           AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', 'Why: the installer finished...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])
+E           assert ['Next: run t.../install.log'] == ['Next: open .../install.log']
+E             
+E             At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != 'Next: open astrid.haus > Settings > Updates > Download diagnostics, and send it to support.'
+E             Use -v to get more diff
+
+tests/test_update_from_field_states.py:646: AssertionError
+_____ test_each_reason_has_its_own_next_step[windows-upgrade-unsupported] ______
+
+reason = 'windows-upgrade-unsupported'
+
+    @pytest.mark.parametrize("reason", sorted(EXPECTED_NEXT))
+    def test_each_reason_has_its_own_next_step(reason):
+        """Plan 29 R11 card 1: the Next line is the reason's own action; support only for bugs and errors."""
+        from astrid.installer.outcome import REASONS, Outcome
+    
+        assert set(REASONS) == set(EXPECTED_NEXT)  # every reason in the enum is covered, none invented
+        log = "/tmp/install.log"
+        for kind in ("not-updated", "failed", "rolled-back"):
+            lines = Outcome(kind, 1, 1, 2, reason, "update", log).headline()
+>           assert lines[-2:] == [EXPECTED_NEXT[reason], f"Details: {log}"], (kind, lines)
+E           AssertionError: ('not-updated', ['Astrid did NOT update. It is still Release 1; Release 2 is available.', "Why: upgrading from an earl...n the same command again; if it fails again, send the error and install log to support.', 'Details: /tmp/install.log'])
+E           assert ['Next: run t.../install.log'] == ['Next: this .../install.log']
+E             
+E             At index 0 diff: 'Next: run the same command again; if it fails again, send the error and install log to support.' != "Next: this Windows version can't be upgraded this way. Open astrid.haus > Settings > Updates > Download diagnostics to see what is installed."
+E             Use -v to get more diff
+
+tests/test_update_from_field_states.py:646: AssertionError
+==================================== PASSES ====================================
+______ test_rollback_after_normalisation_restores_r0_and_keeps_both_roots ______
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "778cf82888d67c070b575bbdcf43b6c458fc466a47615744e9f1a6ce5f3e2292",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "6096cdc3e18f44d4b8aac0c3abe70821",
+  "post_inventory_sha256": "778cf82888d67c070b575bbdcf43b6c458fc466a47615744e9f1a6ce5f3e2292",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/data",
+  "source_inventory_sha256": "778cf82888d67c070b575bbdcf43b6c458fc466a47615744e9f1a6ce5f3e2292",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 676567,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "121c384a2b5f80e02b68d3bb349fbc5594e6c54998f781a0864b9c16143f87f0",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:38:46.498706+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_rollback_after_normalisat0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+Recovered the previous R0 service. Both roots were kept; changes made in R1 remain in R1.
+____________________ test_resolver_reports_the_field_state _____________________
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "7e366ebad24c15211671903daffeeb52aa71c002f746b0659cd96a8481a2084b",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "d04d4c1ad28e4221b318cdabca340f62",
+  "post_inventory_sha256": "7e366ebad24c15211671903daffeeb52aa71c002f746b0659cd96a8481a2084b",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/data",
+  "source_inventory_sha256": "7e366ebad24c15211671903daffeeb52aa71c002f746b0659cd96a8481a2084b",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675788,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "8a9e344da38f3ddc647b4f8cf7c7c2e59a888dbf3d214f86061e7d4c4beb94b6",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:38:51.329103+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_resolver_reports_the_fiel0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+_ test_launcher_admits_r1_when_normalisation_was_cut_between_marker_and_selection _
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "cf7e2885d7aa78a5ab9d6553b5bf9c549eaa52bccc184c7fd0bcea846017f456",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "ddec2281a9b749f1a59d4d3a7160ac4e",
+  "post_inventory_sha256": "cf7e2885d7aa78a5ab9d6553b5bf9c549eaa52bccc184c7fd0bcea846017f456",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/data",
+  "source_inventory_sha256": "cf7e2885d7aa78a5ab9d6553b5bf9c549eaa52bccc184c7fd0bcea846017f456",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675794,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "4a9727fcd6127ff30e1f05ba3bee297bff953286c77f17c7d6ca91f7cd207322",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:38:59.809660+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_launcher_admits_r1_when_n0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+_ test_restore_archive_cut_between_link_and_unlink_is_finished_by_the_next_run _
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "45814003b192c2c7db8524a70c718d424561eea4eb4bb3503f27bcb705135446",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "4d5a80a06c0d42c59645c58824f2110c",
+  "post_inventory_sha256": "45814003b192c2c7db8524a70c718d424561eea4eb4bb3503f27bcb705135446",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/data",
+  "source_inventory_sha256": "45814003b192c2c7db8524a70c718d424561eea4eb4bb3503f27bcb705135446",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675792,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "e9c0b67b7d96c05a2a7975febc1400134df89c889d99555c61b0440a29c95228",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:00.992837+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_restore_archive_cut_betwe0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+Recovered the previous R0 service. Both roots were kept; changes made in R1 remain in R1.
+__________ test_a_failing_run_after_a_success_leaves_no_stale_receipt __________
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "aabd2e2b1835c0e6ed90b51c7c488b41c2cb94552ed868558231947d1322a0a8",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "4a39bccaeaf343dda934f6a330060c1f",
+  "post_inventory_sha256": "aabd2e2b1835c0e6ed90b51c7c488b41c2cb94552ed868558231947d1322a0a8",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/data",
+  "source_inventory_sha256": "aabd2e2b1835c0e6ed90b51c7c488b41c2cb94552ed868558231947d1322a0a8",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675784,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "b71fc88642b1472e47d084e367d415f44950e9484992bb9edc810bc339501989",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:02.502222+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+Using your workspace at /workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_failing_run_after_a_suc0/data-r1.
+Downloading Release 2
+Checking it
+Stopping Release 1
+Starting Release 2
+Checking Release 2 started
+Open https://astrid.haus
+
+Astrid updated: Release 1 → Release 2.
+Astrid couldn't finish. Your work is kept.
+OSError: the installer could not start
+
+Astrid setup summary:
+  Startup: not confirmed.
+  Sign-in autostart: not confirmed.
+  Command/PATH: not reached in this run.
+  Skill destinations: not confirmed in this run.
+  Failure: OSError
+  Skill copies recovery: to enable skill copies later, rerun the install line with --skill-copies on (replace this flag in the Way back line).
+  Maintenance: rerun the install line to repair or restart; add --update to update, or --uninstall to remove Astrid. Uninstall keeps the workspace unless --delete-data is added.
+  Way back: curl -fsSL https://astrid.haus/install | sh -s -- --yes --update --autostart on --command on --skills on --skill-copies off
+
+Astrid was NOT installed: setup stopped with an error.
+Setup did not finish; some downloaded files may remain.
+Next: run the same command again; if it fails again, send the error and install log to support.
+Details: see the error in this window.
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/astrid/installer/cli.py", line 610, in main
+    backend = _speaking(Backend(root, log_path, uv, process_control=process_control), say)
+                        ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent/tests/test_update_from_field_states.py", line 453, in broken
+    raise OSError("the installer could not start")
+OSError: the installer could not start
+_____________ test_a_finished_local_update_journal_reads_as_direct _____________
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "8592926314521149dc573d37d1f7cf164d392b2b656a140c76fd50509127ea41",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "2ed6a507aed148b28ab34ffe4a5d916f",
+  "post_inventory_sha256": "8592926314521149dc573d37d1f7cf164d392b2b656a140c76fd50509127ea41",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/data",
+  "source_inventory_sha256": "8592926314521149dc573d37d1f7cf164d392b2b656a140c76fd50509127ea41",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675785,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "e9ce53046f0ced92e9448f757fb78b8ca76ec7cb7dc2de13ba1c72ae4b518d7b",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:04.144785+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_a_finished_local_update_j0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+_________ test_local_update_operates_the_r1_label_after_normalisation __________
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "eb6aa2ec80f29e3d09ff73814cf25914a0b951ef0a5263725d3bdb8cf6fd9ba1",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "0d8bcba957b240efb9b1a55f8fbc98dc",
+  "post_inventory_sha256": "eb6aa2ec80f29e3d09ff73814cf25914a0b951ef0a5263725d3bdb8cf6fd9ba1",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/data",
+  "source_inventory_sha256": "eb6aa2ec80f29e3d09ff73814cf25914a0b951ef0a5263725d3bdb8cf6fd9ba1",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675786,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "8acc002adfb2d03560c8472544fd4961c6b1175d9939941fe155e1e1424b5c57",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:05.270137+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_local_update_operates_the0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+____ test_retained_versions_keep_every_version_when_the_move_cannot_be_read ____
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "eb4a8ae7c0fd87eeb0784eeee688f7e0e250f6e22d1480a6f53e56e4d1260820",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "61fc64fa7827414c936eaba2e6fabd84",
+  "post_inventory_sha256": "eb4a8ae7c0fd87eeb0784eeee688f7e0e250f6e22d1480a6f53e56e4d1260820",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/data",
+  "source_inventory_sha256": "eb4a8ae7c0fd87eeb0784eeee688f7e0e250f6e22d1480a6f53e56e4d1260820",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675787,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "58ab950f52143fb6e08ee3c6c88467008f5303a218a1bde5087b93ab2b7b3f2c",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:06.603236+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_retained_versions_keep_ev0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+_____ test_handle_refuses_an_unnormalised_complete_journal_without_changes _____
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "0d8c43e8aa971f2e68ee074589d39bac35b23c8dacd0c34ebc89310d080c6c26",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "1a6e009b903e4cecb96f0cdc6ddbf352",
+  "post_inventory_sha256": "0d8c43e8aa971f2e68ee074589d39bac35b23c8dacd0c34ebc89310d080c6c26",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/data",
+  "source_inventory_sha256": "0d8c43e8aa971f2e68ee074589d39bac35b23c8dacd0c34ebc89310d080c6c26",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 675789,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "85df9480c3bfde47b681cdc7a0aca071c98c535f7706ba4266ca2ef07870fa6c",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:09.183463+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_handle_refuses_an_unnorma0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+__ test_normalisation_replaces_the_release1_launcher_before_rewriting_records __
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "2a15e547fe77df140b76d049b491404b72acea49e09aa960bff0cdd95468494d",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "5082da15f49f423da37d72d04995f203",
+  "post_inventory_sha256": "2a15e547fe77df140b76d049b491404b72acea49e09aa960bff0cdd95468494d",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/data",
+  "source_inventory_sha256": "2a15e547fe77df140b76d049b491404b72acea49e09aa960bff0cdd95468494d",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 674519,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "dca1107d339de9ab568f11f6b534def20fda1350ae817cea8f5d3b9eb329ced2",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:10.465366+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_replaces_th0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+_____ test_normalisation_that_cannot_replace_the_launcher_changes_nothing ______
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "4ecc5f0f1a9f8e89b0a13c2722df739ac69d3032cbacc03d3c47faba5982f2ca",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "faba40413c2541b5b8fb1d1733fe6e1c",
+  "post_inventory_sha256": "4ecc5f0f1a9f8e89b0a13c2722df739ac69d3032cbacc03d3c47faba5982f2ca",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/data",
+  "source_inventory_sha256": "4ecc5f0f1a9f8e89b0a13c2722df739ac69d3032cbacc03d3c47faba5982f2ca",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 674522,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "c9a99cf5bc1b8748f906c2f8b9368d1738186dfad227c58d08b036dfbffece1a",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:11.855667+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_normalisation_that_cannot0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+______________ test_release1_launcher_refuses_normalised_records _______________
+----------------------------- Captured stdout call -----------------------------
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/home/.config/systemd/user/astrid.service
+ActiveState=active
+UnitFileState=enabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+{
+  "destination": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/data-r1/runtime/realms/r0",
+  "destination_inventory_sha256": "08161c837a43f85d9e89b742a1e21207e21e0c83202be4ac19acb2efd723bfeb",
+  "migration": {
+    "changed": false,
+    "ok": true,
+    "realm_id": "r0",
+    "source_schema_version": 33,
+    "steps": [],
+    "target_schema_version": 33
+  },
+  "ok": true,
+  "operation_id": "bcd8c42e855f40fcbbfb22fc72314f71",
+  "post_inventory_sha256": "08161c837a43f85d9e89b742a1e21207e21e0c83202be4ac19acb2efd723bfeb",
+  "realm_id": "r0",
+  "receipt_version": 1,
+  "source": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/data/runtime/realms/r0",
+  "source_data_root": "/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/data",
+  "source_inventory_sha256": "08161c837a43f85d9e89b742a1e21207e21e0c83202be4ac19acb2efd723bfeb",
+  "source_manifest_sha256": "2f319066b7e8bd966995671bf0d3c043ea8aeef9bcd5e4d613bc4ac435d7a650",
+  "source_root_device": 27,
+  "source_root_inode": 674523,
+  "source_unchanged": true,
+  "source_version": 33,
+  "sqlite_digest_sha256": "16f1547ed2c33641c8a8657fc5cfb336cd139ec11b7596c0b701833a3b8be03e",
+  "started": false,
+  "target_version": 33,
+  "verified_at": "2026-11-16T21:39:13.056599+00:00"
+}
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/home/.config/systemd/user/astrid.service
+ActiveState=inactive
+UnitFileState=disabled
+LoadState=loaded
+DropInPaths=
+LoadState=not-found
+ActiveState=inactive
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=inactive
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=disabled
+LoadState=loaded
+ActiveState=active
+FragmentPath=/workspace/scratch/cd53b069f320/p39-repair/astrid-agent.env/basetemp/1794865117311221544/test_release1_launcher_refuses0/home/.config/systemd/user/astrid-r1.service
+DropInPaths=
+UnitFileState=enabled
+=========================== short test summary info ============================
+PASSED tests/test_update_from_field_states.py::test_handed_off_release1_update_reaches_the_target_release
+PASSED tests/test_update_from_field_states.py::test_update_that_installs_nothing_fails_its_post_condition
+PASSED tests/test_update_from_field_states.py::test_install_line_on_handed_off_install_repairs_and_applies_choices
+PASSED tests/test_update_from_field_states.py::test_rollback_after_normalisation_restores_r0_and_keeps_both_roots
+PASSED tests/test_update_from_field_states.py::test_install_line_clears_a_rolled_back_handoff_once_the_r1_copy_is_preserved
+PASSED tests/test_update_from_field_states.py::test_rollback_after_a_post_handoff_update_refuses_without_changes
+PASSED tests/test_update_from_field_states.py::test_resolver_reports_the_field_state
+PASSED tests/test_update_from_field_states.py::test_recovery_only_not_updated_headline_is_clear_and_never_bare_did_not_finish
+PASSED tests/test_update_from_field_states.py::test_exit_code_contract_read_by_bootstraps_pinokio_and_journeys
+PASSED tests/test_update_from_field_states.py::test_plain_install_that_recovers_an_interrupted_update_is_repaired
+PASSED tests/test_update_from_field_states.py::test_update_that_only_recovers_an_interrupted_update_is_not_updated
+PASSED tests/test_update_from_field_states.py::test_known_r0_leftover_is_stopped_its_files_kept_and_the_update_proceeds
+PASSED tests/test_update_from_field_states.py::test_unknown_second_runtime_is_refused_before_anything_is_stopped
+PASSED tests/test_update_from_field_states.py::test_real_live_probe_reads_runtime_health_identity
+PASSED tests/test_update_from_field_states.py::test_launcher_admits_r1_when_normalisation_was_cut_between_marker_and_selection
+PASSED tests/test_update_from_field_states.py::test_restore_archive_cut_between_link_and_unlink_is_finished_by_the_next_run
+PASSED tests/test_update_from_field_states.py::test_a_failing_run_after_a_success_leaves_no_stale_receipt
+PASSED tests/test_update_from_field_states.py::test_a_finished_local_update_journal_reads_as_direct
+PASSED tests/test_update_from_field_states.py::test_local_update_operates_the_r1_label_after_normalisation
+PASSED tests/test_update_from_field_states.py::test_retained_versions_keep_every_version_when_the_move_cannot_be_read
+PASSED tests/test_update_from_field_states.py::test_update_whose_runtime_was_not_restarted_reports_runtime_not_running
+PASSED tests/test_update_from_field_states.py::test_handle_refuses_an_unnormalised_complete_journal_without_changes
+PASSED tests/test_update_from_field_states.py::test_normalisation_replaces_the_release1_launcher_before_rewriting_records
+PASSED tests/test_update_from_field_states.py::test_normalisation_that_cannot_replace_the_launcher_changes_nothing
+PASSED tests/test_update_from_field_states.py::test_release1_launcher_refuses_normalised_records
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[acknowledgement-unknown]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[autostart-off]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[busy]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[consent-required]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[declined]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[disk-space]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[legacy-update-record]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[needs-repair]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[other-runtime-running]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[pinokio-managed]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[recovered-previous-version]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[refused]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[runtime-not-running]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[self-update-too-old]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[source-checkout]
+PASSED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[unsupported-service-manager]
+PASSED tests/test_update_from_field_states.py::test_local_update_normalises_a_finished_handoff_and_updates_r1
+PASSED tests/test_update_from_field_states.py::test_local_update_refuses_when_the_handoff_cannot_be_normalised
+PASSED tests/test_update_from_field_states.py::test_local_update_refuses_an_unfinished_handoff_without_changes
+FAILED tests/test_update_from_field_states.py::test_every_non_zero_outcome_ends_with_next_and_details
+FAILED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[error]
+FAILED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[installer-bug]
+FAILED tests/test_update_from_field_states.py::test_each_reason_has_its_own_next_step[windows-upgrade-unsupported]
+4 failed, 44 passed in 37.86s

@@ -1,0 +1,13 @@
+Runtime G2 RE4 full-file proof
+Captured: 2026-11-16 UTC (exact start/end times were not separately recorded)
+Repository: /workspace/scratch/cd53b069f320/p39-repair/astrid-runtime
+Local HEAD: ac9e6d2e7f6a0a6961d7a2d924040f61832925d1
+Local tree: 3fff009d7cb8c46a1a1df21f3f541596b98480bd
+Requested merged candidate: 4fe2c0b847cf83771b2f3ce4e4fba0934f64f6ce (same tree)
+Command: bash scripts/worker-env/runtime-pytest.sh -q tests/test_timeline_bundle2_contract.py tests/test_timeline_commit_contract.py
+Python version observed in checkout: Python 3.12.14
+Exit status: 0
+Summary: 110 passed in 41.70s
+
+--- Complete command output ---
+
