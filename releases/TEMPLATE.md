@@ -3,6 +3,7 @@
 **Release:** NN
 **State:** Draft
 **Kind:** patch
+**Release manager:** not yet named
 
 ## Highlight
 
@@ -24,7 +25,7 @@ Delete this paragraph once the list is written; only plan bullets or `None yet` 
 
 ## Branches
 
-From Release 14 each release has one branch per product repository, `release/<N>/main`, and every plan or fix branch of the release merges into it; delete this paragraph once the table is written. Role is `release`, `plan <PP>` or `fix`; Cut at is the 40-character commit the branch was cut from, or `not yet cut`; State is `open` or `published` for a release row, and `open` or `merged` (contained in that repository's `release/<N>/main`) for a plan or fix row.
+One release branch per product repository, `release/<N>/main`, which every plan and fix branch of the release merges into ([How a release runs](../skills/astrid-dev-release/SKILL.md#how-a-release-runs)); delete this paragraph once the table is written. Role is `release`, `plan <PP>` or `fix`; Cut at is the 40-character commit the branch was cut from, or `not yet cut`; State is `open` or `published` for a release row, and `open` or `merged` (contained in that repository's `release/<N>/main`) for a plan or fix row.
 
 | Repository | Branch | Role | Cut at | State |
 | --- | --- | --- | --- | --- |
@@ -40,4 +41,4 @@ The optional Issues section is created by `python3 scripts/release_issues.py <N>
 
 Not pinned. A Draft is a strategy document, never an instruction to publish.
 
-When approved for final publication, change **State** to **Final** and replace this paragraph with a fenced `json` block containing the exact version, kind, required-update decision and complete pinned product/installer tuple. The Release skill and CI validate these against the currently served release and product repositories. The release integer comes from **Release**, while the rationale and included plan links come from the sections above, so they are not copied into a second file. The final, owner-approved transition publishes; after it is published this document is immutable. See [Plan 31](../plans/31-releases-from-astrid-dev/plan.md).
+When approved for final publication, change **State** to **Final** and replace this paragraph with a fenced `json` block containing the exact version, kind, required-update decision and complete pinned product/installer tuple; set the release rows in `## Branches` to `published` once `main` is at the pinned commits. The Release skill and CI validate these against the currently served release and product repositories. The release integer comes from **Release**, while the rationale and included plan links come from the sections above, so they are not copied into a second file. The final, owner-approved transition publishes; after it is published this document is immutable. See [Plan 31](../plans/31-releases-from-astrid-dev/plan.md).

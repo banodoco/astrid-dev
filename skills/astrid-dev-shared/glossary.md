@@ -12,9 +12,11 @@ One meaning per word; two meanings, two terms.
 
 **orchestrator:** a standing session that plans and starts projects, advises managers, checks on runs.
 
+**release manager:** the orchestrator of one release, named on its brief. It owns `release/<NN>/main` (its health and landing order, the brief's `## Branches` table, tester builds, the candidate and asking for the owner's go); each plan's manager owns that plan branch and its landing.
+
 **advisor:** the `run.yaml` role answering blocking questions: the orchestrator or else a fresh high-judgment sub-agent.
 
-**manager:** dispatches tasks, judges reports, keeps `tasks.md` current; normally the accountable agent.
+**manager:** dispatches tasks, judges reports, keeps `tasks.md` current; normally the accountable agent. In a release it is a **plan manager**.
 
 **Codex manager:** a Codex process managing its own sub-agents, hosted in a Claude session or a Codex Cloud chat; never the default.
 
@@ -64,9 +66,11 @@ One meaning per word; two meanings, two terms.
 
 **gate:** a release's final proof stage.
 
-**release:** a numbered integration across repositories; its **release brief** holds the plan.
+**cut line:** the date by which a release's plans must be done, and what ships without any that is not.
 
-**release branch:** `release/<NN>/main`, a release's one canonical branch in each product repository; tester builds and release candidates come from it.
+**release:** a numbered integration across repositories; its **release brief** holds the plan. [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs) is its one account.
+
+**release branch:** `release/<NN>/main`, a release's one canonical branch in each product repository; tester builds and the candidate, the frozen head of it, come from it.
 
 **plan branch:** `release/<NN>/plan-<PP>`, where a plan's work lands inside its release.
 
@@ -74,7 +78,7 @@ One meaning per word; two meanings, two terms.
 
 **tester build:** a pre-release install manifest naming one exact commit on a release branch, for outside testers.
 
-**integration branch:** an `int/…` branch; it names older work only, since Release 14 uses release, plan and fix branches.
+**integration branch:** retired: an `int/…` branch of Release 13 and earlier. Release 14 on uses release, plan and fix branches.
 
 **brief:** what an agent is told at its start.
 
