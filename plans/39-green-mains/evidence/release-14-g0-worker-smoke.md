@@ -16,7 +16,12 @@ pending, so the task's merged-completion checkbox stays open.
   writes are to `p39/g0` in those three repositories; no release branch or
   `main` was pushed or merged.
 - Initial local validation: Linux, Python 3.13.5; fresh detached checkouts with
-  only the proposed worker scripts copied into `scripts/worker-env/`.
+  only the proposed worker scripts copied into `scripts/worker-env/`. Runtime
+  setup puts the Python venv, fetched Agent and Node 22 beside the checkout in
+  `<checkout>.env/`, but `npm ci --prefix <checkout>/packages/typescript` writes
+  `node_modules` **inside** the checkout at `packages/typescript/node_modules/`.
+  That ignored dependency directory is setup output; the checkout is not wholly
+  untouched. App setup likewise writes its ignored root `node_modules/`.
 - Runtime validation base: `2537fed24385ec1c24f48a812e09af4bb63fb794`, the inspected
   `release/14/main` and `release/14/plan-39` head. Its Agent pin is
   `b05ac03a5bcab278bccf99d85b49f4037b5dec10`.
@@ -136,6 +141,14 @@ const { EnvHttpProxyAgent, setGlobalDispatcher } = require('./node20-proxy/node_
 setGlobalDispatcher(new EnvHttpProxyAgent());
 ```
 
+Node 20.19.x was prepared explicitly before App setup: the available bootstrap
+npm installed the npm-distributed `node@20.19.4` and `npm@10.8.2` into the
+validation-only prefix `/workspace/scratch/0f74e42cf9ba/g0-validation/app-node`,
+outside the product checkout. Its `node_modules/.bin` was prepended to `PATH`.
+The installed package manifests and executable versions confirm Node 20.19.4
+and npm 10.8.2. `app-setup.sh` does not obtain or switch Node; it validates the
+first executable on the caller's `PATH` and refuses a different version.
+
 The exact rerun from the App checkout was:
 
 ```bash
@@ -155,8 +168,9 @@ smoke script interrupted Bash's read of it (syntax error, exit 2). The baseline
 was then exported from the immutable base commit to a separate directory and
 rerun successfully. No product failure was inferred from the discarded attempt.
 
-`python3 scripts/astrid_dev.py check` exits 1 on both the untouched base worktree
-and this candidate, with byte-identical diagnostics:
+Before the separate plan-branch metadata fix, `python3 scripts/astrid_dev.py
+check` exited 1 on both the untouched assigned base and the original G0
+candidate, with byte-identical diagnostics:
 
 ```text
 ERROR release-documents: releases/14.md: Branches row astrid-agent `release/14/plan-39`: duplicate repository and branch
@@ -165,7 +179,10 @@ ERROR release-documents: releases/14.md: Branches row astrid-app `release/14/pla
 ERROR release-documents: releases/14.md: Branches row astrid-dev `release/14/plan-39`: duplicate repository and branch
 ```
 
-Those Release 14 document entries are outside G0 and remain unchanged. The
+Those Release 14 document entries were outside G0. They were subsequently
+fixed on the plan branch in `013e60390882ab9e697009f64bff2210a36391a1`; the
+updated G0 branch incorporates that commit by merge. The historical failure
+above is preserved, not represented as the current documentation result. The
 follow-up below supplies real focused Agent and VibeComfy smoke runs as well.
 No full product suite was run locally. No hosted worker-smoke or native
 macOS/Windows worker-smoke proof is claimed.
@@ -329,29 +346,89 @@ whitespace checks passed. The App checkout remained clean, including its
 manifest and lockfile. The earlier Agent/VC smoke proof carries forward because
 their source, inputs and the canonical scripts are unchanged.
 
-### Hosted checks and remaining integration
+### Completed hosted checks and integration review
 
-The product submissions do not change workflows. Runtime's unrestricted PR
-trigger started [CI run 43921815789](https://github.com/banodoco/astrid-runtime/actions/runs/43921815789)
-on its submitted commit; it was queued at this evidence update. Its untouched
-base has [CI run 43888599361](https://github.com/banodoco/astrid-runtime/actions/runs/43888599361)
-with five failed jobs (both unit jobs, sandbox-process-control, and both
-portability-lifecycle jobs). A passing full Runtime suite is not claimed, nor
-is a result inferred for the queued candidate run.
+The completed [Runtime CI run 43921815789](https://github.com/banodoco/astrid-runtime/actions/runs/43921815789)
+failed five jobs. Its base comparison is
+[run 43888599361](https://github.com/banodoco/astrid-runtime/actions/runs/43888599361)
+at `2537fed24385ec1c24f48a812e09af4bb63fb794`. The completed jobs compare as
+follows (F = failed, P = passed, S = skipped, X = xfailed, E = errors):
 
-App's existing Tests workflow accepts PR bases `main` or `release/*/main`, so
-it does not run for this `release/14/plan-39` submission. The applicable
-[Dockerfile Check run 43921978796](https://github.com/banodoco/astrid-app/actions/runs/43921978796)
-was also queued at this evidence update. Neither product's existing CI invokes
-these new worker scripts; the exact-commit local results above are G0's worker
-acceptance evidence. Workflow changes belong to other Plan 39 tasks.
+| Runtime job | G0 candidate | Untouched base |
+| --- | --- | --- |
+| unit (ubuntu-latest) | 77 F, 8440 P, 26 S, 13 X, 1010 E; 60 subtests passed | Same counts |
+| sandbox-process-control | 82 F, 8355 P, 26 S, 13 X, 1014 E; 60 subtests passed | Same counts |
+| portability-lifecycle (ubuntu-latest) | 7 F, 610 P, 45 S | Same counts |
+| portability-lifecycle (macos-latest) | 8 F, 595 P, 59 S | Same counts |
+| unit (macos-latest) | **74 F, 8339 P**, 130 S, 13 X, 1010 E; 60 subtests passed | **73 F, 8340 P**, otherwise same counts |
 
-The astrid-dev documentation failures described above remain outside G0; the
-later [run on d9f6abcec4bc05781adbd29529a5d421a5728f66](https://github.com/banodoco/astrid-dev/actions/runs/43919638960)
-also ran 417 tests with the same three failures. There is no green CI claim.
-All G0 implementation, matching copies and focused local validation are now
-submitted. Coordinated review/merge and subsequent release qualification remain
-with the release process; no release branch or `main` was changed here.
+The one additional macOS failure is
+`tests/test_p2_commit_phase_capture.py::test_live_watchdog_uses_real_handler_and_private_faulthandler_output`,
+with `assert sampling["sample_total"] > 0` receiving zero samples. The
+[candidate job](https://github.com/banodoco/astrid-runtime/actions/runs/43921815789/job/133490778712)
+ran GitHub merge commit `d93c71648eb393a106a33de0bd7060aecddb4da2`; the
+[base job](https://github.com/banodoco/astrid-runtime/actions/runs/43888599361/job/133373360363)
+did not report that failure. There are no candidate-only error test IDs in
+that comparison.
+
+**Flakiness assessment: not confirmed flaky; likely scheduling-sensitive.**
+The test holds a live request for a fixed 50 ms, then expects a background
+sampler with a 20 ms interval to have observed it. It does not wait for a
+sampling-completion signal. The test and capture helper are byte-identical
+between base and G0. Two preceding stored macOS runs
+([43883740374](https://github.com/banodoco/astrid-runtime/actions/runs/43883740374/job/133356183408)
+and [43870457685](https://github.com/banodoco/astrid-runtime/actions/runs/43870457685/job/133309933790))
+do not report this test failing either. Those observations support a timing
+hypothesis, but do not establish its cause or justify claiming a proven flake.
+The failure remains an explicit unresolved G1/Runtime triage item, not a
+passing test or a waived assertion.
+
+A targeted Linux diagnostic on the unchanged G0 Runtime commit passed this
+one selector in 1.65s when pytest's temporary output was placed under `TMPDIR`:
+
+```bash
+bash scripts/worker-env/runtime-pytest.sh \
+  --basetemp /workspace/scratch/0f74e42cf9ba/g0-validation/runtime-submission.env/tmp/watchdog-diagnostic \
+  -q tests/test_p2_commit_phase_capture.py::test_live_watchdog_uses_real_handler_and_private_faulthandler_output
+```
+
+The initial diagnostic with the launcher's default sibling `basetemp` failed
+an earlier helper precondition, `P2 phase sink must be a new file under TMPDIR`.
+Only the diagnostic output directory was corrected; no test or source changed.
+A Linux pass does not establish macOS flakiness. The required G0 platform smoke
+is unaffected and remains passing.
+
+Manager review: the G0 product changes are exactly the worker-script copies,
+the current hosted CI does not call them, and no product/helper/test code in
+the failing path changed. The independently verified G0 acceptance remains
+valid. The extra broad-suite failure is retained for G1 triage; full Runtime
+CI is explicitly red, and no release promotion is claimed by these task merges.
+
+App's [Dockerfile Check run 43921978796](https://github.com/banodoco/astrid-app/actions/runs/43921978796)
+finished successfully. App's existing Tests workflow accepts PR bases `main`
+or `release/*/main`, so it did not run for this plan-branch submission. The four
+required G0 manifest checks passed locally at the exact submitted commit.
+Neither product's current CI invokes these new worker scripts; full-product
+CI health is separate from G0's worker acceptance.
+
+The completed astrid-dev
+[Documentation integrity run 43922554303](https://github.com/banodoco/astrid-dev/actions/runs/43922554303)
+passed: **417 validator tests, OK**, repository checks, refreshed-view
+validation and the vision consumer contract. It tested GitHub's merge commit
+`7f79ac2f5750d618b93d34cc6ad17bca5d7a9643`, combining G0 head
+`3021fa07c1c887fc2137218a333417f0c39f7f20` with the separately corrected plan
+base `013e60390882ab9e697009f64bff2210a36391a1`. The older runs on `f652b736`
+and `d9f6abce` really did fail three of 417 tests; those are historical results
+on the old metadata, not current blockers or changes made to tests by G0.
+
+The owner independently verified G0's local proof and all five copy modes,
+then authorized record corrections, manager review, marking all three PRs
+ready and merging them as one coordinated batch into `release/14/plan-39`.
+The owner also authorized concurrent wave-0 G1, SF3a and GL work, with manager
+branch review and the existing plan review points; no outside verification is
+required for every individual task. This authority supersedes the earlier
+no-merge boundary for these plan-branch submissions. It does not authorize a
+release/main promotion or edits to excluded Plan 55/38 tests.
 
 Routes used: G0's N route, with an N helper for App implementation and dispatch
 checks and a separate read-only helper for the merged-work audit and focused

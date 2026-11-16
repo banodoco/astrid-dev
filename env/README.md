@@ -4,7 +4,7 @@ Setup and test scripts that any Astrid project's worker can run in a **single-re
 
 ## Rules every script here follows
 
-- **Run from the product checkout root.** Python workers build `<checkout>.env/` next to the checkout; App setup installs its lockfile into the checkout's `node_modules/`.
+- **Run from the product checkout root.** Python workers build `<checkout>.env/` next to the checkout. Runtime setup also installs its TypeScript lockfile into `packages/typescript/node_modules/` inside the checkout; App setup installs its lockfile into the checkout's root `node_modules/`.
 - **Other repositories come only from git,** at the commit the product checkout pins (for example `runtime.lock.json` or `VIBECOMFY_ENGINE_REVISION`), and each fetch checks the SHA. Nothing downloads a GitHub archive: a cloud session's GitHub proxy only serves archives for its attached repository.
 - **Public git, PyPI and npm only.** Nothing private, no credentials, no cloud resources.
 - **Setup failures exit 3.** Pytest runners preserve pytest's exit status. `smoke.sh` keeps its existing exit 3 for either setup or test failure; its `ENV-FAIL` line identifies the step, and the test output gives the verdict.
