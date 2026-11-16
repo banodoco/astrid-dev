@@ -9,7 +9,7 @@ Read the [shared run contract](../astrid-dev-shared/run-contract.md), the assign
 
 ## Map and change the behavior
 
-- Confirm the actual repository, ref/SHA, dirty state, current base, donor identities, and custody before mutation. Preserve user changes; report mismatched or missing source identity to the manager.
+- Confirm the actual repository, ref/SHA, dirty state, current base, dependency identities, and custody before mutation. Preserve user changes; report mismatched or missing source identity to the manager.
 - Trace the assigned behavior from setup and inputs through the existing action/state path to its observable result and focused acceptance check. Reuse current code and fix demonstrated causes at their source. Make the smallest complete in-scope change.
 - On an `X` or `S` task, delegate as the [run contract](../astrid-dev-shared/run-contract.md#who-answers-for-a-run) requires.
 - Use the cheapest venue that can prove the stated claim. Local focused checks are the default; use a hosted runner only for a real OS/CI requirement, and GPU/remote infrastructure only when it is both explicitly authorized and required by live hardware or that environment. A higher venue alone does not make proof stronger.
