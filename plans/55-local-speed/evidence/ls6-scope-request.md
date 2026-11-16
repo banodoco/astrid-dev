@@ -1,6 +1,6 @@
 # LS-6 implementation scope request
 
-**State:** proposed, not approved. The accepted outcome and D1–D8 stay unchanged. This note records the additional code boundaries found during implementation; it does not replace LS-3 or consume RS1.
+**State:** approved by the owner on 16 November 2026 — the bounded additional scope, retaining LS-3/RS1 for protocol and lifecycle changes; see [D11](../decisions.md#d11--ls-6-bounded-implementation-scope-approved). The original request below is retained as the implementation brief. The accepted outcome and D1–D8 stay unchanged. This note records the additional code boundaries found during implementation; it does not replace LS-3 or consume RS1.
 
 ## Why the listed files are insufficient
 
