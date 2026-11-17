@@ -4,7 +4,7 @@ This is a work-in-progress handoff for the next Track B manager, not a release
 gate or permission to rent a GPU. The active instructions are
 [`releases/12.md`](../../releases/12.md),
 [`releases/12/generation.md`](../../releases/12/generation.md),
-`skills/astrid-dev-manage/SKILL.md` and the linked P20/P32/P34/P40 task cards.
+`skills/roles/astrid-dev-manage/SKILL.md` and the linked P20/P32/P34/P40 task cards.
 Read them and recheck live refs. Direct collaboration was used for this shared
 session; a new session needs the orchestrator's verified communication path.
 The owner asked managers to keep working, check off accepted work, escalate

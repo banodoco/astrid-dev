@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
-**Run start:** Accepted — 17 November 2026, by the owner's own message in the Release 14 Lead's session (`session_011EzfW3Zy19ncNecpQnKb7D`): every Release 14 plan except Plan 59 runs by [fresh-packet dispatch](../../skills/astrid-dev-lead/workstreams/multi-manager-release.md). **Accountable agent:** the Release 14 Lead, that session. What it, the Orchestrator and each packet session may do, and what needs the owner, is on the [run board](../../releases/14/run.md#authority); this run covers HM1 to HM3 only; the extraction is Release 15's.
+**Run start:** Accepted — 17 November 2026, by the owner's own message in the Release 14 Lead's session (`session_011EzfW3Zy19ncNecpQnKb7D`): every Release 14 plan except Plan 59 runs by [fresh-packet dispatch](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md). **Accountable agent:** the Release 14 Lead, that session. What it, the Orchestrator and each packet session may do, and what needs the owner, is on the [run board](../../releases/14/run.md#authority); this run covers HM1 to HM3 only; the extraction is Release 15's.
 
 ## Starting code
 
@@ -25,4 +25,4 @@ The historical counts and blob SHAs are evidence about inspected snapshots, not 
 
 ## Constraints
 
-At setup, confirm repositories, actual base branches and SHAs, work to preserve, verified predecessor inputs, a fresh candidate branch, and the intended `pre-main` destination. The original draft specifies no review rounds or limits; retain the run configuration and existing authority at setup without adding review stages. Derive task boundaries and exact focused selectors from that source. Preserve existing execution behavior; characterize before extraction and rerun the same checks, including any touched lifecycle, cancellation, process ownership, and result-handling behavior. Do not conflate moving code with semantic fixes. Follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md) for routes, source identity, proof, and publication limits. This draft does not authorize implementation or broad test discovery.
+At setup, confirm repositories, actual base branches and SHAs, work to preserve, verified predecessor inputs, a fresh candidate branch, and the intended `pre-main` destination. The original draft specifies no review rounds or limits; retain the run configuration and existing authority at setup without adding review stages. Derive task boundaries and exact focused selectors from that source. Preserve existing execution behavior; characterize before extraction and rerun the same checks, including any touched lifecycle, cancellation, process ownership, and result-handling behavior. Do not conflate moving code with semantic fixes. Follow the [shared run contract](../../skills/shared/run-contract.md) for routes, source identity, proof, and publication limits. This draft does not authorize implementation or broad test discovery.

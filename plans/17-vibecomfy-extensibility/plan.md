@@ -163,7 +163,7 @@ All of it is CPU only; the live runs are [Plan 34](../34-real-gpu-proof/plan.md)
 - `astrid packs extensions` lists points, contributions and problems.
 - The sound-on-video plugin produces a video with the generated audio, locally and through the RunPod CPU fake.
 - The protocol, its points and how to write a family are documented.
-- **Not proven here:** real inference (Plan 34), including inpaint and outpaint quality. Record any extension needs the two families do not cover. Destination and publication authority follow the shared [run contract](../../skills/astrid-dev-shared/run-contract.md); verify the intended `pre-main` destination at setup rather than assuming it.
+- **Not proven here:** real inference (Plan 34), including inpaint and outpaint quality. Record any extension needs the two families do not cover. Destination and publication authority follow the shared [run contract](../../skills/shared/run-contract.md); verify the intended `pre-main` destination at setup rather than assuming it.
 
 ## Read next
 

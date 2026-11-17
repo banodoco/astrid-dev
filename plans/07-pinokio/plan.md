@@ -54,7 +54,7 @@ See [task cards](tasks.md) for routes, dependencies, and focused acceptance evid
 
 ## Completion
 
-Complete when all three rows pass at frozen heads and those heads are on `main`. Record any unsupported OS as a named limitation. This proves the hosted basic backend path, not the deferred qualification behaviors. PB-END preserves the original publication boundary; this plan does not start execution. See the [shared run contract](../../skills/astrid-dev-shared/run-contract.md) for run controls and route bindings.
+Complete when all three rows pass at frozen heads and those heads are on `main`. Record any unsupported OS as a named limitation. This proves the hosted basic backend path, not the deferred qualification behaviors. PB-END preserves the original publication boundary; this plan does not start execution. See the [shared run contract](../../skills/shared/run-contract.md) for run controls and route bindings.
 
 ## Read next
 

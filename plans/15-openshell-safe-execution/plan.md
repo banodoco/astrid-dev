@@ -33,7 +33,7 @@ Inspect and reconcile inputs, then scope executable tasks and selectors. Define 
 
 ## Completion
 
-Users can choose, configure, run, and reliably stop the supported full-stack sandbox, understanding its granted access, outside client boundary, external inference data flow, and residual risks. Focused positive and negative checks establish the claims on the integrated candidate. This does not prove absolute safety or qualify unsupported platforms. Integration is subject to the existing `pre-main` destination and publication authority in the [shared run contract](../../skills/astrid-dev-shared/run-contract.md).
+Users can choose, configure, run, and reliably stop the supported full-stack sandbox, understanding its granted access, outside client boundary, external inference data flow, and residual risks. Focused positive and negative checks establish the claims on the integrated candidate. This does not prove absolute safety or qualify unsupported platforms. Integration is subject to the existing `pre-main` destination and publication authority in the [shared run contract](../../skills/shared/run-contract.md).
 
 ## Read next
 

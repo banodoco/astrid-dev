@@ -4,7 +4,7 @@ Start message for the one manager session that takes Release 12 to `GATE-GREEN`.
 
 ## Your job
 
-Get the fixes-only release green and frozen as fast as honest work allows. Read, in this order: [Release 12](../../releases/12.md) (principles, gate), its [task list](../../releases/12/fixes.md) (state, tasks T0–T7, commands), then the [iterate skill](../../skills/astrid-dev-iterate/SKILL.md) and the [run contract's cheapest-first rule](../../skills/astrid-dev-shared/run-contract.md#cheapest-model-first). The [takeover note](2026-11-11-track-a-machine-takeover.md) and the [Plan 29 task record](../../plans/29-update-and-release/tasks.md) are reference for SHAs and what was already tried; their next steps and run authorizations are superseded.
+Get the fixes-only release green and frozen as fast as honest work allows. Read, in this order: [Release 12](../../releases/12.md) (principles, gate), its [task list](../../releases/12/fixes.md) (state, tasks T0–T7, commands), then the [iterate skill](../../skills/capabilities/astrid-dev-iterate/SKILL.md) and the [run contract's cheapest-first rule](../../skills/shared/run-contract.md#cheapest-model-first). The [takeover note](2026-11-11-track-a-machine-takeover.md) and the [Plan 29 task record](../../plans/29-update-and-release/tasks.md) are reference for SHAs and what was already tried; their next steps and run authorizations are superseded.
 
 ## How to work
 

@@ -40,7 +40,7 @@ The executable task breakdown, routes, and focused selectors remain to be scoped
 
 ## Completion
 
-The path is navigable from a clear entry point to canonical sources, explains key purpose and contracts at the right level, and supports the selected bounded journeys. Record remaining gaps without creating a second mandatory manual. Any source changes and publication follow the repository's [shared run contract](../../skills/astrid-dev-shared/run-contract.md); this draft does not authorize execution.
+The path is navigable from a clear entry point to canonical sources, explains key purpose and contracts at the right level, and supports the selected bounded journeys. Record remaining gaps without creating a second mandatory manual. Any source changes and publication follow the repository's [shared run contract](../../skills/shared/run-contract.md); this draft does not authorize execution.
 
 ## Read next
 

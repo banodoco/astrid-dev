@@ -6,7 +6,7 @@
 
 **Scope decision:** Accepted — Hannah asked for this plan on 9 Nov 2026 in session https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9. It starts right after release 12 is published. The end state: every CI workflow on Agent, Runtime and App `main` is green and kept green, and the release rule changes from "no new red" to "everything green".
 
-**Run start:** Accepted — 17 November 2026, by the owner's own message in the Release 14 Lead's session (`session_011EzfW3Zy19ncNecpQnKb7D`): every Release 14 plan except Plan 59 runs by [fresh-packet dispatch](../../skills/astrid-dev-lead/workstreams/multi-manager-release.md). **Accountable agent:** the Release 14 Lead, that session. What it, the Orchestrator and each packet session may do, and what needs the owner, is on the [run board](../../releases/14/run.md#authority); this run covers the rows in [Release 14 waves](tasks.md#release-14-waves).
+**Run start:** Accepted — 17 November 2026, by the owner's own message in the Release 14 Lead's session (`session_011EzfW3Zy19ncNecpQnKb7D`): every Release 14 plan except Plan 59 runs by [fresh-packet dispatch](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md). **Accountable agent:** the Release 14 Lead, that session. What it, the Orchestrator and each packet session may do, and what needs the owner, is on the [run board](../../releases/14/run.md#authority); this run covers the rows in [Release 14 waves](tasks.md#release-14-waves).
 
 **Prior art:** the main runs measured on 9 Nov, the code at those SHAs, and the [Plan 38 test inventory](../38-one-process-identity/tasks.md#test-inventory). The runs:
 - Agent CI 42553788480, Lanes 42553788553 and Windows task host journey 42553788523, at `a105de3a4852cb61b9647dfe2c920118bd29f272`;
@@ -164,5 +164,5 @@ G1 records the published release-12 heads. Every task starts from those heads, n
 - The orchestrator's CI digest and the mypy and Ruff note: [session](https://claude.ai/code/session_011EzfVzreGCJJQnTuXpbib9), 9 Nov 2026.
 - Plan 38's [test inventory](../38-one-process-identity/tasks.md#test-inventory), W0 and E1.
 - Plan 31's [RL-0 and RL-1b](../31-releases-from-astrid-dev/tasks.md).
-- The [Release skill](../../skills/astrid-dev-release/SKILL.md) line "A publish never turns a passing check red", which K4 replaces.
+- The [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md) line "A publish never turns a passing check red", which K4 replaces.
 - [Release 12 pre-existing test failures, bucket A (323 ids)](evidence/release-12-preexisting.md).

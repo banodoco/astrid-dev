@@ -66,7 +66,7 @@ D10 to D13 (the VibeComfy pin, LS-6's scope, the Windows fixture repair, progres
 
 ## For the next manager, in order
 
-1. Read the [Manage skill](../../skills/astrid-dev-manage/SKILL.md), then `decisions.md` and the follow-up on the plan branch. You answer for this plan finishing.
+1. Read the [Manage skill](../../skills/roles/astrid-dev-manage/SKILL.md), then `decisions.md` and the follow-up on the plan branch. You answer for this plan finishing.
 2. Save what could be lost: the LS-5 code, and #756.
 3. Keep the record in one place. `tasks.md` on `main` was brought up to date on 16 November (#774); the copy on the plan branch is a day older and still shows every row empty. D13 lets you merge a pull request to `main` that changes only that file.
 4. Merge `release/14/main` into the Agent plan branch. Merge or close each draft: a draft that is right goes in, one that is superseded is closed with a line saying why.
