@@ -1677,3 +1677,85 @@ bounded_followup_20261117_1527:
   new_automation_created: false
   purpose: Confirm actual independent review and focused candidate XML for Agent PR373-378; check X route default-unit Remotion provisioning without weakening assertions, preserve Plan38_55_owner_holds
   limits: No workflow cancellation rerun manual dispatch, auth retry, release_main_or_public_main change, Runtime clip history integrity contract change, inputs_md or task checkbox edits
+
+# This is an incremental checkpoint on the original preserved qualification.
+k1a_prepared_video_history_20261117:
+  status: active_incomplete_draft_PR_review_and_candidate_proof_hold
+  route: N_direct_source_log_and_actual_XML_diagnosis_no_separate_worker
+  actual_model_review_provenance: unavailable_not_invented
+  evidence: diagnosis/agent/k1a-unit3-prepared-video-historical-sources-20261117.md
+  exact_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI:
+    run: 43967861168
+    attempt: 1
+    outcome: completed_failure
+    job: 133651924518
+    job_name: unit_shard_3_of_8
+    original_junit_artifact_id: 14279162456
+    original_zip_sha256: 6bb5af87d04b19801da97ecb6b109238d3e321979f0ec3fd40838ce1771e7f3f
+    original_xml_sha256: 643987abce5a08925a9ecba818036c6bd5a12ad95ce2ba2ec8f786051ac36006
+    actual_XML_inventory_gzip_sha256: 729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426
+    job_tests: 1865
+    job_failures: 31
+    job_errors: 0
+    existing_group_counts: [6, 1]
+    full_message_hashes:
+      historical_runtime_schema: de56bca83fd20b6e25f59a9bf373e2200232ed9992598e47a92760a19a64470a
+      historical_agent_source: 0caf5260f5e7c8fd2406c2e8281dc0aca01027db53608aa7c6667e6ba512dee2
+    regression_attribution_from_missing_baseline_IDs: false
+    prior_exact_ID_comparison_this_checkpoint: not_performed
+    original_CI_totals_unchanged: 882_failures_398_errors
+    original_Lanes_totals_unchanged: 306_failures_including_12_log_only_optin_260_errors
+  source:
+    test_file: tests/editing_conformance/test_prepared_video_birth.py
+    historical_Runtime_commits: [34eac0041b0891e9011966b39bcbd26053fde5bc, 8ea0766f5e9fb23cea26c7398770a8aaac06b258]
+    historical_Agent_commit: c36ca8c94b695b0e25b7d42c89f194661f187423
+    historical_files_present_at_exact_upstream_refs: true
+    original_runner_local_historical_object_presence: not_proven
+    shallow_history_prerequisite: supported_by_source_and_hosted_error
+  candidate:
+    repo: banodoco/astrid-agent
+    PR: https://github.com/banodoco/astrid-agent/pull/382
+    branch: p39/k1a-prepared-video-history-20261117
+    base: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    commit: 53054252477e57b6666e7c96ae0b08e97f0c20c6
+    draft_open_unmerged: true
+    files: [.github/workflows/ci.yml]
+    scope: unit_shard_only_three_authentic_historical_git_fetches_and_source_checks
+    product_logic_tests_assertions_skips_xfails_installed_pin_changed: false
+    overlaps_file_with_PR376: true
+    patch_composition_review_required: true
+    independent_submitted_reviews: 0
+    focused_worker_test: NO-RESULT
+    hosted_candidate_junit: NO-RESULT
+    acceptance: blocked_until_independent_N_review_and_hosted_proof
+  other_unmerged_drafts_verified: [373, 374, 375, 376, 377, 378]
+  separate_external_PR_observed: '381 DO NOT MERGE cancelled-shard proof; not candidate acceptance evidence'
+  holds:
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    Runtime_clip: uncommitted_25_passed_2_failed_exact_retry_vs_CAS_history_integrity_owner_decision
+    Runtime_draft_PR56: orphan_declaration_metadata_only
+    G1: incomplete
+    G2: incomplete
+    RS1: '0/1'
+  operations:
+    astrid_dev_evidence_branch_only: p39/g1
+    product_change_isolated_task_branch_and_draft_PR_only: true
+    any_product_PR_merged: false
+    release_main_or_public_main_changed: false
+    inputs_md_or_task_checkboxes_changed: false
+    workflow_cancel_rerun_or_dispatch: false
+    authentication_retry: false
+
+bounded_followup_20261117_1731:
+  reused_current_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  update_confirmed_success: true
+  next_run_time_utc: '2026-11-17T17:31:19Z'
+  next_run_time_local: '2026-11-17T09:31:19-08:00'
+  one_off: true
+  new_automation_created: false
+  purpose: Recheck genuine independent review, authentic fetch/hosted exact testcase proof for PR382 and preexisting drafts PR373-378, and safely reconcile nonoverlapping CI workflow patches PR376/PR382 only after those gates; continue bounded K1 prerequisites without ownership crossing
+  limits: No cancellation/rerun/dispatch of other sessions, authentication retry, release_main_or_public_main push, inputs_md_or_task_checkbox edit, Plan38_55 takeover, Release15 inclusion, Runtime_clip_history_integrity_contract_change, or unreviewed PR merge
