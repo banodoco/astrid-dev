@@ -18,7 +18,7 @@ The single task list for Release 12 as of 11 Nov 2026, after the split. Follow t
 
 ## Tasks
 
-Routes are starting points (`N` cheapest); escalate per the [run contract](../../skills/astrid-dev-shared/run-contract.md#cheapest-model-first). T1, T2, T3 and T4 start in parallel.
+Routes are starting points (`N` cheapest); escalate per the [run contract](../../skills/shared/run-contract.md#cheapest-model-first). T1, T2, T3 and T4 start in parallel.
 
 | # | Task | Route | Done when |
 |---|---|---|---|
