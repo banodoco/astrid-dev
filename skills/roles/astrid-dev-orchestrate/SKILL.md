@@ -90,7 +90,7 @@ A run starts with one short message; the plan carries the rest. A long brief rep
    ```
 
 3. **Add nothing the plan should hold.** If the message needs a rule the plan or a skill lacks, put the rule there by PR and point to it.
-4. **Don't add a second accountable agent.** A separate plan manager answers for its run and you advise or supervise; a packet chat is a bounded delegate of that plan manager, not another plan owner. The Release Lead owns release delivery, not a second copy of the plan run.
+4. **Don't add a second accountable agent.** A separate plan manager answers for its run and you advise or supervise; a packet session is a bounded delegate of the run's accountable agent (the Lead, under fresh-packet dispatch), not another plan owner. The Release Lead owns release delivery, not a second copy of the plan run.
 
 ## Claude Cloud setup: no permission prompts
 

@@ -8,4 +8,4 @@
 **PR destination:** <repo(s): `p<P>/<task id>` → `release/<N>/plan-<P>`, or `release/<N>/<topic>` → `release/<N>/main`>
 **Authority:** <link to accepted Run start and permissions>
 
-One packet starts **one fresh ChatGPT session**. The session opens task PRs and submits proof, **but does not merge or edit `tasks.md`**. The Lead reviews, integrates and reconciles tasks; the Orchestrator tracks the handoff in `releases/<N>/run.md`.
+One packet starts **one fresh ChatGPT session**. The session opens task PRs and submits proof, **but does not merge or edit `tasks.md`**. The Lead reviews, integrates and reconciles tasks; the Orchestrator reports the handoff in its hourly STATUS.

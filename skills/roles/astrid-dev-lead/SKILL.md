@@ -1,6 +1,6 @@
 ---
 name: astrid-dev-lead
-description: Lead Astrid release delivery across plans, including preparing bounded work for a Codex Orchestrator to dispatch to fresh ChatGPT sessions.
+description: Lead Astrid release delivery across plans, including preparing bounded work for an Orchestrator to dispatch to fresh ChatGPT sessions.
 ---
 
 # Lead Astrid release delivery
@@ -10,7 +10,7 @@ Enter through [astrid-dev](../../astrid-dev/SKILL.md). The **Lead is the release
 ## Always: Lead responsibilities
 
 1. **Own the release outcome.** Choose priorities, resolve cross-plan questions and keep the next work ready, within accepted scope.
-2. **Keep responsibility clear.** Each authorized plan run names one accountable agent. In ordinary projects this may be a continuing plan manager; in the [fresh-session dispatch workstream](workstreams/multi-manager-release.md), **you** own plan-level reconciliation and integration while each ChatGPT session owns only its packet.
+2. **Keep responsibility clear.** Each plan run names one accountable agent: a plan manager or, under [fresh-packet dispatch](workstreams/multi-manager-release.md), **you**, with each ChatGPT session owning only its packet.
 3. **Judge results.** Accept a submission or name its rework; landed work shows in `tasks.md`, not a second checklist.
 4. **Keep progress legible.** Maintain the existing release brief, run board and decisions; tell the owner what moved, what is blocked and which decisions need them.
 5. **Own release integration.** Follow [Release](../../capabilities/astrid-dev-release/SKILL.md) for landing order, branch health, qualification and a separate owner's go to publish.

@@ -36,3 +36,21 @@ Each packet is a short, stable Markdown assignment at `releases/NN/packets/<pack
 ### Waiting on the owner
 
 - <decision, with the recommendation>; or "nothing".
+
+## Orchestrator launch message
+
+Only when dispatching packets. The owner pastes it into the Orchestrator's own session; fill each `<…>`.
+
+```text
+You are the Orchestrator for Release <N>, reporting to the Lead (mailbox name <lead name>).
+Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev.
+Read releases/<N>/run.md at <SHA>, then on main at every hourly check. Ready rows link the packets.
+Mailbox: <issue URL>, format in its first post. Your mailbox name: <name>.
+First do the board's startup checks and post one STATUS with each result; dispatch nothing until
+the Lead's DECISION answers it. Then give each Ready packet a FRESH ChatGPT session in Pro mode,
+with the workstream's packet start message. Every hour: read the mailbox, check every open packet,
+resume or replace stalled sessions, pass submissions to the Lead, and post one STATUS.
+You may start, resume and replace packet sessions and comment on the mailbox. You may not merge,
+edit the repository or approve anything. Send anything reserved to the owner to the Lead.
+If a check fails, say which manual step the owner must do instead of promising automation.
+```
