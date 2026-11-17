@@ -1,12 +1,11 @@
 # <packet-id> — <bounded outcome>
 
-**Source:** `plans/<P-slug>/tasks.md` — <exact task IDs or explicitly scoped slices; link to real file>
-**Estimate:** <human engineering days, about 3 maximum>
-**Outcome:** <one sentence describing the result>
-**Dependencies:** <accepted task/PR/evidence refs, or none>
-**Proof:** <exact source task IDs carrying commands, checks and acceptance>
-**Delivery:** <accountable plan manager/session; the Orchestrator and shared mailbox>
-**PR destination:** <product repo(s) and `release/<N>/plan-<P>`; task PRs here, not to main>
-**Authority:** <link to the plan's Run start; no new go>
+**Source tasks:** `plans/<P-slug>/tasks.md` — <task IDs / bounded slices>
+**Estimate:** <human engineering days; ~3 maximum>
+**Outcome:** <one sentence>
+**Dependencies:** <task / PR / evidence links, or none>
+**Proof:** <source task IDs holding actual acceptance and checks>
+**PR destination:** <product repo(s), task branch(es) → `release/<N>/plan-<P>`>
+**Authority:** <link to accepted Run start and permissions>
 
-This packet is a dispatch brief, not an independent plan, checklist, run owner, issue or approval. Handoff state, session and live PR links belong to `releases/<N>/run.md`; engineering completion belongs to the source `tasks.md`.
+One packet starts **one fresh ChatGPT session**. The session opens task PRs and submits proof, **but does not merge or edit `tasks.md`**. The Lead reviews, integrates and reconciles tasks; the Orchestrator tracks the handoff in `releases/<N>/run.md`. No independent project, issue, checklist or run is created.
