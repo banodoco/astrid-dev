@@ -75,7 +75,7 @@ synced_targets=0
 
 # Collect the folders to link, checking each skill's declared name.
 SOURCES=()
-for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/astrid-dev-shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/capabilities/astrid-dev-*/; do
+for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/capabilities/astrid-dev-*/; do
   src="${src%/}"
   [[ -d "$src" ]] || continue
   name="$(basename -- "$src")"
