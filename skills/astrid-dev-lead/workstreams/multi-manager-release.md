@@ -12,7 +12,7 @@ Use when a Lead directs an Orchestrator that hands bounded work from accepted pl
 
 ## Each Lead check-in (hourly when scheduled)
 
-Read the Orchestrator's hourly status and addressed requests. Review PRs, proof and independent findings; post **ACCEPT** or a concrete rework request to the mailbox. Reconcile actual work with the plan manager's `tasks.md`, resolve dependencies, prepare next packets and monitor release integration. The Orchestrator updates packet handoff states; the Lead owns acceptance and release decisions. Put substantive rulings in the release's existing decision record, not a new log.
+Read the Orchestrator's hourly status and addressed requests. Review PRs, proof and independent findings; post a **DECISION** to accept or a concrete rework request to the mailbox. Reconcile actual work with the plan manager's `tasks.md`, resolve dependencies, prepare next packets and monitor release integration. The Orchestrator updates packet handoff states; the Lead owns acceptance and release decisions. Put substantive rulings in the release's existing decision record, not a new log.
 
 ## Launch prompt
 
