@@ -5,9 +5,9 @@ description: Full GPU validation. Run every default generation slot and h3_av on
 
 # Full GPU validation
 
-**Outcome:** real outputs on real GPUs for every default slot and h3_av on the revision under test, a pass or fail per cell, every pod released, and one dated record alongside this skill, in `skills/astrid-dev-gpu-validate/records/`. CPU proof cannot show real inference, model downloads, custom-node installs or RunPod capacity; this skill does. It was built by [Plan 34](../../plans/34-real-gpu-proof/plan.md), and real-GPU proof is this skill, run again, not a new project.
+**Outcome:** real outputs on real GPUs for every default slot and h3_av on the revision under test, a pass or fail per cell, every pod released, and one dated record alongside this skill, in `skills/capabilities/astrid-dev-gpu-validate/records/`. CPU proof cannot show real inference, model downloads, custom-node installs or RunPod capacity; this skill does. It was built by [Plan 34](../../../plans/34-real-gpu-proof/plan.md), and real-GPU proof is this skill, run again, not a new project.
 
-Read [the entrypoint](../astrid-dev/SKILL.md) and the [shared run contract](../astrid-dev-shared/run-contract.md). They own routing, provenance, review and authority; this skill owns only the GPU run.
+Read [the entrypoint](../../astrid-dev/SKILL.md) and the [shared run contract](../../astrid-dev-shared/run-contract.md). They own routing, provenance, review and authority; this skill owns only the GPU run.
 
 ## When to run it
 
@@ -45,7 +45,7 @@ Columns:
 
 Each cell is one `(slot, placement)` pair with pass, fail or not run.
 
-Also check what CPU cannot prove (fetch destination against the checked models root, volume reuse across pods, poll-after-start, transport under large outputs): see [Plan 34 G5](../../plans/34-real-gpu-proof/tasks.md) and record each in the evidence file.
+Also check what CPU cannot prove (fetch destination against the checked models root, volume reuse across pods, poll-after-start, transport under large outputs): see [Plan 34 G5](../../../plans/34-real-gpu-proof/tasks.md) and record each in the evidence file.
 
 ## Step 1: VibeComfy smoke, one pod
 
@@ -64,11 +64,11 @@ Send each output to the owner. A slot that failed in Step 1 is marked `blocked (
 
 ## Failures
 
-Each failing cell goes to [Bug fixing](../astrid-dev-bugfix/SKILL.md): reproduce it on CPU where possible, fix it as a repair task through [Iterate](../astrid-dev-iterate/SKILL.md) on the owning plan's plan branch, then re-run that cell live. Release the pod while the fix is made unless the fix is minutes away and the budget allows. **A run ends when every cell passes or the budget is spent.**
+Each failing cell goes to [Bug fixing](../astrid-dev-bugfix/SKILL.md): reproduce it on CPU where possible, fix it as a repair task through [Iterate](../../roles/astrid-dev-iterate/SKILL.md) on the owning plan's plan branch, then re-run that cell live. Release the pod while the fix is made unless the fix is minutes away and the budget allows. **A run ends when every cell passes or the budget is spent.**
 
 ## Evidence record
 
-One file per run: `skills/astrid-dev-gpu-validate/records/<YYYY-MM-DD>-<short-sha>.md`, where the short sha is the Agent revision under test. Commit it to astrid-dev, and link it from the plan or release it serves.
+One file per run: `skills/capabilities/astrid-dev-gpu-validate/records/<YYYY-MM-DD>-<short-sha>.md`, where the short sha is the Agent revision under test. Commit it to astrid-dev, and link it from the plan or release it serves.
 
 ```markdown
 # GPU validation — <YYYY-MM-DD> — <short-sha>
