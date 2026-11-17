@@ -2,7 +2,7 @@
 
 The live state of the Release 14 run, rewritten at every Lead check-in. The [brief](../14.md) holds intent, approach, branches and issues; each plan's `tasks.md` holds engineering progress. This board holds the dispatch queue: who has which packet, and what happens next.
 
-## Now (16:15 UTC, Tue 17 Nov)
+## Now (17:00 UTC, Tue 17 Nov)
 
 Every Release 14 plan except Plan 59 now runs by [fresh-packet dispatch](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): one fresh ChatGPT session per packet, an Orchestrator keeping them moving, and the Lead reviewing and merging. Twelve packets are Ready and one more is written; the rest are listed and are written as their dependencies land. Nothing is dispatched until the Orchestrator's [startup checks](#orchestrator-startup-checks) pass. Nothing is merged into `release/14/main` from any plan yet; six standing-lane fixes are.
 
@@ -13,7 +13,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 - **Accountable agent** for Plans 39, 55, 13, 52 and 53 and for the issue packets: the Release 14 Lead, that session. It is also the advisor for every packet session. Each plan's `Run start` line links here. Earlier plan managers' runs end with this; their branches and drafts are inputs to the packets.
 - **Plan 59** keeps its own run and manager.
 - **The Lead may, without asking:** write and re-plan packets; review packet pull requests and merge accepted ones into `release/<NN>/plan-<P>` and fix branches into `release/14/main`; cut plan and fix branches; open progress pull requests on astrid-dev `main` that change only a plan's `tasks.md` (they merge by the repository's auto-merge once checks pass); close a superseded draft with one line saying why.
-- **The Orchestrator** is authorized by the owner's own message in its session: she pastes the [launch message](#orchestrator-launch-message) there. It may start, resume and replace packet sessions; comment on the mailbox; and open pull requests that change only this board's Handoff, Session and Next columns.
+- **The Orchestrator** is authorized by the owner's own message in its session: she pastes the [launch message](#orchestrator-launch-message) there. It may start, resume and replace packet sessions; comment on the mailbox; and open pull requests that change only this board's Handoff, Session and Next columns and its own row in the Mailbox table.
 - **A packet session may:** create task branches `p<P>/<task id>`, push to them, open pull requests to the packet's destination and comment on the mailbox. It never merges, never edits `tasks.md` and never takes a second packet.
 - **Needs the owner:** any paid action (GPU rental, a paid tester); a re-pin of one product in another; any merge into a product `main`; repository settings and rulesets; a scope change; publication. Open owner decisions are under [Waiting on the owner](#waiting-on-the-owner).
 
@@ -24,10 +24,10 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | Role | Mailbox name | Session |
 |---|---|---|
 | Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` |
-| Orchestrator | `r14-orchestrator-1` | recorded here after its ACK |
+| Orchestrator | `r14-orchestrator-1` | recorded here by the Orchestrator after its ACK |
 | Packet session | `r14-<packet id>-<n>`, for example `r14-P39-01-1` | recorded in the queue's Session column |
 
-**Cadence.** The Orchestrator checks every open packet and posts one STATUS each hour. The Lead reads the mailbox and reviews submissions every two hours, by a scheduled check-in in its session, and answers each submission with a DECISION.
+**Cadence.** The Orchestrator checks every open packet and posts one STATUS each hour. The Lead reads the mailbox, reviews submissions and answers each with a DECISION every two hours. Its session could not schedule that itself (the permission check refused a recurring check-in on 17 November), so until the owner allows it, the owner's message to the Lead session is the nudge.
 
 ## How a packet moves
 
@@ -95,7 +95,9 @@ Follow astrid-dev-orchestrate and its workstream workstreams/multi-manager-dispa
 in banodoco/astrid-dev at main.
 Read releases/14/run.md at <SHA>, then on main at every hourly check: the Lead adds packets and
 moves rows to Ready. Ready rows link the packet briefs in releases/14/packets/.
-Mailbox: https://github.com/banodoco/astrid-dev/issues/789. Your mailbox name: r14-orchestrator-1.
+Mailbox: https://github.com/banodoco/astrid-dev/issues/789, comment format in its first post.
+Your mailbox name: r14-orchestrator-1; record your session on the board's Mailbox table.
+A packet's ID is its file name, for example R14-P39-02.
 First do the board's "Orchestrator startup checks" and post one STATUS with each result.
 Dispatch nothing until the Lead's DECISION answers it.
 Then create a FRESH ChatGPT session in Pro mode for each Ready packet, using the packet start
@@ -104,7 +106,7 @@ Every hour: read the mailbox, check every open packet, nudge or replace a stalle
 pass submitted pull requests and proof to the Lead as Review, and post one STATUS covering all packets.
 The Lead accepts, merges and updates tasks.md. Mark Done only after its DECISION.
 You may start, resume and replace packet sessions, comment on #789, and open pull requests that change
-only releases/14/run.md's Handoff, Session and Next columns. You may not merge, edit tasks.md or packets,
+only releases/14/run.md's Handoff, Session and Next columns and your Mailbox row. You may not merge, edit tasks.md or packets,
 or approve anything. Escalate on #789: anything paid, any re-pin, any product main, repository settings.
 If a check fails, say which manual step the owner must do instead of promising automation.
 ```
@@ -115,6 +117,7 @@ If a check fails, say which manual step the owner must do instead of promising a
 2. **Plan 55 Windows target.** The measured hosted-Windows floor is 226–284 ms against a 0.1 s target. Recommended: keep the target for a real machine, and decide after LS-3 names the cost.
 3. **Re-pins:** the Runtime in the Agent (#674), VibeComfy in the Agent once FIX-02 lands (#676).
 4. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
-5. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
-6. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
-7. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
+5. **The Lead's check-ins:** allow this Lead session to schedule a recurring check-in (a permission rule for its scheduling tool), or nudge it every couple of hours.
+6. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
+7. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
+8. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
