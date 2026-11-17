@@ -17,7 +17,8 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/README.md), then use [Plan](../astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
 | What we're doing now, next and later | [Strategy](../../strategy.md): read it first for release and version direction; see [the hierarchy](../../docs/contribution-workflow.md#review-the-strategy) |
 | A gap, or the strategy across several plans | [Gap](../astrid-dev-gap/SKILL.md): define or reassess the outcome, write its closure approach and route to closure |
-| Handing off a project, or overseeing several | [Orchestrate](../astrid-dev-orchestrate/SKILL.md): plan it, farm it out to a manager set up for cloud sessions, advise and check in |
+| Leading an entire release across several plans | [Lead](../astrid-dev-lead/SKILL.md): own release sequencing, review, readiness and the owner handoff; optionally commission an orchestrator |
+| Supervising managers or dispatching work sessions | [Orchestrate](../astrid-dev-orchestrate/SKILL.md): keep manager runs and handoffs moving, advise and check in |
 | Running one accepted project | [Manage](../astrid-dev-manage/SKILL.md); ask the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) for a genuine blocker or consequential choice |
 | Someone else's pull request, usually an outside contributor's | [Merge](../astrid-dev-merge/SKILL.md): a lead critic and a few cheap helpers review it, then merge it, send it back or bring it to the owner |
 | Test results: is a candidate worse than its baseline, or why is a `main` red | [Get to green](../astrid-dev-green/SKILL.md): measure completely, then gate on no new failures or retire old red by cause |
