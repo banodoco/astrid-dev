@@ -1253,3 +1253,95 @@ bounded_followup_20261117_0540:
   no_new_automation_created: true
   purpose: Check genuine independent reviews of isolated draft PR373_PR374_PR375 and worker-hosted exact candidate proof; continue separate K1 prerequisites without claiming acceptance
   limits: No other-session workflow cancellation rerun dispatch, no release or public main changes, no Plan38/55 ownership takeover, no clip replay CAS history contract edit without owner decision
+
+# Add-only bounded N-class Agent CI historical source prerequisite; earlier snapshots unchanged.
+k1a_ci_release0_agent_archive_20261117:
+  state: active_incomplete_unreviewed_candidate
+  route: N_source_and_actual_hosted_xml_log_prerequisite
+  actual_model_provenance: unavailable_not_invented
+  independent_review_submission: 0
+  source_evidence: diagnosis/agent/k1a-unit-release0-historical-agent-archive-20261117.md
+  source_agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  source_agent_reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI:
+    run_id: 43967861168
+    attempt: 1
+    status: completed_failure
+    existing_failures: 882
+    existing_errors: 398
+    unit7_job_id: 133651924616
+    artifact_id: 14281865130
+    artifact_zip_sha256: 3d208e420b35370e7b153a3f6349a64c415df126e87d3f5d97b7b1b9c8c0693a
+    inner_xml_sha256: 3bd9218c3830caf27bc2502a50ebc7293c19012bad01a2e890b1f31c703b993b
+    complete_existing_xml_inventory_sha256: 729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426
+    raw_job_log_retrieved: true
+    failing_exact_xml_test_ids: 3
+    literal_message_groups: 1
+    same_full_literal_error_count: 3
+    literal_xml_message: "subprocess.CalledProcessError: Command '['git', 'archive', '--format=tar', '3204bb00135bec8ee2d2d3fb21eed5abfceca649', 'astrid']' returned non-zero exit status 128."
+    literal_raw_log_stderr: 'fatal: not a tree object: 3204bb00135bec8ee2d2d3fb21eed5abfceca649'
+    testcase_ids:
+      - tests.test_installer_release0_rollback::test_rollback_selects_and_starts_authentic_release0_runtime
+      - tests.test_installer_release0_rollback::test_pre_stop_interruption_recovers_and_starts_authentic_release0_runtime
+      - tests.test_installer_self_contained_launchers::test_service_and_foreground_exec_with_authentic_release0_package
+    existing_total_already_includes_3_failures: true
+    prior_plan_exact_id_comparison_this_followup: not_performed
+    PR369_regression_attribution: not_proven
+  Lanes:
+    run_id: 43967861160
+    attempt: 1
+    status: completed_failure_unchanged
+    existing_failures_including_optin: 306
+    existing_errors: 260
+  cause:
+    class: shallow_checkout_missing_authentic_historical_Agent_archive_tree
+    source_test_file: tests/test_installer_self_contained_launchers.py
+    helper: _release0_environment
+    immutable_history_commit: 3204bb00135bec8ee2d2d3fb21eed5abfceca649
+    historical_git_commit_and_installer_core_present_on_GitHub: true
+    hosted_git_archive_tree_absent_before_fix: true
+    no_test_contract_or_historical_pin_edit: true
+  isolated_candidate:
+    repository: banodoco/astrid-agent
+    task_branch: p39/k1a-ci-release0-archive-20261117
+    base: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    head: 9c2bbeef7b1bc5a1065c8dc192268acea5b7da8c
+    PR: https://github.com/banodoco/astrid-agent/pull/376
+    state: draft_open_unmerged_unreviewed
+    changed_files: ['.github/workflows/ci.yml']
+    static_diff_read_back: true
+    shell_syntax_bash_n: pass_no_git_execution
+    worker_yml_parse_and_real_git_fetch_archive: not_performed
+    focused_worker_tests: not_run
+    hosted_candidate_exact_ID_xml: not_run
+    independent_N_review: pending
+    acceptance: pending_real_review_worker_source_proof_reviewed_plan_merge_and_exact_head_hosted_XML
+  remaining_separate_holds:
+    Agent_PR373_windows_native: draft_unreviewed_unmerged_no_hosted_proof
+    Agent_PR374_lanes_archive_trees: draft_unreviewed_unmerged_no_hosted_proof
+    Agent_PR375_macos15_provenance: draft_unreviewed_unmerged_no_hosted_proof
+    Runtime_clip: uncommitted_25_passed_2_failed_replay_CAS_integrity_owner_decision
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    formal_G1: incomplete
+    formal_G2: incomplete
+    RS1: '0/1'
+  operations:
+    evidence_and_runstate_only_on_astrid_dev_p39_g1: true
+    Agent_product_change_only_isolated_task_branch: true
+    product_PR_merged: false
+    release_14_main_or_public_main_push_or_merge: false
+    inputs_or_plan_task_checkboxes_edited: false
+    other_sessions_workflow_cancel_rerun_dispatch: false
+    manual_authentication_retry: false
+
+bounded_followup_20261117_0745:
+  reused_current_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  update_confirmed_success: true
+  next_run_time_utc: '2026-11-17T07:45:33Z'
+  next_run_time_local: '2026-11-16T23:45:33-08:00'
+  one_off: true
+  new_automation_created: false
+  purpose: Check independent N reviews and genuine Git source/hosted proof for draft Agent PR373-376; continue bounded source-proven K1 triage without stepping into Plan38_55_or_unruled_contracts
+  limits: No other-session workflow cancellation rerun dispatch; no main or release-main promotion; no replay/CAS contract edit; formal G1_G2_incomplete_RS1_0_of_1
