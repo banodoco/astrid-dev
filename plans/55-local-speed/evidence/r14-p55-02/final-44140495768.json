@@ -1012,5 +1012,14 @@
         }
       ]
     }
+  },
+  "current_merge_ref_verified_after_sync": {
+    "sha": "2a883acbe689ee4e592c846caec3811a00ca96c3",
+    "tree": "1eabe717ec5c9f1ee7d6aa835d4c23a5f3fec986",
+    "parents": [
+      "561950d084ee71a9b1e5e49be01c21bbbafcd785",
+      "820fe62af8295b15aa5d58b66d8b1f5b19892395"
+    ],
+    "same_tree_as_tested_candidate": true
   }
 }

@@ -4,7 +4,8 @@
 
 Packet session `r14-P55-02-1`, 17 November 2026. The Lead has integrated the two
 pure syncs. The final LS-2 standing meter passes both recorded-reference
-comparisons. The separate install-smoke limitation below remains visible.
+comparisons. The separate install-smoke failure and its successful replay
+remain recorded below.
 The Lead owns review, acceptance and task reconciliation; this evidence makes
 no D1 speed or completed-plan claim. No `tasks.md` changes are part of it.
 
@@ -323,6 +324,11 @@ zero failures, errors or skips**. Each OS also passed 110 focused oracles and
 its separate Runtime support/native calibration checks, with the previously
 declared Runtime-support platform skip on Linux.
 
+After the Lead's Agent sync merge, GitHub's current PR merge result
+`2a883acbe689ee4e592c846caec3811a00ca96c3` has parents `561950d0` and
+`820fe62a`, and still has exactly the tested tree `1eabe717`. The base
+integration therefore does not change the measured candidate's file tree.
+
 The final [raw proof fields](final-44140495768.json) retain full-precision
 timings, counts, source IDs, native observations, counter-case results,
 reference-file digests and original-summary digests. Recomputing both
@@ -366,10 +372,10 @@ COMMIT and observed native counts pass the disclosed background allowance.
 
 Both ZIPs and all selected extracted SHA256SUMS entries verified.
 
-### Separate Windows installed-smoke failure retained
+### Separate Windows installed-smoke failure and bounded replay
 
 The automatically triggered [fresh-install guard run 44140495640](https://github.com/banodoco/astrid-agent/actions/runs/44140495640)
-has an additional result outside the standing-meter comparison. Its
+has an additional result outside the standing-meter comparison. Attempt 1's
 [long-paths-on job 134241634426](https://github.com/banodoco/astrid-agent/actions/runs/44140495640/job/134241634426)
 passed real installation, TLS and DACL checks, then failed
 `generate defaults --json` with exit 2 and
@@ -396,9 +402,22 @@ the exposed message does not identify the particular failing query or OS
 error. Matching inputs and prior passes do not establish its cause.
 
 The original failure is retained. One bounded replay of only the failed leg
-was requested at the same Agent head; replay job `134274341401` is pending.
-No source, pin, selector or assertion was changed. Any native lifecycle product
-repair needs separate Lead routing, requested in
+was requested at the same Agent head. Attempt 2 completed **SUCCESS**:
+[replay job 134274341401](https://github.com/banodoco/astrid-agent/actions/runs/44140495640/job/134274341401)
+passed real installation and the full installed-command/attached-ComfyUI
+smoke. The log confirms a healthy Runtime belonging to this installation and
+a running pack-host with its current ready file. Its effective Agent merge
+`db037ee4`, Runtime `6855dfa8` and App `de7dd1e6` exactly match attempt 1.
+The latest-attempt listing also reports long-paths-off job `134274343588`
+successful; no claim is made that this already-passing variant was rerun.
+
+The diagnostic JSON now retains the replay's full step inventory, source
+identities, success receipt lines and fetched-log SHA-256. The successful
+replay emits no artifact because the failure-only upload is skipped; the
+original failure artifact remains available. No source, pin, selector or
+assertion was changed. A successful replay does not identify the original
+failing metadata query or OS error. Any native lifecycle product repair
+remains separate Lead work, as requested in
 [BLOCKED 6957369016](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6957369016).
 
 A local one-sample iteration completed two latency and two counter cases with

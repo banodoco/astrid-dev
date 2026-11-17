@@ -47,9 +47,142 @@
   "causal_limit": "The exposed error does not identify the failing native metadata query or underlying OS error. Matching inputs and prior passes do not establish the cause.",
   "bounded_replay": {
     "requested": true,
+    "requested_failed_job_id": 134241634426,
     "run_id": 44140495640,
+    "run_attempt": 2,
     "job_id": 134274341401,
     "source_or_assertion_change": false,
-    "result": "pending"
+    "result": "success",
+    "run_conclusion": "success",
+    "run_completed_at": "2026-11-17T18:49:23Z",
+    "effective_sources": {
+      "agent": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+      "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+      "app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+    },
+    "effective_sources_match_original_failure": true,
+    "fetched_job_log_sha256": "5918f0995b255b8a7bcfb5c19eac92bd9f5dcf397551963183e7990d964a5caa",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Check out this Agent candidate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Set up the journey driver (not the installed Python)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Resolve App ref and the Runtime commit from the Agent lock",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Check out the locked Runtime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Check out the selected App bootstrap",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Prepare local manifest for the exact checkout archives (no published release)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "B1/B2 long-path guard: set and verify Windows LongPathsEnabled for this variant",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "B1 long-path guard: create a fresh long user-like LOCALAPPDATA",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Real candidate install: B1 long paths, B3 Git missing, F1 TLS, F4 DACL",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Installed command and attached ComfyUI smoke",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "F4 DACL diagnostics: retain paths, owners and SDDL after installation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Upload failed install.log, failure receipts and guard diagnostics",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 13
+      },
+      {
+        "name": "Post Check out the selected App bootstrap",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 23
+      },
+      {
+        "name": "Post Check out the locked Runtime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24
+      },
+      {
+        "name": "Post Set up the journey driver (not the installed Python)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25
+      },
+      {
+        "name": "Post Check out this Agent candidate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 26
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 27
+      }
+    ],
+    "success_receipt_lines": [
+      "2026-11-17T18:48:38.7667213Z Runtime health is ok and belongs to this installation",
+      "2026-11-17T18:48:38.8281141Z pack-host is running with its current ready file"
+    ],
+    "new_artifact_emitted": false,
+    "artifact_note": "Failure-only upload was skipped. Original failure artifact 14357140100 remains retained.",
+    "latest_attempt_other_variant": {
+      "job_id": 134274343588,
+      "conclusion": "success",
+      "note": "Latest-attempt listing; no claim that the previously successful variant was rerun."
+    },
+    "causal_limit": "The replay succeeds on the same effective Agent, Runtime and App commits. This does not establish the cause of the original native metadata failure."
   }
 }
