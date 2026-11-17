@@ -985,3 +985,33 @@ bounded_followup_20261117_next:
   limits: Do not merge PR373 without independent review and hosted Windows exact-ID JUnit proof; no new Agent
     workflow dispatch, no release/main push, no manual auth, no Plan38/55 ownership changes, no Runtime clip
     contract change without owner decision
+
+k1a_historical_runtime_checkout_20261117:
+  classification: source_proven_missing_history_prerequisite_candidate_requires_ownership_clearance
+  route: N_read_only_source_and_real_xml_diagnosis
+  evidence: diagnosis/agent/k1a-lanes-historical-runtime-short-lease-20261117.md
+  agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  lanes_run_id: 43967861160
+  attempt: 1
+  shard_job_id: 133651923800
+  junit_artifact_id: 14285717945
+  exact_setup_error_count: 2
+  literal_message: 'failed on setup with "Failed: the Runtime checkout /home/runner/work/astrid-agent/astrid-agent/astrid-runtime has no commit df3d4ddac7bf73cd858106cc51a802521a4d3552"'
+  selected_runtime_commit: df3d4ddac7bf73cd858106cc51a802521a4d3552
+  source_test_path: tests/integrations/test_generic_host_runtime_restart.py
+  exact_test_ids:
+    - tests.integrations.test_generic_host_runtime_restart::test_real_host_renews_short_lease_during_cpu_execution
+    - tests.integrations.test_generic_host_runtime_restart::test_expired_real_lease_rejects_renewal_and_host_fails_closed
+  workflow_explicit_historical_runtime_fetch_includes_selected_commit: false
+  workflow_checkout_is_shallow_by_default: true
+  github_remote_commit_exists: true
+  prior_plan_same_error_status: true
+  new_pass_to_red: 0
+  potential_narrow_repair: additive_exact_history_fetch_plus_verified_object_before_hosted_tests
+  proposed_product_change: none
+  reason_for_hold: Generic-host and short-lease execution overlaps Plan55 test inventory/LS7; no explicit ownership clearance
+    or independent review; do not change the pinned source, lease assertions, or tests
+  Plan55: WAITING
+  Plan38: WAITING
+  Release15: excluded
+  formal_G1_G2_RS1: incomplete_RS1_0_of_1
