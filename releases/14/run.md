@@ -70,6 +70,9 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Running | `r14-P55-05-1` | Started 19:52 UTC; early report not yet in |
 | [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Running | `r14-P55-07-1` | Started 19:53 UTC; Runtime #58 |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Ready | — | Dispatch first: LS-4 to LS-13 prove their speed against it |
+| [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Ready | — | Dispatch after R14-P55-10 |
+| [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Ready | — | Dispatch after R14-P39-07 |
+| [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Ready | — | Dispatch after R14-P39-08 |
 | [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Ready | — | Dispatch (4) |
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Ready | — | Dispatch (5) |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (6) |
@@ -77,7 +80,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch (8) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Running | `r14-FIX-03-1` | Agent #360 with `release/14/main` merged in; boundary ruled, dependency clients are #823 |
 | [R14-P55-04](packets/R14-P55-04.md) First job | Plan 55 LS-12; draft Agent #361 | Ready | — | Dispatch after R14-P55-06 |
-| R14-P39-04 Re-measure | Plan 39 G1, G2 | Blocked | — | After P39-01 to P39-03 merge |
+| R14-P39-04 Re-measure | Plan 39 G1, G2 | Blocked | — | After R14-P39-01 and the gate fixes R14-P39-07 to 09 |
 | R14-P39-06 onward, wave 2 | Plan 39 RT1–RT8, AT1–AT4, PT1–PT4, K2, K3, SF3b, SF3c | Blocked | — | Cut from G2's causes after the Lead's RS1; about eight packets |
 | R14-P55-09 onward | Plan 55 LS-15, LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-15 after LS-4, LS-5 and LS-8; LS-14 also needs paid GPU time |
 | R14-P13-02 Characterisation | Plan 13 HM2 | Blocked | — | After P13-01 |
