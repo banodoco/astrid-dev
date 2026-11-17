@@ -25,6 +25,7 @@ class GoldenTests(unittest.TestCase):
 
     def test_real_tree_and_fixtures_match_golden_output(self):
         expected = (golden.FIXTURES / "golden.txt").read_text(encoding="utf-8").splitlines()
+        self.maxDiff = None  # Temporary migration diagnostics; do not change the expected result.
         self.assertEqual(self.collected, expected)
 
     def test_collect_does_not_change_the_repository(self):
