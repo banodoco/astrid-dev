@@ -6,9 +6,9 @@ Use only when the Release Lead has prepared a release [dispatch queue](../../ast
 
 ## Start
 
-1. Read the release brief, `releases/<N>/run.md`, mailbox and linked `tasks.md` cards. Check owner permissions, starting commits, proof, dependencies and who is accountable for each plan.
-2. For a Ready packet, launch or nudge an authorized ChatGPT manager session with the exact task IDs, accepted plan, environment, branch/ref, tests, limits, evidence expectations and [Manage](../../astrid-dev-manage/SKILL.md). If using a separate packet chat, give it a bounded assignment under its existing accountable plan manager; do not create a competing run owner.
-3. Record the session link and Running status in `run.md`. One active packet per execution session. Do not rewrite task briefs in the mailbox.
+1. Read the release brief, `releases/<N>/run.md`, its **linked packet Markdown briefs** under `releases/<N>/packets/`, the source `tasks.md` cards and the existing mailbox. Check permission, starting commits, proof, dependencies and the accountable manager for each plan.
+2. For a Ready packet, launch or nudge an authorized ChatGPT session by **linking the packet file** and [Manage](../../astrid-dev-manage/SKILL.md), supplying the source plan ref, environment, branch, limits, and owner go. Do not rewrite the packet or task cards in chat. If using a separate packet chat, give it a bounded assignment under its existing accountable plan manager; do not create a competing run owner.
+3. Record the packet's session link and Running status in `run.md`. One active packet per execution session. The mailbox carries only short linked handoffs, not copied briefs.
 
 ## Every hour
 
