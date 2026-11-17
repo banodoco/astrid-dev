@@ -10,15 +10,15 @@ One meaning per word; two meanings, two terms.
 
 **contributor:** a person or agent changing astrid-dev.
 
-**orchestrator:** a standing session coordinating multiple plan managers or advising a manager; in a led release it owns manager liveness and dispatch, not release acceptance.
+**orchestrator:** a standing session dispatching and supervising managers. In fresh-packet dispatch it creates a new ChatGPT manager session per packet, owns liveness and handoffs, and leaves acceptance/integration to the Lead.
 
 **release lead:** the agent leading delivery across all plans of a release; the release manager named in the release brief.
 
-**release manager:** the release lead named on the brief. It owns `release/<NN>/main` (health, landing order, branch records, tester builds, candidate and asking for the owner's go). Existing named release managers remain so until the owner records a handoff; each plan's manager owns its plan branch and landing.
+**release manager:** the release lead named on the brief. It owns `release/<NN>/main` (health, landing order, branch records, tester builds, candidate and asking for the owner's go). Existing named release managers remain so until the owner records a handoff. In fresh-packet dispatch the Lead also oversees plan-branch integration.
 
 **advisor:** the `run.yaml` role answering blocking questions: the orchestrator or else a fresh high-judgment sub-agent.
 
-**manager:** dispatches tasks, judges reports, keeps `tasks.md` current; normally the accountable agent. In a release it is a **plan manager**.
+**manager:** an agent executing an accepted engineering assignment. In the standard whole-project setup it owns a plan run; in the fresh ChatGPT packet workstream it implements **one packet in one session**, submitting PRs/proof without owning the plan.
 
 **Codex manager:** a Codex process managing its own sub-agents, hosted in a Claude session or a Codex Cloud chat; never the default.
 
@@ -46,7 +46,7 @@ One meaning per word; two meanings, two terms.
 
 **task:** one assignment in `tasks.md`; its **card** holds outcome, route, scope, dependencies and proof.
 
-**dispatch packet:** a short, bounded Markdown assignment at `releases/<N>/packets/<id>.md`, referring to one plan's canonical tasks; about three human engineering days or less; not a new project, GitHub issue or independent plan run.
+**dispatch packet:** a short, bounded Markdown assignment at `releases/<N>/packets/<id>.md`, referring to one plan's canonical tasks; about three human engineering days or less, executed in a fresh ChatGPT session; not a new project, GitHub issue or independent plan run.
 
 **workstream:** a role-specific operating pattern chosen for the situation, documented below its role skill. Environment-specific guides supply commands; neither is an extra role or source of authority.
 
