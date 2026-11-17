@@ -19,7 +19,7 @@ Own the engineering quality of **the assignment you were given**. Work from its 
 6. **Decisions must survive the session.** Record consequential rulings in the existing plan record (whole project) or packet handoff (fresh session); never treat another agent's advice as authority.
 7. **Progress has one home.** A whole-project manager owns its plan's `tasks.md` progress PRs. A fresh packet manager submits PRs and evidence; the Lead reconciles the plan after acceptance.
 8. **Test what people actually use.** Exercise the real entry point early where the accepted task requires it.
-9. **Independent review is not optional when required.** Read any worker's diff yourself, and commission an independent reviewer for the exact range under the existing review rules.
+9. **Independent review is not optional when required.** Read any worker's diff yourself, and commission an independent reviewer for the exact range under the existing review rules; a packet session leaves this to the Lead.
 
 ## Workstreams
 
