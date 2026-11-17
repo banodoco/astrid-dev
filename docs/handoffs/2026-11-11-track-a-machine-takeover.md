@@ -1,6 +1,6 @@
 # Release 12 Track A: machine takeover
 
-Read [Release 12](../../releases/12.md), [Track A](../../releases/12/fixes.md), [Plan 29 tasks](../../plans/29-update-and-release/tasks.md) and `skills/astrid-dev-manage/SKILL.md` on the latest `astrid-dev` main. Those documents and the orchestrator's current instructions govern; this is a status snapshot, not release authorization. Re-fetch and verify all refs, CI and mailbox state. Do not assume a scheduler, a surviving process, or that an interrupted job completed.
+Read [Release 12](../../releases/12.md), [Track A](../../releases/12/fixes.md), [Plan 29 tasks](../../plans/29-update-and-release/tasks.md) and `skills/roles/astrid-dev-manage/SKILL.md` on the latest `astrid-dev` main. Those documents and the orchestrator's current instructions govern; this is a status snapshot, not release authorization. Re-fetch and verify all refs, CI and mailbox state. Do not assume a scheduler, a surviving process, or that an interrupted job completed.
 
 As of 11 Nov, no `A-CAND`, `A-FROZEN` or `GATE-GREEN` has been posted. Agent candidate is `313bbd46f1e24bfe635655d78b27ab0b321145d5`; App candidate is `e72d541de1d65bee74707ca1ae9c2d429ee2f721`; Agent harness `harness/29-r12` is `b550ecadf07d7a4b377be1b7af1d6252642f1b48`. Verify these on GitHub before acting. No product main or candidate push, CI rerun, freeze change or paid work follows from this note.
 

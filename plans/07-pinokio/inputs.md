@@ -20,7 +20,7 @@ The separate source audit in [Plan 10 inputs](../10-pinokio-qualification/inputs
 | Retired Pinokio matrix | Six earlier Pinokio rows stopped at setup, 0/6, and mixed basic path with qualification work | `RELEASE1_1_DEFERRED_PINOKIO_MATRIX` | Historical failure only; explicitly retired, not reusable passing evidence and not to be revived. |
 | New Pinokio gate contract | Separate matrix, checker, dispatch, and exact three hosted job IDs | `RELEASE1_1_PINOKIO_MATRIX`; required IDs: `pinokio-linux`, `pinokio-macos`, `pinokio-windows` | Exact workflow file, command, and selector are missing and must be recovered at task setup. |
 | Stand-in next release | Update target for hosted rows | `scripts/make_standin_release.py` | Current file location/behavior and invoking test selector must be confirmed in the frozen source tree. |
-| Shared run controls | Route bindings, task setup, source identity and proof conventions | [Shared run contract](../../skills/astrid-dev-shared/run-contract.md) | Follow project-specific scope and existing authorization above it; no route or plan grants execution by itself. |
+| Shared run controls | Route bindings, task setup, source identity and proof conventions | [Shared run contract](../../skills/shared/run-contract.md) | Follow project-specific scope and existing authorization above it; no route or plan grants execution by itself. |
 
 ## Constraints and evidence limits
 

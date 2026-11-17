@@ -38,7 +38,7 @@ The intended work is preserved in [tasks.md](tasks.md); executable breakdown and
 
 ## Completion
 
-The editing pack and extension example work through documented timeline primitives, supported media/edit/undo contracts remain intact, and focused evidence demonstrates the shared-material workflow. Record unsupported contracts or extension needs discovered during scoping. This does not establish unsupported preservation behavior or authorize implementation/publication; follow the [shared run contract](../../skills/astrid-dev-shared/run-contract.md).
+The editing pack and extension example work through documented timeline primitives, supported media/edit/undo contracts remain intact, and focused evidence demonstrates the shared-material workflow. Record unsupported contracts or extension needs discovered during scoping. This does not establish unsupported preservation behavior or authorize implementation/publication; follow the [shared run contract](../../skills/shared/run-contract.md).
 
 ## Read next
 

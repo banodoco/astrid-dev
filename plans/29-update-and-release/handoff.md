@@ -18,7 +18,7 @@
 3. App Tests and Direct Journey have **0 failures** on the pinned App head;
 4. the review rounds are done, with no open blocker.
 
-Publishing is under Hannah's **standing conditional go** once the gate holds. Only the [Release skill](../../skills/astrid-dev-release/SKILL.md) merges to product `main`.
+Publishing is under Hannah's **standing conditional go** once the gate holds. Only the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md) merges to product `main`.
 
 **Plan 29 is done** only after Hannah confirms the update works on her Mac through the normal App path. Then delete the hourly check-in scheduled task and tell her.
 
@@ -101,7 +101,7 @@ Agent fix branches in `r12/cand-next`, each with regression tests that fail befo
 
 - **Artifacts:** `GET https://api.github.com/repos/banodoco/<repo>/actions/runs/<id>/artifacts`, then `/actions/artifacts/<id>/zip`. This works through the session proxy with no token. The manager's workers can't download receipts, so the advisor fetches them, unzips the traces (the Codex sandbox can't extract), and hands them to a worker.
 - **Keep-going diagnostic:** `journey.yml` with `direct_only=true`, `diagnostic_keep_going=true` and `diagnostic_leg=fresh-install`. It reports task sub-steps past a failed gate, and is diagnostic only. It runs the fresh-install leg only, so it can't see update-leg failures.
-- **Codex workers:** [codex-in-cloud](../../skills/astrid-dev-orchestrate/codex-in-cloud/README.md) `codex-runner.sh <workdir> <prompt> <run-dir> 6 <model>`. Models: `gpt-6-luna`, `gpt-6.1-terra`, `gpt-6.1-sol`, `gpt-6-astra`.
+- **Codex workers:** [codex-in-cloud](../../skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/README.md) `codex-runner.sh <workdir> <prompt> <run-dir> 6 <model>`. Models: `gpt-6-luna`, `gpt-6.1-terra`, `gpt-6.1-sol`, `gpt-6-astra`.
   - Their sandbox makes `.git` read-only, so the advisor commits and pushes.
   - Give each worker its own `--shared` clone, `TMPDIR`/`--basetemp` inside its workdir, a 2 GB cap, and a `df` check before each test run.
   - A worker that says "blocked" on unattributed baseline failures usually means "needs a base comparison"; run one rather than accepting or rejecting the claim.
