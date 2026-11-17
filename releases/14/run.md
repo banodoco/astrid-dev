@@ -4,9 +4,9 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
-## Now (14:30 UTC, Tue 17 Nov)
+## Now (14:35 UTC, Tue 17 Nov)
 
-Every Release 14 plan except Plan 59 runs by [fresh-packet dispatch](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md): one fresh ChatGPT session per packet, an Orchestrator keeping them moving, and the Lead reviewing and merging. The owner is stopping the earlier Plan 39 and Plan 55 managers. Twelve packets are Ready; nothing is dispatched until the Orchestrator's [startup checks](#orchestrator-startup-checks) pass. Six standing-lane fixes are on `release/14/main`; no plan is yet.
+The Orchestrator started at 14:21 UTC and passed its checks for a fresh Pro session, resuming one, and its own GitHub access. Push, pull request and comment access from a packet session is proved by the first real packet: R14-P55-01 goes out alone, and once its early STATUS shows a pushed branch, a draft pull request and a comment, the next five follow ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6950905639)). The owner is stopping the earlier Plan 39 and Plan 55 managers. Six standing-lane fixes are on `release/14/main`; no plan is yet.
 
 ## Authority
 
@@ -24,8 +24,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | its first comment on #796 |
-| Orchestrator | `r14-orchestrator-1` | from its first STATUS | from its `cursor:` line |
+| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | 6950799012 |
+| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | 6950742823 |
 | Packet session | `r14-<packet>-<n>`, for example `r14-P39-01-1` for the first session on R14-P39-01 | from the Orchestrator's STATUS | — |
 
 **Cadence and time limits.**
@@ -58,12 +58,12 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Ready | — | Dispatch (1) |
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Ready | — | Dispatch (2) |
-| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Ready | — | Dispatch (3) |
-| [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Ready | — | Dispatch (4) |
-| [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Ready | — | Dispatch (5) |
-| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Ready | — | Dispatch (6) |
+| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Ready | — | Dispatch (1) alone, as the access test |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Ready | — | Dispatch (2) after P55-01's early STATUS |
+| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Ready | — | Dispatch (3) after P55-01's early STATUS |
+| [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Ready | — | Dispatch (4) after P55-01's early STATUS |
+| [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Ready | — | Dispatch (5) after P55-01's early STATUS |
+| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Ready | — | Dispatch (6) after P55-01's early STATUS |
 | [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Ready | — | Dispatch (7) |
 | [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Ready | — | Dispatch (8) |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (9) |
@@ -134,10 +134,13 @@ Authority: the Authority section of releases/14/run.md at <SHA>, given by the ow
 Mailbox: https://github.com/banodoco/astrid-dev/issues/796, run r14-dispatch, format in its first post.
 You are r14-P55-01-1; the Orchestrator is r14-orchestrator-1; the Lead is r14-lead.
 Implement and prove this packet. Post STATUS or BLOCKED as comments on the mailbox issue.
+As soon as you have pushed your first branch and opened its draft pull request, post a short STATUS on #796 with both links.
 Do not merge, tick tasks.md or start another packet.
 ```
 
 `<SHA>` is astrid-dev `main` when you send it. When replacing a session, add one line: `Replacing r14-P55-01-1: continue from <branch> and <link to its last STATUS>.`
+
+**Results on 17 November** ([STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6950799012)): 1 passed with the Lead's reply; 2 accepted: the owner is stopping the earlier managers, and the draft heads above guard against a stray one; 3, 4 and 7 passed; 5 is not a gate, since the Lead raises a silent Orchestrator after 2 hours; 6 is proved by each packet's early STATUS, starting with R14-P55-01.
 
 ## Orchestrator launch message
 
