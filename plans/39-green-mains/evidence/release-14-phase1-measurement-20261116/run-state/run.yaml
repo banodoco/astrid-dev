@@ -1052,3 +1052,15 @@ k1a_pod_bootstrap_missing_script_diagnosis_20261117:
   Plan55: WAITING
   Release15: excluded
   acceptance: G1_G2_incomplete_RS1_0_of_1
+
+bounded_followup_20261117_0343:
+  confirmed_scheduled: true
+  reused_current_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  next_run_time_utc: '2026-11-17T03:43:44Z'
+  next_run_time_local: '2026-11-16T19:43:44-08:00'
+  one_off: true
+  verification: Existing automation updated successfully; returned next_run_time 2026-11-16T19:43:44-08:00; no new automation created
+  purpose: Continue bounded source-proven K1 prerequisite triage without guessing legacy pod bootstrap contract;
+    check independent reviewer/hosted Windows evidence for Agent PR373 before any merge
+  limits: No Workflow re-dispatch/rerun/cancel, no release/main change, no Plan38/55 ownership change,
+    no assertion relaxation, no Runtime clip history-integrity bypass without explicit owner decision
