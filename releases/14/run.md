@@ -6,7 +6,7 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 ## Now (14:35 UTC, Tue 17 Nov)
 
-The Orchestrator started at 14:21 UTC and passed its checks for a fresh Pro session, resuming one, and its own GitHub access. Push, pull request and comment access from a packet session is proved by the first real packet: R14-P55-01 goes out alone, and once its early STATUS shows a pushed branch, a draft pull request and a comment, the next five follow ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6950905639)). The owner is stopping the earlier Plan 39 and Plan 55 managers. Six standing-lane fixes are on `release/14/main`; no plan is yet.
+The Orchestrator started at 14:21 UTC. It passed three startup checks: a fresh Pro session, resuming one, and its own GitHub access. The others are settled in the Lead's DECISION. Push, pull request and comment access from a packet session is proved by the first real packet: R14-P55-01 goes out alone, and once its early STATUS shows a pushed branch, a draft pull request and a comment, the next five follow, each proving its own repository the same way ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6950905639)). The owner is stopping the earlier Plan 39 and Plan 55 managers. Six standing-lane fixes are on `release/14/main`; no plan is yet.
 
 ## Authority
 
@@ -24,13 +24,13 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | 6950799012 |
+| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | 6950799012 (its DECISION is 6950905639) |
 | Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | 6950742823 |
 | Packet session | `r14-<packet>-<n>`, for example `r14-P39-01-1` for the first session on R14-P39-01 | from the Orchestrator's STATUS | — |
 
 **Cadence and time limits.**
 - **Orchestrator, every hour:** reads the mailbox, checks every open packet, posts one STATUS with a line per packet (state, session, latest commit or "no change", next action) and `cursor:`.
-- **Packet session:** posts STATUS when it submits, BLOCKED when stuck, and pushes before any pause.
+- **Packet session:** posts an early STATUS once its first branch is pushed and its draft pull request open, STATUS when it submits, BLOCKED when stuck, and pushes before any pause.
 - **Lead, every two hours:** reads the mailbox from its cursor, answers each submission (accept: merge, `tasks.md`, DONE; or rework listed on the pull request, and a DECISION), and rewrites this board. Its session cannot schedule itself (the permission check refused a recurring check-in on 17 November), so until the owner allows that, her message to the Lead session is the nudge.
 
 | If | Then |
@@ -89,7 +89,7 @@ Fixed on `release/14/main`, open until a tester build proves them: #671, #672, #
 
 ## Earlier managers
 
-The owner stopped the Plan 39 and Plan 55 managers on 17 November. The Orchestrator confirms at startup that they and any other session on these plans have stopped, and lists anything else it finds. Their open pull requests, with heads as of 14:15 UTC, and what each becomes:
+The owner stopped the Plan 39 and Plan 55 managers on 17 November. The Orchestrator stops any it can reach and names any it cannot; the owner stops those. A packet session continuing one of these drafts checks its head against this table. Their open pull requests, with heads as of 14:15 UTC, and what each becomes:
 
 | Pull request | Head | Becomes |
 |---|---|---|
@@ -133,8 +133,8 @@ Packet: releases/14/packets/R14-P55-01.md at <SHA>; its PR destination names you
 Authority: the Authority section of releases/14/run.md at <SHA>, given by the owner.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/796, run r14-dispatch, format in its first post.
 You are r14-P55-01-1; the Orchestrator is r14-orchestrator-1; the Lead is r14-lead.
-Implement and prove this packet. Post STATUS or BLOCKED as comments on the mailbox issue.
-As soon as you have pushed your first branch and opened its draft pull request, post a short STATUS on #796 with both links.
+Implement and prove this packet. Post STATUS or BLOCKED as comments on the mailbox issue,
+the first as soon as your first branch is pushed and its draft pull request open.
 Do not merge, tick tasks.md or start another packet.
 ```
 
