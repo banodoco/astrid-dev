@@ -2,11 +2,9 @@
 # Link Astrid development workflows and shared references locally.
 # This installs only folders owned by this repository; it does not sync globally.
 #
-# Every folder in skills/ is linked:
-# - a folder with a SKILL.md is a skill. Its `name:` must match the folder name,
-#   or it is reported invalid and skipped.
-# - a folder without one (for example astrid-dev-shared) holds references that
-#   skills link to by relative path, so it is linked beside them.
+# Install the entrypoint, shared references and packages from roles/ and capabilities/.
+# Each installed skill keeps its astrid-dev-* name, and a flat symlink in the
+# destination, regardless of its source category. No duplicate skill copies.
 # Links into skills/ whose folder no longer exists (renamed or removed skills)
 # are retired. Nothing else in a destination is touched.
 
@@ -22,7 +20,7 @@ usage() {
   cat <<'USAGE'
 Usage: sync.sh [--dry-run] [--destination SKILL_DIR ...]
 
-Links every folder in skills/ into each destination.
+Links the Astrid skill packages and shared references into each destination.
 
 Without --destination, links into whichever of ~/.claude/skills,
 ~/.codex/skills and ~/.agents/skills exist, and skips the others. It fails
@@ -77,8 +75,9 @@ synced_targets=0
 
 # Collect the folders to link, checking each skill's declared name.
 SOURCES=()
-for src in "$SKILLS_DIR"/*/; do
+for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/astrid-dev-shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/capabilities/astrid-dev-*/; do
   src="${src%/}"
+  [[ -d "$src" ]] || continue
   name="$(basename -- "$src")"
   if [[ -f "$src/SKILL.md" ]]; then
     declared="$(sed -n '1{/^---$/!q};2,/^---$/{s/^name:[[:space:]]*//p}' "$src/SKILL.md" | head -n 1)"
