@@ -39,6 +39,8 @@ A fix release to the published release always takes the served number plus one, 
 
 ## Keep the release's records
 
+The **release manager** named in the brief is the [Release Lead](../astrid-dev-lead/SKILL.md); this does not change an incumbent's authority without an owner-recorded handoff. When a Lead uses [multi-manager dispatch](../astrid-dev-lead/workstreams/multi-manager-release.md), its packet queue is a section of the existing `run.md`, not a second release state store.
+
 Every release has its brief, `releases/<N>.md`, from [`releases/TEMPLATE.md`](../../releases/TEMPLATE.md); see [kind](../astrid-dev-shared/glossary.md) and the [hierarchy](../../docs/contribution-workflow.md#review-the-strategy). The approach opens with the current plan; keep earlier plans below, dated.
 
 A release with more than one lane, or with a deadline, also keeps a folder, `releases/<N>/`, from its first day. Each fact has one home, and the other files link to it instead of repeating it:
