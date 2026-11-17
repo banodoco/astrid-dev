@@ -1345,3 +1345,78 @@ bounded_followup_20261117_0745:
   new_automation_created: false
   purpose: Check independent N reviews and genuine Git source/hosted proof for draft Agent PR373-376; continue bounded source-proven K1 triage without stepping into Plan38_55_or_unruled_contracts
   limits: No other-session workflow cancellation rerun dispatch; no main or release-main promotion; no replay/CAS contract edit; formal G1_G2_incomplete_RS1_0_of_1
+
+k1a_e14_runtime_pin_drift_diagnosis_20261117:
+  route: N_source_and_actual_XML_prerequisite
+  evidence: diagnosis/agent/k1a-e14-runtime-pin-drift-20261117.md
+  agent_exact_reviewed_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  workflow:
+    CI_run: 43967861168
+    attempt: 1
+    job: 133651924616
+    junit_artifact: 14281865130
+    zip_sha256: 3d208e420b35370e7b153a3f6349a64c415df126e87d3f5d97b7b1b9c8c0693a
+    xml_sha256: 3bd9218c3830caf27bc2502a50ebc7293c19012bad01a2e890b1f31c703b993b
+    existing_unit7_junit_failures: 250
+    existing_unit7_junit_errors: 160
+    existing_unit7_distinct_full_message_groups: 110
+    same_literal_setup_assertions: 68
+    literal_message_sha256: 2e4afad1dcbbe9ae8dc51baed4c60a5a72503ffbdf0e65019d9a9063490e4af1
+    source_pin_expected_by_fixture: 9ef808711a5207f5be74dc5f267af6fdd7bc9550
+    runtime_lock_and_checkout_actual: 6855dfa8df65cf8ae4c002b57134d6505493c17c
+    count_is_already_in_882CI_failures: true
+    previously_verified_XML_and_testcase_inventory_reused: true
+    newly_measured_baseline_exact_ID_comparison: false
+    no_absent_ID_regression_inference: true
+  isolated_candidate:
+    repository: banodoco/astrid-agent
+    branch: p39/k1a-e14-runtime-pin-20261117
+    exact_base: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    commit: 5b9db95c84f863c0eee63c238bdeb4583b49d7c7
+    PR: https://github.com/banodoco/astrid-agent/pull/377
+    state: draft_open_unmerged
+    files: ['tests/sdk/test_timeline_editing_acceptance_runtime.py']
+    scope: only E14 fixture expected SHA now derived from existing locked source_commit helper
+    exact_checkout_head_assertion_preserved: true
+    imported_runtime_module_source_assertion_preserved: true
+    product_logic_assertions_skips_xfails_changed: false
+    PR_independent_review: not_submitted
+    focused_product_worker_test: not_run
+    hosted_candidate_XML: not_run
+    acceptance: pending_independent_N_review_and_real_worker_hosted_proof
+  separate_provenance_hold:
+    unit7_wrong_import_root_setup_occurrences: 92
+    unit6_wrong_import_root_setup_occurrences: 3
+    source: runtime_protocol imported from installed_site_packages_not_source_checkout
+    classification: distinct_95_occurrence_source_provenance_triage_needed_not_pr377_scope
+    ownership_and_cause: unresolved_do_not_weaken_source_assertions
+  other_draft_agent_PRs: [373, 374, 375, 376]
+  other_PR_review_submissions: 0
+  original_completed_CI: 882_failures_398_errors
+  original_completed_Lanes: 306_failures_including_12_log_only_optin_260_errors
+  holds:
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    Runtime_clip: uncommitted_25_passed_2_failed_owner_replay_history_decision
+    formal_G1_G2: incomplete
+    RS1: '0/1'
+  operations:
+    astrid_dev_branch_only_p39_g1: true
+    Agent_isolated_branch_and_draft_PR_only: true
+    product_merged: false
+    release14_main_or_public_main_changed: false
+    inputs_md_or_plan_task_checkboxes_changed: false
+    other_sessions_workflow_cancel_rerun_dispatch: false
+    authentication_retry: false
+
+bounded_followup_20261117_0919:
+  reused_current_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  update_confirmed_success: true
+  next_run_time_utc: '2026-11-17T09:19:02Z'
+  next_run_time_local: '2026-11-17T01:19:02-08:00'
+  one_off: true
+  new_automation_created: false
+  purpose: Check genuine independent review and worker/hosted candidate proof for draft Agent PR373-377; classify 95 separate runtime_protocol import-root failures without assuming product/test ownership; keep explicit Runtime replay-history contract hold
+  limits: No other-session workflows rerun/cancel/dispatch; no auth retry, main/release-main promotion, Plan38_55 ownership crossing, weakened assertions, or task/input checkbox edits
