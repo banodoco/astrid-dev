@@ -4,7 +4,7 @@ This brief is for the next orchestrator. It holds everything needed to take over
 
 Read it in this order:
 1. this file;
-2. [astrid-dev-orchestrate](../../skills/astrid-dev-orchestrate/SKILL.md);
+2. [astrid-dev-orchestrate](../../skills/roles/astrid-dev-orchestrate/SKILL.md);
 3. each running plan's `handoff.md` (linked in [State and next actions](#state-and-next-actions)).
 
 Release 12 (Plan 29) has its own takeover brief, [`plans/29-update-and-release/orchestrator-brief.md`](../../plans/29-update-and-release/orchestrator-brief.md). Read it too if you take over the release.
@@ -50,7 +50,7 @@ Release path:
 1. Release 12 publishes (Plan 29 owns it).
 2. Lift the CI freeze.
 3. Plan 32 merges `main` into int/32 and re-proves.
-4. Cut `cand/release-13` through the [Release skill](../../skills/astrid-dev-release/SKILL.md), carrying int/32, Plan 20 P1.5, Plan 40, the CI-trigger prep, and VibeComfy [#165](https://github.com/banodoco/VibeComfy/pull/165) and [#166](https://github.com/banodoco/VibeComfy/pull/166) via the pin.
+4. Cut `cand/release-13` through the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md), carrying int/32, Plan 20 P1.5, Plan 40, the CI-trigger prep, and VibeComfy [#165](https://github.com/banodoco/VibeComfy/pull/165) and [#166](https://github.com/banodoco/VibeComfy/pull/166) via the pin.
 
 ## 3. Owner rules (Hannah, 9–10 Nov). These stand until she changes them.
 
@@ -97,11 +97,11 @@ Release path:
 
 ### Starting a manager
 
-Follow [codex-in-cloud](../../skills/astrid-dev-orchestrate/codex-in-claude-cloud/README.md). For each manager:
+Follow [codex-in-cloud](../../skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/README.md). For each manager:
 1. Make a workdir with the clones plus a `run/` folder.
-2. Write `run/prompt.md` from [manager-brief.md](../../skills/astrid-dev-orchestrate/codex-in-claude-cloud/manager-brief.md), and prepend the kickoff below.
+2. Write `run/prompt.md` from [manager-brief.md](../../skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/manager-brief.md), and prepend the kickoff below.
 3. Start it:
-   `CODEX_EFFORT=high CODEX_MAX_THREADS=8 setsid nohup <astrid-dev>/skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-runner.sh <workdir> <workdir>/run/prompt.md <workdir>/run 6 gpt-6-luna >/dev/null 2>&1 </dev/null &`
+   `CODEX_EFFORT=high CODEX_MAX_THREADS=8 setsid nohup <astrid-dev>/skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/codex-runner.sh <workdir> <workdir>/run/prompt.md <workdir>/run 6 gpt-6-luna >/dev/null 2>&1 </dev/null &`
 4. Add the run folder to `~/codex/runs.txt`.
 
 Managers run on Luna and choose worker models by route, **except P29 and P32 for Release 12**: start those two on `gpt-6.1-sol` or `gpt-6-astra` at high effort (a multi-repo release and the conflict-heavy composition).
@@ -187,7 +187,7 @@ Everything else is verified on GitHub. Every task branch in the managers' clones
 - **The output folder:** `generate` writes to `./outputs/<task-id>/` in the current folder, not the project. Recommendation: a small follow-up after Plan 40.
 - **runpod-lifecycle issue:** "Expose Retry-After on rate-limited availability queries" is ready to file (in Plan 40's Deferred list). This session couldn't write to that repo.
 - **The SessionStart hook for the Codex hold daemon.** Hannah has to add it herself:
-  `"hooks": {"SessionStart": [{"hooks": [{"type": "command", "timeout": 10, "command": "setsid nohup <astrid-dev>/skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-hold-daemon.sh >/dev/null 2>&1 </dev/null & exit 0"}]}]}`
+  `"hooks": {"SessionStart": [{"hooks": [{"type": "command", "timeout": 10, "command": "setsid nohup <astrid-dev>/skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/codex-hold-daemon.sh >/dev/null 2>&1 </dev/null & exit 0"}]}]}`
 
 ## Follow-ups to file when Plan 34's first run is DONE
 
