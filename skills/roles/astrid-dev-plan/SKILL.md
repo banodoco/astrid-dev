@@ -7,14 +7,14 @@ description: Define independently useful new Astrid project scope by reusing pri
 
 Enter through [astrid-dev](../../astrid-dev/SKILL.md) and its [domain map](../../astrid-dev/references/domains.md).
 
-Terms follow the [glossary](../../astrid-dev-shared/glossary.md).
+Terms follow the [glossary](../../shared/glossary.md).
 
 ## The answer
 
 You, the **planner** (an administrator: gather evidence, write the task cards, and send consequential judgment to the advisor), produce an agreed, testable end state and tasks another agent can run. An orchestrator may also plan a project itself before farming it out.
 
 1. **Projects are for new, separately useful outcomes** with their own priority, owner and completion proof. Bugs, small fixes and maintenance normally go in issues; existing project tasks use their accepted plan. Read the [aspirations of its gaps](../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
-2. **Planning authorizes no execution or release** ([run contract](../../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)), and runs no checks unless asked ([checks](../../astrid-dev-shared/run-contract.md#checks-and-failure-repair)).
+2. **Planning authorizes no execution or release** ([run contract](../../shared/run-contract.md#scope-source-identity-and-state)), and runs no checks unless asked ([checks](../../shared/run-contract.md#checks-and-failure-repair)).
 3. **Agree the outcome once.** Record the owner's actual choice with a traceable source; a draft project or PR, or no objection, is not approval. Keep earlier accepted scope; avoid repeated sign-offs.
 
 ## Steps
@@ -57,11 +57,11 @@ Each step below earns its cost only under its condition; skip it otherwise. Each
 In the [tasks template](../../../templates/project/tasks.md), every task has a **scope** (the paths, and any shared surface or contract, it may change; a path includes its own tests, wherever they live) and:
 
 - **Scope detail:** name the functions or classes too (`path:symbol`) when the task changes only part of a file.
-- **A route:** `N`, `X`, `S` or `T`, as the [run contract](../../astrid-dev-shared/run-contract.md#routing-and-bindings) defines them. Use `S` where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration). Split taste out of larger tasks, so the functional change is `N`, `X` or `S` and the wording or polish is its own small `T` task.
+- **A route:** `N`, `X`, `S` or `T`, as the [run contract](../../shared/run-contract.md#routing-and-bindings) defines them. Use `S` where correctness needs the deepest reasoning (a protocol never run end to end, security, data safety, migration). Split taste out of larger tasks, so the functional change is `N`, `X` or `S` and the wording or polish is its own small `T` task.
 - **Dependencies,** only where one task needs another's result, or both change the same function, class or contract. Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. The same applies across other active projects. If a shared surface needs one model first, consult the advisor.
 - **The critical path:** state it in `tasks.md`, and keep it as short as the work allows. Chain tasks only where the rule above requires it.
 - **Before implementation:** its actual base and dependency revisions, exact focused checks and authority.
-- **Tests only at load-bearing moments,** per the [run contract's table](../../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing).
+- **Tests only at load-bearing moments,** per the [run contract's table](../../shared/run-contract.md#when-a-test-run-is-load-bearing).
 - **A test inventory and focused proofs.** `tasks.md` names the existing tests the plan affects (its test inventory) and, for each task, the exact test files that prove it. The manager's local baseline runs only these.
 - **A contract card lists what it makes untrue.** A card that changes a contract, a check's trigger or a message names every existing pinned test, fixture and oracle line the change invalidates, and says how each may change. A card whose proof is a `grep` or a list of pinned tests says "re-check against the code at dispatch", because an earlier card may have moved what it names.
 - **Checks a cloud worker can run.** Setup and checks use astrid-dev's [shared worker environment](../../../env/README.md), called by literal path. They must work in a session with only the task's repository attached:
@@ -74,7 +74,7 @@ In the [tasks template](../../../templates/project/tasks.md), every task has a *
 
 **Suggest reviews only where they earn their cost.** State your recommendation in every plan, including when it is none; don't wait to be asked.
 
-- **A simple, bounded project needs no review rounds,** so leave the review row out. For meaningful complexity, recommend one round at the end, before any publishing task, which depends on it. Recommend more only as the [run contract](../../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries)'s guide says, say why, and record the recommendation and the owner's agreed number on the `Review rounds` line in `inputs.md`.
+- **A simple, bounded project needs no review rounds,** so leave the review row out. For meaningful complexity, recommend one round at the end, before any publishing task, which depends on it. Recommend more only as the [run contract](../../shared/run-contract.md#review-and-promotion-boundaries)'s guide says, say why, and record the recommendation and the owner's agreed number on the `Review rounds` line in `inputs.md`.
 - **Add a review stop after a load-bearing part** of a significant project: a contract, data model, protocol, security boundary or shared interface that later tasks build on, where a mistake found only at the end would mean redoing those tasks or would reach users. Put it right after that part, as its own row (`RS<n>`, named for what it reviews), with the later tasks that build on it depending on it. It uses the same protocol as the final review: rounds at most _n_, findings as task cards, done before the stop clears. Use it sparingly, typically only on larger projects (above about five days, or cross-repository) and at most one or two per plan. Each stop needs a stated reason: which later tasks it protects and what a late finding would cost. Record each stop and its agreed rounds in `inputs.md`, alongside the final review.
 
 ## Readiness

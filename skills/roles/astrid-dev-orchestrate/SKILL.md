@@ -10,13 +10,13 @@ description: Deploy and supervise Astrid manager sessions, keep authorized work 
 2. **Supervise:** at the agreed cadence, find work that is ready, moving, submitted or stalled and take the next useful action.
 3. **Unblock:** resolve routine delivery friction; escalate real technical, cross-plan or owner decisions. Improve the brief or skill when the same question recurs, rather than adding supervision overhead.
 
-**One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your session, you are its [accountable agent](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
+**One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your session, you are its [accountable agent](../../shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
 **Across a release, the [Release Lead](../astrid-dev-lead/SKILL.md) owns the release.** An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
 
 **You orchestrate; the manager manages.** If you catch yourself writing a manager's dispatch plan (which tracks run in parallel, per-worker steps, when to escalate), the manage skill is missing a rule: send the manager one line naming the goal, and add the rule to the [manage skill](../astrid-dev-manage/SKILL.md) by PR.
 
-You act for the owner across projects and don't run tasks. Follow the [run contract](../../astrid-dev-shared/run-contract.md); in `run.yaml` your role is `advisor`. Take the path that matches the request:
+You act for the owner across projects and don't run tasks. Follow the [run contract](../../shared/run-contract.md); in `run.yaml` your role is `advisor`. Take the path that matches the request:
 
 | Asked for | Path |
 |---|---|
@@ -49,7 +49,7 @@ When the Lead has prepared accepted release packets, use the [fresh-session disp
    - the plan's path;
    - its release, the brief and `release/<NN>/main`, the plan branch (`release/<NN>/plan-<PP>`), and the exact starting versions;
    - the owner's limits (budget, CPU or GPU, what needs a go);
-   - **the tests, already chosen.** Check that `tasks.md` names the test inventory and each task's exact proof files; if any are missing, you or the planner name them now, because choosing tests is judgment. Tell the manager to run only those, at the [load-bearing moments](../../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing), and never a full suite locally;
+   - **the tests, already chosen.** Check that `tasks.md` names the test inventory and each task's exact proof files; if any are missing, you or the planner name them now, because choosing tests is judgment. Tell the manager to run only those, at the [load-bearing moments](../../shared/run-contract.md#when-a-test-run-is-load-bearing), and never a full suite locally;
    - your session id for questions, as its advisor;
    - its route, [chosen below](#choose-the-managers-route).
 
@@ -78,7 +78,7 @@ Decide this once per run, separately from its tasks' routes. Judge it by what th
 A run starts with one short message; the plan carries the rest. A long brief repeats the plan, drifts from it, and can contradict the skills.
 
 1. **Record the run first.** Fill the `Run start` line in the plan's `inputs.md` ([its fields](../../../templates/project/inputs.md)) and merge it.
-2. **Draft the message for the owner to paste.** A message you send yourself arrives as data from a peer, and the session rightly won't treat it as a go ([authority](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)).
+2. **Draft the message for the owner to paste.** A message you send yourself arrives as data from a peer, and the session rightly won't treat it as a go ([authority](../../shared/run-contract.md#who-answers-for-a-run)).
 
    ```text
    You are accountable for Plan <PP>, <phase or tasks>: you answer for it finishing.
@@ -94,11 +94,11 @@ A run starts with one short message; the plan carries the rest. A long brief rep
 
 ## Claude Cloud setup: no permission prompts
 
-For a Claude Cloud host, follow the [Codex-in-Claude workstream](workstreams/codex-in-claude-cloud.md#claude-cloud-setup-no-permission-prompts). The [run contract](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run) still decides authority and permissions.
+For a Claude Cloud host, follow the [Codex-in-Claude workstream](workstreams/codex-in-claude-cloud.md#claude-cloud-setup-no-permission-prompts). The [run contract](../../shared/run-contract.md#who-answers-for-a-run) still decides authority and permissions.
 
 ## Workstreams
 
-Choose the workstream that fits the environment and assignment; these are **paths within this role**, not sub-skills or new authorities ([convention](../../astrid-dev-shared/workstreams.md)):
+Choose the workstream that fits the environment and assignment; these are **paths within this role**, not sub-skills or new authorities ([convention](../../shared/workstreams.md)):
 
 | Workstream | When |
 |---|---|
@@ -122,7 +122,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 - **Question the question.** Why did it reach you: missing evidence, an unclear card, a gap in a skill or the plan? Sometimes the right answer is a different question.
 - **Unblock it once and for all.** Behind every question is a cause: a missing rule, a thin card, a misleading tool, or authority it wasn't given. Answer, then fix that cause at its source in the same turn (the task card, the plan, or a skill by PR) and say how they could have settled it themselves. If you can't fix it now, add an entry to the [process ledger](../../../docs/ledger/README.md). A question answered twice is a fix you still owe.
 - **Return one concrete next action,** with its route, focused acceptance check, dependencies and return condition. For a high-judgment choice, give the simplest viable option, its trade-off, and a challenge against over-engineering.
-- **Stay inside the run contract's limits** ([review and promotion boundaries](../../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries), [checks and failure repair](../../astrid-dev-shared/run-contract.md#checks-and-failure-repair)), and never invent a model ID.
+- **Stay inside the run contract's limits** ([review and promotion boundaries](../../shared/run-contract.md#review-and-promotion-boundaries), [checks and failure repair](../../shared/run-contract.md#checks-and-failure-repair)), and never invent a model ID.
 
 ## Path 3: check in (only when the owner asks)
 
