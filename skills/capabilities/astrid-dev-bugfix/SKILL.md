@@ -7,7 +7,7 @@ description: Investigate reported Astrid failures, reproduce UI issues in a brow
 
 **Outcome:** understand the failure, recommend the fastest safe way to restore this user's actual workflow, and leave one central incident record—even when no code is changed. **A bug is an issue, not a new project**, unless it reveals a separate independently useful outcome.
 
-Read [the development entrypoint](../../astrid-dev/SKILL.md), [shared run contract](../../astrid-dev-shared/run-contract.md), and relevant product repository instructions. Use their existing model bindings, authority, focused checks and review rules. This skill owns the **user-incident path**, not a second implementation/release workflow.
+Read [the development entrypoint](../../astrid-dev/SKILL.md), [shared run contract](../../shared/run-contract.md), and relevant product repository instructions. Use their existing model bindings, authority, focused checks and review rules. This skill owns the **user-incident path**, not a second implementation/release workflow.
 
 ## Locate the running system
 
@@ -49,6 +49,6 @@ Search for duplicates, then **file or update one [bug issue](../../../docs/contr
 
 ## Upstream only when justified
 
-A proven reusable repair may become a focused PR; a machine-only workaround stays documented in the issue. For a structural fix, investigate existing patterns with N-route helpers and seek high-judgment architectural challenge against overengineering. Then use [Iterate](../../roles/astrid-dev-iterate/SKILL.md) for authorized implementation and focused checks; follow the [shared run contract](../../astrid-dev-shared/run-contract.md) for routing/review and [Release](../astrid-dev-release/SKILL.md) for integration/promotion where applicable. Where the fix lands, and under which release number, is [step 7 of How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs); the issue joins that release by its `release:NN` label. Use the [PR template](../../../templates/product-pr/bug.md). Cross-link PRs and verified results in the central issue.
+A proven reusable repair may become a focused PR; a machine-only workaround stays documented in the issue. For a structural fix, investigate existing patterns with N-route helpers and seek high-judgment architectural challenge against overengineering. Then use [Iterate](../../capabilities/astrid-dev-iterate/SKILL.md) for authorized implementation and focused checks; follow the [shared run contract](../../shared/run-contract.md) for routing/review and [Release](../astrid-dev-release/SKILL.md) for integration/promotion where applicable. Where the fix lands, and under which release number, is [step 7 of How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs); the issue joins that release by its `release:NN` label. Use the [PR template](../../../templates/product-pr/bug.md). Cross-link PRs and verified results in the central issue.
 
 **Done:** the user has evidence and a safe recovery proposal (plus verified outcome if attempted), and the incident has a central issue URL or a publish-ready draft. Never claim a frontend or machine is fixed unless the original failure was actually verified.

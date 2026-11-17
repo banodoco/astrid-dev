@@ -5,7 +5,7 @@
 | Question / domain | Canonical owner and first places to inspect |
 | --- | --- |
 | Vision, missing outcomes, contribution priority | [Astrid Dev vision](../../../vision/README.md), [gaps](../../../vision/README.md), [project catalog](../../../plans/index.md). Status and ownership are *only* in each plan's `plan.md`; the catalog shows them |
-| Project planning, task proof, run/review policy | [Project format](../../../docs/project-format.md), [planning skill](../../roles/astrid-dev-plan/SKILL.md), [shared run contract](../../astrid-dev-shared/run-contract.md). PR evidence rules: [Astrid development skill](../SKILL.md) |
+| Project planning, task proof, run/review policy | [Project format](../../../docs/project-format.md), [planning skill](../../roles/astrid-dev-plan/SKILL.md), [shared run contract](../../shared/run-contract.md). PR evidence rules: [Astrid development skill](../SKILL.md) |
 | Authoritative projects, timelines, media, jobs, permissions | [astrid-runtime](https://github.com/banodoco/astrid-runtime), its API contracts and project/task authority |
 | Agent CLI, models, creative packs, installer, MCP | [astrid-agent](https://github.com/banodoco/astrid-agent); its current [execution map](https://github.com/banodoco/astrid-agent/blob/main/docs/reference/where-things-run.md) and [setup guide](https://github.com/banodoco/astrid-agent/blob/main/docs/setup/SKILL.md) |
 | Editor, user interface, timeline, export, editor extensions | [astrid-app](https://github.com/banodoco/astrid-app), especially [video editor docs](https://github.com/banodoco/astrid-app/tree/main/docs/video-editor) and [editor SDK](https://github.com/banodoco/astrid-app/tree/main/src/sdk) |
@@ -15,11 +15,11 @@
 | Rendering and finished-video options | [rendering-options Plan 27](../../../plans/27-video-render-options/plan.md), App render/export paths. Remote execution belongs separately to [cloud V1 Plan 25](../../../plans/25-cloud-assist-v1/plan.md) |
 | Cloud execution versus fully hosted projects | [cloud V1 Plan 25](../../../plans/25-cloud-assist-v1/plan.md) retains local project custody; [hosted V2 Plan 26](../../../plans/26-fully-hosted-v2/plan.md) moves durable project state into hosted infrastructure |
 | Shared knowledge and agent learning | [Hivemind protocol Plan 22](../../../plans/22-hivemind-protocol/plan.md), [agent learning Plan 23](../../../plans/23-agent-learning-integration/plan.md), [Hivemind](https://github.com/banodoco/hivemind) |
-| Bugs, small fixes and user incidents | [Astrid Dev issues](https://github.com/banodoco/astrid-dev/issues) are the tracking unit, not projects. Use [Bug fixing](../../capabilities/astrid-dev-bugfix/SKILL.md) for recovery and [Iterate](../../roles/astrid-dev-iterate/SKILL.md) for focused repair |
+| Bugs, small fixes and user incidents | [Astrid Dev issues](https://github.com/banodoco/astrid-dev/issues) are the tracking unit, not projects. Use [Bug fixing](../../capabilities/astrid-dev-bugfix/SKILL.md) for recovery and [Iterate](../../capabilities/astrid-dev-iterate/SKILL.md) for focused repair |
 | Integration, releases, public deployments | [Release skill](../../capabilities/astrid-dev-release/SKILL.md) and product-owned [release references](../../capabilities/astrid-dev-release/references/sources.md) |
 
 ## Cross-repository order
 
 The usual dependency direction is **Runtime → Agent → App → Pinokio**, although Runtime tests may also pin Agent. The exact current lock files and installed tuple must be verified in the repositories. A green check in one repository does **not** qualify the combined installed system.
 
-A domain map is **navigation, not permission or a copied runbook**. The active repository's own instructions, current source, named task and [run contract](../../astrid-dev-shared/run-contract.md) determine what an agent may actually change or ship.
+A domain map is **navigation, not permission or a copied runbook**. The active repository's own instructions, current source, named task and [run contract](../../shared/run-contract.md) determine what an agent may actually change or ship.

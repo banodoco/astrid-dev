@@ -42,7 +42,7 @@ Enter through [astrid-dev](../../astrid-dev/SKILL.md). Use [Plan](../../roles/as
 2. **Update the release document first**, if its highlight, intent, approach or included plans change. Drafts can change without a publication event. An already finalized release is history: plan the change in a later release.
 3. **Create a numbered release brief** when needed and its scope is credible. A queued plan alone does not warrant a number or promise shipment.
 4. **Review authored strategy decisions** and update **Last reviewed** when direction changes. Sequencing is the owner’s decision.
-5. **[Check it.](../../astrid-dev-shared/run-contract.md#when-a-test-run-is-load-bearing)** `python3 scripts/astrid_dev.py check` verifies document structure; generated material is refreshed from its sources.
+5. **[Check it.](../../shared/run-contract.md#when-a-test-run-is-load-bearing)** `python3 scripts/astrid_dev.py check` verifies document structure; generated material is refreshed from its sources.
 
 ## Done when
 

@@ -11,7 +11,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 
 | Work | Where it goes |
 | --- | --- |
-| Bug, small fix, docs or maintenance | [Issue](../../docs/contribution-workflow.md#issues) and focused PR. [Bug fixing](../capabilities/astrid-dev-bugfix/SKILL.md) handles incidents; [Iterate](../roles/astrid-dev-iterate/SKILL.md) handles scoped repairs |
+| Bug, small fix, docs or maintenance | [Issue](../../docs/contribution-workflow.md#issues) and focused PR. [Bug fixing](../capabilities/astrid-dev-bugfix/SKILL.md) handles incidents; [Iterate](../capabilities/astrid-dev-iterate/SKILL.md) handles scoped repairs |
 | Noticed something, or have a question | [Issues](../../docs/contribution-workflow.md#issues): file it, search first |
 | Task in a claimed project | Existing [plan, inputs and tasks](../../docs/project-format.md); inherit accepted decisions and permissions |
 | New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/README.md), then use [Plan](../roles/astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
@@ -27,15 +27,15 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../capabilities/astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
 | Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](../capabilities/astrid-dev-improve/SKILL.md): find the rule's one home, change only that, prove it |
 
-**Role/workstream convention:** the `SKILL.md` in each existing role folder defines its general job; optional [workstreams](../astrid-dev-shared/workstreams.md) under that folder add situation-specific steps. No second roles hierarchy.
+**Role/workstream convention:** each role's `SKILL.md` defines its job; optional [workstreams](../shared/workstreams.md) under that folder add situation-specific steps. No second roles hierarchy.
 
 ## One path, proportionate depth
 
 1. **Orient:** Learn what the contributor wants; consult the [domain map](references/domains.md) for the relevant code and specialists.
 2. **Investigate:** Trace actual behavior and prior work before changing it. Search issues and projects; confirm source revision, dependencies and relevant proof.
 3. **Decide:** Agree the smallest complete result and test of success. Reuse accepted scope; challenge consequential designs without creating a mandatory second planning ritual.
-4. **Build:** Work on the authorized source using [Iterate](../roles/astrid-dev-iterate/SKILL.md); protect existing work and respect the current run's constraints.
-5. **Prove:** Record proof as the [run contract](../astrid-dev-shared/run-contract.md#checks-and-failure-repair) and its [route provenance](../astrid-dev-shared/run-contract.md#actual-route-provenance) say. A green wrapper is not product proof.
+4. **Build:** Work on the authorized source using [Iterate](../capabilities/astrid-dev-iterate/SKILL.md); protect existing work and respect the current run's constraints.
+5. **Prove:** Record proof as the [run contract](../shared/run-contract.md#checks-and-failure-repair) and its [route provenance](../shared/run-contract.md#actual-route-provenance) say. A green wrapper is not product proof.
 6. **Land:** Link issue/project and implementation PRs, merged into the plan branch of the release they ship in (a fix goes to its fix branch); use ordinary review and [Release](../capabilities/astrid-dev-release/SKILL.md) for cross-repo integration and separately authorized promotion.
 
 Start at the first stage **not already established by evidence**; a fact-finding task can end after investigation, and a known small fix needn't revisit architectural planning.
@@ -46,4 +46,4 @@ If a person has a goal, find the closest issue or existing task first. Otherwise
 
 Use the [GitHub contributor guide](../../docs/contribution-workflow.md) to **claim, propose, request a start decision, ask a question, submit multiple product PRs or finish a project**. Claiming is ownership, not authorization. No mandatory project conversation hub is created. The concise completion PR is an index of real evidence, not another database. When astrid-dev itself gets in your way, add an entry file to the add-only [process ledger](../../docs/ledger/README.md).
 
-**Authority:** Follow the [shared run contract](../astrid-dev-shared/run-contract.md), [contribution design principles](../../docs/contribution-design-principles.md), and the active product repository's instructions. This skill routes the work; it does not grant execution, integration or release permission. Never install skills or change a contributor's machine merely to orient them.
+**Authority:** Follow the [shared run contract](../shared/run-contract.md), [contribution design principles](../../docs/contribution-design-principles.md), and the active product repository's instructions. This skill routes the work; it does not grant execution, integration or release permission. Never install skills or change a contributor's machine merely to orient them.
