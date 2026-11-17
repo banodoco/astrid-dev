@@ -1420,3 +1420,88 @@ bounded_followup_20261117_0919:
   new_automation_created: false
   purpose: Check genuine independent review and worker/hosted candidate proof for draft Agent PR373-377; classify 95 separate runtime_protocol import-root failures without assuming product/test ownership; keep explicit Runtime replay-history contract hold
   limits: No other-session workflows rerun/cancel/dispatch; no auth retry, main/release-main promotion, Plan38_55 ownership crossing, weakened assertions, or task/input checkbox edits
+
+# N-class source diagnosis complete; X-class contract/runner proof still required.
+k1a_runtime_source_import_provenance_20261117:
+  state: active_incomplete_evidence_only_X_resolution_hold
+  route_completed: N_actual_XML_and_source_diagnosis
+  route_next: X_coupled_installed_distribution_vs_checked_out_Runtime_import
+  S_review_if_security_or_source_authority_changes: required
+  actual_model_or_independent_reviewer_provenance: unavailable_not_invented
+  evidence: diagnosis/agent/k1a-runtime-protocol-source-root-20261117.md
+  exact_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI:
+    run_id: 43967861168
+    attempt: 1
+    completed_conclusion: failure
+    existing_failures: 882
+    existing_errors: 398
+    same_full_literal_message_sha256: 9955b76881fd4a298a92e7917ee1d4be8a4bfd0b0ff1bff62a40709b6c598b0b
+    unit7:
+      job_id: 133651924616
+      original_junit_artifact_id: 14281865130
+      setup_message_occurrences: 92
+      zip_sha256: 3d208e420b35370e7b153a3f6349a64c415df126e87d3f5d97b7b1b9c8c0693a
+      xml_sha256: 3bd9218c3830caf27bc2502a50ebc7293c19012bad01a2e890b1f31c703b993b
+    unit6:
+      job_id: 133651924641
+      original_junit_artifact_id: 14283023095
+      setup_message_occurrences: 3
+      zip_sha256: 74811e80afd29518a356b8f2dd4b4794b4a34f5ea375412dc5ad11cab0ea7d47
+      xml_sha256: b397f917a9ef5f01734ff06fcaeb7b7e39d8a35d3064f4d610977fc97168f89a
+    full_inventory_gzip_sha256: 729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426
+    existing_failures_not_additive: true
+    exact_prior_ID_comparison_this_followup: not_performed
+    regressions_inferred_from_missing_prior_IDs: false
+  Lanes:
+    run_id: 43967861160
+    attempt: 1
+    completed_conclusion: failure
+    existing_failures_including_log_only_optin: 306
+    existing_errors: 260
+    original_XML_artifacts_and_comparisons_preserved: true
+  source_trace:
+    workflow: .github/workflows/ci.yml
+    runner_has_pinned_checkout: true
+    installer: scripts/ci_install_runtime.py
+    runtime_installed_as_noneditable_source_archive: true
+    source_helper: tests/helpers/runtime.py
+    source_helper_prepends_sys_path_not_sys_modules_eviction: true
+    actual_loaded_runtime_protocol: Python3.11_site_packages
+    source_provenance_fixture: tests/sdk/test_timeline_restructure.py
+    fixture_assertion_preserved: true
+    import_order_and_required_separate_environment: unresolved
+    downstream_product_behavior: not_proven
+    contract_decision: distinguish_noneditable_packaging_proof_from_source_checkout_authentication
+  product_changes_in_this_followup: none
+  unmerged_agent_draft_PRs: [373, 374, 375, 376, 377]
+  actual_independent_submitted_reviews_on_PR373_to_PR377: 0
+  candidate_hosted_execution_proof: absent
+  separate_holds:
+    PR377_E14_pin_drift: 68_existing_errors_distinct_not_a_source_root_fix
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    Runtime_clip: uncommitted_25_passed_2_failed_retry_vs_required_CAS_history_conflict
+    Runtime_draft_PR56: orphan_declaration_metadata_only
+    G1: incomplete
+    G2: incomplete
+    RS1: '0/1'
+  operations:
+    astrid_dev_ref_only: p39/g1
+    product_branch_or_PR_modified: false
+    main_or_release_main_changed: false
+    inputs_md_or_task_checkboxes_changed: false
+    authentication_retry: false
+    workflow_cancel_rerun_or_manual_dispatch: false
+
+bounded_followup_20261117_1123:
+  reused_existing_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  automation_update_confirmed: true
+  next_run_time_utc: '2026-11-17T11:23:25Z'
+  next_run_time_local: '2026-11-17T03:23:25-08:00'
+  one_off: true
+  new_automation_created: false
+  purpose: Recheck independent reviews of Agent PR373-377, genuine candidate execution proof, and X-route source-root import provenance while preserving Plan38_55_and_Runtime_clip_owner_holds
+  limits: No unrelated workflow dispatch rerun cancellation, no auth retry, no release or public main change, no input or task-checkbox edits, no weakened authority assertions
