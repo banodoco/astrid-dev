@@ -99,13 +99,18 @@ A session that waits on a prompt nobody sees is a stalled run. Before any work s
 - **Refusals:** who may lift one is in the [run contract](../astrid-dev-shared/run-contract.md#who-answers-for-a-run).
 - **Merges:** a manager merges its own progress pull requests; every other merge into `main` needs the owner's go ([the rule](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Auto mode refuses some merges, deletions and settings commits: ask once for the whole run ("merge the plan PRs; my progress PRs auto-merge") and record that go on the `Run start` line (`run.yaml` is local and git-ignored, so it can't carry it: [who answers for a run](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)).
 
-## Workstreams and cloud environments
+## Workstreams
 
-- **Multi-manager dispatch under a Release Lead:** [dispatch workstream](workstreams/multi-manager-dispatch.md). This changes coordination, not manager authority.
-- **Codex workers or manager hosted in Claude Cloud:** [guide](codex-in-claude-cloud/README.md), with the default choices [below](#use-codex-from-claude-cloud).
-- **Separate Codex Cloud chats:** [guide](codex-cloud/README.md) for mailbox, identity, polling and recovery.
+Choose the workstream that fits the environment and assignment; these are **paths within this role**, not sub-skills or new authorities:
 
-These are role-specific workstreams and environment guides, not standalone sub-skills. For agents in separate Codex Cloud chats, use [Codex Cloud agent coordination](codex-cloud/README.md): its issue mailbox, session IDs and what does not wake an idle chat. Live resource supervision stays the responsible manager's job and never waits for a check-in. Codex inside a Claude Code cloud session is the next section: a different environment.
+| Workstream | When |
+|---|---|
+| [Standard project handoff](#path-1-start-a-project) | Start and advise one accepted plan manager; the default |
+| [Multi-manager release dispatch](workstreams/multi-manager-dispatch.md) | A Release Lead has prepared bounded packet files and a queue for several managers |
+| [Separate Codex Cloud sessions](workstreams/codex-cloud-sessions.md) | Coordinate remote Codex chats using the existing GitHub issue mailbox and durable cursors |
+| [Codex hosted in Claude Cloud](workstreams/codex-in-claude-cloud.md) | Claude hosts Codex workers (default) or a justified Codex manager process |
+
+The last two select **how sessions run** and may accompany multi-manager dispatch. The underlying [Codex Cloud guide](codex-cloud/README.md) and [Codex-in-Claude guide](codex-in-claude-cloud/README.md) retain the technical commands and scripts at their existing paths. Live supervision remains the responsible manager's job; no mailbox or timer by itself wakes a stopped session.
 
 ## Use Codex from Claude Cloud
 
