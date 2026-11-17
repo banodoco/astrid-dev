@@ -21,7 +21,7 @@ Enter through [astrid-dev](../astrid-dev/SKILL.md). You are the **release manage
 
 Choose the situation, **not another role or sub-skill**:
 
-- [Multi-manager dispatch](workstreams/multi-manager-release.md): a Codex orchestrator dispatches bounded work from several existing plans to ChatGPT manager sessions, and reports back to you.
+- [Multi-manager dispatch](workstreams/multi-manager-release.md): a Codex orchestrator dispatches bounded Markdown packet briefs at `releases/<N>/packets/`, linked from the existing release `run.md`, to ChatGPT manager sessions and reports back to you.
 - Otherwise, follow [Release](../astrid-dev-release/SKILL.md) and directly oversee the plan managers; no dispatch layer is required.
 
 Keep any environment-specific how-to in the orchestrator's existing guides. Workstreams supplement role skills; they never override the [run contract](../astrid-dev-shared/run-contract.md) or the owner's authorizations.
