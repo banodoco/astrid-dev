@@ -1,14 +1,14 @@
 # Workstream: Codex hosted inside Claude Cloud
 
-Choose when a Claude Cloud session runs Codex in its container, either as **workers** (default) or, when justified, as a managed Codex process. The detailed commands and scripts remain in the [environment guide](../codex-in-claude-cloud/README.md); do not copy them here. Follow the general [Orchestrate role](../SKILL.md) and [run contract](../../astrid-dev-shared/run-contract.md).
+Choose when a Claude Cloud session runs Codex in its container, either as **workers** (default) or, when justified, as a managed Codex process. The detailed commands and scripts remain in the [environment guide](../codex-in-claude-cloud/README.md); do not copy them here. Follow the general [Orchestrate role](../SKILL.md) and [run contract](../../../astrid-dev-shared/run-contract.md).
 
 ## Claude Cloud setup: no permission prompts
 
 A session that waits on a prompt nobody sees is a stalled run. Before any work starts:
 
 - **Worker sessions and their permissions** are set up as in [manage step 1](../../astrid-dev-manage/SKILL.md#steps). Add a missing allow rule by PR with the owner's OK: a rule change is a change to permissions.
-- **Refusals:** who may lift one is in the [run contract](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run).
-- **Merges:** a manager merges its own progress pull requests; every other merge into `main` needs the owner's go ([the rule](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Auto mode refuses some merges, deletions and settings commits: ask once for the whole run ("merge the plan PRs; my progress PRs auto-merge") and record that go on the `Run start` line (`run.yaml` is local and git-ignored, so it can't carry it: [who answers for a run](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)).
+- **Refusals:** who may lift one is in the [run contract](../../../astrid-dev-shared/run-contract.md#who-answers-for-a-run).
+- **Merges:** a manager merges its own progress pull requests; every other merge into `main` needs the owner's go ([the rule](../../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Auto mode refuses some merges, deletions and settings commits: ask once for the whole run ("merge the plan PRs; my progress PRs auto-merge") and record that go on the `Run start` line (`run.yaml` is local and git-ignored, so it can't carry it: [who answers for a run](../../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)).
 
 ## Use Codex from Claude Cloud
 
@@ -19,7 +19,7 @@ A Claude cloud session can run Codex in its own container ([`codex-in-claude-clo
 | **Codex workers (default)** | The Claude session manages: it briefs each card, starts one `codex exec` per card on the card's route, checks the result, commits and integrates ([how](../codex-in-claude-cloud/README.md#use-codex-for-the-workers-under-a-claude-manager)) | A project run from a task list. This is what "Codex does the bulk of the work" means unless the owner says otherwise |
 | **A Codex manager** | A long-running Codex process manages its own sub-agents; the Claude session hosts it and still answers for the run | One long, self-directed job with few decisions along the way (a GPU validation run), more parallel tracks than the session can supervise, or the owner asks for it. Say which reason applies on the `Run start` line |
 
-This is the one statement that Codex workers are the default; every other file links here. Each route's model is in the [run contract's table](../../astrid-dev-shared/run-contract.md#routing-and-bindings). A Codex manager is a second manager in the same container: it can't commit, reaches you only through a mailbox, and needs a runner and a keep-alive. Don't add that layer by default, and never tell a session to "run the Codex manager" when you mean "send the cards to Codex".
+This is the one statement that Codex workers are the default; every other file links here. Each route's model is in the [run contract's table](../../../astrid-dev-shared/run-contract.md#routing-and-bindings). A Codex manager is a second manager in the same container: it can't commit, reaches you only through a mailbox, and needs a runner and a keep-alive. Don't add that layer by default, and never tell a session to "run the Codex manager" when you mean "send the cards to Codex".
 
 **The rest of this section applies only when you have chosen a Codex manager.**
 - **A worker restart kills every process,** the keep-alive included. Your hosting check-in is a different timer from the owner's cadence in path 3: while a Codex manager's run is live, keep one scheduled (`send_later`) at most 20 minutes away, and have it re-arm `codex-hold.sh` with all live run folders. The daemon and its SessionStart hook, which the owner adds because auto mode refuses Claude's edits to its own settings, are in the [README](../codex-in-claude-cloud/README.md#start-a-run).
