@@ -10,9 +10,11 @@ One meaning per word; two meanings, two terms.
 
 **contributor:** a person or agent changing astrid-dev.
 
-**orchestrator:** a standing session that plans and starts projects, advises managers, checks on runs.
+**orchestrator:** a standing session coordinating multiple plan managers or advising a manager; in a led release it owns manager liveness and dispatch, not release acceptance.
 
-**release manager:** the orchestrator of one release, named on its brief. It owns `release/<NN>/main` (its health and landing order, the brief's `## Branches` table, tester builds, the candidate and asking for the owner's go); each plan's manager owns that plan branch and its landing.
+**release lead:** the agent leading delivery across all plans of a release; the release manager named in the release brief.
+
+**release manager:** the release lead named on the brief. It owns `release/<NN>/main` (health, landing order, branch records, tester builds, candidate and asking for the owner's go). Existing named release managers remain so until the owner records a handoff; each plan's manager owns its plan branch and landing.
 
 **advisor:** the `run.yaml` role answering blocking questions: the orchestrator or else a fresh high-judgment sub-agent.
 
@@ -28,7 +30,7 @@ One meaning per word; two meanings, two terms.
 
 **helper:** an `N` worker doing bounded reading, editing or verifying for a lead.
 
-**lead:** the agent doing a task or review itself, delegating helper work.
+**lead (task lead):** the agent doing an individual task or review itself, delegating helper work; distinct from the release lead.
 
 **reviewer:** independent of the author, read-only, on an exact commit range.
 
@@ -43,6 +45,8 @@ One meaning per word; two meanings, two terms.
 **phase:** a part of a plan that delivers value alone.
 
 **task:** one assignment in `tasks.md`; its **card** holds outcome, route, scope, dependencies and proof.
+
+**dispatch packet:** an assignment of one or more existing plan tasks, sized at roughly three human engineering days or less; not a new project, GitHub issue or independent plan run.
 
 **task scope:** what a task may change: paths with their tests, shared surfaces or contracts, or `path:symbol`.
 
