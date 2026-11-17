@@ -1,11 +1,11 @@
 ---
 name: astrid-dev-orchestrate
-description: Deploy and supervise accountable Astrid managers, keep their authorized work moving, unblock or escalate stalled runs, and follow a specific workstream for ChatGPT session dispatch or cloud environments.
+description: Deploy and supervise Astrid manager sessions, keep authorized work moving, unblock or escalate stalls; for a Lead-prepared packet queue launch a fresh ChatGPT session per packet.
 ---
 
 # Orchestrate Astrid work
 
-**Your job:** get authorized work to accountable managers and keep it moving.
+**Your job:** get authorized work into manager sessions and keep it moving. The default is a continuing project manager; the [fresh-packet workstream](workstreams/multi-manager-dispatch.md) uses a **new ChatGPT manager session for each packet**, with the Lead owning plan-level integration.
 1. **Deploy:** brief managers from accepted project tasks, or a Lead-prepared dispatch queue; do not invent scope.
 2. **Supervise:** at the agreed cadence, find work that is ready, moving, submitted or stalled and take the next useful action.
 3. **Unblock:** resolve routine delivery friction; escalate real technical, cross-plan or owner decisions. Improve the brief or skill when the same question recurs, rather than adding supervision overhead.
@@ -40,7 +40,7 @@ The [Release Lead](../astrid-dev-lead/SKILL.md) (the release manager named on th
 
 ## Path 1: start a project
 
-When the Lead has already prepared accepted release packets, use the [multi-manager dispatch workstream](workstreams/multi-manager-dispatch.md) instead of re-planning them.
+When the Lead has prepared accepted release packets, use the [fresh-session dispatch workstream](workstreams/multi-manager-dispatch.md) instead of this standard whole-project handoff. Its sessions do **not** persist across packets.
 
 1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../strategy.md) and the [catalog](../../plans/index.md). With no accepted plan, write one with [Plan](../astrid-dev-plan/SKILL.md) (you may plan it yourself) and get the owner's scope decision. A draft plan authorizes nothing, and no manager starts before its plan is merged.
    - **Fix the scope when the run starts.** If the owner adds scope to a running release, say what it reopens (tests, re-pins, review) and offer the next release instead; add it only if the owner decides to.
@@ -107,7 +107,7 @@ Choose the workstream that fits the environment and assignment; these are **path
 | Workstream | When |
 |---|---|
 | [Standard project handoff](#path-1-start-a-project) | Start and advise one accepted plan manager; the default |
-| [Multi-manager release dispatch](workstreams/multi-manager-dispatch.md) | A Release Lead has prepared bounded packet files and a queue for several managers |
+| [Fresh ChatGPT packet dispatch](workstreams/multi-manager-dispatch.md) | A Release Lead has prepared packets; launch a new ChatGPT manager session for **each** packet |
 | [Separate Codex Cloud sessions](workstreams/codex-cloud-sessions.md) | Coordinate remote Codex chats using the existing GitHub issue mailbox and durable cursors |
 | [Codex hosted in Claude Cloud](workstreams/codex-in-claude-cloud.md) | Claude hosts Codex workers (default) or a justified Codex manager process |
 
