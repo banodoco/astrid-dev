@@ -1064,3 +1064,96 @@ bounded_followup_20261117_0343:
     check independent reviewer/hosted Windows evidence for Agent PR373 before any merge
   limits: No Workflow re-dispatch/rerun/cancel, no release/main change, no Plan38/55 ownership change,
     no assertion relaxation, no Runtime clip history-integrity bypass without explicit owner decision
+
+
+# Add-only continuation snapshot; earlier checkpoints above remain intact.
+k1a_ae2_historical_archive_candidate_20261117:
+  date_utc: '2026-11-17'
+  state: active_incomplete_not_accepted
+  route: N_source_trace_and_isolated_workflow_candidate
+  actual_model_provenance: unavailable_not_invented
+  source_evidence: diagnosis/agent/k1a-lanes-historical-archives-20261117.md
+  agent_plan_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI:
+    run_id: 43967861168
+    attempt: 1
+    status: completed_failure
+    junit_failures: 882
+    junit_errors: 398
+  Lanes:
+    run_id: 43967861160
+    attempt: 1
+    status: completed_failure
+    total_failures_including_log_only_optin: 306
+    total_errors: 260
+    shard4_job_id: 133651923157
+    artifact_id: 14282352655
+    tests: 516
+    failures: 99
+    errors: 26
+    skipped: 0
+    artifact_zip_sha256: 35038fc7b78af32315598829f361e6e790d74baf20fca25b9b2608ac5bc46b8d
+    integration_xml_sha256: af5f41519f22ba1434ef74a6e28f62f5b4c6fdd6ea7fb0ae238aa6ea79db49da
+    actual_log_retrieved: true
+  archival_prerequisites:
+    failing_exact_xml_test_ids: 13
+    errors: 12
+    failures: 1
+    full_literal_xml_message_groups: 3
+    historical_runtime_SHA: 6d53a19070faf63fc15ae1f81417722edc2c8a5f
+    historical_runtime_setup_errors: 9
+    historical_runtime_failure: 1
+    historical_agent_SHA: 0e1543e0da2215db9cb3320cfd1083174c3c62a9
+    historical_agent_setup_errors: 3
+    runtime_error_message_sha256: 6efcc4c3053bfb250cac33b326fbe83d995e590a1ad4079c5c6b95e884b1e7f3
+    runtime_failure_message_sha256: d9cf0a6bcfc0863f24351de5fa3bfd32023c7a879ad398928864a0f2174d5d23
+    agent_error_message_sha256: 069921f216b966aa60a412f58015552383c74d2401b566d4fba7089c95b14fa0
+    actual_error_signature: 'fatal: not a tree object: <pinned SHA>'
+    source_class: missing_historical_git_tree_in_shallow_runner_checkout
+    compared_against_prior_exact_IDs_in_this_followup: false
+    regression_inference: none
+    product_behavior_after_recovered_history: unproven
+    existing_global_totals_unchanged: true
+  isolated_candidate:
+    repository: banodoco/astrid-agent
+    task_branch: p39/ae2-historical-archives-20261117
+    base_SHA: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    commit_SHA: c815db3f44939df23a65a1c5520a9844e167ad0c
+    PR: https://github.com/banodoco/astrid-agent/pull/374
+    changed_files: ['.github/workflows/lanes.yml']
+    status: draft_unmerged_unreviewed
+    implementation: additive_exact_SHA_fetch_and_commit_tree_verification
+    local_focused_proof: not_run_no_product_worker_checkout
+    candidate_hosted_qualification: not_run
+    independent_review_submissions: 0
+    expected_proof: Real plan-head hosted Lanes shard4 JUnit must execute all 13 exact IDs past archive setup; do not imply they pass.
+  separate_holds:
+    agent_PR373_windows_native: unmerged_unreviewed_no_actual_hosted_candidate_XML
+    runtime_df3d4dd_short_lease: Plan55_ownership_clearance_required_excluded_from_PR374
+    legacy_pod_bootstrap: entrypoint_and_noneditable_vs_editable_product_contract_unresolved
+    runtime_clip: uncommitted_25_passed_2_failed_replay_CAS_integrity_owner_decision_required
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    formal_G1: incomplete
+    formal_G2: incomplete
+    RS1: '0/1'
+  actions:
+    current_astrid_dev_only: p39/g1
+    product_task_branch_only: p39/ae2-historical-archives-20261117
+    product_PR_merged: false
+    no_release_14_main_or_public_main_push_or_merge: true
+    inputs_or_task_checkboxes_modified: false
+    no_auth_retry_or_workflow_dispatch_rerun_cancel: true
+  next: Independent review and executable source-tree proof for PR374; separate PR373 Windows proof; isolate other K1 prerequisites with no owner conflicts.
+
+bounded_followup_20261117_0416:
+  reused_existing_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  update_confirmed_success: true
+  next_run_time_utc: '2026-11-17T04:16:59Z'
+  next_run_time_local: '2026-11-16T20:16:59-08:00'
+  one_off: true
+  no_new_automation_created: true
+  purpose: Follow isolated draft PR374 through independent reviewer and exact historical Git tree proof without merging prematurely; check PR373 review and Windows XML holds
+  limits: Keep G1_G2_incomplete_RS1_0_of_1; never modify public/release main or Plan38/55 ownership or the Runtime replay integrity contract
