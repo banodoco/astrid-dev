@@ -1505,3 +1505,86 @@ bounded_followup_20261117_1123:
   new_automation_created: false
   purpose: Recheck independent reviews of Agent PR373-377, genuine candidate execution proof, and X-route source-root import provenance while preserving Plan38_55_and_Runtime_clip_owner_holds
   limits: No unrelated workflow dispatch rerun cancellation, no auth retry, no release or public main change, no input or task-checkbox edits, no weakened authority assertions
+
+# Additive cross-job inventory correction; original G1 and earlier qualification records unchanged.
+k1a_e14_shared_fixture_cross_shard_20261117:
+  status: active_incomplete_extended_diagnostic_scope_no_candidate_acceptance
+  route: N_exact_XML_and_shared_fixture_source_trace
+  actual_model_provenance: unavailable_not_invented
+  independent_reviews: 0
+  evidence: diagnosis/agent/k1a-e14-shared-fixture-cross-shard-20261117.md
+  exact_agent_plan_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  exact_reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI:
+    workflow_run: 43967861168
+    attempt: 1
+    outcome: completed_failure
+    prior_total_failures_unchanged: 882
+    prior_total_errors_unchanged: 398
+    message_sha256: 2e4afad1dcbbe9ae8dc51baed4c60a5a72503ffbdf0e65019d9a9063490e4af1
+    same_full_literal_message_occurrences: 85
+    category: setup_errors_not_new_failures
+    source: tests/sdk/test_timeline_editing_acceptance_runtime.py_editing_case
+    darwin:
+      job_id: 133651924059
+      junit_artifact_id: 14277714424
+      message_count: 1
+      zip_sha256: 06a2bac5da6c594ded3ca0f5dec3f0237fc6d02bff165cebd39d39450c386df0
+      xml_sha256: 07bd706c3faced716a9a421820e8da6a2bddf099af6fdc7d1347fa574483b984
+    unit4:
+      job_id: 133651924745
+      junit_artifact_id: 14282820153
+      message_count: 16
+      zip_sha256: 2acb279263d68ae27adb9a008e0e0d610dc9bf4662c40fb2c6645cf7bdbe1cf7
+      xml_sha256: 63ea09f25b19ec3267f75f37d07a4fc0af9b122117fd956fa90a49e44b508008
+    unit7:
+      job_id: 133651924616
+      junit_artifact_id: 14281865130
+      message_count: 68
+      zip_sha256: 3d208e420b35370e7b153a3f6349a64c415df126e87d3f5d97b7b1b9c8c0693a
+      xml_sha256: 3bd9218c3830caf27bc2502a50ebc7293c19012bad01a2e890b1f31c703b993b
+    reused_complete_inventory_gzip_sha256: 729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426
+    old_baseline_exact_ID_comparison_this_checkpoint: not_performed
+    missing_old_ID_regressions_inferred: false
+    PR369_regression_attribution: not_proven
+    original_artifacts_network_redownloaded_this_checkpoint: false
+  Lanes:
+    run_id: 43967861160
+    attempt: 1
+    outcome: completed_failure
+    prior_total_failures_including_optin_unchanged: 306
+    prior_total_errors_unchanged: 260
+  PR377:
+    state: open_draft_unmerged
+    change: one_shared_fixture_Runner_Runtime_SHA_source
+    predicted_reach_previous: 68
+    predicted_reach_corrected: 85
+    focused_worker_or_candidate_XML_proof: absent
+    independent_N_review: none
+    acceptance: hold
+  other_open_unmerged_unreviewed_drafts: [373, 374, 375, 376]
+  holds:
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    Runtime_clip: uncommitted_25_passed_2_failed_replay_CAS_history_owner_decision
+    formal_G1: incomplete
+    formal_G2: incomplete
+    RS1: '0/1'
+  operations:
+    only_astrid_dev_p39_g1_evidence_and_runstate_modified: true
+    product_code_or_PR_merged: false
+    main_or_release_main_advanced: false
+    tasks_checkboxes_or_inputs_modified: false
+    workflow_cancel_rerun_dispatch: false
+    authentication_retry: false
+
+bounded_followup_20261117_1324:
+  reused_current_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  update_confirmed_success: true
+  next_run_time_utc: '2026-11-17T13:24:59Z'
+  next_run_time_local: '2026-11-17T05:24:59-08:00'
+  one_off: true
+  new_automation_created: false
+  purpose: Recheck genuine independent N reviews and focused/hosted proof for Agent PR373_to_PR377; verify 85 existing E14 setup IDs after any separately reviewed candidate and continue bounded K1 prerequisite triage
+  limits: No workflow cancellation rerun dispatch, no auth retry, no release_main_or_public_main changes, no Plan38_55 takeover, no Runtime_clip_history_integrity_contract_change, no inputs_md_or_task_checkbox_edit
