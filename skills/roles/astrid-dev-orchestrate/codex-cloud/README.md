@@ -51,7 +51,7 @@ If a session's skill catalog does not list a readable filesystem skill, read its
 From a checkout of `astrid-dev`, read all pages after your own last processed numeric comment ID:
 
 ```sh
-python3 skills/astrid-dev-orchestrate/codex-cloud/inbox.py banodoco/astrid-dev 123 --after 0
+python3 skills/roles/astrid-dev-orchestrate/codex-cloud/inbox.py banodoco/astrid-dev 123 --after 0
 ```
 
 The command emits a JSON array, sorted by comment ID, with author, body and URL. Replace `123` with the agreed issue and `0` with your last processed ID. With `--wait 55 --interval 30` it polls during the **current running turn**, returning on the first new comment or when the wait expires. API, auth and rate-limit errors exit nonzero; they are not an empty inbox. Recheck after an outage or restart.
@@ -64,7 +64,7 @@ If this task has `functions.exec`, it can yield a running watcher and emit a too
 // @exec: {"yield_time_ms": 1000}
 await yield_control();
 let r = await tools.exec_command({
-  cmd: "python3 skills/astrid-dev-orchestrate/codex-cloud/inbox.py banodoco/astrid-dev 123 --after 0 --wait 55 --interval 30",
+  cmd: "python3 skills/roles/astrid-dev-orchestrate/codex-cloud/inbox.py banodoco/astrid-dev 123 --after 0 --wait 55 --interval 30",
   workdir: "/workspace/astrid-dev", yield_time_ms: 1000
 });
 let out = r.output;
