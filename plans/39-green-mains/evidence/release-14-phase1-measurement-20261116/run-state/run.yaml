@@ -1588,3 +1588,92 @@ bounded_followup_20261117_1324:
   new_automation_created: false
   purpose: Recheck genuine independent N reviews and focused/hosted proof for Agent PR373_to_PR377; verify 85 existing E14 setup IDs after any separately reviewed candidate and continue bounded K1 prerequisite triage
   limits: No workflow cancellation rerun dispatch, no auth retry, no release_main_or_public_main changes, no Plan38_55 takeover, no Runtime_clip_history_integrity_contract_change, no inputs_md_or_task_checkbox_edit
+
+# N-route actual-XML/source diagnosis; candidate remains unaccepted pending independent review and proof.
+k1a_rendering_unit5_20261117:
+  status: active_incomplete_candidate_fixture_review_hold_and_X_runner_provisioning_hold
+  evidence: diagnosis/agent/k1a-rendering-unit5-fixture-and-runner-provisioning-20261117.md
+  agent_exact_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI_run: 43967861168
+  attempt: 1
+  job_id: 133651924751
+  junit_artifact_id: 14280895809
+  original_zip_sha256: 0794ad36aecedac140e209565055f10a1be0897d868d904d75c17b719e150ecf
+  original_xml_sha256: c23191801822c359feb5117e8d123e2c44e5e7152168721431ab12c8ab6cf8dd
+  reused_actual_XML_inventory_sha256: 729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426
+  junit_job_totals:
+    tests: 2415
+    failures: 95
+    errors: 107
+    skipped: 0
+  fixture_mock_signature:
+    matching_full_message_occurrences: 32
+    full_literal_message_sha256: 6e1f810a73e5e557728ea5ee0ac74925d70473024f349b9ade3305ebd591c44b
+    source_API: renderer_environment_identity_optional_config
+    source_test: tests/packs/rendering/test_scene_cache_payload.py
+    route: N
+    draft_PR: 378
+    branch: p39/k1a-scene-cache-renderer-identity-20261117
+    candidate_commit: 9303e26fd6412cae20e92e2c4b06dd7ed0a5f3e5
+    exact_base: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    change: two_fixture_lambdas_accept_optional_config_without_changing_outputs
+    independent_review_count: 0
+    focused_execution: NO-RESULT
+    hosted_candidate_JUnit: NO-RESULT
+    acceptance: hold_do_not_merge_without_review_and_candidate_proof
+  separate_default_lane_rendering_prerequisites:
+    full_literal_message_group_counts: [33, 30, 18, 15, 12, 9, 9]
+    total_existing_failure_or_error_occurrences: 126
+    setup_errors: 75
+    failures: 51
+    project_env_missing: 33
+    pinned_node_package_or_peer_missing: 93
+    cause: unit_shards_do_not_npm_ci_remotion_or_supply_ASTRID_REMOTION_PROJECT_DIR
+    darwin_has_npm_ci_remotion: true
+    route_completed: N_source_and_actual_XML
+    route_next: X_review_preserved_default_lane_coverage_and_authenticated_install
+    product_or_coverage_authority_ambiguity: unresolved_no_silent_lane_exclusion
+    product_patch: none
+    candidate_tests: NO-RESULT
+    distinct_additional_targz_failures_not_assigned_to_this_cause: 11
+  reconciliation:
+    all_107_unit5_errors_accounted_for_by_32_fixture_plus_75_environment: true
+    remaining_other_unit5_failures: 44
+    same_original_CI_failures: 882
+    same_original_CI_errors: 398
+    same_original_Lanes_failures_including_12_optin: 306
+    same_original_Lanes_errors: 260
+    new_prior_exact_testcase_ID_comparison: not_performed
+    missing_prior_ID_regression_inferred: false
+    candidate_passes_proven: 0
+  draft_PRs_unmerged: [373, 374, 375, 376, 377, 378]
+  actual_submitted_independent_reviews: 0
+  model_route_provenance: N_direct_diagnosis_no_separate_worker_model_or_reviewer
+  holds:
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    Runtime_clip: uncommitted_25_passed_2_failed_replay_required_CAS_history_integrity_owner_rule
+    Runtime_draftPR56: orphan_declaration_metadata_only
+    G1: incomplete
+    G2: incomplete
+    RS1: '0/1'
+  operations:
+    astrid_dev_progress_branch_only: p39/g1
+    isolated_Agent_task_branch_and_draft_PR: true
+    product_merged: false
+    main_or_release_main_changed: false
+    inputs_md_or_task_checkboxes_changed: false
+    workflows_cancelled_rerun_or_dispatched: false
+    authentication_retry: false
+
+bounded_followup_20261117_1527:
+  reused_existing_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  automation_update_confirmed: true
+  next_run_time_utc: '2026-11-17T15:27:08Z'
+  next_run_time_local: '2026-11-17T07:27:08-08:00'
+  one_off: true
+  new_automation_created: false
+  purpose: Confirm actual independent review and focused candidate XML for Agent PR373-378; check X route default-unit Remotion provisioning without weakening assertions, preserve Plan38_55_owner_holds
+  limits: No workflow cancellation rerun manual dispatch, auth retry, release_main_or_public_main change, Runtime clip history integrity contract change, inputs_md or task checkbox edits
