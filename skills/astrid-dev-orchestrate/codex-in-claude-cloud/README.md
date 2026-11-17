@@ -2,7 +2,7 @@
 
 **Environment:** a Claude Code cloud session that runs Codex in its own container. For managers in separate Codex Cloud chats, use the [Codex Cloud guide](../codex-cloud/README.md) instead.
 
-The [orchestrate skill](../SKILL.md#use-codex-from-claude-cloud) says which of the two shapes a run uses. The first section below is for Codex workers under a Claude manager; the sections from [Brief a manager](#brief-a-manager) on are for a Codex manager. Which model each route uses is the run contract's [table](../../astrid-dev-shared/run-contract.md#routing-and-bindings).
+The [Codex-in-Claude workstream](../workstreams/codex-in-claude-cloud.md#use-codex-from-claude-cloud) says which of the two shapes a run uses. The first section below is for Codex workers under a Claude manager; the sections from [Brief a manager](#brief-a-manager) on are for a Codex manager. Which model each route uses is the run contract's [table](../../astrid-dev-shared/run-contract.md#routing-and-bindings).
 
 ## One-time setup in the session
 
@@ -101,7 +101,7 @@ If Codex can't continue without an answer, it writes its question and ends with 
 
 ## Oversight
 
-The hosting session answers for the run ([who answers for a run](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)); what it does at each check-in is in the [orchestrate skill](../SKILL.md#use-codex-from-claude-cloud). Codex's own reviewer sub-agent reviews, and a Codex manager integrates its own work under the authority in its starting brief ([`manager-brief.md`](manager-brief.md)); a mailbox note can't grant it.
+The hosting session answers for the run ([who answers for a run](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run)); what it does at each check-in is in the [Codex-in-Claude workstream](../workstreams/codex-in-claude-cloud.md#use-codex-from-claude-cloud). Codex's own reviewer sub-agent reviews, and a Codex manager integrates its own work under the authority in its starting brief ([`manager-brief.md`](manager-brief.md)); a mailbox note can't grant it.
 
 ## Known limits
 
