@@ -2,6 +2,16 @@
 
 <!-- CURRENT-MEASUREMENT-START -->
 
+### 2026-11-17 — E14 fixture's stale Runtime revision; 68 setup failures, narrow draft PR377
+
+The completed exact-reviewed-head [Agent CI 43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168), attempt 1, has **68 unit-shard-7 failure occurrences** from one identical literal XML setup assertion: checked-out Runtime SHA `6855dfa8df65cf8ae4c002b57134d6505493c17c` versus fixture's hard-coded `9ef808711a5207f5be74dc5f267af6fdd7bc9550`. The actual [artifact 14281865130](https://github.com/banodoco/astrid-agent/actions/runs/43967861168/artifacts/14281865130), ZIP and XML SHA-256, complete message and source/CI provenance are in [the diagnosis](diagnosis/agent/k1a-e14-runtime-pin-drift-20261117.md). The current Agent lock, hosted checkout and Runtime installer all select **`6855dfa8`**. These 68 are **already counted** in CI's **882 failures/398 errors**; they are not a new regression count.
+
+An isolated one-file test-fixture correction in [Agent **draft PR377**](https://github.com/banodoco/astrid-agent/pull/377) reads the locked Runtime commit through the existing helper and **retains** the exact checked-out HEAD and imported-source-path assertions; no skip/xfail, product implementation or installed pin changes. It remains **unmerged, independently unreviewed, and without worker/hosted candidate execution proof**. The separate **92 unit-7 + 3 unit-6 site-packages-versus-checkout provenance setup errors** are not fixed or ownership-classified; preserve their assertions. No new exact-ID prior-baseline comparison was performed.
+
+Agent [PR373](https://github.com/banodoco/astrid-agent/pull/373)–[PR376](https://github.com/banodoco/astrid-agent/pull/376) likewise remain draft/unmerged without submitted independent review or candidate proof. [Lanes 43967861160](https://github.com/banodoco/astrid-agent/actions/runs/43967861160) stays completed failure **306 failures (12 log-only opt-in included)/260 errors**. No workflows were dispatched, cancelled or rerun, and no auth retry occurred. Plan38/55 WAITING, Release15 excluded, Runtime clip contract unchanged (uncommitted **25 passed/2 failed**); **G1/G2 incomplete, RS1 0/1**. No `release/14/main`, public `main`, `inputs.md` or plan task-checkbox change.
+
+
+
 
 ### 2026-11-17 — authenticated release-0 Agent archive missing in CI unit shards
 
