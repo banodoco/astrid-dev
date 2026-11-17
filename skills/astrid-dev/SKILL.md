@@ -27,6 +27,8 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
 | Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](../astrid-dev-improve/SKILL.md): find the rule's one home, change only that, prove it |
 
+**Role/workstream convention:** the `SKILL.md` in each existing role folder defines its general job; optional [workstreams](../astrid-dev-shared/workstreams.md) under that folder add situation-specific steps. No second roles hierarchy.
+
 ## One path, proportionate depth
 
 1. **Orient:** Learn what the contributor wants; consult the [domain map](references/domains.md) for the relevant code and specialists.
