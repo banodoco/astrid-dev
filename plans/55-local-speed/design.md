@@ -2,10 +2,12 @@
 
 [Plan](plan.md) · [Inputs](inputs.md) · [Decisions](decisions.md) · [LS-3 card](tasks.md)
 
-**LS-3 / R14-P55-01 — design submitted for the Lead's RS1.** This note
+**LS-3 / R14-P55-01 — RS1 rework submitted for the Lead's finding check.** This note
 specifies the implementation; it does not claim that the fast lane exists or
 that a latency target has passed. The packet changes this file only. The Lead
-owns review, integration and the task record.
+owns review, integration and the task record. [RS1's one review round][rs1]
+returned findings RS1.1–RS1.9; this revision applies them and the owner's
+[D14][d14]. It does not commission another round.
 
 ## Basis, scope and evidence
 
@@ -15,9 +17,9 @@ The packet and [authority][authority] are pinned at astrid-dev
 the floor table merged from [#756][floor-pr]. Read together: the
 [handover][handover], [developer handoff](developer-handoff.md),
 [time ledger](inputs.md#the-time-ledger), [keep list](inputs.md#the-keep-list),
-[D1–D8](inputs.md#owner-decisions), [D9][d9] and
-[D10–D13](decisions.md). Older claims that the floor is unmerged, that the
-LS-5 pin or LS-6 scope still awaits approval, or that this packet must finish
+[D1–D8](inputs.md#owner-decisions), [D9][d9], [D10–D13](decisions.md),
+[RS1's rulings][rs1] and [D14][d14]. Older claims that the floor is unmerged,
+that the LS-5 pin or LS-6 scope still awaits approval, or that this packet must finish
 LS-1/LS-2 first are superseded by those decisions and this packet. They are
 not rewritten here.
 
@@ -25,7 +27,7 @@ Code references below are immutable source readings:
 
 | Source | Revision and meaning |
 | --- | --- |
-| Agent | `cb1a590e0008dde7e3fc2d3fbf341ef98401b32a`, observed Plan 55 branch; still pins the older VibeComfy below |
+| Agent | `cb1a590e0008dde7e3fc2d3fbf341ef98401b32a`, the frozen RS1 source input; this snapshot pins the older VibeComfy below, and is not a claim about later live branch heads |
 | Installed VibeComfy baseline | `dba38f8644c46f652376f2cd5112ea161e40f09b`, used by the floor/baseline tuple |
 | VibeComfy design input | `7fde33e2523281f840121b93a8a865a7f5d847de`, D10's approved dependency candidate, with reusable transport; this is not a claim that Agent's plan branch imports it yet |
 | Runtime | `6855dfa8df65cf8ae4c002b57134d6505493c17c`, unchanged published pin |
@@ -107,6 +109,18 @@ catalogue and placement lookup. A managed installation retains audit,
 restore, dependency-sync and doctor results for that installation generation.
 An attached user's server gets no managed installation work.
 
+The managed cache is anchored in existing code, not a second preparation
+pipeline: [`ManagedEnginePreparation.prepare`][a-managed-preparation] owns
+install locking, receipt/source/environment audits and native alignment;
+[`prepare_native_workflow` and `run_native_doctor`][a-native-preparation] own
+the verified-interpreter dependency synchronization and doctor;
+[`VibeComfyEngine.prepare_session`][a-managed-engine] owns engine readiness and
+warmth. Retain those results with their source, recipe, environment, declared
+node/dependency and target generations. A changed requirement, failed audit,
+install/update or relevant engine failure invalidates them and re-enters those
+same checks. Caching does not grant consent to restore nodes or install an
+add-on, and an attached target never enters this managed path.
+
 The first job still gets its own Runtime task, attempt, seed, input identity,
 output prefix, acceptance journal and output. A later job is another execution;
 reusing a template never reuses the previous result or prompt identity.
@@ -139,6 +153,10 @@ pack code cannot join the trusted template process merely by presenting a handle
 [`_approve_live` and output-prefix binding][a-local],
 [entry resolution][a-entries], [source discovery][a-discovery],
 [pack admission][a-imports] and [source setup][a-source] (LS-12/LS-15).
+Managed LS-15 also changes [managed preparation][a-managed-preparation],
+[native preparation][a-native-preparation] and the
+[managed engine][a-managed-engine], including their existing node-restore,
+dependency-sync and doctor calls; §4 maps their ownership.
 The per-job queue fence must accept only the new prepared authority or the
 unchanged full approval path. Proof: every default workflow and 1,000 varied
 bindings match today's complete compile byte for byte; forged handles fail;
@@ -171,6 +189,24 @@ this target state; it need not restart the pack process if its admitted source
 and Astrid installation are unchanged. Outstanding attempts stay associated
 with their old generation until settled or reported unknown.
 
+**Agent-side I/O carries the same generation (RS1.8).** Extend
+[`ComfyTargetClient`][a-target], not only VibeComfy's transport: its constructor
+receives the immutable target-generation handle and its shared retirement
+latch. `request_json`, `submit_prompt`, `upload_media`, `download_output` and
+cancel check that handle under the dispatch guard before starting I/O. Requests
+queued before retirement are refused if they have not started. No upload,
+download, cancel or other control request may silently reconnect a retired
+client; retained upload-presence facts have the same generation key.
+
+Check the generation again before installing a downloaded file, retaining an
+upload name or reporting a successful control response. Bytes or acknowledgements
+arriving after retirement are evidence for reconciliation, not new-generation
+success. An already-started POST is still classified conservatively, as above;
+retirement does not erase possible acceptance. Recovery creates a separately
+authorized connection for the recorded old prompt and never re-enables its old
+client. Proof must retire the pair before and during each upload, download and
+cancel and show no new request or destination publication through a stale handle.
+
 **Limit on a user's server.** Standard ComfyUI exposes no durable incarnation
 token. Managed lifecycle ownership can supply stronger process identity;
 attached mode cannot prove that two connections accepted at the same URL
@@ -194,13 +230,17 @@ record and cannot pass the normal zero-poll budget.
 Agent [`ComfyTargetClient`][a-target] and [attached adapter][a-attached]. The
 approved transport already separates shared I/O from an attempt; its existing
 bounded polling fallback is not by itself the complete zero-poll fast lane.
-Keep one attempted POST per attempt and a separate witnessed-prompt set.
+Keep one attempted POST per **Comfy attempt** and a separate witnessed-prompt
+set. The single definite-rejection recovery in §3 allocates a new Comfy attempt;
+it never resets an old client's submit flag.
 
 ## 3. Leaving the fast lane and reaching the full path
 
 Full path means fresh resolution/preparation under existing permissions and
 typed refusals. It is not permission to rerun an accepted or uncertain job.
-Use one explicit fallback flag per logical invocation, not recursive retry.
+Track definite-rejection recovery with one explicit used/not-used flag per
+logical invocation, not recursive retry. Ordinary cold preparation is not a
+submitted attempt and does not consume that recovery allowance.
 
 | Case | Action and submission rule |
 | --- | --- |
@@ -208,35 +248,75 @@ Use one explicit fallback flag per logical invocation, not recursive retry.
 | Workflow, companion, admitted pack or effective settings change | Stop using the old key; atomically select a newly verified snapshot and full preparation. Never reread mutable code through an old handle. |
 | Astrid/source/environment update | Retire the resident generation as in §4/§8; re-handshake and use full preparation. |
 | Either target transport drops, restart or listener continuity is uncertain | Retire the pair and reconcile all old attempts as in §2/§6. New jobs prepare against a new generation. Old accepted/unknown jobs are not submitted again. |
-| Node/model removed and ComfyUI definitively refuses before enqueue | Invalidate target facts; refresh and run full-path diagnosis once. Return the same typed missing-node/model/precondition refusal and repair choices. Do not POST again for this Runtime attempt, even if refresh finds usable state. A later explicit invocation gets its own admitted attempt; never reset the refused attempt's submitted flag. |
+| Node/model removed and ComfyUI definitively refuses before enqueue | Apply RS1.3: a definite typed rejection with **no prompt ID and no acceptance evidence** invalidates target facts and permits one full-path refresh/recompile. If it succeeds, allocate one fresh Comfy attempt under the same live Runtime task/attempt/fence, with a new client, witness, journal and private output prefix, then submit once. If refresh fails, return the existing typed missing-node/model/precondition refusal and repair choices. Never reset the rejected client's submit flag. |
 | Failure after enqueue, including a model disappearing during execution | Record the typed terminal failure. Invalidate readiness for the next request; do not regenerate this job automatically. |
 | Timeout, malformed/empty acknowledgement, disconnect during POST, or failure to persist acceptance | Mark acceptance unknown, reconcile if owned evidence permits, otherwise return the existing recoverable unknown outcome. A second POST is forbidden. |
 | Cached uploaded input absent or the wrong size | Invalidate the presence fact and use LS-11's private per-task upload name. Never repair/overwrite a shared content-named file. |
 | Changed authorization, expired lease/fence, revoked capability or scope mismatch | Refuse through Runtime. A full path cannot bypass the refusal. |
 | Output truncated, mutated, unattributed or missing | Refuse publication/delivery; retain the original prompt identity for retrieval recovery. Full preparation can serve a later explicit request but cannot conceal this failure by regenerating. |
 
-A definite rejection is established by the existing typed protocol response,
-not merely any HTTP error. After one refresh, another refusal is returned;
-there is no infinite refresh/submit loop. A user-requested retry after an
+A definite rejection is established by the existing typed pre-enqueue protocol
+response, not an arbitrary HTTP error or merely the absence of a prompt ID.
+The [Lead's RS1.3 ruling][rs1] preserves the job that can succeed today after
+refreshing its schema. Persist the rejected Comfy attempt's evidence, then use
+a new child-attempt ID/ordinal for the refreshed payload. Its witness starts
+empty; its journal and output prefix cannot overlap the rejected attempt.
+Recheck the Runtime lease/fence and unchanged caller consent before submitting.
+There remain **one POST per Comfy attempt and at most two Comfy attempts per
+logical invocation** on this specific path. It adds no Runtime create/claim.
+
+If the refresh fails or the second Comfy attempt is definitively rejected,
+return the full-path typed refusal; there is no further refresh/submit loop.
+An accepted first attempt, a timeout, malformed acknowledgement, lost witness
+or uncertain acceptance never qualifies. A user-requested retry after an
 unknown outcome is a new invocation with explicit provenance, not automatic
-recovery. Internal preparation retries that never attempted submission still
-keep one visible request identity.
+recovery. The rejected and replacement attempts' additional evidence writes
+belong to the fallback case, outside §5's successful warm-job allocation.
 
 **Code to change:** [local preparation/approval][a-local],
 [pack action dispatch][a-local-job], [target submission/cancel][a-target],
 [VibeComfy queue and failure evidence][v-run], [session failure state][v-session]
-and LS-8's new session supervisor (LS-9/LS-15). LS-9's proof is one case per
-row with the current typed result, plus no duplicate POST, no unrelated cancel
-and no unexpected source/installation mutation.
+and LS-8's adapter under the existing session owner (LS-9/LS-15). LS-9's proof is one case per
+row with the current typed result, plus successful fresh-schema recovery,
+refresh failure, second rejection and lost acknowledgement. Assert one POST
+per Comfy attempt, exactly one bounded replacement only on definite rejection,
+distinct clients/witnesses/journals/prefixes, no unrelated cancel and no
+unexpected source/installation mutation.
 
 ## 4. Resident helper: lifetime, state and isolation
 
 LS-8 adds a module such as `astrid/core/execution/resident_sessions.py` and a
 worker entry beside `generic_host_worker.py`; these names are proposed, not
-existing APIs. In accordance with [Plan 13][plan13], supervision/state/protocol
-live in those modules. `generic_host.py` gets only narrow wiring at its existing
-registration, claim, task-dispatch and shutdown seams. This is not the host
-extraction assigned to Release 15.
+existing APIs. They implement the retained pack-worker adapter and its bounded
+message protocol **under the existing host session owner**, not another session
+manager or scheduler. [Plan 13][plan13] draws its map on `release/14/main` and
+redraws it after Plan 55 lands. The source map below is this note's pinned Agent
+input, not a claim that it replaces that release-branch map. Release 14 adds
+narrow host wiring; the broad host extraction remains Release 15's.
+
+### Existing ownership and the precise extension seams (RS1.1)
+
+All paths in this table are relative to `astrid/`. None is replaced by a parallel
+registry, scheduler or process owner.
+
+| Existing module / proposed module | Reuse or extension | `generic_host.py` seam |
+| --- | --- | --- |
+| [`core/execution/managed_tool_session.py`][a-managed-session] | **Reuse and narrowly extend** `ManagedToolSession`, `SessionBinding`, `AdmissionToken`, `open`, `admit`, `adapter_for`, `settle`, `cancel` and verified `release`. The resident worker is an adapter in this same custody slot. Preserve binding/generation checks, single dispatch per token and occupied poisoned slots when release is unproved. An adapter supplies token-specific `cancel_admission`; it must not fall through to whole-engine cancel. | The owner is constructed at 6814; `_hold_session_slot`, `release_managed_session` and `_release_idle_session` at 7274–7330 remain the owner controls. Extend the VibeComfy session open/admit/dispatch/settle path in `_run_task_impl` (13309–13972); keep Runtime settlement in the parent. |
+| [`core/execution/persistent_supervisor.py`][a-persistent-supervisor] | **Reuse unchanged** as the opt-in durable JSONL wrapper for already-admitted jobs. Do not instantiate another `PersistentJsonlSupervisor` inside the helper: its own attempt/fence/capacity journal would duplicate the outer lifecycle. | `persistent_supervisor` at 15007–15062 continues to call `run_task` and `cancel_task`; `run` / `_run_claim_slots` remain the canonical Runtime claim loops. |
+| [`core/execution/warm_hold.py`][a-warm-hold] | **Reuse** `WarmHolds.lease/release` and generation-checked idle callbacks. The existing holder lock and lease count prevent eviction during active use. Idle policy does not become a second admission queue. | `_hold_session_slot`, `_settle_session_hold`, `_warm_session` and `_release_idle_session`; retain the distinct managed-engine idle ownership rather than adding a competing timer. |
+| [`core/execution/task_scope.py`][a-task-scope] | **Reuse** task process-scope birth evidence, termination/reap and absence confirmation for ordinary children and helper lifetime. Per-job authorization remains a separate Runtime fence even when a process spans jobs. | Existing launch/cleanup in `_run_task_impl`, plus host shutdown; delegate helper lifetime to the adapter without moving scope ownership into `generic_host.py`. |
+| [`core/execution/custody_broker.py`][a-custody-broker] | **Reuse** authenticated role/birth-bound launch, observation, signalling and release. A PID or process group number alone is not custody. Preserve retained ownership after uncertain cleanup. | Existing host/engine role wiring and `_track_process` / `_untrack_process`; the adapter receives the already-owned launch/observe operations. |
+| [`core/execution/process_group.py`][a-process-group] | **Reuse** `popen_owned_group`, `observe_tree`, `terminate_tree`, `verify_tree_absent` and `release_group`, including retained-handle containment and platform protections. No replacement subprocess manager. | The retained-child pattern in `_ManagedWanChildAdapter` (915 onward) and `prepare_wan_session` / `invoke_wan_session` (7333–7417) is a donor for inert construction, owner-before-start and fenced invocation, not a change to Wan behavior. |
+| Proposed `core/execution/resident_sessions.py` and worker entry | **Add only the adapter/protocol**: captured-source start, bounded typed job frames, per-job context/evidence, generation invalidation and verified child shutdown. It has no Runtime task registry, claim loop or independent restart election. | `_register_impl` advertises supported resident descriptors (§7); `claim_once` / `_execute_claimed_task` select the adapter after ordinary claim; `_run_task_impl` dispatches; existing shutdown (7420–7515) fences and releases it. |
+| [`core/generation/managed_preparation.py`][a-managed-preparation], [`packs/vibecomfy/native_preparation.py`][a-native-preparation], [`core/generation/backends/vibecomfy.py`][a-managed-engine] | **Extend existing readiness reuse**: `ManagedEnginePreparation.prepare`, node-restore/alignment, `prepare_native_workflow` / `run_native_doctor` and `VibeComfyEngine.prepare_session` remain the install/audit/sync/doctor authorities. Cache their verified results by §1's generations. Replace the backend's job-wide cleanup calls with §6's per-job path; defer idle model release until quiescent. | The existing preparation and VibeComfy open/admit path in `_run_task_impl`; the host keeps install custody, source checks and consent, while the pack caches immutable results and owns Comfy semantics. |
+
+Today's host serializes use of its session slot with `_session_task_lock`;
+`CapabilityDescriptor` already distinguishes serial and concurrent admission.
+Do not simply remove that lock or create a manager per request. LS-8 keeps one
+owner and extends only the token-scoped dispatch interval for the declared
+concurrent adapter after LS-15 removes process-global job state. Lifecycle
+replacement/release remains exclusive and quiescent; Runtime resource limits
+still bound concurrency. Ordinary serial adapters keep their current behavior.
 
 A manifest declaration opts an admitted action into the resident capability.
 Initial support is limited to the VibeComfy integration needed here. Declaration
@@ -254,7 +334,7 @@ Core must not acquire ComfyUI schema, model or queue logic (D8).
 | Must remain per job | Inputs, seed, attempt root, output prefix, prompt ownership, progress cursor, cancellation state, lease/fence/epoch, receipt and delivery state. Clear these on completion; do not reuse an attempt client. |
 | Authority | Parent owns Runtime admission/publication credentials. The helper receives only the selected job's scoped operations/lease context; a returned result is rechecked by the parent and Runtime. A helper cannot create arbitrary tasks, widen effects or settle another attempt. |
 | Source/install change | Stop new dispatch immediately, mark old jobs for reconciliation, revoke the session's ability to act, then terminate its owned process scope. Keep the admitted bytes and attempt evidence needed for recovery; never hot-reload modules in the old interpreter. |
-| Crash, broken fence or protocol violation | Fence all affected in-flight jobs, kill the owned process scope, start a fresh helper for subsequent work, and reconcile affected prompts without replay. One failure may retire a shared helper, but never implies a global Comfy interrupt. |
+| Crash, broken fence or protocol violation | Fence all affected in-flight jobs, terminate and prove release of the helper's owned process scope, and reconcile each prompt without replay before admitting a replacement. An unproved release keeps the slot occupied. This invokes no global Comfy interrupt; §6 explicitly replaces the managed backend's current global cleanup behavior. |
 | Idle/shutdown | Explicit host-owned shutdown closes transports and releases memory. Idle eviction is allowed only with no live job; the next job takes full preparation. No independent scheduler/daemon election is introduced. |
 
 Before concurrent jobs are enabled, LS-15 replaces `os.environ` mutation,
@@ -273,14 +353,17 @@ If the platform cannot reliably support the claimed edit detection without
 per-job content checks, that development tree remains ineligible for the fast
 lane. Installed immutable snapshots are the supported warm case.
 
-**Code to change:** [host source custody, child environment and dispatch][a-host],
+**Code to change:** the ownership table above, [host source custody, child environment and dispatch][a-host],
 [`generic_host_worker.run`][a-worker], [pack imports][a-imports],
 [manifest schema v3][a-schema] and [VibeComfy manifest][a-manifest] (LS-8);
 [local job runner][a-local-job], [local server runner][a-local] and
-[run action][a-action] (LS-15). Reuse the existing process-scope implementation,
-including [Windows Job Objects][r-platform]; it is not a claim of a complete
-OS sandbox. Proof must cover source/install change, kill, cross-job fence
-refusal, ordinary per-job actions and two concurrent isolated contexts.
+[run action][a-action] (LS-15). Process scope lives in
+[`task_scope.py`][a-task-scope], [`custody_broker.py`][a-custody-broker] and
+[`process_group.py`][a-process-group], not in the host's wiring. Preserve their
+platform custody, including Windows Job Objects; this is not a claim of a
+complete OS sandbox. Proof must cover source/install change, kill, cross-job
+fence refusal, ordinary per-job actions, two concurrent isolated contexts,
+warm-hold expiry races and retention of an unproved-release slot.
 
 ## 5. Runtime hand-off, output and write budget
 
@@ -291,6 +374,17 @@ The pinned Runtime offers cursor-paged event reads through
 LS-7 adds bounded authenticated waiting for eligible work and for a selected
 task's result on top of those durable states. Notifications contain IDs/cursors
 and cause a state read; they are not a second source of truth or a claim grant.
+
+The exact Agent seams are [`GenericPackHost.claim_once` and
+`_claim_once_impl`][a-host] (14154 onward), the idle waits in `run` and
+`_run_claim_slots`, and the SDK's
+[`_wait_for_kernel_task_loop`][a-invocation] (3433–3656), whose `poll_seconds`
+default is one second at its callers. Also replace the separate
+`_settle_task_managed_outputs` visibility retry (3272–3307) with the durable
+result/output wake. Preserve claim gates, capability readiness, budgets and
+claim-versus-task identity checks. Today's empty `claim_next` itself writes an
+idempotent empty outcome; waiting must be a read-only eligibility operation,
+not a succession of empty claims with a timer hidden inside the server.
 
 Register a waiter and recheck the authoritative predicate under the same
 coordination lock used to publish a committed transition. Release that lock
@@ -337,18 +431,27 @@ writable CAS alias, hardlink-as-immutability claim or success-before-settlement
 is allowed. Delivery creates an independent caller file, atomically installed
 only after verification; truncation leaves the prior destination intact.
 
-D11 permits a bounded streaming improvement over existing object routes. The
-reviewed design for full-object export is: Runtime reads and hashes the actual
-chunks it transmits, checks length/digest, and sends the protocol's successful
-end-of-message marker only after those checks pass. The negotiated client
-requires that marker as well as the expected object identity and length before
-renaming its temporary file. A header, an earlier verified file descriptor, or
-receiving the expected byte count alone does not establish success: the
-underlying file can change. Keep caller hashing on the old protocol and for
-ranges/other producers. Remove it only on this negotiated, tested transfer;
-otherwise the one-Agent-hash target remains unqualified rather than weakening
-verification. Tests must corrupt equal-length data and truncate after all
-payload bytes but before the completion marker, as well as mutate mid-stream.
+D11 permits a bounded streaming improvement over existing object routes;
+**[D14][d14] settles RS1.5: the caller keeps its own hash on every verified
+transfer.** Runtime reads and hashes the actual chunks it transmits, checks
+length/digest, and sends the negotiated protocol's successful end-of-message
+marker only after those checks pass. Independently, the caller hashes the bytes
+it actually receives and compares their digest and length with the expected
+object identity from the authorized Runtime result. Only after its own checks
+and the completion marker pass may it rename the temporary file. Neither
+negotiation nor a server-side successful verification removes that caller pass.
+
+A header, an earlier verified file descriptor, or receiving the expected byte
+count alone does not establish success: the underlying file can change. Old
+protocols, ranges and other producers retain their existing caller verification
+as well. Count the Agent producer's one collection hash, Runtime trust-boundary
+hashes and the caller's independent receipt hash separately, even when the
+caller is the Agent SDK. The old one-hash wording cannot be used to delete a
+D14-required pass or label it uncounted. LS-6 removes redundant passes within
+a boundary; it cannot promise one total end-to-end pass. Tests must corrupt
+equal-length data despite a claimed successful transfer, truncate after all
+payload bytes but before completion, and mutate mid-stream; none may replace
+the caller's prior destination or yield a verified receipt.
 
 ### Thumbnail and evidence follow-up
 
@@ -373,6 +476,8 @@ and Runtime directories, idle queue, no new input, lease still valid—set:
 | Work before usable reply | Stage-one design ceiling |
 | --- | --- |
 | Runtime lifecycle | **3 outer committed transactions**: create, claim, settle. Nested savepoints are not extra commits. No unconditional renewal or progress-only transaction. |
+| SQLite commit syncs, assumed | **3 WAL syncs**, one for each of those commits with `synchronous=FULL`; checkpoint and WAL-reuse/header syncs are counted separately below. Verify the actual setting and count with LS-2, not by inferring them from three commits. |
+| Thin resolution and descriptor registration | **0 extra warm-job commits**. §7 resolves from admitted data and records normalization/replay identity in the existing create transaction. Descriptor registration shares startup/change registration and is counted in the first-job/change path. |
 | VibeComfy attempt evidence | **8 explicit file sync calls** allocated to prepared attempt + prepared journal (2), acceptance witness (1), history observation (1), final attempt/metadata/completion + terminal journal (4). Consolidate duplicate snapshots, not these evidence boundaries. |
 | Runtime one-new-output publication | **9 explicit application file/directory sync calls** under the current successful POSIX inline-output recipe described below. Do not drop an integrity or recovery boundary to hit the number. |
 | Caller file durability, when requested | At most **1 additional file-sync call** in the ordinary atomic-copy path; preserve any platform-required publication operation and report it. |
@@ -399,25 +504,36 @@ Reused objects, multiple declared outputs and failure cleanup are separate
 cases with their own recorded vector, not a reason to mask a surplus.
 
 Thus the reference one-output path allocates **17 application sync calls,
-plus the optional caller call, plus SQLite's internal syncs**. Three commits
-are not three native flushes. SQLite/WAL checkpoints, Windows write-through
-operations and unrelated maintenance are not numerically attributed by the
-existing evidence; their native ceiling is **NO-RESULT**, not zero. LS-7 must
-instrument these named boundaries, explain any necessary difference, and
-retain durability. LS-14 must enforce the resulting platform-specific native
-vector with zero observer gaps; the qualification cannot pass while it is
-missing. Do not copy 166/162 from the instrumented baseline into the budget or
-relax a check to absorb excess writes. This explicit allocation lets LS-7
-proceed without another LS-1 run in this packet.
+plus the optional caller call**. [`store.py` at 1525][r-store] enforces WAL
+but does not set `synchronous`; RS1.6's explicit design assumption is the
+default **FULL** mode and **three WAL commit syncs** for the three successful
+write transactions. [SQLite's contract][sqlite-sync] adds a WAL sync for each
+FULL transaction; checkpoints and WAL header reuse have further sync work.
+The nominal allocation is therefore **20 calls plus the optional caller call,
+before separately counted checkpoint/reuse and platform operations**. This is
+an assumption for the named fixture, not a measured native ceiling.
+
+LS-2's forced-write counter checks it: record the effective SQLite mode and
+attribute commit, checkpoint/WAL reuse, filesystem publication, background
+maintenance and platform write-through separately, including any work that
+lands before the reply. Do not suppress a coincident checkpoint or weaken
+durability to force three observed syncs. Native counts, especially Windows'
+mapping from these calls, remain **NO-RESULT** until that attribution exists.
+LS-7 must explain any difference while preserving durability; LS-13 maps the
+Windows operations and LS-14 enforces the resulting vector with zero observer
+gaps. A missing vector cannot pass qualification. Do not substitute 166/162
+from the instrumented baseline or relax a check to absorb excess writes.
 
 **Deeper Runtime change is conditional.** The observed Windows one-caller
 medians were create 22.29 ms, claim 16.79 ms and settle 159.98 ms; these are
 separate phase medians and must not be summed as a total median. Stage one
 retains those operations. LS-1b plus attributed LS-2/LS-7 evidence may justify
 combined local admission/claim or a narrowly scoped one-pass custody path for
-the tighter target. Such a proposal must preserve D2/D3, stale-worker and
-duplicate-settle refusal and crash ordering, go through the Lead's review and
-obtain any new exact dependency pin. There is no general `synchronous=OFF`,
+the tighter target. Any second half of LS-7 remains an **owner decision after
+that evidence**, not permission to implement it now. Such a proposal must
+preserve D2/D3, stale-worker and duplicate-settle refusal and crash ordering,
+go through the Lead and obtain the owner's exact Runtime re-pin. There is no
+general `synchronous=OFF`,
 after-reply task record or newly trusted worker in this design.
 
 **Code to change:** Runtime [service][r-service], [store][r-store],
@@ -431,8 +547,9 @@ from their templates; do not patch generated copies alone.
 
 Carry this tuple through every message and evidence record: request
 idempotency key; Runtime realm/instance/epoch; task and attempt IDs; lease ID
-and fence; admitted source/session generation; target generation; exact bound
-prompt digest; accepted prompt ID if known; and private output prefix. A
+and fence; admitted source/session generation; target generation; **Comfy
+child-attempt ID/ordinal**; exact bound prompt digest; accepted prompt ID if
+known; and private output prefix. A
 session-local handle never replaces Runtime identity. Before POST, persist the
 selected prompt digest, source, target and an intent that makes a crash around
 submission conservatively recoverable. After acknowledgement, persist its
@@ -453,16 +570,88 @@ job retains its lease and continues to stored settlement; reconnect attaches
 to the same task. Local-file delivery may be incomplete and retryable without
 regenerating. An explicit authorized cancel names the Runtime task, resolves
 only its witnessed prompt, and races with completion under Runtime's terminal
-fence. Queued cancellation deletes only that prompt. Running cancellation
-requires the server's atomic per-job operation; without it, return the existing
-typed unsupported/refused cancel. A queue read followed by global `/interrupt`
-is unsafe. Killing the resident process is not a substitute for job cancel.
+fence. Killing the resident process is not a substitute for job cancel.
+
+### Managed and attached cancellation (RS1.2)
+
+The pinned [`VibeComfyEngine.cancel` and `_cold_free`][a-managed-engine]
+currently send `/interrupt {}`, `/queue {"clear": true}` and model unload/free.
+`_contain` also prepends global interrupt after a poisoned or pending-fence
+state, including on a later release. Those paths are incompatible with the
+shared-target guarantee; the new resident adapter **must not reuse them as
+job cancellation**. The existing
+[`ComfyTargetClient.cancel_prompt`][a-target] is also insufficient: adding a
+`prompt_id` to `/interrupt` does not prove that an old server honors it, and
+even the inspected server's legacy handler checks before interrupting outside
+the queue mutex.
+
+Use the inspected server's dedicated
+[`POST /api/jobs/{job_id}/cancel`][comfy-server] for both target kinds. It
+calls [`PromptQueue.interrupt_if_running`][comfy-execution], which checks the
+identity and signals under the same queue mutex; queued deletion also selects
+only the named ID. No queue snapshot followed by a global interrupt is an
+acceptable substitute.
+
+**Detect support safely on an attached target.** `ComfyTargetClient` gains
+this exact bounded, witnessed-ID route in its allowlist. On an authorized
+cancel, call it for that witnessed prompt; the operation itself is idempotent
+and specific to that ID, so no destructive capability probe or guessed job is
+needed. A valid `{"cancelled": <boolean>}` response on this dedicated route
+establishes route support for the current target generation. A 404/405/501 is
+unsupported, not permission to try `/interrupt`. A malformed acknowledgement,
+timeout or generation change leaves the cancel outcome unknown and uses only
+bounded reconciliation. The inspected [feature list][comfy-features] does not
+advertise atomic cancellation: neither a guessed feature flag, version string,
+`OPTIONS` result nor an HTTP 200 from legacy `/interrupt` is capability proof.
+
+If the dedicated route is absent, queued cancellation may still use
+`/queue {"delete": [owned_prompt_id]}`. Confirm the owned job's outcome from
+queue/history; if it is running or may have raced into running, return the
+existing typed unsupported/uncertain result without any interrupt. On the
+dedicated route, `cancelled: false` is a no-op, not proof of terminal
+cancellation; even `true` means cancellation was dispatched and still needs
+the terminal observation before reporting confirmed completion. Retire this
+capability observation with the target generation (§2). Require no extension
+or installation change on the user's server.
+
+**Scope the managed backend itself.** Add token-specific `cancel_admission`
+on its adapter, resolve that token to one witnessed Comfy attempt, and route
+`cancel` through the same atomic operation above. Keep cancellation, pending
+native evidence and late-result rejection per invocation. Refactor `_contain`
+so it never prepends a global interrupt, clears the entire queue or frees
+models as fallout from a job failure, cancellation or poisoned token. A
+session-wide uncertainty fences admission and reconciles each affected job;
+it must not stop the other job's prompt. `release` / `_cold_free` become
+exclusive **idle** lifecycle operations: require the current owner binding,
+no live tokens or unresolved prompts, and verified quiescence before model
+release. They send no global interrupt or queue clear. If quiescence or process
+release cannot be proved, keep custody fenced and occupied. A later ordinary
+operation cannot silently reset that state.
+
+The helper's process scope and the managed Comfy engine's lifecycle custody
+remain distinct. Cancelling A cannot kill a helper or target serving B.
+Before enabling concurrent native dispatch, LS-8/LS-15 must supply the
+token-specific adapter and lifecycle guards above; existing serial adapters
+stay serial. This changes the named backend code, rather than assuming its
+current global cleanup is safe merely because Astrid started the target.
+
+**Required LS-9 proof, on both a managed and an attached target:** admit A and
+B with separate witnesses; cancel queued A while B is running, and cancel running A
+while B is queued. Include A finishing exactly as B starts. B must still
+produce its own valid output and Runtime record. Exercise poisoned-engine
+cleanup followed by the next operation, stale-generation cancel, an unrelated
+third-party prompt on the attached target, and a legacy server that ignores
+`prompt_id` on `/interrupt`. Assert zero requests to global interrupt or queue
+clear, no unload while a job is live, typed refusal/unknown where required,
+and eventual owner-verified idle release. These are implementation obligations,
+not tests executed by this documentation packet.
 
 | Failure point | Recovery; what may happen next |
 | --- | --- |
 | Before Runtime admission | Reissue the same frozen admission only with the same idempotency key. No helper execution has authority yet. |
 | Created but not claimed | Runtime queue remains authoritative; normal single claim may proceed. |
 | Claimed, provably before submit | Recover the existing task under a valid attempt/fence and full preparation. Only explicit proof that POST never started permits submission; a missing acknowledgement does not supply it. |
+| Definite typed rejection, before the one full-path replacement | Preserve the rejected Comfy attempt. Only its durable definite-rejection evidence with no prompt/acceptance permits §3's one new client, witness, journal and prefix. If that evidence is missing, or the replacement may already have submitted, reconcile conservatively and do not create another replacement. |
 | Intent recorded, crash just before/during POST | Conservatively treat as possibly submitted unless a surviving supervisor can prove otherwise. Reconcile owned queue/history; no blind retry across this gap. |
 | Accepted, acknowledgement or witness lost | Inspect retained evidence and known prompt identity under the same target evidence. If ownership/acceptance cannot be established, expose unknown outcome and the explicit recovery choice. Do not claim ownership of a guessed history entry. |
 | Accepted, helper/socket dies while Comfy runs | Fence the old helper, retain the prompt mapping, reconcile with bounded queue/history reads and resume collection if attributable. A server restart may make the outcome irrecoverable. |
@@ -479,7 +668,8 @@ acceptance or output receipt to the other.
 
 **Code to change:** [host run/cancel/settle][a-host], [worker validation][a-worker],
 [new session modules described in §4](#4-resident-helper-lifetime-state-and-isolation),
-[Comfy target][a-target], [attached artifact custody][a-attached],
+[Comfy target][a-target], [managed `cancel` / `_contain` / `_cold_free` / `release`][a-managed-engine],
+[attached artifact custody and cleanup][a-attached],
 [VibeComfy acceptance/failure journal][v-session], [runtime run][v-run] and
 [Runtime claim/settle][r-service] (LS-8/LS-9/LS-15; output recovery in LS-6/LS-7).
 Retain existing typed exceptions/envelopes; labels in this table describe
@@ -495,36 +685,55 @@ contains neither compiled Python/graph authority nor a caller-created
 execution binding, lease or verified-output receipt. A raw caller path is not
 an admitted input and is never permission for an arbitrary resident file read.
 
-Move catalogue/default/placement/schema resolution out of fresh CLI imports
+Move catalogue/default/placement/schema discovery out of fresh CLI imports
 into the admitted resident generation. Resolve only the named entry against
 cached, versioned facts; preserve existing default precedence and the user's
-requested values. Freeze any generated seed and the normalized admission
-payload once, before sending a retriable Runtime create. Keep original values
-and resolved identities in provenance so recovery cannot reselect a newer
-default or a different model.
+requested values. Keep original values and resolved identities in provenance
+so recovery cannot reselect a newer default or a different model.
 
-**Admission order is unchanged.** Introduce the thin request as an
-optional authenticated adapter at the Runtime boundary, using the host's
-registered, admitted descriptors for resident resolution. Resolution is a
-bounded preparation/query operation; it cannot execute a workflow, claim work,
-install dependencies or publish output. Its result supplies the same
-capability, input and execution-request fields to the existing `create_task`
-under the original caller's authority. Runtime validates source binding,
-permissions, resources and effects itself. There is one ordinary task and no
-post-hoc record or worker bypass. Unknown entries and missing prerequisites
-that currently fail before admission still do so. If a safe descriptor is not
-available, use today's full caller preparation path rather than create an
-under-specified task or widen the helper's permissions.
+### Concrete channel and authority (RS1.4)
 
-Freeze the resolved source, settings and placement generations in the admission
-description and revalidate them at create and claim. A change between lookup
-and create invalidates the lookup; it cannot bind new code to an old handle.
-An uncertain create response is recovered by its key before resolving again.
+Today's host [`_register_impl`][a-host] sends capability digests, readiness,
+resources and source/dependency/epoch facts; it does **not** register entry,
+default or placement definitions. The pinned [Runtime routes][r-server] have
+no callback into a host. Registration cannot be treated as an existing resolver
+channel. This design chooses **pure data resolution inside the already-resident
+Runtime**, from an explicit registration extension, with no per-job reverse RPC.
 
-The adapter is part of LS-7's existing service/server route scope and LS-10's
-caller integration, not a combined admission-and-claim redesign. It adds no
-independent task registry or scheduler. Core carries generic bounded
-preparation messages; the VibeComfy pack owns selector semantics. The existing
+| Step and channel | Authority and data | Commit cost |
+| --- | --- | --- |
+| Pack helper → parent host over the LS-8 private, bounded, generation-bound pipe | At preparation/change time the pack supplies an immutable, versioned declarative descriptor for supported entries: bounded field/default mappings, named placements, admitted input requirements, prerequisite/refusal data and exact capability/source/settings identities. The parent checks it against the captured admitted source. No Python, import path, callback address or arbitrary expression is accepted as resolver code. | No new Runtime commit; this is preparation, not task execution. |
+| Parent host → Runtime using **`POST /v1/executors`**, with a proposed validated `resolution_descriptors` field | Extend `register_executor`'s allowlist/schema explicitly. The existing `worker:register` credential, executor actor binding and local-admission checks remain. Bind each descriptor digest to the approved capability/source definition, authority scope, live executor, Runtime/source/settings/placement generations and descriptor format. A caller cannot register one or acquire a worker credential. Existing untyped extra capability keys are not authoritative descriptors. | Persist/invalidate descriptors with the existing registration transaction at startup or change. Count it in first-job/change measurements; do not re-register for each warm job. |
+| Caller → Runtime using **`POST /v1/tasks`**, with a proposed negotiated thin-request variant | Keep `tasks:write`, original caller identity and the existing project/capability/input/effect checks. A bounded Runtime normalizer reads only admitted descriptors and current scoped settings; it cannot call the host, execute pack code, read arbitrary paths, install, claim or publish. Its output is the ordinary normalized `execution_request` and admission fields. | Pure lookup/normalization adds **0** commits; ordinary create still costs **1**. |
+| Runtime → host through the existing task queue and ordinary claim | The host receives the fully admitted task under the existing immutable claim, lease and fence. Comfy preparation/compilation and execution occur only after this claim. | Claim **1**, settle **1**: **3** outer commits for the warm successful invocation. |
+
+This extension keeps pack-specific selectors in **pack-authored data** and
+the pack's actual execution adapter; Runtime interprets only a bounded,
+versioned field/default mapping format for the first supported use. It does
+not import a VibeComfy resolver or acquire Comfy node/model rules. Resolution
+that requires executable hooks, fresh target I/O, arbitrary pack code or facts
+not safely expressible in that descriptor uses today's full caller preparation
+before admission. Descriptor absence, stale generation or version disagreement
+cannot create an under-specified task. Unknown entries and missing prerequisites
+that fail before admission today retain that order and their typed refusals.
+
+**Admission and replay are one existing write boundary.** Extend the service
+and store ingress so a thin request's authenticated scope, idempotency key and
+canonical original-envelope hash are checked for an existing receipt **before
+re-resolution**. On the first create, resolve once, freeze any generated seed,
+the resolved source/settings/placement/descriptor identities and normalized
+payload, and store them with the ordinary task and command result in that same
+create transaction. Check descriptor liveness/generations again at commit and
+claim. On replay, identical original bytes return that recorded result; changed
+bytes under the key are refused. No new resolution ticket, command journal or
+fourth commit is introduced. This is a required extension to the existing
+idempotency path, not a claim that the current Runtime already understands an
+unresolved key. If creation is uncertain, recover/replay the same frozen thin
+request; do not resolve through the full path under a new key.
+
+The adapter is part of LS-7's service/server/store and generated-client scope
+and LS-10's caller integration. It retains separate create, claim and settle,
+and adds no independent task registry or scheduler. The existing
 `generation_intent` field describes output publication and is **not** silently
 repurposed into this request format. Keep its versioned contract and
 `execution_request` as the first-class admission field.
@@ -544,17 +753,24 @@ the warm path.
 **Code to change:** [console routing][a-console], [gateway dispatch][a-gateway],
 [generation CLI][a-cli], [`GenerationFacade` resolution][a-generation],
 [SDK admission/wait][a-invocation], [`mcp_server._run`/`call_tool`][a-mcp],
-[pack entry resolution][a-entries] and the LS-7 [Runtime route/service][r-server]
-(LS-10/LS-15). Add a minimal client module as needed; do not import all of
+[pack entry resolution][a-entries]; host [`_register_impl`][a-host], Runtime
+[`register_executor` / `create_task`][r-service], [store admission/replay][r-store],
+[server routes][r-server] and [generated client templates][r-generator]
+(LS-7/LS-10/LS-15). Add a minimal client module as needed; do not import all of
 `astrid.sdk.generation` merely to serialize a request. Prove identical records
 and refusal envelopes for CLI, SDK and tool-server cases, plus no task side
-effects on pre-admission refusal and no per-call tool-server subprocess.
+effects on pre-admission refusal and no per-call tool-server subprocess. Test
+unauthorized descriptor registration, stale/forged descriptor digests, source
+change between resolve and commit, missing descriptors, unsupported executable
+resolution, and replay after a lost create response and a descriptor update.
+Instrument exactly three warm lifecycle commits with no resolver write or
+host callback; separately report startup/change registration costs.
 
 ## 8. Client/resident version agreement across updates
 
 Negotiate once per authenticated connection and again after any reconnect:
 Runtime realm/instance/epoch, request and result schema/protocol versions,
-required features (wait, thin request, prepared template, verified transfer),
+required features (wait, thin request/descriptor format, prepared template, verified transfer),
 Agent source/install generation and relevant admitted pack/VibeComfy identity.
 A package version string alone is insufficient. Exact schema/source agreement
 is the initial fast-lane compatibility rule; an older supported client may use
@@ -611,6 +827,19 @@ Stage one can proceed while this choice remains open. The Lead must record
 the owner's answer before LS-14 claims the Windows 100 ms target is met or
 changed.
 
+## Owner decisions and dependency gates after RS1
+
+The [review][rs1] identifies these decisions. The packet records their state;
+it does not grant an approval, re-pin a dependency or perform LS-7's second half.
+
+| Decision | State and consequence |
+| --- | --- |
+| Windows 0.1 s choice | **Open.** The three options and their costs are in Windows above; preserve D1 until the owner chooses. |
+| VibeComfy re-pin after LS-4 / LS-5 | **Open for any new candidate.** D10 authorizes only `7fde33e2523281f840121b93a8a865a7f5d847de`. Later template/transport changes need the owner's new exact pin before the Agent consumes them. |
+| Runtime re-pin for LS-6 / LS-7 | **Open.** D11 authorizes bounded implementation scope, not a new Runtime dependency in the Agent. The owner must approve the exact Runtime candidate containing the output/wait/descriptor protocol changes. |
+| D11 interpretation: caller hashing on verified transfer | **Settled by [D14][d14], 17 November 2026.** Keep the caller's independent hash. §5, the guarantee table and later proof obligations use that rule without a negotiated exception. |
+| Any second half of LS-7 | **Open and conditional on attributed LS-1b/LS-2 evidence.** The Lead takes the concrete combined-admission/claim or narrower-custody proposal to the owner; the three-step first half proceeds without selecting that redesign. |
+
 ## Guarantees and the owner decisions that permit changes
 
 The table is exhaustive for the behavioral changes proposed here. Rows marked
@@ -621,17 +850,18 @@ decision or a new pin.
 | Guarantee / previous behavior | Proposed behavior and limit | Decision that permits it |
 | --- | --- | --- |
 | Re-resolve and recheck workflow/target each job | Retain generation-scoped facts and prepare once; preserve immutable source identity, lookup/slot bounds and anti-forgery authority | D6; accepted statements 4–6; LS-4/LS-12 |
+| Fresh-schema recovery after a definite pre-enqueue rejection | Preserve one full-path recovery using a new Comfy client, witness, journal and output prefix under the same Runtime task/attempt; no replacement for accepted/unknown submission | Existing full-path promise in plan.md; Lead ruling RS1.3; one POST per Comfy attempt preserved |
 | Astrid graph/schema/model preflight on every job | Compile-time structural warnings; Comfy validates submissions. Unknown inputs that Comfy accepts are not newly refused; last-check age is recorded | D6 |
 | Same-name model-content assurance | Remains unverified as accepted; do not claim a cached schema verifies model bytes | D6, preserved limitation |
 | One Python process per action | Only declared, supported admitted actions use a supervised resident process; ordinary/arbitrary code retains disposable children | D8; accepted statement 2; pinned-source/environment/fence guarantees preserved |
-| Per-job managed audits/restore/sync/doctor | Cache for managed installation generation; repeat on changes/failure. Never run managed preparation on attached servers | D6 and accepted statement 5; D5 forbids imposed changes on a person's server |
-| Poll work, completion and result | Event-driven waits plus authoritative reads; bounded disconnect fallback is separate and unqualified for zero-poll budget | Accepted statement 3; D3 and LS-5/LS-7; state/idempotency guarantees preserved |
-| Repeated output hashing and buffered transfers | Carry original digest; retain Runtime checks and caller verification until negotiated verified transfer passes | D11's bounded scope; D2 preserved |
+| Per-job managed audits/restore/sync/doctor | Cache the existing `ManagedEnginePreparation.prepare`, native preparation/doctor and `VibeComfyEngine.prepare_session` results for their installation generations; repeat on changes/failure. Never run managed preparation on attached servers | D6 and accepted statement 5; D5 forbids imposed changes on a person's server; code owners in §1/§4 |
+| Poll work, completion and result | Replace `claim_once` loop waits and SDK `_wait_for_kernel_task_loop` / `poll_seconds` plus managed-output visibility retry with event-driven waits and authoritative reads; bounded disconnect fallback remains separately counted | Accepted statement 3; D3 and LS-5/LS-7; state/idempotency guarantees preserved |
+| Repeated output hashing and buffered transfers | Carry the producer digest; preserve Runtime checks and the caller's own received-byte hash on every transfer, including negotiated verified transfer | D11 bounded scope, clarified by D14 / RS1.5; D2 preserved |
 | Thumbnail extraction before reply | Durable Runtime follow-up intent and ordinary thumbnail task after main result; recover after caller/host loss | D11; D2/D3 preserved; no worker authority expansion |
 | Success means stored and recorded | Unchanged, including output custody, output associations/effects and terminal record before success | D2; no weaker durability option approved |
-| Runtime is the execution door | Unchanged; thin resolution feeds existing create/claim/settle, no direct worker execution | D3 |
+| Runtime is the execution door | Unchanged; authenticated worker registration supplies validated data-only descriptors, and Runtime resolves the thin request into existing create/claim/settle with no per-job host callback or extra commit | D3; LS-3 point 7 and RS1.4; no caller/worker authority expansion |
 | Fresh CLI/tool subprocess resolution | Python minimal client; resident tool server calls in-process; full path on supported fallback | D4 and accepted statement 10; native client remains unapproved |
-| Requirements on user ComfyUI / cancel | No required extension or install; atomic owned-job cancel only, otherwise typed refusal; never global interrupt | D5 |
+| Requirements on user ComfyUI / cancel | No required extension or install. Both managed and attached paths use the dedicated atomic job-cancel route for a witnessed ID; legacy missing support yields queued-only deletion or typed running-cancel refusal. Replace managed `cancel` / `_contain` global cleanup, and gate `_cold_free` / `release` on owned quiescence | D5 and plan.md's job-only guarantee; RS1.2; two-job managed and attached proof required |
 | Lost caller/unknown acceptance | Continue admitted job independently of subscriptions; recover its stored result or return typed unknown/incomplete, never automatic rerun | LS-3 point 6 and LS-9; D2/D3/D5 preserved; no exactly-once server claim |
 | Connected/CLI/first-job timing promises | Keep D1 stages and workload scope; 100 ms unpromised until measured; Windows choice remains open | D1; this packet makes no target change |
 | GPU-gated design progress | Write LS-3 and hold RS1 on existing CPU/stand-in evidence; live qualification remains required later | D9 |
@@ -648,13 +878,14 @@ qualification obligations, with unknown values left visible:
 | Default workflows can be frozen with typed slots under 5 ms fill | LS-4's 1,000 varied values/default-workflow equivalence test, forged-handle and changed-shape/schema cases; LS-14 reports any full-path exclusions instead of silently treating them as fast. |
 | Resident protocol preserves source, environment and task custody | LS-8/LS-15 two-job and two-caller proof, kill/source-change/fence tests; LS-14 runs the installed candidate, not an in-process substitute. |
 | Hosted Linux's one/two-caller difference is contention rather than a new fundamental write cost | LS-2/LS-7 exclusive spans and separate timing/counter runs; LS-14 reports both caller counts and queue wait. No saving is inferred by subtracting medians. |
-| Exact native flush vector, including Windows and SQLite, fits the allocation and timing | LS-7 names each cause against §5's 3 commits and application-write budget; LS-13 maps Windows operations; LS-14 requires complete attribution and regression gates. Missing native counts remain NO-RESULT. Necessary extra durability work returns to the Lead with a revised measured design, never a weakened assertion. |
-| Full-object completion proof can replace redundant caller hashing safely | LS-6 mutation/equal-length corruption/truncation/final-framing, disconnected caller and stale-fence cases; LS-14 counts hashes across the installed path. Keep verification and leave the one-hash target open until proven. |
+| Exact native flush vector, including Windows and SQLite, fits the allocation and timing | LS-2's forced-write counter verifies §5's assumed 3 FULL-mode WAL commit syncs, with checkpoints/reuse separately attributed; LS-7 names each cause against 3 commits and the application-write budget; LS-13 maps Windows operations; LS-14 requires complete attribution and regression gates. Missing native counts remain NO-RESULT. Necessary extra durability work returns to the Lead with a revised measured design, never a weakened assertion. |
+| Verified streaming preserves both Runtime and caller verification | D14 keeps the caller's own hash. LS-6 mutation/equal-length corruption/truncation/final-framing, disconnected-caller and stale-fence cases must still fail safely; LS-14 counts producer, Runtime and caller passes separately across the installed path, with no negotiated omission. |
+| Thin resolution stays within existing admission authority and 3 commits | LS-7/LS-10 descriptor-registration auth/source/generation tests, pre-admission refusals and frozen-envelope replay across updates; LS-2 counts warm transactions and separately records startup/change registration. A descriptor cannot run pack code or become a worker credential. |
 | Moving preview off the reply does not lose it | Kill after settlement but before thumbnail admission, drop caller, restart host and verify one eventual Runtime-backed attachment. LS-14 checks valid primary output plus durable follow-up, not just low latency. |
 | Actual first-job and Python CLI floors | LS-12/LS-10 measure real start-to-request and request-to-reply on each OS; LS-14 keeps cold/changed-source jobs separate from second jobs. Native-client timing is absent and does not change D4. |
 | Real Windows machine can meet the owner's chosen target | LS-13 plus live LS-14 on declared hardware with the normal scanner. Apply the owner's Windows choice; report medians and slowest-in-twenty without hiding tails. |
 | Warm-model image, video and new-input behavior | Live LS-14 on authorized GPU hardware, default image and default video, Linux and Windows, real stored outputs and task records. Large media and new input are separately attributed; the small-image target is not a size-independent bound. |
-| Older/uncontrolled ComfyUI event/cancel support | LS-5/LS-9 cover cached/error/interrupted/lost-event/reconnect and missing atomic cancel; LS-14 labels bounded fallback and unsupported cases. No install requirement is invented. |
+| Older/uncontrolled ComfyUI event/cancel support | LS-5/LS-9 cover cached/error/interrupted/lost-event/reconnect, retired Agent upload/download/cancel and missing dedicated atomic cancel; §6 requires two-job managed/attached cancellation and poisoned cleanup cases. LS-14 labels bounded fallback and unsupported cases. No install requirement is invented. |
 
 **Acceptance matrix for the Lead's design review:** §1 answers the key and
 first-job residue; §2 the paired target generation; §3 every fast-lane exit;
@@ -665,8 +896,22 @@ and all three owner options; the guarantee table links every change to its
 authority. Each numbered section names the code that changes and the proof
 its implementation must supply.
 
+### RS1 rework index
+
+| Finding | Change to inspect |
+| --- | --- |
+| RS1.1 and Paths | §4 names reuse/extension of the existing session, supervisor, warm-hold and process-custody modules and the exact host seams; Plan 13's map is on `release/14/main`. |
+| RS1.2 | §6 scopes the managed backend, detects/uses dedicated per-job cancellation on attached targets and specifies both two-job proofs; the guarantee row agrees. |
+| RS1.3 | §3 and §6 preserve one fresh Comfy attempt after definite typed no-prompt rejection, with new custody records and no uncertain-submit retry. |
+| RS1.4 | §7 specifies private preparation frames, authenticated descriptor registration and Runtime-side data resolution; normalization shares create and adds no warm commit. |
+| RS1.5 / D14 | §5 and both matrices retain the caller's independent hash without a negotiated exception. |
+| RS1.6 | §5 states three assumed FULL-mode WAL commit syncs and separate checkpoint/reuse accounting, checked by LS-2. |
+| RS1.7 | §1/§4 name managed/native/backend readiness code; §5 and the guarantee table name `claim_once`, SDK `poll_seconds` and managed-output waits. |
+| RS1.8 | §2 carries the generation and retirement fence through every Agent upload, download and cancel, including late responses. |
+| RS1.9 | PR #803 must begin with one `Project: plans/55-local-speed/plan.md` and one `Review request: implementation` line. Submission proof reports `review-intake` as well as documentation/consumer checks; a red check is not an overall CI success. |
+
 The repository's documentation check validates this note's structure/links.
-It does not consume RS1, certify product performance or complete LS-1/LS-2.
+It does not consume another RS1 round, certify product performance or complete LS-1/LS-2.
 Submit the exact document commit and check results in PR #803 and mailbox
 #796; no `tasks.md` edit, product change or merge is part of this packet.
 
@@ -674,12 +919,23 @@ Submit the exact document commit and check results in PR #803 and mailbox
 [handover]: https://github.com/banodoco/astrid-dev/blob/1c6b21f3e6fda84384871805719ebba6e03b626c/plans/55-local-speed/handover.md
 [plan13]: https://github.com/banodoco/astrid-dev/blob/1c6b21f3e6fda84384871805719ebba6e03b626c/plans/13-execution-host-refactor/plan.md#release-14-scope
 [d9]: https://github.com/banodoco/astrid-dev/pull/728
+[rs1]: https://github.com/banodoco/astrid-dev/pull/803#issuecomment-6955108457
+[d14]: https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6955711095
 [floor-pr]: https://github.com/banodoco/astrid-dev/pull/756
 [floor]: ../../releases/14/evidence/ls1/real-cpu-20261116.json
 [linux-meter]: evidence/continuation-20261116/linux-meter-43918996289.json
 [later]: evidence/continuation-20261116/approved-implementation-followup.md#e5--newest-completed-attached-meter-run-and-bounded-memory-windows-replay
 [a-host]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/generic_host.py
 [a-worker]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/generic_host_worker.py
+[a-managed-session]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/managed_tool_session.py
+[a-persistent-supervisor]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/persistent_supervisor.py
+[a-warm-hold]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/warm_hold.py
+[a-task-scope]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/task_scope.py
+[a-custody-broker]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/custody_broker.py
+[a-process-group]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/execution/process_group.py
+[a-managed-preparation]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/generation/managed_preparation.py
+[a-native-preparation]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/packs/vibecomfy/native_preparation.py
+[a-managed-engine]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/core/generation/backends/vibecomfy.py
 [a-local]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/packs/vibecomfy/local_server_engine.py
 [a-local-job]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/packs/vibecomfy/local_job.py
 [a-action]: https://github.com/banodoco/astrid-agent/blob/cb1a590e0008dde7e3fc2d3fbf341ef98401b32a/astrid/packs/vibecomfy/actions/run/run.py
@@ -716,3 +972,7 @@ Submit the exact document commit and check results in PR #803 and mailbox
 [r-dirfd]: https://github.com/banodoco/astrid-runtime/blob/6855dfa8df65cf8ae4c002b57134d6505493c17c/runtime_protocol/dirfd.py
 [r-platform]: https://github.com/banodoco/astrid-runtime/blob/6855dfa8df65cf8ae4c002b57134d6505493c17c/runtime_protocol/platform.py
 [r-generator]: https://github.com/banodoco/astrid-runtime/blob/6855dfa8df65cf8ae4c002b57134d6505493c17c/generators/python_client_template.py
+[comfy-server]: https://github.com/Comfy-Org/ComfyUI/blob/6bfaacc67c2103481e5f0c84d75257cd0581d86a/server.py
+[comfy-execution]: https://github.com/Comfy-Org/ComfyUI/blob/6bfaacc67c2103481e5f0c84d75257cd0581d86a/execution.py
+[comfy-features]: https://github.com/Comfy-Org/ComfyUI/blob/6bfaacc67c2103481e5f0c84d75257cd0581d86a/comfy_api/feature_flags.py
+[sqlite-sync]: https://www.sqlite.org/pragma.html#pragma_synchronous
