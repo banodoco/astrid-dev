@@ -14,7 +14,7 @@
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
-**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): what one person or run notices reaches everyone else without a conversation. CA-005's route does not name this plan, and none of its closure-evidence items is about intake, so there is no `Contributes to closure` line; adding one is a [Gap](../../skills/astrid-dev-gap/SKILL.md) step for the owner to ask for.
+**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): what one person or run notices reaches everyone else without a conversation. CA-005's route does not name this plan, and none of its closure-evidence items is about intake, so there is no `Contributes to closure` line; adding one is a [Gap](../../skills/capabilities/astrid-dev-gap/SKILL.md) step for the owner to ask for.
 
 ## Outcome and scope
 
@@ -57,10 +57,10 @@ One home, and one link from everywhere else. Nothing but the home states the for
 | `docs/contribution-workflow.md`, new section "Issues" | The home: how to file each type, the `About` line, triage, close reasons, the untrusted-text rule | II-5 |
 | `.github/ISSUE_TEMPLATE/*.yml` | The home of each type's questions | II-3 |
 | `skills/astrid-dev/SKILL.md` route table | One row, "Noticed something, or have a question" | II-5 |
-| `skills/astrid-dev-bugfix/SKILL.md` | Its template link becomes the bug form; the incident record is a comment on the issue | II-5 |
-| `skills/astrid-dev-manage/SKILL.md`, `skills/astrid-dev-orchestrate/SKILL.md` | One link each: a product finding from a run is an issue the manager files; triage happens at check-ins | II-5 |
-| `skills/astrid-dev-shared/glossary.md` | `issue`, `observation` | II-5 |
-| `skills/astrid-dev-improve/SKILL.md` table of homes | One row | II-5 |
+| `skills/capabilities/astrid-dev-bugfix/SKILL.md` | Its template link becomes the bug form; the incident record is a comment on the issue | II-5 |
+| `skills/roles/astrid-dev-manage/SKILL.md`, `skills/roles/astrid-dev-orchestrate/SKILL.md` | One link each: a product finding from a run is an issue the manager files; triage happens at check-ins | II-5 |
+| `skills/shared/glossary.md` | `issue`, `observation` | II-5 |
+| `skills/capabilities/astrid-dev-improve/SKILL.md` table of homes | One row | II-5 |
 | `CONTRIBUTING.md`, root `README.md` (hand-written text), `docs/ledger/README.md`, `docs/contribution-automation-setup.md` | One link or one table row each | II-5 |
 | astrid-app, astrid-agent, astrid-runtime, astrid-pinokio: `.github/ISSUE_TEMPLATE/config.yml` | The redirect | II-8 |
 | astrid-agent `docs/setup/troubleshooting.md#asking-for-help` (the App's help link points here) and astrid-pinokio `README.md` ("tell us") | The issue link | II-8 |

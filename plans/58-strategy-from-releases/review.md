@@ -4,7 +4,7 @@
 
 ## Independent critique of the first draft, 15 November 2026
 
-A fresh agent with no stake in the draft read the pack at commit `ed0171cfd5b53e1cdb57b08715f68581c6b09282` against the code, briefed by the [planning skill](../../skills/astrid-dev-plan/SKILL.md) to build as little as possible and to verify claims in code. It ran the repository check (passes), the pull-request check (only the two expected Challenge errors) and the 352 unit tests (pass). Verdict: accept with changes, four of them blocking. Its findings are numbered as it gave them.
+A fresh agent with no stake in the draft read the pack at commit `ed0171cfd5b53e1cdb57b08715f68581c6b09282` against the code, briefed by the [planning skill](../../skills/roles/astrid-dev-plan/SKILL.md) to build as little as possible and to verify claims in code. It ran the repository check (passes), the pull-request check (only the two expected Challenge errors) and the 352 unit tests (pass). Verdict: accept with changes, four of them blocking. Its findings are numbered as it gave them.
 
 ### Blocking, all accepted
 
