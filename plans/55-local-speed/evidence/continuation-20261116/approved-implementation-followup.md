@@ -166,3 +166,13 @@ of equality to either earlier downloaded copy**. No current D1 warm-model
 speed commitment has been proven, no task completion is ticked, and RS1/R
 remain 0/1 with spend zero and Plan 54 queued. This is additional evidence,
 not an independent reviewer or a permission/re-pin/product-main authorization.
+
+
+## E6 — Identities retained from superseded draft #783
+
+R14-P55-02 preserves the evidence that was only on [draft #783](https://github.com/banodoco/astrid-dev/pull/783), head `fbc25971f4e2623108c1022ea5997419f95a954c`, before the Lead closes that conflicting draft. This supplements E5; it does not change its native-coverage limits.
+
+The observer candidate `74ed3d7b838a0ced901a12c707b7d3ee2a4cd4eb` failed its new negative-descriptor oracle on both systems in [run 43942400532](https://github.com/banodoco/astrid-agent/actions/runs/43942400532): 81 passed, one failed, two deselected per OS. `os.fsync(-1)` raised `ValueError` before the intended C-level exception event. The correction uses a once-valid, then closed descriptor and preserves attempted/error/no-success assertions. Test blob `43d15e9f8eff04492130a1168bcc6e4efbd2cb4f` passed on both systems in [43950915734](https://github.com/banodoco/astrid-agent/actions/runs/43950915734), then entered #359 at `d083878970ef1ac04ff11426b8c716397d675a6d`.
+
+Artifact **14267022761** belongs to the offline Windows replay [43945137375](https://github.com/banodoco/astrid-agent/actions/runs/43945137375), not to run 43942400532. Its recorded SHA-256 is `d86cdd9568d3debb2be8f2bc062d080c8d9b0320a0ac33cca07bfe45be7f4d8b`. That replay verified the archived ETL/proof, passed seven decoder tests and completed tracerpt conversion with exit 0 in about 8m42s. The subsequent strict XML parse was cancelled at the 35-minute job bound in `ET.iterparse`. Generation/counter JUnit retained two passes; completed native counts remained **NO-RESULT**. These facts are historical retained evidence, not a fresh replay by R14-P55-02.
+
