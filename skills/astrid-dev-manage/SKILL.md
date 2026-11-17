@@ -30,11 +30,11 @@ Choose the specific operating pattern. Both inherit the responsibilities above (
 
 ## Decide
 
-Whole-project decision log and escalation details: [whole-project workstream](workstreams/whole-project.md#decide). Packet-specific boundaries: [packet workstream](workstreams/chatgpt-packet.md#receive--implement--submit).
+Whole-project decision log and escalation details: [whole-project workstream](workstreams/whole-project.md#decide). Packet-specific boundaries: [packet workstream](workstreams/chatgpt-packet.md#receive-implement-submit).
 
 ## Steps
 
-Whole-project execution, proof, task integration and progress steps: [whole-project workstream](workstreams/whole-project.md#steps). For a fresh packet use [its bounded handoff](workstreams/chatgpt-packet.md#receive--implement--submit).
+Whole-project execution, proof, task integration and progress steps: [whole-project workstream](workstreams/whole-project.md#steps). For a fresh packet use [its bounded handoff](workstreams/chatgpt-packet.md#receive-implement-submit).
 
 ## Report
 
