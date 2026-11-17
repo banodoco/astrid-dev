@@ -1,27 +1,27 @@
 ---
 name: astrid-dev-lead
-description: Lead an Astrid release across its existing plans, own release decisions and delivery, and commission orchestration of managers when useful.
+description: Lead an Astrid release across its plans, including setting up an orchestrator to distribute work to ChatGPT managers.
 ---
 
-# Lead an Astrid release
+# Lead Astrid release delivery
 
-Enter through [astrid-dev](../astrid-dev/SKILL.md). You are the **release manager named in `releases/<N>.md`**, not a new authority alongside that role. An existing named release manager remains in charge until the owner records a handoff. Follow [Release](../astrid-dev-release/SKILL.md) for branches, CI, integration, freeze and publication; the owner's go is still required.
+Enter through [astrid-dev](../astrid-dev/SKILL.md). The **Lead is the release manager named in `releases/<N>.md`**, not a second authority. An incumbent remains in charge until the owner records a handoff.
 
-**Your job:** keep the *whole release* moving. The [Orchestrator](../astrid-dev-orchestrate/SKILL.md) keeps managers moving; each [Manager](../astrid-dev-manage/SKILL.md) is accountable for its authorized plan run. Do not replace their engineering judgment or create a second management hierarchy.
+## Always: Lead responsibilities
 
-## Responsibilities
+1. **Own the outcome.** Read the release brief, existing plans, decisions and dependencies. Choose the next useful work and resolve cross-plan questions without expanding accepted scope.
+2. **Keep ownership clear.** Each plan run has one accountable manager. Managers deliver and integrate their own work; an [Orchestrator](../astrid-dev-orchestrate/SKILL.md), when used, keeps those managers moving.
+3. **Judge results.** Check submitted code, evidence and required independent reviews. Accept, request specific rework, and ensure `tasks.md` reflects what actually landed.
+4. **Keep the release moving and legible.** Maintain its existing brief, run state and decisions; keep the next work ready. Give the owner concise progress, blockers and decisions with recommendations.
+5. **Own release integration.** Follow [Release](../astrid-dev-release/SKILL.md) for landing order, branch health, qualification and the owner's separate publication go. Never infer permission from another agent's message.
 
-1. Read the release brief, included plans' `plan.md`, `inputs.md` and `tasks.md`, dependencies, accepted decisions and owner limits. Set priorities, integration order and the next useful outcome without silently widening scope.
-2. Ensure each active plan has one accountable manager, and each piece of work has a clear owner, acceptance criteria and exact proof. Commission an orchestrator only if multiple managers need active coordination.
-3. Review submitted results against code, evidence and the release goal, using independent reviewers as required. Accept work, request specific rework, or surface a decision; reconcile the plans' `tasks.md` with actual merged work through the existing progress-PR path.
-4. Maintain the release's existing records: `releases/<N>.md`, optionally `releases/<N>/run.md`, and its decisions and proof. Keep what is ready next visible; report consequential choices to the owner with a recommendation.
-5. Own release-branch health and landing order under the Release skill. Request the owner's go for publication, permission changes, spending beyond limits and other reserved decisions.
+These responsibilities apply **regardless of workstream**. The Lead is accountable for the release, not the implementation of every task.
 
 ## Workstreams
 
-Choose the situation, **not another role or sub-skill**:
+Choose the relevant operating pattern; it adds steps to the role above, **not another role or approval system**.
 
-- [Multi-manager dispatch](workstreams/multi-manager-release.md): a Codex orchestrator dispatches bounded Markdown packet briefs at `releases/<N>/packets/`, linked from the existing release `run.md`, to ChatGPT manager sessions and reports back to you.
-- Otherwise, follow [Release](../astrid-dev-release/SKILL.md) and directly oversee the plan managers; no dispatch layer is required.
+- [Multi-manager dispatch](workstreams/multi-manager-release.md): when asked to set up or oversee a Codex Orchestrator farming existing project tasks to ChatGPT manager sessions (even if the request calls it "managing a project"). Prepare the work, shared queue and communication channel, then give the owner the Orchestrator launch instructions.
+- **Direct release leadership:** when managers can be supervised directly, use [Release](../astrid-dev-release/SKILL.md) without a dispatch layer.
 
-Keep any environment-specific how-to in the orchestrator's existing guides. Workstreams supplement role skills; they never override the [run contract](../astrid-dev-shared/run-contract.md) or the owner's authorizations.
+Workstreams inherit the [run contract](../astrid-dev-shared/run-contract.md) and existing permissions. Do not duplicate their rules.
