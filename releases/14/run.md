@@ -4,9 +4,9 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
-## Now (15:00 UTC, Tue 17 Nov)
+## Now (17:05 UTC, Tue 17 Nov)
 
-Six packets are Running, dispatched 14:46–14:52 UTC; the other six Ready packets wait for a free slot. Early reports have proved a packet session can push, open a draft pull request and comment in astrid-dev (R14-P55-01, #803), astrid-runtime (R14-P39-02, #56) and VibeComfy (R14-P55-02, #173); R14-P39-03 needed no branch yet. Sessions push through the connected GitHub write API: shell `git push` has no credentials there. astrid-agent and astrid-app pushes are not yet shown. The owner has stopped the earlier Plan 39 and Plan 55 managers. Six standing-lane fixes are on `release/14/main`; no plan is yet.
+All six slots are full: four packets wait on the Lead's review (R14-P55-01, R14-P39-02, R14-P39-03, R14-FIX-01) and two are Running (R14-P39-01, R14-P55-02). Every session has proved it can push, open a pull request and comment, through the connected GitHub write API. The Lead's check-in loop stopped from 15:32 to 16:56 UTC, because its session's machine was replaced; it is now a scheduled task held outside the machine. The Lead's [rulings](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6954911390) on the four BLOCKED reports added rows RT6.1, RT9, RT10 and AT5 to Plan 39 and LS-16 to Plan 55. Six standing-lane fixes are on `release/14/main`; no plan is yet.
 
 ## Authority
 
@@ -24,8 +24,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | 6951665652 |
-| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | 6951493201 |
+| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | 6954789645 |
+| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | 6952117313 (STATUS 16:25 UTC) |
 | Packet session | `r14-<packet>-<n>`, for example `r14-P39-01-1` for the first session on R14-P39-01 | from the Orchestrator's STATUS | — |
 
 **Cadence and time limits.**
@@ -58,12 +58,12 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Running | `r14-P55-01-1` | Draft astrid-dev #803 at `91e6161`; design in progress |
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Running | `r14-P39-01-1` | Dispatched 14:52; early report not yet in |
-| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Running | `r14-P39-02-1` | Continuing Runtime #56 (head matched the board), base merged in at `b3659a3` |
-| [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Running | `r14-P55-02-1` | VibeComfy sync draft #173 at `f6a6f18`; Agent sync and Windows meter next |
-| [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Running | `r14-P39-03-1` | No fix needed so far; App Tests stored results match (20,870 + 335); Lanes and E2E failures being classified |
-| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Running | `r14-FIX-01-1` | Dispatched 14:52; early report not yet in |
+| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Review | `r14-P55-01-1` | astrid-dev #803 at `844afcf`, CI passed; the Lead's RS1 review is running |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Running | `r14-P39-01-1` | Six drafts continued; K1a scanner ruling given; hosted proof running |
+| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Review | `r14-P39-02-1` | Runtime #56 at `06055ed`; one macOS regression to re-run on base and head; K1b cap held for the owner |
+| [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Running | `r14-P55-02-1` | Sync drafts Agent #379 and VibeComfy #173 accepted as pure merges; LS-2 evidence in astrid-dev #810 |
+| [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Review | `r14-P39-03-1` | App repair `p39/k1c`; SF3a stored results checked; Lead review running |
+| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Review | `r14-FIX-01-1` | Agent #367 at `1cb6314` and #380 at `7630bc8`; Lead review running |
 | [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Ready | — | Dispatch (7) |
 | [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Ready | — | Dispatch (8) |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (9) |
