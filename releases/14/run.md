@@ -59,16 +59,16 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Done | `r14-P55-01-1` | Design merged into astrid-dev `release/14/plan-55` at `cb5419731` (#803), after the Lead's RS1; RS1.10 and RS1.11 go to LS-7 and LS-9 |
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Running | `r14-P39-01-2` | Started 18:05; AE1, AE2 and the E14 fixture continue; K1a's scanner waits on the owner |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Review | `r14-P39-01-2` | Submitted 22:16 UTC (#373–#378, D10 applied); the Lead's deep review is running |
 | [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Done | `r14-P39-02-1` | Runtime #56 and #57 merged into `release/14/plan-39` (`6cfe9a19`) |
 | [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Done | `r14-P55-02-1` | Sync and meter merged; the meter's review reopened LS-2 as a gate (R14-P55-10) |
 | [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Done | `r14-P39-03-1` | App #281 merged into `release/14/plan-39` (`e5f00690`) |
 | [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Done | `r14-FIX-01-1` | Agent #367 and #380 merged into `release/14/main` (`d5f90a4b`) |
 | [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Done | `r14-P13-01-1` | HM1 astrid-dev #822 (`a62ae1eb`) and HM3 Agent #383 (`a9085e17`) merged into `release/14/plan-13` |
-| [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Running | `r14-FIX-02-1` | VibeComfy #174; the second import edge is in scope |
-| [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Running | `r14-P55-03-1` | Started 18:57 on #371; its own protocol fixture, by the Lead's ruling |
-| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Running | `r14-P55-05-1` | Started 19:52 UTC; early report not yet in |
-| [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Running | `r14-P55-07-1` | Started 19:53 UTC; Runtime #58 |
+| [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Done | `r14-FIX-02-1` | VibeComfy #174 merged into `release/14/main` at `c27fe76b`; JSON-workflow follow-up #836; the Agent re-pin is the owner's |
+| [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Rework | `r14-P55-03-1` | The Lead's review: idle keep-alive loses jobs, websocket fallback, Windows websocket proof |
+| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Review | `r14-P55-05-1` | Submitted 22:20 UTC (VibeComfy #175, Agent #385, with LS-4.1); the Lead's deep review is running |
+| [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Review | `r14-P55-07-1` | Rework done: macOS trials 3/3 on both sides, labelled schema snapshot; the Lead's deep review is running |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Ready | — | Dispatch first: LS-4 to LS-13 prove their speed against it |
 | [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Ready | — | Dispatch after R14-P55-10 |
 | [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Ready | — | Dispatch after R14-P39-07 |
