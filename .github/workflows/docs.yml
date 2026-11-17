@@ -25,6 +25,15 @@ jobs:
           fetch-depth: 0
       - name: Test documentation validators
         run: python3 -m unittest discover -s scripts -p "test_*.py"
+      - name: Verify grouped skill installation
+        run: |
+          mkdir -p "$RUNNER_TEMP/skills"
+          bash sync.sh --destination "$RUNNER_TEMP/skills"
+          test -L "$RUNNER_TEMP/skills/astrid-dev"
+          test -L "$RUNNER_TEMP/skills/astrid-dev-worker"
+          test -L "$RUNNER_TEMP/skills/astrid-dev-iterate"
+          test -L "$RUNNER_TEMP/skills/astrid-dev-gpu-validate"
+          test -L "$RUNNER_TEMP/skills/shared"
       - name: Run repository checks
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
