@@ -46,7 +46,9 @@ One meaning per word; two meanings, two terms.
 
 **task:** one assignment in `tasks.md`; its **card** holds outcome, route, scope, dependencies and proof.
 
-**dispatch packet:** an assignment of one or more existing plan tasks, sized at roughly three human engineering days or less; not a new project, GitHub issue or independent plan run.
+**dispatch packet:** a short, bounded Markdown assignment at `releases/<N>/packets/<id>.md`, referring to one plan's canonical tasks; about three human engineering days or less; not a new project, GitHub issue or independent plan run.
+
+**workstream:** a role-specific operating pattern chosen for the situation, documented below its role skill. Environment-specific guides supply commands; neither is an extra role or source of authority.
 
 **task scope:** what a task may change: paths with their tests, shared surfaces or contracts, or `path:symbol`.
 
