@@ -1,0 +1,7 @@
+FAILED tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[False-True-True-True]
+FAILED tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[True-False-True-True]
+FAILED tests/test_workflow_bundle.py::test_derived_template_live_identity_requires_package_lock_and_checkout[True-True-True-True]
+FAILED tests/test_workflow_bundle.py::test_v2_companion_keeps_generated_python_small_and_round_trippable
+FAILED tests/test_workflow_bundle.py::test_v2_source_contract_rejects_whole_file_integrity_mutations
+FAILED tests/test_workflow_bundle.py::test_v2_rebuild_refreshes_edited_model_requirement
+6 failed in 6.75s
