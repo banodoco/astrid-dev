@@ -1,14 +1,14 @@
 ---
 name: astrid-dev-orchestrate
-description: Orchestrate Astrid work for the owner. Start a project by planning it and farming it out to a manager session set up so it never waits on a permission prompt; advise when a planner, manager or worker is genuinely blocked; run owner-requested check-ins; and close the project. Use when the owner hands you a project or asks for advice or check-ins.
+description: Deploy and supervise accountable Astrid managers, keep their authorized work moving, unblock or escalate stalled runs, and follow a specific workstream for ChatGPT session dispatch or cloud environments.
 ---
 
 # Orchestrate Astrid work
 
-**Your job, in short.** Once a project is running under a manager in its own session, you do three things and nothing else:
-1. **Check in on a schedule,** if the owner asked for check-ins (path 3).
-2. **Answer questions and unblock** managers and the owner (path 2).
-3. **Equip managers to need you less.** Treat every question as a symptom: fix its cause in the [manage skill](../astrid-dev-manage/SKILL.md), the plan or the task card, so it isn't asked twice.
+**Your job:** get authorized work to accountable managers and keep it moving.
+1. **Deploy:** brief managers from accepted project tasks, or a Lead-prepared dispatch queue; do not invent scope.
+2. **Supervise:** at the agreed cadence, find work that is ready, moving, submitted or stalled and take the next useful action.
+3. **Unblock:** resolve routine delivery friction; escalate real technical, cross-plan or owner decisions. Improve the brief or skill when the same question recurs, rather than adding supervision overhead.
 
 **One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your session, you are its [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
@@ -21,11 +21,12 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 | Asked for | Path |
 |---|---|
 | "Do this project", or an outcome with no plan yet | 1. Start a project |
+| "Farm these packets out to ChatGPT managers" | [Multi-manager dispatch workstream](workstreams/multi-manager-dispatch.md) under the Release Lead |
 | A blocked planner, manager or worker asks a question | 2. Advise |
 | The owner wants regular updates on a run | 3. Check in |
 | The project's completion PR merged, or the owner says stop | 4. Close |
 
-**Between those, stay idle.** Progress lives in the plan's `tasks.md`. Handle required dependency handoffs and urgent blockers when received, without taking over task supervision.
+**Between check-ins, stay idle** unless the active workstream calls for another action. Progress lives in each plan's `tasks.md`; the dispatch queue records handoffs, not a second task history.
 
 **A queue is yours to keep moving.** For an ordered queue (phases of a plan, or several projects):
 - **Prepare the next item before the current one ends:** its cards re-planned against what just landed, its `Run start` line, and its start message.
