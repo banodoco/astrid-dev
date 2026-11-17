@@ -4,9 +4,14 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
-## Now (18:10 UTC, Tue 17 Nov)
+## Now (23:00 UTC, Tue 17 Nov)
 
-Three packets are Done (R14-P39-02, R14-P39-03, R14-FIX-01) and Plan 55's branch catch-up is merged. Six are in progress: R14-P55-01 in rework after the Lead's RS1, R14-P39-01, R14-P55-02, and, since 17:48 UTC, R14-P13-01, R14-FIX-02 and R14-FIX-03. R14-P55-03 is next. Two original ChatGPT chats will not load ("Could not load this ChatGPT conversation"); the Orchestrator replaces them from their branches. Since 17:53 its hourly STATUS opens with an `acted on:` line. On `release/14/main`: eight standing-lane fixes, now including #669 and #670; no plan yet.
+Seven packets are Done: R14-P39-02, R14-P39-03, R14-FIX-01, R14-P55-01, R14-P13-01, R14-P55-02 and R14-FIX-02. Since 22:40 UTC, four of R14-P39-01's six PRs are merged into `release/14/plan-39`.
+
+- **Rework:** R14-P39-01 (#373's ceiling and #374's fetch list), R14-P55-03, R14-P55-05 and R14-P55-07.
+- **Running:** R14-FIX-03.
+
+Every gate is accepted only after a review that injects the failures it must catch. Next to dispatch: R14-P55-10, then R14-P61-01 and R14-P39-07.
 
 ## Authority
 
@@ -59,7 +64,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Done | `r14-P55-01-1` | Design merged into astrid-dev `release/14/plan-55` at `cb5419731` (#803), after the Lead's RS1; RS1.10 and RS1.11 go to LS-7 and LS-9 |
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Review | `r14-P39-01-2` | Submitted 22:16 UTC (#373–#378, D10 applied); the Lead's deep review is running |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Rework | `r14-P39-01-2` | Review grade B. Agent #375, #376, #377 and #378 merged into `release/14/plan-39`. #373: the D10 ceiling can grow, and entries are keyed by line. #374: add Runtime `df3d4dd` to the fetch list. New rows K1a.1, AT9 and AT10 ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6963171646)) |
 | [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Done | `r14-P39-02-1` | Runtime #56 and #57 merged into `release/14/plan-39` (`6cfe9a19`) |
 | [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Done | `r14-P55-02-1` | Sync and meter merged; the meter's review reopened LS-2 as a gate (R14-P55-10) |
 | [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Done | `r14-P39-03-1` | App #281 merged into `release/14/plan-39` (`e5f00690`) |
@@ -67,8 +72,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Done | `r14-P13-01-1` | HM1 astrid-dev #822 (`a62ae1eb`) and HM3 Agent #383 (`a9085e17`) merged into `release/14/plan-13` |
 | [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Done | `r14-FIX-02-1` | VibeComfy #174 merged into `release/14/main` at `c27fe76b`; JSON-workflow follow-up #836; the Agent re-pin is the owner's |
 | [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Rework | `r14-P55-03-1` | The Lead's review: idle keep-alive loses jobs, websocket fallback, Windows websocket proof |
-| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Review | `r14-P55-05-1` | Submitted 22:20 UTC (VibeComfy #175, Agent #385, with LS-4.1); the Lead's deep review is running |
-| [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Review | `r14-P55-07-1` | Rework done: macOS trials 3/3 on both sides, labelled schema snapshot; the Lead's deep review is running |
+| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Rework | `r14-P55-05-1` | Review grade C+ / B: a forged prepared record passes the queue fence; add per-default cells through real compile; Agent falls back before upload ([review](https://github.com/banodoco/VibeComfy/pull/175#issuecomment-6963105986)) |
+| [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Rework | `r14-P55-07-1` | Review grade C+. Thin tasks stick after a restart and are tied to one executor; the host spins when work cannot be claimed; the attached meter's Runtime pin is stale ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6963280720)) |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Ready | — | Dispatch first: LS-4 to LS-13 prove their speed against it |
 | [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-4, RB-8 | Ready | — | Dispatch after R14-P55-10 |
 | [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9 | Blocked | — | After R14-P61-01 merges |
@@ -103,7 +108,7 @@ The owner stopped the Plan 39 and Plan 55 managers on 17 November. The Orchestra
 
 | Pull request | Head | Becomes |
 |---|---|---|
-| Agent #373, #374, #375, #376, #377, #378 (Plan 39) | `80e748f`, `c815db3`, `58219a6`, `9c2bbee`, `5b9db95`, `9303e26` | Inputs to R14-P39-01 |
+| Agent #373, #374 (Plan 39) | `35d66be`, `a6466b0` | In R14-P39-01's rework; #375 to #378 are merged |
 | Runtime #56 (Plan 39) | `3833e20` | Input to R14-P39-02 |
 | Agent #359 (LS-2) | `d083878` | Input to R14-P55-02 |
 | Agent #371 (LS-5) | `5f3fff9` | Input to R14-P55-03 |

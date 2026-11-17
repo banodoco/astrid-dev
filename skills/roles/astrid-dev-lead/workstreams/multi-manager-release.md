@@ -13,5 +13,10 @@ Use when the Lead prepares accepted plan work for an Orchestrator to assign to *
 ## At each Lead check-in
 
 **Inputs:** the mailbox since your cursor, open packet PRs, and `python3 scripts/release_branches.py check <N>`.
-**Each Review:** accept, merge, open the `tasks.md` progress PR and post DONE; or list the rework on the PR and post a DECISION. A fresh high-judgment sub-agent may review a packet for you; the decision stays yours. A meter, gate or check is accepted only after a review that injects the failures it must catch.
+**Each Review:** accept, merge, open the `tasks.md` progress PR and post DONE; or list the rework on the PR and post a DECISION. A fresh sub-agent may review for you; the decision stays yours. Match the reviewer to the risk:
+- **Fast model:** mechanical checks, such as check status, failure IDs before and after, a diff confined to its files, or a record-only PR. Check a pure sync by tree equality.
+- **Mid model:** a bounded fix with a clear oracle. It runs the tests on both base and head.
+- **High-judgment model:** a meter, gate or check; a design; a new subsystem or protocol; concurrency, custody or security; and the first packet of a kind. Also any mid-model "merge" of more than about 500 lines of product code, or one that touches a shared contract.
+
+A meter, gate or check is accepted only after a review that injects the failures it must catch.
 **Then:** move unblocked packets to Ready and write the next; copy the Orchestrator's STATUS into the board; refresh Now and Waiting on the owner. No Orchestrator STATUS for 2 hours, or a message of yours missing from its `acted on:` line, is the owner's to hear. Schedule your own check-ins; if your session cannot, say which nudge the owner gives.
