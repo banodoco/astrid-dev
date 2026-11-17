@@ -17,6 +17,10 @@
 
 ## Entries
 
+### 17 November, late: judging the old man re-takes (install-4)
+- `--compare-media <O1> --against cut --cut 7`: the page rendered, but the difference map is dominated by framing. The source cut is the letterboxed still and the take is the bar-free reference, so every pixel "differs" (12.4/255) and the question that mattered, whether the mouth stays closed, can't be answered from it. Wanted: compare after fitting the take to the source's picture area (ignore the bars), or a take-only mouth/motion view (`--layer lipsync` on a media id, not only on a cut).
+- `--compare-media <O2> --against cut --cut 9`: "could not read a frame at 2.50 s of generated_00001-audio.mp4". The take is 2.50 s and the cut 2.54 s, so the sampler asked for a frame at the take's exact end. Wanted: clamp samples to the take's last frame and say the take is 0.04 s shorter than the cut.
+
 ### 17 November, evening: after batch 1 (dev loop, branch p59/visualize-readable)
 - Overview: much better. Plain header (name, length, cuts in shots, short revision); readable legend; no false dead-air boxes; one numbering ("cut 5 5.00-8.00 s"); shot names wrap; words line says "voice here; no words stored (timelines transcripts run)" or "no voice under this cut"; plan labels on the tiles.
 - `--at 14 --region 300,0,1200,450`: source-resolution crop of the sunglasses with a locator. Rough edge: the region was clipped to the 1280 canvas without saying so.
