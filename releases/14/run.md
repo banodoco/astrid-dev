@@ -70,6 +70,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Review | `r14-P55-05-1` | Submitted 22:20 UTC (VibeComfy #175, Agent #385, with LS-4.1); the Lead's deep review is running |
 | [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Review | `r14-P55-07-1` | Rework done: macOS trials 3/3 on both sides, labelled schema snapshot; the Lead's deep review is running |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Ready | — | Dispatch first: LS-4 to LS-13 prove their speed against it |
+| [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-4, RB-8 | Ready | — | Dispatch after R14-P55-10 |
+| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9 | Blocked | — | After R14-P61-01 merges |
 | [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Ready | — | Dispatch after R14-P55-10 |
 | [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Ready | — | Dispatch after R14-P39-07 |
 | [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Ready | — | Dispatch after R14-P39-08 |
@@ -182,5 +184,7 @@ If a check fails, say which manual step I must do instead of promising automatio
 4. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
 5. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
 6. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
+
+- **Plan 61:** D3 (recommended: one review round, R, before landing) and filing the three drafted issues. The real run and the first-start trace (RB-6, RB-9) run on a hosted Mac (R14-P61-02), so no stop window on your machine is needed; a run on your own data is optional.
 
 **Decided on 17 November:** the quarantine cap counts tests, with today's 19 as a ceiling that may only fall (Plan 39 D9); the caller keeps its own hash on a verified transfer (Plan 55 D14). The Lead's check-ins now run as a scheduled task outside its machine.
