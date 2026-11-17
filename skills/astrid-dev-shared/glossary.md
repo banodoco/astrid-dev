@@ -74,7 +74,7 @@ One meaning per word; two meanings, two terms.
 
 **cut line:** the date by which a release's plans must be done, and what ships without any that is not.
 
-**release:** a numbered set of work across repositories, one release branch per repository that everything merges into; its **release brief** holds the plan. [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs) is its one account.
+**release:** a numbered set of work across repositories, one release branch per repository that everything merges into; its **release brief** holds the plan. [How a release runs](../capabilities/astrid-dev-release/SKILL.md#how-a-release-runs) is its one account.
 
 **release branch:** `release/<NN>/main`, a release's one canonical branch in each repository it changes; plan and fix branches merge into it, tester builds and the candidate come from it, and publication fast-forwards `main` to it.
 
