@@ -9,7 +9,7 @@ Terms follow the [glossary](../astrid-dev-shared/glossary.md).
 
 ## The answer
 
-In the [Release Lead's multi-manager workstream](../astrid-dev-lead/workstreams/multi-manager-release.md), the named plan manager remains the **one accountable agent** for the plan run and integration. Other chats executing bounded packets return evidence to that manager; they do not open competing runs, claim plan ownership or merge its plan branch independently. In this workstream, a manager checks the shared coordination issue for messages addressed to its session when starting, resuming, reaching a milestone or stopping; reports submitted work or a blocker with links there, and otherwise keeps working. The Orchestrator—not the manager—does the hourly status reporting.
+In the [Lead's multi-manager workstream](../astrid-dev-lead/workstreams/multi-manager-release.md), follow the [ChatGPT packet handoff](workstreams/chatgpt-packet.md) in addition to this skill. One accountable manager runs each plan and normally implements packets directly. Other packet chats are its delegates. The Orchestrator handles hourly reporting; managers submit results and blockers.
 
 You take an accepted project to a reviewed, integrated candidate, and you [answer for it finishing](../astrid-dev-shared/run-contract.md#who-answers-for-a-run). [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change and [Release](../astrid-dev-release/SKILL.md) publishes.
 
