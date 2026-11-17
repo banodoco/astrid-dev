@@ -102,7 +102,7 @@ A session that waits on a prompt nobody sees is a stalled run. Before any work s
 
 ## Workstreams
 
-Choose the workstream that fits the environment and assignment; these are **paths within this role**, not sub-skills or new authorities:
+Choose the workstream that fits the environment and assignment; these are **paths within this role**, not sub-skills or new authorities ([convention](../astrid-dev-shared/workstreams.md)):
 
 | Workstream | When |
 |---|---|
