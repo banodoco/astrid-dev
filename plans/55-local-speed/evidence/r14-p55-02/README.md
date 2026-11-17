@@ -42,6 +42,12 @@ VibeComfy `dba38f8644c46f652376f2cd5112ea161e40f09b`, and lifecycle
 `7f0b025e9391baac9f5c2fb7393617ea6fef0704`, fetched at and verified against the
 unchanged checkout pins. Test execution time is not generation-speed evidence.
 
+The exact sync candidate also passed both hosted Windows fresh-install
+variants in [run 44109272947](https://github.com/banodoco/astrid-agent/actions/runs/44109272947):
+job `134130124785` with long paths off and job `134130125460` with long paths
+on. Both include the installed-command/attached-ComfyUI smoke and private
+DACL diagnostics. This is a separate install guard, not the LS-2 baseline.
+
 ### VibeComfy CPU checks — existing failures, no demonstrated regression
 
 Command, from the VibeComfy sync checkout, using the existing astrid-dev
@@ -121,7 +127,11 @@ the original output and distinct-succeeded-task assertions.
 The reference policy was fixed before measurement: median overhead at most
 `1.5 * reference + 3 seconds`; slowest at most `2 * reference + 5 seconds`.
 Deterministic operation counts may not increase. Existing background sleep
-and COMMIT counts have a separately labelled `50% + 10` allowance. This is
+attempts, COMMIT statements and observed native flushes have a separately
+labelled `50% + 10` allowance. Native counts remain distinct from Python
+requests and cannot disappear in a comparison. The v2 policy requires the
+same OS, workload, dependency commits, callers, tolerance, native coverage
+and at least the reference's latency and counter sample counts. This is
 the standing regression baseline for today's path; `budget_certified` stays
 false until the design budget and later speed work are qualified.
 
@@ -149,15 +159,84 @@ ASTRID_RUNTIME_CHECKOUT=<agent-env>/runtime \
   tests/core/generation/test_local_speed_schema_encoding.py
 ```
 
-The exact Linux/Windows measurement run is
-[44111104582](https://github.com/banodoco/astrid-agent/actions/runs/44111104582);
-both jobs remain queued as of 15:29 UTC on 17 November. Its command is
-`python -m tests.local_speed_meter_run --output plan55-meter-proof --timeout
-1800 --samples 5 --counter-samples 2`. The workflow uses Python 3.11 and the
-same exact Runtime, VibeComfy and lifecycle pins listed above. The first run
-records a reference; it does not yet claim a reference comparison. A subsequent
-candidate must retain the measured per-OS references, require the comparison
-in CI, and pass it before the packet's standing-baseline proof is complete.
+### Repeated acquisition — Windows PASS, Linux counter failure retained
+
+[Run 44111104582](https://github.com/banodoco/astrid-agent/actions/runs/44111104582)
+tested the initial head through merge `3663fd5c667549ae764144866e1354bce46d5c04`.
+The GitHub commit object confirms the same `ead505c1` tree as the candidate.
+Command: `python -m tests.local_speed_meter_run --output plan55-meter-proof
+--timeout 1800 --samples 5 --counter-samples 2`. It uses Python 3.11 and the
+unchanged dependency commits above. Both jobs passed the 105 then-current
+observer/collector checks, the separate Runtime support selection and native
+calibration. The two normal-lane integration deselections are not lost cases:
+Windows passed both in the integration step; Linux passed one with its declared
+Windows-only case skipped.
+
+[Windows job 134136613016](https://github.com/banodoco/astrid-agent/actions/runs/44111104582/job/134136613016)
+passed all **10 latency and four counter cases**, with no failures, errors or
+skips. Five-sample overheads are:
+
+| Caller | Median, seconds | Slowest, seconds |
+| --- | --- | --- |
+| Resident SDK | 99.969 | 102.312 |
+| Fresh Python CLI | 48.125 | 56.000 |
+
+The exact, unrounded raw fields needed to reproduce the reference are retained
+in [acquisition-44111104582.json](acquisition-44111104582.json), together with
+source identities, JUnit outcomes and the original summary's SHA-256. The
+complete output-identity and process records remain in the linked artifact.
+Windows's measured native attached count is explicitly unobserved. Its separate
+native calibration passed with six FileIoFlush completions, zero failed.
+
+[Linux job 134136612257](https://github.com/banodoco/astrid-agent/actions/runs/44111104582/job/134136612257)
+passed all **10 latency cases** and both CLI counter cases. Both instrumented
+SDK cases exceeded the existing **600-second pytest limit**; counter results
+were two failed / two passed. The outer capture completed with exit 1, not
+timeout 124. The summary remains NO-RESULT and no complete Linux baseline
+was fabricated from those partial counters. Native calibration separately
+passed with nine completed flushes, zero failed.
+
+Both artifacts were downloaded and their ZIP digests verified. Extracted
+Windows evidence files also match the retained SHA256SUMS manifest.
+
+| OS | Artifact | Verified ZIP SHA-256 |
+| --- | --- | --- |
+| Windows | [14347147925](https://github.com/banodoco/astrid-agent/actions/runs/44111104582/artifacts/14347147925) | `f9f85595c7e2e6a1d3622771c580a334a2f40bc0b0346e5f7c5da89f0fd9831b` |
+| Linux | [14346966205](https://github.com/banodoco/astrid-agent/actions/runs/44111104582/artifacts/14346966205) | `9b463b09b51b336b692c4ebe7df5c881c43284a7a0f281c649fbce360c13aa00` |
+
+### Targeted Linux retry and required Windows comparison
+
+The retry is published at `46024d467df98b81621012afdb7e8fcd36ef9f2d`, tree
+`5b0c1234452a2efa883572af85b5c73b105a4d9e`, exactly matching local checked
+commit `6f55afc1964aa033e65933dccb1404b818f48edc`. It adds strace's
+`--seccomp-bpf` kernel filter for the existing process/fsync/fdatasync selection.
+Without this filter, choosing the printed syscall set still incurs unrelated
+ptrace stops; see [upstream strace internals](https://github.com/strace/strace/blob/master/doc/INTERNALS.md).
+The SDK timeout stack reaches recursive conversion under the Python observer;
+the same observer finishes on Windows without Linux syscall tracing. This
+makes tracing overhead a causal hypothesis to test, not an established repair.
+The per-PID trace, reader checks, timeouts, sample counts and assertions remain.
+
+The committed [Windows reference and provenance](https://github.com/banodoco/astrid-agent/tree/46024d467df98b81621012afdb7e8fcd36ef9f2d/tests/fixtures/local-speed-baselines)
+exactly reproduce the downloaded raw Windows records with the v2 helper.
+Conversion from the artifact's v1 baseline adds explicit unobserved native
+coverage without changing measured numbers, source commits or tolerances.
+The workflow now requires that Windows reference comparison. Linux is still
+explicitly in acquisition mode pending a complete passing counter run.
+
+The assembled retry passed **110 focused cases, two existing default-lane
+deselections**, using the command above plus
+`tests/core/generation/test_local_speed_native_reader.py`.
+[Complete status inventory](meter-retry-focused.txt). YAML, all embedded
+Python, reference-policy validation and diff checks passed. Local native
+calibration remained NO-RESULT because the container denies PTRACE_TRACEME
+with Operation not permitted; the [original refusal](local-native-refusal.txt)
+is retained. No privileges were changed. Hosted calibration is required.
+
+[Retry run 44127948473](https://github.com/banodoco/astrid-agent/actions/runs/44127948473)
+is pending. The packet still needs a complete Linux acquisition, its committed
+reference, and a final CI comparison requiring both OS references. The first
+Windows PASS was an acquisition, not a reference-comparison PASS.
 
 A local one-sample iteration completed two latency and two counter cases with
 no failures, errors or skips. It verified each delivered PNG and both distinct
