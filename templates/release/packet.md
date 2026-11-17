@@ -1,6 +1,6 @@
 # <packet-id> — <bounded outcome>
 
-**Source:** [Plan <P> tasks](../../plans/<P-slug>/tasks.md) — <task IDs or explicitly scoped slices>
+**Source:** `plans/<P-slug>/tasks.md` — <exact task IDs or explicitly scoped slices; link to real file>
 **Estimate:** <human engineering days, about 3 maximum>
 **Outcome:** <one sentence describing the result>
 **Dependencies:** <accepted task/PR/evidence refs, or none>
