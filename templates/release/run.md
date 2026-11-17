@@ -27,11 +27,11 @@ One or two sentences: where the release stands, and the next thing that matters.
 
 ### Dispatch queue (only when using the Lead's multi-manager workstream)
 
-| Packet | Plan tasks | Estimate (human days) | Handoff | Session | Next action / evidence |
-|---|---|---:|---|---|---|
-| <release-plan-sequence> | <links to tasks.md rows> | <up to 3> | Ready | — | <next action> |
+| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
+|---|---|---|---|---|
+| [RNN-PXX-01](packets/RNN-PXX-01.md) | <tasks.md IDs> | Ready | — | <next action> |
 
-Handoff is Ready / Running / Review / Blocked / Done. This is not another task checklist: plans' `tasks.md` records engineering completion. Delete this section when dispatch is not used. Link the single cross-session mailbox here if one is needed.
+Each packet is a short, stable Markdown assignment at `releases/NN/packets/<packet-id>.md`, including its source tasks, up-to-3-day estimate, outcome, dependencies, inherited proof/permissions and handoff recipient ([format](../../skills/astrid-dev-lead/workstreams/multi-manager-release.md#packet-format)). The table tracks Ready / Running / Review / Blocked / Done **handoffs**, not engineering completion; the plan's `tasks.md` remains authoritative. Delete this section when dispatch is not used. Link an existing cross-session mailbox issue here when needed, rather than creating another.
 
 ### Waiting on the owner
 
