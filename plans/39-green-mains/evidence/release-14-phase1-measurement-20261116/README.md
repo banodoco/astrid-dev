@@ -3,6 +3,18 @@
 <!-- CURRENT-MEASUREMENT-START -->
 ## Latest measurements and repair state
 
+
+### 2026-11-17 — two historical Lanes archive prerequisites
+
+The exact reviewed Agent head `6bbda788` (tree `c0a0cc55`) has **completed failing** CI [43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168), attempt 1 (**882 failures, 398 errors**), and Lanes [43967861160](https://github.com/banodoco/astrid-agent/actions/runs/43967861160), attempt 1 (**306 failures including 12 log-only opt-in, 260 errors**). The retained actual-XML inventory has 13 failing JUnit jobs, original artifact IDs plus SHA-256, all full literal messages and exact testcase IDs. These totals are **not new measurements from a later candidate**.
+
+In Lanes integration shard 4, **13 exact red IDs** share two absent historical git archive trees in the shallow runner: Runtime `6d53a190...` (nine setup errors, one failure) and Agent `0e1543e0...` (three setup errors). The raw log says `fatal: not a tree object` for each, and the actual XML reports **three literal message groups, counts 9/1/3**. See [source/log/actual-XML diagnosis](diagnosis/agent/k1a-lanes-historical-archives-20261117.md). No regression is inferred from absent baseline IDs and no product behavior has been proven once the sources become readable.
+
+Isolated [Agent draft PR374](https://github.com/banodoco/astrid-agent/pull/374) adds exact history fetches and commit/tree verification in `lanes.yml`; it is **unreviewed, untested on its candidate, unmerged**. The unrelated Windows-selector [draft PR373](https://github.com/banodoco/astrid-agent/pull/373) is also unreviewed and has no hosted exact-ID Windows proof. The `df3d4dd` short-lease history issue stays on Plan55 ownership hold; the 26 pod-bootstrap failures remain on their legacy-entrypoint/installation-contract hold. Plan38/55 are WAITING, Release15 excluded, Runtime clip patch remains uncommitted **25 passed / 2 failed**, and **formal G1/G2 acceptance and RS1 (0/1) remain incomplete**. No `release/14/main`, public `main`, inputs or task-checklist change.
+
+The existing bounded follow-up is confirmed for **2026-11-17 04:16:59 UTC**, to check actual independent review and the candidate's exact historical source proof, with no other-session workflow dispatch/cancellation/rerun.
+
+
 These are **provisional post-batch observations**, separate from the frozen G1 table below. G1 evidence and phase-1 acceptance remain incomplete; formal G2 is not closed and RS1 remains **0/1**. This session has made no push or merge to `release/14/main` or public `main`.
 
 ### Merged-head Agent CI/Lanes continuation checkpoint
