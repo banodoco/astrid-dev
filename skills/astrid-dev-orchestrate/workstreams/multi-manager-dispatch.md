@@ -17,10 +17,10 @@ You are the ChatGPT manager implementing ONE packet for Release <N>.
 Follow astrid-dev-manage and workstreams/chatgpt-packet.md.
 Packet: releases/<N>/packets/<id>.md at <SHA>.
 Source plan/tasks: <path>; working product repo(s): <repos>.
-Start from the named plan branch; PRs target release/<N>/plan-<P>.
+Branches and PR target: the packet's PR destination.
 Owner authorization/limits: <exact recorded authority or requirement>.
 Mailbox: <issue URL>; Orchestrator session: <id>.
-Implement and prove this packet. Open task PRs to the plan branch.
+Implement and prove this packet. Open its PRs there.
 Post STATUS with PRs, SHAs and evidence here when submitted, or BLOCKED
 with the impediment. Do not merge, tick tasks.md or start another packet.
 ```

@@ -4,7 +4,7 @@ The live state of the Release 14 run, rewritten at every Lead check-in. The [bri
 
 ## Now (16:15 UTC, Tue 17 Nov)
 
-Every Release 14 plan except Plan 59 now runs by [fresh-packet dispatch](../../skills/astrid-dev-lead/workstreams/multi-manager-release.md): one fresh ChatGPT session per packet, an Orchestrator keeping them moving, and the Lead reviewing and merging. Eight plan packets are Ready and one more is written; four issue-fix packets wait on the owner's yes to the issue-fix rule (below); the rest are listed and are written as their dependencies land. Nothing is dispatched until the Orchestrator's [startup checks](#orchestrator-startup-checks) pass. Nothing is merged into `release/14/main` from any plan yet; six standing-lane fixes are.
+Every Release 14 plan except Plan 59 now runs by [fresh-packet dispatch](../../skills/astrid-dev-lead/workstreams/multi-manager-release.md): one fresh ChatGPT session per packet, an Orchestrator keeping them moving, and the Lead reviewing and merging. Twelve packets are Ready and one more is written; the rest are listed and are written as their dependencies land. Nothing is dispatched until the Orchestrator's [startup checks](#orchestrator-startup-checks) pass. Nothing is merged into `release/14/main` from any plan yet; six standing-lane fixes are.
 
 ## Authority
 
@@ -62,16 +62,16 @@ Packet files are in [packets/](packets/). Rows without a file are the next packe
 | R14-P13-02 Characterisation | Plan 13 HM2 | Blocked | — | After P13-01 |
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch |
 | [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Ready | — | Dispatch |
-| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670 | Blocked | — | Owner: yes to the issue-fix rule |
-| [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Blocked | — | Owner: yes to the issue-fix rule |
-| [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Blocked | — | Owner: yes to the issue-fix rule |
-| [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Blocked | — | Owner: yes to the issue-fix rule |
+| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670 | Ready | — | Dispatch |
+| [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Ready | — | Dispatch |
+| [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Ready | — | Dispatch |
+| [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch |
 | R14-FIX-05 Rejected saves | #732, the App half of #720 | Blocked | — | Owner: discard or copy out |
 | R14-FIX-06 Scenes in CI | #734 | Blocked | — | After FIX-01 lands, to keep one Agent fix moving at a time |
 | R14-FIX-07 Release tooling | #739 | Blocked | — | Owner: the ruleset on `release/*/main` |
 | R14-FIX-08 Windows leads | #677 | Blocked | — | Owner: fix or close each lead; needs a Windows machine |
 
-**Issue-fix packets.** The workstream says a packet comes from one plan's `tasks.md` and targets a plan branch. Release issues have no plan; they land by a fix branch into `release/14/main` ([Release](../../skills/astrid-dev-release/SKILL.md)). FIX-01 to FIX-04 are written for that route and wait on the owner's yes to the small rule change that allows it. Pinokio's half of Plan 52 II-8 has no release branch; the Lead does it.
+**Issue packets** (FIX-*) group release issues; their fix branches `release/14/<topic>` target `release/14/main`, per the [Lead workstream](../../skills/astrid-dev-lead/workstreams/multi-manager-release.md#set-up-once). Pinokio's half of Plan 52 II-8 has no release branch; the Lead does it.
 
 Fixed on `release/14/main`, open until a tester build proves them: #671, #672, #673, #722, #723, #742, #736 (App `5aecce5ba`) and #674 (Runtime `038e0e8`; the Agent re-pin of the Runtime waits on the owner).
 
@@ -93,7 +93,8 @@ The owner pastes this into the Orchestrator's own session. `<SHA>` is astrid-dev
 You are the Orchestrator for Release 14, reporting to the Lead (mailbox name r14-lead).
 Follow astrid-dev-orchestrate and its workstream workstreams/multi-manager-dispatch.md,
 in banodoco/astrid-dev at main.
-Read releases/14/run.md at <SHA>. Its Ready rows link the packet briefs in releases/14/packets/.
+Read releases/14/run.md at <SHA>, then on main at every hourly check: the Lead adds packets and
+moves rows to Ready. Ready rows link the packet briefs in releases/14/packets/.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/789. Your mailbox name: r14-orchestrator-1.
 First do the board's "Orchestrator startup checks" and post one STATUS with each result.
 Dispatch nothing until the Lead's DECISION answers it.
@@ -116,5 +117,4 @@ If a check fails, say which manual step the owner must do instead of promising a
 4. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
 5. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
 6. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
-7. **The issue-fix rule** for FIX-01 to FIX-04 (see [Issue-fix packets](#dispatch-queue)): a yes to its pull request.
-8. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
+7. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
