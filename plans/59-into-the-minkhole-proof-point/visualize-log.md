@@ -17,6 +17,12 @@
 
 ## Entries
 
+### 17 November, evening: after batch 1 (dev loop, branch p59/visualize-readable)
+- Overview: much better. Plain header (name, length, cuts in shots, short revision); readable legend; no false dead-air boxes; one numbering ("cut 5 5.00-8.00 s"); shot names wrap; words line says "voice here; no words stored (timelines transcripts run)" or "no voice under this cut"; plan labels on the tiles.
+- `--at 14 --region 300,0,1200,450`: source-resolution crop of the sunglasses with a locator. Rough edge: the region was clipped to the 1280 canvas without saying so.
+- Not intuitive yet for judging a mask: `--region` works only with `--at` (no region over time); `--cut 8 --layer heat,diff` draws a per-frame pixel-change bar chart and one text line ("pixels change inside x 18%-80%, y 0-100%"), not where the movement is on the picture; the `heat` layer drew nothing. Wanted (batch 2, in progress): region strips over a cut or range, a mask overlay with inside/outside motion, a heat overlay on the frame, and a take shown against its source.
+- Useful existing layers found: `lipsync` (mouth state against words), `onion`, `strip`, `diff`.
+
 ### 17 November: first real use on the approved cut (install-2)
 - `--preset overview` drew 19 cuts in 9 shots and confirmed the shot map: Morpheus in cuts 5 and 8, the old man stills in cuts 7 and 9, the lens stills in 13-15.
 - Confusing: an internal ID and "UNCERTIFIED preview (claimed revision …)" as the header; a tiny legend; red dead-air boxes on intended silence; "ch02" next to "01 Two options"; "—" under every tile with no explanation.
