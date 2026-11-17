@@ -1,0 +1,41 @@
+# K1a — Agent unit shard 5: renderer cache fixture and default-lane provisioning (17 November 2026)
+
+## Source identity and scope
+
+This is an **N-route source and actual-XML diagnosis**, not accepted G2, an independent review, a complete worker proof, or a claim that a test has passed. Agent CI [43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168), **attempt 1**, on exact integrated Agent head `6bbda788c1a62abcdda242f85c7a1cae86c57d3d`, reviewed tree `c0a0cc55b363fa71a27fedcaa57b08076d9ae180`. The completed job is **unit shard 5/8**, id `133651924751`, JUnit artifact [14280895809](https://github.com/banodoco/astrid-agent/actions/runs/43967861168/artifacts/14280895809), **2,415 tests, 95 failures, 107 errors, zero skipped**.
+
+Original downloaded JUnit artifact ZIP SHA-256: `0794ad36aecedac140e209565055f10a1be0897d868d904d75c17b719e150ecf`; XML SHA-256: `c23191801822c359feb5117e8d123e2c44e5e7152168721431ab12c8ab6cf8dd`. Reused complete actual-XML testcase and literal-message inventory gzip SHA-256: `729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426` (hash reverified against mounted inventory this turn). No new JUnit download or candidate execution took place. Full literal messages and exact IDs are preserved in that inventory; the following groups have **different literal messages**, even when they share a prerequisite.
+
+## 1. 32 exact setup errors from a stale renderer-identity test double
+
+- XML full-message SHA-256 `6e1f810a73e5e557728ea5ee0ac74925d70473024f349b9ade3305ebd591c44b`, **32** occurrences: `failed on setup with "TypeError: captured.<locals>.<lambda>() takes 0 positional arguments but 1 was given"`.
+- Representative exact ID: `tests.packs.rendering.test_scene_cache_payload::test_new_provider_reuses_rows_without_query_or_private_visibility[transport]`.
+- In `astrid/packs/rendering/actions/timeline_visualize/composed_frame.py`, `renderer_environment_identity(config: Mapping[str, Any] | None = None)` accepts a snapshot config, and `frame_cache_key`/`capture` pass one. In `tests/packs/rendering/test_scene_cache_payload.py`, the `captured` fixture and `changed == "renderer"` branch both replaced it with a zero-argument lambda. That mock signature rejects the supported production call before the cache assertions run.
+- Isolated [draft Agent PR378](https://github.com/banodoco/astrid-agent/pull/378), branch `p39/k1a-scene-cache-renderer-identity-20261117`, commit `9303e26fd6412cae20e92e2c4b06dd7ed0a5f3e5`, based on exact `6bbda788`, changes **only those two lambda signatures** to accept optional `_config=None`. Return values remain `"stable-renderer"` and `"new-renderer-source"`; cache misses, source binding and all test assertions stay intact.
+- **Acceptance hold**: no independent review and no focused/hosted candidate execution. Potential reach is 32 **existing** setup errors, not 32 established passes. Independent N reviewer must check both lambdas and actual cache miss coverage, then run focused same-file tests on exact candidate and retain XML. Do not merge a review-only draft.
+
+## 2. 126 separate existing failures/errors from missing default-lane Remotion setup
+
+The exact tested `.github/workflows/ci.yml` **unit-shard** job sets up Node from `.node-version` and installs the Agent and pinned Runtime/VibeComfy, but **never runs `npm ci --prefix remotion`** or sets `ASTRID_REMOTION_PROJECT_DIR`. In contrast, its **Darwin native** job explicitly runs `npm ci --prefix remotion` and provides a dedicated Remotion lane. The following rendering test families nevertheless run in the default Linux unit shards. Sources: `tests/packs/rendering/test_normal_audio_run.py`, `test_normal_audio_http.py`, `test_scene_host.py`, `test_scene_source_carry.py`, `test_capture_scene_labels.py`, `test_ffmpeg_support.py`, `test_remotion_backend.py`, and the pinned `remotion/package.json`.
+
+| Existing exact XML occurrences | Outcome | Literal first line / immediate cause | Full-message SHA-256 |
+|---:|---|---|---|
+| 33 | setup error | `failed on setup with "KeyError: 'ASTRID_REMOTION_PROJECT_DIR'"` | `4d1ce530d5810b2e8a7ea8668c82e9028cd03af71d70e5e582e6c81db4ee7137` |
+| 30 | failure | `RuntimeError: node:internal/modules/esm/resolve:873` — underlying `ERR_MODULE_NOT_FOUND` for `@banodoco/timeline-composition` in `normal-audio-sources.mjs` | `b3ff1636f963120863e6bc392c2021e171e612a5808b0633252b4b4624aabb2e` |
+| 18 | setup error | `failed on setup with "AssertionError: missing provisioned peer: .../capture-label-host1/remotion/node_modules/react` | `1f33b8f021ecaaafccb80001f37de0b5dcec60ae74d67473aba14aab4643da9e` |
+| 15 | setup error | `failed on setup with "AssertionError: requires provisioned renderer peers` — `remotion/node_modules/esbuild` absent | `c9718997cce4001cd40afe1ad7939bdf3f5950d24c48dfd627fb8491c9ea6dbb` |
+| 12 | failure | `ValueError: cannot verify missing rendering components` — installed composition `package.json` absent | `08fc3b436c99137bab6886943d218b669332d43ed6a6e27ecb5c3d4ef65f75ac` |
+| 9 | setup error | `failed on setup with "AssertionError: missing provisioned peer: .../capture-label-host0/remotion/node_modules/react` | `1e78e4d7d993c0e3e1a13d9a3d1841baeb883f0014a7608c7f39866e996e3c95` |
+| 9 | failure | `AssertionError: PosixPath('.../remotion/node_modules/@banodoco/timeline-composition/package.json')` | `10ba16fd424bf530d97c471eaa02724ae322343cabad3b2848da412d86d7638` |
+
+The seven groups total **126 already-counted occurrences: 75 setup errors and 51 failures**. The two categories are distinguishable: `ASTRID_REMOTION_PROJECT_DIR` (33) is a separate required environment variable, whereas the other six groups (93) show missing pinned Node installation and peer graph. These **do not demonstrate 126 guaranteed passes** after provisioning; previously masked functional assertions may become red. There are further rendering failures outside this cluster (including 11 `tar -xOf` failures of a committed historical composition artifact) that are **not assigned** to this cause.
+
+**Route and review**: N diagnostics establish missing setup. Resolve via an **X coupled CI-lane/source review**: decide whether these true default-lane tests should receive an authenticated pinned Remotion install and project path on every unit shard, or whether the existing dedicated Remotion lane must run their exact selectors while retaining equivalent coverage. Do not merely mark tests off or skip them. The proposed change must prove the pinned package tree, avoid altering test oracles/xfails, preserve other default-lane coverage, and record exact focused candidate tests and hosted JUnit. The optional cache-fixture PR378 is independent and must not be portrayed as a remedy for these 126.
+
+## Reconciliation and holds
+
+The **32 + 126 = 158 occurrences are disjoint**, by full message and exact testcase outcome, and all already included in the unchanged unit-shard-5 original **95 failures/107 errors** and overall Agent CI **882 failures/398 errors**. The 126 provisioning group includes 75 errors and 51 failures; the 32 mock-signature group is errors; together these explain **all 107 recorded unit-shard-5 errors**, with 44 further failures outside this focused diagnosis. Lanes unchanged at **306 failures (including 12 opt-in log-only)/260 errors**. This is not a regression attribution: no new prior-run exact-ID comparison was performed, and missing old IDs were never treated as regressions.
+
+As of this check, submitted independent reviews on Agent draft PR373–378: **zero**. PR378 is only a proposed fixture repair; candidate focused test and hosted proof **NO-RESULT**. Prior other draft PRs remain unmerged and unaccepted. No workflow rerun/cancellation/manual dispatch, no auth retry, no promotion of `release/14/main` or public `main`, no `inputs.md` or task-checkbox changes. Plan38/55 **WAITING**, Release15 excluded, Runtime clip patch uncommitted **25P/2F** with replay-versus-mandatory-CAS-history-integrity owner hold unchanged, Runtime draftPR56 orphan-declaration only; formal **G1/G2 incomplete, RS1 0/1**.
+
+Route provenance: N source/log/actual-XML fact-finding and one narrow fixture edit performed directly; **no separate model worker or independent reviewer** invoked. Next X review/proof cannot be represented as completed.
