@@ -1,0 +1,55 @@
+{
+  "schema": "r14-p55-02-install-guard-diagnostic.v1",
+  "run_id": 44140495640,
+  "failed_attempt": 1,
+  "failed_job_id": 134241634426,
+  "passing_other_variant_job_id": 134241634915,
+  "candidate_head": "820fe62af8295b15aa5d58b66d8b1f5b19892395",
+  "tested_merge": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+  "preceding_passing_run": 44127948431,
+  "preceding_passing_job_id": 134196776048,
+  "preceding_head": "46024d467df98b81621012afdb7e8fcd36ef9f2d",
+  "preceding_tested_merge": "6bbc74dbe43e5244e3973e0ea303bd92e53211ac",
+  "artifact_id": 14357140100,
+  "artifact_zip_sha256_verified": "bac59a6c72ee18a32497cabb56e080d2bae9269bb52934fe888c7ac7c729d8c7",
+  "artifact_sources": {
+    "agent": {
+      "sha": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+      "repo": "D:\\a\\astrid-agent\\astrid-agent"
+    },
+    "runtime": {
+      "sha": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+      "repo": "D:\\a\\astrid-agent\\astrid-agent\\journey-runtime"
+    },
+    "app": {
+      "sha": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+      "repo": "D:\\a\\astrid-agent\\astrid-agent\\journey-app"
+    }
+  },
+  "matching_effective_runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+  "matching_effective_app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+  "unchanged_relevant_file_blobs": {
+    ".github/workflows/windows-install-guard.yml": "567ff897a4510f804b7702d83d696990d51f2238",
+    "scripts/ci_windows_install_guard.py": "3cf41875251a2dc1c235612321381031860926f8",
+    "scripts/ci_windows_journey.py": "74262b69dff5fd027d2b3e1ec4a0c1ff881a2875",
+    "runtime.lock.json": "c70bd3dd4da60099a9a78e0bdb7a2beac427f4fb",
+    "pyproject.toml": "9be0c21c1a4f43fc921382b9a5953acf84cfcc24",
+    "astrid/sdk/host_bootstrap.py": "009f4874cc1fae61cd7ff86f9289facfc6ded399"
+  },
+  "only_changed_agent_files": [
+    ".github/workflows/plan55-native-flush.yml",
+    "tests/fixtures/local-speed-baselines/README.md",
+    "tests/fixtures/local-speed-baselines/linux.json"
+  ],
+  "captured_cli_output": "{\r\n  \"entry\": null,\r\n  \"fixes\": [],\r\n  \"issues\": [\r\n    {\r\n      \"code\": \"unavailable\",\r\n      \"details\": {\r\n        \"lifecycle_code\": \"runtime_lifecycle_error\",\r\n        \"next_action\": \"run the Astrid install line again\"\r\n      },\r\n      \"message\": \"host native process metadata unavailable; field=registered_host\",\r\n      \"severity\": \"error\"\r\n    }\r\n  ],\r\n  \"status\": \"blocked\",\r\n  \"target\": null,\r\n  \"task_id\": null\r\n}\r\n",
+  "captured_cli_output_sha256": "c5a17a71b206aa4e6d83bdf7518d084706a585e3f172477b2c02845d14502ee8",
+  "failure": "generate defaults --json exited 2: host native process metadata unavailable; field=registered_host",
+  "causal_limit": "The exposed error does not identify the failing native metadata query or underlying OS error. Matching inputs and prior passes do not establish the cause.",
+  "bounded_replay": {
+    "requested": true,
+    "run_id": 44140495640,
+    "job_id": 134274341401,
+    "source_or_assertion_change": false,
+    "result": "pending"
+  }
+}

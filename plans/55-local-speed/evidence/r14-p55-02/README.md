@@ -2,10 +2,11 @@
 
 [Pinned packet](https://github.com/banodoco/astrid-dev/blob/656be69360e8c91cb593589ae20b120028bf7554/releases/14/packets/R14-P55-02.md) · [Plan](../../plan.md) · [Pinned authority](https://github.com/banodoco/astrid-dev/blob/656be69360e8c91cb593589ae20b120028bf7554/releases/14/run.md#authority)
 
-Packet session `r14-P55-02-1`, 17 November 2026. These are scoped candidate
-checks, not integration, independent review, a completed plan, or a D1 speed
-claim. The Lead owns acceptance and task reconciliation. No `tasks.md` changes
-are part of this evidence.
+Packet session `r14-P55-02-1`, 17 November 2026. The Lead has integrated the two
+pure syncs. The final LS-2 standing meter passes both recorded-reference
+comparisons. The separate install-smoke limitation below remains visible.
+The Lead owns review, acceptance and task reconciliation; this evidence makes
+no D1 speed or completed-plan claim. No `tasks.md` changes are part of it.
 
 ## Pure branch synchronization
 
@@ -21,6 +22,12 @@ commits checked were Agent `5e24938d98859a27a4277a7539be2284084bacb0` and VibeCo
 `5e9f96a028c6f9aeceafd99c9db3210f550d53a5`; the connector-created commits differ
 in commit metadata only. VibeComfy changes only its PR template and two workflow
 files; its product and test bytes equal the plan parent.
+
+The Lead [accepted and merged both syncs](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6956405239):
+Agent merge `561950d084ee71a9b1e5e49be01c21bbbafcd785` and VibeComfy merge
+`e5596dcd5ee1b9657acca4c90913c0da7631764a`. Their Git commit objects each have
+exactly the tested candidate tree in the table above. This packet session
+performed no merge.
 
 ### Agent CPU checks — PASS
 
@@ -307,9 +314,92 @@ diff checks passed locally. The underlying helper/oracle code is the same as
 the passing hosted retry.
 
 [Final run 44140495768](https://github.com/banodoco/astrid-agent/actions/runs/44140495768)
-is queued to prove **both required reference comparisons** on this candidate.
-This gate is still pending. Linux acquisition alone is not claimed as a final
-standing comparison, and the packet has not yet been submitted as complete.
+is **SUCCESS on both OSes** at candidate `820fe62a`. The actual tested merge
+`db037ee418b36edae7391100fa2d5f7ec43507cd` has exactly tree `1eabe717`, matching
+the published and locally checked candidate. Both summaries report
+`baseline_status: PASS`, the required OS reference path and
+`baseline_regressions: []`. Both have **10 latency and four counter cases,
+zero failures, errors or skips**. Each OS also passed 110 focused oracles and
+its separate Runtime support/native calibration checks, with the previously
+declared Runtime-support platform skip on Linux.
+
+The final [raw proof fields](final-44140495768.json) retain full-precision
+timings, counts, source IDs, native observations, counter-case results,
+reference-file digests and original-summary digests. Recomputing both
+comparisons from those raw records reproduces the PASS results.
+
+| OS | Caller | Reference median / slowest, seconds | Final median / slowest, seconds |
+| --- | --- | --- | --- |
+| Linux | Resident SDK | 22.438 / 22.617 | 22.058 / 22.698 |
+| Linux | Fresh Python CLI | 16.920 / 16.991 | 16.859 / 16.952 |
+| Windows | Resident SDK | 99.969 / 102.312 | 83.797 / 84.609 |
+| Windows | Fresh Python CLI | 48.125 / 56.000 | 42.125 / 42.328 |
+
+Each timing distribution has five samples. Counter maxima across two separate
+samples per caller are:
+
+| Metric | Linux SDK | Linux CLI | Windows SDK | Windows CLI |
+| --- | --- | --- | --- | --- |
+| Pack-worker starts | 1 | 1 | 1 | 1 |
+| Fresh CLI starts | 0 | 1 | 0 | 1 |
+| Other external starts | 7 | 7 | 5 | 5 |
+| Workflow compiles | 8 | 8 | 8 | 8 |
+| Bundle compiles / emissions | 2 / 3 | 2 / 3 | 2 / 3 | 2 / 3 |
+| Comfy HTTP requests | 13 | 13 | 13 | 13 |
+| Output hash streams | 25 | 25 | 25 | 25 |
+| Python force requests | 150 | 150 | 84 | 84 |
+| Native completed fsync/fdatasync operations | 161 | 161 | Unobserved | Unobserved |
+| Sleep attempts | 158 | 156 | 252 | 258 |
+| Runtime COMMIT statements | 1381 | 1301 | 1518 | 861 |
+
+Linux native coverage has zero failed flushes or gaps. The calibration again
+observes nine completed flushes. Windows's separate calibration sees four
+successful FileIoFlush completions; that does not qualify native attribution
+inside its meter. All deterministic counters pass their recorded caps; sleep,
+COMMIT and observed native counts pass the disclosed background allowance.
+`budget_certified` remains false on both OSes.
+
+| OS | Job | Verified artifact | ZIP SHA-256 |
+| --- | --- | --- | --- |
+| Linux | [134241636341](https://github.com/banodoco/astrid-agent/actions/runs/44140495768/job/134241636341) | [14356430304](https://github.com/banodoco/astrid-agent/actions/runs/44140495768/artifacts/14356430304) | `27531bfac4f6998d7b7d5a08fd8cb954ae625610fa58be2831a677dc7f4dda42` |
+| Windows | [134241636180](https://github.com/banodoco/astrid-agent/actions/runs/44140495768/job/134241636180) | [14357113308](https://github.com/banodoco/astrid-agent/actions/runs/44140495768/artifacts/14357113308) | `d21e30a55db19d445dabcfe95ad16857f6936f07928d48482dc6116d2a9918c6` |
+
+Both ZIPs and all selected extracted SHA256SUMS entries verified.
+
+### Separate Windows installed-smoke failure retained
+
+The automatically triggered [fresh-install guard run 44140495640](https://github.com/banodoco/astrid-agent/actions/runs/44140495640)
+has an additional result outside the standing-meter comparison. Its
+[long-paths-on job 134241634426](https://github.com/banodoco/astrid-agent/actions/runs/44140495640/job/134241634426)
+passed real installation, TLS and DACL checks, then failed
+`generate defaults --json` with exit 2 and
+`host native process metadata unavailable; field=registered_host`.
+The CLI reports blocked/unavailable with `runtime_lifecycle_error`.
+Long-paths-off job `134241634915` passed.
+
+The immediately preceding candidate `46024d46` passed both install variants
+in [run 44127948431](https://github.com/banodoco/astrid-agent/actions/runs/44127948431),
+including long-paths-on job `134196776048`. The effective Runtime
+`6855dfa8df65cf8ae4c002b57134d6505493c17c` and App
+`de7dd1e668aa6dcf3cbce013c701fa7c76615f99` commits match between those jobs.
+Agent's only intervening changes are the native-meter workflow, reference
+README and Linux reference. Product, install workflow, smoke/journey helpers,
+Runtime lock and packaging bytes are unchanged; the same long-path mode and
+long user-like directory were used.
+
+The failure's [verified diagnostic record](install-guard-44140495640.json)
+retains its captured CLI output and source/file identities. Artifact
+`14357140100` ZIP SHA-256 is
+`bac59a6c72ee18a32497cabb56e080d2bae9269bb52934fe888c7ac7c729d8c7`.
+The native guard catches errors from executable, argv or identity lookup;
+the exposed message does not identify the particular failing query or OS
+error. Matching inputs and prior passes do not establish its cause.
+
+The original failure is retained. One bounded replay of only the failed leg
+was requested at the same Agent head; replay job `134274341401` is pending.
+No source, pin, selector or assertion was changed. Any native lifecycle product
+repair needs separate Lead routing, requested in
+[BLOCKED 6957369016](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6957369016).
 
 A local one-sample iteration completed two latency and two counter cases with
 no failures, errors or skips. It verified each delivered PNG and both distinct
