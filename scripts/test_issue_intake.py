@@ -123,13 +123,16 @@ class IssuesSectionTests(unittest.TestCase):
         for name in linked:
             self.assertTrue((ROOT / ".github" / "ISSUE_TEMPLATE" / name).is_file(), name)
 
-    def test_six_states_each_have_one_search_and_two_labels_are_never_both(self):
+    def test_seven_states_each_have_one_search_and_their_labels_are_exclusive(self):
         section = self.section()
         searches = re.findall(r"^- \[([^\]]+)\]\(https://github\.com/banodoco/astrid-dev/issues\?q=([^)]+)\):", section, re.M)
         self.assertEqual([name for name, _ in searches],
-                         ["New", "Backlog", "Planned", "Done", "Decided not to act", "Duplicate"])
-        self.assertEqual(len({query for _, query in searches}), 6)
-        self.assertIn("never has both `backlog` and `planned`", section)
+                         ["New", "Backlog", "Planned", "Claimed", "Done", "Decided not to act", "Duplicate"])
+        self.assertEqual(len({query for _, query in searches}), 7)
+        self.assertIn("never has both `backlog` and `planned`, and carries `claimed` alone", section)
+        new = dict(searches)["New"]
+        for label in ("backlog", "planned", "claimed"):
+            self.assertIn(f"-label%3A{label}", new)
         self.assertRegex(section, r"Every not-planned closure carries one comment giving the reason")
         self.assertRegex(section, r"leaves no issue it has read in New")
         self.assertNotIn("triaged", " ".join(re.findall(r"label:\S+", section)))

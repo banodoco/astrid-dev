@@ -27,7 +27,7 @@
 - [Plan 31](../31-releases-from-astrid-dev/plan.md) is queued and unassigned with no task done. It plans the final record, the release contract, publishing and versions on screen, and one legacy record it validates against the served manifest. It plans checks that the strategy page agrees with the release briefs, not generation, and no issue list. It would make the owner the code owner of all of `releases/`.
 
 *Issues.*
-- [The issue rules](../../docs/contribution-workflow.md#issues): four types, six states, labels `plan:NN` and `gap:ID`, a closed list of triage actions, and "an issue becomes work only through a task row".
+- [The issue rules](../../docs/contribution-workflow.md#issues): four types, seven states, labels `plan:NN` and `gap:ID`, a closed list of triage actions, and "an issue becomes work only through a task row".
 - Plan 52's [first triage](../52-issue-intake/evidence/triage-first-run.md): "No task row in any plan cites an open issue."
 - On GitHub on 15 November 2026, at the planning read: 60 open issues; 43 carry a `plan:NN` label and 17 carry none; none is `planned`; Plans 39, 50 and 40, which Release 15 includes, have 35 between them. Later the same day 76 were open, 23 with no type label and five with more than one `plan:` label.
 - The issues endpoint is reachable from a cloud session through `contribution_api.request`; it also returns pull requests.
