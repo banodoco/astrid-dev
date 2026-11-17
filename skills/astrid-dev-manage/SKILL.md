@@ -9,7 +9,12 @@ Terms follow the [glossary](../astrid-dev-shared/glossary.md).
 
 ## The answer
 
-**Fresh ChatGPT packet:** use the [packet workstream](workstreams/chatgpt-packet.md). One new session implements one packet and submits PRs/proof. The **Lead**, not a continuing plan manager, owns plan-level integration and `tasks.md` reconciliation; the Orchestrator owns hourly dispatch. Apply this skill's engineering, proof and review standards to the packet; its full-project run, landing and closure steps apply only when you were assigned a whole project.
+## Workstreams
+
+- **Whole-project management (default):** use [the steps below](#steps) when you own a complete plan run.
+- **[Fresh ChatGPT packet](workstreams/chatgpt-packet.md):** implement one packet in a new session and submit PRs/proof. The Lead owns plan integration and `tasks.md` reconciliation; the Orchestrator owns hourly dispatch. Apply this skill's engineering and proof standards, **not** its whole-project ownership, landing or closure procedures.
+
+These follow the shared [workstream convention](../astrid-dev-shared/workstreams.md).
 
 For a **whole-project assignment**, you take an accepted project to a reviewed, integrated candidate and [answer for it finishing](../astrid-dev-shared/run-contract.md#who-answers-for-a-run). [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change and [Release](../astrid-dev-release/SKILL.md) publishes.
 
