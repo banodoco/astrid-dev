@@ -32,25 +32,17 @@ curl -fsSL https://astrid.haus/install | \
   --data-root /absolute/path/to/pilot/data --managed-by pinokio
 ```
 
-Use a fresh HOME/XDG home for the install service as required by the host setup. The pilot used the installer's `--managed-by pinokio` option to stage without registering a shared login service, and ran its Runtime under an external supervisor. With variables set to the installed version, isolated home and data root, and a free door port, its equivalent launch is:
+Use a fresh HOME/XDG home for the install. Run the installer, and everything after it, with the **full session environment** plus the isolated `HOME`/`XDG_*`: do not build an environment allowlist by hand. A hand-made list dropped `NODE_EXTRA_CA_CERTS` on 16 November; npm then failed every download behind the session proxy, exited 0 anyway, and left the renderer's packages empty, so `timelines visualize` could not draw frames. After installing, `astrid doctor` must be healthy; do not continue past an unhealthy doctor.
+
+Start the installed Runtime with the install's own launcher (a managed install refuses `python -m astrid_runtime run` by design):
 
 ```sh
-python3 - <<'PY'
-import os
-names = ('PATH', 'HOME', 'XDG_CONFIG_HOME', 'XDG_DATA_HOME', 'XDG_STATE_HOME', 'TMPDIR',
-         'RUNPOD_API_KEY', 'HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'NO_PROXY',
-         'http_proxy', 'https_proxy', 'all_proxy', 'no_proxy', 'SSL_CERT_FILE',
-         'SSL_CERT_DIR', 'REQUESTS_CA_BUNDLE', 'CURL_CA_BUNDLE')
-env = {name: os.environ[name] for name in names if name in os.environ}
-py = os.environ['ASTRID_PYTHON']
-os.execve(py, [py, '-I', '-m', 'astrid_runtime', 'run', '--profile', 'astrid',
-               '--data-root', os.environ['ASTRID_RUNTIME_DATA_ROOT'],
-               '--source-manifest', os.environ['ASTRID_PROFILE'],
-               '--door-port', os.environ['ASTRID_DOOR_PORT']], env)
-PY
+HOME=<install>/home XDG_CONFIG_HOME=<install>/xdg-config XDG_DATA_HOME=<install>/xdg-data \
+XDG_CACHE_HOME=<install>/xdg-cache TMPDIR=<install>/tmp \
+  <install>/program/run --door-port <free port>
 ```
 
-Set `HOME`/`XDG_*` to the install's isolated home, and export `ASTRID_PYTHON`, `ASTRID_PROFILE`, `ASTRID_RUNTIME_DATA_ROOT`, and `ASTRID_DOOR_PORT` before launching. The supervisor must keep the Runtime alive. Values from the allowlist remain only in process environment data: never inspect `.env` or credential files, echo secrets, or put them in command arguments or logs. Verify the installed Runtime and generic host are ready using Astrid/Runtime status surfaces before proceeding.
+Keep it running (background or a supervisor). Point the CLI at it with `ASTRID_RUNTIME_DATA_ROOT=<install>/data` and `ASTRID_RUNTIME_DOOR_PORT=<port>`. Never inspect `.env` or credential files, echo secrets, or put them in command arguments or logs. Verify the Runtime and pack host are ready with `astrid doctor --shared --json` before proceeding.
 
 **Proves:** the selected installed package set and its installed release manifest are the actual host environment. **Does not prove:** provider credentials work, a volume is visible in the account, a claim will allocate, or a GPU workload will succeed. The host's service environment matters: the first staged claim failed to confirm the volume because its service lacked proxy/certificate trust; the log showed TLS certificate verification errors. The safe fix was to restart only the staged Runtime with allowlisted inherited proxy/trust settings plus the existing API key. The retry then confirmed the volume. Do not “fix” this by weakening TLS verification.
 
