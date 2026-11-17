@@ -86,6 +86,8 @@ The old, separately measured plan-branch shard 3 also has 516 actual IDs: **372 
 
 **No formal G1/G2 acceptance or RS1 review follows from this completion.** Agent draft PR373, which fixes two omitted native Windows selectors, remains unmerged with zero submitted independent reviews and no candidate Windows proof. The K1a policy still has 19 direct gates at its prior proof; other source-contract/setup causes remain ambiguous. The strengthened Runtime clip port remains uncommitted **25P/2F**, pending the explicit exact-retry vs mandatory CAS-history integrity owner rule; Runtime draft PR56 is orphan metadata only. Plan38/55 WAITING, Release15 excluded. No inputs/task checkbox edits, no public or release-main promotion, no auth retry, and no cancellation/re-run of anyone else's workflows. The [current state](run-state/run.yaml) includes the separate new completion snapshot.
 
+**Additional K1 prerequisite diagnosis (17 November):** Two exact Lanes shard-3 short-lease setup errors require historical Runtime commit `df3d4ddac7bf73cd858106cc51a802521a4d3552`, which the tested workflow's explicit nine-SHA history fetch omits. GitHub has the commit, but the hosted shallow checkout reported it unavailable. The same two IDs were errors in the prior-plan shard; no new regression is claimed. [Exact XML and source trace](diagnosis/agent/k1a-lanes-historical-runtime-short-lease-20261117.md). Because generic-host/lease behavior overlaps Plan 55's inventory and LS-7, no change to its execution test or pin is authorized without ownership clearance. A narrow additive history-provisioning fix is a candidate only; no product change was made. PR373 remains a separately unreviewed Windows selector draft.
+
 <!-- CURRENT-MEASUREMENT-END -->
 
 
