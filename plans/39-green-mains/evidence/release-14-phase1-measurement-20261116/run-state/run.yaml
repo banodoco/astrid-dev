@@ -168,9 +168,11 @@ review:
     formal_RS1: false
     ruling: provisional measurement now; K1a/K1b acceptance follow-up cause cards permitted before RS1 to break
       dependencies; own card acceptance must be met; no promotion authorization
-status: Runtime and App reviewed batches integrated and measured. Agent PR369 now merged at6bbda788 with exact
-  reviewed tree; new CI/Lanes active. Full policy retains19direct gates. Strengthened Runtime clip port held
-  solely on replay/history-contract decision after independent coverage rereview. Formal G1/G2/RS1 incomplete.
+status: Runtime and App reviewed batches integrated and measured. Agent PR369 merged at6bbda788 with exact
+  reviewed tree; both exact-head attempt1 CI and Lanes completed with failures, all failing test jobs inventoried.
+  Agent K1a draft PR373 still unmerged and unreviewed; full policy retains19direct gates. Strengthened Runtime
+  clip port held solely on replay/history-contract owner decision after independent coverage rereview.
+  Formal G1/G2/RS1 incomplete, RS1 0/1.
 candidates:
 - repository: banodoco/astrid-agent
   base_sha: ab95803ce28fa51eec937b4074f5ec0f0439b98a
@@ -329,8 +331,9 @@ baseline_supplements:
   plan55_exact_matches: 0
   remaining: shard3 still running; frozen baseline counts unchanged
   ledger: plans/39-green-mains/evidence/release-14-first-repair-batch/baseline-supplement/lanes-integration-4-133451220087.json
-next_blocker: Complete new Agent qualification, continue independent K1 causes and resolve explicit replay/history
-  contract rule. Preserve Plan38/55, source-artifact/access holds and no release promotion.
+next_blocker: Exact Agent attempt1 hosted CI/Lanes jobs fully inventoried; continue independently reviewed and
+  proven K1 causes (PR373 unmerged), source/ownership classification and explicit replay/history contract rule.
+  Preserve Plan38/55, source-artifact/access holds and no release promotion.
 integrated_publication:
   astrid-agent:
     pr: 369
@@ -870,3 +873,102 @@ bounded_followup_20261117:
   purpose: Recheck exact Agent Lanes43967861160 attempt1 shard3, obtain log/XML and hashes once completed, compare exact IDs without baseline rewrite, keep review/ownership holds
   safe_actions: read_and_record_on_astrid_dev_p39_g1_only
   no_new_automation_created: true
+
+qualification_continuation_20261117_complete_lanes:
+  state: active_incomplete
+  captured_on_utc_date: '2026-11-17'
+  source: agent/merged-head-6bbda788/completed-lanes-shard3-20261117.md
+  exact_agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  attempt: 1
+  raw_complete_xml_inventory:
+    local_name: p39-merged-head-complete-xml-inventory-20261117.json.gz
+    sha256: 729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426
+    note: Complete literal messages and exact XML testcase outcomes, original GitHub artifacts linked in source report
+    scope: 13 finished failing JUnit test jobs; opt-in failures are log-only
+  CI:
+    run_id: 43967861168
+    status: completed_failure
+    failing_xml_jobs: 9
+    junit_tests: 31351
+    failures: 882
+    errors: 398
+    skipped: 55
+    per_job_literal_failure_error_message_groups: 549
+    unit6_aggregate_failing_subtests_without_individual_xml_ids: 30
+    successful_jobs: [fast_checks, boundary, windows_native_and_installer, release_wheel_3_11, release_wheel_3_12]
+    skipped_jobs: [landing_reference]
+    evidence: agent/merged-head-6bbda788/completed-ci-lanes-followup-20261116.md
+  Lanes:
+    run_id: 43967861160
+    status: completed_failure
+    failed_jobs: [133651923592, 133651923670, 133651924063, 133651923800, 133651923157]
+    successful_jobs: [133651923640]
+    pending_jobs: []
+    integration_actual_xml_shards: [1, 2, 3, 4]
+    integration_xml_testcases: 2064
+    integration_xml_failures: 294
+    integration_xml_errors: 260
+    log_only_optin_failures: 12
+    total_failure_error_records_including_optin: 566
+    integration_literal_message_groups_per_job: 176
+    new_shard3:
+      job_id: 133651923800
+      terminal_outer_summary: '81 failed, 372 passed, 1 skipped, 31868 deselected, 13 warnings, 62 errors in 7828.85s (2:10:28)'
+      tests: 516
+      failures: 81
+      errors: 62
+      passed: 372
+      skipped: 1
+      artifact_id: 14285717945
+      artifact_zip_sha256: f0da81cc7c13bb8e8c0bac64f6a389b32a96c79406ec67fa6780b71bca76cb70
+      inner_integration_xml_sha256: 2851d730e6bafd2452071c7e13f70ee7b1eaf7c24503f9201f51c89b09c14d40
+      literal_failure_error_message_groups: 64
+      distinct_first_line_groups: 60
+      old_comparator_run_id: 43934820639
+      old_comparator_job_id: 133536534907
+      old_comparator_artifact_id: 14277921134
+      old_comparator_zip_sha256: 88e987ceeff7e87ba3d45b31c2a2ded5029d90f791a78e17355ac465b63544be
+      old_comparator_xml_sha256: bf717b7e9579957f65aa492687e217ff728e53110558cf62e629a834ef3d0862
+      shared_exact_testcase_ids: 516
+      old_only_testcase_ids: 0
+      current_only_testcase_ids: 0
+      exact_transitions: {pass_to_pass: 372, failure_to_failure: 81, error_to_error: 62, skipped_to_skipped: 1}
+      exact_status_regressions: 0
+      exact_status_improvements: 0
+      exact_red_ids_with_changed_literal_message: 9
+      historical_frozen_G1_shard3: unavailable_not_inferred
+  combined:
+    ci_and_lanes_failures: 1188
+    ci_and_lanes_errors: 658
+    fully_verified_xml_message_groups_per_job: 725
+    exact_prior_plan_shared_old_red_to_pass: 7
+    exact_prior_plan_shared_old_pass_to_red: 3
+    no_attribution_to_PR369_without_source_proof: true
+    membership_drift_not_regression: true
+  K1a:
+    route: N_for_bounded_windows_selector_candidate
+    draft_Agent_PR373: https://github.com/banodoco/astrid-agent/pull/373
+    branch_head: 80e748fff9d41a1e33728c49d81832df12eb0773
+    review_submissions: 0
+    tested_local: false
+    hosted_windows_exact_ids: not_yet_tested_on_candidate
+    status: unmerged_pending_independent_review_and_hosted_execution
+    hardlink_unsupported_direct_skip: remains_separate_unresolved_gate
+    provider_edge_and_Runtime_missing_commit: contract_or_provisioning_triage_not_fixed
+  K1b:
+    runtime_clip_uncommitted: 25_passed_2_failed_history_integrity_owner_rule
+    draft_Runtime_PR56: orphan_declaration_metadata_only
+    exact_retry_after_corrupt_required_history_contract: owner_decision_required_no_change
+  ownership: {Plan38: WAITING, Plan55: WAITING, Release15: excluded}
+  acceptance: {G1: incomplete, G2: incomplete, RS1: '0/1'}
+  remote_actions:
+    astrid_dev_evidence_only_on: p39/g1
+    product_code_changed_this_check: false
+    product_merged_this_check: false
+    release_or_public_main_changed_this_check: false
+    inputs_or_task_checkboxes_changed: false
+    no_cancel_or_rerun: true
+    no_authentication_retry_or_manual_dispatch: true
+  next_bounded_action: Seek independent review and genuine Windows selector execution proof for Agent PR373;
+    classify shard3 provider/SDK/Runtime-checkout failures without changing behavior contracts or other plan ownership.
