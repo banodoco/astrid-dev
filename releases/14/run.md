@@ -4,9 +4,9 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
-## Now (17:05 UTC, Tue 17 Nov)
+## Now (18:10 UTC, Tue 17 Nov)
 
-All six slots are full: four packets wait on the Lead's review (R14-P55-01, R14-P39-02, R14-P39-03, R14-FIX-01) and two are Running (R14-P39-01, R14-P55-02). Every session has proved it can push, open a pull request and comment, through the connected GitHub write API. The Lead's check-in loop stopped from 15:32 to 16:56 UTC, because its session's machine was replaced; it is now a scheduled task held outside the machine. The Lead's [rulings](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6954911390) on the four BLOCKED reports added rows RT6.1, RT9, RT10 and AT5 to Plan 39 and LS-16 to Plan 55. Six standing-lane fixes are on `release/14/main`; no plan is yet.
+Three packets are Done (R14-P39-02, R14-P39-03, R14-FIX-01) and Plan 55's branch catch-up is merged. Six are in progress: R14-P55-01 in rework after the Lead's RS1, R14-P39-01, R14-P55-02, and, since 17:48 UTC, R14-P13-01, R14-FIX-02 and R14-FIX-03. R14-P55-03 is next. Two original ChatGPT chats will not load ("Could not load this ChatGPT conversation"); the Orchestrator replaces them from their branches. Since 17:53 its hourly STATUS opens with an `acted on:` line. On `release/14/main`: eight standing-lane fixes, now including #669 and #670; no plan yet.
 
 ## Authority
 
@@ -24,8 +24,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | 6954789645 |
-| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | 6952117313 (STATUS 16:25 UTC) |
+| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | 6956518109 |
+| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | 6956385305 (STATUS 17:57 UTC) |
 | Packet session | `r14-<packet>-<n>`, for example `r14-P39-01-1` for the first session on R14-P39-01 | from the Orchestrator's STATUS | — |
 
 **Cadence and time limits.**
@@ -58,19 +58,19 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Review | `r14-P55-01-1` | astrid-dev #803 at `844afcf`, CI passed; the Lead's RS1 review is running |
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Running | `r14-P39-01-1` | Six drafts continued; K1a scanner ruling given; hosted proof running |
-| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Review | `r14-P39-02-1` | Runtime #56 at `06055ed`; one macOS regression to re-run on base and head; K1b cap held for the owner |
-| [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Running | `r14-P55-02-1` | Sync drafts Agent #379 and VibeComfy #173 accepted as pure merges; LS-2 evidence in astrid-dev #810 |
-| [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Review | `r14-P39-03-1` | App repair `p39/k1c`; SF3a stored results checked; Lead review running |
-| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Review | `r14-FIX-01-1` | Agent #367 at `1cb6314` and #380 at `7630bc8`; Lead review running |
-| [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Ready | — | Dispatch (7) |
-| [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Ready | — | Dispatch (8) |
+| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Rework | `r14-P55-01-1` | Rework on #803 from the Lead's RS1 (RS1.1–RS1.9) and D14; resumed 17:56 UTC in its own chat |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Running | `r14-P39-01-2` | Replacing `-1`, whose chat will not load; K1a ruling: a ceiling of 16 gates that may only fall |
+| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Done | `r14-P39-02-1` | Runtime #56 and #57 merged into `release/14/plan-39` (`6cfe9a19`) |
+| [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Running | `r14-P55-02-1` | Sync merged (Agent #379 `561950d0`, VibeComfy #173 `e5596dcd`); LS-2 final run on #359 at `820fe62` |
+| [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Done | `r14-P39-03-1` | App #281 merged into `release/14/plan-39` (`e5f00690`) |
+| [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Done | `r14-FIX-01-1` | Agent #367 and #380 merged into `release/14/main` (`d5f90a4b`) |
+| [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Running | `r14-P13-01-1` | HM1 map draft astrid-dev #822; HM3 caller change approved |
+| [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Running | `r14-FIX-02-1` | VibeComfy #174; the second import edge is in scope |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (9) |
 | [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Ready | — | Dispatch (10) |
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch (11) |
-| [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Ready | — | Dispatch (12), after FIX-01 is Done |
-| [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Blocked | — | Ready when P55-02's sync merges |
+| [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Running | `r14-FIX-03-1` | Agent #360 with `release/14/main` merged in; boundary ruled, dependency clients are #823 |
+| [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Ready | — | Next to dispatch |
 | R14-P55-04 First job | Plan 55 LS-12; draft Agent #361 | Blocked | — | After P55-02 |
 | R14-P39-04 Re-measure | Plan 39 G1, G2 | Blocked | — | After P39-01 to P39-03 merge |
 | R14-P39-06 onward, wave 2 | Plan 39 RT1–RT8, AT1–AT4, PT1–PT4, K2, K3, SF3b, SF3c | Blocked | — | Cut from G2's causes after the Lead's RS1; about eight packets |
