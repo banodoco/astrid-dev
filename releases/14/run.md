@@ -75,14 +75,15 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Rework | `r14-P55-05-1` | Review grade C+ / B: a forged prepared record passes the queue fence; add per-default cells through real compile; Agent falls back before upload ([review](https://github.com/banodoco/VibeComfy/pull/175#issuecomment-6963105986)) |
 | [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Rework | `r14-P55-07-1` | Review grade C+. Thin tasks stick after a restart and are tied to one executor; the host spins when work cannot be claimed; the attached meter's Runtime pin is stale ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6963280720)) |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Ready | — | Dispatch first: LS-4 to LS-13 prove their speed against it |
-| [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-4, RB-8 | Ready | — | Dispatch after R14-P55-10 |
-| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9 | Blocked | — | After R14-P61-01 merges |
+| [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Ready | — | Dispatch after R14-P55-10 |
+| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Blocked | — | After R14-P61-01 merges |
 | [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Ready | — | Dispatch after R14-P55-10 |
 | [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Ready | — | Dispatch after R14-P39-07 |
 | [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Ready | — | Dispatch after R14-P39-08 |
 | [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Ready | — | Dispatch (4) |
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Ready | — | Dispatch (5) |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (6) |
+| [R14-FIX-09](packets/R14-FIX-09.md) JSON workflow loading | #836 | Ready | — | Dispatch after R14-FIX-04; half a day, VibeComfy only |
 | [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Ready | — | Dispatch (7) |
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch (8) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Running | `r14-FIX-03-1` | Agent #360 with `release/14/main` merged in; boundary ruled, dependency clients are #823 |
@@ -99,6 +100,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 The review stops are the Lead's, not packets: Plan 39 RS1 after P39-04, Plan 55 RS1 after P55-01, and each plan's final R.
 
 **Issue packets** (FIX-*) group release issues; their fix branches `release/14/<topic>` target `release/14/main`, per the [Lead workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#set-up-once). Pinokio's half of Plan 52 II-8 has no release branch; the Lead does it.
+
+**Not dispatched:** #839 (App) and #842 (Agent), the editor's refusals on long-lived timelines. Another session has been fixing them on `release/14/edit-refusals` since 22:48 UTC. The Lead reviews them when they reach `release/14/main`; a packet would make a second writer.
 
 Fixed on `release/14/main`, open until a tester build proves them: #671, #672, #673, #722, #723, #742, #736 (App `5aecce5ba`) and #674 (Runtime `038e0e8`; the Agent re-pin of the Runtime waits on the owner).
 
