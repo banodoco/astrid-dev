@@ -20,6 +20,6 @@ Use when a [Release Lead](../../astrid-dev-lead/SKILL.md) has prepared the [mult
 
 ## Manager contact and stopping
 
-Each manager receives the **same mailbox issue**, checks messages addressed to its session on start/resume and at a milestone or before stopping, and posts a link-backed **SUBMITTED** or **BLOCKED** message when needed. Managers work from their plan's existing records; they are **not required to write hourly reports**. The Orchestrator is responsible for checking them hourly.
+Each manager receives the **same mailbox issue**, checks messages addressed to its session on start/resume and at a milestone or before stopping, and posts a link-backed **STATUS** message on submission or a **BLOCKED** message when needed. Managers work from their plan's existing records; they are **not required to write hourly reports**. The Orchestrator is responsible for checking them hourly.
 
 The hour is a check-in cadence, **not automatic session wake-up**. If scheduling and remote session resume are not verified, report the manual nudge needed and never claim unattended supervision. Stop check-ins when the authorized dispatch run ends.
