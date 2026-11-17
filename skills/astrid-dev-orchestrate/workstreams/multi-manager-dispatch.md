@@ -1,21 +1,20 @@
 # Workstream: dispatch ChatGPT managers
 
-Use only when the Release Lead has prepared a release [dispatch queue](../../astrid-dev-lead/workstreams/multi-manager-release.md) and the owner has authorized this Codex orchestration session.
+Use when a [Release Lead](../../astrid-dev-lead/SKILL.md) has prepared the [multi-manager queue](../../astrid-dev-lead/workstreams/multi-manager-release.md) and the owner has authorized this session. Follow the [Orchestrate role](../SKILL.md); this adds only dispatch mechanics.
 
-**Goal:** keep all assigned work moving. The Lead owns release priorities and packet acceptance; each accountable plan manager owns its plan run and integration. You supervise session liveness and handoffs, not product architecture or release decisions.
+**Your job:** keep execution moving. The Lead owns scope, review and release decisions; each plan has **one accountable manager** for implementation and integration.
 
 ## Start
 
-1. Read the release brief, `releases/<N>/run.md`, its **linked packet Markdown briefs** under `releases/<N>/packets/`, the source `tasks.md` cards and the existing mailbox. Check permission, starting commits, proof, dependencies and the accountable manager for each plan.
-2. For a Ready packet, launch or nudge an authorized ChatGPT session by **linking the packet file** and [Manage](../../astrid-dev-manage/SKILL.md), supplying the source plan ref, environment, branch, limits, and owner go. Do not rewrite the packet or task cards in chat. If using a separate packet chat, give it a bounded assignment under its existing accountable plan manager; do not create a competing run owner.
-3. Record the packet's session link and Running status in `run.md`. One active packet per execution session. The mailbox carries only short linked handoffs, not copied briefs.
+1. Read the release `run.md`, linked packet briefs, source `tasks.md`, permissions and mailbox. Confirm who is accountable for each plan. Test an attributable message and acknowledgment with the Lead using the [mailbox protocol](../codex-cloud/README.md#establish-the-mailbox).
+2. Give Ready packets to the existing authorized manager sessions when possible, linking each brief and [Manage](../../astrid-dev-manage/SKILL.md). If using a separate packet chat, it works for the plan's accountable manager; it does not start another plan run. Verify that session creation/resume is supported rather than assuming GitHub access provides it.
+3. **You own dispatch-state changes** in the `run.md` queue after setup. Record session links and state; reread the current file before writing. The mailbox carries short messages and evidence links, not a second queue.
 
-## Every hour
+## Each check-in (hourly when possible)
 
-1. Read new mailbox messages (including your own account's), acknowledge requests and reconcile the queue with linked PRs and manager reports.
-2. For each Running or Blocked packet, identify concrete forward movement since the last check. If stalled, send **one specific next action**; recover or replace an unusable session with a durable link to its prior state. Never claim a GitHub message woke a session without verifying that it did.
-3. Resolve ordinary assignment/environment friction. Escalate technical, scope or cross-plan blockers to the Lead with evidence and a requested decision. Owner-reserved actions still require the owner's go.
-4. When a manager has submitted the named PRs and proof, mark **Review** (not Done) and ask the Lead for acceptance. Relay any rework. Mark **Done only after the Lead's acceptance** and the accountable plan manager's task record is reconciled.
-5. Dispatch the next Ready packet and write a short, attributable status/request in the shared mailbox **only when something changed or needs action**.
+1. Read and acknowledge new mailbox requests. Compare each Running/Blocked packet with its last evidence.
+2. Nudge stalled work with **one concrete next action**, or resume/recover the session through a proven mechanism. If an impediment needs engineering or cross-plan judgment, send evidence and one question to the Lead. Do not restart duplicate sessions blindly.
+3. Mark submitted work **Review** and ask the Lead to accept or return it. Move to **Done** only after the Lead accepts and the plan manager reconciles `tasks.md`. Dispatch the next Ready packet.
+4. Leave a short attributable mailbox message **only on a change, blocker or request**. Otherwise keep moving without ceremony.
 
-Use the existing [Codex Cloud mailbox protocol](../codex-cloud/README.md#establish-the-mailbox) for `from`, `from_session`, `to`, `to_session`, `message_id`, type, request, acknowledgement and deduplication. One mailbox, one release queue, no parallel status file. If hourly execution or remote session resume is not supported, tell the owner what needs a manual nudge rather than claiming continuous monitoring.
+GitHub comments don't wake stopped chats. If hourly scheduling or session resume cannot be verified, state the manual intervention needed; never claim unattended operation.
