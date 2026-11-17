@@ -67,8 +67,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Done | `r14-P13-01-1` | HM1 astrid-dev #822 (`a62ae1eb`) and HM3 Agent #383 (`a9085e17`) merged into `release/14/plan-13` |
 | [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Running | `r14-FIX-02-1` | VibeComfy #174; the second import edge is in scope |
 | [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Running | `r14-P55-03-1` | Started 18:57 on #371; its own protocol fixture, by the Lead's ruling |
-| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Ready | — | Dispatch (2) |
-| [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Ready | — | Dispatch (3) |
+| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Running | `r14-P55-05-1` | Started 19:52 UTC; early report not yet in |
+| [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Running | `r14-P55-07-1` | Started 19:53 UTC; Runtime #58 |
 | [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Ready | — | Dispatch (4) |
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Ready | — | Dispatch (5) |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (6) |
