@@ -107,7 +107,7 @@ Choose the workstream that fits the environment and assignment; these are **path
 | [Separate Codex Cloud sessions](workstreams/codex-cloud-sessions.md) | Coordinate remote Codex chats using the existing GitHub issue mailbox and durable cursors |
 | [Codex hosted in Claude Cloud](workstreams/codex-in-claude-cloud.md) | Claude hosts Codex workers (default) or a justified Codex manager process |
 
-The last two select **how sessions run** and may accompany multi-manager dispatch. The underlying [Codex Cloud guide](codex-cloud/README.md) and [Codex-in-Claude guide](codex-in-claude-cloud/README.md) retain the technical commands and scripts at their existing paths. Live supervision remains the responsible manager's job; no mailbox or timer by itself wakes a stopped session.
+The last two select **how sessions run** and may accompany multi-manager dispatch. The underlying [Codex Cloud guide](workstreams/codex-cloud/README.md) and [Codex-in-Claude guide](workstreams/codex-in-claude-cloud/README.md) retain the technical commands and scripts at their existing paths. Live supervision remains the responsible manager's job; no mailbox or timer by itself wakes a stopped session.
 
 ## Use Codex from Claude Cloud
 
@@ -128,7 +128,7 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 
 For delegated multi-manager release work use the [dispatch checklist](workstreams/multi-manager-dispatch.md#every-hour); the Lead retains release-wide review and issue intake. Otherwise use this general project check-in path.
 
-Record the agreed cadence and end condition on the plan's `Run start` line, and as `checkin` in the run's `run.yaml` once a run exists. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. Without a verified path, poll in the foreground while active and tell the owner when a manual nudge is needed ([what works](codex-cloud/README.md#what-works-and-what-does-not)). A [hosted Codex manager's keep-alive check-in](workstreams/codex-in-claude-cloud.md#use-codex-from-claude-cloud) is a different timer. These documents never start a check-in themselves.
+Record the agreed cadence and end condition on the plan's `Run start` line, and as `checkin` in the run's `run.yaml` once a run exists. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. Without a verified path, poll in the foreground while active and tell the owner when a manual nudge is needed ([what works](workstreams/codex-cloud/README.md#what-works-and-what-does-not)). A [hosted Codex manager's keep-alive check-in](workstreams/codex-in-claude-cloud.md#use-codex-from-claude-cloud) is a different timer. These documents never start a check-in themselves.
 
 Each check-in compares the run with the previous check-in. To gather the facts (logs, CI runs, the manager's recent events), send N helpers; keep the judgment yourself.
 - **Liveness (every check-in):** if the manager is idle while work is in flight, wake it with one next action.
