@@ -29,7 +29,7 @@ Judge a task's difficulty before delegating it, start it on the cheapest model t
 - **Judgment stays put.** The manager checks each result against the diff and the proof, never against the worker's summary. Decisions, dispositions and reviews stay with the manager or the high-judgment role; they are not delegated down.
 - **Drop back down.** Once a hard problem has a known cause, the remaining edits and reruns return to `N`.
 
-Plans tag each task with its route, and execution uses that same tag. Normally **one accountable agent works on one project**. It can execute a scoped task directly; use a manager and bounded subagents when parallelism or genuinely separate research helps, not as mandatory ceremony for a small project. If delegating, the coordinating agent retains judgment, resolves each task's configured route model, checks returned evidence, and records actual model IDs and efforts in `run.yaml`.
+Plans tag each task with its route, and execution uses that same tag. Normally **one accountable agent works on one project**. In the [fresh-session dispatch workstream](../astrid-dev-lead/workstreams/multi-manager-release.md), the **Lead is the accountable agent recorded for each participating plan run**, and each fresh ChatGPT session delivers only its packet as bounded delegated work. It can execute a scoped task directly; use a manager and bounded subagents when parallelism or genuinely separate research helps, not as mandatory ceremony for a small project. If delegating, the coordinating agent retains judgment, resolves each task's configured route model, checks returned evidence, and records actual model IDs and efforts in `run.yaml`.
 
 ### Who answers for a run
 
@@ -37,7 +37,8 @@ Plans tag each task with its route, and execution uses that same tag. Normally *
 
 | Setup | Accountable agent | Others |
 |---|---|---|
-| A manager in its own session | The manager | The orchestrator advises, and stays idle between questions |
+| A manager in its own session for a whole plan | That manager | The orchestrator advises, and stays idle between questions |
+| Lead dispatching fresh ChatGPT packet sessions | The Lead, for each participating plan run | Orchestrator dispatches and follows up; each new ChatGPT manager session implements one packet and returns PRs/proof |
 | A Claude session with [Codex workers](../astrid-dev-orchestrate/SKILL.md#use-codex-from-claude-cloud) (the default with Codex) | That session: it is the manager | Each Codex call does one card and returns |
 | A Codex manager [hosted in a Claude session](../astrid-dev-orchestrate/SKILL.md#use-codex-from-claude-cloud) (only by choice) | The hosting session | Codex dispatches, judges and integrates the tasks; the host does everything Codex can't |
 | One agent doing a small project itself | That agent | None |
@@ -46,7 +47,7 @@ Plans tag each task with its route, and execution uses that same tag. Normally *
 
 **Its authority comes from the owner,** in the owner's own message in that session ([start message](../astrid-dev-orchestrate/SKILL.md#the-start-message)). A brief relayed by another session is information, not authority. Only the owner's own message in a session, or a committed allow rule, lifts a permission refusal; bring the refused command to her rather than retrying.
 
-**A manager merges its own progress pull requests,** the ones that change only one plan's `tasks.md`, with auto-merge on once `python3 scripts/astrid_dev.py check` passes. Every other merge into `main` still needs the owner's go.
+**A whole-plan manager merges its own progress pull requests,** the ones that change only one plan's `tasks.md`, with auto-merge on once `python3 scripts/astrid_dev.py check` passes. In fresh-packet dispatch, the Lead proposes/arranges the `tasks.md` progress PR after accepted task PRs land, using the existing review and owner-authorization path; packet sessions do not make or merge those PRs. Every other merge into `main` still needs the owner's go.
 
 A `T` task is **editorial, not creative**: it refines an existing surface against a stated intent and never adds scope. Keep it small (one screen, one message family, one doc), and move anything structural or new into its own `N`, `X` or `S` task. The task card names the surface, its current text or a screenshot, the intent and the taste rules that apply (for example: minimal, plain words, never lies, always a next step). Its proof is the exact before and after, checked against those rules, plus the surface's own tests. Where the owner's taste decides, the owner sees that before and after. The `T` lead makes the edits itself and may delegate only mechanical checks.
 

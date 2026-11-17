@@ -25,6 +25,14 @@ One or two sentences: where the release stands, and the next thing that matters.
 |---|---|---|---|
 | <lane> | <session id> | `briefs/<lane>.md` | <one line> |
 
+### Dispatch queue (only when using the Lead's multi-manager workstream)
+
+| Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
+|---|---|---|---|---|
+| `packets/RNN-PXX-01.md` (link when created) | <tasks.md IDs> | Ready | — | <next action> |
+
+Each packet is a short, stable Markdown assignment at `releases/NN/packets/<packet-id>.md`, implemented in **one fresh ChatGPT session**, including its source tasks, up-to-3-day estimate, outcome, dependencies, inherited proof/permissions and handoff recipient ([format](packet.md)). The table tracks Ready / Running / Review / Blocked / Done **handoffs**, not engineering completion; the plan's `tasks.md` remains authoritative. Delete this section when dispatch is not used. Link an existing cross-session mailbox issue here when needed, rather than creating another.
+
 ### Waiting on the owner
 
 - <decision, with the recommendation>; or "nothing".

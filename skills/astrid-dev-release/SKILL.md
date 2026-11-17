@@ -11,7 +11,7 @@ Use this workflow for cross-repository integration, qualification and explicitly
 
 A release is one numbered set of work across the repositories. Its plans and fixes merge into one release branch per repository, `release/<NN>/main`, which is tested as a whole and becomes `main` only at publication. A plan joins a release by its line in the brief and an issue by its label; every branch and pull request names the plan or issue it belongs to. The release manager runs the release; the owner decides what ships and gives the go.
 
-This is the one home for a release's branches and order. Each step says who acts, on which branch, what must be true and where it is recorded; the section it links holds the detail. The **release manager** is the release's orchestrator ([glossary](../astrid-dev-shared/glossary.md)); a **plan manager** runs one plan.
+This is the one home for a release's branches and order. Each step says who acts, on which branch, what must be true and where it is recorded; the section it links holds the detail. The **release manager** is the [Release Lead](../astrid-dev-lead/SKILL.md) named on the brief ([glossary](../astrid-dev-shared/glossary.md)). Ordinarily a plan manager runs one plan; under [fresh-packet dispatch](../astrid-dev-lead/workstreams/multi-manager-release.md), the Lead is accountable for participating plan runs and integrates the short-lived managers' accepted task PRs. No other release or PR authority changes.
 
 **Branches.** In each repository the release changes (the product repositories, and `astrid-dev` for a plan that changes only this repository):
 - `release/<NN>/main`, the **release branch**, is the release's one canonical branch. Work reaches it only by merge from a plan or fix branch. [Tester builds](../astrid-dev-shared/glossary.md) and the [candidate](../astrid-dev-shared/glossary.md) come only from it.
@@ -38,6 +38,8 @@ This is the one home for a release's branches and order. Each step says who acts
 A fix release to the published release always takes the served number plus one, because the App's release guard accepts only exactly that and installs update only to the next number. If a release in progress holds that number, the release manager renumbers it in one step: its brief moves to the new number, with a line in the brief recording the renumbering; in each repository its branches are pushed as `release/<new>/...` and the old names deleted; the Branches table is updated; its `release:NN` labels are renamed; and open pull requests into the renamed branches are retargeted. When several releases shift, start from the highest number.
 
 ## Keep the release's records
+
+The **release manager** named in the brief is the [Release Lead](../astrid-dev-lead/SKILL.md); this does not change an incumbent's authority without an owner-recorded handoff. When a Lead uses [fresh-session dispatch](../astrid-dev-lead/workstreams/multi-manager-release.md), its packet queue is a section of the existing `run.md`, not a second release state store.
 
 Every release has its brief, `releases/<N>.md`, from [`releases/TEMPLATE.md`](../../releases/TEMPLATE.md); see [kind](../astrid-dev-shared/glossary.md) and the [hierarchy](../../docs/contribution-workflow.md#review-the-strategy). The approach opens with the current plan; keep earlier plans below, dated.
 

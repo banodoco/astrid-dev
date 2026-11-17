@@ -5,7 +5,7 @@ description: Full GPU validation. Run every default generation slot and h3_av on
 
 # Full GPU validation
 
-**Outcome:** real outputs on real GPUs for every default slot and h3_av on the revision under test, a pass or fail per cell, every pod released, and one dated record in [`validation/gpu/`](../../validation/gpu/README.md). CPU proof cannot show real inference, model downloads, custom-node installs or RunPod capacity; this skill does. It was built by [Plan 34](../../plans/34-real-gpu-proof/plan.md), and real-GPU proof is this skill, run again, not a new project.
+**Outcome:** real outputs on real GPUs for every default slot and h3_av on the revision under test, a pass or fail per cell, every pod released, and one dated record alongside this skill, in `skills/astrid-dev-gpu-validate/records/`. CPU proof cannot show real inference, model downloads, custom-node installs or RunPod capacity; this skill does. It was built by [Plan 34](../../plans/34-real-gpu-proof/plan.md), and real-GPU proof is this skill, run again, not a new project.
 
 Read [the entrypoint](../astrid-dev/SKILL.md) and the [shared run contract](../astrid-dev-shared/run-contract.md). They own routing, provenance, review and authority; this skill owns only the GPU run.
 
@@ -68,7 +68,7 @@ Each failing cell goes to [Bug fixing](../astrid-dev-bugfix/SKILL.md): reproduce
 
 ## Evidence record
 
-One file per run: `validation/gpu/<YYYY-MM-DD>-<short-sha>.md`, where the short sha is the Agent revision under test. Commit it to astrid-dev, and link it from the plan or release it serves.
+One file per run: `skills/astrid-dev-gpu-validate/records/<YYYY-MM-DD>-<short-sha>.md`, where the short sha is the Agent revision under test. Commit it to astrid-dev, and link it from the plan or release it serves.
 
 ```markdown
 # GPU validation — <YYYY-MM-DD> — <short-sha>
