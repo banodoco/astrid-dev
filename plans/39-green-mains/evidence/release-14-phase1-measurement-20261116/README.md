@@ -1,6 +1,16 @@
 # Release 14 Plan 39 — phase 1 measurement and evidence package
 
 <!-- CURRENT-MEASUREMENT-START -->
+
+### 2026-11-17 — independent macOS-15 failure-mode provenance prerequisite
+
+The completed [Agent CI 43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168), attempt 1 at reviewed head `6bbda788`/tree `c0a0cc55`, has **40 exact red XML IDs** with one identical literal `KeyError: 'macos-15'`: **25** in unit shard 7 ([artifact 14281865130](https://github.com/banodoco/astrid-agent/actions/runs/43967861168/artifacts/14281865130)) and **15** in unit shard 8 ([artifact 14278249808](https://github.com/banodoco/astrid-agent/actions/runs/43967861168/artifacts/14278249808)). The [source/actual-XML diagnosis](diagnosis/agent/k1a-failure-mode-macos15-20261117.md) records complete ZIP/XML hashes, message SHA-256, exact-ID scope and the deterministic missing runner-provenance lookup. These failures were **already counted** in the existing CI totals of **882 failures and 398 errors**; no old-ID regression attribution is made. Lanes 43967861160 remains completed failing, **306 failures (including 12 opt-in log-only) and 260 errors**.
+
+A one-line additive mapping is isolated in [Agent **draft PR375**](https://github.com/banodoco/astrid-agent/pull/375) at `58219a6360df541fabb6f04280ebbc62b0be5aad`. It is **unmerged, independently unreviewed and untested on the candidate**; no tests, skips, xfails, or receipt assertions were relaxed. Prior [draft PR373](https://github.com/banodoco/astrid-agent/pull/373) (missing Windows selectors) and [draft PR374](https://github.com/banodoco/astrid-agent/pull/374) (historical archive source objects) also remain open without independent review or hosted candidate proof. The next bounded check on the **existing** automation is confirmed for **2026-11-17 05:40:16 UTC**; do not cancel/rerun/dispatch others' workflows.
+
+All three PRs remain review/proof holds, not accepted fixes. Plan38/55 **WAITING**, Release15 excluded, clip retry-versus-CAS-history contract unchanged at **25 passed / 2 failed**, formal **G1/G2 incomplete, RS1 0/1**. Only `astrid-dev` `p39/g1` evidence/run state and the isolated Agent task PR were touched. No release-main/public-main, `inputs.md`, or task-checkbox changes.
+
+
 ## Latest measurements and repair state
 
 
