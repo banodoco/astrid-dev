@@ -2,6 +2,16 @@
 
 <!-- CURRENT-MEASUREMENT-START -->
 
+### 2026-11-17 — 95 separate source-import provenance setup failures, X-route resolution hold
+
+The immutable, previously SHA-256 verified actual JUnit inventory for Agent [CI 43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168) attempt 1 contains **92 unit-shard-7 and three unit-shard-6 setup failures** with the **identical full literal XML assertion** (SHA-256 `9955b76881fd4a298a92e7917ee1d4be8a4bfd0b0ff1bff62a40709b6c598b0b`): `runtime_protocol.__file__` is under Python 3.11's `site-packages` rather than the checked-out pinned `astrid-runtime` tree. The [new actual-XML / source diagnosis](diagnosis/agent/k1a-runtime-protocol-source-root-20261117.md) preserves job/artifact IDs, full ZIP/XML SHA-256 hashes, literal message, exact test examples and the import/installer distinction.
+
+The unit workflow installs the locked Runtime noneditably with `scripts/ci_install_runtime.py`; the shared `restructure_runtime` fixture requires an import from the actual checkout, while `use_runtime()` prepends the checkout to `sys.path` without evicting modules already loaded. The **hosted import path mismatch is proved**, but the first import's timing and whether the source-required cohort needs a separate environment/process are **not**. **No automatic conversion to editable installation, source assertion removal, skip/xfail, or `sys.modules` purge** is justified. N-class diagnosis is complete; actual resolution requires X-class coupled packaging/source proof, with S review for authority-sensitive code. The 95 are already in CI's **882 failures / 398 errors**, are separate from PR377's 68 E14 stale-SHA failures, and are not new regressions. No new prior exact-ID comparison is claimed.
+
+The PR369 plan head and CI/Lanes attempt-1 outcomes remain unchanged. Draft Agent PR373–377 have **zero submitted independent reviews and no qualifying candidate hosted proof** at this check; do not merge. Plan38/55 WAITING, Release15 excluded, the uncommitted Runtime clip 25P/2F history-integrity conflict untouched, formal G1/G2 incomplete and RS1 **0/1**. No unrelated branch/workflow, inputs or task checkbox change.
+
+
+
 ### 2026-11-17 — E14 fixture's stale Runtime revision; 68 setup failures, narrow draft PR377
 
 The completed exact-reviewed-head [Agent CI 43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168), attempt 1, has **68 unit-shard-7 failure occurrences** from one identical literal XML setup assertion: checked-out Runtime SHA `6855dfa8df65cf8ae4c002b57134d6505493c17c` versus fixture's hard-coded `9ef808711a5207f5be74dc5f267af6fdd7bc9550`. The actual [artifact 14281865130](https://github.com/banodoco/astrid-agent/actions/runs/43967861168/artifacts/14281865130), ZIP and XML SHA-256, complete message and source/CI provenance are in [the diagnosis](diagnosis/agent/k1a-e14-runtime-pin-drift-20261117.md). The current Agent lock, hosted checkout and Runtime installer all select **`6855dfa8`**. These 68 are **already counted** in CI's **882 failures/398 errors**; they are not a new regression count.
