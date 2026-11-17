@@ -1889,3 +1889,89 @@ bounded_followup_20261117_1757:
   new_automation_created: false
   purpose: Recheck genuine submitted independent reviews and exact-head candidate XML for PR373-378/382, especially PR376 shard7 and PR374 shard3, without reruns/cancellations/dispatch; preserve PR377 full_85_ID_source_guard_blocker
   limits: No new credentials or auth retry, no source/custody guard weakening, no Plan38_or_55_owner takeover, no Release15 scope, no Runtime_clip_history_integrity_contract change, no main/release_main merge, no input or tasks checkbox edits
+
+# Incremental actual-XML candidate evidence, 2026-11-17 18:06 UTC; does not alter earlier frozen measurements.
+k1a_candidate_pr374_shard3_pr376_unit7_20261117:
+  status: active_incomplete_exact_candidate_artifacts_verified_not_integrated_G2
+  route: N_read_only_real_hosted_XML_exact_ID_comparison
+  actual_model_provenance: session_only_no_independent_review_claim
+  evidence: diagnosis/agent/k1a-candidate-pr374-shard3-pr376-unit7-20261117.md
+  original_Agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  original_reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  original_CI: {run: 43967861168, attempt: 1, conclusion: failure, failures: 882, errors: 398}
+  original_Lanes: {run: 43967861160, attempt: 1, conclusion: failure, integration_failures: 294, optin_logonly_failures: 12, total_failures: 306, errors: 260}
+  PR374_Lanes:
+    PR: 374
+    head: a6466b09267ec12156a594a41c45d319a3d93110
+    run: 44109637931
+    attempt: 1
+    status: completed_failure
+    shard3_job: 134131407900
+    original_artifact: 14285717945
+    original_zip_sha256: f0da81cc7c13bb8e8c0bac64f6a389b32a96c79406ec67fa6780b71bca76cb70
+    original_xml_sha256: 2851d730e6bafd2452071c7e13f70ee7b1eaf7c24503f9201f51c89b09c14d40
+    candidate_artifact: 14354475417
+    candidate_zip_sha256: 0f249971812ac36d55d2330a6794d91f0c13f1a1126b1849bcb9e24b31904144
+    candidate_xml_sha256: 7b06a942ae0ae41f4a24938415fc1a09083958258d6f9ab5cdb63a3ba2a57971
+    digest_verified: true
+    exact_ids_original: 516
+    exact_ids_candidate: 516
+    missing_old_ids: 0
+    new_ids: 0
+    transitions: {pass_pass: 372, failure_failure: 81, error_error: 62, skipped_skipped: 1}
+    literal_failure_error_groups_both: 64
+    distinct_first_line_groups_both: 60
+    existing_red_ids_changed_literal_message_no_status_change: 9
+    protected_Plan55_short_lease_ids: 2
+    protected_exact_error_unchanged: true
+    protected_missing_Runtime_commit: df3d4ddac7bf73cd858106cc51a802521a4d3552
+    shard2_XML: missing_after_runner_communication_loss_not_inferred
+  PR376_CI:
+    PR: 376
+    head: 9c2bbeef7b1bc5a1065c8dc192268acea5b7da8c
+    run: 44111968318
+    attempt: 1
+    status: in_progress_other_shards_incomplete
+    unit7_job: 134139715798
+    unit7_conclusion: completed_failure
+    original_artifact: 14281865130
+    original_zip_sha256: 3d208e420b35370e7b153a3f6349a64c415df126e87d3f5d97b7b1b9c8c0693a
+    original_xml_sha256: 3bd9218c3830caf27bc2502a50ebc7293c19012bad01a2e890b1f31c703b993b
+    candidate_artifact: 14354493440
+    candidate_zip_sha256: b8f50b3da55675b2fc4e0dbc217bac65d35a74c92bae148bd059819d6bbea13a
+    candidate_xml_sha256: ef78e4cbbb09c942443f1d053d5e9298d1427c26bf934a4a2012055ab99bbb23
+    digest_verified: true
+    exact_ids_original: 6050
+    exact_ids_candidate: 6050
+    missing_old_ids: 0
+    new_ids: 0
+    transitions: {pass_pass: 5636, failure_failure: 249, error_error: 160, skipped_skipped: 4, failure_pass: 1}
+    original_literal_failure_error_groups: 110
+    candidate_literal_failure_error_groups: 111
+    first_line_groups_both: 92
+    red_ids_changed_full_message: 31
+    exact_release0_archive_IDS: 3
+    archive_after: {behavior_pass: 1, downstream_Choose_Update_refusal_failures: 2}
+    downstream_message_hashes: [4ddc982d0820da41dbd4001b8e02ad01d8827d479c916de12466ff62fbed6b22, 22fdf0fcd8bc663022a8fd01c079550a8d9a9f95e2bd38ebb21c70d861d5e75d]
+    downstream_route: X_product_contract_provenance_then_S_review_if_security_authority_changed
+  external_review_gate:
+    PRs: [373, 374, 375, 376, 377, 378, 382]
+    all_draft_unmerged: true
+    submitted_independent_reviews: 0
+    PR376_PR382_workflow_composition: required_before_merge
+    integrated_G2: not_run
+  ownership: {Plan38: WAITING, Plan55: WAITING, Release15: excluded}
+  Runtime_clip: {uncommitted_pass: 25, uncommitted_fail: 2, exact_retry_vs_required_CAS_history: explicit_owner_decision_required_no_contract_change}
+  Runtime_draft_PR56: orphan_declaration_metadata_only
+  formal_acceptance: {G1: incomplete, G2: incomplete, RS1: '0/1'}
+  operations: {astrid_dev_only: p39/g1, product_PRs_merged: false, no_release_or_public_main_promotion: true, no_inputs_or_task_checkbox_edit: true, no_other_session_cancel_rerun_dispatch: true, no_authentication_retry: true}
+
+bounded_followup_20261117_2006:
+  reused_current_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  automation_update_confirmed: true
+  next_run_time_utc: '2026-11-17T20:06:23Z'
+  next_run_time_local: '2026-11-17T12:06:23-08:00'
+  one_off: true
+  no_new_automation_created: true
+  purpose: Recheck actual independent reviews and remaining hosted candidate XML; verify PR376 completed shards and PR374 missing shard2 XML, continue bounded independently justified K1 N-route prerequisite work without changing ownership contracts
+  limits: No credential/auth retry, other-session workflow cancellation/rerun/dispatch, Plan38/55 takeover, Release15 expansion, Runtime clip CAS-history contract change, source/custody assertion weakening, or release/public-main promotion
