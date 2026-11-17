@@ -6,11 +6,11 @@
 
 **Status:** active
 
-**Owner:** ChatGPT manager — `chatgpt-workspace-6ee41b0f0cca/root`
+**Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
 **Estimate:** 2–3
 
-**Waiting on:** LS-1 measurements before LS-3; owner approval for paid GPU work, a Windows tester, re-pins and product-main merges. [Run authorization and published base](inputs.md#run-start-source-identities).
+**Waiting on:** LS-3, the design ([R14-P55-01](../../releases/14/packets/R14-P55-01.md)); owner approval for paid GPU work, a Windows tester, re-pins and product-main merges
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 

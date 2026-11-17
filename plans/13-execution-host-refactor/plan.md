@@ -4,13 +4,13 @@
 
 **Goal:** Split the oversized execution host into clear, maintainable modules while preserving supported execution behavior.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
 **Estimate:** TBD
 
-**Waiting on:** a manager; scope agreement for the extraction (steps 3 and 4), which is Release 15's
+**Waiting on:** nothing for HM1 to HM3; scope agreement for the extraction (steps 3 and 4), which is Release 15's
 
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 

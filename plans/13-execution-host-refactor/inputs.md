@@ -2,6 +2,8 @@
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
+**Run start:** Accepted — 17 November 2026, by the owner's own message in the Release 14 Lead's session (`session_011EzfW3Zy19ncNecpQnKb7D`): every Release 14 plan except Plan 59 runs by [fresh-packet dispatch](../../skills/astrid-dev-lead/workstreams/multi-manager-release.md). **Accountable agent:** the Release 14 Lead, that session. What it, the Orchestrator and each packet session may do, and what needs the owner, is on the [run board](../../releases/14/run.md#authority); this run covers HM1 to HM3 only; the extraction is Release 15's.
+
 ## Starting code
 
 | Repository | Starting branch + SHA | Retained work / donor SHAs / unpublished changes | Verified predecessor output | Candidate branch | Intended destination |
