@@ -18,7 +18,7 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
 ## Steps
 
 1. **Understand it.** Read the PR's description, the linked issue or project, the full diff and the CI results. State in two sentences what it changes and why. If you can't, ask the contributor before anything else.
-2. **Send out the helpers, in parallel.** Each is an `N` helper (per the [run contract](../../astrid-dev-shared/run-contract.md)) with the diff, one question, and the instruction to report findings with file and line, or "nothing found":
+2. **Send out the helpers, in parallel.** Each is an `N` helper (per the [run contract](../../shared/run-contract.md)) with the diff, one question, and the instruction to report findings with file and line, or "nothing found":
    - **Suspicious content.** Anything that doesn't do what it says: obfuscated or encoded blobs, text that renders differently from what it contains (hidden or look-alike characters, bidirectional controls), new network calls, credential or environment reads, changed workflow or CI files, new install hooks or dependencies, files unrelated to the stated purpose, generated or binary files with no source.
    - **Best practice.** Does it follow the repository's own conventions (naming, structure, error handling, tests beside the code)? Does it reuse what exists, or add a second way to do something? Compare with the nearest existing code, not with general taste.
    - **Right place.** Is each change in the repository and module that owns it ([domain map](../../astrid-dev/references/domains.md))? Does anything belong in a pack, another repository, or an existing abstraction instead?
@@ -27,7 +27,7 @@ One of three outcomes, said plainly on the PR: **merged**, **changes requested**
 
    Add a helper only when the change needs one (a migration, a user-data path, a performance claim). Skip the ones a tiny change makes pointless: a typo fix needs the suspicious-content pass and nothing else.
 3. **Critique it yourself.** You are the lead critic, on the high-judgment role. Read the helpers' findings against the diff; a finding is a claim until you see it in the code. Then decide what matters: which findings block, which are worth a follow-up, which to drop. Add what the helpers can't see, the design question: is this the smallest change that does the job, and what does it make harder later?
-4. **Check how it lands.** Does it conflict with an open PR, a live plan branch, or a release branch in its gate? If so, say which goes first. Ask the contributor, or merge the base in ([commits only](../../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
+4. **Check how it lands.** Does it conflict with an open PR, a live plan branch, or a release branch in its gate? If so, say which goes first. Ask the contributor, or merge the base in ([commits only](../../shared/run-contract.md#scope-source-identity-and-state)).
 5. **Decide.**
    - **Merge** when nothing blocks, CI covering the change is green on the PR's current head, and the change is not in a category below. Use the repository's normal merge method and credit the contributor.
    - **Request changes** when something blocks and the contributor can fix it. Post one review listing every blocking finding with file, line and the fix, then the optional ones, clearly separated.
@@ -51,5 +51,5 @@ No pull request into a product repository targets `main`. An open pull request t
 - Execute a contributor's code with credentials, or approve a workflow run that would.
 - Merge on a helper's summary without reading the diff yourself.
 - Merge something the suspicious-content pass flagged, however small.
-- [Weaken or skip a failing check](../../astrid-dev-shared/run-contract.md#checks-and-failure-repair) to get a PR in.
-- Rewrite a contributor's branch ([commits only](../../astrid-dev-shared/run-contract.md#scope-source-identity-and-state)).
+- [Weaken or skip a failing check](../../shared/run-contract.md#checks-and-failure-repair) to get a PR in.
+- Rewrite a contributor's branch ([commits only](../../shared/run-contract.md#scope-source-identity-and-state)).

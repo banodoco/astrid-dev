@@ -5,7 +5,7 @@ description: Manage an accepted Astrid engineering assignment: judge scope and e
 
 # Manage Astrid engineering work
 
-Terms follow the [glossary](../../astrid-dev-shared/glossary.md). Follow the [run contract](../../astrid-dev-shared/run-contract.md) for authorization, proof and review.
+Terms follow the [glossary](../../shared/glossary.md). Follow the [run contract](../../shared/run-contract.md) for authorization, proof and review.
 
 ## The answer
 
@@ -15,7 +15,7 @@ Own the engineering quality of **the assignment you were given**. Work from its 
 2. **Reports are claims.** Check against code, diffs and actual tests, not a worker's summary.
 3. **See the failure first.** Make its cause visible before fixing it.
 4. **Prove the user path.** Evidence names the exact candidate, command, environment and outcome; tests alone may not demonstrate a working user journey.
-5. **Use proportionate judgment.** Choose the [cheapest viable route](../../astrid-dev-shared/run-contract.md#cheapest-model-first); escalate repeated misses or consequential decisions.
+5. **Use proportionate judgment.** Choose the [cheapest viable route](../../shared/run-contract.md#cheapest-model-first); escalate repeated misses or consequential decisions.
 6. **Decisions must survive the session.** Record consequential rulings in the existing plan record (whole project) or packet handoff (fresh session); never treat another agent's advice as authority.
 7. **Progress has one home.** A whole-project manager owns its plan's `tasks.md` progress PRs. A fresh packet manager submits PRs and evidence; the Lead reconciles the plan after acceptance.
 8. **Test what people actually use.** Exercise the real entry point early where the accepted task requires it.
@@ -23,7 +23,7 @@ Own the engineering quality of **the assignment you were given**. Work from its 
 
 ## Workstreams
 
-Choose the specific operating pattern. Both inherit the responsibilities above ([convention](../../astrid-dev-shared/workstreams.md)).
+Choose the specific operating pattern. Both inherit the responsibilities above ([convention](../../shared/workstreams.md)).
 
 - **[Whole project](workstreams/whole-project.md)** — the default when you are accountable for an entire plan run: dispatch, manage workers and run state, land and reconcile tasks, and close the project.
 - **[Fresh ChatGPT packet](workstreams/chatgpt-packet.md)** — one new ChatGPT session executes exactly one packet and returns task PRs and evidence to the Lead; no plan-level run, task-progress PR, or release merge.

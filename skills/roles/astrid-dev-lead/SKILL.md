@@ -19,9 +19,9 @@ These responsibilities apply in every workstream; the Lead does not personally i
 
 ## Workstreams
 
-A [workstream](../../astrid-dev-shared/workstreams.md) adds situation-specific steps **under this role**, not another role or approval system.
+A [workstream](../../shared/workstreams.md) adds situation-specific steps **under this role**, not another role or approval system.
 
 - [Fresh ChatGPT packet dispatch](workstreams/multi-manager-release.md): set up a Codex Orchestrator to create a **new ChatGPT session for every bounded packet** across one or more plans. Prepare packets, queue and mailbox; give the owner the launch instructions; review and reconcile results.
 - **Direct release leadership:** when a separate dispatcher is unnecessary, use [Release](../../capabilities/astrid-dev-release/SKILL.md) and work directly with the relevant managers.
 
-Follow the [run contract](../../astrid-dev-shared/run-contract.md) and existing owner permissions throughout.
+Follow the [run contract](../../shared/run-contract.md) and existing owner permissions throughout.
