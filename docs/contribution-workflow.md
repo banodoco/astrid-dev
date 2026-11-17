@@ -24,7 +24,7 @@
 | Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md) and [the aspiration template](../vision/templates/aspiration.md); adding or rewording an aspiration or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
 | Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
-| Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/astrid-dev-shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
+| Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
 | Product API, UI, installer or extension technical docs | The owning [product repository](../skills/astrid-dev/references/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
 | Typo, small wording or README improvement | Normal, focused PR. No project, new skill, evidence-pack file or planning ceremony |
 
@@ -122,7 +122,7 @@ The low-permission [review-intake workflow](../.github/workflows/review-intake.y
 
 ## Record routes as work happens
 
-Name the **route** (`N`, `X`, `S` or `T`) that ran each piece of work, at the relevant invocation rather than from memory at the end, as [the run contract's route provenance](../skills/astrid-dev-shared/run-contract.md#actual-route-provenance) requires.
+Name the **route** (`N`, `X`, `S` or `T`) that ran each piece of work, at the relevant invocation rather than from memory at the end, as [the run contract's route provenance](../skills/shared/run-contract.md#actual-route-provenance) requires.
 
 In an **Astrid-dev checkout**, the [route-use helper](../scripts/model_usage.py) records each invocation. Copy its **Routes used:** line into the review PR; its local JSONL stays gitignored under `.otto/`.
 
