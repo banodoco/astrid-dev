@@ -1157,3 +1157,99 @@ bounded_followup_20261117_0416:
   no_new_automation_created: true
   purpose: Follow isolated draft PR374 through independent reviewer and exact historical Git tree proof without merging prematurely; check PR373 review and Windows XML holds
   limits: Keep G1_G2_incomplete_RS1_0_of_1; never modify public/release main or Plan38/55 ownership or the Runtime replay integrity contract
+
+# Add-only bounded continuation. Earlier measurements and historical cutoffs remain unchanged.
+k1a_macos15_provenance_20261117:
+  status: active_incomplete_prerequisite_candidate_not_accepted
+  route: N_source_diagnosis_and_mechanical_one_line_candidate
+  actual_model_provenance: unavailable_not_invented
+  independent_reviewer: none
+  formal_RS1_consumed: 0
+  formal_RS1_max: 1
+  evidence: diagnosis/agent/k1a-failure-mode-macos15-20261117.md
+  source_agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  CI:
+    run_id: 43967861168
+    attempt: 1
+    status: completed_failure
+    existing_total_failures: 882
+    existing_total_errors: 398
+    junit_tests: 31351
+    unit7:
+      job_id: 133651924616
+      junit_artifact_id: 14281865130
+      exact_red_message_occurrences: 25
+      zip_sha256: 3d208e420b35370e7b153a3f6349a64c415df126e87d3f5d97b7b1b9c8c0693a
+      xml_sha256: 3bd9218c3830caf27bc2502a50ebc7293c19012bad01a2e890b1f31c703b993b
+    unit8:
+      job_id: 133651924880
+      junit_artifact_id: 14278249808
+      exact_red_message_occurrences: 15
+      zip_sha256: 035eb0316e0ca3b3294b4eeb5ac205d78bdd0ce754b86628d090fd253ca7d891
+      xml_sha256: adb00f44093c9f0656c1b050b4e712e83a5e31203fd72f89224af0d598885c42
+    distinct_literal_message: "KeyError: 'macos-15'"
+    literal_message_sha256: 7e50c076d42ec2a2cb14b3b73dd06c0f522bacac69d765b4992447a318c5bbc6
+    exact_red_ids: 40
+    count_not_additive_to_existing_totals: true
+    old_exact_ID_comparison_this_checkpoint: not_performed
+    classification: source_proven_missing_runner_provenance_mapping_not_proven_regression
+    full_actual_xml_inventory_sha256: 729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426
+  Lanes:
+    run_id: 43967861160
+    attempt: 1
+    status: completed_failure
+    failures_including_log_only_optin: 306
+    errors: 260
+    previously_verified_artifacts_and_exact_id_comparison: retained_unchanged
+  cause:
+    contract: scripts/journey_matrix.py M4_6_MATRIX macos_15_slot_rows
+    test_fixture: tests/failure_mode_fixtures.py valid_observation
+    product_registry: scripts/journey_failure_modes.py RUNNER_PROVENANCE
+    missing_key: macos-15
+    correct_provenance: macos_macOS_macos15
+    preserved_old_key: macos-14
+    test_assertions_or_skips_changed: false
+  isolated_candidate:
+    repository: banodoco/astrid-agent
+    task_branch: p39/k1a-failure-mode-macos15-20261117
+    base: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+    commit: 58219a6360df541fabb6f04280ebbc62b0be5aad
+    PR: https://github.com/banodoco/astrid-agent/pull/375
+    state: draft_open_unmerged
+    changed_files: ['scripts/journey_failure_modes.py']
+    changed_lines: one_additive_mapping
+    independent_review_submissions: 0
+    worker_focused_test: not_run_no_product_worker_checkout
+    hosted_candidate_exact_ID_XML: not_run
+    next_gates: independent_N_review_actual_worker_focused_proof_then_reviewed_plan_branch_integration_and_hosted_exact_XML
+  separate_holds:
+    Agent_PR373: draft_open_unmerged_unreviewed_no_hosted_Windows_two_exact_IDs
+    Agent_PR374: draft_open_unmerged_unreviewed_no_hosted_historical_tree_proof
+    short_lease: Plan55_WAITING
+    pod_bootstrap_legacy_entrypoint: unruled_contract
+    Runtime_clip: uncommitted_25_passed_2_failed_history_integrity_owner_decision
+    Plan38: WAITING
+    Plan55: WAITING
+    Release15: excluded
+    formal_G1: incomplete
+    formal_G2: incomplete
+    RS1: '0/1'
+  operations:
+    astrid_dev_p39_g1_evidence_and_runstate_only: true
+    product_isolated_branch_only: true
+    product_PR_merged: false
+    release14_main_or_public_main_pushed_or_merged: false
+    inputs_or_task_checkboxes_modified: false
+    no_cancel_rerun_workflow_dispatch: true
+    no_authentication_retry: true
+
+bounded_followup_20261117_0540:
+  reused_current_automation_id: Automation_60dcdff072388191b7dda44bc899c46e
+  update_confirmed_success: true
+  next_run_time_utc: '2026-11-17T05:40:16Z'
+  next_run_time_local: '2026-11-16T21:40:16-08:00'
+  one_off: true
+  no_new_automation_created: true
+  purpose: Check genuine independent reviews of isolated draft PR373_PR374_PR375 and worker-hosted exact candidate proof; continue separate K1 prerequisites without claiming acceptance
+  limits: No other-session workflow cancellation rerun dispatch, no release or public main changes, no Plan38/55 ownership takeover, no clip replay CAS history contract edit without owner decision
