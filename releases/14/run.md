@@ -36,7 +36,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | If | Then |
 |---|---|
 | A Running packet has no commit or STATUS for 3 hours | The Orchestrator resumes its session |
-| … for 6 hours | The Orchestrator replaces it (`-<n+1>`), from its branch and last STATUS |
+| Its chat will not load after one reload, gives no reply 30 minutes after a resume, or it is quiet for 6 hours | Broken. If its branch moved in the last 30 minutes, wait: it is still working. Otherwise the Orchestrator replaces it (`-<n+1>`) from the branch head and last STATUS, naming that head; never two writers on one branch |
 | A Review is unanswered for 4 hours | The Orchestrator sends the Lead a REQUEST and tells the owner |
 | No Orchestrator STATUS for 2 hours | The Lead tells the owner the Orchestrator's reminder is down |
 | A message is not ACKed after two cycles | Its sender sends it again |

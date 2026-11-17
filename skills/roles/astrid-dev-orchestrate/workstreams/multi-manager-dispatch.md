@@ -32,7 +32,7 @@ You send it from the owner's account, as her message ([run contract](../../../sh
 ## Every hour
 
 1. **Read the mailbox** and ACK what is addressed to you.
-2. **Inspect every open packet** in the release queue: Ready, Running, Review or Blocked. Check its messages, PRs and evidence since last time. Running with no commit or STATUS for 3 hours: resume it; for 6 hours: replace it from its branch.
+2. **Inspect every open packet** in the release queue: Ready, Running, Review or Blocked. Check its messages, PRs and evidence since last time. The branch, not the chat, shows health. No commit or STATUS for 3 hours: resume it. A chat that will not load after one reload, gives no reply 30 minutes after a resume, or is quiet for 6 hours is broken. Replace it only once its branch has not moved for 30 minutes, from the branch head and last STATUS, and name that head in the replacement's first message. Never two writers on one branch.
 3. **Act once where needed:** dispatch Ready packets to fresh sessions; nudge/resume stalled sessions; pass submitted PRs and proof to the Lead as Review; relay rework to the same packet, never duplicated; escalate genuine technical/permission/dependency blockers; an environment block (no way to start, resume or push) is one BLOCKED naming the missing capability. Set Done only on the Lead's DONE. A Review unanswered for 4 hours: send the Lead a REQUEST and tell the owner.
 4. **Post one hourly STATUS**: first an `acted on:` line naming each Lead message since the last STATUS and what you did about it, then a line per open packet with state, session, latest evidence (or no change) and next action. That STATUS, with `cursor:` your last processed comment, is the live record of handoffs and sessions; the Lead copies it to `run.md`. 
 
