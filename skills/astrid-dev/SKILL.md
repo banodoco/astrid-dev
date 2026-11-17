@@ -13,10 +13,12 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | --- | --- |
 | Bug, small fix, docs or maintenance | [Issue](../../docs/contribution-workflow.md#issues) and focused PR. [Bug fixing](../capabilities/astrid-dev-bugfix/SKILL.md) handles incidents; [Iterate](../capabilities/astrid-dev-iterate/SKILL.md) handles scoped repairs |
 | Noticed something, or have a question | [Issues](../../docs/contribution-workflow.md#issues): file it, search first |
+| Assigned one bounded task as a worker | [Worker](../roles/astrid-dev-worker/SKILL.md): follow the task card and invoke [Iterate](../capabilities/astrid-dev-iterate/SKILL.md) for code |
 | Task in a claimed project | Existing [plan, inputs and tasks](../../docs/project-format.md); inherit accepted decisions and permissions |
 | New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/README.md), then use [Plan](../roles/astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
 | What we're doing now, next and later | [Strategy](../../strategy.md): read it first for release and version direction; see [the hierarchy](../../docs/contribution-workflow.md#review-the-strategy) |
 | A gap, or the strategy across several plans | [Gap](../capabilities/astrid-dev-gap/SKILL.md): define or reassess the outcome, write its closure approach and route to closure |
+| Planning a new project | [Planner](../roles/astrid-dev-plan/SKILL.md): define the accepted scope and tasks |
 | Leading release delivery, including setting up a Codex orchestrator to farm tasks out to ChatGPT managers | [Lead](../roles/astrid-dev-lead/SKILL.md): own the overall outcome; select the [multi-manager workstream](../roles/astrid-dev-lead/workstreams/multi-manager-release.md) when applicable |
 | Supervising managers or dispatching work sessions | [Orchestrate](../roles/astrid-dev-orchestrate/SKILL.md): keep manager runs and handoffs moving, advise and check in |
 | Running one accepted project | [Manage](../roles/astrid-dev-manage/SKILL.md); ask the advisor ([Orchestrate](../roles/astrid-dev-orchestrate/SKILL.md)) for a genuine blocker or consequential choice |
@@ -27,7 +29,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../capabilities/astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
 | Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](../capabilities/astrid-dev-improve/SKILL.md): find the rule's one home, change only that, prove it |
 
-**Role/workstream convention:** each role's `SKILL.md` defines its job; optional [workstreams](../shared/workstreams.md) under that folder add situation-specific steps. No second roles hierarchy.
+**Skill structure:** [Roles](../shared/workstreams.md) define who acts; capabilities define what work is done; optional workstreams specify how. All keep their `astrid-dev-*` names.
 
 ## One path, proportionate depth
 
