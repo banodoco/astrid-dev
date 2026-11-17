@@ -1,0 +1,204 @@
+name: Plan 55 real CPU floor
+
+on:
+  push:
+    branches: [p55/ls1-real-cpu-d9]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p55-real-cpu-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  real-cpu-floor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: dev
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: banodoco/astrid-runtime
+          ref: 6855dfa8df65cf8ae4c002b57134d6505493c17c
+          path: runtime
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: Comfy-Org/ComfyUI
+          ref: 6bfaacc67c2103481e5f0c84d75257cd0581d86a
+          path: comfy
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check exact astrid-dev candidate
+        working-directory: dev
+        run: python3 scripts/astrid_dev.py check
+      - name: Install CPU PyTorch, real ComfyUI and published Runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof
+          python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu 2>&1 | tee proof/install-cpu.log
+          python -m pip install -r comfy/requirements.txt -e './runtime[test]' -e ./runtime/packages/python 2>&1 | tee proof/install-runtime-comfy.log
+          python -m pip freeze > proof/python-packages.txt
+      - name: Run original probes against isolated real CPU ComfyUI
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, platform, signal, statistics, subprocess, sys, time
+          from pathlib import Path
+          from urllib.request import urlopen
+          import torch
+
+          root = Path.cwd()
+          proof = root / 'proof'
+          floor = root / 'dev/releases/14/evidence/ls1'
+          runtime = root / 'runtime'
+          comfy = root / 'comfy'
+          proof.mkdir(exist_ok=True)
+          def sha(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+          def git(repo, *args):
+              return subprocess.check_output(['git', '-C', str(repo), *args], text=True).strip()
+          expected = {'runtime': '6855dfa8df65cf8ae4c002b57134d6505493c17c',
+                      'comfy': '6bfaacc67c2103481e5f0c84d75257cd0581d86a'}
+          actual = {name: git(root/name, 'rev-parse', 'HEAD') for name in ('dev', 'runtime', 'comfy')}
+          assert all(actual[k] == v for k, v in expected.items()), actual
+          for name, blob in [('comfy_floor.py', 'b09b6b6d6c30e69e348de7bc0838413e7f3bc3dd'),
+                             ('integrated_floor.py', 'fec5a76dcf28cce578bf98ffca636b3927839ed9')]:
+              assert git(root/'dev', 'hash-object', str(floor/name)) == blob, name
+          assert torch.version.cuda is None, 'This lane must use CPU-only PyTorch'
+          metadata = {'run': '2026-11-15-local-speed', 'manager': 'chatgpt-workspace-6ee41b0f0cca/root',
+                      'authorization': 'D9 / astrid-dev#728 plus owner CPU correction, 2026-11-16',
+                      'sources': actual, 'os': platform.platform(), 'python': sys.version,
+                      'torch': torch.__version__, 'cpu_count': os.cpu_count(),
+                      'torch_threads': torch.get_num_threads(),
+                      'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+                      'workflow_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+                      'gpu_measured': False, 'windows_measured': False,
+                      'script_sha256': {n: sha(floor/n) for n in ('comfy_floor.py', 'integrated_floor.py', 'trivial-graph.json')},
+                      'commands': [], 'limitations': [
+                          'Trivial EmptyImage/SaveImage graphs only; no model weights or GPU.',
+                          'Times are client-observed; post response to execution start is not exact queue wait.',
+                          'No queue time is silently subtracted.',
+                          'Real compressed solid PNG size is reported, not labelled a 1 MiB image.',
+                          'Runtime checks stored bytes, succeeded task and output association after settlement.',
+                          'This is LS-1 CPU evidence, not a finished Agent fast path or LS-2 counter proof.',
+                          'No native flush counts or Windows results are inferred.']}
+          (proof/'environment.json').write_text(json.dumps(metadata, indent=2)+'\n')
+          command = [sys.executable, str(comfy/'main.py'), '--cpu', '--listen', '127.0.0.1',
+                     '--port', '18888', '--disable-all-custom-nodes', '--disable-auto-launch',
+                     '--output-directory', str(proof/'comfy-output')]
+          metadata['server_command'] = command
+          env = os.environ.copy()
+          env['PYTHONPATH'] = os.pathsep.join(map(str, [runtime, runtime/'tests', runtime/'packages/python', floor]))
+          env['PYTHONDONTWRITEBYTECODE'] = '1'
+          reports = {}
+          def run(name, args):
+              record = {'name': name, 'argv': args, 'cwd': str(runtime)}
+              metadata['commands'].append(record)
+              with (proof/(name+'.log')).open('w') as log:
+                  try:
+                      result = subprocess.run(args, cwd=runtime, env=env, stdout=log,
+                                              stderr=subprocess.STDOUT, timeout=300)
+                      record['exit_code'] = result.returncode
+                      if result.returncode:
+                          raise RuntimeError(f'{name} failed with exit {result.returncode}; see its log')
+                  except subprocess.TimeoutExpired:
+                      record['timeout_seconds'] = 300
+                      raise
+          server_log = (proof/'comfy-server.log').open('w')
+          server = subprocess.Popen(command, cwd=comfy, stdout=server_log,
+                                    stderr=subprocess.STDOUT, start_new_session=True)
+          try:
+              deadline = time.monotonic() + 150
+              while True:
+                  if server.poll() is not None:
+                      raise RuntimeError(f'ComfyUI startup failed: {server.returncode}')
+                  try:
+                      with urlopen('http://127.0.0.1:18888/system_stats', timeout=2) as response:
+                          stats = json.load(response)
+                      break
+                  except OSError:
+                      if time.monotonic() >= deadline:
+                          raise RuntimeError('Real ComfyUI readiness timeout')
+                      time.sleep(0.25)  # startup only, outside every measured interval
+              (proof/'comfy-system-stats.json').write_text(json.dumps(stats, indent=2)+'\n')
+              with urlopen('http://127.0.0.1:18888/object_info', timeout=15) as response:
+                  info = json.load(response)
+              assert {'EmptyImage', 'SaveImage'} <= info.keys()
+              (proof/'required-node-info.json').write_text(json.dumps({k: info[k] for k in ('EmptyImage', 'SaveImage')}, indent=2)+'\n')
+              for side in (64, 1024):
+                  graph = json.loads((floor/'trivial-graph.json').read_text())
+                  graph['1']['inputs'].update(width=side, height=side)
+                  graph_path = proof/f'trivial-{side}.json'
+                  graph_path.write_text(json.dumps(graph, indent=2)+'\n')
+                  warm = f'real-cpu-{side}-warmup'
+                  run(warm, [sys.executable, str(floor/'comfy_floor.py'), '--url', 'http://127.0.0.1:18888',
+                             '--graph', str(graph_path), '--samples', '1', '--output', str(proof/(warm+'.json'))])
+                  cells = [('comfy', 'comfy_floor.py', []),
+                           ('integrated-1', 'integrated_floor.py', ['--callers', '1']),
+                           ('integrated-2', 'integrated_floor.py', ['--callers', '2'])]
+                  for label, script, extra in cells:
+                      name = f'real-cpu-{side}-{label}'
+                      output = proof/(name+'.json')
+                      run(name, [sys.executable, str(floor/script), '--url', 'http://127.0.0.1:18888',
+                                 '--graph', str(graph_path), '--samples', '20', '--output', str(output), *extra])
+                      data = json.loads(output.read_text())
+                      rows = data['records']
+                      assert len(rows) == 20 and sorted(r['sample'] for r in rows) == list(range(20)), name
+                      for key, values in data['summary_ms'].items():
+                          assert abs(statistics.median(r[key] for r in rows)-values['median']) < 1e-6
+                          assert abs(max(r[key] for r in rows)-values['max']) < 1e-6
+                      wall = 'wall_ms' if label == 'comfy' else 'caller_wall_ms'
+                      execution = 'execution_ms' if label == 'comfy' else 'execution_observed_ms'
+                      overheads = [r[wall]-r[execution] for r in rows]
+                      assert all(v >= 0 for v in overheads), name
+                      sizes = [o['bytes'] for r in rows for o in r['outputs']] if label == 'comfy' else [r['bytes'] for r in rows]
+                      reports[name] = {'samples': 20, 'side_pixels': side,
+                          'wall_median_ms': statistics.median(r[wall] for r in rows),
+                          'wall_slowest_ms': max(r[wall] for r in rows),
+                          'execution_median_ms': statistics.median(r[execution] for r in rows),
+                          'overhead_median_ms': statistics.median(overheads), 'overhead_slowest_ms': max(overheads),
+                          'output_bytes_min': min(sizes), 'output_bytes_max': max(sizes)}
+                      print(name, json.dumps(reports[name]), flush=True)
+              from PIL import Image
+              images = list((proof/'comfy-output').rglob('*.png'))
+              assert len(images) == 122, len(images)
+              for path in images:
+                  with Image.open(path) as image:
+                      assert image.size in ((64, 64), (1024, 1024))
+                      image.verify()
+              metadata['verified_real_png_outputs'] = len(images)
+              metadata['result'] = 'PASS_CPU_TRIVIAL_CELLS_ONLY'
+          finally:
+              if server.poll() is None:
+                  os.killpg(server.pid, signal.SIGTERM)
+                  try:
+                      server.wait(timeout=15)
+                  except subprocess.TimeoutExpired:
+                      os.killpg(server.pid, signal.SIGKILL)
+                      server.wait(timeout=10)
+              server_log.close()
+              (proof/'environment.json').write_text(json.dumps(metadata, indent=2)+'\n')
+              (proof/'summary.json').write_text(json.dumps(reports, indent=2)+'\n')
+              for repo in ('dev', 'runtime'):
+                  subprocess.run(['git', '-C', str(root/repo), 'archive', '--format=tar.gz',
+                                  '-o', str(proof/(repo+'-source.tar.gz')), 'HEAD'], check=True)
+              files = sorted(p for p in proof.rglob('*') if p.is_file() and p.name != 'SHA256SUMS')
+              (proof/'SHA256SUMS').write_text(''.join(sha(p)+'  '+str(p.relative_to(proof))+'\n' for p in files))
+          PY
+      - name: Preserve exact CPU evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plan55-real-cpu-${{ github.run_id }}-${{ github.run_attempt }}
+          path: proof
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 7
