@@ -25,6 +25,14 @@ One or two sentences: where the release stands, and the next thing that matters.
 |---|---|---|---|
 | <lane> | <session id> | `briefs/<lane>.md` | <one line> |
 
+### Dispatch queue (only when using the Lead's multi-manager workstream)
+
+| Packet | Plan tasks | Estimate (human days) | Handoff | Session | Next action / evidence |
+|---|---|---:|---|---|---|
+| <release-plan-sequence> | <links to tasks.md rows> | <up to 3> | Ready | — | <next action> |
+
+Handoff is Ready / Running / Review / Blocked / Done. This is not another task checklist: plans' `tasks.md` records engineering completion. Delete this section when dispatch is not used. Link the single cross-session mailbox here if one is needed.
+
 ### Waiting on the owner
 
 - <decision, with the recommendation>; or "nothing".
