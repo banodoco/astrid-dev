@@ -1,6 +1,6 @@
 ---
 name: astrid-dev-manage
-description: Run an accepted Astrid project or multi-agent effort end to end: dispatch tasks by route, judge what agents report, keep run state, integrate, and bring only real decisions to the owner.
+description: Manage engineering work and proof for an Astrid project or one bounded packet. In the fresh ChatGPT packet workstream, implement and submit one packet without owning the plan or integrating its tasks.
 ---
 
 # Manage an Astrid project
@@ -9,9 +9,9 @@ Terms follow the [glossary](../astrid-dev-shared/glossary.md).
 
 ## The answer
 
-In the [Lead's multi-manager workstream](../astrid-dev-lead/workstreams/multi-manager-release.md), follow the [ChatGPT packet handoff](workstreams/chatgpt-packet.md) in addition to this skill. One accountable manager runs each plan and normally implements packets directly. Other packet chats are its delegates. The Orchestrator handles hourly reporting; managers submit results and blockers.
+**Fresh ChatGPT packet:** use the [packet workstream](workstreams/chatgpt-packet.md). One new session implements one packet and submits PRs/proof. The **Lead**, not a continuing plan manager, owns plan-level integration and `tasks.md` reconciliation; the Orchestrator owns hourly dispatch. Apply this skill's engineering, proof and review standards to the packet; its full-project run, landing and closure steps apply only when you were assigned a whole project.
 
-You take an accepted project to a reviewed, integrated candidate, and you [answer for it finishing](../astrid-dev-shared/run-contract.md#who-answers-for-a-run). [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change and [Release](../astrid-dev-release/SKILL.md) publishes.
+For a **whole-project assignment**, you take an accepted project to a reviewed, integrated candidate and [answer for it finishing](../astrid-dev-shared/run-contract.md#who-answers-for-a-run). [Plan](../astrid-dev-plan/SKILL.md) defines the work, [Iterate](../astrid-dev-iterate/SKILL.md) does each change and [Release](../astrid-dev-release/SKILL.md) publishes.
 
 1. **One model per shared surface.** Work touching the same screens, contract or files follows one agreed model; if the plan doesn't settle it, ask the advisor before dispatching.
 2. **A report is a claim.** Check what your next step depends on against code, logs or a run.
