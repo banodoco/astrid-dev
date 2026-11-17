@@ -7,7 +7,7 @@ Use when the [Release Lead](../../astrid-dev-lead/SKILL.md) has prepared the [pa
 ## Start
 
 1. Read `releases/<N>/run.md`, the linked `releases/<N>/packets/<id>.md` and source `tasks.md`, plus the **one GitHub coordination issue** linked from the release board. Confirm each packet's dependencies, product repo, PR target, proof and authorization.
-2. Verify the mailbox by exchanging a message and ACK with the Lead using the [existing protocol](../codex-cloud/README.md#establish-the-mailbox). Verify how ChatGPT sessions can be started/resumed; a GitHub comment or session URL alone cannot wake one.
+2. Verify the mailbox by exchanging a message and ACK with the Lead using the [existing protocol](codex-cloud/README.md#establish-the-mailbox). Verify how ChatGPT sessions can be started/resumed; a GitHub comment or session URL alone cannot wake one.
 3. For each Ready packet, launch a **new authorized ChatGPT session**, using the [short message](#packet-start-message), and link it in the queue. Do not make an ongoing plan manager or ask the packet session to take the next packet.
 
 ## Packet start message
