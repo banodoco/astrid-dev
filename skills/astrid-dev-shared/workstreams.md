@@ -1,9 +1,9 @@
-# Role skills and workstreams
+# Skill structure
 
-Each Astrid role lives in its existing `skills/astrid-dev-<role>/` folder:
+- [Astrid-dev](../astrid-dev/SKILL.md) is the entrypoint and routes requests.
+- `skills/roles/astrid-dev-*/SKILL.md` defines **who is responsible** (Lead, Orchestrator, Manager, Planner, Worker).
+- `skills/capabilities/astrid-dev-*/SKILL.md` defines **what specialist work to do**, reusable across roles.
+- `skills/astrid-dev-shared/` owns shared rules, terms and templates.
+- A skill's optional `workstreams/` adds **how it operates in a particular setup**, with supporting scripts beside that workstream, not another skill.
 
-- **`SKILL.md`** defines responsibilities and routes to any optional workstream.
-- **`workstreams/<name>.md`** gives only the extra steps for a particular setup, such as fresh ChatGPT packet sessions. It links back to the role; it does not create another role, project, task list or permission system.
-- **Environment guides** retain the concrete commands and tools at their existing paths; workstreams link to them rather than copy them.
-
-Start from [astrid-dev](../astrid-dev/SKILL.md), choose the role, then the relevant workstream. Roles without distinct operating variants need no `workstreams/` folder. Follow the shared [run contract](run-contract.md) and existing release and project records throughout. Do not reorganize the established skill paths into another `roles/` hierarchy.
+Every discoverable skill retains its namespaced `name: astrid-dev-*` and matching leaf directory name. [`sync.sh`](../../sync.sh) installs **flat symlinks** to the canonical packages for Claude/Codex discovery; the extra grouping directory does not appear in installed skill names. Do not duplicate instructions or add folders for workstreams that need no variant. Follow the [run contract](run-contract.md).
