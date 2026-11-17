@@ -12,21 +12,9 @@ Use when one Release Lead directs a Codex Orchestrator supervising ChatGPT manag
 
 ## Packet format
 
-Each file at `releases/<N>/packets/<packet-id>.md` is an **assignment**, not a second task list or progress log. For example:
+Each brief at `releases/<N>/packets/<packet-id>.md` follows the [small packet template](../../../templates/release/packet.md): **source plan/task IDs, estimate (up to about three human engineering days), one outcome, dependencies, inherited proof, delivery recipient and branch/authority link**. For example, `R14-P39-01.md` could cover a bounded set of Plan 39 task IDs; the actual IDs and estimate must come from the current plan, not this example.
 
-```md
-# R14-P39-01 — Windows custody repair
-
-- **Source:** `plans/39-green-mains/tasks.md` — task IDs G2, G3 (links to exact rows)
-- **Size:** 2 human engineering days (maximum about 3)
-- **Outcome:** Repair the named custody failures without weakening security
-- **Dependencies:** G0 evidence and the accepted plan decisions
-- **Proof:** Follow the exact commands and acceptance checks in G2/G3
-- **Deliver to:** Accountable Plan 39 manager; task PRs, commit SHAs and evidence links
-- **Working branch and permissions:** Inherit the plan's Run start, release branch and limits
-```
-
-No copied task checkboxes, independent owner/status, or new acceptance criteria. When a packet spans too many task rows, split it; when one task is too large, define a bounded slice in the canonical task before dispatch.
+A packet is an **assignment**, not a second task list or progress log. No copied task checkboxes, independent owner/status or new acceptance criteria. When a packet spans too many task rows, split it; when one task is too large, first define a bounded slice in the canonical task.
 
 ## Lead: every hourly check-in
 
