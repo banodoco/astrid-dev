@@ -2,6 +2,12 @@
 
 <!-- CURRENT-MEASUREMENT-START -->
 
+### 2026-11-17 — E14 shared fixture actually blocks 85 exact-head tests across three CI jobs
+
+A cross-job query of the **previously hash-verified complete actual JUnit inventory** (gzip SHA-256 `729e8a833061dc0b29c6cc345aef8b61d740ba83f004d969923398fc3a9c5426`) found the **same full literal stale-Runtime-pin assertion** (message SHA-256 `2e4afad1dcbbe9ae8dc51baed4c60a5a72503ffbdf0e65019d9a9063490e4af1`) in **Darwin 1 error (artifact 14277714424), unit shard 4 16 errors (artifact 14282820153), and unit shard 7 68 errors (artifact 14281865130): 85 existing errors total**, not merely the 68 first identified. Exact testcase IDs and original three ZIP/XML hashes are in the [cross-shard evidence extension](diagnosis/agent/k1a-e14-shared-fixture-cross-shard-20261117.md). All three cohorts use the same `editing_case` fixture. Agent [draft PR377](https://github.com/banodoco/astrid-agent/pull/377) changes that fixture only, so its *potential setup-error reach* is 85; **zero candidate passes, independent reviews or hosted proof are claimed**. This is a correction to diagnostic scope, **not 17 new workflow errors**: original CI stays **882 failures/398 errors**, Lanes **306 failures including opt-in/260 errors**. No prior-ID regression inferred. Other drafts PR373–376 also unmerged/unreviewed; Plan38/55 WAITING, Release15 excluded, Runtime clip 25P/2F history-integrity owner decision held, G1/G2 incomplete, RS1 **0/1**. Only `p39/g1` evidence was advanced; no product, inputs/task-checkbox, workflow or main mutation.
+
+
+
 ### 2026-11-17 — 95 separate source-import provenance setup failures, X-route resolution hold
 
 The immutable, previously SHA-256 verified actual JUnit inventory for Agent [CI 43967861168](https://github.com/banodoco/astrid-agent/actions/runs/43967861168) attempt 1 contains **92 unit-shard-7 and three unit-shard-6 setup failures** with the **identical full literal XML assertion** (SHA-256 `9955b76881fd4a298a92e7917ee1d4be8a4bfd0b0ff1bff62a40709b6c598b0b`): `runtime_protocol.__file__` is under Python 3.11's `site-packages` rather than the checked-out pinned `astrid-runtime` tree. The [new actual-XML / source diagnosis](diagnosis/agent/k1a-runtime-protocol-source-root-20261117.md) preserves job/artifact IDs, full ZIP/XML SHA-256 hashes, literal message, exact test examples and the import/installer distinction.
