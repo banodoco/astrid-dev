@@ -1,42 +1,30 @@
-# Workstream: dispatch multiple release plans
+# Workstream: multi-manager release dispatch
 
-Use when one Release Lead directs a Codex Orchestrator supervising ChatGPT managers across several already accepted plans. This is an **execution queue**, not a new kind of project, issue or release.
+Use when a Lead directs an Orchestrator that hands bounded work from accepted plans to ChatGPT manager sessions. **Everything in the [Lead skill](../SKILL.md) still applies.** This guide covers only the extra setup and handoffs.
 
-## Lead: set up once
+## Set up
 
-1. Read `releases/<N>.md` and the included project packs. Partition eligible `tasks.md` work into **packets of at most about three human engineering days**, each scoped to **one plan**. Each packet is a short Markdown assignment at `releases/<N>/packets/<packet-id>.md` (see [packet format](#packet-format)). It points to existing task IDs; it does not replace task cards, create a new project, or expand accepted scope. If the task card lacks a scope, exact proof or an acceptance rule, improve that canonical card through the normal reviewed plan process before dispatch.
-2. Put a concise **Dispatch queue** in the existing `releases/<N>/run.md` (create it from the release template if needed). One row links to each **packet file** and records `Ready/Running/Review/Blocked/Done`, execution session, next action and evidence/PR links. The packet is the manager-facing brief; the queue records only live handoff state; each plan's `tasks.md` remains the only engineering completion record. Keep packet briefs stable during execution; updates to accepted scope or proofs belong in the source task card, then refresh the packet link.
-3. For each plan, identify **one accountable plan manager** under the [run contract](../../astrid-dev-shared/run-contract.md#who-answers-for-a-run). A separate packet chat may implement bounded work for that manager, but does not become another accountable agent for the same run or independently integrate its plan. Record the integrator and how packet output returns to them. Do not start manager sessions without the owner's required go.
-4. If separate chats need an asynchronous channel, **reuse the release's existing coordination mailbox issue**, if any; otherwise designate one issue, not one per packet. Link it from `run.md`. Use the existing [Codex Cloud mailbox format](../../astrid-dev-orchestrate/codex-cloud/README.md#establish-the-mailbox), with `from`, `from_session`, `to`, `to_session`, type, message ID, request and links. Acknowledgements and decisions are new comments. GitHub comments alone cannot wake a stopped chat.
-5. Give the owner the release/queue/mailbox links and an exact **Orchestrator start message** to paste in an authorized session, specifying session, cadence, limits and when to escalate. Verify an hourly scheduler *and* session-resume mechanism before promising unattended check-ins.
+1. **Prepare packets.** Read `releases/<N>.md` and each included plan's `tasks.md`. Group compatible, ready task IDs from **one plan** into assignments of roughly **three human engineering days maximum**. Create concise briefs at `releases/<N>/packets/<id>.md` using [the packet template](../../../templates/release/packet.md). Point to canonical tasks, proof, dependencies, branch and accountable plan manager; don't copy task checklists or invent a new project. If a task needs splitting or lacks acceptance/proof, correct its original task card through the normal review path first.
+2. **Prepare the queue.** Add packet links to the existing `releases/<N>/run.md` (create from its template if missing). The queue has **Ready / Running / Review / Blocked / Done**, session and next-action/evidence links. The plan's `tasks.md` alone records engineering completion. The Lead prepares packets and decides acceptance; **after handoff the Orchestrator maintains dispatch state in the queue**. For other release-wide `run.md` edits, reread the latest version and avoid competing changes.
+3. **Keep one accountable plan manager.** Reuse an existing manager session where possible. The manager integrates that plan's PRs and keeps its `tasks.md` current. A separate packet chat, if needed for parallelism, is a bounded delegate, **not a second owner of the plan run**. Never start a session without the required owner authorization.
+4. **Set up one mailbox, if needed.** Search for the release's existing coordination issue; reuse it if present. Otherwise create one issue titled `coordination: Release <N> Lead / Orchestrator`, with a short body identifying it as **coordination only**, linking `run.md`, naming roles/sessions and pointing to the [existing mailbox protocol](../../astrid-dev-orchestrate/codex-cloud/README.md#establish-the-mailbox). Link it from the queue. Do **not** open an issue per packet or add `plan:NN`, `release:NN` or `planned` labels: ordinary issues remain for product reports and ideas. Messages identify sender, recipient, session, ID, action and evidence; acknowledgements are comments, not edits.
+5. **Hand off to the owner.** Check that links and issue read/write access work. Give the owner the queue, mailbox, ready/blocked packet links, any missing authorizations and the exact [Orchestrator launch prompt](#launch-prompt). State whether hourly scheduling **and session resume** are verified; if not, say who must manually nudge sessions. The Orchestrator tests two-way mailbox delivery at startup; the Lead cannot claim that test passed before it launches.
 
-## Packet format
+## Each Lead check-in (hourly when scheduled)
 
-Each brief at `releases/<N>/packets/<packet-id>.md` follows the [small packet template](../../../templates/release/packet.md): **source plan/task IDs, estimate (up to about three human engineering days), one outcome, dependencies, inherited proof, delivery recipient and branch/authority link**. For example, `R14-P39-01.md` could cover a bounded set of Plan 39 task IDs; the actual IDs and estimate must come from the current plan, not this example.
+Read requests and submissions. Review PRs, proof and independent findings; post **ACCEPT** or a concrete rework request to the mailbox. Reconcile actual work with the plan manager's `tasks.md`, resolve dependencies, prepare next packets and monitor release integration. The Orchestrator updates packet handoff states; the Lead owns acceptance and release decisions. Put substantive rulings in the release's existing decision record, not a new log.
 
-A packet is an **assignment**, not a second task list or progress log. No copied task checkboxes, independent owner/status or new acceptance criteria. When a packet spans too many task rows, split it; when one task is too large, first define a bounded slice in the canonical task.
-
-## Lead: every hourly check-in
-
-- Read and acknowledge addressed requests and newly submitted packets.
-- Check commits, PRs, tests and independent review where required. **Only you accept a packet for the queue**, but the accountable plan manager remains responsible for the plan's integration and its `tasks.md` updates.
-- Return insufficient work with one concrete next action; settle cross-plan dependencies and replenish Ready packets.
-- Reconcile the queue with plan records and release branch state; log meaningful rulings in the release's existing `decisions.md`, not the mailbox.
-
-## Issue boundary
-
-**Do not open an Astrid-dev issue per packet or use issue labels as packet statuses.** Existing issues are reports, ideas and questions; their `plan:NN`/`release:NN` labels feed release intake. Packet briefs live in `releases/<N>/packets/`; the release queue links them. Link an existing issue from the relevant task when it concerns real product work. A coordination mailbox is transport only: identify it explicitly, do not label it `plan:NN`, `release:NN` or `planned`, and never treat its comments as scope approval or task instructions. It will still appear as an issue in ordinary issue views; keep it to one per release and close it when coordination ends.
-
-## Orchestrator launch prompt
+## Launch prompt
 
 ```text
-You are the execution Orchestrator for Release <N>, supervised by the Release Lead
-<session>. Follow astrid-dev-orchestrate and its multi-manager dispatch workstream.
-Read releases/<N>.md and releases/<N>/run.md at <SHA>; each Ready row links
-its packet brief at releases/<N>/packets/<id>.md; mailbox: <existing issue URL>.
-Dispatch only Ready packets linked to accepted tasks, using the recorded plan managers
-and owner-approved ChatGPT sessions. Check every active session hourly through a
-verified scheduler/resume path. Recover stalls, submit evidence for Lead review,
-and ask the Lead about technical or cross-plan decisions. You may <authorized actions>;
-you must escalate <reserved decisions>. Do not publish or accept work for the Lead.
+You are the Codex Orchestrator for Release <N>, supervised by Lead <session>.
+Follow astrid-dev-orchestrate and its multi-manager dispatch workstream.
+Start at releases/<N>.md and releases/<N>/run.md at <SHA>.
+Ready rows link packet briefs in releases/<N>/packets/; mailbox: <issue URL>.
+Reuse accountable plan managers; dispatch authorized packets and supervise sessions.
+Maintain dispatch states, send completed work to Lead for acceptance, unblock stalls
+and escalate technical/cross-plan choices. Check hourly only with a proven scheduler
+and resume mechanism; otherwise report the manual nudge required.
+You may <authorized actions>; ask the owner for <reserved decisions>.
+First verify two-way mailbox communication; do not publish or accept Lead reviews.
 ```
