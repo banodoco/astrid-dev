@@ -168,11 +168,11 @@ If a check fails, say which manual step I must do instead of promising automatio
 
 ## Waiting on the owner
 
-1. **Plan 39 quarantine cap.** The Runtime has 20 quarantined tests in 10 groups; the cap is ten. Recommended: count tests, give every entry an issue, owner and expiry, and cut to ten in wave 2.
-2. **Plan 55 Windows target.** The measured hosted-Windows floor is 226–284 ms against a 0.1 s target. Recommended: keep the target for a real machine, and decide after LS-3 names the cost.
-3. **Re-pins:** the Runtime in the Agent (#674), VibeComfy in the Agent once FIX-02 lands (#676).
-4. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
-5. **The Lead's check-ins:** allow this Lead session to schedule a recurring check-in (a permission rule for its scheduling tool), or nudge it every couple of hours.
-6. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
-7. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
-8. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
+1. **Plan 55 Windows target.** The measured hosted-Windows floor is 226–284 ms against a 0.1 s target. Recommended: keep the target for a real machine, and decide after LS-3 names the cost.
+2. **Re-pins:** the Runtime in the Agent (#674), VibeComfy in the Agent once FIX-02 lands (#676).
+3. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
+4. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
+5. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
+6. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
+
+**Decided on 17 November:** the quarantine cap counts tests, with today's 19 as a ceiling that may only fall (Plan 39 D9); the caller keeps its own hash on a verified transfer (Plan 55 D14). The Lead's check-ins now run as a scheduled task outside its machine.
