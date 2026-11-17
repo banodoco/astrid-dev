@@ -12,7 +12,7 @@ description: Orchestrate Astrid work for the owner. Start a project by planning 
 
 **One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your session, you are its [accountable agent](../astrid-dev-shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
-**A second exception: across a release you are its release manager** ([below](#across-a-release)). Follow the accepted release brief for any other coordination duties it assigns you, such as relaying cross-track dependencies, accepting frozen inputs, arranging review or publishing after the owner's go.
+**Across a release, the [Release Lead](../astrid-dev-lead/SKILL.md) owns the release.** An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
 
 **You orchestrate; the manager manages.** If you catch yourself writing a manager's dispatch plan (which tracks run in parallel, per-worker steps, when to escalate), the manage skill is missing a rule: send the manager one line naming the goal, and add the rule to the [manage skill](../astrid-dev-manage/SKILL.md) by PR.
 
@@ -35,12 +35,11 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 
 ## Across a release
 
-When the plans you oversee belong to one release, you are that release's **release manager**, one role named on its brief ([glossary](../astrid-dev-shared/glossary.md)). Follow [How a release runs](../astrid-dev-release/SKILL.md#how-a-release-runs); this part adds only what orchestrating needs.
-- **Sequence the plans** from the brief and each plan's dependencies. When two plans change the same contract or surface, decide their landing order and the one model they follow.
-- **Own `release/<NN>/main`:** watch its CI, run its [green stage](../astrid-dev-release/SKILL.md#get-the-release-branch-green), keep the `## Branches` table, and cut tester builds, the candidate and the request for the owner's go.
-- **Leave each plan branch and its landing to that plan's manager.**
+The [Release Lead](../astrid-dev-lead/SKILL.md) (the release manager named on the brief) owns release sequencing, `release/<NN>/main`, CI gates, branch records, tester builds and the publication request. You manage assigned managers and escalate release-level decisions to that Lead; do not duplicate its board or take over a plan manager's integration. If you are already the named release manager, continue under [Release](../astrid-dev-release/SKILL.md) until the owner records a handoff.
 
 ## Path 1: start a project
+
+When the Lead has already prepared accepted release packets, use the [multi-manager dispatch workstream](workstreams/multi-manager-dispatch.md) instead of re-planning them.
 
 1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../strategy.md) and the [catalog](../../plans/index.md). With no accepted plan, write one with [Plan](../astrid-dev-plan/SKILL.md) (you may plan it yourself) and get the owner's scope decision. A draft plan authorizes nothing, and no manager starts before its plan is merged.
    - **Fix the scope when the run starts.** If the owner adds scope to a running release, say what it reopens (tests, re-pins, review) and offer the next release instead; add it only if the owner decides to.
@@ -90,7 +89,7 @@ A run starts with one short message; the plan carries the rest. A long brief rep
    ```
 
 3. **Add nothing the plan should hold.** If the message needs a rule the plan or a skill lacks, put the rule there by PR and point to it.
-4. **Don't add a tier.** If you hand a project to another session, it becomes the accountable agent and you become its advisor, or step out. Never stay an advisor above an advisor: then nobody answers for the run.
+4. **Don't add a second accountable agent.** A separate plan manager answers for its run and you advise or supervise; a packet chat is a bounded delegate of that plan manager, not another plan owner. The Release Lead owns release delivery, not a second copy of the plan run.
 
 ## Claude Cloud setup: no permission prompts
 
@@ -100,9 +99,13 @@ A session that waits on a prompt nobody sees is a stalled run. Before any work s
 - **Refusals:** who may lift one is in the [run contract](../astrid-dev-shared/run-contract.md#who-answers-for-a-run).
 - **Merges:** a manager merges its own progress pull requests; every other merge into `main` needs the owner's go ([the rule](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)). Auto mode refuses some merges, deletions and settings commits: ask once for the whole run ("merge the plan PRs; my progress PRs auto-merge") and record that go on the `Run start` line (`run.yaml` is local and git-ignored, so it can't carry it: [who answers for a run](../astrid-dev-shared/run-contract.md#who-answers-for-a-run)).
 
-## Choose the cloud workflow
+## Workstreams and cloud environments
 
-For agents in separate Codex Cloud chats, use [Codex Cloud agent coordination](codex-cloud/README.md): its issue mailbox, session IDs and what does not wake an idle chat. Live resource supervision stays the responsible manager's job and never waits for a check-in. Codex inside a Claude Code cloud session is the next section: a different environment.
+- **Multi-manager dispatch under a Release Lead:** [dispatch workstream](workstreams/multi-manager-dispatch.md). This changes coordination, not manager authority.
+- **Codex workers or manager hosted in Claude Cloud:** [guide](codex-in-claude-cloud/README.md), with the default choices [below](#use-codex-from-claude-cloud).
+- **Separate Codex Cloud chats:** [guide](codex-cloud/README.md) for mailbox, identity, polling and recovery.
+
+These are role-specific workstreams and environment guides, not standalone sub-skills. For agents in separate Codex Cloud chats, use [Codex Cloud agent coordination](codex-cloud/README.md): its issue mailbox, session IDs and what does not wake an idle chat. Live resource supervision stays the responsible manager's job and never waits for a check-in. Codex inside a Claude Code cloud session is the next section: a different environment.
 
 ## Use Codex from Claude Cloud
 
@@ -138,6 +141,8 @@ Answer the one bounded question you were given: a genuine blocker, conflicting e
 - **Stay inside the run contract's limits** ([review and promotion boundaries](../astrid-dev-shared/run-contract.md#review-and-promotion-boundaries), [checks and failure repair](../astrid-dev-shared/run-contract.md#checks-and-failure-repair)), and never invent a model ID.
 
 ## Path 3: check in (only when the owner asks)
+
+For delegated multi-manager release work use the [dispatch checklist](workstreams/multi-manager-dispatch.md#every-hour); the Lead retains release-wide review and issue intake. Otherwise use this general project check-in path.
 
 Record the agreed cadence and end condition on the plan's `Run start` line, and as `checkin` in the run's `run.yaml` once a run exists. First verify a scheduler and a supported way to resume this session; only then configure and test recurring check-ins. Without a verified path, poll in the foreground while active and tell the owner when a manual nudge is needed ([what works](codex-cloud/README.md#what-works-and-what-does-not)). The Codex manager's 20-minute hosting check-in above is a different timer. These documents never start a check-in themselves.
 
