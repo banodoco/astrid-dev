@@ -97,11 +97,11 @@ Release path:
 
 ### Starting a manager
 
-Follow [codex-in-cloud](../../skills/astrid-dev-orchestrate/codex-in-cloud/README.md). For each manager:
+Follow [codex-in-cloud](../../skills/astrid-dev-orchestrate/codex-in-claude-cloud/README.md). For each manager:
 1. Make a workdir with the clones plus a `run/` folder.
-2. Write `run/prompt.md` from [manager-brief.md](../../skills/astrid-dev-orchestrate/codex-in-cloud/manager-brief.md), and prepend the kickoff below.
+2. Write `run/prompt.md` from [manager-brief.md](../../skills/astrid-dev-orchestrate/codex-in-claude-cloud/manager-brief.md), and prepend the kickoff below.
 3. Start it:
-   `CODEX_EFFORT=high CODEX_MAX_THREADS=8 setsid nohup <astrid-dev>/skills/astrid-dev-orchestrate/codex-in-cloud/codex-runner.sh <workdir> <workdir>/run/prompt.md <workdir>/run 6 gpt-6-luna >/dev/null 2>&1 </dev/null &`
+   `CODEX_EFFORT=high CODEX_MAX_THREADS=8 setsid nohup <astrid-dev>/skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-runner.sh <workdir> <workdir>/run/prompt.md <workdir>/run 6 gpt-6-luna >/dev/null 2>&1 </dev/null &`
 4. Add the run folder to `~/codex/runs.txt`.
 
 Managers run on Luna and choose worker models by route, **except P29 and P32 for Release 12**: start those two on `gpt-6.1-sol` or `gpt-6-astra` at high effort (a multi-repo release and the conflict-heavy composition).
@@ -187,7 +187,7 @@ Everything else is verified on GitHub. Every task branch in the managers' clones
 - **The output folder:** `generate` writes to `./outputs/<task-id>/` in the current folder, not the project. Recommendation: a small follow-up after Plan 40.
 - **runpod-lifecycle issue:** "Expose Retry-After on rate-limited availability queries" is ready to file (in Plan 40's Deferred list). This session couldn't write to that repo.
 - **The SessionStart hook for the Codex hold daemon.** Hannah has to add it herself:
-  `"hooks": {"SessionStart": [{"hooks": [{"type": "command", "timeout": 10, "command": "setsid nohup <astrid-dev>/skills/astrid-dev-orchestrate/codex-in-cloud/codex-hold-daemon.sh >/dev/null 2>&1 </dev/null & exit 0"}]}]}`
+  `"hooks": {"SessionStart": [{"hooks": [{"type": "command", "timeout": 10, "command": "setsid nohup <astrid-dev>/skills/astrid-dev-orchestrate/codex-in-claude-cloud/codex-hold-daemon.sh >/dev/null 2>&1 </dev/null & exit 0"}]}]}`
 
 ## Follow-ups to file when Plan 34's first run is DONE
 
