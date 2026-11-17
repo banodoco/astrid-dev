@@ -17,7 +17,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | New independent outcome | Check [catalog](../../plans/index.md) and [gaps](../../vision/README.md), then use [Plan](../astrid-dev-plan/SKILL.md). A difficult bug still needn't become a project |
 | What we're doing now, next and later | [Strategy](../../strategy.md): read it first for release and version direction; see [the hierarchy](../../docs/contribution-workflow.md#review-the-strategy) |
 | A gap, or the strategy across several plans | [Gap](../astrid-dev-gap/SKILL.md): define or reassess the outcome, write its closure approach and route to closure |
-| Leading an entire release across several plans | [Lead](../astrid-dev-lead/SKILL.md): own release sequencing, review, readiness and the owner handoff; optionally commission an orchestrator |
+| Leading release delivery, including setting up a Codex orchestrator to farm tasks out to ChatGPT managers | [Lead](../astrid-dev-lead/SKILL.md): own the overall outcome; select the [multi-manager workstream](../astrid-dev-lead/workstreams/multi-manager-release.md) when applicable |
 | Supervising managers or dispatching work sessions | [Orchestrate](../astrid-dev-orchestrate/SKILL.md): keep manager runs and handoffs moving, advise and check in |
 | Running one accepted project | [Manage](../astrid-dev-manage/SKILL.md); ask the advisor ([Orchestrate](../astrid-dev-orchestrate/SKILL.md)) for a genuine blocker or consequential choice |
 | Someone else's pull request, usually an outside contributor's | [Merge](../astrid-dev-merge/SKILL.md): a lead critic and a few cheap helpers review it, then merge it, send it back or bring it to the owner |
