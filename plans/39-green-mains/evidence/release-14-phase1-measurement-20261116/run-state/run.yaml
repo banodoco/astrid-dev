@@ -1015,3 +1015,40 @@ k1a_historical_runtime_checkout_20261117:
   Plan38: WAITING
   Release15: excluded
   formal_G1_G2_RS1: incomplete_RS1_0_of_1
+
+k1a_pod_bootstrap_missing_script_diagnosis_20261117:
+  route: N_read_only_exact_head_XML_and_source_diagnosis
+  evidence: diagnosis/agent/k1a-pod-bootstrap-missing-script-20261117.md
+  agent_head: 6bbda788c1a62abcdda242f85c7a1cae86c57d3d
+  reviewed_tree: c0a0cc55b363fa71a27fedcaa57b08076d9ae180
+  run_id: 43967861168
+  attempt: 1
+  job_id: 133651924641
+  JUnit_artifact_id: 14283023095
+  ZIP_sha256: 74811e80afd29518a356b8f2dd4b4794b4a34f5ea375412dc5ad11cab0ea7d47
+  XML_sha256: b397f917a9ef5f01734ff06fcaeb7b7e39d8a35d3064f4d610977fc97168f89a
+  exact_test_prefix: 'tests.scripts.test_pod_bootstrap::'
+  actual_exact_red_IDs: 26
+  actual_status: all_failure
+  distinct_full_XML_failure_messages: 6
+  literal_message_counts: [13, 9, 1, 1, 1, 1]
+  source_test_ref: tests/scripts/test_pod_bootstrap.py
+  test_expected_script: scripts/pod_bootstrap.sh
+  script_exists_at_exact_head: false
+  script_exists_at_previous_plan_head: false
+  installed_pack_source: astrid/packs/runpod/pod_bootstrap.py
+  source_payload_transport: astrid/packs/runpod/remote_placement.py
+  legacy_route_reference: scripts/pod_session.py
+  potential_legacy_product_bug: not_proven_until_entrypoint_support_and_reachability_confirmed
+  contract_conflict: Old suite asserts noneditable installation; pack-owned current script uses -e for Agent and Runtime
+  exact_old_xml_comparison_of_these_26: not_performed
+  claimed_PR369_regression: false
+  decision_hold: Confirm whether legacy pod_session route remains supported and which bootstrap contract is authoritative;
+    do not substitute the payload or edit assertions blindly
+  new_product_patch: none
+  independent_review: none
+  PR373_windows_selector_review: pending
+  Plan38: WAITING
+  Plan55: WAITING
+  Release15: excluded
+  acceptance: G1_G2_incomplete_RS1_0_of_1
