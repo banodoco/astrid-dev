@@ -1,0 +1,1025 @@
+{
+  "schema": "r14-p55-02-final-meter-evidence.v1",
+  "run_id": 44140495768,
+  "candidate_head": "820fe62af8295b15aa5d58b66d8b1f5b19892395",
+  "tested_merge": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+  "tree": "1eabe717ec5c9f1ee7d6aa835d4c23a5f3fec986",
+  "derivation": "Exact selected fields from digest-verified summaries and JUnit without rounding. Each reference comparison is reproduced from the raw records with the unchanged v2 helper. Full output/process identities remain in the linked archives.",
+  "platforms": {
+    "ubuntu": {
+      "artifact_id": 14356430304,
+      "artifact_zip_sha256_verified": "27531bfac4f6998d7b7d5a08fd8cb954ae625610fa58be2831a677dc7f4dda42",
+      "job_id": 134241636341,
+      "raw_summary_sha256": "339206192b673e707f09d818eb6cf1d91ab4830d103603c8ecc24da2809c5621",
+      "platform": "Linux-7.0.0-1016-aws-x86_64-with-glibc2.43",
+      "python": "3.11.18 (main, Oct 26 2026, 02:48:29) [GCC 15.2.0]",
+      "sources": {
+        "agent": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+        "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+        "vibecomfy": "dba38f8644c46f652376f2cd5112ea161e40f09b",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "status": "PASS",
+      "budget_certified": false,
+      "latency_junit": {
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "counter_junit": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "latency": [
+        {
+          "caller": "resident_sdk",
+          "sample_index": 0,
+          "caller_seconds": 21.99948655899999,
+          "overhead_seconds": 21.999476894999987,
+          "standin_queue_seconds": [
+            1.4699998018841143e-07
+          ],
+          "standin_execution_seconds": [
+            9.664000003795081e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 0,
+          "caller_seconds": 16.748738136999975,
+          "overhead_seconds": 16.748731118999956,
+          "standin_queue_seconds": [
+            1.1800000265793642e-07
+          ],
+          "standin_execution_seconds": [
+            7.018000019343162e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 1,
+          "caller_seconds": 21.73858518100002,
+          "overhead_seconds": 21.738577699000018,
+          "standin_queue_seconds": [
+            1.500000053056283e-07
+          ],
+          "standin_execution_seconds": [
+            7.482000000891276e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 1,
+          "caller_seconds": 16.837739495999983,
+          "overhead_seconds": 16.83773100000002,
+          "standin_queue_seconds": [
+            1.3300001455718302e-07
+          ],
+          "standin_execution_seconds": [
+            8.495999963997747e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 2,
+          "caller_seconds": 22.058208202000003,
+          "overhead_seconds": 22.05820066000001,
+          "standin_queue_seconds": [
+            2.599999788799323e-07
+          ],
+          "standin_execution_seconds": [
+            7.541999991644843e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 2,
+          "caller_seconds": 16.859340103000022,
+          "overhead_seconds": 16.859331532000056,
+          "standin_queue_seconds": [
+            1.6499996036145603e-07
+          ],
+          "standin_execution_seconds": [
+            8.570999966650561e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 3,
+          "caller_seconds": 22.697966037000015,
+          "overhead_seconds": 22.697957463999956,
+          "standin_queue_seconds": [
+            1.369999154121615e-07
+          ],
+          "standin_execution_seconds": [
+            8.573000059186597e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 3,
+          "caller_seconds": 16.952081544000066,
+          "overhead_seconds": 16.952072604000023,
+          "standin_queue_seconds": [
+            1.6199999208765803e-07
+          ],
+          "standin_execution_seconds": [
+            8.940000043367036e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 4,
+          "caller_seconds": 22.28009355000006,
+          "overhead_seconds": 22.280084934,
+          "standin_queue_seconds": [
+            2.0400000266818097e-07
+          ],
+          "standin_execution_seconds": [
+            8.61600005919172e-06
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 4,
+          "caller_seconds": 16.89951603899999,
+          "overhead_seconds": 16.899508752999964,
+          "standin_queue_seconds": [
+            1.199999815071351e-07
+          ],
+          "standin_execution_seconds": [
+            7.286000027306727e-06
+          ],
+          "queue_time_subtracted": false
+        }
+      ],
+      "counters": [
+        {
+          "caller": "resident_sdk",
+          "sample_index": 0,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 150,
+            "fsync_success": 150,
+            "process_start": 8,
+            "sleep_attempt": 158,
+            "sleep_success": 158,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "external": 7,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 1381,
+          "native_flushes": 161,
+          "native_observation": {
+            "native_flushes": 161,
+            "observed_successful_flushes": 161,
+            "observed_failed_flushes": 0,
+            "by_operation": {
+              "fsync": 150,
+              "fdatasync": 11
+            },
+            "by_process": {
+              "161187": 115,
+              "171423": 46
+            },
+            "coverage_gaps": []
+          }
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 0,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 150,
+            "fsync_success": 150,
+            "process_start": 9,
+            "sleep_attempt": 156,
+            "sleep_success": 156,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "cli": 1,
+            "external": 7,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 1301,
+          "native_flushes": 161,
+          "native_observation": {
+            "native_flushes": 161,
+            "observed_successful_flushes": 161,
+            "observed_failed_flushes": 0,
+            "by_operation": {
+              "fsync": 150,
+              "fdatasync": 11
+            },
+            "by_process": {
+              "178641": 56,
+              "161187": 59,
+              "182556": 46
+            },
+            "coverage_gaps": []
+          }
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 1,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 150,
+            "fsync_success": 150,
+            "process_start": 8,
+            "sleep_attempt": 158,
+            "sleep_success": 158,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "external": 7,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 1330,
+          "native_flushes": 161,
+          "native_observation": {
+            "native_flushes": 161,
+            "observed_successful_flushes": 161,
+            "observed_failed_flushes": 0,
+            "by_operation": {
+              "fsync": 150,
+              "fdatasync": 11
+            },
+            "by_process": {
+              "161187": 115,
+              "194072": 46
+            },
+            "coverage_gaps": []
+          }
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 1,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 150,
+            "fsync_success": 150,
+            "process_start": 9,
+            "sleep_attempt": 156,
+            "sleep_success": 156,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "cli": 1,
+            "external": 7,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 1292,
+          "native_flushes": 161,
+          "native_observation": {
+            "native_flushes": 161,
+            "observed_successful_flushes": 161,
+            "observed_failed_flushes": 0,
+            "by_operation": {
+              "fsync": 150,
+              "fdatasync": 11
+            },
+            "by_process": {
+              "201594": 56,
+              "161187": 59,
+              "205515": 46
+            },
+            "coverage_gaps": []
+          }
+        }
+      ],
+      "counter_capture": {
+        "schema": "astrid.local-speed-native-capture.v1",
+        "command": [
+          "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "-s",
+          "-rA",
+          "-m",
+          "integration",
+          "tests/integrations/test_local_speed_meter.py",
+          "--junitxml=/home/runner/work/astrid-agent/astrid-agent/plan55-meter-proof/counters.xml",
+          "--basetemp=/home/runner/work/_temp/p55-vkt5zv50"
+        ],
+        "platform": "Linux-7.0.0-1016-aws-x86_64-with-glibc2.43",
+        "python": "3.11.18 (main, Oct 26 2026, 02:48:29) [GCC 15.2.0]",
+        "started_epoch_ns": 1794938262242827567,
+        "completed": true,
+        "trace_command": [
+          "/usr/bin/strace",
+          "-ff",
+          "--seccomp-bpf",
+          "-ttt",
+          "-T",
+          "-e",
+          "trace=process,fsync,fdatasync",
+          "-o",
+          "/home/runner/work/astrid-agent/astrid-agent/plan55-meter-proof/native/trace",
+          "--",
+          "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "-s",
+          "-rA",
+          "-m",
+          "integration",
+          "tests/integrations/test_local_speed_meter.py",
+          "--junitxml=/home/runner/work/astrid-agent/astrid-agent/plan55-meter-proof/counters.xml",
+          "--basetemp=/home/runner/work/_temp/p55-vkt5zv50"
+        ],
+        "proof_exit": 0,
+        "observer": "strace",
+        "finished_epoch_ns": 1794938566131897376
+      },
+      "baseline": {
+        "schema": "astrid.local-speed-baseline.v2",
+        "system": "Linux",
+        "sources": {
+          "agent": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+          "vibecomfy": "dba38f8644c46f652376f2cd5112ea161e40f09b",
+          "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+        },
+        "tolerance": {
+          "median_relative": 0.5,
+          "median_seconds": 3.0,
+          "slowest_relative": 1.0,
+          "slowest_seconds": 5.0,
+          "background_relative": 0.5,
+          "background_count": 10
+        },
+        "callers": {
+          "resident_sdk": {
+            "caller_seconds": {
+              "samples": 5,
+              "median": 22.058208202000003,
+              "slowest": 22.697966037000015
+            },
+            "overhead_seconds": {
+              "samples": 5,
+              "median": 22.05820066000001,
+              "slowest": 22.697957463999956
+            },
+            "queue_seconds": {
+              "samples": 5,
+              "median": 1.500000053056283e-07,
+              "slowest": 2.599999788799323e-07
+            },
+            "execution_seconds": {
+              "samples": 5,
+              "median": 8.573000059186597e-06,
+              "slowest": 9.664000003795081e-06
+            },
+            "counter_samples": 2,
+            "native_flush_coverage": "observed",
+            "counter_maxima": {
+              "comfy_http.GET /history/<prompt>": 1,
+              "comfy_http.GET /object_info": 4,
+              "comfy_http.GET /queue": 2,
+              "comfy_http.GET /system_stats": 2,
+              "comfy_http.GET /view": 1,
+              "comfy_http.POST /prompt": 1,
+              "comfy_http.POST /queue": 2,
+              "native.completed_flushes": 161,
+              "output_hash_streams": 25,
+              "process_start.external": 7,
+              "process_start.pack_worker": 1,
+              "python.bundle_compile": 2,
+              "python.bundle_emission": 3,
+              "python.fdatasync_attempt": 0,
+              "python.fdatasync_success": 0,
+              "python.fsync_attempt": 150,
+              "python.fsync_success": 150,
+              "python.sleep_attempt": 158,
+              "python.workflow_compile": 8,
+              "python_forced_write_requests": 150,
+              "runtime_commit_statements": 1381
+            }
+          },
+          "fresh_python_cli": {
+            "caller_seconds": {
+              "samples": 5,
+              "median": 16.859340103000022,
+              "slowest": 16.952081544000066
+            },
+            "overhead_seconds": {
+              "samples": 5,
+              "median": 16.859331532000056,
+              "slowest": 16.952072604000023
+            },
+            "queue_seconds": {
+              "samples": 5,
+              "median": 1.3300001455718302e-07,
+              "slowest": 1.6499996036145603e-07
+            },
+            "execution_seconds": {
+              "samples": 5,
+              "median": 8.495999963997747e-06,
+              "slowest": 8.940000043367036e-06
+            },
+            "counter_samples": 2,
+            "native_flush_coverage": "observed",
+            "counter_maxima": {
+              "comfy_http.GET /history/<prompt>": 1,
+              "comfy_http.GET /object_info": 4,
+              "comfy_http.GET /queue": 2,
+              "comfy_http.GET /system_stats": 2,
+              "comfy_http.GET /view": 1,
+              "comfy_http.POST /prompt": 1,
+              "comfy_http.POST /queue": 2,
+              "native.completed_flushes": 161,
+              "output_hash_streams": 25,
+              "process_start.cli": 1,
+              "process_start.external": 7,
+              "process_start.pack_worker": 1,
+              "python.bundle_compile": 2,
+              "python.bundle_emission": 3,
+              "python.fdatasync_attempt": 0,
+              "python.fdatasync_success": 0,
+              "python.fsync_attempt": 150,
+              "python.fsync_success": 150,
+              "python.sleep_attempt": 156,
+              "python.workflow_compile": 8,
+              "python_forced_write_requests": 150,
+              "runtime_commit_statements": 1301
+            }
+          }
+        },
+        "fixture": "attached stand-in, 16x16 PNG; no inference, not a D1 workload",
+        "native_windows_flushes": "unqualified; LS-13 owns the native trace",
+        "budget_certified": false
+      },
+      "baseline_status": "PASS",
+      "baseline_reference": "tests/fixtures/local-speed-baselines/linux.json",
+      "baseline_regressions": [],
+      "reference_file_sha256": "d71091e2671aaadbec083bd658d37a268a6f1aa7cbcbbdf69338d007265c34c2",
+      "comparison_reproduced_from_raw_records": true,
+      "native_flush_coverage": "completed OS operations",
+      "native_calibration": {
+        "status": "PASS",
+        "native_count": {
+          "native_flushes": 9,
+          "observed_successful_flushes": 9,
+          "observed_failed_flushes": 0,
+          "by_operation": {
+            "fsync": 1,
+            "fdatasync": 8
+          },
+          "by_process": {
+            "3709": 9
+          },
+          "coverage_gaps": []
+        }
+      },
+      "counter_case_results": [
+        {
+          "name": "test_attached_caller_observation[0-resident_sdk]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "91.181",
+          "status": "passed"
+        },
+        {
+          "name": "test_attached_caller_observation[0-fresh_python_cli]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "61.887",
+          "status": "passed"
+        },
+        {
+          "name": "test_attached_caller_observation[1-resident_sdk]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "82.520",
+          "status": "passed"
+        },
+        {
+          "name": "test_attached_caller_observation[1-fresh_python_cli]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "63.003",
+          "status": "passed"
+        }
+      ]
+    },
+    "windows": {
+      "artifact_id": 14357113308,
+      "artifact_zip_sha256_verified": "d21e30a55db19d445dabcfe95ad16857f6936f07928d48482dc6116d2a9918c6",
+      "job_id": 134241636180,
+      "raw_summary_sha256": "c147ddc2358f2eed32fa606da521fe029de8a782ca063ae1d36779d29e278557",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "sources": {
+        "agent": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+        "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+        "vibecomfy": "dba38f8644c46f652376f2cd5112ea161e40f09b",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "status": "PASS",
+      "budget_certified": false,
+      "latency_junit": {
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "counter_junit": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "latency": [
+        {
+          "caller": "resident_sdk",
+          "sample_index": 0,
+          "caller_seconds": 84.49999999999994,
+          "overhead_seconds": 84.49999999999994,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 0,
+          "caller_seconds": 42.327999999999975,
+          "overhead_seconds": 42.327999999999975,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 1,
+          "caller_seconds": 84.60900000000004,
+          "overhead_seconds": 84.60900000000004,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 1,
+          "caller_seconds": 42.125,
+          "overhead_seconds": 42.125,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 2,
+          "caller_seconds": 83.39099999999996,
+          "overhead_seconds": 83.39099999999996,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 2,
+          "caller_seconds": 41.827999999999975,
+          "overhead_seconds": 41.827999999999975,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 3,
+          "caller_seconds": 82.20299999999997,
+          "overhead_seconds": 82.20299999999997,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 3,
+          "caller_seconds": 42.031000000000176,
+          "overhead_seconds": 42.031000000000176,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 4,
+          "caller_seconds": 83.7969999999998,
+          "overhead_seconds": 83.7969999999998,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 4,
+          "caller_seconds": 42.2650000000001,
+          "overhead_seconds": 42.2650000000001,
+          "standin_queue_seconds": [
+            0.0
+          ],
+          "standin_execution_seconds": [
+            0.0
+          ],
+          "queue_time_subtracted": false
+        }
+      ],
+      "counters": [
+        {
+          "caller": "resident_sdk",
+          "sample_index": 0,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 84,
+            "fsync_success": 84,
+            "process_start": 6,
+            "sleep_attempt": 252,
+            "sleep_success": 252,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "external": 5,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 1518,
+          "native_flushes": null
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 0,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 84,
+            "fsync_success": 84,
+            "process_start": 7,
+            "sleep_attempt": 254,
+            "sleep_success": 254,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "cli": 1,
+            "external": 5,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 861,
+          "native_flushes": null
+        },
+        {
+          "caller": "resident_sdk",
+          "sample_index": 1,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 84,
+            "fsync_success": 84,
+            "process_start": 6,
+            "sleep_attempt": 251,
+            "sleep_success": 251,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "external": 5,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 1506,
+          "native_flushes": null
+        },
+        {
+          "caller": "fresh_python_cli",
+          "sample_index": 1,
+          "python_counts": {
+            "bundle_compile": 2,
+            "bundle_emission": 3,
+            "fsync_attempt": 84,
+            "fsync_success": 84,
+            "process_start": 7,
+            "sleep_attempt": 258,
+            "sleep_success": 258,
+            "workflow_compile": 8
+          },
+          "process_start_counts": {
+            "cli": 1,
+            "external": 5,
+            "pack_worker": 1
+          },
+          "attached_http_paths": {
+            "GET /history/slot-2": 1,
+            "GET /object_info": 4,
+            "GET /queue": 2,
+            "GET /system_stats": 2,
+            "GET /view": 1,
+            "POST /prompt": 1,
+            "POST /queue": 2
+          },
+          "output_hash_streams": 25,
+          "runtime_main_connection_commit_statements": 850,
+          "native_flushes": null
+        }
+      ],
+      "counter_capture": {
+        "observer": "Python process observer",
+        "proof_exit": 0,
+        "completed": true
+      },
+      "baseline": {
+        "schema": "astrid.local-speed-baseline.v2",
+        "system": "Windows",
+        "sources": {
+          "agent": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+          "vibecomfy": "dba38f8644c46f652376f2cd5112ea161e40f09b",
+          "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+        },
+        "tolerance": {
+          "median_relative": 0.5,
+          "median_seconds": 3.0,
+          "slowest_relative": 1.0,
+          "slowest_seconds": 5.0,
+          "background_relative": 0.5,
+          "background_count": 10
+        },
+        "callers": {
+          "resident_sdk": {
+            "caller_seconds": {
+              "samples": 5,
+              "median": 83.7969999999998,
+              "slowest": 84.60900000000004
+            },
+            "overhead_seconds": {
+              "samples": 5,
+              "median": 83.7969999999998,
+              "slowest": 84.60900000000004
+            },
+            "queue_seconds": {
+              "samples": 5,
+              "median": 0.0,
+              "slowest": 0.0
+            },
+            "execution_seconds": {
+              "samples": 5,
+              "median": 0.0,
+              "slowest": 0.0
+            },
+            "counter_samples": 2,
+            "native_flush_coverage": "unobserved",
+            "counter_maxima": {
+              "comfy_http.GET /history/<prompt>": 1,
+              "comfy_http.GET /object_info": 4,
+              "comfy_http.GET /queue": 2,
+              "comfy_http.GET /system_stats": 2,
+              "comfy_http.GET /view": 1,
+              "comfy_http.POST /prompt": 1,
+              "comfy_http.POST /queue": 2,
+              "output_hash_streams": 25,
+              "process_start.external": 5,
+              "process_start.pack_worker": 1,
+              "python.bundle_compile": 2,
+              "python.bundle_emission": 3,
+              "python.fdatasync_attempt": 0,
+              "python.fdatasync_success": 0,
+              "python.fsync_attempt": 84,
+              "python.fsync_success": 84,
+              "python.sleep_attempt": 252,
+              "python.workflow_compile": 8,
+              "python_forced_write_requests": 84,
+              "runtime_commit_statements": 1518
+            }
+          },
+          "fresh_python_cli": {
+            "caller_seconds": {
+              "samples": 5,
+              "median": 42.125,
+              "slowest": 42.327999999999975
+            },
+            "overhead_seconds": {
+              "samples": 5,
+              "median": 42.125,
+              "slowest": 42.327999999999975
+            },
+            "queue_seconds": {
+              "samples": 5,
+              "median": 0.0,
+              "slowest": 0.0
+            },
+            "execution_seconds": {
+              "samples": 5,
+              "median": 0.0,
+              "slowest": 0.0
+            },
+            "counter_samples": 2,
+            "native_flush_coverage": "unobserved",
+            "counter_maxima": {
+              "comfy_http.GET /history/<prompt>": 1,
+              "comfy_http.GET /object_info": 4,
+              "comfy_http.GET /queue": 2,
+              "comfy_http.GET /system_stats": 2,
+              "comfy_http.GET /view": 1,
+              "comfy_http.POST /prompt": 1,
+              "comfy_http.POST /queue": 2,
+              "output_hash_streams": 25,
+              "process_start.cli": 1,
+              "process_start.external": 5,
+              "process_start.pack_worker": 1,
+              "python.bundle_compile": 2,
+              "python.bundle_emission": 3,
+              "python.fdatasync_attempt": 0,
+              "python.fdatasync_success": 0,
+              "python.fsync_attempt": 84,
+              "python.fsync_success": 84,
+              "python.sleep_attempt": 258,
+              "python.workflow_compile": 8,
+              "python_forced_write_requests": 84,
+              "runtime_commit_statements": 861
+            }
+          }
+        },
+        "fixture": "attached stand-in, 16x16 PNG; no inference, not a D1 workload",
+        "native_windows_flushes": "unqualified; LS-13 owns the native trace",
+        "budget_certified": false
+      },
+      "baseline_status": "PASS",
+      "baseline_reference": "tests\\fixtures\\local-speed-baselines\\windows.json",
+      "baseline_regressions": [],
+      "reference_file_sha256": "035c210dcdb52c9c03a3050e4ec4133d366072cd13228af9d402862d3d9269e9",
+      "comparison_reproduced_from_raw_records": true,
+      "native_flush_coverage": "unobserved; Windows native trace belongs to LS-13",
+      "native_calibration": {
+        "status": "PASS",
+        "native_count": {
+          "native_flushes": 4,
+          "observed_successful_flushes": 4,
+          "observed_failed_flushes": 0,
+          "by_operation": {
+            "FileIoFlush": 4
+          },
+          "by_process": {
+            "1168": 4
+          },
+          "coverage_gaps": []
+        }
+      },
+      "counter_case_results": [
+        {
+          "name": "test_attached_caller_observation[0-resident_sdk]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "287.457",
+          "status": "passed"
+        },
+        {
+          "name": "test_attached_caller_observation[0-fresh_python_cli]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "129.276",
+          "status": "passed"
+        },
+        {
+          "name": "test_attached_caller_observation[1-resident_sdk]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "263.971",
+          "status": "passed"
+        },
+        {
+          "name": "test_attached_caller_observation[1-fresh_python_cli]",
+          "classname": "tests.integrations.test_local_speed_meter",
+          "time": "128.754",
+          "status": "passed"
+        }
+      ]
+    }
+  },
+  "current_merge_ref_verified_after_sync": {
+    "sha": "2a883acbe689ee4e592c846caec3811a00ca96c3",
+    "tree": "1eabe717ec5c9f1ee7d6aa835d4c23a5f3fec986",
+    "parents": [
+      "561950d084ee71a9b1e5e49be01c21bbbafcd785",
+      "820fe62af8295b15aa5d58b66d8b1f5b19892395"
+    ],
+    "same_tree_as_tested_candidate": true
+  }
+}

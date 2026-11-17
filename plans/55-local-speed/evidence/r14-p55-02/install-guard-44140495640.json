@@ -1,0 +1,188 @@
+{
+  "schema": "r14-p55-02-install-guard-diagnostic.v1",
+  "run_id": 44140495640,
+  "failed_attempt": 1,
+  "failed_job_id": 134241634426,
+  "passing_other_variant_job_id": 134241634915,
+  "candidate_head": "820fe62af8295b15aa5d58b66d8b1f5b19892395",
+  "tested_merge": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+  "preceding_passing_run": 44127948431,
+  "preceding_passing_job_id": 134196776048,
+  "preceding_head": "46024d467df98b81621012afdb7e8fcd36ef9f2d",
+  "preceding_tested_merge": "6bbc74dbe43e5244e3973e0ea303bd92e53211ac",
+  "artifact_id": 14357140100,
+  "artifact_zip_sha256_verified": "bac59a6c72ee18a32497cabb56e080d2bae9269bb52934fe888c7ac7c729d8c7",
+  "artifact_sources": {
+    "agent": {
+      "sha": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+      "repo": "D:\\a\\astrid-agent\\astrid-agent"
+    },
+    "runtime": {
+      "sha": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+      "repo": "D:\\a\\astrid-agent\\astrid-agent\\journey-runtime"
+    },
+    "app": {
+      "sha": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+      "repo": "D:\\a\\astrid-agent\\astrid-agent\\journey-app"
+    }
+  },
+  "matching_effective_runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+  "matching_effective_app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+  "unchanged_relevant_file_blobs": {
+    ".github/workflows/windows-install-guard.yml": "567ff897a4510f804b7702d83d696990d51f2238",
+    "scripts/ci_windows_install_guard.py": "3cf41875251a2dc1c235612321381031860926f8",
+    "scripts/ci_windows_journey.py": "74262b69dff5fd027d2b3e1ec4a0c1ff881a2875",
+    "runtime.lock.json": "c70bd3dd4da60099a9a78e0bdb7a2beac427f4fb",
+    "pyproject.toml": "9be0c21c1a4f43fc921382b9a5953acf84cfcc24",
+    "astrid/sdk/host_bootstrap.py": "009f4874cc1fae61cd7ff86f9289facfc6ded399"
+  },
+  "only_changed_agent_files": [
+    ".github/workflows/plan55-native-flush.yml",
+    "tests/fixtures/local-speed-baselines/README.md",
+    "tests/fixtures/local-speed-baselines/linux.json"
+  ],
+  "captured_cli_output": "{\r\n  \"entry\": null,\r\n  \"fixes\": [],\r\n  \"issues\": [\r\n    {\r\n      \"code\": \"unavailable\",\r\n      \"details\": {\r\n        \"lifecycle_code\": \"runtime_lifecycle_error\",\r\n        \"next_action\": \"run the Astrid install line again\"\r\n      },\r\n      \"message\": \"host native process metadata unavailable; field=registered_host\",\r\n      \"severity\": \"error\"\r\n    }\r\n  ],\r\n  \"status\": \"blocked\",\r\n  \"target\": null,\r\n  \"task_id\": null\r\n}\r\n",
+  "captured_cli_output_sha256": "c5a17a71b206aa4e6d83bdf7518d084706a585e3f172477b2c02845d14502ee8",
+  "failure": "generate defaults --json exited 2: host native process metadata unavailable; field=registered_host",
+  "causal_limit": "The exposed error does not identify the failing native metadata query or underlying OS error. Matching inputs and prior passes do not establish the cause.",
+  "bounded_replay": {
+    "requested": true,
+    "requested_failed_job_id": 134241634426,
+    "run_id": 44140495640,
+    "run_attempt": 2,
+    "job_id": 134274341401,
+    "source_or_assertion_change": false,
+    "result": "success",
+    "run_conclusion": "success",
+    "run_completed_at": "2026-11-17T18:49:23Z",
+    "effective_sources": {
+      "agent": "db037ee418b36edae7391100fa2d5f7ec43507cd",
+      "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+      "app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+    },
+    "effective_sources_match_original_failure": true,
+    "fetched_job_log_sha256": "5918f0995b255b8a7bcfb5c19eac92bd9f5dcf397551963183e7990d964a5caa",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Check out this Agent candidate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Set up the journey driver (not the installed Python)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Resolve App ref and the Runtime commit from the Agent lock",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Check out the locked Runtime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Check out the selected App bootstrap",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Prepare local manifest for the exact checkout archives (no published release)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "B1/B2 long-path guard: set and verify Windows LongPathsEnabled for this variant",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "B1 long-path guard: create a fresh long user-like LOCALAPPDATA",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Real candidate install: B1 long paths, B3 Git missing, F1 TLS, F4 DACL",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Installed command and attached ComfyUI smoke",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "F4 DACL diagnostics: retain paths, owners and SDDL after installation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Upload failed install.log, failure receipts and guard diagnostics",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 13
+      },
+      {
+        "name": "Post Check out the selected App bootstrap",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 23
+      },
+      {
+        "name": "Post Check out the locked Runtime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24
+      },
+      {
+        "name": "Post Set up the journey driver (not the installed Python)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25
+      },
+      {
+        "name": "Post Check out this Agent candidate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 26
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 27
+      }
+    ],
+    "success_receipt_lines": [
+      "2026-11-17T18:48:38.7667213Z Runtime health is ok and belongs to this installation",
+      "2026-11-17T18:48:38.8281141Z pack-host is running with its current ready file"
+    ],
+    "new_artifact_emitted": false,
+    "artifact_note": "Failure-only upload was skipped. Original failure artifact 14357140100 remains retained.",
+    "latest_attempt_other_variant": {
+      "job_id": 134274343588,
+      "conclusion": "success",
+      "note": "Latest-attempt listing; no claim that the previously successful variant was rerun."
+    },
+    "causal_limit": "The replay succeeds on the same effective Agent, Runtime and App commits. This does not establish the cause of the original native metadata failure."
+  }
+}
