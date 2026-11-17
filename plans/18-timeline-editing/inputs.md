@@ -19,4 +19,4 @@ No repository or revision was identified in the draft. At execution start, ident
 
 ## Constraints
 
-Preserve existing behavior according to verified source support. Do not invent a large API or claim functionality is missing without evidence. The [shared run contract](../../skills/astrid-dev-shared/run-contract.md) governs source identity, execution, proof, review, and publication authority.
+Preserve existing behavior according to verified source support. Do not invent a large API or claim functionality is missing without evidence. The [shared run contract](../../skills/shared/run-contract.md) governs source identity, execution, proof, review, and publication authority.

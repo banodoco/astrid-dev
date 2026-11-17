@@ -100,4 +100,4 @@ Read at Agent `ff40f2c68` and VibeComfy `e65f494`. Class: **G** is general and m
 
 ## Constraints
 
-Follow repository [Astrid development skill](../../skills/astrid-dev/SKILL.md) and the shared [run contract](../../skills/astrid-dev-shared/run-contract.md) for execution, resources, routes, and publication. Confirm source identities and destination at setup.
+Follow repository [Astrid development skill](../../skills/astrid-dev/SKILL.md) and the shared [run contract](../../skills/shared/run-contract.md) for execution, resources, routes, and publication. Confirm source identities and destination at setup.
