@@ -38,8 +38,8 @@ Packet files are in [packets/](packets/). Rows without a file are the next packe
 
 | Packet | Source | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#377 | Ready | — | Dispatch |
-| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE2, RE3, K1b; Runtime #56 | Ready | — | Dispatch |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Ready | — | Dispatch |
+| [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Ready | — | Dispatch |
 | [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Ready | — | Dispatch |
 | R14-P39-04 Re-measure | Plan 39 G1, G2 | Blocked | — | After P39-01 to P39-03 merge |
 | R14-P39-05 Review stop | Plan 39 RS1 | Blocked | — | After P39-04 |
