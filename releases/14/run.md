@@ -58,7 +58,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Rework | `r14-P55-01-1` | Rework on #803 from the Lead's RS1 (RS1.1–RS1.9) and D14; resumed 17:56 UTC in its own chat |
+| [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Done | `r14-P55-01-1` | Design merged into astrid-dev `release/14/plan-55` at `cb5419731` (#803), after the Lead's RS1; RS1.10 and RS1.11 go to LS-7 and LS-9 |
 | [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Running | `r14-P39-01-2` | Replacing `-1`, whose chat will not load; K1a ruling: a ceiling of 16 gates that may only fall |
 | [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Done | `r14-P39-02-1` | Runtime #56 and #57 merged into `release/14/plan-39` (`6cfe9a19`) |
 | [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Running | `r14-P55-02-1` | Sync merged (Agent #379 `561950d0`, VibeComfy #173 `e5596dcd`); LS-2 final run on #359 at `820fe62` |
@@ -66,15 +66,19 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-FIX-01](packets/R14-FIX-01.md) Agent Windows host | #669, #670; Agent #367 | Done | `r14-FIX-01-1` | Agent #367 and #380 merged into `release/14/main` (`d5f90a4b`) |
 | [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Running | `r14-P13-01-1` | HM1 map draft astrid-dev #822; HM3 caller change approved |
 | [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Running | `r14-FIX-02-1` | VibeComfy #174; the second import edge is in scope |
-| [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (9) |
-| [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Ready | — | Dispatch (10) |
-| [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch (11) |
+| [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Ready | — | Dispatch next (1) |
+| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Ready | — | Dispatch (2) |
+| [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Ready | — | Dispatch (3) |
+| [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Ready | — | Dispatch (4) |
+| [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Ready | — | Dispatch (5) |
+| [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (6) |
+| [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Ready | — | Dispatch (7) |
+| [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch (8) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Running | `r14-FIX-03-1` | Agent #360 with `release/14/main` merged in; boundary ruled, dependency clients are #823 |
-| [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Ready | — | Next to dispatch |
 | R14-P55-04 First job | Plan 55 LS-12; draft Agent #361 | Blocked | — | After P55-02 |
 | R14-P39-04 Re-measure | Plan 39 G1, G2 | Blocked | — | After P39-01 to P39-03 merge |
 | R14-P39-06 onward, wave 2 | Plan 39 RT1–RT8, AT1–AT4, PT1–PT4, K2, K3, SF3b, SF3c | Blocked | — | Cut from G2's causes after the Lead's RS1; about eight packets |
-| R14-P55-06 onward | Plan 55 LS-4, LS-6, LS-7, LS-8, LS-15, LS-9, LS-10, LS-13, LS-14 | Blocked | — | After the Lead's RS1 on P55-01; LS-14 also needs paid GPU time |
+| R14-P55-09 onward | Plan 55 LS-15, LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-15 after LS-4, LS-5 and LS-8; LS-14 also needs paid GPU time |
 | R14-P13-02 Characterisation | Plan 13 HM2 | Blocked | — | After P13-01 |
 | R14-FIX-05 Rejected saves | #732, the App half of #720 | Blocked | — | Owner: discard or copy out |
 | R14-FIX-06 Scenes in CI | #734 | Blocked | — | After FIX-03, one Agent issue packet at a time |
