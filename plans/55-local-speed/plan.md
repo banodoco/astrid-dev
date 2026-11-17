@@ -10,7 +10,7 @@
 
 **Estimate:** 2–3
 
-**Waiting on:** LS-1 measurements before LS-3; owner approval for paid GPU work, a Windows tester, re-pins and product-main merges. [Run authorization and published base](inputs.md#run-start-source-identities).
+**Waiting on:** LS-2 CPU meter before LS-3/RS1; owner approval for the LS-5 re-pin and LS-6 scope. GPU proof waits for GPU and does not hold CPU work under D9. [Run authorization and published base](inputs.md#run-start-source-identities).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
@@ -59,31 +59,46 @@ Everything else Astrid does today answers a question whose answer only changes w
 
 ### The floor, and the targets
 
-Estimates, not measurements; LS-1 measures them before anything is built.
+**Real CPU measurements, 16 November 2026.** The original `comfy_floor.py` and `integrated_floor.py` ran against isolated, real ComfyUI on standard hosted Linux and Windows runners, without a model or GPU. Each cell has twenty samples after a separately retained warmup. Overhead is calculated for each sample as caller wall time minus client-observed ComfyUI start-to-success; queue time is not subtracted. These are floor probes, **not the installed Agent generation path or a claim that Plan 55 is fast**.
 
-| Step | Linux | Windows |
+| Actual CPU workload and path | Linux median / slowest, ms | Windows median / slowest, ms |
+| --- | ---: | ---: |
+| Trivial graph, transport | 3.20 / 3.82 | 3.33 / 4.16 |
+| Trivial graph, Runtime, one caller | 15.94 / 43.02 | 134.37 / 286.72 |
+| Trivial graph, Runtime, two callers | 29.61 / 34.81 | 161.39 / 388.18 |
+| One-megapixel image, transport | 4.83 / 6.05 | 5.49 / 5.93 |
+| One-megapixel image, Runtime, one caller | 41.35 / 319.63 | 225.63 / 592.06 |
+| One-megapixel image, Runtime, two callers | 178.49 / 225.22 | 284.01 / 546.03 |
+
+The one-megapixel input is a seeded synthetic RGB image. ComfyUI saved 904,486-byte PNGs on Linux and 927,815-byte PNGs on Windows; the trivial graph saved 338 bytes. The Runtime probes create, claim and settle through actual HTTP/CAS and assert exact stored bytes, a succeeded task and a managed-output association after settlement. Post-settlement verification is outside the timed interval. The two-caller experiment includes admission-lock/queue contention and cannot be attributed wholly to Runtime writes.
+
+| One-caller, one-megapixel integrated phase | Linux median / slowest, ms | Windows median / slowest, ms |
+| --- | ---: | ---: |
+| Runtime create | 3.01 / 40.03 | 22.29 / 166.37 |
+| Runtime claim | 2.69 / 4.38 | 16.79 / 122.65 |
+| Fill hand-prepared graph slots | 0.03 / 0.04 | 0.02 / 0.03 |
+| POST through acceptance (not pure validation) | 1.29 / 204.79 | 1.68 / 172.84 |
+| Observed success to history-ready | 0.38 / 0.41 | 0.56 / 0.93 |
+| One history read | 0.79 / 1.05 | 0.73 / 0.84 |
+| Fetch and hash output (not store) | 1.87 / 3.56 | 2.57 / 3.55 |
+| Prepare inline output descriptor | 1.38 / 2.46 | 2.99 / 3.20 |
+| Runtime settle, including store and record | 28.82 / 307.79 | 159.98 / 550.77 |
+
+**Correction to the earlier estimates:** the unchanged one-caller Runtime floor has a Windows median of 225.63 ms, so the previous 25–120 ms total estimate does not support a sub-100-ms promise. Linux's 41.35 ms median fits that aspiration for this probe, but its 319.63 ms slowest sample does not establish a tail guarantee. Both OSes fit the stage-one 2-second floor in these CPU cells. Hand-prepared slot filling is not the proposed VibeComfy template implementation; POST time is not isolated node-validation cost; the fetch/hash phase excludes storage. Native flush counts and the installed Agent's repeated work belong to LS-2 and must not be invented from transaction counts or these suite durations.
+
+For LS-3, retain durable success and the existing create/claim/settle path for stage one; the measurements do not justify weakening D2. The conditional deeper Runtime work is a design question for the tighter target after the standing meter attributes the actual costs, not an automatic permission to combine or omit durable writes.
+
+Evidence: [derived summary and original record identities](../../releases/14/evidence/ls1/real-cpu-20261116.json), [CPU execution PR #353](https://github.com/banodoco/astrid-agent/pull/353), [actual run 43858887774](https://github.com/banodoco/astrid-agent/actions/runs/43858887774). The summary names original artifact/file hashes, exact source commits, Python/OS versions, sample counts and recomputed overhead. The original archives retain full probe records, outputs, commands and exit codes. The probe bytes differ by Windows checkout line endings and are hashed separately; no cross-OS byte identity or equal hardware is implied.
+
+D1 is unchanged: **commit to median overhead under 2 s for every caller** for the stated workload; build for the tighter targets below and promise them only when measured. GPU and Windows-with-GPU results remain waiting for GPU, not a gate on CPU work under [D9 in #728](https://github.com/banodoco/astrid-dev/pull/728).
+
+| Caller | Linux and macOS design target | Windows design target |
 | --- | --- | --- |
-| Request and reply | 0.2 to 2 ms | 0.5 to 5 ms |
-| Check the request, name the job | 0.1 to 2 ms | 0.2 to 3 ms |
-| Fill and check the template | 0.2 to 5 ms | 0.5 to 8 ms |
-| ComfyUI's own validation and queue wake-up | 1 to 10 ms | 2 to 20 ms |
-| Woken at completion, one history read | 1 to 8 ms | 2 to 15 ms |
-| Read, hash and store a one-megabyte output | 1 to 8 ms | 2 to 20 ms |
-| Record and force to disk | 1 to 15 ms | 2 to 35 ms |
-| **Already-connected caller, total** | **15 to 70 ms** | **25 to 120 ms** |
-| A new command-line process on top | 25 to 150 ms in Python | 80 to 500 ms in Python |
-
-Two independent estimates (the advisor's and an Astra review that was not shown it) agree that under 0.1 s is plausible for an already-connected caller on both systems, with Windows' slowest cases unproven. They also agree on what is outside the number: waiting behind another job in ComfyUI's queue, a large output (about 50 to 330 ms per 100 MB to read and hash), a new input file, and a custom node whose own validation is slow.
-
-Proposed targets (D1), after a first stage of under 2 s for every caller: median overhead for a one-megapixel image, measured as caller wall time minus ComfyUI's own start-to-success span.
-
-| Caller | Linux and macOS | Windows |
-| --- | --- | --- |
-| Already connected (SDK, App, agent tool server) | under 0.1 s | under 0.1 s, confirmed by measurement |
-| Command line | under 0.25 s | measured first; target set from LS-1 |
+| Already connected (SDK, App, agent tool server) | under 0.1 s, not yet qualified end to end | under 0.1 s aim; current unchanged Runtime CPU floor does not meet it |
+| Command line | under 0.25 s | measured first; target not yet set |
 | First job after a start, update or change | under 3 s | under 5 s |
 
-Queue wait is reported separately and never subtracted silently.
+Queue wait is reported separately and never subtracted silently. The first-job and CLI targets have not been measured by this resident floor probe. Large video, new-input, arbitrary-custom-node and warm-model performance are not inferred from the small synthetic image.
 
 ### Included
 
@@ -99,19 +114,21 @@ The measurements, the code traces and the independent review are in [inputs.md](
 
 What this plan takes from Plan 54, drops and adds is listed in [inputs.md](inputs.md#plan-54-what-moves-here). The decision to design from the floor up, and to leave rented machines out, is the owner's (15 November 2026).
 
-Smaller alternatives considered: caching inside today's path (Plan 54's local tasks) reaches one to four seconds and stops there, because the per-job process, the polling and the per-job resolution remain. A direct socket to the worker that bypasses the Runtime is faster to build and leaves two doors (D3).
+Smaller alternatives considered: caching inside today's path (Plan 54's local tasks; reaches one to four seconds); a direct socket to the worker that bypasses the Runtime is faster to build and leaves two doors (D3).
 
 ## Sequence and readiness
 
-LS-1 first, in two steps. A throwaway script does only steps 2, 4, 5 and 6 against a real ComfyUI and prints the overhead: the floor that is not ours to remove. Then the existing Runtime steps and real output storage are added to it, unchanged, and each is timed. That second step decides whether the deeper Runtime change is needed at all. Both run on Linux and on Windows. LS-2 turns the test lane's attached harness into the standing meter. LS-3 is the design, and RS1 reviews it once, because the door, the durability rule and the worker's lifetime are what LS-7 to LS-10 are built on.
+The owner's 16 November D9 follow-up replaces the GPU-gated sequence. The real-ComfyUI CPU floor is measured above. Next finish LS-2, write LS-3 from those numbers and the standing meter, then conduct the one RS1 design review on CPU/stand-in evidence. Later GPU findings may reopen a design finding, but do not hold this work. After RS1 the dependency order is **LS-4 → LS-8 → LS-15 → LS-7 → LS-10**.
 
-LS-5, LS-6 and LS-11 do not wait for the design: they are needed under any door.
+Alongside, without waiting for RS1: LS-12, the safe cancellation and per-case work in LS-9, the code parts of LS-13 and LS-14, and the approved portions of LS-5 and LS-6. The exact LS-5 re-pin and LS-6 scope proposal remain proposals until the owner accepts them. Live GPU cells of LS-1, Windows-with-GPU measurement, live LS-14 proof and final R remain open; no incomplete code task is marked complete merely because it does not need a GPU.
 
-Real bottlenecks: the design review; two re-pins (VibeComfy for the template and the connection, the Runtime for the hand-off and the record); a live measurement on a GPU machine where Astrid and ComfyUI run together; a Windows measurement, which needs a tester or a Windows machine.
+A task is done only when its code and focused proof have landed and the standing meter demonstrates the relevant change on the stand-in or real CPU path. Calibration-test durations and artifact hashes are not speed evidence. Spend, publication and product-main promotion retain their owner gates. Plan 54 remains queued.
 
 Task details are in [tasks.md](tasks.md). The owner's 15 November 2026 run authorization is recorded in [inputs.md](inputs.md#planning-evidence); its limits govern this run.
 
 ## Interfaces and handoff
+
+**Developer pickup:** [Current branches, open issues, exact reproductions and next actions](developer-handoff.md). This guide preserves unresolved permission and meter failures; it does not waive proof or mark tasks complete.
 
 **Consumes:** Release 13 as published (astrid-agent, VibeComfy and Runtime at the Release 13 pins); the test lane's attached-ComfyUI harness; Release 13's per-phase timing block; donor branches named in [inputs.md](inputs.md#source-identities).
 
