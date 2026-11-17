@@ -80,9 +80,13 @@ the sync. The failures are:
 | `test_v2_rebuild_refreshes_edited_model_requirement` | Expects a model-name string; the unchanged emitter returns the model metadata mapping. The node input changes correctly. |
 
 The packet requires a pure merge, so these tests and product files were not
-edited to make the base green. The passing-inventory requirement remains
-unproven and is reported to the Lead in
-[BLOCKED](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6952110654).
+edited to make the base green. The original
+[BLOCKED](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6952110654)
+was resolved by the [Lead's decision, clause 6](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6954911390):
+accept the pure sync because the six failures reproduce on unchanged base
+blobs, and carry their repair to a separate Plan 55 row. Both pure sync drafts
+were [submitted for Lead review](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6955180375).
+This disposition does not claim that the six failing cases or hosted CI are green.
 
 Hosted baseline comparison also preserves existing failures:
 
@@ -213,16 +217,16 @@ commit `6f55afc1964aa033e65933dccb1404b818f48edc`. It adds strace's
 Without this filter, choosing the printed syscall set still incurs unrelated
 ptrace stops; see [upstream strace internals](https://github.com/strace/strace/blob/master/doc/INTERNALS.md).
 The SDK timeout stack reaches recursive conversion under the Python observer;
-the same observer finishes on Windows without Linux syscall tracing. This
-makes tracing overhead a causal hypothesis to test, not an established repair.
+the same observer finishes on Windows without Linux syscall tracing. Those
+observations motivated the kernel-filter correction; its result is below.
 The per-PID trace, reader checks, timeouts, sample counts and assertions remain.
 
 The committed [Windows reference and provenance](https://github.com/banodoco/astrid-agent/tree/46024d467df98b81621012afdb7e8fcd36ef9f2d/tests/fixtures/local-speed-baselines)
 exactly reproduce the downloaded raw Windows records with the v2 helper.
 Conversion from the artifact's v1 baseline adds explicit unobserved native
 coverage without changing measured numbers, source commits or tolerances.
-The workflow now requires that Windows reference comparison. Linux is still
-explicitly in acquisition mode pending a complete passing counter run.
+That retry workflow required the Windows reference comparison and kept Linux
+in explicit acquisition mode for its complete counter run.
 
 The assembled retry passed **110 focused cases, two existing default-lane
 deselections**, using the command above plus
@@ -233,10 +237,79 @@ calibration remained NO-RESULT because the container denies PTRACE_TRACEME
 with Operation not permitted; the [original refusal](local-native-refusal.txt)
 is retained. No privileges were changed. Hosted calibration is required.
 
-[Retry run 44127948473](https://github.com/banodoco/astrid-agent/actions/runs/44127948473)
-is pending. The packet still needs a complete Linux acquisition, its committed
-reference, and a final CI comparison requiring both OS references. The first
-Windows PASS was an acquisition, not a reference-comparison PASS.
+### Retry results — both jobs PASS
+
+[Run 44127948473](https://github.com/banodoco/astrid-agent/actions/runs/44127948473)
+passed both jobs. The actual tested merge was
+`6bbc74dbe43e5244e3973e0ea303bd92e53211ac`; its GitHub commit object verifies
+the same `5b0c1234` tree as head `46024d46` and the locally checked candidate.
+[Exact raw fields and JUnit outcomes](retry-44127948473.json) are retained
+without rounding, including native counts, calibration, source identities and
+the raw summary SHA-256 values.
+
+| OS | Job | Meter cases | Reference result |
+| --- | --- | --- | --- |
+| Linux | [134196776058](https://github.com/banodoco/astrid-agent/actions/runs/44127948473/job/134196776058) | 10 latency + four counter cases passed, zero failures/errors/skips | Complete reference acquired; comparison not requested |
+| Windows | [134196776550](https://github.com/banodoco/astrid-agent/actions/runs/44127948473/job/134196776550) | 10 latency + four counter cases passed, zero failures/errors/skips | Stored reference PASS, zero regressions |
+
+Both OSes passed **110 focused oracles**, with the same two default-lane
+integration deselections. Separate Runtime support passed two cases on Windows;
+Linux passed one and skipped the declared Windows-only case. Native calibration
+passed on both systems: nine successful flushes on Linux, four FileIoFlush
+completions on Windows, zero observed failed flushes or gaps.
+
+Linux's two SDK counter cases took **90.679 and 84.044 seconds**, within the
+unchanged 600-second limit; both had previously timed out. CLI cases took
+63.985 and 63.616 seconds. The full counter capture took **307.813 seconds**,
+exit 0. Native observations remain complete: each SDK sample has **161**
+completed flushes and each CLI sample **160**, with no failures or gaps.
+The corresponding Python force-request count is **150**; the quantities are
+reported separately. The tracing correction affects the instrumented run;
+changes in uninstrumented latency between runners are not attributed to it.
+
+Windows's actual reference comparison passed with median/slowest overhead
+**59.641 / 64.828 seconds for SDK** and **31.609 / 33.000 seconds for CLI**.
+It retained the original reference instead of resetting to the faster repeat.
+Both caller counter samples still observe 25 output hash streams, 84 Python
+force requests and 13 Comfy requests. Attached native Windows flushes remain
+unobserved; the separate native calibration does not qualify them.
+
+Both ZIP digests and every extracted manifest entry were verified:
+
+| OS | Artifact | Verified ZIP SHA-256 |
+| --- | --- | --- |
+| Linux | [14353432178](https://github.com/banodoco/astrid-agent/actions/runs/44127948473/artifacts/14353432178) | `444dedb9e04bcd2bc64a230eedc7eca984e14037099fd34f1cf664ab20752ece` |
+| Windows | [14354311252](https://github.com/banodoco/astrid-agent/actions/runs/44127948473/artifacts/14354311252) | `6abab98ff7e7cc8d79da015b4086cc6be527824fbdaf2ad5173ff4f82a5b2aa3` |
+
+### Required standing comparison on both systems
+
+Final standing candidate: `820fe62af8295b15aa5d58b66d8b1f5b19892395`, tree
+`1eabe717ec5c9f1ee7d6aa835d4c23a5f3fec986`, identical to local checked commit
+`86cfab59fae0484ddba0af7f01efe0d7922293dc`. Its only changes after the passing
+retry are the Linux reference, reference provenance README and workflow.
+The [committed references](https://github.com/banodoco/astrid-agent/tree/820fe62af8295b15aa5d58b66d8b1f5b19892395/tests/fixtures/local-speed-baselines)
+are exactly reproduced from verified raw records with the v2 helper:
+
+| OS | Caller | Samples | Median overhead, seconds | Slowest overhead, seconds |
+| --- | --- | --- | --- | --- |
+| Windows | Resident SDK | 5 | 99.969 | 102.312 |
+| Windows | Fresh Python CLI | 5 | 48.125 | 56.000 |
+| Linux | Resident SDK | 5 | 22.438 | 22.617 |
+| Linux | Fresh Python CLI | 5 | 16.920 | 16.991 |
+
+Both OS jobs now require their recorded reference and fail if the file is
+missing. Relevant product changes trigger the workflow. The acquisition-only
+product freeze is removed so later optimizations can be tested; exact
+dependency source-byte checks and identity comparison remain. Samples,
+tolerances, counters, output assertions and dependency commits are unchanged.
+Final workflow YAML, embedded Python, raw-reference equality/policy checks and
+diff checks passed locally. The underlying helper/oracle code is the same as
+the passing hosted retry.
+
+[Final run 44140495768](https://github.com/banodoco/astrid-agent/actions/runs/44140495768)
+is queued to prove **both required reference comparisons** on this candidate.
+This gate is still pending. Linux acquisition alone is not claimed as a final
+standing comparison, and the packet has not yet been submitted as complete.
 
 A local one-sample iteration completed two latency and two counter cases with
 no failures, errors or skips. It verified each delivered PNG and both distinct
