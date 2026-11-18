@@ -23,13 +23,13 @@ Example (02c, "Into the Minkhole"): start image = the corrected lens frame (the 
   - masked edit: "video edits support modalities: image", and an audio guide is always a fixed replacement span.
 
 ## Scope (smallest useful)
-1. **Source-free generation with references (branch `source_free`).** Allow, besides 1–9 image references:
+1. **Source-free generation and masked edits** (the `source_free` branch, and the masked edit in item 3). Allow, besides 1–9 image references:
    - up to 3 `video` references, each with an optional `range` (2–15 s after trimming, on the 24 fps grid); bind its frames to `ref_video_k` and, if it has an audio stream, its soundtrack to `ref_video_audio_k`;
    - up to 3 `audio` references with an optional `range`; bind them to `ref_audio_j`.
    
    Keep the existing refusal messages for anything over the limits, and name the limit.
 2. **Start image.** Keep the starting image as a reference image (`<Picture 1>`). The prompt says the first frame matches it, which is how source-free generation is used today. Don't add a new "first frame" concept in this ticket. The source-backed "still as a short video" route (astrid-dev#863) is the separate way to pin the exact first frame.
-3. **The masked edit route:** allow `video` and `audio` references as region guides only if the native edit graph reaches the same node inputs. If it doesn't, keep refusing, and say why in the message and the SKILL. Don't fake it.
+3. **The masked edit route: in scope, same as source-free.** The native masked edit already conditions through the same `MiniMaxH3ReferenceToVideo` node (its image guides bind to `ref_images`), so `video` and `audio` references bind to `ref_videos` / `ref_video_audios` / `ref_audios` the same way, as region `guides`. This is the most valuable case for recasting: mask the mouth, give a reference video of the speaker, keep the original picture elsewhere. The same rule as images applies: references condition the whole pass, so all regions in one pass share one reference set. An audio guide given *with* a `range` keeps today's meaning (fixed replacement span); an audio or video reference given as a `reference` (not a replacement) conditions the voice instead. Write both meanings out in the SKILL so they are never confused.
 4. **The continuation route:** out of scope. It already carries the voice in its source.
 
 ## Behaviour and checks
@@ -54,7 +54,11 @@ Example (02c, "Into the Minkhole"): start image = the corrected lens frame (the 
   - compile binds the right node inputs (check the graph JSON);
   - image-only digests are unchanged;
   - Character Swap still compiles identically.
-- **One live GPU job (the proof):** 02c, start image = the corrected lens frame, video reference = Morpheus speaking (about 5 s from the film), line = "tuning workflows by hand,". Accept it if:
+- **Two live GPU jobs (the proof),** both on 02c with the line "tuning workflows by hand,":
+  - **source-free:** start image = the corrected lens frame, video reference = Morpheus speaking (about 5 s from the film);
+  - **masked edit:** mouth mask on the real close-up, the same video reference, original picture elsewhere.
+
+  Accept each if:
   - the transcript shows the line and nothing else (`timelines transcripts run`);
   - the voice is recognisably his (owner listens);
   - the lenses still match the start image.
