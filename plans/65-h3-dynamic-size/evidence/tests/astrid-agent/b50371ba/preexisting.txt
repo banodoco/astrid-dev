@@ -1,0 +1,1 @@
+tests/packs/h3_av/test_generation.py::test_generation_assets_use_recipe_lock_revisions
