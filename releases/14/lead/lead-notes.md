@@ -1,0 +1,9 @@
+Lead notes
+- Reviews: codex exec -m gpt-6.2-astra (owner, 11:08 18 Nov). Effort by risk: low mechanical, medium bounded fix, high gates/designs/concurrency/security.
+- Full permissions: --dangerously-bypass-approvals-and-sandbox (owner-approved).
+- Gate threat model: PRACTICAL (owner 12:50 18 Nov; mailbox 6979024059). Realistic weakening only; crafted bypasses are a stated limit; max two review rounds; GL.3 closed. Use briefs/gate-common.md.
+- Lead is a LIGHT gatekeeper (owner, ~14:00 18 Nov): filter reviewer findings. Block only on wrong results accepted, data/install damage, real security/custody holes, regressions from base. Everything else -> follow-up row. Append briefs/review-tiers.md to every review brief.
+- P55-08 follow-ups filed as astrid-dev #896 (backlog), not a row.
+- Follow-ups lever (owner, ~14:10 18 Nov): FOLLOW-UP/NOTE findings that are nice-to-have or poor structure -> one astrid-dev issue (observation form: What I saw / About; search first; then label backlog), linked from the PR. tasks.md rows only for work the release must do.
+- Owed: board row R14-FIX-11 for astrid-dev #905 (cleanup ACK during activation; Agent issue packet after FIX-10), packet file, and #905 cited from the brief issue list.
+- Owner decisions 18 Nov 18:35: P55-10 meter "Report totals, gate invariants" (approved changing existing cap assertions; mailbox decision). Record in board Decided.
