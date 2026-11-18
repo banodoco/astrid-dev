@@ -4,7 +4,7 @@
 
 **Goal:** A creator makes a character say a new line in their own voice by giving H3 a reference video or audio clip of them speaking, with the picture regenerated from a start image or kept under a mouth mask.
 
-**Status:** `queued`
+**Status:** queued
 
 **Owner:** Unassigned
 

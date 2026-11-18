@@ -4,7 +4,7 @@
 
 **Goal:** A creator chooses the H3 working size per request (small for voice-only takes, other aspect ratios, larger where it's worth paying for), and masks, previews, composition and checks follow it.
 
-**Status:** `queued`
+**Status:** queued
 
 **Owner:** Unassigned
 
