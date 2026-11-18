@@ -1,0 +1,3 @@
+tests/packs/h3_av/test_compile_generalized.py::test_lanpaint_bindings_preserve_prompt_duration_masks_and_audio_intervals
+tests/packs/h3_av/test_compile_generalized.py::test_lanpaint_regional_change_requires_and_binds_real_mask_asset
+tests/packs/h3_av/test_generation.py::test_generation_assets_use_recipe_lock_revisions
