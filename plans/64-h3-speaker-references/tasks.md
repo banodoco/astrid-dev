@@ -8,6 +8,7 @@
 
 - SR-1 requires the owner-approved clean identity break recorded in inputs D3. Update the pinned v2 digest values to the new author-intent identity in one commit, retaining semantic-equality assertions and adding proof of historical sealed-byte verification and actionable in-flight refusal. List each digest change and its reason.
 - **REVIEW — SR-1 mask lowering deferred to SR-3:** shared seed/reference validation remains in SR-1. Separate permission and sampler-strength masks and failure when a grant vanishes on the model grid require `compile.py` and `generation.py`, which SR-3 owns, and proof in its `test_native_masked_edit.py` selection. SR-3 must deliver and test them before landing.
+- **REVIEW — SR-1 mixed round trip deferred in part to SR-5:** the unguided audio-generation interval is currently rejected by the explicit fail-closed test `test_unimplemented_sampling_combinations_fail_closed[audio-regenerate]`. Preserve that check until SR-5 implements generated audio; SR-5 must add the mixed round trip and positive admission proof alongside its end-to-end audio proof. SR-1 still covers typed conditioning and replacement occurrences.
 - Release 14 now includes Plan 64 ([#912](https://github.com/banodoco/astrid-dev/pull/912)); the branch row is in [PR #918](https://github.com/banodoco/astrid-dev/pull/918).
 
 **Task ids:** SR-1 through SR-7.
