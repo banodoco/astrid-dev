@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Final elegance check: Plans 64, 65 and 66
 
 Read-only, 18 Nov 2026. Read the uncommitted worktree versions of all nine files. Nothing was run.

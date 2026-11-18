@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Independent critique of Plan 66
 
 **Verdict — revise before greenlight.** Keep the four-layer design. One request that distinguishes what the editor must deliver from what the model may use is the right external contract. The current cards leave the hardest behavior to the implementer while prescribing a tuple of compiler steps, a scan of all error strings and a shot-planning schema change. Approve the external contract first. Give continuation its own CPU milestone and keep the live comparison with the owner. [66 plan.md:21–49,93–105; 66 tasks.md:13–20,32–60]

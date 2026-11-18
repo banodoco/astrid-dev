@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # H3 voice-reference findings
 
 Read-only research against the requested release-14 plan-59 source, VibeComfy pin/cache, ComfyUI `6bfaacc`, H3 model card, spec #890 and Hivemind. The evidence separates what the implementation feeds to the model from what is documented as a capability and what still needs a generation run.

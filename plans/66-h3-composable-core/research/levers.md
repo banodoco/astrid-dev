@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Levers: one abstraction for everything that steers an H3 job
 
 Design note, read-only, 18 Nov 2026. No implementation, nothing run. Built on `mc-1.md`, `mc-2.md`, `mc-3.md`, `restrictions.md` and the current Plan 66 text. Where a mechanism is unverified for H3, I say so.

@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Ambiguity pass — CC-7 continuation, bridge, inserts
 
 Read-only research, 18 November 2026. Sources: Plan 66 `tasks.md` and `research/continuation.md`; Astrid source at `origin/release/14/main`; motion-context pack at `361624fb406b63eb6694442eac6c895fc1533a70`; VibeComfy cached node schema at that pack revision. No tests, workflows, inference or machine checks were run. Source paths below are relative to those repositories unless stated otherwise.

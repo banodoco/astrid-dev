@@ -46,7 +46,7 @@ Its changes to Plans 64 and 65 are applied.
   - an explicit `role: guide`;
   - porting continuation's active Existing Video path, with differences listed before code;
   - `-1` as the last delivered frame;
-  - exact start with a guided end. The owner then asked for exact stills at any frame, added as CC-8 with a 4-frame hold;
+  - exact start with a guided end. The owner then asked for exact stills at any frame, added as CC-8 (one frame at multiples of 17, otherwise a 4-frame hold);
   - deleting the LanPaint row;
   - a lifecycle of intent, then measured inputs, then one resolved job;
   - grants keeping strength, seed, occurrence and references together, with the polarity stated;
@@ -66,8 +66,20 @@ Its changes to Plans 64 and 65 are applied.
 
 **Lever abstraction and small-model tests.** Fable's levers note ([research/levers.md](research/levers.md)) groups every control into three families: Output (exact: place and edit), Context (soft: references, guides, prompt) and Process (soft: LoRAs, control, settings). The families share field names, and the denoising clock is a second time axis (`phase`). A one-page lever document was then tested on five creative asks with a small model in two rounds ([research/haiku-tests.md](research/haiku-tests.md)). In round 2 all five structures were correct. Accepted as a result:
 - the capability table keyed by lever kind (CC-2);
-- end-relative time and timed prompts, moved from later into phase 1 (CC-9);
+- end-relative time in phase 1 (CC-9). Timed prompts were briefly here and moved to Plan 67 on 18 Nov, when the owner asked that Plans 64–66 cover only the existing tools;
 - the tested page as the CC-6 skill draft ([research/skill-draft.md](research/skill-draft.md)).
+
+**Functional review.** An independent functional walk-through of 18 November 2026 ([research/functional-review.md](research/functional-review.md)) traced five requests down to node inputs. The masked recast and the symmetric bridge are feasible as designed. All blocking and high findings are accepted, in [tasks.md](tasks.md#functional-additions):
+- one ordered AV mask pair;
+- separate permission and strength masks;
+- occurrence bindings;
+- exact per-channel verification;
+- the bridge and prefix assembly contracts;
+- clock transforms;
+- resource reporting;
+- pre-claim refusals for a late LoRA, a mouth edit inside a prefix, and ControlNet.
+
+From the red-team review only these were taken: declared lowering dependencies, per-tag binding reports, refusal of per-grant seed or reference conflicts, and refusal of still collisions inside one chunk. The owner set the rest of that list aside for a later plan. Timed prompts and other community steering moved to [Plan 67](../67-h3-community-steering/plan.md).
 
 **Restrictions review.** On 18 November the owner asked for every restriction to be justified or dropped. Fable's review is in [research/restrictions.md](research/restrictions.md). Its Luna helpers were blocked by the session's permissions, so Fable did the research directly. It found most limits came from Astrid using one node of the already-pinned motion pack. All ten edits are accepted:
 - no image required;
@@ -96,7 +108,7 @@ Accepted:
 - CC-7 split into CC-7a to CC-7d. Prefix continuation is `MiniMaxH3ExistingVideoMaskedContext` at `insert_frame` 0; inserts share that node with a different assembler; bridges use their own node family. The 60-frame bridge example was invalid, and is replaced by 39 + 63 + 39 = 141 frames. Inserts must sit on multiples of 51, and a Character Swap adapter case was added to continuation and bridge.
 
 Not taken:
-- the suggestion to make the `continuation` flag do nothing in CC-1 (the captured bundle keeps continuation working until CC-7a);
+- (resolved) From CC-1.2 a continuation is chosen by the arrangement of placed items; the `continuation` flag is accepted and ignored until CC-7d removes it. The captured bundle keeps continuation working until CC-7a replaces it;
 - the suggestion to keep the captured workflows until a live comparison. The owner already decided D3.
 
 Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audio-mask edges) and Plan 65 D3 (rectangle edge ties).
@@ -117,6 +129,12 @@ Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audi
 - **D3 — delete the captured continuation workflows in this plan (decided 18 Nov 2026, owner: "delete it ASAP… we already have it saved in GitHub… in the history").** CC-7d deletes them once the port passes its CPU proofs, with no live comparison first. The CPU parity list against their active path is the only check before deletion.
 - **D4 — one clean break in request identity, now (decided 18 Nov 2026, owner: "we should make a clean break now… who gives a fuck about keeping things of the past").** The break happens in Plan 64 SR-1, the first task to land. After it, no plan preserves old digests: changed fixtures are regenerated in the same commit, with reasons.
 - **D5 — drop Plan 65's continuation work (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** Continuation gets size, and any reference count, from CC-7a. This reverses Plan 65's earlier D1.
+
+- **D6 — live renders during the work (pending).** The handoff review ([research/handoff-review.md](research/handoff-review.md)) points out that 18 CPU days pass across Plans 64–66 before any render. It proposes two short live sessions, each with one render per new mechanism. One comes after Plan 64 (speaker reference, audio time mask, exact start), and one after Plan 66 phase 1 (guides, interior stills). The options:
+  - (a) keep everything CPU-only until all three plans are done (D1 as it stands);
+  - (b) add the two sessions, with small GPU spend and a budget set by the owner.
+
+  Recommendation: (b), because nothing can be marked `live-tested` otherwise.
 
 ## Source identities
 

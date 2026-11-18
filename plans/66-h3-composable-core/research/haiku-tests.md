@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Lever doc tests with a small model (18 Nov 2026)
 
 Five creative asks were given to five Haiku agents, each with only the lever document. The agents couldn't run commands. The asks were:

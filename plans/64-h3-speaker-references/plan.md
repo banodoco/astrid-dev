@@ -23,7 +23,7 @@ A creator writes the new line in the prompt and supplies an identified speaker c
 - **Source-free:** H3 animates a still image. The still is either a reference that guides the picture, or a `role: timeline` image at frame 0, which becomes the exact first frame.
 - **Masked edit:** the source picture is kept outside the mouth mask. Source audio is kept outside the edit's time window. H3 generates the new line inside it.
 
-Both routes accept image, video and standalone audio references, within the limits table in SR-2. Generation needs no image: audio or video references with text are documented uses, and text alone is admitted with a dry-run note that it's outside the documented use of the Ref2VA checkpoint. Character Swap keeps its contract: one image and one video. Captured continuation keeps its two image slots.
+Both routes accept image, video and standalone audio references, within the limits table in SR-2. Generation needs no image: audio or video references with text are documented uses, and text alone is admitted with a dry-run note that it's outside the documented use of the Ref2VA checkpoint. Character Swap needs at least one image and one video; more references are allowed (SR-2). Captured continuation keeps its two image slots.
 
 **Not in this plan. Do not build these:**
 - a GPU or live run of any kind (D2). The owner tests afterwards;

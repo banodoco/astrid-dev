@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Direction review: is the H3 work heading toward an elegant agent toolset?
 
 Read-only review, 18 Nov 2026. No tests, runs or edits. Sources: Plans 64 and 65 on astrid-dev main; `astrid-agent` `origin/release/14/main` (`9f614dff`) for the H3 pack; `origin/release/14/plan-59` for the Recast skill, which is not on release main yet; the two Plan 66 research notes, `continuation.md` and `nekodificador.md`, as completed at 15:20.
