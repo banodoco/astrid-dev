@@ -66,8 +66,20 @@ Its changes to Plans 64 and 65 are applied.
 
 **Lever abstraction and small-model tests.** Fable's levers note ([research/levers.md](research/levers.md)) groups every control into three families: Output (exact: place and edit), Context (soft: references, guides, prompt) and Process (soft: LoRAs, control, settings). The families share field names, and the denoising clock is a second time axis (`phase`). A one-page lever document was then tested on five creative asks with a small model in two rounds ([research/haiku-tests.md](research/haiku-tests.md)). In round 2 all five structures were correct. Accepted as a result:
 - the capability table keyed by lever kind (CC-2);
-- end-relative time and timed prompts, moved from later into phase 1 (CC-9);
+- end-relative time in phase 1 (CC-9). Timed prompts were briefly here and moved to Plan 67 on 18 Nov, when the owner asked that Plans 64–66 cover only the existing tools;
 - the tested page as the CC-6 skill draft ([research/skill-draft.md](research/skill-draft.md)).
+
+**Functional review.** An independent functional walk-through of 18 November 2026 ([research/functional-review.md](research/functional-review.md)) traced five requests down to node inputs. The masked recast and the symmetric bridge are feasible as designed. All blocking and high findings are accepted, in [tasks.md](tasks.md#functional-additions):
+- one ordered AV mask pair;
+- separate permission and strength masks;
+- occurrence bindings;
+- exact per-channel verification;
+- the bridge and prefix assembly contracts;
+- clock transforms;
+- resource reporting;
+- pre-claim refusals for a late LoRA, a mouth edit inside a prefix, and ControlNet.
+
+From the red-team review only these were taken: declared lowering dependencies, per-tag binding reports, refusal of per-grant seed or reference conflicts, and refusal of still collisions inside one chunk. The owner set the rest of that list aside for a later plan. Timed prompts and other community steering moved to [Plan 67](../67-h3-community-steering/plan.md).
 
 **Restrictions review.** On 18 November the owner asked for every restriction to be justified or dropped. Fable's review is in [research/restrictions.md](research/restrictions.md). Its Luna helpers were blocked by the session's permissions, so Fable did the research directly. It found most limits came from Astrid using one node of the already-pinned motion pack. All ten edits are accepted:
 - no image required;

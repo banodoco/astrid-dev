@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 13.5 days (phase 1, the core mechanisms: 6; phase 2, continuation, bridges and inserts: 5.5; phase 3, templates and skills: 2; CPU only, the live test comes after)
+**Estimate:** 15.5 days (phase 1, the core mechanisms: 7; phase 2, continuation, bridges and inserts: 6; phase 3, templates and skills: 2.5; CPU only, the live test comes after)
 
 **Waiting on:** Owner greenlight of scope, and Plans 59, 64 and 65.
 
@@ -64,13 +64,13 @@ Plans 64–66 are proven by compiling. The owner's live test comes after.
 4. **Templates:** a template is a request with named holes. It can be listed, shown, filled from `--set` values or a shot, written out, and submitted like any request.
 
 **Phases.**
-- **Phase 1 (core):** one public path and one resolved job; capabilities as lever kinds; the dry-run view; end-relative time and timed prompts; guides; exact stills at any frame; templates; both skills.
+- **Phase 1 (core):** one public path and one resolved job; capabilities as lever kinds; the dry-run view; end-relative time; guides; exact stills at any frame; templates; both skills.
 - **Phase 2 (continuation):** continuation, bridges and inserts by placement: a clip before, between or after generated time, through the pinned motion-context nodes. The captured continuation workflows are then deleted (D3). Git history keeps them.
 
 **Not in this plan. Do not build these:**
 - a GPU or live run of any kind (D1). The owner tests afterwards;
 - more than one continuation block per job, or any chain orchestration;
-- timed text prompts beyond serializing them into H3's own timed shot format (CC-9), an Event Curve tool, or any GPL node vendored into Astrid;
+- timed prompts, `phase` on guides or LoRAs, ControlNet, a curve-to-audio-guide tool, or per-actor binding work. These are [Plan 67](../67-h3-community-steering/plan.md). No GPL node is vendored into Astrid;
 - shot-plan schema changes, or automatic take recording on shots;
 - an endless-continuation skill, take lineage or continue-from-take;
 - variations or multi-pass chains in the core;
@@ -90,7 +90,7 @@ It adds the guide role, templates and the continuation port. Request identity wa
 
 Plans 59, 64 and 65 land first.
 
-**Phase 1** runs in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities, as lever kinds), CC-3 (the dry-run view), CC-9 (end-relative time and timed prompts), CC-4 (guides), CC-8 (exact stills at any frame).
+**Phase 1** runs in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities, as lever kinds), CC-3 (the dry-run view), CC-9 (end-relative time), CC-4 (guides), CC-8 (exact stills at any frame).
 
 **Phase 2** is CC-7a (prefix continuation; it first checks whether one full-canvas preparation can serve prefix, insert and bridge), then CC-7b (bridges) and CC-7c (inserts) in parallel, then CC-7d (deleting the captured workflows and the `continuation` flag). It starts after CC-3, not after the skill.
 
@@ -116,11 +116,13 @@ Plans 59, 64 and 65 land first.
 CPU tests prove each of these:
 
 **Phase 1**
-- `describe` lists lever kinds with their family, fields, defaults, params and limits; `range: [-2, end]`, `at: end` and a two-segment timed prompt resolve as written and show in the dry run.
+- `describe` lists lever kinds with their family, fields, defaults, params and limits; `range: [-2, end]`, `at: end` and `during: [-2, end]` resolve on each stream's clock and show in the dry run.
 - The public prompt-and-image invocation, a masked edit, a fixed-audio redub and Character Swap each go through preparation, build, composition and receipt via `compile_job`.
 - `branch_for` is gone, and a v1 request is refused with a message to write it as v2.
 - `describe --entry h3 --json` shows the same capabilities admission uses.
-- Unsupported pairs are refused, naming both items and a fix.
+- Unsupported pairs are refused, naming both items and a fix. A late LoRA, a mouth edit inside a continuation prefix and `role: control` are refused before claim, with no build.
+- Every kept or supplied span is byte-identical per channel in the decoded published file, including asymmetric stereo and off-by-one cases; the permission and strength masks are separate, and a vanished grant fails loudly.
+- The dry run reports each tag's actual binding, and each occurrence's retained frames, audio and resource estimate.
 - The dry run separates requested grants, effective latent influence and delivered ownership across the frame-4 boundary.
 - Guides bind at the right resolved index, including the last delivered frame on an off-lattice shot.
 - Exact stills at frame 0, an interior frame and the last frame each come out pixel-exact (frame 0 and frame 51 hold one frame; frame 61 and the last frame hold their four-frame chunk, clipped at the end), and the dry run shows each requested frame, chunk and hold.
@@ -132,7 +134,7 @@ CPU tests prove each of these:
 - The ported continuation matches the captured active path, apart from the listed differences.
 - It delivers the prefix exactly across the seam.
 - It compiles at 512×288 with three images and a speaker clip.
-- Clip A, a 63-frame generated gap and clip B compile to a bridge. A clip placed at frame 51 compiles to an insert, and an insert at frame 34 is refused.
+- Clip A, a 63-frame generated gap and clip B compile to a bridge, and unequal owners (120 and 90 frames, n = 39) give matching audio and video lengths. A clip placed at frame 51 compiles to an insert, and an insert at frame 34 is refused.
 - With the Character Swap adapter on, continuation and bridge graphs carry both LoRAs in the model chain.
 - The captured workflows and the `continuation` flag are gone.
 

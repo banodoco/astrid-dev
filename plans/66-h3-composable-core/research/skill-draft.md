@@ -44,7 +44,7 @@ A kind can also have its own settings under `params:`. `astrid generate describe
 | edit | Output | `edit[]` inside a placed item. Overlapping edits: the higher strength wins. |
 | guide | Context | `media[]` with `role: guide` |
 | reference | Context | `media[]` with `role: reference` |
-| prompt | Context | `prompt:`, either one string or a list of `{during, text}` for what happens when |
+| prompt | Context | `prompt:`, one string. Timed prompts, a list of `{during, text}`, come in Plan 67. |
 | LoRA | Process | `settings.loras[]`: `{file, strength, phase}` |
 | control | Process | `media[]` with `role: control`, `during`, `strength`, `phase`, and its own `params`, e.g. `params: {type: soft_edge, soft_edge: 0.4}`. A control carries another clip's structure or motion without its look, and is off outside its `phase`. |
 | settings | Process | `settings: {size: [1024, 576], seed, steps}` |
