@@ -25,14 +25,25 @@ On a synthetic timeline shaped like the owner's heavy one (profiled on 18 Novemb
 - every ordinary edit the editor can make saves: alone, twice back to back, ten in a burst, and the same drag repeated;
 - nothing vanishes (a failed drop keeps its placeholder; a dropped file is never silently lost);
 - a refusal happens only on a real clash, and shows Try again and Discard;
-- a save reaches "Saved" in about 2 s or better on the heavy fixture (it is 3.74 s on the real timeline and 0.22 s on one clip);
+- a save reaches "Saved" in about 2 s or better on the heavy fixture (a warm commit median through the Runtime was 3.74 s on the profiled timeline against 0.22 s on one clip; editor time to Saved is measured by the harness);
 - the plan deltas for Plans 63 to 65 and 18 (astrid-dev PR #880) are written from this live evidence.
 
 In scope: the fixture, the harness, the loop, recovery of the uncommitted work from the 18 November crash, and the fixes each round picks, in astrid-app, astrid-agent and astrid-runtime. Out of scope: the 300 ms target (Plan 64's), the shot-trim task (its branches are only listed in the [handover](handover.md)), and the [Plan 63](../../plans/index.md) to 65 designs themselves.
 
+## Terms
+
+- **realm:** one workspace's data store; a stack gets its own copy.
+- **head:** the latest accepted revision of a timeline; "head count" is how many a timeline has (it should be one).
+- **occurrence:** one placement of a clip on a track; a clip can be placed more than once.
+- **door:** the port a running stack's Runtime listens on for clients.
+- **sandbox project:** a project the harness creates for itself in the stack's realm; no scenario touches any other project.
+- **hold:** saving holds when an edit that should save does, within the target time, and keeps working under repeated or concurrent use.
+- **real clash:** another actor changed the same occurrence or field since this client's read head.
+- **time to Saved:** from the end of a gesture to the editor's Saved badge, measured by the harness in the browser.
+
 ## Existing work and decision
 
-The [reviews and profile](inputs.md#planning-evidence) say where the time goes (`validate_final_candidate`, about 57% of a save, with a pass run twice) and why edits are refused. The longer-term plans were costed from design reviews with no live loop on a heavy timeline, and the one-shot sweep of 14 edit kinds on 18 November missed the repeated-gesture failures. So this plan measures first, fixes the cheapest causes, and lets the evidence rewrite the longer plans. The 14-kind sweep harness is the seed; its first run saved 3 and refused 11, and it died when the disk filled.
+The [reviews and profile](inputs.md#planning-evidence) say where the time goes (`validate_final_candidate`, about 59% of a commit, with a pass run twice inside) and why edits are refused. The longer-term plans were costed from design reviews with no live loop on a heavy timeline, and the one-shot sweep of 14 edit kinds on 18 November missed the repeated-gesture failures. So this plan measures first, fixes the cheapest causes, and lets the evidence rewrite the longer plans. The 14-kind sweep harness is the seed; its first run saved 3 and refused 11 of the 14 scenarios that completed, and then crashed when its browser closed (the disk was nearly full).
 
 ## Sequence and readiness
 

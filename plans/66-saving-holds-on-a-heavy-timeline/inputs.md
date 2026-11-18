@@ -6,7 +6,7 @@
 
 **Scope decision:** The owner asked on 18 November 2026, in the Release 14 Lead's session, for this loop: a heavy generated timeline, live tests of every edit, a strategist consulted each round, optimization, and updates to the saving plans from what the loop finds. Codex does the work; the coordinator makes the judgment calls. The owner did not choose the plan's number, title or card list; those are the planner's draft. Source: the owner's message in that session, quoted in the task brief that created this pack (not otherwise recorded).
 
-**Prior art:** The 14-kind sweep and its profiler, 18 November: [results.jsonl](evidence/results.jsonl) (3 saved, 11 refused), [log](evidence/sweep-loaded.log), [commit profile](evidence/sonnet-commit-profile-r14.md) (about 57% of a 3.74 s save is `validate_final_candidate`, a doubled pass inside; 0.22 s on one clip). Design reviews that costed Plans 63 to 65 and 18 from reading, not from a live loop: [final recommendations](evidence/fable-final-recommendations.md), [commit proof fit](evidence/fable-commit-proof-fit.md), [end-state review](evidence/fable-end-state-review.md). The state of everything on the crash day: [handover facts](evidence/handover-facts-20261118.md) and [QUEUE](evidence/QUEUE.md). The seeded harness is on astrid-app `release/14/plan-66` under `scripts/save-loop/`; the profiler helpers `prof_run.py` and `wall_run.py` could not be found on disk, so the profiling in SL-0 and SL-3c is redone from the report.
+**Prior art:** The 14-kind sweep and its profiler, 18 November: [results.jsonl](evidence/results.jsonl) (3 saved, 11 refused), [log](evidence/sweep-loaded.log), [commit profile](evidence/sonnet-commit-profile-r14.md) (about 59% of a 3.74 s warm commit is `validate_final_candidate`, a doubled pass inside; 0.22 s on one clip). Design reviews that costed Plans 63 to 65 and 18 from reading, not from a live loop: [final recommendations](evidence/fable-final-recommendations.md), [commit proof fit](evidence/fable-commit-proof-fit.md), [end-state review](evidence/fable-end-state-review.md). The state of everything on the crash day: [handover facts](evidence/handover-facts-20261118.md) and [QUEUE](evidence/QUEUE.md). The seeded harness is on astrid-app `release/14/plan-66` under `scripts/save-loop/`; the profiler helpers `prof_run.py` and `wall_run.py` could not be found on disk, so the profiling in SL-0 and SL-3c is redone from the report.
 
 **Approach:** Measure first and fix by cause, rather than build the longer designs on estimates. A loop plan (a known end state, tasks from each live round) is the smallest form: three template files, a few setup cards and one standing card, run by the [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md). Alternatives rejected: another one-shot sweep (it missed repeated gestures); starting Plans 63 and 64 first (the same costing gap); a fixed card list (the fixes are not known). The stop-gap speed target is about 2 s; 300 ms stays Plan 64's.
 
@@ -16,7 +16,10 @@
 
 **Review rounds:** The owner's standing preference: reviews at the very end, up to five advisor rounds (review, fix, review), no per-step gates. The strategist's per-round advice inside the loop is evidence, not a review round.
 
-**Run start:** Pending — The owner has asked for the handover, so no separate go is needed. Next: the coordinator records the date, the cards it covers (SL-0 to SL-3 first), its own session and what it may do without asking when it starts.
+**Run start:** The owner's go is their own message in the main session on 18 November 2026: "write like basically a handover thing for this … make sure that everything is pushed to like a proper release-14 branch … it ultimately should just be like a plan within Astrid-dev that I'm able to give to another machine and they're able to do it … we're going to use Codex for most of the heavy lifting while it just acts as the coordinator, you know, fixing the stuff and making judgment calls on it."
+- **Accountable:** the coordinator session that claims the plan on the new machine; it records its session id in the `Owner` line of [plan.md](plan.md) when it starts.
+- **May, without asking:** open and merge PRs into `release/14/plan-66` in all three repositories after focused proof; add an empty-realm option to the release script on App `release/14/plan-66` (and say so in the PR, for Plan 61); dispatch workers; fix the docs of astrid-dev PR #880 (renumber, Approach lines).
+- **Needs the owner:** anything into `release/14/main` or product `main`; publishing anything; touching any live install or the owner's timelines; paid spend. Plan 66 reaches `release/14/main` only through the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md), on the owner's go.
 
 ### Heavy timeline shape
 
@@ -35,12 +38,24 @@ Measured read-only on 18 November 2026 from a copied Release 14 realm (see the d
 | Revisions / commit publications | 13 document revisions; 18 publications; 1 head; timeline version 18 |
 | Side tables | 46 project shots; 237 media transcript documents (not in the timeline document) |
 
-**Unexplained discrepancy (not the spec):** the 18 November profile reports 616 clips and a document of about 2.6 MB for the heavy timeline; the copied realm's version of it has 8 clips and 140 KB. The copy may have been read from a different timeline or state. The fixture's primary target is the profiled shape, measured live through the stack's API; the copy's table above sets only the asset mix ratios and the track layout.
+**Discrepancy (not the spec):** the 18 November profile reports 616 clips and a document of about 2.6 MB for "Almost Ready (trial v2)"; the copied realm's "Almost Ready" has 8 clips and 140 KB. The copy probably read a different timeline. The fixture's primary target is the profiled shape, measured live through the stack's API; the table above sets only the asset mix ratios and the track layout.
 
 ## Owner decisions
 
 - **D1 Release.** Decided, 18 November 2026: the owner asked in the Release 14 Lead's session for this work on a proper Release 14 branch, as a plan another machine runs. Release 14; listed in [releases/14.md](../../releases/14.md).
+- **D9, D10, D14, D15** are open and carried from the [QUEUE](evidence/QUEUE.md); none is decided here:
+  - **D9** which release carries Plans 63 to 65 and 18: Release 15 recommended ([final recommendations, 5.4](evidence/fable-final-recommendations.md)).
+  - **D10** corpus data: synthetic recommended; the shadow-applier experiment reads a local copy of real history and commits none of it (same file).
+  - **D14** persist `file_identity` ([QUEUE](evidence/QUEUE.md), item 13). Its full wording is not recorded, and the QUEUE elsewhere calls it "cold start": confirm what it means before asking.
+  - **D15** what a refused change looks like, the one most affecting this plan: "park it with everything behind it, with Try again and Discard" in the [final recommendations](evidence/fable-final-recommendations.md); "remove and list, or leave visible and marked" in the [QUEUE](evidence/QUEUE.md). The recommendations differ; the loop's refusals are shown as Try again / Discard until the owner decides.
 - **D2 Review rounds.** Decided as the owner's standing preference (see Review rounds above): up to five advisor rounds at the very end.
+
+## The owner's wider goals
+
+- Humans and agents edit the same timelines.
+- Fast saving, aiming at about 300 ms in the later plans.
+- Extensibility for agents without touching the core.
+- As elegant and minimal as possible.
 
 ## Source identities
 
