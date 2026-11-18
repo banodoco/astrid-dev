@@ -8,6 +8,7 @@
 
 - DS-1 pinned `test_spec.py` identity and schema assertions passed at `6dfb3542` and failed at `58a2b1bf`. Repair `e75d9d78` restores both with tests unchanged (148 passed, 4 deselected); the pinned schema cannot admit output.size without a contract ruling.
 - REVIEW: DS-2 conform.py and its automatic-conform and remote-handoff proofs, plus DS-3 non-16:9 masked-edit proof, wait on Plan 59 landing in release/14/main; rerun those proofs and finish size integration then. DS-3 adds base-only non-16:9 coverage in test_static_regions.py.
+- REVIEW: DS-4 card estimates ~423 GB for 16384×16384×141 frames; 8-bit RGB actually requires 113,548,034,048 bytes (~113.55 GB decimal). Report the format and units, and leave target resource qualification unknown absent evidence.
 - REVIEW: two sources with distinct offsets: prove in Plan 66 CC-1.1 and CC-10; current base admits only one timeline source. Independent jobs at two offsets passed.
 - Schema admission for `mask.canvas` is blocked by the same pinned schema hash as `output.size`.
 - REVIEW: DS-3 preserves existing direct static-region resolver semantics required by `test_static_regions.py:43-49,60-67,99-101`; compiler opts into authored canvas and still-image scaling, with separate user-path proof.
