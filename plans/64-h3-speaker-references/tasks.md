@@ -2,28 +2,94 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-**Task ids:** SR-1 through SR-6.
+**Task ids:** SR-1 through SR-7.
 
-**Critical path:** SR-1 → SR-2 → parallel SR-3 and SR-4 → SR-6 → R. SR-5 starts when the executable examples from SR-2/SR-3 exist and also feeds R. The slower sibling bounds the finish.
+**Critical path:** SR-1 → SR-2 → SR-3 → (SR-4, SR-5, SR-6 in parallel) → SR-7 → R.
 
-**Test inventory:** Card filenames below resolve under `tests/packs/h3_av/` unless a full path is given. Run the named files from the Agent checkout with the pinned astrid-dev worker command `env/agent-pytest.sh`. At dispatch record the actual release and dependency SHAs, owner decisions, authorized scope and spend, and reviewer binding. Re-check fixture and source anchors against the code at dispatch. Product changes belong in astrid-agent. SR-1/SR-6 requests, comparisons and receipts belong in astrid-dev under `plans/64-h3-speaker-references/evidence/`.
+**Test inventory:** Bare test filenames are under `tests/packs/h3_av/` in astrid-agent. Run them from the Agent checkout with the pinned worker command `env/agent-pytest.sh <paths>`. Run only the files a card names, not the whole suite. Product paths are under `astrid/packs/h3_av/` unless given in full. Cards name functions, not line numbers: find each function with `grep -n` at dispatch. Every task is CPU only (D2). No task claims a machine, rents a GPU or spends money.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
-| SR-1 Compare voice with and without a speaker reference | N | Scope and budget settled | Plain VibeComfy route, corrected lens image, fixed speaker clip and dialogue in prompt, audio VAE connected. Record clip identity, model, seed, duration, settings, time and peak VRAM on RTX 5090. | Compare the same transcript and matched settings against a matching receipt for the same guided image and prompt without the speaker clip, or run both jobs within the combined $1.50 spike ceiling. If that cannot cover both, obtain a revised budget before starting. Owner listens to reference and both outputs and records the D1 verdict. Include one take with an exact start image (timeline image at frame 0) to judge how naturally frame 1 continues. | [ ] |
-| SR-2 Preserve typed occurrences, derive passes and lower effective node inputs once | X | SR-1 (proof run; D1 decided: build regardless) | `astrid/packs/h3_av/shared/` request_v2.py normalization, spec.py conversions and sampling passes, prepare.py resolved-media validation, compile.py source-free/masked/Character Swap, generation.py shared builder. Own the interface described below and provide executable example requests for both recipes. | `test_spec.py`, `test_native_v2_contract.py`, `test_request_contract.py`, `test_generation.py`, `test_native_masked_edit.py`, `test_edit_inputs.py`, `test_character_swap.py`, `test_character_swap_cpu_boundary.py`, `test_compile_generalized.py`. Exercise public request → preparation → graph and the fixture changes below. | [ ] |
-| SR-3 Generate masked audio and preserve sound outside its authorized span | X | SR-2 | compile.py masked audio selection, replacement-only reads at 621–653 and 672–677 and capability records, generation.py granular denoise strength, compose.py audio segment selection. Select strength 1 for unguided generated audio. Keep the fixed clip's existing splice, one-sample tolerance and fallback. | `test_native_masked_edit.py`, `test_edit_inputs.py`, `test_handle_build_compose.py`. In a lossless partial-span fixture put distinct source tones before and after new speech. Decode PCM and picture, verify kept samples on both sides and kept pixels outside the mouth mask, and verify generated audio/video inside. Exercise the legacy fixed-clip digest. | [ ] |
-| SR-4 Surface the effective rows in dry run and settled result | N | SR-2 | Reuse compilation.json, declared as h3.compilation by H3 workflow hooks.py, and stages.py _sealed_plan. Carry these rows with the settled generation payload through astrid/sdk/results.py _reconstruct_generation_result, consumed by astrid/sdk/generation.py. Independent of optional settings work. | `test_generation.py`, `test_parent_receipt_readback.py`, `tests/sdk/test_generation_result_refs.py`. Read the same mixed request through dry run and real result reconstruction from a settled CPU fixture. Compare every occurrence, effective tag, trim and slot to the graph and assert the receipt still reads after scratch cleanup. | [ ] |
-| SR-5 Edit the admitted examples and route boundaries | T | SR-2, SR-3 executable examples | `astrid/packs/h3_av/docs/SKILL.md` and `docs/recast-scene/SKILL.md` in the same pack. Document both recipes, D3 wording, prompt dialogue and remaining node controls. Synchronize width/height with DS-5. | `test_skill_examples_admitted.py` exercises the documented requests, `tests/test_pack_declared_skills.py` verifies both skill declarations. | [ ] |
-| SR-6 Verify both 02c recipes on the approved worker | N | SR-3, SR-4 | Two jobs, combined ceiling $1.50. Use SR-1's speaker, line and comparison settings. Save requests, receipts, transcript, reviewed cut/time, mouth mask and source comparison. | Check exact spoken words and owner voice recognition in both outputs. Inspect lenses and mouth motion. For the masked shot use the same mask and timed cut for picture comparison and verify the audio witnesses on both sides of the window. | [ ] |
-| R Review rounds (at most 1 recommended, pending owner decision) | S | SR-5, SR-6 | Read-only integrated result, high-judgment completion reviewer (Astra or Opus). | Review the owner's decisions, CPU and live evidence on recorded revisions. Findings become rows R1.<n> under the [run contract](../../skills/shared/run-contract.md) and close before completion. | [ ] |
+| SR-1 Carry typed reference occurrences through the request and spec | X | Owner scope | `shared/request_v2.py` normalization; `shared/spec.py` forward and reverse conversion. Details below. | `test_spec.py`, `test_native_v2_contract.py`, `test_request_contract.py`. One round-trip fixture with a guided fixed replacement clip, a separate unguided audio-generation interval and a separately named conditioning clip. Assert each occurrence keeps its identity, modality, trim, paired-soundtrack choice and `use`. Assert two trims of one asset stay two occurrences. Assert today's image-only request bytes and digests are unchanged. | [ ] |
+| SR-2 Add one limits table and refuse over-limit references before claim | N | SR-1 | A `LIMITS` table in `shared/generation.py` beside `IMAGE_REFERENCE_CAPACITY` (which then reads from it); measurement in `shared/prepare.py`; existing hand-written slot refusals in `shared/compile.py` rewritten to read the table. Details below. | `test_edit_inputs.py`, `test_real_media_preflight.py`, `test_generation.py`. Boundary-test every table entry at the limit and one past it. Also: clips that are each valid but sum past 15 seconds; unreadable metadata; a trim past the end of the file; a requested soundtrack that's missing; a silent video accepted with audio off. Compare node slot counts and size rules to the cached node schema. | [ ] |
+| SR-3 Lower every route once through one `GenerationInputs` record | X | SR-2 | `shared/generation.py` (`GenerationInputs`, `build_generation_workflow`); `shared/compile.py` source-free, masked and Character Swap compilers. Removes the source-free v2→v1 translation. Details below. | `test_generation.py`, `test_native_masked_edit.py`, `test_character_swap.py`, `test_character_swap_cpu_boundary.py`, `test_compile_generalized.py`, `test_edit_inputs.py`. Compile the same mixed image/video/standalone-audio request on source-free and masked routes. Inspect each node input and prompt tag. Test stale or forged request tags, and a prompt naming a tag no row has. Compare today's image-only source-free bundle, masked digests and Character Swap bindings with their fixtures. | [ ] |
+| SR-4 Make a frame-0 timeline image the exact first frame | N | SR-3 | `shared/request_v2.py` admission of `role: timeline` images; `shared/compose.py` one frame-0 paste step after source-free generation. Details below. | `test_handle_build_compose.py`, `test_native_v2_contract.py`. Compose a source-free request with a frame-0 timeline image over a visibly different stand-in clip. Decoded frame 0 equals the prepared still pixel for pixel; frame 1 equals the stand-in; the soundtrack is the stand-in's. A timeline image at frame 1 is refused with the message given below. | [ ] |
+| SR-5 Generate new audio inside a masked edit's window and keep source audio outside it | X | SR-3 | `shared/compile.py` masked-audio selection; `shared/generation.py` `audio_strength` binding; `shared/compose.py` audio segment selection. Details below. | `test_native_masked_edit.py`, `test_edit_inputs.py`, `test_handle_build_compose.py`. Lossless partial-window fixture with distinct tones before and after the window and a stand-in generated clip. Decoded PCM before and after the window equals the source; inside equals the stand-in. Picture outside the mouth mask equals the source. The existing fixed-clip digest is unchanged. | [ ] |
+| SR-6 Show the same reference rows in the dry run and the settled result | N | SR-3 | `compilation.json` (declared as `h3.compilation` by the H3 workflow `hooks.py`); `shared/stages.py` `_sealed_plan`; `astrid/sdk/results.py` `_reconstruct_generation_result`, read by `astrid/sdk/generation.py`. | `test_generation.py`, `test_parent_receipt_readback.py`, `tests/sdk/test_generation_result_refs.py`. Read one mixed request through the dry run and through result reconstruction from a settled CPU fixture. Every row (occurrence, tag, trim, slot) matches the graph, and still reads after scratch cleanup. | [ ] |
+| SR-7 Document both recipes | T | SR-3, SR-4, SR-5 | `docs/SKILL.md` and `docs/recast-scene/SKILL.md`. Two recipes: start image plus speaker clip; mouth mask plus speaker clip. State the limits from the table, the frame-0 rule and that room tone inside the window is regenerated. | `test_skill_examples_admitted.py` admits each documented request. `tests/test_pack_declared_skills.py` passes. | [ ] |
+| R Review rounds (at most 1, recommended) | S | SR-1 through SR-7 | Read-only integrated result; high-judgment reviewer (Astra or Opus). | Check the CPU proofs above against the plan's completion list and owner decisions. Findings become rows `R1.<n>` under the [run contract](../../skills/shared/run-contract.md) and close before completion. | [ ] |
 
-**SR-2 conversion.** Use one frozen `GenerationInputs` record in shared/generation.py with prompt, frames, resolved size, ordered reference rows, optional source edit carrying its mask artifact, strength and audio mode, and optional adapter. Source-free, masked and Character Swap all construct it through one lowering from `canonical_spec`. The no-source spec already emits generate at spec.py:573–575. Preserve adapter bindings and existing sampling controls in the record as needed. `build_generation_workflow(inputs)` takes only this record. This is the single composition point for new pieces. Test all three public routes through it. Apply the timeline-image admission rule in [D3](inputs.md#owner-decisions) and test the diagnostic. Extend spec.py's forward conversion at 493–508 and 539–572 and reverse normalization at 290 and 328–333, including sampling_passes and sampling_request_document. At normalization, resolve guide bindings and classify each audio occurrence exactly once as `use: conditioning | replacement`. A clip named by a replacement edit has replacement use. Reject conflicting uses of one occurrence and allow separate occurrences of one asset. Preserve the derived classification outside legacy identity bytes and carry it through both spec conversions. Spec operations, file counting, slots and tags consume that classification. Carry occurrence identity, modality, trim, paired-audio choice and guide selection through both directions. In one round-trip fixture include a guided fixed replacement, a separate unguided audio generation interval and a separately named conditioning clip. Exercise each supported audio mode through the public compile path. Preserve the existing single modifying audio span per graph and the multi-region agreement on image guides, interval, seed and strength at compile.py:549–554. Distinct trims of the same asset remain distinct occurrences. Remove the source-free v2→v1 translation, retaining common bundle emission in _compile_generation at 1235 onward.
+## Terms
 
-**SR-2 admission.** Before machine claim, prepare.py measures the resolved file bytes for each conditioning occurrence with the existing probe and per-stream coverage routines used in compile.py:628–653. Require decodable images, measurable selected streams, trim endpoints within actual coverage, the clip duration and per-modality totals in the shared table. A selected video contributes its trim to video and, if enabled, its paired track to audio. Count each supplied reference occurrence once toward the conditioning file limit, including repeated uses with different trims. The paired track uses its video's file, and fixed replacement audio stays on its separate edit path. SR-2 or DS-1, whichever lands first, creates one limits table beside IMAGE_REFERENCE_CAPACITY in shared/generation.py. The later plan consumes it. It defines builder image/video/standalone-audio capacities 9/3/3, Character Swap image/video capacities 1/1, continuation image/video capacities 2/0, 2–15 seconds per clip, 15 seconds per modality, 12 conditioning files and the inclusive 32–16384 pixel range per axis on a 32-pixel grid. Compare node-exposed slots (including matched soundtracks) and axis constraints to the cached node schema. Boundary-test the model and route policies separately. Derive admission and refusal text from table entries, including the masked and continuation image-slot checks near compile.py:612 and 1105. Exercise each boundary and overflow, including valid individual clips whose sum exceeds 15 seconds, unavailable metadata, EOF, requested-but-missing soundtrack, and a silent video accepted with audio disabled.
+- **Occurrence:** one use of one asset in the request. Two trims of the same file are two occurrences.
+- **`use: conditioning | replacement`:** set once per audio occurrence at normalization. An audio clip named by a replacement edit is `replacement`; every other audio clip is `conditioning`. One occurrence with both uses is refused. Every later step reads this field and never recomputes it.
+- **`audio_strength`:** the masked-edit node's single audio value for the whole clip. `0` keeps the source audio latent unchanged (today's hard-coded value); `1` regenerates all of it. There is no in-between value in this plan and no time mask on it. The time window comes from composition (SR-5).
+- **Effective rows:** the references in the order the node actually receives them, which fixes their prompt tags (`<Picture n>`, `<Video n>`, `<Audio n>`).
 
-**SR-2 slot proof.** Derive conditioning rows once from effective node order, preserving order within each modality. Enabled video soundtracks get audio tags before standalone clips even if the standalone occurrence came first in the request. A fixed replacement consumes no conditioning slot or tag. Reject a prompt naming any Picture, Video or Audio tag absent from the effective rows. Preserve normalized model_tags solely for digest compatibility. No downstream consumer reads the request’s model_tags or per-occurrence model_tag. Replace the adapter’s hard-coded tags at compile.py:987 with effective-row lookups. Test stale/poisoned request tags across all three routes, the adapter record and readback, and an absent prompt tag. Bind standalone ports as AUDIO and reuse the rows for graph, prompt-facing record and receipt. Record the requested trim and the effective video frame count after target-length cap and frame-grid adjustment. Compile the same mixed image/video/standalone request on both supported routes. Confirm source-free requires an image and Character Swap still requires exactly one image and one video. Compare baseline image-only source-free bundle members, masked digests and adapter bindings. When integrated with DS-3, run the mixed masked case at 768×448 and the unchanged default image-only case on that same CPU head.
+## SR-1 detail
 
-**SR-2 existing oracles.** In test_edit_inputs.py:147 replace the image-only video-guide refusal with selection of a separately named audio conditioning occurrence. Keep the invalid fixed-audio guide refusal at 169. Replace 237 and 247 with affirmative conditioning and three-image masked cases. Retain fixed-audio and image-only fixtures. Keep the captured continuation's two-slot refusal in test_compile_generalized.py:149. Re-check these lines at dispatch.
+- At normalization, give each reference occurrence its modality, trim, paired-soundtrack choice and, for audio, its `use`.
+- Carry all of these through `spec.py` in both directions, including `sampling_passes` and `sampling_request_document`.
+- Keep `use` out of the request's identity bytes, so today's digests don't change.
+- Keep the request's `model_tags` field as is, only so digests don't change. No new code reads it (SR-3 replaces every reader).
+- Keep the rules that exist today: one audio-changing window per graph, and the agreement multi-region edits already need on image guides, interval, seed and strength.
 
-**SR-2 exact start image.** A `role: timeline` image with `at: {frame: 0}` lowers to a frozen frame 0, with no new node: regeneration starts at frame 1, and composition writes the exact prepared pixels at frame 0, reusing the masked edit's frozen-frame and paste-back path. A timeline image at any other frame is refused with a clear message (later: `MiniMaxH3AddGuide`). Proof: `test_native_masked_edit.py` and `test_handle_build_compose.py` compile and compose a source-free request with a frame-0 timeline image; decoded frame 0 equals the prepared image pixel for pixel. See [research/first-frame.md](research/first-frame.md).
+## SR-2 detail
+
+One table, in one place. Plan 65 adds no second copy:
+
+| Entry | Value |
+| --- | --- |
+| Builder images / videos / standalone audio | 9 / 3 / 3 |
+| Character Swap images / videos | 1 / 1 |
+| Continuation images / videos | 2 / 0 |
+| Per clip | 2–15 seconds |
+| Per modality total | 15 seconds |
+| Conditioning files | 12 |
+| Width and height | 32–16384, multiples of 32 (Plan 65 reads this) |
+
+- Before claim, `prepare.py` measures each conditioning occurrence's real file with the existing probe and per-stream coverage routines in `compile.py`.
+- Each supplied occurrence counts once toward the 12-file limit, including repeats with different trims.
+- A video's soundtrack counts toward audio time but uses its video's file.
+- Fixed replacement audio counts toward nothing here.
+- Every refusal message names the table entry it broke.
+
+## SR-3 detail
+
+`GenerationInputs` is a frozen dataclass in `shared/generation.py` with exactly these fields. Add a field only when a test needs it, and name that test in the PR:
+
+- `prompt`, `frames`, `size` (default 1024×576 until Plan 65);
+- `references`: the effective rows;
+- `source_edit`: optional; the mask artifact, strength and audio mode;
+- `adapter`: optional; Character Swap's bindings;
+- `sampling`: today's sampling controls, passed through unchanged.
+
+Rules:
+- All three routes build the record from `canonical_spec`, and `build_generation_workflow(inputs)` takes only the record.
+- Derive the rows once from the node's input order, keeping the request order within each modality.
+- A video's enabled soundtrack takes its audio tag before any standalone clip, even if the standalone clip came first in the request.
+- Replace Character Swap's hard-coded tags in `compile.py` with lookups in the rows.
+- Refuse a prompt that names a tag no row has.
+
+## SR-4 detail
+
+- A `role: timeline` image with `at: {frame: 0}` is admitted on the source-free route only.
+- Generation runs as it does today.
+- Composition then writes the prepared still over decoded frame 0. Reuse the existing `compose.py` encode path. Add one paste step, not a new compositor.
+- Any other frame is refused with: `timeline images are only supported at frame 0`.
+- No new node and no `MiniMaxH3AddGuide`. See [research/first-frame.md](research/first-frame.md).
+
+## SR-5 detail
+
+- A masked edit that asks for new audio, with no replacement clip, sets `audio_strength` to 1. Today it's refused.
+- Composition keeps source audio outside the edit's time window, using the existing per-stream audio segments.
+- The fixed-clip path keeps strength 0, its existing splice, its one-sample tolerance and its fallback.
+
+## Existing tests that change
+
+- `test_edit_inputs.py`:
+  - the image-only video-guide refusal becomes selection of a separately named audio conditioning occurrence;
+  - the two "only two image slots" masked refusals become affirmative cases: one conditioning clip, three images;
+  - the invalid fixed-audio guide refusal stays.
+- `test_compile_generalized.py`: the captured continuation's two-slot refusal stays.
+- All other fixed-audio and image-only fixtures stay.

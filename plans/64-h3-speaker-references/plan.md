@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 3 days (2 for the shared builder, normalization and compatibility work, 1 for proof and docs)
+**Estimate:** 2.5 days (CPU only; the live test is separate and comes after)
 
 **Waiting on:** Owner greenlight of scope.
 
@@ -18,24 +18,46 @@
 
 ## Outcome and scope
 
-A creator supplies dialogue in the existing prompt and an identified speaker clip. Source-free generation animates a still image: guided by it as a reference, or starting exactly on it when it's given as a frame-0 timeline image. A masked edit keeps the source picture outside the mouth mask and source audio outside the authorized audio interval. Inside that interval H3 generates the new line. Room tone inside that interval is regenerated, and the first frame is guided, not pinned. Both are model behaviour, recorded in [inputs.md](inputs.md#owner-decisions).
+A creator writes the new line in the prompt and supplies an identified speaker clip: a video with its soundtrack, or a standalone audio clip. Two routes use it:
 
-Both routes accept image, video and standalone audio conditioning within the preparation limits in SR-2. Source-free still requires an image. Character Swap reuses the lowering within its one-image, one-video adapter contract. Captured continuation retains its two image slots. Continuation moves onto the builder under [#866](https://github.com/banodoco/astrid-dev/issues/866), including small-size continuation for [#885](https://github.com/banodoco/astrid-dev/issues/885). An exact start image is in scope: a timeline image at frame 0, lowered to the frozen-frame mechanism H3 already uses (regeneration starts at frame 1, and composition supplies the exact frame-0 pixels), so no new node is needed ([research](research/first-frame.md)). Deferred work also includes `MiniMaxH3AddGuide` as soft, time-positioned conditioning (image, clip or audio at any frame; no pixel guarantee), fixed audio as a timeline audio item, dialogue lines as a v2 piece bound to speaker rows, and removing model_tags from the digest through an identity migration. A second model is deferred. Only the shared limits table is in scope for that extension. Plan 65 defers moving-mask scaling.
+- **Source-free:** H3 animates a still image. The still is either a reference that guides the picture, or a `role: timeline` image at frame 0, which becomes the exact first frame.
+- **Masked edit:** the source picture is kept outside the mouth mask. Source audio is kept outside the edit's time window. H3 generates the new line inside it.
+
+Both routes accept image, video and standalone audio references, within the limits table in SR-2. Source-free generation still requires an image. Character Swap keeps its contract: one image and one video. Captured continuation keeps its two image slots.
+
+**Not in this plan. Do not build these:**
+- a GPU or live run of any kind (D2). The owner tests afterwards;
+- several speakers bound to their own voices;
+- copying the original room tone back under the new line;
+- `MiniMaxH3AddGuide`, timeline images at any frame other than 0, or any new Comfy node;
+- fixed audio as a timeline audio item, or dialogue lines as their own request piece;
+- removing `model_tags` from the request digest;
+- moving continuation onto the shared builder ([#866](https://github.com/banodoco/astrid-dev/issues/866));
+- a second model. Only the shared limits table is designed to extend to one.
 
 ## Existing work and decision
 
-The shared generation builder already binds a video with its soundtrack for Character Swap. Extend that builder and the existing canonical spec to preserve typed reference occurrences through the public request, preparation and compilation. Keep the existing compositor as the owner of edit intervals. The independent critique, source revision and outstanding owner decisions are in [inputs.md](inputs.md#planning-evidence).
+The shared generation builder (`build_generation_workflow`) already binds a video with its soundtrack for Character Swap. This plan adds one lowering in front of it. Every route builds the same `GenerationInputs` record, and the builder takes only that record. The existing compositor keeps ownership of edit intervals. The planning critique, the source snapshot and the owner decisions are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-After scope and spend approval, SR-1 compares the speaker clip to a matched no-reference baseline. The owner judges recognisability. SR-2 establishes the request, spec, pass and builder contracts. SR-3 and SR-4 then proceed in parallel. The executable recipes precede editorial work in SR-5. SR-6 exercises both recipes on shot 02c. Both SR-5 and SR-6 feed final review. Budget and dispatch details are in [tasks.md](tasks.md).
+SR-1 carries typed references through the request and spec. SR-2 adds the limits table and admission. SR-3 lowers everything once into the builder. SR-4 (exact start image), SR-5 (masked audio) and SR-6 (dry-run and result rows) then run in parallel. SR-7 documents the recipes once SR-3 to SR-5 work. Review comes last. Details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
-SR-2 supplies one ordered set of effective reference inputs to the shared builder, compilation record, dry run and result receipt. Each row identifies the occurrence, requested trim, effective input and prompt tag. Fixed replacement audio retains its own edit binding.
+SR-3 supplies one ordered list of effective reference rows to the builder, the compilation record, the dry run and the result receipt. Each row names the occurrence, its requested trim, the effective input and its prompt tag. Fixed replacement audio keeps its own edit binding and gets no row.
 
-Coordinate with [Plan 65](../65-h3-dynamic-size/plan.md) on normalization, the source-free branch, masked and adapter calls, the builder and both skills. SR-2 owns removal of the v2→v1 translation. Prefer SR-2 first, then rebase DS-3 onto its builder interface. If size lands first, retain its public source-free size proof through SR-2. On the integrated head compile a mixed-reference masked request at 768×448 and compare the default image-only behavior with the baseline on CPU. Reconcile the exposed width/height inventory in SR-5 and DS-5. Each plan has its own live proof.
+**Order with [Plan 65](../65-h3-dynamic-size/plan.md):** this plan's SR-1 to SR-3 land first. Plan 65 builds on the `GenerationInputs` record and limits table they create, and adds the size field to them. Plan 65 does not create either.
 
 ## Completion
 
-For both 02c recipes the transcript contains exactly “tuning workflows by hand” and the owner recognises Morpheus against the fixed reference. Inspect the corrected lenses in the guided shot and the mouth motion inside the mask in the kept shot. Compare decoded picture outside the mask and source audio on both sides of a partial edit to the prepared source. SR-4 must show the same effective rows in the dry run and the settled result. Out-of-limit and unmeasurable conditioning inputs fail before claim. Existing image-only bundles, masked digests, fixed audio and Character Swap bindings pass their compatibility fixtures. SR-6 and the integrated review complete the plan. This proves one speaker, shot and GPU type. Release is a separate decision.
+CPU tests prove each of these:
+
+- A mixed image, video and standalone-audio request compiles on both source-free and masked routes. Each reference reaches the right node input with the right prompt tag.
+- Over-limit and unmeasurable references are refused before a machine is claimed, with the limit named in the message.
+- In a masked edit with a partial time window, decoded audio before and after the window matches the source sample for sample. Decoded picture outside the mouth mask matches the source pixel for pixel.
+- With a frame-0 timeline image, decoded frame 0 equals the prepared still pixel for pixel.
+- The dry run and the settled result show the same reference rows.
+- Existing image-only bundles, masked digests, fixed-audio splices and Character Swap bindings match their current fixtures.
+
+Review then closes the plan. Voice likeness and lip sync are judged in the owner's live test afterwards. That test is not part of this plan.
