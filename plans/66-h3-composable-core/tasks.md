@@ -187,10 +187,10 @@ Segment mapping for continuations (delivered span to sampled segment, guides ins
 
 **Resources (CC-3, Plan 64 SR-2, Plan 65 DS-4).** For each selected occurrence, report:
 - the requested trim, bound file and tracks;
-- the actual retained picture frames and audio duration (a 48-frame reference can bind 39 visual frames and its whole soundtrack);
+- a conservative, labelled retained-picture-frame estimate from metadata in the dry run, with the actual count unknown until decoding; the settled result and receipt report the actual retained picture frames and audio duration (a 48-frame reference can bind 39 visual frames and its whole soundtrack);
 - slot, tag and effective size.
 
-Bind standalone audio ports as AUDIO. Estimate raw RGB bytes and target, reference and guide rows without decoding, and bound source loads to the windows needed before resizing. At 16384×16384 a 141-frame job is about 423 GB of raw frames: that is a tensor-size calculation, not a memory measurement. Separate schema-valid, resource-qualified and observed. Apply the node's length limit (3592 is the largest 5 + 17k value within its 3600 maximum) to the actual bound input.
+Bind standalone audio ports as AUDIO. Estimate raw RGB bytes and target, reference and guide rows without decoding, and bound source loads to the windows needed before resizing. Admission refuses a metadata bound clearly over the 15-second clip or modality limit and warns near a boundary; it does not require a provenance-controlled or otherwise restricted video subset. At 16384×16384 a 141-frame job is about 423 GB of raw frames: that is a tensor-size calculation, not a memory measurement. Separate schema-valid, resource-qualified and observed. Apply the node's length limit (3592 is the largest 5 + 17k value within its 3600 maximum) to the actual bound input.
 
 ### Functional additions refusals
 
