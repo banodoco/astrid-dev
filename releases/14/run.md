@@ -199,7 +199,8 @@ If a check fails, say which manual step I must do instead of promising automatio
 
 1. **Plan 55 Windows target.** The measured hosted-Windows floor is 226–284 ms against a 0.1 s target. Recommended: keep the target for a real machine, and decide after LS-3 names the cost.
 2. **Structure ceiling (Plan 39 GL.2, #647).** The Agent structure check fails on base with 102 findings against a 13-entry baseline. Recommended: freeze today's findings as a ceiling that may only fall, as D10 did for skip gates, and cut wave-2 cards to bring it down. Until then, R14-P39-07 lands with that check red only on the inherited findings.
-3. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
+3. **`ASTRID_GATE_OWNERS`** (an astrid-agent repository variable). R14-P39-07's gates refuse a change to a gate unless a named owner approves that exact head. Until the variable lists those people, probably just you, no one can approve a legitimate gate change. This is a repository setting, so it stays with you.
+4. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
 3. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
 4. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
 5. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
