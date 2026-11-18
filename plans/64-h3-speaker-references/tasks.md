@@ -83,7 +83,7 @@ Rules:
 - A `role: timeline` image with `at: {frame: 0}` is a placed still. Lower it to the existing source-backed path: the still becomes the source's frame 0, video is generated from frame 1, and audio is generated (strength 1, per SR-5). That way the model sees the still, so frame 1 continues from it.
 - **This is more than a paste.** Preparation must build the source from the still: a full-canvas-length video whose frames all hold the still (the builder needs a source as long as the output), plus silent audio that nobody supplied and that is entirely generated. Use a CPU fixture with only the still and no user audio.
 - Composition writes the prepared still over decoded frame 0, through the existing paste-back.
-- A placed still at any other frame is refused from the limits table, as a lowering limit. [Plan 66](../66-h3-composable-core/plan.md) adds a soft guide at other frames (CC-4); an exact still off frame 0 stays refused.
+- A placed still at any other frame is refused from the limits table, as a lowering limit. [Plan 66](../66-h3-composable-core/plan.md) adds soft guides at other frames (CC-4) and exact stills at any frame (CC-8).
 - No new node. See [research/first-frame.md](research/first-frame.md).
 
 ## SR-5 detail

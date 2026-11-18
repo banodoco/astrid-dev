@@ -46,7 +46,7 @@ Its changes to Plans 64 and 65 are applied.
   - an explicit `role: guide`;
   - porting continuation's active Existing Video path, with differences listed before code;
   - `-1` as the last delivered frame;
-  - exact start with a guided end, and exact interior or end stills deferred;
+  - exact start with a guided end. The owner then asked for exact stills at any frame, added as CC-8 with a 4-frame hold;
   - deleting the LanPaint row;
   - a lifecycle of intent, then measured inputs, then one resolved job;
   - grants keeping strength, seed, occurrence and references together, with the polarity stated;
