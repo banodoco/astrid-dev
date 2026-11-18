@@ -59,3 +59,9 @@ A plan not listed here comes after the listed ones, and `done` and `cancelled` p
 - 56-workflow-setup
 - 57-pack-database-extensions
 - 59-into-the-minkhole-proof-point
+- 64-h3-speaker-references
+- 65-h3-dynamic-size
+- 66-h3-composable-core
+- 68-h3-guides-and-stills
+- 70-h3-continuation-bridges-inserts
+- 67-h3-community-steering
