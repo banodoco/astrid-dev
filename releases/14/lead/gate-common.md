@@ -4,7 +4,7 @@ HARD LIMITS: do not push, comment, label, merge, approve, or dispatch/cancel/re-
 
 Context to read first (astrid-dev main is at /home/user/astrid-dev; `git -C /home/user/astrid-dev pull -q` first):
 - The PRACTICAL threat model (owner, 18 Nov): a gate catches realistic weakening, the kind made to get to green, even by accident: skipping, xfailing or deselecting tests; markers, -k/-m, config files or PYTEST_ADDOPTS that drop tests; a registry, baseline or ceiling that approves itself or grows; a PR editing its gate or running its own gate code; missing, truncated or empty results read as passing. Deliberately crafted bypasses (shadowing the stdlib, patching test-runner internals, packaging or build hooks, malformed result files) are a stated limit: do NOT report them as findings. At most two review rounds; in round two check only that round-one findings are fixed.
-- releases/14/run.md "Standing rulings" 3 to 6 (ruling 5: an introducing PR may land once with its base-checker step red because the base has no checker; ruling 6: after a third round new variants go to a follow-up row, GL.3).
+- releases/14/run.md "Standing rulings" 3 to 6 (ruling 5: an introducing PR may land once with its base-checker step red because the base has no checker; ruling 6: at most two review rounds; round two checks only the round-one fixes).
 - The packet file named below and the Lead's previous decisions linked below (mailbox banodoco/astrid-dev#796: `gh api repos/banodoco/astrid-dev/issues/comments/<id> --jq .body`).
 
 Method:
