@@ -42,7 +42,7 @@ Context and Process only influence.
 
 Composition then restores every kept pixel and sample. A new lever adds a kind to the table and a function that feeds one mechanism. It never adds a request structure or a compiler branch.
 
-**Two clocks.** Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` in this plan) says when during generation a Process lever acts. No field touches both.
+**Two clocks.** Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` in this plan) says when during generation a lever acts. Any kind may accept it; the table says which do. No field touches both.
 
 **Invariants.**
 - No code names or classifies a kind of job.

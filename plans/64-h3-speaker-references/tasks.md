@@ -83,6 +83,7 @@ Rules:
 - Each effective reference row is `{occurrence, modality, trim, input_binding, tag}`. Derive the rows once, in the exact order they're passed to node slots, keeping the request order within each modality.
 - A video's enabled soundtrack takes its audio tag before any standalone clip, because that's the order the node receives them (`ref_video_audios` before `ref_audios`). Even so, assert the order from the emitted graph, not from this sentence.
 - Replace Character Swap's hard-coded tags in `compile.py` with lookups in the rows.
+- Build the graph's custom-node requirements from the lowerings used. Replace the two-pack list in `astrid/packs/runpod/h3_release.py` `release_inputs` with one read from the pins, so a new pinned pack needs no code change there.
 - Check only generated reference labels (`<Picture n>`, `<Video n>`, `<Audio n>`): a prompt naming a reference tag that no row has is refused. Don't scan or reject other angle-bracket text in the prompt.
 - Adapter and mask combinations are decided by the limits table, not by fixed compiler refusals.
 

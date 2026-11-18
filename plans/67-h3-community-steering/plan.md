@@ -22,7 +22,7 @@ Plan 66 gives every H3 job one shape: three families of levers (Output, Context,
 
 **Included:**
 - **Timed prompts.** `prompt` may be a list of `{during, text}`. It lowers to one prompt in H3's own timed shot format and is soft: it biases when things happen, and never guarantees it.
-- **`phase` on guides.** A guide can act only during part of the denoising (`phase: [0, 0.2]`). It lowers through NKD's MiniMax Guides node, whose `until` is that phase.
+- **`phase` on guides.** A guide can act only during part of the denoising (`phase: [0, 0.2]`). It lowers to a schedule over the timed rows: stock conditioning time ranges if they compile, otherwise NKD's MiniMax Guides node.
 - **`phase` on LoRAs**, only if a lowering is proven to compile with the H3 model. Otherwise it stays `unavailable`, and says so.
 - **Curve audio guides.** A thin Astrid tool runs NKD's Event Curve node and saves its output as an ordinary audio file, which the agent then uses as an audio `guide`. The curve is a tool that makes an input, not a lever.
 - **ControlNet** as `role: control`, through the official `MiniMaxH3FunControlNetApply`: a control video, optional mask and source, strength, and `phase` as the node's start and end percent.
@@ -68,7 +68,7 @@ Order:
 1. CS-1 pins NKD on the worker.
 2. CS-2 (timed prompts), CS-3 (guide phase) and CS-6 (signals) run in parallel.
 3. CS-4 (curve audio guides) follows CS-3.
-4. CS-5 (ControlNet) and CS-7 (LoRA phase) follow CS-2.
+4. CS-5 and CS-7 follow CS-1 and can run alongside CS-2, CS-3 and CS-6.
 5. CS-8 adds the recipes and skill sections.
 6. The final review.
 
