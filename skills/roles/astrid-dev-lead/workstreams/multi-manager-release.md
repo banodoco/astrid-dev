@@ -19,6 +19,14 @@ Use when the Lead prepares accepted plan work for an Orchestrator to assign to *
 - **Mid model:** a bounded fix with a clear oracle. It runs the focused tests on both base and head.
 - **High-judgment model:** a meter, gate or check; a design; a new subsystem or protocol; concurrency, custody or security; and the first packet of a kind. Also any mid-model "merge" of more than about 500 lines of product code, or one that touches a shared contract.
 
+**Fix it yourself when it is small.** Instead of posting rework, have a sub-agent make the fixes when all of these hold:
+- the review grades the packet B+ or better;
+- it leaves at most four must-fix items, each in one place, about 50 changed lines or fewer, with a failing case that defines done;
+- none changes a design, protocol, schema, threat model, product default, pin or existing assertion;
+- the packet's session has submitted, and its branch has not moved for 30 minutes.
+
+The sub-agent works on the packet's branch, adding each failing-before case, in commits labelled `Lead review fixes`. A second, faster reviewer checks them; then merge and post DONE as usual. Otherwise, post the rework.
+
 **Before merging:** a meter, gate or check is accepted only after a review that injects the failures it must catch. Find every pin change: each needs its own commit and the owner's approval or delegation. After a dependency's PR is squash-merged, re-point its pin to the squash commit.
 
 **Rulings:** when a ruling will recur, add it to the board's Standing rulings (`releases/<N>/run.md`), so that a fresh Lead, Orchestrator or packet session finds it without reading the mailbox. A ruling that holds beyond the release goes into its skill instead, and the board links it.
