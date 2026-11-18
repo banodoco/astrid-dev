@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — the owner asked for this capability in the Plan 59 session (18 Nov 2026): "a starting image for the video, and we feed a reference video, a video reference of just him speaking"; and "why would we block masked edits + video references?" They asked for a plan, not yet greenlit scope. Next: owner greenlight of this plan, including D1–D3.
+**Scope decision:** Pending — the owner asked for this capability in the Plan 59 session (18 Nov 2026): "a starting image for the video, and we feed a reference video, a video reference of just him speaking"; and "why would we block masked edits + video references?" They asked for a plan, not yet greenlit scope. D1 decided (build voice references regardless). Next: owner greenlight of this plan.
 
 **Prior art:**
 - **The node supports it.** ComfyUI `6bfaacc` `comfy_extras/nodes_minimax_h3.py` `MiniMaxH3ReferenceToVideo`:
