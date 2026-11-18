@@ -2,45 +2,103 @@
 
 **Project:** Extensible timeline editing
 
-**Goal:** Provide reliable timeline editing primitives as a pack that people and agents can extend with their own views, tools, and creative workflows.
+**Goal:** Every timeline gesture is one named command that people, agents and extensions all send, and anyone can add a command of their own, so an edit means the same thing everywhere and a refusal always says why.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** Phase 0 (the commit contract) about 23 engineering days (11 elapsed with parallel workers); phase 1 about 60 (about 25 elapsed); phase 2 about 9 (about 7 elapsed), scoped at the phase gate.
 
-**Waiting on:** scope agreement
+**Waiting on:** Release 14 to be published (nothing here starts before it; phase 0 builds on its fix branches); the owner's answers on D9 (the release phase 0 joins), D14 (persisting verified trust), D4 (the release for phase 1), D5 (the view) and, only if TL-1 cannot settle it, D8 (the unit convention) in [inputs.md](inputs.md#owner-decisions). The independent critique is done and accepted.
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. **To begin once Release 14 is published:** read [tasks.md](tasks.md#start-here) (prerequisites, repositories, commands), then take CC-7 and CC-1 (phase 0). TL-1 (phase 1) waits for CC-3, CC-4 and CC-7.
 
-**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (primary). This plan proves one timeline-specific foundation, not the entire workspace/component contract.
+**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (primary). Phase 2 proves one timeline-specific foundation, not the whole workspace and component contract. Phases 0 and 1 also serve [F-001 — Platform reliability](../../vision/gaps/F-001-platform-reliability.md).
 
-Draft: provide dependable timeline editing primitives as a pack, so people and agents can build their own ways to understand, view, and edit the same creative material. Current status, owner, and estimate live in the [project queue](../../README.md).
+## Outcome and scope
 
-## Goal and scope
+## Phase 0: the commit contract
 
-- Included: inspect current timeline/editing capabilities; expose and strengthen them through a pack that reuses current state and execution contracts; demonstrate an extension offering an alternate view or workflow over the same material; preserve media, edits, and undo where supported contracts provide them.
-- Deferred: wholesale timeline redesign and capabilities unrelated to a reliable extension path.
-- Still undecided: implementation task breakdown, dependencies, routes, and exact focused checks pending source inspection.
+Added on 18 November 2026. The owner, in chat, about the week's timeline-editing failures: "get it fixed now and PROPERLY fixed in the follow up plan". The "now" part is Release 14's fix branches (listed below). This is the follow-up: it goes first in this plan, because phase 1 puts every gesture on the commit path and would inherit every flaw in it. The decision to extend this plan, not open a new one, is the main session's, on the advice of the review `fable-near-instant-review.md` ("Deeper issue"), since this plan is queued, unowned and waiting on scope, and #852 already points here ([D1 and D9](inputs.md#owner-decisions)).
 
-## What we build on
+**The root cause.** Nothing in the stack treats an accepted head as settled. Every request re-proves the accepted base from scratch against today's code, and when that disagrees the only outcome is a refusal. The five symptoms of the week are one cause: (1) commits that took 3 minutes, from repeated re-verification of one unchanged base; (2) whole-head refusals ([#842](https://github.com/banodoco/astrid-dev/issues/842)'s four rules, plus the unsupported-declaration and half-catalog-association cases); (3) the editor's equality bridge ([#839](https://github.com/banodoco/astrid-dev/issues/839)); (4) conflict states nothing can discharge ([#732](https://github.com/banodoco/astrid-dev/issues/732)); (5) a writer that stored what a reader later refuses. No test held a document with a history or with size, so each slipped through.
 
-The existing timeline, editing implementation, state ownership, execution contracts, and pack conventions are to be identified at execution start. Do not assume primitives or extension support are absent. The design direction is in the [Liquid Software vision](../../vision/pillars/liquid-software.md); source identities and recorded inputs belong in [inputs.md](inputs.md).
+**The contract.** Six statements, each held by a named test (the full list is in [tasks.md](tasks.md#phase-0-end-state-checks)):
 
-## Sequence
+- **(a) Bounded work.** A commit's work is the change plus one pass over the document, independent of history length. It is stated as counts (closure loads, CAS hashes, opens and stats, timing passes) and held by a scaling test at 3 and at 30 history entries and at one and two timelines. Trust persists: a refused commit or an unrelated write causes no re-hash. No test uses a wall-clock limit.
+- **(b) One delta gate.** The registry is the one home of every document invariant (`validate_final_candidate` runs the registered rules; no second list), through `register_rule` for the built-in rules; how packs register rules is TL-1's, through the same function and under the same gate. Every rule that reads the whole head reports `{key: signature}` findings through `_preexisting.split_findings`, and only introduced findings block. A function that reads the base never raises on its content. The gate is total (a rule's exception is a finding; the inline `_fail(` calls become rules or named shape preconditions), the grid is generated from the registry and the corpus manifest, and a count of the remaining raise sites only falls.
+- **(c) The editor sends intent and adopts the head (held in phase 0 by a ratchet; delivered in phase 1)** ([#852](https://github.com/banodoco/astrid-dev/issues/852)). Phase 0 states it and holds it with a ratchet (no new expected-diff refusal site); phase 1 delivers it (TL-3b `clip.move` with a track, TL-5 send and adopt, TL-6 to TL-11 conversions, TL-12 retiring the equality bridge and the unnamed-edit predicate, and with them the native command path becoming live). The shot start and end command ([#838](https://github.com/banodoco/astrid-dev/issues/838)) is Plan 59's, by the owner's decision of 17 November; paste and duplicate is TL-3d and TL-10.
+- **(d) A refusal applies to one change and can be discharged** ([#732](https://github.com/banodoco/astrid-dev/issues/732)). The Runtime returns typed reasons from one closed list that the Agent owns and the Runtime and App generate from; each entry declares its own `retryable` (phase 1's code list is the same list); the App matches no message text; `stale_head` rebases an intent.
+- **(e) Writers cannot store what readers refuse.** Registry and catalog entries are validated at write time, in one place, both ids or neither; a closure test applies every writer to every corpus head and checks the result cold.
+- **(f) One corpus.** Long-lived documents, synthetic or anonymised real shapes, in astrid-agent, run the invariant: every head accepts an unrelated one-field commit and a duplicate, at the stated counts. The App pins Agent fixtures by SHA-256 (`tests/fixtures/p1-feasibility/cases.json`).
 
-1. Map supported timeline edit, media, undo, and extension contracts.
-2. Shape small, composable primitives around current behavior, preserving supported media and edit state.
-3. Add one concrete alternate view, effect, or workflow over the same material, with focused evidence for the contracts it exercises.
+**What Release 14 lands now, and what phase 0 adds.** Phase 0 builds on these and does not redo them (their identities are in [inputs.md](inputs.md#source-identities)):
 
-The intended work is preserved in [tasks.md](tasks.md); executable breakdown and exact checks remain to be scoped after inspecting current code.
+As of 18 November the branches below are cut and in flight, from Rev 2 of the near-instant-commits plan (`plan-near-instant-commits.md`); only #393 is merged, and the Runtime and Agent work was still uncommitted in worktrees. The "lands now" column is that plan's intent: CC-1 starts by checking each against the merged code, and anything that did not land moves into the CC task named in the third column (CC-2 takes on all of Rev 2 if the three do not land, and is then re-estimated).
+
+| Release 14 branch | Lands now | Phase 0 generalises it to |
+| --- | --- | --- |
+| Runtime `release/14/commit-cost` | CAS verify-once by file identity through the one existing map; survives memo clears; "inputs changed" returned as `head_busy`, the one refusal a client retries, with the moved component logged | a counted contract held at 3 and 30 entries and one and two timelines (CC-1, CC-2); the history read and the replay memo ([#826](https://github.com/banodoco/astrid-dev/issues/826), [#846](https://github.com/banodoco/astrid-dev/issues/846)); the typed reason set, using Release 14's `head_busy` (CC-4) |
+| Agent `release/14/legacy-probes` | one collect pass on base and candidate, judged by `split_findings` (lands only if a differential against the old probe holds on every corpus head; otherwise the probe stays and the difference goes to the owner); an unsupported declaration signed by its own value; the `gap_after_s` probe fault tested | the rule registry and the rules by legacy-shape grid (CC-3), so the next rule cannot skip the gate |
+| Agent `release/14/commit-loads` | verified document memoised per commit; reserved identities kept per accepted revision | the counts as a permanent test on more axes (CC-1), not a one-off profile |
+| Agent #393 (merged, `b126d7482`) | an incomplete catalog association judged only when a change introduces or touches it (the reader side) | the writer side: no half association can be stored (CC-6) |
+| App `release/14/rejected-discharge` (`88045a78c`, astrid-app #295) | `stale_head` takes the conflict and rebase path, not a permanent refusal (the retained chain is rebased and resent, bounded); both conflict buttons discharge a rejected change through the local save session, including after a reload, when the rejected entry's base is gone, and when several owners have retained work (`88045a78c`, astrid-app #295) | the tests, and the deletions that make a stuck state impossible (CC-4, CC-5) |
+| App `release/14/drop-placement` (into plan-59) | the drop guard's OR-chain split into named reasons; it refuses only when the target is really gone | one named reason per refusal for every gesture, from the one list (CC-4; TL-4 for headlines) |
+| App `release/14/save-rejections` (#720, `ba20e7da`, merged) | a permanently rejected save (413) is not retried forever; a banner and a discard for `too_large` | the whole reason list, so no class of rejection is retried by guess (CC-4) |
+| Agent `release/14/edit-refusals` (#842, `d5f90a4b`, open) | the uniform baseline rule, one helper called by every rule | CC-3 builds directly on it: the helper becomes the registry's gate |
+
+**Polling and contention, each included or deferred.** Included: history GETs and the ~110 requests a minute of one tab must cost no re-hash and must not clear CAS trust (CC-2 proves it by count); per-GET opens and stats are equal at 3 and 30 entries, so the store mutex is held for a counted, history-independent amount of work; the two-tab draft-slot clash is a CC-5 test, with a fix keyed by owner id if two tabs still block each other; cold start is bounded by count (each object of the requested closure hashed once) and persisting trust is the owner's decision D14. Deferred, with reasons, in [inputs.md](inputs.md#deferred-from-phase-0): reducing the poll rate itself (follows from adopting the head in phase 1; re-measure after CC-2) and the per-revision snapshot size (a storage-format question; the contract bounds work, not disk).
+
+**Release.** Phase 0 is proposed for Release 15, ahead of phase 1; an owner decision (D9).
+
+**What creators and agents get.** Dragging, trimming, splitting, dropping and typing in the editor stop failing for reasons the creator cannot see. The editor no longer judges whether its own edit looks right: it says what the person did ("trim this shot's end to 4.2 s"), the Agent and Runtime decide, and the editor shows the document that comes back. When something is refused, the message says in plain words what and why, and the same code reaches an agent over the CLI, the SDK or MCP.
+
+**Phase 1: one command layer (about 60 days).** Included:
+
+1. **Every gesture is a named op the editor sends.** The editor's gestures (21 rows in the [inventory](tasks.md#gestures-and-their-ops): drop, move, cross-track move, trim clip edge, trim shot edge, split, delete, inspector field edit, Source In/Out, element edit, duplicate, undo, redo, track add, rename, reorder and remove, and the rest) each map to one Agent op. Missing ops are added: cross-track move, trim by timeline edge, split and trim of an occurrence's children, track removal and reorder, a plain clip duplicate, and `clip.set` coverage for speed and volume.
+2. **The editor sends and adopts, with dumb encoders.** One `sendIntent`, generalised from `occurrence.trim`. An encoder returns only `{op, select, args}`: it reads no document, builds no `reads`, `expect` or `selections`, and cannot refuse. The local edit is a disposable preview; intents queue in order; adoption waits while a gesture is active; a refusal returns the display to the last adopted head; a mismatch snaps and never refuses. Each converted gesture deletes its expected-diff block and the refusals it made dead. The TypeScript capture ports (about 3,600 lines), the `commitSession.ts` family and the generic whole-document diff path are deleted.
+3. **The op layer is the extension point.** `register_operation(name, parameters, handler, intent, singleton)`; the built-ins register through it; the schema, an ops listing and the contract page are generated from the registry; a composite op built only from other handlers (`clip.ripple-delete`) proves a new command gets validation, atomicity, undo and coded refusals for free.
+4. **One op vocabulary in the App.** The editor extension SDK's `apply()` takes the same Agent ops through `sendIntent`; its separate `TimelinePatch` vocabulary is retired. No App writer sends `doc.patch` (a repo-wide lint); `placementService.ts` and `shotTimelineDataProvider.ts` convert or are named, dated exceptions.
+5. **Agents can send ops.** One CLI verb takes a JSON command batch (`--dry-run`, `--json`, `--expected-head`), one MCP tool is generated from the registry, and `timelines ops --json` lists the ops. One unit and naming convention (lean: integer milliseconds), a clean break with no aliases.
+6. **A refusal is a value:** `{ok:false, code, headline, retryable}`. The code list closes on the Agent side (reusing `hint`, `suggested_command` and `status`, with a falling ratchet on uncoded errors); headlines live once, in the Agent; save status is `{status:'error', reason}`; the silent paths in the inventory are fixed or deleted.
+7. **Two tiers through one door.** `doc.patch` stays for document routes, but every document invariant lives once in `validate_final_candidate`, which both tiers hit.
+8. **One schema owner.** The Agent owns `edit-command.schema.json`; the Runtime copy is generated and CI-checked; the App's digest and contract constants come from the generated file.
+9. **A generated suite in CI.** A seeded Agent generator writes a document x gesture x track matrix, with raw-parity rows; the Agent replays intents on real documents; the editor side is a small gesture-to-op table test; both are required checks.
+
+**Phase 2: the extension proof (about 9 days; Plan 18's original scope).** One alternate view or workflow over the same material, built only on the phase 1 commands and **registering at least one op of its own** through the registry, with undo and a coded refusal and no App change. Recommended: a text-first cut list (D5).
+
+**Deferred or out of scope:** a redesign of the timeline UI; the meaning of `source_offset` ([#851](https://github.com/banodoco/astrid-dev/issues/851), decided for Plan 59: the window origin); the Agent's whole-head validation (phase 0, CC-3, [#842](https://github.com/banodoco/astrid-dev/issues/842)); retiring `doc.patch` as the lowering for document routes (a later plan); the Runtime's replay-memo cost (phase 0, CC-2, [#846](https://github.com/banodoco/astrid-dev/issues/846)); anything in Release 14 or Plan 59.
+
+## Existing work and decision
+
+We build on `occurrence.trim`, the one gesture already built as intent plus adopt-the-head: 18 changed lines in the handoff, no expected diff, and the Runtime owning the rules. We also reuse the Agent's 37 ops, the Runtime's provider design (it loads the Agent's validators, so there is one meaning of an op), and the Agent's `Recording`, which already gives every handler atomicity, authoritative reads and derived undo. The App's capture ports are not reused: they are a second implementation of the Agent's handlers (about 3,600 lines) that the template does not need. The smallest sound approach is to convert every gesture to that shape and delete the code it makes dead, not to add a fifth description of each gesture. The independent critique of 18 November found the first draft built a consumer API, not an extension point; all eight of its gaps were accepted (see Challenge in [inputs.md](inputs.md#planning-evidence)). The evidence, the alternatives, the open challenge and the owner's decision are in [inputs.md](inputs.md#planning-evidence); this draft is not accepted.
+
+## Sequence and readiness
+
+**Phase 0 goes first.** It starts after Release 14 is published, on that release's fix branches, and phase 1 consumes its output: TL-1 waits for CC-3 (the delta gate), CC-4 (typed reasons) and CC-7 (the corpus, which TL-15b extends rather than builds a second one). CC-7, CC-1 and CC-6 start together; CC-3 follows CC-7; CC-2 follows CC-1; CC-4 then CC-5 run beside them; R0 closes the phase (the order is in [tasks.md](tasks.md#critical-path-and-estimates)). Phase 1 starts after Release 14 is published and takes nothing from it: Plan 59 lands the shot-trim gesture, the edit-refusals fix and the `source_offset` rule first, and phase 1 builds on that base. Order: TL-1 writes the command contract and its findings (the load-bearing design: op per gesture, the unit convention, the registry and how the Runtime loads pack-registered ops, the editor SDK vocabulary, the responsiveness rule, the refusal codes); **review stop RS1** follows; then four strands run in parallel (schema owner, registry and new ops; the refusal value, send-and-adopt and the editor SDK; the generated suite; the agent surface); then the gesture conversions run in parallel and each lands with its rows in the matrix; then the generic path is deleted and the end-state checks go in; then the final review. The critical path is in [tasks.md](tasks.md#critical-path-and-estimates). The phase 2 gate: phase 1's end-state checks pass and the owner has chosen the view (D5). Unresolved: D4, D5 and possibly D8; the rest are recommended or ruled by the main session.
+
+## Interfaces and handoff
+
+**Phase 0 produces:** (1) the counting harness and the scaling test (Agent and Runtime), whose golden counts may only fall; (2) the rule registry and the rules-by-legacy-shapes test; (3) the typed refusal reasons in the Runtime and the App's per-change discharge; (4) one write-time admission function for registry and catalog entries; (5) the corpus and its manifest, pinned by the App by SHA-256. Phase 1 uses all five.
+
+**Consumes:** Release 14's published tip of each product repository (identified by SHA at TL-1, in [inputs.md](inputs.md#source-identities)), including `occurrence.trim`, the edit-refusals fix and the window-origin `source_offset` rule; the Agent's baseline rule from #842.
+
+**Produces:** (1) the command contract, generated from the registry and the code list into `docs/timeline-command-contract.md` in astrid-agent, with the TL-1 findings; (2) `register_operation`, so a pack can add a command; (3) the schema-sync script and CI check; (4) the gesture matrix and its generator, which any later gesture must extend to merge; (5) the editor handoff as one `sendIntent` plus a table of gesture-to-op encoders; (6) the CLI batch verb, the MCP tool and `timelines ops --json`. Limits: the non-remote `saveTimeline` fallback and local undo snapshots follow the TL-1 decision (delete, or named as a second path); Runtime schema bumps still need a paired App pin. Product pull requests link here when they exist.
 
 ## Completion
 
-The editing pack and extension example work through documented timeline primitives, supported media/edit/undo contracts remain intact, and focused evidence demonstrates the shared-material workflow. Record unsupported contracts or extension needs discovered during scoping. This does not establish unsupported preservation behavior or authorize implementation/publication; follow the [shared run contract](../../skills/shared/run-contract.md).
+Done when each of these is true, each guarded by a named test that fails if it stops being true (the full list with test names is in [tasks.md](tasks.md#end-state-checks); phase 0's six contract checks are in [tasks.md](tasks.md#phase-0-end-state-checks) and are true before phase 1 starts):
 
-## Read next
+1. **No expected-diff block remains:** no App file constructs `reads`, `expect` or `selections`, and no encoder can refuse.
+2. **Every gesture is one named op, and the App has one op vocabulary:** the exhaustive gesture-to-op table is checked against the generated types, and the extension SDK's old patch vocabulary is gone.
+3. **No App writer sends `doc.patch`:** a repo-wide lint, with any exception named and dated; `applyEdit` requires an intent by type.
+4. **Agents and the editor use the same ops:** one CLI verb takes any command batch with dry-run and an expected head, an MCP tool is generated from the registry, `timelines ops --json` lists the ops; `doc.patch` is a second tier through the same validator.
+5. **A refusal cannot reach the user without a code and a headline;** the count of uncoded Agent errors only falls; an error status cannot be set without a reason.
+6. **One schema owner:** CI fails when the Runtime copy, generated types, the App contract or the registry-generated schema differ; no digest literal is left.
+7. **A generated suite runs in CI through the Agent:** at least 12 documents x every gesture x every track, plus a gesture after a refusal and raw-parity rows; the manifest contains every gesture-to-op key and cannot shrink.
+8. **Phase 2:** the alternate view registers at least one op of its own, with undo and a coded refusal and no App change, and edits the same document as the editor with identical results.
+9. **Responsiveness:** two fast gestures with the first refused leave the display at the last adopted head.
+10. **The registry is the extension point:** a composite op built from other handlers gets validation, atomicity, undo and coded refusals with no per-op plumbing.
 
-- [tasks.md](tasks.md): intended work and draft status.
-- [inputs.md](inputs.md): source identities, evidence, and limits.
+Negative case: a deliberately wrong gesture encoder (a trim that sends a track change) must fail the table test and the matrix before it fails a user. Limits: this proves the editor and the Agent agree on the op layer, not that every possible stored document is covered; Release 14 and the anonymised real documents set the floor. Integration and publication follow the [run contract](../../skills/shared/run-contract.md); this plan authorizes neither.
