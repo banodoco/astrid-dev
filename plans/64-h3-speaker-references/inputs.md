@@ -35,7 +35,7 @@ Alternatives considered:
 
 **Proof and limits:**
 - **Acceptance:** the CPU proofs in [plan.md](plan.md#completion). The owner's live test comes afterwards and is not part of this plan (D2).
-- **Failure cases:** over-limit references are refused before claiming; image-only digests are unchanged; Character Swap is unchanged.
+- **Failure cases:** over-limit references are refused before claiming; image-only and Character Swap graphs are unchanged apart from listed differences.
 - **Assumptions:** voice match is sample-dependent. Room tone inside the spoken window is regenerated (model behaviour, see Owner decisions).
 
 **Review rounds:** Recommend 1 (a shared request contract and a user-visible flow). Next: the owner confirms.
@@ -45,6 +45,7 @@ Alternatives considered:
 ## Owner decisions
 
 - **D1 — build voice references regardless (decided 18 Nov 2026, owner in the Plan 59 session: "we should build in any case voice references").** No proof run gates the build.
+- **D3 — clean break in request identity (decided 18 Nov 2026, owner; recorded as [Plan 66 D4](../66-h3-composable-core/inputs.md#owner-decisions)).** SR-1 makes the break; no task preserves old digests.
 - **D2 — CPU only (decided 18 Nov 2026, owner in the Plan 59 session: "we're not going to do a GPU test. This is just CPU… We'll do a test afterwards").** No task in this plan claims a machine or spends money. Voice likeness, lip sync and frame-1 continuity are judged in the owner's live test after the plan completes.
 
 **Model behaviour, recorded here so nobody mistakes it for a decision:**
