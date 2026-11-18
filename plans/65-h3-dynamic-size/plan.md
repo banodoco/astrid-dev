@@ -18,9 +18,9 @@
 
 ## Outcome and scope
 
-A creator can ask for `output.size: [512, 288]` on an H3 v2 image-guided generation, masked edit or Character Swap. The public request defaults to 1024×576. Source conform, generation, mask rasterization, composition, dry run and completed-job evidence use the same effective dimensions. Character Swap retains its existing input contract. Both captured continuation workflows retain default size only.
+A creator can ask for `output.size: [512, 288]` on an H3 v2 image-guided generation, continuation, masked edit or Character Swap. The public request defaults to 1024×576. Source conform, generation, mask rasterization, composition, dry run and completed-job evidence use the same effective dimensions. Character Swap retains its existing input contract.
 
-Static image masks and rectangles describe an authored working canvas. Creators can reuse them at a new size and preview the result before claiming compute. Moving masks retain their lossless, prepared-source-size and clock requirements. Automatic size selection, quality guidance across the entire node range, tuning `ref_image_size` and scaling moving masks are deferred. Continuation moves onto the builder under [#866](https://github.com/banodoco/astrid-dev/issues/866), including small-size continuation for [#885](https://github.com/banodoco/astrid-dev/issues/885). The remaining deferred input and identity changes are listed in [Plan 64’s scope](../64-h3-speaker-references/plan.md#outcome-and-scope).
+Static image masks and rectangles describe an authored working canvas. Creators can reuse them at a new size and preview the result before claiming compute. Moving masks retain their lossless, prepared-source-size and clock requirements. Automatic size selection, quality guidance across the entire node range, tuning `ref_image_size` and scaling moving masks are deferred. Both captured continuation workflows take the requested size in this plan. Their builder migration remains under [#866](https://github.com/banodoco/astrid-dev/issues/866). The remaining deferred input and identity changes are listed in [Plan 64’s scope](../64-h3-speaker-references/plan.md#outcome-and-scope).
 
 ## Existing work and decision
 
@@ -38,6 +38,6 @@ Coordinate the shared normalizer, source-free path, masked and Character Swap ca
 
 ## Completion
 
-On the image-guided source-free route, two otherwise identical spoken-line jobs render at 512×288 and 1024×576. Each transcript matches the intended words and the smaller job uses less GPU time under the same measurement protocol. Both captured continuation variants refuse non-default sizes before claim.
+For the voice-only use case in [#885](https://github.com/banodoco/astrid-dev/issues/885), two otherwise identical spoken-line continuation jobs render at 512×288 and 1024×576. Each transcript matches the intended words and the smaller job uses less GPU time under the same measurement protocol. Compiled bundles bind the requested dimensions with zero, one and two references.
 
 A 768×448 lens edit aligns to an asymmetric landmark. Decoded frames retain the prepared source pixels outside the authorized mask and interval. Dry-run and completed-job records agree with the decoded dimensions. Unsupported sizes fail before claim, and existing default request identities and compiled artifacts match the baseline. Evidence covers the tested routes, sizes and GPU type. Completion requires the final integrated review. Release and publication require separate authority.
