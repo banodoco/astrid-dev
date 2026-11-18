@@ -22,7 +22,11 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 - **The Lead may, without asking:** write, re-plan and order packets; review packet pull requests and merge accepted ones into `release/14/plan-<P>`, and fix branches into `release/14/main`; merge `release/14/main` into plan branches and land plan branches in `release/14/main` (the plan manager's [Release](../../skills/capabilities/astrid-dev-release/SKILL.md#how-a-release-runs) steps); cut and record plan and fix branches; dispatch workflows on plan and fix branches; merge astrid-dev pull requests that change only `releases/14/` or a plan's `tasks.md` (by auto-merge once checks pass); close a superseded draft with one line saying why.
 - **The Orchestrator** acts in the owner's own ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace sessions on this release's plans, and comment on the mailbox. It does not edit the repository.
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, dispatch workflows on those branches, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch and never takes a second packet.
-- **Needs the owner:** any paid action (GPU rental, a paid tester); a re-pin of one product in another; any merge into a product `main`; repository settings and rulesets; a scope change; publication. Anything reserved goes to the Lead, which adds it to [Waiting on the owner](#waiting-on-the-owner).
+- **Delegated to the Lead on 18 November 2026,** by the owner in the Lead's session:
+  - **Re-pins:** a re-pin of one product in another, once the change it brings has passed the Lead's review.
+  - **Required checks:** turning on required status checks, as rulesets, on `release/14/main` and `release/14/plan-*` once the gate packets land.
+  - **Landing and publishing:** landing `release/14/main` in each product `main`, and publishing Release 14, once it is qualified under [Release](../../skills/capabilities/astrid-dev-release/SKILL.md#how-a-release-runs). The Lead tells the owner before each of these, and records each in the brief.
+- **Needs the owner:** any paid action (GPU rental, a paid tester); any other repository setting; a scope change. Anything reserved goes to the Lead, which adds it to [Waiting on the owner](#waiting-on-the-owner).
 
 ## Mailbox
 
