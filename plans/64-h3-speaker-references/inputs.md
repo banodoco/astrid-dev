@@ -48,7 +48,7 @@ Alternatives considered:
 
 **Model behaviour, recorded here so nobody mistakes it for a decision:**
 - H3 regenerates audio per window at one strength, so room tone inside the spoken window is regenerated with the voice. Sound outside the window is kept, and SR-3 proves it. Copying the original background back under the new words is a possible later improvement, not in scope.
-- A start image guides the first frame. An exact first frame is a timeline image at frame 0, which needs `MiniMaxH3AddGuide`, untested with this model. Until that's proven, normalization refuses it with a clear message (a later ticket, not a decision).
+- **Exact start image needs no new node** ([research/first-frame.md](research/first-frame.md)). A timeline image at frame 0 is lowered to the frozen-frame mechanism the masked edit already uses: regeneration starts at frame 1, and composition writes the exact frame-0 pixels. `MiniMaxH3AddGuide` is different: soft, time-positioned conditioning that leaves the latent and noise mask untouched and gives no pixel guarantee, so it's a later, separate piece. Proof: a CPU compile-and-compose check shows frame 0 is pixel-exact; one GPU render judges how naturally frame 1 continues.
 
 ## Source identities
 
