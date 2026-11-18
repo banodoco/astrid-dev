@@ -58,6 +58,8 @@ On the way: [Release 12 — Reliable updates](releases/12.md), [Release 13 — O
 - [Plan 13 — Execution host refactor](plans/13-execution-host-refactor/plan.md) — [Release 14](releases/14.md): the execution host mapped and its behaviour pinned by tests, before anything is moved; [Release 15](releases/15.md): the execution host split into modules, one responsibility at a time.
 - [Plan 52 — Issue intake](plans/52-issue-intake/plan.md) — [Release 14](releases/14.md): its last three tasks: one place for user and tester reports.
 - [Plan 53 — Vision aspirations](plans/53-vision-aspirations/plan.md) — [Release 14](releases/14.md): one short reference under the vision for each part of Astrid, and every gap measured against it.
+- [Plan 64 — H3 speaker references](plans/64-h3-speaker-references/plan.md) — [Release 14](releases/14.md): a character says a new line in their own voice from a reference clip, with the picture regenerated from a start image or kept under a mouth mask (added 18 Nov 2026 by the owner).
+- [Plan 65 — H3 dynamic output size](plans/65-h3-dynamic-size/plan.md) — [Release 14](releases/14.md): the creator chooses the H3 output size, and masks, conform, composition and checks follow it (added 18 Nov 2026 by the owner).
 - [Plan 50 — Recorded boundaries and an offline generation harness](plans/50-recorded-boundaries/plan.md) — [Release 15](releases/15.md): rented-machine failures found on a CPU.
 - [Plan 30 — Update everywhere: remaining setups](plans/30-update-everywhere/plan.md) — [Release 16](releases/16.md): less common setups.
 - [Plan 09 — Install and update confidence](plans/09-install-and-update-confidence/plan.md) — [Release 16](releases/16.md): hosted tests for install, update, rollback and removal.
