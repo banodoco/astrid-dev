@@ -15,7 +15,7 @@ Written on 18 November 2026 by the session that added phase 0 (the commit contra
 
 - **D4:** which release carries phase 1 (the release after Plan 63's; recommended, since phase 1 starts on its base).
 - **D5, D6 and D8** from the earlier draft are unchanged.
-- D9 to D15 are Plan 63's.
+- D9 (the release) is Plan 63's, one decision for the four saving plans (Plans 63, 64, 65 and this one); D10 to D15 are Plan 63's or Plan 64's (D14).
 
 ## For the next manager, in order
 
