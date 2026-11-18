@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Masked edit + speaker reference: findings
 
 Read-only research against `origin/release/14/plan-59`, the pinned ComfyUI and motion-pack sources, VibeComfy's cached node schema, and hivemind. No tests or GPU runs were performed.

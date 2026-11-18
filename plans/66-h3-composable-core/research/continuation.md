@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Continuation as a time-masked edit on the shared H3 builder
 
 ## Scope and evidence

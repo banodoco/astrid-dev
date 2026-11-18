@@ -50,7 +50,7 @@ One table, in one place. Plan 65 adds no second copy:
 | Character Swap adapter | needs the Ref2VA base, at least one video (`<Video 1>`, the performance) and at least one image (`<Picture 1>`, the character); further references are allowed but untested |
 | Continuation images / videos | 2 / 0 |
 | Per clip | 2–15 seconds |
-| Per modality total | 15 seconds |
+| Per modality total | 15 seconds. A video's enabled soundtrack and standalone audio clips share the 15-second audio total; soundtracks need no slot limit of their own, because each belongs to one of at most three videos. |
 | Conditioning files | 12 |
 | Audio grant strength | 0 to 1 (values between untested) |
 | Regions per pass | one seed, one reference set |
@@ -89,7 +89,7 @@ Rules:
 ## SR-4 detail
 
 - This is a special case of a placed exact still, implemented through the job's placed-item and grant rules. Don't add a separate frame-0-only compiler path. Plan 66 CC-8 owns exact stills at other frames, and keeps this case as a compatibility fixture.
-- A `role: timeline` image with `at: {frame: 0}` is a placed still. Lower it to the existing source-backed path: the still becomes the source's frame 0, video is generated from frame 1, and audio is generated (strength 1, per SR-5). That way the model sees the still, so frame 1 continues from it.
+- A `role: timeline` image with `at: {frame: 0}` is a placed still. Lower it to the existing source-backed path: the still becomes the source's frame 0, video is generated from frame 1, and audio is generated: the SR-5 audio mask is 1 over the whole clip, with V2V `audio_strength` 0. That way the model sees the still, so frame 1 continues from it.
 - **This is more than a paste.** Preparation must build the source from the still: a full-canvas-length video whose frames all hold the still (the builder needs a source as long as the output), plus silent audio that nobody supplied and that is entirely generated. Use a CPU fixture with only the still and no user audio.
 - Composition writes the prepared still over decoded frame 0, through the existing paste-back.
 - A placed still at any other frame is refused from the limits table, as a lowering limit. [Plan 66](../66-h3-composable-core/plan.md) adds soft guides at other frames (CC-4) and exact stills at any frame (CC-8).

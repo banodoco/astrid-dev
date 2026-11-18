@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Plan 66 ambiguity pass: CC-4, CC-8, CC-5, CC-6, and audio mask
 
 Read-only research for implementers. Planning source: `astrid-dev `plans/66-h3-composable-core``; code snapshot: `astrid-agent` `origin/release/14/main` (Plan 66 inputs identify H3 pack SHA `9f614dff`); official ComfyUI `6bfaacc`; motion pack `361624fb406b63eb6694442eac6c895fc1533a70`. Source locations below are paths within those checkouts unless fully qualified. No tests or workflows were run.

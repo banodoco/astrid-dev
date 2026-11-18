@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Restrictions review: real limit or arbitrary?
 
 Read-only, 18 Nov 2026. Nothing was run.

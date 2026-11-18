@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # H3 jobs: one shape, three families of levers
 
 An H3 job makes a short video with sound, at 24 fps. Set its length with `duration:` (seconds) at the top of the request. You steer it with **levers**, in three families:

@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Nekodificador’s H3 tools and their fit in Astrid
 
 Research date: 2026-11-18. This is read-only research; no workflows were run. “Fact” means a source states or implements it. “Fit” means a proposed Astrid mapping, not an implemented feature or validated generation result. A node’s existence/interface does not establish output quality.

@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Plan 66 ambiguity pass — CC-1, RS1, CC-2, CC-3
 
 **Read-only research snapshot:** astrid-agent `origin/release/14/main` = `9f614dff7707a493f29a548583f86c4791b957d2`; plans from the astrid-dev plans worktree current main. No code was changed and no checks were run.

@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # Ambiguity pass: Plans 64 and 65
 
 Read-only review of the task cards against `origin/release/14/main` (`9f614dff7707a493f29a548583f86c4791b957d2`), Plan 66 and the cached H3 motion-node schema. Citations are `path:line` in that source revision. The cards are implementation specifications, but several contracts conflict with the later job model or leave boundary behavior open. The replacements below are ready-to-paste card text.

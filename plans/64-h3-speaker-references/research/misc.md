@@ -1,3 +1,5 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
 # H3 miscellaneous unknowns
 
 Research is read-only except for this findings file. Code evidence is from `origin/release/14/plan-59` unless otherwise stated. “Resolved” below means the source evidence answers the stated implementation question; it does not imply inference quality unless explicitly said.
