@@ -81,8 +81,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Done | `r14-P55-07-2` | Runtime #58 (`f3dc970a`) and Agent #384 (`6451821e`) merged into `release/14/plan-55`. The Runtime schema digest changes; it is sequenced with Plan 59's #838 at `release/14/main` |
 | [R14-FIX-10](packets/R14-FIX-10.md) Agent re-pins on `release/14/main` | #674, #676 | Running | `r14-FIX-10-1` | Agent #395 (`7d0cbba8`): pin and lock files only; waiting for hosted CI |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Running | `r14-P55-10-1` | Agent #388. Its counter gate now takes its limits from five base-vs-base runs, after it failed identical product bytes ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965824641)) |
-| [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Ready | — | Dispatch together with the other two gate packets, after R14-FIX-10, as slots free. They are in three repositories and on the critical path |
-| [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Ready | — | Dispatch together with the other two gate packets, after R14-FIX-10, as slots free. They are in three repositories and on the critical path |
+| [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Running | `r14-P39-07-1` | Agent #397. Acceptance boundary set: the structure check may be red only on the 102 inherited findings (GL.2, #647) |
+| [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Running | `r14-P39-08-1` | Runtime #60 |
 | [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Ready | — | Dispatch together with the other two gate packets, after R14-FIX-10, as slots free. They are in three repositories and on the critical path |
 | [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Ready | — | Dispatch after R14-P39-07 to 09 |
 | [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Blocked | — | After R14-P61-01 merges |
@@ -196,7 +196,8 @@ If a check fails, say which manual step I must do instead of promising automatio
 ## Waiting on the owner
 
 1. **Plan 55 Windows target.** The measured hosted-Windows floor is 226–284 ms against a 0.1 s target. Recommended: keep the target for a real machine, and decide after LS-3 names the cost.
-2. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
+2. **Structure ceiling (Plan 39 GL.2, #647).** The Agent structure check fails on base with 102 findings against a 13-entry baseline. Recommended: freeze today's findings as a ceiling that may only fall, as D10 did for skip gates, and cut wave-2 cards to bring it down. Until then, R14-P39-07 lands with that check red only on the inherited findings.
+3. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
 3. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
 4. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
 5. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
