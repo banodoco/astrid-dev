@@ -52,9 +52,57 @@ Cuts, accepted: TL-15a falls to about 2.5 days (plus CI wiring); the contract-ma
 
 **Run start:** Pending — no run is authorized, and none may start before Release 14 is published. Next: when the owner starts a run, record the date, the phase, the accountable session, what it may do without asking, what needs her go, and the advisor session.
 
+## Phase 0: the commit contract
+
+Evidence and decisions for phase 0, added on 18 November 2026. Sources are the reviews and profiles of 17 and 18 November held by the Release 14 Lead (`fable-near-instant-review.md`, `fable-edit-refusals-deeper.md`, `plan-near-instant-commits.md` Rev 2, `near-instant-facts.md`, `sonnet-commit-profile.md`, `live-check-almost-ready.md`, `sonnet-unnamed-edits-on-shot-timelines.md`); they are private and not committed, so what matters is restated here as shapes and counts. Nothing in this plan copies content from the owner's timeline.
+
+**The measured shape.** One timeline with shots, about 8 records and a closure of 7 shots, about 1 MB per revision and about 1,100 distinct stored objects. An uncontended add-media commit took 187 seconds (176 live); profiled, 280 seconds, of which about 190 were CAS re-verification (59 history read passes, 32,686 confirmations, 23,268 physical reads, the Agent loading the base 11 times) and about 80 were legacy timing probes (268 probes, 69 full compiles, each deep-copying the whole bundle). History was only 3 entries, so the reservation scan (2 + 3N closure loads per attempt) is a term that grows by three loads per edit. A clip move was refused after 85 seconds for a legacy declaration it never touched. The editor polls about 110 requests a minute per tab; a history GET took 8 to 9 seconds while holding the store mutex. The handoff has 69 refusal calls (33 with a literal code, 35 without) and about 50 of them re-derive what a named op already encodes.
+
+**The root cause**, in the reviewer's words, restated: "nothing in the stack treats 'accepted' as settled." Each layer re-derives the accepted base from scratch against today's code, and a disagreement can only end in refusal. The five symptoms follow from it (plan.md lists them). It was logged only in pieces: #842 (the principle, closed after four rules), #852 (the editor side), #826 and #846 (cost), #732 (the stuck state), #847 (the same 400 at first start), Plan 54's principle "verify at a trust boundary once; inside a job, carry the digest" (written for generation jobs, per job and not per history), and `releases/12/decisions.md` (a sticky refusal fixed once at one site). Plan 59's handover records the writer-side lesson: "Data was accepted early and refused late." None made it a mechanism, and no test held a document with a history or with size.
+
+**Approach.** Make the principle a mechanism with counts: a counted scaling test (CC-1) so no cost can scale with history again; a rule registry and one delta gate (CC-3) so no rule can re-judge an accepted head; typed reasons and per-change refusals (CC-4, CC-5) so a disagreement has an outcome other than a permanent refusal; one write-time admission (CC-6) so a writer cannot store what a reader refuses; one corpus (CC-7) that runs all of it. Alternatives rejected: a cache keyed by base revision (every ordinary edit creates a new base, so it only helps retries); a second resolver for the legacy probes called "equivalent" (the pattern the 17 November review named; the collect pass reuses the evaluator and the old probe stays as a test oracle); a clock gate (the owner forbids it); a new plan (this one is queued, unowned and already named by #852).
+
+**Challenge:** Pending: no independent critique of phase 0 has been made. Next: the main thread reviews this draft; one fresh reviewer then reads it against the code, briefed to build as little as possible (the same method as the 18 November critique of phase 1).
+
+### Issue ledger
+
+States were read from the GitHub API on 18 November 2026. "Closes" means the plan's end-state check for it passes and the Lead closes the issue then; the plan does not close issues itself.
+
+| Issue | State now | Phase 0 | How |
+| --- | --- | --- | --- |
+| [#826](https://github.com/banodoco/astrid-dev/issues/826) history reads pay for the whole history; every write clears the verification cache | open | closes | CC-1, CC-2, check P0-1 (the verification-cost part is already on the Runtime's `p59/revision-listing-perf`) |
+| [#846](https://github.com/banodoco/astrid-dev/issues/846) every refusal clears the replay memo | open | closes | CC-2, check P0-1 (zero re-hashes after a refusal) |
+| [#852](https://github.com/banodoco/astrid-dev/issues/852) the editor sends intent and adopts the head | open | **states and ratchets; closes at TL-12 (phase 1)** | phase 0 cannot close it alone: the editor half is TL-3b, TL-5, TL-6 to TL-12; CC-8 stops the bridge growing meanwhile |
+| [#732](https://github.com/banodoco/astrid-dev/issues/732) a rejected save leaves the editor stuck | open (labelled `planned`, `release:14`; owner-blocked) | closes | CC-5, check P0-4; `release/14/save-rejections` and `rejected-discharge` land the part for `too_large` and both buttons |
+| [#842](https://github.com/banodoco/astrid-dev/issues/842) validation re-judges whole heads | closed 17 November | **reopen as the mechanism** | CC-3, check P0-2: the principle ("refused only for problems it introduces or touches") closed after four rules; the registry makes it hold for the next rule. The Lead reopens it with a comment linking this plan when the scope PR merges |
+| [#847](https://github.com/banodoco/astrid-dev/issues/847) first start fails with "inputs changed" | open | links | CC-4 logs which component moved and returns a retryable reason; the trace is Plan 61 RB-9 |
+| [#839](https://github.com/banodoco/astrid-dev/issues/839) the equality bridge | closed 17 November | links | the interim fix is Release 14's `release/14/edit-refusals`; CC-8 ratchets; TL-12 retires the bridge |
+| [#838](https://github.com/banodoco/astrid-dev/issues/838) no gesture for a shot's own start and end | open, `plan:59` | links | the owner's decision of 17 November puts it in Plan 59 (`task/plan59-shot-trim`), not this plan; phase 1 consumes the command (TL-5 template) |
+| [#720](https://github.com/banodoco/astrid-dev/issues/720) a world on the timeline makes a 413 save that retries forever | open | links | the retry class is CC-4's (`too_large` is non-retryable by `reason`); the scene-by-reference removal is Release 14's |
+| [#745](https://github.com/banodoco/astrid-dev/issues/745) multi-shot fork rejects valid per-command parents | open, `plan:59` | links | the same habit (re-prove against the original base); Plan 59 owns the fix; CC-3's grid is where a fix adds its row |
+| [#769](https://github.com/banodoco/astrid-dev/issues/769) commit accepts properties that render refuses | open | links | Plan 59's asset-admission contract owns "renderable subset"; CC-6 calls it when it lands |
+
+### Deferred from phase 0
+
+| Item | Decision | Reason |
+| --- | --- | --- |
+| The editor's poll rate (about 110 requests a minute per tab) | Deferred; the cost is bounded by CC-2 | After CC-2 a GET does no hashing and clears no trust, proven by count. Lowering the rate needs the editor to subscribe to the head it adopts, which is phase 1's send-and-adopt (TL-5). Re-measure after CC-2 and file an issue if the Runtime is still busy |
+| Two tabs sharing one draft slot | Deferred to TL-5; TL-1 re-checks | The draft slot is a copy of the local edit. When the local edit is a disposable preview and the head is adopted, there is no retained draft to offer as recovery of another tab's |
+| Cold-start hashing (every media object once per process; about 8 s on one timeline, growing with media bytes) | Deferred; file an issue | The contract is about history length, and this is once per process and proportional to media bytes. Persisting trust across restarts weakens the corruption guarantee the 18 November review found worth keeping, so it is an owner decision on the trust model, not a fix |
+| The roughly 1 MB snapshot stored per revision | Deferred; file an issue | The contract bounds work, not disk; the work is bounded by the head, which is one pass. Delta storage is a storage-format change with a migration, which this plan does not need |
+| The residue under one second | Deferred to a re-profile after CC-2 | No number in the profile shows under one second; "low seconds" is the honest expectation. Wall time on the owner's timeline is recorded as evidence, not gated. The editor's 500 ms save debounce is a separate floor |
+
 ## Owner decisions
 
 **D1 — Decided, 18 November 2026.** Source: the owner, in this Claude Code session, asked "Yeah, is plan 18 a good fit for it?" and then said "do it please". Recorded verbatim. Her approval covers re-scoping Plan 18 so that its **phase 1 is one command layer**: every editor gesture becomes a named command the editor sends, adopting the returned head; each converted gesture deletes its expected-diff block from the save handoff; refusals become a value with a code and a plain headline; generated document x gesture x track tests run through the Agent; schema copies get a single owner. **Phase 2** is Plan 18's original extension proof: one alternate view or workflow built only on those commands. The plan is queued to start **after Release 14** and does not compete with it. Plan 59 owns the editor work in Release 14; nothing is taken from it.
+
+**D9 — Open (owner): which release carries phase 0.** The owner said, on 18 November 2026, in chat: "get it fixed now and PROPERLY fixed in the follow up plan". The "now" is Release 14's fix branches. Proposed: Release 15, the first release after the one whose fix branches phase 0 builds on, ahead of phase 1 (D4). Release 15's brief is "every platform and rented machines", so this is a stretch of its theme (it carries stability work "added on the fly from actual usage"); the alternative is Release 17, "generates quickly and dependably" (version 0.1). Phase 0 changes the commit path of all three repositories, so it should not ride the release that is mid-publish.
+
+**D10 — Open (owner): the corpus data.** Recommended: CC-7 builds synthetic documents to the recorded shapes and counts, with no owner content; optionally the owner supplies one anonymised export of a long-lived timeline (titles, text, asset names and paths removed, shapes and counts kept) for TL-15b. Never a raw copy, and never committed to this public repository without the owner's say.
+
+**D11 — Main-session ruling, to confirm: what `stale_head` does.** For an intent command that names its own reads (the named-op path), the App re-reads the head and re-sends with a new expected head and the same key; for a raw document patch it remains a genuine conflict and opens the card. Reason: an intent is re-evaluated by the Agent against the new head; a patch is a whole-document claim that the other writer may have invalidated.
+
+**D12 — Main-session ruling, to confirm: the contract is checked by counts, with no clock.** Per the owner's rule that tests carry no time limits. Live wall time is recorded as evidence only.
 
 **Main-session rulings, 18 November 2026** (made by the main session, the coordinator, when it judged the independent critique; recorded as such, not as owner decisions; the owner's D1 approval stands and she may overrule any of them):
 
@@ -73,6 +121,10 @@ Decisions table (bold is the recommendation the plan proceeds on):
 | --- | --- | --- |
 | D2 | What happens to raw `doc.patch` | **Settled by ruling 6:** two tiers through one door; retiring it is a later plan. The owner may pull retirement forward. |
 | D3 | Shape of cross-track move | Recommended: `clip.move` gains an optional `track`; finally decided in TL-1 and reviewed at RS1. |
+| D9 | Which release carries phase 0 | **Open (owner).** Proposed Release 15; alternative Release 17. See above. |
+| D10 | Corpus data | **Open (owner).** Recommended synthetic plus optionally one anonymised export. |
+| D11 | What `stale_head` does | **Main-session ruling** (above), to confirm. |
+| D12 | Counts, no clock | **Main-session ruling**; the owner's standing rule. |
 | D4 | Which release carries phase 1 | **Open (owner).** Release 15 ([every platform and rented machines](../../releases/15.md)) or later. Phase 1 changes the commit contract, so it should not ride a release whose theme is installers. The plan only requires the Release 14 publish first. |
 | D5 | The phase 2 extension | **Open (owner).** Recommended: a text-first cut list (one row per shot or clip: trim, reorder, delete) that registers one op of its own. Decided at the phase gate. |
 | D6 | Review rounds | Recommended: RS1 one round, final two, phase 2 one. Pending the owner's agreement. |
@@ -88,10 +140,21 @@ Before code work, record the actual repository, ref and SHA for each. This plan 
 | astrid-app | TBD: `release/<NN>/main` after Release 14 publishes | Template: `task/plan59-shot-trim` at `0e441ea67` (`53eb17b85` the gesture, `5810d02e3` the contract sync); read-only until Plan 59 lands it | Release 14's edit-refusals fix (astrid-app #285), the shot-trim gesture and `source_offset` rule (#851), landed on `release/14/main` | `release/<NN>/plan-18` | `release/<NN>/main` |
 | astrid-agent | TBD: `release/<NN>/main` | Template: `f4c9a3f4c` (`occurrence.trim`, `native_occurrence_trim.py`) | Release 14's uniform-baseline fix (#842) | `release/<NN>/plan-18` | `release/<NN>/main` |
 | astrid-runtime | TBD: `release/<NN>/main` | Template: `9be54d58` | The schema copy and digest `2f9ab523` | `release/<NN>/plan-18` | `release/<NN>/main` |
-| astrid-dev | `origin/main` at `b564a58b` when this draft was cut | Draft branch `plan/18-command-layer`, local only | None | `plan/18-command-layer` | `main` by the scope PR |
+| astrid-dev | `origin/main` at `b564a58b` when this draft was cut (phase 0 added on top, branch `plan/18-phase-0-commit-contract`, cut from `plan/18-command-layer` at `bd535a5d`; local only) | Draft branch `plan/18-command-layer`, local only | None | `plan/18-command-layer` | `main` by the scope PR |
+
+**Phase 0 sources, by repository.** Release 14 fix branches, cut and in flight on 18 November (identities to be recorded at CC-1; none is a retained donor until merged):
+
+| Repository | Branch or PR | What it carries (intent, per Rev 2) |
+|---|---|---|
+| astrid-runtime | `release/14/commit-cost` (cut from `519b404`) | CAS verify-once by file identity; trust survives memo clears; "inputs changed" as a retryable reason with the moved component logged |
+| astrid-agent | `release/14/legacy-probes` (cut from `b126d7482`) | probe memo per base; the `gap_after_s` probe test; unsupported declarations signed by value |
+| astrid-agent | `release/14/commit-loads` (cut from `b126d7482`) | verified document memoised per commit; reserved identities per accepted revision |
+| astrid-agent | #393, merged `b126d7482` | an incomplete catalog association judged only when a change introduces or touches it |
+| astrid-app | `release/14/rejected-discharge` (cut from `a4f765fbb`); #294 (not verified on a remote when this was written) | both conflict buttons discharge; Position fields use `onValueCommitted` |
 
 ## References
 
+- Phase 0 issues: [#826](https://github.com/banodoco/astrid-dev/issues/826), [#846](https://github.com/banodoco/astrid-dev/issues/846), [#732](https://github.com/banodoco/astrid-dev/issues/732), [#847](https://github.com/banodoco/astrid-dev/issues/847), [#720](https://github.com/banodoco/astrid-dev/issues/720), [#745](https://github.com/banodoco/astrid-dev/issues/745), [#769](https://github.com/banodoco/astrid-dev/issues/769). Principle: [Plan 54](../54-warm-latency/plan.md) "Verify at a trust boundary once"; writer-side lesson: [Plan 59 handover](../59-into-the-minkhole-proof-point/handover.md).
 - Release 14: [`releases/14.md`](../../releases/14.md); Plan 59 owns the editor work in it ([plan](../59-into-the-minkhole-proof-point/plan.md)).
 - Gap: [LS-003](../../vision/gaps/LS-003-full-stack-contributions.md).
 - Issues: [#838](https://github.com/banodoco/astrid-dev/issues/838), [#839](https://github.com/banodoco/astrid-dev/issues/839), [#842](https://github.com/banodoco/astrid-dev/issues/842), [#851](https://github.com/banodoco/astrid-dev/issues/851), [#852](https://github.com/banodoco/astrid-dev/issues/852), [#853](https://github.com/banodoco/astrid-dev/issues/853), [#854](https://github.com/banodoco/astrid-dev/issues/854).

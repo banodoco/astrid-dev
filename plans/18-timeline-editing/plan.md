@@ -8,15 +8,46 @@
 
 **Owner:** Unassigned
 
-**Estimate:** Phase 1 about 60 engineering days (about 25 elapsed with parallel workers); phase 2 about 9 (about 7 elapsed), scoped at the phase gate.
+**Estimate:** Phase 0 (the commit contract) about 23 engineering days (about 11 elapsed with parallel workers); phase 1 about 60 (about 25 elapsed); phase 2 about 9 (about 7 elapsed), scoped at the phase gate.
 
-**Waiting on:** Release 14 to be published (nothing here starts before it); the owner's answers on D4 (release), D5 (the view) and, only if TL-1 cannot settle it, D8 (the unit convention) in [inputs.md](inputs.md#owner-decisions). The independent critique is done and accepted.
+**Waiting on:** Release 14 to be published (nothing here starts before it; phase 0 builds on its fix branches); the owner's answers on D9 (the release phase 0 joins), D4 (the release for phase 1), D5 (the view) and, only if TL-1 cannot settle it, D8 (the unit convention) in [inputs.md](inputs.md#owner-decisions). The independent critique is done and accepted.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. **To begin once Release 14 is published:** read [tasks.md](tasks.md#start-here) (prerequisites, repositories, commands), then take TL-1.
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. **To begin once Release 14 is published:** read [tasks.md](tasks.md#start-here) (prerequisites, repositories, commands), then take CC-7 and CC-1 (phase 0). TL-1 (phase 1) waits for CC-3, CC-4 and CC-7.
 
-**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (primary). Phase 2 proves one timeline-specific foundation, not the whole workspace and component contract. Phase 1 also serves [F-001 — Platform reliability](../../vision/gaps/F-001-platform-reliability.md).
+**Vision gaps:** [LS-003 — Composable frontend and backend contributions](../../vision/gaps/LS-003-full-stack-contributions.md) (primary). Phase 2 proves one timeline-specific foundation, not the whole workspace and component contract. Phases 0 and 1 also serve [F-001 — Platform reliability](../../vision/gaps/F-001-platform-reliability.md).
 
 ## Outcome and scope
+
+## Phase 0: the commit contract
+
+Added on 18 November 2026. The owner, in chat, about the week's timeline-editing failures: "get it fixed now and PROPERLY fixed in the follow up plan". The "now" part is Release 14's fix branches (listed below). This is the follow-up: it goes first in this plan, because phase 1 puts every gesture on the commit path and would inherit every flaw in it. The decision to extend this plan, not open a new one, is the main session's, on the advice of the review `fable-near-instant-review.md` ("Deeper issue"), since this plan is queued, unowned and waiting on scope, and #852 already points here ([D1 and D9](inputs.md#owner-decisions)).
+
+**The root cause.** Nothing in the stack treats an accepted head as settled. Every request re-proves the accepted base from scratch against today's code, and when that disagrees the only outcome is a refusal. The five symptoms of the week are one cause: (1) commits that took 3 minutes, from repeated re-verification of one unchanged base; (2) whole-head refusals ([#842](https://github.com/banodoco/astrid-dev/issues/842)'s four rules, plus the unsupported-declaration and half-catalog-association cases); (3) the editor's equality bridge ([#839](https://github.com/banodoco/astrid-dev/issues/839)); (4) conflict states nothing can discharge ([#732](https://github.com/banodoco/astrid-dev/issues/732)); (5) a writer that stored what a reader later refuses. No test held a document with a history or with size, so each slipped through.
+
+**The contract.** Six statements, each held by a named test (the full list is in [tasks.md](tasks.md#phase-0-end-state-checks)):
+
+- **(a) Bounded work.** A commit's work is the change plus one pass over the document, independent of history length. It is stated as counts (closure loads, CAS hashes, opens and stats, timing passes) and held by a scaling test at 3 and at 30 history entries and at one and two timelines. Trust persists: a refused commit or an unrelated write causes no re-hash. No test uses a wall-clock limit.
+- **(b) One delta gate.** Every rule that reads the whole head reports `{key: signature}` findings through `_preexisting.split_findings`, and only introduced findings block. A function that reads the base never raises on its content. A rule registry plus a test that runs every registered rule over a base carrying each known legacy shape stops a new rule skipping this.
+- **(c) The editor sends intent and adopts the head** ([#852](https://github.com/banodoco/astrid-dev/issues/852)). Phase 0 states it and holds it with a ratchet (no new expected-diff refusal site); phase 1 delivers it (TL-3b `clip.move` with a track, TL-5 send and adopt, TL-6 to TL-11 conversions, TL-12 retiring the equality bridge and the unnamed-edit predicate, and with them the native command path becoming live). The shot start and end command ([#838](https://github.com/banodoco/astrid-dev/issues/838)) is Plan 59's, by the owner's decision of 17 November; paste and duplicate is TL-3d and TL-10.
+- **(d) A refusal applies to one change and can be discharged** ([#732](https://github.com/banodoco/astrid-dev/issues/732)). The Runtime returns typed, retryable reasons; the App matches no message text; `stale_head` rebases an intent.
+- **(e) Writers cannot store what readers refuse.** Registry and catalog entries are validated at write time, in one place, both ids or neither; a closure test applies every writer to every corpus head and checks the result cold.
+- **(f) One corpus.** Long-lived documents, synthetic or anonymised real shapes, in astrid-agent, run the invariant: every head accepts an unrelated one-field commit and a duplicate, at the stated counts. The App pins Agent fixtures by SHA-256 (`tests/fixtures/p1-feasibility/cases.json`).
+
+**What Release 14 lands now, and what phase 0 adds.** Phase 0 builds on these and does not redo them (their identities are in [inputs.md](inputs.md#source-identities)):
+
+As of 18 November the branches below are cut and in flight, from Rev 2 of the near-instant-commits plan (`plan-near-instant-commits.md`); only #393 is merged. The "lands now" column is that plan's intent: CC-1 starts by checking each against the merged code, and anything that did not land moves into phase 0.
+
+| Release 14 branch | Lands now | Phase 0 generalises it to |
+| --- | --- | --- |
+| Runtime `release/14/commit-cost` | CAS verify-once by file identity through the one existing map; survives memo clears; "inputs changed" returned as a retryable reason with the moved component logged | a counted contract held at 3 and 30 entries and one and two timelines (CC-1, CC-2); the history read and the replay memo ([#826](https://github.com/banodoco/astrid-dev/issues/826), [#846](https://github.com/banodoco/astrid-dev/issues/846)); the typed reason set (CC-4) |
+| Agent `release/14/legacy-probes` | probe results memoised per base; the `gap_after_s` probe fault tested; an unsupported declaration signed by its own value | the rule registry and the rules by legacy-shape grid (CC-3), so the next rule cannot skip the gate |
+| Agent `release/14/commit-loads` | verified document memoised per commit; reserved identities kept per accepted revision | the counts as a permanent test (CC-1), not a one-off profile |
+| Agent #393 (merged, `b126d7482`) | an incomplete catalog association judged only when a change introduces or touches it (the reader side) | the writer side: no half association can be stored (CC-6) |
+| App `release/14/rejected-discharge` and #294 | both conflict buttons discharge a rejected change; Position fields commit on `onValueCommitted` | a refusal that is per change from the start, with the retry classification typed (CC-4, CC-5) |
+
+**Polling and contention, each included or deferred.** Included: history GETs and the ~110 requests a minute of one tab must cost no re-hash and must not clear CAS trust (CC-2 proves it by count); the store mutex is held for a counted, history-independent amount of work. Deferred, with reasons, in [inputs.md](inputs.md#deferred-from-phase-0): reducing the poll rate itself (follows from adopting the head in phase 1; re-measure after CC-2), the two-tab draft-slot clash (the draft slot disappears when the local edit is a disposable preview, TL-5; TL-1 re-checks), cold-start hashing (once per process and proportional to media bytes, not history; persisting trust across restarts needs an owner decision on the trust model), and the per-revision snapshot size (a storage-format question; the contract bounds work, not disk).
+
+**Release.** Phase 0 is proposed for Release 15, ahead of phase 1; an owner decision (D9).
 
 **What creators and agents get.** Dragging, trimming, splitting, dropping and typing in the editor stop failing for reasons the creator cannot see. The editor no longer judges whether its own edit looks right: it says what the person did ("trim this shot's end to 4.2 s"), the Agent and Runtime decide, and the editor shows the document that comes back. When something is refused, the message says in plain words what and why, and the same code reaches an agent over the CLI, the SDK or MCP.
 
@@ -42,9 +73,11 @@ We build on `occurrence.trim`, the one gesture already built as intent plus adop
 
 ## Sequence and readiness
 
-Starts after Release 14 is published and takes nothing from it: Plan 59 lands the shot-trim gesture, the edit-refusals fix and the `source_offset` rule first, and phase 1 builds on that base. Order: TL-1 writes the command contract and its findings (the load-bearing design: op per gesture, the unit convention, the registry and how the Runtime loads pack-registered ops, the editor SDK vocabulary, the responsiveness rule, the refusal codes); **review stop RS1** follows; then four strands run in parallel (schema owner, registry and new ops; the refusal value, send-and-adopt and the editor SDK; the generated suite; the agent surface); then the gesture conversions run in parallel and each lands with its rows in the matrix; then the generic path is deleted and the end-state checks go in; then the final review. The critical path is in [tasks.md](tasks.md#critical-path-and-estimates). The phase 2 gate: phase 1's end-state checks pass and the owner has chosen the view (D5). Unresolved: D4, D5 and possibly D8; the rest are recommended or ruled by the main session.
+**Phase 0 goes first.** It starts after Release 14 is published, on that release's fix branches, and phase 1 consumes its output: TL-1 waits for CC-3 (the delta gate), CC-4 (typed reasons) and CC-7 (the corpus, which TL-15b extends rather than builds a second one). CC-7, CC-1 and CC-6 start together; CC-3 follows CC-7; CC-2 follows CC-1; CC-4 then CC-5 run beside them; R0 closes the phase (the order is in [tasks.md](tasks.md#critical-path-and-estimates)). Phase 1 starts after Release 14 is published and takes nothing from it: Plan 59 lands the shot-trim gesture, the edit-refusals fix and the `source_offset` rule first, and phase 1 builds on that base. Order: TL-1 writes the command contract and its findings (the load-bearing design: op per gesture, the unit convention, the registry and how the Runtime loads pack-registered ops, the editor SDK vocabulary, the responsiveness rule, the refusal codes); **review stop RS1** follows; then four strands run in parallel (schema owner, registry and new ops; the refusal value, send-and-adopt and the editor SDK; the generated suite; the agent surface); then the gesture conversions run in parallel and each lands with its rows in the matrix; then the generic path is deleted and the end-state checks go in; then the final review. The critical path is in [tasks.md](tasks.md#critical-path-and-estimates). The phase 2 gate: phase 1's end-state checks pass and the owner has chosen the view (D5). Unresolved: D4, D5 and possibly D8; the rest are recommended or ruled by the main session.
 
 ## Interfaces and handoff
+
+**Phase 0 produces:** (1) the counting harness and the scaling test (Agent and Runtime), whose golden counts may only fall; (2) the rule registry and the rules-by-legacy-shapes test; (3) the typed refusal reasons in the Runtime and the App's per-change discharge; (4) one write-time admission function for registry and catalog entries; (5) the corpus and its manifest, pinned by the App by SHA-256. Phase 1 uses all five.
 
 **Consumes:** Release 14's published tip of each product repository (identified by SHA at TL-1, in [inputs.md](inputs.md#source-identities)), including `occurrence.trim`, the edit-refusals fix and the window-origin `source_offset` rule; the Agent's baseline rule from #842.
 
@@ -52,7 +85,7 @@ Starts after Release 14 is published and takes nothing from it: Plan 59 lands th
 
 ## Completion
 
-Done when each of these is true, each guarded by a named test that fails if it stops being true (the full list with test names is in [tasks.md](tasks.md#end-state-checks)):
+Done when each of these is true, each guarded by a named test that fails if it stops being true (the full list with test names is in [tasks.md](tasks.md#end-state-checks); phase 0's six contract checks are in [tasks.md](tasks.md#phase-0-end-state-checks) and are true before phase 1 starts):
 
 1. **No expected-diff block remains:** no App file constructs `reads`, `expect` or `selections`, and no encoder can refuse.
 2. **Every gesture is one named op, and the App has one op vocabulary:** the exhaustive gesture-to-op table is checked against the generated types, and the extension SDK's old patch vocabulary is gone.
