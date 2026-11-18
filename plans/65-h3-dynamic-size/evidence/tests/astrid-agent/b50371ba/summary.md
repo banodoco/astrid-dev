@@ -16,3 +16,11 @@ The sorter compares this starting log with itself solely to classify its failure
 | preexisting | 1 |
 | fixed | 0 |
 | missing | 0 |
+
+Exact command:
+
+```sh
+PYTEST_ADDOPTS=-rA bash ../astrid-dev/env/agent-pytest.sh tests/packs/h3_av/test_character_swap.py tests/packs/h3_av/test_character_swap_cpu_boundary.py tests/packs/h3_av/test_generation.py tests/packs/h3_av/test_mask_contract.py tests/packs/h3_av/test_moving_masks.py tests/packs/h3_av/test_native_masked_edit.py tests/packs/h3_av/test_native_v2_contract.py tests/packs/h3_av/test_skill_examples_admitted.py tests/packs/h3_av/test_source_frame_fit.py tests/packs/h3_av/test_spec.py tests/packs/h3_av/test_static_mask_preflight.py tests/packs/h3_av/test_static_regions.py tests/core/generation/test_catalog_entries_dry_run.py tests/core/generation/test_local_job_h3_evidence.py
+```
+
+All three collected `test_static_mask_preflight.py` tests were deselected for the integration lane; no test in that file ran.
