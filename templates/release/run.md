@@ -37,6 +37,10 @@ Each packet is a short, stable Markdown assignment at `releases/NN/packets/<pack
 
 - <decision, with the recommendation>; or "nothing".
 
+## Standing rulings
+
+Rulings the Lead has made that recur, each with the decision that set it. Read before acting. A ruling not listed here was a one-off and binds no other packet.
+
 ## Orchestrator launch message
 
 Only when dispatching packets. The owner pastes it into the Orchestrator's own session; fill each `<…>`.
