@@ -18,7 +18,7 @@
 
 ## Outcome and scope
 
-A creator can ask for `output.size: [512, 288]` on image-guided generation, a masked edit or Character Swap. Continuation gets size from [Plan 66](../66-h3-composable-core/plan.md) CC-7 (D1). Any width and height from 32 to 16384 in multiples of 32 is accepted. With no size given, the request is 1024×576 and its bytes and digest are exactly what they are today. Source conform, generation, mask rasterization, composition, dry run and the completed-job record all use the same effective size.
+A creator can ask for `output.size: [512, 288]` on image-guided generation, a masked edit or Character Swap. Continuation gets size from [Plan 66](../66-h3-composable-core/plan.md) CC-7 (D1). Any width and height from 32 to 16384 in multiples of 32 is accepted. With no size given, the request is 1024×576, identical in bytes and digest to an explicit 1024×576 request. Source conform, generation, mask rasterization, composition, dry run and the completed-job record all use the same effective size.
 
 Rectangle masks are authored on a canvas: by default 1024×576, or the canvas the mask states. They scale to the chosen size. A still-image mask scales from its own pixel size.
 
@@ -49,7 +49,7 @@ The request's size goes through `GenerationInputs.canvas`, which every stage rea
 
 CPU tests prove each of these:
 
-- A 512×288 and a 768×448 request compile on image-guided generation, masked edit and Character Swap, with the requested size in every width and height binding. A non-default size on continuation is refused, pointing to Plan 66.
+- A 512×288 and a 768×448 request compile on image-guided generation, masked edit and Character Swap, with the requested size in every width and height binding. A non-default size on continuation is refused from the limits table as a lowering limit, which Plan 66 CC-7 removes.
 - 256×144, 768×432, out-of-range, fractional, string and boolean sizes are refused before claim.
 - A request with no size and one with explicit 1024×576 give identical bytes and digests, and compile the same graph as before this plan.
 - At 768×448, decoded output keeps the prepared source pixels outside a scaled rectangle mask, on a non-16:9 source with an off-centre landmark.

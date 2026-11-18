@@ -29,7 +29,7 @@ Both routes accept image, video and standalone audio references, within the limi
 - a GPU or live run of any kind (D2). The owner tests afterwards;
 - several speakers bound to their own voices;
 - copying the original room tone back under the new line;
-- `MiniMaxH3AddGuide`, or timeline images at any frame other than 0 ([Plan 66](../66-h3-composable-core/plan.md) CC-3), or any new Comfy node;
+- `MiniMaxH3AddGuide`, or timeline images at any frame other than 0 ([Plan 66](../66-h3-composable-core/plan.md) CC-4 adds guides), or any new Comfy node;
 - fixed audio as a timeline audio item, or dialogue lines as their own request piece;
 - moving continuation onto the shared builder ([#866](https://github.com/banodoco/astrid-dev/issues/866));
 - a second model. Only the shared limits table is designed to extend to one.
