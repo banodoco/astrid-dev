@@ -69,7 +69,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Done | `r14-P55-01-1` | Design merged into astrid-dev `release/14/plan-55` at `cb5419731` (#803), after the Lead's RS1; RS1.10 and RS1.11 go to LS-7 and LS-9 |
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Rework | `r14-P39-01-2` | #373 and #375–#378 merged. #374: fetching Runtime `df3d4dd` broke 82 later tests on its schema, so revert that one change and merge at the `a6466b09` tree. The leak goes to LS-7.2 ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6966380532)) |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Done | `r14-P39-01-2` | Agent #373 to #378 merged into `release/14/plan-39` (#374 at `c598ba5f`); AE1 satisfied at base. Follow-ups: K1a.1, AT9, AT10, AT16, LS-7.2 |
 | [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Done | `r14-P39-02-1` | Runtime #56 and #57 merged into `release/14/plan-39` (`6cfe9a19`) |
 | [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Done | `r14-P55-02-1` | Sync and meter merged; the meter's review reopened LS-2 as a gate (R14-P55-10) |
 | [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Done | `r14-P39-03-1` | App #281 merged into `release/14/plan-39` (`e5f00690`) |
