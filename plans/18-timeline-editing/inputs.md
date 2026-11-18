@@ -104,6 +104,8 @@ States were read from the GitHub API on 18 November 2026. "Closes" means the pla
 
 **D11 — Main-session ruling, to confirm: what `stale_head` does.** For an intent command that names its own reads (the named-op path), the App re-reads the head and re-sends with a new expected head and the same key; for a raw document patch it remains a genuine conflict and opens the card. Reason: an intent is re-evaluated by the Agent against the new head; a patch is a whole-document claim that the other writer may have invalidated.
 
+**D13 — Phase 1 session ruling, 18 November 2026:** one rule home and one registration surface (CC-3 builds the shared registry, TL-3r calls it), and one closed refusal list owned by the Agent with one wording home (CC-4 creates it, TL-4 extends it). CC-8's temporary ratchet stays; TL-12's check replaces it.
+
 **D12 — Main-session ruling, to confirm: the contract is checked by counts, with no clock.** Per the owner's rule that tests carry no time limits. Live wall time is recorded as evidence only.
 
 **Main-session rulings, 18 November 2026** (made by the main session, the coordinator, when it judged the independent critique; recorded as such, not as owner decisions; the owner's D1 approval stands and she may overrule any of them):
