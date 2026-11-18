@@ -102,9 +102,10 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Review | `r14-P39-07-1` | Agent #397 at `10cd2913`. The Lead checks the four round-3 injections before merging ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6974939283), [STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6976265216)) |
 | [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Review | `r14-P39-08-1` | Runtime #60 at `74e0ac87`. The Lead checks the injections ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6974962759), [STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6976535923)); Standing ruling 5 applies to the bootstrap step ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6976303727)) |
 | [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Review | `r14-P39-09-1` | App #298 at `88c4b95f`. The Lead checks the round-2 injections and [Tests 44288191092](https://github.com/banodoco/astrid-app/actions/runs/44288191092) ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6974930588), [STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6976758754)) |
+| [R14-P39-12](packets/R14-P39-12.md) Structure ceiling that may only fall | Plan 39 GL.2 (#647) | Ready | — | Dispatch next: wave 1 ends only when fast checks is green. Needs ASTRID_GATE_OWNERS to land |
 | [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Rework | `r14-P61-01-1` | App #302 at `1a62b911` adds the focused macOS step. Collect the native fixture result from [Tests 44292742370](https://github.com/banodoco/astrid-app/actions/runs/44292742370) ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6976304113), [STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6976965905)) |
 | [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Blocked | — | After R14-P61-01 merges |
-| [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Ready | — | Dispatch after R14-P39-09 |
+| [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Blocked | — | After RS1: AT11 and AT12 are wave 2 rows ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6978542613)) |
 | [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Ready | — | Dispatch (4) |
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Ready | — | Dispatch (5) |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Ready | — | Dispatch (6) |
@@ -113,7 +114,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch (8) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Done | `r14-FIX-03-3` | Agent #360 merged into `release/14/main` at `b9740f64`. #721 stays open until a tester build proves it |
 | [R14-P55-04](packets/R14-P55-04.md) First job | Plan 55 LS-12; draft Agent #361 | Ready | — | Dispatch after R14-P55-06 |
-| R14-P39-04 Re-measure | Plan 39 G1, G2 | Blocked | — | Write and dispatch once the three gate packets R14-P39-07, R14-P39-08 and R14-P39-09 merge |
+| [R14-P39-04](packets/R14-P39-04.md) Re-measure | Plan 39 G1, G2 | Ready | — | Dispatch now: R14-P39-07, R14-P39-08 and R14-P39-09 are merged (Agent `2266c24a`, Runtime `19cd1e35`, App `549e335d`). Then the stop: G2, RS1 |
 | R14-P39-06 onward, wave 2 | Plan 39 RT1–RT8, AT1–AT4, PT1–PT4, K2, K3, SF3b, SF3c | Blocked | — | Cut from G2's causes after the Lead's RS1; about eight packets |
 | R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2, LS-20 (#855) | Blocked | — | After R14-P55-05 and R14-P55-07 merge: the same backend and host files |
 | R14-P39-11 A bound on terminal publication replay | Plan 39 AT13 (#611) | Blocked | — | After R14-P55-07 merges: the same `generic_host.py` |
@@ -215,15 +216,14 @@ If a check fails, say which manual step I must do instead of promising automatio
 
 ## Waiting on the owner
 
-1. **Plan 55 Windows target.** The measured hosted-Windows floor is 226–284 ms against a 0.1 s target. Recommended: keep the target for a real machine, and decide after LS-3 names the cost.
-2. **Structure ceiling (Plan 39 GL.2, #647).** The Agent structure check fails on base with 102 findings against a 13-entry baseline. Recommended: freeze today's findings as a ceiling that may only fall, as D10 did for skip gates, and cut wave-2 cards to bring it down. Until then, R14-P39-07 lands with that check red only on the inherited findings.
-3. **`ASTRID_GATE_OWNERS`** (an astrid-agent repository variable). R14-P39-07's gates refuse a change to a gate unless a named owner approves that exact head. Until the variable lists those people, probably just you, no one can approve a legitimate gate change. This is a repository setting, so it stays with you.
-4. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
-5. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
-6. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
-7. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
-8. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
-9. **Plan 61:** D3 (recommended: one review round, R, before landing) and filing the three drafted issues. The real run and the first-start trace (RB-6, RB-9) run on a hosted Mac (R14-P61-02), so no stop window on your machine is needed; a run on your own data is optional.
+1. **`ASTRID_GATE_OWNERS`** (an astrid-agent repository variable). Once Agent #397 merges, changing the structure baseline is a protected gate change. [R14-P39-12](packets/R14-P39-12.md) can land only when the variable lists your login and you approve the exact head.
+2. **One task row per ChatGPT submission:** the Orchestrator holds packets with several rows (R14-FIX-04, R14-P52-01, R14-P53-01, R14-P55-11) under her direct instruction; does it apply, and to which?
+3. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
+4. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
+5. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
+6. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
+7. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
+8. **Plan 61:** filing the three drafted issues. The real run and the first-start trace (RB-6, RB-9) run on a hosted Mac (R14-P61-02), so no stop window on your machine is needed; a run on your own data is optional.
 
 **Decided on 18 November:** three Agent re-pins, approved by the owner in the Lead's session:
 - Runtime `f3dc970a` on `release/14/plan-55`, for Agent #384 (LS-7);
@@ -232,6 +232,12 @@ If a check fails, say which manual step I must do instead of promising automatio
 
 The last two are R14-FIX-10.
 
+At 12:30 UTC the owner agreed to four further decisions in the Lead's session:
+
+- **Plan 39 GL.2 (#647).** Freeze the Agent structure check's 102 current findings as a ceiling that may only fall, as D10 did for skip gates. Wave 2 cards bring it down.
+- **Plan 55 Windows target.** Keep the 0.1 s target for a real machine and decide after LS-3 names the cost. The hosted-Windows floor measured 226–284 ms.
+- **Plan 61 D3.** Hold one review round, R, before landing.
+- **Issue scope.** With [#888](https://github.com/banodoco/astrid-dev/pull/888) merged, prepare an Agent fix packet for #869 and move #622, #815, #816 and #820 out of Release 14.
 The owner limited gates to realistic weakening and capped gate reviews at two rounds.
 
 **Decided on 17 November:** the quarantine cap counts tests, with today's 19 as a ceiling that may only fall (Plan 39 D9); the caller keeps its own hash on a verified transfer (Plan 55 D14). The Lead's check-ins now run as a scheduled task outside its machine.
