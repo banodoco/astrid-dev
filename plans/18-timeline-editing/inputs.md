@@ -77,7 +77,7 @@ Decisions table (bold is the recommendation the plan proceeds on):
 | --- | --- | --- |
 | D2 | What happens to raw `doc.patch` | **Settled by ruling 6:** two tiers through one door; retiring it is a later plan. The owner may pull retirement forward. |
 | D3 | Shape of cross-track move | Recommended: `clip.move` gains an optional `track`; finally decided in TL-1 and reviewed at RS1. |
-| D4 | Which release carries phase 1 | **Open (owner).** The release after [Plan 63](../63-dependable-saving/plan.md)'s, which is Release 14 (D9, decided 18 November 2026): so Release 15 ([every platform and rented machines](../../releases/15.md)) or later, since phase 1 starts on Plan 63's base. Phase 1 changes the commit contract, so it should not ride a release whose theme is installers. |
+| D4 | Which release carries phase 1 | **Open (owner).** The release after [Plan 63](../63-dependable-saving/plan.md)'s, which is itself open (its D9, recommended Release 15): so Release 16 or later if Plan 63 is Release 15, since phase 1 starts on Plan 63's base. Phase 1 changes the commit contract, so it should not ride a release whose theme is installers. |
 | D5 | The phase 2 extension | **Open (owner).** Recommended: a text-first cut list (one row per shot or clip: trim, reorder, delete) that registers one op of its own. Decided at the phase gate. |
 | D6 | Review rounds | Recommended: RS1 one round, final two, phase 2 one. Pending the owner's agreement. |
 | D7 | Capture ports and the `commitSession.ts` family | **Decided (main session, ruling 1): delete.** |

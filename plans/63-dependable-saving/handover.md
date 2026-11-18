@@ -6,7 +6,7 @@ Written on 18 November 2026 by the session that moved Plan 18's Phase 0 here. It
 
 ## Where it stands
 
-- The plan is **queued and unowned**, in Release 14 by the owner's decision (D9). It is a draft on the astrid-dev branch `plan/63-dependable-saving`; the main thread reviews it first.
+- The plan is **queued and unowned**, in no release brief; the owner said to add it to astrid-dev and not to start it. Which release carries it is D9 (open; recommended Release 15). It is a draft on the astrid-dev branch `plan/63-dependable-saving`; the main thread reviews it first.
 - Phase 0 of Plan 18 was **moved** here, not copied, with the save-category design's deltas applied (CC-4 and CC-5 rewritten, CC-9 new, CC-10 moved in from TL-10, the corpus and ratchet extended). Plan 18 now depends on this plan.
 - The save fixes already merged on Release 14 (N1 to N12, the `_reference_basis` fix, Runtime #61 to #63, App #299 to #300) are the base. Their branches were in flight on 18 November; CC-1 starts by checking each against merged code.
 - Independent review of the earlier Phase 0 by Opus (merge with edits), edits applied. The deltas are Fable's. This pack has had no further review.
@@ -22,7 +22,7 @@ Proven by reading, not running: the profile numbers, the 16 incidents and the ro
 
 ## For the next manager, in order
 
-1. Read [plan.md](plan.md), then [tasks.md](tasks.md#start-here). Do not start before today's save fixes are on `release/14/main`; the plan's branches are `release/14/plan-63`.
+1. Read [plan.md](plan.md), then [tasks.md](tasks.md#start-here). Do not start before the owner has chosen the release (D9) and said go; the plan's branches are then `release/<NN>/plan-63`.
 2. Take CC-5a (the model test, grown from the seed) first, with CC-7, CC-1 and CC-4 beside it; CC-3 then CC-6, CC-2, CC-8 and CC-9 run beside the critical path (CC-4, CC-5, CC-10, R0).
 3. Put D15 to the owner now.
 4. When the scope PR merges, the Lead reopens #842 as the mechanism and links this plan on #826, #846, #732 and #852 (see the ledger in [inputs.md](inputs.md#issue-ledger)), and files the deferred items ([inputs.md](inputs.md#deferred)).
