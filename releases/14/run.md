@@ -2,7 +2,7 @@
 
 The live state of the Release 14 run. The Lead is its only writer and rewrites it at every check-in; between check-ins the Orchestrator's latest STATUS on the mailbox is the live record of sessions and handoffs. The [brief](../14.md) holds intent, branches and issues; each plan's `tasks.md` holds engineering progress.
 
-**If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
+**If you are a packet session,** read [Authority](#authority) and [Standing rulings](#standing-rulings) before your packet. **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Standing rulings](#standing-rulings), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
 ## Now (01:10 UTC, Wed 18 Nov)
 
@@ -20,7 +20,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 - **Accountable agent** for Plans 39, 55, 13, 52 and 53 and for the issue packets: the Release 14 Lead, that session. It advises every packet session, runs each plan's review stops (RS1, R) with an independent reviewer, and takes an unresolved finding to the owner. Each plan's `Run start` line links here. **Plan 59** keeps its own run and manager.
 - **The Lead may, without asking:** write, re-plan and order packets; review packet pull requests and merge accepted ones into `release/14/plan-<P>`, and fix branches into `release/14/main`; merge `release/14/main` into plan branches and land plan branches in `release/14/main` (the plan manager's [Release](../../skills/capabilities/astrid-dev-release/SKILL.md#how-a-release-runs) steps); cut and record plan and fix branches; dispatch workflows on plan and fix branches; merge astrid-dev pull requests that change only `releases/14/` or a plan's `tasks.md` (by auto-merge once checks pass); close a superseded draft with one line saying why.
-- **The Orchestrator** acts in the owner's own ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace sessions on this release's plans, and comment on the mailbox. It does not edit the repository.
+- **The Orchestrator** acts in the owner's own ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace sessions on this release's plans, dispatch an authorized workflow on a packet's branch when its session cannot, and comment on the mailbox. It does not edit the repository.
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, dispatch workflows on those branches, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch and never takes a second packet.
 - **Delegated to the Lead on 18 November 2026,** by the owner in the Lead's session:
   - **Re-pins:** a re-pin of one product in another, once the change it brings has passed the Lead's review.
@@ -61,6 +61,23 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | Rework | Lead | Its DECISION and the pull request comments name what to change; the same packet goes back to the same or a replacement session |
 | Blocked | Lead | Waiting on a named dependency or owner decision; anyone may report one |
 | Done | Lead, by DONE | Merged, and `tasks.md` updated on `main` |
+
+## Standing rulings
+
+Rulings that recur, set by the Lead in the decision linked. Read the group that applies to you before acting. Anything not listed here was a one-off. General rules live in their skills: failures are compared by test ID and flips told by isolated runs ([Green 3A](../../skills/capabilities/astrid-dev-green/SKILL.md#3a-no-new-failures)), and a gate packet's threat model is in the [Lead workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md#set-up-once).
+
+**Every packet**
+1. **A known-failing test stays executed,** in its own visible step, rather than deselected to make a new step green. ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6971546393))
+2. **Intermittents routed this release** have their own rows; a packet does not fix them: #785 (H3 frame coverage), RT11 (macOS watchdog), RT12 (macOS custody audit token), AT15 (Windows installed host), AT16 (HyperFrames render), AT17 (G28 cancel variants). ([1](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6964057649), [2](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6969410175), [3](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6974796464))
+
+**Gate, meter or check packets**
+3. **A gate that fails on identical product bytes is a false positive.** Calibrate it from base-against-base runs, and gate invariants (cadence, invocations, waits per call), not totals that follow timing. ([1](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965824641), [2](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6968415737), [3](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6970432614))
+4. **On shared runners, the maximum of many timings is never the deciding statistic.** Gate the median and the 99th percentile, with the share over the limit; a strict maximum may also stay, by the owner's no-loosening rule. ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6967421223))
+5. **A PR that introduces a checker run from the merge base may land once with that step red,** because its base has no checker yet; the PR body says so. ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6974930588))
+6. **After a third review round,** new variants go to a follow-up row, not to the same PR. ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6974939283))
+
+**Pinned dependencies**
+7. **Dependency-identity guards stay.** When one refuses a comparison because a pin moved (the Plan 55 meter, the LS-5 comparison), the run counts as an observation, and the refusal is stated as the reason. A new reference follows the owner's re-pin, under LS-2.1. ([1](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6964652193), [2](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6968167548))
 
 ## Dispatch queue
 

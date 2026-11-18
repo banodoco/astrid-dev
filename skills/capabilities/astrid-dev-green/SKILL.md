@@ -70,7 +70,8 @@ For each side, and each workflow in scope:
    - **Missing:** cleared only by a recorded ruling, either a behaviour removed on purpose, or a rename that keeps the coverage ([the contract's ruling](../../shared/run-contract.md#checks-and-failure-repair)). A deleting commit alone doesn't clear it.
 4. **Find the introducing commit** by bisecting across the candidate's merges, which are named lanes. A failure in files an active lane owns goes to that lane: the test id, the commit, the first error and your best guess.
 5. Re-sort at each load-bearing run. The gate stands on the frozen candidate's qualifying run, with no blocking row left and no required job without a usable result.
-6. **To get a release branch green,** run this mode on the head of `release/<NN>/main` ([the stage](../astrid-dev-release/SKILL.md#get-the-release-branch-green)); a regression goes to the plan that brought it, and old red is mode B.
+6. **A packet or task PR** is judged on what its own change does. A failure that also fails or flips on its base is not caused by it: it gets its own row and does not block that merge. It is not excused, and its row still blocks the release candidate under step 2. To tell a suspected flip, run that one test in isolation three times on the base and three on the head. If it fails on any head run and on no base run, it is the change's. Never rerun until green.
+7. **To get a release branch green,** run this mode on the head of `release/<NN>/main` ([the stage](../astrid-dev-release/SKILL.md#get-the-release-branch-green)); a regression goes to the plan that brought it, and old red is mode B.
 
 ## 3B. Retire old red
 
