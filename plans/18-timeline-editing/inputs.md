@@ -1,22 +1,61 @@
-# Inputs: Extensible timeline editing
+# Inputs — Extensible timeline editing
 
-[Plan](plan.md) · [Tasks](tasks.md)
+[Plan](plan.md) · [Tasks](tasks.md) · [Ten statements](statements.md)
 
-## Starting code
+## Planning evidence
 
-No repository or revision was identified in the draft. At execution start, identify the owning repository or repositories, current refs and full SHAs, dirty work to preserve, actual timeline/editing contracts, and intended `pre-main` destination. Freeze identities before changes; distinguish the current base from any retained donor work. Unknowns remain TBD until then.
+**Scope decision:** Pending — the owner approved the re-scope on 18 November 2026 (quoted under D1), so the shape below is settled; what she has not yet seen is this written plan, its ten [statements](statements.md) and the open decisions D2 to D7. Next: the owner reads the statements, rules on D2 to D7, and the scope PR records her answers here; only then does the plan become `Accepted`.
+
+**Prior art:** The category of bug is already named, traced and partly fixed once, so this plan reuses and does not re-derive.
+
+- *The incidents.* [#839](https://github.com/banodoco/astrid-dev/issues/839): the editor refuses ordinary edits on long-lived timelines because the save handoff compares whole documents and positions, and one refusal poisons later edits. [#838](https://github.com/banodoco/astrid-dev/issues/838): a shot's own start and end have no gesture. [#842](https://github.com/banodoco/astrid-dev/issues/842): the Agent re-judges whole heads (Release 14 carries the Agent fix; this plan consumes it).
+- *The independent review of 18 November* (held by the Release 14 Lead; its findings are the four issues below): one gesture must agree across about fourteen places (the UI edit, the handoff's expected diff, its hand-listed reads, the Agent handler, Agent commit validation, the schema in the Agent, two Runtime copies and an App digest literal, and three projections). The Agent fix converges; the App patches leave the count unchanged. Direction: the editor sends intent and adopts the head. The four issues it produced are the plan's backbone: [#852](https://github.com/banodoco/astrid-dev/issues/852) (intent-only editor), [#853](https://github.com/banodoco/astrid-dev/issues/853) (refusal result type), [#854](https://github.com/banodoco/astrid-dev/issues/854) (schema copies and digest) and [#851](https://github.com/banodoco/astrid-dev/issues/851) (`source_offset`, owned by Plan 59 and consumed here). The comment on #839 ([17 November](https://github.com/banodoco/astrid-dev/issues/839)) generalises the corpus to a generated document x gesture x target matrix.
+- *The first instance, already built:* `occurrence.trim` on `task/plan59-shot-trim` (App `0e441ea67`, Agent `f4c9a3f4c`, Runtime `9be54d58`; unmerged when this was written, owned by Plan 59 for Release 14). Its App half is 18 changed lines in the handoff (`hooks/timelineLocalSaveHandoff.ts:339-349` builds one command and appends it; `flush()` at `:755-779` adopts the returned head) plus a contract sync (`5810d02e3`). It has no expected-diff block, and the Runtime owns anchor, bounds and neighbours. This is the template.
+- *Measured current state (template branch, line numbers will move after Release 14):* the handoff has 8 gesture kinds and 69 `refuse()` calls (33 with a literal code, 35 without, none with a user-facing code); about 50 of the 69 re-derive what a named op already encodes. Only `move`, `transition-clear`, `track-label`, `occurrence-trim`, `prepared-media` and `element` survive a timeline that has shots; split, trim, delete, add track and cross-track moves refuse there (line 336). Expected-diff blocks: move and transition-clear 33 lines (`:408-440`), track label 9, element about 45 (plus 20 on the non-local path, `useTimelineSave.ts:77-96`), prepared media 7 and about 42, placement baseline 51 (`:273-323`). Silent paths: capture refusal swallowed until the next save (`useTimelinePersistence.ts:1098-1100`), a recovery-draft read failure that reloads and clears with no message (`useTimelineSave.ts:771-775`), plus the `useAssetManagement.ts:398`, `:412` and four reasonless error statuses in [#853](https://github.com/banodoco/astrid-dev/issues/853).
+- *The Agent already has 37 ops* (31 in the schema, six registry-only), a provider the Runtime loads (`runtime_protocol/timeline_commit_provider.py`, so the Runtime keeps no op table of its own), and App capture encoders that already build named commands with golden parity against the Agent (`commands/clipMoveCapture.ts`, `clipTrimCapture.ts`, `clipScalarCapture.ts`, `trackLabelCapture.ts`, `parentClipAddCapture.ts`; goldens made by `commands/fixtures/clip_move_parity.py`). They are the encoders to revive; the editor's live path does not use them. The test-only `commands/commitSession.ts` family (1,449 lines) is imported only by tests.
+- *Gaps in the op set (negative findings):* no op changes a clip's track (`clip.move` has `on` only), none trims a clip's edge in timeline time (`clip.trim` is source seconds, parent media only), none splits or trims an occurrence child, none removes or reorders a track, none duplicates a plain clip (the schema has `occurrence.duplicate`; `clip.duplicate-media` is registry-only), and `clip.set` covers 11 fields (not speed or volume). Raw `doc.patch` checks shape and previous values but no field names or value domains: it accepted `hold = -5` and an unknown key offline, where `clip.move` with `on = -5` is refused.
+- *Detail files:* five read-only inventories (gestures, ops, refusals, tests, agent surface) were made on 18 November from the template branches; their results are the counts and file references in this section and in [tasks.md](tasks.md). They are not committed (private logs stay out of the pack); TL-1 repeats the inventories on the real base.
+
+**Approach:** One command layer, in two phases, extending what exists. Phase 1: (1) the editor's gestures all become named Agent ops the editor sends, adopting the head that returns, reusing the capture encoders and the `occurrence.trim` path; each conversion deletes that gesture's expected-diff block and refusal sites; (2) refusals become a value `{ok:false, code, headline}` from one closed list; (3) the schema gets one owner (the Agent) with the Runtime copy generated and the App digest literals deleted; (4) a seeded generator in the Agent writes a document x gesture x track matrix that the Agent replays and the editor handoff must reproduce command for command, in CI; (5) `doc.patch` is validated per field from the op schemas and the Agent's refusal envelope gains a code, a retry flag and the current head, so an outside agent and the editor meet the same checks. Phase 2: Plan 18's original extension proof, one alternate view built only on those commands. Alternatives rejected: keep patching the handoff (the review shows each fix adds a third model of the gesture); a Runtime-side "intent" service (the Runtime already delegates op meaning to the Agent, correctly); retiring `doc.patch` outright now (pack helpers `shot_plan.py:12`, `timeline_elements.py:189`, `authoring_commit.py:138`, `remote.py:659` and `publish.py:330` emit it; that is its own migration, offered as D2); doing nothing (the same class of bug filed repeatedly in one week: astrid-app #249, #252, #253, #254 and astrid-dev #635, #720, #732, #745, #769, #838, #839 in one week).
+
+**Challenge:** Pending — this is cross-repository, touches the commit contract and user data, and exceeds five days, so an independent critique is required before greenlight. Next: a fresh high-judgment critic, briefed to build as little as possible and to check the claims above against the code, reads this folder and the template branches; record its findings and what is accepted, rejected or left to the owner here.
+
+**Proof and limits:** Completion is the list of end-state checks in [plan.md](plan.md#completion), each guarded by a named test. Limits: the line numbers and counts above are from the unmerged `task/plan59-shot-trim` branches and do not include Release 14's edit-refusals fix (astrid-app #285, whose revert-on-refusal and "Not saved" copy are absent from that tree); TL-1 re-inventories on the real base before anything is built. Nothing was run by the planner except offline probes of the Agent's validators. Phase 2's alternate view is a recommendation, not a decision (D5), and the editor's own extension points were not traced.
+
+**Review rounds:** Recommended: one at stop RS1 (the command contract, because every later task builds on it and a late finding would redo them) and two at the end (cross-repository, protocol and data safety, per the [run contract](../../skills/shared/run-contract.md#review-and-promotion-boundaries)). Phase 2 adds one. Pending the owner's agreement (D6).
+
+**Run start:** Pending — no run is authorized, and none may start before Release 14 is published. Next: when the owner starts a run, record the date, the phase, the accountable session, what it may do without asking, what needs her go, and the advisor session.
+
+## Owner decisions
+
+**D1 — Decided, 18 November 2026.** Source: the owner, in this Claude Code session, asked "Yeah, is plan 18 a good fit for it?" and then said "do it please". Recorded verbatim. Her approval covers re-scoping Plan 18 so that its **phase 1 is one command layer**: every editor gesture becomes a named command the editor sends, adopting the returned head; each converted gesture deletes its expected-diff block from the save handoff; refusals become a value with a code and a plain headline; generated document x gesture x track tests run through the Agent; schema copies get a single owner. **Phase 2** is Plan 18's original extension proof: one alternate view or workflow built only on those commands. The plan is queued to start **after Release 14** and does not compete with it. Plan 59 owns the editor work in Release 14; nothing is taken from it.
+
+Open decisions (recommendations in bold; the plan proceeds on them unless she says otherwise):
+
+| ID | Decision | Options | Recommendation |
+| --- | --- | --- | --- |
+| D2 | What happens to raw `doc.patch` | (a) validate it per field from the op schemas and stop teaching it; (b) retire it for agents now and migrate five pack helpers | **(a).** The editor still stops sending it (a hard end-state check). Retiring it is a later plan once the helpers have named ops. |
+| D3 | Shape of cross-track move | (a) `clip.move` gains an optional `track`; (b) a new op | **(a)** one op per user intent (move), decided finally in TL-1 and reviewed at RS1. |
+| D4 | Which release carries phase 1 | Release 15 ([every platform and rented machines](../../releases/15.md)), or a later one | Her call; the plan only requires the Release 14 publish first. Phase 1 changes the commit contract, so it should not ride a release whose theme is installers. |
+| D5 | The phase 2 extension | (a) a text-first cut list (one row per shot or clip: trim, reorder, delete); (b) a transcript-driven editor; (c) a storyboard grid | **(a)**: smallest, uses only commands phase 1 builds, and is easy to judge by eye. Decided at the phase gate, not now. |
+| D6 | Review rounds | RS1 one round; final two; phase 2 one | **As stated.** |
+| D7 | The test-only `commitSession.ts` family | revive the capture encoders it holds; delete what nothing imports | **Revive the encoders that match Agent goldens, delete the rest** in TL-12, by evidence of what is imported. |
+
+## Source identities
+
+Before code work, record the actual repository, ref and SHA for each. This plan changes three product repositories and astrid-dev. Branches follow the rule for a plan in Release 14 or later: `release/<NN>/plan-18` in each repository the plan changes, cut from that repository's `release/<NN>/main` (NN is the release D4 chooses).
 
 | Repository | Starting branch + SHA | Retained work / donor SHAs / unpublished changes | Verified predecessor output | Candidate branch | Intended destination |
 |---|---|---|---|---|---|
-| TBD | TBD | TBD | TBD | TBD | `pre-main` where applicable; verify at setup |
+| astrid-app | TBD: `release/<NN>/main` after Release 14 publishes | Template: `task/plan59-shot-trim` at `0e441ea67` (`53eb17b85` the gesture, `5810d02e3` the contract sync); read-only until Plan 59 lands it | Release 14's edit-refusals fix (astrid-app #285), the shot-trim gesture and `source_offset` rule (#851), landed on `release/14/main` | `release/<NN>/plan-18` | `release/<NN>/main` |
+| astrid-agent | TBD: `release/<NN>/main` | Template: `f4c9a3f4c` (`occurrence.trim`, `native_occurrence_trim.py`) | Release 14's uniform-baseline fix (#842) | `release/<NN>/plan-18` | `release/<NN>/main` |
+| astrid-runtime | TBD: `release/<NN>/main` | Template: `9be54d58` | The schema copy and digest `2f9ab523` | `release/<NN>/plan-18` | `release/<NN>/main` |
+| astrid-dev | `origin/main` at `b564a58b` when this draft was cut | Draft branch `plan/18-command-layer`, local only | None | `plan/18-command-layer` | `main` by the scope PR |
 
-## References and evidence
+## References
 
-| Source | What it establishes | Identity or link | Limits / missing information |
-|---|---|---|---|
-| Extensibility philosophy | Small dependable primitives, packs for specialized behavior, and deliberate interfaces for further extension. | [Liquid Software vision](../../vision/pillars/liquid-software.md) | Design direction only; does not establish current timeline capabilities. |
-| Timeline/editing implementation and pack conventions | Must establish state ownership, supported media/edit/undo behavior, and composition boundary. | Inspect the owning source at execution start. | Repositories, refs, SHAs, contracts, and focused selectors are TBD. |
-
-## Constraints
-
-Preserve existing behavior according to verified source support. Do not invent a large API or claim functionality is missing without evidence. The [shared run contract](../../skills/shared/run-contract.md) governs source identity, execution, proof, review, and publication authority.
+- Release 14: [`releases/14.md`](../../releases/14.md); Plan 59 owns the editor work in it ([plan](../59-into-the-minkhole-proof-point/plan.md)).
+- Gap: [LS-003](../../vision/gaps/LS-003-full-stack-contributions.md).
+- Issues: [#838](https://github.com/banodoco/astrid-dev/issues/838), [#839](https://github.com/banodoco/astrid-dev/issues/839), [#842](https://github.com/banodoco/astrid-dev/issues/842), [#851](https://github.com/banodoco/astrid-dev/issues/851), [#852](https://github.com/banodoco/astrid-dev/issues/852), [#853](https://github.com/banodoco/astrid-dev/issues/853), [#854](https://github.com/banodoco/astrid-dev/issues/854).
+- Reviews of 17 and 18 November (edit refusals; astrid-app #285; Release 14 timeline-editing changes): held by the Release 14 Lead; their findings are summarised under Prior art.
+- Test-only family and live path: App `src/tools/video-editor/commands/commitSession.ts`, `hooks/timelineLocalSaveHandoff.ts`, `hooks/useTimelinePersistence.ts`, `hooks/useTimelineSave.ts`.
