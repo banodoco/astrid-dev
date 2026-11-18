@@ -108,7 +108,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Review | `r14-P55-06-1` | Lead reviews the Agent materialization fixes in [Agent #407](https://github.com/banodoco/astrid-agent/pull/407). The [scope decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6982812408) assigns the remaining LS-6 work and hash-count change to [R14-P55-12](packets/R14-P55-12.md) |
 | [R14-P55-12](packets/R14-P55-12.md) Output handled once: Runtime and VibeComfy | Plan 55 LS-6 remainder | Ready | — | Dispatch after [R14-P55-06](packets/R14-P55-06.md) merges |
 | [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
-| [R14-FIX-09](packets/R14-FIX-09.md) JSON workflow loading | #836 | Ready | — | Dispatch after R14-FIX-04; half a day, VibeComfy only |
+| [R14-FIX-09](packets/R14-FIX-09.md) JSON workflow loading | #836 | Ready | — | Dispatch now; no longer waits for R14-FIX-04 (no shared files or proof) |
 | [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Done | `r14-FIX-03-3` | Agent #360 merged into `release/14/main` at `b9740f64`. #721 stays open until a tester build proves it |
@@ -118,7 +118,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2, LS-20 (#855) | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
 | R14-P39-11 A bound on terminal publication replay | Plan 39 AT13 (#611) | Blocked | — | After R14-P55-07 merges: the same `generic_host.py` |
 | R14-P55-09 onward | Plan 55 LS-15, LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-15 after LS-4, LS-5 and LS-8; LS-14 also needs paid GPU time |
-| R14-P13-02 Characterisation | Plan 13 HM2 | Blocked | — | After P13-01 |
+| [R14-P13-02](packets/R14-P13-02.md) Characterisation | Plan 13 HM2 | Ready | — | Dispatch next (single row) |
 | R14-FIX-05 Rejected saves | #732, the App half of #720 | Blocked | — | Owner: discard or copy out |
 | R14-FIX-06 Scenes in CI | #734 | Blocked | — | After R14-FIX-10, one Agent issue packet at a time |
 | R14-FIX-07 Release tooling | #739 | Blocked | — | Owner: the ruleset on `release/*/main` |
