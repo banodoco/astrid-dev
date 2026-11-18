@@ -9,7 +9,7 @@ Written on 18 November 2026 by the session that added phase 0 (the commit contra
 - The plan is **queued and unowned**. Phase 0 and the phase 1 re-scope are drafts on astrid-dev branches that are **local only**: `plan/18-command-layer` (phase 1 and 2, commits `d9ac42a4` and `bd535a5d`) and `plan/18-phase-0-commit-contract` (phase 0, one commit on top of it). Neither is pushed and no planning PR exists. The main thread reviews first.
 - Phase 0 exists because of one finding of 18 November: nothing treats an accepted head as settled (the five symptoms are in [plan.md](plan.md#phase-0-the-commit-contract)). The owner asked for it to be fixed "now and PROPERLY ... in the follow up plan"; the "now" is Release 14's fix branches.
 - Release 14's fix branches were cut and in flight on 18 November (runtime `release/14/commit-cost`, agent `release/14/legacy-probes` and `release/14/commit-loads`, app `release/14/rejected-discharge`; Agent #393 is merged at `b126d7482`). They are not rows in `releases/14.md` yet. CC-1 starts by checking each against merged code.
-- No independent critique of phase 0 has been made.
+- Phase 0 has had no independent critique yet; an Opus review is running (18 November 2026). Record its findings in inputs.md when it returns.
 
 ## What is proven, and what is not
 
