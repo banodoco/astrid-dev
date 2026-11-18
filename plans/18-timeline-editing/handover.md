@@ -9,7 +9,7 @@ Written on 18 November 2026 by the session that added phase 0 (the commit contra
 - The plan is **queued and unowned**. Phase 1 and 2 are a draft on the astrid-dev branch `plan/18-command-layer` (commits `d9ac42a4` and `bd535a5d`), local only when this was written. The main thread reviews first.
 - **Phase 0 is no longer here.** The owner asked whether stability should come before extensibility, and the answer was that stability goes first, as its own project, queued in no release brief for now ([Plan 63 D9](../63-dependable-saving/inputs.md#owner-decisions), open: which release; recommended Release 15). Everything about the commit contract, its evidence, its tasks (CC-1 to CC-10, R0) and its decisions (D9 to D15) is there.
 - **Phase 1 starts on the dependable-saving base.** TL-1 waits for Plan 63's CC-3, CC-4 and CC-7; RS1 and every task that changes product code wait for its R0 and end-state checks.
-- What stays here from the save work: TL-5 (the document is the head plus the queue replayed), TL-10's command half (a drop is a named command; the upload half is Plan 63's CC-10) and TL-4's headlines.
+- What stays here from the save work: TL-5 (the document is the head plus the queue replayed), TL-10's command half (a drop is a named command, and the durable upload record), TL-4's closed reason list with headlines and TL-2's sync script (moved here from Plan 63's CC-4), and TL-5's opaque-payload swap.
 
 ## Waiting on the owner
 
