@@ -64,12 +64,12 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 ## Dispatch queue
 
-**Order and limit.** The Orchestrator dispatches Ready packets in the order below, with **at most six in Running or Review at once**, and only one Agent issue packet at a time. Rows without a file are written when their dependencies land.
+**Order and limit.** The Orchestrator dispatches Ready packets in the order below, with **at most six in Running or Review at once**, and only one Agent issue packet at a time. Packets that take slots "together" go out in the same round as slots free, ahead of rows below them. The owner kept the cap at six on 18 Nov. Rows without a file are written when their dependencies land.
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
 | [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Done | `r14-P55-01-1` | Design merged into astrid-dev `release/14/plan-55` at `cb5419731` (#803), after the Lead's RS1; RS1.10 and RS1.11 go to LS-7 and LS-9 |
-| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Rework | `r14-P39-01-2` | #375–#378 and #373 (D10 ceiling, after an injected re-review) merged into `release/14/plan-39` at `d06b6cff`. #374 waits for its hosted run; its two Plan 55 short-lease failures went to LS-7.2 |
+| [R14-P39-01](packets/R14-P39-01.md) Agent wave 1 | Plan 39 AE1, AE2, K1a; drafts Agent #373–#378 | Rework | `r14-P39-01-2` | #373 and #375–#378 merged. #374: fetching Runtime `df3d4dd` broke 82 later tests on its schema, so revert that one change and merge at the `a6466b09` tree. The leak goes to LS-7.2 ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6966380532)) |
 | [R14-P39-02](packets/R14-P39-02.md) Runtime wave 1 | Plan 39 RE1–RE4, K1b; Runtime #56 | Done | `r14-P39-02-1` | Runtime #56 and #57 merged into `release/14/plan-39` (`6cfe9a19`) |
 | [R14-P55-02](packets/R14-P55-02.md) Branch sync and meter | Plan 55 LS-2; draft Agent #359 | Done | `r14-P55-02-1` | Sync and meter merged; the meter's review reopened LS-2 as a gate (R14-P55-10) |
 | [R14-P39-03](packets/R14-P39-03.md) App wave 1 and stored results | Plan 39 PE1, K1c, SF3a | Done | `r14-P39-03-1` | App #281 merged into `release/14/plan-39` (`e5f00690`) |
@@ -77,15 +77,15 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P13-01](packets/R14-P13-01.md) Host map | Plan 13 HM1, HM3 | Done | `r14-P13-01-1` | HM1 astrid-dev #822 (`a62ae1eb`) and HM3 Agent #383 (`a9085e17`) merged into `release/14/plan-13` |
 | [R14-FIX-02](packets/R14-FIX-02.md) VibeComfy loader | #676 | Done | `r14-FIX-02-1` | VibeComfy #174 merged into `release/14/main` at `c27fe76b`; JSON-workflow follow-up #836; the Agent re-pin is the owner's |
 | [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Rework | `r14-P55-03-1` | Re-review B+: a stale connection or websocket drop before the POST fails the job instead of re-preparing; the Windows gate must be the packet's own 61 cases ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965549840)) |
-| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Review | `r14-P55-05-1` | Forged-record fix and refusal parity pushed (VibeComfy #175 `4f6ba9f5`); the Lead's re-review is running. A Windows installed-host failure is being re-run on two heads ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965824641)) |
+| [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Rework | `r14-P55-05-1` | Re-review A− / B+: the forged-record fence holds. Fixing schema refusal parity (range, choice), compile-error wrapping and prefix fallback, pushed at VibeComfy `d0eb56e0`. The Windows failure was intermittent (AT15) ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6966041442)) |
 | [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Review | `r14-P55-07-1` | Re-review A− on both. Runtime #58 merged into `release/14/plan-55` at `f3dc970a`. Agent #384 is accepted and waits only on the owner's Runtime re-pin ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965785953)) |
-| [R14-FIX-10](packets/R14-FIX-10.md) Agent re-pins on `release/14/main` | #674, #676 | Ready | — | Dispatch now, ahead of the queue: the owner approved the re-pins on 18 Nov. It may run beside R14-FIX-03 |
-| [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Ready | — | Dispatch first: LS-4 to LS-13 prove their speed against it |
-| [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Ready | — | Dispatch after R14-P55-10 |
+| [R14-FIX-10](packets/R14-FIX-10.md) Agent re-pins on `release/14/main` | #674, #676 | Ready | — | Dispatch into the next free slot; the cap stays six. The owner approved the re-pins on 18 Nov |
+| [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Running | `r14-P55-10-1` | Agent #388. Its counter gate now takes its limits from five base-vs-base runs, after it failed identical product bytes ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965824641)) |
+| [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Ready | — | Dispatch together with the other two gate packets, after R14-FIX-10, as slots free. They are in three repositories and on the critical path |
+| [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Ready | — | Dispatch together with the other two gate packets, after R14-FIX-10, as slots free. They are in three repositories and on the critical path |
+| [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Ready | — | Dispatch together with the other two gate packets, after R14-FIX-10, as slots free. They are in three repositories and on the critical path |
+| [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Ready | — | Dispatch after R14-P39-07 to 09 |
 | [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Blocked | — | After R14-P61-01 merges |
-| [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Ready | — | Dispatch after R14-P55-10 |
-| [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Ready | — | Dispatch after R14-P39-07 |
-| [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Ready | — | Dispatch after R14-P39-08 |
 | [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Ready | — | Dispatch after R14-P39-09 |
 | [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Ready | — | Dispatch (4) |
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Ready | — | Dispatch (5) |
