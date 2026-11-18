@@ -91,7 +91,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P55-04](packets/R14-P55-04.md) First job | Plan 55 LS-12; draft Agent #361 | Ready | — | Dispatch after R14-P55-06 |
 | R14-P39-04 Re-measure | Plan 39 G1, G2 | Blocked | — | After R14-P39-01 and the gate fixes R14-P39-07 to 09 |
 | R14-P39-06 onward, wave 2 | Plan 39 RT1–RT8, AT1–AT4, PT1–PT4, K2, K3, SF3b, SF3c | Blocked | — | Cut from G2's causes after the Lead's RS1; about eight packets |
-| R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2 | Blocked | — | After R14-P55-05 and R14-P55-07 merge: the same backend and host files |
+| R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2, LS-20 (#855) | Blocked | — | After R14-P55-05 and R14-P55-07 merge: the same backend and host files |
 | R14-P39-11 A bound on terminal publication replay | Plan 39 AT13 (#611) | Blocked | — | After R14-P55-07 merges: the same `generic_host.py` |
 | R14-P55-09 onward | Plan 55 LS-15, LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-15 after LS-4, LS-5 and LS-8; LS-14 also needs paid GPU time |
 | R14-P13-02 Characterisation | Plan 13 HM2 | Blocked | — | After P13-01 |
