@@ -8,14 +8,14 @@ Written on 18 November 2026 by the session that added phase 0 (the commit contra
 
 - The plan is **queued and unowned**. Phase 1 and 2 are a draft on the astrid-dev branch `plan/18-command-layer` (commits `d9ac42a4` and `bd535a5d`), local only when this was written. The main thread reviews first.
 - **Phase 0 is no longer here.** The owner asked whether stability should come before extensibility, and the answer was that stability goes first, as its own project, queued in no release brief for now ([Plan 63 D9](../63-dependable-saving/inputs.md#owner-decisions), open: which release; recommended Release 15). Everything about the commit contract, its evidence, its tasks (CC-1 to CC-10, R0) and its decisions (D9 to D15) is there.
-- **Phase 1 starts on the dependable-saving base.** TL-1 waits for Plan 63's CC-3, CC-4 and CC-7; RS1 and every task that changes product code wait for its R0 and end-state checks.
+- **Re-phased on 18 November 2026 (final recommendations, accepted by the owner): phase A, agents and packs (about 18 days; Agent and Runtime only), starts after Plan 63's server track and does not wait for R0 or the week; phase B, editor gestures (about 44 days), waits for Plan 63's R0 and a week of editing; phase C, the alternate view, is deferred.** TL-1 waits for Plan 63's CC-3, CC-4 and CC-7. New: TL-3e (close the set) and EX-P (the pack-op proof). Cut: the Runtime's schema copy and sync script, selector-declared reads, automatic re-apply and "delete beats edit". About 62 days plus 8.5 optional.
 - What stays here from the save work: TL-5 (the document is the head plus the queue replayed), TL-10's command half (a drop is a named command, and the durable upload record), TL-4's closed reason list with headlines and TL-2's sync script (moved here from Plan 63's CC-4), and TL-5's opaque-payload swap.
 
 ## Waiting on the owner
 
-- **D4:** which release carries phase 1 (the release after Plan 63's; recommended, since phase 1 starts on its base).
-- **D5, D6 and D8** from the earlier draft are unchanged.
-- D9 (the release) is Plan 63's, one decision for the four saving plans (Plans 63, 64, 65 and this one); D10 to D15 are Plan 63's or Plan 64's (D14).
+- **D4:** which release carries phase B (the owner decided Release 15 for the four saving plans, [Plan 63's D9](../63-dependable-saving/inputs.md#owner-decisions); phase B may not fit).
+- **D5 is decided: the alternate view is deferred.** D6 and D8 from the earlier draft are unchanged.
+- D9 (the release, decided: Release 15) is Plan 63's, one decision for the four saving plans (Plans 63, 64, 65 and this one); D10 to D19 are Plan 63's or Plan 64's (D14).
 
 ## For the next manager, in order
 

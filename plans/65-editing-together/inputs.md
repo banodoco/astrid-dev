@@ -11,11 +11,11 @@
 - *One route, merge by address.* Every writer posts to `POST …/timelines/{t}/commit`; the Agent's provider replays on a moved head up to three times, then answers `head_busy`. Two writers clash when the thing is the same and one path is a prefix of the other, or either names the whole timeline.
 - *Most writers name the whole timeline.* A `doc.patch` with no declared reads is forced to `atomic`; an agent's function commit is `atomic` over the whole timeline unless it declares reads; a document publish is `atomic`.
 - *How the editor hears of someone else's commit.* In the reply to its own next save, or from a poll every 30 s skipped while anything is unsaved or a gesture is active. No push. Adopting a foreign document clears the undo and redo stacks and shows no notice.
-- *"Try again" cannot win a real clash.* It resends the same change on the latest head; a real clash is refused again.
+- *Today's "Try again" cannot win a real clash.* It resends the same change on the latest head; a real clash is refused again.
 
 **Approach:** Change what each writer declares (narrow by default), notice sooner, keep the person's place, say who and what, make a bundle survive `moved`, and prove it with one test with both writers. No new merge mechanism; the notice uses fields the commit already stores. Alternatives rejected: a push event instead of the 2 s check (nice-to-have, 3 days, later); the editor replaying queued edits on the new head (needs the command layer: Plan 18's TL-5); a third queue for bundles (a bundle keeps its request and key instead; sending bundles through Plan 18's one verb is the later form); merging the editor's and the Agent's queue implementations (they share a contract, not code).
 
-**Challenge:** Reviewed: the independent four-questions check (`fable-four-questions.md`, 18 November 2026, accepted by the main thread) and the agent-edits check (`fable-agent-edits.md`, accepted earlier and applied to Plan 63). Not checked by either (open): how fine the merge is in practice (only "different clips merge, the same clip clashes" is pinned by a test); case (d), delete second, is inferred, not run; whether narrowing a function commit's default reads is safe for intents that depend on things they do not change (not surveyed: ET-1's first step); which path clears undo on a foreign head (ET-3's first step); whether `/v1/events` can carry a head change (reported as unverified, so push is sized as new work). Next: the owner's answers.
+**Challenge:** Reviewed: the independent four-questions check (`fable-four-questions.md`, 18 November 2026, accepted by the main thread) and the agent-edits check (`fable-agent-edits.md`, accepted earlier and applied to Plan 63). Not checked by either (open): how fine the merge is in practice (only "different clips merge, the same clip clashes" is pinned by a test); case (d), delete second, is inferred, not run; whether narrowing a function commit's default reads is safe for intents that depend on things they do not change (not surveyed: ET-1's first step); which path clears undo on a foreign head (ET-3's first step); whether `/v1/events` can carry a head change (reported as unverified, so push is sized as new work). Next: the owner's answers. **The final recommendations** (`fable-final-recommendations.md`, 18 November 2026, with `fable-end-state-review.md`; accepted by the owner) changed this plan to about 12 days: ET-0 (the clash and undo rules), ET-1's editor half cut (the editor never declares reads), ET-2 with a first check (a `timelines-updated` listener may already do it), ET-3 with undo by `timeline.inverse` and the snapshot stacks deleted, ET-4b (undo an agent's change) promoted to a must, "Keep mine" and "delete beats edit" cut. Unverified: that the server lets one actor invert another's commit; whether the listener fires for an agent's commit.
 
 **Proof and limits:** Completion is the list in [plan.md](plan.md#completion). Limits: nothing here was built or run; no co-editing case was reproduced; the sizes are the check's judgment on Plan 63's own figures, not a bottom-up estimate.
 
@@ -30,23 +30,22 @@
 | Push in place of the 2 s head check | Later, 3 days | Only after the check has been found wanting; whether `/v1/events` can carry a head change is unverified |
 | The agent's change visible in the middle of a burst | Plan 18's TL-5 | The screen would be the accepted head with the queue replayed; until then it appears at the next pause |
 | A table test of finer merges (two fields of one clip, an add beside a reorder), narrowing patch paths where it fails | Later, 1 day plus what it finds | |
-| "Keep mine" on a real clash (resend with guards taken from the new head, for the touched fields only) | Later, 2 days | |
-| Delete beats edit | Plan 18, free with commands | Deleting needs no agreement about what the thing looked like; with document patches it is a special case |
-| Undo the agent's change from the line; highlight what changed; "an agent is working here" | Later, 2 + 3 + 2 days | |
+| "Keep mine" as a separate feature; "delete beats edit"; automatic re-apply | **Cut** (D15, D16) | The one bar's Keep mine is the person overwriting on purpose; a delete parks like any clash |
+| Highlight what changed; "an agent is working here" | Later, 3 + 2 days | (undo of the agent's change is ET-4b, a must) |
 
 ## Owner decisions
 
-Decision ids keep the numbers they had in [Plan 18](../18-timeline-editing/inputs.md#owner-decisions). **D9 (which release) is [Plan 63's](../63-dependable-saving/inputs.md#owner-decisions): one decision for the four plans, open.** This plan has no decision of its own.
+Decision ids keep the numbers they had in [Plan 18](../18-timeline-editing/inputs.md#owner-decisions). **D9 (which release) is [Plan 63's](../63-dependable-saving/inputs.md#owner-decisions): one decision for the four plans, decided 18 November 2026: Release 15.** The decisions that shape this plan are recorded there: **D16** (a clash parks, never re-applied automatically; Keep mine and Discard), **D17** (an agent's edit relies only on what its commands read and wrote; the whole timeline is opt-in). This plan has no decision of its own.
 
 ## Source identities
 
-Before code work, record the actual repository, ref and SHA for each. This plan changes three product repositories and astrid-dev. Branches: `release/<NN>/plan-65` in each repository the plan changes, cut from that repository's `release/<NN>/main`, where NN is the release chosen (open).
+Before code work, record the actual repository, ref and SHA for each. This plan changes three product repositories and astrid-dev. Branches: `release/15/plan-65` in each repository the plan changes, cut from that repository's `release/15/main`.
 
 | Repository | Starting branch + SHA | Retained work / donor SHAs / unpublished changes | Verified predecessor output | Candidate branch | Intended destination |
 |---|---|---|---|---|---|
-| astrid-agent | TBD: `release/<NN>/main` | none | Plan 63's CC-4b (the Agent client reads `outcome`) | `release/<NN>/plan-65` | `release/<NN>/main` |
-| astrid-runtime | TBD: `release/<NN>/main` | none | Plan 63's CC-4 (`outcome`) | `release/<NN>/plan-65` | `release/<NN>/main` |
-| astrid-app | TBD: `release/<NN>/main` | none | Plan 63's CC-4, CC-5b | `release/<NN>/plan-65` | `release/<NN>/main` |
+| astrid-agent | TBD: `release/15/main` | none | Plan 63's CC-4b (the Agent client reads `outcome`) | `release/15/plan-65` | `release/15/main` |
+| astrid-runtime | TBD: `release/15/main` | none | Plan 63's CC-4 (`outcome`) | `release/15/plan-65` | `release/15/main` |
+| astrid-app | TBD: `release/15/main` | none | Plan 63's CC-4, CC-5b | `release/15/plan-65` | `release/15/main` |
 | astrid-dev | `origin/main` | this pack | None | `plan/63-dependable-saving` (with Plans 63, 64, 18) | `main` by the scope PR |
 
 ## References
