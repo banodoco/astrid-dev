@@ -112,7 +112,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Ready | — | Dispatch (8) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Done | `r14-FIX-03-3` | Agent #360 merged into `release/14/main` at `b9740f64`. #721 stays open until a tester build proves it |
 | [R14-P55-04](packets/R14-P55-04.md) First job | Plan 55 LS-12; draft Agent #361 | Ready | — | Dispatch after R14-P55-06 |
-| [R14-P39-04](packets/R14-P39-04.md) Re-measure | Plan 39 G1, G2 | Blocked | — | Dispatch when R14-P39-08 merges (P39-07 and P39-09 are merged) |
+| [R14-P39-04](packets/R14-P39-04.md) Re-measure | Plan 39 G1, G2 | Ready | — | Dispatch now: R14-P39-07, R14-P39-08 and R14-P39-09 are merged (Agent `2266c24a`, Runtime `19cd1e35`, App `549e335d`). Then the stop: G2, RS1 |
 | R14-P39-06 onward, wave 2 | Plan 39 RT1–RT8, AT1–AT4, PT1–PT4, K2, K3, SF3b, SF3c | Blocked | — | Cut from G2's causes after the Lead's RS1; about eight packets |
 | R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2, LS-20 (#855) | Blocked | — | After R14-P55-05 and R14-P55-07 merge: the same backend and host files |
 | R14-P39-11 A bound on terminal publication replay | Plan 39 AT13 (#611) | Blocked | — | After R14-P55-07 merges: the same `generic_host.py` |
