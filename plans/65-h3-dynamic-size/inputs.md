@@ -12,6 +12,17 @@
 
 **Challenge:** Reviewed — the independent planning critique of 18 November 2026 inspected the Plan 59 Git objects and cached node schema and returned both plans for revision. Accepted all six Plan 65 findings: correct the proof dimensions, decide continuation scope in advance, preserve request identity, give the compiler explicit ownership of the mask handoff, respect standalone preview geometry and stage integration behind those interfaces. Accepted the shared CPU proof, source-pin, test-inventory and reviewer recommendations. No critique findings were rejected. The earlier assumption that the two original proof sizes pass the grid failed integer validation. A successful builder comparison alone cannot close the continuation use case in [#885](https://github.com/banodoco/astrid-dev/issues/885). Fable’s 18 November composability review confirmed duplicate preparation defaults at prepare.py:477–478 and the separate moving-mask handling at compose.py:445–472. Accepted a single resolved size and one shared limits table. D1 now leaves continuation sizing to Plan 66. On 18 November the plan was tightened for a less experienced implementer: GPU work removed (D2), the mask handoff cut to static masks rasterized once (moving masks unchanged), the literal-number scan replaced by binding checks, one plan order (Plan 64 SR-1 to SR-3 first), explicit non-goals, and function names instead of line numbers.
 
+**Ambiguity pass (18 November 2026).** A reviewer read the final cards against the code ([report](../66-h3-composable-core/research/ambiguity-64-65.md)). Accepted:
+- the exact size normalization and per-dimension bounds;
+- the canvas as the conform target, with the fill/fit mode recorded;
+- top-left, half-open pixel-edge box coordinates;
+- grayscale decode before the threshold;
+- binding every active size input, and listing them in the proof;
+- request fixtures in DS-5 instead of long prose;
+- region unions following Plan 64 SR-1.
+
+The report's alternative rounding text was not taken; D3 keeps the card's rule.
+
 **Proof and limits:** Separate size effects from aspect changes with a same-aspect comparison and a different-aspect mask fixture. CPU proofs cover exact bindings, decoded geometry, protected pixels and retained result records. Speech quality and GPU timing are left to the owner's live test after the plan (D2). Node admission alone establishes neither quality nor feasible memory use across the allowed range.
 
 **Review rounds:** One final round recommended because request identity, mask permission geometry and the worker handoff are shared. Owner confirmation pending.
@@ -20,8 +31,9 @@
 
 ## Owner decisions
 
-- **D1 — no continuation work in this plan (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** This reverses the earlier same-day choice to include small-size continuation. [Plan 66](../66-h3-composable-core/inputs.md#owner-decisions) CC-7 gives continuation any size through its ported stage, and deletes the captured workflows (Plan 66 D3, D5). Until then, a non-default size on continuation is refused.
+- **D1 — no continuation work in this plan (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** This reverses the earlier same-day choice to include small-size continuation. [Plan 66](../66-h3-composable-core/inputs.md#owner-decisions) CC-7a gives continuation any size through its ported stage, and deletes the captured workflows (Plan 66 D3, D5). Until then, a non-default size on continuation is refused.
 - **D2 — CPU only (decided 18 Nov 2026, owner in the Plan 59 session: "we're not going to do a GPU test. This is just CPU… We'll do a test afterwards").** No task in this plan claims a machine or spends money. The 512×288 vs 1024×576 speech and timing comparison happens in the owner's live test afterwards.
+- **D3 — rectangle edge ties round down (decided 18 Nov 2026, owner in the Plan 59 session: "I agree on your two recommendations").** Scaled rectangle edges use `ceil(edge - 0.5)`, so an exact half rounds down, as DS-3 already said. The alternative, `floor(edge + 0.5)` (ties round up), was rejected. Current code has no scaled-mask precedent.
 
 **Model limits and defaults, not decisions** (owner, 18 Nov 2026: "offer that and constrain them within that"):
 - `output.size` is a pixel pair, constrained exactly to the node's limits: width and height 32–16384 in steps of 32 (`MiniMaxH3ReferenceToVideo` schema). There are no presets.

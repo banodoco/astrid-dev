@@ -60,9 +60,9 @@ It adds the guide role, templates and the continuation port. Request identity wa
 
 Plans 59, 64 and 65 land first.
 
-**Phase 1** runs in order: CC-1 (one public path and job), RS1 (review the job contract), CC-2 (capabilities), CC-3 (the dry-run view), CC-4 (guides), CC-8 (exact stills at any frame), CC-5 (templates), CC-6 (both skills).
+**Phase 1** runs in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities), CC-3 (the dry-run view), CC-4 (guides), CC-8 (exact stills at any frame), CC-5 (templates), CC-6 (both skills).
 
-**Phase 2** is CC-7 (the continuation port, then deleting the captured workflows), followed by the final review. [Task cards](tasks.md)
+**Phase 2** is CC-7a (prefix continuation through the ported stage), then CC-7b (bridges) and CC-7c (inserts) in parallel, then CC-7d (deleting the captured workflows and the `continuation` flag), followed by the final review. [Task cards](tasks.md)
 
 ## Interfaces and handoff
 
@@ -99,7 +99,8 @@ CPU tests prove each of these:
 - The ported continuation matches the captured active path, apart from the listed differences.
 - It delivers the prefix exactly across the seam.
 - It compiles at 512×288 with three images and a speaker clip.
-- Clip A, a gap and clip B compile to a bridge; a clip placed at frame 51 compiles to an insert.
+- Clip A, a 63-frame generated gap and clip B compile to a bridge. A clip placed at frame 51 compiles to an insert, and an insert at frame 34 is refused.
+- With the Character Swap adapter on, continuation and bridge graphs carry both LoRAs in the model chain.
 - The captured workflows and the `continuation` flag are gone.
 
 Review then closes the plan. How the port looks and sounds against the old workflows, and how well guides are followed, are judged in the owner's live test afterwards.
