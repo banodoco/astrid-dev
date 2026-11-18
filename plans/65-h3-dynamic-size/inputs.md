@@ -20,7 +20,7 @@
 
 ## Owner decisions
 
-- **D3 — small-size continuation now, or with the continuation builder migration ([astrid-dev#866](https://github.com/banodoco/astrid-dev/issues/866))?** Recommend deferring: Plan 64's voice references largely replace the voice-only continuation trick that motivated it. Including it adds about half a day and both captured workflows to DS-3. Pending — the owner chooses.
+- **D3 — small-size continuation: include now (decided 18 Nov 2026, owner in the Plan 59 session).** DS-3 owns the size bindings of both captured continuation workflows (`workflow.py` ~101–102; the refs variant ~115–116 and its 0.5 MP resize ~191; selection at `compile.py` ~1176–1178). DS-6 runs the 512×288 vs 1024×576 timing pair on continuation. Estimate +0.5 day.
 
 **Model limits and defaults, not decisions** (owner, 18 Nov 2026: "offer that and constrain them within that"):
 - `output.size` is a pixel pair, constrained exactly to the node's limits: width and height 32–16384 in steps of 32 (`MiniMaxH3ReferenceToVideo` schema). There are no presets.
