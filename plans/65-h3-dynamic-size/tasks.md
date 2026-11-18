@@ -2,6 +2,13 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+## Rulings
+
+**Now (2026-11-18):** Agent `release/14/plan-65` starts at `b50371baf101d6f706269fab38cdf3a7a5eb2013`; environment smoke and scoped baseline pending. DS-1 waits for Plan 64 SR-3; DS-2 through DS-5 and review follow their dependencies. DS-5 Recast skill text waits on Plan 59. CPU only; spend $0.
+
+- Branch registration PR #914 is blocked by the release-document check until Plan 65 is included in the release brief. Host notified.
+- Starting revision lacks six named proof files: `test_edit_inputs.py`, `test_lead_in.py`, `test_automatic_conform.py`, `test_remote_prepared_source_handoff.py`, `test_non16x9_masked_edit_cpu.py`, and `tests/test_pack_declared_skills.py`. Reassess after SR-3; do not claim missing tests passed.
+
 **Task ids:** `DS-1` … `DS-5`.
 
 **Critical path:** Plan 64 SR-3 → DS-1 → (DS-2, DS-3 in parallel) → DS-4 → DS-5 → R.
