@@ -64,6 +64,18 @@ Its changes to Plans 64 and 65 are applied.
   - keeping the captured workflows as fallback fixtures, and preserving Plan 65 D1. Both were overruled by the owner in D3 and D5.
 - **Cut, as the critique advised:** shot-plan schema changes and automatic take recording.
 
+**Restrictions review.** On 18 November the owner asked for every restriction to be justified or dropped. Fable's review is in [research/restrictions.md](research/restrictions.md). Its Luna helpers were blocked by the session's permissions, so Fable did the research directly. It found most limits came from Astrid using one node of the already-pinned motion pack. All ten edits are accepted:
+- no image required;
+- a time-varying audio mask via `MiniMaxH3SetAVNoiseMask`, so the model hears kept audio and several audio windows are allowed;
+- regions may differ in interval and strength;
+- audio strength anywhere from 0 to 1;
+- bridges and inserts in CC-7;
+- several voices bound by prompt text (no voice-to-face input exists);
+- v1 deleted;
+- adapters as table rows with declared input contracts;
+- the 1, 4, 4, 4, 4 chunk pattern, so frames 0, 17, 34 and so on are single-frame pins;
+- a source column on the limits table.
+
 **Proof and limits:** CPU only (D1). Because of D3, the old workflows are gone before the live test, so the live test compares the port with today's saved takes rather than with a fresh run of the old workflows. Proof covers compiled graphs, refusals, the dry-run record, template admission and a cold read of the skill. Not covered, and left to the owner's live test:
 - whether the ported continuation looks and sounds like the captured one;
 - guide adherence;

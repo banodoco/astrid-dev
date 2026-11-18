@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 11 days (phase 1, the core: 7; phase 2, continuation: 4; CPU only, the live test comes after)
+**Estimate:** 12.5 days (phase 1, the core: 7; phase 2, continuation and bridges: 5.5; CPU only, the live test comes after)
 
 **Waiting on:** Owner greenlight of scope, and Plans 59, 64 and 65.
 
@@ -35,7 +35,7 @@ Three rules decide what happens. Placed material is kept. Time nothing covers is
 
 **Phases.**
 - **Phase 1 (core):** one public path and one resolved job; capabilities; the dry-run view; guides; exact stills at any frame; templates; both skills.
-- **Phase 2 (continuation):** continuation by placement, through a ported motion-context stage. The captured continuation workflows are then deleted (D3). Git history keeps them.
+- **Phase 2 (continuation):** continuation, bridges and inserts by placement: a clip before, between or after generated time, through the pinned motion-context nodes. The captured continuation workflows are then deleted (D3). Git history keeps them.
 
 **Not in this plan. Do not build these:**
 - a GPU or live run of any kind (D1). The owner tests afterwards;
@@ -43,7 +43,7 @@ Three rules decide what happens. Placed material is kept. Time nothing covers is
 - timed text prompts, an Event Curve tool, or any GPL node vendored into Astrid;
 - shot-plan schema changes, or automatic take recording on shots;
 - an endless-continuation skill, take lineage or continue-from-take;
-- multiple speakers, variations or multi-pass chains in the core;
+- variations or multi-pass chains in the core;
 - a planner that picks the method, a workflow engine, or a template language beyond named holes;
 - normalized mask coordinates or a second model.
 
@@ -85,7 +85,7 @@ CPU tests prove each of these:
 
 **Phase 1**
 - The public prompt-and-image invocation, a masked edit, a fixed-audio redub and Character Swap each go through preparation, build, composition and receipt via `compile_job`.
-- `branch_for` is gone, and a v1 request still translates.
+- `branch_for` is gone, and a v1 request is refused with a message to write it as v2.
 - `describe --entry h3 --json` shows the same capabilities admission uses.
 - Unsupported pairs are refused, naming both items and a fix.
 - The dry run separates requested grants, effective latent influence and delivered ownership across the frame-4 boundary.
@@ -99,6 +99,7 @@ CPU tests prove each of these:
 - The ported continuation matches the captured active path, apart from the listed differences.
 - It delivers the prefix exactly across the seam.
 - It compiles at 512×288 with three images and a speaker clip.
+- Clip A, a gap and clip B compile to a bridge; a clip placed at frame 51 compiles to an insert.
 - The captured workflows and the `continuation` flag are gone.
 
 Review then closes the plan. How the port looks and sounds against the old workflows, and how well guides are followed, are judged in the owner's live test afterwards.
