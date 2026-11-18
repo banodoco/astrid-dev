@@ -1,67 +1,69 @@
-# Spec: H3 video and audio references ("start image + a reference video of the speaker")
+# Spec: H3 video and audio references (#890), toward composable pieces
 
-Ticket: banodoco/astrid-dev#890. Status: spec, 18 Nov 2026. Read against `origin/release/14/plan-59` (`astrid/packs/h3_av/shared/`).
+Status: spec v2, 18 Nov 2026, after a design review. Read against `origin/release/14/plan-59` (`astrid/packs/h3_av/shared/`).
 
-## Goal
-A recast agent can write one H3 request that says: start from this image, make the character say this line, and take the voice and speaking manner from this reference video of them talking. No continuation trick, and no second mouth pass.
+## End state (owner)
+A set of pieces that combine freely, each with one meaning:
+- start image;
+- reference images;
+- speaker video or audio;
+- masks or regions;
+- fixed replacement audio;
+- source clips or continuations;
+- lines of dialogue.
 
-Example (02c, "Into the Minkhole"): start image = the corrected lens frame (the old man and Morpheus's hands with the mink and the blue pill); reference video = 3–10 s of Morpheus speaking in the film; line = "tuning workflows by hand,".
+The user works with them at a high level, and Astrid plugs the right ComfyUI workflow and node inputs in underneath. A route (source-free, masked edit, Character Swap, continuation) is a fact derived from the pieces, not a separate form the user has to learn.
 
-## What exists today
-- **The node supports it.** `MiniMaxH3ReferenceToVideo` (ComfyUI `6bfaacc`) has optional inputs:
-  - `ref_images` (≤9, `<Picture i>`);
-  - `ref_videos` (≤3, frames at 24 fps, 2–15 s, `<Video k>`);
-  - `ref_video_audios` (each video's soundtrack);
-  - `ref_audios` (≤3, `<Audio j>`).
-  
-  The `vae` and `audio_vae` inputs make the references condition the latents, not only the text encoder.
-- **The v2 request half-knows it.** References may be `image`, `video` or `audio`, and the normaliser already assigns `<Picture n>` / `<Video n>` / `<Audio n>` tags (`request_v2.py:363-381`).
-- **One route already binds a video reference:** the Character Swap adapter (`compile.py` ~839-860 `_compile_character_swap_v2`; validation `request_v2.py:312-330`) binds one video reference with a range to the node. Reuse its loader and binding code; don't write a second one.
-- **Every other route refuses them:**
-  - source-free generate: "accepts image references only" (`compile.py` ~1065);
-  - continuation: "reference ports accept image references only" (~1108);
-  - masked edit: "video edits support modalities: image", and an audio guide is always a fixed replacement span.
+## The three pieces v2 already has (use them as such)
+- **`role: timeline` (+ `at`, `range`): fixed content at a time.** A source clip, a start image, a fixed replacement audio clip.
+- **`role: reference`: tagged conditioning** (`<Picture n>` / `<Video n>` / `<Audio n>`, assigned in `request_v2.py:363-381`), bound to the node's `ref_images` / `ref_videos` / `ref_video_audios` / `ref_audios`.
+- **`edit`: permission to regenerate** (stream, interval, mask, strength).
 
-## Scope (smallest useful)
-1. **Source-free generation and masked edits** (the `source_free` branch, and the masked edit in item 3). Allow, besides 1–9 image references:
-   - up to 3 `video` references, each with an optional `range` (2–15 s after trimming, on the 24 fps grid); bind its frames to `ref_video_k` and, if it has an audio stream, its soundtrack to `ref_video_audio_k`;
-   - up to 3 `audio` references with an optional `range`; bind them to `ref_audio_j`.
-   
-   Keep the existing refusal messages for anything over the limits, and name the limit.
-2. **Start image.** Keep the starting image as a reference image (`<Picture 1>`). The prompt says the first frame matches it, which is how source-free generation is used today. Don't add a new "first frame" concept in this ticket. The source-backed "still as a short video" route (astrid-dev#863) is the separate way to pin the exact first frame.
-3. **The masked edit route: in scope, same as source-free.** The native masked edit already conditions through the same `MiniMaxH3ReferenceToVideo` node (its image guides bind to `ref_images`), so `video` and `audio` references bind to `ref_videos` / `ref_video_audios` / `ref_audios` the same way, as region `guides`. This is the most valuable case for recasting: mask the mouth, give a reference video of the speaker, keep the original picture elsewhere. The same rule as images applies: references condition the whole pass, so all regions in one pass share one reference set. An audio guide given *with* a `range` keeps today's meaning (fixed replacement span); an audio or video reference given as a `reference` (not a replacement) conditions the voice instead. Write both meanings out in the SKILL so they are never confused.
-4. **The continuation route:** out of scope. It already carries the voice in its source.
+The node (`MiniMaxH3ReferenceToVideo`, ComfyUI `6bfaacc`) takes up to 9 images, 3 videos (2–15 s at 24 fps, plus their soundtracks) and 3 audio clips. `build_generation_workflow` (`generation.py:234`) is already the single builder behind source-free, masked edit and Character Swap.
 
-## Behaviour and checks
-- **Validation, in the normaliser, using the same `_asset` inspection:**
-  - a video reference must decode, run 2–15 s after its range, and have measurable stream durations (the error we hit today was "source stream start times and durations must be measurable");
-  - an audio reference must decode at 48 kHz, or be resampled once at preparation.
-- **Prompt tags:** the docs and the example use `<Video 1>` / `<Audio 1>` in the prompt. A request that defines a video reference but never mentions its tag gets a warning in the dry run, not a refusal.
-- **Records:** the dry run and the result list each reference with its tag, range and node slot. This rides on the effective-settings record from `p59/h3-overrides`.
-- **Digest:** existing image-only requests compile byte-identically (the same check `test_edit_inputs.py` already does).
-
-## Files
-- `shared/request_v2.py`: allow the modalities and ranges per route; per-route limits.
-- `shared/compile.py`: source-free binding; reuse the Character Swap video-reference binding helper (extract it into a shared helper used by both).
-- `shared/generation.py` / `stages.py`: preparation of video and audio reference assets (trim to range, 24 fps, 48 kHz).
-- The workflow graph for source-free generation: add the loader nodes for `ref_videos` / `ref_video_audios` / `ref_audios`, unconnected when unused.
-- `docs/SKILL.md`: a "References" table (what each route accepts) and a recipe. `docs/recast-scene/SKILL.md`: add "start image + speaker video" as the fourth "new line" method in the rubric.
-- **Pack coverage note** (the principle in #890): list the node inputs the H3 pack still doesn't expose.
+## This ticket (smallest step toward the end state)
+1. **One reference lowering.** One function turns the request's `reference` media into image, video and audio rows for `build_generation_workflow`, and all three builder callers use it.
+   - **Capacities:** 9/3/3 sit in one table beside the builder, pinned by one test against the node schema's limits (`object_info` autogrow `max`).
+   - **Delete:** the masked edit's hand-written "two image-reference slots" (`compile.py` ~612), copied from the continuation graph; the node takes 9.
+   - **Character Swap:** keeps only its adapter rule (exactly 1 image + 1 video).
+2. **References condition the whole pass.** An edit's `guides` only selects the pass's reference set, so any modality is allowed on any edit. Stop extending `EDIT_GUIDE_MODALITIES` per stream.
+3. **One meaning per spelling, defined by structure, not by `range`:**
+   - a reference named by an *audio* edit's `guides` is a fixed replacement clip. That's today's spelling, unchanged, and marked legacy;
+   - every other reference is conditioning;
+   - `range` on any reference is only a trim.
+4. **Audio regeneration in a masked edit:** an audio edit with `action: generate` and no guides maps to audio strength 1. Today the masked edit hard-codes `audio_strength=0` (`generation.py` ~440) and refuses audio regeneration without a replacement clip (`compile.py:545`), so a voice reference would condition audio that is never generated. State the limit: audio strength is one value per window, so the sound around the line inside that window is regenerated too unless composition restores it.
+5. **Source-free calls the builder directly** with v2 rows. It no longer lowers into a v1 request (`compile.py:1075`), and video and audio references are not added to v1.
+6. **The builder gains a `ref_audios` loader loop.** The existing video loader already trims and resamples to 24 fps in the graph, so no new preparation stage is needed unless the 48 kHz audio check shows otherwise.
+7. **Records:** the dry run and the result list each reference with its tag, range and node slot, alongside the effective settings from `p59/h3-overrides`. There's no separate "tag not mentioned in the prompt" warning. The 2–15 s check lives in the normaliser only.
 
 ## Tests
-- Unit tests:
-  - normalisation accepts 1 image + 1 video (+ its audio) + 1 audio on source-free, and refuses a 4th video, a 16 s video, or a video without measurable durations;
-  - compile binds the right node inputs (check the graph JSON);
-  - image-only digests are unchanged;
-  - Character Swap still compiles identically.
-- **Two live GPU jobs (the proof),** both on 02c with the line "tuning workflows by hand,":
-  - **source-free:** start image = the corrected lens frame, video reference = Morpheus speaking (about 5 s from the film);
-  - **masked edit:** mouth mask on the real close-up, the same video reference, original picture elsewhere.
+- **Unit tests:**
+  - the lowering produces the right rows and node inputs for 1 image + 1 video (+ its audio) + 1 audio, on source-free and on masked edit;
+  - the capacity test against the node schema;
+  - refusals for a 4th video, a 16 s video, or a video without measurable stream durations;
+  - existing image-only requests compile byte-identically;
+  - Character Swap compiles identically.
+- **Two live GPU jobs** on 02c with the line "tuning workflows by hand,":
+  - **source-free:** start image = the corrected lens frame (as `<Picture 1>`), plus a video reference of Morpheus speaking (about 5 s from the film);
+  - **masked edit:** mouth mask on the real close-up, the same video reference, an audio edit with `action: generate`, and the original picture elsewhere.
+  
+  Accept each if the transcript shows exactly the line, the owner recognises the voice, and the lenses (source-free) or the untouched picture (masked) are right.
 
-  Accept each if:
-  - the transcript shows the line and nothing else (`timelines transcripts run`);
-  - the voice is recognisably his (owner listens);
-  - the lenses still match the start image.
+## What it covers afterwards
+| Need | After this ticket |
+|---|---|
+| New line in someone's voice, picture regenerated | Yes (source-free + speaker video or audio) |
+| New line, original picture kept | Yes (masked mouth + speaker reference + audio generate); the sound inside the window is regenerated |
+| Different person or creature in a region | Yes (image or video guides) |
+| Several speakers | By capacity (3 videos + 3 audio clips); which voice goes to which face rests on prompt tags, unproven |
+| Line longer than the shot | No, still continuation |
+| Voice from audio only, or from video | Both |
 
-## Size
-A few hours of build: mostly wiring and reuse, plus one install and one short GPU job.
+## Later tickets (toward the end state)
+- **Respell fixed content as timeline items:**
+  - fixed audio becomes `role: timeline` audio;
+  - the start image becomes a timeline image at frame 0, probably via `MiniMaxH3AddGuide` ("anchor an image, clip or audio at any frame"; only used in the LanPaint graph today, and unverified with ref2va). This folds in #863;
+  - retire the guides-as-replacement spelling.
+- **Continuation from the same builder** ("build the invocation once", #866). Then voice references and long lines compose too. Its captured graph already uses `ref_video_0` and `ref_audio_0/1`.
+- **Pack coverage note:** list the node inputs the pack doesn't expose: `ref_image_size` (fixed to `match`), width/height (fixed at 1024×576, see #885), `first_frame` / `last_frame`, AddGuide, Fun ControlNet.
+- **Recast skill:** add "speaker video reference" to the "new line" table only after the GPU proof. It would then replace "make the voice first" for most cases.
