@@ -50,7 +50,7 @@
 
 - At normalization, give each media-list item a stable occurrence key from its authored list position, not its asset id. Repeated assets and repeated trims stay separate occurrences.
 - Give each reference occurrence its modality, trim and, for audio, its `use`. A video reference contributes its soundtrack only when the node binding includes it. Record that as one video occurrence with its video input and an optional soundtrack input, not as a second authored audio occurrence.
-- Carry all of these through normalization into the record. Touch `spec.py` only where the record needs it, including `sampling_passes` and `sampling_request_document`.
+- Carry all of these through normalization into the record. The internal sampling request retains occurrence uses through pass splitting; `sampling_request_document` is a read-only view and refuses replay when an unselected replacement would be lost (see the SR-5 ruling). Touch `spec.py` only where the record needs it, including `sampling_passes` and this view.
 - **The clean break (Plan 66 D4):** request identity is derived from author intent: modality, role, trim or range, placement, edit and `use` intent, occurrence order, model and sampling settings. Resolved paths, measured metadata and generated files never enter identity.
   - Derived prompt tags (`model_tags`, and each occurrence's `model_tag`) leave the identity and the normalized request. SR-3 derives tags from the effective rows.
   - v1 requests are not refused here. The plain-input hook still builds v1 until Plan 66 CC-1.3, and Plan 66 CC-1.4 then refuses v1.
