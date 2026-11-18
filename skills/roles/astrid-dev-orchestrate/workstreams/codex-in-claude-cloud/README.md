@@ -31,12 +31,12 @@ Default model for each route, using the newest available model of that family:
 
 Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
 
-**Reviews.** A review's verdict runs on the high-judgment role. A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. A meter, gate or check is reviewed by injecting the failures it must catch. The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run).
+**Reviews.** A review's verdict runs on the high-judgment role. A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. Check a pure sync by tree equality. A bounded-fix check runs the focused tests on both base and head. A bounded-fix check of more than about 500 lines of product code, or one that touches a shared contract, goes to the high-judgment role. A meter, gate or check is reviewed by injecting the failures it must catch. The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run).
 
 *From [Routing and bindings](../../../../shared/run-contract.md#routing-and-bindings); edit it there.*
 <!-- block:routing:end -->
 
-- **Routes.** Chosen and escalated as the run contract's [cheapest-model-first rules](../../../../shared/run-contract.md#cheapest-model-first) say. Reviews go to the high-judgment role's Codex model, run read-only (`-s read-only`) on the exact commit range and given the previous round's report. `T` (taste) tasks may run on the Codex taste family; Claude is recommended.
+- **Routes.** Choose and escalate routes as the run contract's [cheapest-model-first rules](../../../../shared/run-contract.md#cheapest-model-first) say. Reviews go to the high-judgment role's Codex model, run read-only (`-s read-only`) on the exact commit range and given the previous round's report. `T` (taste) tasks may run on the Codex taste family; Claude is recommended.
 - **Sign-in first, once per session** (its own container needs its own): do the [one-time setup](#one-time-setup-in-the-session), then post the link and code `codex login --device-auth` prints in your own reply, where the owner can see them, and tell the orchestrator they are waiting. The code expires in minutes, so ask when the owner is present, and again if it lapses. Never read or copy `~/.codex`.
 - **One task, one call, one worktree.** From a Claude sub-agent, so the output stays out of the manager's context:
 

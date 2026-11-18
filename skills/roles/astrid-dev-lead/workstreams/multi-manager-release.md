@@ -29,7 +29,7 @@ Default model for each route, using the newest available model of that family:
 
 Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
 
-**Reviews.** A review's verdict runs on the high-judgment role. A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. A meter, gate or check is reviewed by injecting the failures it must catch. The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run).
+**Reviews.** A review's verdict runs on the high-judgment role. A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. Check a pure sync by tree equality. A bounded-fix check runs the focused tests on both base and head. A bounded-fix check of more than about 500 lines of product code, or one that touches a shared contract, goes to the high-judgment role. A meter, gate or check is reviewed by injecting the failures it must catch. The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run).
 
 *From [Routing and bindings](../../../shared/run-contract.md#routing-and-bindings); edit it there.*
 <!-- block:routing:end -->
@@ -42,7 +42,7 @@ Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claud
 
 The sub-agent works on the packet's branch, adding each failing-before case, in commits labelled `Lead review fixes`. A second, faster reviewer checks them; then merge and post DONE as usual. Otherwise, post the rework.
 
-**Before merging:** a meter, gate or check is accepted only after a review that injects the failures it must catch. Find every pin change: each needs its own commit and the owner's approval or delegation. After a dependency's PR is squash-merged, re-point its pin to the squash commit.
+**Before merging:** find every pin change: each needs its own commit and the owner's approval or delegation. After a dependency's PR is squash-merged, re-point its pin to the squash commit.
 
 **Rulings:** when a ruling will recur, add it to the board's Standing rulings (`releases/<N>/run.md`), so that a fresh Lead, Orchestrator or packet session finds it without reading the mailbox. A ruling that holds beyond the release goes into its skill instead, and the board links it.
 

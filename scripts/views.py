@@ -163,6 +163,17 @@ VIEWS = (
 
 
 def _with_marker(view: View, content: str) -> str:
+    if isinstance(view.region, str) and view.region.startswith("block:"):
+        name = view.region.removeprefix("block:")
+        regions = _block_regions(content, view.target)
+        if ("block", name) not in regions:
+            raise ValueError(f"view {view.name}: {view.target} must contain one <!-- block:{name}:start --> and one <!-- block:{name}:end --> line; restore them")
+        _, body_start, body_end, _ = regions[("block", name)]
+        body = content[body_start:body_end]
+        if view.marker in body:
+            return content
+        generated = "\n".join(line for line in body.strip("\n").splitlines() if not line.startswith(MARKER_PREFIX))
+        return content[:body_start] + "\n" + view.marker + "\n" + generated + "\n" + content[body_end:]
     if view.region:
         region = "vision-summary" if view.region is True else view.region
         start = f"<!-- {region}:start -->"
@@ -200,6 +211,14 @@ def touched(view: View, root: Path, base: str) -> bool:
     def region_content(text: str, revision: str, *, baseline: bool = False) -> str | None:
         if not view.region:
             return text
+        if isinstance(view.region, str) and view.region.startswith("block:"):
+            try:
+                found = _block_regions(text, view.target).get(("block", view.region.removeprefix("block:")))
+            except ValueError:
+                found = None
+            if found is None and not baseline:
+                raise ValueError(f"view {view.name}: {view.target} must contain one {view.region} marker pair ({revision})")
+            return None if found is None else text[found[1]:found[2]]
         region = "vision-summary" if view.region is True else view.region
         start = f"<!-- {region}:start -->"
         end = f"<!-- {region}:end -->"
@@ -255,13 +274,17 @@ def check_view(view: View, root: Path) -> list[str]:
 
 
 def check(root: Path) -> list[str]:
-    return [message for view in VIEWS for message in check_view(view, root)]
+    declared, errors = views_for(root)
+    return [*errors, *(message for view in declared for message in check_view(view, root))]
 
 
 def sync(root: Path) -> list[str]:
     root = root.resolve()
+    declared, errors = views_for(root)
+    if errors:
+        raise ValueError("shared blocks: " + "; ".join(errors))
     targets = []
-    for view in VIEWS:
+    for view in declared:
         target_name = Path(view.target)
         if target_name.is_absolute() or ".." in target_name.parts:
             raise ValueError(f"view {view.name}: unsafe target outside repository: {view.target}")
@@ -277,7 +300,7 @@ def sync(root: Path) -> list[str]:
 
     changed = []
     changed_targets = set()
-    for view, target in zip(VIEWS, targets):
+    for view, target in zip(declared, targets):
         content = expected(view, root)
         target.parent.mkdir(parents=True, exist_ok=True)
         if not target.exists() or target.read_text(encoding="utf-8") != content:
@@ -302,30 +325,39 @@ def rebase_links(value: str, from_dir: Path, to_dir: Path) -> str:
 
 
 BLOCK_MARKER = re.compile(r"(?m)^<!-- (block-source|block):([a-z0-9-]+):(start|end) -->[ \t]*$")
-_FENCE = r"(?ms)^\s*```.*?^\s*```[^\n]*$"
+_FENCE = re.compile(r"(?ms)^[ \t]*(`{3,}|~{3,})[^\n]*\n.*?^[ \t]*\1[ \t]*$")
+BLOCK_COPY_ROOTS = ("skills/", "templates/", "docs/")
+BLOCK_COPY_HISTORY = ("docs/ledger/", "docs/handoffs/")
 
 
-def _block_regions(text: str, path: str) -> dict[tuple[str, str], tuple[int, int]]:
-    """Return {(kind, name): (start, end)} positions; reject unpaired or repeated markers."""
+def _blank_fences(text: str) -> str:
+    """Blank fenced code (``` or ~~~) with spaces, keeping every offset and newline."""
+    return _FENCE.sub(lambda hit: re.sub(r"[^\n]", " ", hit.group(0)), text)
+
+
+def _block_regions(text: str, path: str) -> dict[tuple[str, str], tuple[int, int, int, int]]:
+    """Return {(kind, name): (start marker begin, body begin, body end, end marker end)} offsets in `text`.
+
+    Markers inside code fences are ignored. Unpaired or repeated markers are an error.
+    """
     seen: dict[tuple[str, str], list[tuple[str, int, int]]] = {}
-    for hit in BLOCK_MARKER.finditer(re.sub(_FENCE, "", text)):
+    for hit in BLOCK_MARKER.finditer(_blank_fences(text)):
         seen.setdefault((hit.group(1), hit.group(2)), []).append((hit.group(3), hit.start(), hit.end()))
     regions = {}
     for (kind, name), marks in seen.items():
         if [edge for edge, _, _ in marks] != ["start", "end"]:
             raise ValueError(f"{path}: {kind}:{name} needs exactly one start marker followed by one end marker "
                              f"(found {', '.join(edge for edge, _, _ in marks)}); fix the markers")
-        regions[(kind, name)] = (marks[0][2], marks[1][1])
+        regions[(kind, name)] = (marks[0][1], marks[0][2], marks[1][1], marks[1][2])
     return regions
 
 
-def _owner_body(text: str, name: str) -> tuple[str, str, str]:
+def _owner_body(text: str, name: str, path: str) -> tuple[str, str, str]:
     """Return the owner's body, its nearest heading title and that heading's anchor."""
-    start, end = f"<!-- block-source:{name}:start -->", f"<!-- block-source:{name}:end -->"
-    before, rest = text.split(start, 1)
-    body = rest.split(end, 1)[0].strip("\n")
+    begin, body_start, body_end, _ = _block_regions(text, path)[("block-source", name)]
+    body = text[body_start:body_end].strip("\n")
     from records import markdown_heading_anchors
-    headings = markdown_heading_anchors(before)
+    headings = markdown_heading_anchors(text[:begin])
     if not headings:
         return body, "", ""
     _, title, anchor = headings[-1]
@@ -333,51 +365,70 @@ def _owner_body(text: str, name: str) -> tuple[str, str, str]:
 
 
 def _render_block(root: Path, name: str, owner: str, target: str) -> str:
-    body, title, anchor = _owner_body((root / owner).read_text(encoding="utf-8"), name)
+    body, title, anchor = _owner_body((root / owner).read_text(encoding="utf-8"), name, owner)
     owner_dir, target_dir = Path(owner).parent, Path(target).parent
+    # A same-file #anchor link must keep pointing at the owner once copied elsewhere.
+    body = re.sub(r"(?<!!)(\[[^\]\n]+\])\(#([^)\n]*)\)", lambda hit: f"{hit.group(1)}({Path(owner).name}#{hit.group(2)})", body)
+    body = rebase_links(body, owner_dir, target_dir)
     link = os.path.relpath(owner, target_dir)
     link = f"{link}#{anchor}" if anchor else link
     note = f"*From [{title or Path(owner).name}]({link}); edit it there.*"
-    start, end = f"<!-- block:{name}:start -->", f"<!-- block:{name}:end -->"
     text = (root / target).read_text(encoding="utf-8")
-    if text.count(start) != 1 or text.count(end) != 1 or text.find(start) > text.find(end):
-        raise ValueError(f"view block-{name}-{target}: target must contain exactly one ordered {start} and {end} pair; restore them in {target}")
-    before, rest = text.split(start, 1)
-    _, after = rest.split(end, 1)
-    body = rebase_links(body, owner_dir, target_dir)
-    return before + start + "\n" + body + "\n\n" + note + "\n" + end + after
+    regions = _block_regions(text, target)
+    if ("block", name) not in regions:
+        raise ValueError(f"view block-{name}-{target}: {target} must contain one <!-- block:{name}:start --> and one <!-- block:{name}:end --> line; restore them")
+    _, body_start, body_end, _ = regions[("block", name)]
+    return text[:body_start] + "\n" + body + "\n\n" + note + "\n" + text[body_end:]
 
 
-def block_views(root: Path) -> tuple[View, ...]:
-    """One View per `block:<name>` copy region, filled from its `block-source:<name>` owner region."""
+def block_views(root: Path) -> tuple[tuple[View, ...], list[str]]:
+    """Return one View per `block:<name>` copy region of tracked Markdown, and the errors found.
+
+    Each copy is filled from the single `block-source:<name>` owner region. Problems are returned,
+    never raised, so one bad marker cannot stop unrelated checks.
+    """
     root = root.resolve()
-    owners: dict[str, str] = {}
+    try:
+        listing = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=root, check=True, capture_output=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return (), []
+    owners: dict[str, list[str]] = {}
     copies: list[tuple[str, str]] = []
-    for directory, dirs, files in os.walk(root):
-        dirs[:] = sorted(d for d in dirs if d != ".git")
-        for filename in sorted(files):
-            full = Path(directory) / filename
-            if not filename.endswith(".md") or full.is_symlink():
-                continue
-            path = full.relative_to(root).as_posix()
+    errors: list[str] = []
+    for path in sorted(p for p in listing.decode("utf-8").split("\0") if p):
+        full = root / path
+        if full.is_symlink() or not full.is_file():
+            continue
+        try:
             regions = _block_regions(full.read_text(encoding="utf-8"), path)
-            for kind, name in regions:
-                if kind == "block-source":
-                    if name in owners:
-                        raise ValueError(f"block {name}: two owners, {owners[name]} and {path}; keep exactly one block-source:{name} region")
-                    owners[name] = path
-                    if ("block", name) in regions:
-                        raise ValueError(f"{path}: block {name} has a copy region inside its own owner file; remove the block:{name} region")
-                else:
-                    copies.append((name, path))
+        except ValueError as exc:
+            errors.append(str(exc))
+            continue
+        for kind, name in regions:
+            if kind == "block-source":
+                owners.setdefault(name, []).append(path)
+                if ("block", name) in regions:
+                    errors.append(f"{path}: block {name} has a copy region inside its own owner file; remove the block:{name} region")
+            elif not path.startswith(BLOCK_COPY_ROOTS) or path.startswith(BLOCK_COPY_HISTORY):
+                errors.append(f"{path}: block {name} copy is not allowed here; put copies only under skills/, templates/ or docs/, "
+                              "never in docs/ledger/ or docs/handoffs/ (history)")
+            else:
+                copies.append((name, path))
+    for name, paths in sorted(owners.items()):
+        if len(paths) > 1:
+            errors.append(f"block {name}: {len(paths)} owners ({', '.join(paths)}); keep exactly one block-source:{name} region")
     result = []
     for name, path in copies:
         if name not in owners:
-            raise ValueError(f"{path}: block {name} has no owner; add a block-source:{name} region to the file that owns the rule")
-        result.append(View(f"block-{name}-{path}", (owners[name],), path,
-                           lambda root, name=name, owner=owners[name], path=path: _render_block(root, name, owner, path),
-                           f"block:{name}"))
-    return tuple(result)
+            errors.append(f"{path}: block {name} has no owner; add a block-source:{name} region to the file that owns the rule")
+        elif len(owners[name]) == 1 and path != owners[name][0]:
+            result.append(View(f"block-{name}-{path}", (owners[name][0],), path,
+                               lambda root, name=name, owner=owners[name][0], path=path: _render_block(root, name, owner, path),
+                               f"block:{name}"))
+    return tuple(result), errors
 
 
-VIEWS = VIEWS + block_views(Path(__file__).resolve().parents[1])
+def views_for(root: Path) -> tuple[tuple[View, ...], list[str]]:
+    """The declared views plus the shared-block copies found under `root`, and any block errors."""
+    found, errors = block_views(root)
+    return tuple(VIEWS) + found, errors
