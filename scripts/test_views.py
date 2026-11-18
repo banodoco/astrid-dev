@@ -654,6 +654,126 @@ class PublicVisionRefreshTests(unittest.TestCase):
         self.assertEqual(error.exception.code, 2)
 
 
+class SharedBlockTests(unittest.TestCase):
+    OWNER = ("# Contract\n\n## Routing rules\n\n<!-- block-source:{name}:start -->\nRule {name} with [a link](sibling.md) and [home](#top).\n"
+             "<!-- block-source:{name}:end -->\n")
+    COPY = "Intro.\n\n<!-- block:{name}:start -->\n<!-- block:{name}:end -->\n\nOutro.\n"
+
+    def tree(self, root, files):
+        for name, text in files.items():
+            path = root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8")
+
+    def synced(self, root):
+        import views
+        from unittest.mock import patch
+        return patch.object(views, "VIEWS", views.block_views(root))
+
+    def basic(self, root):
+        self.tree(root, {"shared/owner.md": self.OWNER.format(name="r"), "shared/sibling.md": "# S\n",
+                         "skills/deep/user.md": self.COPY.format(name="r")})
+
+    def test_copy_is_filled_from_owner_and_is_idempotent(self):
+        import views
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.basic(root)
+            with self.synced(root):
+                self.assertEqual(sync(root), ["skills/deep/user.md"])
+                self.assertEqual(sync(root), [])
+                self.assertEqual(check(root), [])
+            text = (root / "skills/deep/user.md").read_text(encoding="utf-8")
+            self.assertIn("Rule r with", text)
+            self.assertTrue(text.startswith("Intro.\n\n"))
+            self.assertTrue(text.endswith("\nOutro.\n"))
+            self.assertIn("*From [Routing rules](../../shared/owner.md#routing-rules); edit it there.*", text)
+
+    def test_links_are_rebased_for_a_target_in_another_directory(self):
+        import check_docs
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.basic(root)
+            with self.synced(root):
+                sync(root)
+            text = (root / "skills/deep/user.md").read_text(encoding="utf-8")
+            self.assertIn("[a link](../../shared/sibling.md)", text)
+            self.assertIn("[home](#top)", text)
+            self.assertEqual(check_docs.local_links(root, Path("skills/deep/user.md")), [])
+
+    def test_hand_edit_to_a_copy_fails_check(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.basic(root)
+            with self.synced(root):
+                sync(root)
+                target = root / "skills/deep/user.md"
+                target.write_text(target.read_text(encoding="utf-8").replace("Rule r", "Hand rule"), encoding="utf-8")
+                errors = check(root)
+            self.assertEqual(len(errors), 1)
+            self.assertIn("edit shared/owner.md instead", errors[0])
+
+    def test_two_blocks_in_one_file(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.tree(root, {"a.md": self.OWNER.format(name="one"), "b.md": self.OWNER.format(name="two"),
+                             "c.md": self.COPY.format(name="one") + self.COPY.format(name="two")})
+            with self.synced(root):
+                self.assertEqual(sync(root), ["c.md"])
+                self.assertEqual(sync(root), [])
+                self.assertEqual(check(root), [])
+            text = (root / "c.md").read_text(encoding="utf-8")
+            self.assertIn("Rule one", text)
+            self.assertIn("Rule two", text)
+
+    def test_missing_owner_names_the_file(self):
+        import views
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.tree(root, {"x/c.md": self.COPY.format(name="lost")})
+            with self.assertRaisesRegex(ValueError, "x/c.md: block lost has no owner"):
+                views.block_views(root)
+
+    def test_duplicate_owner_is_refused(self):
+        import views
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.tree(root, {"a.md": self.OWNER.format(name="r"), "b.md": self.OWNER.format(name="r")})
+            with self.assertRaisesRegex(ValueError, "two owners, a.md and b.md"):
+                views.block_views(root)
+
+    def test_copy_inside_its_owner_file_is_refused(self):
+        import views
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.tree(root, {"a.md": self.OWNER.format(name="r") + self.COPY.format(name="r")})
+            with self.assertRaisesRegex(ValueError, "a.md: block r has a copy region inside its own owner"):
+                views.block_views(root)
+
+    def test_mismatched_or_duplicate_markers_are_refused(self):
+        import views
+        for text in ("<!-- block:r:start -->\n", "<!-- block:r:end -->\n<!-- block:r:start -->\n",
+                     self.COPY.format(name="r") * 2):
+            with tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                self.tree(root, {"o.md": self.OWNER.format(name="r"), "bad.md": text})
+                with self.assertRaisesRegex(ValueError, "bad.md: block:r needs exactly one start marker"):
+                    views.block_views(root)
+
+    def test_fenced_markers_are_ignored(self):
+        import views
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.tree(root, {"d.md": "```\n<!-- block:zzz:start -->\n```\n"})
+            self.assertEqual(views.block_views(root), ())
+
+    def test_real_repository_routing_copies_are_current(self):
+        import views
+        names = [v.target for v in views.VIEWS if v.region == "block:routing"]
+        self.assertIn("skills/roles/astrid-dev-plan/SKILL.md", names)
+        self.assertEqual({v.sources for v in views.VIEWS if v.region == "block:routing"}, {("skills/shared/run-contract.md",)})
+
+
 class SyncTargetSafetyTests(unittest.TestCase):
     def assert_refused_before_writing(self, root, unsafe):
         import views

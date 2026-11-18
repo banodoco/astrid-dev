@@ -299,3 +299,85 @@ def rebase_links(value: str, from_dir: Path, to_dir: Path) -> str:
         relative = os.path.relpath(from_dir / path, to_dir)
         return f"[{match.group(1)}]({relative}{sep}{fragment})"
     return re.sub(r"(?<!!)\[([^]\n]+)\]\(([^)\n]+)\)", replace, value)
+
+
+BLOCK_MARKER = re.compile(r"(?m)^<!-- (block-source|block):([a-z0-9-]+):(start|end) -->[ \t]*$")
+_FENCE = r"(?ms)^\s*```.*?^\s*```[^\n]*$"
+
+
+def _block_regions(text: str, path: str) -> dict[tuple[str, str], tuple[int, int]]:
+    """Return {(kind, name): (start, end)} positions; reject unpaired or repeated markers."""
+    seen: dict[tuple[str, str], list[tuple[str, int, int]]] = {}
+    for hit in BLOCK_MARKER.finditer(re.sub(_FENCE, "", text)):
+        seen.setdefault((hit.group(1), hit.group(2)), []).append((hit.group(3), hit.start(), hit.end()))
+    regions = {}
+    for (kind, name), marks in seen.items():
+        if [edge for edge, _, _ in marks] != ["start", "end"]:
+            raise ValueError(f"{path}: {kind}:{name} needs exactly one start marker followed by one end marker "
+                             f"(found {', '.join(edge for edge, _, _ in marks)}); fix the markers")
+        regions[(kind, name)] = (marks[0][2], marks[1][1])
+    return regions
+
+
+def _owner_body(text: str, name: str) -> tuple[str, str, str]:
+    """Return the owner's body, its nearest heading title and that heading's anchor."""
+    start, end = f"<!-- block-source:{name}:start -->", f"<!-- block-source:{name}:end -->"
+    before, rest = text.split(start, 1)
+    body = rest.split(end, 1)[0].strip("\n")
+    from records import markdown_heading_anchors
+    headings = markdown_heading_anchors(before)
+    if not headings:
+        return body, "", ""
+    _, title, anchor = headings[-1]
+    return body, re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title).replace("`", ""), anchor
+
+
+def _render_block(root: Path, name: str, owner: str, target: str) -> str:
+    body, title, anchor = _owner_body((root / owner).read_text(encoding="utf-8"), name)
+    owner_dir, target_dir = Path(owner).parent, Path(target).parent
+    link = os.path.relpath(owner, target_dir)
+    link = f"{link}#{anchor}" if anchor else link
+    note = f"*From [{title or Path(owner).name}]({link}); edit it there.*"
+    start, end = f"<!-- block:{name}:start -->", f"<!-- block:{name}:end -->"
+    text = (root / target).read_text(encoding="utf-8")
+    if text.count(start) != 1 or text.count(end) != 1 or text.find(start) > text.find(end):
+        raise ValueError(f"view block-{name}-{target}: target must contain exactly one ordered {start} and {end} pair; restore them in {target}")
+    before, rest = text.split(start, 1)
+    _, after = rest.split(end, 1)
+    body = rebase_links(body, owner_dir, target_dir)
+    return before + start + "\n" + body + "\n\n" + note + "\n" + end + after
+
+
+def block_views(root: Path) -> tuple[View, ...]:
+    """One View per `block:<name>` copy region, filled from its `block-source:<name>` owner region."""
+    root = root.resolve()
+    owners: dict[str, str] = {}
+    copies: list[tuple[str, str]] = []
+    for directory, dirs, files in os.walk(root):
+        dirs[:] = sorted(d for d in dirs if d != ".git")
+        for filename in sorted(files):
+            full = Path(directory) / filename
+            if not filename.endswith(".md") or full.is_symlink():
+                continue
+            path = full.relative_to(root).as_posix()
+            regions = _block_regions(full.read_text(encoding="utf-8"), path)
+            for kind, name in regions:
+                if kind == "block-source":
+                    if name in owners:
+                        raise ValueError(f"block {name}: two owners, {owners[name]} and {path}; keep exactly one block-source:{name} region")
+                    owners[name] = path
+                    if ("block", name) in regions:
+                        raise ValueError(f"{path}: block {name} has a copy region inside its own owner file; remove the block:{name} region")
+                else:
+                    copies.append((name, path))
+    result = []
+    for name, path in copies:
+        if name not in owners:
+            raise ValueError(f"{path}: block {name} has no owner; add a block-source:{name} region to the file that owns the rule")
+        result.append(View(f"block-{name}-{path}", (owners[name],), path,
+                           lambda root, name=name, owner=owners[name], path=path: _render_block(root, name, owner, path),
+                           f"block:{name}"))
+    return tuple(result)
+
+
+VIEWS = VIEWS + block_views(Path(__file__).resolve().parents[1])
