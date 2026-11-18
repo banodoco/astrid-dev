@@ -27,11 +27,11 @@ The report's alternative rounding text was not taken; D3 keeps the card's rule.
 
 **Review rounds:** One final round recommended because request identity, mask permission geometry and the worker handoff are shared. Owner confirmation pending.
 
-**Run start:** Pending — the owner requested planning only. Before dispatch record the accountable session, date, authorized tasks, spend and publication boundaries, reviewer and advisor bindings.
+**Run start:** Started 18 Nov 2026 by the owner in the Plan 59 session: all tasks, CPU only (no GPU, RunPod or paid APIs), no publication or release merge. A Codex manager on the X route's Codex model, per the owner's request, hosted and answered for by this session (session_011EzfW4BJ221kXBNRB4xQcG), with hourly check-ins. Plan branches `release/14/plan-64` and `release/14/plan-65` in astrid-agent, cut from `release/14/main`.
 
 ## Owner decisions
 
-- **D1 — no continuation work in this plan (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** This reverses the earlier same-day choice to include small-size continuation. [Plan 66](../66-h3-composable-core/inputs.md#owner-decisions) CC-7a gives continuation any size through its ported stage, and deletes the captured workflows (Plan 66 D3, D5). Until then, a non-default size on continuation is refused.
+- **D1 — no continuation work in this plan (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** This reverses the earlier same-day choice to include small-size continuation. [Plan 70](../70-h3-continuation-bridges-inserts/plan.md) CC-7a gives continuation any size through its ported stage, and deletes the captured workflows (Plan 66 D3, D5). Until then, a non-default size on continuation is refused.
 - **D2 — CPU only (decided 18 Nov 2026, owner in the Plan 59 session: "we're not going to do a GPU test. This is just CPU… We'll do a test afterwards").** No task in this plan claims a machine or spends money. The 512×288 vs 1024×576 speech and timing comparison happens in the owner's live test afterwards.
 - **D3 — rectangle edge ties round down (decided 18 Nov 2026, owner in the Plan 59 session: "I agree on your two recommendations").** Scaled rectangle edges use `ceil(edge - 0.5)`, so an exact half rounds down, as DS-3 already said. The alternative, `floor(edge + 0.5)` (ties round up), was rejected. Current code has no scaled-mask precedent.
 

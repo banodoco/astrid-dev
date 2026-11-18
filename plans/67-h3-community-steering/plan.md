@@ -10,7 +10,7 @@
 
 **Estimate:** 9.5 days (CPU only; the live test is separate and comes after)
 
-**Waiting on:** Owner greenlight of scope, and Plans 64, 65 and 66.
+**Waiting on:** Owner greenlight of scope, and Plans 64, 65, 66 and 68; the `speech-continue` recipe also waits for Plan 70.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -62,7 +62,7 @@ NKD's MiniMax Guides node schedules each guide over denoising progress, and its 
 
 ## Sequence and readiness
 
-Plans 64, 65 and 66 land first; this plan uses Plan 66's capability table, dry-run view, guide lowering and recipe format.
+Plans 64, 65 and 66 land first; this plan uses Plan 66's capability table, dry-run view and recipe format, cites the design in `astrid/packs/h3_av/docs/design.md`, and wraps [Plan 68](../68-h3-guides-and-stills/plan.md)'s guide lowering. Timed prompts, binding reports, ControlNet and LoRA phase (CS-2, CS-6, CS-5, CS-7) can start after Plan 66; guide phase and the curve tool (CS-3, CS-4) wait for Plan 68; the `speech-continue` recipe in CS-8 waits for [Plan 70](../70-h3-continuation-bridges-inserts/plan.md).
 
 Order:
 1. CS-1 pins NKD on the worker.
@@ -77,7 +77,7 @@ Order:
 ## Interfaces and handoff
 
 **Consumes:**
-- Plan 66's job, lever-kind table, dry-run view, guide lowering, recipe format and skills;
+- Plan 66's job, lever-kind table, dry-run view, recipe format and skills, and its design file; Plan 68's guide lowering; Plan 70 for the `speech-continue` recipe;
 - Plan 64's reference rows and audio rule;
 - NKD Basic Tools at commit `c157722a2b484d80dee6b6d3f166c90d9ec197b8`.
 

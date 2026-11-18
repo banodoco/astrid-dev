@@ -4,13 +4,13 @@
 
 **Goal:** A creator chooses the H3 working size per request (small for voice-only takes, other aspect ratios, larger where it's worth paying for), and masks, previews, composition and checks follow it.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Session `session_011EzfW4BJ221kXBNRB4xQcG` (the Plan 59 session)
 
 **Estimate:** 2 days (CPU only; the live test is separate and comes after)
 
-**Waiting on:** Owner greenlight of scope.
+**Waiting on:** Plan 64 SR-3 (the shared input record and limits table), which DS-1 builds on.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -18,7 +18,7 @@
 
 ## Outcome and scope
 
-A creator can ask for `output.size: [512, 288]` on image-guided generation, a masked edit or Character Swap. Continuation gets size from [Plan 66](../66-h3-composable-core/plan.md) CC-7a (D1). Any width and height from 32 to 16384 in multiples of 32 is accepted. With no size given, the request is 1024×576, identical in bytes and digest to an explicit 1024×576 request. Source conform, generation, mask rasterization, composition, dry run and the completed-job record all use the same effective size.
+A creator can ask for `output.size: [512, 288]` on image-guided generation, a masked edit or Character Swap. Continuation gets size from [Plan 70](../70-h3-continuation-bridges-inserts/plan.md) CC-7a (D1). Any width and height from 32 to 16384 in multiples of 32 is accepted. With no size given, the request is 1024×576, identical in bytes and digest to an explicit 1024×576 request. Source conform, generation, mask rasterization, composition, dry run and the completed-job record all use the same effective size.
 
 Rectangle masks are authored on a canvas: by default 1024×576, or the canvas the mask states. They scale to the chosen size. A still-image mask scales from its own pixel size.
 
@@ -29,7 +29,7 @@ Rectangle masks are authored on a canvas: by default 1024×576, or the canvas th
 - a new mask-to-composition mapping layer, member digests or relocatable build-state records;
 - size presets, automatic size selection or quality guidance across the range;
 - tuning `ref_image_size`;
-- continuation sizing, or any change to the captured continuation workflows. [Plan 66](../66-h3-composable-core/plan.md) replaces them (D1).
+- continuation sizing, or any change to the captured continuation workflows. [Plan 70](../70-h3-continuation-bridges-inserts/plan.md) replaces them (D1).
 
 ## Existing work and decision
 
@@ -49,7 +49,7 @@ The request's size goes through `GenerationInputs.canvas`, which every stage rea
 
 CPU tests prove each of these:
 
-- A 512×288 and a 768×448 request compile on image-guided generation, masked edit and Character Swap, with the requested size in every width and height binding. A non-default size on continuation is refused from the limits table as a lowering limit, which Plan 66 CC-7a removes.
+- A 512×288 and a 768×448 request compile on image-guided generation, masked edit and Character Swap, with the requested size in every width and height binding. A non-default size on continuation is refused from the limits table as a lowering limit, Plan 70 CC-7a removes.
 - 256×144, 768×432, out-of-range, fractional, string and boolean sizes are refused before claim.
 - A request with no size and one with explicit 1024×576 give identical bytes and digests, and compile the same graph as before this plan.
 - At 768×448, decoded output keeps the prepared source pixels outside a scaled rectangle mask, on a non-16:9 source with an off-centre landmark.

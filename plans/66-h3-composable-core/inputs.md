@@ -113,6 +113,13 @@ Not taken:
 
 Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audio-mask edges) and Plan 65 D3 (rectangle edge ties).
 
+**Split.** On 18 November the owner asked to break this plan into several. An independent review ([research/split-review.md](research/split-review.md)) checked the cut. Accepted:
+- this plan keeps the core (CC-1.1 to CC-1.4, RS1, CC-2, CC-3, CC-9) plus composition by occurrence and exact delivery (new CC-10, moved out of CC-8), the template machinery and recipes for existing capabilities, and the base skill rewrite;
+- guides and exact stills (CC-4, CC-8) become [Plan 68](../68-h3-guides-and-stills/plan.md);
+- continuation, bridges and inserts (CC-7a to CC-7d) become [Plan 70](../70-h3-continuation-bridges-inserts/plan.md), after Plan 68, because CC-7a's first check compares against Plan 68's full-canvas source;
+- four reservations, the design file in the pack, three skill guards, a closing review here and the integrated review after Plan 70;
+- card ids unchanged.
+
 **Proof and limits:** CPU only (D1). Because of D3, the old workflows are gone before the live test, so the live test compares the port with today's saved takes rather than with a fresh run of the old workflows. Proof covers compiled graphs, refusals, the dry-run record, template admission and a cold read of the skill. Not covered, and left to the owner's live test:
 - whether the ported continuation looks and sounds like the captured one;
 - guide adherence;
@@ -126,15 +133,16 @@ Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audi
 
 - **D1 — CPU only (decided 18 Nov 2026, owner in the Plan 59 session: "we're not going to do a GPU test. This is just CPU… We'll do a test afterwards").** No task claims a machine or spends money.
 - **D2 — finish the model rather than keep routes (decided 18 Nov 2026, owner: "if we're doing something for historical reasons, why don't we just update it to use the current way").**
-- **D3 — delete the captured continuation workflows in this plan (decided 18 Nov 2026, owner: "delete it ASAP… we already have it saved in GitHub… in the history").** CC-7d deletes them once the port passes its CPU proofs, with no live comparison first. The CPU parity list against their active path is the only check before deletion.
+- **D3 — delete the captured continuation workflows (now in Plan 70) (decided 18 Nov 2026, owner: "delete it ASAP… we already have it saved in GitHub… in the history").** Plan 70 CC-7d deletes them once the port passes its CPU proofs, with no live comparison first. The CPU parity list against their active path is the only check before deletion.
 - **D4 — one clean break in request identity, now (decided 18 Nov 2026, owner: "we should make a clean break now… who gives a fuck about keeping things of the past").** The break happens in Plan 64 SR-1, the first task to land. After it, no plan preserves old digests: changed fixtures are regenerated in the same commit, with reasons.
-- **D5 — drop Plan 65's continuation work (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** Continuation gets size, and any reference count, from CC-7a. This reverses Plan 65's earlier D1.
+- **D5 — drop Plan 65's continuation work (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** Continuation gets size, and any reference count, from Plan 70 CC-7a. This reverses Plan 65's earlier D1.
 
-- **D6 — live renders during the work (pending).** The handoff review ([research/handoff-review.md](research/handoff-review.md)) points out that 18 CPU days pass across Plans 64–66 before any render. It proposes two short live sessions, each with one render per new mechanism. One comes after Plan 64 (speaker reference, audio time mask, exact start), and one after Plan 66 phase 1 (guides, interior stills). The options:
-  - (a) keep everything CPU-only until all three plans are done (D1 as it stands);
-  - (b) add the two sessions, with small GPU spend and a budget set by the owner.
+- **D6 — live checks during the work (pending).** The handoff review ([research/handoff-review.md](research/handoff-review.md)) points out that many CPU days pass before any render. After the split into Plans 66, 68 and 70, the recommended points are three short live sessions, each with one render per new mechanism:
+  - after Plan 64 (speaker reference, audio time mask, exact start);
+  - after Plan 66 (a regression check of the shipped recipes);
+  - after Plan 68 (guides, interior stills).
 
-  Recommendation: (b), because nothing can be marked `live-tested` otherwise.
+  The options are (a) keep everything CPU-only until all the plans are done (D1 as it stands), or (b) add those sessions, with small GPU spend and a budget set by the owner. Recommendation: (b), because nothing can be marked `live-tested` otherwise. Still pending the owner.
 
 ## Source identities
 
@@ -143,4 +151,4 @@ Planning snapshot: `astrid-agent` `origin/release/14/main` at `9f614dff` for the
 ## References
 
 - [Direction review](research/direction.md), [continuation research](research/continuation.md), [community capabilities](research/community.md), [Astra critique](research/critique.md).
-- [Plan 64](../64-h3-speaker-references/plan.md), [Plan 65](../65-h3-dynamic-size/plan.md), [#866](https://github.com/banodoco/astrid-dev/issues/866) (build the invocation once; superseded by the CC-1 cards and CC-7a), [#863](https://github.com/banodoco/astrid-dev/issues/863) (still-to-clip preparation; stays open until a recipe reproduces the four-frame silent hold).
+- [Plan 64](../64-h3-speaker-references/plan.md), [Plan 65](../65-h3-dynamic-size/plan.md), [#866](https://github.com/banodoco/astrid-dev/issues/866) (build the invocation once; superseded by the CC-1 cards and Plan 70 CC-7a), [#863](https://github.com/banodoco/astrid-dev/issues/863) (still-to-clip preparation; stays open until a recipe reproduces the four-frame silent hold).

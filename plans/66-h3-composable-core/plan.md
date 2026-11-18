@@ -1,14 +1,14 @@
-# H3 composable core
+# H3 one compiler
 
-**Project:** H3 composable core
+**Project:** H3 one compiler
 
-**Goal:** An agent makes H3 shots — continue, start from an image, start and end on exact images, inpaint, redub, speaker voice — with one request shape, one compiler and one general skill, and problem skills like Recast become short guides with templates.
+**Goal:** Every H3 request goes through one compiler, one capability table and one dry-run view, so later plans add capabilities as table rows and functions instead of routes, and agents learn one shape from one page.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** 15.5 days (phase 1, the core mechanisms: 7; phase 2, continuation, bridges and inserts: 6; phase 3, templates and skills: 2.5; CPU only, the live test comes after)
+**Estimate:** 8 days (CPU only; the live check comes after)
 
 **Waiting on:** Owner greenlight of scope, and Plans 59, 64 and 65.
 
@@ -42,7 +42,7 @@ Context and Process only influence.
 
 Composition then restores every kept pixel and sample. A new lever adds a kind to the table and a function that feeds one mechanism. It never adds a request structure or a compiler branch.
 
-**Two clocks.** Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` in this plan) says when during generation a lever acts. Any kind may accept it; the table says which do. No field touches both.
+**Two clocks.** Clip time (`at`, `during`, `range`) places things in the video. Denoising progress (`phase`, reserved and `unavailable` here; [Plan 67](../67-h3-community-steering/plan.md) adds it) says when during generation a lever acts. Any kind may accept it; the table says which do. No field touches both.
 
 **Invariants.**
 - No code names or classifies a kind of job.
@@ -55,7 +55,7 @@ Composition then restores every kept pixel and sample. A new lever adds a kind t
 - `live-tested`: only with a cited render and date;
 - `unavailable`: no lowering exists yet.
 
-Plans 64–66 are proven by compiling. The owner's live test comes after.
+Plans 64–70 are proven by compiling. The owner's live test comes after.
 
 **Four layers, each thin:**
 1. **Tools:** one compiler; a dry run that shows the resolved job; `describe` that shows what the model and Astrid accept; refusals that name the item, the limit and a fix.
@@ -63,14 +63,16 @@ Plans 64–66 are proven by compiling. The owner's live test comes after.
 3. **Problem skills such as Recast:** the order of work, judgment calls, pitfalls, and a brief template naming each shot's recipes.
 4. **Templates:** a template is a request with named holes. It can be listed, shown, filled from `--set` values or a shot, written out, and submitted like any request.
 
-**Phases.**
-- **Phase 1 (core):** one public path and one resolved job; capabilities as lever kinds; the dry-run view; end-relative time; guides; exact stills at any frame; templates; both skills.
-- **Phase 2 (continuation):** continuation, bridges and inserts by placement: a clip before, between or after generated time, through the pinned motion-context nodes. The captured continuation workflows are then deleted (D3). Git history keeps them.
+**This plan builds the core only.** It adds no new creative capability, so its live check is a clean regression check. The capabilities on top come in their own plans, each citing this plan's design, which ships in the pack as `astrid/packs/h3_av/docs/design.md`:
+- [Plan 68](../68-h3-guides-and-stills/plan.md): guides and exact stills at any frame;
+- [Plan 70](../70-h3-continuation-bridges-inserts/plan.md): continuation, bridges and inserts by placement, and deleting the captured continuation workflows;
+- [Plan 67](../67-h3-community-steering/plan.md): community steering (timed prompts, `phase`, the curve tool, ControlNet, binding reports).
 
 **Not in this plan. Do not build these:**
 - a GPU or live run of any kind (D1). The owner tests afterwards;
-- more than one continuation block per job, or any chain orchestration;
-- timed prompts, `phase` on guides or LoRAs, ControlNet, a curve-to-audio-guide tool, or per-actor binding work. These are [Plan 67](../67-h3-community-steering/plan.md). No GPL node is vendored into Astrid;
+- guides or exact stills off frame 0 ([Plan 68](../68-h3-guides-and-stills/plan.md)); this plan reserves their `unavailable` rows and the guide seam;
+- the continuation port, bridges or inserts ([Plan 70](../70-h3-continuation-bridges-inserts/plan.md)); continuation keeps running through the captured bundle until then;
+- timed prompts, `phase` on guides or LoRAs, ControlNet, a curve-to-audio-guide tool, or per-actor binding work ([Plan 67](../67-h3-community-steering/plan.md)). No GPL node is vendored into Astrid;
 - shot-plan schema changes, or automatic take recording on shots;
 - an endless-continuation skill, take lineage or continue-from-take;
 - variations or multi-pass chains in the core;
@@ -84,17 +86,11 @@ Request v2 already has the model's shape: timeline and reference items with per-
 - `branch_for` and the per-route compilers;
 - the route-specific refusals.
 
-It adds the guide role, templates and the continuation port. Request identity was already broken once in Plan 64 (D4), so nothing here preserves old digests. The evidence, the reviews and the alternatives are in [inputs.md](inputs.md#planning-evidence).
+It adds the capability table as lever kinds, the dry-run view, end-relative time, composition by occurrence with exact-delivery checks, and the template machinery with recipes for what exists. Request identity was already broken once in Plan 64 (D4), so nothing here preserves old digests. The evidence, the reviews and the alternatives are in [inputs.md](inputs.md#planning-evidence). The split into Plans 66, 68 and 70 is reviewed in [research/split-review.md](research/split-review.md).
 
 ## Sequence and readiness
 
-Plans 59, 64 and 65 land first.
-
-**Phase 1** runs in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities, as lever kinds), CC-3 (the dry-run view), CC-9 (end-relative time), CC-4 (guides), CC-8 (exact stills at any frame).
-
-**Phase 2** is CC-7a (prefix continuation; it first checks whether one full-canvas preparation can serve prefix, insert and bridge), then CC-7b (bridges) and CC-7c (inserts) in parallel, then CC-7d (deleting the captured workflows and the `continuation` flag). It starts after CC-3, not after the skill.
-
-**Phase 3** is CC-5 (templates, with recipes for every phase 1 and phase 2 capability) and CC-6 (both skills, written once against the finished system), followed by the final review. [Task cards](tasks.md)
+Plans 59, 64 and 65 land first. Then, in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities, as lever kinds), CC-3 (the dry-run view), CC-9 (end-relative time), CC-10 (composition by occurrence and exact delivery), CC-5 (templates and recipes for existing capabilities), CC-6 (the base skill rewrite and thin Recast), and the closing review. Plans 68 and 70 follow, in that order; Plan 67's first cards can start once this plan closes. [Task cards](tasks.md)
 
 ## Interfaces and handoff
 
@@ -104,38 +100,27 @@ Plans 59, 64 and 65 land first.
 - Plan 59's shot plan and Recast skill.
 
 **Produces:**
-- `compile_job(job, bindings, out_dir)`;
+- `compile_job(job, bindings, out_dir)`, and the one function that reads how placed items are arranged;
+- the capability table keyed by lever kind, with status and node-pack columns, and `unavailable` rows reserved for guides, off-zero stills, bridges and inserts;
 - the `capabilities` field in `describe`;
-- the resolved-job view in the dry run and the settled result;
-- `role: guide`;
-- the recipe format with `templates list`, `templates show` and `--template` fill;
-- the general H3 skill, `docs/reference.md`, and the thin Recast skill with its brief template.
+- the resolved-job view in the dry run and the settled result, with a reserved slot for the delivered-to-sampled frame map;
+- composition by occurrence and the exact-delivery verifier;
+- the guide seam (one function from ordered guides to conditioning), implemented by Plan 68;
+- the recipe format with `templates list`, `templates show` and `--template` fill, and recipes for existing capabilities;
+- the general H3 skill with its three guards, `docs/reference.md`, `docs/design.md`, and the thin Recast skill with its brief template.
 
 ## Completion
 
 CPU tests prove each of these:
-
-**Phase 1**
-- `describe` lists lever kinds with their family, fields, defaults, params and limits; `range: [-2, end]`, `at: end` and `during: [-2, end]` resolve on each stream's clock and show in the dry run.
-- The public prompt-and-image invocation, a masked edit, a fixed-audio redub and Character Swap each go through preparation, build, composition and receipt via `compile_job`.
+- `describe` lists lever kinds with their family, fields, defaults, params, status and limits; `range: [-2, end]`, `at: end` and `during: [-2, end]` resolve on each stream's clock and show in the dry run.
+- The public prompt-and-image invocation, a masked edit, a fixed-audio redub, Character Swap and the captured-bundle continuation each go through preparation, build, composition and receipt via `compile_job`.
 - `branch_for` is gone, and a v1 request is refused with a message to write it as v2.
-- `describe --entry h3 --json` shows the same capabilities admission uses.
-- Unsupported pairs are refused, naming both items and a fix. A late LoRA, a mouth edit inside a continuation prefix and `role: control` are refused before claim, with no build.
+- `describe --entry h3 --json` shows the same capabilities admission uses, with the reserved rows marked `unavailable`.
+- Unsupported pairs are refused, naming both items and a fix. A late LoRA, a mouth edit inside a continuation prefix, `role: control`, `role: guide` and an off-zero still are refused before claim, with no build.
 - Every kept or supplied span is byte-identical per channel in the decoded published file, including asymmetric stereo and off-by-one cases; the permission and strength masks are separate, and a vanished grant fails loudly.
 - The dry run reports each tag's actual binding, and each occurrence's retained frames, audio and resource estimate.
 - The dry run separates requested grants, effective latent influence and delivered ownership across the frame-4 boundary.
-- Guides bind at the right resolved index, including the last delivered frame on an off-lattice shot.
-- Exact stills at frame 0, an interior frame and the last frame each come out pixel-exact (frame 0 and frame 51 hold one frame; frame 61 and the last frame hold their four-frame chunk, clipped at the end), and the dry run shows each requested frame, chunk and hold.
-- Every recipe fills, dry-runs and compiles.
-- A written template submits as a plain request.
-- A cold-read agent gets from a described shot to a dry run using only the skill.
+- Every recipe fills, dry-runs and compiles, and a written template submits as a plain request.
+- The skill guards pass, and a cold-read agent gets from a described shot to a dry run using only the skill.
 
-**Phase 2**
-- The ported continuation matches the captured active path, apart from the listed differences.
-- It delivers the prefix exactly across the seam.
-- It compiles at 512×288 with three images and a speaker clip.
-- Clip A, a 63-frame generated gap and clip B compile to a bridge, and unequal owners (120 and 90 frames, n = 39) give matching audio and video lengths. A clip placed at frame 51 compiles to an insert, and an insert at frame 34 is refused.
-- With the Character Swap adapter on, continuation and bridge graphs carry both LoRAs in the model chain.
-- The captured workflows and the `continuation` flag are gone.
-
-Review then closes the plan. How the port looks and sounds against the old workflows, and how well guides are followed, are judged in the owner's live test afterwards.
+The closing review then closes the plan. The owner's live check after it is a regression check of the shipped recipes.

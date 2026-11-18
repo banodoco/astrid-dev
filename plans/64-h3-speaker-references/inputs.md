@@ -54,7 +54,7 @@ Alternatives considered:
 
 **Review rounds:** Recommend 1 (a shared request contract and a user-visible flow). Next: the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: the owner starts a run.
+**Run start:** Started 18 Nov 2026 by the owner in the Plan 59 session: all tasks, CPU only (no GPU, RunPod or paid APIs), no publication or release merge. A Codex manager on the X route's Codex model, per the owner's request, hosted and answered for by this session (session_011EzfW4BJ221kXBNRB4xQcG), with hourly check-ins. Plan branches `release/14/plan-64` and `release/14/plan-65` in astrid-agent, cut from `release/14/main`.
 
 ## Owner decisions
 

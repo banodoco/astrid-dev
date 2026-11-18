@@ -4,13 +4,13 @@
 
 **Goal:** A creator makes a character say a new line in their own voice by giving H3 a reference video or audio clip of them speaking, with the picture regenerated from a start image or kept under a mouth mask.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Session `session_011EzfW4BJ221kXBNRB4xQcG` (the Plan 59 session)
 
 **Estimate:** 2.5 days (CPU only; the live test is separate and comes after)
 
-**Waiting on:** Owner greenlight of scope.
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -28,7 +28,7 @@ Both routes accept image, video and standalone audio references, within the limi
 **Not in this plan. Do not build these:**
 - a GPU or live run of any kind (D2). The owner tests afterwards;
 - copying the original room tone back under the new line;
-- `MiniMaxH3AddGuide`, or timeline images at any frame other than 0 ([Plan 66](../66-h3-composable-core/plan.md) CC-4 adds guides), or any new Comfy node;
+- `MiniMaxH3AddGuide`, or timeline images at any frame other than 0 ([Plan 68](../68-h3-guides-and-stills/plan.md) CC-4 adds guides), or any new Comfy node;
 - fixed audio as a timeline audio item, or dialogue lines as their own request piece;
 - moving continuation onto the shared builder ([#866](https://github.com/banodoco/astrid-dev/issues/866));
 - a second model. Only the shared limits table is designed to extend to one.
