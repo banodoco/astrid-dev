@@ -4,13 +4,12 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 **If you are a packet session,** read [Authority](#authority) and [Standing rulings](#standing-rulings) before your packet. **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Standing rulings](#standing-rulings), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
-## Now (15:20 UTC, Wed 18 Nov)
+## Now (19:05 UTC, Wed 18 Nov)
 
-- Sixteen packets are Done. The three Plan 39 gates landed in Agent #397 (`2266c24a`), App #298 (`549e335d`) and Runtime #60 (`19cd1e35`). Plan 61's App #302 landed at `0bce7312`.
-- G2 (R14-P39-04) continues in `r14-P39-04-2` after the first session reached its conversation limit at 15:13. The Lead dispatched the five missing runs and reran the cancelled Runtime job.
-- The Lead is reviewing the GL.2 ceiling (Agent #406), LS-8 rework (Agent #405) and the Agent portion of LS-6 (Agent #407).
-- R14-P55-10 is applying the SDK wait ruling in Agent #388. R14-FIX-10 awaits four unit jobs on Agent #395.
-- R14-P55-12 takes the rest of LS-6 after #407 merges. The Orchestrator holds R14-P61-02 and the other multi-row packets under the owner's one-row instruction.
+- Agent #405, #406 and #407 have landed. R14-P55-09, R14-P55-12 and R14-P13-02 are running.
+- G2 continues in R14-P39-04. R14-P55-10 has the owner's meter decision. R14-FIX-10 awaits Agent #395's unit jobs.
+- R14-P61-02 is ready under the temporary delegation. R14-FIX-11 follows R14-FIX-10 and needs HM2's frozen reproducer.
+- Fresh Lead sessions start with the [Lead handoff](lead/README.md).
 
 ## Authority
 
@@ -24,7 +23,8 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
   - **Re-pins:** a re-pin of one product in another, once the change it brings has passed the Lead's review.
   - **Required checks:** turning on required status checks, as rulesets, on `release/14/main` and `release/14/plan-*` once the gate packets land.
   - **Landing and publishing:** landing `release/14/main` in each product `main`, and publishing Release 14, once it is qualified under [Release](../../skills/capabilities/astrid-dev-release/SKILL.md#how-a-release-runs). The Lead tells the owner before each of these, and records each in the brief.
-- **Needs the owner:** any paid action (GPU rental, a paid tester); any other repository setting; a scope change. Anything reserved goes to the Lead, which adds it to [Waiting on the owner](#waiting-on-the-owner).
+  - **While the owner is away, 18 Nov 19:00 UTC to about 20 Nov 07:00 UTC** ([delegation](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6988377106)): the Release 14 cut at RS1; narrow changes to existing assertions (only where one encodes the defect being fixed or fails on identical product bytes, each in its own commit and named); the one-row rule (a multi-row packet is allowed when its rows share one setup and one proof); syncing and landing plan branches without notice; a GPU budget of up to $10, each spend reported.
+- **Needs the owner:** paid actions outside the delegated GPU budget (including a paid tester); any other repository setting; a scope change. Anything reserved goes to the Lead, which adds it to [Waiting on the owner](#waiting-on-the-owner).
 
 ## Mailbox
 
@@ -39,7 +39,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 **Cadence and time limits.**
 - **Orchestrator, every hour:** reads the mailbox, checks every open packet, posts one STATUS with a line per packet (state, session, latest commit or "no change", next action) and `cursor:`.
 - **Packet session:** posts an early STATUS once its first branch is pushed and its draft pull request open, STATUS when it submits, BLOCKED when stuck, and pushes before any pause.
-- **Lead, every two hours:** reads the mailbox from its cursor, answers each submission (accept: merge, `tasks.md`, DONE; or rework listed on the pull request, and a DECISION), and rewrites this board. Its session cannot schedule itself (the permission check refused a recurring check-in on 17 November), so until the owner allows that, her message to the Lead session is the nudge.
+- **Lead, every 30–60 minutes:** use `send_later` for the next check-in, read the mailbox from the cursor, answer submissions and update the board. See the [Lead handoff](lead/README.md) for the strategic review cadence.
 
 | If | Then |
 |---|---|
@@ -95,30 +95,32 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Done | `r14-P55-05-2` | VibeComfy #175 (`d8e61a50`) and Agent #385 (`24c68a27`) merged into `release/14/plan-55` |
 | [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Done | `r14-P55-07-2` | Runtime #58 (`f3dc970a`) and Agent #384 (`6451821e`) merged into `release/14/plan-55`. The Runtime schema digest changes; it is sequenced with Plan 59's #838 at `release/14/main` |
 | [R14-FIX-10](packets/R14-FIX-10.md) Agent re-pins on `release/14/main` | #674, #676 | Blocked | `r14-FIX-10-1` | Wait for the four unit jobs on [Agent #395](https://github.com/banodoco/astrid-agent/pull/395) at `08b89f0f`, then submit the paired test-ID comparison ([STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6982679771)) |
+| [R14-FIX-11](packets/R14-FIX-11.md) Cleanup ACK during activation | [#905](https://github.com/banodoco/astrid-dev/issues/905) | Ready-after-FIX-10 | — | Wait for FIX-10 Done and obtain the frozen HM2 test from Agent #409 (merged or cherry-picked). |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Running | `r14-P55-10-2` | Apply the [SDK wait ruling](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6981129059) in [Agent #388](https://github.com/banodoco/astrid-agent/pull/388), collect [run 44317370264](https://github.com/banodoco/astrid-agent/actions/runs/44317370264) and submit |
 | [R14-P39-07](packets/R14-P39-07.md) Agent gates that cannot be fooled | Plan 39 GL.1, K0, SF3a.1; fix #742 | Done | `r14-P39-07-1` | [Agent #397](https://github.com/banodoco/astrid-agent/pull/397) merged into `release/14/plan-39` at `2266c24a` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6979176022)) |
 | GL.3 follow-up | Plan 39 GL.3 | Closed | — | Crafted bypasses: not pursued unless seen in a real PR (owner, 18 Nov) |
 | [R14-P39-08](packets/R14-P39-08.md) Runtime guard under xdist | Plan 39 K1b.1, K0, SF3a.1 | Done | `r14-P39-08-1` | [Runtime #60](https://github.com/banodoco/astrid-runtime/pull/60) merged into `release/14/plan-39` at `19cd1e35` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6979362725)) |
 | [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Done | `r14-P39-09-1` | [App #298](https://github.com/banodoco/astrid-app/pull/298) merged into `release/14/plan-39` at `549e335d` |
-| [R14-P39-12](packets/R14-P39-12.md) Structure ceiling that may only fall | Plan 39 GL.2 (#647) | Review | `r14-P39-12-1` | Lead reviews [Agent #406](https://github.com/banodoco/astrid-agent/pull/406) at `7e325cab` against the submitted ceiling proof ([STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6982000367)) |
+| [R14-P39-12](packets/R14-P39-12.md) Structure ceiling that may only fall | Plan 39 GL.2 (#647) | Done | `r14-P39-12-1` | [Agent #406](https://github.com/banodoco/astrid-agent/pull/406) merged into `release/14/plan-39` at `9a698c39` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6985650516)). |
 | [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Done | `r14-P61-01-1` | [App #302](https://github.com/banodoco/astrid-app/pull/302) merged into `release/14/plan-61` at `0bce7312` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6980328306)) |
-| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Blocked | — | R14-P61-01 merged. The Orchestrator holds the three rows under the [one-row instruction](#waiting-on-the-owner) |
-| [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner). AT11 and AT12 also wait for RS1 ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6978542613)) |
-| [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Review | `r14-P55-08-1` | Lead reviews the four rework fixes in [Agent #405](https://github.com/banodoco/astrid-agent/pull/405) at `bf694ecd` ([STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6982096905)). Follow-ups are in [astrid-dev #896](https://github.com/banodoco/astrid-dev/issues/896) |
-| [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Review | `r14-P55-06-1` | Lead reviews the Agent materialization fixes in [Agent #407](https://github.com/banodoco/astrid-agent/pull/407). The [scope decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6982812408) assigns the remaining LS-6 work and hash-count change to [R14-P55-12](packets/R14-P55-12.md) |
-| [R14-P55-12](packets/R14-P55-12.md) Output handled once: Runtime and VibeComfy | Plan 55 LS-6 remainder | Ready | — | Dispatch after [R14-P55-06](packets/R14-P55-06.md) merges |
-| [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
+| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Ready | — | Dispatch as one packet under the one-row delegation. The hosted Mac run supplies the shared setup and proof. |
+| [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority). AT11 and AT12 also wait for RS1 ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6978542613)) |
+| [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Done | `r14-P55-08-1` | [Agent #405](https://github.com/banodoco/astrid-agent/pull/405) merged into `release/14/plan-55` at `d0217776` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6983043853)). Follow-ups are in [astrid-dev #896](https://github.com/banodoco/astrid-dev/issues/896). |
+| [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Done | `r14-P55-06-1` | [Agent #407](https://github.com/banodoco/astrid-agent/pull/407) merged into `release/14/plan-55` at `91cb4cb4` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6985581776)). R14-P55-12 carries the LS-6 remainder. |
+| [R14-P55-12](packets/R14-P55-12.md) Output handled once: Runtime and VibeComfy | Plan 55 LS-6 remainder | Running | `r14-P55-12-1` | [Runtime #68](https://github.com/banodoco/astrid-runtime/pull/68), [VibeComfy #176](https://github.com/banodoco/VibeComfy/pull/176), [Agent #410](https://github.com/banodoco/astrid-agent/pull/410) |
+| [R14-FIX-04](packets/R14-FIX-04.md) Small Runtime and App fixes | #685, #675 | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority) |
 | [R14-FIX-09](packets/R14-FIX-09.md) JSON workflow loading | #836 | Ready | — | Dispatch now; no longer waits for R14-FIX-04 (no shared files or proof) |
-| [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
-| [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
+| [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority) |
+| [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Done | `r14-FIX-03-3` | Agent #360 merged into `release/14/main` at `b9740f64`. #721 stays open until a tester build proves it |
 | [R14-P55-04](packets/R14-P55-04.md) First job | Plan 55 LS-12; draft Agent #361 | Ready | — | Dispatch after R14-P55-06 |
 | [R14-P39-04](packets/R14-P39-04.md) Re-measure | Plan 39 G2 | Running | `r14-P39-04-2` | Collect the five newly dispatched runs for [astrid-dev #897](https://github.com/banodoco/astrid-dev/pull/897) and attempt 2 of Runtime CI. Record NO-RESULT if the macOS job is cancelled again, then submit G2 for RS1 ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6982812408)) |
 | R14-P39-06 onward, wave 2 | Plan 39 RT1–RT8, AT1–AT4, PT1–PT4, K2, K3, SF3b, SF3c | Blocked | — | Cut from G2's causes after the Lead's RS1; about eight packets |
-| R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2, LS-20 (#855) | Blocked | — | Held by the Orchestrator under the [one-row instruction](#waiting-on-the-owner) |
+| R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2, LS-20 (#855) | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority) |
 | R14-P39-11 A bound on terminal publication replay | Plan 39 AT13 (#611) | Blocked | — | After R14-P55-07 merges: the same `generic_host.py` |
-| R14-P55-09 onward | Plan 55 LS-15, LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-15 after LS-4, LS-5 and LS-8; LS-14 also needs paid GPU time |
-| [R14-P13-02](packets/R14-P13-02.md) Characterisation | Plan 13 HM2 | Ready | — | Dispatch next (single row) |
+| [R14-P55-09](packets/R14-P55-09.md) Resident session reuse | Plan 55 LS-15 | Running | `r14-P55-09-1` | [Agent #408](https://github.com/banodoco/astrid-agent/pull/408) |
+| Later Plan 55 packets | Plan 55 LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-14 needs GPU time under the [delegated budget](#authority) |
+| [R14-P13-02](packets/R14-P13-02.md) Characterisation | Plan 13 HM2 | Running | `r14-P13-02-1` | [Agent #409](https://github.com/banodoco/astrid-agent/pull/409) carries the HM2 reproducer for #905. |
 | R14-FIX-05 Rejected saves | #732, the App half of #720 | Blocked | — | Owner: discard or copy out |
 | R14-FIX-06 Scenes in CI | #734 | Blocked | — | After R14-FIX-10, one Agent issue packet at a time |
 | R14-FIX-07 Release tooling | #739 | Blocked | — | Owner: the ruleset on `release/*/main` |
@@ -215,11 +217,11 @@ If a check fails, say which manual step I must do instead of promising automatio
 
 ## Waiting on the owner
 
-1. **One task row per ChatGPT submission:** Does the instruction apply to all multi-row packets? The Orchestrator holds R14-P61-02 (three rows), R14-FIX-04, R14-P52-01, R14-P53-01 and R14-P55-11 pending clarification.
+1. **One task row per ChatGPT submission.** Delegated while away (see [Authority](#authority)). The Lead may group rows with one setup and one proof.
 2. **`ASTRID_GATE_OWNERS` before required checks.** Set the astrid-agent repository variable to your login before the Lead enables required checks. This can wait because product `main` does not yet have the gate-integrity workflow and no check is required.
 3. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
 4. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
-5. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
+5. **Paid GPU time** for Plan 55 LS-1 and LS-14. Delegated while away (see [Authority](#authority)), up to $10 total with each spend reported. A **Windows tester** for LS-13 and the Windows fixes still needs the owner.
 6. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
 7. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
 8. **Plan 61:** filing the three drafted issues. The real run and the first-start trace (RB-6, RB-9) run on a hosted Mac (R14-P61-02), so no stop window on your machine is needed; a run on your own data is optional.
@@ -238,5 +240,9 @@ At 12:30 UTC the owner agreed to four further decisions in the Lead's session:
 - **Plan 61 D3.** Hold one review round, R, before landing.
 - **Issue scope.** With [#888](https://github.com/banodoco/astrid-dev/pull/888) merged, prepare an Agent fix packet for #869 and move #622, #815, #816 and #820 out of Release 14.
 The owner limited gates to realistic weakening and capped gate reviews at two rounds.
+
+At 18:35 UTC the owner approved reporting the speed meter’s duration-following totals as observations while its invariants gate (R14-P55-10, [decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6987905451), follow-up [astrid-dev #907](https://github.com/banodoco/astrid-dev/issues/907)).
+
+From 19:00 UTC until about 20 Nov 07:00 UTC, the owner delegated the RS1 cut, narrow assertion changes, shared-setup and shared-proof packets, plan-branch syncs and landings without notice, and up to $10 of reported GPU spend. See [Authority](#authority) for the limits and the [delegation](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6988377106).
 
 **Decided on 17 November:** the quarantine cap counts tests, with today's 19 as a ceiling that may only fall (Plan 39 D9); the caller keeps its own hash on a verified transfer (Plan 55 D14). The Lead's check-ins now run as a scheduled task outside its machine.
