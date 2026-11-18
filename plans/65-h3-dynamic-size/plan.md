@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 2.5 days (1.5 plumbing, 0.5 masks, 0.5 proof and docs)
+**Estimate:** 2.5 days for the builder routes. Re-estimate if D3 includes the two captured continuation bundles.
 
-**Waiting on:** Owner greenlight of scope; D1 (the size vocabulary) and D2 (the mask coordinate space).
+**Waiting on:** Owner greenlight and D1–D3, including whether small-size continuation is required.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -18,75 +18,26 @@
 
 ## Outcome and scope
 
-**The creator's experience.** An H3 v2 request may state its working size, for example `output.size: [256, 144]`. Without it, the default stays 1024×576, so existing requests are unchanged. The chosen size is carried through the whole pipeline:
-- conform (fill or fit);
-- source validation and the preparation record;
-- the generation node (`width`/`height`);
-- the preserved-tail mask;
-- static mask resolution and its preview;
-- composition and paste-back;
-- Character Swap;
-- `astrid media mask --preview-on` and the dry-run record.
+A creator can ask for `output.size: [512, 288]` on an H3 v2 image-guided generation, masked edit or Character Swap. The public request defaults to 1024×576. Source conform, generation, mask rasterization, composition, dry run and completed-job evidence use the same effective dimensions. Character Swap retains its existing input contract. D3 determines whether continuation supports non-default sizes in this project.
 
-Masks are stored independent of the working size and resolved once, at one boundary.
-
-**Included:** the request field with the node's rules (32–16384, steps of 32), one carried size value, size-independent masks, the documented coordinate space, and the docs.
-
-**Deferred:**
-- quality guidance beyond the two proof sizes;
-- automatic size choice;
-- the reference image size (`ref_image_size`, see [Plan 64](../64-h3-speaker-references/plan.md)'s coverage list);
-- the continuation's captured graph, if it can't take the size without a graph change. Then it keeps 1024×576 and refuses another size with a clear message.
+Static image masks and rectangles describe an authored working canvas. Creators can reuse them at a new size and preview the result before claiming compute. Moving masks retain their lossless, prepared-source-size and clock requirements. Automatic size selection, quality guidance across the entire node range and tuning `ref_image_size` are deferred.
 
 ## Existing work and decision
 
-**Today 1024×576 is assumed in:**
-- generation: `generation.py:367-376` and the tail mask at `:424-425`;
-- conform: `conform.py:180-184` and `:225`;
-- source preflight and preparation: `prepare.py:243-244, 267, 452, 477-478`;
-- mask compilation: `compile.py:487, 499, 568, 570, 594`;
-- static masks: they must equal the frame size (`static_regions.py:45-80`);
-- docs: `docs/SKILL.md` (:218, 237, 309-311, 497, 515).
-
-**Already dimension-aware:** composition (`compose.py:632-675`, `:895`), take reporting, and the generation node itself.
-
-**Smallest sound approach:** one size value from the request, threaded through the existing functions in place of the constant, and masks resolved once in `static_regions.resolve_static_region`. No new stage. Evidence and alternatives are in [inputs.md](inputs.md#planning-evidence).
+Reuse the v2 normalizer, source conform, generation builder, static-region resolver and managed artifact handoff. Composition already uses the prepared source dimensions but independently finds or redraws masks. The proposed change gives compilation ownership of the resolved permissions used in both generation and paste-back. The owner requested a plan. Scope, coordinate semantics and continuation remain pending. [Planning evidence](inputs.md#planning-evidence)
 
 ## Sequence and readiness
 
-1. **DS-1:** the request field and one carried value.
-2. **DS-2:** conform, preflight and preparation.
-3. **DS-3:** generation and the compiler's full-frame and tail masks.
-4. **DS-4:** size-independent masks and preview.
-5. **DS-5:** docs.
-6. **DS-6:** live proof.
-
-DS-2, DS-3 and DS-4 depend on DS-1 and change different files, so they run in parallel. Budget: about $1.50 of RunPod for DS-6. It's independent of Plan 64, and either can land first. Task details are in [tasks.md](tasks.md). Recording this plan authorizes no implementation.
+DS-1 establishes the size and frozen-source contracts. DS-2 carries size through conform while DS-4 defines and implements the mask handoff. DS-3 integrates the builder with that handoff. Once the CPU paths work together, the executable examples feed DS-5 and the live comparison can proceed in parallel in DS-6. Both feed the final review. Dispatch requires recorded decisions, exact revisions and authority for the three-job proof. [Task cards](tasks.md)
 
 ## Interfaces and handoff
 
-**Consumes:**
-- the H3 v2 request contract at the integrating `release/<NN>/plan-65` head;
-- the `MiniMaxH3ReferenceToVideo` width/height rules from the node schema (ComfyUI `6bfaacc`).
+The v2 request consumes the pinned H3 node's width and height rules. Compilation supplies one effective pixel pair and resolved mask artifacts indexed by edit and time interval. The dry-run plan and retained job result expose the effective dimensions. The standalone mask preview takes its own explicit `--size`.
 
-**Produces:**
-- `output.size` in the v2 request, with the default unchanged;
-- masks valid at any working size;
-- the size in the dry-run plan and result;
-- `media mask --preview-on` at the request's size.
-
-**Limits:** quality at other sizes isn't guaranteed. The proof covers two sizes.
+Coordinate the shared normalizer, source-free path, masked and Character Swap calls, builder signature and skill examples with Plan 64. Prefer SR-2 first. SR-2 owns removal of the v1 translation and retains common bundle emission. Rebase DS-3 on that interface. If size lands first, DS-1 carries the size across the existing bridge and SR-2 keeps its public test. At the combined head compile one mixed-reference masked request at 768×448 and compare default image-only behavior to the prior bundle, bindings and digest. Record the integrated CPU result once and link it from both plans. Each project's GPU proof stands alone.
 
 ## Completion
 
-**Observable result:**
-- a voice-only continuation at 256×144 produces the line; its transcript matches a 1024×576 run of the same request, and it takes less GPU time;
-- a lens edit at a non-default size (for example 768×432) keeps everything outside the mask (`timelines visualize --compare-media`: MATCH outside).
+On the route selected in D3, two otherwise identical spoken-line jobs render at 512×288 and 1024×576. Each transcript matches the intended words and the smaller job uses less GPU time under the same measurement protocol. If continuation is deferred, the builder-route comparison and pre-claim continuation refusal satisfy this criterion. Small-size continuation remains open under #885.
 
-**Negative cases:**
-- a size off the 32-step grid, or below 32, is refused before claiming;
-- existing requests without a size compile byte-identically;
-- a mask drawn for another size is resolved, not refused;
-- the continuation route refuses a non-default size if it can't take one.
-
-**Limits of the proof:** one GPU type, two sizes.
+A 768×448 lens edit aligns to an asymmetric landmark. Decoded frames retain the prepared source pixels outside the authorized mask and interval. Dry-run and completed-job records agree with the decoded dimensions. Unsupported sizes fail before claim, and existing default request identities and compiled artifacts match the baseline. Evidence covers the tested routes, sizes and GPU type. Completion requires the final integrated review. Release and publication require separate authority.

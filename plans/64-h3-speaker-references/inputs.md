@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — the owner asked for this capability in the Plan 59 session (18 Nov 2026): "a starting image for the video, and we feed a reference video, a video reference of just him speaking"; and "why would we block masked edits + video references?" They asked for a plan, not yet greenlit scope. Next: owner greenlight of this plan, including D1 and D2.
+**Scope decision:** Pending — the owner asked for this capability in the Plan 59 session (18 Nov 2026): "a starting image for the video, and we feed a reference video, a video reference of just him speaking"; and "why would we block masked edits + video references?" They asked for a plan, not yet greenlit scope. Next: owner greenlight of this plan, including D1–D3.
 
 **Prior art:**
 - **The node supports it.** ComfyUI `6bfaacc` `comfy_extras/nodes_minimax_h3.py` `MiniMaxH3ReferenceToVideo`:
@@ -15,7 +15,7 @@
 - **Astrid already has most of the path:**
   - the shared builder `astrid/packs/h3_av/shared/generation.py:234` `build_generation_workflow` serves source-free generation, masked edit and Character Swap;
   - Character Swap already binds a typed video reference, with its soundtrack, through it (`compile.py` `_compile_character_swap_v2`);
-  - the normaliser already assigns `<Video n>` / `<Audio n>` tags (`request_v2.py:357–390`).
+  - the normalizer currently numbers declared occurrences by modality (`request_v2.py:375–390`). That numbering misses audio inserted by a video soundtrack.
 - **Today's refusals are hand-written:**
   - source-free "accepts image references only" (`compile.py` ~1065) and lowers into a v1 request with no modality or range (~1075);
   - the masked edit has a hand-written "two image-reference slots" limit (~612) copied from the continuation graph, and `audio_strength=0` hard-coded (`generation.py` ~440);
@@ -31,23 +31,12 @@ Alternatives considered:
 - **(b) The plain VibeComfy workflow route only.** Kept as the SR-1 spike route, but rejected as the product path, because it skips the pack's checks, verification and composition.
 - **(c) Wait for "build the invocation once" (#866).** Rejected as a prerequisite: this lowering is a step toward it, not a conflict.
 
-**Challenge:** Design critique by a fresh high-judgment reviewer (18 Nov, read against `origin/release/14/plan-59`). Accepted:
-- one lowering, not per-route tables;
-- capacities in one table pinned against the node schema;
-- delete the masked edit's two-slot limit;
-- references condition the whole pass, so any modality on any edit (stop extending `EDIT_GUIDE_MODALITIES`);
-- meaning by structure (a reference named by an audio edit's `guides` is the legacy fixed clip; everything else is conditioning; `range` is only a trim);
-- audio generate in masked edits;
-- source-free calls the builder directly;
-- no "tag not mentioned" warning;
-- no new preparation stage unless the 48 kHz check needs one.
-
-Rejected: none. A plan-level critique of this document is recorded under References once done.
+**Challenge:** The independent planning critique of 18 November 2026 inspected the Agent snapshot below, the pinned node and both plan packs. Accepted all six Plan 64 findings and the shared integration, evidence and dispatch corrections. The earlier design review established structural fixed audio, one lowering and retention of the existing pack. The independent review identified where that lowering lost information in both canonical conversions, how paired soundtracks shift prompt tags, and why latent strength alone cannot preserve samples. SR-2 owns occurrence identity and admission, SR-3 owns temporal composition, and SR-4 must prove settled readback. The revised cards name the conflicting fixture expectations, budget the control, sequence shared interfaces and reserve voice and frame judgments for the owner. The recommendations on scope, scheduling and proof are accepted. Retain the image prerequisite on source-free generation and the existing adapter and continuation contracts. The two requested recipes need no wider admission.
 
 **Proof and limits:**
 - **Acceptance:** the two 02c jobs in SR-6, plus SR-1's spike.
 - **Failure cases:** over-limit references are refused before claiming; image-only digests are unchanged; Character Swap is unchanged.
-- **Assumptions:** voice match is sample-dependent; room tone inside a masked audio window is regenerated.
+- **Assumptions:** voice match is sample-dependent. D2 records the pending choice for room tone inside the window.
 
 **Review rounds:** Recommend 1 (a shared request contract and a user-visible flow). Next: the owner confirms.
 
@@ -60,15 +49,12 @@ Rejected: none. A plan-level critique of this document is recorded under Referen
   - (b) build regardless, since the model card documents it.
   
   Recommend (a): the build is cheap, but the whole point is the voice.
-- **D2 — masked-edit audio scope.** Options:
-  - (a) regenerate audio for the whole edit window;
-  - (b) also restore the source audio outside the spoken interval during composition.
-  
-  Recommend (a) now, (b) only if SR-6 shows audible room-tone damage.
+- **D2 — room tone inside the authorized audio window.** Recommend accepting generated room tone under the new line. If the owner requires the original ambience mixed under speech inside that window, scope the mix and listening oracle before dispatch. Source sound on both sides is always protected.
+- **D3 — first frame.** Recommend an image-guided first frame. If the owner needs an exact frame, SR-1 must check a frame-zero MiniMaxH3AddGuide with Ref2VA and compare the decoded first frame against the supplied image before promising the recipe. Reprice that check before authorizing jobs.
 
 ## Source identities
 
-Pending — no code work yet. The base is `astrid-agent` `release/14/main` at dispatch, cut to `release/<NN>/plan-64` in `astrid-agent` only. Pins consumed: ComfyUI `6bfaacc`; the H3 motion pack `361624fb` (VibeComfy `custom_nodes.lock:31–39`).
+Planning snapshot: `astrid-agent` `origin/release/14/plan-59` at `ec758a9b86a43416ace0650eb8109cb5967575dc`. The inspected worker pins ComfyUI `6bfaacc` and H3 motion pack `361624fb`. At dispatch record the actual release number, `release/<NN>/main` SHA, retained donor and dependency SHAs, and the cut `release/<NN>/plan-64` head in Agent. The planning donor does not establish the release base.
 
 ## References
 

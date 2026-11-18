@@ -18,72 +18,24 @@
 
 ## Outcome and scope
 
-**The creator's experience.** The H3 v2 request treats a reference as one composable piece: a `reference` of modality `image`, `video` or `audio`, tagged `<Picture n>` / `<Video n>` / `<Audio n>` in the prompt. Any H3 route built on the shared graph builder (source-free generation, masked edit, Character Swap) accepts it, up to the node's own limits. Two recipes become possible and documented:
-- **Start image + speaker reference** (source-free): the corrected frame plus a 2–15 s clip of the speaker; H3 animates the image and speaks the line in that voice.
-- **Kept picture + mouth mask + speaker reference** (masked edit): only the lower face and the audio inside the line's window are regenerated.
+A creator supplies dialogue in the existing prompt and an identified speaker clip. Source-free generation animates a visually guided first frame from a still image. A masked edit keeps the source picture outside the mouth mask and source audio outside the authorized audio interval. Inside that interval H3 generates the new line. D1–D3 in [inputs.md](inputs.md#owner-decisions) settle voice quality, room tone and whether an exact first frame is essential.
 
-**Included:**
-- one reference lowering for the builder;
-- `ref_audios` support in the builder;
-- audio regeneration (`action: generate`) in masked edits;
-- one meaning per spelling for audio;
-- a record of each reference's tag, trim and node slot;
-- the recipes in the H3 and recast skills;
-- the pack's list of node inputs it still doesn't expose.
-
-**Deferred:**
-- continuation built from the same builder ([astrid-dev#866](https://github.com/banodoco/astrid-dev/issues/866));
-- fixed content respelled as timeline items, including an exact start frame via `MiniMaxH3AddGuide` ([astrid-dev#863](https://github.com/banodoco/astrid-dev/issues/863));
-- output size ([Plan 65](../65-h3-dynamic-size/plan.md));
-- multi-speaker voice-to-face binding beyond what SR-1 shows;
-- collapsing v1 onto v2 ([astrid-dev#860](https://github.com/banodoco/astrid-dev/issues/860)).
+Both routes accept image, video and standalone audio conditioning within the preparation limits in SR-2. Source-free still requires an image. Character Swap reuses the lowering within its one-image, one-video adapter contract. Captured continuation retains its two image slots. Multi-speaker binding, a v1 migration and new continuation graphs remain deferred.
 
 ## Existing work and decision
 
-**Retain and build on:**
-- the node `MiniMaxH3ReferenceToVideo` (ComfyUI `6bfaacc`), already on the worker: 9 images, 3 videos, 3 audio clips, each 2–15 s and 15 s total per modality;
-- the model card's documented voice-timbre reference prompting;
-- the shared builder `build_generation_workflow` (`astrid/packs/h3_av/shared/generation.py`);
-- the normaliser's reference tags (`request_v2.py:357-390`);
-- Character Swap's video-reference binding, which already goes through the builder with its soundtrack.
-
-**Smallest sound approach:** a single lowering in front of the builder, used by every route, plus deletion of the hand-written per-route refusals. No new pack and no new route.
-
-Evidence, alternatives and the design critique are in [inputs.md](inputs.md#planning-evidence).
+The shared generation builder already binds a video with its soundtrack for Character Swap. Extend that builder and the existing canonical spec to preserve typed reference occurrences through the public request, preparation and compilation. Keep the existing compositor as the owner of edit intervals. The independent critique, source revision and outstanding owner decisions are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-1. **SR-1 GPU spike (gate):** through the plain VibeComfy workflow route, run one start image plus one Morpheus reference clip with `audio_vae` connected. Listen, transcribe, and measure time and VRAM. If the voice isn't his, stop, and the owner decides whether to continue.
-2. **SR-2 and SR-3:** the lowering and the masked-edit audio generate. They change different functions, so they run in parallel, with a merge order.
-3. **SR-4 records, SR-5 docs.**
-4. **SR-6 live proof:** two jobs on shot 02c.
-
-Budget: about $3 of RunPod for SR-1 and SR-6 together. Task details are in [tasks.md](tasks.md). Recording this plan authorizes no implementation.
+After scope and spend approval, SR-1 compares the speaker clip to a matched no-reference baseline. The owner judges recognisability. SR-2 establishes the request, spec, pass and builder contracts. SR-3 and SR-4 then proceed in parallel. The executable recipes precede editorial work in SR-5. SR-6 exercises both recipes on shot 02c. Both SR-5 and SR-6 feed final review. Budget and dispatch details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
-**Consumes:**
-- the H3 v2 request contract at the integrating `release/<NN>/plan-64` head;
-- the ComfyUI pin `6bfaacc` from the worker recipe (VibeComfy `custom_nodes.lock`);
-- the effective-settings record from `p59/h3-overrides`, if merged; otherwise SR-4 adds the reference rows to the dry-run plan only.
+SR-2 supplies one ordered set of effective reference inputs to the shared builder, compilation record, dry run and result receipt. Each row identifies the occurrence, requested trim, effective input and prompt tag. Fixed replacement audio retains its own edit binding.
 
-**Produces:**
-- the v2 request accepting typed video and audio references on builder routes;
-- a refusal that names the limit for anything over the node's caps;
-- a dry-run and result record of each reference's tag, range and slot;
-- the recipes in `astrid/packs/h3_av/docs/SKILL.md` and `recast-scene/SKILL.md`.
-
-**Limits:**
-- voice-match quality is sample-dependent;
-- audio strength is one value per window, so in the masked recipe the room tone inside the window is regenerated unless composition restores it outside the spoken interval.
+Coordinate with [Plan 65](../65-h3-dynamic-size/plan.md) on normalization, the source-free branch, masked and adapter calls, the builder and both skills. SR-2 owns removal of the v2→v1 translation. Prefer SR-2 first, then rebase DS-3 onto its builder interface. If size lands first, retain its public source-free size proof through SR-2. On the integrated head compile a mixed-reference masked request at 768×448 and compare the default image-only behavior with the baseline on CPU. Reconcile the exposed width/height inventory in SR-5 and DS-5. Each plan has its own live proof.
 
 ## Completion
 
-**Observable result:** on 02c, both recipes produce Morpheus saying exactly "tuning workflows by hand,". That's checked by `timelines transcripts show` (words and nothing else), by the owner recognising the voice, and by the lenses or kept picture being intact (`timelines visualize --compare-media`).
-
-**Negative cases:**
-- a 4th video reference, a 16 s reference, or a reference without measurable stream durations is refused before any machine is claimed;
-- existing image-only requests compile byte-identically;
-- Character Swap compiles identically.
-
-**Limits of the proof:** one speaker, one shot, one GPU type (RTX 5090). Integration and release follow the release process.
+For both 02c recipes the transcript contains exactly “tuning workflows by hand” and the owner recognises Morpheus against the fixed reference. Inspect the corrected lenses in the guided shot and the mouth motion inside the mask in the kept shot. Compare decoded picture outside the mask and source audio on both sides of a partial edit to the prepared source. SR-4 must show the same effective rows in the dry run and the settled result. Out-of-limit and unmeasurable conditioning inputs fail before claim. Existing image-only bundles, masked digests, fixed audio and Character Swap bindings pass their compatibility fixtures. SR-6 and the integrated review complete the plan. This proves one speaker, shot and GPU type. Release is a separate decision.
