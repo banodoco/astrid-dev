@@ -112,6 +112,8 @@ The review stops are the Lead's, not packets: Plan 39 RS1 after P39-04, Plan 55 
 
 **Not dispatched:** #839 (App) and #842 (Agent), the editor's refusals on long-lived timelines. Another session has been fixing them on `release/14/edit-refusals` since 22:48 UTC. The Lead reviews them when they reach `release/14/main`; a packet would make a second writer.
 
+On 18 Nov, Agent #398 (`release/14/installer-mypy`, fix #742) merged into `release/14/main` at `cf5fbbe1`. Fast checks are green there, and the `unit` aggregate now fails honestly when a shard fails.
+
 Fixed on `release/14/main`, open until a tester build proves them: #671, #672, #673, #722, #723, #742, #736 (App `5aecce5ba`) and #674 (Runtime `038e0e8`; the Agent re-pin of the Runtime waits on the owner).
 
 ## Earlier managers
