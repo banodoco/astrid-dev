@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 3.5 days (includes small-size continuation, D3)
+**Estimate:** 2.5 days (CPU only; includes small-size continuation, D1; the live test is separate and comes after)
 
 **Waiting on:** Owner greenlight of scope.
 
@@ -18,26 +18,41 @@
 
 ## Outcome and scope
 
-A creator can ask for `output.size: [512, 288]` on an H3 v2 image-guided generation, continuation, masked edit or Character Swap. The public request defaults to 1024×576. Source conform, generation, mask rasterization, composition, dry run and completed-job evidence use the same effective dimensions. Character Swap retains its existing input contract.
+A creator can ask for `output.size: [512, 288]` on any H3 v2 route: image-guided generation, continuation, masked edit or Character Swap. Any width and height from 32 to 16384 in multiples of 32 is accepted. With no size given, the request is 1024×576 and its bytes and digest are exactly what they are today. Source conform, generation, mask rasterization, composition, dry run and the completed-job record all use the same effective size.
 
-Static image masks and rectangles describe an authored working canvas. Creators can reuse them at a new size and preview the result before claiming compute. Moving masks retain their lossless, prepared-source-size and clock requirements. Automatic size selection, quality guidance across the entire node range, tuning `ref_image_size` and scaling moving masks are deferred. Both captured continuation workflows take the requested size in this plan. Their builder migration remains under [#866](https://github.com/banodoco/astrid-dev/issues/866). The remaining deferred input and identity changes are listed in [Plan 64’s scope](../64-h3-speaker-references/plan.md#outcome-and-scope).
+Rectangle masks are authored on a canvas: by default 1024×576, or the canvas the mask states. They scale to the chosen size. A still-image mask scales from its own pixel size. Both captured continuation workflows take the requested size.
+
+**Not in this plan. Do not build these:**
+- a GPU or live run of any kind (D2). The owner tests afterwards;
+- scaling moving (video) masks. They keep today's rule: lossless, the prepared source's size, the same clock;
+- any change to how moving masks reach composition;
+- a new mask-to-composition mapping layer, member digests or relocatable build-state records;
+- size presets, automatic size selection or quality guidance across the range;
+- tuning `ref_image_size`;
+- moving continuation onto the shared builder ([#866](https://github.com/banodoco/astrid-dev/issues/866)).
 
 ## Existing work and decision
 
-Reuse the v2 normalizer, source conform, generation builder, static-region resolver and managed artifact handoff. Composition already uses the prepared source dimensions but independently finds or redraws masks. The proposed change gives compilation ownership of the resolved permissions used in both generation and paste-back. The owner requested a plan. Scope, coordinate semantics and acceptance of the live proof remain pending. [Planning evidence](inputs.md#planning-evidence)
+Reuse the v2 normalizer, source conform, the generation builder, the static-region resolver and the existing managed artifact handoff. The one structural change: composition today finds or redraws static masks on its own and resizes them a second time. Instead, the masked compiler rasterizes each static mask once at the target size, and composition reads that file. The planning evidence is in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-DS-1 establishes the size and frozen-source contracts. DS-2 carries size through conform while DS-4 defines and implements the mask handoff. DS-3 integrates the builder with that handoff. Once the CPU paths work together, the executable examples feed DS-5 and the live comparison can proceed in parallel in DS-6. Both feed the final review. Dispatch requires recorded decisions, exact revisions and authority for the three-job proof. [Task cards](tasks.md)
+**Order with [Plan 64](../64-h3-speaker-references/plan.md):** Plan 64's SR-1 to SR-3 land first. This plan adds `size` to their `GenerationInputs` record and reads width and height from their limits table. It creates neither.
+
+DS-1 sets the size contract. DS-2 (conform) and DS-3 (static masks) then run in parallel. DS-4 binds size at every generation entry point, including both continuation workflows. DS-5 documents it. Review comes last. [Task cards](tasks.md)
 
 ## Interfaces and handoff
 
-The v2 request consumes the pinned H3 node's width and height rules. Compilation supplies one effective pixel pair and resolved mask artifacts indexed by edit and time interval. The dry-run plan and retained job result expose the effective dimensions. The standalone mask preview takes its own explicit `--size`.
-
-Coordinate the shared normalizer, source-free path, masked and Character Swap calls, builder signature and skill examples with Plan 64. Prefer SR-2 first. SR-2 owns removal of the v1 translation and retains common bundle emission. Rebase DS-3 on that interface. If size lands first, DS-1 carries the size across the existing bridge and SR-2 keeps its public test. At the combined head compile one mixed-reference masked request at 768×448 and compare default image-only behavior to the prior bundle, bindings and digest. Record the integrated CPU result once and link it from both plans. Each project's GPU proof stands alone.
+The request's size goes through `GenerationInputs.size`, which every stage reads; nothing else holds a size. Compilation passes each static mask's rasterized file to composition. The dry-run plan and the retained job result show the effective size. The standalone `media mask` preview keeps its own explicit `--size`.
 
 ## Completion
 
-For the voice-only use case in [#885](https://github.com/banodoco/astrid-dev/issues/885), two otherwise identical spoken-line continuation jobs render at 512×288 and 1024×576. Each transcript matches the intended words and the smaller job uses less GPU time under the same measurement protocol. Compiled bundles bind the requested dimensions with zero, one and two references.
+CPU tests prove each of these:
 
-A 768×448 lens edit aligns to an asymmetric landmark. Decoded frames retain the prepared source pixels outside the authorized mask and interval. Dry-run and completed-job records agree with the decoded dimensions. Unsupported sizes fail before claim, and existing default request identities and compiled artifacts match the baseline. Evidence covers the tested routes, sizes and GPU type. Completion requires the final integrated review. Release and publication require separate authority.
+- A 512×288 and a 768×448 request compile on every route, with the requested size in every width and height binding, both continuation workflows included.
+- 256×144, 768×432, out-of-range, fractional, string and boolean sizes are refused before claim.
+- A request with no size and one with explicit 1024×576 give identical bytes and digests, which match today's fixtures.
+- At 768×448, decoded output keeps the prepared source pixels outside a scaled rectangle mask, on a non-16:9 source with an off-centre landmark.
+- The dry run and the completed-job record show the decoded size.
+
+Review then closes the plan. Speech quality and timing at small sizes are judged in the owner's live test afterwards. That test is not part of this plan.
