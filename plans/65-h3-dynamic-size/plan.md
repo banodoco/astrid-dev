@@ -10,7 +10,7 @@
 
 **Estimate:** 3 days for the builder routes, including the shared size contract and moving-mask handoff.
 
-**Waiting on:** Owner greenlight and D1–D3, including acceptance of the builder-route timing proof.
+**Waiting on:** Owner greenlight and D3 (small-size continuation now or later).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

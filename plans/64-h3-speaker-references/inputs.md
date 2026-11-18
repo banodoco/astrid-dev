@@ -36,7 +36,7 @@ Alternatives considered:
 **Proof and limits:**
 - **Acceptance:** the two 02c jobs in SR-6, plus SR-1's spike.
 - **Failure cases:** over-limit references are refused before claiming; image-only digests are unchanged; Character Swap is unchanged.
-- **Assumptions:** voice match is sample-dependent. D2 records the pending choice for room tone inside the window.
+- **Assumptions:** voice match is sample-dependent. Room tone inside the spoken window is regenerated (model behaviour, see Owner decisions).
 
 **Review rounds:** Recommend 1 (a shared request contract and a user-visible flow). Next: the owner confirms.
 
@@ -44,13 +44,11 @@ Alternatives considered:
 
 ## Owner decisions
 
-- **D1 — gate on the spike.** Options:
-  - (a) build only if SR-1's voice is recognisably the speaker's;
-  - (b) build regardless, since the model card documents it.
-  
-  Recommend (a): the build is cheap, but the whole point is the voice.
-- **D2 — room tone inside the authorized audio window.** Recommend accepting generated room tone under the new line. If the owner requires the original ambience mixed under speech inside that window, scope the mix and listening oracle before dispatch. Source sound on both sides is always protected.
-- **D3 — first frame.** Recommend an image-guided first frame. If the owner needs an exact frame, SR-1 must check a frame-zero MiniMaxH3AddGuide with Ref2VA and compare the decoded first frame against the supplied image before promising the recipe. Reprice that check before authorizing jobs. An exact start image is a timeline image item at frame 0 using the existing at/hard placement fields. Reference rows carry no exact-start flag. The product AddGuide lowering follows the D3 check. Until it lands, SR-2 refuses every timeline image during normalization with “Timeline image placement requires AddGuide support.”
+- **D1 — build voice references regardless (decided 18 Nov 2026, owner in the Plan 59 session: "we should build in any case voice references").** SR-1 is no longer a gate. It's the first proof run, and its results inform tuning and docs, not whether to build.
+
+**Model behaviour, recorded here so nobody mistakes it for a decision:**
+- H3 regenerates audio per window at one strength, so room tone inside the spoken window is regenerated with the voice. Sound outside the window is kept, and SR-3 proves it. Copying the original background back under the new words is a possible later improvement, not in scope.
+- A start image guides the first frame. An exact first frame is a timeline image at frame 0, which needs `MiniMaxH3AddGuide`, untested with this model. Until that's proven, normalization refuses it with a clear message (a later ticket, not a decision).
 
 ## Source identities
 

@@ -20,9 +20,13 @@
 
 ## Owner decisions
 
-- **D1 — Size vocabulary.** Recommend an explicit pixel pair in `output.size`. The alternative is a named preset with an explicit override. Both need the same underlying node validation.
-- **D2 — Rectangle coordinates.** Recommend pixel boxes on a declared working canvas, with 1024×576 implicit for older rectangles. A still image mask supplies its own authored dimensions. The alternative is normalized 0–1 rectangles with conversion of existing requests. The recommended interpretation preserves coordinates on the default canvas. A crop or pad changes where the source landmark falls, so author against the prepared view for that fit.
-- **D3 — Is small-size continuation required now?** The revised scope defers both captured workflows. Confirm that timing an image-guided source-free spoken take satisfies this plan’s acceptance case. DS-1 refuses non-default continuation size before claim.
+- **D3 — small-size continuation now, or with the continuation builder migration ([astrid-dev#866](https://github.com/banodoco/astrid-dev/issues/866))?** Recommend deferring: Plan 64's voice references largely replace the voice-only continuation trick that motivated it. Including it adds about half a day and both captured workflows to DS-3. Pending — the owner chooses.
+
+**Model limits and defaults, not decisions** (owner, 18 Nov 2026: "offer that and constrain them within that"):
+- `output.size` is a pixel pair, constrained exactly to the node's limits: width and height 32–16384 in steps of 32 (`MiniMaxH3ReferenceToVideo` schema). There are no presets.
+- Duration keeps H3's own frame rule: 24 fps, frame counts 17k+5, trained about 124–362 frames.
+- Existing mask boxes are 1024×576 pixels and scale to the chosen size. A new mask states its own size.
+- Quality is only established at the sizes the proof tests.
 
 ## Source identities
 

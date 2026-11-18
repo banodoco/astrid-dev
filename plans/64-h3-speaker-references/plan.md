@@ -10,7 +10,7 @@
 
 **Estimate:** 3 days (2 for the shared builder, normalization and compatibility work, 1 for proof and docs)
 
-**Waiting on:** Owner greenlight of scope; one GPU spike (task SR-1) before build tasks start.
+**Waiting on:** Owner greenlight of scope.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
