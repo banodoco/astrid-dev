@@ -23,9 +23,10 @@ Own the engineering quality of **the assignment you were given**. Work from its 
 
 ## Workstreams
 
-Choose the specific operating pattern. Both inherit the responsibilities above ([convention](../../shared/workstreams.md)).
+Choose the specific operating pattern. All inherit the responsibilities above ([convention](../../shared/workstreams.md)).
 
 - **[Whole project](workstreams/whole-project.md)** — the default when you are accountable for an entire plan run: dispatch, manage workers and run state, land and reconcile tasks, and close the project.
+- **[Loop plan](workstreams/live-loop.md)** — the plan's end state is known but its tasks come from each live round: run the scenarios, ask the strategist, fix, rerun.
 - **[Fresh ChatGPT packet](workstreams/chatgpt-packet.md)** — one new ChatGPT session executes exactly one packet and returns task PRs and evidence to the Lead; no plan-level run, task-progress PR, or release merge.
 
 ## Decide
