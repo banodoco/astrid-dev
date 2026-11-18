@@ -75,6 +75,7 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 | [R14-P55-03](packets/R14-P55-03.md) Held connection | Plan 55 LS-5; draft Agent #371 | Rework | `r14-P55-03-1` | Re-review B+: a stale connection or websocket drop before the POST fails the job instead of re-preparing; the Windows gate must be the packet's own 61 cases ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965549840)) |
 | [R14-P55-05](packets/R14-P55-05.md) Prepared workflow | Plan 55 LS-4 | Review | `r14-P55-05-1` | Forged-record fix and refusal parity pushed (VibeComfy #175 `4f6ba9f5`); the Lead's re-review is running. A Windows installed-host failure is being re-run on two heads ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965824641)) |
 | [R14-P55-07](packets/R14-P55-07.md) Runtime hand-off, first half | Plan 55 LS-7 | Review | `r14-P55-07-1` | Re-review A− on both. Runtime #58 merged into `release/14/plan-55` at `f3dc970a`. Agent #384 is accepted and waits only on the owner's Runtime re-pin ([DECISION](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6965785953)) |
+| [R14-FIX-10](packets/R14-FIX-10.md) Agent re-pins on `release/14/main` | #674, #676 | Ready | — | Dispatch now, ahead of the queue: the owner approved the re-pins on 18 Nov. It may run beside R14-FIX-03 |
 | [R14-P55-10](packets/R14-P55-10.md) Meter made a gate | Plan 55 LS-2.2 | Ready | — | Dispatch first: LS-4 to LS-13 prove their speed against it |
 | [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Ready | — | Dispatch after R14-P55-10 |
 | [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Blocked | — | After R14-P61-01 merges |
@@ -191,15 +192,19 @@ If a check fails, say which manual step I must do instead of promising automatio
 ## Waiting on the owner
 
 1. **Plan 55 Windows target.** The measured hosted-Windows floor is 226–284 ms against a 0.1 s target. Recommended: keep the target for a real machine, and decide after LS-3 names the cost.
-2. **Re-pins**, each recommended yes:
-   - **Runtime in the Agent, on `release/14/plan-55`:** move to `f3dc970a`, LS-7's accepted hand-off. Agent #384 waits on this.
-   - **VibeComfy in the Agent, on `release/14/main`:** move to `c27fe76b`, #676's loader fix.
-   - **Runtime in the Agent, on `release/14/main`:** #674's fix.
+2. **Re-pins:** approved on 18 Nov; see Decided below. Later re-pins, such as LS-4's VibeComfy pin on `release/14/plan-55`, come back here.
 3. **#732** discard or copy out; **#720** scene by reference or a raised limit; **#739** the ruleset; **#677** fix or close each lead.
 4. **Paid GPU time** for Plan 55 LS-1's warm-model cells and LS-14, and a **Windows tester** for LS-13 and the Windows fixes.
 5. **Plan 52:** moving the open product issues here (II-10, about 20 minutes), two minutes for II-11, and approving the reporting rules text (II-9).
 6. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
 
 - **Plan 61:** D3 (recommended: one review round, R, before landing) and filing the three drafted issues. The real run and the first-start trace (RB-6, RB-9) run on a hosted Mac (R14-P61-02), so no stop window on your machine is needed; a run on your own data is optional.
+
+**Decided on 18 November:** three Agent re-pins, approved by the owner in the Lead's session:
+- Runtime `f3dc970a` on `release/14/plan-55`, for Agent #384 (LS-7);
+- Runtime `2537fed2` on `release/14/main`, which contains #674's fix;
+- VibeComfy `c27fe76b` on `release/14/main`, #676's fix.
+
+The last two are R14-FIX-10.
 
 **Decided on 17 November:** the quarantine cap counts tests, with today's 19 as a ceiling that may only fall (Plan 39 D9); the caller keeps its own hash on a verified transfer (Plan 55 D14). The Lead's check-ins now run as a scheduled task outside its machine.
