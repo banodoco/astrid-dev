@@ -1,6 +1,6 @@
 # Save failures on "Almost Ready": evidence pack
 
-18 Nov 2026. Read-only. Nothing installed, changed, restarted, committed or published. Timeline `77f906f3242c48179ab86ca7c3e62eb4`, project `801a01b3a87941a1ab25958c488afdbf`.
+18 Nov 2026. Read-only. Nothing installed, changed, restarted, committed or published. Timeline `<owner-timeline>`, project `<owner-project>`.
 
 **Code under test (the install on :2400):** editor `~/astrid-release/release-14-plan-59/editor/src` (App `fbb8168bd` per QUEUE); Runtime `program/versions/fdbff077811b/py/lib/python3.11/site-packages/runtime_protocol` (Runtime `d725811`, per `runtime.lock.json`); Agent `…/site-packages/astrid` (Agent `458d9d51`). Line numbers below are the install's. The live-check file cites lines from the older Runtime `519b404` and App `b38e29d`, so its numbers differ.
 
@@ -165,7 +165,7 @@ Each incident gives the user-visible text, the trigger, the state record, the ra
 
 ### I-13. An accepted commit loses its reply (`ENOBUFS`), so the editor never hears
 
-- **Text (verified in the log):** `Runtime internal error (request f9b658ad…, POST …/timelines/77f906f3…/commit)` with `OSError: [Errno 55] No buffer space available`. User-visible: "the save never got a confirmation" (I-1).
+- **Text (verified in the log):** `Runtime internal error (request f9b658ad…, POST …/timelines/<owner-timeline>…/commit)` with `OSError: [Errno 55] No buffer space available`. User-visible: "the save never got a confirmation" (I-1).
 - **Raise (verified):** `server.py:464` `self.wfile.write(encoded)` in `_send`. The error propagates through `_dispatch` (`server.py:1565`). `_send_file` writes at `:487`. There is no retry on `ENOBUFS`.
 - **Trigger:** kernel socket buffer pressure. `netstat -m` showed 241,090,671 denied requests since boot (reported, `r14-slow-save-evidence.md` / `fable-still-slow-review.md`).
 - **State record:** the commit is accepted (the realm has the row; the request id is not stored in the realm, reported).

@@ -8,7 +8,7 @@ The `gh` CLI is not on this shell's PATH, so PR states below are reported or inf
 
 ## 1. Agent jobs (from transcripts)
 
-Transcripts: `~/.claude/projects/-Users-hannahomalley/89e96a59-5dfa-43fb-8013-1fe9d0216757/subagents/agent-<id>.jsonl`
+Transcripts: `~/.claude/projects/-Users-<user>/89e96a59-5dfa-43fb-8013-1fe9d0216757/subagents/agent-<id>.jsonl`
 (the `tasks/` folder under /private/tmp only holds three 0-135 byte stubs written at 15:56; the real records are the subagent transcripts). **verified**
 
 | Job (meta description) | Agent id | Model | Last write | Status at crash |
@@ -212,7 +212,7 @@ Path: `~/Developer/astrid-release-src/plan-review/`. Sizes and mtimes (**verifie
 ### 3.1 Logs
 - `start-pre66.log` (mtime 13:38), `rebuild-pre66.log` (13:11), `update-run-123205.log` (12:32). All **verified** (read).
 - Ports: editor 2400, proxy 17500, door 17501.
-- Realm copy: `221335d5-722e-48d0-a0ab-d9fde94b2277`. Copied from the owner's data: 558 media files, 279 byte-compared, 2211654876 bytes. Stack selects it. Timelines listed through the stack: 8 (start log) and 7 (update log). **verified**
+- Realm copy: `<owner-realm>`. Copied from the owner's data: 558 media files, 279 byte-compared, 2211654876 bytes. Stack selects it. Timelines listed through the stack: 8 (start log) and 7 (update log). **verified**
 - Live runtime (`haus.astrid.runtime`) was left untouched by the runs (plist mtime unchanged). **verified**
 
 ### 3.2 Pinned SHAs (verified from start-pre66 / rebuild-pre66)

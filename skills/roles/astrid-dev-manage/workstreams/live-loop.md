@@ -4,17 +4,17 @@ Use when the plan is a [loop plan](../../../shared/glossary.md): its end state i
 
 ## Roles
 
-- **Coordinator** (the manager session, normally Claude): keeps the judgment. Reads every round row and picks the fixes. Treats what Codex and Astra return as evidence to check.
-- **Codex:** the heavy lifting. `gpt-6-luna` normally, `gpt-6.1-sol` at xhigh for a hard fix. Run in the background, one worktree per fix:
-  `codex exec -m <model> --skip-git-repo-check -C <dir> -s workspace-write -o <scratch>/<name>.txt "<brief>" < /dev/null`
-  Add `-c model_reasoning_effort='"xhigh"'` for Sol.
-- **Astra** (`gpt-6-astra`, `-s read-only`): consulted on strategy each round. Its advice is evidence, not a verdict; it tends to over-engineer, so ask it what to remove first.
+- **Coordinator** (the manager session): keeps the judgment. Reads every round row and picks the fixes. Treats what Codex and the strategist return as evidence to check.
+- **Execution runs on Codex:** the heavy lifting, `N` normally and `X` for a hard fix, each bound to a model and effort in the run's `run.yaml`. Run in the background, one worktree per fix:
+  `codex exec -m <model from run.yaml> --skip-git-repo-check -C <dir> -s workspace-write -o <scratch>/<name>.txt "<brief>" < /dev/null`
+  Add `-c model_reasoning_effort='"<effort from run.yaml>"'`.
+- **Strategist:** the run's high-judgment advisor binding, read-only (`-s read-only`), consulted on strategy each round. Its advice is evidence, not a verdict; it tends to over-engineer, so ask it what to remove first.
 
 ## The round
 
 1. **Run the scenario set live,** against the real installed stack, over its public interface only (the browser or the public API), never in-process.
 2. **Record a round row** in the plan's `rounds.md`: what saved; what was refused, with the reason shown; timings; anything that vanished; the stack's versions.
-3. **Ask Astra for strategy:** give it the row and the previous rows, not your conclusion.
+3. **Ask the strategist:** give it the row and the previous rows, not your conclusion.
 4. **Pick the fixes.** Each is one failing scenario, a cause, and the smallest change at its source.
 5. **Fix** each as an ordinary [Iterate](../../../capabilities/astrid-dev-iterate/SKILL.md) run, a PR into the plan branch, with the failing live scenario as its red test.
 6. **Rebuild the stack and rerun** from step 1.

@@ -75,7 +75,7 @@ Pins measured: Agent `ca3f830f`, Runtime `4c18af59` (the installed program, froz
 
 ## A. Absorb (Runtime #62 + #65, `cb05b1e`, overlaid on the installed Runtime) vs Discard (same code, `store._after_commit = None` after start-up, scratch launcher only)
 
-Sequence x3 per mode on Almost Ready (`801a01b3...` / `77f906f3...`): commit, import of a 64x64 PNG, commit. Note that each `astrid timelines edit --add-layer media` first imports its file, so every commit is itself preceded by an import; the table lists all of them. Statements counted with `set_trace_callback` on every SQLite connection, per service call.
+Sequence x3 per mode on Almost Ready (`<owner-project>...` / `<owner-timeline>...`): commit, import of a 64x64 PNG, commit. Note that each `astrid timelines edit --add-layer media` first imports its file, so every commit is itself preceded by an import; the table lists all of them. Statements counted with `set_trace_callback` on every SQLite connection, per service call.
 
 History length: 17 accepted entries on Almost Ready at the start of each run, 24 at the end (7 commits).
 

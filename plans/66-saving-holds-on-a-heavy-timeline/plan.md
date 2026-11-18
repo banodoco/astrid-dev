@@ -10,7 +10,7 @@
 
 **Estimate:** About 4 engineering days (3 to 5): about 1.5 for the setup cards, about 0.5 to recover the lost work, and 2 for the first three loop rounds. Further rounds are extra.
 
-**Waiting on:** a machine with 40 GB free disk and the [handover](handover.md) steps; Release 14 owner go to run it. Not in a release brief yet: it is cut as `release/14/plan-66`.
+**Waiting on:** a machine with 40 GB free and the [handover](handover.md) steps.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -20,7 +20,7 @@
 
 ## Outcome and scope
 
-On a synthetic timeline shaped like the owner's heavy one ("Almost Ready" on 18 November), run through the real installed stack:
+On a synthetic timeline shaped like the owner's heavy one (profiled on 18 November: 616 clips, a document of about 2.6 MB), run through the real installed stack:
 
 - every ordinary edit the editor can make saves: alone, twice back to back, ten in a burst, and the same drag repeated;
 - nothing vanishes (a failed drop keeps its placeholder; a dropped file is never silently lost);
@@ -44,4 +44,4 @@ It consumes the three `release/14/plan-66` branches (App, Agent, Runtime), cut f
 
 ## Completion
 
-Two consecutive loop rounds, on a fresh stack built through the release script, in which every scenario in the matrix either saves within about 2 s on the heavy fixture or is refused for a real clash with Try again and Discard, with no vanished work and one head. Limits: the fixture is synthetic, so a real-timeline check by the owner stays his; the 2 s figure is a stop-gap, not Plan 64's target.
+Two consecutive loop rounds, on a fresh stack built through the release script, in which every scenario in the matrix either saves within about 2 s on the heavy fixture or is refused for a real clash with Try again and Discard, with no vanished work and one head. Limits: the fixture is synthetic, so a real-timeline check by the owner stays the owner's; the 2 s figure is a stop-gap, not Plan 64's target.
