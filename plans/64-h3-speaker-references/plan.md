@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 2 days (1 build, 1 proof and docs)
+**Estimate:** 3 days (2 for the shared builder, normalization and compatibility work, 1 for proof and docs)
 
 **Waiting on:** Owner greenlight of scope; one GPU spike (task SR-1) before build tasks start.
 
@@ -20,7 +20,7 @@
 
 A creator supplies dialogue in the existing prompt and an identified speaker clip. Source-free generation animates a visually guided first frame from a still image. A masked edit keeps the source picture outside the mouth mask and source audio outside the authorized audio interval. Inside that interval H3 generates the new line. D1–D3 in [inputs.md](inputs.md#owner-decisions) settle voice quality, room tone and whether an exact first frame is essential.
 
-Both routes accept image, video and standalone audio conditioning within the preparation limits in SR-2. Source-free still requires an image. Character Swap reuses the lowering within its one-image, one-video adapter contract. Captured continuation retains its two image slots. Multi-speaker binding, a v1 migration and new continuation graphs remain deferred.
+Both routes accept image, video and standalone audio conditioning within the preparation limits in SR-2. Source-free still requires an image. Character Swap reuses the lowering within its one-image, one-video adapter contract. Captured continuation retains its two image slots. Continuation moves onto the builder under [#866](https://github.com/banodoco/astrid-dev/issues/866), including small-size continuation for [#885](https://github.com/banodoco/astrid-dev/issues/885). Deferred work also includes the product AddGuide lowering after the D3 check, fixed audio as a timeline audio item, dialogue lines as a v2 piece bound to speaker rows, and removing model_tags from the digest through an identity migration. A second model is deferred. Only the shared limits table is in scope for that extension. Plan 65 defers moving-mask scaling.
 
 ## Existing work and decision
 
