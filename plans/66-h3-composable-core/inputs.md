@@ -64,6 +64,11 @@ Its changes to Plans 64 and 65 are applied.
   - keeping the captured workflows as fallback fixtures, and preserving Plan 65 D1. Both were overruled by the owner in D3 and D5.
 - **Cut, as the critique advised:** shot-plan schema changes and automatic take recording.
 
+**Lever abstraction and small-model tests.** Fable's levers note ([research/levers.md](research/levers.md)) groups every control into three families: Output (exact: place and edit), Context (soft: references, guides, prompt) and Process (soft: LoRAs, control, settings). The families share field names, and the denoising clock is a second time axis (`phase`). A one-page lever document was then tested on five creative asks with a small model in two rounds ([research/haiku-tests.md](research/haiku-tests.md)). In round 2 all five structures were correct. Accepted as a result:
+- the capability table keyed by lever kind (CC-2);
+- end-relative time and timed prompts, moved from later into phase 1 (CC-9);
+- the tested page as the CC-6 skill draft ([research/skill-draft.md](research/skill-draft.md)).
+
 **Restrictions review.** On 18 November the owner asked for every restriction to be justified or dropped. Fable's review is in [research/restrictions.md](research/restrictions.md). Its Luna helpers were blocked by the session's permissions, so Fable did the research directly. It found most limits came from Astrid using one node of the already-pinned motion pack. All ten edits are accepted:
 - no image required;
 - a time-varying audio mask via `MiniMaxH3SetAVNoiseMask`, so the model hears kept audio and several audio windows are allowed;
