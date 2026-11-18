@@ -55,7 +55,7 @@ Its changes to Plans 64 and 65 are applied.
   - the fill contract;
   - keeping the #863 workaround until a recipe reproduces it;
   - installed recipe files in the example test;
-  - a review stop after CC-1;
+  - a review stop after the CC-1 cards;
   - continuation as its own phase, a one-block limit, and the two-phase estimate.
 - **Also accepted:** the Plan 64 SR-2, SR-4 and SR-5 corrections.
 - **Rejected:**
@@ -69,12 +69,32 @@ Its changes to Plans 64 and 65 are applied.
 - a time-varying audio mask via `MiniMaxH3SetAVNoiseMask`, so the model hears kept audio and several audio windows are allowed;
 - regions may differ in interval and strength;
 - audio strength anywhere from 0 to 1;
-- bridges and inserts in CC-7;
+- bridges and inserts (now CC-7b and CC-7c);
 - several voices bound by prompt text (no voice-to-face input exists);
 - v1 deleted;
 - adapters as table rows with declared input contracts;
 - the 1, 4, 4, 4, 4 chunk pattern, so frames 0, 17, 34 and so on are single-frame pins;
 - a source column on the limits table.
+
+**Ambiguity pass.** Also on 18 November, one reviewer per task group read the final cards against the code, to make them safe for an implementer who knows far less than the planner: [Plans 64 and 65](research/ambiguity-64-65.md), [CC-1 to CC-3](research/ambiguity-cc1-3.md), [CC-4, CC-8, CC-5 and CC-6, plus the Plan 64 SR-5 audio wiring](research/ambiguity-cc4-8.md), and [CC-7](research/ambiguity-cc7.md).
+
+Accepted:
+- CC-1 split into CC-1.1 to CC-1.4, each mergeable on its own, with the callers to migrate listed;
+- RS1 reviewing the integrated head after all four;
+- CC-2's source fields and refusal pairs, and the `describe` JSON shape;
+- CC-3's half-open intervals and persisting the view before cleanup;
+- CC-4's exact guide wiring, with 1–4 frames using the first frame and `-1` resolved by Astrid;
+- CC-8's chunk boundaries, confirmed from the model code;
+- CC-5's JSON recipe files with `{"$hole": …}` markers, typed `--set` values and qualified names;
+- CC-6's file list;
+- Plan 64 SR-5 wired exactly: `MiniMaxH3SetAVNoiseMask` with only an audio mask, after V2V, with V2V `audio_strength` 0;
+- CC-7 split into CC-7a to CC-7d. Prefix continuation is `MiniMaxH3ExistingVideoMaskedContext` at `insert_frame` 0; inserts share that node with a different assembler; bridges use their own node family. The 60-frame bridge example was invalid, and is replaced by 39 + 63 + 39 = 141 frames. Inserts must sit on multiples of 51, and a Character Swap adapter case was added to continuation and bridge.
+
+Not taken:
+- the suggestion to make the `continuation` flag do nothing in CC-1 (the captured bundle keeps continuation working until CC-7a);
+- the suggestion to keep the captured workflows until a live comparison. The owner already decided D3.
+
+Two owner choices raised by the pass were decided the same day: Plan 64 D4 (audio-mask edges) and Plan 65 D3 (rectangle edge ties).
 
 **Proof and limits:** CPU only (D1). Because of D3, the old workflows are gone before the live test, so the live test compares the port with today's saved takes rather than with a fresh run of the old workflows. Proof covers compiled graphs, refusals, the dry-run record, template admission and a cold read of the skill. Not covered, and left to the owner's live test:
 - whether the ported continuation looks and sounds like the captured one;
@@ -89,9 +109,9 @@ Its changes to Plans 64 and 65 are applied.
 
 - **D1 — CPU only (decided 18 Nov 2026, owner in the Plan 59 session: "we're not going to do a GPU test. This is just CPU… We'll do a test afterwards").** No task claims a machine or spends money.
 - **D2 — finish the model rather than keep routes (decided 18 Nov 2026, owner: "if we're doing something for historical reasons, why don't we just update it to use the current way").**
-- **D3 — delete the captured continuation workflows in this plan (decided 18 Nov 2026, owner: "delete it ASAP… we already have it saved in GitHub… in the history").** CC-7 deletes them once the port passes its CPU proofs, with no live comparison first. The CPU parity list against their active path is the only check before deletion.
+- **D3 — delete the captured continuation workflows in this plan (decided 18 Nov 2026, owner: "delete it ASAP… we already have it saved in GitHub… in the history").** CC-7d deletes them once the port passes its CPU proofs, with no live comparison first. The CPU parity list against their active path is the only check before deletion.
 - **D4 — one clean break in request identity, now (decided 18 Nov 2026, owner: "we should make a clean break now… who gives a fuck about keeping things of the past").** The break happens in Plan 64 SR-1, the first task to land. After it, no plan preserves old digests: changed fixtures are regenerated in the same commit, with reasons.
-- **D5 — drop Plan 65's continuation work (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** Continuation gets size, and any reference count, from CC-7. This reverses Plan 65's earlier D1.
+- **D5 — drop Plan 65's continuation work (decided 18 Nov 2026, owner: "let's drop this plan 65 work and the continuations workflow as well").** Continuation gets size, and any reference count, from CC-7a. This reverses Plan 65's earlier D1.
 
 ## Source identities
 
@@ -100,4 +120,4 @@ Planning snapshot: `astrid-agent` `origin/release/14/main` at `9f614dff` for the
 ## References
 
 - [Direction review](research/direction.md), [continuation research](research/continuation.md), [community capabilities](research/community.md), [Astra critique](research/critique.md).
-- [Plan 64](../64-h3-speaker-references/plan.md), [Plan 65](../65-h3-dynamic-size/plan.md), [#866](https://github.com/banodoco/astrid-dev/issues/866) (build the invocation once; superseded by CC-1 and CC-7), [#863](https://github.com/banodoco/astrid-dev/issues/863) (still-to-clip preparation; stays open until a recipe reproduces the four-frame silent hold).
+- [Plan 64](../64-h3-speaker-references/plan.md), [Plan 65](../65-h3-dynamic-size/plan.md), [#866](https://github.com/banodoco/astrid-dev/issues/866) (build the invocation once; superseded by the CC-1 cards and CC-7a), [#863](https://github.com/banodoco/astrid-dev/issues/863) (still-to-clip preparation; stays open until a recipe reproduces the four-frame silent hold).

@@ -33,6 +33,20 @@ Alternatives considered:
 
 **Challenge:** The independent planning critique of 18 November 2026 inspected the Agent snapshot below, the pinned node and both plan packs. Accepted all six Plan 64 findings and the shared integration, evidence and dispatch corrections. The earlier design review established structural fixed audio, one lowering and retention of the existing pack. The independent review identified where that lowering lost information in both canonical conversions, how paired soundtracks shift prompt tags, and why latent strength alone cannot preserve samples. SR-1 and SR-2 own occurrence identity and admission, SR-5 owns temporal composition, and SR-6 proves settled readback. The cards name the conflicting fixture expectations, sequence shared interfaces and leave voice and frame judgments to the owner's live test. The recommendations on scope, scheduling and proof are accepted. Retain the image prerequisite on source-free generation and the existing adapter and continuation contracts. The two requested recipes need no wider admission. Fable’s 18 November composability review traced the source-free bridge, masked canonical conversion and adapter compiler on the pinned revision. Accepted one frozen builder input, normalization-time audio classification, effective-row prompt validation and the shared limits table (now SR-3 and SR-2). The frame-zero timeline placement in request_v2.py supports the start-image rule below. On 18 November the plan was tightened for a less experienced implementer: GPU work removed (D2), SR-2 split into SR-1 to SR-3, a fixed `GenerationInputs` field list, defined terms, explicit non-goals, one plan order, and function names instead of line numbers.
 
+**Ambiguity pass (18 November 2026).** One reviewer per task group read the final cards against the code: [64/65](../66-h3-composable-core/research/ambiguity-64-65.md) and [SR-5 audio wiring](../66-h3-composable-core/research/ambiguity-cc4-8.md). Accepted:
+- occurrence keys taken from the authored list position;
+- identity fields named exactly;
+- soundtracks as part of their video occurrence;
+- explicit counting rules for the limits table;
+- reference rows taken from the emitted node order;
+- only generated reference tags checked in the prompt;
+- the frame-0 still as a special case of placed stills;
+- the exact `MiniMaxH3SetAVNoiseMask` wiring (audio only, after V2V, V2V `audio_strength` 0);
+- one persisted view for SR-6;
+- request fixtures in SR-7 instead of long prose.
+
+**Rejected:** the claim that no time-mask input exists. The node's `audio_mask` input was confirmed from its source. **Owner choice:** D4, decided the same day.
+
 **Proof and limits:**
 - **Acceptance:** the CPU proofs in [plan.md](plan.md#completion). The owner's live test comes afterwards and is not part of this plan (D2).
 - **Failure cases:** over-limit references are refused before claiming; image-only and Character Swap graphs are unchanged apart from listed differences.
@@ -47,6 +61,7 @@ Alternatives considered:
 - **D1 — build voice references regardless (decided 18 Nov 2026, owner in the Plan 59 session: "we should build in any case voice references").** No proof run gates the build.
 - **D3 — clean break in request identity (decided 18 Nov 2026, owner; recorded as [Plan 66 D4](../66-h3-composable-core/inputs.md#owner-decisions)).** SR-1 makes the break; no task preserves old digests.
 - **D2 — CPU only (decided 18 Nov 2026, owner in the Plan 59 session: "we're not going to do a GPU test. This is just CPU… We'll do a test afterwards").** No task in this plan claims a machine or spends money. Voice likeness, lip sync and frame-1 continuity are judged in the owner's live test after the plan completes.
+- **D4 — audio mask edges: accept the node's resampling (decided 18 Nov 2026, owner in the Plan 59 session: "I agree on your two recommendations").** The audio mask is given per video frame, and the pinned node linearly resamples it onto H3's 40 Hz audio steps, so a sharp start or end of a generated-audio window becomes a short ramp in what the model hears. Delivered audio outside the grants stays exact through composition, and the dry run shows the effective resampled mask. The rejected alternative was exact 40 Hz edges, which would need a new audio-clock mask input or node.
 
 **Model behaviour, recorded here so nobody mistakes it for a decision:**
 - H3 regenerates audio per window at one strength, so room tone inside the spoken window is regenerated with the voice. Sound outside the window is kept, and SR-3 proves it. Copying the original background back under the new words is a possible later improvement, not in scope.
