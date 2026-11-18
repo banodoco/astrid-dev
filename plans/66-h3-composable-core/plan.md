@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** 12.5 days (phase 1, the core: 7; phase 2, continuation and bridges: 5.5; CPU only, the live test comes after)
+**Estimate:** 13.5 days (phase 1, the core: 8; phase 2, continuation and bridges: 5.5; CPU only, the live test comes after)
 
 **Waiting on:** Owner greenlight of scope, and Plans 59, 64 and 65.
 
@@ -34,13 +34,13 @@ Three rules decide what happens. Placed material is kept. Time nothing covers is
 4. **Templates:** a template is a request with named holes. It can be listed, shown, filled from `--set` values or a shot, written out, and submitted like any request.
 
 **Phases.**
-- **Phase 1 (core):** one public path and one resolved job; capabilities; the dry-run view; guides; exact stills at any frame; templates; both skills.
+- **Phase 1 (core):** one public path and one resolved job; capabilities as lever kinds; the dry-run view; end-relative time and timed prompts; guides; exact stills at any frame; templates; both skills.
 - **Phase 2 (continuation):** continuation, bridges and inserts by placement: a clip before, between or after generated time, through the pinned motion-context nodes. The captured continuation workflows are then deleted (D3). Git history keeps them.
 
 **Not in this plan. Do not build these:**
 - a GPU or live run of any kind (D1). The owner tests afterwards;
 - more than one continuation block per job, or any chain orchestration;
-- timed text prompts, an Event Curve tool, or any GPL node vendored into Astrid;
+- timed text prompts beyond serializing them into H3's own timed shot format (CC-9), an Event Curve tool, or any GPL node vendored into Astrid;
 - shot-plan schema changes, or automatic take recording on shots;
 - an endless-continuation skill, take lineage or continue-from-take;
 - variations or multi-pass chains in the core;
@@ -60,7 +60,7 @@ It adds the guide role, templates and the continuation port. Request identity wa
 
 Plans 59, 64 and 65 land first.
 
-**Phase 1** runs in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities), CC-3 (the dry-run view), CC-4 (guides), CC-8 (exact stills at any frame), CC-5 (templates), CC-6 (both skills).
+**Phase 1** runs in order: CC-1.1 to CC-1.4 (one resolved job, one compile call, every caller moved, then v1 and route classification removed; each mergeable on its own), RS1 (review the job contract), CC-2 (capabilities, as lever kinds), CC-3 (the dry-run view), CC-9 (end-relative time and timed prompts), CC-4 (guides), CC-8 (exact stills at any frame), CC-5 (templates), CC-6 (both skills).
 
 **Phase 2** is CC-7a (prefix continuation through the ported stage), then CC-7b (bridges) and CC-7c (inserts) in parallel, then CC-7d (deleting the captured workflows and the `continuation` flag), followed by the final review. [Task cards](tasks.md)
 
@@ -84,6 +84,7 @@ Plans 59, 64 and 65 land first.
 CPU tests prove each of these:
 
 **Phase 1**
+- `describe` lists lever kinds with their family, fields, defaults, params and limits; `range: [-2, end]`, `at: end` and a two-segment timed prompt resolve as written and show in the dry run.
 - The public prompt-and-image invocation, a masked edit, a fixed-audio redub and Character Swap each go through preparation, build, composition and receipt via `compile_job`.
 - `branch_for` is gone, and a v1 request is refused with a message to write it as v2.
 - `describe --entry h3 --json` shows the same capabilities admission uses.
