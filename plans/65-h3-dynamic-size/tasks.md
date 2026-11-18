@@ -4,10 +4,12 @@
 
 ## Rulings
 
-**Now (2026-11-18):** Agent `release/14/plan-65` starts at `b50371baf101d6f706269fab38cdf3a7a5eb2013`; environment smoke passed; scoped baseline: 218 passed, 1 failed, 34 deselected (evidence PR #922). DS-1 waits for Plan 64 SR-3; DS-2 through DS-5 and review follow their dependencies. DS-5 Recast skill text waits on Plan 59. CPU only; spend $0.
+**Now (2026-11-18):** Agent `release/14/plan-65` starts at `b50371baf101d6f706269fab38cdf3a7a5eb2013`; environment smoke passed; scoped baseline: 218 passed, 1 failed, 34 deselected (evidence PR #922). Plan 64 SR-3 `2d0b466adab47b96ec787a68ebe5a66138f8ff54` merged into Agent plan branch as `6dfb3542b3f95597eca77cd7b378a654aeac3eb0`; DS-1 is underway. DS-2 through DS-5 and review follow their dependencies. DS-5 Recast skill text waits on Plan 59. CPU only; spend $0.
 
+- REVIEW: DS-1 retains optional `prepare_request` width/height compatibility inputs, with no numeric defaults, resolving overrides into the canvas record. Removing them would make pinned `test_edit_inputs.py:114-117` untrue. Coordinate eventual removal with the test contract; never weaken that test.
+- REVIEW: lead-in cases wait on Plan 59 landing in release/14/main; rerun them then. Do not import Plan 59 code for DS-1.
 - Branch row landed in PR #917 (`0f3702737a1d6eb16bf845b0f8653ecb18d982ef`). Baseline failure: `test_generation_assets_use_recipe_lock_revisions` expects 5 model locks, finds 36; it predates this plan. Six absent files are not counted as passed.
-- Starting revision lacks six named proof files: `test_edit_inputs.py`, `test_lead_in.py`, `test_automatic_conform.py`, `test_remote_prepared_source_handoff.py`, `test_non16x9_masked_edit_cpu.py`, and `tests/test_pack_declared_skills.py`. Reassess after SR-3; do not claim missing tests passed.
+- Starting revision lacked six named proof files (SR-3 adds `test_edit_inputs.py`; reassess the rest): `test_edit_inputs.py`, `test_lead_in.py`, `test_automatic_conform.py`, `test_remote_prepared_source_handoff.py`, `test_non16x9_masked_edit_cpu.py`, and `tests/test_pack_declared_skills.py`. Reassess after SR-3; do not claim missing tests passed.
 
 **Task ids:** `DS-1` … `DS-5`.
 
