@@ -6,6 +6,7 @@ This is the single policy owner for run identity, routing, focused proof, failur
 
 Use `N` for everything below very hard, including ordinary hard work; `X` for very hard work with coupled or non-obvious reasoning; `S` for super-hard work where deeper reasoning materially improves correctness; and `T` for taste work: small, editorial refinement where the quality is a matter of judgment. `N` is the default; tag a task `X`, `S` or `T` only when it clearly needs that depth. These labels describe capability bands, not exact model identities. Configure actual available model IDs, supported reasoning efforts, availability, and role bindings in that run's `run.yaml`. A role resolves through the binding in `run.yaml` to a model entry's exact `model_id` and `reasoning_effort`; do not infer availability from a class label, invent IDs, or silently substitute. Resolve unavailability explicitly. Plan/advisor/reviewer judgment bindings are configured separately from execution routes.
 
+<!-- block-source:routing:start -->
 Default model for each route, using the newest available model of that family:
 
 | Route | Work | Claude | Codex |
@@ -17,7 +18,10 @@ Default model for each route, using the newest available model of that family:
 
 Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claude) or Astra (Codex); configure it in run.yaml as `completion_reviewer`, `plan_judgment` and `advisor`.
 
-This table and the high-judgment role below it are the only place in the skills, docs and templates that names model families; history records are exempt. `templates/run.yaml` and the Codex brief are fill-in copies of them. Elsewhere name the route, and a family only when the run used one other than the route's, never an exact model ID. When workers are on Codex, `T` work may run on the Codex taste family; Claude is recommended.
+**Reviews.** A review's verdict runs on the high-judgment role. A check of a bounded fix against a named oracle (its failing case or probe) may run on `X`. `N` may gather facts for a review (check status, failure IDs, diff scope) but never gives the verdict. Check a pure sync by tree equality. A bounded-fix check runs the focused tests on both base and head. A bounded-fix check of more than about 500 lines of product code, or one that touches a shared contract, goes to the high-judgment role. A meter, gate or check is reviewed by injecting the failures it must catch. The run names the actual reviewer model, flags and permissions where it records its bindings (`run.yaml`, or the run board for a dispatch run).
+<!-- block-source:routing:end -->
+
+This table and the high-judgment role below it are the only place in the skills, docs and templates that defines model families; generated `block:routing` copies carry them where work is handed to a model; history records are exempt. `templates/run.yaml` and the Codex brief are fill-in copies of them. Elsewhere name the route, and a family only when the run used one other than the route's, never an exact model ID. When workers are on Codex, `T` work may run on the Codex taste family; Claude is recommended.
 
 ### Cheapest model first
 

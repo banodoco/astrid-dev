@@ -311,10 +311,11 @@ def _public_vision(context):
 
 def _generated_views(context):
     import views
+    declared, errors = views.views_for(context.root)
+    errors = [f'shared blocks: {message}' for message in errors]
     if not context.base:
-        return []
-    errors = []
-    for view in views.VIEWS:
+        return errors
+    for view in declared:
         try:
             if views.touched(view, context.root, context.base):
                 errors.extend(views.check_view(view, context.root))
