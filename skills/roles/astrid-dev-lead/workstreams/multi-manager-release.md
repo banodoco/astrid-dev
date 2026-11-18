@@ -42,8 +42,22 @@ Reviews, plan judgment and advice use a separate high-judgment role: Opus (Claud
 
 The sub-agent works on the packet's branch, adding each failing-before case, in commits labelled `Lead review fixes`. A second, faster reviewer checks them; then merge and post DONE as usual. Otherwise, post the rework.
 
+**Judge like a light gatekeeper.** Ask each reviewer to sort its findings into BLOCKING, FOLLOW-UP or NOTE, and block only on wrong results accepted, data or install damage, a real security or custody hole, or a regression from base. File the rest of a PR's follow-ups as one issue in astrid-dev, marked `backlog` and linked from the PR. A `tasks.md` row is for work the release must do. A regression the candidate introduced is fixed in its packet. A defect that predates it gets an issue and a test that stays executed and visibly failing, and the packet does not fix it. Changing an existing assertion, including turning a gate's limit into an observation, is the owner's call unless she has delegated it. An Orchestrator acting on her direct instructions needs her confirmation in its own chat.
+
+**Keep work moving.** When a packet has waited more than two hours on hosted jobs, read its run list: pull-request CI may run only part of a suite, so dispatch the full run it is waiting for. Have a cross-repository packet exercise its installed path early. Every few hours, ask a high-judgment reviewer for a zoomed-out second opinion on bottlenecks, order and scope; act on what is within your authority and bring the rest to the owner.
+
 **Before merging:** find every pin change: each needs its own commit and the owner's approval or delegation. After a dependency's PR is squash-merged, re-point its pin to the squash commit. Give a gate at most two review rounds and use round two only to verify the round-one fixes. Once those fixes pass, record a new realistic variant in a follow-up row only if it is cheap to address, then merge.
 
 **Rulings:** when a ruling will recur, add it to the board's Standing rulings (`releases/<N>/run.md`), so that a fresh Lead, Orchestrator or packet session finds it without reading the mailbox. A ruling that holds beyond the release goes into its skill instead, and the board links it.
 
 **Then:** triage the release's issues ([states](../../../../docs/contribution-workflow.md#issues)): an issue a task row or packet cites is `planned`, and one that a branch, pull request or running packet names is `claimed`, whoever started it. Give each uncited issue a row, or move it out. Move unblocked packets to Ready and write the next; copy the Orchestrator's STATUS into the board; refresh Now and Waiting on the owner. No Orchestrator STATUS for 2 hours, or a message of yours missing from its `acted on:` line, is the owner's to hear. Schedule your own check-ins with a scheduler that outlives your machine, and re-arm it at each one; if your session cannot, say which nudge the owner gives.
+
+## Standby Lead
+
+When the Lead's own session may stop without warning (a usage allowance, a lost container), the owner can keep a **standby Lead** in another session, on the high-judgment role of the other family.
+- **Heartbeat.** The Lead posts a `STATUS` on the mailbox at least every 90 minutes, even when nothing moved, with a marker the standby can recognise (for example its tool's footer).
+- **Wait.** The standby checks the mailbox every hour and posts nothing while the newest Lead message is less than 3 hours old.
+- **Take over.** After 3 hours of silence, the standby first rules out a quiet Lead: no Lead commit, branch push, pull request or board edit in those 3 hours. Then it posts one takeover message, keeps the same mailbox name, and runs the Lead's check-ins under the same Authority.
+- **One Lead.** Once a takeover message exists, the earlier Lead stands down if it returns, and does nothing until the owner hands the role back.
+
+The release keeps the standby's brief and the environment notes beside its run board, under `releases/<N>/lead/`.
