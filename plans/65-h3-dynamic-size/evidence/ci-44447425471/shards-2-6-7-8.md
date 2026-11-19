@@ -2222,3 +2222,13 @@ Counts below are pytest job-summary totals, followed by unique node IDs recovere
 - Plan 39 evidence reviewed: `release-12-preexisting.md`, `release-12-vibecomfy-ci.md`, `release-12-installer-preexisting.md`, `release-12-r10-diff.md`, and `lanes-integration-triage.md`. These document historic failures broadly, but none proves the cause of these three exact candidate-only IDs.
 - SR3: `run/sr3-h3-failures.log` is a separate invocation; it includes synthetic invalid PNG fixture failures and does not explain these candidate-only IDs. `run/ci-comparison/sr3-runs.json` reports `total_count: 0`.
 - Classification: three candidate-only failures; zero proven root causes, zero explained by Plan 39/SR3 evidence. Failures are observed regressions relative to the baseline pass evidence, but causation remains unknown.
+
+## Further triage
+
+The three target test files, installer activation code, and Pinokio adapter are unchanged between base `b50371baf` and candidate `513204189`. No test reruns were performed for this triage.
+
+- Readiness `[True]` is tracked as Plan 39 AT12: the same test has previously timed out probing the test server under load. The candidate also shows a broken pipe, consistent with that history; this log does not prove that timeout caused this particular failure.
+- Installer local rollback passed in prior candidate run `44442946712` and in the base; the latest log reports no runtime discovery with startup detail withheld. The startup cause remains unknown.
+- Pinokio has the exact listener-owner failure documented in Plan 39 AT19, including its occurrence before the secret assertions. The prior candidate run `44442946712` reported the same failure. The current log does not establish whether the runner condition documented in AT19 is present, and does not establish secret disclosure.
+
+See `plans/39-green-mains/tasks.md`, AT12 and AT19. These historical matches narrow the investigation but do not prove the causes of the present failures.
