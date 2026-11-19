@@ -81,6 +81,15 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 **Pinned dependencies**
 7. **Dependency-identity guards stay.** When one refuses a comparison because a pin moved (the Plan 55 meter, the LS-5 comparison), the run counts as an observation, and the refusal is stated as the reason. A new reference follows the owner's re-pin, under LS-2.1. ([1](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6964652193), [2](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6968167548))
 
+**Runs and merges**
+8. **A run on a checkpoint that qualifies nothing does not hold back the next push.** That covers declaration-only, tests-only, failing-before and diagnostic runs. Advance the topic, never cancel the old run, and record a cancellation by the workflow's own concurrency as unqualified evidence. A run that is the qualifying proof still finishes first. ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6998651356))
+9. **A change to a shared contract is merged only after the affected full suites pass by ID.** That applies to merges into `release/14/main` or a plan branch, and to a change to the Agent host, an App editor contract, a Runtime schema, a pin or a gate. The full suites are:
+   - all eight Agent unit shards, plus the affected integration lanes;
+   - full App Vitest, plus the affected journey;
+   - the Runtime matrix.
+
+   They run on the head being merged and are compared with its destination by ID. Agent PR CI runs shard 1 only, so the Lead dispatches the full run. Bounded changes elsewhere share broad coverage at the next plan checkpoint. Why: shard 1 alone missed shard 2's readiness failures, and three App PRs left ten stale Vitest cases (#973).
+
 ## Dispatch queue
 
 **Order and limit.** The Orchestrator dispatches Ready packets in the order below, with **at most six in Running or Review at once**, and only one Agent issue packet at a time. Packets that take slots "together" go out in the same round as slots free, ahead of rows below them. The owner kept the cap at six on 18 Nov. Rows without a file are written when their dependencies land.
