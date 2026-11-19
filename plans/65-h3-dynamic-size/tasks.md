@@ -35,7 +35,7 @@
 
 ## Landed-scope review R1
 
-Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; all five findings independently confirmed. Repairs and the runtime-binding CI fix are independently tested and reviewer-closed, staged locally at `a7b0881e1549d290f6fc49e8e779bcdc52cff164`; they await the in-flight CI run before push. CI comparison: [evidence](evidence/ci-44429375595/README.md).
+Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; all five findings independently confirmed. Repairs and the runtime-binding CI fix are independently tested and reviewer-closed, including the combined merge, staged locally at `a7b0881e1549d290f6fc49e8e779bcdc52cff164`; they await the in-flight CI run before push. CI comparison: [evidence](evidence/ci-44429375595/README.md).
 
 | Finding | Status |
 | --- | --- |
