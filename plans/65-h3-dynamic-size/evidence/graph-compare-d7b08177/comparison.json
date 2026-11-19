@@ -1,0 +1,47 @@
+{
+  "base_commit": "dd8cc6a8f9e3a62fa409c80e67dee55fd964e439",
+  "candidate_commit": "d7b08177f9d40bd40e8631fef792e1b27edb80db",
+  "interpreter": "/home/user/work/managers/plan-65/worker-ds4.env/venv/bin/python",
+  "result": [
+    {
+      "base_api": "base/source-free-image-guided.json",
+      "base_sha256": "4fbf1c2988f9c85485e5185eb94e0f86a99bccb239cbba2eb343b421f85018c0",
+      "candidate_api": "candidate/source-free-image-guided.json",
+      "candidate_sha256": "4fbf1c2988f9c85485e5185eb94e0f86a99bccb239cbba2eb343b421f85018c0",
+      "case": "source-free-image-guided",
+      "equal": true,
+      "node_count_base": 18,
+      "node_count_candidate": 18
+    },
+    {
+      "base_api": "base/masked-static.json",
+      "base_sha256": "47ee943ee06acb34e0382cddea293e48283e573b4823a62ad8dbaf52665528aa",
+      "candidate_api": "candidate/masked-static.json",
+      "candidate_sha256": "47ee943ee06acb34e0382cddea293e48283e573b4823a62ad8dbaf52665528aa",
+      "case": "masked-static",
+      "equal": true,
+      "node_count_base": 25,
+      "node_count_candidate": 25
+    },
+    {
+      "base_api": "base/character-swap.json",
+      "base_sha256": "6f8877c41a353c448052c2fddfa2b7d2b306eef5785526ebf0d4f04e815e17ee",
+      "candidate_api": "candidate/character-swap.json",
+      "candidate_sha256": "6f8877c41a353c448052c2fddfa2b7d2b306eef5785526ebf0d4f04e815e17ee",
+      "case": "character-swap",
+      "equal": true,
+      "node_count_base": 20,
+      "node_count_candidate": 20
+    },
+    {
+      "base_api": "base/masked-video-tail.json",
+      "base_sha256": "8fc4beba99b8d0c451a8b9962276f6702cd80e2aa45c61d3e6764af3338ba0b0",
+      "candidate_api": "candidate/masked-video-tail.json",
+      "candidate_sha256": "8fc4beba99b8d0c451a8b9962276f6702cd80e2aa45c61d3e6764af3338ba0b0",
+      "case": "masked-video-tail",
+      "equal": true,
+      "node_count_base": 28,
+      "node_count_candidate": 28
+    }
+  ]
+}

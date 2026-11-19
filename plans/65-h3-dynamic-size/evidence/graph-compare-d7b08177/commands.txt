@@ -1,0 +1,10 @@
+Base source export:
+git -C /home/user/work/managers/plan-65/worker-ds4 archive dd8cc6a8f9e3a62fa409c80e67dee55fd964e439 | tar -x -C /tmp/plan65-base-export
+
+Candidate source export:
+git -C /home/user/work/managers/plan-65/worker-ds4 archive d7b08177f9d40bd40e8631fef792e1b27edb80db | tar -x -C /tmp/plan65-candidate-export
+
+Probe command (run once for each source, substituting source and output paths; env was sanitized with env -i):
+env -i PATH=/home/user/work/managers/plan-65/worker-ds4.env/venv/bin:/usr/local/bin:/usr/bin:/bin HOME=/home/user/work/managers/plan-65/worker-ds4.env/home TMPDIR=/home/user/work/managers/plan-65/worker-ds4.env/tmp XDG_CACHE_HOME=/home/user/work/managers/plan-65/worker-ds4.env/cache LANG=C.UTF-8 PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONSAFEPATH=1 PYTHONPATH=<SOURCE_EXPORT>:/home/user/work/managers/plan-65/worker-ds4.env/vibecomfy ASTRID_RUNTIME_CHECKOUT=/home/user/work/managers/plan-65/worker-ds4.env/runtime ASTRID_VIBECOMFY_CHECKOUT=/home/user/work/managers/plan-65/worker-ds4.env/vibecomfy ASTRID_TEST_LIFECYCLE_CHECKOUT=/home/user/work/managers/plan-65/worker-ds4.env/lifecycle /home/user/work/managers/plan-65/worker-ds4.env/venv/bin/python /tmp/plan65_graph_probe.py <SOURCE_EXPORT> <OUTPUT_DIR>
+
+Cases: source-free image-guided, masked static, Character Swap, masked-video tail. Full canonical API graph dictionaries were JSON-sorted and compared, including nodes, links, node ids, and inputs. No pytest suite was run. No external service/network/credential access was used. The .env directory was not opened; its venv and dependency checkouts were used directly.
