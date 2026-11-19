@@ -8,3 +8,7 @@ Lead notes
 - Owed: board row R14-FIX-11 for astrid-dev #905 (cleanup ACK during activation; Agent issue packet after FIX-10), packet file, and #905 cited from the brief issue list.
 - Owner decisions 18 Nov 18:35: P55-10 meter "Report totals, gate invariants" (approved changing existing cap assertions; mailbox decision). Record in board Decided.
 - STANDBY (owner, 18 Nov ~19:45): a Codex Astra standby takes over after 3h without a Claude Lead heartbeat (releases/14/lead/standby.md). At EVERY check-in: (1) first check the mailbox for a standby takeover message (from_session r14-lead WITHOUT the Claude Code footer, starting "Lead continuity:"); if one exists, stand down: post nothing, do nothing, tell the owner only. (2) post a short Lead STATUS heartbeat if my last mailbox post is older than 60 minutes (must be at least every 90).
+- RUN CODEX JOBS AS TRACKED BACKGROUND TASKS (run_in_background), never detached nohup: the machine restarted at 23:34 and 00:07 when only detached jobs were running, killing them.
+
+## Cursor rule (04:05 UTC, 19 Nov)
+Pass check.py the id of the last comment I READ, never my own newest post. Using my post id skipped 6998856096 (P39-13 frozen for shard dispatch) for about 40 minutes.
