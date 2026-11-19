@@ -11,6 +11,7 @@
 - REVIEW: For 16384×16384×141 RGB frames, RGB8 is 113,548,034,048 bytes (~113.5 GB decimal); float32 RGB is 454,192,136,192 bytes (~454 GB decimal / ~423 GiB). These are format-specific estimates, not observed memory; target resource qualification remains unknown absent evidence.
 - REVIEW: two sources with distinct offsets: prove in Plan 66 CC-1.1 and CC-10; current base admits only one timeline source. Independent jobs at two offsets passed.
 - Schema admission for `mask.canvas` is blocked by the same pinned schema hash as `output.size`.
+- REVIEW: default multi-pass plan status remains `eligible` for child orchestration to preserve the pinned contract; nondefault plans report `orchestration_only`. Root preparation is guarded in both cases.
 - REVIEW: DS-3 preserves existing direct static-region resolver semantics required by `test_static_regions.py:43-49,60-67,99-101`; compiler opts into authored canvas and still-image scaling, with separate user-path proof.
 - REVIEW: DS-1 retains optional `prepare_request` width/height compatibility inputs, with no numeric defaults, resolving overrides into the canvas record. Removing them would make pinned `test_edit_inputs.py:114-117` untrue. Coordinate eventual removal with the test contract; never weaken that test.
 - REVIEW: lead-in cases wait on Plan 59 landing in release/14/main; rerun them then. Do not import Plan 59 code for DS-1.
@@ -34,7 +35,7 @@
 
 ## Landed-scope review R1
 
-Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; all five findings independently confirmed. Repairs are underway on separate task branches.
+Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; all five findings independently confirmed. Repairs and the runtime-binding CI fix are independently tested and reviewer-closed, staged locally at `a7b0881e1549d290f6fc49e8e779bcdc52cff164`; they await the in-flight CI run before push. CI comparison: [evidence](evidence/ci-44429375595/README.md).
 
 | Finding | Status |
 | --- | --- |
