@@ -127,7 +127,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Ready | — | Wave 2 has started. Prove both under shard load. AT12.1 tracks the separate post-#406 failure. |
 | Agent load regressions | Plan 55 LS-7 (eight idle-Remotion IDs), Plan 39 AT27 and AT12.1 | Blocked | — | packet to write for each owner’s proof, with paired runs for AT12.1 |
 | Agent installed journeys | Plan 39 AT4 (both Windows shells), issue [#869](https://github.com/banodoco/astrid-dev/issues/869) (skill publication) | Blocked | — | packet to write for each installed witness. #905 is already in FIX-11. |
-| [R14-FIX-12](packets/R14-FIX-12.md) A retried task with durable logs settles | [#926](https://github.com/banodoco/astrid-dev/issues/926) | Blocked | — | Ready when R14-FIX-11 is Done (one Agent issue packet at a time) |
+| [R14-FIX-12](packets/R14-FIX-12.md) A task with durable logs settles | [#926](https://github.com/banodoco/astrid-dev/issues/926), [#958](https://github.com/banodoco/astrid-dev/issues/958) | Blocked | — | Ready when R14-FIX-11 is Done (one Agent issue packet at a time) |
 | Agent renderer inputs | Plan 39 AT1.21, AT1.111, AT1.113, AT1.50 | Blocked | — | packet to write per input: timeline-composition, React peers, project environment, Node/esbuild |
 | Agent custody fixture | Plan 39 SF6d with Plan 38 | Blocked | — | packet to write with the verified-host custody owner |
 | Runtime installed and historical inputs | Plan 39 RT7, RT9 | Blocked | — | packet to write per row for installed update and archived snapshot inputs |
