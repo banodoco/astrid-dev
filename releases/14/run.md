@@ -132,6 +132,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | Agent installed journeys | Plan 39 AT4 (both Windows shells), issue [#869](https://github.com/banodoco/astrid-dev/issues/869) (skill publication) | Blocked | — | packet to write for each installed witness. #905 is already in FIX-11. |
 | [R14-FIX-12](packets/R14-FIX-12.md) A task with durable logs settles | [#926](https://github.com/banodoco/astrid-dev/issues/926), [#958](https://github.com/banodoco/astrid-dev/issues/958) | Ready | — | Next in the Agent issue lane. |
 | [R14-FIX-13](packets/R14-FIX-13.md) The TLS policy module moves into a canonical package | [#964](https://github.com/banodoco/astrid-dev/issues/964) | Ready | — | Mechanical; may run beside R14-FIX-12 |
+| [R14-FIX-14](packets/R14-FIX-14.md) App tests follow the changed editor contracts | [#973](https://github.com/banodoco/astrid-dev/issues/973) | Ready | — | Test-only, App; may run beside R14-FIX-12 and FIX-13 |
 | Agent renderer inputs | Plan 39 AT1.21, AT1.111, AT1.113, AT1.50 | Blocked | — | packet to write per input: timeline-composition, React peers, project environment, Node/esbuild |
 | Agent custody fixture | Plan 39 SF6d with Plan 38 | Blocked | — | packet to write with the verified-host custody owner |
 | Runtime installed and historical inputs | Plan 39 RT7, RT9 | Blocked | — | packet to write per row for installed update and archived snapshot inputs |

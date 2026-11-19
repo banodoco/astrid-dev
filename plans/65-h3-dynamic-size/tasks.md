@@ -4,7 +4,7 @@
 
 ## Rulings
 
-**Now (2026-11-18):** Agent `release/14/plan-65` starts at `b50371baf101d6f706269fab38cdf3a7a5eb2013`; environment smoke passed; scoped baseline: 218 passed, 1 failed, 34 deselected (evidence PR #922). Plan 64 SR-3 `2d0b466adab47b96ec787a68ebe5a66138f8ff54` merged into Agent plan branch as `6dfb3542b3f95597eca77cd7b378a654aeac3eb0`; DS-1 regressions repaired in `e75d9d786c0ac4b18e19633d40ca22107d00dafe`; schema admission remains blocked on owner ruling. DS-2 preflight slice merged in `fab132eb833257ebd16143f5df51c4840a7c6c89`; its conform and custody work waits on Plan 59. DS-3 runtime slice merged in `dd8cc6a8f9e3a62fa409c80e67dee55fd964e439`; DS-4 merged at `282917a850f4736e68d0d9b2ce0a22a066a7630f`; DS-5 available documentation merged at `65ebfaac652f124d56b7aad165822527bc222732`; public admission and Plan 59 remain pending. Full CI run [44429375595](https://github.com/banodoco/astrid-agent/actions/runs/44429375595) on `65ebfaac` was cancelled after shard 6 exceeded its hang threshold. R1 repairs and Plan 64 batch `a5275ccb` are merged locally as `af60c137c06aa02726ebfa2c25d4302e6d5c3fc8`; focused proofs and merge review are underway before push and one fresh CI. DS-4, DS-5 and review follow their dependencies. DS-5 Recast skill text waits on Plan 59. CPU only; spend $0.
+**Now (2026-11-18):** Agent `release/14/plan-65` starts at `b50371baf101d6f706269fab38cdf3a7a5eb2013`; environment smoke passed; scoped baseline: 218 passed, 1 failed, 34 deselected (evidence PR #922). Plan 64 SR-3 `2d0b466adab47b96ec787a68ebe5a66138f8ff54` merged into Agent plan branch as `6dfb3542b3f95597eca77cd7b378a654aeac3eb0`; DS-1 regressions repaired in `e75d9d786c0ac4b18e19633d40ca22107d00dafe`; schema admission remains blocked on owner ruling. DS-2 preflight slice merged in `fab132eb833257ebd16143f5df51c4840a7c6c89`; its conform and custody work waits on Plan 59. DS-3 runtime slice merged in `dd8cc6a8f9e3a62fa409c80e67dee55fd964e439`; DS-4 merged at `282917a850f4736e68d0d9b2ce0a22a066a7630f`; DS-5 available documentation merged at `65ebfaac652f124d56b7aad165822527bc222732`; public admission and Plan 59 remain pending. Full CI run [44429375595](https://github.com/banodoco/astrid-agent/actions/runs/44429375595) on `65ebfaac` was cancelled after shard 6 exceeded its hang threshold. R1 repairs, Plan 64 batch `a5275ccb`, and integration fixes are pushed at `513204189161c4f72abc73e4fe7d46d7e97ac534`; focused proof passed (32 passed, 4 deselected), merge review passed, and fresh CI [44447425471](https://github.com/banodoco/astrid-agent/actions/runs/44447425471) is queued. DS-4, DS-5 and review follow their dependencies. DS-5 Recast skill text waits on Plan 59. CPU only; spend $0.
 
 - DS-1 pinned `test_spec.py` identity and schema assertions passed at `6dfb3542` and failed at `58a2b1bf`. Repair `e75d9d78` restores both with tests unchanged (148 passed, 4 deselected); the pinned schema cannot admit output.size without a contract ruling.
 - REVIEW: DS-2 conform.py and its automatic-conform and remote-handoff proofs, plus DS-3 non-16:9 masked-edit proof, wait on Plan 59 landing in release/14/main; rerun those proofs and finish size integration then. DS-3 adds base-only non-16:9 coverage in test_static_regions.py.
@@ -35,15 +35,15 @@
 
 ## Landed-scope review R1
 
-Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; all five findings independently confirmed. Repairs and the runtime-binding CI fix are independently tested and reviewer-closed, including the combined merge, staged locally at `a7b0881e1549d290f6fc49e8e779bcdc52cff164`; they are included in the locally merged Plan 64 batch; focused proofs and merge review precede push. CI comparison: [evidence](evidence/ci-44429375595/README.md).
+Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; all five findings independently confirmed. Repairs and the runtime-binding CI fix are independently tested and reviewer-closed, merged in the pushed candidate `513204189161c4f72abc73e4fe7d46d7e97ac534`. CI comparison: [evidence](evidence/ci-44429375595/README.md).
 
 | Finding | Status |
 | --- | --- |
-| R1.1 Source-free delivered dimensions can differ from the recorded requested size. | [ ] |
-| R1.2 `h3 plan` previews static masks using legacy geometry and saves preparation before raster handoff. | [ ] |
-| R1.3 Multi-pass planner drops the requested output size. | [ ] |
-| R1.4 Repeated compile and an authored `permission_mask_0` asset collide with derived permission IDs. | [ ] |
-| R1.5 Legacy prepared v2 requests can use compatibility overrides that diverge from compiled size. | [ ] |
+| R1.1 Source-free delivered dimensions can differ from the recorded requested size. | [x] merged and reviewed in `51320418` |
+| R1.2 `h3 plan` previews static masks using legacy geometry and saves preparation before raster handoff. | [x] merged and reviewed in `51320418` |
+| R1.3 Multi-pass planner drops the requested output size. | [x] merged and reviewed in `51320418` |
+| R1.4 Repeated compile and an authored `permission_mask_0` asset collide with derived permission IDs. | [x] merged and reviewed in `51320418` |
+| R1.5 Legacy prepared v2 requests can use compatibility overrides that diverge from compiled size. | [x] merged and reviewed in `51320418` |
 
 ## DS-3 detail
 
