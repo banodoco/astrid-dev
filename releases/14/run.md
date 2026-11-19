@@ -4,16 +4,19 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 **If you are a packet session,** read [Authority](#authority) and [Standing rulings](#standing-rulings) before your packet. **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Standing rulings](#standing-rulings), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
-## Now (07:05 UTC, Thu 19 Nov)
+## Now (13:41 UTC, Thu 19 Nov)
 
-- P39-14 is Done on `release/14/plan-39` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7000240701)). Agent [#433](https://github.com/banodoco/astrid-agent/pull/433) (`68e7aa85`), Runtime [#69](https://github.com/banodoco/astrid-runtime/pull/69) (`97321788`), App [#313](https://github.com/banodoco/astrid-app/pull/313) (`0700e981`). The ledger seed has 163 Agent entries, 0 Runtime and 20 App. #984 tracks activation.
-- FIX-12 is in Review. Runtime #70 squash-merged into `release/14/main` at `8e8711fd`. Agent #439 is re-pinning to that commit, with full CI and Lanes queued.
-- FIX-13 is in Review. Agent #441 received a MERGE review and awaits hosted fast checks and Fresh Windows install. FIX-14 is Ready (#973).
-- P39-13 is reconciling the results of completed Lanes run `44454822934` on Agent #428.
-- P55-04 continues on Agent #361 (`ee0a5f04`) under the [provisional D1 ruling](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7002034371). P55-09 continues on Agent #408 (`e7570b62`) in `r14-P55-09-3`.
-- P61-02 continues on App #310, #311 and #314. App #314 addresses #966.
-- Agent #437 synced `release/14/main` into `release/14/plan-13` at `6c9913bb`. Landing Plan 13 into `release/14/main` awaits a full CI slot.
-- Standing rulings 8 and 9 are on the board (#979). Hosted CI capacity limits progress. Base runs are reused when the trees are identical.
+The standby took over as `r14-lead` at 13:36 UTC. The last Claude mailbox message was at 08:33 UTC and the last Lead account activity was at 10:33 UTC. [Continuity decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010718325)
+
+- FIX-13 landed in Agent release/14/main at `ae929cda`. FIX-14 is next for the Orchestrator when the Lead posts DONE. After FIX-14, use the [standing slot order](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7003453313).
+- FIX-12 needs a new comparison against that release head. Runtime #70 is merged. The packet will merge the destination into Agent #439 and submit its new head. Destination CI 44535516200 and Lanes 44535516469 are already running.
+- P39-13 is in Review at Agent #428 `4ba3becd`. The Lead dispatched CI 44535765805 and Lanes 44535552341. The old 2,067-case receipt covers the previous head.
+- P55-09 is in Review at Agent #408 `978fb66c`. Windows resident proof passed. The Linux resident job is being retried after a setup failure. CI 44535559533 and Lanes 44535565116 qualify the corrected head against shared base `e3795656`.
+- P55-04 is in Rework. The second pair improved whole-job macOS timing but still regressed in pack verification. Split the correctness and single-emission changes from the verification optimization under the [original ruling](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7003306733).
+- P61-02 remains in Review. App #314 passed the 309-case focused suite. Full App Vitest and the affected editor journey against plan-61 remain outstanding under ruling 9. App #310 and #311 remain together for installed proof.
+- Plan 13 landing awaits full CI capacity. Plan 39 ceiling activation remains tracked in #984. The Lead commissioned an independent strategic review at 13:37 UTC. The next is due at 16:37 UTC.
+
+[Orchestrator handoff](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010505695) · [Lead dispositions](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010819708)
 
 ## Authority
 
@@ -37,9 +40,9 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r14-lead` | Claude `session_011EzfW3Zy19ncNecpQnKb7D` | [7001814160](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7001814160) |
-| Standby Lead | `r14-lead` (only after a takeover) | Codex (Astra) session kept by the owner; waits, and takes over after 3 hours without a Lead heartbeat ([standby](lead/standby.md)) | — |
-| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | [6991855804](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6991855804) (STATUS 21:15 UTC) |
+| Lead | `r14-lead` | Codex standby, active since [13:36 UTC](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010718325) | [7010505695](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010505695) |
+| Standby Lead | — | Standby is now active Lead. A handback requires the owner. | — |
+| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | [13:27 UTC STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010505695), Lead cursor 7003970186 |
 | Packet session | `r14-<packet>-<n>`, for example `r14-P39-01-1` for the first session on R14-P39-01 | from the Orchestrator's STATUS | — |
 
 **Cadence and time limits.**
@@ -120,7 +123,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Done | `r14-P39-09-1` | [App #298](https://github.com/banodoco/astrid-app/pull/298) merged into `release/14/plan-39` at `549e335d` |
 | [R14-P39-12](packets/R14-P39-12.md) Structure ceiling that may only fall | Plan 39 GL.2 (#647) | Done | `r14-P39-12-1` | [Agent #406](https://github.com/banodoco/astrid-agent/pull/406) merged into `release/14/plan-39` at `9a698c39` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6985650516)). |
 | [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Done | `r14-P61-01-1` | [App #302](https://github.com/banodoco/astrid-app/pull/302) merged into `release/14/plan-61` at `0bce7312` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6980328306)) |
-| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Running | `r14-P61-02-1` | App #310, #311 and #314 (#966). Real run 44397280690 proved copied-realm attach and preserved the live install. Once PR Tests 44405212756 passes at unchanged head `e431cfbd`, the Lead reruns with a video seed to prove playback. #930 tracks image-only preview readiness. |
+| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Review | `r14-P61-02-1` | App #314 at `75a83f53` awaits full Vitest and affected journey evidence. Then run the installed harness at #310 with #311 and verify the installed App SHA. |
 | [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Done | `r14-P55-08-1` | [Agent #405](https://github.com/banodoco/astrid-agent/pull/405) merged into `release/14/plan-55` at `d0217776` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6983043853)). Follow-ups are in [astrid-dev #896](https://github.com/banodoco/astrid-dev/issues/896). |
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Done | `r14-P55-06-1` | [Agent #407](https://github.com/banodoco/astrid-agent/pull/407) merged into `release/14/plan-55` at `91cb4cb4` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6985581776)). R14-P55-12 carries the LS-6 remainder. |
 | [R14-P55-12](packets/R14-P55-12.md) Output handled once: Runtime and VibeComfy | Plan 55 LS-6 remainder | Done | `r14-P55-12-2` | Merged into `release/14/plan-55`: [Runtime #68](https://github.com/banodoco/astrid-runtime/pull/68) at `b35c93ad`, [VibeComfy #176](https://github.com/banodoco/VibeComfy/pull/176) at `b87a70a6`, [Agent #410](https://github.com/banodoco/astrid-agent/pull/410) at `e3795656` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6998870417)). #975 tracks follow-ups. |
@@ -129,9 +132,9 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P52-01](packets/R14-P52-01.md) The other doors | Plan 52 II-8 (App, Runtime), II-9, II-11, II-13 | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority) |
 | [R14-P53-01](packets/R14-P53-01.md) Aspirations checked and proven | Plan 53 VA-1, VA-2, VA-5, VA-6, VA-8, VA-9 (verify), VA-7 | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority) |
 | [R14-FIX-03](packets/R14-FIX-03.md) Certificate trust | #721; Agent #360 | Done | `r14-FIX-03-3` | Agent #360 merged into `release/14/main` at `b9740f64`. #721 stays open until a tester build proves it |
-| [R14-P55-04](packets/R14-P55-04.md) First job | Plan 55 LS-12; draft Agent #361 | Review | `r14-P55-04-1` | [VibeComfy #178](https://github.com/banodoco/VibeComfy/pull/178) at `a56a19b1` merged into plan-55. Agent #361 remains in review pending integration of `e3795656` and renewed D1 proof. |
+| [R14-P55-04](packets/R14-P55-04.md) First job | Plan 55 LS-12; draft Agent #361 | Rework | `r14-P55-04-1` | VibeComfy #178 landed. Agent #361 at `b2a993f7` failed the owned-phase criterion. Submit the correctness and emission subset for qualification. |
 | [R14-P39-04](packets/R14-P39-04.md) Re-measure | Plan 39 G2 | Done | `r14-P39-04-4` | [#897](https://github.com/banodoco/astrid-dev/pull/897) at `7290367c`. G2 accepted for routing with the corrections in the [RS1 decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6995664680). |
-| [R14-P39-13](packets/R14-P39-13.md) Agent integration collection | Plan 39 AT1.9, AT1.54 | Running | `r14-P39-13-1` | Agent #428 awaits hosted shard qualification. |
+| [R14-P39-13](packets/R14-P39-13.md) Agent integration collection | Plan 39 AT1.9, AT1.54 | Review | `r14-P39-13-1` | Agent #428 at `4ba3becd`. Reconcile CI 44535765805 and all four Lanes shards in 44535552341 against plan-39 `68e7aa85`. |
 | [R14-P39-14](packets/R14-P39-14.md) Per-ID ceiling | Plan 39 K2, K3 | Done | `r14-P39-14-1` | Agent [#433](https://github.com/banodoco/astrid-agent/pull/433) (`68e7aa85`), Runtime [#69](https://github.com/banodoco/astrid-runtime/pull/69) (`97321788`), App [#313](https://github.com/banodoco/astrid-app/pull/313) (`0700e981`). [DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7000240701). |
 | [R14-P39-15](packets/R14-P39-15.md) Runtime migrated realms | Plan 39 RT1, RT2 | Ready | — | Restore provider registration and verification. |
 | [R14-P39-16](packets/R14-P39-16.md) App E2E setup | Plan 39 PT2 | Ready | — | Restore seven setup mechanisms and exercise the service-error guard. |
@@ -140,8 +143,8 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Ready | — | Wave 2 has started. Prove both under shard load. AT12.1 tracks the separate post-#406 failure. |
 | Agent load regressions | Plan 55 LS-7 (eight idle-Remotion IDs), Plan 39 AT27 and AT12.1 | Blocked | — | packet to write for each owner’s proof, with paired runs for AT12.1 |
 | Agent installed journeys | Plan 39 AT4 (both Windows shells), issue [#869](https://github.com/banodoco/astrid-dev/issues/869) (skill publication) | Blocked | — | packet to write for each installed witness. #905 is already in FIX-11. |
-| [R14-FIX-12](packets/R14-FIX-12.md) A task with durable logs settles | [#926](https://github.com/banodoco/astrid-dev/issues/926), [#958](https://github.com/banodoco/astrid-dev/issues/958) | Review | — | Runtime #70 landed at `8e8711fd`. Agent #439 is re-pinning, with full CI and Lanes queued. |
-| [R14-FIX-13](packets/R14-FIX-13.md) The TLS policy module moves into a canonical package | [#964](https://github.com/banodoco/astrid-dev/issues/964) | Review | — | Agent #441 received a MERGE review and awaits hosted fast checks and Fresh Windows install. |
+| [R14-FIX-12](packets/R14-FIX-12.md) A task with durable logs settles | [#926](https://github.com/banodoco/astrid-dev/issues/926), [#958](https://github.com/banodoco/astrid-dev/issues/958) | Review | `r14-FIX-12-1` | Runtime #70 landed. Agent #439 at `c2fb3ec7` needs the `ae929cda` destination integrated and the resulting candidate qualified. The old shard 6 logs were recovered. |
+| [R14-FIX-13](packets/R14-FIX-13.md) The TLS policy module moves into a canonical package | [#964](https://github.com/banodoco/astrid-dev/issues/964) | Done | `r14-FIX-13-1` | Agent #441 squash-merged at `ae929cda`. Windows TLS passed on both path settings. The identical fast-check failure and separately routed #785 remain visible. |
 | [R14-FIX-14](packets/R14-FIX-14.md) App tests follow the changed editor contracts | [#973](https://github.com/banodoco/astrid-dev/issues/973) | Ready | — | Test-only, App; may run beside R14-FIX-12 and FIX-13 |
 | Agent renderer inputs | Plan 39 AT1.21, AT1.111, AT1.113, AT1.50 | Blocked | — | packet to write per input: timeline-composition, React peers, project environment, Node/esbuild |
 | Agent custody fixture | Plan 39 SF6d with Plan 38 | Blocked | — | packet to write with the verified-host custody owner |
@@ -156,7 +159,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P39-22](packets/R14-P39-22.md) Native capture restores before its adapter opens | Plan 39 S04 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
 | [R14-P39-23](packets/R14-P39-23.md) Opaque item identities survive reopen and inverse | Plan 39 S10, S13 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
 | [R14-P39-24](packets/R14-P39-24.md) Fixture plumbing for four integration cases | Plan 39 S16, S18, S19, S20 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
-| [R14-P55-09](packets/R14-P55-09.md) Resident session reuse | Plan 55 LS-15 | Running | `r14-P55-09-3` | Collect hosted LS-15 proof for [Agent #408](https://github.com/banodoco/astrid-agent/pull/408). |
+| [R14-P55-09](packets/R14-P55-09.md) Resident session reuse | Plan 55 LS-15 | Review | `r14-P55-09-3` | Agent #408 at `978fb66c`. Linux resident retry, full candidate CI and Lanes are in progress. Compare against the existing plan-55 base. |
 | Later Plan 55 packets | Plan 55 LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-14 needs GPU time under the [delegated budget](#authority) |
 | [R14-P13-02](packets/R14-P13-02.md) Characterisation | Plan 13 HM2 | Done | `r14-P13-02-1` | Agent #409 merged into `release/14/plan-13` at `82e19108` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6990525750)). HM2 retains the #905 reproducer. |
 | R14-FIX-05 Rejected saves | #732, the App half of #720 | Blocked | — | Owner: discard or copy out |
