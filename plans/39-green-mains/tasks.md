@@ -238,3 +238,9 @@ The [19 November cut][cut] budgets **30–60 engineering days** for A–D plus e
 [readyhead]: https://github.com/banodoco/astrid-agent/actions/runs/44354482287/job/134978745699
 [night]: https://github.com/banodoco/astrid-runtime/actions/runs/44309715980
 [planes]: https://github.com/banodoco/astrid-app/actions/runs/44333946552
+
+### K2/K3 follow-through on 19 November 2026
+
+App P39-28’s six exact native streams retain all destination IDs and outcomes. The official evaluator reports 31 findings after 824 supported additions, down from 855. The separate sync still has its original FAIL. Protected inventory approval, the scoped identity migrations and the four Node loss checks remain open. [App review](https://github.com/banodoco/astrid-app/pull/321#issuecomment-7025363699)
+
+Runtime P39-29's original merge and release replays each go from 937 to 500 recorded findings with 437 additional supported passes. The 51 omission dispositions, the seven streams needing per-ID loss enforcement and the historical exclusions remain open. Three failures shared one stale Runtime manifest digest introduced by the K2/K3 reporter. [P39-32](../../releases/14/packets/R14-P39-32.md) owns the generated-file repair and unchanged host checks. [Runtime disposition](https://github.com/banodoco/astrid-dev/issues/984#issuecomment-7025419901)
