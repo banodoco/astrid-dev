@@ -1,0 +1,148 @@
+{
+  "fresh_run_id": 44447425471,
+  "fresh_job_id": 135302866188,
+  "fresh_shards": [
+    3
+  ],
+  "baseline_run_id": 44378598394,
+  "baseline_shards": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "comparison_unit": "pytest node ID, status-separated; baseline is union across all eight shards to account for shard movement",
+  "extraction": "Top-level timestamped pytest short-summary records matching FAILED|ERROR tests/...::...; nested traceback text excluded. Candidate summary reconciled against extracted status counts.",
+  "sources": {
+    "candidate": "/home/user/work/managers/plan-65/run/ci-44447425471-shard3.log",
+    "baseline_logs": [
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard1.log",
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard2.log",
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard3.log",
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard4.log",
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard5.log",
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard6.log",
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard7.log",
+      "/home/user/work/managers/plan-64/run/ci-release14-baseline-shard8.log"
+    ]
+  },
+  "counts": {
+    "fresh": {
+      "FAILED": 31,
+      "ERROR": 0
+    },
+    "baseline_union": {
+      "FAILED": 837,
+      "ERROR": 397
+    },
+    "fresh_present_in_baseline": {
+      "FAILED": 31,
+      "ERROR": 0
+    },
+    "fresh_only": {
+      "FAILED": 0,
+      "ERROR": 0
+    }
+  },
+  "candidate_summary": {
+    "failed": 31,
+    "passed": 1909,
+    "deselected": 30031,
+    "warnings": 2,
+    "duration": "2059.56s (0:34:19)"
+  },
+  "baseline_shard_counts": {
+    "ci-release14-baseline-shard1.log": {
+      "failed_event_count": 41,
+      "error_event_count": 54,
+      "summary": null
+    },
+    "ci-release14-baseline-shard2.log": {
+      "failed_event_count": 79,
+      "error_event_count": 51,
+      "summary": null
+    },
+    "ci-release14-baseline-shard3.log": {
+      "failed_event_count": 31,
+      "error_event_count": 0,
+      "summary": {
+        "failed": 31,
+        "passed": 1882,
+        "deselected": 29811,
+        "warnings": 2,
+        "duration": "3110.66s (0:51:50)"
+      }
+    },
+    "ci-release14-baseline-shard4.log": {
+      "failed_event_count": 28,
+      "error_event_count": 19,
+      "summary": null
+    },
+    "ci-release14-baseline-shard5.log": {
+      "failed_event_count": 95,
+      "error_event_count": 107,
+      "summary": null
+    },
+    "ci-release14-baseline-shard6.log": {
+      "failed_event_count": 220,
+      "error_event_count": 22,
+      "summary": null
+    },
+    "ci-release14-baseline-shard7.log": {
+      "failed_event_count": 256,
+      "error_event_count": 143,
+      "summary": null
+    },
+    "ci-release14-baseline-shard8.log": {
+      "failed_event_count": 87,
+      "error_event_count": 1,
+      "summary": null
+    }
+  },
+  "fresh_ids": {
+    "FAILED": [
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_authentic_complete_abi1_binding_set_survives_history_and_inverse",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_authenticated_history_abi_preserves_original_fork_proofs[1-False]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_authenticated_history_abi_preserves_original_fork_proofs[absent-False]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_caller_annotations_and_recorder_schema_do_not_supply_history_abi",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[0]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[1.0]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[1]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[2.0]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[2]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[3]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[False]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[None]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[True]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[metadata10]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[metadata11]",
+      "tests/editing_conformance/test_fork_abi1_binding_set.py::test_malformed_authenticated_recorder_abi_fails_closed[metadata9]",
+      "tests/editing_conformance/test_fork_historical_source_boundary.py::test_production_undo_authenticates_restored_source_without_changing_publication[False-1]",
+      "tests/editing_conformance/test_fork_historical_source_boundary.py::test_production_undo_authenticates_restored_source_without_changing_publication[True-1]",
+      "tests/editing_conformance/test_headless_root_mirror_effects.py::test_config_replacement_retains_real_root_mirror_removal[False]",
+      "tests/editing_conformance/test_headless_root_mirror_effects.py::test_config_replacement_retains_real_root_mirror_removal[True]",
+      "tests/editing_conformance/test_native_word_anchor_vectors.py::test_portable_native_captures[a]",
+      "tests/editing_conformance/test_native_word_anchor_vectors.py::test_portable_native_captures[b]",
+      "tests/editing_conformance/test_occurrence_shared_d20.py::test_provider_full_closure_preview_retry_inverse[1]",
+      "tests/editing_conformance/test_prepared_video_birth.py::test_frozen_request_envelope_rejects_unknown_fields[idempotency_key]",
+      "tests/editing_conformance/test_prepared_video_birth.py::test_frozen_request_envelope_rejects_unknown_fields[unexpected]",
+      "tests/editing_conformance/test_prepared_video_birth.py::test_literal_after_insert_request_is_identical_on_c36_and_new",
+      "tests/editing_conformance/test_prepared_video_birth.py::test_normalized_production_video_birth_and_guarded_inverse[0.02]",
+      "tests/editing_conformance/test_prepared_video_birth.py::test_normalized_production_video_birth_and_guarded_inverse[4]",
+      "tests/editing_conformance/test_prepared_video_birth.py::test_normalized_production_video_birth_and_guarded_inverse[None]",
+      "tests/editing_conformance/test_prepared_video_birth.py::test_normalized_production_video_birth_and_guarded_inverse[absent]",
+      "tests/editing_conformance/test_producer_insertion.py::test_native_parent_media_golden_is_the_exported_capture"
+    ],
+    "ERROR": []
+  },
+  "fresh_only_ids": {
+    "FAILED": [],
+    "ERROR": []
+  },
+  "candidate_only_assessment": [],
+  "candidate_only_cause": "No candidate-only IDs: all 31 fresh FAILED IDs occur by exact node ID in the baseline union; there are no ERROR IDs. Candidate-only trace attribution against Plan 39 evidence or SR3 logs is therefore not applicable."
+}
