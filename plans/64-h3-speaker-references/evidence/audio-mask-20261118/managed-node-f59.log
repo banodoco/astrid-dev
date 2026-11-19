@@ -1,0 +1,5 @@
+[VideoHelperSuite] - [0;33mWARNING[0m - Failed to import imageio_ffmpeg
+managed member assets/493d85fa54354e64-audio-time-mask.mkv sha256 493d85fa54354e649fff961c2072ef9eabd8fbb5d95ad30c33efd5414f571850 loaded frames 294 mask shape (294, 1, 1)
+nonzero frames [(1, 0.49950408935546875)]
+H3 preserved video mask [0.25, 0.75]
+H3 audio mask shape (1, 1, 2, 490) nonzero ticks [(1, 0.19980165362358093), (2, 0.49950408935546875), (3, 0.19980156421661377)]
