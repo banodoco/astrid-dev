@@ -13,5 +13,32 @@ Each selected ID had one primary outcome and a teardown report. Nightly's collec
 | --- | --- |
 | Agent integrations and Darwin | P39-13 reconciles all four integration shards on its exact submission. The Lead compares the results against the sealed inventory and reviews Darwin separately. Destination Darwin collected 55 IDs and executed none. Candidate Darwin reported all 55, with 42 passes and 13 failures. [Integration run](https://github.com/banodoco/astrid-agent/actions/runs/44535552341) · [Darwin artifact](https://github.com/banodoco/astrid-agent/actions/runs/44535765805/artifacts/14537431686) |
 | App Direct Journey | The Lead owns #316. Retain IDs, failures, retries and checkout identities from both Direct Journey and three-products when the queued jobs finish. [Plan-39 sync run](https://github.com/banodoco/astrid-app/actions/runs/44563320327) |
-| Installed Windows tuple | Plan 39 AT4 owns the Windows task-host journey. The Lead must reconcile the installed App, Agent and Runtime identities against the reviewed expected pins in both shell cells. The existing run records sibling checkouts. [Journey workflow](https://github.com/banodoco/astrid-agent/blob/68e7aa85/.github/workflows/windows-journey.yml) |
+| Installed Windows tuple | Plan 39 AT4 owns the Windows task-host journey. The Lead must reconcile the installed App, Agent and Runtime identities against the reviewed expected pins in both shell cells. The two shell artifacts also prove the source pins selected by the installer, as detailed below. [Journey workflow](https://github.com/banodoco/astrid-agent/blob/68e7aa85/.github/workflows/windows-journey.yml) |
 | Trusted workflow and overall coverage | The Lead owns reconciliation against the full required-check manifests and the delegated checks. The owner supplies the Agent gate-owner variable. Activation still requires the trusted default-branch workflow and policy, followed by a verified rejected unapproved workflow edit. The global inventory remains unknown. [Activation prerequisites](https://github.com/banodoco/astrid-dev/issues/984) |
+
+## Installed Windows evidence, 19 November at 19:37 UTC
+
+Both shell cells of [run 44462370880](https://github.com/banodoco/astrid-agent/actions/runs/44462370880) executed the real installer from App `de7dd1e6`. Each install step succeeded after comparing the installed-root Agent and Runtime records against the complete corresponding records in the served manifest. In both artifacts all four installed-profile binding checks passed. App plan-39 at `0700e981` declares the same two pins as the installer used in this run. [Installed-root comparison](https://github.com/banodoco/astrid-agent/blob/68e7aa85/scripts/ci_windows_journey.py#L403-L427) · [Plan manifest](https://github.com/banodoco/astrid-app/blob/0700e981/public/install-manifest.json)
+
+| Shell | Installer App checkout | Selected and verified installed Agent | Selected and verified installed Runtime |
+| --- | --- | --- | --- |
+| [Windows PowerShell](https://github.com/banodoco/astrid-agent/actions/runs/44462370880/artifacts/14502544860) | `de7dd1e6` | `9814193a` | `6855dfa8` |
+| [PowerShell 7](https://github.com/banodoco/astrid-agent/actions/runs/44462370880/artifacts/14506254222) | `de7dd1e6` | `9814193a` | `6855dfa8` |
+
+The harness ran from Agent `68e7aa85` and checked out sibling Runtime `2537fed2`. The App SHA identifies the installer script. Health and pack-host readiness passed in both jobs. The installed CLI rejected the top-level packs command, so discovery and SDK settlement still block AT4. P39-27 owns the qualifying two-shell journey. [Activation finding](https://github.com/banodoco/astrid-dev/issues/984#issuecomment-7020193721)
+
+## App journey inventory
+
+The #316 comparison accounts for all 59 selected native identities and their Playwright attempts on both exact trees. Each side executed 48 distinct cases. The same concurrent edit failed on both, and eleven later serial cases were never assigned a worker. Those eleven have no execution result. The trusted Node recorder and the original PT5 failure remain open. [Native receipt, source commits and job links](app-journey-census/README.md)
+
+## Trusted default-branch preparation
+
+The three product defaults lack both reviewed files. For each repository the Lead prepared a local two-file patch for `.github/workflows/gate-integrity.yml` and `scripts/ci/protect_gate_paths.py`. Each applied cleanly to its default, passed workflow lint, accepted an unchanged tree and returned exit 1 for the unapproved protected-file change. [Exact file blobs, candidate trees and patch digests](gate-bootstrap-preflight.json)
+
+| Product | Current default | Reviewed plan-39 source |
+| --- | --- | --- |
+| App | `de7dd1e6` | [0700e981](https://github.com/banodoco/astrid-app/tree/0700e981) |
+| Agent | `959da732` | [68e7aa85](https://github.com/banodoco/astrid-agent/tree/68e7aa85) |
+| Runtime | `6855dfa8` | [97321788](https://github.com/banodoco/astrid-runtime/tree/97321788) |
+
+The current default and plan-39 branches report no effective protection on all three products. The trusted workflow fetches its checker from the current default branch. Production activation requires protecting that policy source or reviewing and qualifying an immutable binding, then confirming the hosted verdict covers the exact PR head. The accessible variable inventories contain no gate-owner roster. The owner's existing instructions reserve the Agent roster and product-default changes before release qualification. An authorized organization administrator must verify organization-level workflow enforcement. Release-branch required checks remain within the Lead's delegation after their prerequisites are met.

@@ -1,0 +1,125 @@
+{
+  "app": {
+    "base": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+    "source": "0700e981be5dfbfc229784b8ade69869f62716dd",
+    "blobs": {
+      ".github/workflows/gate-integrity.yml": "a699b92f12877519d8998452af29ea4255935d49",
+      "scripts/ci/protect_gate_paths.py": "1e9066b8410d8dd29a7ef3587a9911973f17f405"
+    },
+    "patch_sha256": "bdb7ae91de9939bfadb6f7fab5fcbdf65510d97d0b596442ff9fbf790738f322",
+    "candidate_tree": "999141af1adddd754c95231a6a7b6431133f7d1f",
+    "python_standard_library_imports": [
+      "__future__",
+      "argparse",
+      "json",
+      "os",
+      "re",
+      "subprocess",
+      "sys",
+      "urllib"
+    ],
+    "checks": [
+      {
+        "head": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+        "exit": 0,
+        "output": [
+          "Trusted gate policy: base=de7dd1e668aa6dcf3cbce013c701fa7c76615f99 head=de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+          "Gate integrity passed; owner=no protected changes"
+        ]
+      },
+      {
+        "head": "9b1287946066ce88955e76afc54141c65d5e2f2c",
+        "exit": 1,
+        "output": [
+          "Trusted gate policy: base=de7dd1e668aa6dcf3cbce013c701fa7c76615f99 head=9b1287946066ce88955e76afc54141c65d5e2f2c",
+          "Protected change: .github/workflows/gate-integrity.yml",
+          "Protected change: scripts/ci/protect_gate_paths.py",
+          "ERROR: protected gate changes require a configured named owner's approval of this exact head."
+        ]
+      }
+    ]
+  },
+  "agent": {
+    "base": "959da7326c982a9197b5d6e2a4489f45e1deef0e",
+    "source": "68e7aa8593d13eaeb6a55da1d97bed8b494df15b",
+    "blobs": {
+      ".github/workflows/gate-integrity.yml": "6706a1be98df4e24ef8e86082f4e116238294e48",
+      "scripts/ci/protect_gate_paths.py": "351f6be4ca6b3e0f60968b5e77bdc21b15a57307"
+    },
+    "patch_sha256": "b237060fa8aacc89a606757c50d5eb980fb3d45bec7c5e5ce578be943fbe0bdb",
+    "candidate_tree": "fa26f047e36787e2b5f5e01b0ffb70239def7d02",
+    "python_standard_library_imports": [
+      "__future__",
+      "argparse",
+      "configparser",
+      "json",
+      "os",
+      "pathlib",
+      "re",
+      "subprocess",
+      "sys",
+      "tomllib",
+      "urllib"
+    ],
+    "checks": [
+      {
+        "head": "959da7326c982a9197b5d6e2a4489f45e1deef0e",
+        "exit": 0,
+        "output": [
+          "Trusted gate policy: base=959da7326c982a9197b5d6e2a4489f45e1deef0e head=959da7326c982a9197b5d6e2a4489f45e1deef0e",
+          "Gate integrity passed; owner=no protected changes"
+        ]
+      },
+      {
+        "head": "adddb82ffaa0634f35fef5a1ed095265e9b2ec7a",
+        "exit": 1,
+        "output": [
+          "Trusted gate policy: base=959da7326c982a9197b5d6e2a4489f45e1deef0e head=adddb82ffaa0634f35fef5a1ed095265e9b2ec7a",
+          "Protected change: .github/workflows/gate-integrity.yml",
+          "Protected change: scripts/ci/protect_gate_paths.py",
+          "ERROR: protected gate changes require a configured named owner's approval of this exact head."
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "base": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+    "source": "97321788fab40400878f9abf1860a7adbf6ddb92",
+    "blobs": {
+      ".github/workflows/gate-integrity.yml": "a699b92f12877519d8998452af29ea4255935d49",
+      "scripts/ci/protect_gate_paths.py": "5a7155e2d7002a609d97b08e70426c89bb560816"
+    },
+    "patch_sha256": "5a8a08a23658a82b825215c2dd5c63499ca981d3c0e2e8044ec71dcd0463e6f6",
+    "candidate_tree": "6545b2233bae3b18aed6a02cbc82265aeeebc32f",
+    "python_standard_library_imports": [
+      "__future__",
+      "argparse",
+      "json",
+      "os",
+      "re",
+      "subprocess",
+      "sys",
+      "urllib"
+    ],
+    "checks": [
+      {
+        "head": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+        "exit": 0,
+        "output": [
+          "Trusted gate policy: base=6855dfa8df65cf8ae4c002b57134d6505493c17c head=6855dfa8df65cf8ae4c002b57134d6505493c17c",
+          "Gate integrity passed; owner=no protected changes"
+        ]
+      },
+      {
+        "head": "78ab4b9f776011adfe175dd1f755f9e5117ea50f",
+        "exit": 1,
+        "output": [
+          "Trusted gate policy: base=6855dfa8df65cf8ae4c002b57134d6505493c17c head=78ab4b9f776011adfe175dd1f755f9e5117ea50f",
+          "Protected change: .github/workflows/gate-integrity.yml",
+          "Protected change: scripts/ci/protect_gate_paths.py",
+          "ERROR: protected gate changes require a configured named owner's approval of this exact head."
+        ]
+      }
+    ]
+  }
+}

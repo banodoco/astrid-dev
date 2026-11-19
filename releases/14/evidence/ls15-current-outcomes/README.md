@@ -19,3 +19,7 @@ These receipts compare the exact e3795656 reference and 978fb66c candidate. They
 | [Integration 4 outcomes](integration4-outcomes.json.gz) | 23,377 | `bf80e45fc258c87541ffbeaad3a6fe4a11fa835e717ce52b1f2e70129dcc1a5c` |
 
 [Integration 3 outcomes](integration3-outcomes.json.gz) · SHA-256 `16fee8554eb83970bf1865c95533588d8df158e7b5f0b2d3f234259526008fe1`.
+
+## Repaired candidate c54a6099
+
+The [four-shard paired receipt](c54-integration-outcomes-by-id.json.gz) compares e3795656 with c54a6099. All 2,092 reference IDs are present among the 2,101 candidate IDs. Two common failures became passes, and all nine added IDs passed. Candidate shard 3, job 135721800656, reports 526 primary results: 368 passes, 95 failures, 62 explicit setup errors and one skip with unknown phase. All eight raw shard exits were 1. The receipt includes original job and log hashes. For protected parameter displays, look up the SHA-256 of the original UTF-8 node ID. This file's SHA-256 is `d4a1305cf334641ef1fa96eec559b0600a341c53746ddf86be223f7e6d62609d`. The earlier 978fb66c receipts remain separate.
