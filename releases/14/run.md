@@ -149,6 +149,12 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | App installed outcomes | Plan 39 PT3, PT5, PT6, PT12 | Blocked | — | packet to write per row for editor/extension, lost ACK, source tuple and film download |
 | R14-P55-11 Small Plan 55 fixes | Plan 55 LS-18 (#583), LS-19 (#610), LS-7.2, LS-20 (#855) | Blocked | — | Lead to assess shared setup and proof under the [one-row delegation](#authority) |
 | R14-P39-11 A bound on terminal publication replay | Plan 39 AT13 (#611) | Blocked | — | After R14-P55-07 merges: the same `generic_host.py` |
+| [R14-P39-19](packets/R14-P39-19.md) Media shot replacement keeps its managed links | Plan 39 S01 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
+| [R14-P39-20](packets/R14-P39-20.md) The authenticated G5 history archive is available on hosted runners | Plan 39 S02, S09 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
+| [R14-P39-21](packets/R14-P39-21.md) The retained transcript word resolves at publication | Plan 39 S03 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
+| [R14-P39-22](packets/R14-P39-22.md) Native capture restores before its adapter opens | Plan 39 S04 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
+| [R14-P39-23](packets/R14-P39-23.md) Opaque item identities survive reopen and inverse | Plan 39 S10, S13 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
+| [R14-P39-24](packets/R14-P39-24.md) Fixture plumbing for four integration cases | Plan 39 S16, S18, S19, S20 | Ready | — | Plan 39 setup clusters (Lanes 44454822934) |
 | [R14-P55-09](packets/R14-P55-09.md) Resident session reuse | Plan 55 LS-15 | Running | `r14-P55-09-2` | Collect hosted LS-15 proof for [Agent #408](https://github.com/banodoco/astrid-agent/pull/408). |
 | Later Plan 55 packets | Plan 55 LS-9, LS-10, LS-13, LS-14, R | Blocked | — | LS-14 needs GPU time under the [delegated budget](#authority) |
 | [R14-P13-02](packets/R14-P13-02.md) Characterisation | Plan 13 HM2 | Done | `r14-P13-02-1` | Agent #409 merged into `release/14/plan-13` at `82e19108` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6990525750)). HM2 retains the #905 reproducer. |
@@ -156,6 +162,8 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | R14-FIX-06 Scenes in CI | #734 | Blocked | — | After R14-FIX-10, one Agent issue packet at a time |
 | R14-FIX-07 Release tooling | #739 | Blocked | — | Owner: the ruleset on `release/*/main` |
 | R14-FIX-08 Windows leads | #677 | Blocked | — | Owner: fix or close each lead; needs a Windows machine |
+
+Of the triage’s 34 remaining unowned errors, P39-24 covers four in this wave. S05–S08, S12, S15 and S17 (30) need packets after this wave. RT1 and LS-7.2 already own S11 and S14 (5 errors).
 
 The review stops are the Lead's, not packets: Plan 39 RS1 after P39-04, Plan 55 RS1 after P55-01, and each plan's final R.
 
