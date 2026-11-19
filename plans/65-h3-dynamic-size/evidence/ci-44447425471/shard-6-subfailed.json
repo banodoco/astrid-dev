@@ -1,0 +1,368 @@
+{
+  "description": "All shard 6 failed subtests match a base subtest by parameters and parent node ID.",
+  "matches": [
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.editorial.actions.boundary_candidates.run', parser_path=(), dest='kind') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66881
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69446
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.editorial.actions.transcribe.run', parser_path=(), dest='diarize') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66880
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69445
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.foley.actions.foley_map.run', parser_path=(), dest='stop_after') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66882
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69447
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.rendering.actions.sprite_sheet.run', parser_path=(), dest='ai_upscale_provider') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66873
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69438
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.understanding.actions.audio_understand.run', parser_path=(), dest='audition_reel') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66875
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69440
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.understanding.actions.audio_understand.run', parser_path=(), dest='mode') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66876
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69441
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.understanding.actions.understand.run', parser_path=(), dest='mode') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66877
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69442
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.understanding.actions.video_understand.run', parser_path=(), dest='mode') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66874
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69439
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.understanding.actions.visual_understand.run', parser_path=(), dest='detail') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66879
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69444
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.understanding.actions.visual_understand.run', parser_path=(), dest='mode') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66878
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69443
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.cut.run', parser_path=(), dest='renderer') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66883
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69448
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.logo_ideas.run', parser_path=(), dest='output_format') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66891
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69456
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.logo_ideas.run', parser_path=(), dest='provider') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66890
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69455
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='output_format') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66887
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69452
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='quality') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66886
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69451
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='reference_mode') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66889
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69454
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.thumbnail_maker.run', parser_path=(), dest='visual_mode') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66888
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69453
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.vary_grid.run', parser_path=(), dest='output_format') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66885
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69450
+      }
+    },
+    {
+      "subtest": "SUBFAILED(module='astrid.packs.video_editing.actions.vary_grid.run', parser_path=(), dest='quality') tests/packs/test_pack_run_cli_choices.py::PackRunCliChoicesTests::test_importable_pack_parsers_use_static_choices",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66884
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69449
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='editorial') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66835
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69400
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='editorial') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66842
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69407
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='fal') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66839
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69404
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='fal') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66846
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69411
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='foley') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66837
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69402
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='foley') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66844
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69409
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='moirae') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66840
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69405
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='moirae') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66847
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69412
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='understanding') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66834
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69399
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='understanding') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66841
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69406
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='video_editing') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66836
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69401
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='video_editing') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66843
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69408
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='youtube') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_core_pack_taxonomy_and_declared_content_kinds",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66838
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69403
+      }
+    },
+    {
+      "subtest": "SUBFAILED(pack='youtube') tests/packs/test_pack_migration_m4_shells.py::TestCorePackTaxonomyV3::test_declared_rendering_elements_match_element_manifests_on_disk",
+      "candidate": {
+        "file": "ci-44447425471-shard6.log",
+        "line": 66845
+      },
+      "base": {
+        "file": "ci-release14-baseline-shard6.log",
+        "line": 69410
+      }
+    }
+  ]
+}
