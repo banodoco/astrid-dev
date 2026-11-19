@@ -23,3 +23,7 @@ These receipts compare the exact e3795656 reference and 978fb66c candidate. They
 ## Repaired candidate c54a6099
 
 The [four-shard paired receipt](c54-integration-outcomes-by-id.json.gz) compares e3795656 with c54a6099. All 2,092 reference IDs are present among the 2,101 candidate IDs. Two common failures became passes, and all nine added IDs passed. Candidate shard 3, job 135721800656, reports 526 primary results: 368 passes, 95 failures, 62 explicit setup errors and one skip with unknown phase. All eight raw shard exits were 1. The receipt includes original job and log hashes. For protected parameter displays, look up the SHA-256 of the original UTF-8 node ID. This file's SHA-256 is `d4a1305cf334641ef1fa96eec559b0600a341c53746ddf86be223f7e6d62609d`. The earlier 978fb66c receipts remain separate.
+
+## Terminal unit comparison for c54a6099
+
+All 31,191 reference primary IDs are present among the 31,219 candidate IDs. All 28 additions passed. Three readiness failures became passes. The partly-installed-default case changed from pass to fail at its readiness-reason assertion on line 107. Unit 6 matched all 4,998 common primary outcomes. Its four setup errors and 33 failed subtests remain visible on each side. Each unit 6 job exited 1. The smaller receipt contains the same two job records as the full comparison. [Unit 6 native evidence](c54-unit6-outcomes-by-id.json.gz) · [All eight shards](c54-unit-outcomes-by-id.json.gz) · [Readiness disposition](https://github.com/banodoco/astrid-dev/issues/733#issuecomment-7020202936)
