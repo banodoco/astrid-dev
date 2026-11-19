@@ -32,6 +32,18 @@
 | DS-5 Document size | T | DS-4 | Add the size examples as complete request files that the admission test loads; Plan 66 CC-5 later turns them into recipe files, and CC-6 owns the final skill wording. Short notes in `docs/SKILL.md`, `docs/recast-scene/SKILL.md`, the default and route descriptions in `profiles/native-v2.yaml`, and the workflow input description in `extensions/vibecomfy.workflows/h3.yaml`: the rule (32–16384, multiples of 32), the 1024×576 default, and `mask.canvas` (rectangle coordinates; omitted means the legacy 1024×576 canvas; still-image masks use their own pixel size). Name only the sizes the test inventory covers; say other accepted sizes are uncharacterized. Mention the voice-only use from [#885](https://github.com/banodoco/astrid-dev/issues/885) without promising its quality before a live result. | `test_skill_examples_admitted.py` admits a 512×288 image-guided speech example and a 768×448 masked-edit example. `tests/test_pack_declared_skills.py` passes. | [ ] scoped docs merged `65ebfaac`; 6 passed; public admission, Recast and declared-skills proof pending |
 | R Review rounds (at most 1, recommended) | S | DS-1 through DS-5 | Integrated result, read-only, high-judgment reviewer. | Check the CPU proofs against the plan's completion list and owner decisions. Findings become rows `R1.<n>` under the [run contract](../../skills/shared/run-contract.md); closing waits for them. | [ ] |
 
+## Landed-scope review R1
+
+Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; independent confirmation underway.
+
+| Finding | Status |
+| --- | --- |
+| R1.1 Source-free delivered dimensions can differ from the recorded requested size. | [ ] |
+| R1.2 `h3 plan` previews static masks using legacy geometry and saves preparation before raster handoff. | [ ] |
+| R1.3 Multi-pass planner drops the requested output size. | [ ] |
+| R1.4 Repeated compile and an authored `permission_mask_0` asset collide with derived permission IDs. | [ ] |
+| R1.5 Legacy prepared v2 requests can use compatibility overrides that diverge from compiled size. | [ ] |
+
 ## DS-3 detail
 
 **Rectangle masks.**
