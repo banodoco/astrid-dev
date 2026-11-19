@@ -34,7 +34,7 @@
 
 ## Landed-scope review R1
 
-Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; independent confirmation underway.
+Review of `65ebfaac652f124d56b7aad165822527bc222732` returned changes required; all five findings independently confirmed. Repairs are underway on separate task branches.
 
 | Finding | Status |
 | --- | --- |
