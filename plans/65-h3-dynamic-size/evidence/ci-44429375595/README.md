@@ -1,0 +1,7 @@
+# CI comparison, 19 November 2026
+
+Candidate run [44429375595](https://github.com/banodoco/astrid-agent/actions/runs/44429375595) at `65ebfaac652f124d56b7aad165822527bc222732` was compared test by test with Release 14 base run [44378598394](https://github.com/banodoco/astrid-agent/actions/runs/44378598394) at `b50371baf101d6f706269fab38cdf3a7a5eb2013`. Only unit shards 3, 4, 5 and 8 had finished when this evidence was collected; the JSON retains their exact failure-ID comparisons. Other shards and final CI status remain pending.
+
+Shard 3 had 31 matching failures. Shard 4 had seven new H3 failures; shard 5 had two new H3 failures. An exact focused rerun at SR-3 merge `6dfb3542b3f95597eca77cd7b378a654aeac3eb0` reproduces seven of those nine, as recorded in `sr3-h3-failures.log`. The cached-node schema test passes in the worker environment, which supplies `VIBECOMFY_SOURCE`; CI omits it, so this is an SR-3 test-environment gap. The remaining planner runtime-binding failure passes at SR-3 and was introduced by Plan 65; its repair is in progress. Shard 8 had 11 candidate-only failures outside the H3 paths and two platform errors; they remain unclassified. The model-lock count failures occur in the base run.
+
+Fast checks reported Ruff and mypy ratchet failures; a same-version local comparison found the blocking H3 diagnostics present on SR-3 too. CI uses Ruff 0.12.0 while the local comparison used 0.16.9, so the exact aggregate was not reproduced. Darwin native also failed; it has not been fully classified against the base. No GPU work was run.
