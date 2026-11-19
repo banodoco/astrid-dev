@@ -30,7 +30,7 @@ The one home for a release's branches and order. Each step says who acts, on whi
 8. **Keep current.** When the release branch moves, each manager merges it into their open plan and fix branches promptly. A branch lands only when it contains the release branch's current head and its proof passed on that combined tree.
 9. **Land a green plan.** The plan manager lands their own plan: its branch, with the current release branch merged in, passes its checks on that combined tree ([what CI runs](../astrid-dev-green/SKILL.md#using-github-actions)). They merge it into `release/<NN>/main` and set the row to `merged`. Every piece of work says what it belongs to, at its branch: a plan branch by its name, a fix branch by the issue in its Role (`fix #<issue>`). A pull request into `release/<NN>/main` must name its plan or issue: each product repository's CI has a `landing reference` check that fails otherwise, and a plan branch passes by its name; otherwise the title or body must contain, for example, `Plan 55` or `banodoco/astrid-dev#721`.
 10. **Keep the release branch green.** If a merge turns it red, [the red-branch rule](#get-the-release-branch-green) applies. The release manager runs its green stage before any tester build, candidate freeze or request for the go.
-11. **Tester builds,** from the release branch only ([tester builds](#tester-builds)).
+11. **Tester builds,** from the release branch only ([tester builds](#tester-builds)). To look at a release or plan branch on your own machine first, [try it live](#try-a-release-or-plan-branch-live).
 12. **Freeze and qualify.** The release manager freezes the release branch's head commit as the candidate and qualifies it ([freeze](#freeze-the-candidate), [claims and evidence](#state-the-claim-and-select-evidence)). Recorded: the evidence its gates name, `tests.md`.
 13. **Branches check.** `python3 scripts/release_branches.py check <NN>` exits 0 ([check](#check-the-release-branches)); every plan and fix row is `merged`, or the brief says why a row is left out.
 14. **Owner's go,** in this session, naming the exact commits ([publish](#promote-or-publish) step 1).
@@ -83,6 +83,24 @@ A named stage of the release's pre-release work, owned by the release manager. R
 ## Tester builds
 
 A [tester build](../astrid-dev-shared/glossary.md) is an install manifest for one exact commit on `release/<N>/main`. Its Agent commit must be that branch's head or a commit on it, and the release branch must be green on that commit ([green stage](#get-the-release-branch-green)). Write the manifest as `tester/install-manifest.json` on a `windows/tester-<sha8>` branch of astrid-dev, where `<sha8>` is the Agent commit's first eight characters, as existing tester builds do. Keep the `windows/` prefix, which the Agent's Windows journey is triggered by ([green](../astrid-dev-green/SKILL.md)).
+
+## Try a release or plan branch live
+
+For developers and testers who want to see a branch running before anything is cut. It is a live check only: not landing proof, not a [tester build](#tester-builds), and it authorizes no freeze, publication or promotion. The tool is `scripts/astrid-release/` in astrid-app, Plan 61 of Release 14. Until Release 14 publishes it is on astrid-app [`release/14/plan-61`](https://github.com/banodoco/astrid-app/blob/release/14/plan-61/scripts/astrid-release/README.md), and run from a checkout of that branch; it reaches `main` when the release does. [Plan 61](https://github.com/banodoco/astrid-dev/tree/main/plans/61-run-a-release-branch-locally) is its plan, and [Plan 62](https://github.com/banodoco/astrid-dev/tree/main/plans/62-one-manifest-one-stack), queued after it, widens it.
+
+`scripts/astrid-release/astrid-release <branch>` puts the whole stack on that branch in an isolated root, `~/astrid-release/<slug>`, with its own HOME and ports (editor from 2400, proxy and door from 17500), next to the normal install. Other verbs: `status`, `update`, `stop`. It uses the real installer and the Agent branch's pins. The App and Agent heads resolve `release/NN/plan-PP`, then `release/NN/main`, then `main`, and print a loud `FELL BACK` line when a repository lacks the branch; Runtime, VibeComfy and lifecycle follow the Agent's locks.
+
+- **Your realm is copied, never shared.** The copy is a read-only snapshot (APFS clones). Edits in the stack never reach the live realm, and the live install and realm are never written; the tool checks the live service is unchanged before and after.
+- **Open the editor** at the address printed at READY and by `status`, for example `http://127.0.0.1:2400/tools/video-editor?connect=1`. The README adds `?entry=editor` to skip the welcome dialog. The editor talks only to the stack's own proxy.
+- **Needs** macOS (APFS), a live install to copy from, git, node, python3 and sqlite3, and in practice about 10 GB free (the script's own checks are lower: 5 GB plus twice the realm database, 2 GB for `npm ci`). Windows and Linux are not supported.
+- **Stop** with `astrid-release stop <branch>`.
+
+Limits, stated plainly:
+
+- `update` cannot move a stack to new Agent or Runtime commits yet. The installer's `--update` is blocked ([#825](https://github.com/banodoco/astrid-dev/issues/825)) and reinstalling over kept data hits the retained-source-profile guard ([#817](https://github.com/banodoco/astrid-dev/issues/817), [#815](https://github.com/banodoco/astrid-dev/issues/815)). It refuses and prints manual steps: stop, delete the stack folder, run again. That re-copies the realm and loses edits made on the copy.
+- The first start on a copied realm may need one automatic retry ("accepted commit inputs changed during verification"); the cause is not yet understood ([#818](https://github.com/banodoco/astrid-dev/issues/818)). Any readiness failure is retried, up to three starts.
+- Use `<root>/program/run-astrid` only as `HOME=<root>/home <root>/program/run-astrid`, so it cannot touch the live install. `astrid` on PATH is still the live one.
+- The tool does not pass `ASTRID_*` variables or the live env file into the stack; other environment variables of your shell are not stripped. GPU and RunPod jobs from the stack use the stack's own pins when started with its own `run-astrid`; source-mode GPU runs are not supported yet.
 
 ## Take stock of open pull requests
 
