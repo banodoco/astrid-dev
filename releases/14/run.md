@@ -4,19 +4,19 @@ The live state of the Release 14 run. The Lead is its only writer and rewrites i
 
 **If you are a packet session,** read [Authority](#authority) and [Standing rulings](#standing-rulings) before your packet. **If you are the Orchestrator,** read in this order: [Authority](#authority), [Mailbox](#mailbox), [Orchestrator startup checks](#orchestrator-startup-checks), [Standing rulings](#standing-rulings), [Earlier managers](#earlier-managers), then the [Dispatch queue](#dispatch-queue). The [start message for the first packet](#packet-start-message-filled-for-the-first-packet) is written out below as an example; the others follow the same pattern.
 
-## Now (14:07 UTC, Thu 19 Nov)
+## Now (14:37 UTC, Thu 19 Nov)
 
 The standby took over as `r14-lead` at 13:36 UTC. The last Claude mailbox message was at 08:33 UTC and the last Lead account activity was at 10:33 UTC. [Continuity decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010718325)
 
-- FIX-13 landed in Agent release/14/main at `ae929cda`. The Lead posted [FIX-13 DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7011470870) after #994 merged on main and asked the Orchestrator to dispatch FIX-14. Session assignment awaits its ACK. After FIX-14, use the [standing slot order](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7003453313).
-- FIX-12 needs a new comparison against that release head. Runtime #70 is merged. The packet will merge the destination into Agent #439 and submit its new head. Destination CI 44535516200 and Lanes 44535516469 are already running.
-- P39-13 is in Review at Agent #428 `4ba3becd`. The Lead dispatched CI 44535765805 and Lanes 44535552341. Independent review passed 123 focused tests with 19 native-Windows skips. Landing awaits the hosted by-ID comparison. The old 2,067-case receipt covers the previous head.
-- P55-09 is in Review at Agent #408 `978fb66c`. Windows resident proof passed. The [Linux resident retry](https://github.com/banodoco/astrid-agent/actions/runs/44524330798/job/135599943553) passed its crash and public-SDK cases. Nine historical dry-run/live regressions still need comparison on the corrected head. CI 44535559533 and Lanes 44535565116 qualify the corrected head against shared base `e3795656`.
-- P55-04 is in Rework. The second pair improved whole-job macOS timing but still regressed in pack verification. Split the correctness and single-emission changes from the verification optimization under the [original ruling](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7003306733).
-- P61-02 remains in Review. App #314 passed the 309-case focused suite. The direct-journey job passed on both sides. Full Vitest and the three-products job comparison are outstanding (candidate Tests 44536150965 / Journey 44536156802, destination Tests 44536162169 / Journey 44536167919). App #310 and #311 remain together for installed proof.
-- Plan 13 landing awaits full CI capacity. Plan 39 ceiling activation remains tracked in #984. The Lead commissioned an independent strategic review at 13:37 UTC. The next is due at 16:37 UTC.
+- FIX-14 is running in `r14-FIX-14-1` on App #315 at `2c01a777`. Independent review reproduced the same 130 cases, with ten failures on destination and all 130 passing on candidate. The changed Keep/resend journey still needs a route-specific receipt.
+- FIX-12 merged Agent release/14/main into #439 at `253456ce`. Its two lock files are the only destination differences. The packet submitted refreshed installed proof. Candidate CI 44546258657 and Lanes 44546268151 are running against the existing `ae929cda` destination pair.
+- P39-13 remains in Review at Agent #428 `4ba3becd`. Full CI 44535765805 and Lanes 44535552341 are running. P55-09 remains at Agent #408 `978fb66c` with Linux resident proof restored; the packet is comparing nine historical dry-run/live differences and the readiness result.
+- P55-04 is preparing the correctness and single-emission subset on #361. The intermediate commit `b369213a` preserves the original optimization tests. LS-12.1 owns the deferred verification work.
+- P61-02 remains in Review. App #314 ran all 59 journey IDs. Eleven base cases did not execute after a serial failure. Record those as unknown; the candidate had seven passes and four existing expected failures among those eleven. The installed proof on #310/#311 follows acceptance of #314.
+- P61-02 and FIX-14 share a [hosted evidence run](https://github.com/banodoco/astrid-app/actions/runs/44546763609) with four immutable App checkouts. Compare App and SDK results by ID within each pair. The workflow resides on the separate App branch `release/14/app-vitest-proof`; it is for evidence collection only.
+- All six slots are occupied. The Orchestrator confirmed the FIX-14 handoff. The next strategic review is due around 16:37 UTC. Plan 39 ceiling activation remains tracked in #984.
 
-[Orchestrator handoff](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010505695) · [Lead dispositions](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010819708)
+[Orchestrator handoff](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7011947230) · [Lead dispositions](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7012365894)
 
 ## Authority
 
@@ -40,9 +40,9 @@ On 17 November 2026 the owner, in the Lead's own session (`session_011EzfW3Zy19n
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r14-lead` | Codex standby, active since [13:36 UTC](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010718325) | [7010885908](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010885908) |
+| Lead | `r14-lead` | Codex standby, active since [13:36 UTC](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010718325) | [7012409236](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7012409236) |
 | Standby Lead | — | Standby is now active Lead. A handback requires the owner. | — |
-| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | [13:27 UTC STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7010505695), Lead cursor 7003970186 |
+| Orchestrator | `r14-orchestrator-1` | started 14:21 UTC, 17 Nov | [14:25 UTC STATUS](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7011947230), Lead cursor 7011470870 |
 | Packet session | `r14-<packet>-<n>`, for example `r14-P39-01-1` for the first session on R14-P39-01 | from the Orchestrator's STATUS | — |
 
 **Cadence and time limits.**
@@ -123,7 +123,7 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P39-09](packets/R14-P39-09.md) App guard sees expected failures | Plan 39 K1c.1, SF3a.1 | Done | `r14-P39-09-1` | [App #298](https://github.com/banodoco/astrid-app/pull/298) merged into `release/14/plan-39` at `549e335d` |
 | [R14-P39-12](packets/R14-P39-12.md) Structure ceiling that may only fall | Plan 39 GL.2 (#647) | Done | `r14-P39-12-1` | [Agent #406](https://github.com/banodoco/astrid-agent/pull/406) merged into `release/14/plan-39` at `9a698c39` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6985650516)). |
 | [R14-P61-01](packets/R14-P61-01.md) Release-branch tool: no-stop proofs | Plan 61 RB-2, RB-3 (fixture), RB-4, RB-8 | Done | `r14-P61-01-1` | [App #302](https://github.com/banodoco/astrid-app/pull/302) merged into `release/14/plan-61` at `0bce7312` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6980328306)) |
-| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Review | `r14-P61-02-1` | App #314 at `75a83f53` awaits full Vitest and affected journey evidence. Then run the installed harness at #310 with #311 and verify the installed App SHA. |
+| [R14-P61-02](packets/R14-P61-02.md) The one real run, on a hosted Mac | Plan 61 RB-6, RB-9, RB-3 (real attach) | Review | `r14-P61-02-1` | App #314 at `75a83f53` submitted its journey comparison. Collect complete Vitest/SDK outcomes from 44546763609. Then run the installed harness at #310 with #311 and verify the installed App SHA. |
 | [R14-P55-08](packets/R14-P55-08.md) Resident sessions | Plan 55 LS-8 | Done | `r14-P55-08-1` | [Agent #405](https://github.com/banodoco/astrid-agent/pull/405) merged into `release/14/plan-55` at `d0217776` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6983043853)). Follow-ups are in [astrid-dev #896](https://github.com/banodoco/astrid-dev/issues/896). |
 | [R14-P55-06](packets/R14-P55-06.md) Output handled once | Plan 55 LS-6 | Done | `r14-P55-06-1` | [Agent #407](https://github.com/banodoco/astrid-agent/pull/407) merged into `release/14/plan-55` at `91cb4cb4` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6985581776)). R14-P55-12 carries the LS-6 remainder. |
 | [R14-P55-12](packets/R14-P55-12.md) Output handled once: Runtime and VibeComfy | Plan 55 LS-6 remainder | Done | `r14-P55-12-2` | Merged into `release/14/plan-55`: [Runtime #68](https://github.com/banodoco/astrid-runtime/pull/68) at `b35c93ad`, [VibeComfy #176](https://github.com/banodoco/VibeComfy/pull/176) at `b87a70a6`, [Agent #410](https://github.com/banodoco/astrid-agent/pull/410) at `e3795656` ([DONE](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6998870417)). #975 tracks follow-ups. |
@@ -143,9 +143,9 @@ Rulings that recur, set by the Lead in the decision linked. Read the group that 
 | [R14-P39-10](packets/R14-P39-10.md) Two tests that fail under load | Plan 39 AT11 (#785), AT12 (#733) | Ready | — | Wave 2 has started. Prove both under shard load. AT12.1 tracks the separate post-#406 failure. |
 | Agent load regressions | Plan 55 LS-7 (eight idle-Remotion IDs), Plan 39 AT27 and AT12.1 | Blocked | — | packet to write for each owner’s proof, with paired runs for AT12.1 |
 | Agent installed journeys | Plan 39 AT4 (both Windows shells), issue [#869](https://github.com/banodoco/astrid-dev/issues/869) (skill publication) | Blocked | — | packet to write for each installed witness. #905 is already in FIX-11. |
-| [R14-FIX-12](packets/R14-FIX-12.md) A task with durable logs settles | [#926](https://github.com/banodoco/astrid-dev/issues/926), [#958](https://github.com/banodoco/astrid-dev/issues/958) | Review | `r14-FIX-12-1` | Runtime #70 landed. Agent #439 at `c2fb3ec7` needs the `ae929cda` destination integrated and the resulting candidate qualified. The old shard 6 logs were recovered. |
+| [R14-FIX-12](packets/R14-FIX-12.md) A task with durable logs settles | [#926](https://github.com/banodoco/astrid-dev/issues/926), [#958](https://github.com/banodoco/astrid-dev/issues/958) | Review | `r14-FIX-12-1` | Runtime #70 landed. Agent #439 at `253456ce` contains destination `ae929cda`. Refreshed installed proof passed; full candidate CI and Lanes are in progress. |
 | [R14-FIX-13](packets/R14-FIX-13.md) The TLS policy module moves into a canonical package | [#964](https://github.com/banodoco/astrid-dev/issues/964) | Done | `r14-FIX-13-1` | Agent #441 squash-merged at `ae929cda`. Windows TLS passed on both path settings. The identical fast-check failure and separately routed #785 remain visible. |
-| [R14-FIX-14](packets/R14-FIX-14.md) App tests follow the changed editor contracts | [#973](https://github.com/banodoco/astrid-dev/issues/973) | Ready | — | Lead authorized dispatch after FIX-13 DONE. Orchestrator to assign a fresh App session. |
+| [R14-FIX-14](packets/R14-FIX-14.md) App tests follow the changed editor contracts | [#973](https://github.com/banodoco/astrid-dev/issues/973) | Running | `r14-FIX-14-1` | App #315 at `2c01a777`. Compare full Vitest against destination and G2, and prove the retained-command path in the changed journey case. |
 | Agent renderer inputs | Plan 39 AT1.21, AT1.111, AT1.113, AT1.50 | Blocked | — | packet to write per input: timeline-composition, React peers, project environment, Node/esbuild |
 | Agent custody fixture | Plan 39 SF6d with Plan 38 | Blocked | — | packet to write with the verified-host custody owner |
 | Runtime installed and historical inputs | Plan 39 RT7, RT9 | Blocked | — | packet to write per row for installed update and archived snapshot inputs |
