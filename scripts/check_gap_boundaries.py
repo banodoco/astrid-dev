@@ -72,7 +72,11 @@ def _legacy_elements(text: str) -> tuple[list[str], str]:
 def needs_boundary_review(before: str | None, after: str | None, vision_root: Path = VISION) -> bool:
     if before is None or after is None:
         return True
-    old, new = boundary_signature(before), boundary_signature(after)
+    # A terminology-only migration from aspirations to goals changes no outcome.
+    # Compare normalized meaning; keep actual edits to scope and proof visible.
+    def normalize_wording(signature: tuple[str, ...]) -> tuple[str, ...]:
+        return tuple(re.sub(r"\b[Aa]spiration(s?)\b", lambda m: ("Goal" if m.group(0)[0].isupper() else "goal") + m.group(1), value) for value in signature)
+    old, new = normalize_wording(boundary_signature(before)), normalize_wording(boundary_signature(after))
     if old == new:
         return False
     if old[:1] + old[2:] != new[:1] + new[2:]:

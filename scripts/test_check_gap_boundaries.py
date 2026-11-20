@@ -192,21 +192,26 @@ class GapBoundaryGateTests(unittest.TestCase):
             self.assertEqual(affected_gaps(base, root), {"F-005"})
 
 
-    def test_like_for_like_aspiration_migration_alone_needs_no_record(self):
+    def test_like_for_like_goal_relationship_migration_needs_no_record(self):
         old = "**Applies to:** [Local-first](../principles/local-first-cloud-capable.md) (primary) · [Control](../principles/in-the-creators-control.md) (supporting) · **Assessment:** Open"
-        new = "**Aspiration:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open"
+        new = "**Goal:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open"
         self.assertFalse(needs_boundary_review(old, new))
         self.assertTrue(needs_boundary_review(old, new.split(" · [Explicit")[0] + " · **Assessment:** Open"))
         moved = new.replace("[Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice)", "[Live tool composition](../pillars/liquid-software.md#live-tool-composition)")
         self.assertTrue(needs_boundary_review(old, moved))
         added = new.replace(" · **Assessment:**", " · [Live tool composition](../pillars/liquid-software.md#live-tool-composition) (supporting) · **Assessment:**")
         self.assertTrue(needs_boundary_review(old, added))
-        # Once migrated, even an aspiration change within one element is material.
+        # Once migrated, even a goal change within one element is material.
         changed = new.replace("[Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy)", "[Control at every layer](../principles/in-the-creators-control.md#control-at-every-layer)")
         self.assertTrue(needs_boundary_review(new, changed))
         self.assertTrue(needs_boundary_review(old + "\n## Desired state\nOld result", new + "\n## Desired state\nNew result"))
 
-    def test_aspiration_refs_are_accepted_and_matched_in_boundary_records(self):
+    def test_goal_metadata_relabel_without_a_boundary_change_needs_no_review(self):
+        before = "**Aspiration:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary) · **Assessment:** Open"
+        after = before.replace("**Aspiration:**", "**Goal:**")
+        self.assertFalse(needs_boundary_review(before, after))
+
+    def test_goal_refs_are_accepted_and_matched_in_boundary_records(self):
         primary = "principle:local-first-cloud-capable/everything-local-or-cloud-by-choice"
         supporting = "principle:in-the-creators-control/explicit-permissions-and-privacy"
         record = RECEIPT.replace("principle:local-first-cloud-capable —", primary + " —").replace("principle:in-the-creators-control —", supporting + " —")
