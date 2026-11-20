@@ -1,3 +1,7 @@
+---
+description: Manage a complete accepted plan, including worker coordination, tested integration, progress records and project closure.
+---
+
 # Workstream: manage a whole project
 
 Use when you are the **one accountable manager** for an accepted Astrid plan run, rather than a short-lived [ChatGPT packet manager](chatgpt-packet.md). Apply the [general Manage principles](../SKILL.md) and the [run contract](../../../shared/run-contract.md). The project pack owns scope and acceptance; don't create another queue.
