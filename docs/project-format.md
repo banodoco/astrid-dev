@@ -4,6 +4,8 @@
 
 Each gap-linked project declares **exactly one primary gap**, with optional secondary references. The public vision lists the project under its primary gap only, avoiding repetitive project cards across pillars and principles. Secondary links explain dependencies; they are not extra homes for the project. Foundational enablers may have no gap.
 
+An owner-authorized project changing **only astrid-dev** may operate outside a product release by declaring `**Run route:** astrid-dev-only` in its plan and recording an explicit `**Run start:**` in inputs.md. A project touching a product repository still requires release placement. The exception never grants merge, spending or publication authority and never weakens checks. See the [Manage whole-project workstream](../skills/roles/astrid-dev-manage/workstreams/whole-project.md#steps).
+
 Each project uses one folder with three complementary files. **The templates are the one definition of each file's sections and fields;** this page and the skills say what each file is for and do not restate its sections. A PR that adds a new pack is checked against the templates (`pack-shape`); an existing pack, renamed or not, is never checked.
 
 | File | Answers |

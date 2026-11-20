@@ -12,6 +12,8 @@
 
 **Waiting on:** First package-contract review RS1 before migration, then final independent review R and required CI before main integration.
 
+**Run route:** astrid-dev-only
+
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six fields above define the catalog row; do not edit the generated catalog or add this plan to [priority.md](../priority.md) without an owner decision. The entry links here deliberately reference the current system until the implementation migration.
 
 **Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary).
