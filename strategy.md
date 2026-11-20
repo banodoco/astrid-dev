@@ -61,6 +61,7 @@ On the way: [Release 12 — Reliable updates](releases/12.md), [Release 13 — O
 - [Plan 64 — H3 speaker references](plans/64-h3-speaker-references/plan.md) — [Release 14](releases/14.md): a character says a new line in their own voice from a reference clip, with the picture regenerated from a start image or kept under a mouth mask (added 18 Nov 2026 by the owner).
 - [Plan 65 — H3 dynamic output size](plans/65-h3-dynamic-size/plan.md) — [Release 14](releases/14.md): the creator chooses the H3 output size, and masks, conform, composition and checks follow it (added 18 Nov 2026 by the owner).
 - [Plan 50 — Recorded boundaries and an offline generation harness](plans/50-recorded-boundaries/plan.md) — [Release 15](releases/15.md): rented-machine failures found on a CPU.
+- [Plan 72 — Composable project-delivery relationships](plans/72-composable-project-delivery/plan.md) — [Release 15](releases/15.md): consolidate canonical delivery relationships into reusable typed links, with a small read-only issue-to-release reuse proof (internal only; no publication change).
 - [Plan 30 — Update everywhere: remaining setups](plans/30-update-everywhere/plan.md) — [Release 16](releases/16.md): less common setups.
 - [Plan 09 — Install and update confidence](plans/09-install-and-update-confidence/plan.md) — [Release 16](releases/16.md): hosted tests for install, update, rollback and removal.
 - [Plan 38 — One process identity for Agent and Runtime](plans/38-one-process-identity/plan.md) — [Release 16](releases/16.md): one process identity across systems.
