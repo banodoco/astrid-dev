@@ -71,6 +71,7 @@ errors=0
 created=0
 skipped=0
 retired=0
+retargeted=0
 synced_targets=0
 
 # Collect the folders to link, checking each skill's declared name.
@@ -140,8 +141,31 @@ for target_dir in "${TARGET_DIRS[@]}"; do
         printf 'skip   %s (already linked)\n' "$dest"
         skipped=$((skipped + 1))
       else
-        printf 'conflict %s -> %s (foreign symlink; leaving untouched)\n' "$dest" "$current" >&2
-        errors=$((errors + 1))
+        # Move only links installed by this repository's earlier layout.
+        # Legacy paths are preserved as directory symlinks for historical docs,
+        # but installed skill links should point at the canonical package.
+        legacy=""
+        if [[ "$src" == "$SKILLS_DIR/shared/workstreams/"* ]]; then
+          if [[ "$name" == "astrid-dev-plan" ]]; then
+            legacy="$SKILLS_DIR/roles/$name"
+          else
+            legacy="$SKILLS_DIR/capabilities/$name"
+          fi
+        fi
+        if [[ -n "$legacy" && "$current" == "$legacy" && -L "$legacy" && -d "$legacy" ]]; then
+          if ((DRY_RUN)); then
+            printf 'would-retarget %s -> %s (legacy %s)\n' "$dest" "$src" "$legacy"
+          elif ln -sfn -- "$src" "$dest"; then
+            printf 'retargeted %s -> %s\n' "$dest" "$src"
+            retargeted=$((retargeted + 1))
+          else
+            printf 'incomplete %s (could not retarget legacy link)\n' "$dest" >&2
+            errors=$((errors + 1))
+          fi
+        else
+          printf 'conflict %s -> %s (foreign symlink; leaving untouched)\n' "$dest" "$current" >&2
+          errors=$((errors + 1))
+        fi
       fi
     elif [[ -e "$dest" ]]; then
       printf 'conflict %s (entry exists and is not the expected symlink; leaving untouched)\n' "$dest" >&2
@@ -163,5 +187,5 @@ if ((synced_targets == 0 && !EXPLICIT_TARGETS)); then
   errors=$((errors + 1))
 fi
 
-printf '\ndone: %s created, %s already linked, %s retired, %s incomplete/conflicting/invalid\n' "$created" "$skipped" "$retired" "$errors"
+printf '\ndone: %s created, %s already linked, %s retargeted, %s retired, %s incomplete/conflicting/invalid\n' "$created" "$skipped" "$retargeted" "$retired" "$errors"
 ((errors == 0))
