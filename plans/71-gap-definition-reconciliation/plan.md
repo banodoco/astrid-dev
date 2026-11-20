@@ -12,7 +12,7 @@
 
 **Waiting on:** independent planning critique and the agreed RS1/RS2/R review gates; owner's separate acceptance of the calibrated definition (GD-5) and later migration (GD-9); coordination with Plan 53 and Goals-schema changes. Phases 6–7 remain deferred.
 
-**Delivery:** astrid-dev-only
+**Run route:** astrid-dev-only
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
