@@ -30,7 +30,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
             base = commit_base(root)
             target = root / "vision/README.md"
             content = target.read_text(encoding="utf-8")
@@ -90,7 +90,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
             base_readme = root / "README.md"
             original_readme = base_readme.read_text(encoding="utf-8")
             base_readme.write_text(original_readme.replace("<!-- vision-summary:end -->", "", 1),
@@ -135,7 +135,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
             base = commit_base(root)
             target = root / "README.md"
             content = target.read_text(encoding="utf-8")
@@ -196,7 +196,7 @@ class ViewTests(unittest.TestCase):
         source = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "repo"
-            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            shutil.copytree(source, root, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
             # main's generated pages may be stale between a merge and the refresh job's
             # commit; bring every view current first so only plans/index.md is left to change.
             sync(root)
