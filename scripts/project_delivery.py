@@ -10,7 +10,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from gap_relationships import gap_metadata, parse_gap_aspirations
+import gap_relationships as goal_links
+from gap_relationships import gap_metadata
 from project_contract import PLAN_FOLDER, plan_gap_ids, project_number
 from records import release_brief
 from relationships import RecordRef, Relationship, RelationshipError, RelationshipIndex
@@ -46,7 +47,7 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
     for directory, kind in (("pillars", "pillar"), ("principles", "principle")):
         for path in sorted((root / "vision" / directory).glob("*.md")):
             subject = parse_subject(path.read_text(encoding="utf-8"), path.as_posix())
-            for item in subject["characteristics"]:
+            for item in subject.get("goals", subject.get("characteristics", ())):
                 records.append(RecordRef("goal", f"{kind}:{path.stem}/{item['id']}"))
 
     # The existing gap parser validates the *actual* subject and heading,
@@ -58,8 +59,10 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
         text = path.read_text(encoding="utf-8")
         gap = RecordRef("gap", matched.group(1))
         records.append(gap)
-        aspirations, primary = parse_gap_aspirations(
-            gap_metadata(text), root / "vision")
+        parse_goals = getattr(goal_links, "parse_gap_goals", None)
+        if parse_goals is None:
+            parse_goals = goal_links.parse_gap_aspirations  # Pending PR #1059
+        aspirations, primary = parse_goals(gap_metadata(text), root / "vision")
         for goal_id in aspirations:
             links.append(Relationship(
                 gap, "measures", RecordRef("goal", goal_id),

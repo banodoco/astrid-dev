@@ -3,6 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import gap_relationships as goal_links
+from vision_subject import SECTIONS
 from project_delivery import (
     deliveries_for_goal, frozen_releases_for_issue, load_delivery)
 from relationships import RecordRef, RelationshipError
@@ -90,8 +92,9 @@ class DeliveryCompositionTests(unittest.TestCase):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         self.root = Path(tmp.name)
-        self.write("vision/pillars/shared.md", PILLAR)
-        self.write("vision/gaps/CA-001-finish-work.md", GAP)
+        self.write("vision/pillars/shared.md", PILLAR.replace("## Aspirations", f"## {SECTIONS[2]}"))
+        self.write("vision/gaps/CA-001-finish-work.md", GAP.replace(
+            "**Aspiration:**", "**Goal:**") if hasattr(goal_links, "parse_gap_goals") else GAP)
         self.write("plans/72-demo/plan.md", PLAN)
         self.write("releases/15.md", RELEASE)
 
@@ -162,6 +165,23 @@ class DeliveryCompositionTests(unittest.TestCase):
         graph = load_delivery(self.root)
         self.assertIn(RecordRef("project", "73"), graph.enablers)
         self.assertEqual(graph.outgoing(RecordRef("project", "73")), ())
+
+    def test_actual_repository_delivery_traversal(self):
+        # The user-facing read-only CLI consumes this full repository, not only
+        # the fixture. Do not infer publication, issue fixes or gap closure.
+        real = Path(__file__).resolve().parent.parent
+        graph = load_delivery(real)
+        self.assertIn(RecordRef("gap", "AA-001"), graph.records)
+        self.assertIn(RecordRef("project", "72"), graph.records)
+        self.assertIn(RecordRef("goal", "pillar:artistic-ambition/finished-artistic-work"),
+                      graph.records)
+        paths = deliveries_for_goal(
+            graph, RecordRef("goal", "pillar:artistic-ambition/finished-artistic-work"))
+        self.assertTrue(paths, "authored real vision-to-release path is absent")
+        self.assertTrue(all(path.goal.kind == "goal"
+                            and path.release.kind == "release" for path in paths))
+        self.assertTrue(any(edge.source_path.startswith("releases/")
+                            for edge in graph.relationships if edge.kind == "includes"))
 
     def test_cannot_infer_delivery_from_queued_status_alone(self):
         self.write("releases/15.md",
