@@ -36,13 +36,13 @@ You act for the owner across projects and don't run tasks. Follow the [run contr
 
 ## Across a release
 
-The [Release Lead](../astrid-dev-lead/SKILL.md) (the release manager named on the brief) owns release sequencing, `release/<NN>/main`, CI gates, branch records, tester builds and the publication request. You manage assigned managers and escalate release-level decisions to that Lead; do not duplicate its board or take over a plan manager's integration. If you are already the named release manager, continue under [Release](../../capabilities/astrid-dev-release/SKILL.md) until the owner records a handoff.
+The [Release Lead](../astrid-dev-lead/SKILL.md) (the release manager named on the brief) owns release sequencing, `release/<NN>/main`, CI gates, branch records, tester builds and the publication request. You manage assigned managers and escalate release-level decisions to that Lead; do not duplicate its board or take over a plan manager's integration. If you are already the named release manager, continue under [Release](../../shared/workstreams/astrid-dev-release/SKILL.md) until the owner records a handoff.
 
 ## Path 1: start a project
 
 When the Lead has prepared accepted release packets, use the [fresh-session dispatch workstream](workstreams/multi-manager-dispatch.md) instead of this standard whole-project handoff. Its sessions do **not** persist across packets.
 
-1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../../strategy.md) and the [catalog](../../../plans/index.md). With no accepted plan, write one with [Plan](../astrid-dev-plan/SKILL.md) (you may plan it yourself) and get the owner's scope decision. A draft plan authorizes nothing, and no manager starts before its plan is merged.
+1. **Plan it, or confirm its plan.** Start from [`strategy.md`](../../../strategy.md) and the [catalog](../../../plans/index.md). With no accepted plan, write one with [Plan](../../shared/workstreams/astrid-dev-plan/SKILL.md) (you may plan it yourself) and get the owner's scope decision. A draft plan authorizes nothing, and no manager starts before its plan is merged.
    - **Fix the scope when the run starts.** If the owner adds scope to a running release, say what it reopens (tests, re-pins, review) and offer the next release instead; add it only if the owner decides to.
 2. **Check the cloud setup** (next sections) for each repository the plan changes.
 3. **Farm it out.** Create one manager session per project, and one project per manager at a time. Give it:
@@ -166,7 +166,7 @@ For each manager or cross-track blocker, take the next useful action:
 - **Needs a nudge:** send the manager one next action to unblock or improve the run.
 - **Needs the owner:** bring one decision with your recommendation.
 
-**Improve astrid-dev as you go.** Friction in astrid-dev itself gets a [process ledger](../../../docs/ledger/README.md) entry; fix small ones in the same check-in by the [improve skill](../../capabilities/astrid-dev-improve/SKILL.md).
+**Improve astrid-dev as you go.** Friction in astrid-dev itself gets a [process ledger](../../../docs/ledger/README.md) entry; fix small ones in the same check-in by the [improve skill](../../shared/workstreams/astrid-dev-improve/SKILL.md).
 
 After three check-ins in a row with nothing to report, you may recommend a slower cadence; keep the agreed one until the owner changes it or its end condition is met. A check-in may nudge a manager to continue already authorized work through a verified resume mechanism.
 

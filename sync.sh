@@ -2,7 +2,7 @@
 # Link Astrid development workflows and shared references locally.
 # This installs only folders owned by this repository; it does not sync globally.
 #
-# Install the entrypoint, shared references and packages from roles/ and capabilities/.
+# Install the entrypoint, shared references and packages from roles/ and shared/workstreams/.
 # Each installed skill keeps its astrid-dev-* name, and a flat symlink in the
 # destination, regardless of its source category. No duplicate skill copies.
 # Links into skills/ whose folder no longer exists (renamed or removed skills)
@@ -75,10 +75,15 @@ synced_targets=0
 
 # Collect the folders to link, checking each skill's declared name.
 SOURCES=()
-for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/capabilities/astrid-dev-*/; do
+for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/shared/workstreams/astrid-dev-*/; do
   src="${src%/}"
   [[ -d "$src" ]] || continue
   name="$(basename -- "$src")"
+  if [[ "$name" != "astrid-dev" && "$name" != "shared" && "$name" != astrid-dev-* ]]; then
+    printf 'invalid installed package name %s (expected astrid-dev-*)\n' "$name" >&2
+    errors=$((errors + 1))
+    continue
+  fi
   if [[ -f "$src/SKILL.md" ]]; then
     declared="$(sed -n '1{/^---$/!q};2,/^---$/{s/^name:[[:space:]]*//p}' "$src/SKILL.md" | head -n 1)"
     declared="${declared%"${declared##*[![:space:]]}"}"

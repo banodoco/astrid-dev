@@ -91,6 +91,31 @@ def validate(root: Path) -> list[str]:
             seen.add(title)
         except (OSError, UnicodeError, ValueError) as exc:
             errors.append(f"{relative}: {exc}")
+    # Standalone shared workstreams are skills, not generated parent-index entries.
+    shared = root / "skills/shared/workstreams"
+    if shared.exists():
+        for folder in sorted(shared.iterdir()):
+            if not folder.is_dir() or folder.is_symlink() or not folder.name.startswith("astrid-dev-"):
+                errors.append(f"{folder.relative_to(root)}: shared workstream must be an astrid-dev-* directory")
+                continue
+            skill = folder / "SKILL.md"
+            if skill.is_symlink() or not skill.is_file():
+                errors.append(f"{folder.relative_to(root)}: missing regular SKILL.md")
+                continue
+            lines = skill.read_text(encoding="utf-8").splitlines()
+            if len(lines) < 4 or lines[0] != "---" or "---" not in lines[1:]:
+                errors.append(f"{skill.relative_to(root)}: missing YAML frontmatter")
+                continue
+            end = lines.index("---", 1)
+            meta = lines[1:end]
+            if meta.count(f"name: {folder.name}") != 1 or len([line for line in meta if line.startswith("name:")]) != 1:
+                errors.append(f"{skill.relative_to(root)}: name must match folder {folder.name!r}")
+            descriptions = [line.removeprefix("description: ") for line in meta if line.startswith("description: ")]
+            if len(descriptions) != 1 or not descriptions[0].strip() or len(descriptions[0]) > 240:
+                errors.append(f"{skill.relative_to(root)}: exactly one nonempty single-line description required")
+    for legacy in (root / "skills/capabilities", root / "skills/roles/astrid-dev-plan"):
+        if legacy.exists():
+            errors.append(f"{legacy.relative_to(root)}: obsolete location; move workstream to skills/shared/workstreams/")
     for parent in PARENT_SKILLS:
         try:
             _markers((root / parent).read_text(encoding="utf-8"), parent)

@@ -137,6 +137,20 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "exactly one ordered"):
                 render_index(root, MANAGE)
 
+    def test_shared_workstream_skills_require_namespaced_folder_and_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture(root)
+            folder = root / "skills/shared/workstreams/astrid-dev-sample"
+            folder.mkdir(parents=True)
+            skill = folder / "SKILL.md"
+            skill.write_text("---\nname: astrid-dev-sample\ndescription: Deliver an independently useful result.\n---\n\n# Sample\n", encoding="utf-8")
+            self.assertEqual(validate(root), [])
+            skill.write_text(skill.read_text().replace("name: astrid-dev-sample", "name: sample"), encoding="utf-8")
+            self.assertTrue(any("name must match" in message for message in validate(root)))
+            skill.write_text("---\nname: astrid-dev-sample\n---\n# Sample\n", encoding="utf-8")
+            self.assertTrue(any("single-line description" in message for message in validate(root)))
+
     def test_one_line_description_is_an_always_on_ci_gate(self):
         checks = [check for check in REGISTRY if check.id == "workstream-descriptions"]
         self.assertEqual(len(checks), 1)
