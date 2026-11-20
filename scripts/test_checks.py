@@ -209,6 +209,38 @@ class ProjectCatalogContractTests(unittest.TestCase):
             (root / "releases/14.md").write_text(brief.format(state="Final"), encoding="utf-8")
             self.assertEqual(len(self.errors(root, "active-plans-in-releases")), 2)
 
+    def test_dev_only_active_plan_exemption_requires_authorized_run(self):
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            folder = "71-gap-definition"
+            plan = Records.plan(Status="active") + "**Delivery:** astrid-dev-only\n"
+            Records.write(root, folder, plan)
+            inputs = root / "plans" / folder / "inputs.md"
+            inputs.write_text("## Planning evidence\n\n**Run start:** Pending — no owner approval\n", encoding="utf-8")
+            (root / "releases").mkdir()
+            errors = self.errors(root, "active-plans-in-releases")
+            self.assertTrue(any("requires an Authorized Run start" in e for e in errors), errors)
+            self.assertTrue(any("in no unpublished release brief" in e for e in errors), errors)
+            inputs.write_text("## Planning evidence\n\n**Run start:** Authorized — by owner for Astrid Dev only\n",
+                              encoding="utf-8")
+            self.assertEqual(self.errors(root, "active-plans-in-releases"), [])
+            Records.write(root, folder, Records.plan(Status="active"))
+            self.assertTrue(any("in no unpublished release brief" in e
+                                for e in self.errors(root, "active-plans-in-releases")))
+
+    def test_dev_only_delivery_cannot_be_malformed_or_duplicated(self):
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            folder = "71-gap-definition"
+            Records.write(root, folder, Records.plan() + "**Delivery:** astrid-dev-only\n**Delivery:** astrid-dev-only\n")
+            errors = self.errors(root, "plan-files")
+            self.assertTrue(any("Delivery must be exactly one" in e for e in errors), errors)
+            Records.write(root, folder, Records.plan() + "**Delivery:** cross-repository\n")
+            self.assertTrue(any("Delivery must be exactly one" in e
+                                for e in self.errors(root, "plan-files")))
+
     def test_catalog_reports_each_malformed_priority_line(self):
         from test_records import ProjectRecordTests as Records
         with tempfile.TemporaryDirectory() as directory:
