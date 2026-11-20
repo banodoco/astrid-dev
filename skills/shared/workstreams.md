@@ -20,7 +20,7 @@
 **Completion:** What evidence or disposition proves the workstream is finished.
 ```
 
-These five labels must occur once, in that order, with substantive single-line values. The parser validates structure; it cannot decide whether the instructions are correct, the evidence sufficient, or the actor authorized. Keep detailed instructions under their existing headings after the contract summary. Do not replace real steps or proof with placeholder summaries, and do not duplicate shared run policy.
+These five labels must occur once, in that order, with substantive single-line values, and there must be actual execution instructions beyond the summary. A second contract field after a blank line is also a duplicate. The parser validates structure; it cannot decide whether the instructions are correct, the evidence sufficient, or the actor authorized. Keep detailed instructions under their existing headings after the contract summary. Do not replace real steps or proof with placeholder summaries, and do not duplicate shared run policy.
 
 Standalone skills add `name: astrid-dev-<name>` to frontmatter, use a matching directory and may give their H1 a natural title. Role-specific documents use only `description:` in frontmatter and start with `# Workstream: <title>`. Both have a one-line description of at most 240 characters, ending in punctuation. Supporting guides inside nested workstream directories are not workstreams and do not need this contract.
 

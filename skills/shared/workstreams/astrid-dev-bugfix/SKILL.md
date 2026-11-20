@@ -13,7 +13,7 @@ description: Investigate reported Astrid failures, reproduce UI issues in a brow
 **Procedure:** Locate the installed system, reproduce the issue, recommend safe recovery and route justified upstream fixes through the existing issue.
 **Completion:** The user has an actionable recovery path and a linked, evidence-backed incident record with any upstream work clearly assigned.
 
-**Outcome:** understand the failure, recommend the fastest safe way to restore this user's actual workflow, and leave one central incident record—even when no code is changed. **A bug is an issue, not a new project**, unless it reveals a separate independently useful outcome.
+**A bug is an issue, not a new project**, unless it reveals a separate independently useful outcome. A recovery recommendation may be the finished result even when no code changes.
 
 Read [the development entrypoint](../../../astrid-dev/SKILL.md), [shared run contract](../../run-contract.md), and relevant product repository instructions. Use their existing model bindings, authority, focused checks and review rules. This skill owns the **user-incident path**, not a second implementation/release workflow.
 

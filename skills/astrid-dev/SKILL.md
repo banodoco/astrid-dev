@@ -29,7 +29,7 @@ description: One entrypoint for people and agents contributing to Astrid; locate
 | Real-GPU proof of generation ("run full GPU validation") | [GPU validate](../shared/workstreams/astrid-dev-gpu-validate/SKILL.md), within the owner's standing budget |
 | Changing astrid-dev itself: a rule, term, skill, template, check or generated page | [Improve](../shared/workstreams/astrid-dev-improve/SKILL.md): find the rule's one home, change only that, prove it |
 
-**Skill structure:** [Roles](../shared/workstreams.md) define who acts; capabilities define what work is done; optional workstreams specify how. All keep their `astrid-dev-*` names.
+**Skill structure:** [Roles](../shared/workstreams.md) define who is accountable; shared workstreams are independently callable procedures; role-specific workstreams are operating variants. [Shared run rules](../shared/run-contract.md) govern every invocation. Standalone skills retain `astrid-dev-*` names.
 
 ## One path, proportionate depth
 
