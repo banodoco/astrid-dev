@@ -269,7 +269,7 @@ def _markdown_links(context):
     # Product evidence and old task cards must either have valid local links
     # or be removed/replaced by their authoritative project source.
     mandatory += [p.relative_to(root) for p in root.rglob("*.md")
-                  if ".git" not in p.relative_to(root).parts]
+                  if ".git" not in p.relative_to(root).parts and ".generated" not in p.relative_to(root).parts]
     for path in sorted(set(mandatory)):
         errors.extend(local_links(root, path))
 
@@ -288,13 +288,13 @@ def _link_anchors(context):
         return {anchor for _, _, anchor in markdown_heading_anchors(read(root, relative))}
 
     errors = []
-    for path in sorted(p.relative_to(root) for p in root.rglob("*.md") if ".git" not in p.relative_to(root).parts):
+    for path in sorted(p.relative_to(root) for p in root.rglob("*.md") if ".git" not in p.relative_to(root).parts and ".generated" not in p.relative_to(root).parts):
         for hit in LINK.finditer(re.sub(fence, "", read(root, path))):
             address, _, fragment = hit.group(1).strip().split(' "', 1)[0].strip("<>").partition("#")
             if not fragment or re.match(r"^([a-z][\w+.-]*:|/)", address, re.I):
                 continue
             target = posixpath.normpath((path.parent / (address or path.name)).as_posix())
-            if (re.fullmatch(r"(?:skills|templates)/.+\.md|docs/[^/]+\.md", target) and (root / target).is_file()
+            if (re.fullmatch(r"(?:agent|skills|templates)/.+\.md|docs/[^/]+\.md", target) and (root / target).is_file()
                     and fragment not in anchors(Path(target))):
                 errors.append(f"{path.as_posix()}: link to {target}#{fragment} matches no heading in that file; point the link at a heading that exists")
     return errors
@@ -312,7 +312,8 @@ def _public_vision(context):
 
 def _workstream_structure(context):
     from workstreams import validate
-    return validate(context.root)
+    from agent_documents import validate_documents
+    return [*validate(context.root), *validate_documents(context.root)]
 
 
 def _generated_views(context):

@@ -25,6 +25,10 @@ jobs:
           fetch-depth: 0
       - name: Test documentation validators
         run: python3 -m unittest discover -s scripts -p "test_*.py"
+      - name: Check generated agent skill packages
+        run: |
+          python3 scripts/astrid_dev.py skills build
+          python3 scripts/astrid_dev.py skills check
       - name: Run repository checks
         env:
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}

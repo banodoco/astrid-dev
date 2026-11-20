@@ -337,7 +337,7 @@ def rebase_links(value: str, from_dir: Path, to_dir: Path) -> str:
 
 BLOCK_MARKER = re.compile(r"(?m)^<!-- (block-source|block):([a-z0-9-]+):(start|end) -->[ \t]*$")
 _FENCE = re.compile(r"(?ms)^[ \t]*(`{3,}|~{3,})[^\n]*\n.*?^[ \t]*\1[ \t]*$")
-BLOCK_COPY_ROOTS = ("skills/", "templates/", "docs/")
+BLOCK_COPY_ROOTS = ("agent/", "skills/", "templates/", "docs/")
 BLOCK_COPY_HISTORY = ("docs/ledger/", "docs/handoffs/")
 
 
