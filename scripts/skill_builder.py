@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import os
 import re
 import shutil
@@ -74,7 +75,7 @@ def render_skill(doc: AgentDocument, root: Path) -> str:
     content = _rewrite_links(doc, Path(root).resolve())
     return ("---\n"
             f"name: {doc.skill_name}\n"
-            f"description: {doc.description}\n"
+            f"description: {json.dumps(doc.description, ensure_ascii=False)}\n"
             "---\n\n" + content.lstrip("\n").rstrip("\n") + "\n")
 
 
@@ -148,9 +149,13 @@ def build_packages(root: Path) -> list[str]:
     output = _output_root(root)
     output.mkdir(parents=True, exist_ok=True)
     actions = []
-    for extra in sorted({item.name for item in output.iterdir()} - set(expected)):
-        target = output / extra
-        _assert_package_dir(target, stale=True)
+    # Validate every existing package before any destructive or corrective write.
+    # A foreign package must not leave an earlier owned package half-retired.
+    existing = {item.name: item for item in output.iterdir()}
+    for name, package in sorted(existing.items()):
+        _assert_package_dir(package, stale=name not in expected)
+    for extra in sorted(set(existing) - set(expected)):
+        target = existing[extra]
         shutil.rmtree(target)
         actions.append(f"retired {extra}")
     for name, (content, source) in expected.items():

@@ -138,6 +138,32 @@ class PackageTests(unittest.TestCase):
             build_packages(self.root)
         self.assertTrue(foreign.exists())
 
+    def test_description_with_yaml_special_characters_is_preserved(self):
+        from json import loads
+
+        path = self.root / "agent" / "roles" / "leader.md"
+        description = 'Guide migration: keep "#tag" intact.'
+        path.write_text(
+            ROLE.replace("Lead an accepted outcome and preserve authority.", description),
+            encoding="utf-8",
+        )
+        build_packages(self.root)
+        skill = (self.package("astrid-dev-leader") / "SKILL.md").read_text(encoding="utf-8")
+        line = next(line for line in skill.splitlines() if line.startswith("description: "))
+        self.assertEqual(loads(line.removeprefix("description: ")), description)
+
+    def test_foreign_package_refusal_does_not_retire_owned_packages(self):
+        build_packages(self.root)
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(ROLE.replace("skill: true\n", ""), encoding="utf-8")
+        foreign = self.root / ".generated" / "skills" / "zz-foreign"
+        foreign.mkdir()
+        (foreign / "SKILL.md").write_text("foreign", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "unmanaged"):
+            build_packages(self.root)
+        self.assertTrue(self.package("astrid-dev-leader").exists())
+        self.assertTrue(foreign.exists())
+
     def test_fenced_examples_are_not_rewritten(self):
         path = self.root / "agent" / "roles" / "leader.md"
         fence = chr(96) * 3
