@@ -15,13 +15,25 @@ FIXTURE_FILES = Path(__file__).parent / "fixtures" / "vision"
 
 class PublicVisionProjectionTests(unittest.TestCase):
 
-    def test_every_gap_resolves_to_an_goal_and_preserves_element_projection(self):
+    def test_every_gap_resolves_to_a_goal_and_preserves_element_projection(self):
+        from vision_subject import parse_subject
         page = self.page
         known = {f"{kind}:{subject['id']}/{item['id']}": item
                  for kind, subjects in (("pillar", page["pillars"]), ("principle", page["principles"]))
                  for subject in subjects for item in subject["goals"]}
-        self.assertEqual(len(known), 31)
-        self.assertEqual(len(page["gaps"]), 22)
+        # Derive expected identities from the checked-in source files. Adding a
+        # valid goal or gap must not require editing a frozen inventory count.
+        expected_goals = {
+            f"{kind}:{path.stem}/{goal['id']}"
+            for kind, folder in (("pillar", "pillars"), ("principle", "principles"))
+            for path in (self.fixture_root / "vision" / folder).glob("*.md")
+            for goal in parse_subject(path.read_text(encoding="utf-8"), path.as_posix())["goals"]
+        }
+        self.assertEqual(set(known), expected_goals)
+        self.assertEqual(len(known), sum(len(item["goals"]) for item in page["pillars"] + page["principles"]))
+        source_gaps = list((self.fixture_root / "vision/gaps").glob("*.md"))
+        self.assertEqual(len(page["gaps"]), len(source_gaps))
+        self.assertEqual(len({gap["id"] for gap in page["gaps"]}), len(source_gaps))
         for gap in page["gaps"]:
             refs = [gap["goal"], *gap["supportingGoals"]]
             self.assertTrue(all(ref in known for ref in refs), gap["id"])
@@ -30,6 +42,16 @@ class PublicVisionProjectionTests(unittest.TestCase):
         packs = known["pillar:liquid-software/packs-are-live-portable-and-extensible"]
         self.assertIn("**We should:**", packs["detailsMarkdown"])
         self.assertIn("**We should never:**", packs["detailsMarkdown"])
+
+
+    def test_goal_wire_aliases_are_identical_for_cached_v1_consumers(self):
+        # The new goal names are canonical; the prior schema-v1 names remain
+        # strictly identical until cached App clients no longer need them.
+        for subject in self.page["pillars"] + self.page["principles"]:
+            self.assertEqual(subject["goals"], subject["characteristics"])
+        for gap in self.page["gaps"]:
+            self.assertEqual(gap["goal"], gap["aspiration"])
+            self.assertEqual(gap["supportingGoals"], gap["supportingAspirations"])
 
 
     @classmethod
