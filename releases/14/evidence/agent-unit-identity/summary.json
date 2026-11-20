@@ -1,0 +1,135 @@
+{
+  "verdict_artifact": 14614377040,
+  "verdict_digest": "84491e3752b056f6acb7dc63f07cc211897bfd3d899f339230ef1865325de1fb",
+  "verdict": "FAIL",
+  "native_artifact": 14609831662,
+  "native_digest": "sha256:d12e37e0c6483b61766ef8dd1cc1778b4a16d9b63cc2e8d22f5e9121217f45ce",
+  "run": 44682589147,
+  "head": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+  "lane": "CI/unit (ubuntu-latest)",
+  "collected_primary": 4028,
+  "native_end": {
+    "event": "finish",
+    "exitstatus": 1,
+    "collected": 4028
+  },
+  "primary_outcomes": {
+    "passed": 3878,
+    "failed": 131,
+    "skipped": 19
+  },
+  "phase_counts": {
+    "call failed": 80,
+    "call passed": 3904,
+    "setup failed": 51,
+    "setup passed": 3958,
+    "setup skipped": 19,
+    "teardown passed": 4028
+  },
+  "native_reports": 12040,
+  "normalized_rows": 4054,
+  "distinct_full_keys": 4053,
+  "duplicate": {
+    "parent": "tests/core/test_executor_schema_capabilities.py::ExecutorSchemaCapabilityTest::test_external_runtime_rejects_invalid_source_install_import_and_binary",
+    "subtest": "SubtestContext(msg=None, kwargs={'expected': 'source.url'})",
+    "native_outcomes": [
+      "passed",
+      "passed"
+    ],
+    "stage": [
+      "call",
+      "call"
+    ],
+    "occurrences": 2
+  },
+  "sealed_lost_total": 4056,
+  "with_exact_shard2_receipt": 4044,
+  "matching_primary": 4019,
+  "matching_subtest": 25,
+  "current_shard2_keys_outside_lost_inventory": 9,
+  "temporary_path_subtests": [
+    {
+      "node": "tests/packs/test_vibecomfy_metadata.py::VibeComfyStructuredMetadataTest::test_run_rejects_missing_or_empty_engine_inventory",
+      "subtest_pattern": "SubtestContext(msg=None, kwargs={'inventory': ('<temporary-directory>/missing.png',)})",
+      "observed": "passed"
+    },
+    {
+      "node": "tests/test_ci_journey_service_ownership.py::LinuxServiceOwnershipTests::test_missing_or_wrong_fragment_is_an_ownership_failure",
+      "subtest_pattern": "SubtestContext(msg=None, kwargs={'load_state': 'not-found', 'fragment_path': '<temporary-directory>/run/home/.config/systemd/user/astrid.service'})",
+      "observed": "passed"
+    }
+  ],
+  "absent_primaries": [
+    {
+      "absent_native_id": "tests/installer/test_tls_fallback.py::test_certificate_failure_retries_once_with_verified_context[direct]",
+      "source_change": "b9740f64b300b5d5fc69b84499b071093f4fe68e",
+      "observed_successors": {
+        "tests/installer/test_tls_fallback.py::test_certificate_failure_stops_after_one_verified_attempt[direct]": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/installer/test_tls_fallback.py::test_certificate_failure_retries_once_with_verified_context[urlerror]",
+      "source_change": "b9740f64b300b5d5fc69b84499b071093f4fe68e",
+      "observed_successors": {
+        "tests/installer/test_tls_fallback.py::test_certificate_failure_stops_after_one_verified_attempt[urlerror]": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/installer/test_tls_fallback.py::test_default_success_uses_one_attempt_without_changing_ssl",
+      "source_change": "b9740f64b300b5d5fc69b84499b071093f4fe68e",
+      "observed_successors": {
+        "tests/installer/test_tls_fallback.py::test_success_uses_one_verified_attempt_without_changing_ssl": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/installer/test_tls_fallback.py::test_open_with_tls_fallback_keeps_handlers_and_retries_once_natively",
+      "source_change": "b9740f64b300b5d5fc69b84499b071093f4fe68e",
+      "observed_successors": {
+        "tests/installer/test_tls_fallback.py::test_open_with_tls_fallback_keeps_handlers_and_uses_shared_policy_once": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/installer/test_tls_fallback.py::test_repeated_certificate_failure_stops_after_two_attempts",
+      "source_change": "b9740f64b300b5d5fc69b84499b071093f4fe68e",
+      "observed_successors": {
+        "tests/installer/test_tls_fallback.py::test_repeated_certificate_failure_is_never_retried": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/installer/test_tls_fallback.py::test_retry_still_rejects_a_checksum_mismatch",
+      "source_change": "b9740f64b300b5d5fc69b84499b071093f4fe68e",
+      "observed_successors": {
+        "tests/installer/test_tls_fallback.py::test_shared_trust_still_rejects_a_checksum_mismatch": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/installer/test_tls_fallback.py::test_retry_works_in_dependency_free_bootstrap",
+      "source_change": "b9740f64b300b5d5fc69b84499b071093f4fe68e",
+      "observed_successors": {
+        "tests/installer/test_tls_fallback.py::test_shared_policy_works_in_dependency_free_bootstrap": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/test_handoff_sentence.py::test_skills_off_closes_with_a_scan_hint_that_matches_the_command_on_path",
+      "source_change": "a525e87e4bf66558af627cb3773ae4740f78a6b9",
+      "observed_successors": {
+        "tests/test_handoff_sentence.py::test_skills_off_closes_with_a_runnable_launcher_scan_hint[linux-./run-astrid generate scan]": "passed",
+        "tests/test_handoff_sentence.py::test_skills_off_closes_with_a_runnable_launcher_scan_hint[win32-.\\\\run-astrid.cmd generate scan]": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/test_installer_shim.py::test_connect_page_link_is_always_printed_and_opened_unless_switched_off[None-False-True-False]",
+      "source_change": "a525e87e4bf66558af627cb3773ae4740f78a6b9",
+      "observed_successors": {
+        "tests/test_installer_shim.py::test_connect_page_link_is_always_printed_and_opened_unless_switched_off[None-False-False-False]": "passed"
+      }
+    },
+    {
+      "absent_native_id": "tests/test_installer_shim.py::test_connect_page_link_is_always_printed_and_opened_unless_switched_off[None-False-True-True]",
+      "source_change": "a525e87e4bf66558af627cb3773ae4740f78a6b9",
+      "observed_successors": {
+        "tests/test_installer_shim.py::test_connect_page_link_is_always_printed_and_opened_unless_switched_off[None-False-False-True]": "passed"
+      }
+    }
+  ]
+}
