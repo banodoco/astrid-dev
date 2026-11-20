@@ -41,8 +41,15 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             registered = [v for v in VIEWS if v.target == parent and v.region == "workstreams"]
             self.assertEqual(len(registered), 1, parent)
             view = registered[0]
-            self.assertEqual((root / parent).read_text(encoding="utf-8"), expected(view, root))
-            self.assertEqual(check_view(view, root), [])
+            # A source-only PR may leave the checked-in view stale until the
+            # post-main refresh; tests must not force duplicate parent edits.
+            generated = expected(view, root)
+            self.assertIn(START, generated)
+            self.assertIn(END, generated)
+            for path in workstream_files(root):
+                if (path.parent.parent / "SKILL.md").relative_to(root).as_posix() == parent:
+                    title, description = metadata(path)
+                    self.assertIn(f"[{title}](workstreams/{path.name}) — {description}", generated)
 
     def test_add_edit_and_remove_workstream_from_single_file(self):
         with tempfile.TemporaryDirectory() as directory:
