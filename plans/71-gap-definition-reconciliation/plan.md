@@ -4,13 +4,13 @@
 
 **Goal:** A contributor or agent can reliably distinguish a meaningful missing Astrid capability from an issue, project or vision goal, and the existing gap catalogue is reassessed against actual issues, projects and verified outcomes using that standard.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Plan 71 manager (ChatGPT, owner-authorized session of 20 November 2026)
 
 **Estimate:** Provisionally 10–16 engineering days for Phases 1–5, subject to the evidence census and scope review; Phases 6–7 are deferred and unestimated.
 
-**Waiting on:** independent planning critique and maintainer scope review; acceptance of the calibrated gap definition before full-catalogue work; owner approval of the catalogue migration; coordination with Plan 53 and the Goals-schema migration on shared surfaces.
+**Waiting on:** independent scope critique and RS1 before the definition gate; explicit owner acceptance of the calibrated rubric (GD-5) and eventual catalogue migration (GD-9); coordination with active Plan 53 and Goals-schema PRs. The owner authorized the Astrid Dev-only Release 18 and Phase 1–5 execution on 20 November 2026; Phases 6–7 stay deferred.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
