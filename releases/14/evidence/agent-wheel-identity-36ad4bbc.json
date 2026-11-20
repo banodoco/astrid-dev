@@ -1,0 +1,153 @@
+{
+  "run": "44809985585",
+  "driver": "a34bcf286bb4ddc1e6b0eeaaef8d2175d33b1de9",
+  "candidate": "36ad4bbc89250aa29315803b075e9ddd5308ea77",
+  "tree": "dc2ae082125ff067086e7a3271758c025bbeae93",
+  "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+  "source": "https://github.com/banodoco/astrid-runtime/archive/2537fed24385ec1c24f48a812e09af4bb63fb794.tar.gz",
+  "source_sha256": "9f7763bae778614459d4134a8427e2837793e0e79812bb045e436e4425cdf7ad",
+  "jobs": [
+    {
+      "python": "3.11.18",
+      "job": 136543757707,
+      "matrix": 0,
+      "installed_prefix": "/home/runner/work/_temp/release-venv",
+      "artifacts": {
+        "identity": {
+          "id": 14664354649,
+          "sha256": "sha256:2d2544bb1210186f13cd9c2682b619528076135892377793e72045711a0abf5e"
+        },
+        "capture": {
+          "id": 14666560302,
+          "sha256": "sha256:9a68d690a4bc1f38d25c35e397b0b2f71853af19ee42a489dfae56e85735ce85"
+        },
+        "wheel": {
+          "id": 14666276488,
+          "sha256": "sha256:24546d44b8651b694f1bbfae58efc14fa2febfbabb177d395f22f39d4cb10b54"
+        }
+      },
+      "agent_wheel": "b0ca02a8dbdf3dc9c96e17e036d612a2c687f93026be3517f5eef4c99d17d951",
+      "commands": {
+        "step-03": {
+          "command_sha256": "035f1c7552c0cfb6efc03d7ac9363d264f973547ee669a65134b09ca1f51beb1",
+          "raw_exit": 0
+        },
+        "step-04": {
+          "command_sha256": "4802cea772b447457d69ccad58d91a58bfdfa7ce6b091928e0ab2a12905b141e",
+          "raw_exit": 0
+        },
+        "step-05": {
+          "command_sha256": "4b1892499b51b8f9feadf9d57e4e02d976be4b4135679ae84aaa2735a042b3d1",
+          "raw_exit": 0
+        },
+        "step-06": {
+          "command_sha256": "f16dd008c3812bb5a3821a0bd69bef56d91557612e9157acc3615313f6402c97",
+          "raw_exit": 0
+        },
+        "step-07": {
+          "command_sha256": "32bf85183335e6f78c190c96c6fec5d506bcf8cba5cab9f550ac29a35e770d60",
+          "raw_exit": 0
+        },
+        "step-08": {
+          "command_sha256": "7b781177d946c375b9ce66b8d5008136bef295170349c18b159ed37438306149",
+          "raw_exit": 0
+        }
+      },
+      "installed": {
+        "astrid-runtime": {
+          "version": "0.1.0",
+          "subdirectory": null,
+          "dist_info": "/home/runner/work/_temp/release-venv/lib/python3.11/site-packages/astrid_runtime-0.1.0.dist-info",
+          "sha256": {
+            "METADATA": "4512b43e59c46ad5790ada1a077265389da9057f9ae524fc7754119ff18217b3",
+            "direct_url.json": "1f33cea1352d57e9d0a973204f583d61971f61303f8f73cfe03b16c76cbbee22",
+            "RECORD": "bd594aa99e2ef67a7f1b12756cbc7522998aadc9f25abf1972f9a3de42729804"
+          },
+          "RECORD_rows": 212
+        },
+        "astrid-runtime-client": {
+          "version": "0.2.14",
+          "subdirectory": "packages/python",
+          "dist_info": "/home/runner/work/_temp/release-venv/lib/python3.11/site-packages/astrid_runtime_client-0.2.14.dist-info",
+          "sha256": {
+            "METADATA": "ea64b204c3cb59f91bc781e4104eb729f6de1e3491b12c5f7740a2fed7224bca",
+            "direct_url.json": "44c1fb61652bd5bbd074c04bea7129ecf64844d1e6524355fd024d7403fcad85",
+            "RECORD": "2acf95e982ebddef07b09897c34b3b17d8814269c4d8c3f1e174ab14842abdb9"
+          },
+          "RECORD_rows": 15
+        }
+      }
+    },
+    {
+      "python": "3.12.16",
+      "job": 136543758199,
+      "matrix": 1,
+      "installed_prefix": "/home/runner/work/_temp/release-venv",
+      "artifacts": {
+        "identity": {
+          "id": 14668287452,
+          "sha256": "sha256:68c798be922f8922a2544a77c9a8a7d00c3ff1b1e383b529bc879556abc13b34"
+        },
+        "capture": {
+          "id": 14668026646,
+          "sha256": "sha256:9e853e8c6e7c016a1d9613fcce7e0b569815b7e8bb5ff14665e2efcee0e3f7c0"
+        },
+        "wheel": {
+          "id": 14668731571,
+          "sha256": "sha256:a6f2a27946537d4aa465bd2b7dc69623aba1e1b3c272e94ce45ba326df61bb6c"
+        }
+      },
+      "agent_wheel": "feae6bb58708bd4023172ecf292f3fe98178aa3734bc4d9bbb6b728605734ea1",
+      "commands": {
+        "step-03": {
+          "command_sha256": "035f1c7552c0cfb6efc03d7ac9363d264f973547ee669a65134b09ca1f51beb1",
+          "raw_exit": 0
+        },
+        "step-04": {
+          "command_sha256": "4802cea772b447457d69ccad58d91a58bfdfa7ce6b091928e0ab2a12905b141e",
+          "raw_exit": 0
+        },
+        "step-05": {
+          "command_sha256": "4b1892499b51b8f9feadf9d57e4e02d976be4b4135679ae84aaa2735a042b3d1",
+          "raw_exit": 0
+        },
+        "step-06": {
+          "command_sha256": "f16dd008c3812bb5a3821a0bd69bef56d91557612e9157acc3615313f6402c97",
+          "raw_exit": 0
+        },
+        "step-07": {
+          "command_sha256": "32bf85183335e6f78c190c96c6fec5d506bcf8cba5cab9f550ac29a35e770d60",
+          "raw_exit": 0
+        },
+        "step-08": {
+          "command_sha256": "ffc552e48ba547f32d85a0d2ed82783f80070be7f471d63df782d5693aabb7ec",
+          "raw_exit": 0
+        }
+      },
+      "installed": {
+        "astrid-runtime": {
+          "version": "0.1.0",
+          "subdirectory": null,
+          "dist_info": "/home/runner/work/_temp/release-venv/lib/python3.12/site-packages/astrid_runtime-0.1.0.dist-info",
+          "sha256": {
+            "METADATA": "4512b43e59c46ad5790ada1a077265389da9057f9ae524fc7754119ff18217b3",
+            "direct_url.json": "1f33cea1352d57e9d0a973204f583d61971f61303f8f73cfe03b16c76cbbee22",
+            "RECORD": "77f85532ace0d0b1bde764c6a869665cf1846acb7159e1ba50f31ce3aca6a6d6"
+          },
+          "RECORD_rows": 212
+        },
+        "astrid-runtime-client": {
+          "version": "0.2.14",
+          "subdirectory": "packages/python",
+          "dist_info": "/home/runner/work/_temp/release-venv/lib/python3.12/site-packages/astrid_runtime_client-0.2.14.dist-info",
+          "sha256": {
+            "METADATA": "ea64b204c3cb59f91bc781e4104eb729f6de1e3491b12c5f7740a2fed7224bca",
+            "direct_url.json": "44c1fb61652bd5bbd074c04bea7129ecf64844d1e6524355fd024d7403fcad85",
+            "RECORD": "1497d4e2dcfcd60bf3dc8ca5793304a7c3527a02e901305fb3871737d9dccdcb"
+          },
+          "RECORD_rows": 15
+        }
+      }
+    }
+  ]
+}
