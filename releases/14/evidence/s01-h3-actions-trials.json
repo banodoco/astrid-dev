@@ -1,0 +1,232 @@
+{
+  "case": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+  "platform": "macOS-15.4-arm64-arm-64bit",
+  "python": "Python 3.11.11",
+  "pytest": "pytest 9.2.0",
+  "ffmpeg": "ffmpeg version 7.1.1 Copyright (c) 2000-2025 the FFmpeg developers",
+  "ffprobe": "ffprobe version 7.1.1 Copyright (c) 2007-2025 the FFmpeg developers",
+  "trials": [
+    {
+      "order": 1,
+      "trial": 1,
+      "pins": {
+        "agent": "b1e53baf5facbb340dfc42b1688f7152c255e351",
+        "tree": "28adcd87b8c23602b3643e364fa46ce30f7a5d8a",
+        "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+        "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "video": {},
+      "hashes": {
+        "phase.jsonl": "7e3cf9f2a1d38c1cbd6d898b6524c0d6582c8bf602322c3a6452b3530c212137",
+        "native.xml": "ad15c2caf8717a0db7590cdd64de058ac236dc7c6cfb35233f2ca4742a8873b7",
+        "pytest.log": "e86bc9e1c9a6ebf71751448afdff758240b1046f111c0f52c2fc72ffc4dc34e0"
+      },
+      "test_sha256": "3cc44041d0851cdb0c869a4ee379414bff47c3ef11ba208067089b56f8876c54"
+    },
+    {
+      "order": 2,
+      "trial": 1,
+      "pins": {
+        "agent": "f0283b919d5584fb2c6773d91a6b7090f98a4d8f",
+        "tree": "6ad5ddc7cb056280e19fd5df4537a25ae1e98297",
+        "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+        "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "video": {},
+      "hashes": {
+        "phase.jsonl": "7e3cf9f2a1d38c1cbd6d898b6524c0d6582c8bf602322c3a6452b3530c212137",
+        "native.xml": "85854ced30de72be48b20e1b3e3ff01b140e01dd954d058ee648e22b7f2f6b90",
+        "pytest.log": "80eb24c313075bd90e3d856e729199956bff97e394669b83c2b751673e7a1190"
+      },
+      "test_sha256": "3cc44041d0851cdb0c869a4ee379414bff47c3ef11ba208067089b56f8876c54"
+    },
+    {
+      "order": 3,
+      "trial": 2,
+      "pins": {
+        "agent": "b1e53baf5facbb340dfc42b1688f7152c255e351",
+        "tree": "28adcd87b8c23602b3643e364fa46ce30f7a5d8a",
+        "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+        "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "video": {},
+      "hashes": {
+        "phase.jsonl": "7e3cf9f2a1d38c1cbd6d898b6524c0d6582c8bf602322c3a6452b3530c212137",
+        "native.xml": "59bcbb9b394be8b8f12d5e9709e1a93e044af4721c9821942cdac6b1e75f78b7",
+        "pytest.log": "c908c3e8cbc38d9f7e9e6347b928cd9d474c8c2d4121dc4ff81e00c11dd916b3"
+      },
+      "test_sha256": "3cc44041d0851cdb0c869a4ee379414bff47c3ef11ba208067089b56f8876c54"
+    },
+    {
+      "order": 4,
+      "trial": 2,
+      "pins": {
+        "agent": "f0283b919d5584fb2c6773d91a6b7090f98a4d8f",
+        "tree": "6ad5ddc7cb056280e19fd5df4537a25ae1e98297",
+        "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+        "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "video": {},
+      "hashes": {
+        "phase.jsonl": "7e3cf9f2a1d38c1cbd6d898b6524c0d6582c8bf602322c3a6452b3530c212137",
+        "native.xml": "352a7d6f6452d512eba0e5461366769b148ea6bfc2ede2500f85b1fc61ae73f1",
+        "pytest.log": "b7a8916a10032a6cd95c001ec41c6c74f46ea25ee02303f2e9e95114eb16c8d0"
+      },
+      "test_sha256": "3cc44041d0851cdb0c869a4ee379414bff47c3ef11ba208067089b56f8876c54"
+    },
+    {
+      "order": 5,
+      "trial": 3,
+      "pins": {
+        "agent": "b1e53baf5facbb340dfc42b1688f7152c255e351",
+        "tree": "28adcd87b8c23602b3643e364fa46ce30f7a5d8a",
+        "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+        "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "video": {},
+      "hashes": {
+        "phase.jsonl": "7e3cf9f2a1d38c1cbd6d898b6524c0d6582c8bf602322c3a6452b3530c212137",
+        "native.xml": "15e64287f7d3706938ca88dff88b3687a55b274585a159ece9dde1d03cafe21f",
+        "pytest.log": "41825802e4194d7d8f0319a9d08fba658db35db8ab1ecd51f54ba57964e80c15"
+      },
+      "test_sha256": "3cc44041d0851cdb0c869a4ee379414bff47c3ef11ba208067089b56f8876c54"
+    },
+    {
+      "order": 6,
+      "trial": 3,
+      "pins": {
+        "agent": "f0283b919d5584fb2c6773d91a6b7090f98a4d8f",
+        "tree": "6ad5ddc7cb056280e19fd5df4537a25ae1e98297",
+        "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+        "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+        "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+      },
+      "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "video": {},
+      "hashes": {
+        "phase.jsonl": "7e3cf9f2a1d38c1cbd6d898b6524c0d6582c8bf602322c3a6452b3530c212137",
+        "native.xml": "4d8add2675a56637a23aa1bdb0d2997fe67eb13c3ae1581a86ba3d4eece2d723",
+        "pytest.log": "d99b38fdce360c06da689c75880160f53dddc71c41564d76a123b0dbb61ab1b9"
+      },
+      "test_sha256": "3cc44041d0851cdb0c869a4ee379414bff47c3ef11ba208067089b56f8876c54"
+    }
+  ]
+}
