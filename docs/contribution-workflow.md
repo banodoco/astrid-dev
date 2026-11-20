@@ -71,6 +71,8 @@ A [gap](../templates/gap.md) measures the distance from current evidence to **on
 
 GitHub [issues](#issues) are a different intake path for bugs, observations, questions and ideas. Issues can carry `gap:ID` or `plan:NN` labels, or be triaged directly into a release as `release:NN`. Labels are contextual references, not guaranteed project membership, authorization or a new file-backed record. An accepted issue may become a project task or a direct release fix; do not create a project for every issue.
 
+**Astrid Dev-only exception:** A project that changes only `banodoco/astrid-dev` and has a named owner and an explicitly authorized Run start may declare `**Delivery:** astrid-dev-only` in its `plan.md` header. It works through `plan/<PP>` and task branches instead of a release. Changes to product repositories, releases, deployments or product versions are excluded. The final plan-branch PR to `main` still needs the normal checks, independent review where required, and the owner's explicit merge approval ([Manage](../skills/roles/astrid-dev-manage/workstreams/whole-project.md#steps)). Other projects still require release assignment.
+
 An authored [release brief](../releases/TEMPLATE.md) selects its included plans and explicitly routed fixes; a release branch integrates and qualifies that selected work. [Strategy](../strategy.md) groups releases into version milestones. Vision, element authoring, gap relationships, project packs, release briefs and generated public views each have existing CI checks; **issue-to-goal coverage and strategic merit are not fully machine-verifiable** and depend on triage and review. Follow each object's own canonical record instead of copying status or authority into other objects.
 
 ## Review the strategy
