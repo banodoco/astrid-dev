@@ -2,6 +2,8 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
+**Current manager handoff:** Owner requested end-to-end execution and a GitHub push plus canonical `tasks.md` update after **each verified completed task** ([decision D9](inputs.md#owner-decisions)). Execution is currently **BLOCKED before MS-1**: the project has no designated release, release branch, authorized run identity or confirmed critique. No MS task has been started or marked complete. After each task's proof and task-branch integration, submit a separate small `tasks.md` progress PR onto `main`, mark only that row `[x]` with the exact commit/PR and evidence, and confirm the progress PR actually merged.
+
 This is a planning-only task inventory, not permission to implement. Recheck every named path, test and caller against the live repository at dispatch. `N` is the default route; `X` is used for coupled migration and `S` for the package safety/contract and independent review decisions. No task may weaken, delete or silently rewrite an existing test, fixture, oracle or authority rule to obtain green. The *contract-card impact list* below is a proposed review surface; verify exact old assertions before changing them.
 
 **Task ids:** `MS-1` to `MS-11`, one load-bearing review stop `RS1` and final review `R`.
