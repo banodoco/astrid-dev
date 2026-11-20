@@ -1,0 +1,134 @@
+{
+  "plan": {
+    "label": "plan",
+    "commit": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+    "tree": "fb3075ea952f284a89c8b1db6e8f3927b3288a95",
+    "parents": "3a50507ceef9bf3520f44938e2e8ef6d4ef43a42 8abe5815491c8c9f8d5fa5b747ebb0e1010234f9",
+    "platform": "macOS-15.4-arm64-arm-64bit",
+    "python": "Python 3.11.11",
+    "pins": {
+      "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+      "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+    },
+    "test_blob": "075bb051a02296a768335e9849165a366f9cf23c",
+    "test_sha256": "a189b2d4af29bbe7d45da87d89689b314f9b317d5b2577f1daf288a0d04d1563",
+    "ids": [
+      "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+      "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]"
+    ],
+    "phases": [
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+        "phase": "setup",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+        "phase": "call",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+        "phase": "teardown",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]",
+        "phase": "setup",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]",
+        "phase": "call",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]",
+        "phase": "teardown",
+        "outcome": "passed"
+      }
+    ],
+    "exit": 0,
+    "hashes": {
+      "phase.jsonl": "711519d07848fe7697865341bbc1b2109d3846a7cdd3c7181e394825d79a4626",
+      "native.xml": "fd9b35f801a2c8cdd5aede472138c8ed255ad84162cef66e1459038bfc4df128",
+      "pytest.log": "04eef6c6192364a815ab89395d194c5cfb6d787c0c12278f289953b7c9d32ca6"
+    },
+    "commit_kind": "published release/14/plan-39",
+    "selection": {
+      "collected": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "observed_scope": "Both original parameter cases execute the public gateway and parser in process; the test substitutes pack listing and installation I/O. No Windows process, PowerShell, installer or network pack installation runs.",
+    "pin_verification": "All four import origins resolve to the verified Agent, Runtime, VibeComfy and lifecycle checkouts."
+  },
+  "effective": {
+    "label": "effective",
+    "commit": "3d414c2f310add56a03354dd62c8d8546b03dac8",
+    "tree": "eab421c214866d4bcd384636e6492124be3929f7",
+    "parents": "66c5ee27712d36c583eaf9c39fd62269fbc44f41 f0283b919d5584fb2c6773d91a6b7090f98a4d8f",
+    "platform": "macOS-15.4-arm64-arm-64bit",
+    "python": "Python 3.11.11",
+    "pins": {
+      "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+      "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+    },
+    "test_blob": "075bb051a02296a768335e9849165a366f9cf23c",
+    "test_sha256": "a189b2d4af29bbe7d45da87d89689b314f9b317d5b2577f1daf288a0d04d1563",
+    "ids": [
+      "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+      "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]"
+    ],
+    "phases": [
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+        "phase": "setup",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+        "phase": "call",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[install-missing]",
+        "phase": "teardown",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]",
+        "phase": "setup",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]",
+        "phase": "call",
+        "outcome": "passed"
+      },
+      {
+        "id": "tests/test_ci_windows_pack_entrypoint.py::test_windows_pack_setup_reaches_public_pack_parser[already-installed]",
+        "phase": "teardown",
+        "outcome": "passed"
+      }
+    ],
+    "exit": 0,
+    "hashes": {
+      "phase.jsonl": "711519d07848fe7697865341bbc1b2109d3846a7cdd3c7181e394825d79a4626",
+      "native.xml": "d61b94dd8613df65d70b5ea9711c2327e53ca07191d6bc4db0266e872e0ca22a",
+      "pytest.log": "a011e6ecb611debf2e28ddc736c7ebd04a7142312ffb16f39ad3e745751c7d86"
+    },
+    "commit_kind": "locally reconstructed, unpublished two-parent merge",
+    "selection": {
+      "collected": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "observed_scope": "Both original parameter cases execute the public gateway and parser in process; the test substitutes pack listing and installation I/O. No Windows process, PowerShell, installer or network pack installation runs.",
+    "pin_verification": "All four import origins resolve to the verified Agent, Runtime, VibeComfy and lifecycle checkouts."
+  }
+}
