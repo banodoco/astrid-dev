@@ -800,7 +800,7 @@ class SharedBlockTests(unittest.TestCase):
         found, errors = views.block_views(root)
         self.assertEqual(errors, [])
         routing = [v for v in found if v.region == "block:routing"]
-        self.assertIn("skills/roles/astrid-dev-plan/SKILL.md", [v.target for v in routing])
+        self.assertIn("skills/shared/workstreams/astrid-dev-plan/SKILL.md", [v.target for v in routing])
         self.assertEqual({v.sources for v in routing}, {("skills/shared/run-contract.md",)})
 
 

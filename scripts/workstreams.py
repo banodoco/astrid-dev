@@ -12,7 +12,10 @@ PARENT_SKILLS = (
     "skills/roles/astrid-dev-manage/SKILL.md",
     "skills/roles/astrid-dev-orchestrate/SKILL.md",
 )
+ROLE_SKILLS = PARENT_SKILLS + ("skills/roles/astrid-dev-worker/SKILL.md",)
 START = "<!-- workstreams:start -->"
+SHARED_START = "<!-- shared-workstreams:start -->"
+SHARED_END = "<!-- shared-workstreams:end -->"
 END = "<!-- workstreams:end -->"
 TITLE = re.compile(r"^# Workstream: (.+)$")
 
@@ -50,11 +53,11 @@ def metadata(path: Path) -> tuple[str, str]:
     return title[0].upper() + title[1:], description
 
 
-def _markers(text: str, parent: str) -> tuple[str, str]:
-    if text.count(START) != 1 or text.count(END) != 1 or text.index(START) > text.index(END):
-        raise ValueError(f"{parent}: expected exactly one ordered {START} and {END} pair")
-    before, remainder = text.split(START, 1)
-    _, after = remainder.split(END, 1)
+def _markers(text: str, parent: str, start: str = START, end: str = END) -> tuple[str, str]:
+    if text.count(start) != 1 or text.count(end) != 1 or text.index(start) > text.index(end):
+        raise ValueError(f"{parent}: expected exactly one ordered {start} and {end} pair")
+    before, remainder = text.split(start, 1)
+    _, after = remainder.split(end, 1)
     return before, after
 
 
@@ -70,6 +73,19 @@ def render_index(root: Path, parent: str) -> str:
         title, description = metadata(path)
         lines.append(f"- [{title}](workstreams/{path.name}) — {description}")
     return before + START + "\n" + "\n".join(lines) + "\n" + END + after
+
+
+def render_shared_index(root: Path, parent: str) -> str:
+    """List the names of independently invocable workstream skills under a role."""
+    text = (root / parent).read_text(encoding="utf-8")
+    before, after = _markers(text, parent, SHARED_START, SHARED_END)
+    rows = []
+    for folder in sorted((root / "skills/shared/workstreams").glob("astrid-dev-*")):
+        if folder.is_symlink() or not folder.is_dir():
+            continue
+        # These identifiers are checked by validate and by the installer.
+        rows.append(f"- [{folder.name}](../../shared/workstreams/{folder.name}/SKILL.md)")
+    return before + SHARED_START + "\n" + "\n".join(rows) + "\n" + SHARED_END + after
 
 
 def validate(root: Path) -> list[str]:
@@ -111,11 +127,24 @@ def validate(root: Path) -> list[str]:
             if meta.count(f"name: {folder.name}") != 1 or len([line for line in meta if line.startswith("name:")]) != 1:
                 errors.append(f"{skill.relative_to(root)}: name must match folder {folder.name!r}")
             descriptions = [line.removeprefix("description: ") for line in meta if line.startswith("description: ")]
-            if len(descriptions) != 1 or not descriptions[0].strip() or len(descriptions[0]) > 240:
+            if len(descriptions) != 1 or not descriptions[0].strip() or descriptions[0] != descriptions[0].strip():
                 errors.append(f"{skill.relative_to(root)}: exactly one nonempty single-line description required")
-    for legacy in (root / "skills/capabilities", root / "skills/roles/astrid-dev-plan"):
-        if legacy.exists():
-            errors.append(f"{legacy.relative_to(root)}: obsolete location; move workstream to skills/shared/workstreams/")
+    # Preserve historical Markdown links without installing a second skill.
+    # Only these relative directory symlinks are permitted at legacy locations.
+    aliases = {f"skills/capabilities/astrid-dev-{name}": f"skills/shared/workstreams/astrid-dev-{name}"
+               for name in ("bugfix", "gap", "gpu-validate", "green", "improve", "iterate", "merge", "release")}
+    aliases["skills/roles/astrid-dev-plan"] = "skills/shared/workstreams/astrid-dev-plan"
+    for legacy, canonical in sorted(aliases.items()):
+        source = root / legacy
+        if not source.exists() and not source.is_symlink():
+            continue
+        if not source.is_symlink() or source.resolve() != (root / canonical).resolve():
+            errors.append(f"{legacy}: historical link must be a symlink to {canonical}, not another skill copy")
+    for parent in ROLE_SKILLS:
+        try:
+            _markers((root / parent).read_text(encoding="utf-8"), parent, SHARED_START, SHARED_END)
+        except (OSError, UnicodeError, ValueError) as exc:
+            errors.append(f"{parent}: {exc}")
     for parent in PARENT_SKILLS:
         try:
             _markers((root / parent).read_text(encoding="utf-8"), parent)

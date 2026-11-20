@@ -77,7 +77,7 @@ synced_targets=0
 SOURCES=()
 for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/shared/workstreams/astrid-dev-*/; do
   src="${src%/}"
-  [[ -d "$src" ]] || continue
+  [[ -d "$src" && ! -L "$src" ]] || continue
   name="$(basename -- "$src")"
   if [[ "$name" != "astrid-dev" && "$name" != "shared" && "$name" != astrid-dev-* ]]; then
     printf 'invalid installed package name %s (expected astrid-dev-*)\n' "$name" >&2
