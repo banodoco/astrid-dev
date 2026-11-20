@@ -24,7 +24,10 @@ def plan_text(repository: str, ref: str, folder: str) -> str | None:
             or "target" in result):
         raise ValueError("expected a plain project plan file")
     try:
-        return base64.b64decode(result["content"], validate=True).decode("utf-8")
+        # GitHub Contents API wraps base64 with ASCII whitespace. Keep strict
+        # alphabet/padding validation after removing only that permitted wrapping.
+        encoded = result["content"].translate(str.maketrans("", "", " \t\r\n\v\f"))
+        return base64.b64decode(encoded, validate=True).decode("utf-8")
     except (ValueError, UnicodeDecodeError) as exc:
         raise ValueError("project plan is not valid base64 UTF-8 text") from exc
 
