@@ -2,7 +2,7 @@
 
 **Status:** Draft for calibration and independent RS1 review; **not** an accepted change to Astrid's canonical gap definition.
 **Source snapshot:** `banodoco/astrid-dev` `main` `4b3e3841af3921d9846389a4cd744f027c1db0b3`, read 20 November 2026; [GD-1 source audit](../inputs.md#gd-1--source-and-authority-audit-20-november-2026).
-**Future canonical home:** [Define or reassess a vision gap](../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap), consumed by the existing [Gap workstream](../../../skills/shared/workstreams/astrid-dev-gap/SKILL.md) and [gap template](../../../templates/gap.md). This draft does not create a competing policy, a new record type or a workstream.
+**Future canonical home:** [Define or reassess a vision gap](../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap), consumed by the existing [Gap workstream](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/shared/workstreams/astrid-dev-gap/SKILL.md) and [gap template](../../../templates/gap.md). This draft does not create a competing policy, a new record type or a workstream.
 
 ## Definition
 
@@ -99,6 +99,6 @@ These examples deliberately do **not** predetermine the full-catalogue outcome. 
 
 ## Known limits and placement decision
 
-The existing [individual Gap workstream](../../../skills/shared/workstreams/astrid-dev-gap/SKILL.md) and template remain the intended canonical consumers; no `astrid-dev-gap-review` skill, scheduler or recurring review state is introduced. The **Plan 73** Markdown-first skills migration has active writers to the workstream's eventual `agent/shared/workstreams/gap.md` home, while **Plan 53** has an open Goals source/consumer migration. Do not edit either owner's shared files from GD-2 until their accepted contracts land or ownership is explicitly coordinated. Keeping this draft under Plan 71 evidence avoids overlapping writes; its acceptance must later be reflected in the *canonical* authoring rule, with only links elsewhere.
+The existing [individual Gap workstream](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/shared/workstreams/astrid-dev-gap/SKILL.md) and template remain the intended canonical consumers; no `astrid-dev-gap-review` skill, scheduler or recurring review state is introduced. The **Plan 73** Markdown-first skills migration has active writers to the workstream's eventual `agent/shared/workstreams/gap.md` home, while **Plan 53** has an open Goals source/consumer migration. Do not edit either owner's shared files from GD-2 until their accepted contracts land or ownership is explicitly coordinated. Keeping this draft under Plan 71 evidence avoids overlapping writes; its acceptance must later be reflected in the *canonical* authoring rule, with only links elsewhere.
 
 **GD-2 progress:** a substantive draft exists for test and review. It is **not yet marked complete**: independent calibration/review and any resulting canonical placement decision are still pending, so no unverified completion checkmark is warranted.
