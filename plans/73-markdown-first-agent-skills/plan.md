@@ -4,13 +4,13 @@
 
 **Goal:** Astrid contributors and their agents can write each role and workstream once as an ordinary Markdown document, opt it into skill discovery with `skill: true`, and reliably use its generated skill without maintaining a separate authoring layout.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** ChatGPT Manager — Plan 73
 
 **Estimate:** 8–12 engineering days, provisional until the reference-packaging probe and current baseline.
 
-**Waiting on:** Owner scope greenlight, independent architecture critique, and a separate authorized run/release placement.
+**Waiting on:** First package-contract review RS1 before migration, then final independent review R and required CI before main integration.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six fields above define the catalog row; do not edit the generated catalog or add this plan to [priority.md](../priority.md) without an owner decision. The entry links here deliberately reference the current system until the implementation migration.
 
