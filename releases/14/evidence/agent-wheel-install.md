@@ -1,5 +1,14 @@
 # Agent release wheels at 66c5ee27
 
+## Submitted repair and terminal comparison
+
+Agent #448 at `36ad4bbc` passed both original wheel jobs. Python 3.11 and 3.12 each installed the built wheel, imported Astrid from site-packages outside the checkout, and ran smoke. The full unit comparison retained all 31,064 primary IDs on both sides. Of 93,391 phase and subtest records, two passing temporary-path keys differed in spelling. Four calls recovered and the H3 contribution case failed at the known frame-count check. Both Windows pwsh attempts remain recorded. [Final review](https://github.com/banodoco/astrid-agent/pull/448#issuecomment-7046585069)
+
+The terminal merge-tier verdict failed with 1,934 findings and 11 unknowns. It normalized 17 suites across 14 of 19 required jobs. All 13 lost identities matched the plan controls. Both passing wheel jobs reached a separate failure in the trusted reader because their final receipts omitted the installed Runtime identity. The release virtual environment survived smoke, but the final capture inspected the outer interpreter. The first trusted comparison and both attempts' native results remain available. [Terminal verdict](https://github.com/banodoco/astrid-agent/actions/runs/44757477745/artifacts/14654516241) · [Runtime identity follow-up](https://github.com/banodoco/astrid-dev/issues/984#issuecomment-7045972955)
+
+## Original diagnosis
+
+
 **The unchanged capture wrapper reproduced the failed install on both Python minors.** Its PYTHONPATH construction appends an empty component when the parent path is unset. Python interprets the component as the current working directory. During wheel installation the checkout contains the 0.1.0 distribution metadata created by the build. Pip under that environment reports the same version already installed. The original import from the runner temp directory then cannot find astrid. The hosted jobs establish the sequence, while the controlled local comparison isolates the mechanism. The native logs do not print pip's selected metadata path. [Capture source](https://github.com/banodoco/astrid-agent/blob/66c5ee27/scripts/ci/ceiling_capture.py#L103) · [CI install and smoke](https://github.com/banodoco/astrid-agent/blob/66c5ee27/.github/workflows/ci.yml)
 
 | Native job | Python and pip | Verified retained artifact SHA-256 |
