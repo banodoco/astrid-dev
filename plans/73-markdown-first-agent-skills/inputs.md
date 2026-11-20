@@ -20,6 +20,7 @@
 
 ## Owner decisions
 
+- **D8 — Plan number collision (20 November 2026, verified on `main`):** the gap-definition project also landed as Plan 71 and the composable-delivery project uses Plan 72. This project is moved to Plan 73 without changing its scope, tasks or execution authority; the earlier scope proposal remains traceable in [PR #1062](https://github.com/banodoco/astrid-dev/pull/1062). Renumbering is a repository-integrity repair, not a project implementation task.
 - **D1 — Authored format and opt-in (direction chosen 20 Nov 2026):** one Markdown source per agent instruction, optional `skill: true`, a short `description` and generated standard `SKILL.md` packages. No separate manually maintained skills. This direction is accepted for drafting, not an implementation go.
 - **D2 — Naming and roles (direction chosen 20 Nov 2026):** derive `astrid-dev-<filename-stem>` from the source filename; call the four role identities **Leader, Orchestrator, Manager and Worker**. The proposed main skill is `astrid-dev-start`. No aliases. Confirm the deliberate entry-point rename at greenlight.
 - **D3 — Ownership (direction chosen 20 Nov 2026):** role-specific workstreams beside each role; reusable workstreams in `agent/shared/workstreams/`; standing role definitions in single `leader.md`, `orchestrator.md`, `manager.md` and `worker.md`. Default role-specific docs have no `skill: true`; adding it later must also preserve parent-role authority.
