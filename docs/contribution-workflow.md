@@ -73,6 +73,21 @@ GitHub [issues](#issues) are a different intake path for bugs, observations, que
 
 An authored [release brief](../releases/TEMPLATE.md) selects its included plans and explicitly routed fixes; a release branch integrates and qualifies that selected work. [Strategy](../strategy.md) groups releases into version milestones. Vision, element authoring, gap relationships, project packs, release briefs and generated public views each have existing CI checks; **issue-to-goal coverage and strategic merit are not fully machine-verifiable** and depend on triage and review. Follow each object's own canonical record instead of copying status or authority into other objects.
 
+### How the relationships are validated
+
+All the records above use the same **source → parse → validate links → derive views** pattern, but not the same file layout. The current authored record owns its facts; no registry of copied relationships is maintained:
+
+| Relationship | Authoritative source | Enforcement and projection |
+| --- | --- | --- |
+| Pillar/principle → goals | The two element folders in `vision/`, following `vision/templates/subject.md` | `vision_subject.py` parses both as the same element shape; `subjects` checks the authored sections and goal IDs |
+| Goal → gap | Each gap's single `**Goal:**` line, pointing to actual headings in the elements | `gap_relationships.py` resolves one primary goal and distinct supporting goals; `gap-structure` and boundary reviews check validity |
+| Gap → project | Each project's `plan.md` declares one primary gap plus any supporting gaps, or an explicit foundational-enabler role | `project_contract.py` and `plan-files` check identity/references; each gap's Route to closure and plan backlink are checked without copying the task queue |
+| Issue → plan/gap/release | GitHub issue's `About` references and triaged labels, not a Markdown project file | `issue_intake.py` adds known `gap:ID`/`plan:NN` labels; `release_issues.py` pulls explicitly included issue labels; triage still determines acceptance |
+| Project/fix → release | The release brief's Included plans, branch rows and issue routes | `release-documents`, `active-plans-in-releases` and release branch/fix checks enforce relationships |
+| Release → version | Release Kind and version decisions in `strategy.md` | `strategy-consistency` and generated strategy views build the version story from briefs |
+
+**Structure is not an implementation plan.** New project packs inherit their section and table shape from `templates/project/`, enforced by `pack-shape` on newly introduced packs; existing packs retain their accepted design. The validator checks a project has an identity, named scope, relationships, tasks and evidence—not a prescribed internal task breakdown or technical implementation. Issue triage and whether proof truly meets a vision goal remain human decisions. A generated public view must be a projection of these records, never a second authored truth.
+
 ## Review the strategy
 
 A gap says what must improve; a plan, what is built; a release, what ships together, as one branch per repository that its plans and fixes merge into (see [How a release runs](../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)); a version, where releases lead; a major version, the aim. See [strategy](../strategy.md) and [release briefs](../releases/TEMPLATE.md).
