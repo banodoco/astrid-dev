@@ -5,7 +5,7 @@ from pathlib import Path
 
 from checks import Context, REGISTRY
 from views import VIEWS, View, check_view, expected
-from workstreams import END, START, PARENT_SKILLS, metadata, render_index, validate, workstream_files
+from workstreams import END, START, PARENT_SKILLS, ROLE_SKILLS, SHARED_START, SHARED_END, metadata, render_index, render_shared_index, validate, workstream_files
 
 
 MANAGE = "skills/roles/astrid-dev-manage/SKILL.md"
@@ -23,11 +23,14 @@ def workstream(root, name, description="Execute this operating pattern and provi
 
 
 def fixture(root):
-    for parent in PARENT_SKILLS:
+    for parent in ROLE_SKILLS:
         path = root / parent
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text("# Role\n\n## Workstreams\n\nBefore.\n\n" + START + "\n" + END
-                        + "\n\nAfter.\n", encoding="utf-8")
+        body = "# Role\n\nBefore.\n\n"
+        if parent in PARENT_SKILLS:
+            body += "## Workstreams\n\n" + START + "\n" + END + "\n\n"
+        body += "## Shared workstreams\n\n" + SHARED_START + "\n" + SHARED_END + "\n\nAfter.\n"
+        path.write_text(body, encoding="utf-8")
 
 
 class WorkstreamDiscoveryTests(unittest.TestCase):
@@ -136,6 +139,41 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             self.assertTrue(any("exactly one ordered" in error for error in validate(root)))
             with self.assertRaisesRegex(ValueError, "exactly one ordered"):
                 render_index(root, MANAGE)
+
+    def test_shared_workstream_skills_require_namespaced_folder_and_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture(root)
+            folder = root / "skills/shared/workstreams/astrid-dev-sample"
+            folder.mkdir(parents=True)
+            skill = folder / "SKILL.md"
+            skill.write_text("---\nname: astrid-dev-sample\ndescription: Deliver an independently useful result.\n---\n\n# Sample\n", encoding="utf-8")
+            self.assertEqual(validate(root), [])
+            skill.write_text(skill.read_text().replace("name: astrid-dev-sample", "name: sample"), encoding="utf-8")
+            self.assertTrue(any("name must match" in message for message in validate(root)))
+            skill.write_text("---\nname: astrid-dev-sample\n---\n# Sample\n", encoding="utf-8")
+            self.assertTrue(any("single-line description" in message for message in validate(root)))
+
+    def test_shared_workstream_names_render_without_descriptions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture(root)
+            folder = root / "skills/shared/workstreams/astrid-dev-foo"
+            folder.mkdir(parents=True)
+            (folder / "SKILL.md").write_text("---\nname: astrid-dev-foo\ndescription: Do the shared task.\n---\n", encoding="utf-8")
+            for parent in ROLE_SKILLS:
+                skill = root / parent
+                rendered = render_shared_index(root, parent)
+                self.assertIn("- [astrid-dev-foo](../../shared/workstreams/astrid-dev-foo/SKILL.md)", rendered)
+                self.assertNotIn("Do the shared task", rendered)
+
+    def test_all_parent_skills_register_shared_indexes(self):
+        root = Path(__file__).resolve().parents[1]
+        self.assertEqual(validate(root), [])
+        for parent in ROLE_SKILLS:
+            views = [v for v in VIEWS if v.target == parent and v.region == "shared-workstreams"]
+            self.assertEqual(len(views), 1)
+            self.assertIn("astrid-dev-plan", expected(views[0], root))
 
     def test_one_line_description_is_an_always_on_ci_gate(self):
         checks = [check for check in REGISTRY if check.id == "workstream-descriptions"]

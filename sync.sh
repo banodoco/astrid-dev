@@ -2,7 +2,7 @@
 # Link Astrid development workflows and shared references locally.
 # This installs only folders owned by this repository; it does not sync globally.
 #
-# Install the entrypoint, shared references and packages from roles/ and capabilities/.
+# Install the entrypoint, shared references and packages from roles/ and shared/workstreams/.
 # Each installed skill keeps its astrid-dev-* name, and a flat symlink in the
 # destination, regardless of its source category. No duplicate skill copies.
 # Links into skills/ whose folder no longer exists (renamed or removed skills)
@@ -71,14 +71,20 @@ errors=0
 created=0
 skipped=0
 retired=0
+retargeted=0
 synced_targets=0
 
 # Collect the folders to link, checking each skill's declared name.
 SOURCES=()
-for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/capabilities/astrid-dev-*/; do
+for src in "$SKILLS_DIR/astrid-dev" "$SKILLS_DIR/shared" "$SKILLS_DIR"/roles/astrid-dev-*/ "$SKILLS_DIR"/shared/workstreams/astrid-dev-*/; do
   src="${src%/}"
-  [[ -d "$src" ]] || continue
+  [[ -d "$src" && ! -L "$src" ]] || continue
   name="$(basename -- "$src")"
+  if [[ "$name" != "astrid-dev" && "$name" != "shared" && "$name" != astrid-dev-* ]]; then
+    printf 'invalid installed package name %s (expected astrid-dev-*)\n' "$name" >&2
+    errors=$((errors + 1))
+    continue
+  fi
   if [[ -f "$src/SKILL.md" ]]; then
     declared="$(sed -n '1{/^---$/!q};2,/^---$/{s/^name:[[:space:]]*//p}' "$src/SKILL.md" | head -n 1)"
     declared="${declared%"${declared##*[![:space:]]}"}"
@@ -127,7 +133,8 @@ for target_dir in "${TARGET_DIRS[@]}"; do
   done
 
   for src in "${SOURCES[@]}"; do
-    dest="$target_dir/$(basename -- "$src")"
+    name="$(basename -- "$src")"
+    dest="$target_dir/$name"
 
     if [[ -L "$dest" ]]; then
       current="$(readlink "$dest")"
@@ -135,8 +142,31 @@ for target_dir in "${TARGET_DIRS[@]}"; do
         printf 'skip   %s (already linked)\n' "$dest"
         skipped=$((skipped + 1))
       else
-        printf 'conflict %s -> %s (foreign symlink; leaving untouched)\n' "$dest" "$current" >&2
-        errors=$((errors + 1))
+        # Move only links installed by this repository's earlier layout.
+        # Legacy paths are preserved as directory symlinks for historical docs,
+        # but installed skill links should point at the canonical package.
+        legacy=""
+        if [[ "$src" == "$SKILLS_DIR/shared/workstreams/"* ]]; then
+          if [[ "$name" == "astrid-dev-plan" ]]; then
+            legacy="$SKILLS_DIR/roles/$name"
+          else
+            legacy="$SKILLS_DIR/capabilities/$name"
+          fi
+        fi
+        if [[ -n "$legacy" && "$current" == "$legacy" && -L "$legacy" && -d "$legacy" ]]; then
+          if ((DRY_RUN)); then
+            printf 'would-retarget %s -> %s (legacy %s)\n' "$dest" "$src" "$legacy"
+          elif ln -sfn -- "$src" "$dest"; then
+            printf 'retargeted %s -> %s\n' "$dest" "$src"
+            retargeted=$((retargeted + 1))
+          else
+            printf 'incomplete %s (could not retarget legacy link)\n' "$dest" >&2
+            errors=$((errors + 1))
+          fi
+        else
+          printf 'conflict %s -> %s (foreign symlink; leaving untouched)\n' "$dest" "$current" >&2
+          errors=$((errors + 1))
+        fi
       fi
     elif [[ -e "$dest" ]]; then
       printf 'conflict %s (entry exists and is not the expected symlink; leaving untouched)\n' "$dest" >&2
@@ -158,5 +188,5 @@ if ((synced_targets == 0 && !EXPLICIT_TARGETS)); then
   errors=$((errors + 1))
 fi
 
-printf '\ndone: %s created, %s already linked, %s retired, %s incomplete/conflicting/invalid\n' "$created" "$skipped" "$retired" "$errors"
+printf '\ndone: %s created, %s already linked, %s retargeted, %s retired, %s incomplete/conflicting/invalid\n' "$created" "$skipped" "$retargeted" "$retired" "$errors"
 ((errors == 0))

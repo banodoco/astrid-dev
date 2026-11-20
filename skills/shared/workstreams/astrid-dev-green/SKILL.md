@@ -5,29 +5,29 @@ description: Make Astrid's test results complete and trustworthy, then either ga
 
 # Get to green
 
-Terms follow the [glossary](../../shared/glossary.md). This skill owns how to **read, complete and act on** CI results. These rules have their own homes, and this skill links to them:
-- the [regression rule and when a run bears load](../../shared/run-contract.md#when-a-test-run-is-load-bearing);
-- [never weakening a check](../../shared/run-contract.md#checks-and-failure-repair), and where local runs stop;
-- [dispatch, integration and pushes](../../roles/astrid-dev-manage/SKILL.md#steps);
+Terms follow the [glossary](../../glossary.md). This skill owns how to **read, complete and act on** CI results. These rules have their own homes, and this skill links to them:
+- the [regression rule and when a run bears load](../../run-contract.md#when-a-test-run-is-load-bearing);
+- [never weakening a check](../../run-contract.md#checks-and-failure-repair), and where local runs stop;
+- [dispatch, integration and pushes](../../../roles/astrid-dev-manage/SKILL.md#steps);
 - the [publish gate](../astrid-dev-release/SKILL.md);
-- the green-mains project's [order, quarantine and completion](../../../plans/39-green-mains/plan.md);
-- the [tools in `env/`](../../../env/README.md).
+- the green-mains project's [order, quarantine and completion](../../../../plans/39-green-mains/plan.md);
+- the [tools in `env/`](../../../../env/README.md).
 
-Each single fix is one [Iterate](../../capabilities/astrid-dev-iterate/SKILL.md) card.
+Each single fix is one [Iterate](../astrid-dev-iterate/SKILL.md) card.
 
 ## Page one
 
 - **Measure before you judge.** A comparison is only as good as its least complete side.
 - **No result is not a pass.** A required job that was cancelled, timed out, skipped when it should have run, or stopped in setup has **NO-RESULT**, as does a test job that ran zero tests. Never count it as green, and never count its tests as missing. A log that omits passes (pytest `-ra`) shows its failures, but can never support a complete comparison or a claim of zero regressions.
-- **Diagnose freely; qualify once.** A NON-PROOF run tells you what is there, and never counts for a gate. Only an ordinary run of the exact candidate, with complete reporting, qualifies ([Iterate](../../capabilities/astrid-dev-iterate/SKILL.md#iterate-freely-qualify-once)).
-- **Full suites run on hosted CI** ([where local runs stop](../../shared/run-contract.md#checks-and-failure-repair)).
+- **Diagnose freely; qualify once.** A NON-PROOF run tells you what is there, and never counts for a gate. Only an ordinary run of the exact candidate, with complete reporting, qualifies ([Iterate](../astrid-dev-iterate/SKILL.md#iterate-freely-qualify-once)).
+- **Full suites run on hosted CI** ([where local runs stop](../../run-contract.md#checks-and-failure-repair)).
 
 ## 1. Name the question
 
 | Question | Mode | Ends in |
 | --- | --- | --- |
 | Is this candidate worse than its baseline, test by test? | **A: no new failures** (a release or project gate) | no blocking row, on one qualifying run of the frozen candidate |
-| Why is this `main` red, and how do we make it green? | **B: retire old red** (the [green-mains project](../../../plans/39-green-mains/plan.md)) | that project's completion |
+| Why is this `main` red, and how do we make it green? | **B: retire old red** (the [green-mains project](../../../../plans/39-green-mains/plan.md)) | that project's completion |
 
 Both start at step 2. If step 2 can't complete, the first card in either mode is to fix the reporting.
 
@@ -46,7 +46,7 @@ For each side, and each workflow in scope:
 
 | Stop | NON-PROOF way through |
 | --- | --- |
-| A hang ([manage's threshold](../../roles/astrid-dev-manage/SKILL.md#steps)) | Cancel it; don't wait. Name the test: collect the shard exactly as CI does (the same command, `--splits`, `--group` and `--durations-path`), map the last progress line's characters onto that order, and read the pytest-timeout dumps. Run that test alone on both sides with `-o faulthandler_timeout=300`. A scratch run that leaves out the hanging file changes coverage, and the shards' membership with it. So compare by test id, account for every id of the original inventory, and keep the left-out ids unsorted |
+| A hang ([manage's threshold](../../../roles/astrid-dev-manage/SKILL.md#steps)) | Cancel it; don't wait. Name the test: collect the shard exactly as CI does (the same command, `--splits`, `--group` and `--durations-path`), map the last progress line's characters onto that order, and read the pytest-timeout dumps. Run that test alone on both sides with `-o faulthandler_timeout=300`. A scratch run that leaves out the hanging file changes coverage, and the shards' membership with it. So compare by test id, account for every id of the original inventory, and keep the left-out ids unsorted |
 | A setup step fails, so no tests run | Fix the setup; it is usually one card. Then run again |
 | A suite stops at its first failure (`-x`, `--maxfail`, a serial chain) | Override only the stop. Append `--maxfail=0` after the job's own options, or run a serial chain one test at a time with an isolating filter |
 | A failing gate skips the job's later steps | Run the skipped steps once on a scratch ref |
@@ -57,7 +57,7 @@ For each side, and each workflow in scope:
    - A commit that leaves tests out is diagnostic, and its left-out tests stay unsorted.
    - The gate's owner rules on any other case, and the ruling is recorded on the row.
 
-**What the sorter reads.** [`env/baseline-diff.py`](../../../env/README.md) reads pytest `-rA` summary lines only. App test runners (Vitest, Playwright) report per test, but nothing compares them yet. Until an adapter exists, App per-test qualification is unresolved: say so on the gate, and never stand in a by-name comparison for it.
+**What the sorter reads.** [`env/baseline-diff.py`](../../../../env/README.md) reads pytest `-rA` summary lines only. App test runners (Vitest, Playwright) report per test, but nothing compares them yet. Until an adapter exists, App per-test qualification is unresolved: say so on the gate, and never stand in a by-name comparison for it.
 
 ## 3A. No new failures
 
@@ -67,7 +67,7 @@ For each side, and each workflow in scope:
    - **A regression,** or a failing new test that checks the candidate's own behaviour: blocks until its owner fixes it.
    - **A failing new test that exposes a defect already on the baseline:** prove it on the baseline, keep the test out of the candidate, and give it a row in the green-mains plan.
    - **Preexisting:** listed only.
-   - **Missing:** cleared only by a recorded ruling, either a behaviour removed on purpose, or a rename that keeps the coverage ([the contract's ruling](../../shared/run-contract.md#checks-and-failure-repair)). A deleting commit alone doesn't clear it.
+   - **Missing:** cleared only by a recorded ruling, either a behaviour removed on purpose, or a rename that keeps the coverage ([the contract's ruling](../../run-contract.md#checks-and-failure-repair)). A deleting commit alone doesn't clear it.
 4. **Find the introducing commit** by bisecting across the candidate's merges, which are named lanes. A failure in files an active lane owns goes to that lane: the test id, the commit, the first error and your best guess.
 5. Re-sort at each load-bearing run. The gate stands on the frozen candidate's qualifying run, with no blocking row left and no required job without a usable result.
 6. **A packet or task PR** is judged on what its own change does. A failure that also fails or flips on its base is not caused by it: it gets its own row and does not block that merge. It is not excused, and its row still blocks the release candidate under step 2. To tell a suspected flip, run that one test in isolation three times on the base and three on the head. If it fails on any head run and on no base run, it is the change's. Never rerun until green.
@@ -83,13 +83,13 @@ For each side, and each workflow in scope:
    One Agent collection error once hid about 24,500 tests.
 2. **Cluster by cause, not by file.** The key is the exception type plus the first frame in product code. Rank clusters by the tests a fix would unblock.
 3. **Batch.**
-   - One cause is one Iterate card. Run every card whose scope doesn't overlap another's at the same time ([scopes](../../roles/astrid-dev-manage/SKILL.md#steps)).
-   - Land them in batches ([pushes start CI](../../roles/astrid-dev-manage/SKILL.md#steps)), and re-sort once per batch.
-4. **Stop patching and spec a project** ([Plan](../../roles/astrid-dev-plan/SKILL.md)) when any of these holds:
+   - One cause is one Iterate card. Run every card whose scope doesn't overlap another's at the same time ([scopes](../../../roles/astrid-dev-manage/SKILL.md#steps)).
+   - Land them in batches ([pushes start CI](../../../roles/astrid-dev-manage/SKILL.md#steps)), and re-sort once per batch.
+4. **Stop patching and spec a project** ([Plan](../astrid-dev-plan/SKILL.md)) when any of these holds:
    - a cause needs a contract or schema decision;
    - a cause spans about ten files or more;
    - the same signature comes back after two batches.
-5. **A real bug** gets its own fix card. A test that can't be fixed in its card follows the [quarantine rule](../../../plans/39-green-mains/plan.md#quarantine-rule), and only once that rule's guard exists in the repository. The Agent's guard fails every xfail today (`tests/lanes.py`).
+5. **A real bug** gets its own fix card. A test that can't be fixed in its card follows the [quarantine rule](../../../../plans/39-green-mains/plan.md#quarantine-rule), and only once that rule's guard exists in the repository. The Agent's guard fails every xfail today (`tests/lanes.py`).
 6. **Fix where the change will ship:** a fix branch under the release in progress, or a fix release for the published one ([which](../astrid-dev-release/SKILL.md#how-a-release-runs), step 5).
 
 ## Using GitHub Actions
@@ -98,7 +98,7 @@ For each side, and each workflow in scope:
   - List runs: `GET /repos/<o>/<r>/actions/runs?branch=<b>` or `?head_sha=<sha>`.
   - List jobs: `.../runs/<id>/jobs?per_page=100`, or `.../runs/<id>/attempts/<n>/jobs` for an earlier attempt.
   - Fetch a log: `.../actions/jobs/<id>/logs` (follow the redirect).
-  - Fetch artifacts: [`fetch-artifacts.sh`](../../roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/fetch-artifacts.sh).
+  - Fetch artifacts: [`fetch-artifacts.sh`](../../../roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/fetch-artifacts.sh).
   - Cancel your own run: `POST .../runs/<id>/cancel`.
 - **Timestamps.** A job log prefixes every line with a timestamp. Strip it with the regex `^\S+Z ` (for example, Python `re.sub`) before sorting, or the sorter finds nothing. Grep for the failing ids rather than reading whole logs. Logs and artifacts expire (test durations after 3 days, and some logs vanish), so commit the evidence when you take it.
 - **Know each workflow's trigger.** Read its `on:` block before relying on a run. This is the one statement of what CI runs:
@@ -110,15 +110,15 @@ For each side, and each workflow in scope:
   - So the full suite first runs on the combined tree after a merge to the release branch, which is why [getting the release branch green](../astrid-dev-release/SKILL.md#get-the-release-branch-green) and its red-branch rule exist.
   - Before a gate, list every required workflow and where the candidate's run of each comes from.
 - **A scratch ref** is your own branch, started with `POST .../actions/workflows/<file>/dispatches`, the header `Content-Type: application/json` (the proxy refuses the call without it) and `{"ref": "<branch>"}`. Then find its run by listing runs for that branch. It never enters a candidate.
-- **Concurrency is set per workflow.** Read its `concurrency:` block. Where `cancel-in-progress` is on, a new run on the same group cancels the one in flight. The Agent's `ci.yml` groups by workflow and ref; manual journey dispatches never cancel each other. The coordination rule is [manage's](../../roles/astrid-dev-manage/SKILL.md#steps).
+- **Concurrency is set per workflow.** Read its `concurrency:` block. Where `cancel-in-progress` is on, a new run on the same group cancels the one in flight. The Agent's `ci.yml` groups by workflow and ref; manual journey dispatches never cancel each other. The coordination rule is [manage's](../../../roles/astrid-dev-manage/SKILL.md#steps).
 - **Paid workflows.** VibeComfy's `nightly-runpod.yml` and `e2e_matrix.yml` can rent RunPod pods. Never dispatch them without paid authorization.
-- **Run less to learn more.** Diagnose on one shard or one file, not the whole matrix. Re-run a cancelled shard only after you have changed or diagnosed its cause ([two-same-signature rule](../../shared/run-contract.md#checks-and-failure-repair)).
+- **Run less to learn more.** Diagnose on one shard or one file, not the whole matrix. Re-run a cancelled shard only after you have changed or diagnosed its cause ([two-same-signature rule](../../run-contract.md#checks-and-failure-repair)).
 
 ## Keep it moving
 
 The loop runs at CI's pace, about two hours a cycle at Agent scale, so:
 - **Never wait on a run.** While it runs, cluster the last results and brief the next batch.
-- **Run everything independent at once:** measurement, clustering and disjoint fix cards, using cheap helpers for the mechanical parts ([routes](../../shared/run-contract.md#cheapest-model-first)).
+- **Run everything independent at once:** measurement, clustering and disjoint fix cards, using cheap helpers for the mechanical parts ([routes](../../run-contract.md#cheapest-model-first)).
 - **Turn repeated judgment into a tool** in `env/`. A recipe you have run twice by hand is the next tool card.
 - **Spend review where it bears load:** a disputed bucket, a change to an assertion, the decision to spec a project, and the qualifying run.
-- **Record every friction** in the [process ledger](../../../docs/ledger/README.md), so the next run starts from a better skill.
+- **Record every friction** in the [process ledger](../../../../docs/ledger/README.md), so the next run starts from a better skill.

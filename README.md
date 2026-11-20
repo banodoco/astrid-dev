@@ -49,7 +49,7 @@ The vision sets the destination; gaps measure the distance to it; projects, the 
 | Where releases and versions lead | [Strategy](strategy.md) |
 | Each project's owner, status, priority and estimate | [Plan catalog](plans/index.md) |
 | What each release holds: plans, issues, branches | [Release briefs](releases/) |
-| The order a release runs in | [How a release runs](skills/capabilities/astrid-dev-release/SKILL.md#how-a-release-runs) |
+| The order a release runs in | [How a release runs](skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs) |
 | Routes, issues and review | [Contribution workflow](docs/contribution-workflow.md) |
 | The thinking behind it | [Design principles](docs/contribution-design-principles.md) |
 | How an agent contributes | [Contributor skill](skills/astrid-dev/SKILL.md) |
