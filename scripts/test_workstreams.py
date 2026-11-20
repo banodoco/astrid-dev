@@ -1,14 +1,36 @@
-"""Workstream descriptions, discovery, generated indexes and CI contract."""
+"""One workstream contract across skill packages and role-specific documents."""
 import tempfile
 import unittest
 from pathlib import Path
 
 from checks import Context, REGISTRY
 from views import VIEWS, View, check_view, expected
-from workstreams import END, START, PARENT_SKILLS, ROLE_SKILLS, SHARED_START, SHARED_END, metadata, render_index, render_shared_index, validate, workstream_files
+from workstreams import END, START, PARENT_SKILLS, ROLE_SKILLS, SHARED_START, SHARED_END, CONTRACT_FIELDS, parse_workstream, shared_skill_files, metadata, render_index, render_shared_index, validate, workstream_files
 
 
 MANAGE = "skills/roles/astrid-dev-manage/SKILL.md"
+
+CONTRACT = (
+    "\n## Workstream contract\n\n"
+    "**Outcome:** Deliver an accepted and testable result with receipts.\n"
+    "**When to use:** Select this workstream for the assigned operating context.\n"
+    "**Inputs:** An authorized brief, source identity and accepted proof requirements.\n"
+    "**Procedure:** Read the brief, perform the defined steps and preserve original outcomes.\n"
+    "**Completion:** Report source, evidence and remaining blockers to the accountable agent.\n"
+)
+
+
+def shared_workstream(root, name="astrid-dev-sample"):
+    folder = root / "skills/shared/workstreams" / name
+    folder.mkdir(parents=True, exist_ok=True)
+    skill = folder / "SKILL.md"
+    skill.write_text(
+        f"---\nname: {name}\ndescription: Deliver an independently useful result.\n---\n\n"
+        "# Example shared workstream\n" + CONTRACT + "\nRun the existing procedure.\n",
+        encoding="utf-8",
+    )
+    return skill
+
 
 
 def workstream(root, name, description="Execute this operating pattern and provide verifiable results.",
@@ -16,7 +38,7 @@ def workstream(root, name, description="Execute this operating pattern and provi
     path = root / MANAGE.replace("SKILL.md", "workstreams/" + name + ".md")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        f"---\ndescription: {description}\n---\n\n# Workstream: {title or name}\n\nSteps.\n",
+        f"---\ndescription: {description}\n---\n\n# Workstream: {title or name}\n" + CONTRACT + "\nSteps.\n",
         encoding="utf-8",
     )
     return path
@@ -95,8 +117,8 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             for invalid, expected_message in (
                 ("# Workstream: alpha\n", "missing frontmatter"),
                 ("---\ndescription: A line.\n  extra: bad\n---\n# Workstream: alpha\n",
-                 "exactly one single-line"),
-                ("---\ndescription: \n---\n# Workstream: alpha\n", "plain-text sentence"),
+                 "frontmatter fields must be nonempty"),
+                ("---\ndescription: \n---\n# Workstream: alpha\n", "frontmatter fields must be nonempty"),
                 ("---\ndescription: No terminal punctuation\n---\n# Workstream: alpha\n",
                  "plain-text sentence"),
                 ("---\ndescription: Good sentence.\n---\n# Wrong heading\n",
@@ -147,12 +169,12 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             folder = root / "skills/shared/workstreams/astrid-dev-sample"
             folder.mkdir(parents=True)
             skill = folder / "SKILL.md"
-            skill.write_text("---\nname: astrid-dev-sample\ndescription: Deliver an independently useful result.\n---\n\n# Sample\n", encoding="utf-8")
+            shared_workstream(root, "astrid-dev-sample")
             self.assertEqual(validate(root), [])
             skill.write_text(skill.read_text().replace("name: astrid-dev-sample", "name: sample"), encoding="utf-8")
-            self.assertTrue(any("name must match" in message for message in validate(root)))
-            skill.write_text("---\nname: astrid-dev-sample\n---\n# Sample\n", encoding="utf-8")
-            self.assertTrue(any("single-line description" in message for message in validate(root)))
+            self.assertTrue(any("skill name must be an astrid-dev-*" in message for message in validate(root)))
+            skill.write_text(skill.read_text().replace("description: Deliver an independently useful result.\n", ""), encoding="utf-8")
+            self.assertTrue(any("frontmatter must contain exactly" in message for message in validate(root)))
 
     def test_shared_workstream_names_render_without_descriptions(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -160,7 +182,9 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             fixture(root)
             folder = root / "skills/shared/workstreams/astrid-dev-foo"
             folder.mkdir(parents=True)
-            (folder / "SKILL.md").write_text("---\nname: astrid-dev-foo\ndescription: Do the shared task.\n---\n", encoding="utf-8")
+            (folder / "SKILL.md").write_text(
+                "---\nname: astrid-dev-foo\ndescription: Do the shared task.\n---\n"
+                "\n# Example shared workstream\n" + CONTRACT, encoding="utf-8")
             for parent in ROLE_SKILLS:
                 skill = root / parent
                 rendered = render_shared_index(root, parent)
@@ -175,8 +199,62 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             self.assertEqual(len(views), 1)
             self.assertIn("astrid-dev-plan", expected(views[0], root))
 
+
+    def test_one_parsed_contract_for_both_packaging_formats(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture(root)
+            doc = parse_workstream(workstream(root, "alpha"))
+            skill = parse_workstream(shared_workstream(root))
+            self.assertEqual((doc.outcome, doc.when_to_use, doc.inputs, doc.procedure, doc.completion),
+                             (skill.outcome, skill.when_to_use, skill.inputs, skill.procedure, skill.completion))
+            self.assertEqual(doc.kind, "document")
+            self.assertIsNone(doc.name)
+            self.assertEqual(skill.kind, "skill")
+            self.assertEqual(skill.name, "astrid-dev-sample")
+            self.assertEqual(len(CONTRACT_FIELDS), 5)
+            self.assertEqual(validate(root), [])
+
+    def test_missing_out_of_order_empty_and_duplicate_contract_fields_fail_in_both_formats(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture(root)
+            documents = [workstream(root, "alpha"), shared_workstream(root)]
+            for path in documents:
+                original = path.read_text(encoding="utf-8")
+                wrong = [
+                    (original.replace("## Workstream contract", "## Different", 1), "first ## section"),
+                    (original.replace("**Inputs:** An authorized brief, source identity and accepted proof requirements.\n", ""), "contract fields must be"),
+                    (original.replace("**Inputs:** An authorized brief, source identity and accepted proof requirements.\n",
+                                      "**Inputs:** \n"), "contract must contain only"),
+                    (original.replace("**Procedure:** Read the brief, perform the defined steps and preserve original outcomes.\n",
+                                      "**Completion:** Read the brief, perform the defined steps and preserve original outcomes.\n"),
+                     "duplicate contract field"),
+                    (original.replace("**Inputs:** An authorized brief, source identity and accepted proof requirements.\n"
+                                      "**Procedure:** Read the brief, perform the defined steps and preserve original outcomes.\n",
+                                      "**Procedure:** Read the brief, perform the defined steps and preserve original outcomes.\n"
+                                      "**Inputs:** An authorized brief, source identity and accepted proof requirements.\n"),
+                     "contract fields must be"),
+                ]
+                for altered, error in wrong:
+                    with self.subTest(path=path.name, error=error):
+                        path.write_text(altered, encoding="utf-8")
+                        self.assertTrue(any(error in finding for finding in validate(root)), validate(root))
+                path.write_text(original, encoding="utf-8")
+            self.assertEqual(validate(root), [])
+
+    def test_all_existing_workstreams_have_the_same_five_fields(self):
+        root = Path(__file__).resolve().parents[1]
+        all_files = [*workstream_files(root), *shared_skill_files(root)]
+        self.assertGreaterEqual(len(all_files), 15)
+        for path in all_files:
+            with self.subTest(path=path.relative_to(root).as_posix()):
+                entry = parse_workstream(path)
+                for value in (entry.outcome, entry.when_to_use, entry.inputs, entry.procedure, entry.completion):
+                    self.assertGreaterEqual(len(value), 12)
+
     def test_one_line_description_is_an_always_on_ci_gate(self):
-        checks = [check for check in REGISTRY if check.id == "workstream-descriptions"]
+        checks = [check for check in REGISTRY if check.id == "workstream-structure"]
         self.assertEqual(len(checks), 1)
         self.assertEqual(checks[0].trigger, "always")
         with tempfile.TemporaryDirectory() as directory:

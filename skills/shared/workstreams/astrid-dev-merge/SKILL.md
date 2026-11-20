@@ -5,6 +5,14 @@ description: Review one pull request, usually from an outside contributor, with 
 
 # Review and merge a pull request
 
+## Workstream contract
+
+**Outcome:** One external or delegated pull request reviewed and disposed as merged, changes requested or escalated to the owner.
+**When to use:** When considering another contributor's pull request rather than implementing a task or integrating an entire release.
+**Inputs:** The PR diff, source and destination, original CI receipts, applicable authority and review criteria.
+**Procedure:** Read the untrusted diff safely, gather independent findings, request bounded repairs or make an authorized merge decision.
+**Completion:** The PR receives a complete, actionable disposition with source-linked findings and any required owner decision.
+
 Enter through [astrid-dev](../../../astrid-dev/SKILL.md). Use this for **one pull request someone else wrote**, in any Astrid repository: most often an outside contributor's. A project's own task PRs are landed by its manager ([Manage](../../../roles/astrid-dev-manage/SKILL.md)); bringing several PRs together into a release is [Release](../astrid-dev-release/SKILL.md), which calls this skill once per PR.
 
 ## The answer

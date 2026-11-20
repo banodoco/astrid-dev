@@ -4,6 +4,14 @@ description: Implement one bounded packet in a fresh ChatGPT session and return 
 
 # Workstream: execute one packet in ChatGPT
 
+## Workstream contract
+
+**Outcome:** One bounded packet implemented and proved on draft task pull requests for Lead review.
+**When to use:** When a fresh ChatGPT session is assigned an accepted packet with explicit scope and authority by the release dispatch.
+**Inputs:** The exact packet, assigned task rows, mailbox and current rulings, target repository and base, accepted proof and permissions.
+**Procedure:** Receive and verify the assignment, implement directly on the permitted branch, collect original proof and submit the draft PR and handoff.
+**Completion:** Every assigned task has a traceable disposition, exact source and test evidence, and a Lead-visible handoff without unauthorized merging.
+
 Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../../astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md). Follow [Manage](../SKILL.md) for scoped engineering and proof; the review is the Lead's, so commission none. **You do this packet's engineering yourself**; you do not own the plan, and you take no second packet.
 
 ## Receive → implement → submit

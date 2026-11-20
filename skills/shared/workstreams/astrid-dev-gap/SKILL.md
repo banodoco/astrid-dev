@@ -5,6 +5,14 @@ description: Define, reassess and route Astrid vision gaps; write closure approa
 
 # Work on an Astrid vision gap
 
+## Workstream contract
+
+**Outcome:** A well-defined vision gap with closure evidence, a rationale and a route through relevant plans and strategy.
+**When to use:** When assessing an aspiration blocked by several potential projects or revisiting a gap's closure approach.
+**Inputs:** The vision and aspiration references, existing gaps and plans, supporting observations, strategy and authorized decision makers.
+**Procedure:** Compare the vision to current capability, write or revise the gap and its closure route, then maintain plan and strategy links.
+**Completion:** The gap records testable closure evidence and consistent references; consequential strategic decisions have been reviewed.
+
 Enter through [astrid-dev](../../../astrid-dev/SKILL.md). Use [Plan](../astrid-dev-plan/SKILL.md) for a single project's scope. Use this skill for the outcome a set of projects serves; releases and their briefs own the cross-project delivery strategy.
 
 ## The levels

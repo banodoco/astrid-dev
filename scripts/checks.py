@@ -310,7 +310,7 @@ def _public_vision(context):
 
 
 
-def _workstream_descriptions(context):
+def _workstream_structure(context):
     from workstreams import validate
     return validate(context.root)
 
@@ -470,7 +470,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
     Check('link-anchors', 'always', 'Validate links to headings in skills, templates and top-level docs', _link_anchors),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
-    Check('workstream-descriptions', 'always', 'Require a one-line description for every workstream', _workstream_descriptions),
+    Check('workstream-structure', 'always', 'Validate common workstream contracts and skill or document packaging', _workstream_structure),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),

@@ -4,6 +4,14 @@ description: Host Codex workers or a manager inside Claude Cloud while preservin
 
 # Workstream: Codex hosted inside Claude Cloud
 
+## Workstream contract
+
+**Outcome:** Codex work hosted inside Claude Cloud with explicit permissions, ownership and recoverable execution.
+**When to use:** When a Claude Cloud Orchestrator hosts Codex as workers or, with justification, as a managed process.
+**Inputs:** The approved task or plan, assigned actors, permissions, tool availability, current checkout, and environment guide.
+**Procedure:** Establish noninteractive permissions, use the documented Codex-hosting path and preserve source, run and recovery evidence.
+**Completion:** Delegated work and remaining blockers have verified receipts and an authorized handoff; no silent permission or merge escalation occurred.
+
 Choose when a Claude Cloud session runs Codex in its container, either as **workers** (default) or, when justified, as a managed Codex process. The detailed commands and scripts remain in the [environment guide](codex-in-claude-cloud/README.md); do not copy them here. Follow the general [Orchestrate role](../SKILL.md) and [run contract](../../../shared/run-contract.md).
 
 ## Claude Cloud setup: no permission prompts

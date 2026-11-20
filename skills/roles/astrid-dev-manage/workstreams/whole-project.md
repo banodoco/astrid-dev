@@ -4,6 +4,14 @@ description: Manage a complete accepted plan, including worker coordination, tes
 
 # Workstream: manage a whole project
 
+## Workstream contract
+
+**Outcome:** An accepted project managed through verified task delivery, integrated progress and an owner-reviewable completion record.
+**When to use:** When one accountable Manager is assigned the full plan run rather than an isolated fresh-session packet.
+**Inputs:** The accepted plan and tasks, current run identity, named owner, working repositories, dependencies, proof requirements and permissions.
+**Procedure:** Keep task progress current, make scope decisions within authority, coordinate implementation and proof, integrate work and report accurately.
+**Completion:** Accepted tasks and completion evidence are recorded in the project's canonical files, or precise blockers remain visible for the owner.
+
 Use when you are the **one accountable manager** for an accepted Astrid plan run, rather than a short-lived [ChatGPT packet manager](chatgpt-packet.md). Apply the [general Manage principles](../SKILL.md) and the [run contract](../../../shared/run-contract.md). The project pack owns scope and acceptance; don't create another queue.
 
 ## Progress is always current

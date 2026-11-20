@@ -5,6 +5,14 @@ description: Change astrid-dev itself, whether a rule, term, skill, template, ch
 
 # Improve astrid-dev
 
+## Workstream contract
+
+**Outcome:** A demonstrated Astrid Dev process or documentation failure corrected at its canonical source with regression proof.
+**When to use:** When changing an Astrid Dev rule, term, skill, template, check or generated document.
+**Inputs:** The recorded failure or need, one authoritative source, neighboring references, existing tests and permission to change the machinery.
+**Procedure:** Identify the owning source, make the smallest coherent change, run the relevant checks and record the fix without duplicating policy.
+**Completion:** Documentation and generated views remain consistent, original regressions are covered and the change's proof is recorded.
+
 Enter through [astrid-dev](../../../astrid-dev/SKILL.md). Words follow the [glossary](../../glossary.md).
 
 ## Where things go

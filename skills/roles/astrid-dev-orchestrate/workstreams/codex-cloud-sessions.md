@@ -4,6 +4,14 @@ description: Coordinate separate Codex Cloud sessions through the shared GitHub 
 
 # Workstream: separate Codex Cloud sessions
 
+## Workstream contract
+
+**Outcome:** Separate Codex Cloud sessions coordinated through one durable mailbox, with ownership and handoffs preserved.
+**When to use:** When an authorized Orchestrator and plan manager work in different Codex Cloud chats.
+**Inputs:** An accepted plan, named accountable manager, permitted session identities, mailbox, task boundaries and tested resume mechanism.
+**Procedure:** Register sessions, send bounded briefs, reconcile their evidence and recover stalled work using the linked Codex Cloud guide.
+**Completion:** The manager has a complete session handoff and traceable task evidence; unwakeable sessions are reported rather than assumed active.
+
 Choose this when the orchestrator and plan managers work in **different Codex Cloud chats**. For the actual mailbox commands, session registration, authentication limits, acknowledgments, polling and recovery use the existing [Codex Cloud guide](codex-cloud/README.md); its scripts remain in that directory.
 
 1. Start from an accepted plan and its authorized `Run start`; name **one accountable plan manager**. Agree on one shared mailbox issue and durable per-session identities and cursors. Reuse an existing mailbox rather than create a second issue.

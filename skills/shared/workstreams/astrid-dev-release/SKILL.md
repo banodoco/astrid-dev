@@ -1,9 +1,17 @@
 ---
 name: astrid-dev-release
-description: Run a release: cut its branches, merge plan and fix work in, get it green, freeze the candidate and publish it on the owner's go. Release is the sole workflow for cross-repository integration and publication; it does not grant unrequested deployment or publication authority.
+description: Integrate and qualify a cross-repository Astrid release, freeze its candidate, and publish only on the owner's explicit approval without granting any new deployment authority.
 ---
 
 # Astrid development release
+
+## Workstream contract
+
+**Outcome:** A qualified, reproducible cross-repository release candidate and, only with the owner's go, an evidenced publication.
+**When to use:** When integrating accepted plans and fixes into a release and preparing or executing an authorized promotion.
+**Inputs:** An accepted release brief and branches, pinned product sources, baseline proof, integration receipts and publication authority when applicable.
+**Procedure:** Integrate accepted changes, qualify the combined tuple, freeze the candidate and request explicit approval before publishing.
+**Completion:** The release records exact sources, all required gates and failures, and either an authorized publication receipt or an explicit blocked state.
 
 Use this workflow for cross-repository integration, qualification and explicitly authorized publication. [Iterate](../astrid-dev-iterate/SKILL.md) owns assigned implementation and repair; [Plan](../astrid-dev-plan/SKILL.md) prepares a new plan. Release consumes accepted work and owns integration and publication. The shared run contract is the authority for source identity, proof policy, and review budgets; do not restate or reset those choices here. Use the [domain map](../../../astrid-dev/references/domains.md) to locate current product-owned release runbooks; verify the actual source SHAs before integration.
 

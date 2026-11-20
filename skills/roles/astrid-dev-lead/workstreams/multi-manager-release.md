@@ -4,6 +4,14 @@ description: Prepare and lead fresh-session packet delivery across accepted rele
 
 # Workstream: fresh-session ChatGPT packet dispatch
 
+## Workstream contract
+
+**Outcome:** Lead-prepared, authorized release packets with one durable dispatch queue and review-ready task evidence.
+**When to use:** When the Lead coordinates accepted release work through fresh ChatGPT manager sessions rather than a single long-lived manager.
+**Inputs:** An approved release brief, current plan task records, packet scope and dependencies, owner authorization, branch destinations and evidence requirements.
+**Procedure:** Prepare bounded packets and one mailbox, run Lead check-ins, review delivered task PRs and integrate only authorized work using the sections below.
+**Completion:** The queue and task records reflect every packet, its evidence and disposition, with review/integration decisions owned by the Lead.
+
 Use when the Lead prepares accepted plan work for an Orchestrator to assign to **a fresh ChatGPT manager session per packet**. The [Lead responsibilities](../SKILL.md) continue to apply.
 
 ## Set up once
