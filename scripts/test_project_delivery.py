@@ -166,6 +166,23 @@ class DeliveryCompositionTests(unittest.TestCase):
         self.assertIn(RecordRef("project", "73"), graph.enablers)
         self.assertEqual(graph.outgoing(RecordRef("project", "73")), ())
 
+    def test_actual_repository_delivery_traversal(self):
+        # The user-facing read-only CLI consumes this full repository, not only
+        # the fixture. Do not infer publication, issue fixes or gap closure.
+        real = Path(__file__).resolve().parent.parent
+        graph = load_delivery(real)
+        self.assertIn(RecordRef("gap", "AA-001"), graph.records)
+        self.assertIn(RecordRef("project", "72"), graph.records)
+        self.assertIn(RecordRef("goal", "pillar:artistic-ambition/finished-artistic-work"),
+                      graph.records)
+        paths = deliveries_for_goal(
+            graph, RecordRef("goal", "pillar:artistic-ambition/finished-artistic-work"))
+        self.assertTrue(paths, "authored real vision-to-release path is absent")
+        self.assertTrue(all(path.goal.kind == "goal"
+                            and path.release.kind == "release" for path in paths))
+        self.assertTrue(any(edge.source_path.startswith("releases/")
+                            for edge in graph.relationships if edge.kind == "includes"))
+
     def test_cannot_infer_delivery_from_queued_status_alone(self):
         self.write("releases/15.md",
                    RELEASE.replace("- [Plan 72](../plans/72-demo/plan.md) — demonstrable result",
