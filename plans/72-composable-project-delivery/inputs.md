@@ -28,6 +28,9 @@
 
 ## Source identities
 
+**PD-0 source and CI baseline (20 Nov 2026):** [Exact code/reader ownership and native GitHub Actions receipts](evidence/tests/astrid-dev/4b3e384/summary.md) compare the original pre-candidate `4b3e3841...` main (450/450) with core (456/456), reader (463/463) and guide (463/463) candidates. The current release-scoping merge is `ae9e105d...`; Release 15 integration and independent review remain open. This is evidence from existing runs, not a newly launched or independently reviewed qualification.
+
+
 **Planning source:** `banodoco/astrid-dev` `main` at `6d174521e6f3996349044e393d51b9fa06dbc625`, inspected 20 November 2026. Relevant other work includes [PR 1059](https://github.com/banodoco/astrid-dev/pull/1059); do not assume its result is installed or accepted.
 
 **Execution source:** Pending — before any code work, re-read live main, check other writers touching the same scripts, pin exact base/donor SHA, active review and release destination. For a Release 14+ implementation the owner's selected `release/<NN>/main` is the source of `release/<NN>/plan-72`, per the [release workflow](../../skills/shared/workstreams/astrid-dev-release/SKILL.md). This scope PR targets `main` for planning only; it is not an implementation branch.
