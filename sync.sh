@@ -133,7 +133,8 @@ for target_dir in "${TARGET_DIRS[@]}"; do
   done
 
   for src in "${SOURCES[@]}"; do
-    dest="$target_dir/$(basename -- "$src")"
+    name="$(basename -- "$src")"
+    dest="$target_dir/$name"
 
     if [[ -L "$dest" ]]; then
       current="$(readlink "$dest")"
