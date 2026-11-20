@@ -87,17 +87,33 @@ def _release_documents(context):
 
 def _active_plans_in_releases(context):
     from check_docs import read
-    from records import active_plan_errors, project_fields, release_brief
+    from records import active_plan_errors, dev_only_delivery, project_fields, release_brief
     root = context.root
     if not _catalog_ready(context):
         return []
-    active = {}
+    active, dev_only, errors = {}, set(), []
     for path in sorted((root / 'plans').glob('*/plan.md')):
-        if project_fields(read(root, path.relative_to(root)))['Status'] == 'active':
-            active[path.parent.name[:2]] = path.parent.name
+        body = read(root, path.relative_to(root))
+        if project_fields(body)['Status'] != 'active':
+            continue
+        number = path.parent.name.split('-', 1)[0]
+        active[number] = path.parent.name
+        try:
+            declared = dev_only_delivery(body)
+        except ValueError as exc:
+            errors.append(f'{path.relative_to(root)}: {exc}')
+            continue
+        if not declared:
+            continue
+        inputs = root / 'plans' / path.parent.name / 'inputs.md'
+        text = inputs.read_text(encoding='utf-8') if inputs.is_file() else ''
+        if re.search(r'^\*\*Run start:\*\*[ \t]*Authorized\b', text, re.M):
+            dev_only.add(number)
+        else:
+            errors.append(f'{path.relative_to(root)}: astrid-dev-only active plan requires an Authorized Run start in inputs.md')
     briefs = [release_brief(read(root, p.relative_to(root)), strict=False)
               for p in sorted((root / 'releases').glob('[0-9]*.md')) if p.stem.isdigit()]
-    return active_plan_errors(active, briefs)
+    return errors + active_plan_errors(active, briefs, dev_only)
 
 
 def _strategy_consistency(context):
@@ -164,6 +180,7 @@ def _gap_structure(context):
 
 def _plan_files(context):
     from check_docs import read, GAP_NAME, plan_gap_ids
+    from records import dev_only_delivery
     root = context.root
     if not _catalog_ready(context):
         return []
@@ -175,6 +192,10 @@ def _plan_files(context):
             if not (root / plan.parent / name).is_file():
                 errors.append(f'{plan.parent}: missing {name}')
         body = read(root, plan)
+        try:
+            dev_only_delivery(body)
+        except ValueError as exc:
+            errors.append(f'{plan}: {exc}')
         try:
             refs = plan_gap_ids(body)
             for gap in refs:
