@@ -1,0 +1,78 @@
+{
+  "run": 44714412835,
+  "attempt": 1,
+  "status": "completed",
+  "conclusion": "success",
+  "head": "ba4741b34cce743c35f94ebca0c0d168c78bf72d",
+  "tree": "26d9790a39808a93848296035bbd00222dfa112f",
+  "jobs": [
+    {
+      "job": "chat",
+      "old_reader": {
+        "accepted": true,
+        "same_id_outcome": true
+      },
+      "job_id": 136214010107,
+      "conclusion": "success",
+      "artifact": 14619141427,
+      "digest": "sha256:8b827620e135ea120f9f43c60e4b5a5284ef1d991b38d39281d8f69acae80b84",
+      "bytes": 19951,
+      "counts": [
+        {
+          "step": "step-06",
+          "raw_exit": 0,
+          "unique": 210,
+          "selected": 210,
+          "declared_skips": 2,
+          "filtered": 0,
+          "outcomes": {
+            "passed": 208,
+            "skipped": 2
+          }
+        }
+      ],
+      "added": [],
+      "missing": []
+    },
+    {
+      "job": "windows-launchers",
+      "old_reader": {
+        "accepted": false,
+        "reason": "Bun terminal summary missing/truncated"
+      },
+      "job_id": 136214010514,
+      "conclusion": "success",
+      "artifact": 14618058741,
+      "digest": "sha256:6189b679db32a23ddd8336edac435f2ef5c694cb7f13a1a8824fca115ffc3f65",
+      "bytes": 10270,
+      "counts": [
+        {
+          "step": "step-03",
+          "raw_exit": 0,
+          "unique": 24,
+          "selected": 24,
+          "declared_skips": 1,
+          "filtered": 0,
+          "outcomes": {
+            "passed": 23,
+            "skipped": 1
+          }
+        },
+        {
+          "step": "step-04",
+          "raw_exit": 0,
+          "unique": 11,
+          "selected": 1,
+          "declared_skips": 0,
+          "filtered": 10,
+          "outcomes": {
+            "passed": 1,
+            "skipped": 10
+          }
+        }
+      ],
+      "added": [],
+      "missing": []
+    }
+  ]
+}
