@@ -4,13 +4,15 @@
 
 **Goal:** A contributor or agent can reliably distinguish a meaningful missing Astrid capability from an issue, project or vision goal, and the existing gap catalogue is reassessed against actual issues, projects and verified outcomes using that standard.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Plan 71 whole-project manager (ChatGPT, owner-authorized 20 November 2026)
 
 **Estimate:** Provisionally 10–16 engineering days for Phases 1–5, subject to the evidence census and scope review; Phases 6–7 are deferred and unestimated.
 
-**Waiting on:** independent planning critique and maintainer scope review; acceptance of the calibrated gap definition before full-catalogue work; owner approval of the catalogue migration; coordination with Plan 53 and the Goals-schema migration on shared surfaces.
+**Waiting on:** independent planning critique and the agreed RS1/RS2/R review gates; owner's separate acceptance of the calibrated definition (GD-5) and later migration (GD-9); coordination with Plan 53 and Goals-schema changes. Phases 6–7 remain deferred.
+
+**Delivery:** astrid-dev-only
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -45,7 +47,7 @@ The current [contribution workflow](../../docs/contribution-workflow.md#define-o
 
 **Reuse rather than rebuild:** give the existing Gap workstream a stronger evidence/abstraction decision method, use its existing gap records and PR reviews, and add only bounded evidence or targeted checks that solve a demonstrated classification or migration problem. A separate issue-to-gap classification service, automated new-gap generator or new authoring level would duplicate existing structures. The wider synthesis is different enough to merit a **future** recurring workstream, but not its implementation now.
 
-The owner requested this project on 20 November 2026, explicitly accepting the sequence **definition → evidence → validation → catalogue review → migration** while placing recurring review and its validation in the last two deferred phases. This records a **planning direction**, not run start, independent critique, a release assignment, acceptance of an untested rubric or permission to migrate gaps. [Inputs](inputs.md#planning-evidence) records alternatives, evidence and remaining decisions.
+The owner requested this project on 20 November 2026, explicitly accepting **definition → evidence → validation → catalogue review → migration** and deferring the recurring workstream and its validation. The owner subsequently authorized execution and explicitly requested that Astrid-dev-only work run **without a release**, through the Manage exception. This records a run start, not an independent critique, approval of a still-untested rubric, permission to migrate gaps or permission to merge the final project to `main`. [Inputs](inputs.md#planning-evidence) records alternatives, evidence and remaining decisions.
 
 ## Sequence and readiness
 
