@@ -13,7 +13,7 @@ description: Validate every default generation slot and h3_av on real RunPod, lo
 **Procedure:** Run the prescribed VibeComfy and Astrid probes on real GPU placements, capture per-cell failures and release all pods.
 **Completion:** Every required cell has a recorded pass or failure, pods are released and a dated evidence file identifies revisions and limitations.
 
-**Outcome:** real outputs on real GPUs for every default slot and h3_av on the revision under test, a pass or fail per cell, every pod released, and one dated record alongside this skill, in `skills/shared/workstreams/astrid-dev-gpu-validate/records/`. CPU proof cannot show real inference, model downloads, custom-node installs or RunPod capacity; this skill does. It was built by [Plan 34](../../../../plans/34-real-gpu-proof/plan.md), and real-GPU proof is this skill, run again, not a new project.
+CPU proof cannot establish real inference, model downloads, custom-node installs or RunPod capacity. The matrix and dated evidence record below specify the hardware proof; the skill was built under [Plan 34](../../../../plans/34-real-gpu-proof/plan.md) and is rerun when needed, not recreated as a new project.
 
 Read [the entrypoint](../../../astrid-dev/SKILL.md) and the [shared run contract](../../run-contract.md). They own routing, provenance, review and authority; this skill owns only the GPU run.
 

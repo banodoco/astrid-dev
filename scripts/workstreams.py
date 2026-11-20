@@ -89,7 +89,15 @@ def parse_workstream(path: Path) -> Workstream:
             raise ValueError(f"skill name must match folder {path.parent.name!r}")
     if not headings(body, 2) or headings(body, 2)[0].strip() != CONTRACT_HEADING:
         raise ValueError("first ## section must be '## Workstream contract'")
-    contract = ordered_bold_fields(section(body, CONTRACT_HEADING), CONTRACT_FIELDS)
+    contract_block = section(body, CONTRACT_HEADING)
+    contract = ordered_bold_fields(contract_block, CONTRACT_FIELDS)
+    # A valid summary alone is not an executable workstream. Require a real
+    # procedure below it: a later level-two section or an authored step/list.
+    trailing = body.split("## Workstream contract", 1)[1]
+    _, _, instructions = trailing.partition("\n\n")
+    if not (headings(body, 2)[1:] or re.search(r"(?m)^(?:[0-9]+\. |[-*] )\S", instructions)):
+
+        raise ValueError("workstream requires operational instructions beyond its five-field contract")
     return Workstream(
         path=path, kind=kind, name=metadata.get("name"), title=title,
         description=description, outcome=contract["Outcome"],

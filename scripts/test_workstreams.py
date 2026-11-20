@@ -26,7 +26,7 @@ def shared_workstream(root, name="astrid-dev-sample"):
     skill = folder / "SKILL.md"
     skill.write_text(
         f"---\nname: {name}\ndescription: Deliver an independently useful result.\n---\n\n"
-        "# Example shared workstream\n" + CONTRACT + "\nRun the existing procedure.\n",
+        "# Example shared workstream\n" + CONTRACT + "\n1. Perform the agreed procedure and report its evidence.\n",
         encoding="utf-8",
     )
     return skill
@@ -38,7 +38,7 @@ def workstream(root, name, description="Execute this operating pattern and provi
     path = root / MANAGE.replace("SKILL.md", "workstreams/" + name + ".md")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        f"---\ndescription: {description}\n---\n\n# Workstream: {title or name}\n" + CONTRACT + "\nSteps.\n",
+        f"---\ndescription: {description}\n---\n\n# Workstream: {title or name}\n" + CONTRACT + "\n1. Perform the agreed procedure and report its evidence.\n",
         encoding="utf-8",
     )
     return path
@@ -184,7 +184,7 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
             folder.mkdir(parents=True)
             (folder / "SKILL.md").write_text(
                 "---\nname: astrid-dev-foo\ndescription: Do the shared task.\n---\n"
-                "\n# Example shared workstream\n" + CONTRACT, encoding="utf-8")
+                "\n# Example shared workstream\n" + CONTRACT + "\n1. Perform the agreed procedure and report its evidence.\n", encoding="utf-8")
             for parent in ROLE_SKILLS:
                 skill = root / parent
                 rendered = render_shared_index(root, parent)
@@ -252,6 +252,21 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
                 entry = parse_workstream(path)
                 for value in (entry.outcome, entry.when_to_use, entry.inputs, entry.procedure, entry.completion):
                     self.assertGreaterEqual(len(value), 12)
+
+    def test_workstream_without_steps_is_rejected_in_both_packages(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture(root)
+            for path in (workstream(root, "alpha"), shared_workstream(root)):
+                original = path.read_text(encoding="utf-8")
+                # Keep all five fields but remove the executable part.
+                path.write_text(original.split("**Completion:**", 1)[0]
+                                + "**Completion:** Report source, evidence and remaining blockers to the accountable agent.\n",
+                                encoding="utf-8")
+                with self.subTest(path=path.name):
+                    self.assertTrue(any("operational instructions" in e for e in validate(root)), validate(root))
+                path.write_text(original, encoding="utf-8")
+            self.assertEqual(validate(root), [])
 
     def test_one_line_description_is_an_always_on_ci_gate(self):
         checks = [check for check in REGISTRY if check.id == "workstream-structure"]

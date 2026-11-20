@@ -8,11 +8,35 @@ from __future__ import annotations
 import re
 
 
-def headings(text: str, level: int = 2) -> list[str]:
-    """Return exact Markdown headings at a chosen level, in source order."""
+def _heading_spans(text: str, level: int) -> list[tuple[str, int, int]]:
+    """Find real Markdown headings, not examples inside backtick/tilde fences."""
     if level < 1 or level > 6:
         raise ValueError("heading level must be 1..6")
-    return re.findall(rf"^{'#' * level} (.+)$", text, re.M)
+    found: list[tuple[str, int, int]] = []
+    fence: str | None = None
+    fence_size = 0
+    offset = 0
+    for line in text.splitlines(keepends=True):
+        plain = line.rstrip("\r\n")
+        if fence is not None:
+            if re.fullmatch(r"[ ]{0,3}" + re.escape(fence) + "{" + str(fence_size) + r",}[ \t]*", plain):
+                fence, fence_size = None, 0
+        else:
+            opening = re.match(r"^[ ]{0,3}(" + re.escape(chr(96)) + r"{3,}|~{3,})", plain)
+            if opening:
+                marker = opening.group(1)
+                fence, fence_size = marker[0], len(marker)
+            else:
+                match = re.fullmatch(re.escape("#" * level) + r" (.+)", plain)
+                if match:
+                    found.append((match.group(1).strip(), offset, offset + len(line)))
+        offset += len(line)
+    return found
+
+
+def headings(text: str, level: int = 2) -> list[str]:
+    """Return actual Markdown headings at one level, ignoring fenced examples."""
+    return [title for title, _, _ in _heading_spans(text, level)]
 
 
 def ordered_heading_error(actual: list[str], required: list[str], *, level: int = 2) -> str | None:
@@ -50,22 +74,29 @@ def frontmatter(text: str) -> tuple[dict[str, str], str]:
 
 
 def section(text: str, name: str, *, level: int = 2) -> str:
-    """Find exactly one Markdown section and return the text up to the next peer."""
-    marker = "#" * level
-    matches = list(re.finditer(rf"^{re.escape(marker)} {re.escape(name)}[ \t]*$", text, re.M))
-    if len(matches) != 1:
-        raise ValueError(f"expected exactly one '{marker} {name}' section")
-    match = matches[0]
-    next_peer = re.search(rf"^{re.escape(marker)} (?!#)[^\n]+$", text[match.end():], re.M)
-    end = match.end() + next_peer.start() if next_peer else len(text)
-    return text[match.end():end].strip()
+    """Find exactly one real Markdown section, stopping at the next peer."""
+    matches = _heading_spans(text, level)
+    positions = [i for i, (title, _, _) in enumerate(matches) if title == name]
+    if len(positions) != 1:
+        raise ValueError(f"expected exactly one '{'#' * level} {name}' section")
+    index = positions[0]
+    start = matches[index][2]
+    end = matches[index + 1][1] if index + 1 < len(matches) else len(text)
+    return text[start:end].strip()
 
 
 def ordered_bold_fields(block: str, required: tuple[str, ...]) -> dict[str, str]:
     """Require one substantive, single-line **Label:** value for each field, in order."""
     # The compact contract's first paragraph is its machine-readable interface.
     # Further prose may elaborate within the section without duplicating the fields.
-    rows = [line.strip() for line in block.split("\n\n", 1)[0].splitlines() if line.strip()]
+    first, _, remainder = block.partition("\n\n")
+    rows = [line.strip() for line in first.splitlines() if line.strip()]
+    # Supporting prose is permitted, but not a second version of any contract
+    # field after the first blank line. There is one canonical value per field.
+    names = "|".join(re.escape(name) for name in required)
+    duplicate = re.search(r"(?m)^\s*\*\*(" + names + r"):\*\*", remainder)
+    if duplicate:
+        raise ValueError(f"duplicate contract field {duplicate.group(1)!r} after the field block")
     actual: list[str] = []
     values: dict[str, str] = {}
     for line in rows:

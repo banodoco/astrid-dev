@@ -63,6 +63,16 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 **Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap skill](../skills/shared/workstreams/astrid-dev-gap/SKILL.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
 
+## How the vision becomes shipped work
+
+The vision contains **elements** in two categories: pillars (ambitions) and principles (guiding design choices). They use the same [element authoring contract](../vision/templates/subject.md), not two different levels. Each element defines individual **vision goals**, shown as **Goals** on the Astrid website. The existing Dev heading `Aspirations`, `Aspiration` gap metadata and aspiration IDs refer to those exact same goals; these source/feed identifiers are retained for compatibility, not a second type of goal.
+
+A [gap](../templates/gap.md) measures the distance from current evidence to **one primary vision goal**, with optional supporting goals. A gap records desired/current state, closure evidence and a route to closure; completing a plan does not automatically close the gap. A [project pack](../templates/project/plan.md) declares one primary gap plus optional supporting gaps (or an explicit foundational-enabler exception), with scope, inputs, tasks and proof. A project can serve several gaps, but the primary relationship owns its public classification.
+
+GitHub [issues](#issues) are a different intake path for bugs, observations, questions and ideas. Issues can carry `gap:ID` or `plan:NN` labels, or be triaged directly into a release as `release:NN`. Labels are contextual references, not guaranteed project membership, authorization or a new file-backed record. An accepted issue may become a project task or a direct release fix; do not create a project for every issue.
+
+An authored [release brief](../releases/TEMPLATE.md) selects its included plans and explicitly routed fixes; a release branch integrates and qualifies that selected work. [Strategy](../strategy.md) groups releases into version milestones. Vision, element authoring, gap relationships, project packs, release briefs and generated public views each have existing CI checks; **issue-to-goal coverage and strategic merit are not fully machine-verifiable** and depend on triage and review. Follow each object's own canonical record instead of copying status or authority into other objects.
+
 ## Review the strategy
 
 A gap says what must improve; a plan, what is built; a release, what ships together, as one branch per repository that its plans and fixes merge into (see [How a release runs](../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)); a version, where releases lead; a major version, the aim. See [strategy](../strategy.md) and [release briefs](../releases/TEMPLATE.md).

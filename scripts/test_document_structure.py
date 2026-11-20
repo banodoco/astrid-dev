@@ -29,6 +29,30 @@ class DocumentStructureTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "exactly one"):
             section(text + "\n## Outcome\nMore\n", "Outcome")
 
+    def test_fenced_examples_are_not_document_headings(self):
+        text = (
+            "# Example\n\n"
+            "```markdown\n## Fake\n## Outcome\n```\n"
+            "## Actual\nParagraph.\n\n"
+            "~~~markdown\n## Hidden\n~~~\n"
+            "## Completion\nDone.\n"
+        )
+        self.assertEqual(headings(text), ["Actual", "Completion"])
+        self.assertEqual(section(text, "Actual"), "Paragraph.\n\n~~~markdown\n## Hidden\n~~~")
+        with self.assertRaisesRegex(ValueError, "exactly one"):
+            section(text, "Fake")
+
+    def test_duplicate_contract_field_after_first_paragraph_is_rejected(self):
+        fields = ("Outcome", "Inputs")
+        text = "**Outcome:** A verified delivery of one result.\n**Inputs:** The authorized brief and source.\n"
+        for tail in (
+            "\n**Outcome:** A second competing outcome statement.\n",
+            "\nExtra detail.\n\n**Inputs:** A conflicting second input set.\n",
+        ):
+            with self.subTest(tail=tail):
+                with self.assertRaisesRegex(ValueError, "duplicate contract field"):
+                    ordered_bold_fields(text + tail, fields)
+
     def test_contract_field_order_duplicate_and_substance(self):
         labels = ("Outcome", "Inputs")
         block = "**Outcome:** An accepted outcome with proof.\n**Inputs:** An approved brief and source.\n\nFurther details can follow."

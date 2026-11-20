@@ -48,7 +48,7 @@ One meaning per word; two meanings, two terms.
 
 **dispatch packet:** a short, bounded Markdown assignment at `releases/<N>/packets/<id>.md`, referring to one plan's canonical tasks or to release issues; at most about three human engineering days, done in one fresh ChatGPT session; not a project, issue or plan run.
 
-**workstream:** a role-specific operating pattern chosen for the situation, documented below its role skill. Environment-specific guides supply commands; neither is an extra role or source of authority.
+**workstream:** an outcome-driven procedure with one structural contract. A shared workstream is independently discoverable as an `astrid-dev-*` skill; a role-specific workstream is selected within its role. Neither grants authority beyond the invoking role and run.
 
 **task scope:** what a task may change: paths with their tests, shared surfaces or contracts, or `path:symbol`.
 
@@ -108,9 +108,9 @@ One meaning per word; two meanings, two terms.
 
 **element:** a pillar or principle of the vision; one type with two kinds.
 
-**aspiration:** what an element is trying to reach, with optional paired We should / We should never lists.
+**goal (vision):** what a vision element (pillar or principle) is trying to achieve, with optional paired We should / We should never lists. The website calls these **Goals**. The existing Astrid Dev authoring heading `Aspirations`, aspiration-reference names and feed field `characteristics` remain compatibility identifiers for this same concept, not separate entities.
 
-**primary and supporting aspirations (of a gap):** its one measured outcome and any distinct related aspirations.
+**primary and supporting goals (of a gap):** its one primary vision goal and any distinct supporting goals; existing file metadata calls these aspirations for compatibility.
 
 **version:** the user-facing `major.minor.patch` number of a release. A minor or major release ships a new version (0.1, 1.0); the strategy page has one section for each version, holding that release and the patch releases that lead to it.
 
