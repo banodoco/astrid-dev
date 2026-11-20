@@ -36,7 +36,7 @@ def boundary_signature(text: str) -> tuple[str, ...]:
     the outcome does not require a second architecture review.
     """
     title = re.search(r"^# (.+)$", text, re.M)
-    applies = re.search(r"^\*\*(?:Applies to|Aspiration):\*\*[ \t]*(.*)$", text, re.M)
+    applies = re.search(r"^\*\*(?:Applies to|Aspiration|Goal):\*\*[ \t]*(.*)$", text, re.M)
     return (
         title.group(1).strip() if title else "",
         re.sub(r"\.\./principles\.md#([a-z0-9-]+)", r"../principles/\1.md", applies.group(1).split("**Assessment:**", 1)[0].strip()) if applies else "",
@@ -47,8 +47,8 @@ def boundary_signature(text: str) -> tuple[str, ...]:
 
 
 def _legacy_elements(text: str) -> tuple[list[str], str]:
-    """Read historical element-only metadata solely for the migration comparison."""
-    lines = [line for line in text.splitlines() if line.startswith(("**Applies to:**", "**Aspiration:**"))]
+    """Read historical element-only metadata solely for migration comparisons."""
+    lines = [line for line in text.splitlines() if line.startswith(("**Applies to:**", "**Aspiration:**", "**Goal:**"))]
     if len(lines) != 1 or not lines[0].startswith("**Applies to:**") or "**Assessment:**" not in lines[0]:
         raise ValueError("not an element-only historical gap")
     raw = lines[0].split("**Assessment:**", 1)[0].removeprefix("**Applies to:**").strip().removesuffix("·").strip()

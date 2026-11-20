@@ -8,8 +8,8 @@ description: Define, reassess and route Astrid vision gaps; write closure approa
 ## Workstream contract
 
 **Outcome:** A well-defined vision gap with closure evidence, a rationale and a route through relevant plans and strategy.
-**When to use:** When assessing an aspiration blocked by several potential projects or revisiting a gap's closure approach.
-**Inputs:** The vision and aspiration references, existing gaps and plans, supporting observations, strategy and authorized decision makers.
+**When to use:** When assessing an goal blocked by several potential projects or revisiting a gap's closure approach.
+**Inputs:** The vision and goal references, existing gaps and plans, supporting observations, strategy and authorized decision makers.
 **Procedure:** Compare the vision to current capability, write or revise the gap and its closure route, then maintain plan and strategy links.
 **Completion:** The gap records testable closure evidence and consistent references; consequential strategic decisions have been reviewed.
 
@@ -17,7 +17,7 @@ Enter through [astrid-dev](../../../astrid-dev/SKILL.md). Use [Plan](../astrid-d
 
 ## The levels
 
-- **Vision** ([elements and their aspirations](../../../../vision/README.md)): where Astrid is heading; a gap [names its aspirations](../../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
+- **Vision** ([elements and their goals](../../../../vision/README.md)): where Astrid is heading; a gap [names its goals](../../../../docs/contribution-workflow.md#define-or-reassess-a-vision-gap).
 - **Strategy** ([`strategy.md`](../../../../strategy.md)) draws on release briefs; see [how the documents fit](../../../../docs/contribution-workflow.md#review-the-strategy).
 - **Gap** ([`vision/gaps/`](../../../../vision/gaps)): an assessed outcome that blocks the vision. It names a result that would still matter if today's projects were replaced, and it has its own closure evidence.
 - **Closure approach and route to closure** (sections of the gap): the strategy. The approach is prose explaining the idea and the order of work. The route is an ordered table of plans, showing which closure evidence each one delivers.

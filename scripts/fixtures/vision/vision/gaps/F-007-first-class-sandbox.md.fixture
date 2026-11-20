@@ -1,6 +1,6 @@
 # F-007 — Running Astrid in a sandbox isn't yet a first-class option
 
-**Aspiration:** [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (primary) · [Important decisions stay visible](../principles/eliminate-needless-technical-wrangling.md#important-decisions-stay-visible) (supporting) · **Assessment:** Open; sandbox foundations exist, but an integrated, qualified user-facing full-stack path has not been demonstrated (2026-11-07).
+**Goal:** [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (primary) · [Important decisions stay visible](../principles/eliminate-needless-technical-wrangling.md#important-decisions-stay-visible) (supporting) · **Assessment:** Open; sandbox foundations exist, but an integrated, qualified user-facing full-stack path has not been demonstrated (2026-11-07).
 
 ## Desired state
 

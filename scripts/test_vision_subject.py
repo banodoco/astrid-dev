@@ -13,9 +13,9 @@ Creative people should direct their own tools.
 
 ## Explanation
 
-This is one short, coherent explanatory paragraph about how the creative intent drives the software. It leaves the distinct criteria to the following characteristics.
+This is one short, coherent explanatory paragraph about how the creative intent drives the software. It leaves the distinct criteria to the following goals.
 
-## Aspirations
+## Goals
 
 ### Agency
 
@@ -44,34 +44,34 @@ class SubjectStructureTests(unittest.TestCase):
         for file in files:
             data = parse_subject(file.read_text(encoding="utf-8"), file.name)
             self.assertTrue(data["statement"].endswith("."))
-            self.assertGreaterEqual(len(data["characteristics"]), 2)
-            self.assertEqual(len({c["id"] for c in data["characteristics"]}),
-                             len(data["characteristics"]))
-            self.assertIn("## Aspirations", render_subject_markdown(data))
+            self.assertGreaterEqual(len(data["goals"]), 2)
+            self.assertEqual(len({c["id"] for c in data["goals"]}),
+                             len(data["goals"]))
+            self.assertIn("## Goals", render_subject_markdown(data))
 
-    def test_aspiration_template_supports_optional_paired_guidance(self):
-        template = (ROOT / "vision/templates/aspiration.md").read_text(encoding="utf-8")
+    def test_goal_template_supports_optional_paired_guidance(self):
+        template = (ROOT / "vision/templates/goal.md").read_text(encoding="utf-8")
         old = SAMPLE[SAMPLE.index("### Agency"):SAMPLE.index("### Continuity")]
         with_guidance = parse_subject(SAMPLE.replace(old, template + "\n"), "template.md")
-        details = with_guidance["characteristics"][0]["detailsMarkdown"]
+        details = with_guidance["goals"][0]["detailsMarkdown"]
         self.assertIn("**We should:**", details)
         self.assertIn("**We should never:**", details)
         without = template.partition("**We should:**")[0].rstrip() + "\n\n"
         no_guidance = parse_subject(SAMPLE.replace(old, without), "template-without-guidance.md")
-        self.assertNotIn("We should", no_guidance["characteristics"][0]["detailsMarkdown"])
-        self.assertEqual(with_guidance["characteristics"][0]["summary"],
-                         no_guidance["characteristics"][0]["summary"])
+        self.assertNotIn("We should", no_guidance["goals"][0]["detailsMarkdown"])
+        self.assertEqual(with_guidance["goals"][0]["summary"],
+                         no_guidance["goals"][0]["summary"])
 
     def test_wrong_section_order_is_rejected(self):
         bad = SAMPLE.replace("## Statement", "## Overview")
         with self.assertRaisesRegex(ValueError, "sections"):
             parse_subject(bad, "test.md")
 
-    def test_each_characteristic_needs_distinct_summary_and_explanation(self):
+    def test_each_goal_needs_distinct_summary_and_explanation(self):
         bad = SAMPLE.replace("Artists should be able to control the result.\n\n", "")
         with self.assertRaisesRegex(ValueError, "summary sentence"):
             parse_subject(bad, "test.md")
-        bad = SAMPLE.replace("## Aspirations", "## Aspirations\n\n### Empty\n\nOnly one sentence.\n")
+        bad = SAMPLE.replace("## Goals", "## Goals\n\n### Empty\n\nOnly one sentence.\n")
         with self.assertRaisesRegex(ValueError, "summary sentence"):
             parse_subject(bad, "test.md")
 
@@ -89,7 +89,7 @@ class SubjectStructureTests(unittest.TestCase):
     def test_legacy_markdown_body_is_derived(self):
         data = parse_subject(SAMPLE, "test.md")
         markdown = render_subject_markdown(data)
-        self.assertIn("## Aspirations", markdown)
+        self.assertIn("## Goals", markdown)
         self.assertIn("### Agency", markdown)
         self.assertIn("## References", markdown)
 
@@ -98,7 +98,7 @@ class SubjectStructureTests(unittest.TestCase):
         lists = "\n\n**We should:**\n\n- Keep consequential decisions visible to the creator.\n\n**We should never:**\n\n- Hide a consequential change from the creator."
         source = SAMPLE.replace("\n\n### Continuity", lists + "\n\n### Continuity")
         parsed = parse_subject(source, "test.md")
-        self.assertIn(lists.strip(), parsed["characteristics"][0]["detailsMarkdown"])
+        self.assertIn(lists.strip(), parsed["goals"][0]["detailsMarkdown"])
         self.assertIn("**We should never:**", render_subject_markdown(parsed))
 
     def test_malformed_lists_are_rejected_without_counting_bullets_as_prose(self):
@@ -119,8 +119,8 @@ class SubjectStructureTests(unittest.TestCase):
             parse_subject(SAMPLE.replace(prose, "Too short." + good), "test.md")
 
     def test_old_heading_is_rejected_with_the_new_heading_in_the_error(self):
-        with self.assertRaisesRegex(ValueError, "Aspirations"):
-            parse_subject(SAMPLE.replace("## Aspirations", "## Characteristics"), "test.md")
+        with self.assertRaisesRegex(ValueError, "Goals"):
+            parse_subject(SAMPLE.replace("## Goals", "## Characteristics"), "test.md")
 
 
 if __name__ == "__main__":

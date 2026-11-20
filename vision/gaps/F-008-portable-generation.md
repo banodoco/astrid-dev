@@ -1,10 +1,10 @@
 # F-008 — Generation isn't yet one portable, extensible path across machines and inference engines
 
-**Aspiration:** [One generation path, any engine, any machine](../principles/eliminate-needless-technical-wrangling.md#one-generation-path-any-engine-any-machine) (primary) · [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (supporting) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · [A small, dependable foundation](../pillars/liquid-software.md#a-small-dependable-foundation) (supporting) · **Assessment:** Open; path review and live RunPod attempts (2026-11-08).
+**Goal:** [One generation path, any engine, any machine](../principles/eliminate-needless-technical-wrangling.md#one-generation-path-any-engine-any-machine) (primary) · [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (supporting) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · [A small, dependable foundation](../pillars/liquid-software.md#a-small-dependable-foundation) (supporting) · **Assessment:** Open; path review and live RunPod attempts (2026-11-08).
 
 ## Desired state
 
-The [generation aspiration](../principles/eliminate-needless-technical-wrangling.md#one-generation-path-any-engine-any-machine) is proven for every supported slot, including composed workflows such as h3_av, across local GPUs, a user's server and rented machines. Requests declare custom-node and model requirements and support align, check and trust modes; results return to the creator.
+The [generation goal](../principles/eliminate-needless-technical-wrangling.md#one-generation-path-any-engine-any-machine) is proven for every supported slot, including composed workflows such as h3_av, across local GPUs, a user's server and rented machines. Requests declare custom-node and model requirements and support align, check and trust modes; results return to the creator.
 
 ComfyUI through VibeComfy is the first engine, with Wan2GP providing the second-engine proof. Rented machines can be reused while warm and retain models on attached storage, so a second job does not download them again. A new workflow, engine or provider meets its declared contract without a new route through Astrid's core.
 

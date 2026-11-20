@@ -1,6 +1,6 @@
 # CA-005 — Many contributors and agents can't yet work in parallel through one clear process
 
-**Aspiration:** [Many hands, one clear way in](../pillars/shared-endeavour.md#many-hands-one-clear-way-in) (primary) · [Open decisions and working knowledge](../principles/open-by-design.md#open-decisions-and-working-knowledge) (supporting) · **Assessment:** Open / partly evidenced (2026-11-12): Plan 48's committed scope is complete and shown on astrid-dev's `main` and in a scratch repository, and Plan 51 finished its two parts (route step 2); none of it is from observed work at scale.
+**Goal:** [Many hands, one clear way in](../pillars/shared-endeavour.md#many-hands-one-clear-way-in) (primary) · [Open decisions and working knowledge](../principles/open-by-design.md#open-decisions-and-working-knowledge) (supporting) · **Assessment:** Open / partly evidenced (2026-11-12): Plan 48's committed scope is complete and shown on astrid-dev's `main` and in a scratch repository, and Plan 51 finished its two parts (route step 2); none of it is from observed work at scale.
 
 
 ## Desired state

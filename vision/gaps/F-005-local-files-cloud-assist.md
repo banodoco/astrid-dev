@@ -1,6 +1,6 @@
 # F-005 — Local-first projects can't yet use cloud execution seamlessly
 
-**Aspiration:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary) · [Important decisions stay visible](../principles/eliminate-needless-technical-wrangling.md#important-decisions-stay-visible) (supporting) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open; remote routes exist but an integrated cloud-assisted local-files workflow has not been qualified.
+**Goal:** [Everything local or cloud, by choice](../principles/local-first-cloud-capable.md#everything-local-or-cloud-by-choice) (primary) · [Important decisions stay visible](../principles/eliminate-needless-technical-wrangling.md#important-decisions-stay-visible) (supporting) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open; remote routes exist but an integrated cloud-assisted local-files workflow has not been qualified.
 
 ## Desired state
 

@@ -1,6 +1,6 @@
 # F-004 — Pack installation and upgrades aren't yet proven under demanding conditions
 
-**Aspiration:** [Packs are live, portable and extensible](../pillars/liquid-software.md#packs-are-live-portable-and-extensible) (primary) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · **Assessment:** Open / partial current mechanisms (2026-11-06).
+**Goal:** [Packs are live, portable and extensible](../pillars/liquid-software.md#packs-are-live-portable-and-extensible) (primary) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · **Assessment:** Open / partial current mechanisms (2026-11-06).
 
 ## Desired state
 

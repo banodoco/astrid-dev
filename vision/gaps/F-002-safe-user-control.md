@@ -1,6 +1,6 @@
 # F-002 — User control and recovery aren't fully proven
 
-**Aspiration:** [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (primary) · **Assessment:** Open / partly implemented foundations (2026-11-06).
+**Goal:** [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (primary) · **Assessment:** Open / partly implemented foundations (2026-11-06).
 
 ## Desired state
 

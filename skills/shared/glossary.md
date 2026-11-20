@@ -108,9 +108,9 @@ One meaning per word; two meanings, two terms.
 
 **element:** a pillar or principle of the vision; one type with two kinds.
 
-**goal (vision):** what a vision element (pillar or principle) is trying to achieve, with optional paired We should / We should never lists. The website calls these **Goals**. The existing Astrid Dev authoring heading `Aspirations`, aspiration-reference names and feed field `characteristics` remain compatibility identifiers for this same concept, not separate entities.
+**goal (vision):** what a vision element (pillar or principle) is trying to achieve, with optional paired We should / We should never lists. The website and Astrid Dev sources both call these **Goals**. The stable goal IDs do not change; schema-v1 feed fields with former names remain temporary compatibility aliases for older clients, not additional records.
 
-**primary and supporting goals (of a gap):** its one primary vision goal and any distinct supporting goals; existing file metadata calls these aspirations for compatibility.
+**primary and supporting goals (of a gap):** its one primary vision goal and any distinct supporting goals; current gap metadata is `**Goal:**` and names the stable heading-derived IDs.
 
 **version:** the user-facing `major.minor.patch` number of a release. A minor or major release ships a new version (0.1, 1.0); the strategy page has one section for each version, holding that release and the patch releases that lead to it.
 

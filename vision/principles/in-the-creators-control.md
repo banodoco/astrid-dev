@@ -8,7 +8,7 @@ Creators have the final say over their creative environments.
 
 Astrid should make it possible to choose features and services, control agent permissions, and decide what stays private or becomes shared. Even core workings should be adaptable, without requiring artists to become experts in the underlying technology.
 
-## Aspirations
+## Goals
 
 ### Control at every layer
 

@@ -1,6 +1,6 @@
 # CI-002 — Hivemind functionality isn't yet refined and interoperable
 
-**Aspiration:** [Share without surrendering control](../pillars/compounding-intelligence.md#share-without-surrendering-control) (primary) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open, proposal compared with source (2026-11-06).
+**Goal:** [Share without surrendering control](../pillars/compounding-intelligence.md#share-without-surrendering-control) (primary) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open, proposal compared with source (2026-11-06).
 
 ## Desired state
 

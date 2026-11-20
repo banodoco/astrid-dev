@@ -1,6 +1,6 @@
 # CI-003 — Hivemind doesn't yet learn from public internet resources
 
-**Aspiration:** [Use knowledge with judgment](../pillars/compounding-intelligence.md#use-knowledge-with-judgment) (primary) · [Open decisions and working knowledge](../principles/open-by-design.md#open-decisions-and-working-knowledge) (supporting) · **Assessment:** Open; initial assessment (2026-11-10); not implementation proof.
+**Goal:** [Use knowledge with judgment](../pillars/compounding-intelligence.md#use-knowledge-with-judgment) (primary) · [Open decisions and working knowledge](../principles/open-by-design.md#open-decisions-and-working-knowledge) (supporting) · **Assessment:** Open; initial assessment (2026-11-10); not implementation proof.
 
 ## Desired state
 
