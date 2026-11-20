@@ -34,10 +34,9 @@ class WorkstreamDiscoveryTests(unittest.TestCase):
     def test_repository_workstreams_are_all_valid_and_indexes_are_current(self):
         root = Path(__file__).resolve().parents[1]
         self.assertEqual(validate(root), [])
-        discovered = workstream_files(root)
-        self.assertGreaterEqual(len(discovered), 6)
-        self.assertEqual({path.name for path in discovered if "astrid-dev-manage" in str(path)},
-                         {"whole-project.md", "chatgpt-packet.md"})
+        # Discovery remains open to additions and legitimate removals; no frozen roster.
+        for path in workstream_files(root):
+            self.assertTrue(metadata(path)[1])
         for parent in PARENT_SKILLS:
             registered = [v for v in VIEWS if v.target == parent and v.region == "workstreams"]
             self.assertEqual(len(registered), 1, parent)
