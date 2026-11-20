@@ -25,7 +25,7 @@ Copy this into your agent:
 ```text
 Help me contribute to Astrid. Start at
 https://github.com/banodoco/astrid-dev and follow
-skills/astrid-dev/SKILL.md. Find relevant existing
+agent/start.md. Find relevant existing
 issues and project work before proposing anything new.
 Help me choose the smallest useful contribution,
 verify it, and follow the repository's review process.

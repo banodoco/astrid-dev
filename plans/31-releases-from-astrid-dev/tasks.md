@@ -2,9 +2,9 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run contract](../../skills/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. An N task that misses the same acceptance check twice re-routes to X.
+Routes: **N** = normal, **X** = very hard, **S** = super hard (see the [run contract](../../agent/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. An N task that misses the same acceptance check twice re-routes to X.
 
-**Where work lands.** Every task lands by PR on `int/31-releases-from-astrid-dev`, in astrid-dev and in the App, cut from each `main` when the run starts (after Plan 29 is on App `main`). Only the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md) moves either branch to `main` (RL-G). Record each task's base SHA when it starts.
+**Where work lands.** Every task lands by PR on `int/31-releases-from-astrid-dev`, in astrid-dev and in the App, cut from each `main` when the run starts (after Plan 29 is on App `main`). Only the [Release skill](../../agent/shared/workstreams/release.md) moves either branch to `main` (RL-G). Record each task's base SHA when it starts.
 
 **Phases.** Phase 1 is every row down to RL-G: releases are defined, checked and published from astrid-dev. Phase 2 is RL-3: users see versions. Per-phase estimates are in the [catalog](../index.md).
 

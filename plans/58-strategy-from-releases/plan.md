@@ -12,9 +12,9 @@
 
 **Waiting on:** —
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
-**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): a person or agent joining sees where we are heading, what each release is for and what it ships, without asking. CA-005's route does not name this plan, so there is no `Contributes to closure` line; adding one is a [Gap](../../skills/capabilities/astrid-dev-gap/SKILL.md) step for the owner to ask for.
+**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): a person or agent joining sees where we are heading, what each release is for and what it ships, without asking. CA-005's route does not name this plan, so there is no `Contributes to closure` line; adding one is a [Gap](../../agent/shared/workstreams/gap.md) step for the owner to ask for.
 
 ## Outcome and scope
 

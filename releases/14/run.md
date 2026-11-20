@@ -246,7 +246,7 @@ Send it from the owner's account to a new ChatGPT session using the mode assigne
 
 ```text
 You are the ChatGPT manager implementing ONE packet for Release 14.
-Follow skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md in banodoco/astrid-dev.
+Follow agent/roles/manager/chatgpt-packet.md in banodoco/astrid-dev.
 Packet: releases/14/packets/R14-P55-01.md at <SHA>; its PR destination names your branches.
 Authority: the Authority section of releases/14/run.md at <SHA>, given by the owner.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/796, run r14-dispatch, format in its first post.
@@ -266,7 +266,7 @@ The owner pastes this into the Orchestrator's own session. `<SHA>` is astrid-dev
 
 ```text
 You are the Orchestrator for Release 14, reporting to the Lead (mailbox name r14-lead).
-Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev.
+Follow agent/roles/orchestrator/multi-manager-dispatch.md in banodoco/astrid-dev.
 Read releases/14/run.md at <SHA>, then on main at every hourly check: the Lead rewrites it.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/796, format in its first post.
 Your mailbox name: r14-orchestrator-1. A packet's ID is its file name, for example R14-P39-02.

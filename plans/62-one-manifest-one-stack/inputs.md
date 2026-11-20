@@ -33,7 +33,7 @@ Concept count: today, two ideas in about ten spellings. After Plan 61 alone: the
 
 **Review rounds:** Recommend at most 5 at the end, stopping at the first round with no blockers. That is the owner's standing rule. It is warranted here because the plan reaches the installer tuple, the source surfaces and user data. Plan 61's tool has its own round before it lands (Plan 61's D3), so these rounds cover Plan 62's changes. Next: the owner confirms (D3).
 
-**Run start:** Pending — no run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../skills/shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one.
+**Run start:** Pending — no run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../agent/shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one.
 
 ## Owner decisions
 

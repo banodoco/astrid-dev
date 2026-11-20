@@ -12,7 +12,7 @@
 
 **Waiting on:** the owner's scope decision (D1); Release 13's in-flight terminal-reconcile and Runtime inline-proof fixes, which RB-1 needs
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** [Portable generation](../../vision/gaps/F-008-portable-generation.md) (primary): generation on a rented GPU must fail with a named cause, not a silent hang, before it can be relied on. [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (supporting): failures that leave a task stuck or a machine billing are operational-lifecycle failures.
 

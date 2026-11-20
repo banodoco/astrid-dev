@@ -135,7 +135,7 @@ One line per finding, ruled by the Release 12 manager. Agent candidate `cand/29-
 - **A4 source ownership:** A [source-only Chromium 148 note](evidence/r12/a4-chromium-source.md) identifies interceptor disconnect, completion and CDP ownership with exact upstream links. It does not prove CI took that path or that no terminal can be emitted elsewhere. The documented interfaces examined do not establish a behavior-preserving mechanism for both missing terminal and incomplete body; no scope waiver or fix is claimed.
 - **A4 decision record:** The [capture guarantee, observed browser boundary, viable paths and consequences](evidence/r12/a4-decision.md) are summarized for orchestration. A browser/DevTools mechanism is the recommended behavior-preserving path; an App-owned lifecycle contract requires product-behavior disposition. No evidence contract has been relaxed and A4 remains blocked even if the release is split.
 
-Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = super hard (see the [run contract](../../skills/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. Start each task from the live heads, recorded when it starts. The SHAs here only locate the cited lines: App `915bfa84`, Agent `a2c4ab7d` (the same product code as `709492fa` in inputs.md, plus test-harness commits), Runtime `61e2c301`. Re-check those lines against the branch being built.
+Routes: **N** = normal (everything below very hard), **X** = very hard, **S** = super hard (see the [run contract](../../agent/shared/run-contract.md)). X and S tasks delegate research, reading, mechanical edits and checks to N helpers, and keep the judgment and the final change. Start each task from the live heads, recorded when it starts. The SHAs here only locate the cited lines: App `915bfa84`, Agent `a2c4ab7d` (the same product code as `709492fa` in inputs.md, plus test-harness commits), Runtime `61e2c301`. Re-check those lines against the branch being built.
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
@@ -340,7 +340,7 @@ Release versions, the release log and versions on screen moved to [Plan 31](../3
 
 ### UR-R Review rounds
 
-This plan sets its own review policy, as the [run contract](../../skills/shared/run-contract.md) allows.
+This plan sets its own review policy, as the [run contract](../../agent/shared/run-contract.md) allows.
 
 1. **Run a round.** An independent S reviewer (Opus) reviews the integrated candidate across App, Agent, Runtime and launcher. It reviews against [the completion criteria and negative cases](plan.md#completion) and the recorded owner decisions. It returns each finding as a task card, with these fields:
    - outcome;
@@ -372,7 +372,7 @@ Reviewed on Runtime `3d19ba9a`, Agent `41170fdb`, App `73a8500d` (superseded; se
 - **Route:** X.
 - **Dependencies and inputs:**
   - [decision 17](inputs.md);
-  - the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md) Patch release section, written 12 Nov;
+  - the [Release skill](../../agent/shared/workstreams/release.md) Patch release section, written 12 Nov;
   - Plan 09 IU-15 for the update rows from every published release.
 - **Work:**
   - Make `release-guard` and the release record recognise a patch: the tuple diff is limited to the patched component, and the record lists the fix commits and the carried-over evidence by run and SHA.

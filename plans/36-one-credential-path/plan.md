@@ -14,7 +14,7 @@
 
 **Vision gaps:** [User control and recovery](../../vision/gaps/F-002-safe-user-control.md) (primary) · [Local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (supporting).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 **Draft; not ready for execution.** Every secret Astrid uses is stored, granted and revoked one way, through the Runtime's credential records (`<data-root>/credentials/`, `controlRemoteCredential`). It is never kept in app-state, preferences, a settings document or a plaintext dotenv file.
 

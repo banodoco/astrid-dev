@@ -12,7 +12,7 @@
 
 **Waiting on:** the owner's go to queue it (ready, held by the owner on 9 Nov); scope agreement; owner decisions D1–D9; advisor critique; Plan 32 T6 (G1–G3 can start now)
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Creative execution](../../vision/gaps/F-003-creative-execution.md) (primary). Why F-003 and not AA-001 or LS-002 is in [inputs.md](inputs.md#planning-evidence).
 
