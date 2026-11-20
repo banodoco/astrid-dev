@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Platform reliability](../../vision/gaps/F-001-platform-reliability.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 Prove the everyday Pinokio backend path on hosted Linux, macOS, and Windows through a separate three-row gate. This is the basic R1.1 increment; full engine, custody, and fully-local qualification stays in [Plan 10](../10-pinokio-qualification/plan.md).
 
@@ -54,7 +54,7 @@ See [task cards](tasks.md) for routes, dependencies, and focused acceptance evid
 
 ## Completion
 
-Complete when all three rows pass at frozen heads and those heads are on `main`. Record any unsupported OS as a named limitation. This proves the hosted basic backend path, not the deferred qualification behaviors. PB-END preserves the original publication boundary; this plan does not start execution. See the [shared run contract](../../skills/shared/run-contract.md) for run controls and route bindings.
+Complete when all three rows pass at frozen heads and those heads are on `main`. Record any unsupported OS as a named limitation. This proves the hosted basic backend path, not the deferred qualification behaviors. PB-END preserves the original publication boundary; this plan does not start execution. See the [shared run contract](../../agent/shared/run-contract.md) for run controls and route bindings.
 
 ## Read next
 

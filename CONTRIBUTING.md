@@ -1,6 +1,6 @@
 # Contributing to Astrid
 
-**[Start here: contribution workflow](docs/contribution-workflow.md)** · [Use an agent? Give it the main skill](skills/astrid-dev/SKILL.md) · [Find work](plans/index.md) · [Report a bug](https://github.com/banodoco/astrid-dev/issues/new)
+**[Start here: contribution workflow](docs/contribution-workflow.md)** · [Use an agent? Give it the main skill](agent/start.md) · [Find work](plans/index.md) · [Report a bug](https://github.com/banodoco/astrid-dev/issues/new)
 
 Everyone can propose work. [The contribution workflow](docs/contribution-workflow.md) sets the rules for [claiming](docs/contribution-workflow.md#claim-a-project), [scope review](docs/contribution-workflow.md#propose-and-greenlight-new-work), [implementation review](docs/contribution-workflow.md#submit-work-for-review) and [completion](docs/contribution-workflow.md#submit-a-completed-project). A claim or review-queue label is not execution or merge permission.
 

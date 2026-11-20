@@ -12,7 +12,7 @@
 
 **Waiting on:** Draft review and an authorized implementation start; the live installation remains paused.
 
-**Start:** [Astrid contributor skill](../../../skills/astrid-dev/SKILL.md) and [domain map](../../../skills/astrid-dev/references/domains.md). This is a paused draft extension to [Plan 09](../plan.md), not a separately queued project or authorization to start a run.
+**Start:** [Astrid contributor skill](../../../agent/start.md) and [domain map](../../../agent/shared/domains.md). This is a paused draft extension to [Plan 09](../plan.md), not a separately queued project or authorization to start a run.
 
 **Vision gaps:** [F-001 platform reliability](https://github.com/banodoco/astrid-dev/blob/d7666299d56dc502e06721b8263c6e2f5c594d14/vision/gaps/F-001-platform-reliability.md) (primary), [F-002 safe user control](https://github.com/banodoco/astrid-dev/blob/d7666299d56dc502e06721b8263c6e2f5c594d14/vision/gaps/F-002-safe-user-control.md) (supporting). No `Contributes to closure` claim yet: no gap route has been edited or accepted.
 

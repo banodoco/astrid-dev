@@ -12,7 +12,7 @@
 
 **Waiting on:** What the project waits for, or `—`.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
 **Vision gaps:** Link the relevant [existing gap](../../vision/gaps/F-001-platform-reliability.md) (primary), with any other truly useful supporting gaps linked after it, or, for no gap, replace this line with `**Vision role:** Foundational enabler — <reason>`. A small bug or maintenance fix belongs in an issue.
 

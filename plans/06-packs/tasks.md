@@ -1,10 +1,10 @@
 # Tasks: Packs v1.3
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 [Project explanation](plan.md) · [Inputs and provenance](inputs.md) · [Current project status](../../README.md)
 
-Routes: `N` is the default (including ordinary hard work), `X` very hard, `S` super hard; see the [run contract](../../skills/shared/run-contract.md#routing-and-bindings). Run only the checks named here, with the exact selectors given; never a whole suite. A check that fails follows the run contract: keep the first failure, repair the cause, rerun the same check. Start only on the owner's go.
+Routes: `N` is the default (including ordinary hard work), `X` very hard, `S` super hard; see the [run contract](../../agent/shared/run-contract.md#routing-and-bindings). Run only the checks named here, with the exact selectors given; never a whole suite. A check that fails follows the run contract: keep the first failure, repair the cause, rerun the same check. Start only on the owner's go.
 
 Selectors marked **Step 0** must be confirmed on the task's head before it starts (the place to look is given). If a Step 0 lookup finds nothing, record that in the task and drop the check; do not invent a selector. A selector marked **new** is a test the task writes.
 
@@ -205,7 +205,7 @@ BND
 
 ## LB-TXN transaction review
 
-Use the completion-reviewer role from the [run contract](../../skills/shared/run-contract.md#review-and-promotion-boundaries) on the PK-8 and PK-9 diffs (`git diff <PK-7 head> <PK-8 head>` and `<PK-8 head> <PK-9 head>`), before anything builds on them. Blocking classes: lost or corrupted pack bytes, an unrecoverable half-state, a consent not bound to the staged bytes, a secret reaching an undeclared action, a read path taking the exclusive lock. **At most 2 rounds** (owner decision, 3 Nov 2026; overrides the default of 5); at the cap, report `REVIEW-AT-CAP:` to the owner. A finding in PK-8 also sends PK-9 back for the same cause; a repair goes forward as a new commit on the current head, then the failed selector reruns.
+Use the completion-reviewer role from the [run contract](../../agent/shared/run-contract.md#review-and-promotion-boundaries) on the PK-8 and PK-9 diffs (`git diff <PK-7 head> <PK-8 head>` and `<PK-8 head> <PK-9 head>`), before anything builds on them. Blocking classes: lost or corrupted pack bytes, an unrecoverable half-state, a consent not bound to the staged bytes, a secret reaching an undeclared action, a read path taking the exclusive lock. **At most 2 rounds** (owner decision, 3 Nov 2026; overrides the default of 5); at the cap, report `REVIEW-AT-CAP:` to the owner. A finding in PK-8 also sends PK-9 back for the same cause; a repair goes forward as a new commit on the current head, then the failed selector reruns.
 
 ## PK-10 rendering and composition
 
@@ -386,7 +386,7 @@ test "$(grep -cE '^\| (E|N|X)([1-9]|10) \|' docs/packs/CPU-PROOF.md)" -eq 30
 
 ## END integrated review
 
-Use the completion-reviewer role from the [run contract](../../skills/shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, **at most 3 rounds** (owner decision, 3 Nov 2026; overrides the default of 5), stop on an uncontested PASS; at the cap report `REVIEW-AT-CAP:` to the owner. Give the reviewer the Agent, Runtime, App and poms_packs candidate heads, the check outputs and these items:
+Use the completion-reviewer role from the [run contract](../../agent/shared/run-contract.md#review-and-promotion-boundaries): one review after all scoped checks, **at most 3 rounds** (owner decision, 3 Nov 2026; overrides the default of 5), stop on an uncontested PASS; at the cap report `REVIEW-AT-CAP:` to the owner. Give the reviewer the Agent, Runtime, App and poms_packs candidate heads, the check outputs and these items:
 
 1. The foundation chain and the parks are ancestors; the excluded lanes (g3, the deferred M3-04 lanes, r6, CAS) are not.
 2. `astrid/packs/wan2gp` still exists and nothing else in the Wan2GP path changed.
@@ -404,13 +404,13 @@ Route N (X if conflicts).
 
 1. Re-freeze each destination: Agent, Runtime and App `pre-main`, and poms_packs (still no `main`). Record the SHAs.
 2. Rebase the reviewed Agent, Runtime and App candidates onto them. If nothing moved, record that and go to PK-PREMAIN.
-3. If the rebase is clean, rerun only the checks whose inputs changed (a moved target invalidates only the proof that depends on it, per the [run contract](../../skills/shared/run-contract.md#checks-and-failure-repair)) and record why the rest carries forward. A rebased Runtime head has a new SHA: regenerate the Agent and App locks against it with their tools and rerun PK-14's lock check and PK-15's lock check.
+3. If the rebase is clean, rerun only the checks whose inputs changed (a moved target invalidates only the proof that depends on it, per the [run contract](../../agent/shared/run-contract.md#checks-and-failure-repair)) and record why the rest carries forward. A rebased Runtime head has a new SHA: regenerate the Agent and App locks against it with their tools and rerun PK-14's lock check and PK-15's lock check.
 4. If it conflicts, resolve the conflicts (route X), rerun the affected checks, and ask the completion reviewer for a delta review of the resolution. This counts against END's three-round budget; it adds no stage.
 5. PK-PREMAIN promotes the rebased heads by fast-forward. Never force-push.
 
 ## PK-PREMAIN promote
 
-Route N. Only with the owner's explicit authority. Follow the release workflow's `pre-main` integration lane ([release skill](../../skills/capabilities/astrid-dev-release/SKILL.md)): recapture each destination immediately before and promote the exact rebased heads by ordinary fast-forward or create operations, in this order so no consumer names a producer that is not yet there: Runtime, Agent, App.
+Route N. Only with the owner's explicit authority. Follow the release workflow's `pre-main` integration lane ([release skill](../../agent/shared/workstreams/release.md)): recapture each destination immediately before and promote the exact rebased heads by ordinary fast-forward or create operations, in this order so no consumer names a producer that is not yet there: Runtime, Agent, App.
 
 1. Verify the destination `pre-main` equals the RB1 record. If it moved, repeat RB1 for what moved.
 2. Push each candidate head to `pre-main` as a fast-forward.

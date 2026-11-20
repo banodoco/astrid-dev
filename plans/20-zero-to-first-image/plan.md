@@ -12,7 +12,7 @@
 
 **Waiting on:** release 12 published, then the owner's go to merge the Agent `main` group; the App group rides the next App release; the generation group waits on Plan 32 S2, T5d and T6d; phase 4 is part of release 13 (owner, 14 Nov) and lands with it
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../../plans/index.md).
 
 **Vision gaps:** [Dependable creative execution](../../vision/gaps/F-003-creative-execution.md) (primary).
 

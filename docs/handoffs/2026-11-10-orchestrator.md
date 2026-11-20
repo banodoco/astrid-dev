@@ -4,7 +4,7 @@ This brief is for the next orchestrator. It holds everything needed to take over
 
 Read it in this order:
 1. this file;
-2. [astrid-dev-orchestrate](../../skills/roles/astrid-dev-orchestrate/SKILL.md);
+2. [astrid-dev-orchestrate](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/roles/astrid-dev-orchestrate/SKILL.md);
 3. each running plan's `handoff.md` (linked in [State and next actions](#state-and-next-actions)).
 
 Release 12 (Plan 29) has its own takeover brief, [`plans/29-update-and-release/orchestrator-brief.md`](../../plans/29-update-and-release/orchestrator-brief.md). Read it too if you take over the release.
@@ -50,7 +50,7 @@ Release path:
 1. Release 12 publishes (Plan 29 owns it).
 2. Lift the CI freeze.
 3. Plan 32 merges `main` into int/32 and re-proves.
-4. Cut `cand/release-13` through the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md), carrying int/32, Plan 20 P1.5, Plan 40, the CI-trigger prep, and VibeComfy [#165](https://github.com/banodoco/VibeComfy/pull/165) and [#166](https://github.com/banodoco/VibeComfy/pull/166) via the pin.
+4. Cut `cand/release-13` through the [Release skill](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/capabilities/astrid-dev-release/SKILL.md), carrying int/32, Plan 20 P1.5, Plan 40, the CI-trigger prep, and VibeComfy [#165](https://github.com/banodoco/VibeComfy/pull/165) and [#166](https://github.com/banodoco/VibeComfy/pull/166) via the pin.
 
 ## 3. Owner rules (Hannah, 9–10 Nov). These stand until she changes them.
 
@@ -97,9 +97,9 @@ Release path:
 
 ### Starting a manager
 
-Follow [codex-in-cloud](../../skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/README.md). For each manager:
+Follow [codex-in-cloud](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/README.md). For each manager:
 1. Make a workdir with the clones plus a `run/` folder.
-2. Write `run/prompt.md` from [manager-brief.md](../../skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/manager-brief.md), and prepend the kickoff below.
+2. Write `run/prompt.md` from [manager-brief.md](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/manager-brief.md), and prepend the kickoff below.
 3. Start it:
    `CODEX_EFFORT=high CODEX_MAX_THREADS=8 setsid nohup <astrid-dev>/skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/codex-runner.sh <workdir> <workdir>/run/prompt.md <workdir>/run 6 gpt-6-luna >/dev/null 2>&1 </dev/null &`
 4. Add the run folder to `~/codex/runs.txt`.

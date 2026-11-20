@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs and source identities](inputs.md) · [Status, priority and owner](../index.md)
 
-**Scope boundary:** these are dependency-aware proposed tasks, not dispatched work. No implementation, cloud spend, provider commitment or access to user files is authorized without a scoped owner decision and the [shared run contract](../../skills/shared/run-contract.md). Routes (`N`, `X`, `S`) and estimates remain undecided until source audits establish actual complexity; do not guess or treat a draft as ready for execution.
+**Scope boundary:** these are dependency-aware proposed tasks, not dispatched work. No implementation, cloud spend, provider commitment or access to user files is authorized without a scoped owner decision and the [shared run contract](../../agent/shared/run-contract.md). Routes (`N`, `X`, `S`) and estimates remain undecided until source audits establish actual complexity; do not guess or treat a draft as ready for execution.
 
 ## Task index
 
