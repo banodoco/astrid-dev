@@ -1,3 +1,7 @@
+---
+description: Host Codex workers or a manager inside Claude Cloud while preserving explicit ownership, permissions and recovery.
+---
+
 # Workstream: Codex hosted inside Claude Cloud
 
 Choose when a Claude Cloud session runs Codex in its container, either as **workers** (default) or, when justified, as a managed Codex process. The detailed commands and scripts remain in the [environment guide](codex-in-claude-cloud/README.md); do not copy them here. Follow the general [Orchestrate role](../SKILL.md) and [run contract](../../../shared/run-contract.md).
