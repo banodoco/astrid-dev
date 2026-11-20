@@ -266,5 +266,54 @@ class ReviewEventTests(unittest.TestCase):
             self.assertFalse(any(c.args[0] != "GET" for c in request.call_args_list))
 
 
+class PlanTextTransportTests(unittest.TestCase):
+    """GitHub content is line-wrapped; only ASCII wrapping is ignorable."""
+
+    @staticmethod
+    def content(encoded):
+        return {"type": "file", "encoding": "base64", "content": encoded}
+
+    def test_accepts_line_wrapped_base64_without_losing_utf8(self):
+        import base64
+        from contribution_api import plan_text
+
+        wrapped = base64.encodebytes(PLAN.encode("utf-8")).decode("ascii")
+        spaced = " \t\r\n".join(
+            wrapped.replace("\n", "")[i:i + 32]
+            for i in range(0, len(wrapped.replace("\n", "")), 32)
+        )
+        for encoded in (wrapped, spaced, base64.b64encode(PLAN.encode("utf-8")).decode("ascii")):
+            with self.subTest(encoded=encoded[:30]), patch(
+                "contribution_api.request", return_value=self.content(encoded)
+            ) as request:
+                self.assertEqual(plan_text(REPO, MAIN, FOLDER), PLAN)
+                request.assert_called_once_with(
+                    "GET", f"/repos/{REPO}/contents/{PATH}?ref={MAIN}"
+                )
+
+    def test_rejects_bad_alphabet_padding_unicode_whitespace_and_utf8(self):
+        import base64
+        from contribution_api import plan_text
+
+        invalid = ("Zg==@", "Zg===", "Zg=", "\u00a0Zg==",
+                   base64.b64encode(b"\xff").decode("ascii"))
+        for encoded in invalid:
+            with self.subTest(encoded=encoded), patch(
+                "contribution_api.request", return_value=self.content(encoded)
+            ), self.assertRaisesRegex(ValueError, "not valid base64 UTF-8"):
+                plan_text(REPO, MAIN, FOLDER)
+
+    def test_rejects_non_file_and_symlink_without_decoding(self):
+        from contribution_api import plan_text
+
+        for result in ({"type": "symlink", "encoding": "base64", "content": "YQ=="},
+                       {**self.content("YQ=="), "target": "../private"},
+                       {"type": "file", "encoding": "none", "content": "YQ=="}):
+            with self.subTest(result=result), patch(
+                "contribution_api.request", return_value=result
+            ), self.assertRaisesRegex(ValueError, "expected a plain project plan"):
+                plan_text(REPO, MAIN, FOLDER)
+
+
 if __name__ == "__main__":
     unittest.main()
