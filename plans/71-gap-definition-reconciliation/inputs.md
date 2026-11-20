@@ -67,6 +67,16 @@ Phase 2 must also include at least one genuinely valid existing gap, one non-gap
 
 **At implementation:** Re-read current refs, writer/ownership state, accepted Plan 53 output, issue inventory and actual App contract. If an active branch or owner conflicts on a shared record, coordinate before editing; do not fabricate compatible donors, an automatically rebased baseline or claimed CI results. Capture full issue-search pagination and any missing history during GD-6.
 
+### Execution readiness check — 20 November 2026
+
+**Current disposition:** Preparation only, **not** a task run or completion claim. The owner has now instructed a Manager to drive Phases 1–5 to completion and to push accepted task results with updates to the canonical `tasks.md`. This is an execution request, but the [whole-project Manage workstream](../../skills/roles/astrid-dev-manage/workstreams/whole-project.md#steps) explicitly requires a release brief to include the plan before a new plan run can start.
+
+**Verified blocker:** As checked on Astrid Dev `main` `9949514a92bd5dda836d7ecebef3816dc601534e`, the Plan 71 header is `Status: queued`, `Owner: Unassigned`; Releases [14](../../releases/14.md), [15](../../releases/15.md), [16](../../releases/16.md), and [17](../../releases/17.md) do not include Plan 71. There is no plan-specific `p71` branch returned by a branch search, and no recorded `Run start`. The run must not be represented as active or any GD task checked off until the release, accountable manager, authorization and baseline are recorded.
+
+**Other gates:** The independent scope critique remains pending; the plan's load-bearing RS1/RS2/R reviews cannot be replaced with author self-review. [Astrid Dev Goals PR #1059](https://github.com/banodoco/astrid-dev/pull/1059) and [App PR #323](https://github.com/banodoco/astrid-app/pull/323) were still open and draft at this check; they own overlapping authoring/export semantics. Phase 3 GD-5 requires an actual owner acceptance of the tested gap definition; Phase 4 GD-9 separately requires an actual owner acceptance of the proposed catalogue migration.
+
+**Recommended next decision:** Place this foundational documentation/process project in an explicitly approved release, preferably a separate future release rather than silently expanding the product-stability scope of Releases 14–17; identify one accountable manager and the independent reviewer. After that, record the run start, run the baseline, and perform GD-1. Then each accepted task should be pushed on its own task branch, integrated through reviewed PRs, and separately checked off in `tasks.md` on `main`, per Manage. Keep Phases 6–7 deferred and unimplemented. This is a proposed route, not an owner decision or release edit.
+
 ## References
 
 - [Gap workstream](../../skills/shared/workstreams/astrid-dev-gap/SKILL.md), [project planning workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md), [contribution design principles](../../docs/contribution-design-principles.md).
