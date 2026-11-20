@@ -227,7 +227,7 @@ Check names are as GitHub shows them. K2 writes them to `ci/required-checks.json
 
 ## Estimate
 
-The [19 November cut][cut] budgets **30–60 engineering days** for A–D plus enforcement, parallel across the three repositories. Re-estimate once A restores integration execution and D’s shared setup exposes the hidden tests. Qualification still takes three consecutive green nights.
+The [19 November cut][cut] budgets **30–60 engineering days** for A–D plus enforcement, parallel across the three repositories. A restored all 2,067 integration executions. The first 78 of D’s 104 paired S01 cases now reach their calls, with 48 passing and 30 failing at four observed boundaries. Retain this provisional range until the remaining 26 cases and the two historical HTTP fixtures expose their original outcomes. [20 November strategic review](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7027746810) Qualification still takes three consecutive green nights.
 
 [cut]: https://github.com/banodoco/astrid-dev/issues/796#issuecomment-6995664680
 [g1]: https://github.com/banodoco/astrid-dev/blob/77a95b4b/plans/39-green-mains/evidence/release-14-phase1-measurement-20261116/baseline-g1/final-report-data.json.gz
