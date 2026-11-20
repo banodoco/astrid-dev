@@ -1,0 +1,429 @@
+{
+  "plan": "5dd0e9ea869560f827ef9184a11c8eb22d0b665d",
+  "tier": "release",
+  "trusted_base": "5dd0e9ea869560f827ef9184a11c8eb22d0b665d",
+  "run": 44776293931,
+  "attempt": 1,
+  "verdict": "FAIL",
+  "artifact": 14649977324,
+  "sha256": "22eac46ed69df867284b5381e67ebd33a2a242697d45092b22a5b16b584daa5d",
+  "prior": {
+    "errors": 5866,
+    "unknown": 13,
+    "covered": 137,
+    "retired": 0,
+    "categories": {
+      "lost ID": 4056,
+      "observed ID must be retained in the inventory": 855,
+      "new red": 954,
+      "new skip/xfail/deselection": 1
+    }
+  },
+  "current": {
+    "errors": 1943,
+    "unknown": 12,
+    "covered": 159,
+    "retired": 0,
+    "categories": {
+      "lost ID": 13,
+      "observed ID must be retained in the inventory": 866,
+      "new red": 1063,
+      "new skip/xfail/deselection": 1
+    }
+  },
+  "required": 25,
+  "normalized": 20,
+  "lost_ids": [
+    "[\"CI/unit (ubuntu-latest)\",\"tests/core/test_executor_schema_capabilities.py::ExecutorSchemaCapabilityTest::test_external_runtime_rejects_invalid_source_install_import_and_binary\",\"null\",\"\\\"SubtestContext(msg=None, kwargs={'expected': 'source.url'})\\\"\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/installer/test_tls_fallback.py::test_certificate_failure_retries_once_with_verified_context[direct]\",\"\\\"[direct]\\\"\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/installer/test_tls_fallback.py::test_certificate_failure_retries_once_with_verified_context[urlerror]\",\"\\\"[urlerror]\\\"\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/installer/test_tls_fallback.py::test_default_success_uses_one_attempt_without_changing_ssl\",\"null\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/installer/test_tls_fallback.py::test_open_with_tls_fallback_keeps_handlers_and_retries_once_natively\",\"null\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/installer/test_tls_fallback.py::test_repeated_certificate_failure_stops_after_two_attempts\",\"null\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/installer/test_tls_fallback.py::test_retry_still_rejects_a_checksum_mismatch\",\"null\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/installer/test_tls_fallback.py::test_retry_works_in_dependency_free_bootstrap\",\"null\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/packs/test_vibecomfy_metadata.py::VibeComfyStructuredMetadataTest::test_run_rejects_missing_or_empty_engine_inventory\",\"null\",\"\\\"SubtestContext(msg=None, kwargs={'inventory': ('/tmp/tmpl8p3yqof/missing.png',)})\\\"\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/test_ci_journey_service_ownership.py::LinuxServiceOwnershipTests::test_missing_or_wrong_fragment_is_an_ownership_failure\",\"null\",\"\\\"SubtestContext(msg=None, kwargs={'load_state': 'not-found', 'fragment_path': '/tmp/tmp799koq1q/run/home/.config/systemd/user/astrid.service'})\\\"\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/test_handoff_sentence.py::test_skills_off_closes_with_a_scan_hint_that_matches_the_command_on_path\",\"null\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/test_installer_shim.py::test_connect_page_link_is_always_printed_and_opened_unless_switched_off[None-False-True-False]\",\"\\\"[None-False-True-False]\\\"\",\"null\"]",
+    "[\"CI/unit (ubuntu-latest)\",\"tests/test_installer_shim.py::test_connect_page_link_is_always_printed_and_opened_unless_switched_off[None-False-True-True]\",\"\\\"[None-False-True-True]\\\"\",\"null\"]"
+  ],
+  "unknown": [
+    "missing required job/nightly: CI / release wheel / Python 3.11",
+    "missing required job/nightly: CI / release wheel / Python 3.12",
+    "missing required job/nightly: Chat service / windows-launchers",
+    "missing required job/nightly: Windows task host journey / Windows task host journey (powershell.exe)",
+    "missing required job/nightly: Windows task host journey / Windows task host journey (pwsh.exe)",
+    "uncovered non-test/earlier-stage failure: ('CI', 'fast checks'): ['Structure baseline gate', 'Structure ceiling policy from merge base']",
+    "uncovered non-test/earlier-stage failure: ('Lanes', 'installed wheel'): ['Generate the installed Remotion registry']",
+    "('CI', 'release wheel / Python 3.11'): missing command receipt: step-07/Smoke the installed wheel",
+    "('CI', 'release wheel / Python 3.12'): missing command receipt: step-07/Smoke the installed wheel",
+    "('Chat service', 'windows-launchers'): Bun terminal summary missing/truncated",
+    "('Windows task host journey', 'Windows task host journey (powershell.exe)'): unresolved installed/dependency custody: App installer ref defaults to mutable main; installed Agent/Runtime are selected App manifest revisions, not sibling checkouts. An installed tuple receipt and reviewed expected pins are required.",
+    "('Windows task host journey', 'Windows task host journey (pwsh.exe)'): unresolved installed/dependency custody: App installer ref defaults to mutable main; installed Agent/Runtime are selected App manifest revisions, not sibling checkouts. An installed tuple receipt and reviewed expected pins are required."
+  ],
+  "inputs": [
+    {
+      "run": {
+        "id": 44753713361,
+        "name": "CI",
+        "run_attempt": 1,
+        "created_at": "2026-11-20T14:28:00Z",
+        "head_sha": "5dd0e9ea869560f827ef9184a11c8eb22d0b665d",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "jobs": [
+        {
+          "id": 136347861834,
+          "name": "windows-native-and-installer",
+          "conclusion": "success"
+        },
+        {
+          "id": 136347862032,
+          "name": "release wheel / Python 3.12",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862198,
+          "name": "fast checks",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862209,
+          "name": "unit shard 4 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862213,
+          "name": "release wheel / Python 3.11",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862255,
+          "name": "unit shard 1 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862278,
+          "name": "unit shard 7 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862329,
+          "name": "boundary",
+          "conclusion": "success"
+        },
+        {
+          "id": 136347862338,
+          "name": "darwin native",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862373,
+          "name": "unit shard 6 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862510,
+          "name": "unit shard 5 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862610,
+          "name": "unit shard 2 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862618,
+          "name": "unit shard 3 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347862646,
+          "name": "unit shard 8 / 8 (ubuntu-latest)",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347864755,
+          "name": "landing reference",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 136413385134,
+          "name": "unit",
+          "conclusion": "failure"
+        }
+      ],
+      "captured_artifacts": [
+        {
+          "id": 14647877989,
+          "name": "failure-ceiling-unit-shard-5-1",
+          "digest": "sha256:ddd94743ff0cd939f03fcf02932062efb1daff4afb6e0a0baf756a1689856247",
+          "created_at": "2026-11-20T16:20:48Z",
+          "expired": false
+        },
+        {
+          "id": 14644882797,
+          "name": "failure-ceiling-unit-shard-1-1",
+          "digest": "sha256:65c4fa9c400e2fdf261e9ba2524d3a9a39b72ab35ed7693bb13cbc289af3b747",
+          "created_at": "2026-11-20T15:51:29Z",
+          "expired": false
+        },
+        {
+          "id": 14644718676,
+          "name": "failure-ceiling-unit-shard-0-1",
+          "digest": "sha256:5ca29dc20462df85c83621bd32960c1acd695baaff77c7ac9a77adc05898fa92",
+          "created_at": "2026-11-20T15:54:06Z",
+          "expired": false
+        },
+        {
+          "id": 14643256009,
+          "name": "failure-ceiling-unit-shard-3-1",
+          "digest": "sha256:677f45f8fd650ecbe73c3dca46073ee39eb46cf0373a24b7e9922f6760391c30",
+          "created_at": "2026-11-20T15:35:21Z",
+          "expired": false
+        },
+        {
+          "id": 14642653762,
+          "name": "failure-ceiling-unit-shard-6-1",
+          "digest": "sha256:99552fd74d39a0c62d8c52c1c31a70bfdb2c9454cfbfa705ca7ef110cda21186",
+          "created_at": "2026-11-20T15:35:42Z",
+          "expired": false
+        },
+        {
+          "id": 14641675419,
+          "name": "failure-ceiling-unit-shard-4-1",
+          "digest": "sha256:2e4f53bc9e6f11554372ee4e35545229e6720e2be40543095c3a587d197aebf8",
+          "created_at": "2026-11-20T15:12:41Z",
+          "expired": false
+        },
+        {
+          "id": 14640112378,
+          "name": "failure-ceiling-unit-shard-7-1",
+          "digest": "sha256:e9f1e121a5cbd29663fef33f8aa07ec99eb34c661ca2c649d7d84232c8d3c4b5",
+          "created_at": "2026-11-20T15:06:48Z",
+          "expired": false
+        },
+        {
+          "id": 14639274930,
+          "name": "failure-ceiling-unit-shard-2-1",
+          "digest": "sha256:f0794225e3c1533ab9a92a69a0a82459eab721b6dc7550d5af09693ba92cd050",
+          "created_at": "2026-11-20T15:09:46Z",
+          "expired": false
+        },
+        {
+          "id": 14638955594,
+          "name": "failure-ceiling-darwin-native-0-1",
+          "digest": "sha256:0080ce3f346f2e9d3613c16b8c2e00b5b02d40c1186e1fa5b27bf010ad26cc6c",
+          "created_at": "2026-11-20T14:44:06Z",
+          "expired": false
+        },
+        {
+          "id": 14637520851,
+          "name": "failure-ceiling-checks-0-1",
+          "digest": "sha256:08c94deb289abc798d0a9d68b4c090344f6462eacb778226dfa7a06141bbc01d",
+          "created_at": "2026-11-20T14:37:40Z",
+          "expired": false
+        },
+        {
+          "id": 14636728041,
+          "name": "failure-ceiling-windows-native-and-installer-0-1",
+          "digest": "sha256:46d3d1c0480c58aa4bfa048fe640fe64113a8182f045169dc433ea51fb186bd4",
+          "created_at": "2026-11-20T14:32:04Z",
+          "expired": false
+        },
+        {
+          "id": 14636128033,
+          "name": "failure-ceiling-boundary-0-1",
+          "digest": "sha256:3c85fb0435555041c03bc0b650853d7f51114c2539cbcaa93a774bdeeb37dc49",
+          "created_at": "2026-11-20T14:28:10Z",
+          "expired": false
+        },
+        {
+          "id": 14635644238,
+          "name": "failure-ceiling-release-1-1",
+          "digest": "sha256:c68321f2eab43b9b0f8353b4c68bd03df6663fa901d6ec28396e24d86154f152",
+          "created_at": "2026-11-20T14:29:33Z",
+          "expired": false
+        },
+        {
+          "id": 14635289806,
+          "name": "failure-ceiling-release-0-1",
+          "digest": "sha256:7ef803677fe2c0c9508a56ba9c519afc0c77f6721bfceaea488afcc84044105b",
+          "created_at": "2026-11-20T14:29:29Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run": {
+        "id": 44753713329,
+        "name": "Lanes",
+        "run_attempt": 1,
+        "created_at": "2026-11-20T14:28:00Z",
+        "head_sha": "5dd0e9ea869560f827ef9184a11c8eb22d0b665d",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "jobs": [
+        {
+          "id": 136347859914,
+          "name": "installed wheel",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347860426,
+          "name": "integration shard 2 / 4",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347860491,
+          "name": "integration shard 1 / 4",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347860549,
+          "name": "integration shard 4 / 4",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347860559,
+          "name": "opt-in",
+          "conclusion": "failure"
+        },
+        {
+          "id": 136347860578,
+          "name": "integration shard 3 / 4",
+          "conclusion": "failure"
+        }
+      ],
+      "captured_artifacts": [
+        {
+          "id": 14647243055,
+          "name": "failure-ceiling-integration-2-1",
+          "digest": "sha256:8a35a84a2b5f235a06dfa7cc60c0597b8022b5979f98cfb12877e85633e54d61",
+          "created_at": "2026-11-20T16:19:24Z",
+          "expired": false
+        },
+        {
+          "id": 14646557264,
+          "name": "failure-ceiling-integration-3-1",
+          "digest": "sha256:990cb05fb060c4f60d2c7ceae7d9e36928f582621df29904601894acfdeb3c44",
+          "created_at": "2026-11-20T15:55:48Z",
+          "expired": false
+        },
+        {
+          "id": 14640665629,
+          "name": "failure-ceiling-integration-1-1",
+          "digest": "sha256:9553de51e467e862193e419789fe0949367922c2e3419b385fa776a55ff925cd",
+          "created_at": "2026-11-20T14:54:57Z",
+          "expired": false
+        },
+        {
+          "id": 14638066723,
+          "name": "failure-ceiling-integration-0-1",
+          "digest": "sha256:939082faebc837b1dcace5e62f785cb59952dd10694c54513120a52bdb614073",
+          "created_at": "2026-11-20T14:46:00Z",
+          "expired": false
+        },
+        {
+          "id": 14636257510,
+          "name": "failure-ceiling-installed-0-1",
+          "digest": "sha256:8ccffa815b5256808b4b14e8f9782f6b7b17b605e94467c44d1448092baecd12",
+          "created_at": "2026-11-20T14:29:48Z",
+          "expired": false
+        },
+        {
+          "id": 14636163924,
+          "name": "failure-ceiling-opt-in-0-1",
+          "digest": "sha256:fa7363cdea248b21e954e17e3434596a301a0013c5ec863c0e04e26e2b5e9ba9",
+          "created_at": "2026-11-20T14:33:24Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run": {
+        "id": 44753713373,
+        "name": "Chat service",
+        "run_attempt": 1,
+        "created_at": "2026-11-20T14:28:00Z",
+        "head_sha": "5dd0e9ea869560f827ef9184a11c8eb22d0b665d",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      "jobs": [
+        {
+          "id": 136347860267,
+          "name": "chat",
+          "conclusion": "success"
+        },
+        {
+          "id": 136347860646,
+          "name": "windows-launchers",
+          "conclusion": "success"
+        }
+      ],
+      "captured_artifacts": [
+        {
+          "id": 14637181028,
+          "name": "failure-ceiling-windows-launchers-0-1",
+          "digest": "sha256:4a8fd601eab0f06eb00e9f959a2f0573ad0dfd3d71ce28e5dd647f4b054d68db",
+          "created_at": "2026-11-20T14:28:52Z",
+          "expired": false
+        },
+        {
+          "id": 14636797327,
+          "name": "failure-ceiling-chat-0-1",
+          "digest": "sha256:649118404b9baf3ab9629b94371f531dc81b5e4db9b4c21c6560191b4383f6da",
+          "created_at": "2026-11-20T14:30:58Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run": {
+        "id": 44753713395,
+        "name": "Windows task host journey",
+        "run_attempt": 1,
+        "created_at": "2026-11-20T14:28:00Z",
+        "head_sha": "5dd0e9ea869560f827ef9184a11c8eb22d0b665d",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      "jobs": [
+        {
+          "id": 136347861034,
+          "name": "Windows task host journey (pwsh.exe)",
+          "conclusion": "success"
+        },
+        {
+          "id": 136347861776,
+          "name": "Windows task host journey (powershell.exe)",
+          "conclusion": "success"
+        }
+      ],
+      "captured_artifacts": [
+        {
+          "id": 14636763456,
+          "name": "failure-ceiling-windows-journey-0-1",
+          "digest": "sha256:5cb85ee3964ca01737a8f79e5ac543b946b53c3373ea2fcd6a4aab119f387e4e",
+          "created_at": "2026-11-20T14:36:53Z",
+          "expired": false
+        },
+        {
+          "id": 14635539900,
+          "name": "failure-ceiling-windows-journey-1-1",
+          "digest": "sha256:1762e639debd9114cbf1dc9cf5f3d4496f97232da5ddb7617141c111b6d20fe3",
+          "created_at": "2026-11-20T14:36:13Z",
+          "expired": false
+        }
+      ]
+    }
+  ]
+}
