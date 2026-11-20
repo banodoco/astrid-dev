@@ -38,9 +38,10 @@ For contributors, the first stage means one command and one list to learn; the s
 |---|---|---|---|
 | 1 | [Plan 48](../../plans/48-one-record-model/plan.md) | one command lists every check and generated page; a project lands by adding only its own folder; one source per fact; a fresh agent extends it from the guide; refusals work. Shown on `main` and in a scratch repository: the list and the same-everywhere command, two plan-adding PRs merging without conflict, hand edits and a missing completion form refused, a fresh agent adding a check and a view from the guide. Not shown: ten contributors at once, a fresh contributor finding five single sources, and adding a project field from the guide | A: one model, and plans define the list (reached 12 Nov 2026). Plan 48's track C (generated completion form) and Phase 4 (one evidence envelope) were not built and remain proposals |
 | 2 | [Plan 51](../../plans/51-astrid-dev-clean-up/plan.md) | each rule and term has one source; a fresh agent changes astrid-dev from one skill and the guide it links (shown for one new check; not for a new generated page) | B: one home per rule and one word per term |
+| 3 | [Plan 71](../../plans/71-markdown-first-agent-skills/plan.md) | One canonical authored Markdown source for each role/workstream; new skills opt in via metadata and generated packages/installer are checked, including a fresh-agent extension and negative cases. This helps source discoverability, but does not prove concurrent contribution at scale. | C: agent documents define generated skills (proposed scope, not yet run) |
 | — | unplanned | reassessment after a real period with at least ten contributors working at the same time | — |
 
-Critical path: step 1, then step 2, then the unplanned reassessment.
+Critical path to the gap's remaining real-world closure evidence: steps 1 and 2, then the unplanned reassessment. Step 3 is an independent source-authoring improvement, not a substitute for or prerequisite to ten-contributor observation.
 
 ## Sources and reassessment
 
