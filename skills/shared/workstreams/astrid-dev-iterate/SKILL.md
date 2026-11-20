@@ -5,6 +5,14 @@ description: Implement, debug, or repair one scoped Astrid change and return an 
 
 # Iterate on one Astrid change
 
+## Workstream contract
+
+**Outcome:** A scoped implementation candidate with focused acceptance proof, reproducible source identity and clearly stated residual failures.
+**When to use:** When executing an assigned code or focused document change under an accepted task or issue.
+**Inputs:** The authorized brief, repository and exact base, relevant existing behavior, focused proof and permitted dependencies.
+**Procedure:** Trace the behavior, make the smallest complete repair, qualify original tests and return source and evidence to the manager.
+**Completion:** The candidate is linked to exact revisions and focused results, with all remaining uncertainty or downstream failures visible.
+
 Read the [shared run contract](../../run-contract.md), the assigned brief (an issue, bug report or existing project task), and the working repository's instructions. **An issue or small fix needs no new project pack.** This is the single implementation/debug/focused-test repair loop. Work only within the accepted outcome, paths, dependencies, frozen source identity, route, and authority. Do not create another worker workflow.
 
 ## Map and change the behavior

@@ -5,6 +5,14 @@ description: Make Astrid's test results complete and trustworthy, then either ga
 
 # Get to green
 
+## Workstream contract
+
+**Outcome:** Complete, trustworthy test evidence showing either no new failures or diagnosed repair of old red without weakening checks.
+**When to use:** When a candidate needs qualification or existing CI failures prevent reliable integration.
+**Inputs:** The exact source and baseline revisions, original test inventories, runner and dependency identities, and authorized proof scope.
+**Procedure:** Measure original jobs and identities, compare real failures, repair causes within scope and retain all regressions and gate evidence.
+**Completion:** Native outcomes and raw exits reconcile with the stated claim, including blockers and any remaining red.
+
 Terms follow the [glossary](../../glossary.md). This skill owns how to **read, complete and act on** CI results. These rules have their own homes, and this skill links to them:
 - the [regression rule and when a run bears load](../../run-contract.md#when-a-test-run-is-load-bearing);
 - [never weakening a check](../../run-contract.md#checks-and-failure-repair), and where local runs stop;

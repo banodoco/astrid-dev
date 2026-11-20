@@ -1,9 +1,17 @@
 ---
 name: astrid-dev-gpu-validate
-description: Full GPU validation. Run every default generation slot and h3_av on real GPUs across RunPod, local-managed and attached placements, within a hard budget, releasing every pod and recording one dated evidence file per run.
+description: Validate every default generation slot and h3_av on real RunPod, local-managed and attached GPUs within an approved budget, releasing pods and recording dated evidence.
 ---
 
 # Full GPU validation
+
+## Workstream contract
+
+**Outcome:** Real-GPU validation receipts for the exact revision and required matrix, with every rented pod released.
+**When to use:** When the owner explicitly requests full GPU validation or the release gate requires real hardware proof.
+**Inputs:** The pinned candidate revision, GPU matrix, model dependencies, credentials, approved budget and infrastructure permissions.
+**Procedure:** Run the prescribed VibeComfy and Astrid probes on real GPU placements, capture per-cell failures and release all pods.
+**Completion:** Every required cell has a recorded pass or failure, pods are released and a dated evidence file identifies revisions and limitations.
 
 **Outcome:** real outputs on real GPUs for every default slot and h3_av on the revision under test, a pass or fail per cell, every pod released, and one dated record alongside this skill, in `skills/shared/workstreams/astrid-dev-gpu-validate/records/`. CPU proof cannot show real inference, model downloads, custom-node installs or RunPod capacity; this skill does. It was built by [Plan 34](../../../../plans/34-real-gpu-proof/plan.md), and real-GPU proof is this skill, run again, not a new project.
 

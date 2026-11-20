@@ -5,6 +5,14 @@ description: Define independently useful new Astrid project scope by reusing pri
 
 # Plan a new Astrid project
 
+## Workstream contract
+
+**Outcome:** An agreed, independently useful project scope with a verifiable end state and executable tasks.
+**When to use:** When defining a new project outcome that cannot reasonably be handled as an existing issue or task.
+**Inputs:** The proposed outcome, prior art, current strategy and gaps, design constraints, reviewer input and owner authority.
+**Procedure:** Investigate existing work, challenge consequential choices, define acceptance evidence and write the project plan and task records.
+**Completion:** The agreed plan is testable and sufficiently decomposed for another agent to run without reopening accepted decisions.
+
 Enter through [astrid-dev](../../../astrid-dev/SKILL.md) and its [domain map](../../../astrid-dev/references/domains.md).
 
 Terms follow the [glossary](../../glossary.md).

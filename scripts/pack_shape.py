@@ -5,12 +5,13 @@ import re
 from pathlib import Path
 
 from check_project_planning import LABELS as PLANNING_LABELS
+from document_structure import headings, ordered_heading_error
 from project_contract import PLAN_FOLDER
 from records import PROJECT_FIELDS, git_result, read_text
 
 
 def _headings(text: str) -> list[str]:
-    return re.findall(r"^## (.+)$", text, re.M)
+    return headings(text, 2)
 
 
 def _planning_labels(text: str) -> list[str]:
@@ -44,15 +45,7 @@ def template_shape(root: Path) -> dict[str, object]:
 
 
 def _ordered_error(actual: list[str], expected: list[str]) -> str | None:
-    cursor = 0
-    for item in expected:
-        try:
-            cursor = actual.index(item, cursor) + 1
-        except ValueError:
-            if item in actual:
-                return f"heading '## {item}' is out of order; move it to where the template puts it"
-            return f"missing heading '## {item}'; add it where the template puts it"
-    return None
+    return ordered_heading_error(actual, expected, level=2)
 
 
 def shape_errors(folder: str, shape: dict[str, object], root: Path) -> list[str]:

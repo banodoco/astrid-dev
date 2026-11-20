@@ -1,12 +1,16 @@
-"""Canonical workstream descriptions and parent-skill discovery views.
+"""One workstream contract for independently invocable skills and role-owned docs.
 
-Each direct workstreams/*.md file owns its one-line description and H1 title.
-Only registered parent SKILL.md files may receive generated content.
+The procedure's substance remains in its body. Packaging changes discovery and
+ownership, never the required outcome, inputs, execution or completion criteria.
 """
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Literal
 import re
 
-# Also the target allowlist for generated workstream views in scripts/views.py.
+from document_structure import frontmatter, headings, ordered_bold_fields, section
+
+# These are also the authorized generated-index targets in scripts/views.py.
 PARENT_SKILLS = (
     "skills/roles/astrid-dev-lead/SKILL.md",
     "skills/roles/astrid-dev-manage/SKILL.md",
@@ -14,43 +18,90 @@ PARENT_SKILLS = (
 )
 ROLE_SKILLS = PARENT_SKILLS + ("skills/roles/astrid-dev-worker/SKILL.md",)
 START = "<!-- workstreams:start -->"
+END = "<!-- workstreams:end -->"
 SHARED_START = "<!-- shared-workstreams:start -->"
 SHARED_END = "<!-- shared-workstreams:end -->"
-END = "<!-- workstreams:end -->"
-TITLE = re.compile(r"^# Workstream: (.+)$")
+CONTRACT_HEADING = "Workstream contract"
+CONTRACT_FIELDS = ("Outcome", "When to use", "Inputs", "Procedure", "Completion")
+
+
+@dataclass(frozen=True)
+class Workstream:
+    """The common definition, irrespective of how an agent discovers it."""
+    path: Path
+    kind: Literal["skill", "document"]
+    title: str
+    description: str
+    outcome: str
+    when_to_use: str
+    inputs: str
+    procedure: str
+    completion: str
+    name: str | None = None
 
 
 def workstream_files(root: Path) -> tuple[Path, ...]:
-    """Find direct workstream documents, not nested setup guides."""
-    return tuple(sorted(path for path in (root / "skills").glob("**/workstreams/*.md")
+    """Find direct role-owned workstream docs, excluding nested guides."""
+    return tuple(sorted(path for path in (root / "skills/roles").glob("astrid-dev-*/workstreams/*.md")
                         if path.name != "README.md"))
 
 
-def metadata(path: Path) -> tuple[str, str]:
-    """Read the existing workstream title and its single-line discovery description."""
-    if path.is_symlink():
-        raise ValueError("workstream source must not be a symlink")
-    lines = path.read_text(encoding="utf-8").splitlines()
-    if not lines or lines[0] != "---":
-        raise ValueError("missing frontmatter; add a first-line '---', one 'description: ...' line and a closing '---'")
-    try:
-        end = lines.index("---", 1)
-    except ValueError as exc:
-        raise ValueError("unclosed frontmatter; add a closing '---'") from exc
-    fields = lines[1:end]
-    if len(fields) != 1 or not fields[0].startswith("description: "):
-        raise ValueError("frontmatter must contain exactly one single-line 'description: ...' field")
-    description = fields[0][len("description: "):]
-    if (not description.strip() or description != description.strip()
-            or len(description) > 240 or not description.endswith((".", "!", "?"))
+def shared_skill_files(root: Path) -> tuple[Path, ...]:
+    """Find standalone workstreams (skill packages) without following aliases."""
+    folder = root / "skills/shared/workstreams"
+    return tuple(sorted(path / "SKILL.md" for path in folder.glob("astrid-dev-*")
+                        if path.is_dir() and not path.is_symlink()))
+
+
+def parse_workstream(path: Path) -> Workstream:
+    """Parse the same structural contract from a SKILL.md or a role-specific .md.
+
+    Name and parent rules are packaging-specific; the five contract fields are not.
+    """
+    if path.is_symlink() or not path.is_file():
+        raise ValueError("workstream source must be a regular file, not a symlink")
+    metadata, body = frontmatter(path.read_text(encoding="utf-8"))
+    kind: Literal["skill", "document"] = "skill" if path.name == "SKILL.md" else "document"
+    allowed = {"name", "description"} if kind == "skill" else {"description"}
+    if set(metadata) != allowed:
+        fields = ", ".join(sorted(allowed))
+        raise ValueError(f"frontmatter must contain exactly {fields} as single-line fields")
+    description = metadata["description"]
+    if (not description or len(description) > 240 or description != description.strip()
+            or not description.endswith((".", "!", "?"))
             or any(char in description for char in "[]<>|\t\r\n")):
         raise ValueError("description must be one plain-text sentence (max 240 characters) ending in punctuation")
-    heading = next((line for line in lines[end + 1:] if line.strip()), "")
-    match = TITLE.fullmatch(heading)
-    if not match or not match.group(1).strip() or any(char in match.group(1) for char in "[]"):
-        raise ValueError("first body heading must be '# Workstream: <title>'")
-    title = match.group(1).strip()
-    return title[0].upper() + title[1:], description
+    lines = [line for line in body.splitlines() if line.strip()]
+    heading = lines[0] if lines else ""
+    if not heading.startswith("# ") or not heading[2:].strip():
+        raise ValueError("first body heading must be a nonempty '# <title>'")
+    if kind == "document":
+        hit = re.fullmatch(r"# Workstream: ([^\[\]]+)", heading)
+        if not hit or not hit.group(1).strip():
+            raise ValueError("first body heading must be '# Workstream: <title>'")
+        title = hit.group(1).strip()
+        title = title[0].upper() + title[1:]
+    else:
+        title = heading[2:].strip()
+        if not re.fullmatch(r"astrid-dev-[a-z0-9]+(?:-[a-z0-9]+)*", metadata["name"]):
+            raise ValueError("skill name must be an astrid-dev-* identifier")
+        if metadata["name"] != path.parent.name:
+            raise ValueError(f"skill name must match folder {path.parent.name!r}")
+    if not headings(body, 2) or headings(body, 2)[0].strip() != CONTRACT_HEADING:
+        raise ValueError("first ## section must be '## Workstream contract'")
+    contract = ordered_bold_fields(section(body, CONTRACT_HEADING), CONTRACT_FIELDS)
+    return Workstream(
+        path=path, kind=kind, name=metadata.get("name"), title=title,
+        description=description, outcome=contract["Outcome"],
+        when_to_use=contract["When to use"], inputs=contract["Inputs"],
+        procedure=contract["Procedure"], completion=contract["Completion"],
+    )
+
+
+def metadata(path: Path) -> tuple[str, str]:
+    """Compatibility wrapper for the generated, role-specific discovery index."""
+    workstream = parse_workstream(path)
+    return workstream.title, workstream.description
 
 
 def _markers(text: str, parent: str, start: str = START, end: str = END) -> tuple[str, str]:
@@ -62,34 +113,32 @@ def _markers(text: str, parent: str, start: str = START, end: str = END) -> tupl
 
 
 def render_index(root: Path, parent: str) -> str:
-    """Replace only the parent skill's generated workstream region."""
+    """Replace only a role's generated role-specific workstream region."""
     text = (root / parent).read_text(encoding="utf-8")
     before, after = _markers(text, parent)
     folder = (root / parent).parent / "workstreams"
-    lines = []
+    rows = []
     for path in sorted(folder.glob("*.md")):
         if path.name == "README.md":
             continue
-        title, description = metadata(path)
-        lines.append(f"- [{title}](workstreams/{path.name}) — {description}")
-    return before + START + "\n" + "\n".join(lines) + "\n" + END + after
+        workstream = parse_workstream(path)
+        rows.append(f"- [{workstream.title}](workstreams/{path.name}) — {workstream.description}")
+    return before + START + "\n" + "\n".join(rows) + "\n" + END + after
 
 
 def render_shared_index(root: Path, parent: str) -> str:
-    """List the names of independently invocable workstream skills under a role."""
+    """List shared workstreams by name only, without duplicating their descriptions."""
     text = (root / parent).read_text(encoding="utf-8")
     before, after = _markers(text, parent, SHARED_START, SHARED_END)
     rows = []
-    for folder in sorted((root / "skills/shared/workstreams").glob("astrid-dev-*")):
-        if folder.is_symlink() or not folder.is_dir():
-            continue
-        # These identifiers are checked by validate and by the installer.
-        rows.append(f"- [{folder.name}](../../shared/workstreams/{folder.name}/SKILL.md)")
+    for path in shared_skill_files(root):
+        workstream = parse_workstream(path)
+        rows.append(f"- [{workstream.name}](../../shared/workstreams/{workstream.name}/SKILL.md)")
     return before + SHARED_START + "\n" + "\n".join(rows) + "\n" + SHARED_END + after
 
 
 def validate(root: Path) -> list[str]:
-    """Always-on CI check, including source-only edits and newly added files."""
+    """Validate both packages, the common contract, parent registration and views."""
     root = root.resolve()
     errors: list[str] = []
     parents = set(PARENT_SKILLS)
@@ -100,14 +149,13 @@ def validate(root: Path) -> list[str]:
         if parent not in parents:
             errors.append(f"{relative}: unregistered parent {parent}; register its generated view and CI target first")
         try:
-            title, _ = metadata(path)
+            item = parse_workstream(path)
             seen = titles.setdefault(parent, set())
-            if title in seen:
-                errors.append(f"{relative}: duplicate workstream title {title!r} under {parent}")
-            seen.add(title)
+            if item.title in seen:
+                errors.append(f"{relative}: duplicate workstream title {item.title!r} under {parent}")
+            seen.add(item.title)
         except (OSError, UnicodeError, ValueError) as exc:
             errors.append(f"{relative}: {exc}")
-    # Standalone shared workstreams are skills, not generated parent-index entries.
     shared = root / "skills/shared/workstreams"
     if shared.exists():
         for folder in sorted(shared.iterdir()):
@@ -115,20 +163,10 @@ def validate(root: Path) -> list[str]:
                 errors.append(f"{folder.relative_to(root)}: shared workstream must be an astrid-dev-* directory")
                 continue
             skill = folder / "SKILL.md"
-            if skill.is_symlink() or not skill.is_file():
-                errors.append(f"{folder.relative_to(root)}: missing regular SKILL.md")
-                continue
-            lines = skill.read_text(encoding="utf-8").splitlines()
-            if len(lines) < 4 or lines[0] != "---" or "---" not in lines[1:]:
-                errors.append(f"{skill.relative_to(root)}: missing YAML frontmatter")
-                continue
-            end = lines.index("---", 1)
-            meta = lines[1:end]
-            if meta.count(f"name: {folder.name}") != 1 or len([line for line in meta if line.startswith("name:")]) != 1:
-                errors.append(f"{skill.relative_to(root)}: name must match folder {folder.name!r}")
-            descriptions = [line.removeprefix("description: ") for line in meta if line.startswith("description: ")]
-            if len(descriptions) != 1 or not descriptions[0].strip() or descriptions[0] != descriptions[0].strip():
-                errors.append(f"{skill.relative_to(root)}: exactly one nonempty single-line description required")
+            try:
+                parse_workstream(skill)
+            except (OSError, UnicodeError, ValueError) as exc:
+                errors.append(f"{skill.relative_to(root)}: {exc}")
     # Preserve historical Markdown links without installing a second skill.
     # Only these relative directory symlinks are permitted at legacy locations.
     aliases = {f"skills/capabilities/astrid-dev-{name}": f"skills/shared/workstreams/astrid-dev-{name}"

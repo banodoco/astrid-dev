@@ -4,6 +4,14 @@ description: Dispatch and supervise Lead-approved packets in fresh ChatGPT sessi
 
 # Workstream: dispatch to fresh ChatGPT sessions
 
+## Workstream contract
+
+**Outcome:** Authorized release packets assigned and supervised through fresh ChatGPT sessions with a reliable Lead handoff.
+**When to use:** When the Release Lead has prepared a packet queue and an owner has authorized the Orchestrator to dispatch it.
+**Inputs:** The live run board, accepted packet briefs, task rows, mailbox, session access, capacity and dispatch authority.
+**Procedure:** Run startup and resume checks, dispatch one packet per session, track check-ins and surface blocked work for Lead decisions.
+**Completion:** Every dispatched packet has an identified session, current state and evidence or an explicit blocker; the Lead retains review and integration.
+
 Use when the [Release Lead](../../astrid-dev-lead/SKILL.md) has prepared the [packet queue](../../astrid-dev-lead/workstreams/multi-manager-release.md) and the owner has authorized this Orchestrator. The general [Orchestrate role](../SKILL.md) still applies.
 
 **One packet, one fresh ChatGPT session.** The packet session implements and submits; **you** keep sessions moving; **the Lead** reviews and integrates.

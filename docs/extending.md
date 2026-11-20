@@ -70,3 +70,7 @@ python3 scripts/astrid_dev.py check
 ```
 
 The project field list is a contract shared by the plan, catalog, feed, and checks. Keep its order and meaning consistent across those readers.
+
+## Add or edit a workstream
+
+Follow the single [workstream authoring contract](../skills/shared/workstreams.md). A shared, independently callable procedure lives at `skills/shared/workstreams/astrid-dev-<name>/SKILL.md` with a matching `name:`; a role-specific procedure lives as a `.md` file under that role's `workstreams/`. Both require the same five-field `## Workstream contract` and a one-line description. The common parser is in [`workstreams.py`](../scripts/workstreams.py), backed by reusable [Markdown structure checks](../scripts/document_structure.py). The always-on `workstream-structure` check validates both formats; role-specific and shared discovery lists are generated, not hand-maintained.
