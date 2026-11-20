@@ -92,12 +92,24 @@ def _active_plans_in_releases(context):
     if not _catalog_ready(context):
         return []
     active = {}
+    errors = []
     for path in sorted((root / 'plans').glob('*/plan.md')):
-        if project_fields(read(root, path.relative_to(root)))['Status'] == 'active':
-            active[path.parent.name[:2]] = path.parent.name
+        body = read(root, path.relative_to(root))
+        if project_fields(body)['Status'] != 'active':
+            continue
+        if re.search(r"(?m)^\*\*Run route:\*\* astrid-dev-only\s*$", body):
+            inputs = path.parent / 'inputs.md'
+            evidence = inputs.read_text(encoding='utf-8') if inputs.is_file() else ''
+            if (not re.search(r"(?m)^\*\*Run start:\*\* .+", evidence)
+                    or 'owner-authorized' not in
+                    next((line for line in evidence.splitlines()
+                          if line.startswith('**Run start:**')), '')):
+                errors.append(f"{path.relative_to(root)}: astrid-dev-only active run requires an explicit owner-authorized Run start in inputs.md")
+            continue
+        active[path.parent.name[:2]] = path.parent.name
     briefs = [release_brief(read(root, p.relative_to(root)), strict=False)
               for p in sorted((root / 'releases').glob('[0-9]*.md')) if p.stem.isdigit()]
-    return active_plan_errors(active, briefs)
+    return [*errors, *active_plan_errors(active, briefs)]
 
 
 def _strategy_consistency(context):

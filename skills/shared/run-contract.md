@@ -71,6 +71,8 @@ The local `model-usage.jsonl` is under gitignored `.otto/`; do not publish raw l
 
 ## Scope, source identity, and state
 
+An **astrid-dev-only plan** may be started without release membership only on the owner's explicit instruction, following [Manage's dev-only project route](../roles/astrid-dev-manage/workstreams/whole-project.md#steps). This does not loosen review, protected `main` merges, permission checks, evidence requirements or any product-repository release gate.
+
 A skill installation, plan, or run template does not authorize product execution or publication. Follow the repository's pause and stop instructions (a paused status, or a plan or brief that says stop) and its accepted plan. Do not start, resume, or broaden product work without its explicit authority.
 
 For a new run, keep control artifacts at `<project>/.otto/runs/<run-id>/`; inspect and resume a matching existing run first. Record the actual source repository, ref and SHA, dirty state, custody, and destination branch (the plan or fix branch the work lands on); separately identify each dependency and its ref/SHA/dirty state and role. Preserve user changes and distinguish the current base from dependency inputs. If identity or custody conflicts with the assignment, stop dependent mutation and resolve the discrepancy. Each assignment names its outcome, in-scope behavior/paths, dependencies, source identity, route, and focused acceptance evidence.
