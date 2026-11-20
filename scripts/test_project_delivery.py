@@ -3,6 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import gap_relationships as goal_links
+from vision_subject import SECTIONS
 from project_delivery import (
     deliveries_for_goal, frozen_releases_for_issue, load_delivery)
 from relationships import RecordRef, RelationshipError
@@ -90,8 +92,9 @@ class DeliveryCompositionTests(unittest.TestCase):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         self.root = Path(tmp.name)
-        self.write("vision/pillars/shared.md", PILLAR)
-        self.write("vision/gaps/CA-001-finish-work.md", GAP)
+        self.write("vision/pillars/shared.md", PILLAR.replace("## Aspirations", f"## {SECTIONS[2]}"))
+        self.write("vision/gaps/CA-001-finish-work.md", GAP.replace(
+            "**Aspiration:**", "**Goal:**") if hasattr(goal_links, "parse_gap_goals") else GAP)
         self.write("plans/72-demo/plan.md", PLAN)
         self.write("releases/15.md", RELEASE)
 
