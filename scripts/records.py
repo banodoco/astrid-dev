@@ -365,12 +365,27 @@ def release_branch_errors(text: str, number: str, plan_numbers) -> list[str]:
     return list(dict.fromkeys(errors))
 
 
-def active_plan_errors(active: dict[str, str], briefs) -> list[str]:
-    """An active plan (folder by plan number) must be listed by a brief whose State is not Final."""
+DEV_ONLY_DELIVERY = re.compile(r"^\*\*Delivery:\*\*[ \t]*(.*)$", re.M)
+
+
+def dev_only_delivery(plan_text: str) -> bool:
+    """A narrow, explicit exception for a wholly Astrid Dev-owned project."""
+    header = re.split(r"^## ", plan_text, maxsplit=1, flags=re.M)[0]
+    declarations = DEV_ONLY_DELIVERY.findall(header)
+    if not declarations:
+        return False
+    if len(declarations) != 1 or declarations[0].strip() != "astrid-dev-only":
+        raise ValueError("Delivery must be exactly one 'astrid-dev-only' declaration")
+    return True
+
+
+def active_plan_errors(active: dict[str, str], briefs, dev_only: set[str] | None = None) -> list[str]:
+    """Active projects require a live release except for authorized Dev-only runs."""
     joined = {number for brief in briefs if brief["state"] != "Final" for number, _ in brief["plan_links"]}
+    standalone = dev_only or set()
     return [f"plans/{folder}/plan.md: Status is active but plan {number} is in no unpublished release brief; "
             "a plan joins a release by its line under a brief's Included plans (owner's decision) and does not run until then"
-            for number, folder in sorted(active.items()) if number not in joined]
+            for number, folder in sorted(active.items()) if number not in joined and number not in standalone]
 
 
 def release_fix_issue_errors(text: str, number: str) -> list[str]:
