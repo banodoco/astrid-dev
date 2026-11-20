@@ -187,6 +187,18 @@ class ProjectRecordTests(unittest.TestCase):
     def git(root, *args):
         return subprocess.check_output(["git", *args], cwd=root, text=True).strip()
 
+    def test_dev_only_delivery_requires_one_exact_header_declaration(self):
+        from records import dev_only_delivery
+        plain = self.plan()
+        self.assertFalse(dev_only_delivery(plain))
+        marked = plain + "**Delivery:** astrid-dev-only\n"
+        self.assertTrue(dev_only_delivery(marked))
+        self.assertFalse(dev_only_delivery(plain + "## Notes\n**Delivery:** astrid-dev-only\n"))
+        for bad in ("**Delivery:** product-repo\n", "**Delivery:** \n",
+                    "**Delivery:** astrid-dev-only\n**Delivery:** astrid-dev-only\n"):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "Delivery must"):
+                dev_only_delivery(plain + bad)
+
     def test_six_fields_preserve_values_and_ignore_body_fields(self):
         import records
         self.assertEqual(records.PROJECT_FIELDS, self.FIELDS)
