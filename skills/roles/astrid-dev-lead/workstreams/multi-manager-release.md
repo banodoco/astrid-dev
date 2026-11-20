@@ -1,3 +1,7 @@
+---
+description: Prepare and lead fresh-session packet delivery across accepted release work without delegating the Lead's review or integration authority.
+---
+
 # Workstream: fresh-session ChatGPT packet dispatch
 
 Use when the Lead prepares accepted plan work for an Orchestrator to assign to **a fresh ChatGPT manager session per packet**. The [Lead responsibilities](../SKILL.md) continue to apply.

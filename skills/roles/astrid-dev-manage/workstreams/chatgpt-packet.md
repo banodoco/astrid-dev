@@ -1,3 +1,7 @@
+---
+description: Implement one bounded packet in a fresh ChatGPT session and return task pull requests and evidence for Lead review.
+---
+
 # Workstream: execute one packet in ChatGPT
 
 Use when a fresh ChatGPT session receives **one** accepted packet from the [Orchestrator](../../astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md). Follow [Manage](../SKILL.md) for scoped engineering and proof; the review is the Lead's, so commission none. **You do this packet's engineering yourself**; you do not own the plan, and you take no second packet.

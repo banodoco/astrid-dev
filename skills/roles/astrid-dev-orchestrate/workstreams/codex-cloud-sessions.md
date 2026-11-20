@@ -1,3 +1,7 @@
+---
+description: Coordinate separate Codex Cloud sessions through the shared GitHub mailbox and durable session handoffs.
+---
+
 # Workstream: separate Codex Cloud sessions
 
 Choose this when the orchestrator and plan managers work in **different Codex Cloud chats**. For the actual mailbox commands, session registration, authentication limits, acknowledgments, polling and recovery use the existing [Codex Cloud guide](codex-cloud/README.md); its scripts remain in that directory.
