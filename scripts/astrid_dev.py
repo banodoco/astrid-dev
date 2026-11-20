@@ -39,7 +39,7 @@ def main(argv=None, *, root=ROOT, registry=None):
         try:
             changed = views.sync(Path(root))
         except (ValueError, OSError) as exc:
-            print(f"ERROR views generate: {exc}")
+            print(f"ERROR {'sync' if args.command == 'sync' else 'views generate'}: {exc}")
             return 1
         for target in changed:
             print(f"Updated {target}")
