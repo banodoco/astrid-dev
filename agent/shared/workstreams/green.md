@@ -118,7 +118,7 @@ For each side, and each workflow in scope:
   - List runs: `GET /repos/<o>/<r>/actions/runs?branch=<b>` or `?head_sha=<sha>`.
   - List jobs: `.../runs/<id>/jobs?per_page=100`, or `.../runs/<id>/attempts/<n>/jobs` for an earlier attempt.
   - Fetch a log: `.../actions/jobs/<id>/logs` (follow the redirect).
-  - Fetch artifacts: [`fetch-artifacts.sh`](../../../skills/roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/fetch-artifacts.sh).
+  - Fetch artifacts: [`fetch-artifacts.sh`](../../guides/codex-in-claude-cloud/fetch-artifacts.sh).
   - Cancel your own run: `POST .../runs/<id>/cancel`.
 - **Timestamps.** A job log prefixes every line with a timestamp. Strip it with the regex `^\S+Z ` (for example, Python `re.sub`) before sorting, or the sorter finds nothing. Grep for the failing ids rather than reading whole logs. Logs and artifacts expire (test durations after 3 days, and some logs vanish), so commit the evidence when you take it.
 - **Know each workflow's trigger.** Read its `on:` block before relying on a run. This is the one statement of what CI runs:

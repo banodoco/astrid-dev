@@ -139,6 +139,16 @@ class AgentDocumentTests(unittest.TestCase):
         link.symlink_to(original)
         self.assertIn("not a symlink", str(validate_documents(self.root)))
 
+    def test_repository_source_catalog_can_be_discovered(self):
+        root = Path(__file__).resolve().parents[1]
+        docs = discover_documents(root)
+        self.assertEqual(len([doc for doc in docs if doc.skill]), 14)
+        self.assertEqual(len(docs), 29)
+        self.assertEqual(validate_documents(root), [])
+        expected = {"astrid-dev-start", "astrid-dev-leader", "astrid-dev-orchestrator",
+                    "astrid-dev-manager", "astrid-dev-worker", "astrid-dev-plan"}
+        self.assertTrue(expected.issubset({doc.skill_name for doc in docs if doc.skill}))
+
 
 if __name__ == "__main__":
     unittest.main()
