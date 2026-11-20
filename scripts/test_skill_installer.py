@@ -44,5 +44,34 @@ class SkillInstallerTests(unittest.TestCase):
                         self.assertFalse((link / "SKILL.md").exists())
 
 
+    def test_old_owned_install_links_are_retargeted_without_touching_foreign_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            dest = Path(directory) / "skills"
+            dest.mkdir()
+            for name, old in (
+                ("astrid-dev-plan", "roles/astrid-dev-plan"),
+                ("astrid-dev-iterate", "capabilities/astrid-dev-iterate"),
+            ):
+                (dest / name).symlink_to(ROOT / "skills" / old, target_is_directory=True)
+            run = subprocess.run(["bash", str(ROOT / "sync.sh"), "--destination", str(dest)],
+                                 cwd=ROOT, capture_output=True, text=True)
+            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+            for name in ("astrid-dev-plan", "astrid-dev-iterate"):
+                self.assertEqual((dest / name).resolve(),
+                                 (ROOT / "skills/shared/workstreams" / name).resolve())
+                self.assertEqual((dest / name).readlink(),
+                                 ROOT / "skills/shared/workstreams" / name)
+            self.assertIn("retargeted", run.stdout)
+
+            alien = dest / "astrid-dev-release"
+            alien.unlink()
+            alien.symlink_to(dest / "another-repository", target_is_directory=True)
+            run = subprocess.run(["bash", str(ROOT / "sync.sh"), "--destination", str(dest)],
+                                 cwd=ROOT, capture_output=True, text=True)
+            self.assertNotEqual(run.returncode, 0)
+            self.assertIn("foreign symlink", run.stderr)
+            self.assertEqual(alien.readlink(), dest / "another-repository")
+
+
 if __name__ == "__main__":
     unittest.main()
