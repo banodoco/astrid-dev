@@ -209,6 +209,24 @@ class ProjectCatalogContractTests(unittest.TestCase):
             (root / "releases/14.md").write_text(brief.format(state="Final"), encoding="utf-8")
             self.assertEqual(len(self.errors(root, "active-plans-in-releases")), 2)
 
+    def test_dev_only_release_exception_needs_authorized_run_start(self):
+        from test_records import ProjectRecordTests as Records
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            body = Records.plan(Status="active") + "\n**Run route:** astrid-dev-only\n"
+            Records.write(root, "73-docs", body)
+            path = root / "plans/73-docs/inputs.md"
+            path.write_text("# Inputs\n\n**Run start:** owner-authorized for only astrid-dev on 20 Nov 2026.\n",
+                            encoding="utf-8")
+            self.assertEqual(self.errors(root, "active-plans-in-releases"), [])
+            path.write_text("# Inputs\n\n**Run start:** Pending — no go.\n", encoding="utf-8")
+            errors = self.errors(root, "active-plans-in-releases")
+            self.assertEqual(len(errors), 1, errors)
+            self.assertIn("requires an explicit owner-authorized Run start", errors[0])
+            Records.write(root, "73-docs", Records.plan(Status="active"))
+            self.assertIn("in no unpublished release brief",
+                          str(self.errors(root, "active-plans-in-releases")))
+
     def test_catalog_reports_each_malformed_priority_line(self):
         from test_records import ProjectRecordTests as Records
         with tempfile.TemporaryDirectory() as directory:
