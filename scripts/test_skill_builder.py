@@ -273,6 +273,95 @@ class PackageTests(unittest.TestCase):
             build_packages(self.root)
         self.assertTrue(leader.is_dir())
 
+    def test_absolute_and_file_links_are_not_portable_local_sources(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        original = "Follow the shared [rules](../shared/run-contract.md#rules)."
+        for address in ("/tmp/missing-secret", "file:///tmp/missing-secret",
+                        "FILE:///tmp/missing-secret", "file:../missing-secret",
+                        "C:/private/missing-secret"):
+            with self.subTest(address=address):
+                source.write_text(
+                    ROLE.replace(original, f"Follow the shared [unsafe]({address})."),
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "absolute|file:|filesystem"):
+                    expected_packages(self.root)
+
+    def test_reference_definition_cannot_bypass_local_file_refusal(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        original = "Follow the shared [rules](../shared/run-contract.md#rules)."
+        for address in ("/tmp/missing-secret", "file:///tmp/missing-secret"):
+            with self.subTest(address=address):
+                source.write_text(
+                    ROLE.replace(original,
+                                 f"Follow the shared [unsafe][ref].\n\n[ref]: {address}"),
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "absolute|file:|filesystem"):
+                    expected_packages(self.root)
+
+    def test_skills_check_refuses_absolute_and_file_links_in_source(self):
+        build_packages(self.root)
+        source = self.root / "agent" / "roles" / "leader.md"
+        original = "Follow the shared [rules](../shared/run-contract.md#rules)."
+        for address in ("/tmp/missing-secret", "file:///tmp/missing-secret"):
+            with self.subTest(address=address):
+                source.write_text(
+                    ROLE.replace(original, f"Follow the shared [unsafe]({address})."),
+                    encoding="utf-8",
+                )
+                problems = check_packages(self.root)
+                self.assertTrue(
+                    any("absolute" in error or "file:" in error or "filesystem" in error
+                        for error in problems), problems,
+                )
+
+    def test_local_encoded_space_remains_url_encoded_in_inline_skill_link(self):
+        notes = self.root / "docs" / "a space.md"
+        notes.write_text("# A space\n", encoding="utf-8")
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(
+            ROLE.replace(
+                "Follow the shared [rules](../shared/run-contract.md#rules).",
+                "Follow the shared [notes](../../docs/a%20space.md).",
+            ), encoding="utf-8",
+        )
+        build_packages(self.root)
+        text = (self.package("astrid-dev-leader") / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("[notes](repo/docs/a%20space.md)", text)
+        self.assertNotIn("[notes](repo/docs/a space.md)", text)
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_local_encoded_space_remains_url_encoded_in_reference_definition(self):
+        notes = self.root / "docs" / "a space.md"
+        notes.write_text("# A space\n", encoding="utf-8")
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(
+            ROLE.replace(
+                "Follow the shared [rules](../shared/run-contract.md#rules).",
+                "Follow the shared [notes][notes-ref].\n\n"
+                "[notes-ref]: ../../docs/a%20space.md",
+            ), encoding="utf-8",
+        )
+        build_packages(self.root)
+        text = (self.package("astrid-dev-leader") / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("[notes-ref]: repo/docs/a%20space.md", text)
+        self.assertNotIn("[notes-ref]: repo/docs/a space.md", text)
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_external_web_links_remain_unchanged(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(
+            ROLE.replace(
+                "Follow the shared [rules](../shared/run-contract.md#rules).",
+                "Follow the shared [web](https://example.org/guide?x=1#usage).",
+            ), encoding="utf-8",
+        )
+        build_packages(self.root)
+        text = (self.package("astrid-dev-leader") / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("[web](https://example.org/guide?x=1#usage)", text)
+        self.assertEqual(check_packages(self.root), [])
+
     def test_fenced_examples_are_not_rewritten(self):
         path = self.root / "agent" / "roles" / "leader.md"
         fence = chr(96) * 3
