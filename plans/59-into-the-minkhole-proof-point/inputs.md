@@ -10,7 +10,7 @@
 
 **Approach:** Keep this as a live work loop rather than a fixed implementation plan. Start from the next creative result; extend the Astrid capability that owns each blocker; file a durable issue when the fix is too large for this run. The composition package is the shared appearance source; D3 records its current source home.
 
-**Challenge:** Keep the task list intentionally short and mutable: only C1 is detailed; later creative tasks are one line each. A retrospective blocker log captures cause, decision, landing place and proof without maintaining a second backlog.
+**Challenge:** Not needed — the owner directed a live work loop, not a fixed implementation plan. Keep the task list intentionally short and mutable: only C1 is detailed; later creative tasks are one line each. A retrospective blocker log captures cause, decision, landing place and proof without maintaining a second backlog.
 
 **Proof and limits:** The ten user-visible outcomes in [plan.md](plan.md#outcome-and-scope) are the acceptance picture. Evidence belongs beside the task and blocker as work proceeds. The plan does not claim completion from CPU fixtures where a real GPU result is required.
 
