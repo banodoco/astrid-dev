@@ -201,6 +201,78 @@ class PackageTests(unittest.TestCase):
         self.assertTrue(self.package("astrid-dev-leader").exists())
         self.assertTrue(skill.is_symlink())
 
+    def test_reference_style_definition_rewrites_to_repository_link(self):
+        path = self.root / "agent" / "roles" / "leader.md"
+        path.write_text(ROLE.replace(
+            "[rules](../shared/run-contract.md#rules)",
+            "See [rules][contract].\n\n[contract]: ../shared/run-contract.md#rules"
+        ), encoding="utf-8")
+        build_packages(self.root)
+        generated = (self.package("astrid-dev-leader") / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("[rules][contract]", generated)
+        self.assertIn("[contract]: repo/agent/shared/run-contract.md#rules", generated)
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_missing_reference_style_file_blocks_build(self):
+        path = self.root / "agent" / "roles" / "leader.md"
+        path.write_text(ROLE.replace(
+            "[rules](../shared/run-contract.md#rules)",
+            "See [rules][contract].\n\n[contract]: ../shared/absent-contract.md"
+        ), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+
+    def test_missing_reference_style_file_blocks_check(self):
+        build_packages(self.root)
+        path = self.root / "agent" / "roles" / "leader.md"
+        path.write_text(ROLE.replace(
+            "[rules](../shared/run-contract.md#rules)",
+            "See [rules][contract].\n\n[contract]: ../shared/absent-contract.md"
+        ), encoding="utf-8")
+        self.assertTrue(any("missing link target" in error
+                            for error in check_packages(self.root)),
+                        check_packages(self.root))
+
+    def test_stale_repo_entry_is_validated_before_any_retirement(self):
+        build_packages(self.root)
+        leader = self.package("astrid-dev-leader")
+        gap = self.package("astrid-dev-gap")
+        link = leader / "repo"
+        link.unlink()
+        link.symlink_to(self.root / "foreign-repo", target_is_directory=True)
+        (self.root / "agent" / "roles" / "leader.md").write_text(
+            ROLE.replace("skill: true\n", ""), encoding="utf-8")
+        (self.root / "agent" / "shared" / "workstreams" / "gap.md").write_text(
+            STREAM.replace("skill: true\n", ""), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "canonical repo link"):
+            build_packages(self.root)
+        self.assertTrue(leader.is_dir())
+        self.assertTrue(gap.is_dir())
+        self.assertTrue(link.is_symlink())
+
+    def test_stale_repo_directory_is_not_owned_for_cleanup(self):
+        build_packages(self.root)
+        leader = self.package("astrid-dev-leader")
+        link = leader / "repo"
+        link.unlink()
+        link.mkdir()
+        (self.root / "agent" / "roles" / "leader.md").write_text(
+            ROLE.replace("skill: true\n", ""), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "canonical repo link"):
+            build_packages(self.root)
+        self.assertTrue(leader.is_dir())
+        self.assertTrue(link.is_dir())
+
+    def test_stale_package_missing_skill_is_not_deleted(self):
+        build_packages(self.root)
+        leader = self.package("astrid-dev-leader")
+        (leader / "SKILL.md").unlink()
+        (self.root / "agent" / "roles" / "leader.md").write_text(
+            ROLE.replace("skill: true\n", ""), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "SKILL.md"):
+            build_packages(self.root)
+        self.assertTrue(leader.is_dir())
+
     def test_fenced_examples_are_not_rewritten(self):
         path = self.root / "agent" / "roles" / "leader.md"
         fence = chr(96) * 3
