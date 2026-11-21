@@ -4,40 +4,56 @@
 
 ## Planning evidence
 
-**Scope decision:** Owner request, 21 November 2026, recorded in the supplied `evidence.md`: “we should just be able to look at the timeline editing skill associated with Astrid and do this live very easily without changing any code in the core.” Also: “we're basically just editing a timeline”, “the custom elements are just stuff that we vibe code”, “we have built a path for batch edits, so why aren't we just using that? And why are we scripting outside the editor?”, “there should be only the loose necessary kind of security stuff”, and “Wut, why on earth would loading a pack require restart?” These express the desired direction, not approval of the specific scope or security design below. Owner decision needed: D1–D4. The owner reported the prior edits visible after publish; that is not an in-editor-agent proof.
+**Scope decision:** Pending — the owner asked for this plan on 21 November 2026 ("Can you spec out those issues specifically as a plan according to /astrid-dev-plan please") and set its direction in the same conversation, quoted under [Owner decisions](#owner-decisions); the specific scope below is not yet greenlit. Next: the owner reads the ten statements, strikes any that are wrong and answers D2 and D4.
 
-**Prior art:** Verified against the branch identities below, 21 November: `Timeline.commit` (`astrid/sdk/timeline/commit_session.py:Timeline.commit`) accepts a callable or a fixed command list; the public `astrid/sdk/timeline_elements.py:place_element` constructs one `clip.set-element` and publishes at an expected head, and its public interface takes one target. The underlying operation has additional same-owner constraints; first placement of a built-in effect is a special path, so raw command composition is not yet proven equivalent. `astrid/packs/rendering/docs/references/generated-elements-authoring.md` gives the single-target command; `astrid/packs/timeline/docs/SKILL.md` teaches commit and retry, but not this composition. Inference: a small public composition seam can avoid seven commits, if the mixed batch proves those semantics. A new pack is not needed. The runbook inspected uses seven serial placements, direct SQLite and a detached publish. Its logs report success on a fresh stack after a missing motion-pack blocker; this is reported run evidence, not a reproduced measurement here.
+**Prior art:** Checked on 21 November against the plan-69 heads in [Source identities](#source-identities).
 
-Verified: `astrid/resources/moved-elements.json` identifies motion's moved pack but supplies a floating suggestion, not a default release pin; `astrid/core/pack/defaults.py:_default_pins` requires manifest commit and digest. `astrid/core/element/registry.py:_load_default_registry_data` caches the corpus and `clear_default_registry_cache` exists. The CLI can report refresh pending; `astrid/core/pack/transaction.py` has a refresh outbox and `runtime_protocol/daemon.py:RuntimeDaemon` owns a long-lived installed-pack reader. Inference: stale process-local discovery is a plausible cause of the reported restart, not yet a proven causal trace; clear in the process which owns the stale cache and prove it. No pin was found in the inspected Agent/Runtime files; verify the actual release manifest at dispatch.
+- **The batch exists.** `astrid/sdk/timeline/commit_session.py:603` `Timeline.commit` takes a function or a fixed command list and submits one request; `astrid/sdk/timeline/commands.py:75-115` registers `clip.set-element`, `clip.set-params`, `clip.add` and `doc.patch`. `astrid/sdk/timeline_elements.py:419` `place_element` is that same commit with one `clip.set-element`, after fetching the pack pin with `_admitted_element_inputs`. Nothing in `model.py` or `edits.py` stages a placement, which is the gap.
+- **Limits found.** `clip.add` refuses anything but the parent (`_clip_commands.py:16-18`), so clips added inside a shot go through the `doc.patch` that `_capture_free_edits` emits (`commit_session.py:485`). A formula can be removed with `doc.patch` (`_doc_patch.py:379-417`), not `clip.set`.
+- **The skill teaches the slow way.** `astrid/packs/rendering/docs/references/generated-elements-authoring.md:65` gives `place-element` with one `--target`; the timeline skill teaches one commit for many edits but never mentions placements.
+- **Live refresh exists.** App `src/tools/video-editor/contexts/VideoEditorProvider.tsx:273-283` re-reads admitted elements whenever the element refs the preview renders change, so a commit that points clips at a new revision refreshes the open editor. `admitted-elements.ts:72` loads only exact refs, and `admittedElementLoader.ts:104-117` checks each bundle's SHA-256 before import. Not covered: re-admitting different bytes under an unchanged ref, which admission never does because the revision is the digest.
+- **The restart.** The Runtime runs the Agent's commit code in-process (`runtime_protocol/timeline_commit_provider.py:70-99`); the element registry is cached (`astrid/core/element/registry.py:197`), and `astrid/sdk/timeline_address.py:471-492` clears it only when a known provider changes, not after a miss. The pack host already acknowledges installs while idle (`GenericPackHost.acknowledge_pack_refresh`), so the CLI's "next start" line (`cli_manage.py:354-356`) is wrong. That the cache caused the reported restart is inferred from code, not reproduced.
+- **The motion pack.** `astrid/resources/moved-elements.json` says `astrid_motion` moved to `poms_packs` and suggests a floating `--revision main` install. `astrid/core/pack/defaults.py:36` installs defaults from a release manifest passed in by the installer; no manifest in the three repositories pins the motion pack.
+- **Checks on pack code.** `astrid/core/element/project_packs.py:327` `_check_imports` (comment: "Pack code is trusted build source, but its dependency closure is explicit"), `:478` `admit_project_pack` (snapshot, compile, digest revision); Runtime `runtime_protocol/service.py:5987`, `:6013` serve only currently admitted bytes and verify them.
+- **Whole-timeline cost.** Agent `astrid/sdk/timeline/commit.py:1201` `RuntimeCommitService.commit` and Runtime `runtime_protocol/timeline_commit_store.py:1528` `_validate` hash and validate the full closure on every commit; there is no diff-scoped path. [Plan 75](../75-fast-saving/plan.md) and [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) own that cost; [Plan 18](../18-timeline-editing/plan.md) owns broader command unification; plans [61](../61-run-a-release-branch-locally/plan.md) and [62](../62-one-manifest-one-stack/plan.md) own the local stack. Issues [#842](https://github.com/banodoco/astrid-dev/issues/842), [#846](https://github.com/banodoco/astrid-dev/issues/846), [#852](https://github.com/banodoco/astrid-dev/issues/852) and [#966](https://github.com/banodoco/astrid-dev/issues/966) overlap validation, replay, commands and saving; do not duplicate them.
+- **What the run did instead.** The runbook used seven serial placements, direct SQLite reads and a detached publish. It worked on a fresh stack once the motion pack was installed and the Runtime restarted (reported by the run, not reproduced here).
 
-Verified: `astrid/core/element/project_packs.py:_check_imports` prohibits dynamic loading and restricts imports; `admit_project_pack` snapshots and compiles, with content-derived revisions. Runtime `runtime_protocol/service.py:project_pack_elements` and `open_project_pack_element` verify scoped identity and compiled digest. App `admitted-elements.ts:refreshAdmittedElements` selects exact requested refs and preserves prior selection on failure. Inference: imports are not isolation; a real local/shared distinction must be established before relaxation. App plan-69 already loads admitted modules from Runtime for hosted and same-origin cases; the DEV-only gate in the older App branch is superseded by plan-69 `5c5899a61`, and `admitted-elements.hosted.test.ts` asserts the new behavior. Hosted isolation and production deployment remain unproven, not a reason to restore that gate.
+**Approach:** Extend the one commit path with a staged placement, clear one cache on a miss, fix the skills, prove it live. Compared and rejected: doing nothing (the owner cannot use the flow they asked for); a new batch command or endpoint (duplicates `Timeline.commit`, its outbox and its conflict rules); a combined admit-and-apply command (two transactions behind one name, and unnecessary once the commit is one call); an App change for live refresh (already there); a trust-tier design for local packs (nothing to distinguish it from yet, see D1). No new pack and no core change outside the Agent.
 
-Verified: Agent `astrid/sdk/timeline/commit.py:_CommitProvider.commit` constructs and validates the full candidate; Runtime `runtime_protocol/timeline_commit_store.py:_validate` checks the full digest and closure. `runtime_protocol/cas.py:ContentAddressedStore.read` at b2ea261 caches verification by full file identity while `verify` rehashes. Diff-scoping would need trusted base/effects and dependency proof; it is not safe to skip the server boundary based solely on client assertions. [Plan 75](../75-fast-saving/plan.md) already owns cost proportional to change, and [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) owns ~2 s heavy-timeline saving and failure loops. [Plan 18](../18-timeline-editing/plan.md) owns broader command and editor-gesture unification; this plan supplies a specific custom-element authoring journey. Plans [54](../54-warm-latency/plan.md) and [55](../55-local-speed/plan.md) focus on generation speed; [61](../61-run-a-release-branch-locally/plan.md) and [62](../62-one-manifest-one-stack/plan.md) own the local stack. No plan-69 folder exists on fetched main. Existing issues [#842](https://github.com/banodoco/astrid-dev/issues/842), [#846](https://github.com/banodoco/astrid-dev/issues/846), [#852](https://github.com/banodoco/astrid-dev/issues/852) and [#966](https://github.com/banodoco/astrid-dev/issues/966) overlap validation, replay, commands and saving; don't duplicate them.
+**Challenge:** Reviewed — by Claude Fable on 21 November against the draft at `fb16986db` and the code, with three read-only Luna verifiers (outputs `V1.txt`–`V3.txt`, machine-local). Fable also wrote the source report the draft was built from, so this is independent of the draft but not of the evidence; one finding corrects that report. Findings and rulings:
 
-**Approach:** Reuse existing pack, timeline commands, admission and editor; no new pack or detached publishing path. Doing nothing leaves the owner unable to exercise the workflow. A separate system duplicates the outbox, schema and conflict rules. Defaults, live refresh and public batch composition block the integrated result and are tasks despite being small fixes. Diff storage and validation changes belong to plans 75/77; extend those only if measured proof shows a remaining block. The admission and timeline transaction are not collapsed into a misleading atomic operation. The security relaxation is phase 2: phase 1 is useful under the present policy and is not contingent on waiving it.
+- **Live refresh is already built** (`VideoEditorProvider.tsx:273-283`). Accepted: removed the App half of LE-3.
+- **The admit-and-apply wrapper adds a surface and hides which step failed.** Accepted: removed; the skills teach two calls. LE-3 is gone and its doc work moved into LE-1.
+- **RS1 guarded a contract that no longer exists.** Accepted: removed. One final review stays.
+- **Phase 2 (LE-5) designed a local-versus-shared trust boundary for packs that have no shared path.** Accepted: removed. The owner's words decide the direction (D1); hosted and shared trust stays a proposed issue.
+- **The restart fix was scoped across the pack transaction, the CLI and the Runtime daemon.** Accepted: narrowed to the miss path in `timeline_address.py` plus the wrong message; route N.
+- **Wrong names in the draft:** `commit.py:_CommitProvider` is `RuntimeCommitService`; the test that pins the restart message is `tests/core/pack/test_cli_manage.py`, missing from the inventory. Corrected.
+- **Missed limit:** `clip.add` refuses occurrences, so the six added text clips depend on `doc.patch` mixing with `clip.set-element`. Accepted as LE-1's main risk and written into its card.
+- **Correction to Fable's own report:** it described a DEV-only editor gate and no integrity check, read from the App's `release/14/plan-59` checkout. On plan-69 (`5c5899a61`) every editor loads admitted elements from the Runtime and checks the digest. The draft had this right.
+- **Rejected:** dropping the final review as well. The change alters what one commit may contain and what a long-lived process caches; one review is cheap against that.
+- **Rejected:** a seconds target as a completion gate. The commit cost belongs to plans 75 and 77; this plan records times and does not promise them.
+- **Left to the owner:** D2 and D4.
 
-**Challenge:** Independent critique REQUIRED and PENDING: cross-repository contract, security, visible editing flow and >5 days. Next: a fresh independent high-judgment advisor verifies the claims and written task cards against code, seeks removals and reuse, then records findings and accepted/rejected/unresolved rulings here before greenlight. Ambiguity pass per task group is also pending, after critique and before dispatch.
+**Proof and limits:** Unit proofs for the mixed commit and the miss-then-install lookup; a live proof through the editor's chat agent for the whole flow, with negative cases, as [Completion](plan.md#completion) describes. Limits: the restart cause is inferred until LE-2 reproduces it; mixing native and patch commands in one request is unproven until LE-1; the live proof is one project on one machine and says nothing about hosted use.
 
-**Proof and limits:** The old external runbook's seven placements and final detached publication are evidence of the problem, not evidence of a single commit or agent flow. The literal four edits, timing, clip nesting and formula removals require a real test. Warm commit and visible-result time must be recorded separately; no guessed duration proves the seconds target. The security proof must exercise a genuinely distinguishable local/shared boundary, not merely label a request local.
+**Review rounds:** Recommended: no review stop, and one final review of at most 2 rounds, because the change is small but touches what a commit may contain. Next: the owner confirms the cap (D4).
 
-**Review rounds:** Owner decision needed: recommend up to two rounds at RS1 for batch/refresh contract and two integrated rounds at R because security and three repositories interact. RS1 protects the expensive real-flow proof from an invalid contract. The owner's agreed caps are pending.
+**Run start:** Pending — no run is authorized. Next: when the owner starts one, record the date, the accountable session, the actual base and dependency revisions and what it may do without asking.
 
-**Run start:** Pending — no run authorized. Next: record accountable session, dates, phase, actual base/dependency SHAs, authorities and advisor at explicit start.
+Ten statements for the owner to strike or keep:
 
-Ten statements to discuss with the owner; all describe the proposed plan, not an approved outcome:
+1. Now, a custom-element edit is eight commits driven by a script outside the editor. After, the editor's own agent does it in one commit.
+2. Seven placements, their parameter changes and six new text clips are one receipt and one undo.
+3. We add no new batch system: `place-element` already rides the batch path one clip at a time, and we let it carry many.
+4. Installing a pack never needs a restart, and Astrid stops saying it does.
+5. Pack code a creator wrote on their own machine is trusted as theirs: no sandbox, no provenance check, no trust tiers.
+6. The digest pin and exact revision stay, because they are why last month's timeline still renders last month's code.
+7. Custom elements may still import only React, Remotion and files in the pack; arbitrary packages stay out.
+8. Admitting an element and committing the timeline stay two calls, and a failure says which one failed.
+9. This plan does not make a save faster; it makes one save do the work of eight.
+10. Hosted and shared packs get no isolation from this plan, and none exists today.
 
-1. The editor's own agent takes the four-edit request from chat and carries it through to a visible timeline.
-2. Seven placements and the other timeline changes enter one commit and leave one durable receipt.
-3. A newly installed pack becomes discoverable by the running host without restarting it.
-4. The motion pack is pinned as a release default only if the owner chooses it.
-5. Admission and application read as one agent workflow, while failures reveal which transaction succeeded.
-6. A failed compile leaves the prior admitted selection intact.
-7. Preview loads the exact admitted revision and never substitutes a newer one.
-8. The proof measures the warm edit and visible result on a named heavy fixture against seconds, not minutes.
-9. Local import restrictions change only after an owner decision and an enforceable trust-boundary review.
-10. Hosted isolation and a general storage redesign remain outside this plan.
-
-Owner reactions to these statements: pending; record contested choices under D1–D4 before greenlight.
+Owner reactions: pending. Record any struck statement under [Owner decisions](#owner-decisions) and revise the plan before greenlight.
 
 Proposed issues (do not create them as part of planning):
 
@@ -51,10 +67,17 @@ Proposed issues (do not create them as part of planning):
 
 ## Owner decisions
 
-- **D1 — Owner decision needed:** Retain current local import checks, or relax them for verifiably user-authored local packs? Recommend the latter only with enforceable provenance, compile/digest/exact-revision checks and a strict shared/hosted boundary; if no trustworthy distinction exists, retain restrictions and return for a decision. The owner expressed concern, not approval of this implementation.
-- **D2 — Owner decision needed:** Include an immutable `astrid_motion` release default or keep explicit installation? Recommend a release pin for the demonstrated common workflow; assess distribution size, update and trust implications.
-- **D3 — Owner decision needed:** Accept this phased local outcome, timing target and numeric fallback if exact word binding remains broken, or require word binding in the proof? Recommend phases as written, record any fallback explicitly; no substitution for the four visual edits.
-- **D4 — Owner decision needed:** Agree review caps and intended release/integration destination after the independent critique; recommend RS1 and final review at two rounds each, with no release assigned here.
+Owner's words, 21 November 2026, from the planning conversation (machine-local record `evidence.md`):
+
+- "we should just be able to look at the timeline editing skill associated with Astrid and do this live very easily without changing any code in the core."
+- "we have built a path for batch edits, so why aren't we just using that? And why are we scripting outside the editor?" and "we 100% should be able to batch these."
+- "the custom elements are just stuff that we vibe code… there should be only the loose necessary kind of security stuff."
+- "Wut, why on earth would loading a pack require restart?"
+
+- **D1 — Decided by the owner's words: only loose, necessary security for local custom elements.** The plan reads that as: trust local pack code, add no gates, keep the integrity checks (compile, digest pin, exact revision) and the import rule. Statements 5–7 are that reading; the owner can strike any of them.
+- **D2 — Owner decision needed:** should a fresh install include the motion pack, pinned to an exact commit in the release manifest? Recommended: yes. The timeline skill teaches `am-type` and `am-footage`, and a fresh install without them refuses the first edit. The cost is a larger install and one more pin to move each release. Without it, LE-2 still removes the restart, and the first edit installs the pack on demand.
+- **D3 — Decided by the planner, reported:** one phase; if word-bound timing on new shot clips cannot be committed, the proof uses numeric timing and says so, and the binding defect is an issue.
+- **D4 — Owner decision needed:** confirm one final review of at most 2 rounds, and name the release this work joins.
 
 ## Source identities
 
@@ -64,4 +87,4 @@ Observed donor heads: Agent `release/14/plan-69` `83d5f8fe382e2573deee39ffb6036c
 
 ## References
 
-Owner evidence, Fable reviews, Luna L1–L5, stack logs and fresh runbook supplied in the planning request are private machine-local inputs, not portable project dependencies. Their specific checked findings and uncertainty are recorded above. The live proof must use a distributable fixture or an explicitly authorized private test copy; never include private media or credentials in the plan.
+Owner evidence, Fable reviews, Luna L1–L5 and V1–V3, stack logs and fresh runbook supplied in the planning request are private machine-local inputs, not portable project dependencies. Their specific checked findings and uncertainty are recorded above. The live proof must use a distributable fixture or an explicitly authorized private test copy; never include private media or credentials in the plan.

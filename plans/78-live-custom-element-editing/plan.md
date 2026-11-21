@@ -2,15 +2,15 @@
 
 **Project:** Live custom-element editing
 
-**Goal:** An editor's agent applies a creator's custom pack-element timeline edits live in one commit, with feedback in seconds and no restart or external runbook.
+**Goal:** The editor's own agent writes a custom element and applies it with the rest of an edit in one commit, with no restart, no outside script and no page reload.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** 11–14 engineering days: phase 1, 7–9; phase 2, 4–5.
+**Estimate:** 4–6 engineering days, one phase.
 
-**Waiting on:** Owner decisions, independent critique, and identification and integration of the plan-69 product inputs.
+**Waiting on:** The owner's reaction to the ten statements, and the plan-69 product work landing on a release line.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md).
 
@@ -20,24 +20,38 @@
 
 ## Outcome and scope
 
-Phase 1: on an explicitly identified local installed stack, the editor's own agent follows the skills to prepare a project pack and apply the four representative animation edits from a chat prompt, in one timeline commit. The running daemon sees an installed pack without a restart; the open editor sees the admitted exact revision and resulting edit. A release default includes the pinned motion pack if the owner agrees. Measure the warm commit and the whole interaction separately against a seconds, not minutes, target; a failure is not a pass. Use an admit-and-apply agent workflow that hides redundant ceremony but keeps distinct admission and commit failure boundaries and durable retry identity.
+A creator asks the editor's agent for an animation change. The agent edits the project pack's files, admits them, and makes **one** timeline commit that points every affected clip at the new element and carries the parameter, text and timing edits with it. The open editor shows the result without a reload, and a pack installed while Astrid is running works on the next command.
 
-Phase 2: subject to an explicit owner decision and the security review, make local user-authored element admission less restrictive without weakening a hosted or shared trust boundary. Keep digest-pinned retained source and compiled artifact, compile at admission, and exact revision checks. Distinguish trusted local authority from untrusted inputs using an enforceable boundary; if it cannot be established, retain restrictions and return the decision to the owner. Never present import restrictions as a sandbox.
+Included, all in the Agent:
 
-This plan does not promise a hosted sandbox, broad delta storage, or general editing concurrency. [Plans 75 and 77](inputs.md#planning-evidence) own the saving-cost work; unresolved independent defects are proposed as issues in inputs. The four-edit proof uses a safe copy with equivalent source and records exactly which timing semantics are supported.
+- **One commit for a mixed edit.** A placement becomes something a `Timeline.commit` function can do alongside its other edits, so seven placements and their edits are one receipt and one undo.
+- **No restart after a pack install.** The running Runtime rediscovers elements when a lookup misses, and the install message stops telling people to restart.
+- **The skills teach that flow.** The rendering guide's per-clip `place-element` recipe gives way to "admit, then one commit".
+- **A live proof** through the editor's chat agent of the four representative edits.
+
+Decided boundaries:
+
+- **Local project-pack code is trusted as the creator's own.** The code already says so (`_check_imports`: "Pack code is trusted build source"). This plan adds no sandbox, provenance check or trust tier, and removes ceremony rather than checks.
+- **What stays is integrity, not policing:** compile at admission, the digest-pinned snapshot, the exact revision on each clip, and the editor's digest check before it imports a module. They are what keeps an old timeline rendering the code it was made with.
+- **The import rule stays** (React, Remotion and declared files in the pack). It is what makes the snapshot complete; widening it to arbitrary packages is a dependency feature nobody has asked for.
+- **Admission and the timeline commit stay two calls.** A wrapper command that merges them would hide which one failed and buys nothing once the commit is a single call.
+
+Left out: hosted or shared-pack isolation, cheaper saves on heavy timelines ([plans 75 and 77](inputs.md#planning-evidence) own that), and the separate defects listed as proposed issues in [inputs](inputs.md#planning-evidence). This plan does not promise a speed number: one commit instead of eight removes seven whole-timeline validations, and the proof records what remains.
 
 ## Existing work and decision
 
-Extend the existing Timeline.commit command path, project-pack admission, installed-pack refresh and editor loader; do not build a new pack or a parallel publishing system. The alternatives, checked source, observed limits, owner quotation and unresolved choices are in [inputs](inputs.md#planning-evidence). This is a draft, not an accepted security or scope decision.
+Almost everything exists. `Timeline.commit` already takes many edits as one commit, and `place_element` is that same commit with exactly one `clip.set-element` in it. The open editor already reloads admitted elements when a commit changes the element refs it renders. The pack host already picks up a newly installed pack while idle. Two things are missing: a way to stage a placement inside a commit function, and a cache clear when the Runtime's element lookup misses. The plan adds those two, corrects the skills and proves the flow; it builds no new pack, command surface or publishing path. Sources, the critique of the first draft and the alternatives are in [inputs](inputs.md#planning-evidence). The owner set the direction; the specific scope is not yet greenlit.
 
 ## Sequence and readiness
 
-First freeze the actual plan-69 integration inputs and reconcile later release heads. Batch authoring and installed-pack discovery can proceed independently; the combined admit-and-apply workflow consumes the batch interface. Review the batch and refresh contracts before the integrated editor proof. Phase 2 follows the owner's trust-boundary decision, not a presumption of approval. See [tasks](tasks.md) for the critical path and test inventory. A plan is not authorization to start a run, change production or release.
+LE-1 (batch) and LE-2 (no restart) are independent and run in parallel. LE-4 (the live proof) needs both. One review at the end. The work builds on the plan-69 changes in all three repositories, so it starts once those are on a release line, or from the plan-69 branches if the owner starts it sooner. See [tasks](tasks.md). Recording this plan authorizes no run, release or change to a live stack.
 
 ## Interfaces and handoff
 
-Consume the exact Agent, Runtime, App, release manifest and motion-pack revisions recorded at dispatch, including selected plan-69 changes; do not assume the donor branches have merged. Produce a public batch editing interface, compatible exact-revision admission/refresh and a reproducible live-flow record bound to integrated commits. Keep captured expected heads, idempotency, conflict and recovery semantics. No release has been assigned; the run owner must determine the release integration destination before dispatch.
+Consumes the plan-69 Agent, Runtime and App work (project-pack compile and admission, Runtime serving, the App loader) at the revisions recorded at run start; the donor heads observed while planning are in [inputs](inputs.md#source-identities). Produces one public Agent interface, a placement staged inside `Timeline.commit`, plus corrected skills, and a recorded live proof bound to exact commits. The existing `place_element` call and CLI keep working unchanged. Expected-head, idempotency, conflict and retry behaviour are the existing commit's, not new ones. No release is assigned.
 
 ## Completion
 
-On a disposable representative heavy project, the actual in-editor agent makes the four requested edits, including seven placements and six added text clips, with one durable timeline receipt/history row and visible correct preview without restart or manual SQL/runbook. Record source pins, prompt, elapsed times for admission, commit and visible preview, resulting head, screenshot or recording and independent visual comparison to the intended four edits. Show stale head, lost acknowledgement, failed compilation and mismatched revision do not silently apply or substitute code. Measure a warm repeated run: target seconds for commit and visible result, with the data size and machine recorded. If plan 77 does not meet it on the fixture, report the blocker rather than relaxing the target. This local proof does not establish hosted isolation or performance on all projects.
+On a disposable copy of a heavy project, the editor's chat agent is asked for the four edits and delivers them with one timeline receipt and one history row: seven clips retargeted to two forked elements, their parameter edits, and six added text clips. The open editor shows them without a reload. A pack installed after the Runtime started resolves on the next commit without a restart. No SQL, outside script or detached publish is used.
+
+The record holds the source pins, the prompt, the resulting head, stills of the four edits compared with the intent, and the elapsed time for admission, commit and visible result. Negative cases: a stale head, a wrong or unadmitted revision, a failed compile and a failed commit after a good admission each leave the timeline unchanged and say which step failed. If the exact word-bound timing of the new text clips cannot be committed, the proof uses numeric timing and says so. The proof is local; it shows nothing about hosted isolation or about every project size.
