@@ -20,8 +20,12 @@ def project_number(plan_path: str | Path) -> str:
     return folder.split("-", 1)[0]
 
 
-def plan_gap_ids(plan_text: str) -> list[str]:
-    """The one interpretation used by validation, completion and publishing."""
+def plan_gap_links(plan_text: str) -> list[tuple[str, str, str]]:
+    """Parse canonical project-gap declarations as (ID, role, relative href).
+
+    Own the roles and exact source link once, so derived readers do not
+    separately infer role, target path, or declaration ordering.
+    """
     gaps, roles = VISION_GAPS.findall(plan_text), VISION_ROLE.findall(plan_text)
     if len(gaps) + len(roles) != 1:
         raise ValueError("expected exactly one Vision gaps or Vision role declaration")
@@ -59,4 +63,11 @@ def plan_gap_ids(plan_text: str) -> list[str]:
         raise ValueError("primary gap must follow the first gap link")
     if len(second_link) > 1 and first_primary.start() > second_link[1].start():
         raise ValueError("primary gap must be the first linked gap")
-    return ids
+    return [(gap_id, "primary" if i == 0 else "supporting",
+             match.group(0)[2:-1])
+            for i, (gap_id, match) in enumerate(zip(ids, gap_matches))]
+
+
+def plan_gap_ids(plan_text: str) -> list[str]:
+    """The canonical ID projection used by validation and public publishing."""
+    return [gap_id for gap_id, _, _ in plan_gap_links(plan_text)]
