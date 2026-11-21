@@ -60,6 +60,14 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
         text = path.read_text(encoding="utf-8")
         gap = RecordRef("gap", matched.group(1))
         provenance = path.relative_to(root).as_posix()
+        # Mirror the canonical gap-structure title contract before emitting
+        # any edge; a CA-001 filename cannot author a CA-002 relationship.
+        required_heading = f"# {gap.id} —"
+        if not text.startswith(required_heading):
+            heading = text.splitlines()[0] if text else "<empty>"
+            raise RelationshipError(
+                f"{provenance} ({gap}): heading {heading!r} must start "
+                f"{required_heading!r} to match the canonical gap filename")
         previous = gap_sources.get(gap.id)
         if previous is not None:
             raise RelationshipError(
