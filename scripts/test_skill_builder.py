@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from skill_builder import build_packages, check_packages, expected_packages
 
@@ -488,6 +489,90 @@ class PackageTests(unittest.TestCase):
         (self.root / ".generated").symlink_to(self.root / "agent", target_is_directory=True)
         with self.assertRaisesRegex(ValueError, "cannot be a symlink"):
             build_packages(self.root)
+
+
+    def test_nested_dangling_alias_preserves_output(self):
+        build_packages(self.root)
+        skill = self.package("astrid-dev-start") / "SKILL.md"
+        before = skill.read_bytes()
+        (self.root / "agent" / "missing-dir").symlink_to(self.root / "gone", target_is_directory=True)
+        self.assertTrue(any("symlink" in issue for issue in check_packages(self.root)))
+        with self.assertRaisesRegex(ValueError, "symlink"):
+            build_packages(self.root)
+        self.assertEqual(skill.read_bytes(), before)
+
+    def test_parent_directory_builds_twice(self):
+        folder = self.root / "agent" / "Team_Notes"
+        folder.mkdir()
+        (self.root / "agent" / "start.md").rename(folder / "start.md")
+        build_packages(self.root)
+        self.assertEqual(build_packages(self.root), [])
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_empty_alt_rebases_and_missing_refuses(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        source.write_text(original + "\n![](../docs/notes.md)\n")
+        build_packages(self.root)
+        skill = self.package("astrid-dev-start") / "SKILL.md"
+        self.assertIn("![](repo/docs/notes.md)", skill.read_text())
+        before = skill.read_bytes()
+        source.write_text(original + "\n![](missing.png)\n")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+        self.assertEqual(skill.read_bytes(), before)
+
+    def test_encoded_fragments_and_reference_destinations(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        (self.root / "docs" / "notes.md").write_text("# Café\n")
+        source.write_text(original + "\n[one](../docs/notes.md#caf%C3%A9)\n[two](<../docs/notes.md>)\n[three][r]\n\n[r]:\n../docs/notes.md\n")
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("repo/docs/notes.md#caf%C3%A9", text)
+        self.assertIn("<repo/docs/notes.md>", text)
+        self.assertIn("[r]:\nrepo/docs/notes.md", text)
+        source.write_text(original + "\n[bad](../docs/notes.md#absent)\n")
+        with self.assertRaisesRegex(ValueError, "missing heading"):
+            build_packages(self.root)
+        source.write_text(original + "\n[bad](<../../outside>)\n")
+        with self.assertRaisesRegex(ValueError, "escapes checkout"):
+            build_packages(self.root)
+
+    def test_multiline_code_and_quoted_fence_are_literals(self):
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\n`[literal]\nname`\n\n> ~~~\n> [example](missing.md)\n> ~~~\n\n[real](../docs/notes.md)\n")
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("`[literal]\nname`", text)
+        self.assertIn("> [example](missing.md)", text)
+        self.assertIn("[real](repo/docs/notes.md)", text)
+        source.write_text(source.read_text() + "\n[bad](missing.md)\n")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+
+    def test_failed_refresh_preserves_packages_and_retry_succeeds(self):
+        build_packages(self.root)
+        stale = self.package("astrid-dev-leader")
+        active = self.package("astrid-dev-start") / "SKILL.md"
+        before = active.read_bytes()
+        (self.root / "agent" / "roles" / "leader.md").write_text(ROLE.replace("skill: true\n", ""))
+        start = self.root / "agent" / "start.md"
+        start.write_text(start.read_text() + "\nChanged.\n")
+        real_open = Path.open
+        def fail_refresh(path, *args, **kwargs):
+            if path.resolve() == active.resolve() and args and args[0] == "r+":
+                raise PermissionError("refused refresh")
+            return real_open(path, *args, **kwargs)
+        with patch.object(Path, "open", fail_refresh):
+            with self.assertRaisesRegex(PermissionError, "refused refresh"):
+                build_packages(self.root)
+        self.assertTrue(stale.is_dir())
+        self.assertEqual(active.read_bytes(), before)
+        build_packages(self.root)
+        self.assertFalse(stale.exists())
+        self.assertIn("Changed.", active.read_text())
+        self.assertEqual(check_packages(self.root), [])
 
 
 if __name__ == "__main__":

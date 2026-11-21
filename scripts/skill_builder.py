@@ -6,6 +6,7 @@ import json
 import os
 import re
 import shutil
+import tempfile
 from urllib.parse import quote, unquote
 
 from agent_documents import AgentDocument, discover_documents
@@ -14,13 +15,13 @@ from records import markdown_heading_anchors
 OUTPUT = Path(".generated/skills")
 MARKER = ".astrid-dev-generated"
 REPO_LINK = "../../../"
-_LINK = re.compile(r"(!?\[[^\]\n]+\])\(([^)\n]+)\)")
+_LINK = re.compile(r"(!?\[[^\]\n]*\])\(([^)\n]+)\)")
 _SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.I)
 _REFERENCE_DEFINITION = re.compile(r"^([ ]{0,3})\[([^\]\n]+)\]:[ \t]*(.*)$")
 _REFERENCE_USE = re.compile(r"(?<!\\)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
 _REF_TOKEN = re.compile(r"^([ \t]*)(<[^>\n]+>|[^\s\n]+)")
-_CODE_SPAN = re.compile(r"(?<!\\)(\x60+)(.*?)\1")
-_MARKER_SOURCE = re.compile(r"agent/(?:[a-z0-9]+(?:-[a-z0-9]+)*/)*([a-z0-9]+(?:-[a-z0-9]+)*)\.md\n\Z")
+_CODE_SPAN = re.compile(r"(?<!\\)(\x60+)(?!\x60)(.*?)(?<!\x60)\1(?!\x60)", re.S)
+_MARKER_SOURCE = re.compile(r"agent/(?:[^/\\\r\n]+/)*([a-z0-9]+(?:-[a-z0-9]+)*)\.md\n\Z")
 
 
 def _active_lines(lines: list[str]) -> list[bool]:
@@ -29,7 +30,7 @@ def _active_lines(lines: list[str]) -> list[bool]:
     fence: str | None = None
     size = 0
     for line in lines:
-        plain = line.rstrip("\r\n")
+        plain = re.sub(r"^(?:[ ]{0,3}>[ ]?)+", "", line.rstrip("\r\n"))
         if fence is not None:
             result.append(False)
             if re.fullmatch(
@@ -63,7 +64,7 @@ def _ref_key(label: str) -> str:
 
 def _mask_code_spans(line: str) -> str:
     # Keep offsets stable so the original source can be rewritten exactly.
-    return _CODE_SPAN.sub(lambda match: " " * len(match.group(0)), line)
+    return _CODE_SPAN.sub(lambda match: "".join("\n" if ch == "\n" else "\r" if ch == "\r" else " " for ch in match.group(0)), line)
 
 
 def _rewrite_links(source: AgentDocument, root: Path) -> str:
@@ -100,7 +101,7 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
         if not target.exists():
             raise ValueError(f"{source.relative}: missing link target: {address}")
         if anchor and target.is_file() and target.suffix.lower() == ".md":
-            if anchor not in _real_anchors(target.read_text(encoding="utf-8")):
+            if unquote(anchor) not in _real_anchors(target.read_text(encoding="utf-8")):
                 raise ValueError(f"{source.relative}: missing heading in {address}")
         result = "repo/" + quote(target.relative_to(root).as_posix(), safe="/-._~")
         if query:
@@ -131,7 +132,7 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
         else:
             destination_line = index + 1
             if (destination_line >= len(lines) or not active[destination_line]
-                    or not re.match(r"^[ \t]+", lines[destination_line])):
+                    or not lines[destination_line].strip()):
                 raise ValueError(f"{source.relative}: reference [{key}] has no destination")
             token = _REF_TOKEN.match(lines[destination_line])
             if token is None:
@@ -146,10 +147,11 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
         destinations[destination_line] = (begin, finish, original, address)
         definition_lines.add(index)
 
+    masked_lines = _mask_code_spans("".join(line if keep else " " * (len(line.rstrip("\r\n"))) + ("\n" if line.endswith("\n") else "") for line, keep in zip(lines, active))).splitlines(keepends=True)
     for index, line in enumerate(lines):
         if not active[index] or index in definition_lines:
             continue
-        masked = _mask_code_spans(line)
+        masked = masked_lines[index]
         for match in reversed(list(_LINK.finditer(masked))):
             masked = (masked[:match.start()]
                       + " " * (match.end() - match.start())
@@ -168,7 +170,7 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
     for index, line in enumerate(lines):
         if not active[index]:
             continue
-        masked = _mask_code_spans(line)
+        masked = masked_lines[index]
         replacements: list[tuple[int, int, str]] = []
         for match in _LINK.finditer(masked):
             actual = _LINK.fullmatch(line[match.start():match.end()])
@@ -178,9 +180,13 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
             if quoted is None:
                 raise ValueError(f"{source.relative}: unsupported Markdown link {raw!r}")
             address, suffix = quoted.group(1), quoted.group(2) or ""
+            angle = address.startswith("<") and address.endswith(">")
+            address = address[1:-1] if angle else address
+            rewritten = rewrite_address(address)
+            rewritten = f"<{rewritten}>" if angle else rewritten
             replacements.append(
                 (match.start(), match.end(),
-                 label + "(" + rewrite_address(address) + suffix + ")")
+                 label + "(" + rewritten + suffix + ")")
             )
         if index in destinations:
             begin, finish, token, address = destinations[index]
@@ -233,7 +239,8 @@ def _assert_package_dir(package: Path, *, stale: bool = False) -> None:
         raise ValueError(f"refusing unmanaged generated package: {package}")
     source = marker.read_text(encoding="utf-8")
     match = _MARKER_SOURCE.fullmatch(source)
-    if match is None or package.name != "astrid-dev-" + match.group(1):
+    if (match is None or any(part in (".", "..") for part in source.strip().split("/"))
+            or package.name != "astrid-dev-" + match.group(1)):
         raise ValueError(f"invalid ownership marker: {package}")
     # Verify every package's SKILL.md before build_packages can retire anything.
     # A symlink with matching bytes is still foreign content and must be refused.
@@ -291,10 +298,6 @@ def build_packages(root: Path) -> list[str]:
     existing = {item.name: item for item in output.iterdir()}
     for name, package in sorted(existing.items()):
         _assert_package_dir(package, stale=name not in expected)
-    for extra in sorted(set(existing) - set(expected)):
-        target = existing[extra]
-        shutil.rmtree(target)
-        actions.append(f"retired {extra}")
     for name, (content, source) in expected.items():
         package = output / name
         if package.exists() or package.is_symlink():
@@ -308,11 +311,31 @@ def build_packages(root: Path) -> list[str]:
         if skill.is_symlink():
             raise ValueError(f"{name}: refusing symlinked SKILL.md")
         if not skill.is_file() or skill.read_text(encoding="utf-8") != content:
-            skill.write_text(content, encoding="utf-8")
+            # Verify a refresh may write the existing file, then stage the new
+            # bytes before replacement so a failed write cannot truncate it.
+            if skill.exists():
+                with skill.open("r+", encoding="utf-8"):
+                    pass
+            staged = None
+            try:
+                with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=package,
+                                                 delete=False) as pending:
+                    staged = Path(pending.name)
+                    pending.write(content)
+                if skill.exists():
+                    os.chmod(staged, skill.stat().st_mode & 0o777)
+                os.replace(staged, skill)
+            finally:
+                if staged is not None:
+                    staged.unlink(missing_ok=True)
             actions.append(f"updated {name}")
         if (package / MARKER).read_text(encoding="utf-8") != source:
             (package / MARKER).write_text(source, encoding="utf-8")
             actions.append(f"source {name}")
+    for extra in sorted(set(existing) - set(expected)):
+        target = existing[extra]
+        shutil.rmtree(target)
+        actions.append(f"retired {extra}")
     issues = check_packages(root)
     if issues:
         raise ValueError("; ".join(issues))
