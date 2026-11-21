@@ -222,6 +222,30 @@ class DeliveryCompositionTests(unittest.TestCase):
         self.assertIn(RecordRef("project", "73"), graph.enablers)
         self.assertEqual(graph.outgoing(RecordRef("project", "73")), ())
 
+    def test_communication_enabler_is_an_explicit_gapless_role(self):
+        self.write("plans/73-enabler/plan.md", PLAN.replace(
+            "**Vision gaps:** [CA-001](../../vision/gaps/CA-001-finish-work.md) (primary)",
+            "**Vision role:** Communication enabler — explains the creative vision"))
+        graph = load_delivery(self.root)
+        self.assertIn(RecordRef("project", "73"), graph.enablers)
+        self.assertEqual(graph.outgoing(RecordRef("project", "73")), ())
+
+    def test_arbitrary_vision_role_cannot_claim_foundational_enabler(self):
+        # plan_gap_ids() returns [] for any Vision role, not necessarily an
+        # explicit foundational enabler. The derived graph must fail closed.
+        for role in ("Unresolved; ask later",
+                     "Foundational enablerish — not an accepted role"):
+            with self.subTest(role=role):
+                self.write("plans/73-enabler/plan.md", PLAN.replace(
+                    "**Vision gaps:** [CA-001](../../vision/gaps/CA-001-finish-work.md) (primary)",
+                    "**Vision role:** " + role))
+                with self.assertRaises(RelationshipError) as failure:
+                    load_delivery(self.root)
+                message = str(failure.exception)
+                for expected in ("plans/73-enabler/plan.md",
+                                 "project:73", role, "Foundational enabler"):
+                    self.assertIn(expected, message)
+
     def test_actual_repository_delivery_traversal(self):
         # The user-facing read-only CLI consumes this full repository, not only
         # the fixture. Do not infer publication, issue fixes or gap closure.
