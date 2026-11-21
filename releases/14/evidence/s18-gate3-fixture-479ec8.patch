@@ -2,12 +2,12 @@
 +++ b/tests/editing_conformance/native_checkout_current_fixture.py
 @@ -74,8 +74,13 @@
      assert [clip["id"] for clip in parent["clips"][-2:]] == ["music-bed", "music-other"]
- 
+
      if gate3:
 +        from astrid.core.element.catalog import list_element_descriptors
          from astrid.sdk.timeline.native_occurrence_delete import capture_occurrence_delete
 +        from astrid.sdk.timeline.native_word_anchor import capture_anchor
- 
+
 +        clear = capture_anchor(current_bundle(case), "parent/clip:card", "on", None, None)
 +        _current_commit(case, [clear], "native-checkout-current-gate3-clear-anchor")
 +
