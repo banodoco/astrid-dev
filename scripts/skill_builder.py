@@ -66,27 +66,41 @@ def _active_lines(lines: list[str]) -> list[bool]:
     indented_context: tuple[int, tuple[tuple[int, int], ...]] | None = None
     list_stack: list[tuple[int, int]] = []  # marker column, content column
     list_quote_depth = 0
+    uncertain_quote_container = False
     for index, line in enumerate(lines):
         plain = line.rstrip("\r\n")
         quote = re.match(r"^(?:[ ]{0,3}>[ ]?)+", plain)
         depth = quote.group(0).count(">") if quote else 0
         content = plain[len(quote.group(0)):] if quote else plain
         if not content.strip():
+            # An unquoted blank ends a blockquote; a quoted blank retains it.
+            if not quote and list_quote_depth:
+                list_stack.clear()
+                list_quote_depth = 0
+                uncertain_quote_container = False
+                indented_context = None
             previous_blank = True
             previous_depth = depth
             continue
         if depth != list_quote_depth:
             list_stack.clear()
+            uncertain_quote_container = False
             list_quote_depth = depth
         # Expand indentation from the actual column after quote markers.
-        # A tab immediately after '>' has partially consumed marker whitespace;
-        # keep that ambiguous form live instead of guessing.
+        # When the separator is a tab, CommonMark consumes one expanded space
+        # for marker separation; the remainder contributes to indentation.
         prefix = quote.group(0) if quote else ""
         start_column = len(prefix.expandtabs(4))
         whitespace = content[:len(content) - len(content.lstrip(" \t"))]
         leading = len((prefix + whitespace).expandtabs(4)) - start_column
-        ambiguous_marker_tab = bool(quote and prefix.endswith(">") and content.startswith("\t"))
+        if quote and prefix.endswith(">") and content.startswith("\t"):
+            leading -= 1
         marker = re.match(r"^([ ]*)([-+*]|\d{1,9}[.)])([ \t]+)", content)
+        if (quote and prefix.endswith(">") and content.startswith("\t")
+                and re.match(r"^(?:[-+*]|\d{1,9}[.)])[ \t]+", content.lstrip(" \t"))):
+            # The tab straddles marker whitespace and indentation. Until this
+            # quote closes, retain potentially live list content for checking.
+            uncertain_quote_container = True
         if marker and (len(marker.group(1)) < 4 or list_stack):
             marker_column = len(marker.group(1))
             while list_stack and marker_column < list_stack[-1][1]:
@@ -102,9 +116,9 @@ def _active_lines(lines: list[str]) -> list[bool]:
             while list_stack and leading < list_stack[-1][1]:
                 list_stack.pop()
         threshold = (list_stack[-1][1] if list_stack else 0) + 4
-        indented = leading >= threshold and not ambiguous_marker_tab
+        indented = leading >= threshold
         context = (depth, tuple(list_stack))
-        eligible = result[index] and not marker and indented
+        eligible = result[index] and not marker and indented and not uncertain_quote_container
         starts_block = previous_blank or depth > previous_depth
         if eligible and (indented_context == context or starts_block):
             result[index] = False

@@ -913,5 +913,42 @@ class PackageTests(unittest.TestCase):
                         build_packages(self.root)
 
 
+    def test_immediate_quote_tabs_and_closed_quote_list_literals(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        bodies = (">\t\t[literal](missing.md)",
+                  ">\t\t\t[literal](missing.md)",
+                  ">\t\t[undefined]",
+                  "> - item\n\n>     [literal](missing.md)",
+                  "> - item\n\n>     [undefined]",
+                  "> - item\n\n    [literal](missing.md)")
+        for body in bodies:
+            with self.subTest(body=body):
+                source.write_text(original + "\n" + body + "\n\n[real](../docs/notes.md)\n")
+                build_packages(self.root)
+                text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+                self.assertIn("[real](repo/docs/notes.md)", text)
+                self.assertIn("[undefined]" if "undefined" in body else "[literal](missing.md)", text)
+
+    def test_open_quote_list_and_immediate_tab_live_links_are_checked(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        for body in (">\t[bad](missing.md)",
+                     "> paragraph\n>\t\t[bad](missing.md)",
+                     ">\t- item\n>\n>\t\t[bad](missing.md)",
+                     ">\t1. item\n>\n>\t\t[bad](missing.md)",
+                     "> - item\n>\n>     [bad](missing.md)",
+                     "> - item\n> lazy\n>\n>     [bad](missing.md)"):
+            with self.subTest(body=body):
+                source.write_text(original + "\n" + body + "\n")
+                with self.assertRaisesRegex(ValueError, "missing link target"):
+                    build_packages(self.root)
+        for dest in ("../../outside.md", "%2e%2e/%2e%2e/outside.md"):
+            for prefix in ("> - item\n>\n>     ", ">\t- item\n>\n>\t\t"):
+                source.write_text(original + prefix + "[bad](" + dest + ")\n")
+                with self.assertRaisesRegex(ValueError, "escapes checkout"):
+                    build_packages(self.root)
+
+
 if __name__ == "__main__":
     unittest.main()
