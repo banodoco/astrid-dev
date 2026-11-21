@@ -51,7 +51,7 @@ Setup cards SL-0 to SL-3 run mostly in parallel; the loop card SL-4 starts when 
 
 ## Interfaces and handoff
 
-It consumes the three `release/14/plan-69` branches (App, Agent, Runtime), cut from `release/14/plan-59`; the exact SHAs are in [inputs.md](inputs.md#source-identities). It produces: fixes as PRs into those branches; a fixture and a harness in astrid-app `scripts/save-loop/` that any machine can rerun; and the round rows and plan deltas in [rounds.md](rounds.md), which Plans 63, 75 and 76 and 18 take up.
+It consumes the three `release/14/plan-77` branches (App, Agent, Runtime), cut from `release/14/plan-59`; the exact SHAs are in [inputs.md](inputs.md#source-identities). It produces: fixes as PRs into those branches; a fixture and a harness in astrid-app `scripts/save-loop/` that any machine can rerun; and the round rows and plan deltas in [rounds.md](rounds.md), which Plans 63, 75 and 76 and 18 take up.
 
 ## Completion
 
