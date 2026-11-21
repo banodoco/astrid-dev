@@ -277,37 +277,37 @@ def _assert_package_dir(package: Path, *, stale: bool = False) -> None:
         raise ValueError(f"{package}: expected canonical repo link")
 
 
+def _check_output(output: Path, expected: dict[str, tuple[str, str]]) -> None:
+    if not output.exists():
+        if expected:
+            raise ValueError("generated skill packages are missing")
+        return
+    if not output.is_dir():
+        raise ValueError("generated skills root is not a directory")
+    actual = {child.name for child in output.iterdir()}
+    if actual != set(expected):
+        raise ValueError(f"generated skill names differ: missing={sorted(set(expected)-actual)}, extra={sorted(actual-set(expected))}")
+    for name, (content, source) in expected.items():
+        package = output / name
+        _assert_package_dir(package)
+        if (package / "SKILL.md").read_text(encoding="utf-8") != content:
+            raise ValueError(f"{name}: generated SKILL.md is stale")
+        if (package / MARKER).read_text(encoding="utf-8") != source:
+            raise ValueError(f"{name}: ownership/source marker is stale")
+
+
 def check_packages(root: Path) -> list[str]:
     """Report drift without changing generated packages."""
     root = Path(root).resolve()
     try:
-        expected = expected_packages(root)
-        output = _output_root(root)
-        if not output.exists():
-            return ["generated skill packages are missing"] if expected else []
-        if not output.is_dir():
-            raise ValueError("generated skills root is not a directory")
-        actual = {child.name for child in output.iterdir()}
-        if actual != set(expected):
-            raise ValueError(f"generated skill names differ: missing={sorted(set(expected)-actual)}, extra={sorted(actual-set(expected))}")
-        for name, (content, source) in expected.items():
-            package = output / name
-            _assert_package_dir(package)
-            if (package / "SKILL.md").read_text(encoding="utf-8") != content:
-                raise ValueError(f"{name}: generated SKILL.md is stale")
-            if (package / MARKER).read_text(encoding="utf-8") != source:
-                raise ValueError(f"{name}: ownership/source marker is stale")
+        _check_output(_output_root(root), expected_packages(root))
         return []
     except (OSError, UnicodeError, ValueError) as exc:
         return [str(exc)]
 
 
-def build_packages(root: Path) -> list[str]:
-    """Refresh owned packages, retiring only package directories with own marker."""
-    root = Path(root).resolve()
-    expected = expected_packages(root)
-    output = _output_root(root)
-    output.mkdir(parents=True, exist_ok=True)
+def _build_output(output: Path, expected: dict[str, tuple[str, str]]) -> list[str]:
+    """Apply changes to a private staged copy of the generated tree."""
     actions = []
     # Validate every existing package before any destructive or corrective write.
     # A foreign package must not leave an earlier owned package half-retired.
@@ -352,7 +352,63 @@ def build_packages(root: Path) -> list[str]:
         target = existing[extra]
         shutil.rmtree(target)
         actions.append(f"retired {extra}")
-    issues = check_packages(root)
-    if issues:
-        raise ValueError("; ".join(issues))
+    _check_output(output, expected)
     return actions
+
+
+def build_packages(root: Path) -> list[str]:
+    """Stage the complete owned tree and restore it if publication fails."""
+    root = Path(root).resolve()
+    expected = expected_packages(root)
+    output = _output_root(root)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    if output.exists() and not output.is_dir():
+        raise ValueError("generated skills root is not a directory")
+    existing = {item.name: item for item in output.iterdir()} if output.exists() else {}
+    for name, package in sorted(existing.items()):
+        _assert_package_dir(package, stale=name not in expected)
+    # Preserve the existing refusal for read-only active files and check every
+    # one before doing any work on the staged copy.
+    for name, (content, source) in expected.items():
+        package = existing.get(name)
+        if package is None:
+            continue
+        skill = package / "SKILL.md"
+        if skill.exists() and skill.read_text(encoding="utf-8") != content:
+            with skill.open("r+", encoding="utf-8"):
+                pass
+        marker = package / MARKER
+        if marker.read_text(encoding="utf-8") != source:
+            with marker.open("r+", encoding="utf-8"):
+                pass
+    scratch = Path(tempfile.mkdtemp(prefix=".skills-build-", dir=output.parent))
+    stage = scratch / "skills"
+    backup = scratch / "previous"
+    preserve_backup = False
+    try:
+        if output.exists():
+            shutil.copytree(output, stage, symlinks=True)
+        else:
+            stage.mkdir()
+        actions = _build_output(stage, expected)
+        if not actions and output.exists():
+            return actions
+        had_output = output.exists()
+        if had_output:
+            os.replace(output, backup)
+        try:
+            os.replace(stage, output)
+        except BaseException:
+            if had_output:
+                try:
+                    os.replace(backup, output)
+                except BaseException as rollback_error:
+                    # Never remove the only surviving original if restoration
+                    # itself fails; report the recovery path to the caller.
+                    preserve_backup = True
+                    raise RuntimeError(f"package rollback failed; original retained at {backup}") from rollback_error
+            raise
+        return actions
+    finally:
+        if not preserve_backup:
+            shutil.rmtree(scratch, ignore_errors=True)
