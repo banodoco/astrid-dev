@@ -20,6 +20,15 @@ You are the **manager** for two Release 15 plans, run back to back by you alone:
 2. **Plan 77:** start as soon as you have asked for that go; do not wait for it. Its first action brings its branches current with Plan 69 ([handover](../../../plans/77-saving-holds-on-a-heavy-timeline/handover.md#first-actions-on-a-new-machine)).
 3. When Plan 69 lands, merge `release/15/main` into `release/15/plan-77` before the next loop round.
 
+## Building on the existing code
+
+Nothing is rebuilt from scratch, and nothing is rebased: newer work comes in by merge, and pins are regenerated after each merge ([how](../../../plans/69-project-elements/handover.md#pins)).
+
+- **Already in the branches:** `release/15/plan-69` holds the owner's editing work on top of `release/15/main` (which holds `release/14/main`). `release/15/plan-77` holds all of that, plus Release 14's integration of Plans 59, 64 and 65 and the 18 November save-loop harness. Plan 77's SL-3 ports the crash-day branches listed in its handover.
+- **Plan 69, before landing:** merge `release/15/main` into `release/15/plan-69` (PE-3).
+- **Plan 77, at its start and before each loop round:** merge in whatever is newer, in this order: `release/15/plan-69` (or `release/15/main` once Plan 69 has landed), then Release 14's work.
+- **Release 14's work, when it moves:** when the Release 14 Lead lands `release/14/int-59-64-65` (Plan 59 with App R14-FIX-16) in `release/14/main`, merge `release/14/main` directly into each `release/15/plan-77` yourself; Plan 77's authority allows it, and you need not wait for a forward into `release/15/main`. Its save-path conflicts are the Lead's combination already made, so take `release/14/main`'s side unless a test says otherwise.
+
 ## Before you start
 
 - **Read, in order:** this brief; [releases/15.md](../../15.md) (Included plans, Branches); Plan 69's handover, tasks and inputs; Plan 77's handover, plan and tasks.
@@ -29,9 +38,9 @@ You are the **manager** for two Release 15 plans, run back to back by you alone:
 
 ## Authority
 
-- **May, without asking:** open and merge pull requests into `release/15/plan-69` and `release/15/plan-77` after focused proof; dispatch workers; merge `release/15/main` into those branches; regenerate pins; update both plans' `tasks.md`, `inputs.md`, `handover.md` and Plan 77's `rounds.md` through astrid-dev pull requests.
+- **May, without asking:** open and merge pull requests into `release/15/plan-69` and `release/15/plan-77` after focused proof; dispatch workers; merge `release/15/main`, `release/15/plan-69` and `release/14/main` into those branches as above; regenerate pins; update both plans' `tasks.md`, `inputs.md`, `handover.md` and Plan 77's `rounds.md` through astrid-dev pull requests.
 - **Needs the owner:** landing either plan into `release/15/main`; anything into `release/14/*` or a product `main`; publishing; touching a live install or the owner's timelines; paid spend.
-- **Not yours:** forwarding Release 14 into `release/15/main`, and Release 15's run board beyond your lane's line; ask the release manager (the setup session named in the brief) or the owner.
+- **Not yours:** forwarding Release 14 into `release/15/main` itself, and Release 15's run board beyond your lane's line. The release manager named in the brief was the setup session and may not be running; if it does not answer, ask the owner.
 
 ## Report
 
