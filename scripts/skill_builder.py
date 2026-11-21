@@ -16,13 +16,47 @@ MARKER = ".astrid-dev-generated"
 REPO_LINK = "../../../"
 _LINK = re.compile(r"(!?\[[^\]\n]+\])\(([^)\n]+)\)")
 _SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.I)
+_REFERENCE_DEFINITION = re.compile(r"^([ ]{0,3}\[(?!\^)[^\]\n]+\]:[ \t]*)(<[^>\n]+>|[^\s\n]+)")
 
 
 def _rewrite_links(source: AgentDocument, root: Path) -> str:
-    """Local Markdown links resolve through the generated package's repo link."""
+    """Rebase and validate both inline and reference-style Markdown destinations."""
     fence: str | None = None
     size = 0
     lines = []
+
+    def rewrite_address(address: str) -> str:
+        if not address:
+            return address
+        if address.startswith("#"):
+            # A fragment-only link targets this source's unchanged Markdown body.
+            fragment = unquote(address[1:])
+            if fragment and fragment not in {
+                anchor for _, _, anchor in markdown_heading_anchors(source.body)
+            }:
+                raise ValueError(f"{source.relative}: missing heading in {address}")
+            return address
+        if address.startswith(("/", "//")) or _SCHEME.match(address):
+            return address
+        pathpart, sep, anchor = address.partition("#")
+        pathpart, _, query = pathpart.partition("?")
+        target = (source.path.parent / unquote(pathpart)).resolve()
+        if not target.is_relative_to(root):
+            raise ValueError(f"{source.relative}: link escapes checkout: {address}")
+        if not target.exists():
+            raise ValueError(f"{source.relative}: missing link target: {address}")
+        if anchor and target.is_file() and target.suffix.lower() == ".md":
+            anchors = {a for _, _, a in markdown_heading_anchors(
+                target.read_text(encoding="utf-8"))}
+            if anchor not in anchors:
+                raise ValueError(f"{source.relative}: missing heading in {address}")
+        output = "repo/" + target.relative_to(root).as_posix()
+        if query:
+            output += "?" + query
+        if sep:
+            output += "#" + anchor
+        return output
+
     for line in source.body.splitlines(keepends=True):
         trimmed = line.strip()
         if fence:
@@ -43,40 +77,22 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
             if quoted is None:
                 raise ValueError(f"{source.relative}: unsupported Markdown link {raw!r}")
             address, suffix = quoted.group(1), quoted.group(2) or ""
-            if not address:
-                return match.group(0)
-            if address.startswith("#"):
-                # A fragment-only link targets this source's unchanged Markdown body.
-                fragment = unquote(address[1:])
-                if fragment and fragment not in {
-                    anchor for _, _, anchor in markdown_heading_anchors(source.body)
-                }:
-                    raise ValueError(f"{source.relative}: missing heading in {address}")
-                return match.group(0)
-            if address.startswith(("/", "//")) or _SCHEME.match(address):
-                return match.group(0)
-            pathpart, sep, anchor = address.partition("#")
-            pathpart, _, query = pathpart.partition("?")
-            target = (source.path.parent / unquote(pathpart)).resolve()
-            if not target.is_relative_to(root):
-                raise ValueError(f"{source.relative}: link escapes checkout: {address}")
-            if not target.exists():
-                raise ValueError(f"{source.relative}: missing link target: {address}")
-            if anchor and target.is_file() and target.suffix.lower() == ".md":
-                anchors = {a for _, _, a in markdown_heading_anchors(
-                    target.read_text(encoding="utf-8"))}
-                if anchor not in anchors:
-                    raise ValueError(f"{source.relative}: missing heading in {address}")
-            output = "repo/" + target.relative_to(root).as_posix()
-            if query:
-                output += "?" + query
-            if sep:
-                output += "#" + anchor
-            return label + "(" + output + suffix + ")"
+            return label + "(" + rewrite_address(address) + suffix + ")"
 
-        lines.append(_LINK.sub(replace, line))
+        line = _LINK.sub(replace, line)
+        # A reference definition is the destination for [label][reference] and
+        # ![image][reference]. Inline-link rewriting alone cannot validate it.
+        definition = _REFERENCE_DEFINITION.match(line)
+        if definition:
+            token = definition.group(2)
+            angled = token.startswith("<") and token.endswith(">")
+            address = token[1:-1] if angled else token
+            rewritten = rewrite_address(address)
+            if rewritten != address:
+                replacement = f"<{rewritten}>" if angled else rewritten
+                line = line[:definition.start(2)] + replacement + line[definition.end(2):]
+        lines.append(line)
     return "".join(lines)
-
 
 def render_skill(doc: AgentDocument, root: Path) -> str:
     if not doc.skill or doc.skill_name is None:
@@ -124,13 +140,16 @@ def _assert_package_dir(package: Path, *, stale: bool = False) -> None:
         raise ValueError(f"{package}: refusing symlinked SKILL.md")
     if skill.exists() and not skill.is_file():
         raise ValueError(f"{package}: SKILL.md must be a regular file")
+    if stale and not skill.is_file():
+        raise ValueError(f"{package}: stale SKILL.md must be a regular file")
     contents = {path.name for path in package.iterdir()}
     if contents - {MARKER, "SKILL.md", "repo"}:
         raise ValueError(f"unmanaged extra files in {package}: {sorted(contents)}")
-    if not stale:
-        link = package / "repo"
-        if not link.is_symlink() or os.readlink(link) != REPO_LINK:
-            raise ValueError(f"{package}: expected canonical repo link")
+    # Even obsolete packages must retain an owned, canonical repo entry.
+    # Check every member of every package before retiring any stale package.
+    link = package / "repo"
+    if not link.is_symlink() or os.readlink(link) != REPO_LINK:
+        raise ValueError(f"{package}: expected canonical repo link")
 
 
 def check_packages(root: Path) -> list[str]:
