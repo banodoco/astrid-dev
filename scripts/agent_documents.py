@@ -53,6 +53,8 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
         path = root / path
     if path.is_symlink() or not path.is_file():
         raise ValueError("source must be a regular Markdown file, not a symlink")
+    # Resolve the source as well as root: /var and /private/var alias on macOS.
+    path = path.resolve()
     try:
         relative = path.relative_to(root / "agent")
     except ValueError as exc:
