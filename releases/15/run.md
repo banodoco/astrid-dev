@@ -14,7 +14,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 
 | Lane | Session | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 Runtime and Agent review batches landed on plan branches. App qualification, installed render parity and the owner’s effect ruling are open. Plan 77 direct stack landed. The heavy seed and baseline wait on the Release 14 Runtime repair ([#796](https://github.com/banodoco/astrid-dev/issues/796)). |
+| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 Runtime and Agent review batches landed on plan branches. The installed effect and save/reopen proofs passed. The App batch awaits three owner decisions before review 2. Plan 77 direct stack landed. The unpushed Runtime repair passed the nine-track probe, while the older Runtime refused the heavy seed after 12 clips. The full fixture and baseline remain open. The standalone Release 14 App and Agent forwards are held for the integrated save path ([#796](https://github.com/banodoco/astrid-dev/issues/796)). |
 | Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
 | Plans 39, 13, 50, 40, 63, 75, 76, 18, 72 | not started | — | Queued; branches not yet cut |
 
