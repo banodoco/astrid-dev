@@ -611,5 +611,81 @@ class PackageTests(unittest.TestCase):
             build_packages(self.root)
 
 
+    def test_second_update_failure_rolls_back_whole_package_set(self):
+        build_packages(self.root)
+        output = self.root / ".generated" / "skills"
+        def snapshot():
+            result = {}
+            for item in sorted(output.rglob("*")):
+                key = str(item.relative_to(output))
+                result[key] = ("link", os.readlink(item)) if item.is_symlink() else (
+                    ("file", item.read_bytes()) if item.is_file() else ("dir",))
+            return result
+        before = snapshot()
+        for path in (self.root / "agent" / "roles" / "leader.md", self.root / "agent" / "start.md"):
+            path.write_text(path.read_text() + "\nChanged.\n")
+        second = self.package("astrid-dev-start") / "SKILL.md"
+        real_open = Path.open
+        def fail_second(path, *args, **kwargs):
+            if path.resolve() == second.resolve() and args and args[0] in ("r+", "w"):
+                raise PermissionError("second update refused")
+            return real_open(path, *args, **kwargs)
+        with patch.object(Path, "open", fail_second):
+            with self.assertRaisesRegex(PermissionError, "second update refused"):
+                build_packages(self.root)
+        self.assertEqual(snapshot(), before)
+        build_packages(self.root)
+        self.assertEqual(check_packages(self.root), [])
+
+
+    def test_second_staged_update_failure_keeps_original_tree(self):
+        build_packages(self.root)
+        output = self.root / ".generated" / "skills"
+        def snapshot():
+            return {str(p.relative_to(output)): (("link", os.readlink(p)) if p.is_symlink()
+                    else ("file", p.read_bytes()) if p.is_file() else ("dir",))
+                    for p in sorted(output.rglob("*"))}
+        before = snapshot()
+        for source in (self.root / "agent" / "roles" / "leader.md", self.root / "agent" / "start.md"):
+            source.write_text(source.read_text() + "\nChanged.\n")
+        real_replace = os.replace
+        writes = []
+        def fail_second(src, dst):
+            dst = Path(dst)
+            if dst.name == "SKILL.md" and ".skills-build-" in str(dst):
+                writes.append(dst.parent.name)
+                if len(writes) == 2:
+                    raise PermissionError("second staged update failed")
+            return real_replace(src, dst)
+        with patch("skill_builder.os.replace", side_effect=fail_second):
+            with self.assertRaisesRegex(PermissionError, "second staged update"):
+                build_packages(self.root)
+        self.assertEqual(writes, ["astrid-dev-leader", "astrid-dev-start"])
+        self.assertEqual(snapshot(), before)
+        build_packages(self.root)
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_publication_failure_restores_prior_tree(self):
+        build_packages(self.root)
+        output = (self.root / ".generated" / "skills").resolve()
+        skill = output / "astrid-dev-start" / "SKILL.md"
+        marker = output / "astrid-dev-start" / ".astrid-dev-generated"
+        link = output / "astrid-dev-start" / "repo"
+        before = (skill.read_bytes(), marker.read_bytes(), os.readlink(link))
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\nChanged.\n")
+        real_replace = os.replace
+        def fail_publish(src, dst):
+            if Path(dst) == output and Path(src).name == "skills":
+                raise OSError("publish failed")
+            return real_replace(src, dst)
+        with patch("skill_builder.os.replace", side_effect=fail_publish):
+            with self.assertRaisesRegex(OSError, "publish failed"):
+                build_packages(self.root)
+        self.assertEqual((skill.read_bytes(), marker.read_bytes(), os.readlink(link)), before)
+        build_packages(self.root)
+        self.assertEqual(check_packages(self.root), [])
+
+
 if __name__ == "__main__":
     unittest.main()
