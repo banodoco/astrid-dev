@@ -10,7 +10,7 @@
 
 **Estimate:** About 2 engineering days (1 to 3): the inventory, the open Runtime question, and landing.
 
-**Waiting on:** the approved vendor restore, render refusals, exact combined full CI comparison and R2. The owner granted standing landing approval subject to those checks. [D4–D7](inputs.md#owner-decisions)
+**Waiting on:** exact combined full CI comparison and R2. The approved vendor restore and render refusals have landed on the plan branches. The standing landing approval is subject to the remaining gates. [D4–D7](inputs.md#owner-decisions)
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
