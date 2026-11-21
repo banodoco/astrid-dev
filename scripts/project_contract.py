@@ -7,6 +7,9 @@ PLAN_FOLDER = re.compile(r"\d{2,}-[a-z0-9-]+")
 GAP_LINK = re.compile(r"\]\(\.\./\.\./vision/gaps/([A-Z]{1,3}-\d{3})-[^)]+\.md\)")
 VISION_GAPS = re.compile(r"^\*\*Vision gaps:\*\*\s*(.+)$", re.M)
 VISION_ROLE = re.compile(r"^\*\*Vision role:\*\*\s*(.+)$", re.M)
+VISION_ENABLER_ROLE = re.compile(
+    r"^(?:Foundational|Communication) enabler(?:\s*[—–:]\s*\S.*)?$"
+)
 
 
 def project_number(plan_path: str | Path) -> str:
@@ -23,6 +26,13 @@ def plan_gap_ids(plan_text: str) -> list[str]:
     if len(gaps) + len(roles) != 1:
         raise ValueError("expected exactly one Vision gaps or Vision role declaration")
     if roles:
+        role = roles[0].strip()
+        # A gapless plan must explicitly declare a supported enabler kind;
+        # an arbitrary placeholder must not masquerade as delivery evidence.
+        if not VISION_ENABLER_ROLE.fullmatch(role):
+            raise ValueError(
+                f"unsupported Vision role {role!r}; expected explicit "
+                "Foundational enabler or Communication enabler")
         return []
     ids = GAP_LINK.findall(gaps[0])
     if not ids:

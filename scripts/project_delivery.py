@@ -12,7 +12,7 @@ from pathlib import Path
 
 import gap_relationships as goal_links
 from gap_relationships import gap_metadata
-from project_contract import GAP_LINK, PLAN_FOLDER, VISION_GAPS, VISION_ROLE, plan_gap_ids, project_number
+from project_contract import GAP_LINK, PLAN_FOLDER, VISION_GAPS, plan_gap_ids, project_number
 from records import release_brief
 from relationships import RecordRef, Relationship, RelationshipError, RelationshipIndex
 from vision_subject import parse_subject
@@ -96,18 +96,6 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
         except ValueError as exc:
             raise RelationshipError(f"{provenance} ({project}): {exc}") from exc
         if not gaps:
-            # The canonical plan_gap_ids reader returns [] for *any* Vision role.
-            # Only the explicit foundational-enabler declaration may get the
-            # graph's no-primary-gap exception; other roles remain unknown.
-            roles = VISION_ROLE.findall(plan_text)
-            role = roles[0].strip() if len(roles) == 1 else ""
-            if not re.fullmatch(
-                r"Foundational enabler(?:\\s*[—–:]\\s*\\S.*)?".replace("\\\\", "\\"),
-                role,
-            ):
-                raise RelationshipError(
-                    f"{provenance} ({project}): unsupported Vision role "
-                    f"{role!r}; expected explicit Foundational enabler")
             enablers.append(project)
         else:
             # Reuse the canonical project's own link pattern: resolving only
