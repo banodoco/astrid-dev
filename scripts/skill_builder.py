@@ -66,7 +66,6 @@ def _active_lines(lines: list[str]) -> list[bool]:
     indented_context: tuple[int, tuple[tuple[int, int], ...]] | None = None
     list_stack: list[tuple[int, int]] = []  # marker column, content column
     list_quote_depth = 0
-    ambiguous_quote_list = False
     for index, line in enumerate(lines):
         plain = line.rstrip("\r\n")
         quote = re.match(r"^(?:[ ]{0,3}>[ ]?)+", plain)
@@ -78,21 +77,22 @@ def _active_lines(lines: list[str]) -> list[bool]:
             continue
         if depth != list_quote_depth:
             list_stack.clear()
-            ambiguous_quote_list = False
             list_quote_depth = depth
-        # Relative tab stops are unambiguous outside quotes. For a quoted tab,
-        # keep the line live instead of guessing physical-column alignment.
-        expanded = content.expandtabs(4)
-        leading = len(expanded) - len(expanded.lstrip(" "))
+        # Expand indentation from the actual column after quote markers.
+        # A tab immediately after '>' has partially consumed marker whitespace;
+        # keep that ambiguous form live instead of guessing.
+        prefix = quote.group(0) if quote else ""
+        start_column = len(prefix.expandtabs(4))
+        whitespace = content[:len(content) - len(content.lstrip(" \t"))]
+        leading = len((prefix + whitespace).expandtabs(4)) - start_column
+        ambiguous_marker_tab = bool(quote and prefix.endswith(">") and content.startswith("\t"))
         marker = re.match(r"^([ ]*)([-+*]|\d{1,9}[.)])([ \t]+)", content)
         if marker and (len(marker.group(1)) < 4 or list_stack):
-            if quote and "\t" in marker.group(3):
-                ambiguous_quote_list = True
             marker_column = len(marker.group(1))
             while list_stack and marker_column < list_stack[-1][1]:
                 list_stack.pop()
             marker_end = marker_column + len(marker.group(2))
-            content_column = len(marker.group(0).expandtabs(4))
+            content_column = len((prefix + marker.group(0)).expandtabs(4)) - start_column
             # CommonMark treats more than four padding columns as one; the
             # remainder is content, often an indented code example.
             if content_column - marker_end > 4:
@@ -102,9 +102,9 @@ def _active_lines(lines: list[str]) -> list[bool]:
             while list_stack and leading < list_stack[-1][1]:
                 list_stack.pop()
         threshold = (list_stack[-1][1] if list_stack else 0) + 4
-        indented = leading >= threshold and not (quote and "\t" in content[:len(content) - len(content.lstrip(" \t"))])
+        indented = leading >= threshold and not ambiguous_marker_tab
         context = (depth, tuple(list_stack))
-        eligible = result[index] and not marker and indented and not ambiguous_quote_list
+        eligible = result[index] and not marker and indented
         starts_block = previous_blank or depth > previous_depth
         if eligible and (indented_context == context or starts_block):
             result[index] = False

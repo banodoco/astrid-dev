@@ -875,5 +875,43 @@ class PackageTests(unittest.TestCase):
                 build_packages(self.root)
 
 
+    def test_quoted_tab_code_uses_physical_columns(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        bodies = ("> \t\t[literal](missing.md)",
+                  "> -\titem\n>\n>       [literal](missing.md)",
+                  "> 1.\titem\n>\n>           [literal](missing.md)",
+                  "> - item\n>\n> \t\t[literal](missing.md)",
+                  "> \t\t[undefined]",
+                  "> -\titem\n>\n>       [undefined]")
+        for body in bodies:
+            with self.subTest(body=body):
+                source.write_text(original + "\n" + body + "\n\n[real](../docs/notes.md)\n")
+                build_packages(self.root)
+                text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+                self.assertIn("[real](repo/docs/notes.md)", text)
+                self.assertIn("[literal](missing.md)" if "literal" in body else "[undefined]", text)
+
+    def test_quoted_tab_live_links_keep_safety_refusals(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        with TemporaryDirectory() as temp:
+            outside = Path(temp) / "outside.md"
+            outside.write_text("# Outside\n")
+            (self.root / "docs" / "outside.md").symlink_to(outside)
+            cases = (("missing.md", "missing link target"),
+                     ("../../outside.md", "escapes checkout"),
+                     ("%2e%2e/%2e%2e/outside.md", "escapes checkout"),
+                     ("/absolute/path", "absolute filesystem"),
+                     ("file:///tmp/outside", "file:"),
+                     ("C:/outside.md", "absolute filesystem"),
+                     ("../docs/outside.md", "escapes checkout"))
+            for destination, message in cases:
+                with self.subTest(destination=destination):
+                    source.write_text(original + "> 1.\titem\n>\n>         [bad](" + destination + ")\n")
+                    with self.assertRaisesRegex(ValueError, message):
+                        build_packages(self.root)
+
+
 if __name__ == "__main__":
     unittest.main()
