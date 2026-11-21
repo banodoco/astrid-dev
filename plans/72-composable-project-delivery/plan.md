@@ -10,7 +10,7 @@
 
 **Estimate:** About 7–10 engineering days, provisional until an independent architecture critique and current-source baseline.
 
-**Waiting on:** scope PR acceptance; independent design critique; named owner, release placement and explicit run start.
+**Waiting on:** independent design critique; accountable successor and run authority; Release 15 Lead and integration custody.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md), [Plan workstream](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above own the catalog facts; priority stays in [priority.md](../priority.md). [Inputs](inputs.md) · [Tasks](tasks.md).
 
@@ -43,7 +43,7 @@ The development workspace already describes a path from vision elements and thei
 
 This is **an extension, not a replacement, of [Plan 48](../48-one-record-model/plan.md)**: it delivered shared record readers in [records.py](../../scripts/records.py), the [check registry](../../scripts/checks.py), declared [views](../../scripts/views.py), generated catalog and extension guide. It expressly did not build the proposed universal evidence envelope. Current domain owners include [vision_subject.py](../../scripts/vision_subject.py) for authored goal IDs, [gap_relationships.py](../../scripts/gap_relationships.py) for primary/supporting goal references, [project_contract.py](../../scripts/project_contract.py) for project-to-gap links, and [records.py](../../scripts/records.py) for release brief and issue-list parsing. The [public exporter](../../scripts/export_public_vision.py) consumes these contracts today.
 
-The missing piece is **a small shared way to represent and traverse links across these readers**, not another place to store them. Competing approaches and source identities are in [inputs.md](inputs.md). The requester chose this intermediate outcome on 20 November 2026; final scope acceptance, independent critique and implementation authorization are still pending via the review PR. This plan has not been run.
+The missing piece is **a small shared way to represent and traverse links across these readers**, not another place to store them. Competing approaches and source identities are in [inputs.md](inputs.md). The requester chose this intermediate outcome on 20 November 2026; the scope proposal [#1064](https://github.com/banodoco/astrid-dev/pull/1064) and Release 15 placement [#1071](https://github.com/banodoco/astrid-dev/pull/1071) merged. Candidate code and evidence exist, but independent critique, authorized run custody, release integration and acceptance remain open. See [inputs](inputs.md) and [tasks](tasks.md).
 
 ## Sequence and readiness
 
