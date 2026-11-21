@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import os
 import re
@@ -116,6 +117,46 @@ def parse_vitest_json(path: Path) -> dict[str, str]:
     return out
 
 
+
+def parse_playwright_json(path: Path) -> dict[str, str]:
+    """Playwright JSON reporter: explicit project + full nested title, no line-number identity.
+
+    Dot-reporter logs expose only failures, so they cannot certify full test coverage.
+    """
+    report = json.loads(path.read_text())
+    suites = report.get("suites")
+    if not isinstance(suites, list) or not suites:
+        raise ValueError(f"{path}: missing Playwright JSON suites")
+    result = {}
+
+    def visit(suite: dict, parents: list[str]):
+        title = suite.get("title") or ""
+        context = parents + ([title] if title and not title.endswith((".spec.ts", ".spec.tsx", ".test.ts", ".test.tsx")) else [])
+        for spec in suite.get("specs", []):
+            file = (spec.get("file") or suite.get("file") or "").replace("\\", "/")
+            if "/tests/" in file:
+                file = "tests/" + file.rsplit("/tests/", 1)[1]
+            title = spec.get("title")
+            for test in spec.get("tests", []):
+                project = test.get("projectName")
+                state = test.get("status")
+                if not file or not title or not project or state not in ("expected", "unexpected", "flaky", "skipped"):
+                    raise ValueError(f"{path}: incomplete/unknown Playwright test identity or status")
+                key = " › ".join([file, f"[{project}]", *context, title])
+                if key in result:
+                    raise ValueError(f"{path}: duplicated Playwright ID {key}")
+                # A flaky retry is an adverse result until Lead disposition; never erase it.
+                result[key] = "PASS" if state == "expected" else "SKIP" if state == "skipped" else "FAIL"
+        for child in suite.get("suites", []):
+            visit(child, context)
+
+    for suite in suites:
+        visit(suite, [])
+    if not result:
+        raise ValueError(f"{path}: no Playwright per-test records")
+    return result
+
+
 def api(path: str, *, binary: bool = False) -> bytes:
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     if not token:
@@ -191,11 +232,12 @@ def collect_runs(manifest: dict, out: Path) -> dict:
     return records
 
 
-def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | None]) -> tuple[list[dict], list[dict], list[str]]:
+def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | None], playwright: dict[str, Path] | None = None) -> tuple[list[dict], list[dict], list[str]]:
     rows, jobs, problems = [], [], []
     aliases = manifest.get("job_renames", {})
     id_aliases = manifest.get("test_id_renames", {})
     dispositions = manifest.get("dispositions", {})
+    playwright = playwright or {}
     for product, work in records.items():
         for workflow in sorted(set(work["baseline"]) | set(work["candidate"])):
             old = work["baseline"].get(workflow)
@@ -225,10 +267,20 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
                         continue
                     old_ids, new_ids = parse_vitest_json(p0), parse_vitest_json(p1)
                 else:
-                    parser = parse_playwright
-                if product != "app" or "vitest" not in old_name.lower():
-                    old_ids = parser(Path(oldjob["log"]).read_text(errors="replace"))
-                    new_ids = parser(Path(newjob["log"]).read_text(errors="replace"))
+                    p0 = playwright.get(f"baseline/{workflow}/{old_name}")
+                    p1 = playwright.get(f"candidate/{workflow}/{to_name}")
+                    if p0 or p1:
+                        if not p0 or not p1:
+                            problems.append(f"{product}/{workflow}/{old_name}: Playwright JSON missing on one side")
+                            continue
+                        old_ids = parse_playwright_json(p0)
+                        new_ids = parse_playwright_json(p1)
+                    else:
+                        old_ids = parse_playwright(Path(oldjob["log"]).read_text(errors="replace"))
+                        new_ids = parse_playwright(Path(newjob["log"]).read_text(errors="replace"))
+                if product == "agent":
+                    old_ids = parse_pytest(Path(oldjob["log"]).read_text(errors="replace"))
+                    new_ids = parse_pytest(Path(newjob["log"]).read_text(errors="replace"))
                 # Not every job is a test job (e.g. lint, wheel, aggregate).
                 required_ids = (product == "agent" and ("unit shard" in old_name or "integration shard" in old_name)) or (product == "app" and ("vitest" in old_name.lower() or "journey" in old_name.lower() or "checkout" in old_name.lower() or "three-products" in old_name.lower() or "e2e" in old_name.lower()))
                 if required_ids and (not old_ids or not new_ids):
@@ -314,13 +366,29 @@ def main(argv=None) -> int:
     ap.add_argument("--out", required=True, type=Path)
     ap.add_argument("--vitest-json-r13", type=Path, help="full R13 Vitest JSON reporter output")
     ap.add_argument("--vitest-json-r14", type=Path, help="full candidate Vitest JSON reporter output")
+    ap.add_argument("--playwright-json", action="append", default=[], metavar="SIDE/WORKFLOW/JOB=PATH",
+                    help="native per-ID JSON reporter for dot-output E2E/Lanes jobs, on BOTH sides")
     a = ap.parse_args(argv)
     try:
+        playwright = {}
+        for spec in a.playwright_json:
+            key, sep, value = spec.partition("=")
+            if not sep or not key.startswith(("baseline/", "candidate/")) or not value or key in playwright:
+                raise ValueError(f"invalid or duplicate --playwright-json: {spec}")
+            playwright[key] = Path(value)
+        inputs = {f"app/Tests/{k}/vitest": p for k, p in {"baseline": a.vitest_json_r13, "candidate": a.vitest_json_r14}.items() if p}
+        inputs.update({f"app/{key}/playwright": path for key, path in playwright.items()})
+        native_input_digests = {}
+        for key, p in inputs.items():
+            native_input_digests[key] = {"path": str(p), "sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+                                         "provenance": "MUST VERIFY run SHA, attempt, job, artifact/command before sign-off"}
+        a.out.mkdir(parents=True, exist_ok=True)
+        (a.out / "native-report-input-digests.json").write_text(json.dumps(native_input_digests, indent=2) + "\n")
         m = json.loads(a.manifest.read_text())
         a.out.mkdir(parents=True, exist_ok=True)
         records = collect_runs(m, a.out)
         (a.out / "resolved-runs.json").write_text(json.dumps(records, indent=2) + "\n")
-        rows, jobs, problems = evaluate(m, records, a.out, {"baseline": a.vitest_json_r13, "candidate": a.vitest_json_r14})
+        rows, jobs, problems = evaluate(m, records, a.out, {"baseline": a.vitest_json_r13, "candidate": a.vitest_json_r14}, playwright)
         problems.extend(check_canonical_baseline_diff(records, a.out))
         write_csv(a.out / "all-test-ids.csv", rows, ["product", "workflow", "job", "id", "r13_id", "r13", "candidate", "classification", "explanation", "source"])
         write_csv(a.out / "jobs.csv", jobs, ["product", "workflow", "r13_job", "candidate_job", "r13", "candidate", "r13_job_id", "candidate_job_id"])
