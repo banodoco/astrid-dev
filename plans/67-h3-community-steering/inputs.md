@@ -50,6 +50,8 @@ Planning snapshot: astrid-dev main after Plan 66's merge; `astrid-agent` `origin
 
 ## References
 
+- **New architectural exploration (20 Nov 2026, unapproved):** [Composable control substrate and optional packs](research/composable-control-packs.md). Tests the owner's idea of H3 as a base frame/timeline control compiler with separately installed NKD, ControlNet and higher-level toolkit contributions; distinguishes model-specific lowering from generic VibeComfy machinery, and notes that Plan 71 is already occupied. This is evidence and a proposed design, **not an amendment to Plan 67's agreed task scope, greenlight or run authority**. Independent critique and an owner decision are needed before implementation.
+
 - [NKD speech scheduling research](research/nkd-speech.md), [ten-capability extension check](research/extension.md), [red-team cases](research/breaking-cases.md).
 - **Later issues, not in this plan:**
   - **hard word timing:** needs a node that enforces when a word is spoken;
