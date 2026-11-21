@@ -143,6 +143,14 @@ class AgentDocumentTests(unittest.TestCase):
         self.assertEqual(parsed.relative, Path("roles/leader.md"))
         self.assertEqual(parsed.path, document.resolve())
 
+    def test_dangling_agent_directory_symlink_is_not_an_empty_document_tree(self):
+        # Lexical existence is false for dangling symlinks, but this is a refusal,
+        # not permission to retire previously generated packages.
+        (self.root / "agent").rmdir()
+        (self.root / "agent").symlink_to(self.root / "missing-agent", target_is_directory=True)
+        problems = validate_documents(self.root)
+        self.assertTrue(any("real directory" in issue for issue in problems), problems)
+
     def test_reject_source_symlink(self):
         original = self.write("shared/workstreams/plan.md", STREAM)
         link = self.root / "agent/shared/workstreams/other.md"
