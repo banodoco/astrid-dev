@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — the owner said on 21 November 2026 that this work ("the existing timeline work that we're working on top of") goes into the next release and should be set up properly with its plan and branch, but has not confirmed the outcome as written in [plan.md](plan.md), which is read from the commits. Next: the owner confirms or corrects the outcome.
+**Scope decision:** Pending — the owner said on 21 November 2026 that this work ("the existing timeline work that we're working on top of") goes into the next release and should be set up properly with its plan and branch; that it was "just me trying to edit a clip on the timeline and actually edit the tools", not Plan 59's project; and "we should create a plan for this and correlate it" with Plan 78, "fixing and improving a bunch of stuff for the practical use of the video editor and timeline". The owner has not yet confirmed the outcome as written in [plan.md](plan.md), which is read from the commits. Next: the owner confirms or corrects the outcome.
 
 **Prior art:** The work itself, on `release/14/plan-69`, 18 to 21 November 2026; commit lists per repository are in [source identities](#source-identities). No astrid-dev plan, pull request or issue recorded it before this pack (searched 21 November: plans, releases, pull requests, issues and the Release 14 mailbox #796).
 
@@ -45,3 +45,4 @@ What the merge changed, and what PE-1 should check first:
 ## References
 
 - [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), which builds on this plan's branch.
+- [Plan 78](../78-live-custom-element-editing/plan.md), which names this work as its donor (`release/14/plan-69` heads in its source identities) and starts from it.

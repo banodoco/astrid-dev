@@ -1,8 +1,8 @@
-# Project elements
+# Editing a real clip: project elements and practical fixes
 
-**Project:** Project elements
+**Project:** Editing a real clip: project elements and practical fixes
 
-**Goal:** A project's own effects and components load in every editor and render the same in preview and in the final render, and a failure to load them never blocks the editor or the agent.
+**Goal:** The fixes and the custom-element work made while editing a real clip and its tools land in Release 15: a project's own effects and components load in every editor and render the same in preview and in the final render, and a failure to load them never blocks the editor or the agent.
 
 **Status:** active
 
@@ -18,7 +18,7 @@
 
 ## Outcome and scope
 
-This plan records work that was already under way, on `release/14/plan-69` in astrid-app, astrid-agent and astrid-runtime, before any plan described it (commits from 18 to 21 November 2026). Read from its commits, it covers:
+**Where it came from:** the owner's own hands-on editing on 18 to 21 November 2026, "trying to edit a clip on the timeline and actually edit the tools", fixing and improving what the video editor and timeline needed for practical use. It is not part of Plan 59's Minkhole project. This plan records that work, which was already under way on `release/14/plan-69` in astrid-app, astrid-agent and astrid-runtime, before any plan described it (commits from 18 to 21 November 2026). Read from its commits, it covers:
 
 - **Admission:** the Agent admits a project's elements (effects and components) by compiling them with the renderer's own Node and esbuild into the pack snapshot; re-admitting an unchanged legacy admission upgrades it.
 - **Serving:** the Runtime serves the admitted element bundles, scoped to the project being read, and lists them without reading snapshots.
@@ -27,7 +27,10 @@ This plan records work that was already under way, on `release/14/plan-69` in as
 - **Editing verbs:** `place-element` points a built-in effect clip at an admitted project effect; `clip.set-element` refuses unbound clips.
 - **Speed and validation fixes found on the way:** strict timing validation judges only clips the candidate added or changed; a shot's revision bump keeps the baseline of clips it does not touch; the Runtime verifies stored objects once per process instead of re-hashing timeline history; Runtime calls get a timeout long enough for large realms.
 
-Out of scope: anything the owner does not confirm. The speed and validation fixes are also inputs to [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), which builds on this plan's branch.
+Out of scope: anything the owner does not confirm, and the next steps, which are their own plans built on this one:
+
+- [Plan 78](../78-live-custom-element-editing/plan.md) — live custom-element editing: the editor's agent writes an element and applies it with the rest of an edit in one commit, with no restart or reload. It consumes this plan's Agent, Runtime and App work.
+- [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) — saving holds on a heavy timeline; its branches already include this plan's, for the validation and Runtime speed fixes.
 
 ## Existing work and decision
 
@@ -41,7 +44,7 @@ The work exists; this pack gives it a plan, a release and a branch so it can lan
 
 ## Interfaces and handoff
 
-It consumes `release/15/main` in each repository. It produces admitted project elements served by the Runtime and loaded by the App, the validation-scope and object-verification speed fixes, and the pins that tie App, Agent and Runtime together. [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) merges this plan's branch into its own.
+It consumes `release/15/main` in each repository. It produces admitted project elements served by the Runtime and loaded by the App, the validation-scope and object-verification speed fixes, and the pins that tie App, Agent and Runtime together. [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md) merges this plan's branch into its own; [Plan 78](../78-live-custom-element-editing/plan.md) starts from it.
 
 ## Completion
 
