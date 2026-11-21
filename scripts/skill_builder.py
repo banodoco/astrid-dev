@@ -58,6 +58,36 @@ def _active_lines(lines: list[str]) -> list[bool]:
             result.append(False)
         else:
             result.append(True)
+    # Recognize only unambiguous top-level indented blocks. An indented line
+    # cannot start such a block in a paragraph or an open list: in either
+    # location it can be a live link and must remain subject to validation.
+    previous_blank = True
+    indented_code = False
+    list_indent: int | None = None
+    for index, line in enumerate(lines):
+        plain = line.rstrip("\r\n")
+        if not plain.strip():
+            previous_blank = True
+            continue
+        quote = re.match(r"^(?:[ ]{0,3}>[ ]?)+", plain)
+        content = plain[len(quote.group(0)):] if quote else plain
+        marker = re.match(r"^([ ]{0,3}(?:[-+*]|\d{1,9}[.)])[ \t]+)", content)
+        leading = len(content) - len(content.lstrip(" "))
+        if marker:
+            # Excess list padding may begin indented code within the item;
+            # the minimal marker width is the safe boundary for live text.
+            width = leading + len(marker.group(1).lstrip(" ").split()[0]) + 1
+            list_indent = min(list_indent, width) if list_indent is not None else width
+        elif list_indent is not None and not quote and leading < list_indent:
+            list_indent = None
+        eligible = (result[index] and not quote and list_indent is None
+                    and plain.startswith("    "))
+        if eligible and (indented_code or previous_blank):
+            result[index] = False
+            indented_code = True
+        else:
+            indented_code = False
+        previous_blank = False
     return result
 
 
