@@ -362,6 +362,120 @@ class PackageTests(unittest.TestCase):
         self.assertIn("[web](https://example.org/guide?x=1#usage)", text)
         self.assertEqual(check_packages(self.root), [])
 
+    def test_dangling_agent_symlink_never_retires_owned_packages(self):
+        build_packages(self.root)
+        before = {package.name: (package / "SKILL.md").read_bytes()
+                  for package in (self.root / ".generated" / "skills").iterdir()}
+        agent = self.root / "agent"
+        agent.rename(self.root / "parked-agent")
+        agent.symlink_to(self.root / "missing-agent", target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, "real directory"):
+            build_packages(self.root)
+        self.assertTrue(any("real directory" in issue
+                            for issue in check_packages(self.root)))
+        for name, contents in before.items():
+            self.assertEqual((self.package(name) / "SKILL.md").read_bytes(), contents)
+
+    def test_undefined_full_collapsed_and_shortcut_references_refused(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        old = "Follow the shared [rules](../shared/run-contract.md#rules)."
+        for usage in ("[rules][undefined]", "[undefined][]", "[undefined]"):
+            with self.subTest(usage=usage):
+                source.write_text(ROLE.replace(old, f"Follow the shared {usage}."),
+                                  encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "undefined reference"):
+                    expected_packages(self.root)
+
+    def test_valid_full_collapsed_and_shortcut_references_are_supported(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        old = "Follow the shared [rules](../shared/run-contract.md#rules)."
+        for usage in ("[rules][contract]", "[contract][]", "[contract]"):
+            with self.subTest(usage=usage):
+                source.write_text(
+                    ROLE.replace(old, f"Follow the shared {usage}.\n\n"
+                                 "[contract]: ../shared/run-contract.md#rules"),
+                    encoding="utf-8")
+                generated = expected_packages(self.root)["astrid-dev-leader"][0]
+                self.assertIn("[contract]: repo/agent/shared/run-contract.md#rules",
+                              generated)
+
+    def test_multiline_reference_definition_is_rebased_and_checked(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(ROLE.replace(
+            "Follow the shared [rules](../shared/run-contract.md#rules).",
+            "Follow the shared [rules][contract].\n\n"
+            "[contract]:\n  ../shared/run-contract.md#rules",
+        ), encoding="utf-8")
+        build_packages(self.root)
+        generated = (self.package("astrid-dev-leader") / "SKILL.md").read_text()
+        self.assertIn("[contract]:\n  repo/agent/shared/run-contract.md#rules",
+                      generated)
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_missing_multiline_reference_target_is_refused(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(ROLE.replace(
+            "Follow the shared [rules](../shared/run-contract.md#rules).",
+            "Follow the shared [rules][contract].\n\n"
+            "[contract]:\n  ../shared/absent-contract.md",
+        ), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            expected_packages(self.root)
+
+    def test_inline_code_references_and_fake_links_are_literals(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(
+            ROLE + "\nUse " + chr(96) + "[literal][undefined]" + chr(96)
+            + " and " + chr(96) + "[example](missing.md)" + chr(96)
+            + " as textual examples.\n", encoding="utf-8")
+        build_packages(self.root)
+        generated = (self.package("astrid-dev-leader") / "SKILL.md").read_text()
+        self.assertIn(chr(96) + "[literal][undefined]" + chr(96), generated)
+        self.assertIn(chr(96) + "[example](missing.md)" + chr(96), generated)
+
+    def test_tilde_fenced_phantom_heading_cannot_satisfy_fragment(self):
+        source = self.root / "agent" / "roles" / "leader.md"
+        source.write_text(
+            ROLE + "\n~~~markdown\n## Phantom Heading\n~~~\n"
+            "\nSee [phantom](#phantom-heading).\n", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "missing heading"):
+            expected_packages(self.root)
+
+    def test_tilde_fenced_heading_in_target_cannot_satisfy_fragment(self):
+        notes = self.root / "docs" / "notes.md"
+        notes.write_text("# Notes\n\n~~~markdown\n## Phantom\n~~~\n",
+                         encoding="utf-8")
+        source = self.root / "agent" / "shared" / "workstreams" / "gap.md"
+        source.write_text(STREAM.replace(
+            "[notes](../../../docs/notes.md)",
+            "[notes](../../../docs/notes.md#phantom)",
+        ), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "missing heading"):
+            expected_packages(self.root)
+
+    def test_stale_marker_parent_traversal_is_not_ownership(self):
+        build_packages(self.root)
+        leader = self.package("astrid-dev-leader")
+        (leader / ".astrid-dev-generated").write_text(
+            "agent/../../outside.md\n", encoding="utf-8")
+        (self.root / "agent" / "roles" / "leader.md").write_text(
+            ROLE.replace("skill: true\n", ""), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "ownership marker"):
+            build_packages(self.root)
+        self.assertTrue(leader.is_dir())
+        self.assertTrue(self.package("astrid-dev-start").is_dir())
+
+    def test_stale_marker_source_mismatch_is_not_ownership(self):
+        build_packages(self.root)
+        leader = self.package("astrid-dev-leader")
+        (leader / ".astrid-dev-generated").write_text(
+            "agent/roles/other.md\n", encoding="utf-8")
+        (self.root / "agent" / "roles" / "leader.md").write_text(
+            ROLE.replace("skill: true\n", ""), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "ownership marker"):
+            build_packages(self.root)
+        self.assertTrue(leader.is_dir())
+
     def test_fenced_examples_are_not_rewritten(self):
         path = self.root / "agent" / "roles" / "leader.md"
         fence = chr(96) * 3
