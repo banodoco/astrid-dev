@@ -249,7 +249,13 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
             b = {j["name"]: j for j in new["jobs"]}
             used = set()
             for old_name, oldjob in sorted(a.items()):
-                to_name = aliases.get(f"{product}/{workflow}/{old_name}", old_name)
+                job_alias = aliases.get(f"{product}/{workflow}/{old_name}")
+                to_name = old_name
+                if job_alias is not None:
+                    if not isinstance(job_alias, dict) or not all(job_alias.get(x) for x in ("to", "reason", "source")):
+                        problems.append(f"{product}/{workflow}/{old_name}: job rename lacks to/reason/source")
+                    else:
+                        to_name = job_alias["to"]
                 newjob = b.get(to_name)
                 used.add(to_name)
                 jobs.append({"product": product, "workflow": workflow, "r13_job": old_name, "candidate_job": to_name if newjob else "MISSING", "r13": oldjob["conclusion"], "candidate": newjob["conclusion"] if newjob else "MISSING", "r13_job_id": oldjob["id"], "candidate_job_id": newjob["id"] if newjob else ""})
@@ -282,14 +288,20 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
                     old_ids = parse_pytest(Path(oldjob["log"]).read_text(errors="replace"))
                     new_ids = parse_pytest(Path(newjob["log"]).read_text(errors="replace"))
                 # Not every job is a test job (e.g. lint, wheel, aggregate).
-                required_ids = (product == "agent" and ("unit shard" in old_name or "integration shard" in old_name)) or (product == "app" and ("vitest" in old_name.lower() or "journey" in old_name.lower() or "checkout" in old_name.lower() or "three-products" in old_name.lower() or "e2e" in old_name.lower()))
+                required_ids = (product == "agent" and ("unit shard" in old_name or "integration shard" in old_name)) or (product == "app" and (workflow in ("E2E", "Direct Journey") or "vitest" in old_name.lower() or "journey" in old_name.lower() or "checkout" in old_name.lower() or "three-products" in old_name.lower()))
                 if required_ids and (not old_ids or not new_ids):
                     problems.append(f"{product}/{workflow}/{old_name}: no comparable native test IDs on both sides")
                 if not old_ids and not new_ids:
                     continue
                 mapped = {}
                 for ident, state in old_ids.items():
-                    new_id = id_aliases.get(f"{product}/{workflow}/{ident}", ident)
+                    rename = id_aliases.get(f"{product}/{workflow}/{ident}")
+                    new_id = ident
+                    if rename is not None:
+                        if not isinstance(rename, dict) or not all(rename.get(x) for x in ("to", "reason", "source")):
+                            problems.append(f"{product}/{workflow}/{ident}: test rename lacks to/reason/source")
+                        else:
+                            new_id = rename["to"]
                     if new_id in mapped:
                         raise ValueError(f"non-injective test ID rename: {new_id}")
                     mapped[new_id] = (ident, state)
@@ -306,8 +318,8 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
                             result = "lost-or-regressed"
                         elif old_state == "MISSING" and new_state in ("FAIL", "ERROR"):
                             result = "failing-added"
-                        if result in ("lost-or-regressed", "failing-added") and not why:
-                            problems.append(f"{product}/{workflow}/{ident}: {old_state} -> {new_state} unexplained")
+                        if result in ("lost-or-regressed", "failing-added"):
+                            problems.append(f"{product}/{workflow}/{ident}: {old_state} -> {new_state} BLOCKS publish; explanation={bool(why and ref)}")
                     rows.append({"product": product, "workflow": workflow, "job": old_name, "id": ident, "r13_id": old_id, "r13": old_state, "candidate": new_state, "classification": result, "explanation": why, "source": ref})
             for new_name in sorted(set(b) - used):
                 job = b[new_name]
