@@ -66,6 +66,10 @@
 | A second local Runtime collides on the default browser-door port. | C1 | Reproduction: start a second local Runtime while another uses port `17340`; there is no hint to use `--door-port`. | File an issue; make the port configurable and explain the option in the collision error/help. | Issues to file | Two local Runtimes can run with distinct browser-door ports, and the collision gives the `--door-port` remedy. |
 | Source-profile Runtime reads fail after source files change. | C1 | Reproduction: change source files under a running source-profile Runtime; reads return `runtime_identity_mismatch` until `astrid-runtime restart`. | File an issue; source-profile changes should be picked up safely or the required restart should be surfaced clearly. | Issues to file | After source changes, reads recover through the documented supported action and explain any required restart. |
 
+## Release 15 follow-ups
+
+- [ ] Investigate OS-specific sandbox and mount isolation for managed-media ffprobe and FFmpeg when paths resolve to mapped drives or mounted network filesystems. Evaluate protocol whitelists for the remaining invocation sites listed in the HTTP audit. The R14 assurance covers only protocol controls on the managed-media ffprobe helper and excludes filesystem isolation.
+
 ## Issues to file
 
 - Broader `timelines visualize` command-surface redesign if the immediate C1 single-frame path is fixed but the CLI remains hard to understand.
