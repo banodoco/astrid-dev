@@ -141,6 +141,35 @@ class DeliveryCompositionTests(unittest.TestCase):
         self.assertEqual(frozen_releases_for_issue(graph, 123), ())
         self.assertNotIn(RecordRef("issue", "123"), graph.records)
 
+    def test_duplicate_project_number_reports_both_authored_sources(self):
+        # The second sorted folder overwrites project_folders["72"] in the
+        # original adapter, causing a misleading release folder mismatch.
+        self.write("plans/72-z-duplicate/plan.md", PLAN)
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in ("duplicate project", "project:72",
+                         "plans/72-demo/plan.md",
+                         "plans/72-z-duplicate/plan.md"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+        self.assertNotIn("unknown folder", message)
+
+    def test_duplicate_gapless_project_number_is_not_an_enabler_escape(self):
+        enabler = PLAN.replace(
+            "**Vision gaps:** [CA-001](../../vision/gaps/CA-001-finish-work.md) (primary)",
+            "**Vision role:** Foundational enabler — shared infrastructure")
+        self.write("plans/72-z-duplicate/plan.md", enabler)
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in ("duplicate project", "project:72",
+                         "plans/72-demo/plan.md",
+                         "plans/72-z-duplicate/plan.md"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+        self.assertNotIn("unknown folder", message)
+
     def test_unknown_release_project_fails_at_actual_record(self):
         self.write("releases/15.md",
                    RELEASE.replace("72-demo/plan.md", "72-unrelated/plan.md"))
