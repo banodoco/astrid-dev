@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "purpose": "R14-PUB-1 read-only R13 versus frozen R14 audit. Candidate fields MUST be filled from real Lead-dispatched run IDs; do not reuse provisional runs.",
+  "baseline": {
+    "agent": {
+      "sha": "959da7326c982a9197b5d6e2a4489f45e1deef0e",
+      "workflows": {
+        "CI": 43760673752,
+        "Lanes": 43760673730
+      }
+    },
+    "app": {
+      "sha": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+      "workflows": {
+        "Tests": 43860030897,
+        "Lanes": 43860030963,
+        "Direct Journey": 44078954757,
+        "E2E": 43860030918
+      }
+    }
+  },
+  "candidate": {
+    "agent": {
+      "sha": null,
+      "workflows": {
+        "CI": null,
+        "Lanes": null
+      }
+    },
+    "app": {
+      "sha": null,
+      "workflows": {
+        "Tests": null,
+        "Lanes": null,
+        "Direct Journey": null,
+        "E2E": null
+      }
+    }
+  },
+  "job_renames": {},
+  "test_id_renames": {},
+  "dispositions": {}
+}
