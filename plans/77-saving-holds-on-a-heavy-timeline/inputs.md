@@ -44,6 +44,7 @@ Measured read-only on 18 November 2026 from a copied Release 14 realm (see the d
 
 ## Owner decisions
 
+- **D0 Order.** Decided, 21 November 2026: Plan 69 first, then this plan, run back to back by one manager ([decision](https://github.com/banodoco/astrid-dev/issues/1224#issuecomment-7067275617)).
 - **D1 Release.** Decided, 18 November 2026: the owner asked in the Release 14 Lead's session for this work on a proper Release 14 branch, as a plan another machine runs. Moved, 21 November 2026: the owner moved the plan to Release 15 ("I think this should move to release. This should basically be release 15"), because Release 14 makes no speed claim and the saving plans it feeds (63, 75, 76, 18) are Release 15's. Release 15; listed in [releases/15.md](../../releases/15.md).
 - **D9, D10, D14, D15** are open and carried from the [QUEUE](evidence/QUEUE.md); none is decided here:
   - **D9** which release carries Plans 63, 75 and 76 and 18: Release 15 recommended ([final recommendations, 5.4](evidence/fable-final-recommendations.md)).
