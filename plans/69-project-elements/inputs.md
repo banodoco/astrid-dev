@@ -28,6 +28,8 @@
 - **D6 Optional motion pack.** Decided on 21 November 2026, given to the hosting session. Rendering an `astrid_motion` effect requires the pack installation. For a known uninstalled effect, name the pack to install and retain refusal for unregistered effects.
 - **D7 Standing PE-3 go.** Decided on 21 November 2026, given to the hosting session. Land Runtime, then Agent repinned to the landed Runtime, then App repinned to both, after R2 passes on the exact integrated tuple and full hosted CI on each combined plan head shows no failing ID absent from `release/15/main`. Dispatch the full workflow only while the repository has no queued or running `release/14/*` runs. Each landing PR names Plan 69, records the inherited RunPod digest mismatch and larger-commit WAL refusal, links the narrowed animation render scope, and states the optional pack requirement. If a condition fails, hold the landing and report the reason to the host.
 
+The hosting session updated CI scheduling on 21 November so Release 14 runs no longer defer the Release 15 dispatches. Reuse exact completed base evidence and complete missing Agent base shards. The owner authorized one replacement full App run after the test-only 0.2.15 fixture correction, on the exact new combined App head.
+
 ## Source identities
 
 Before 21 November the work was on `release/14/plan-69`, based on `release/14/main` (not on Plan 59): App `e0c6f7cdb` (10 commits), Agent `83d5f8fe3` (21 commits), Runtime `b2ea261` (5 commits), heads on 21 November.

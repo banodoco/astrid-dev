@@ -14,7 +14,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 
 | Lane | Session | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | The Plan 69 review fixes landed on its plan branches. Exact combined full CI and review 2 gate conditional PE-3. Plan 77 owns the checkpoint and commit-cost defects on its branches. The repair, full fixture and baseline are open. Release 14 forwards remain held. |
+| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 closed the installed journey and landed the 0.2.15 fixture correction. Exact combined full CI and review 2 gate PE-3. Plan 77 landed its checkpoint repair and regenerated pins. The exact retime, full fixture and baseline are open. |
 | Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
 | Plans 39, 13, 50, 40, 63, 75, 76, 18, 72 | not started | — | Queued; branches not yet cut |
 
