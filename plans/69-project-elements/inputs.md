@@ -43,6 +43,19 @@ What the merge changed, and what PE-1 should check first:
 - **Agent:** three esbuild-discovery tests in `tests/core/test_project_packs.py` fail on `release/14/plan-69` itself (`KeyError: 'ASTRID_REMOTION_PROJECT_DIR'`), and element admission needs the renderer's pinned Node v20.19.4 (`ASTRID_NODE_EXECUTABLE`).
 - Every focused test failing on these heads also fails on `release/15/main` or on `release/14/plan-69`; none is new. Destination for every task: the same repository's `release/15/plan-69`.
 
+## PE-1 inventory (21 November 2026)
+
+Verified on App `5866b23bb`, Agent `58c749cab` and Runtime `1046f4074`, with the scoped selections in [tasks](tasks.md).
+
+- **Admission.** Agent's `astrid/core/element/project_packs.py` compiles with the renderer's pinned Node and esbuild and binds the compiled result into the snapshot. `test_project_pack_snapshots.py` passed 48 tests, including compiled module and legacy readmission. All three compiler-discovery cases passed with `ASTRID_REMOTION_PROJECT_DIR` pointing at the checkout's renderer and Node 20.19.4 selected.
+- **Serving.** Runtime's project elements routes in `runtime_protocol/server.py` and `service.py` list current admissions from project documents and serve verified bundle bytes within the selected project. All 33 `test_runtime_project_elements_http.py` cases passed, including list without CAS reads, cross-project refusal and closure verification.
+- **Loading.** App's `admittedElementLoader.ts` and `admitted-elements.ts` check project ownership and digest, fence stale selections and preserve the editor when list or import fails. `admittedElementLoader.test.ts`, `admitted-elements.test.ts` and the applicable Remotion preview and placeholder cases passed. Local browser-backed tests could not start the Playwright revision selected by App. CI and the integrated journey supply browser evidence.
+- **One compiler.** `test_render_stages_the_admitted_compiled_module_as_the_component` passed in Agent. The App loader consumes the digest-pinned bundle that Runtime serves. Preview to final-render visual parity is still open on the integrated stack.
+- **Editing verbs.** Agent's `timeline_elements.py` places the exact admitted element reference and `_clip_scalar_commands.py` rejects unbound clips. The named element placement and selected schema tests passed.
+- **Speed and validation.** The named Agent timing and boundary tests passed, including scoped validation, untouched-baseline handling and the Runtime HTTP timeout. Runtime retains Plan 59's live identity cache. The named history tests cover warm reuse and changed-object rejection, and PE-2 supplies the real pinned-reader check. These checks cover correctness. They supply no live editor latency claim.
+
+The Agent's two CLI parity failures occurred on both comparison heads. App's named failure IDs appeared on the Release 15 base or the Plan 69 donor, and the two extra admitted-loader type diagnostics also appeared on the donor. Runtime's original scoped comparison found 23 pre-existing failed or errored IDs, including fixture setup errors from the tracked Agent pin. The inventory identifies one outstanding integrated journey in [PE-1a](tasks.md).
+
 ## References
 
 - [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), which builds on this plan's branch.
