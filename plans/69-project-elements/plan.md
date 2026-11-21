@@ -4,13 +4,13 @@
 
 **Goal:** The fixes and the custom-element work made while editing a real clip and its tools land in Release 15: a project's own effects and components load in every editor and render the same in preview and in the final render, and a failure to load them never blocks the editor or the agent.
 
-**Status:** active
+**Status:** queued
 
-**Owner:** Unassigned (branches set up by the Release 15 manager)
+**Owner:** Unassigned
 
-**Estimate:** TBD
+**Estimate:** About 2 engineering days (1 to 3): the inventory, the open Runtime question, and landing.
 
-**Waiting on:** the owner's scope confirmation and the session already working on it recording itself here.
+**Waiting on:** a manager; the [handover](handover.md) has the first actions.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -38,9 +38,7 @@ The work exists; this pack gives it a plan, a release and a branch so it can lan
 
 ## Sequence and readiness
 
-1. Its Release 15 branches, `release/15/plan-69`, were made on 21 November from `release/15/main` with `release/14/plan-69` merged in ([inputs](inputs.md#source-identities)). New work goes there; the session that pushed to `release/14/plan-69` moves to it.
-2. The owner confirms the scope and names who runs it.
-3. The remaining tasks are written from what is left, then the plan lands into `release/15/main` under the [Release workflow](../../skills/shared/workstreams/astrid-dev-release/SKILL.md).
+The code is done; what is left is checking it and landing it. PE-1 inventories it against the outcome above; PE-2 answers the one open Runtime question ([astrid-dev#1222](https://github.com/banodoco/astrid-dev/issues/1222)); PE-3 brings the branches current and lands them into `release/15/main`, Runtime then Agent then App. See [tasks](tasks.md) and the [handover](handover.md). In Release 15 this plan runs first, then [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), by one manager ([brief](../../releases/15/briefs/plans-69-77.md)).
 
 ## Interfaces and handoff
 
