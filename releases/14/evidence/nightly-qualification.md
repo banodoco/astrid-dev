@@ -2,6 +2,10 @@
 
 The [independent strategic review](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7047889828) for the 18:56 UTC checkpoint on 20 November 2026 recorded zero qualifying nights. The live App / Agent / Runtime heads were `e6ca6e80 / 0020c2e8 / 8e8711fd` on release/14/main, `da6e7cc8 / 5dd0e9ea / 98dda1d0` on plan-39, and `de7dd1e6 / 959da732 / 6855dfa8` on product defaults. The served App manifest declared release 13 and selected Agent `9814193a` and Runtime `6855dfa8`. The ceiling and gate-integrity workflows existed on the three plan branches. Both files were absent from all three defaults and release mains. [Release manifest](https://github.com/banodoco/astrid-app/blob/e6ca6e80/public/install-manifest.json) · [Activation and custody](https://github.com/banodoco/astrid-dev/issues/984)
 
+## 05:14 UTC landed Agent unit retry
+
+The targeted second attempt on Agent `f841c754` recovered all 4,043 inventoried and 11 unseeded observations missing from the original unit shard. Against the previous landed plan, all 4,028 primary IDs, 26 subtests and 12,040 phase keys matched. The only outcome change was a previously failing defaults-readiness call passing. The retry exited 1. It supplies a direct comparison of this shard. The first official daytime verdict still admitted 19 of 25 jobs and zero release nights qualify. [Per-ID comparison](f841-unit2-retry-6076.json.gz) · [Original verdict and retry disposition](https://github.com/banodoco/astrid-dev/issues/984#issuecomment-7057800406)
+
 ## 03:56 UTC checkpoint on 21 November
 
 Zero nights qualify. The November 21 cutoff passed. November 22–24 remains conditional on a frozen installed tuple, both Windows shells' installed roots, effective protected gates and fresh routing before 01:17 UTC November 22. The public installer still selects Release 13. The [independent review](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7056873107) retained RS1 and the provisional 30–60 engineering days for repairs A–D and enforcement.
