@@ -6,7 +6,7 @@
 
 **Status:** active
 
-**Owner:** Unassigned
+**Owner:** Unassigned (branches set up by the Release 15 manager)
 
 **Estimate:** TBD
 
