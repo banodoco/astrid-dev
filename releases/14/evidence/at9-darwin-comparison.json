@@ -1,0 +1,566 @@
+{
+  "plan": {
+    "artifact": 14605766839,
+    "source": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+    "raw_exit": 1,
+    "phases": {
+      "tests/core/execution/test_custody_broker.py::test_real_later_absence_reconciles_without_rewriting_capture_history[fresh-absent-sibling]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_later_absence_reconciles_without_rewriting_capture_history[fresh-absent]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_later_absence_reconciles_without_rewriting_capture_history[retry-pre-absent]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_admitted_zombie_signal_observation_requires_original_reap_and_final_census": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_live_capture_retry_uses_actual_native_token[invalid-argument]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_live_capture_retry_uses_actual_native_token[invalid-destination]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_live_capture_retry_uses_actual_native_token[name-no-port]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_ordinary_descendant_exec_refreshes_retained_anchor[False]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_ordinary_descendant_exec_refreshes_retained_anchor[True]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_terminal_capture_substage_releases_mach_port": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_reconciliation_burst_and_deadline_keep_exact_custody[churn]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_reconciliation_burst_and_deadline_keep_exact_custody[finite]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_launcher_exit.py::test_a_detached_child_does_not_keep_its_launcher_alive": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_existing_network_sandbox_preserves_inherited_local_channel": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_failed_suspended_admission_kills_and_reaps_original_child": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_native_multiple_exec_keeps_birth_anchor_and_cleans_with_fresh_token": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_native_original_root_term_wait_avoids_unnecessary_kill": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_native_vibe_birth_observation_owned_child_has_no_helper_descendants": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_target_code_waits_until_suspended_launch_observer_is_ready": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_vibecomfy_engine_adapter.py::test_real_selected_source_birth_preimage_spawns_ps_fixed_native_matches_without_spawn": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/integrations/test_generic_host_activation_acceptance.py::test_local_host_control_is_separate_and_survives_multiple_bounded_requests": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/integrations/test_managed_media_saved_visualize.py::test_saved_revision_with_managed_media_visualizes_a_frame": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/builtin/generate_image/test_codex_managed_profile.py::test_codex_native_binary_starts_in_host_sandbox": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_config_loads_as_cjs.py::test_remotion_config_loads_the_way_remotions_cjs_loader_evaluates_it": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::RemotionTypecheckSmokeTest::test_remotion_typecheck_when_dependencies_present": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_actual_cli_compiler_resolves_full_selected_import_closure": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_failed_browser_close_preserves_original_session[False]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_failed_browser_close_preserves_original_session[True]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[0-allocated]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[0-before-allocation]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[1-allocated]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[1-before-allocation]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[unset-allocated]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[unset-before-allocation]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[0-None]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1--1]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-0]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-4294967296]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-None]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_rejects_missing_selected_config": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_streaming_gate_uses_only_explicit_admitted_memory": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_streaming_native_esm_install_requires_selected_absolute_root": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_review_overlay_props.py::test_review_overlay_shows_only_the_active_phrase": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_timeline_visualize_motion_views.py::test_a_real_v6_push_comes_from_the_element": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_timeline_visualize_motion_views.py::test_the_fallback_mirror_still_matches_the_element_on_v6_pushes": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[interrupted]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[stale]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/test_generic_host.py::test_native_persistent_capture_failure_contains_known_root_and_scrubs_fake_auth": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/test_provider_manifest_readiness.py::test_all_supported_provider_routes_are_ready_and_grantable_with_declared_inputs": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/test_provider_route_grant.py::test_provider_route_grant_reads_runtime_nested_task_inputs": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/test_provider_route_grant.py::test_provider_run_requires_explicit_grant": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/test_release_identity.py::test_b11_local_submodule_is_pinned_and_inside_source_root": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/test_release_identity.py::test_b11_runs_declared_generator_twice": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    }
+  },
+  "candidate": {
+    "artifact": 14628665048,
+    "source": "f2c8e80d1303f093097ffc094f2533b5d0eabe2a",
+    "raw_exit": 1,
+    "phases": {
+      "tests/core/execution/test_custody_broker.py::test_real_later_absence_reconciles_without_rewriting_capture_history[fresh-absent-sibling]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_later_absence_reconciles_without_rewriting_capture_history[fresh-absent]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_later_absence_reconciles_without_rewriting_capture_history[retry-pre-absent]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_admitted_zombie_signal_observation_requires_original_reap_and_final_census": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_live_capture_retry_uses_actual_native_token[invalid-argument]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_live_capture_retry_uses_actual_native_token[invalid-destination]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_live_capture_retry_uses_actual_native_token[name-no-port]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_ordinary_descendant_exec_refreshes_retained_anchor[False]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_ordinary_descendant_exec_refreshes_retained_anchor[True]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_owned_terminal_capture_substage_releases_mach_port": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_reconciliation_burst_and_deadline_keep_exact_custody[churn]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_broker.py::test_real_reconciliation_burst_and_deadline_keep_exact_custody[finite]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_custody_launcher_exit.py::test_a_detached_child_does_not_keep_its_launcher_alive": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_generic_host_child_bridge_d18.py::test_existing_network_sandbox_preserves_inherited_local_channel": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_failed_suspended_admission_kills_and_reaps_original_child": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_native_multiple_exec_keeps_birth_anchor_and_cleans_with_fresh_token": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_native_original_root_term_wait_avoids_unnecessary_kill": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_native_vibe_birth_observation_owned_child_has_no_helper_descendants": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_process_group.py::test_target_code_waits_until_suspended_launch_observer_is_ready": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/core/execution/test_vibecomfy_engine_adapter.py::test_real_selected_source_birth_preimage_spawns_ps_fixed_native_matches_without_spawn": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/integrations/test_generic_host_activation_acceptance.py::test_local_host_control_is_separate_and_survives_multiple_bounded_requests": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/integrations/test_managed_media_saved_visualize.py::test_saved_revision_with_managed_media_visualizes_a_frame": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/builtin/generate_image/test_codex_managed_profile.py::test_codex_native_binary_starts_in_host_sandbox": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_config_loads_as_cjs.py::test_remotion_config_loads_the_way_remotions_cjs_loader_evaluates_it": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::RemotionTypecheckSmokeTest::test_remotion_typecheck_when_dependencies_present": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_actual_cli_compiler_resolves_full_selected_import_closure": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_failed_browser_close_preserves_original_session[False]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_failed_browser_close_preserves_original_session[True]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[0-allocated]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[0-before-allocation]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[1-allocated]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[1-before-allocation]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[unset-allocated]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_frame_worker_real_esm_spawn_capture_preserves_cold_failure[unset-before-allocation]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[0-None]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1--1]": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-0]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-4294967296]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-None]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_rejects_missing_selected_config": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_streaming_gate_uses_only_explicit_admitted_memory": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_remotion_render_contract.py::test_streaming_native_esm_install_requires_selected_absolute_root": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_review_overlay_props.py::test_review_overlay_shows_only_the_active_phrase": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_timeline_visualize_motion_views.py::test_a_real_v6_push_comes_from_the_element": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/rendering/test_timeline_visualize_motion_views.py::test_the_fallback_mirror_still_matches_the_element_on_v6_pushes": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[interrupted]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[stale]": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/test_generic_host.py::test_native_persistent_capture_failure_contains_known_root_and_scrubs_fake_auth": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/test_provider_manifest_readiness.py::test_all_supported_provider_routes_are_ready_and_grantable_with_declared_inputs": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/test_provider_route_grant.py::test_provider_route_grant_reads_runtime_nested_task_inputs": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/test_provider_route_grant.py::test_provider_run_requires_explicit_grant": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "tests/test_release_identity.py::test_b11_local_submodule_is_pinned_and_inside_source_root": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "tests/test_release_identity.py::test_b11_runs_declared_generator_twice": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      }
+    }
+  }
+}

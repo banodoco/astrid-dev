@@ -15,7 +15,7 @@ Written on 18 November 2026 by the session that added phase 0 (the commit contra
 
 - **D4:** which release carries phase B (the owner decided Release 15 for the four saving plans, [Plan 63's D9](../63-dependable-saving/inputs.md#owner-decisions); phase B may not fit).
 - **D5 is decided: the alternate view is deferred.** D6 and D8 from the earlier draft are unchanged.
-- D9 (the release, decided: Release 15) is Plan 63's, one decision for the four saving plans (Plans 63, 64, 65 and this one); D10 to D19 are Plan 63's or Plan 64's (D14).
+- D9 (the release, decided: Release 15) is Plan 63's, one decision for the four saving plans (Plans 63, 75, 76 and this one); D10 to D19 are Plan 63's or Plan 75's (D14).
 
 ## For the next manager, in order
 

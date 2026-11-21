@@ -1,0 +1,5 @@
+[VideoHelperSuite] - [0;33mWARNING[0m - Failed to import imageio_ffmpeg
+VHS loaded frames 4 mask shape (4, 1, 1)
+actual red values [0.0, 0.5000076293945312, 1.0, 0.1883726269006729]
+H3 preserved video mask [0.25, 0.75]
+H3 audio mask shape (1, 1, 2, 7) ticks [0.0, 0.17857417464256287, 0.46429282426834106, 0.7500038743019104, 0.9420264363288879, 0.47823941707611084, 0.1883726269006729]

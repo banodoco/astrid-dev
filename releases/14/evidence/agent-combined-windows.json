@@ -1,0 +1,341 @@
+{
+  "proof": {
+    "run": 44714461276,
+    "head": "ba4741b34cce743c35f94ebca0c0d168c78bf72d",
+    "tree": "26d9790a39808a93848296035bbd00222dfa112f",
+    "event": "workflow_dispatch",
+    "attempt": 1,
+    "shells": [
+      {
+        "shell": "powershell.exe",
+        "job": 136214173425,
+        "conclusion": "success",
+        "artifacts": [
+          {
+            "id": 14618208701,
+            "name": "failure-ceiling-windows-journey-0-1",
+            "digest": "sha256:a78ccbdb66cb8828acc8942341af80b1200ef8b24c1030174298986dcf09287c",
+            "size_in_bytes": 124658
+          },
+          {
+            "id": 14619127354,
+            "name": "Windows-task-host-journey-powershell.exe",
+            "digest": "sha256:774dcf169179457fff30d311050f0d038a246e3cbff451d983cd6718a674b399",
+            "size_in_bytes": 242122
+          }
+        ],
+        "command_exits": {
+          "step-01": 0,
+          "step-03": 0,
+          "step-06": 0,
+          "step-07": 0,
+          "step-08": 0,
+          "step-09": 0,
+          "step-10": 0,
+          "step-11": 0,
+          "step-12": 0,
+          "step-13": 0,
+          "step-14": 0,
+          "step-15": 0
+        },
+        "command_installed_sources_empty": true,
+        "last_command_tuple": {
+          "banodoco/astrid-agent": "ba4741b34cce743c35f94ebca0c0d168c78bf72d",
+          "banodoco/astrid-runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+          "banodoco/astrid-app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "trusted_reader": "unresolved installed/dependency custody: App installer ref defaults to mutable main; installed Agent/Runtime are selected App manifest revisions, not sibling checkouts. An installed tuple receipt and reviewed expected pins are required.",
+        "installed": {
+          "agent": "9814193a73f606719e81883a8be197d27dd361d4",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+          "app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "manifest_release": 13,
+        "binding": {
+          "source_root_matches_selected_purelib": true,
+          "host_module_present": true,
+          "purelib_host_module_present": true,
+          "service_root_matches_profile": true
+        },
+        "task_state": "succeeded",
+        "capability": "chiptune.sfx",
+        "outputs": [
+          {
+            "filename": "sfx.wav",
+            "size": 9644,
+            "digest": "sha256:1737d7fcc8dc1fe472da6dce866d91e93c45fc238597d606d4d8554fcce1ab0e"
+          },
+          {
+            "filename": "sfx.json",
+            "size": 301,
+            "digest": "sha256:0fb84ac9656dcc7b866d283a65e7f4b8bb87d23e15642ff86251bceaeb72bcf9"
+          },
+          {
+            "filename": "job.stdout.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "filename": "job.stderr.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "stop": "stopped",
+        "active_tasks": 0,
+        "tracked": 7,
+        "surviving_tracked": 0
+      },
+      {
+        "shell": "pwsh.exe",
+        "job": 136214174316,
+        "conclusion": "success",
+        "artifacts": [
+          {
+            "id": 14619921230,
+            "name": "failure-ceiling-windows-journey-1-1",
+            "digest": "sha256:d9e024d8f560e76711607c465218c78ae04ac64df0ededc9f2ec16f6c5de5448",
+            "size_in_bytes": 124610
+          },
+          {
+            "id": 14619616994,
+            "name": "Windows-task-host-journey-pwsh.exe",
+            "digest": "sha256:fae42c9b8f7c5efe6a31c6c7d1615edb64797ee86aab1843a97901febbfecf0b",
+            "size_in_bytes": 241369
+          }
+        ],
+        "command_exits": {
+          "step-01": 0,
+          "step-03": 0,
+          "step-06": 0,
+          "step-07": 0,
+          "step-08": 0,
+          "step-09": 0,
+          "step-10": 0,
+          "step-11": 0,
+          "step-12": 0,
+          "step-13": 0,
+          "step-14": 0,
+          "step-15": 0
+        },
+        "command_installed_sources_empty": true,
+        "last_command_tuple": {
+          "banodoco/astrid-agent": "ba4741b34cce743c35f94ebca0c0d168c78bf72d",
+          "banodoco/astrid-runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+          "banodoco/astrid-app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "trusted_reader": "unresolved installed/dependency custody: App installer ref defaults to mutable main; installed Agent/Runtime are selected App manifest revisions, not sibling checkouts. An installed tuple receipt and reviewed expected pins are required.",
+        "installed": {
+          "agent": "9814193a73f606719e81883a8be197d27dd361d4",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+          "app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "manifest_release": 13,
+        "binding": {
+          "source_root_matches_selected_purelib": true,
+          "host_module_present": true,
+          "purelib_host_module_present": true,
+          "service_root_matches_profile": true
+        },
+        "task_state": "succeeded",
+        "capability": "chiptune.sfx",
+        "outputs": [
+          {
+            "filename": "sfx.wav",
+            "size": 9644,
+            "digest": "sha256:1737d7fcc8dc1fe472da6dce866d91e93c45fc238597d606d4d8554fcce1ab0e"
+          },
+          {
+            "filename": "sfx.json",
+            "size": 301,
+            "digest": "sha256:0fb84ac9656dcc7b866d283a65e7f4b8bb87d23e15642ff86251bceaeb72bcf9"
+          },
+          {
+            "filename": "job.stdout.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "filename": "job.stderr.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "stop": "stopped",
+        "active_tasks": 0,
+        "tracked": 7,
+        "surviving_tracked": 0
+      }
+    ]
+  },
+  "reference": {
+    "run": 44675925763,
+    "head": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+    "tree": "fb3075ea952f284a89c8b1db6e8f3927b3288a95",
+    "event": "push",
+    "attempt": 1,
+    "shells": [
+      {
+        "shell": "powershell.exe",
+        "job": 136087627751,
+        "conclusion": "success",
+        "artifacts": [
+          {
+            "id": 14604003022,
+            "name": "failure-ceiling-windows-journey-0-1",
+            "digest": "sha256:7e53771163171ac4a8349b66f1498f31405224b62f3e2ab9a288239cb4dc7801",
+            "size_in_bytes": 124665
+          },
+          {
+            "id": 14604071950,
+            "name": "Windows-task-host-journey-powershell.exe",
+            "digest": "sha256:b455330a675cd440be7d3b50b5548b09987712c27514faed1aee133fb6ae3f0b",
+            "size_in_bytes": 242926
+          }
+        ],
+        "command_exits": {
+          "step-01": 0,
+          "step-03": 0,
+          "step-06": 0,
+          "step-07": 0,
+          "step-08": 0,
+          "step-09": 0,
+          "step-10": 0,
+          "step-11": 0,
+          "step-12": 0,
+          "step-13": 0,
+          "step-14": 0,
+          "step-15": 0
+        },
+        "command_installed_sources_empty": true,
+        "last_command_tuple": {
+          "banodoco/astrid-agent": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+          "banodoco/astrid-runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+          "banodoco/astrid-app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "trusted_reader": "unresolved installed/dependency custody: App installer ref defaults to mutable main; installed Agent/Runtime are selected App manifest revisions, not sibling checkouts. An installed tuple receipt and reviewed expected pins are required.",
+        "installed": {
+          "agent": "9814193a73f606719e81883a8be197d27dd361d4",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+          "app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "manifest_release": 13,
+        "binding": {
+          "source_root_matches_selected_purelib": true,
+          "host_module_present": true,
+          "purelib_host_module_present": true,
+          "service_root_matches_profile": true
+        },
+        "task_state": "succeeded",
+        "capability": "chiptune.sfx",
+        "outputs": [
+          {
+            "filename": "sfx.wav",
+            "size": 9644,
+            "digest": "sha256:1737d7fcc8dc1fe472da6dce866d91e93c45fc238597d606d4d8554fcce1ab0e"
+          },
+          {
+            "filename": "sfx.json",
+            "size": 301,
+            "digest": "sha256:0fb84ac9656dcc7b866d283a65e7f4b8bb87d23e15642ff86251bceaeb72bcf9"
+          },
+          {
+            "filename": "job.stdout.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "filename": "job.stderr.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "stop": "stopped",
+        "active_tasks": 0,
+        "tracked": 7,
+        "surviving_tracked": 0
+      },
+      {
+        "shell": "pwsh.exe",
+        "job": 136087627647,
+        "conclusion": "success",
+        "artifacts": [
+          {
+            "id": 14602803493,
+            "name": "failure-ceiling-windows-journey-1-1",
+            "digest": "sha256:4df4f780b1b8edf2063b496dc48f54209ed1159511164a8ce51d73a1fa28681d",
+            "size_in_bytes": 124592
+          },
+          {
+            "id": 14603357370,
+            "name": "Windows-task-host-journey-pwsh.exe",
+            "digest": "sha256:5e5bf417d7133b4e04190750b75242654dced196c0dbea9f7ca68f909415a197",
+            "size_in_bytes": 241590
+          }
+        ],
+        "command_exits": {
+          "step-01": 0,
+          "step-03": 0,
+          "step-06": 0,
+          "step-07": 0,
+          "step-08": 0,
+          "step-09": 0,
+          "step-10": 0,
+          "step-11": 0,
+          "step-12": 0,
+          "step-13": 0,
+          "step-14": 0,
+          "step-15": 0
+        },
+        "command_installed_sources_empty": true,
+        "last_command_tuple": {
+          "banodoco/astrid-agent": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+          "banodoco/astrid-runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+          "banodoco/astrid-app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "trusted_reader": "unresolved installed/dependency custody: App installer ref defaults to mutable main; installed Agent/Runtime are selected App manifest revisions, not sibling checkouts. An installed tuple receipt and reviewed expected pins are required.",
+        "installed": {
+          "agent": "9814193a73f606719e81883a8be197d27dd361d4",
+          "runtime": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+          "app": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99"
+        },
+        "manifest_release": 13,
+        "binding": {
+          "source_root_matches_selected_purelib": true,
+          "host_module_present": true,
+          "purelib_host_module_present": true,
+          "service_root_matches_profile": true
+        },
+        "task_state": "succeeded",
+        "capability": "chiptune.sfx",
+        "outputs": [
+          {
+            "filename": "sfx.wav",
+            "size": 9644,
+            "digest": "sha256:1737d7fcc8dc1fe472da6dce866d91e93c45fc238597d606d4d8554fcce1ab0e"
+          },
+          {
+            "filename": "sfx.json",
+            "size": 301,
+            "digest": "sha256:0fb84ac9656dcc7b866d283a65e7f4b8bb87d23e15642ff86251bceaeb72bcf9"
+          },
+          {
+            "filename": "job.stdout.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "filename": "job.stderr.log",
+            "size": 0,
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "stop": "stopped",
+        "active_tasks": 0,
+        "tracked": 7,
+        "surviving_tracked": 0
+      }
+    ]
+  },
+  "identical_installed_sources_outputs_and_exits": true
+}

@@ -1,0 +1,165 @@
+{
+  "platform": "macOS-15.4-arm64-arm-64bit",
+  "cells": [
+    {
+      "head": "ae929cdae7460c36cfbfd95599019a4c45f42e1c",
+      "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "case": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "trial": 1,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "log_sha256": "dd8ff49dad35894b300ed8881c8c4086fd1464eec28ed8a0420c2df0fa004ebc",
+      "junit_sha256": "6190c208aa0c15f6a223f1590dfdc2901b327e3106421a1ce616ccb867e6d884"
+    },
+    {
+      "head": "dbb7152e4e14891c826babacbac9b4eee17cf9c0",
+      "runtime": "8e8711fd2b3b43fcae680cecd8cec1e7640489cc",
+      "case": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "trial": 1,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "log_sha256": "ae328eac081eac7b10fd7e2df770b0bd1cd84af1dc0ab7a78028b71ff462894f",
+      "junit_sha256": "1b9f8f90c2bdc0d73a76b5a4237b414bafd8d7bab2917f1f65dd1125e77a8335"
+    },
+    {
+      "head": "ae929cdae7460c36cfbfd95599019a4c45f42e1c",
+      "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "case": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 1,
+      "trial": 2,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "failed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "observed_frames": 181,
+      "expected_frames": 108,
+      "log_sha256": "6ec6e6204d8d7a409db016eaa462f8331bd74c992c0ce30006b2c9571c5fd953",
+      "junit_sha256": "8a301e4801815c88f63e2d64d7a0e2e30e5298f6697e62365879a1ec48af0f0c"
+    },
+    {
+      "head": "dbb7152e4e14891c826babacbac9b4eee17cf9c0",
+      "runtime": "8e8711fd2b3b43fcae680cecd8cec1e7640489cc",
+      "case": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 1,
+      "trial": 2,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "failed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "observed_frames": 166,
+      "expected_frames": 108,
+      "log_sha256": "ee7e5e99f9790b624242bec05de669e3099446b67aca76db40cf8e345f6359c7",
+      "junit_sha256": "4708a25cb678b6f312a9d0de5b0405e2b1e778306d40135789632022e3bbc2ff"
+    },
+    {
+      "head": "ae929cdae7460c36cfbfd95599019a4c45f42e1c",
+      "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "case": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "trial": 3,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "log_sha256": "67f94da3b64da85dfc5e1932742f374e60fd8e10d64faa7b7cd2ae6ca5127734",
+      "junit_sha256": "57a5b5046194e88319a35744ba8ca0b700db3de662c654b093ca41c7363e9696"
+    },
+    {
+      "head": "dbb7152e4e14891c826babacbac9b4eee17cf9c0",
+      "runtime": "8e8711fd2b3b43fcae680cecd8cec1e7640489cc",
+      "case": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+      "exit": 0,
+      "trial": 3,
+      "phases": [
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "setup",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "call",
+          "outcome": "passed"
+        },
+        {
+          "id": "tests/core/generation/test_h3_build_after_outputs.py::test_the_run_actions_after_outputs_spec_composes_the_candidate",
+          "phase": "teardown",
+          "outcome": "passed"
+        }
+      ],
+      "log_sha256": "a81a9809cdb7da48cc7094060b5f8aede5f735581e109127704706f790575aa5",
+      "junit_sha256": "4155ef8979f705faf2845e2a8526e9ff8d8d368f3b902f357e00f7af0d5302c9"
+    }
+  ]
+}

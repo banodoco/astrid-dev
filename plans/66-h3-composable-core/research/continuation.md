@@ -1,0 +1,69 @@
+> Historical research, not instructions. Where this differs from the current plan, inputs or tasks files, those win.
+
+# Continuation as a time-masked edit on the shared H3 builder
+
+## Scope and evidence
+
+Read-only source review; no tests or generation were run. Primary Astrid source is `origin/release/14/main` in astrid-agent; no requested path needed the plan-59 fallback. Workflow Python and Vibe workflow JSON are captured artifacts, so their declared graph is evidence of wiring and settings, not evidence of output quality. Quality claims below are reported separately and need to be treated as anecdotal unless backed by comparative runs.
+
+## Current shape
+
+The native v2 request already expresses a canvas duration, placed timeline media, references, edit permissions, and `continuation=true` (`shared/request_v2.py:333-345,352-387`). `branch_for` routes that to `extension_context` (`request_v2.py:472-479`) and preparation generates uncovered intervals after source coverage (`prepare.py:322-343,367-417`). The closed typed `Spec`/legacy route instead has one optional source and global refs (`shared/spec.py:26-80`) and its own `generate`/`extend` constraints (`spec.py:246-273`). Today v2 continuation is still compiled through a dedicated captured-workflow path.
+
+The captured continuation routes are separate fixed workflows (`shared/compile.py:28-29`).
+
+## Findings
+
+### Captured continuation graphs
+
+Both captured workflows load source with VHS at 1024×576, force 24 fps, validate, and crop to 32-pixel dimensions; the graph's resolution selector is configured for 0.5 MP (`workflows/native_h3_continuation/workflow.py:96-109,175-179,208-222`; refs graph mirrors it). Source start and frame cap are bound from the selected source window. Output length rounds onto the H3 `5 + 17k` frame lattice (`workflow.py:111-114,820-831`). This is both a quality/resolution choice and a timebase constraint.
+
+Shared model stack: Ref2VA UNET, Qwen3VL CLIP, H3 video/audio VAEs, FL2V Turbo LoRA at 0.95, Comfy attention backend and SigmaShift audio=3/video=12. Sampling is `KSamplerSelect(res_multistep)`, `BasicScheduler(simple)`, `BasicGuider`, `SamplerCustomAdvanced`; 8 steps, denoise=1 (`workflow.py:91-95,151-152,224-235,343-348,831`). There is no `CFGGuider` or scalar CFG input in this graph; `BasicGuider` uses the positive conditioning, while 0.95 is Turbo LoRA/guidance strength, not CFG (`workflow.py:363-366,420-429`; `shared/compile.py:269-271`).
+
+Node-by-node path: source load → 24fps validation → CropTo32 → ReferenceToVideo conditioning → sampled first-frame starter → `MiniMaxH3StartMaskedContext` → six sequential generated AV context blocks → `MiniMaxH3StreamLiveExtensionAVToVHS` mux. StartMaskedContext receives decoded source frames/audio, starter latent, context_length=39 and feather_ticks=8 (`workflow.py:398-408,441-473`). Every later `MiniMaxH3GeneratedAVMaskedContext` gets a fresh target latent and prior sampled AV latent, with context 39/feather 8 (`workflow.py:513-520,556-562,602-608,648-654,694-700`). The final stream node receives source prefix/audio, starter and six extension outputs at 24fps (`workflow.py:780-818`). Cached schema says the prior latent's final joint AV run is copied to the next prefix and protected with noise-mask 0; 39 frames snap to boundaries 39/90/141/... and 8 ticks is a 0.2s half-cosine audio release (`ComfyUI-H3-Motion-Context-MultiRef@cpu-runtime.json:1497-1538`).
+
+The refs workflow adds two `LoadImage` inputs wired to each ReferenceToVideo conditioning branch (`native_h3_continuation_refs/workflow.py:186-187,267-319`); compile binds one image to both slots or two images separately (`shared/compile.py:366-369`). These are global conditioning refs. There is also a distinct optional first-frame keyframe path at 1-based position `[1]` (`workflow.py:155,398-408`), not an end-frame constraint. Audio is generated jointly in starter/extensions; source audio policy/controller is “Keep source audio”, and the final mux combines prefix and extension with `trim_to_audio=False` (`workflow.py:178-183,209-211,780-811`). Audio regen length/mask nodes exist on a separate route, not the extension output path. `loadaudio` nodes are unused. The word “tail” means the selected source window fed as context/prefix; extension begins after that source end.
+
+### Shared builder masked edit
+
+`build_generation_workflow` builds a normal ReferenceToVideo latent and sampler; `masked_edit` adds source V2V (`shared/generation.py:205-223`). It accepts zero image refs for masked edit; ordinary generation requires image refs. Ordinary conditioning supports up to 9 image and 3 video refs (`generation.py:234-238,307-346`). The masked path loads the requested source window, computes the difference to target length, duplicates the last frame for H3 rounding and pads silent audio; it rejects a source count shorter than target or longer than target (`generation.py:351-376`). It loads/inverts neither source by default, constructs video mask and black/preserve mask tail, then calls `H3V2VGranularFractionalDenoise` with source_fps=24, spatial mode, global_strength=.9995, inside_strength=mask strength (default 1), outside_strength=0, audio_strength=0, source_fit=start, crop=disabled, temporal_reduce=max, invert=false (`generation.py:377-418`). The resulting model/latent feed BasicScheduler denoise=1, KSamplerSelect, RandomNoise, BasicGuider, and SamplerCustomAdvanced; decoded AV is muxed (`generation.py:419-432`). Audio is untouched in this V2V path; it is not a suffix audio generator.
+
+### Diff and implications
+
+| Capability/setting | Captured continuation | Shared builder masked edit | Impact |
+|---|---|---|---|
+| Source temporal context | 39-frame `StartMaskedContext` plus six previous-output AV handoffs | No motion-context/lead-in node; source is the V2V target | Material to temporal continuity and exact source-prefix preservation |
+| Edit/noise mask | Context mask freezes handoff; no spatial user mask | Explicit spatial mask; outside strength 0 | Material: continuation is temporally constrained; builder is spatially constrained |
+| Source/audio | Keep source audio, generate joint AV suffix, stream-mux | Audio strength 0; silent pad only for rounding | Material for generated suffix sound and preservation semantics |
+| Resolution/time | Source ingest 1024×576, 24fps, CropTo32; length `5+17k` | Target conditioning 1024×576; same H3 rounding/pad assumptions | 0.5MP is a material quality cap; frame lattice is correctness/timing |
+| References | Exactly two slots in refs variant; one duplicated if only one | Up to 9 image and 3 video refs | Slot count is incidental if global ref semantics suffice; loss of placed/time-scoped refs remains a product-model gap |
+| Sampler/model | Turbo .95, SigmaShift 3/12, res_multistep/simple, 8 steps, denoise 1 | Same family/settings | Mostly incidental; public overrides differ (continuation exposes model/seed/steps, sampler/guidance fixed: compile.py:352-378) |
+| First image guide | Optional position-1 keyframe to starter | References condition the whole generated latent | Material distinction between a pinned first frame and general reference guidance |
+
+Do not equate “has a noise mask” with “does continuation”: the masks protect different axes (spatial edit permissions versus temporal context).
+
+### What prevents continuation from being a normal timed edit
+
+The v2 request and schedule can already represent a placed shorter source and uncovered generated tail; continuation is selected explicitly and the schedule marks gaps generated (`shared/request_v2.py:333-387,472-479`; `shared/prepare.py:322-343,367-417`). So the request layer is not the primary blocker for this simple case. However `latent_pin` is admitted but dropped during normalization, and references cannot be placed on the timeline (`request_v2.py:352,365-367,379-387`), which blocks the broader canvas/timeline/end-anchor model.
+
+The closed typed `Spec` has one optional source range, interprets source-relative duration in extension validation, and requires generation/extension to cover a full AV interval (`spec.py:26-80,176-180,246-265`). Source edits and preservation stay inside source length (`spec.py:266-273`); source-backed duration longer than source without a generator is rejected (`spec.py:340-345`). Smallest change: avoid making this legacy `Spec` the canonical representation for timed v2 operations, or extend it to preserve placed timeline entries and per-stream intervals.
+
+The v2 native compiler's `extension_context` path requires one video timeline at frame 0, no separate timeline audio, image refs only and at most two refs, no per-operation strength/seed or spatial mask, and fixed sampler/scheduler/guidance (`shared/compile.py:921-967`). It then calls `plan_continuation`, binds source start/frame count, and chooses a captured bundle (`compile.py:968-1008`). The legacy compiler separately requires `operation=continue`, source range from zero, and generated suffix permissions (`compile.py:246-272`). Smallest change: compile the existing interval schedule into the shared builder while retaining motion context as a stage; then relax frame-zero/one-video and fixed-slot limits if the unified timeline model requires them.
+
+Preparation creates a special `extension_context` branch; compose separately checks continuation timing/coverage (`shared/prepare.py:164,303-424`; `shared/compose.py:168-203,245-260`). The masked V2V compiler requires loaded source frames to match output duration (`shared/compile.py:501-505`), and the shared builder's V2V loader only pads the H3 rounding tail and rejects genuinely short sources (`generation.py:214-219,364-376`). This is the direct obstacle to implementing continuation by simply selecting `masked_edit`. Smallest change: add a builder path that accepts a source prefix shorter than canvas and fills the suffix through temporal context + AV generation, then make output validation/composition operate against intervals rather than a full-duration source window.
+
+### End frame and start/end bridging
+
+The captured keyframe is a start-frame guide only (`workflow.py:398-408`). At ComfyUI `6bfaacc`, `MiniMaxH3AddGuide` appends a time-indexed row to positive conditioning and leaves target/noise mask untouched; it is guidance, not pixel locking ([source](https://github.com/Comfy-Org/ComfyUI/blob/6bfaacc/comfy_extras/nodes_minimax_h3.py#L151-L219); Plan 64 notes: `research/first-frame.md:5-11`). H3 spans temporal tokens as 1,4,4,4; frame 0 is alone, but frames 1–4 share a token, and the V2V mask reduces permissions by maximum across a group (`first-frame.md:15-17`). Thus a terminal frame permission may make its whole four-frame token editable; freezing that token also freezes neighboring frames. **Inference:** the noise-mask mechanism cannot independently hard-pin an arbitrary final pixel frame. For guaranteed delivery, composition needs an image-baseline/final-frame paste plus verification; AddGuide can provide soft start/end bridging but not exact pixels (`first-frame.md:5-11`; `shared/compose.py:841-861,896-901,1249-1270`). The request also lacks timeline-image anchor lowering: `latent_pin` is discarded and references cannot be placed (`request_v2.py:352,365-367,379-387`).
+
+### Quality reports and limits
+
+Hivemind has operator reports of H3 context-window chunking followed by V2V upscaling at 2–3 MP, with occasional sideways-motion jumps at joins, but no controlled continuation-vs-V2V comparison (message `1572496981547421728`; summarized in Plan 65 `research/size.md:3,14`). Another report mentions 1344×768, not a quality comparison (message `1541127211602546773`; same lines). Plan 64 also found no direct evidence comparing generated-audio/preserved-image behavior (`research/masked.md:18-22`). So output-quality superiority is unknown; the anecdote specifically warns that chunk joins can jump.
+
+### Fixtures that pin the legacy routes
+
+Captured-route pins found: `tests/packs/h3_av/test_workflow_pair.py:14-17,20-103` checks the reference workflow bundle and wiring; `test_workflow_model_urls.py:123-134` enumerates both captured workflow paths; `test_runtime_declaration_sync.py:16-17,127-133` asserts the continuation contribution bundle; `test_release_runtime_guard.py:10-38` derives runtime guard from continuation metadata; `test_native_v2_contract.py:526-537` loads the native continuation source semantic port; `test_continuation_timing.py:123-158` pins its compile timing. The graph assets themselves are `workflow.py`, `.vibe.json`, `source.json` in both workflow directories. Shared masked-edit behavior has separate coverage in `tests/packs/h3_av/test_native_masked_edit.py:58-102` (node settings and source-window behavior). Retiring the captured routes requires migrating these assertions and preserving timing/source-port contract coverage, not deleting all H3 tests.
+
+## Assessment
+
+**Assessment:** continuation can become a time-masked operation in the product model, but the shared builder needs a temporal source-context stage and joint AV suffix path; simply routing a shorter source through today's spatial V2V branch is incorrect. Consolidation loses nothing inherently if the 39-frame motion handoff, source-audio keep policy, frame lattice and optional start-image guide survive. It would lose current fixed-workflow reproducibility and likely the intentionally 0.5 MP ingest behavior if those are removed. The choice to raise resolution changes quality/cost, not semantics. Exact end-frame pinning remains a separate capability question.

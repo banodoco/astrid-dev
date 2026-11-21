@@ -1,0 +1,95 @@
+{
+  "source": "GitHub exact-head archive 479ec8acae2f829928d58fc4b38f5e7832bd6c8e",
+  "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+  "platform": "macOS-15.4-arm64-arm-64bit",
+  "python": "3.11.18",
+  "pytest": "9.0.2",
+  "sqlite": "3.54.1",
+  "original_test_sha256": "999c1848c59254db7fd75a3a741685bbfa979a4b6864b85bd2b29c8eb87cb395",
+  "catalog_reference": {
+    "packId": "rendering",
+    "kind": "effect",
+    "id": "text-card",
+    "revision": "sha256:6575848081267d8ac02b802f109dd8fedb4bddb94469b914190f83b2e73be56f"
+  },
+  "records": [
+    {
+      "file": "local-control2.json",
+      "sha256": "8c4d3f3423df4ec5df45192c684bb20b2e777a6b18ead6f07a7e3aea0d65a48c",
+      "fixture_sha256": "2bf96fe9a1c5478aa3ff29b7bace254bc9d6d8498ee0a8113600df74d02f9f18",
+      "phases": [
+        [
+          "setup",
+          "failed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "exit": 1,
+      "first_boundary": "capture_occurrence_delete refused because a parent word anchor still selects the removed occurrence"
+    },
+    {
+      "file": "local-clear.json",
+      "sha256": "60fee11900ecf467a6ab5c1090abab15632042f4d5474bacaab7a6e86ef3f7d1",
+      "fixture_sha256": "fc7dfb7ac6695fbf5950d115210a10d5df297c542b3f4fc12126189d9a23abbd",
+      "phases": [
+        [
+          "setup",
+          "failed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "exit": 1,
+      "first_boundary": "delete accepted; candidate looked for occurrences on the authoring parent object instead of canonical payload"
+    },
+    {
+      "file": "local-unbind-canonical.json",
+      "sha256": "e506c09414014e9c16f5e1fe1507e8923778bb75593492efb7ae3507300cb8ca",
+      "fixture_sha256": "e601eab0f14efb4c535e67460a26190c97ce730111cb9da8dec527995359e813",
+      "phases": [
+        [
+          "setup",
+          "failed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "exit": 1,
+      "first_boundary": "verified empty canonical and authored memberships; Runtime refused the title missing elementRef.revision"
+    },
+    {
+      "file": "local-authenticated-title.json",
+      "sha256": "bc2ab70f4e2bc883e912b6b1d4109e0a61ea145556357afadf1d4ea7284d9f69",
+      "fixture_sha256": "5606e3ff3600b32cc63642632693ca7d5c8563cd595f97f66344efca908a7d86",
+      "phases": [
+        [
+          "setup",
+          "passed"
+        ],
+        [
+          "call",
+          "failed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "exit": 1,
+      "first_boundary": "setup accepted; edit committed and accepted revision asserted; reopen reported 1.001 seconds vs expected 1"
+    }
+  ],
+  "patch": {
+    "file": "local-authenticated-title.patch",
+    "sha256": "987b2e8fae0ac067a8a8cd6220f8ba6ab70c88912586f9c27f45507dcf88f63f"
+  },
+  "comparison_scope": "Local scratch changes only. The hosted topic remained at the submitted head.",
+  "scratch_fixture_diff": "--- a/tests/editing_conformance/native_checkout_current_fixture.py\n+++ b/tests/editing_conformance/native_checkout_current_fixture.py\n@@ -74,8 +74,13 @@\n     assert [clip[\"id\"] for clip in parent[\"clips\"][-2:]] == [\"music-bed\", \"music-other\"]\n \n     if gate3:\n+        from astrid.core.element.catalog import list_element_descriptors\n         from astrid.sdk.timeline.native_occurrence_delete import capture_occurrence_delete\n+        from astrid.sdk.timeline.native_word_anchor import capture_anchor\n \n+        clear = capture_anchor(current_bundle(case), \"parent/clip:card\", \"on\", None, None)\n+        _current_commit(case, [clear], \"native-checkout-current-gate3-clear-anchor\")\n+\n         # The parent membership belongs to the semantic occurrence command,\n         # not a raw emitter patch. Reopen each accepted deletion before adding\n         # the Gate 3 title so the emitter sees the current closure.\n@@ -89,7 +94,12 @@\n             )\n             authored = current_bundle(case)\n         assert authored[\"placements\"] == []\n-        assert authored[\"parent\"][\"occurrences\"] == []\n+        accepted_parent = case.documents[case.head()[\"revision_id\"]][\"parent_revision\"][\"payload\"]\n+        assert accepted_parent[\"occurrences\"] == []\n+        title_descriptor, = [\n+            row for row in list_element_descriptors(kind=\"effects\", pack_id=\"rendering\")\n+            if row[\"id\"] == \"text-card\"\n+        ]\n         desired = copy.deepcopy(authored)\n         desired[\"parent\"][\"clips\"].append({\n             \"id\": \"gate3-title\",\n@@ -98,7 +108,7 @@\n             \"clipType\": \"text-card\",\n             \"hold\": 1,\n             \"params\": {\"content\": \"Gate3\"},\n-            \"elementRef\": {\"packId\": \"rendering\", \"kind\": \"effects\", \"id\": \"text-card\"},\n+            \"elementRef\": {key: title_descriptor[key] for key in (\"packId\", \"kind\", \"id\", \"revision\")},\n         })\n         desired[\"parent\"][\"config\"][\"clips\"] = copy.deepcopy(desired[\"parent\"][\"clips\"])\n         topology = _current_commit(\n"
+}

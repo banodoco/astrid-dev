@@ -10,6 +10,8 @@ One concise paragraph explaining why this matters and the governing idea behind 
 
 ## Aspirations
 
+<!-- These are the Goals shown on Astrid's website. Keep this legacy authoring heading and the compatible feed identifiers until an explicitly reviewed schema migration updates all consumers together. -->
+
 <!-- Use [the aspiration template](aspiration.md) for each item below. The
 summary is always visible; its substantive explanation expands first. Optional
 We should / We should never lists live behind a separate, initially closed

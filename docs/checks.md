@@ -17,6 +17,7 @@
 - `markdown-links always Validate markdown links`
 - `link-anchors always Validate links to headings in skills, templates and top-level docs`
 - `public-vision-content always Validate public vision source content`
+- `workstream-structure always Validate common workstream contracts and skill or document packaging`
 - `generated-views pr Validate generated views that a pull request changes`
 - `completion-assessment pr Require evidence for plans newly marked done`
 - `gap-boundary-assessment pr Require a first-principles assessment for redefined gaps`

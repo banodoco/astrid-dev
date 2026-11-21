@@ -1,0 +1,29 @@
+{
+  "base_run": 44378598394,
+  "base_job": 135064357627,
+  "candidate_run": 44447425471,
+  "candidate_job": 135302866144,
+  "base_count": 16,
+  "candidate_count": 13,
+  "common": [
+    "tests/integrations/test_managed_media_saved_visualize.py::test_saved_revision_with_managed_media_visualizes_a_frame",
+    "tests/packs/rendering/test_remotion_render_contract.py::RemotionTypecheckSmokeTest::test_remotion_typecheck_when_dependencies_present",
+    "tests/packs/rendering/test_remotion_render_contract.py::test_actual_cli_compiler_resolves_full_selected_import_closure",
+    "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[0-None]",
+    "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-0]",
+    "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-4294967296]",
+    "tests/packs/rendering/test_remotion_render_contract.py::test_real_cli_config_loader_captures_root_and_streaming_gate[1-None]",
+    "tests/packs/rendering/test_timeline_visualize_motion_views.py::test_a_real_v6_push_comes_from_the_element",
+    "tests/packs/rendering/test_timeline_visualize_motion_views.py::test_the_fallback_mirror_still_matches_the_element_on_v6_pushes",
+    "tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[interrupted]",
+    "tests/stage1/test_runtime_lifecycle_reproducer.py::test_pinned_launcher_recovers_disposable_partial_state[stale]",
+    "tests/test_provider_route_grant.py::test_provider_route_grant_reads_runtime_nested_task_inputs",
+    "tests/test_provider_route_grant.py::test_provider_run_requires_explicit_grant"
+  ],
+  "new": [],
+  "cleared": [
+    "tests/packs/test_audio_render.py::AudioRenderTest::test_rendered_mp4_contains_audio_stream",
+    "tests/packs/test_text_card_render.py::TextCardRenderTest::test_text_card_render_smoke",
+    "tests/test_provider_manifest_readiness.py::test_all_supported_provider_routes_are_ready_and_grantable_with_declared_inputs"
+  ]
+}

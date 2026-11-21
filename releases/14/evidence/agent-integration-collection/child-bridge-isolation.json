@@ -1,0 +1,37 @@
+{
+  "platform": "macOS-15.4-arm64-arm-64bit",
+  "cells": [
+    {
+      "head": "4ba3becd201779a4938aae50eada6e596bd098b4",
+      "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+      "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704",
+      "test": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_real_parent_bridge_dispatches_nested_validator_and_binds_receipt_to_child_attempt",
+      "exit": 0,
+      "native": [
+        {
+          "name": "test_real_parent_bridge_dispatches_nested_validator_and_binds_receipt_to_child_attempt",
+          "outcome": "passed",
+          "seconds": "8.900"
+        }
+      ],
+      "log_sha256": "c9763e84fbb2b611bd82c2ba8c169c5c03add4d3e9ea227f6def90923cbe4b88"
+    },
+    {
+      "head": "e84bbd52725cba1da7ac655771f840cb7af25fc2",
+      "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+      "vibecomfy": "c27fe76b79d917fd9c08246660bc77211be64146",
+      "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704",
+      "test": "tests/core/execution/test_generic_host_child_bridge_d18.py::test_real_parent_bridge_dispatches_nested_validator_and_binds_receipt_to_child_attempt",
+      "exit": 0,
+      "native": [
+        {
+          "name": "test_real_parent_bridge_dispatches_nested_validator_and_binds_receipt_to_child_attempt",
+          "outcome": "passed",
+          "seconds": "7.380"
+        }
+      ],
+      "log_sha256": "fa111a21e124a175c67c53de04bcc6d7d6bbbf7d8feae9b109ae0263fc1dd7d6"
+    }
+  ]
+}
