@@ -10,7 +10,7 @@
 
 **Estimate:** Phase 1, the clone, 4 to 6 engineering days. Phase 2, true links for agents, more than the 22 days first drafted; it is re-estimated by its contract task (LK-1). Phase 3, the editor and automatic copy-in, is deferred and not estimated.
 
-**Waiting on:** the owner's decisions D1 to D7 in [inputs.md](inputs.md#owner-decisions), above all D6 (the clone first) and D7 (reversing an earlier decision); [Plan 79](../79-local-media-any-size/plan.md), whose streaming copy is the fallback; and, for phase 2 only, the saving plans ([63](../63-dependable-saving/plan.md), [75](../75-fast-saving/plan.md), [77](../77-saving-holds-on-a-heavy-timeline/plan.md)) landing first.
+**Waiting on:** [Plan 79](../79-local-media-any-size/plan.md) landing, whose streaming copy is the fallback, then a manager for phase 1. Phase 2 waits on the owner's decision D7, taken after she has used the clone, and on the saving plans ([63](../63-dependable-saving/plan.md), [75](../75-fast-saving/plan.md), [77](../77-saving-holds-on-a-heavy-timeline/plan.md)). Decisions are in [inputs.md](inputs.md#owner-decisions).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -43,7 +43,7 @@ The independent critique recommended building the clone first. It gives most of 
 
 **Real dependencies:** Plan 79 for LK-0. For phase 2, Plan 63's outcomes: LK-4 needs two new ones, "temporarily unavailable" and "stale selection", and must not slow the commit path that Plans 75 and 77 are measuring.
 
-**Unresolved:** D1 to D7. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
+**Unresolved:** D7, and D2 to D5. D1 and D6 were decided on 21 November 2026: the clone first. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 

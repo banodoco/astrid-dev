@@ -10,7 +10,7 @@
 
 **Estimate:** About 8 engineering days (7 to 9): the Runtime's client and the Agent's pin about 1, the Agent about 4, the App about 1.5, the live proof and review about 1.5. The critique of 21 November 2026 raised it from 5.
 
-**Waiting on:** the owner's decisions D1, D2, D4 and D5 in [inputs.md](inputs.md#owner-decisions), a manager, and Plan 77 landing in `release/15/main`: it edits the same Agent and App files, and the editor half needs its drop handling ([sequence](#sequence-and-readiness)).
+**Waiting on:** a manager, the owner's agreement on review rounds, and Plan 77 landing in `release/15/main`: it edits the same Agent and App files, and the editor half needs its drop handling ([sequence](#sequence-and-readiness)). The interim 1 GiB limit (D2) does not wait.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -48,7 +48,7 @@ The Runtime already does the hard part: its `media-imports` route streams the re
 
 **Must not disturb:** Plan 63's import outcomes and replay, Plan 75's concurrent-commit timing and Plan 77's parked-drop retry.
 
-**Unresolved:** decisions D1, D2, D4 and D5. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
+**Unresolved:** the number of review rounds. D1, D2, D4 and D5 were decided on 21 November 2026. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 

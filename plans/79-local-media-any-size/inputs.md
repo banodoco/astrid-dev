@@ -4,9 +4,9 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — The owner asked for this project and its release on 21 November 2026, in the Release 15 Lead session (`session_011EzfW1gtAhRQwk8pgJMzhG`): "Let's add a project to do this right and add it to release 15, please." That followed the Lead's finding that a one-line raise of the 64 MiB constant would unblock ordinary clips but load each whole file into memory. She has not yet read this end state or answered D1, D2, D4 and D5. Next: she confirms or changes them.
+**Scope decision:** Accepted — the owner asked for this project and its release on 21 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) (`session_011EzfW1gtAhRQwk8pgJMzhG`): "Let's add a project to do this right and add it to release 15, please." After the critique she was given the revised end state (about 8 days; the Runtime refuses by size; a Runtime client change and a pin) with the recommended answers to D1, D2, D4 and D5, and replied: "Yes, I agree with your recommendations." The review-round count was not among them and stays pending.
 
-**Prior art:** Read on 21 November 2026 at astrid-agent `release/15/main` `aac1ceb6` and astrid-runtime `release/15/main` `1758a6df`, by an exploration with four read-only helpers, with the lines below re-read by the planner.
+**Prior art:** Read on 21 November 2026 at astrid-agent [`release/15/main` `aac1ceb6`](https://github.com/banodoco/astrid-agent/tree/aac1ceb6) and astrid-runtime [`release/15/main` `1758a6df`](https://github.com/banodoco/astrid-runtime/tree/1758a6df), by an exploration with four read-only helpers, with the lines below re-read by the planner.
 
 - **The limit is the Agent's.** `astrid/sdk/authoring_media.py:27` sets `_MAX_BYTES = 64 * 1024 * 1024`. `_metadata` refuses above it and calls it "Runtime's 64 MiB limit" (lines 111 and 141). The Runtime's object limit is 5 GiB (`runtime_protocol/cas.py:16`).
 - **The file is read whole, more than once.** `_metadata` calls `path.read_bytes()` to hash it (line 139); `astrid/sdk/timeline/media_add.py:55` reads it again and passes the bytes to `import_project_media`; detached authoring reads every file again (`authoring_media.py:592`).
@@ -32,7 +32,7 @@
 - **Everything downstream reads the store:** preview, the renderer, export, recovery and rented machines.
 - **So in-place use needs** missing-media and relink screens, a copy on export and for rented machines, and a media identity that can change under the saving plans' checks (Plans 63, 75 and 77), which are being stabilised now.
 
-**Challenge:** Done on 21 November 2026 by an independent Codex critic (`gpt-6.2-astra`, high effort, read-only brief, no stake in the draft), which checked the draft's claims in the three repositories. It ran no tests or uploads. Findings and what the planner did with each:
+**Challenge:** Reviewed — commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) on 21 November 2026 and done by an independent Codex critic (`gpt-6.2-astra`, high effort, read-only brief, no stake in the draft), which checked the draft's claims in the three repositories. It ran no tests or uploads. Findings and what the planner did with each:
 
 - **Accepted — the Agent cannot learn the limit.** 5 GiB is a ceiling that `RUNTIME_MAX_OBJECT_BYTES` can lower, and neither health nor handshake reports it (`runtime_protocol/service.py:561`, `:858`, `:905`). The draft promised a refusal "before any bytes are sent". Now: the Agent declares the size and the Runtime refuses before reading the body. Reporting the limit in the handshake is a protocol change, left as D1's option (c).
 - **Accepted — streaming needs a Runtime client change and a pin.** The route stages chunks, but the generated client calls `bytes(data)` (`astrid_runtime_client/generated.py:1185-1212`; generator at astrid-runtime `generators/generate.py:23`; pin at astrid-agent `runtime.lock.json:15`). Now LM-1, with the pin as D5.
@@ -51,11 +51,11 @@
 
 ## Owner decisions
 
-- **D1 — the limit.** (a) The Runtime's limit is the only limit, and the Runtime refuses by the declared size. (b) The Agent keeps a lower limit of its own. (c) As (a), and the Runtime also reports its limit in the handshake so clients can refuse earlier; this is a protocol change. Recommendation: (a); a second number is how #1237 happened, and (c) can follow if the late refusal proves annoying. Pending.
-- **D2 — a stopgap first.** (a) No stopgap; this plan starts soon. (b) Raise the Agent's constant to 1 GiB now as a one-line fix, and let this plan replace it. Recommendation: (b) only if this plan waits more than a few days behind Plan 77; a 1 GiB file then uses about 1 GiB of memory. Pending.
+- **D1 — the limit.** (a) The Runtime's limit is the only limit, and the Runtime refuses by the declared size. (b) The Agent keeps a lower limit of its own. (c) As (a), and the Runtime also reports its limit in the handshake so clients can refuse earlier; this is a protocol change. Recommendation: (a); a second number is how #1237 happened, and (c) can follow if the late refusal proves annoying. **Decided 21 November 2026: (a).** The owner agreed with the Lead's recommendation in the Release 15 Lead session (`session_011EzfW1gtAhRQwk8pgJMzhG`): "Yes, I agree with your recommendations."
+- **D2 — a stopgap first.** (a) No stopgap; this plan starts soon. (b) Raise the Agent's constant to 1 GiB now as a one-line fix, and let this plan replace it. Recommendation: (b) only if this plan waits more than a few days behind Plan 77; a 1 GiB file then uses about 1 GiB of memory. **Decided 21 November 2026: (b),** raise the constant to 1 GiB now, because this plan waits behind Plan 77. Same source as D1.
 - **D3 — using the file in place.** Now its own plan: [Plan 80](../80-use-media-in-place/plan.md). Nothing to decide here.
-- **D4 — an upload in flight at reload (astrid-app #255).** (a) Warn before the page closes while an upload is running, using the App's shared reload guard. (b) Save pending uploads and resume them. Recommendation: (a); (b) is a design of its own. Pending.
-- **D5 — the Runtime pin.** LM-1 changes the Runtime's generated client, and the Agent must pin the Runtime commit that has it. A pin change is the owner's to approve. Recommendation: approve it as its own commit once LM-1 has passed review. Pending.
+- **D4 — an upload in flight at reload (astrid-app #255).** (a) Warn before the page closes while an upload is running, using the App's shared reload guard. (b) Save pending uploads and resume them. Recommendation: (a); (b) is a design of its own. **Decided 21 November 2026: (a),** the warning. Same source as D1.
+- **D5 — the Runtime pin.** LM-1 changes the Runtime's generated client, and the Agent must pin the Runtime commit that has it. A pin change is the owner's to approve. Recommendation: approve it as its own commit once LM-1 has passed review. **Decided 21 November 2026: approved in advance,** as its own commit once LM-1 has passed review. Same source as D1.
 
 ## Source identities
 
