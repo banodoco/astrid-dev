@@ -4,13 +4,13 @@
 
 **Goal:** The fixes and the custom-element work made while editing a real clip and its tools land in Release 15: a project's own effects and components load in every editor and render the same in preview and in the final render, and a failure to load them never blocks the editor or the agent.
 
-**Status:** queued
+**Status:** active
 
 **Owner:** Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS)
 
 **Estimate:** About 2 engineering days (1 to 3): the inventory, the open Runtime question, and landing.
 
-**Waiting on:** a manager; the [handover](handover.md) has the first actions.
+**Waiting on:** the owner's ruling on review finding R1.1 (whether App #297's built-in camera and inset changes stay reverted), then review round 2 and the owner's go to land (PE-3).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
