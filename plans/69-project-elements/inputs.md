@@ -16,7 +16,7 @@
 
 **Review rounds:** One final review of at most 2 rounds (R), because the code exists and its own tests ran; no review stop.
 
-**Run start:** Pending — no run is authorized yet. Next: the owner hands the [brief](../../releases/15/briefs/plans-69-77.md) to a manager, who records the date and session here and in the `Owner` line. Authority for that run: open and merge PRs into `release/15/plan-69` after focused proof, dispatch workers, merge `release/15/main` into the plan branch; needs the owner: landing into `release/15/main`, anything into `release/14/*` or product `main`, publishing, live installs, the owner's timelines, paid spend.
+**Run start:** 21 November 2026 — Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS), route S. The owner asked for a Codex manager on 21 November 2026. The host checks in hourly. May open and merge PRs into `release/15/plan-69` after focused proof, dispatch workers, and merge `release/15/main` into the plan branch. Landing to `release/15/main`, changes to `release/14/*` or a product `main`, publication, live installs, the owner's timelines, and paid spend need the owner's go.
 
 ## Owner decisions
 

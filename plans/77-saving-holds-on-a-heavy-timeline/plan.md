@@ -6,7 +6,7 @@
 
 **Status:** queued
 
-**Owner:** Unassigned
+**Owner:** Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS)
 
 **Estimate:** About 4 engineering days (3 to 5): about 1.5 for the setup cards, about 0.5 to recover the lost work, and 2 for the first three loop rounds. Further rounds are extra.
 
