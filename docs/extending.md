@@ -74,3 +74,51 @@ The project field list is a contract shared by the plan, catalog, feed, and chec
 ## Add or edit a workstream
 
 Follow the single [workstream authoring contract](../skills/shared/workstreams.md). A shared, independently callable procedure lives at `skills/shared/workstreams/astrid-dev-<name>/SKILL.md` with a matching `name:`; a role-specific procedure lives as a `.md` file under that role's `workstreams/`. Both require the same five-field `## Workstream contract` and a one-line description. The common parser is in [`workstreams.py`](../scripts/workstreams.py), backed by reusable [Markdown structure checks](../scripts/document_structure.py). The always-on `workstream-structure` check validates both formats; role-specific and shared discovery lists are generated, not hand-maintained.
+
+
+## Compose existing delivery relationships
+
+Plan 72's [project-delivery reader](../scripts/project_delivery.py) assembles a
+**read-only** typed snapshot of canonical Markdown records. The authored records
+are still the sources of truth: aspirations in the subject pages, gap metadata,
+project headers, release briefs and *frozen* release issue lists. The
+[relationship types](../scripts/relationships.py) own only a small shared
+mechanism (record identity, typed endpoints, roles, provenance, deterministic
+traversal and structural refusals), not domain interpretation or a new registry.
+
+**To extend an existing delivery composition:**
+
+1. Find the owning reader first: [vision_subject.py](../scripts/vision_subject.py),
+   [gap_relationships.py](../scripts/gap_relationships.py),
+   [project_contract.py](../scripts/project_contract.py) or
+   [records.py](../scripts/records.py). Do not duplicate its parsing rules.
+2. Define a typed link only when both ends have canonical stable identities,
+   a source declaration and a meaningful, provable direction. The relationship
+   module's kind/endpoint rules are deliberately small.
+3. Add the source adapter to [project_delivery.py](../scripts/project_delivery.py)
+   or the existing appropriate reader, with positive, missing, contradictory
+   and duplicate fixtures in [test_project_delivery.py](../scripts/test_project_delivery.py).
+4. Prove existing public feeds and generated pages retain their shapes and
+   classification. New generated views belong in [views.py](../scripts/views.py);
+   repository checks belong in [checks.py](../scripts/checks.py), not a new
+   pipeline-specific validation framework.
+
+For example, a `project:53` **addresses** the `gap:CA-003` it names in its own
+plan, and a release **includes** that project only if the release brief
+lists it. A merely labeled GitHub issue or a non-frozen issue listing does
+**not** prove it shipped. A project's completion never closes its gap.
+
+Try the read-only queries on a qualified checkout:
+
+~~~sh
+python3 scripts/project_delivery.py check
+python3 scripts/project_delivery.py goal principle:open-by-design/open-decisions-and-working-knowledge
+python3 scripts/project_delivery.py issue 123
+~~~
+
+The latter query returns release membership only for a frozen release issue
+ledger. Empty output means *no supported recorded relationship*, not proof
+that the issue was irrelevant or unfixed. No GitHub API access is needed or
+performed. A second pipeline, scheduler, generic DSL, approvals system or
+graph database is explicitly **not** part of this layer. This reader's
+domain scope must be reviewed when the underlying authoring contract changes.
