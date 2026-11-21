@@ -69,6 +69,14 @@ In the [tasks template](../../../../templates/project/tasks.md), every task has 
 - **Dependencies,** only where one task needs another's result, or both change the same function, class or contract. Sharing a file is not a dependency: tasks that change different functions in one file run in parallel, with a merge order. The same applies across other active projects. If a shared surface needs one model first, consult the advisor.
 - **The critical path:** state it in `tasks.md`, and keep it as short as the work allows. Chain tasks only where the rule above requires it.
 - **Before implementation:** its actual base and dependency revisions, exact focused checks and authority.
+- **A deliberate base.** The default base is the release branch, `release/<NN>/main`. Question it before you accept it.
+  - **Find overlapping plans.** Check every other active plan in the same release whose branch hasn't landed: run `git merge-tree --write-tree --name-only release/<NN>/main release/<NN>/plan-<PP>` and compare what it touches with this plan's files. A plan overlaps when it changes the same functions, classes or contracts, or the producer pins (VibeComfy and Runtime pins, locks and recipes).
+  - **Choose a base for each overlapping plan,** record the choice in `inputs.md` with its reason, and add the plan to **Waiting on**:
+    - **Wait** for it to land first.
+    - **Stack:** cut this plan from its plan branch and land after it.
+    - **Build on the release branch** only if the overlap is disjoint, or the other plan's change is one this plan should replace.
+
+    Deferring an overlapping plan's items doesn't make the plans independent. Their contracts still meet when they merge.
 - **Tests only at load-bearing moments,** per the [run contract's table](../../run-contract.md#when-a-test-run-is-load-bearing).
 - **A test inventory and focused proofs.** `tasks.md` names the existing tests the plan affects (its test inventory) and, for each task, the exact test files that prove it. The manager's local baseline runs only these.
 - **A contract card lists what it makes untrue.** A card that changes a contract, a check's trigger or a message names every existing pinned test, fixture and oracle line the change invalidates, and says how each may change. A card whose proof is a `grep` or a list of pinned tests says "re-check against the code at dispatch", because an earlier card may have moved what it names.
