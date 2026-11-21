@@ -19,9 +19,34 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 
 `.otto/` is gitignored, so create the run's `run.yaml` on the new machine from [`skills/shared/templates/run.yaml`](../../skills/shared/templates/run.yaml), under `plans/77-saving-holds-on-a-heavy-timeline/.otto/runs/<run-id>/`.
 
-- **Bindings:** bind `N`, `X`, the advisor and the reviewer from the owner's own delegation table (in their global agent instructions: normal, hard and sense-check tiers on Codex). If that table is not on the machine, ask the owner. Do not guess model IDs.
-- **If Codex is unavailable** (on the first machine its usage limit was exhausted until 20 November 00:00), run the same routes on the Claude families in the [run contract's routing table](../../skills/shared/run-contract.md#routing-and-bindings), record `--override`, and carry on. Do not wait.
-- The advisor is a role, not route `S`: it gives the strategy each round; the reviewer runs the final review.
+**Bindings.** These follow the [run contract's routing table](../../skills/shared/run-contract.md#routing-and-bindings) (`N` Luna, `X` Terra, `S` Sol, `T` Astra; reviews, plan judgment and advice on Astra) with the newest IDs a ChatGPT-login Codex accepted on 21 November 2026, each answering a one-line `codex exec` with that effort. Fill them in as below; if the owner gives other bindings, theirs win. Before dispatch, re-check each with `codex exec -m <id> -c model_reasoning_effort='"<effort>"' --skip-git-repo-check -s read-only "Reply with just OK." < /dev/null`, and set `availability: verified` only for those that answer. Refused on that login: `gpt-6.2-luna`, `gpt-6.1-luna`, `gpt-6.2-terra`, `gpt-6-terra`, `gpt-6.1-astra`.
+
+```yaml
+models:
+  normal:              {class: Luna/Haiku-class,      model_id: gpt-6-luna,    reasoning_effort: medium}
+  very_hard:           {class: Terra/Sonnet-class,    model_id: gpt-6.1-terra, reasoning_effort: high}
+  super_hard:          {class: Sol/Opus-class,        model_id: gpt-6.2-sol,   reasoning_effort: high}
+  taste:               {class: Astra/Opus-class,      model_id: gpt-6.2-astra, reasoning_effort: medium}
+  plan_judgment:       {class: Astra/Opus/Fable-class, model_id: gpt-6.2-astra, reasoning_effort: high}
+  advisor:             {class: Astra/Opus/Fable-class, model_id: gpt-6.2-astra, reasoning_effort: high}
+  completion_reviewer: {class: Astra/Opus/Fable-class, model_id: gpt-6.2-astra, reasoning_effort: high}
+```
+
+**If Codex is unavailable** (on the first machine its usage limit was exhausted until 20 November 00:00), run the same routes on the Claude families in the routing table (`N` Haiku, `X` Sonnet, `S` Opus; judgment on Opus or Fable, newest of each), record `--override`, and carry on. Do not wait.
+
+### Who runs what
+
+| Work | Runs on | Notes |
+| --- | --- | --- |
+| The coordinator (this plan's manager) | the session the plan is handed to | Keeps every judgment: picks fixes, checks each result against its diff and proof, writes `rounds.md`, merges into the plan branches. Never delegates a decision down. Best on a high-judgment model. |
+| SL-0 fixture, SL-1 stack, SL-3a and SL-3b recovery | `N` | One worktree each, background `codex exec -s workspace-write` (command in the [workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#roles)). |
+| SL-2 harness, SL-3c validation trim | `X` | Writes its `N` split first and runs the helpers in parallel, then merges their work ([tasks](tasks.md)). |
+| A round's fix | `N` by default; `X` when the cause is coupled or unclear | The coordinator tags it when picking. |
+| The strategist, once per round | `advisor`, read-only | Gets the round tables, not the coordinator's conclusion; asked what to remove first. Evidence, not a verdict. |
+| R, the final review | `completion_reviewer` | Up to five rounds after the loop stops. |
+| Fact-finding for anyone (status, logs, diffs) | `N` | Never gives a verdict. |
+
+**Moving up a tier** follows the contract's [cheapest model first](../../skills/shared/run-contract.md#cheapest-model-first): move `N` to `X` after two misses or 20 minutes without progress, or when the work is wrong in a way a better brief would not fix, and `X` to `S` on the same test; pass the previous attempt's diff, output and best guess up; drop back to `N` once the cause is known. A worker stops after three attempts or 45 minutes on one failure and hands back what it has.
 
 ## How to work
 
