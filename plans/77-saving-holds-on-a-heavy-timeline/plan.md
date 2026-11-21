@@ -4,13 +4,13 @@
 
 **Goal:** On an asset-heavy timeline, every ordinary edit saves in about two seconds, alone, twice back to back, in bursts and as repeated drags, and any refusal is a real clash that the person can retry or discard.
 
-**Status:** queued
+**Status:** active
 
 **Owner:** Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS)
 
 **Estimate:** About 4 engineering days (3 to 5): about 1.5 for the setup cards, about 0.5 to recover the lost work, and 2 for the first three loop rounds. Further rounds are extra.
 
-**Waiting on:** [Plan 69](../69-project-elements/plan.md), which runs first by the same manager; a machine with 25 GB free.
+**Waiting on:** the Plan 77 Runtime checkpoint repair and regenerated pins, then a practical public seed for the heavy fixture. Qualify the fixture and run Round 1 on the current plan branches.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

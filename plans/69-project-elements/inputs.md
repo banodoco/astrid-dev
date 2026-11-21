@@ -16,13 +16,17 @@
 
 **Review rounds:** One final review of at most 2 rounds (R), because the code exists and its own tests ran; no review stop.
 
-**Run start:** 21 November 2026 — Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS), route S. The owner asked for a Codex manager on 21 November 2026. The host checks in hourly. May open and merge PRs into `release/15/plan-69` after focused proof, dispatch workers, and merge `release/15/main` into the plan branch. Landing to `release/15/main`, changes to `release/14/*` or a product `main`, publication, live installs, the owner's timelines, and paid spend need the owner's go.
+**Run start:** 21 November 2026 — Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS), route S. The owner asked for a Codex manager on 21 November 2026. The host checks in hourly. May open and merge PRs into `release/15/plan-69` after focused proof, dispatch workers, and merge `release/15/main` into the plan branch. The owner gave a standing go for PE-3 to the hosting session on 21 November 2026, subject to D7. Changes to `release/14/*` or a product `main`, publication, live installs, the owner's timelines, and paid spend remain outside this run.
 
 ## Owner decisions
 
 - **D1 Release.** Decided, 21 November 2026: Release 15, with its branch `release/15/plan-69` (the owner's choice in the Release 15 setup session).
 - **D2 Scope.** Decided, 21 November 2026: accepted as written ([decision](https://github.com/banodoco/astrid-dev/issues/1224#issuecomment-7067275617)).
 - **D3 Order.** Decided, 21 November 2026: this plan first, then Plan 77, run back to back by one manager.
+- **D4 Vendor restore.** Decided on 21 November 2026, given to the hosting session. Restore App #297's five vendored `am-footage` and `am-discord` files and their provenance entries to `release/15/main` bytes. Check vendor sources and the focused preview behavior.
+- **D5 Top-level animation render.** Decided on 21 November 2026, given to the hosting session. Complete Plan 69 for effects and components. The Agent will explicitly refuse an admitted top-level animation before managed render and preserve existing reference validation. Track parity and the `@banodoco/timeline-composition` change and repin separately. [Parity issue #1257](https://github.com/banodoco/astrid-dev/issues/1257)
+- **D6 Optional motion pack.** Decided on 21 November 2026, given to the hosting session. Rendering an `astrid_motion` effect requires the pack installation. For a known uninstalled effect, name the pack to install and retain refusal for unregistered effects.
+- **D7 Standing PE-3 go.** Decided on 21 November 2026, given to the hosting session. Land Runtime, then Agent repinned to the landed Runtime, then App repinned to both, after R2 passes on the exact integrated tuple and full hosted CI on each combined plan head shows no failing ID absent from `release/15/main`. Dispatch the full workflow only while the repository has no queued or running `release/14/*` runs. Each landing PR names Plan 69, records the inherited RunPod digest mismatch and larger-commit WAL refusal, links the narrowed animation render scope, and states the optional pack requirement. If a condition fails, hold the landing and report the reason to the host.
 
 ## Source identities
 
@@ -42,6 +46,32 @@ What the merge changed, and what PE-1 should check first:
 - **App:** the preview keeps both Release 15's `getCurrentFrame` and this plan's removal of the element-readiness gate.
 - **Agent:** three esbuild-discovery tests in `tests/core/test_project_packs.py` fail on `release/14/plan-69` itself (`KeyError: 'ASTRID_REMOTION_PROJECT_DIR'`), and element admission needs the renderer's pinned Node v20.19.4 (`ASTRID_NODE_EXECUTABLE`).
 - Every focused test failing on these heads also fails on `release/15/main` or on `release/14/plan-69`; none is new. Destination for every task: the same repository's `release/15/plan-69`.
+
+## PE-1 inventory (21 November 2026)
+
+Verified on App `5866b23bb`, Agent `58c749cab` and Runtime `1046f4074`, with the scoped selections in [tasks](tasks.md).
+
+- **Admission.** Agent's `astrid/core/element/project_packs.py` compiles with the renderer's pinned Node and esbuild and binds the compiled result into the snapshot. `test_project_pack_snapshots.py` passed 48 tests, including compiled module and legacy readmission. All three compiler-discovery cases passed with `ASTRID_REMOTION_PROJECT_DIR` pointing at the checkout's renderer and Node 20.19.4 selected.
+- **Serving.** Runtime's project elements routes in `runtime_protocol/server.py` and `service.py` list current admissions from project documents and serve verified bundle bytes within the selected project. All 33 `test_runtime_project_elements_http.py` cases passed, including list without CAS reads, cross-project refusal and closure verification.
+- **Loading.** App's `admittedElementLoader.ts` and `admitted-elements.ts` check project ownership and digest, fence stale selections and preserve the editor when list or import fails. `admittedElementLoader.test.ts`, `admitted-elements.test.ts` and the applicable Remotion preview and placeholder cases passed. Local browser-backed tests could not start the Playwright revision selected by App. CI and the integrated journey supply browser evidence.
+- **One compiler.** `test_render_stages_the_admitted_compiled_module_as_the_component` passed in Agent. The App loader consumes the digest-pinned bundle that Runtime serves. Preview to final-render visual parity is still open on the integrated stack.
+- **Editing verbs.** Agent's `timeline_elements.py` places the exact admitted element reference and `_clip_scalar_commands.py` rejects unbound clips. The named element placement and selected schema tests passed.
+- **Speed and validation.** The named Agent timing and boundary tests passed, including scoped validation, untouched-baseline handling and the Runtime HTTP timeout. Runtime retains Plan 59's live identity cache. The named history tests cover warm reuse and changed-object rejection, and PE-2 supplies the real pinned-reader check. These checks cover correctness. They supply no live editor latency claim.
+
+The Agent's two CLI parity failures occurred on both comparison heads. App's named failure IDs appeared on the Release 15 base or the Plan 69 donor, and the two extra admitted-loader type diagnostics also appeared on the donor. Runtime's original scoped comparison found 23 pre-existing failed or errored IDs, including fixture setup errors from the tracked Agent pin. The inventory identifies one outstanding integrated journey in [PE-1a](tasks.md).
+
+## Installed qualification (21 November 2026)
+
+- Initial combined App `e576c7fe`, Agent `efccee92`, Runtime `162500fe` served admitted digests and rendered the synthetic effect at 1920 × 1080. The center RGB matched its preview within one channel value. A fresh browser with the list returning HTTP 503 displayed the missing-element reason, and a normal track edit saved and survived a fresh reopen.
+- On App `b0d4d83a`, Agent `134c6dd0`, Runtime `95920f84`, the SDK placed a project effect on installed `animated-media-transform`, with a durable public receipt. The editor fetched two compiled bundles with HTTP 200 and displayed the expected project effect and animation colors. The managed renderer refused the top-level selected animation at `$.clips[1].clipType`. Render parity for the animation remains open.
+- The ordinary installed launcher reported `am-discord` as unregistered in its reusable visual element catalog. The App vendor’s `am-discord` descriptor keeps the same ID, kind and owner between the Release 15 base and the deliberate vendor revert. Its descriptor and two implementation file hashes differ. The am-discord refusal remains separate evidence from the successful installed-effect control.
+- A fresh profile in the real App used the locally mocked ACP boundary. When two exact element list calls returned HTTP 503 the composer sent a synthetic project-scoped prompt and displayed the canned reply. The browser recorded zero external-network attempts. Independent App tests also cover prompt dispatch during both pending and immediately failed list calls.
+
+- On the current App review candidate `fece2c96` with Agent `134c6dd0` and Runtime `95920f84`, a registered-effect-only preview and managed render matched within one RGB value per channel. A separate normal track rename with the element list returning HTTP 503 saved one full-v2 commit step, advanced the public version once and reopened at that exact head with the renamed track and missing-element reason.
+
+## Inherited Agent model-lock failure (21 November 2026)
+
+Agent Release 15 base `aac1ceb6` and Plan 69 `134c6dd0` contain the same RunPod model lock and recipe pin. The actual hash of `astrid/packs/runpod/models.lock.json` is `e35d5189557b8fe09b54a218b69666a74c678182ea31344245726581130595ff`. The Linux cu130 recipe expects `40f37e271863e67d02fd6bcd6badb00a474eb6ec051ead7e8edf04281b2ef72a`. The release lead reported 35 failures out of 50 in the untouched base’s `tests/packs/runpod/test_h3_release.py`. The manager compared the exact source hashes on both heads. Repair belongs on the release base. Recheck after bringing the current release base into Plan 69 for PE-3.
 
 ## References
 

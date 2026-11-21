@@ -4,13 +4,13 @@
 
 **Goal:** The fixes and the custom-element work made while editing a real clip and its tools land in Release 15: a project's own effects and components load in every editor and render the same in preview and in the final render, and a failure to load them never blocks the editor or the agent.
 
-**Status:** queued
+**Status:** active
 
 **Owner:** Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS)
 
 **Estimate:** About 2 engineering days (1 to 3): the inventory, the open Runtime question, and landing.
 
-**Waiting on:** a manager; the [handover](handover.md) has the first actions.
+**Waiting on:** exact combined full CI comparison and R2. The approved vendor restore and render refusals have landed on the plan branches. The standing landing approval is subject to the remaining gates. [D4–D7](inputs.md#owner-decisions)
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
