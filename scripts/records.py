@@ -413,6 +413,9 @@ def release_brief(text: str, *, strict: bool = True) -> dict:
             else:
                 invalid_lines.append(line)
     errors = []
+    release_numbers = fields.get("Release", [])
+    if len(release_numbers) > 1:
+        errors.append("Release duplicated; keep exactly one **Release:** line")
     kinds = fields.get("Kind", [])
     if len(kinds) > 1:
         errors.append("Kind duplicated; keep one **Kind:** line")

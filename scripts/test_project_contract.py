@@ -9,6 +9,25 @@ class ProjectContractTests(unittest.TestCase):
         self.assertEqual(plan_gap_ids(text), ["F-003", "F-002"])
         self.assertEqual(plan_gap_ids("**Vision role:** Foundational enabler — documentation\n"), [])
 
+    def test_only_explicit_enabler_roles_are_gapless(self):
+        for role in (
+            "Foundational enabler",
+            "Foundational enabler — documentation",
+            "Communication enabler",
+            "Communication enabler — explains the vision",
+        ):
+            with self.subTest(role=role):
+                self.assertEqual(plan_gap_ids("**Vision role:** " + role + "\n"), [])
+        for role in (
+            "Unresolved; ask later",
+            "Foundational enablerish — not a role",
+            "Communication enablerish — not a role",
+            "Foundational enabler — ",
+        ):
+            with self.subTest(role=role):
+                with self.assertRaisesRegex(ValueError, "unsupported Vision role"):
+                    plan_gap_ids("**Vision role:** " + role + "\n")
+
     def test_rejects_duplicates_and_ambiguity(self):
         gap = "**Vision gaps:** [Execution](../../vision/gaps/F-003-creative-execution.md)\n"
         for text in ["# Missing", gap + gap,
