@@ -16,13 +16,17 @@
 
 **Review rounds:** One final review of at most 2 rounds (R), because the code exists and its own tests ran; no review stop.
 
-**Run start:** 21 November 2026 — Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS), route S. The owner asked for a Codex manager on 21 November 2026. The host checks in hourly. May open and merge PRs into `release/15/plan-69` after focused proof, dispatch workers, and merge `release/15/main` into the plan branch. Landing to `release/15/main`, changes to `release/14/*` or a product `main`, publication, live installs, the owner's timelines, and paid spend need the owner's go.
+**Run start:** 21 November 2026 — Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS), route S. The owner asked for a Codex manager on 21 November 2026. The host checks in hourly. May open and merge PRs into `release/15/plan-69` after focused proof, dispatch workers, and merge `release/15/main` into the plan branch. The owner gave a standing go for PE-3 to the hosting session on 21 November 2026, subject to D7. Changes to `release/14/*` or a product `main`, publication, live installs, the owner's timelines, and paid spend remain outside this run.
 
 ## Owner decisions
 
 - **D1 Release.** Decided, 21 November 2026: Release 15, with its branch `release/15/plan-69` (the owner's choice in the Release 15 setup session).
 - **D2 Scope.** Decided, 21 November 2026: accepted as written ([decision](https://github.com/banodoco/astrid-dev/issues/1224#issuecomment-7067275617)).
 - **D3 Order.** Decided, 21 November 2026: this plan first, then Plan 77, run back to back by one manager.
+- **D4 Vendor restore.** Decided on 21 November 2026, given to the hosting session. Restore App #297's five vendored `am-footage` and `am-discord` files and their provenance entries to `release/15/main` bytes. Check vendor sources and the focused preview behavior.
+- **D5 Top-level animation render.** Decided on 21 November 2026, given to the hosting session. Complete Plan 69 for effects and components. The Agent will explicitly refuse an admitted top-level animation before managed render and preserve existing reference validation. Track parity and the `@banodoco/timeline-composition` change and repin separately. [Parity issue #1257](https://github.com/banodoco/astrid-dev/issues/1257)
+- **D6 Optional motion pack.** Decided on 21 November 2026, given to the hosting session. Rendering an `astrid_motion` effect requires the pack installation. For a known uninstalled effect, name the pack to install and retain refusal for unregistered effects.
+- **D7 Standing PE-3 go.** Decided on 21 November 2026, given to the hosting session. Land Runtime, then Agent repinned to the landed Runtime, then App repinned to both, after R2 passes on the exact integrated tuple and full hosted CI on each combined plan head shows no failing ID absent from `release/15/main`. Dispatch the full workflow only while the repository has no queued or running `release/14/*` runs. Each landing PR names Plan 69, records the inherited RunPod digest mismatch and larger-commit WAL refusal, links the narrowed animation render scope, and states the optional pack requirement. If a condition fails, hold the landing and report the reason to the host.
 
 ## Source identities
 
