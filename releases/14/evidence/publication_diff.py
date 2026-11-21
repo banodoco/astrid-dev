@@ -275,6 +275,12 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
                 else:
                     p0 = playwright.get(f"baseline/{workflow}/{old_name}")
                     p1 = playwright.get(f"candidate/{workflow}/{to_name}")
+                    # R13 App E2E and Lanes dot reporters do NOT enumerate passing IDs.
+                    # A partially visible stdout list must never count as full coverage.
+                    needs_native = workflow == "E2E" or (workflow == "Lanes" and ("journey" in old_name or "checkout" in old_name))
+                    if needs_native and not (p0 and p1):
+                        problems.append(f"{product}/{workflow}/{old_name}: complete native Playwright JSON required on both sides")
+                        continue
                     if p0 or p1:
                         if not p0 or not p1:
                             problems.append(f"{product}/{workflow}/{old_name}: Playwright JSON missing on one side")
