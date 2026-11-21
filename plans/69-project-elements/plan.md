@@ -10,7 +10,7 @@
 
 **Estimate:** About 2 engineering days (1 to 3): the inventory, the open Runtime question, and landing.
 
-**Waiting on:** the owner's ruling on review finding R1.1 (whether App #297's built-in camera and inset changes stay reverted), then review round 2 and the owner's go to land (PE-3).
+**Waiting on:** the owner’s decisions on the deliberate built-in revert, admitted-animation render scope and optional motion pack on a bare install. Then review round 2 and the owner’s go to land.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
