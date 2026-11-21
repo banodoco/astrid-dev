@@ -15,32 +15,46 @@ from records import markdown_heading_anchors
 OUTPUT = Path(".generated/skills")
 MARKER = ".astrid-dev-generated"
 REPO_LINK = "../../../"
-_LINK = re.compile(r"(!?\[[^\]\n]*\])\(([^)\n]+)\)")
+_LINK = re.compile(r"(!?\[[^\]\n]*\])\(((?:\\[^\n]|<[^>\n]*>|[^)\\\n])+?)\)")
 _SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.I)
 _REFERENCE_DEFINITION = re.compile(r"^([ ]{0,3})\[([^\]\n]+)\]:[ \t]*(.*)$")
 _REFERENCE_USE = re.compile(r"(?<!\\)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
 _REF_TOKEN = re.compile(r"^([ \t]*)(<[^>\n]+>|[^\s\n]+)")
-_CODE_SPAN = re.compile(r"(?<!\\)(\x60+)(?!\x60)(.*?)(?<!\x60)\1(?!\x60)", re.S)
+_CODE_SPAN = re.compile(r"(?<!\\)(\x60+)(?!\x60)((?:(?!\n[ \t]*\n).)*?)(?<!\x60)\1(?!\x60)", re.S)
 _MARKER_SOURCE = re.compile(r"agent/(?:[^/\\\r\n]+/)*([a-z0-9]+(?:-[a-z0-9]+)*)\.md\n\Z")
 
 
 def _active_lines(lines: list[str]) -> list[bool]:
-    """Ignore real Markdown fenced examples, whether backtick or tilde."""
+    """Mask fenced code in ordinary, blockquote and simple list containers."""
     result: list[bool] = []
     fence: str | None = None
     size = 0
+    quote_depth = 0
+    list_indent = 0
     for line in lines:
-        plain = re.sub(r"^(?:[ ]{0,3}>[ ]?)+", "", line.rstrip("\r\n"))
+        plain = line.rstrip("\r\n")
+        quotes = re.match(r"^(?:[ ]{0,3}>[ ]?)*", plain).group(0)
+        depth = quotes.count(">")
+        rest = plain[len(quotes):]
         if fence is not None:
-            result.append(False)
-            if re.fullmatch(
-                r"[ ]{0,3}" + re.escape(fence) + "{" + str(size) + r",}[ \t]*", plain
-            ):
-                fence, size = None, 0
-            continue
-        opening = re.match(r"^[ ]{0,3}(\x60{3,}|~{3,})", plain)
+            # A container can end before its unclosed fence; following prose
+            # must still be validated, not swallowed by the example.
+            indent = len(rest) - len(rest.lstrip(" "))
+            if depth < quote_depth or (list_indent and rest.strip() and indent < list_indent):
+                fence, size, list_indent = None, 0, 0
+            else:
+                inner = rest[list_indent:] if list_indent else rest
+                result.append(False)
+                if re.fullmatch(r"[ ]{0,3}" + re.escape(fence) + "{" + str(size) + r",}[ \t]*", inner):
+                    fence, size, list_indent = None, 0, 0
+                continue
+        item = re.match(r"^([ ]{0,3}(?:[-+*]|\d{1,9}[.)])[ \t]+)", rest)
+        prefix = len(item.group(1)) if item else 0
+        inner = rest[prefix:]
+        opening = re.match(r"^[ ]{0,3}(\x60{3,}|~{3,})", inner)
         if opening:
             fence, size = opening.group(1)[0], len(opening.group(1))
+            quote_depth, list_indent = depth, prefix
             result.append(False)
         else:
             result.append(True)
@@ -78,6 +92,8 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
     def rewrite_address(address: str) -> str:
         if not address:
             return address
+        # CommonMark backslash escapes apply to ASCII punctuation in destinations.
+        address = re.sub(r"\\([!\"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])", r"\1", address)
         if address.startswith("#"):
             fragment = unquote(address[1:])
             if fragment and fragment not in _real_anchors(source.body):
@@ -176,7 +192,7 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
             actual = _LINK.fullmatch(line[match.start():match.end()])
             assert actual is not None
             label, raw = actual.groups()
-            quoted = re.match(r'^(\S+)(\s+"[^"\n]*")?$', raw)
+            quoted = re.match(r'^(<[^>\n]*>|\S+)(\s+"[^"\n]*")?$', raw)
             if quoted is None:
                 raise ValueError(f"{source.relative}: unsupported Markdown link {raw!r}")
             address, suffix = quoted.group(1), quoted.group(2) or ""

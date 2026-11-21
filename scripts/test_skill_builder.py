@@ -575,5 +575,41 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(check_packages(self.root), [])
 
 
+    def test_escaped_and_angle_destinations(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        (self.root / "docs" / "note(1).md").write_text("# Note\n")
+        (self.root / "docs" / "with space.md").write_text("# Note\n")
+        source.write_text(original + r"\n[escaped](../docs/note\(1\).md)\n[angle](<../docs/with space.md>)\n[ref][r]\n\n[r]: <../docs/with space.md>\n".replace(r"\n", "\n"))
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("[escaped](repo/docs/note%281%29.md)", text)
+        self.assertIn("[angle](<repo/docs/with%20space.md>)", text)
+        self.assertIn("[r]: <repo/docs/with%20space.md>", text)
+        source.write_text(original + r"\n[bad](../docs/missing\(1\).md)\n".replace(r"\n", "\n"))
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+
+    def test_list_and_unclosed_quote_fences_do_not_hide_adjacent_links(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        body = "\n- ~~~\n  [example](missing.md)\n  ~~~\n\n> ~~~\n> [quoted](missing.md)\n\n[real](../docs/notes.md)\n"
+        source.write_text(original + body)
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("[example](missing.md)", text)
+        self.assertIn("[quoted](missing.md)", text)
+        self.assertIn("[real](repo/docs/notes.md)", text)
+        source.write_text(original + body + "\n[bad](missing.md)\n")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+
+    def test_unmatched_code_delimiters_cannot_hide_link_across_paragraphs(self):
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\nUnclosed ` example.\n\n[bad](missing.md) and ` later.\n")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+
+
 if __name__ == "__main__":
     unittest.main()
