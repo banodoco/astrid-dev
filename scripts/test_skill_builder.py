@@ -710,5 +710,49 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(check_packages(self.root), [])
 
 
+    def test_quoted_reference_definition_rewrites_and_refuses_missing(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        source.write_text(original + "\n> [read][r]\n>\n> [r]: ../docs/notes.md\n")
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("> [r]: repo/docs/notes.md", text)
+        source.write_text(original + "\n> [read][r]\n>\n> [r]: missing.md\n")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+
+    def test_balanced_parentheses_in_destination(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        (self.root / "docs" / "note(1).md").write_text("# Note\n")
+        source.write_text(original + "\n[read](../docs/note(1).md)\n")
+        build_packages(self.root)
+        self.assertIn("[read](repo/docs/note%281%29.md)", (self.package("astrid-dev-start") / "SKILL.md").read_text())
+        source.write_text(original + "\n[bad](../../outside(1).md)\n")
+        with self.assertRaisesRegex(ValueError, "escapes checkout"):
+            build_packages(self.root)
+
+
+
+    def test_nested_container_matrix_and_escaped_reference(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        (self.root / "docs" / "note(1).md").write_text("# Note\n")
+        body = ("> - ~~~\n>   [literal](missing.md)\n>   ~~~\n\n"
+                "- item\n  - ~~~\n    [literal](missing.md)\n    ~~~\n\n"
+                "``[literal]\nmore`` and [real][r]\n\n"
+                "[r]: ../docs/note\\(1\\).md\n")
+        source.write_text(original + "\n" + body)
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("[literal](missing.md)", text)
+        self.assertIn("[r]: repo/docs/note%281%29.md", text)
+        self.assertIn("``[literal]\nmore``", text)
+        for destination in (r"..\/../outside.md", "%2e%2e/%2e%2e/outside.md"):
+            source.write_text(original + "\n[bad](" + destination + ")\n")
+            with self.assertRaisesRegex(ValueError, "escapes checkout"):
+                build_packages(self.root)
+
+
 if __name__ == "__main__":
     unittest.main()

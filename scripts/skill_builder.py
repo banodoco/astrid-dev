@@ -15,7 +15,7 @@ from records import markdown_heading_anchors
 OUTPUT = Path(".generated/skills")
 MARKER = ".astrid-dev-generated"
 REPO_LINK = "../../../"
-_LINK = re.compile(r"(!?\[[^\]\n]*\])\(((?:\\[^\n]|<[^>\n]*>|[^)\\\n])+?)\)")
+_LINK = re.compile(r"(!?\[[^\]\n]*\])\(((?:\\[^\n]|<[^>\n]*>|\((?:\\[^\n]|[^()\\\n])*\)|[^()\\\n])+?)\)")
 _SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.I)
 _REFERENCE_DEFINITION = re.compile(r"^([ ]{0,3})\[([^\]\n]+)\]:[ \t]*(.*)$")
 _REFERENCE_USE = re.compile(r"(?<!\\)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
@@ -131,7 +131,8 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
     for index, line in enumerate(lines):
         if not active[index]:
             continue
-        definition = _REFERENCE_DEFINITION.match(line.rstrip("\r\n"))
+        quote_prefix = re.match(r"^(?:[ ]{0,3}>[ ]?)*", line).group(0)
+        definition = _REFERENCE_DEFINITION.match(line[len(quote_prefix):].rstrip("\r\n"))
         if definition is None:
             continue
         key = _ref_key(definition.group(2))
@@ -143,17 +144,21 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
             token = _REF_TOKEN.match(raw)
             if token is None:
                 raise ValueError(f"{source.relative}: unsupported reference [{key}]")
-            begin = definition.start(3) + token.start(2)
-            finish = definition.start(3) + token.end(2)
+            begin = len(quote_prefix) + definition.start(3) + token.start(2)
+            finish = len(quote_prefix) + definition.start(3) + token.end(2)
         else:
             destination_line = index + 1
             if (destination_line >= len(lines) or not active[destination_line]
                     or not lines[destination_line].strip()):
                 raise ValueError(f"{source.relative}: reference [{key}] has no destination")
-            token = _REF_TOKEN.match(lines[destination_line])
+            next_line = lines[destination_line]
+            next_prefix = re.match(r"^(?:[ ]{0,3}>[ ]?)*", next_line).group(0)
+            if next_prefix.count(">") != quote_prefix.count(">"):
+                raise ValueError(f"{source.relative}: reference [{key}] has no destination")
+            token = _REF_TOKEN.match(next_line[len(next_prefix):])
             if token is None:
                 raise ValueError(f"{source.relative}: reference [{key}] has no destination")
-            begin, finish = token.span(2)
+            begin, finish = (position + len(next_prefix) for position in token.span(2))
             definition_lines.add(destination_line)
         original = lines[destination_line][begin:finish]
         address = original[1:-1] if original.startswith("<") and original.endswith(">") else original
