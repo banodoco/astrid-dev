@@ -687,5 +687,28 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(check_packages(self.root), [])
 
 
+    def test_failed_rollback_retains_original_at_reported_path(self):
+        build_packages(self.root)
+        output = (self.root / ".generated" / "skills").resolve()
+        skill = output / "astrid-dev-start" / "SKILL.md"
+        before = skill.read_bytes()
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\nChanged.\n")
+        real_replace = os.replace
+        def fail_publish_and_restore(src, dst):
+            if Path(dst) == output:
+                raise OSError("publication or restore failed")
+            return real_replace(src, dst)
+        with patch("skill_builder.os.replace", side_effect=fail_publish_and_restore):
+            with self.assertRaisesRegex(RuntimeError, "original retained at") as caught:
+                build_packages(self.root)
+        backup = Path(str(caught.exception).split("original retained at ", 1)[1])
+        self.assertEqual((backup / "astrid-dev-start" / "SKILL.md").read_bytes(), before)
+        self.assertEqual(os.readlink(backup / "astrid-dev-start" / "repo"), "../../../")
+        os.replace(backup, output)
+        build_packages(self.root)
+        self.assertEqual(check_packages(self.root), [])
+
+
 if __name__ == "__main__":
     unittest.main()
