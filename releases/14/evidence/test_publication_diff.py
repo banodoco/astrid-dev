@@ -76,6 +76,27 @@ class TestPublicationDiff(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "no Playwright per-test records"):
                 mod.parse_playwright_json(f)
 
+    def test_e2e_dot_logs_with_no_ids_block_qualification(self):
+        with tempfile.TemporaryDirectory() as p:
+            a, b = Path(p) / "base.log", Path(p) / "candidate.log"
+            a.write_text("   555 passed\n   27 failed\n")
+            b.write_text("   552 passed\n   30 failed\n")
+            records = {"app": {"baseline": {"E2E": {"jobs": [{"id": 1, "name": "playwright-default", "conclusion": "failure", "log": str(a)}]}},
+                               "candidate": {"E2E": {"jobs": [{"id": 2, "name": "playwright-default", "conclusion": "failure", "log": str(b)}]}}}}
+            _, _, issues = mod.evaluate({}, records, Path(p), {}, {})
+            self.assertTrue(any("no comparable native test IDs" in x for x in issues))
+
+    def test_explained_pass_to_fail_remains_blocking(self):
+        with tempfile.TemporaryDirectory() as p:
+            a, b = Path(p) / "base.log", Path(p) / "candidate.log"
+            a.write_text("  ✓  1 tests/e2e/a.spec.ts:10:1 › save works (1s)\n")
+            b.write_text("  ✘  1 tests/e2e/a.spec.ts:15:1 › save works (1s)\n")
+            manifest = {"dispositions": {"app/Direct Journey/tests/e2e/a.spec.ts › save works": {"reason": "investigation", "source": "https://example.com/evidence"}}}
+            records = {"app": {"baseline": {"Direct Journey": {"jobs": [{"id": 1, "name": "direct-journey", "conclusion": "success", "log": str(a)}]}},
+                               "candidate": {"Direct Journey": {"jobs": [{"id": 2, "name": "direct-journey", "conclusion": "failure", "log": str(b)}]}}}}
+            _, _, issues = mod.evaluate(manifest, records, Path(p), {}, {})
+            self.assertTrue(any("BLOCKS publish" in x for x in issues))
+
     def test_frozen_sha_and_run_id_required_before_fetch(self):
         with self.assertRaisesRegex(ValueError, "frozen full SHA"):
             mod.collect_runs({"baseline": {"agent": {"sha": None}}}, Path("/tmp/unused"))
