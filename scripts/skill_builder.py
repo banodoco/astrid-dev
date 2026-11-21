@@ -6,7 +6,7 @@ import json
 import os
 import re
 import shutil
-from urllib.parse import unquote
+from urllib.parse import quote, unquote
 
 from agent_documents import AgentDocument, discover_documents
 from records import markdown_heading_anchors
@@ -36,7 +36,17 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
             }:
                 raise ValueError(f"{source.relative}: missing heading in {address}")
             return address
-        if address.startswith(("/", "//")) or _SCHEME.match(address):
+        # Generated skills are checkout-relative; machine-local destinations
+        # cannot be validated or used portably by an installed agent.
+        if address.startswith("/"):
+            raise ValueError(
+                f"{source.relative}: absolute filesystem link is not portable: {address}"
+            )
+        if address.lower().startswith("file:") or re.match(r"^[A-Za-z]:", address):
+            raise ValueError(
+                f"{source.relative}: file: or absolute filesystem link is not portable: {address}"
+            )
+        if _SCHEME.match(address):
             return address
         pathpart, sep, anchor = address.partition("#")
         pathpart, _, query = pathpart.partition("?")
@@ -50,7 +60,7 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
                 target.read_text(encoding="utf-8"))}
             if anchor not in anchors:
                 raise ValueError(f"{source.relative}: missing heading in {address}")
-        output = "repo/" + target.relative_to(root).as_posix()
+        output = "repo/" + quote(target.relative_to(root).as_posix(), safe="/-._~")
         if query:
             output += "?" + query
         if sep:
