@@ -109,6 +109,22 @@ class ReleaseBriefTests(unittest.TestCase):
         self.assertEqual(brief["plans"], [{"number": "19", "folder": "19-first-principles-documentation", "sentence": "documentation from purpose to finished work."}])
         self.assertEqual(release_brief(text.replace("**Kind:** minor\n", ""))["kind"], "patch")
 
+    def test_release_field_duplicated_is_refused_even_with_valid_first_value(self):
+        text = ("# Release 15 — Demo\n\n**Release:** 15\n**State:** Draft\n"
+                "## Highlight\nA substantive description of the work.\n\n"
+                "## Intent\nShow a valid brief.\n\n"
+                "## Approach\nKeep the existing rules.\n\n"
+                "## Included plans\nNone yet\n\n## Publication\nNot pinned.\n")
+        for second in ("15", "16"):
+            with self.subTest(second=second):
+                duplicate = text.replace("**Release:** 15\n",
+                                         "**Release:** 15\n**Release:** " + second + "\n")
+                with self.assertRaisesRegex(ValueError, "Release.*duplicat"):
+                    release_brief(duplicate)
+                raw = release_brief(duplicate, strict=False)
+                self.assertTrue(any("Release" in e and "duplicat" in e
+                                    for e in raw["errors"]), raw)
+
     def test_kind_rejects_duplicate_empty_and_invalid_without_consuming_next_line(self):
         for header in ("**Kind:** patch\n**Kind:** minor", "**Kind:**\n**State:** Draft", "**Kind:** giant"):
             with self.subTest(header=header):
