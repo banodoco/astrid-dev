@@ -58,21 +58,25 @@ def _active_lines(lines: list[str]) -> list[bool]:
             result.append(False)
         else:
             result.append(True)
-    # Recognize only unambiguous top-level indented blocks. An indented line
-    # cannot start such a block in a paragraph or an open list: in either
-    # location it can be a live link and must remain subject to validation.
+    # Recognize unambiguous top-level and quote-only indented blocks. An
+    # open list or paragraph can contain live indented links, so never mask
+    # ambiguous list content or an indented paragraph continuation.
     previous_blank = True
-    indented_code = False
+    previous_depth = 0
+    indented_depth: int | None = None
     list_indent: int | None = None
     for index, line in enumerate(lines):
         plain = line.rstrip("\r\n")
-        if not plain.strip():
-            previous_blank = True
-            continue
         quote = re.match(r"^(?:[ ]{0,3}>[ ]?)+", plain)
+        depth = quote.group(0).count(">") if quote else 0
         content = plain[len(quote.group(0)):] if quote else plain
+        if not content.strip():
+            previous_blank = True
+            previous_depth = depth
+            continue
         marker = re.match(r"^([ ]{0,3}(?:[-+*]|\d{1,9}[.)])[ \t]+)", content)
-        leading = len(content) - len(content.lstrip(" "))
+        expanded = content.expandtabs(4)
+        leading = len(expanded) - len(expanded.lstrip(" "))
         if marker:
             # Excess list padding may begin indented code within the item;
             # the minimal marker width is the safe boundary for live text.
@@ -80,14 +84,18 @@ def _active_lines(lines: list[str]) -> list[bool]:
             list_indent = min(list_indent, width) if list_indent is not None else width
         elif list_indent is not None and not quote and leading < list_indent:
             list_indent = None
-        eligible = (result[index] and not quote and list_indent is None
-                    and plain.startswith("    "))
-        if eligible and (indented_code or previous_blank):
+        # Tab stops after quote markers depend on their physical column. Leave
+        # quoted tabs live; top-level tabs can be measured directly.
+        indented = content.startswith("    ") if quote else expanded.startswith("    ")
+        eligible = result[index] and list_indent is None and indented
+        starts_block = previous_blank or depth > previous_depth
+        if eligible and (indented_depth == depth or starts_block):
             result[index] = False
-            indented_code = True
+            indented_depth = depth
         else:
-            indented_code = False
+            indented_depth = None
         previous_blank = False
+        previous_depth = depth
     return result
 
 
