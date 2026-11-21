@@ -133,6 +133,16 @@ class AgentDocumentTests(unittest.TestCase):
         self.write("roles/leader/run.md", STREAM)
         self.assertIn("has no definition", str(validate_documents(self.root)))
 
+    def test_parse_document_accepts_symlinked_checkout_root(self):
+        # macOS commonly spells its temporary root /var while resolve() uses /private/var.
+        # A deliberate local alias reproduces the differing spellings on Linux CI too.
+        document = self.write("roles/leader.md", ROLE)
+        checkout_alias = self.root / "checkout-alias"
+        checkout_alias.symlink_to(self.root, target_is_directory=True)
+        parsed = parse_document(checkout_alias, checkout_alias / "agent/roles/leader.md")
+        self.assertEqual(parsed.relative, Path("roles/leader.md"))
+        self.assertEqual(parsed.path, document.resolve())
+
     def test_reject_source_symlink(self):
         original = self.write("shared/workstreams/plan.md", STREAM)
         link = self.root / "agent/shared/workstreams/other.md"
