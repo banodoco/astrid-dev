@@ -69,11 +69,21 @@ Cut on 21 November 2026 from `release/14/int-59-64-65`, the Release 14 Lead's in
 | astrid-agent | `release/15/plan-77` | `03e2db9a1`, the integration head; its `runtime.lock.json` pins Runtime `8a18168a3` |
 | astrid-runtime | `release/15/plan-77` | `8a18168a3`, the integration head |
 
-**Why not `release/15/main`:** on 21 November it was last forwarded on 18 November, carried none of Plan 59 and was 35 commits behind `release/14/main` in the App. When Release 15's main is forwarded from Release 14, merge it into the plan branches.
+**Then built on Plan 69 (21 November 2026):** the owner asked for Plan 77 to sit on the project-element work ([Plan 69](../69-project-elements/plan.md)), which also carries speed fixes this plan needs (validation that judges only changed clips; Runtime object checks once per process). `release/15/plan-69` was merged into each `release/15/plan-77`, with pins regenerated (Agent pins Runtime, App pins both). Heads after that merge:
+
+| Repository | `release/15/plan-77` head | Pins |
+| --- | --- | --- |
+| astrid-app | `2a34ab0f9` | Agent `c00721de3`, Runtime `e43bfccc8` |
+| astrid-agent | `c00721de3` | Runtime `e43bfccc8` |
+| astrid-runtime | `e43bfccc8` | — |
+
+Every focused test that fails on these heads also fails on the cut or on `release/15/plan-69` (checked 21 November); the Runtime keeps Plan 59's verify-once CAS design over Plan 69's duplicate ([astrid-dev#1222](https://github.com/banodoco/astrid-dev/issues/1222)).
+
+**Why not `release/15/main`:** on 21 November it was last forwarded on 18 November, carried none of Plan 59 and was 35 commits behind `release/14/main` in the App. It now carries `release/14/main` (forwarded 21 November, [astrid-dev#1224](https://github.com/banodoco/astrid-dev/issues/1224)) and reaches the plan branches through Plan 69; when Release 14's integration lands in `release/14/main` and is forwarded again, merge `release/15/main` into the plan branches.
 
 **Runtime difference (checked 21 November):** the Runtime integration carries #62 ("keep verified history across unrelated writes") but not Plan 59's revert of it, #67, so the stack does not run what `release/14/plan-59` ran. That is the integration's choice at that SHA, still under review; record in round 1 which Runtime ran.
 
-**Old branches:** the 18 November branches (`release/14/plan-66` in all three repositories, and `release/15/plan-77` in the Runtime, from an intermediate rename) are superseded. Delete them once nothing reads them. The uncommitted crash work stays on `release/14/plan-66-wip/*` (and, in the Runtime, the same commits under `release/15/plan-77-wip/*`); each branch and its base is in the [handover](handover.md#where-everything-is). Destination for every fix: the same repository's `release/15/plan-77`.
+**Old branches:** the 18 November branches (`release/14/plan-66` in all three repositories, and `release/14/plan-77` in the Runtime, from an intermediate rename) are superseded. Delete them once nothing reads them. The uncommitted crash work stays on `release/14/plan-66-wip/*` (and, in the Runtime, the same commits under `release/15/plan-77-wip/*`); each branch and its base is in the [handover](handover.md#where-everything-is). Destination for every fix: the same repository's `release/15/plan-77`.
 
 ## References
 
