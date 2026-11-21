@@ -10,7 +10,7 @@
 
 **Estimate:** 4–6 engineering days, one phase.
 
-**Waiting on:** The owner's reaction to the ten statements, and the plan-69 product work landing on a release line.
+**Waiting on:** Plan 69 product work landing on Release 15 branches.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md).
 

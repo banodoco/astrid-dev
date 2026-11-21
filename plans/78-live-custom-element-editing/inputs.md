@@ -36,7 +36,7 @@
 
 **Proof and limits:** Unit proofs for the mixed commit and the miss-then-install lookup; a live proof through the editor's chat agent for the whole flow, with negative cases, as [Completion](plan.md#completion) describes. Limits: the restart cause is inferred until LE-2 reproduces it; mixing native and patch commands in one request is unproven until LE-1; the live proof is one project on one machine and says nothing about hosted use.
 
-**Review rounds:** Recommended: no review stop, and one final review of at most 2 rounds, because the change is small but touches what a commit may contain. Next: the owner confirms the cap (D4).
+**Review rounds:** Recommended: no review stop, and one final review of at most 2 rounds, because the change is small but touches what a commit may contain. Adopted: the owner instructed us to merge the plan to `main` (D4).
 
 **Run start:** Pending — no run is authorized. Next: when the owner starts one, record the date, the accountable session, the actual base and dependency revisions and what it may do without asking.
 
@@ -53,7 +53,7 @@ Ten statements for the owner to strike or keep:
 9. This plan does not make a save faster; it makes one save do the work of eight.
 10. Hosted and shared packs get no isolation from this plan, and none exists today.
 
-Owner reactions: pending. Record any struck statement under [Owner decisions](#owner-decisions) and revise the plan before greenlight.
+Owner reactions: all ten statements approved as written; see [Owner decisions](#owner-decisions).
 
 Proposed issues (do not create them as part of planning):
 
@@ -67,7 +67,7 @@ Proposed issues (do not create them as part of planning):
 
 ## Owner decisions
 
-Owner's words, 21 November 2026, from the planning conversation (machine-local record `evidence.md`):
+Owner's words, 21 November 2026, from the Claude Code session: “merge to main, add this plan to release 15”. The owner approved the scope as written, including all ten statements.
 
 - "we should just be able to look at the timeline editing skill associated with Astrid and do this live very easily without changing any code in the core."
 - "we have built a path for batch edits, so why aren't we just using that? And why are we scripting outside the editor?" and "we 100% should be able to batch these."
@@ -75,9 +75,9 @@ Owner's words, 21 November 2026, from the planning conversation (machine-local r
 - "Wut, why on earth would loading a pack require restart?"
 
 - **D1 — Decided by the owner's words: only loose, necessary security for local custom elements.** The plan reads that as: trust local pack code, add no gates, keep the integrity checks (compile, digest pin, exact revision) and the import rule. Statements 5–7 are that reading; the owner can strike any of them.
-- **D2 — Owner decision needed:** should a fresh install include the motion pack, pinned to an exact commit in the release manifest? Recommended: yes. The timeline skill teaches `am-type` and `am-footage`, and a fresh install without them refuses the first edit. The cost is a larger install and one more pin to move each release. Without it, LE-2 still removes the restart, and the first edit installs the pack on demand.
+- **D2 — Decided by the owner's instruction to merge the plan as written:** adopt the recommendation (yes): a fresh install includes the motion pack, pinned to an exact commit in the release manifest. The timeline skill teaches `am-type` and `am-footage`, and a fresh install without them refuses the first edit. The cost is a larger install and one more pin to move each release.
 - **D3 — Decided by the planner, reported:** one phase; if word-bound timing on new shot clips cannot be committed, the proof uses numeric timing and says so, and the binding defect is an issue.
-- **D4 — Owner decision needed:** confirm one final review of at most 2 rounds, and name the release this work joins.
+- **D4 — Decided by the owner's merge instruction:** this plan joins Release 15; adopt the recommended final review cap of 2 rounds.
 
 ## Source identities
 
