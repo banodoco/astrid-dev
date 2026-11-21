@@ -119,6 +119,22 @@ class TestPublicationDiff(unittest.TestCase):
             self.assertEqual({r["id"] for r in rows if r["job"] == "unit shard 2"}, {"tests/b.py::test_new", "tests/b.py::test_bad"})
             self.assertTrue(any("test_bad" in issue and "BLOCKS" in issue for issue in issues))
 
+    def test_progress_only_ids_are_compared(self):
+        with tempfile.TemporaryDirectory() as p:
+            a, b = Path(p) / "a", Path(p) / "b"
+            a.write_text("tests/x.py::test_vanished PASSED [ 50%]\nPASSED tests/x.py::test_common\n")
+            b.write_text("tests/x.py::test_added[param with space] PASSED [ 50%]\nPASSED tests/x.py::test_common\n")
+            records = {"agent": {"baseline": {"CI": {"jobs": [{"id": 1, "name": "unit shard 1", "conclusion": "success", "log": str(a)}]}}, "candidate": {"CI": {"jobs": [{"id": 2, "name": "unit shard 1", "conclusion": "success", "log": str(b)}]}}}}
+            rows, _, issues = mod.evaluate({}, records, Path(p), {})
+            by_id = {row["id"]: row for row in rows}
+            self.assertEqual(by_id["tests/x.py::test_vanished"]["candidate"], "MISSING")
+            self.assertTrue(any("test_vanished" in issue and "BLOCKS" in issue for issue in issues))
+            self.assertEqual(by_id["tests/x.py::test_added[param with space]"]["candidate"], "PASS")
+            self.assertEqual(by_id["tests/x.py::test_added[param with space]"]["r13"], "MISSING")
+
+    def test_pytest_summary_wins_over_progress_regardless_of_order(self):
+        self.assertEqual(mod.parse_pytest("FAILED tests/a.py::test_one - teardown\ntests/a.py::test_one PASSED [100%]\n"), {"tests/a.py::test_one": "FAIL"})
+
     def test_frozen_sha_and_run_id_required_before_fetch(self):
         with self.assertRaisesRegex(ValueError, "frozen full SHA"):
             mod.collect_runs({"baseline": {"agent": {"sha": None}}}, Path("/tmp/unused"))

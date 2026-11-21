@@ -28,6 +28,7 @@ SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 GH_TIME = re.compile(r"^\d{4}-\d\d-\d\dT\S+Z\s+")
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 PYTEST = re.compile(r"^(PASSED|FAILED|ERROR|XFAIL|XPASS|SKIPPED) (.+)$")
+PYTEST_PROGRESS = re.compile(r"^(.+::.+?)\s+(PASSED|FAILED|ERROR|XFAIL|XPASS|SKIPPED)\s+\[\s*\d+%\]$")
 PLAYWRIGHT = re.compile(r"^[✓✘×x-]\s*\d+\s+(?:\[[^]]+\]\s+)?(.+?\.(?:spec|test)\.[cm]?[jt]sx?):\d+:\d+\s+›\s+(.+?)(?:\s+\(\d+(?:\.\d+)?(?:ms|s|m)\))?$", re.U)
 REPO = {"agent": "astrid-agent", "app": "astrid-app"}
 REQUIRED = {"agent": ("CI", "Lanes"), "app": ("Tests", "Lanes", "Direct Journey", "E2E")}
@@ -57,19 +58,24 @@ def pytest_id(rest: str) -> str | None:
 
 
 def parse_pytest(log: str) -> dict[str, str]:
-    result = {}
+    progress, summary = {}, {}
+    states = {"PASSED": "PASS", "XFAIL": "XFAIL", "XPASS": "XPASS", "FAILED": "FAIL", "ERROR": "ERROR", "SKIPPED": "SKIP"}
     for raw in log.splitlines():
-        m = PYTEST.match(clean(raw))
-        if not m:
-            continue
-        node = pytest_id(m.group(2))
+        line = clean(raw)
+        m = PYTEST.match(line)
+        if m:
+            node, state, target = pytest_id(m.group(2)), states[m.group(1)], summary
+        else:
+            m = PYTEST_PROGRESS.match(line)
+            if not m:
+                continue
+            node, state, target = pytest_id(m.group(1)), states[m.group(2)], progress
         if not node:
             continue
-        state = {"PASSED": "PASS", "XFAIL": "XFAIL", "XPASS": "XPASS", "FAILED": "FAIL", "ERROR": "ERROR", "SKIPPED": "SKIP"}[m.group(1)]
-        if node in result and result[node] != state:
-            raise ValueError(f"conflicting pytest result for {node}: {result[node]} / {state}")
-        result[node] = state
-    return result
+        if node in target and target[node] != state:
+            raise ValueError(f"conflicting pytest result for {node}: {target[node]} / {state}")
+        target[node] = state
+    return {**progress, **summary}
 
 
 def parse_playwright(log: str) -> dict[str, str]:
