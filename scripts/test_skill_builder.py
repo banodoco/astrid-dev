@@ -164,6 +164,43 @@ class PackageTests(unittest.TestCase):
         self.assertTrue(self.package("astrid-dev-leader").exists())
         self.assertTrue(foreign.exists())
 
+    def test_fragment_only_links_must_point_to_an_existing_heading(self):
+        path = self.root / "agent" / "roles" / "leader.md"
+        original = "[rules](../shared/run-contract.md#rules)"
+        path.write_text(ROLE.replace(original, "[section](#missing-heading)"), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "missing heading"):
+            expected_packages(self.root)
+        path.write_text(ROLE.replace(original, "[section](#authority)"), encoding="utf-8")
+        content = expected_packages(self.root)["astrid-dev-leader"][0]
+        self.assertIn("[section](#authority)", content)
+
+    def test_matching_skill_symlink_is_rejected_by_check(self):
+        build_packages(self.root)
+        skill = self.package("astrid-dev-start") / "SKILL.md"
+        foreign = self.root / "foreign-skill.md"
+        foreign.write_text(skill.read_text(encoding="utf-8"), encoding="utf-8")
+        skill.unlink()
+        skill.symlink_to(foreign)
+        self.assertTrue(any("symlinked SKILL.md" in error
+                            for error in check_packages(self.root)))
+        self.assertTrue(skill.is_symlink())
+        self.assertEqual(foreign.read_text(encoding="utf-8"),
+                         skill.read_text(encoding="utf-8"))
+
+    def test_skill_symlink_preflight_precedes_any_stale_retirement(self):
+        build_packages(self.root)
+        skill = self.package("astrid-dev-start") / "SKILL.md"
+        foreign = self.root / "foreign-skill.md"
+        foreign.write_text(skill.read_text(encoding="utf-8"), encoding="utf-8")
+        skill.unlink()
+        skill.symlink_to(foreign)
+        leader_source = self.root / "agent" / "roles" / "leader.md"
+        leader_source.write_text(ROLE.replace("skill: true\n", ""), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "symlinked SKILL.md"):
+            build_packages(self.root)
+        self.assertTrue(self.package("astrid-dev-leader").exists())
+        self.assertTrue(skill.is_symlink())
+
     def test_fenced_examples_are_not_rewritten(self):
         path = self.root / "agent" / "roles" / "leader.md"
         fence = chr(96) * 3
