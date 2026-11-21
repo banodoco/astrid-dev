@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "release": 14,
+  "issue": 785,
+  "pr": 408,
+  "case": "tests/core/generation/test_h3_build_after_outputs.py::test_h3_contribution_build_and_after_outputs_end_to_end",
+  "method": "Three fixed alternating destination/candidate pairs on one machine, fresh isolated home and temporary paths per invocation, original test and frame guard.",
+  "platform": "macOS-15.4-arm64-arm-64bit",
+  "python": "Python 3.11.11",
+  "pytest": "9.2.0",
+  "ffmpeg": "ffmpeg version 7.1.1 Copyright (c) 2000-2025 the FFmpeg developers",
+  "ffprobe": "ffprobe version 7.1.1 Copyright (c) 2007-2025 the FFmpeg developers",
+  "source_heads": {
+    "destination": "e379565641414bc183cd02edebab1cbf77617931",
+    "candidate": "4d77f35c50f545b2da341ed64d303c20c7a3efa1"
+  },
+  "source_trees": {
+    "e3795656": "5ff15dcae73d78eaebb1e7b26929d85f241d6200",
+    "4d77f35c": "75c4349ee85a44b1b8811ea2ee547c723bc3a51a"
+  },
+  "dependencies": {
+    "runtime": "62333bd797e84b21cb3995e4bcf580ed0bdcf9f0",
+    "vibecomfy": "1ba0ac3ad4fe69fa0b4966cc41e6852224013f97",
+    "lifecycle": "7f0b025e9391baac9f5c2fb7393617ea6fef0704"
+  },
+  "identical_source_blobs": {
+    "tests/core/generation/test_h3_build_after_outputs.py": "6d4415f2bd67d8dc732113467281e37cb9f41efe",
+    "astrid/packs/h3_av/shared/compose.py": "3a875a575054122521e7c8e67392906a1a8059af"
+  },
+  "hosted": {
+    "destination_job": 135363346127,
+    "candidate_job": 136023546977,
+    "destination": "pass",
+    "candidate": "failed",
+    "observed_frames": 161,
+    "expected_frames": 108
+  },
+  "trials": [
+    {
+      "trial": 1,
+      "source": "e3795656",
+      "exit": 0,
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "checksums_sha256": {
+        "pytest.log": "9358e35a2f010825b6cb16e384b28e407cda1fd7a1e98186d5a9a6ea52267184",
+        "native.xml": "fc9981201fcb381eb4e4bb71585e7f9abefaac02bd6ba48d148861e012cafb54",
+        "phase.jsonl": "da1aca93c24f1cfa4a5c9367cc3526540f4cc00435207bec6fd87f5323c3de31",
+        "receipt.json": "06e86fd1e22754cea8c2e4c06643b79471bb4790e8c5476a79e29440ca38fa6a"
+      }
+    },
+    {
+      "trial": 1,
+      "source": "4d77f35c",
+      "exit": 0,
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "checksums_sha256": {
+        "pytest.log": "513a5dd46aed99b6fd7a4028653302a2c5f0f5c84cdc7f67700a1ec106ab468e",
+        "native.xml": "b85acb8aa1d62f810402896a57dd15db1cb3e5dc28ac8ae3e0d54c7c53454cdf",
+        "phase.jsonl": "da1aca93c24f1cfa4a5c9367cc3526540f4cc00435207bec6fd87f5323c3de31",
+        "receipt.json": "0ef973886bbc03fbbb63dde97f2657279bc593ee539c616d2e57c120d49efc3e"
+      }
+    },
+    {
+      "trial": 2,
+      "source": "e3795656",
+      "exit": 0,
+      "phases": {
+        "setup": "passed",
+        "call": "passed",
+        "teardown": "passed"
+      },
+      "checksums_sha256": {
+        "pytest.log": "0295d7724376d0469cfec615afa387937d3b5c29b8429e0177f6ee3702d441d8",
+        "native.xml": "aa0cc42bda138030102e25e904cac11766002fc1fca8040701cf56102137eb6b",
+        "phase.jsonl": "da1aca93c24f1cfa4a5c9367cc3526540f4cc00435207bec6fd87f5323c3de31",
+        "receipt.json": "754b69928c8bc2e32e5cb5ea2e464d1d63421d67371ff02cb7010084c7d7c526"
+      }
+    },
+    {
+      "trial": 2,
+      "source": "4d77f35c",
+      "exit": 1,
+      "phases": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "checksums_sha256": {
+        "pytest.log": "22d9c19bef82be8636f42879e13704e76c47d2a1b94a8896afbefcb0f570c94f",
+        "native.xml": "6d44d3c73bfe95c45ec5fac05ba43a90f80e4ac1dbdb19f37a9c834edfc4265a",
+        "phase.jsonl": "fcaaf9003451ed8f8ed4743c6d69064e0847b5d0bfa2a808b6d43e5c88b2f71c",
+        "receipt.json": "b91d31502cff7bdb915a65b99e50dc6db40966b3858cc9720081d912575d1327"
+      },
+      "observed_frames": 178,
+      "expected_frames": 108
+    },
+    {
+      "trial": 3,
+      "source": "e3795656",
+      "exit": 1,
+      "phases": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "checksums_sha256": {
+        "pytest.log": "d4342ec2dd6d1ff4659d11dff48e1c204bf5ae05824d4a56d846257a07f4f026",
+        "native.xml": "52839317d0dc996d2b925f255465e8604cda1e46c3667be62ce11f369b882d00",
+        "phase.jsonl": "0ad5e5262f475ed89c875d9b5501ecd2e9cef11ea9a23b440ffc6cc6934cf4e6",
+        "receipt.json": "852fb227799aeac738a519dfcb26fc5d5428882759281f2988df176717c3c58c"
+      },
+      "observed_frames": 188,
+      "expected_frames": 108
+    },
+    {
+      "trial": 3,
+      "source": "4d77f35c",
+      "exit": 1,
+      "phases": {
+        "setup": "passed",
+        "call": "failed",
+        "teardown": "passed"
+      },
+      "checksums_sha256": {
+        "pytest.log": "771bbe7af437559245faae91da9497f353561259374cf4f86001411b87a1784b",
+        "native.xml": "70fb3d381121a337f2d47dc5814f737a3a0935d96f387262f040474eeca581a6",
+        "phase.jsonl": "aaa11500bba9b5c81f95c2dbbe278680db9c32ca096a5036d5ab10e7f572df3b",
+        "receipt.json": "4dd73701f9e0ec58827285e7d32d3f9e11f0699b2ab14861a048a898e80cdf69"
+      },
+      "observed_frames": 180,
+      "expected_frames": 108
+    }
+  ],
+  "passing_frame_counts": "Passing guards did not print an observed frame count.",
+  "harness_sha256": {
+    "h3-run.py": "eb58185de6dde59ca9b5ce5666ff6ab0e987137118b7299589ff7b39d661ad6c",
+    "phase_probe.py": "12d38b18a1c64560a9715c40e0a38d724e518698e9fb25a7ca284101cc011fcb"
+  }
+}

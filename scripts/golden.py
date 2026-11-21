@@ -18,7 +18,7 @@ REVISION = "0000000000000000000000000000000000000000"
 
 def _copy_tree(destination: Path) -> None:
     ignored = shutil.ignore_patterns(".git", ".otto", "__pycache__", "fixtures")
-    shutil.copytree(ROOT, destination, ignore=ignored, dirs_exist_ok=True)
+    shutil.copytree(ROOT, destination, ignore=ignored, dirs_exist_ok=True, symlinks=True)
 
 
 def _errors(root: Path) -> list[str]:

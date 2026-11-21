@@ -92,12 +92,24 @@ def _active_plans_in_releases(context):
     if not _catalog_ready(context):
         return []
     active = {}
+    errors = []
     for path in sorted((root / 'plans').glob('*/plan.md')):
-        if project_fields(read(root, path.relative_to(root)))['Status'] == 'active':
-            active[path.parent.name[:2]] = path.parent.name
+        body = read(root, path.relative_to(root))
+        if project_fields(body)['Status'] != 'active':
+            continue
+        if re.search(r"(?m)^\*\*Run route:\*\* astrid-dev-only\s*$", body):
+            inputs = path.parent / 'inputs.md'
+            evidence = inputs.read_text(encoding='utf-8') if inputs.is_file() else ''
+            if (not re.search(r"(?m)^\*\*Run start:\*\* .+", evidence)
+                    or 'owner-authorized' not in
+                    next((line for line in evidence.splitlines()
+                          if line.startswith('**Run start:**')), '')):
+                errors.append(f"{path.relative_to(root)}: astrid-dev-only active run requires an explicit owner-authorized Run start in inputs.md")
+            continue
+        active[path.parent.name[:2]] = path.parent.name
     briefs = [release_brief(read(root, p.relative_to(root)), strict=False)
               for p in sorted((root / 'releases').glob('[0-9]*.md')) if p.stem.isdigit()]
-    return active_plan_errors(active, briefs)
+    return [*errors, *active_plan_errors(active, briefs)]
 
 
 def _strategy_consistency(context):
@@ -309,6 +321,12 @@ def _public_vision(context):
     return []
 
 
+
+def _workstream_structure(context):
+    from workstreams import validate
+    return validate(context.root)
+
+
 def _generated_views(context):
     import views
     declared, errors = views.views_for(context.root)
@@ -464,6 +482,7 @@ REGISTRY: tuple[Check, ...] = (
     Check('markdown-links', 'always', 'Validate markdown links', _markdown_links),
     Check('link-anchors', 'always', 'Validate links to headings in skills, templates and top-level docs', _link_anchors),
     Check('public-vision-content', 'always', 'Validate public vision source content', _public_vision),
+    Check('workstream-structure', 'always', 'Validate common workstream contracts and skill or document packaging', _workstream_structure),
     Check('generated-views', 'pr', 'Validate generated views that a pull request changes', _generated_views),
     Check('completion-assessment', 'pr', 'Require evidence for plans newly marked done', _completion),
     Check('gap-boundary-assessment', 'pr', 'Require a first-principles assessment for redefined gaps', _boundary),

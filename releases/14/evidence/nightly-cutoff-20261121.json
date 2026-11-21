@@ -1,0 +1,90 @@
+{
+  "started": "2026-11-21T01:17:07.641284+00:00",
+  "finished": "2026-11-21T01:17:12.966176+00:00",
+  "products": {
+    "app": {
+      "main": {
+        "head": "de7dd1e668aa6dcf3cbce013c701fa7c76615f99",
+        "protected": false,
+        "workflows": []
+      },
+      "release/14/main": {
+        "head": "e6ca6e8032fcb2e6ab42cb713bb5047ae023f2e4",
+        "protected": false,
+        "workflows": []
+      },
+      "release/14/plan-39": {
+        "head": "da6e7cc8f8ed33b22e4710b161ba2d4995bd0ea1",
+        "protected": false,
+        "workflows": [
+          "failure-ceiling.yml",
+          "gate-integrity.yml"
+        ]
+      },
+      "main_rules": [],
+      "served": [
+        13,
+        "9814193a73f606719e81883a8be197d27dd361d4",
+        "6855dfa8df65cf8ae4c002b57134d6505493c17c"
+      ],
+      "scheduled": []
+    },
+    "agent": {
+      "main": {
+        "head": "959da7326c982a9197b5d6e2a4489f45e1deef0e",
+        "protected": false,
+        "workflows": []
+      },
+      "release/14/main": {
+        "head": "0020c2e8d7f5d6051db2964a235b97f4ba002a72",
+        "protected": false,
+        "workflows": []
+      },
+      "release/14/plan-39": {
+        "head": "f841c754eb9288dbc219cfe04af03460ef682f6d",
+        "protected": false,
+        "workflows": [
+          "failure-ceiling.yml",
+          "gate-integrity.yml"
+        ]
+      },
+      "main_rules": [],
+      "scheduled": []
+    },
+    "runtime": {
+      "main": {
+        "head": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+        "protected": false,
+        "workflows": []
+      },
+      "release/14/main": {
+        "head": "8e8711fd2b3b43fcae680cecd8cec1e7640489cc",
+        "protected": false,
+        "workflows": []
+      },
+      "release/14/plan-39": {
+        "head": "98dda1d023f702326d909962556f76190bad10f6",
+        "protected": false,
+        "workflows": [
+          "failure-ceiling.yml",
+          "gate-integrity.yml"
+        ]
+      },
+      "main_rules": [],
+      "scheduled": []
+    }
+  },
+  "owner": [
+    [
+      984,
+      "2026-11-20T22:05:48Z",
+      28
+    ],
+    [
+      1022,
+      "2026-11-20T03:47:19Z",
+      0
+    ]
+  ],
+  "cursor": 7054966042
+}

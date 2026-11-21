@@ -1,0 +1,352 @@
+{
+  "schema": 1,
+  "nodeid": "tests/core/rendering/test_assets.py::test_asset_server_accepts_large_parallel_remotion_burst",
+  "platform": "macOS-15.4-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.11.11 (main, Jan 28 2025, 20:35:47) [Clang 15.0.0 (clang-1500.1.0.2.5)]",
+  "pytest": "9.0.2",
+  "heads": [
+    {
+      "sha": "eff1c195a5ae9fad83baa4310e6288c30e93fc9b",
+      "tree": "6078eb08ccd4eb5458600d15590b18dd6add77ad",
+      "files": {
+        "tests/core/rendering/test_assets.py": {
+          "git_blob": "2d7ae33f7c44c73dff38adc954882fea8c2b6b75",
+          "sha256": "7d0f9a36fe6dd6ca773157fe23aa086b17d11dbc1a8791a1549d46202770a81a"
+        },
+        "astrid/core/rendering/assets.py": {
+          "git_blob": "a1e331ffdeb8bb57e2ddd3567fb2af59b935ec7e",
+          "sha256": "7bbc16847b00ad404bb3ba53242b809ac5057a79bacb694b50921e7eceee20cb"
+        },
+        "astrid/core/foundation/hash.py": {
+          "git_blob": "3e66fc0785d935e68ba876203c45584a78cdd89b",
+          "sha256": "ffbc514a58d19f4d2a2ab4de8650f868ce6d00d7d1d519baca5a000300675be2"
+        },
+        "tests/conftest.py": {
+          "git_blob": "90dceb03604273cd81347326f6f8333bd4292411",
+          "sha256": "8b79adcc7b692a232721ea2c4fc1065ec39945c00c935557cdb0b7f153d76c4c"
+        },
+        "scripts/ci/ceiling_pytest.py": {
+          "git_blob": "11800175d3bdb53aba4b2eb5bd51fa688ca2433e",
+          "sha256": "3166c8770e290ede0237987b73c16832aa2e428595a4777dfec0ac8b9ef79796"
+        },
+        "pyproject.toml": {
+          "git_blob": "9be0c21c1a4f43fc921382b9a5953acf84cfcc24",
+          "sha256": "af36aef2d18fc420e94b84976084ee3ab3696fd2d20567e8a9eb8b528db5e5e4"
+        },
+        "requirements/proof.lock": {
+          "git_blob": "48d61c5ae026b084f24506a09f96a9eff34ac981",
+          "sha256": "d0457889ab50ae929d590e099c58ff54ba76e356d15af9f142bd16106feb2a09"
+        },
+        "requirements/runtime.lock": {
+          "git_blob": "2d4c52fa65fb485f2fad90f8ba159a2d8d9f010f",
+          "sha256": "9469f51df94631ea83a0380e362bc92918efcdcf59c2e263b7e8dece0ec40066"
+        },
+        "requirements/build.lock": {
+          "git_blob": "fb5c495a611345f755cec0ee9a47f689c116ca55",
+          "sha256": "0b3f194bcf699360b0645c15c73f5baa6124faaf323eaabf5b1bcce37915b2f0"
+        },
+        "runtime.lock.json": {
+          "git_blob": "32e4608197f606f131c2eb263e5b7d748bcc0ffd",
+          "sha256": "b04a5de8dcfd6172c39d214161a66be134bcb7f228f5ab29837dc2e1752fa495"
+        },
+        "package-lock.json": {
+          "git_blob": "421651cfed2bff47daec7a515421d37b4813a862",
+          "sha256": "946d5c7d5964aafa6b9fd9f74599285d846ab6349162bdd88b37eab35077230a"
+        }
+      }
+    },
+    {
+      "sha": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+      "tree": "fb3075ea952f284a89c8b1db6e8f3927b3288a95",
+      "files": {
+        "tests/core/rendering/test_assets.py": {
+          "git_blob": "2d7ae33f7c44c73dff38adc954882fea8c2b6b75",
+          "sha256": "7d0f9a36fe6dd6ca773157fe23aa086b17d11dbc1a8791a1549d46202770a81a"
+        },
+        "astrid/core/rendering/assets.py": {
+          "git_blob": "a1e331ffdeb8bb57e2ddd3567fb2af59b935ec7e",
+          "sha256": "7bbc16847b00ad404bb3ba53242b809ac5057a79bacb694b50921e7eceee20cb"
+        },
+        "astrid/core/foundation/hash.py": {
+          "git_blob": "3e66fc0785d935e68ba876203c45584a78cdd89b",
+          "sha256": "ffbc514a58d19f4d2a2ab4de8650f868ce6d00d7d1d519baca5a000300675be2"
+        },
+        "tests/conftest.py": {
+          "git_blob": "90dceb03604273cd81347326f6f8333bd4292411",
+          "sha256": "8b79adcc7b692a232721ea2c4fc1065ec39945c00c935557cdb0b7f153d76c4c"
+        },
+        "scripts/ci/ceiling_pytest.py": {
+          "git_blob": "11800175d3bdb53aba4b2eb5bd51fa688ca2433e",
+          "sha256": "3166c8770e290ede0237987b73c16832aa2e428595a4777dfec0ac8b9ef79796"
+        },
+        "pyproject.toml": {
+          "git_blob": "9be0c21c1a4f43fc921382b9a5953acf84cfcc24",
+          "sha256": "af36aef2d18fc420e94b84976084ee3ab3696fd2d20567e8a9eb8b528db5e5e4"
+        },
+        "requirements/proof.lock": {
+          "git_blob": "48d61c5ae026b084f24506a09f96a9eff34ac981",
+          "sha256": "d0457889ab50ae929d590e099c58ff54ba76e356d15af9f142bd16106feb2a09"
+        },
+        "requirements/runtime.lock": {
+          "git_blob": "2d4c52fa65fb485f2fad90f8ba159a2d8d9f010f",
+          "sha256": "9469f51df94631ea83a0380e362bc92918efcdcf59c2e263b7e8dece0ec40066"
+        },
+        "requirements/build.lock": {
+          "git_blob": "fb5c495a611345f755cec0ee9a47f689c116ca55",
+          "sha256": "0b3f194bcf699360b0645c15c73f5baa6124faaf323eaabf5b1bcce37915b2f0"
+        },
+        "runtime.lock.json": {
+          "git_blob": "32e4608197f606f131c2eb263e5b7d748bcc0ffd",
+          "sha256": "b04a5de8dcfd6172c39d214161a66be134bcb7f228f5ab29837dc2e1752fa495"
+        },
+        "package-lock.json": {
+          "git_blob": "421651cfed2bff47daec7a515421d37b4813a862",
+          "sha256": "946d5c7d5964aafa6b9fd9f74599285d846ab6349162bdd88b37eab35077230a"
+        }
+      }
+    }
+  ],
+  "trials": [
+    {
+      "trial": 1,
+      "head": "eff1c195a5ae9fad83baa4310e6288c30e93fc9b",
+      "started": "2026-11-20T08:10:29.932723+00:00",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-p",
+        "scripts.ci.ceiling_pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "--durations=1",
+        "--junitxml=junit.xml",
+        "tests/core/rendering/test_assets.py::test_asset_server_accepts_large_parallel_remotion_burst"
+      ],
+      "exit": 0,
+      "duration_wall_s": 3.397,
+      "duration_junit_s": 0.706,
+      "phases": [
+        [
+          "setup",
+          "passed"
+        ],
+        [
+          "call",
+          "passed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "artifacts": {
+        "command.log": "08213a916deffa3f25c6c91754f72dda01b5a1c048c6fe09fe9dd7cc40582ec2",
+        "junit.xml": "1beedf4438d73c0a59333123dd9c478d9359f8ff13ec66862329bee733322b2f",
+        "pytest-bab01746504e4e55bb8e0ddcf6a0ab24.jsonl": "943ab177af338eea2ef907ee6c5fa368fdf701baa885f9cf6bb6bf7c19368be7"
+      }
+    },
+    {
+      "trial": 2,
+      "head": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+      "started": "2026-11-20T08:10:33.330931+00:00",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-p",
+        "scripts.ci.ceiling_pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "--durations=1",
+        "--junitxml=junit.xml",
+        "tests/core/rendering/test_assets.py::test_asset_server_accepts_large_parallel_remotion_burst"
+      ],
+      "exit": 0,
+      "duration_wall_s": 2.631,
+      "duration_junit_s": 0.707,
+      "phases": [
+        [
+          "setup",
+          "passed"
+        ],
+        [
+          "call",
+          "passed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "artifacts": {
+        "command.log": "0962a2cad89653f99c2d8186c958ad0b375d96943ed5629a996a1cbf19360bc9",
+        "junit.xml": "b253d4221d52885721178ee9694f68f37d13ed8be1553c93ec2cc267a5bacecd",
+        "pytest-782d0110ed9140c0bb97aa8309be9cb5.jsonl": "c4f24ad78eb4799e11fdaba4aae93a65fdf6e952c0beaaed2459767c138cfc2e"
+      }
+    },
+    {
+      "trial": 3,
+      "head": "eff1c195a5ae9fad83baa4310e6288c30e93fc9b",
+      "started": "2026-11-20T08:10:35.962816+00:00",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-p",
+        "scripts.ci.ceiling_pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "--durations=1",
+        "--junitxml=junit.xml",
+        "tests/core/rendering/test_assets.py::test_asset_server_accepts_large_parallel_remotion_burst"
+      ],
+      "exit": 0,
+      "duration_wall_s": 2.521,
+      "duration_junit_s": 0.699,
+      "phases": [
+        [
+          "setup",
+          "passed"
+        ],
+        [
+          "call",
+          "passed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "artifacts": {
+        "command.log": "0a7e781e0612443239d6fb767819d5b1e092847e448c3aea4bacf77324625def",
+        "junit.xml": "2912834be770d45119a2f4f416418b125d16cbe589d291e3e3e928ed7595422b",
+        "pytest-18fcea22ae1446e895694fed57ad0fda.jsonl": "45fd94e979ed3413829e5165a74060975cea4b8bc362bf64fd4143c1050e4aa0"
+      }
+    },
+    {
+      "trial": 4,
+      "head": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+      "started": "2026-11-20T08:10:38.485133+00:00",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-p",
+        "scripts.ci.ceiling_pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "--durations=1",
+        "--junitxml=junit.xml",
+        "tests/core/rendering/test_assets.py::test_asset_server_accepts_large_parallel_remotion_burst"
+      ],
+      "exit": 0,
+      "duration_wall_s": 2.577,
+      "duration_junit_s": 0.7,
+      "phases": [
+        [
+          "setup",
+          "passed"
+        ],
+        [
+          "call",
+          "passed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "artifacts": {
+        "command.log": "04c32a2fd75dc1b9272b272919cea8bb04ededca75477ffa63cc8d60676b45f1",
+        "junit.xml": "77abaf51055401048d6a2956676cebba0df206f529f78e80c37979adb2fe541e",
+        "pytest-9415f57a975248b199cba06ac51db86f.jsonl": "90ddcaf83c3abadbbd1b97ffada0278d5e758c8a1aac6b6a14602360cad8ea7e"
+      }
+    },
+    {
+      "trial": 5,
+      "head": "eff1c195a5ae9fad83baa4310e6288c30e93fc9b",
+      "started": "2026-11-20T08:10:41.063182+00:00",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-p",
+        "scripts.ci.ceiling_pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "--durations=1",
+        "--junitxml=junit.xml",
+        "tests/core/rendering/test_assets.py::test_asset_server_accepts_large_parallel_remotion_burst"
+      ],
+      "exit": 0,
+      "duration_wall_s": 2.711,
+      "duration_junit_s": 0.701,
+      "phases": [
+        [
+          "setup",
+          "passed"
+        ],
+        [
+          "call",
+          "passed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "artifacts": {
+        "command.log": "04c32a2fd75dc1b9272b272919cea8bb04ededca75477ffa63cc8d60676b45f1",
+        "junit.xml": "bf406280905131d64c2205cab36200a0a3a6e807978d399b5e6ac08212da835f",
+        "pytest-bad4ce30bad14d3e8b013399ab57d24e.jsonl": "f57b4f53919ba397ede4abe40b4582f651e97823f356951d850777ffadafb126"
+      }
+    },
+    {
+      "trial": 6,
+      "head": "66c5ee27712d36c583eaf9c39fd62269fbc44f41",
+      "started": "2026-11-20T08:10:43.775195+00:00",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-p",
+        "scripts.ci.ceiling_pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "--durations=1",
+        "--junitxml=junit.xml",
+        "tests/core/rendering/test_assets.py::test_asset_server_accepts_large_parallel_remotion_burst"
+      ],
+      "exit": 0,
+      "duration_wall_s": 2.53,
+      "duration_junit_s": 0.694,
+      "phases": [
+        [
+          "setup",
+          "passed"
+        ],
+        [
+          "call",
+          "passed"
+        ],
+        [
+          "teardown",
+          "passed"
+        ]
+      ],
+      "artifacts": {
+        "command.log": "d95aed5cf4b31170b819a4902bfe9a0fdc4ccd4427b2f427ff5a8c1602f55116",
+        "junit.xml": "5794214ca109ee53df0309cdee404ae4af84e4adc0a7e9547d06c56bf2f24f3c",
+        "pytest-6b074af49a794a36ad7b782588ad5e64.jsonl": "1141528a0e9556e6f9c322003376ba65092211c6710de1182ecab621ba11649c"
+      }
+    }
+  ]
+}

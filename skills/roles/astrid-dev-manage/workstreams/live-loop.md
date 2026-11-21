@@ -1,4 +1,16 @@
+---
+description: Run a loop plan whose end state is known but whose tasks come from each live round of scenarios, strategist advice and fixes.
+---
+
 # Workstream: run a loop plan
+
+## Workstream contract
+
+**Outcome:** A plan whose end state holds on two consecutive live rounds, with every round, fix and plan delta recorded.
+**When to use:** When an accepted plan's end state is clear but its tasks can only be found by measuring the live product round by round.
+**Inputs:** The accepted loop plan and its scenario set, a running stack built from the plan branches, the run's bindings in `run.yaml`, and the floors to stop at.
+**Procedure:** Run the scenarios live, record the round, ask the strategist, pick the smallest fixes, land each as an Iterate PR into the plan branch, rebuild and rerun.
+**Completion:** The plan's end state holds on two consecutive rounds, or the loop stops at a recorded reason and the owner has the open question.
 
 Use when the plan is a [loop plan](../../../shared/glossary.md): its end state is known, its tasks can't be written up front, and its `tasks.md` ends in one standing loop card. Everything in [whole project](whole-project.md) still applies (progress, decisions, dispatch); this adds the round. The [run contract](../../../shared/run-contract.md) governs routes, proof and review; it is not restated here.
 
@@ -16,7 +28,7 @@ Use when the plan is a [loop plan](../../../shared/glossary.md): its end state i
 2. **Record a round row** in the plan's `rounds.md`: what saved; what was refused, with the reason shown; timings; anything that vanished; the stack's versions.
 3. **Ask the strategist:** give it the row and the previous rows, not your conclusion.
 4. **Pick the fixes.** Each is one failing scenario, a cause, and the smallest change at its source.
-5. **Fix** each as an ordinary [Iterate](../../../capabilities/astrid-dev-iterate/SKILL.md) run, a PR into the plan branch, with the failing live scenario as its red test.
+5. **Fix** each as an ordinary [Iterate](../../../shared/workstreams/astrid-dev-iterate/SKILL.md) run, a PR into the plan branch, with the failing live scenario as its red test.
 6. **Rebuild the stack and rerun** from step 1.
 
 Append each round's rows, picks and PRs under the loop card in `tasks.md`; progress PRs follow [whole project](whole-project.md#progress-is-always-current).

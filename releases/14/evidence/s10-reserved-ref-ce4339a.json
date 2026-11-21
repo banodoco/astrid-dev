@@ -1,0 +1,20 @@
+{
+  "agent": "ce4339a89006dc7bd91baaf72da8596d1fc88d02",
+  "boundary": "opaque-shared-source",
+  "exit": 1,
+  "node_id": "tests/editing_conformance/test_commit_runtime_opaque_items.py::test_occurrence_move_preserves_unknown_item_ids_retry_restart_and_inverse[item_id]",
+  "observation": {
+    "created_ref": "occurrence:occurrence-2",
+    "created_ref_type": "str",
+    "present_in_current_record_claimed_at_check": false,
+    "present_in_reserved_at_check": true
+  },
+  "phase_outcomes": {
+    "setup": "failed",
+    "teardown": "passed"
+  },
+  "runtime": "2537fed24385ec1c24f48a812e09af4bb63fb794",
+  "scratch_fixture_patch_sha256": "5afc3e62ea02c4857ddcd8a683a5e4b0bfeac435e2d0219c9d97e09161eca3c3",
+  "source_file": "astrid/sdk/timeline/commit.py",
+  "source_line": 969
+}

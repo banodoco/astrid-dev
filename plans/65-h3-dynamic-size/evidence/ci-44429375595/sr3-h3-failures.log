@@ -1,0 +1,490 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.0.2, pluggy-1.7.0
+rootdir: /home/user/work/managers/plan-65/sr3-ci-base
+configfile: pyproject.toml
+plugins: split-0.11.0, platformdirs-4.14.7, timeout-2.4.0, anyio-4.16.0, cov-7.1.0
+timeout: 120.0s
+timeout method: signal
+timeout func_only: False
+collected 20 items
+
+tests/packs/h3_av/test_edit_binding.py FFF......FF..                     [ 65%]
+tests/packs/h3_av/test_generation.py .                                   [ 70%]
+tests/packs/h3_av/test_h3_plain_inputs_zero_frames_judge.py ...F         [ 90%]
+tests/packs/h3_av/test_planner.py .                                      [ 95%]
+tests/packs/h3_av/test_source_rate_prepare.py F                          [100%]
+
+=================================== FAILURES ===================================
+___ test_per_operation_strength_seed_and_selected_reference_order[guides0-0] ___
+
+tmp_path = PosixPath('/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_per_operation_strength_se0')
+strength = 0, guides = ['other', 'look']
+
+    @pytest.mark.parametrize("strength", [0, 0.5, 1])
+    @pytest.mark.parametrize("guides", [["other", "look"], [], None])
+    def test_per_operation_strength_seed_and_selected_reference_order(tmp_path, strength, guides):
+        raw = copy.deepcopy(CASES[2]["v2"])
+        raw["media"].append({"id": "other", "asset": "other.png", "role": "reference", "modality": "image"})
+        edit = raw["media"][0]["edit"][0]
+        edit.update(strength=strength, seed=0)
+        if guides is not None:
+            edit["guides"] = guides
+        raw["settings"] = {"seed": 99}
+        jsonschema.validate(raw, SCHEMA)
+        canonical = normalize_request(raw).canonical
+        assert canonical.ops[0].strength == strength
+        assert canonical.ops[0].seed == 0
+        manifest, api = _compile(raw, tmp_path, _assets(tmp_path), "compiled")
+        assert _node(api, "H3V2VGranularFractionalDenoise")["inside_strength"] == strength
+        assert _node(api, "RandomNoise")["noise_seed"] == 0
+        expected = ["other.png", "look.png"] if guides else ([] if guides == [] else ["look.png", "other.png"])
+>       assert manifest["capabilities"]["reference_order"] == expected
+E       AssertionError: assert ['look.png', 'other.png'] == ['other.png', 'look.png']
+E         
+E         At index 0 diff: 'look.png' != 'other.png'
+E         Use -v to get more diff
+
+tests/packs/h3_av/test_edit_binding.py:162: AssertionError
+----------------------------- Captured stderr call -----------------------------
+__init__.py         :139  2026-11-19 01:23:10,855 VibeComfy custom node loading. WEB_DIRECTORY=./web
+------------------------------ Captured log call -------------------------------
+INFO     vibecomfy.comfy_nodes:__init__.py:139 VibeComfy custom node loading. WEB_DIRECTORY=./web
+__ test_per_operation_strength_seed_and_selected_reference_order[guides0-0.5] __
+
+tmp_path = PosixPath('/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_per_operation_strength_se1')
+strength = 0.5, guides = ['other', 'look']
+
+    @pytest.mark.parametrize("strength", [0, 0.5, 1])
+    @pytest.mark.parametrize("guides", [["other", "look"], [], None])
+    def test_per_operation_strength_seed_and_selected_reference_order(tmp_path, strength, guides):
+        raw = copy.deepcopy(CASES[2]["v2"])
+        raw["media"].append({"id": "other", "asset": "other.png", "role": "reference", "modality": "image"})
+        edit = raw["media"][0]["edit"][0]
+        edit.update(strength=strength, seed=0)
+        if guides is not None:
+            edit["guides"] = guides
+        raw["settings"] = {"seed": 99}
+        jsonschema.validate(raw, SCHEMA)
+        canonical = normalize_request(raw).canonical
+        assert canonical.ops[0].strength == strength
+        assert canonical.ops[0].seed == 0
+        manifest, api = _compile(raw, tmp_path, _assets(tmp_path), "compiled")
+        assert _node(api, "H3V2VGranularFractionalDenoise")["inside_strength"] == strength
+        assert _node(api, "RandomNoise")["noise_seed"] == 0
+        expected = ["other.png", "look.png"] if guides else ([] if guides == [] else ["look.png", "other.png"])
+>       assert manifest["capabilities"]["reference_order"] == expected
+E       AssertionError: assert ['look.png', 'other.png'] == ['other.png', 'look.png']
+E         
+E         At index 0 diff: 'look.png' != 'other.png'
+E         Use -v to get more diff
+
+tests/packs/h3_av/test_edit_binding.py:162: AssertionError
+___ test_per_operation_strength_seed_and_selected_reference_order[guides0-1] ___
+
+tmp_path = PosixPath('/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_per_operation_strength_se2')
+strength = 1, guides = ['other', 'look']
+
+    @pytest.mark.parametrize("strength", [0, 0.5, 1])
+    @pytest.mark.parametrize("guides", [["other", "look"], [], None])
+    def test_per_operation_strength_seed_and_selected_reference_order(tmp_path, strength, guides):
+        raw = copy.deepcopy(CASES[2]["v2"])
+        raw["media"].append({"id": "other", "asset": "other.png", "role": "reference", "modality": "image"})
+        edit = raw["media"][0]["edit"][0]
+        edit.update(strength=strength, seed=0)
+        if guides is not None:
+            edit["guides"] = guides
+        raw["settings"] = {"seed": 99}
+        jsonschema.validate(raw, SCHEMA)
+        canonical = normalize_request(raw).canonical
+        assert canonical.ops[0].strength == strength
+        assert canonical.ops[0].seed == 0
+        manifest, api = _compile(raw, tmp_path, _assets(tmp_path), "compiled")
+        assert _node(api, "H3V2VGranularFractionalDenoise")["inside_strength"] == strength
+        assert _node(api, "RandomNoise")["noise_seed"] == 0
+        expected = ["other.png", "look.png"] if guides else ([] if guides == [] else ["look.png", "other.png"])
+>       assert manifest["capabilities"]["reference_order"] == expected
+E       AssertionError: assert ['look.png', 'other.png'] == ['other.png', 'look.png']
+E         
+E         At index 0 diff: 'look.png' != 'other.png'
+E         Use -v to get more diff
+
+tests/packs/h3_av/test_edit_binding.py:162: AssertionError
+_ test_per_operation_controls_fail_closed_on_other_native_routes[character_swap-strength-0.5] _
+
+tmp_path = PosixPath('/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_per_operation_controls_fa0')
+control = 'strength', value = 0.5, route = 'character_swap'
+
+    @pytest.mark.parametrize("control,value", [("strength", 0.5), ("seed", 17)])
+    @pytest.mark.parametrize("route", ["character_swap", "continuation"])
+    def test_per_operation_controls_fail_closed_on_other_native_routes(tmp_path, control, value, route):
+        if route == "character_swap":
+            from tests.packs.h3_av.test_character_swap import _files, _preparation, _request
+    
+            raw = _request(source=True)
+            raw["media"][0]["edit"][0][control] = value
+            preparation = _preparation(raw, _files(tmp_path, source=True))
+            message = "character_swap_v1 does not bind per-operation strength or seed"
+        else:
+            raw = copy.deepcopy(CASES[2]["v2"])
+            raw.update(continuation=True, duration=5)
+            raw["media"][0]["edit"][0][control] = value
+            preparation = prepare_request(normalize_request(raw), asset_map=_assets(tmp_path))
+            message = "native-v2 continuation has no per-operation strength or seed binding"
+>       with pytest.raises(CompilationError, match=message):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'astrid.packs.h3_av.shared.errors.CompilationError'>
+
+tests/packs/h3_av/test_edit_binding.py:219: Failed
+_ test_per_operation_controls_fail_closed_on_other_native_routes[character_swap-seed-17] _
+
+tmp_path = PosixPath('/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_per_operation_controls_fa1')
+control = 'seed', value = 17, route = 'character_swap'
+
+    @pytest.mark.parametrize("control,value", [("strength", 0.5), ("seed", 17)])
+    @pytest.mark.parametrize("route", ["character_swap", "continuation"])
+    def test_per_operation_controls_fail_closed_on_other_native_routes(tmp_path, control, value, route):
+        if route == "character_swap":
+            from tests.packs.h3_av.test_character_swap import _files, _preparation, _request
+    
+            raw = _request(source=True)
+            raw["media"][0]["edit"][0][control] = value
+            preparation = _preparation(raw, _files(tmp_path, source=True))
+            message = "character_swap_v1 does not bind per-operation strength or seed"
+        else:
+            raw = copy.deepcopy(CASES[2]["v2"])
+            raw.update(continuation=True, duration=5)
+            raw["media"][0]["edit"][0][control] = value
+            preparation = prepare_request(normalize_request(raw), asset_map=_assets(tmp_path))
+            message = "native-v2 continuation has no per-operation strength or seed binding"
+>       with pytest.raises(CompilationError, match=message):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'astrid.packs.h3_av.shared.errors.CompilationError'>
+
+tests/packs/h3_av/test_edit_binding.py:219: Failed
+________________ test_h3_plain_invalid_frames_are_rejected[363] ________________
+
+frames = 363
+
+    @pytest.mark.parametrize("frames", [0, -1, 4, 363])
+    def test_h3_plain_invalid_frames_are_rejected(frames):
+        namespace = entries.entry_hooks(entries.find_entry("h3"))["build"].__globals__
+>       with pytest.raises(ValueError, match="duration|frames"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/packs/h3_av/test_h3_plain_inputs_zero_frames_judge.py:9: Failed
+_______________ test_source_free_generate_never_probes_a_source ________________
+
+request = H3Request(value={'version': 2, 'prompt': 'A quiet room.', 'duration': 1, 'media': [{'occurrence_id': 'occurrence-1', '...ile': 'h3_av.native.v2', 'output_count': 1}, digest='d9e9a3b6db9c48bca756061875a8831f2f0426480fc6dafba208554b06b1c838')
+assets = [{'asset': 'look.png', 'kind': 'file', 'path': '/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/179505138572...free_generate_neve0/reference.png', 'sha256': '4110dd12af975f556bdac0299d0bfa04d42fa22d94f56b8550f1762e48fff7fb', ...}]
+warnings = [{'limit': 'job_duration_seconds', 'message': 'Outside 124–362 frames is outside the tested range.'}]
+
+    def _admit_conditioning(request: H3Request, assets: list[dict[str, Any]], warnings: list[dict[str, str]] | None = None) -> list[dict[str, Any]]:
+        """Apply the shared reference table before scheduling any paid/runtime work."""
+        from .compose import _streams, _number
+        warnings = warnings if warnings is not None else []
+        resolved = {str(row["asset"]): Path(str(row["path"])) for row in assets
+                    if row.get("status") == "resolved" and isinstance(row.get("path"), str)}
+        refs = [row for row in request.value["media"] if row.get("role") == "reference" and row.get("use") != "replacement"]
+        counts = {"image": 0, "video": 0, "audio": 0}
+        totals = {"image": Fraction(0), "video": Fraction(0), "audio": Fraction(0)}
+        total_uncertainty = {"video": Fraction(0), "audio": Fraction(0)}
+        files = 0
+        entry = LIMITS["builder_slots"]["value"]
+        duration_clock = {"video": 24, "audio": 48000}
+        measurements: list[dict[str, Any]] = []
+        for item in refs:
+            modality = item.get("modality")
+            if modality not in counts:
+                raise PreparationError(f"conditioning occurrence {item['occurrence_id']!r} has unresolved modality; declare image, video, or audio")
+            counts[modality] += 1
+            files += 1
+            ordinal = counts[modality]
+            slot = {"image": f"ref_images.ref_image_{ordinal - 1}", "video": f"ref_videos.ref_video_{ordinal - 1}", "audio": f"ref_audios.ref_audio_{ordinal - 1}"}[modality]
+            tag = {"image": f"<Picture {ordinal}>", "video": f"<Video {ordinal}>", "audio": None}[modality]
+            measurement: dict[str, Any] = {"occurrence": item["occurrence_id"], "modality": modality,
+                "trim": item.get("range"), "bound_file": None, "tracks": [], "retained_picture_frames": None,
+                "audio_duration_seconds": None, "slot": slot, "tag": tag, "effective_size": None,
+                "resource_estimate": {"schema_valid": False, "qualified": False, "observed": False, "raw_bytes": None}}
+            if modality == "video":
+                measurement["audio_enabled"] = item.get("audio", True)
+            measurements.append(measurement)
+            path = resolved.get(str(item["asset"]))
+            if path is None:
+                continue
+            measurement["bound_file"] = str(path)
+            probe = _probe_conditioning(path)
+            measurement["tracks"] = [str(row.get("codec_type")) for row in probe.get("streams", []) if isinstance(row, Mapping)]
+            streams = _streams(probe, "video" if modality == "image" else modality)
+            if not streams:
+                raise PreparationError(f"conditioning clip 2–15 seconds: {item['occurrence_id']} has no {modality} stream")
+            stream = streams[0]
+            measured = _number(stream.get("duration"))
+            size = (stream.get("width"), stream.get("height"))
+            if all(isinstance(value, int) and value > 0 for value in size):
+                measurement["effective_size"] = _reference_size(modality, size[0], size[1]) if modality in {"image", "video"} else None
+            if modality == "image":
+                try:
+                    from PIL import Image
+>                   with Image.open(path) as image:
+                         ^^^^^^^^^^^^^^^^
+
+astrid/packs/h3_av/shared/prepare.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fp = <_io.BufferedReader name='/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_source_free_generate_neve0/reference.png'>
+mode = 'r', formats = ['PNG', 'BMP', 'DIB', 'GIF', 'JPEG', 'PPM', ...]
+
+    def open(
+        fp: StrOrBytesPath | IO[bytes],
+        mode: Literal["r"] = "r",
+        formats: list[str] | tuple[str, ...] | None = None,
+    ) -> ImageFile.ImageFile:
+        """
+        Opens and identifies the given image file.
+    
+        This is a lazy operation; this function identifies the file, but
+        the file remains open and the actual image data is not read from
+        the file until you try to process the data (or call the
+        :py:meth:`~PIL.Image.Image.load` method).  See
+        :py:func:`~PIL.Image.new`. See :ref:`file-handling`.
+    
+        :param fp: A filename (string), os.PathLike object or a file object.
+           The file object must implement ``file.read``,
+           ``file.seek``, and ``file.tell`` methods,
+           and be opened in binary mode. The file object will also seek to zero
+           before reading.
+        :param mode: The mode.  If given, this argument must be "r".
+        :param formats: A list or tuple of formats to attempt to load the file in.
+           This can be used to restrict the set of formats checked.
+           Pass ``None`` to try all supported formats. You can print the set of
+           available formats by running ``python3 -m PIL`` or using
+           the :py:func:`PIL.features.pilinfo` function.
+        :returns: An :py:class:`~PIL.Image.Image` object.
+        :exception FileNotFoundError: If the file cannot be found.
+        :exception PIL.UnidentifiedImageError: If the image cannot be opened and
+           identified.
+        :exception ValueError: If the ``mode`` is not "r", or if a ``StringIO``
+           instance is used for ``fp``.
+        :exception TypeError: If ``formats`` is not ``None``, a list or a tuple.
+        """
+    
+        if mode != "r":
+            msg = f"bad mode {repr(mode)}"  # type: ignore[unreachable]
+            raise ValueError(msg)
+        elif isinstance(fp, io.StringIO):
+            msg = (  # type: ignore[unreachable]
+                "StringIO cannot be used to open an image. "
+                "Binary data must be used instead."
+            )
+            raise ValueError(msg)
+    
+        if formats is None:
+            formats = ID
+        elif not isinstance(formats, (list, tuple)):
+            msg = "formats must be a list or tuple"  # type: ignore[unreachable]
+            raise TypeError(msg)
+    
+        exclusive_fp = False
+        filename: str | bytes = ""
+        if is_path(fp):
+            filename = os.fspath(fp)
+            fp = builtins.open(filename, "rb")
+            exclusive_fp = True
+        else:
+            fp = cast(IO[bytes], fp)
+    
+        try:
+            fp.seek(0)
+        except (AttributeError, io.UnsupportedOperation):
+            fp = io.BytesIO(fp.read())
+            exclusive_fp = True
+    
+        prefix = fp.read(16)
+    
+        # Try to import just the plugin needed for this file extension
+        # before falling back to preinit() which imports common plugins
+        ext = os.path.splitext(filename)[1] if filename else ""
+        if not _import_plugin_for_extension(ext):
+            preinit()
+    
+        warning_messages: list[str] = []
+    
+        def _open_core(
+            fp: IO[bytes],
+            filename: str | bytes,
+            prefix: bytes,
+            formats: list[str] | tuple[str, ...],
+        ) -> ImageFile.ImageFile | None:
+            for i in formats:
+                i = i.upper()
+                if i not in OPEN:
+                    init()
+                try:
+                    factory, accept = OPEN[i]
+                    result = not accept or accept(prefix)
+                    if isinstance(result, str):
+                        warning_messages.append(result)
+                    elif result:
+                        fp.seek(0)
+                        im = factory(fp, filename)
+                        _decompression_bomb_check(im.size)
+                        return im
+                except (SyntaxError, IndexError, TypeError, struct.error) as e:
+                    if WARN_POSSIBLE_FORMATS:
+                        warning_messages.append(i + " opening failed. " + str(e))
+                except BaseException:
+                    if exclusive_fp:
+                        fp.close()
+                    raise
+            return None
+    
+        im = _open_core(fp, filename, prefix, formats)
+    
+        if im is None and formats is ID:
+            # Try preinit (few common plugins) then init (all plugins)
+            for loader in (preinit, init):
+                checked_formats = ID.copy()
+                loader()
+                if formats != checked_formats:
+                    im = _open_core(
+                        fp,
+                        filename,
+                        prefix,
+                        tuple(f for f in formats if f not in checked_formats),
+                    )
+                    if im is not None:
+                        break
+    
+        if im:
+            im._exclusive_fp = exclusive_fp
+            return im
+    
+        if exclusive_fp:
+            fp.close()
+        for message in warning_messages:
+            warnings.warn(message)
+        msg = "cannot identify image file %r" % (filename if filename else fp)
+>       raise UnidentifiedImageError(msg)
+E       PIL.UnidentifiedImageError: cannot identify image file '/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_source_free_generate_neve0/reference.png'
+
+../sr3-ci-base.env/venv/lib/python3.13/site-packages/PIL/Image.py:3715: UnidentifiedImageError
+
+The above exception was the direct cause of the following exception:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f022f394150>
+tmp_path = PosixPath('/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_source_free_generate_neve0')
+
+    def test_source_free_generate_never_probes_a_source(
+        monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+    ) -> None:
+        probed: list[list[str]] = []
+        real_run = subprocess.run
+    
+        def spy(argv: Any, *args: Any, **kwargs: Any) -> Any:
+            probed.append([str(part) for part in argv])
+            return real_run(argv, *args, **kwargs)
+    
+        reference = tmp_path / "reference.png"
+        reference.write_bytes(b"reference-image")
+        monkeypatch.setattr(prepare_module.subprocess, "run", spy)
+        v1 = prepare_request(_v1("generate"), asset_map={"image-0": str(reference)})
+>       v2 = prepare_request(_v2_source_free(), asset_map={"look.png": str(reference)})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/packs/h3_av/test_source_rate_prepare.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+astrid/packs/h3_av/shared/prepare.py:655: in prepare_request
+    conditioning_measurements = _admit_conditioning(request, assets, warnings)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = H3Request(value={'version': 2, 'prompt': 'A quiet room.', 'duration': 1, 'media': [{'occurrence_id': 'occurrence-1', '...ile': 'h3_av.native.v2', 'output_count': 1}, digest='d9e9a3b6db9c48bca756061875a8831f2f0426480fc6dafba208554b06b1c838')
+assets = [{'asset': 'look.png', 'kind': 'file', 'path': '/home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/179505138572...free_generate_neve0/reference.png', 'sha256': '4110dd12af975f556bdac0299d0bfa04d42fa22d94f56b8550f1762e48fff7fb', ...}]
+warnings = [{'limit': 'job_duration_seconds', 'message': 'Outside 124–362 frames is outside the tested range.'}]
+
+    def _admit_conditioning(request: H3Request, assets: list[dict[str, Any]], warnings: list[dict[str, str]] | None = None) -> list[dict[str, Any]]:
+        """Apply the shared reference table before scheduling any paid/runtime work."""
+        from .compose import _streams, _number
+        warnings = warnings if warnings is not None else []
+        resolved = {str(row["asset"]): Path(str(row["path"])) for row in assets
+                    if row.get("status") == "resolved" and isinstance(row.get("path"), str)}
+        refs = [row for row in request.value["media"] if row.get("role") == "reference" and row.get("use") != "replacement"]
+        counts = {"image": 0, "video": 0, "audio": 0}
+        totals = {"image": Fraction(0), "video": Fraction(0), "audio": Fraction(0)}
+        total_uncertainty = {"video": Fraction(0), "audio": Fraction(0)}
+        files = 0
+        entry = LIMITS["builder_slots"]["value"]
+        duration_clock = {"video": 24, "audio": 48000}
+        measurements: list[dict[str, Any]] = []
+        for item in refs:
+            modality = item.get("modality")
+            if modality not in counts:
+                raise PreparationError(f"conditioning occurrence {item['occurrence_id']!r} has unresolved modality; declare image, video, or audio")
+            counts[modality] += 1
+            files += 1
+            ordinal = counts[modality]
+            slot = {"image": f"ref_images.ref_image_{ordinal - 1}", "video": f"ref_videos.ref_video_{ordinal - 1}", "audio": f"ref_audios.ref_audio_{ordinal - 1}"}[modality]
+            tag = {"image": f"<Picture {ordinal}>", "video": f"<Video {ordinal}>", "audio": None}[modality]
+            measurement: dict[str, Any] = {"occurrence": item["occurrence_id"], "modality": modality,
+                "trim": item.get("range"), "bound_file": None, "tracks": [], "retained_picture_frames": None,
+                "audio_duration_seconds": None, "slot": slot, "tag": tag, "effective_size": None,
+                "resource_estimate": {"schema_valid": False, "qualified": False, "observed": False, "raw_bytes": None}}
+            if modality == "video":
+                measurement["audio_enabled"] = item.get("audio", True)
+            measurements.append(measurement)
+            path = resolved.get(str(item["asset"]))
+            if path is None:
+                continue
+            measurement["bound_file"] = str(path)
+            probe = _probe_conditioning(path)
+            measurement["tracks"] = [str(row.get("codec_type")) for row in probe.get("streams", []) if isinstance(row, Mapping)]
+            streams = _streams(probe, "video" if modality == "image" else modality)
+            if not streams:
+                raise PreparationError(f"conditioning clip 2–15 seconds: {item['occurrence_id']} has no {modality} stream")
+            stream = streams[0]
+            measured = _number(stream.get("duration"))
+            size = (stream.get("width"), stream.get("height"))
+            if all(isinstance(value, int) and value > 0 for value in size):
+                measurement["effective_size"] = _reference_size(modality, size[0], size[1]) if modality in {"image", "video"} else None
+            if modality == "image":
+                try:
+                    from PIL import Image
+                    with Image.open(path) as image:
+                        image.verify()
+                except Exception as exc:
+>                   raise PreparationError(f"conditioning image metadata is unreadable: {item['occurrence_id']}") from exc
+E                   astrid.packs.h3_av.shared.errors.PreparationError: conditioning image metadata is unreadable: occurrence-1
+
+astrid/packs/h3_av/shared/prepare.py:116: PreparationError
+=============================== warnings summary ===============================
+tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[guides0-0]
+  /home/user/work/managers/plan-65/sr3-ci-base.env/basetemp/1795051385725827779/test_per_operation_strength_se0/compiled/native-masked-edit-bundle/workflow.py:42: PendingDeprecationWarning: vibecomfy.templates.ref('name') is a legacy generated-template fallback; new generated templates bind InputSpec.node to node objects inside build().
+    'model': InputSpec(node=ref('unetloader'), field='unet_name', default=UNET_NAME, type='CHOICE', infer_type=False),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[guides1-0]
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[guides1-0.5]
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[guides1-1]
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[None-0]
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[None-0.5]
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[None-1]
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_controls_fail_closed_on_other_native_routes[continuation-strength-0.5]
+PASSED tests/packs/h3_av/test_edit_binding.py::test_per_operation_controls_fail_closed_on_other_native_routes[continuation-seed-17]
+PASSED tests/packs/h3_av/test_generation.py::test_limits_match_the_pinned_cached_h3_node_schema
+PASSED tests/packs/h3_av/test_h3_plain_inputs_zero_frames_judge.py::test_h3_plain_invalid_frames_are_rejected[0]
+PASSED tests/packs/h3_av/test_h3_plain_inputs_zero_frames_judge.py::test_h3_plain_invalid_frames_are_rejected[-1]
+PASSED tests/packs/h3_av/test_h3_plain_inputs_zero_frames_judge.py::test_h3_plain_invalid_frames_are_rejected[4]
+PASSED tests/packs/h3_av/test_planner.py::test_plan_binds_per_edit_reference_selection
+FAILED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[guides0-0]
+FAILED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[guides0-0.5]
+FAILED tests/packs/h3_av/test_edit_binding.py::test_per_operation_strength_seed_and_selected_reference_order[guides0-1]
+FAILED tests/packs/h3_av/test_edit_binding.py::test_per_operation_controls_fail_closed_on_other_native_routes[character_swap-strength-0.5]
+FAILED tests/packs/h3_av/test_edit_binding.py::test_per_operation_controls_fail_closed_on_other_native_routes[character_swap-seed-17]
+FAILED tests/packs/h3_av/test_h3_plain_inputs_zero_frames_judge.py::test_h3_plain_invalid_frames_are_rejected[363]
+FAILED tests/packs/h3_av/test_source_rate_prepare.py::test_source_free_generate_never_probes_a_source
+============= 7 failed, 13 passed, 1 warning in 131.65s (0:02:11) ==============
+
+WRAPPER_EXIT_STATUS=1
