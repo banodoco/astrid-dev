@@ -10,7 +10,7 @@
 
 **Estimate:** About 4 engineering days (3 to 5): about 1.5 for the setup cards, about 0.5 to recover the lost work, and 2 for the first three loop rounds. Further rounds are extra.
 
-**Waiting on:** the Runtime seed and reopen repair reaching `release/14/main`, then heavy fixture qualification and Round 1 on the current plan branches. [Release 14 integration issue](https://github.com/banodoco/astrid-dev/issues/796)
+**Waiting on:** the Runtime seed and reopen repair reaching `release/14/main` and a practical public seed for the heavy fixture. Then qualify the fixture and run Round 1 on the current plan branches. [Release 14 integration issue](https://github.com/banodoco/astrid-dev/issues/796)
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
