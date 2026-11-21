@@ -244,9 +244,8 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
             new = work["candidate"].get(workflow)
             if not old or not new:
                 problems.append(f"{product}/{workflow}: workflow missing from one side")
-                continue
-            a = {j["name"]: j for j in old["jobs"]}
-            b = {j["name"]: j for j in new["jobs"]}
+            a = {j["name"]: j for j in (old or {"jobs": []})["jobs"]}
+            b = {j["name"]: j for j in (new or {"jobs": []})["jobs"]}
             used = set()
             for old_name, oldjob in sorted(a.items()):
                 job_alias = aliases.get(f"{product}/{workflow}/{old_name}")
@@ -318,6 +317,8 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
                     why = disposition.get("reason", "")
                     ref = disposition.get("source", "")
                     result = "same"
+                    if old_id and new_state == "MISSING":
+                        problems.append(f"{product}/{workflow}/{old_id}: disappearance requires destination/reason/source and a present destination")
                     if old_state != new_state:
                         result = "changed"
                         if old_state in ("PASS", "XFAIL", "XPASS") and new_state in ("FAIL", "ERROR", "SKIP", "MISSING"):
@@ -332,6 +333,29 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict[str, Path | 
                 jobs.append({"product": product, "workflow": workflow, "r13_job": "MISSING", "candidate_job": new_name, "r13": "MISSING", "candidate": job["conclusion"], "r13_job_id": "", "candidate_job_id": job["id"]})
                 if job["conclusion"] != "success":
                     problems.append(f"{product}/{workflow}: newly failing job {new_name}")
+                if product == "agent":
+                    new_ids = parse_pytest(Path(job["log"]).read_text(errors="replace"))
+                elif "vitest" in new_name.lower():
+                    report = vitest.get("candidate")
+                    if not report:
+                        problems.append(f"{product}/{workflow}/{new_name}: candidate Vitest JSON required")
+                        continue
+                    new_ids = parse_vitest_json(report)
+                else:
+                    report = playwright.get(f"candidate/{workflow}/{new_name}")
+                    needs_native = workflow == "E2E" or (workflow == "Lanes" and ("journey" in new_name or "checkout" in new_name))
+                    if needs_native and not report:
+                        problems.append(f"{product}/{workflow}/{new_name}: complete candidate Playwright JSON required")
+                        continue
+                    new_ids = parse_playwright_json(report) if report else parse_playwright(Path(job["log"]).read_text(errors="replace"))
+                required_ids = (product == "agent" and ("unit shard" in new_name or "integration shard" in new_name)) or (product == "app" and (workflow in ("E2E", "Direct Journey") or any(x in new_name.lower() for x in ("vitest", "journey", "checkout", "three-products"))))
+                if required_ids and not new_ids:
+                    problems.append(f"{product}/{workflow}/{new_name}: no candidate native test IDs")
+                for ident, state in sorted(new_ids.items()):
+                    result = "failing-added" if state in ("FAIL", "ERROR") else "changed"
+                    if result == "failing-added":
+                        problems.append(f"{product}/{workflow}/{ident}: MISSING -> {state} BLOCKS publish")
+                    rows.append({"product": product, "workflow": workflow, "job": new_name, "id": ident, "r13_id": "", "r13": "MISSING", "candidate": state, "classification": result, "explanation": "", "source": ""})
     return rows, jobs, problems
 
 

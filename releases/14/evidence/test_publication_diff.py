@@ -97,6 +97,28 @@ class TestPublicationDiff(unittest.TestCase):
             _, _, issues = mod.evaluate(manifest, records, Path(p), {}, {})
             self.assertTrue(any("BLOCKS publish" in x for x in issues))
 
+    def test_failed_disappearance_needs_reconciled_present_destination(self):
+        with tempfile.TemporaryDirectory() as p:
+            a, b = Path(p) / "a", Path(p) / "b"
+            a.write_text("FAILED tests/a.py::test_old - failure\n")
+            b.write_text("PASSED tests/a.py::test_other\n")
+            records = {"agent": {"baseline": {"CI": {"jobs": [{"id": 1, "name": "unit shard 1", "conclusion": "failure", "log": str(a)}]}}, "candidate": {"CI": {"jobs": [{"id": 2, "name": "unit shard 1", "conclusion": "failure", "log": str(b)}]}}}}
+            _, _, issues = mod.evaluate({}, records, Path(p), {})
+            self.assertTrue(any("disappearance requires" in issue for issue in issues))
+            manifest = {"test_id_renames": {"agent/CI/tests/a.py::test_old": {"to": "tests/a.py::test_other", "reason": "renamed", "source": "evidence"}}}
+            _, _, issues = mod.evaluate(manifest, records, Path(p), {})
+            self.assertFalse(any("disappearance requires" in issue for issue in issues))
+
+    def test_candidate_only_job_enumerates_ids_and_blocks_failure(self):
+        with tempfile.TemporaryDirectory() as p:
+            a, b = Path(p) / "a", Path(p) / "b"
+            a.write_text("PASSED tests/a.py::test_old\n")
+            b.write_text("PASSED tests/b.py::test_new\nFAILED tests/b.py::test_bad - failure\n")
+            records = {"agent": {"baseline": {"CI": {"jobs": [{"id": 1, "name": "unit shard 1", "conclusion": "success", "log": str(a)}]}}, "candidate": {"CI": {"jobs": [{"id": 2, "name": "unit shard 1", "conclusion": "success", "log": str(a)}, {"id": 3, "name": "unit shard 2", "conclusion": "failure", "log": str(b)}]}}}}
+            rows, _, issues = mod.evaluate({}, records, Path(p), {})
+            self.assertEqual({r["id"] for r in rows if r["job"] == "unit shard 2"}, {"tests/b.py::test_new", "tests/b.py::test_bad"})
+            self.assertTrue(any("test_bad" in issue and "BLOCKS" in issue for issue in issues))
+
     def test_frozen_sha_and_run_id_required_before_fetch(self):
         with self.assertRaisesRegex(ValueError, "frozen full SHA"):
             mod.collect_runs({"baseline": {"agent": {"sha": None}}}, Path("/tmp/unused"))

@@ -17,7 +17,7 @@ These are **two distinct Agent identities**, not interchangeable:
 | Runtime installed by published App manifest | `6855dfa8df65cf8ae4c002b57134d6505493c17c` |
 | VibeComfy installed by published App manifest | `dba38f8644c46f652376f2cd5112ea161e40f09b` |
 | Runtime schema | `sha256:9628bb5fd6e1dbbec392dd39f2e01031622dcf52d7ccff7cd1f0ad10743dcb1c` |
-| Required installer release | `13` (do not raise on R14; R14 is opt-in) |
+| Required installer release | `14` (required update; [owner decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7065093369)) |
 
 [Immutable R13 manifest](https://github.com/banodoco/astrid-app/blob/de7dd1e668aa6dcf3cbce013c701fa7c76615f99/public/install-manifest.json). A served-manifest canary on the R13 App SHA [succeeded](https://github.com/banodoco/astrid-app/actions/runs/44891402290) on 21 Nov; preserve actual served bytes, the Railway deployment ID and its restoration capability in the [rollback runbook](../rollback.md) **before** the R14 production deployment.
 
@@ -75,11 +75,13 @@ FIX-18's [exact four-ID task](../packets/R14-FIX-18.md) owns their cause/disposi
 
 **Final diff:** [ ] exact tuple frozen; [ ] eight Agent unit jobs; [ ] four Agent lanes; [ ] complete App Vitest assertion IDs; [ ] full App journey IDs; [ ] job-name comparison; [ ] omissions/renames explained; [ ] no unexplained pass→fail; [ ] Lead review and verdict.
 
+The provisional 434-ID investigation is in [the breakdown](publication-preflight-agent-breakdown.md); changed tests remain open for Lead review.
+
 ## D. One rented generation — Lead-owned, not executed in this packet
 
 **State:** Not run. No RunPod credential, balance, existing-pod census, paid job ID, result or teardown is asserted here. The Lead alone spends under the owner's delegated budget and reports it. The integration host's separate proposed **$30** live-case budget [awaits express owner confirmation](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7063263106); it is not fungible with the Lead's **$10** delegated GPU cap.
 
-**Before any paid command:** verify exact frozen Agent/Runtime/VibeComfy/lifecycle pins, source worktree and installed tuple; use `astrid generate defaults --json` to choose the smallest **supported image entry** (do not assume an entry ID); verify the currently supported command flags using `astrid generate image --help`; check RunPod account balance and remaining approved budget **privately**; inspect pod census via `astrid machines`/pinned lifecycle; preserve all pre-existing pods and IDs. Set a conservative absolute `--max-usd` so *worst-case* preparation, execution and teardown fit remaining allowance. Require explicit paid consent and named limit; no raw RunPod API/SDK.
+**Before any paid command:** verify exact frozen Agent/Runtime/VibeComfy/lifecycle pins, source worktree and installed tuple; use `astrid generate defaults --json` to choose the smallest **supported image entry** (do not assume an entry ID); verify the currently supported command flags using `astrid generate image --help`; verify credentials and account access with a non-paid check, recording the result without secrets; check RunPod account balance and remaining approved budget **privately**; obtain a full account pod census via `astrid machines`/pinned lifecycle. If any foreign pods exist, leave them alone and stop. Set a conservative absolute `--max-usd` so *worst-case* preparation, execution and teardown fit remaining allowance. Require explicit paid consent and named limit; no raw RunPod API/SDK.
 
 For the Lead to instantiate after those checks (parameters intentionally unresolved; one `--gpu` flag):
 
@@ -96,19 +98,20 @@ astrid generate image --entry "$SUPPORTED_IMAGE_ENTRY" --placement runpod \
 |---|---|
 | Frozen App/Agent/Runtime/VibeComfy/lifecycle SHAs; schema digest; manifest digest | **PENDING** |
 | Run owner, authorization link, spend ceiling, balance before | **PENDING** |
-| Census before (all pod IDs/states, including foreign pods) | **PENDING** |
+| Credential and account access check (no secrets) | **PENDING** |
+| Full census before (all pod IDs/states, including foreign pods) | **PENDING** |
 | Chosen supported image entry, GPU and verified command | **PENDING** |
 | Job ID, generated output URI + digest, output viewed/usable | **PENDING** |
 | First failure reason, if any; receipt path and cleanup | **PENDING** |
-| Stop/terminate acknowledgements and own-pod census after | **PENDING** |
+| Stop/terminate acknowledgements and full account pod census after | **PENDING** |
 | Balance after, measured spend and ledger, remaining cap | **PENDING** |
 
-A usable image **and** zero pods owned by this run after teardown are necessary. If custody is uncertain, release owned resources and mark **BLOCKED**; do not call a wrapper success sufficient.
+A usable image **and a full empty account pod census after teardown** are necessary. If foreign pods exist, leave them alone and stop; do not pass the receipt. If custody is uncertain, release owned resources and mark **BLOCKED**; do not call a wrapper success sufficient.
 
 ## E. Other publication gates and owner handoff
 
-- [ ] FIX-15 Agent #457 lands; combined Plans 59/64/65 integrate with full CI and independent review, then Agent/Runtime/VibeComfy and App merge with final re-pin; schema backward compatibility is explicitly qualified.
-- [ ] FIX-17 R13→R14 installed update and both **mixed-version** rows pass **twice the same day** on frozen SHAs. Include killed Windows update, all three OS fresh/update/save/reopen, R14 App+R13 install, R13 App+R14-written realm.
+- [ ] FIX-15 Agent #457 lands; combined Plans 59/64/65 integrate with full CI and independent review, then Agent/Runtime/VibeComfy and App merge with final re-pin; R14 reopening of R13-written realms is explicitly qualified.
+- [ ] FIX-17 update rows pass on Windows, macOS and Linux; the R13 App shows the required-update prompt and drafts survive update; an R14 install reopens R13-written realms with timelines, history and save queue. Retain the killed Windows update row and two same-day passes on frozen SHAs.
 - [ ] Owner's **real Release 13 Windows install**: update, edit, save, reopen, one local generate, cancel and retry, with original data retained. [Owner accepted this work](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7063270699). Lead provides frozen tester build and script, not this packet.
 - [ ] Lead's one rented image generation and complete budget/census receipt (above).
 - [ ] Exact last-good R13 Railway deployment ID, immutable manifest bytes, rollback/redeploy permission and rehearsable procedure from [rollback.md](../rollback.md).

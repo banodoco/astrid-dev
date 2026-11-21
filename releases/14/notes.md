@@ -1,6 +1,6 @@
 # Release 14 — stability and reliable creative work (DRAFT)
 
-**Status: NOT PUBLISHED.** This draft is conditional on the frozen tuple, Release 14 qualification and the owner's explicit publication approval. Do not present these as shipped features until the Lead has verified the exact resulting product commits. This is an **optional update**: Release 13 installs are not required to upgrade, and Release 14 must remain compatible with supported Release 13 states.
+**Status: NOT PUBLISHED.** This draft is conditional on the frozen tuple, Release 14 qualification and the owner's explicit publication approval. Do not present these as shipped features until the Lead has verified the exact resulting product commits. Release 14 is a **required update** under the [owner decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7065093369).
 
 Release 14 focuses on making ordinary creative work dependable: installs and updates that preserve existing projects, edits that save or refuse clearly, and generation that retains usable evidence when something fails. The release also incorporates the approved Plans 59, 64 and 65 creative work **only to the extent it lands and passes the combined Release 14 gates**.
 
@@ -15,7 +15,7 @@ Release 14 focuses on making ordinary creative work dependable: installs and upd
 
 ## Updating an existing installation
 
-Release 14 is **opt-in**, not a required update. Use the normal update path from a supported Release 13 installation; keep the existing project/realm and verify an edit survives save, reload and reopen. The completed FIX-17 update matrix must test fresh installs on Windows, macOS and Linux, update-over-R13, a killed Windows update, and both live-web/mixed-version states. The owner personally runs the final Windows update on a real Release 13 installation, including one local generation, cancel and retry.
+Release 14 is a **required update**. Use the normal update path from a supported Release 13 installation; keep the existing project/realm and verify an edit survives save, reload and reopen. The completed FIX-17 update matrix must test fresh installs on Windows, macOS and Linux, update-over-R13, a killed Windows update, the required-update prompt with draft preservation, and reopening R13-written realms with timelines, history and save queue. The owner personally runs the final Windows update on a real Release 13 installation, including one local generation, cancel and retry.
 
 There is no instruction here to delete user data, recreate a project, reset an installation, or take a test-only shortcut around a refused save.
 
@@ -25,7 +25,7 @@ There is no instruction here to delete user data, recreate a project, reset an i
 - **Speed work moves to Release 15.** Release 14 makes no performance, warm-start or under-one-second claim ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7061778603)).
 - **Scene-by-reference moves to Release 15**; Release 14's save-refusal card does not implement scene-by-reference ([decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7061951208)).
 - The four Release 13→14 test differences (two Hyperframes public-service renders, a middle-shot duration check, and external process adoption) require FIX-18 causal disposition. No test is skipped, deleted, or relaxed simply to announce the release.
-- A change to the Runtime timeline save contract is not automatically backward compatible. Release 14 App writing to an **unupdated R13 install** and R13 App reading an **R14-written realm** both require the FIX-17 mixed-version rows to pass. Do not claim these cases pass before that result.
+- A change to the Runtime timeline save contract is not automatically backward compatible. Mixed R13/R14 product versions are unsupported. FIX-17 must prove that the R13 App shows the required-update prompt without losing drafts and that an R14 install reopens R13-written realms with timelines, history and save queue.
 - The final rented RunPod generation, teardown receipt and owner-run real Windows checks are pending in [the publication checklist](evidence/publication-checklist.md).
 
 ## Maintainer sign-off (not user-facing release copy)

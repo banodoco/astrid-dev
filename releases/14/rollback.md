@@ -1,8 +1,8 @@
 # Release 14 rollback — frozen-tuple runbook (DRAFT, NOT EXECUTED)
 
-**Scope:** restore the last known good Release 13 **served App + installer manifest** after a Release 14 publish problem, without erasing a user's realm. This runbook is a conditional operational proposal and **not** permission for this packet session to deploy or modify product refs.
+**Scope:** fix forward after a Release 14 publish problem, preserving user realms. An R13 deployment is a last resort. This runbook is a conditional operational proposal and **not** permission for this packet session to deploy or modify product refs.
 
-**Authority:** The Release 14 Lead coordinates; **the owner approves and an authorized Railway/App operator performs the hosted rollback**. Only an authorized publisher may change product `main` or produce a replacement deployment, and it needs the owner's go in that session ([release skill](../../skills/shared/workstreams/astrid-dev-release/SKILL.md#promote-or-publish)). The PUB-1 worker cannot execute any step below.
+**Authority:** The Release 14 Lead coordinates; **the owner approves and an authorized Railway/App operator performs the deployment**. Only an authorized publisher may change product `main` or produce a replacement deployment, and it needs the owner's go in that session ([release skill](../../skills/shared/workstreams/astrid-dev-release/SKILL.md#promote-or-publish)). The PUB-1 worker cannot execute any step below.
 
 ## 1. Last-known-good Release 13 identity (immutable source)
 
@@ -20,37 +20,14 @@
 
 **Must capture before allowing R14 publish (BLOCKING):** the **exact active Railway deployment ID/image digest** that currently serves App `de7dd1e6`; the full R13 manifest bytes with SHA-256; current response bytes/headers from `https://astrid.haus/install-manifest.json`; evidence that the operator has permission to redeploy that immutable deployment; and a non-destructive rehearsal or provider-documented restoration action. Place a redacted receipt in `releases/14/evidence/` or link an access-controlled operational record. **These deployment identifiers and rollback permissions have not been verified by PUB-1; do not invent them.**
 
-## 2. Stop and decide immediately on either trigger
+## 2. Response: fix forward
 
-1. **Served-tuple mismatch after publication:** the public `https://astrid.haus/install-manifest.json` is not the exact Lead-frozen release/Agent/Runtime/VibeComfy/schema tuple after the App deployment completes, or the served-manifest canary disagrees with that tuple.
-2. **Save and reopen failure reported:** a normal edit that claimed to save does not persist on reopen, including an R13-to-R14 update or either mixed-version web/install state. Preserve the user-visible error, original realm and exact paired versions before attempting recovery.
+The [owner made Release 14 a required update](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7065093369). On a served-tuple mismatch or reported save/reopen failure, stop promotion, preserve the affected realm, drafts and logs, notify the Lead and owner, and prepare a qualified forward fix. The Lead coordinates; the owner authorizes publication and an authorized operator deploys it. Verify the frozen corrected tuple, served manifest and canary, and save/reopen a preserved fixture before resuming.
 
-For either trigger: the Lead declares a publication incident on the Release 14 mailbox, **stops further promotion/install advertising**, names the failing tuple, checks for an existing publisher, preserves manifests, job logs and user data, and asks the owner for the restore go. Do not suppress the failing assertion or treat a failed save as harmless.
+Restoring the R13 deployment is **last resort only**, requiring owner authorization and a verified operator and immutable image. It strands installations already updated to R14: they cannot rely on R13/R14 mixed-version compatibility. Do not downgrade installations or overwrite user data. Before publication capture the R13 deployment ID, image digest, served manifest bytes and SHA-256, and operator access and restoration evidence as described above. If a last-resort restore is authorized, verify those bytes, pins and canary after deployment, record the incident and explicitly communicate the impact on R14 users.
 
-## 3. Restore the served R13 App and manifest (operator only)
+## 3. Data safety and qualification
 
-1. Identify the approved **last-good immutable R13 Railway deployment** from the pre-publish capture. Verify its built App SHA and embedded `public/install-manifest.json` byte digest. Do not select an arbitrary earlier deployment by timestamp.
-2. Using the Railway deployment rollback/redeploy mechanism **only if the operator has verified it restores that exact image and manifest**, redeploy the immutable R13 build to the production service. Follow [App's hosted deployment guide](https://github.com/banodoco/astrid-app/blob/de7dd1e668aa6dcf3cbce013c701fa7c76615f99/docs/structure_detail/deployment_and_migration_guide.md) for what the hosted image contains. It builds with `npm run build:hosted` and runs on Railway; a local build itself is **not** a deployment.
-3. **If no trusted immutable R13 image or safe restoration mechanism exists:** stop, keep the incident BLOCKED, and seek an explicitly approved **forward** corrective deployment built from and verified against the R13 App source plus its exact R13 manifest. Do **not** reset, force-push, or rewrite a shared `main`; do not mutate the installer release number without passing the release guard. The Lead/owner must authorize any production Git change separately.
-4. After the platform confirms the rollback, fetch the public manifest and compare exact required values and **whole-file SHA-256** against the preserved R13 bytes. Verify `release == 13`, `required.release == 13`, the R13 Agent/Runtime/VibeComfy SHAs, lifecycle and schema digest. Confirm no R14 manifest remains on an alternate domain/cache edge. Run/observe the served-manifest canary against the restored deployment, and perform a small hosted App load and read-only reopen check on a preserved fixture.
-5. Record the deployment ID, source SHA/image digest, manifest SHA-256, canary run, URL, time, operator, authorization and result in the incident evidence. Keep the frozen R14 evidence and branches intact for causal investigation and a separately qualified forward fix.
+FIX-17 must prove that the R13 App presents the required-update prompt and preserves drafts through update, and that an R14 install reopens R13-written realms including timelines, history and save queue. It must retain the Windows, macOS and Linux update rows and killed Windows update row. The former mixed-version rows fail by design and are no longer release gates. Preserve the original realm and drafts on any failure; do not direct users to delete projects or force an older Runtime to read an unsupported schema. Plans 59, 64 and 65 are in the combined Release 14 tuple and require qualification on the frozen SHAs.
 
-**No Git history rewrite or silent installer downgrade.** Installed clients may already hold the R14 code and a newer locally saved realm; restoring the hosted site does not automatically roll back any local user installation. Protect those versions and data separately.
-
-## 4. Data safety and mixed-version checks
-
-The [FIX-17 Release 13-to-14 matrix](packets/R14-FIX-17.md) must run **before** initial publication, including:
-
-- Release 14 App versus a still-unupdated Release 13 Agent/Runtime install: an edit, save, reopen and one accurately explained rejected save;
-- Release 13 App versus a realm written by Release 14: open, inspect its save queue and reopen;
-- Windows/macOS/Linux update over a seeded R13 realm, **including save/reload after update** and a killed Windows update recovered on R13.
-
-These rows are expected **evidence of compatibility, not a substitute for production restore verification**. The [owner's new combined-tuple ruling](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7063263106) specifically warns that Runtime's edited timeline save schema may not be backward compatible; a mixed row must prove it on the final merged schema. No green mixed-version receipt has been asserted by this packet.
-
-When a reported save/reopen fails, preserve the original realm, its version, logs and drafts; **do not direct the user to delete a project, overwrite history or force an older Runtime to parse unsupported new schema**. FIX-16 offers a safe explicit copy-out or discard-and-reload decision for refused saves. Already-updated installations require their own supported recovery plan or a separately qualified forward fix, rather than an automatic R13 installer downgrade.
-
-## 5. Closing the incident / resuming R14
-
-The owner and Lead decide after comparing the public manifest and a real saved/reopened fixture. Announce which public tuple is served, what happens to R13 and R14 installed users, and what remains blocked. A subsequent R14 publication **again** needs exact frozen SHAs, the full release gates, a new owner go in the publishing session and the App-last deploy/canary order. No evidence from an invalidated tuple is silently reused.
-
-**Pre-publication checklist:** [ ] immutable R13 deployment and restore mechanism confirmed; [ ] manifest bytes/digest captured; [ ] operator/owner authority established; [ ] FIX-17 both mixed rows pass twice on the final frozen tuple; [ ] full publication checklist signed off. If any are missing, keep publication **BLOCKED**.
+Before publication, the Lead must confirm the last-resort R13 deployment evidence, operator access, the required FIX-17 receipts, and the full publication checklist. A forward fix requires its own qualified tuple and owner go.
