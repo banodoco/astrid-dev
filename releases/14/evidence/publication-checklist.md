@@ -47,12 +47,12 @@ The current comparison is **not the frozen candidate**. It is a diagnostic snaps
 | App Vitest individual IDs | uncollected from default log | uncollected from default log | Must regenerate native reporter output; totals are insufficient |
 | App Direct Journey | PASS on published baseline run | **not run at provisional head** | Lead dispatches on frozen tuple |
 
-FIX-18's [exact four-ID task](../packets/R14-FIX-18.md) owns their cause/disposition; no packet here changes those tests. The initial eight-shard pytest log review also observed other pass-to-fail and missing IDs on the provisional Agent comparison (including H3, readiness, duplicate and installer cases). **They are not silently waived.** The complete frozen comparison must enumerate and disposition *every* such ID, including R13-only, skipped, renamed, newly failing and unknown outcomes.
+FIX-18's [exact four-ID task](../packets/R14-FIX-18.md) owns their cause/disposition; no packet here changes those tests. The initial eight-shard pytest log review also observed other pass-to-fail and missing IDs on the provisional Agent comparison (including H3, readiness, duplicate and installer cases). **They are not silently waived.** [Provisional Agent native-ID ledger](publication-preflight-agent-20261121.md) records 21 PASS→FAIL and 432 PASS→missing/skip in eight CI shards, plus four PASS→FAIL and two PASS→missing/skip in four Lanes shards on the **non-final** R14 head. Those per-job counts are not distinct cross-job union IDs, and no root causes/renames are presumed. [Provisional App journey ledger](publication-preflight-app-20261121.md) establishes that the existing dot-reporter logs have **zero extractable complete test-ID streams**; this is **unknown coverage**, not zero regression. The complete frozen comparison must enumerate and disposition *every* ID, including R13-only, skipped, renamed, newly failing and unknown outcomes.
 
 ## C. Reproducible final diff procedure (Lead dispatches workflows)
 
 1. Freeze and record **all full 40-character SHAs**: Agent, Runtime, VibeComfy, App, pinned lifecycle, Runtime schema digest, served manifest bytes/digest. Confirm Agent's `runtime.lock.json` and `astrid/packs/runpod/pins.json` agree with App manifest, and Plans 59/64/65/FIX-15/16/17/18 qualify in the intended merge order.
-2. Obtain complete CI, Agent Lanes, App Tests (Vitest per-ID), App Lanes, App Direct Journey and App E2E on exact R13 and frozen candidate source SHAs. The R13 App Vitest log lacks assertion IDs, so the Lead must obtain a native `vitest --reporter=json --outputFile=...` (or equivalent unaltered native assertion-level artifact) on `de7dd1e6`, plus the same form on the frozen App SHA. Do not alter or skip a test to make collection green.
+2. Obtain complete CI, Agent Lanes, App Tests (Vitest per-ID), App Lanes, App Direct Journey and App E2E on exact R13 and frozen candidate source SHAs. The R13 App Vitest log lacks assertion IDs, so the Lead must obtain a native `vitest --reporter=json --outputFile=...` (or equivalent unaltered native assertion-level artifact) on `de7dd1e6`, plus the same form on the frozen App SHA. Existing App E2E and Lanes **dot-reporter logs likewise lack complete passing Playwright IDs**: obtain native `playwright --reporter=json` full suite reports on both exact SHAs for every affected job, or use another native reporter providing complete per-test statuses and stable project IDs. Preserve the original test selectors and assertions. Read `report.md`/artifacts, not inferred test totals. Do not alter or skip a test to make collection green.
 3. Populate the `candidate` SHA and workflow run IDs in [publication-diff-inputs.json](publication-diff-inputs.json) **only after actual runs**. If a workflow is retried, name the exact attempt; do not splice attempt-one results into attempt-two job identities. Explicitly map only verified job/test renames, with provenance.
 4. From a checkout of astrid-dev, with read-only GitHub API credentials and **no dispatch**:
 
@@ -60,11 +60,17 @@ FIX-18's [exact four-ID task](../packets/R14-FIX-18.md) owns their cause/disposi
    GH_TOKEN="$READ_ONLY_GITHUB_TOKEN" python3 releases/14/evidence/publication_diff.py \
      --manifest releases/14/evidence/publication-diff-inputs.json \
      --out /tmp/r14-publication-diff \
-     --vitest-json-r13 /path/to/r13-vitest-json \
-     --vitest-json-r14 /path/to/r14-vitest-json
+     --vitest-json-r13 /path/to/r13-vitest.json \
+     --vitest-json-r14 /path/to/r14-vitest.json \
+     --playwright-json baseline/E2E/playwright-default=/path/to/r13-default.json \
+     --playwright-json candidate/E2E/playwright-default=/path/to/r14-default.json
+
+   # Add BOTH --playwright-json sides for every other E2E/Lanes dot-reporter
+   # job listed in jobs.csv. Without complete native IDs on both sides,
+   # the comparator returns an unqualified/blocked result.
    ```
 
-5. Preserve `report.md`, `jobs.csv`, `all-test-ids.csv`, `resolved-runs.json` and the canonical `env/baseline-diff.py` outputs under the **astrid-dev evidence lane** (the Leader must decide what becomes committed versus linked GitHub artifact; no evidence in products). Every R13 PASS→candidate FAIL/ERROR/SKIP/MISSING, missing job, newly failing ID, rename, and incomplete ID stream needs an explicit cause and source. A green total with fewer IDs is not a pass. If the script returns nonzero, the publication diff is unqualified.
+5. Preserve `report.md`, `jobs.csv`, `all-test-ids.csv`, `resolved-runs.json`, `native-report-input-digests.json`, and the canonical `env/baseline-diff.py` outputs under the **astrid-dev evidence lane** (the Leader must decide what becomes committed versus linked GitHub artifact; no evidence in products). Verify each externally supplied native JSON digest against the original command/artifact and source SHA, attempt and job before accepting it; the comparator records hashes but cannot attest external reporter provenance on its own. Every R13 PASS→candidate FAIL/ERROR/SKIP/MISSING, missing job, newly failing ID, rename, and incomplete ID stream needs an explicit cause and source. A green total with fewer IDs is not a pass. If the script returns nonzero, the publication diff is unqualified.
 6. Lead compares the same frozen candidate to current product `main` using the [release skill](../../../skills/shared/workstreams/astrid-dev-release/SKILL.md#promote-or-publish), respects the sealed Plan 39 ceiling for inherited red IDs, and records each non-test job that changed from success to failure. No test deletion, deselection or loosened expectation.
 
 **Final diff:** [ ] exact tuple frozen; [ ] eight Agent unit jobs; [ ] four Agent lanes; [ ] complete App Vitest assertion IDs; [ ] full App journey IDs; [ ] job-name comparison; [ ] omissions/renames explained; [ ] no unexplained pass→fail; [ ] Lead review and verdict.
