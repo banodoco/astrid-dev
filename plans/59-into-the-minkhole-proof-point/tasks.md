@@ -68,7 +68,7 @@
 
 ## Release 15 follow-ups
 
-- [ ] Investigate OS-specific sandbox and mount isolation for managed-media ffprobe and FFmpeg when paths resolve to mapped drives or mounted network filesystems. Evaluate protocol whitelists for the remaining invocation sites listed in the HTTP audit. The R14 assurance covers only protocol controls on the managed-media ffprobe helper and excludes filesystem isolation.
+- [ ] Investigate OS-specific sandbox and mount isolation for managed-media ffprobe and FFmpeg when paths resolve to mapped drives or mounted network filesystems. Evaluate protocol whitelists for the remaining invocation sites listed in the HTTP audit. The R14 assurance covers only protocol controls on the managed-media ffprobe helper and excludes filesystem isolation. [astrid-dev #1247](https://github.com/banodoco/astrid-dev/issues/1247).
 
 ## Issues to file
 
