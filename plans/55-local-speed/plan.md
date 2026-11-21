@@ -119,6 +119,8 @@ Task details are in [tasks.md](tasks.md). The owner's 15 November 2026 run autho
 
 ## Completion
 
+On 21 November the owner moved the absolute D1 targets to Release 15. Release 14 reports D1 and keeps the mechanism and no-regression proofs. [Owner decision, 21 Nov](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7060974510)
+
 - The standing budget test passes on Linux and Windows against a stand-in ComfyUI: on the second job with the same key, no process is started, nothing sleeps or polls, the workflow is not compiled, each output byte is hashed once, and the number of forced disk writes before the reply is within the budget LS-3 sets. It also asserts a valid output and a job record.
 - Live, on a GPU machine with a warm model: the targets in D1 are met for the default image workflow and reported for the default video workflow, on Linux and on Windows.
 - Negative cases, each ending in the same typed result as today: ComfyUI restarted between jobs; a model removed; a node pack removed; the workflow edited; Astrid updated; the worker killed mid-job; two callers at once; a cancel.
