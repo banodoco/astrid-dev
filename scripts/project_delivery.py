@@ -12,7 +12,7 @@ from pathlib import Path
 
 import gap_relationships as goal_links
 from gap_relationships import gap_metadata
-from project_contract import GAP_LINK, PLAN_FOLDER, VISION_GAPS, plan_gap_ids, project_number
+from project_contract import PLAN_FOLDER, plan_gap_links, project_number
 from records import release_brief
 from relationships import RecordRef, Relationship, RelationshipError, RelationshipIndex
 from vision_subject import parse_subject
@@ -107,18 +107,15 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
         project_folders[project.id] = path.parent.name
         plan_text = path.read_text(encoding="utf-8")
         try:
-            gaps = plan_gap_ids(plan_text)
+            declared_links = plan_gap_links(plan_text)
         except ValueError as exc:
             raise RelationshipError(f"{provenance} ({project}): {exc}") from exc
-        if not gaps:
+        if not declared_links:
             enablers.append(project)
         else:
-            # Reuse the canonical project's own link pattern: resolving only
-            # the numeric gap ID would accept a stale/nonexistent file target.
-            declaration = VISION_GAPS.findall(plan_text)[0]
-            gap_links = list(GAP_LINK.finditer(declaration))
-            for gap_id, match in zip(gaps, gap_links):
-                href = match.group(0)[2:-1]  # ](../../vision/gaps/<id>-<slug>.md)
+            # The canonical project parser owns relation role and raw link.
+            # Validate the authored target, not just its numeric gap ID.
+            for gap_id, role, href in declared_links:
                 target = (path.parent / href).resolve()
                 canonical = gap_sources.get(gap_id)
                 if canonical is None:
@@ -134,10 +131,10 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
                     raise RelationshipError(
                         f"{provenance} ({project}): gap:{gap_id} link {href!r} "
                         f"does not name canonical source {canonical_path}")
-            for i, gap_id in enumerate(gaps):
+            for gap_id, role, _ in declared_links:
                 links.append(Relationship(
                     project, "addresses", RecordRef("gap", gap_id),
-                    "primary" if i == 0 else "supporting", provenance))
+                    role, provenance))
 
     # A release explicitly includes projects; a project marked done doesn't
     # imply a release. Draft issue snapshots are deliberately *not* proof.
