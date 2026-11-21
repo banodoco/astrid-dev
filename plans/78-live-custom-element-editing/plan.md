@@ -10,7 +10,7 @@
 
 **Estimate:** 4–6 engineering days, one phase.
 
-**Waiting on:** Plan 69 product work landing on Release 15 branches.
+**Waiting on:** nothing for its base: [Plan 69](../69-project-elements/plan.md)'s product work is on `release/15/plan-69` in all three repositories since 21 November 2026; cut `release/15/plan-78` in astrid-agent from it at run start.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md).
 
