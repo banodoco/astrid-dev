@@ -53,6 +53,8 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
         path = root / path
     if path.is_symlink() or not path.is_file():
         raise ValueError("source must be a regular Markdown file, not a symlink")
+    # Resolve the source as well as root: /var and /private/var alias on macOS.
+    path = path.resolve()
     try:
         relative = path.relative_to(root / "agent")
     except ValueError as exc:
@@ -101,9 +103,13 @@ def discover_documents(root: Path) -> tuple[AgentDocument, ...]:
     """Discover all Markdown sources with no manually maintained package list."""
     root = Path(root).resolve()
     agent_root = root / "agent"
+    # A dangling directory symlink has exists() == False; refuse it before
+    # treating an absent agent source tree as an empty, removable package set.
+    if agent_root.is_symlink():
+        raise ValueError("agent/ must be a real directory")
     if not agent_root.exists():
         return ()
-    if agent_root.is_symlink() or not agent_root.is_dir():
+    if not agent_root.is_dir():
         raise ValueError("agent/ must be a real directory")
     documents: list[AgentDocument] = []
     names: dict[str, Path] = {}

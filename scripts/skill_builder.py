@@ -6,7 +6,7 @@ import json
 import os
 import re
 import shutil
-from urllib.parse import unquote
+from urllib.parse import quote, unquote
 
 from agent_documents import AgentDocument, discover_documents
 from records import markdown_heading_anchors
@@ -16,56 +16,181 @@ MARKER = ".astrid-dev-generated"
 REPO_LINK = "../../../"
 _LINK = re.compile(r"(!?\[[^\]\n]+\])\(([^)\n]+)\)")
 _SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.I)
+_REFERENCE_DEFINITION = re.compile(r"^([ ]{0,3})\[([^\]\n]+)\]:[ \t]*(.*)$")
+_REFERENCE_USE = re.compile(r"(?<!\\)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
+_REF_TOKEN = re.compile(r"^([ \t]*)(<[^>\n]+>|[^\s\n]+)")
+_CODE_SPAN = re.compile(r"(?<!\\)(\x60+)(.*?)\1")
+_MARKER_SOURCE = re.compile(r"agent/(?:[a-z0-9]+(?:-[a-z0-9]+)*/)*([a-z0-9]+(?:-[a-z0-9]+)*)\.md\n\Z")
+
+
+def _active_lines(lines: list[str]) -> list[bool]:
+    """Ignore real Markdown fenced examples, whether backtick or tilde."""
+    result: list[bool] = []
+    fence: str | None = None
+    size = 0
+    for line in lines:
+        plain = line.rstrip("\r\n")
+        if fence is not None:
+            result.append(False)
+            if re.fullmatch(
+                r"[ ]{0,3}" + re.escape(fence) + "{" + str(size) + r",}[ \t]*", plain
+            ):
+                fence, size = None, 0
+            continue
+        opening = re.match(r"^[ ]{0,3}(\x60{3,}|~{3,})", plain)
+        if opening:
+            fence, size = opening.group(1)[0], len(opening.group(1))
+            result.append(False)
+        else:
+            result.append(True)
+    return result
+
+
+def _real_anchors(text: str) -> set[str]:
+    """Use shared GitHub slug rules without accepting headings in fences."""
+    lines = text.splitlines(keepends=True)
+    active = _active_lines(lines)
+    visible = "".join(
+        line if keep else ("\n" if line.endswith("\n") else "")
+        for line, keep in zip(lines, active)
+    )
+    return {anchor for _, _, anchor in markdown_heading_anchors(visible)}
+
+
+def _ref_key(label: str) -> str:
+    return " ".join(label.split()).casefold()
+
+
+def _mask_code_spans(line: str) -> str:
+    # Keep offsets stable so the original source can be rewritten exactly.
+    return _CODE_SPAN.sub(lambda match: " " * len(match.group(0)), line)
 
 
 def _rewrite_links(source: AgentDocument, root: Path) -> str:
-    """Local Markdown links resolve through the generated package's repo link."""
-    fence: str | None = None
-    size = 0
-    lines = []
-    for line in source.body.splitlines(keepends=True):
-        trimmed = line.strip()
-        if fence:
-            if re.fullmatch(re.escape(fence) + "{" + str(size) + r",}[ \t]*", trimmed):
-                fence, size = None, 0
-            lines.append(line)
-            continue
-        fence_pattern = r"^(" + re.escape(chr(96)) + r"{3,}|~{3,})"
-        start = re.match(fence_pattern, trimmed)
-        if start:
-            fence, size = start.group(1)[0], len(start.group(1))
-            lines.append(line)
-            continue
+    """Validate and rewrite inline and full/collapsed/shortcut reference links."""
+    lines = source.body.splitlines(keepends=True)
+    active = _active_lines(lines)
+    definitions: set[str] = set()
+    destinations: dict[int, tuple[int, int, str, str]] = {}
+    definition_lines: set[int] = set()
 
-        def replace(match: re.Match[str]) -> str:
-            label, raw = match.groups()
+    def rewrite_address(address: str) -> str:
+        if not address:
+            return address
+        if address.startswith("#"):
+            fragment = unquote(address[1:])
+            if fragment and fragment not in _real_anchors(source.body):
+                raise ValueError(f"{source.relative}: missing heading in {address}")
+            return address
+        if address.startswith("/"):
+            raise ValueError(
+                f"{source.relative}: absolute filesystem link is not portable: {address}"
+            )
+        if address.lower().startswith("file:") or re.match(r"^[A-Za-z]:", address):
+            raise ValueError(
+                f"{source.relative}: file: or absolute filesystem link is not portable: {address}"
+            )
+        if _SCHEME.match(address):
+            return address
+        pathpart, sep, anchor = address.partition("#")
+        pathpart, _, query = pathpart.partition("?")
+        target = (source.path.parent / unquote(pathpart)).resolve()
+        if not target.is_relative_to(root):
+            raise ValueError(f"{source.relative}: link escapes checkout: {address}")
+        if not target.exists():
+            raise ValueError(f"{source.relative}: missing link target: {address}")
+        if anchor and target.is_file() and target.suffix.lower() == ".md":
+            if anchor not in _real_anchors(target.read_text(encoding="utf-8")):
+                raise ValueError(f"{source.relative}: missing heading in {address}")
+        result = "repo/" + quote(target.relative_to(root).as_posix(), safe="/-._~")
+        if query:
+            result += "?" + query
+        if sep:
+            result += "#" + anchor
+        return result
+
+    # Definitions may follow uses and may put the destination on an indented
+    # next line. Missing definitions cannot silently become plain prose.
+    for index, line in enumerate(lines):
+        if not active[index]:
+            continue
+        definition = _REFERENCE_DEFINITION.match(line.rstrip("\r\n"))
+        if definition is None:
+            continue
+        key = _ref_key(definition.group(2))
+        if not key or key in definitions:
+            raise ValueError(f"{source.relative}: invalid or duplicate reference [{key}]")
+        raw = definition.group(3)
+        if raw.strip():
+            destination_line = index
+            token = _REF_TOKEN.match(raw)
+            if token is None:
+                raise ValueError(f"{source.relative}: unsupported reference [{key}]")
+            begin = definition.start(3) + token.start(2)
+            finish = definition.start(3) + token.end(2)
+        else:
+            destination_line = index + 1
+            if (destination_line >= len(lines) or not active[destination_line]
+                    or not re.match(r"^[ \t]+", lines[destination_line])):
+                raise ValueError(f"{source.relative}: reference [{key}] has no destination")
+            token = _REF_TOKEN.match(lines[destination_line])
+            if token is None:
+                raise ValueError(f"{source.relative}: reference [{key}] has no destination")
+            begin, finish = token.span(2)
+            definition_lines.add(destination_line)
+        original = lines[destination_line][begin:finish]
+        address = original[1:-1] if original.startswith("<") and original.endswith(">") else original
+        if not address:
+            raise ValueError(f"{source.relative}: empty reference destination [{key}]")
+        definitions.add(key)
+        destinations[destination_line] = (begin, finish, original, address)
+        definition_lines.add(index)
+
+    for index, line in enumerate(lines):
+        if not active[index] or index in definition_lines:
+            continue
+        masked = _mask_code_spans(line)
+        for match in reversed(list(_LINK.finditer(masked))):
+            masked = (masked[:match.start()]
+                      + " " * (match.end() - match.start())
+                      + masked[match.end():])
+        checkbox = re.match(r"^\s*(?:[-*+]|\d+[.)])\s+\[([ xX])\]", masked)
+        for match in _REFERENCE_USE.finditer(masked):
+            if checkbox and checkbox.start(1) - 1 == match.start():
+                continue
+            if match.group(1).startswith("^"):
+                continue  # Footnote syntax is not a Markdown link.
+            label = match.group(2) if match.group(2) else match.group(1)
+            key = _ref_key(label)
+            if key not in definitions:
+                raise ValueError(f"{source.relative}: undefined reference [{key}]")
+
+    for index, line in enumerate(lines):
+        if not active[index]:
+            continue
+        masked = _mask_code_spans(line)
+        replacements: list[tuple[int, int, str]] = []
+        for match in _LINK.finditer(masked):
+            actual = _LINK.fullmatch(line[match.start():match.end()])
+            assert actual is not None
+            label, raw = actual.groups()
             quoted = re.match(r'^(\S+)(\s+"[^"\n]*")?$', raw)
             if quoted is None:
                 raise ValueError(f"{source.relative}: unsupported Markdown link {raw!r}")
             address, suffix = quoted.group(1), quoted.group(2) or ""
-            if (not address or address.startswith(("#", "/", "//"))
-                    or _SCHEME.match(address)):
-                return match.group(0)
-            pathpart, sep, anchor = address.partition("#")
-            pathpart, _, query = pathpart.partition("?")
-            target = (source.path.parent / unquote(pathpart)).resolve()
-            if not target.is_relative_to(root):
-                raise ValueError(f"{source.relative}: link escapes checkout: {address}")
-            if not target.exists():
-                raise ValueError(f"{source.relative}: missing link target: {address}")
-            if anchor and target.is_file() and target.suffix.lower() == ".md":
-                anchors = {a for _, _, a in markdown_heading_anchors(
-                    target.read_text(encoding="utf-8"))}
-                if anchor not in anchors:
-                    raise ValueError(f"{source.relative}: missing heading in {address}")
-            output = "repo/" + target.relative_to(root).as_posix()
-            if query:
-                output += "?" + query
-            if sep:
-                output += "#" + anchor
-            return label + "(" + output + suffix + ")"
-
-        lines.append(_LINK.sub(replace, line))
+            replacements.append(
+                (match.start(), match.end(),
+                 label + "(" + rewrite_address(address) + suffix + ")")
+            )
+        if index in destinations:
+            begin, finish, token, address = destinations[index]
+            rewritten = rewrite_address(address)
+            if rewritten != address:
+                value = f"<{rewritten}>" if token.startswith("<") else rewritten
+                replacements.append((begin, finish, value))
+        for begin, finish, value in sorted(replacements, reverse=True):
+            line = line[:begin] + value + line[finish:]
+        lines[index] = line
     return "".join(lines)
 
 
@@ -106,15 +231,27 @@ def _assert_package_dir(package: Path, *, stale: bool = False) -> None:
     marker = package / MARKER
     if not marker.is_file() or marker.is_symlink():
         raise ValueError(f"refusing unmanaged generated package: {package}")
-    if not marker.read_text(encoding="utf-8").startswith("agent/"):
+    source = marker.read_text(encoding="utf-8")
+    match = _MARKER_SOURCE.fullmatch(source)
+    if match is None or package.name != "astrid-dev-" + match.group(1):
         raise ValueError(f"invalid ownership marker: {package}")
+    # Verify every package's SKILL.md before build_packages can retire anything.
+    # A symlink with matching bytes is still foreign content and must be refused.
+    skill = package / "SKILL.md"
+    if skill.is_symlink():
+        raise ValueError(f"{package}: refusing symlinked SKILL.md")
+    if skill.exists() and not skill.is_file():
+        raise ValueError(f"{package}: SKILL.md must be a regular file")
+    if stale and not skill.is_file():
+        raise ValueError(f"{package}: stale SKILL.md must be a regular file")
     contents = {path.name for path in package.iterdir()}
     if contents - {MARKER, "SKILL.md", "repo"}:
         raise ValueError(f"unmanaged extra files in {package}: {sorted(contents)}")
-    if not stale:
-        link = package / "repo"
-        if not link.is_symlink() or os.readlink(link) != REPO_LINK:
-            raise ValueError(f"{package}: expected canonical repo link")
+    # Even obsolete packages must retain an owned, canonical repo entry.
+    # Check every member of every package before retiring any stale package.
+    link = package / "repo"
+    if not link.is_symlink() or os.readlink(link) != REPO_LINK:
+        raise ValueError(f"{package}: expected canonical repo link")
 
 
 def check_packages(root: Path) -> list[str]:
