@@ -158,6 +158,62 @@ class DeliveryCompositionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "exactly one primary"):
             load_delivery(self.root)
 
+    def test_wrong_gap_filename_with_right_id_is_rejected(self):
+        # The canonical CA-001 source exists, but this authored link does not.
+        # The bare plan_gap_ids() parser accepts the ID; delivery must not.
+        self.write("plans/72-demo/plan.md",
+                   PLAN.replace("CA-001-finish-work.md", "CA-001-does-not-exist.md"))
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in ("plans/72-demo/plan.md", "project:72", "gap:CA-001",
+                         "CA-001-does-not-exist.md"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
+    def test_changed_release_heading_cannot_publish_a_false_issue_link(self):
+        self.write("releases/15.md",
+                   RELEASE.replace("# Release 15 — Demo", "# Release 16 — Demo"))
+        with self.assertRaises(RelationshipError) as failure:
+            graph = load_delivery(self.root)
+            frozen_releases_for_issue(graph, 123)
+        message = str(failure.exception)
+        for expected in ("releases/15.md", "release:15", "Release 16"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
+    def test_duplicate_gap_sources_name_identity_and_both_files(self):
+        self.write("vision/gaps/CA-001-copy.md", GAP)
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in ("gap:CA-001", "vision/gaps/CA-001-copy.md",
+                         "vision/gaps/CA-001-finish-work.md"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
+    def test_gap_without_primary_names_source_and_identity(self):
+        self.write("vision/gaps/CA-001-finish-work.md",
+                   GAP.replace("(primary)", "(supporting)"))
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in ("vision/gaps/CA-001-finish-work.md", "gap:CA-001",
+                         "exactly one primary"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
+    def test_plan_without_primary_names_source_and_identity(self):
+        self.write("plans/72-demo/plan.md",
+                   PLAN.replace("(primary)", "(supporting)"))
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in ("plans/72-demo/plan.md", "project:72",
+                         "exactly one primary"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
     def test_foundational_enabler_keeps_explicit_exception(self):
         self.write("plans/73-enabler/plan.md", PLAN.replace(
             "**Vision gaps:** [CA-001](../../vision/gaps/CA-001-finish-work.md) (primary)",
