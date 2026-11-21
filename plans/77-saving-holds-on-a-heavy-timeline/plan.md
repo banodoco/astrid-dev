@@ -39,7 +39,7 @@ In scope: the fixture, the harness, the loop, recovery of the uncommitted work f
 - **sandbox project:** a project the harness creates for itself in the stack's realm; no scenario touches any other project.
 - **hold:** saving holds when an edit that should save does, within the target time, and keeps working under repeated or concurrent use.
 - **real clash:** another actor changed the same occurrence or field since this client's read head.
-- **time to Saved:** from the end of a gesture to the editor's Saved badge, measured by the harness in the browser. For a burst or a repeat it runs from the end of the last gesture. A scenario passes at a median of 2.0 s or less over its runs with no run over 4 s (the planner's reading of "about 2 s"; the owner may change it).
+- **time to Saved:** from the end of a gesture to the editor's Saved badge, measured by the harness in the browser. For a burst or a repeat it runs from the end of the last gesture. Each scenario runs at least 3 times per round, and passes at a median of 2.0 s or less over those runs with no run over 4 s (the planner's reading of "about 2 s" and the planner's run count; the owner may change either).
 
 ## Existing work and decision
 

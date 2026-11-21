@@ -7,11 +7,11 @@ Written on 18 November 2026 for whoever runs this plan next, on another machine.
 ## First actions on a new machine
 
 1. **Clone the repositories** (all under `banodoco` on GitHub): `astrid-dev`, `astrid-app`, `astrid-agent`, `astrid-runtime`. Free disk first: 25 GB (a stack is about 10 GB by the release script's README, on top of the 15 GB floor), and never below 15 GB during a run (the disk filled twice on 18 November from headless browser profiles and stack copies). Delete the old stack root before each rebuild; the fixture is rebuilt, so no data copy is kept. Needs Node 20, ffmpeg and Playwright. The release script needs macOS and a live install (APFS clones and launchd); any other machine uses the direct route in [SL-1](tasks.md).
-2. **Check out the branches** (all on origin, cut from `release/14/plan-59`): `release/14/plan-77` in each of astrid-app, astrid-agent and astrid-runtime, and astrid-dev `main` (this pack). One worktree per branch; keep the main clones clean. Record your session id in the `Owner` line of [plan.md](plan.md) ([authority](inputs.md#planning-evidence)).
+2. **Check out the branches** (all on origin, cut from `release/14/plan-59`): `release/14/plan-77` in each of astrid-app, astrid-agent and astrid-runtime, and astrid-dev `main` (this pack). **Check first with `git ls-remote`:** on 21 November only the Runtime had the `plan-77` names; the App and Agent still had `release/14/plan-66` and `release/14/plan-66-wip/...`. The owner asked for this rename on 21 November: if it is not done, push the same commits under the new names if you can, or stop and ask: a stack built from a missing branch name silently falls back to `release/14/main`. One worktree per branch; keep the main clones clean. Record your session id in the `Owner` line of [plan.md](plan.md) ([authority](inputs.md#planning-evidence)).
 3. **Create `run.yaml`** ([below](#runyaml)).
 4. **Build the stack** (SL-1, [below](#build-the-stack)).
 5. **Build the fixture** (SL-0) on that stack: `scripts/save-loop/build-fixture.*` in astrid-app, not written yet.
-6. **Run round 1** ([live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#the-round)), once SL-2 has retargeted the harness. SL-3 (recover the lost work) and SL-5 (astrid-dev PR #880) run beside these and do not block round 1.
+6. **Run round 1** once SL-2 has retargeted the harness, then keep looping ([a round, step by step](#a-round-step-by-step)). SL-3 (recover the lost work) runs beside these and does not block round 1.
 
 Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `python3 -m unittest discover -s scripts -p "test_*.py"` (Python 3.10 or later). For a PR add `--base <base commit> --body-file /dev/null` to the check.
 
@@ -31,6 +31,19 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 - Treat the advisor's advice as evidence, and ask it what to remove first.
 - After a Runtime fix, regenerate the Agent's Runtime pins (`scripts/regenerate_runtime_pins.py` in astrid-agent) before rebuilding the stack.
 - Tag claims as verified or reported.
+
+## A round, step by step
+
+The [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#the-round) is the rule; this is the order on the machine.
+
+1. **Disk:** `df -h`; stop below 15 GB. Delete leftover browser profiles.
+2. **Stack:** if the last round merged an Agent or Runtime fix (after a Runtime fix, regenerate the Agent's pins first), delete the stack root and install fresh by SL-1's route; if it merged only App fixes, check out the new App head and restart the editor. Confirm the stack's App and Agent commits are the plan branch heads.
+3. **Fixture:** run SL-0's `build-fixture` script; it writes the manifest the harness reads.
+4. **Matrix:** run SL-2's harness against the editor port; it prints the round table and writes one JSON row per scenario run.
+5. **Record:** add the round's section to [rounds.md](rounds.md) (versions, the table, timings split into editor wait, commit and badge) and its one line under the loop card in [tasks.md](tasks.md).
+6. **Strategist:** give the advisor binding the new round and the earlier ones, read-only (`codex exec ... -s read-only`, command in the workstream), and ask what to remove first. Paste its advice into the round as evidence.
+7. **Pick and fix:** the coordinator picks the smallest fixes (one failing scenario, one cause, one change) and dispatches each as `N` or `X` in its own worktree; each lands as a PR into `release/14/plan-77` with the failed scenario as its red test. Write the round's plan deltas for Plans 63, 75, 76 and 18.
+8. **Stop or repeat:** check the stop rules on the [loop card](tasks.md); otherwise go to step 1.
 
 ## Where everything is
 
