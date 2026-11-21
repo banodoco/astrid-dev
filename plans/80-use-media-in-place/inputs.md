@@ -39,7 +39,7 @@
 
 **Proof and limits:** The completion cases in [plan.md](plan.md#completion). Not proven here: other operating systems than the one each phase is run on, network and removable drives beyond "missing", and portability without copying in.
 
-**Review rounds:** Recommended: none for phase 1 beyond its focused proof and a bounded-fix check, because it adds no record type; for phase 2, a review stop (RS1) after the contract and two rounds at the end, because the change reaches user data and accepted history. Pending — the owner confirms.
+**Review rounds:** None for phase 1 beyond its focused proof and a bounded-fix check, because it adds no record type; for phase 2, a review stop (RS1) after the contract and two rounds at the end, because the change reaches user data and accepted history. Agreed by the owner on 21 November 2026 in the Release 15 Lead session: "Yeah, I agree with your recommendations".
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase it covers, the accountable session, what it may do without asking and what still needs the owner's go.
 

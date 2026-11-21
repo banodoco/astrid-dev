@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Accepted — the owner asked for this project and its release on 21 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) (`session_011EzfW1gtAhRQwk8pgJMzhG`): "Let's add a project to do this right and add it to release 15, please." After the critique she was given the revised end state (about 8 days; the Runtime refuses by size; a Runtime client change and a pin) with the recommended answers to D1, D2, D4 and D5, and replied: "Yes, I agree with your recommendations." The review-round count was not among them and stays pending.
+**Scope decision:** Accepted — the owner asked for this project and its release on 21 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) (`session_011EzfW1gtAhRQwk8pgJMzhG`): "Let's add a project to do this right and add it to release 15, please." After the critique she was given the revised end state (about 8 days; the Runtime refuses by size; a Runtime client change and a pin) with the recommended answers to D1, D2, D4 and D5, and replied: "Yes, I agree with your recommendations."
 
 **Prior art:** Read on 21 November 2026 at astrid-agent [`release/15/main` `aac1ceb6`](https://github.com/banodoco/astrid-agent/tree/aac1ceb6) and astrid-runtime [`release/15/main` `1758a6df`](https://github.com/banodoco/astrid-runtime/tree/1758a6df), by an exploration with four read-only helpers, with the lines below re-read by the planner.
 
@@ -45,7 +45,7 @@
 
 **Proof and limits:** The four completion cases in [plan.md](plan.md#completion). Not proven here: Windows long paths, network and removable drives, and files above 5 GiB.
 
-**Review rounds:** Recommended: one round at the end, because the change crosses three repositories and a flow every creator uses. Pending — the owner confirms.
+**Review rounds:** One round at the end, because the change crosses three repositories and a flow every creator uses. Agreed by the owner on 21 November 2026 in the Release 15 Lead session: "Yeah, I agree with your recommendations".
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking and what still needs the owner's go.
 
