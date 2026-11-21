@@ -89,6 +89,10 @@ class RelationshipIndex:
         links = tuple(relationships)
         identities: set[tuple[RecordRef, str, RecordRef]] = set()
         for link in links:
+            # Gapless enablers must not also declare a project-to-gap edge.
+            if link.source in accepted_enablers and link.kind == "addresses":
+                raise RelationshipError(
+                    f"{link.source_path}: enabler {link.source} cannot declare addresses")
             if link.source not in self.records or link.target not in self.records:
                 missing = link.source if link.source not in self.records else link.target
                 raise RelationshipError(

@@ -39,6 +39,8 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
     No unlabeled GitHub API result is silently given a relationship.
     """
     root = Path(root)
+    if not root.is_dir():
+        raise RelationshipError(f"delivery root is not an existing directory: {root}")
     records: list[RecordRef] = []
     links: list[Relationship] = []
     enablers: list[RecordRef] = []

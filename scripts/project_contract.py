@@ -39,6 +39,14 @@ def plan_gap_ids(plan_text: str) -> list[str]:
         raise ValueError("Vision gaps declaration needs a gap document link")
     if len(ids) != len(set(ids)):
         raise ValueError("duplicate gap IDs in plan declaration")
+    # Refuse an authored link with both roles; preserve the accepted ordering.
+    gap_matches = list(GAP_LINK.finditer(gaps[0]))
+    for i, match in enumerate(gap_matches):
+        next_start = (gap_matches[i + 1].start()
+                      if i + 1 < len(gap_matches) else len(gaps[0]))
+        role_text = gaps[0][match.end():next_start]
+        if "(primary)" in role_text and "(supporting)" in role_text:
+            raise ValueError(f"gap {ids[i]} has contradictory primary/supporting roles")
     # The first linked gap is the one project owns. Other gaps may inform
     # dependencies, but the public vision renders this project only once.
     primary_count = len(re.findall(r"\(primary\)", gaps[0]))
