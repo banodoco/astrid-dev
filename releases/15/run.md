@@ -14,7 +14,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 
 | Lane | Session | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | not started | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Ready: branches `release/15/plan-69` and `release/15/plan-77` cut; waiting for the owner to hand the brief to a manager |
+| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Started 21 November 2026, route S, with hourly host check-ins. Plan 69 inventory and Runtime question in progress. Plan 77 Linux setup started. |
 | Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
 | Plans 39, 13, 50, 40, 63, 75, 76, 18, 72 | not started | — | Queued; branches not yet cut |
 

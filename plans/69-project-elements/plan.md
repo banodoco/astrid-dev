@@ -6,7 +6,7 @@
 
 **Status:** queued
 
-**Owner:** Unassigned
+**Owner:** Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS)
 
 **Estimate:** About 2 engineering days (1 to 3): the inventory, the open Runtime question, and landing.
 
