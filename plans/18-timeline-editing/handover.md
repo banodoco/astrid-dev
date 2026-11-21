@@ -1,38 +1,24 @@
 # Handover — Extensible timeline editing
 
-[Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md) · [Statements](statements.md) · [Release 14](../../releases/14.md)
+[Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md) · [Statements](statements.md) · [Plan 63](../63-dependable-saving/plan.md) · [Release 14](../../releases/14.md)
 
-Written on 18 November 2026 by the session that added phase 0 (the commit contract) to this plan. It is a dated snapshot for whoever manages this plan next. Nothing is built. Re-read branches with `git ls-remote` before acting.
+Written on 18 November 2026 by the session that added phase 0 (the commit contract) to this plan, and edited the same day when phase 0 moved to [Plan 63, Dependable saving](../63-dependable-saving/handover.md). It is a dated snapshot for whoever manages this plan next. Nothing is built. Re-read branches with `git ls-remote` before acting.
 
 ## Where it stands
 
-- The plan is **queued and unowned**. Phase 0 and the phase 1 re-scope are drafts on astrid-dev branches that are **local only**: `plan/18-command-layer` (phase 1 and 2, commits `d9ac42a4` and `bd535a5d`) and `plan/18-phase-0-commit-contract` (phase 0, one commit on top of it). Neither is pushed and no planning PR exists. The main thread reviews first.
-- Phase 0 exists because of one finding of 18 November: nothing treats an accepted head as settled (the five symptoms are in [plan.md](plan.md#phase-0-the-commit-contract)). The owner asked for it to be fixed "now and PROPERLY ... in the follow up plan"; the "now" is Release 14's fix branches.
-- Release 14's fix branches were cut and in flight on 18 November (runtime `release/14/commit-cost`, agent `release/14/legacy-probes` and `release/14/commit-loads`, app `release/14/rejected-discharge`; Agent #393 is merged at `b126d7482`). They are not rows in `releases/14.md` yet. CC-1 starts by checking each against merged code.
-- Independent review by Opus (merge with edits), edits applied.
-
-## What is proven, and what is not
-
-Proven by reading, not running: the profile numbers and the root-cause reading come from the 18 November reviews (private, held by the Release 14 Lead). **Not proven:** that the Release 14 fixes reach the counts the contract states (nobody has run the scaling test; CC-1 is the first run); that "low seconds" is reachable, and nothing shows under one second; the trigger of the 400 "inputs changed" (candidates: a second writer, a WAL stat change; CC-4 logs it); how the conflict card opens after a `rejected` outcome (reproduce first in CC-5).
+- The plan is **queued and unowned**. Phase 1 and 2 are a draft on the astrid-dev branch `plan/18-command-layer` (commits `d9ac42a4` and `bd535a5d`), local only when this was written. The main thread reviews first.
+- **Phase 0 is no longer here.** The owner asked whether stability should come before extensibility, and the answer was that stability goes first, as its own project, queued in no release brief for now ([Plan 63 D9](../63-dependable-saving/inputs.md#owner-decisions), open: which release; recommended Release 15). Everything about the commit contract, its evidence, its tasks (CC-1 to CC-10, R0) and its decisions (D9 to D15) is there.
+- **Re-phased on 18 November 2026 (final recommendations, accepted by the owner): phase A, agents and packs (about 18 days; Agent and Runtime only), starts after Plan 63's server track and does not wait for R0 or the week; phase B, editor gestures (about 44 days), waits for Plan 63's R0 and a week of editing; phase C, the alternate view, is deferred.** TL-1 waits for Plan 63's CC-3, CC-4 and CC-7. New: TL-3e (close the set) and EX-P (the pack-op proof). Cut: the Runtime's schema copy and sync script, selector-declared reads, automatic re-apply and "delete beats edit". About 62 days plus 8.5 optional.
+- What stays here from the save work: TL-5 (the document is the head plus the queue replayed), TL-10's command half (a drop is a named command, and the durable upload record), TL-4's closed reason list with headlines and TL-2's sync script (moved here from Plan 63's CC-4), and TL-5's opaque-payload swap.
 
 ## Waiting on the owner
 
-- **D9:** which release carries phase 0 (proposed Release 15; alternative Release 17).
-- **D10:** the corpus data: synthetic only, or one anonymised export.
-- **D14:** persist verified trust across restarts (cold start); recommended yes, by `file_identity`.
-- D4, D5, D6 and D8 from the earlier draft are unchanged.
-- Confirm or overrule D11 (`stale_head` rebases an intent, conflicts a document patch) and D12 (counts, no clock).
+- **D4:** which release carries phase B (the owner decided Release 15 for the four saving plans, [Plan 63's D9](../63-dependable-saving/inputs.md#owner-decisions); phase B may not fit).
+- **D5 is decided: the alternate view is deferred.** D6 and D8 from the earlier draft are unchanged.
+- D9 (the release, decided: Release 15) is Plan 63's, one decision for the four saving plans (Plans 63, 75, 76 and this one); D10 to D19 are Plan 63's or Plan 75's (D14).
 
 ## For the next manager, in order
 
-1. Read [plan.md](plan.md#phase-0-the-commit-contract) then [tasks.md](tasks.md#start-here). Do not start before Release 14 is published and D9 is answered.
-2. Re-check the Release 14 branches against the merged code and update the table in plan.md; anything not landed becomes part of CC-2.
-3. Take CC-7 (corpus) first, then CC-1, CC-2 (the critical path, 11 days with R0); CC-3 and CC-6, CC-4 then CC-5, and CC-8 run beside it; close with R0.
-4. When the scope PR merges, the Lead reopens #842 as the mechanism and links this plan on #826, #846, #732 and #852 (see the ledger in [inputs.md](inputs.md#issue-ledger)).
-5. File the issues for the deferred items (cold-start hashing, snapshot size) so they have a home.
-
-## What this run taught
-
-- A cache keyed by base revision does not help ordinary edits, because each commit creates a new base. Trust must be keyed by file identity, which survives commits.
-- A reader that raises on stored data is a bug class, not a bug: the fix is a mechanism (a registry and a test over legacy shapes), not a fourth rule.
-- Phase 0 does not move the editor to send intent. That belongs to phase 1 and its review stop RS1; phase 0 keeps the old checks from growing (CC-8).
+1. Read [Plan 63](../63-dependable-saving/plan.md) and confirm its end-state checks are true; do not start code tasks before then.
+2. Read [plan.md](plan.md) then [tasks.md](tasks.md#start-here). Take TL-1 once CC-3, CC-4 and CC-7 are done.
+3. Re-check the template branches against the merged code before TL-1's inventory.
