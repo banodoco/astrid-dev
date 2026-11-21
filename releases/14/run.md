@@ -125,9 +125,10 @@ FIX-15 through FIX-18 come first, in the order below. Give no new slots to Plan 
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R14-FIX-15](packets/R14-FIX-15.md) The App installs the Release 14 tuple | App pins | Running | — | Re-pin Agent’s VibeComfy dependency, the Windows journey’s App ref and the App tuple. Set the manifest release to 14 and leave the required version unchanged. |
+| [R14-FIX-15](packets/R14-FIX-15.md) The App installs the Release 14 tuple | App pins | Running | — | Land Agent #457 on clean CI with the VibeComfy pin, Windows journey App ref and envelope test. Re-pin the App to the combined tuple after integration lands. Set the manifest release to 14 and leave the required version unchanged. |
+| Plans 59, 64 and 65 integration (`release/14/int-59-64-65`) | [Integration request](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7063199201) | Running (integration and CI) | `session_011EzfW4BJ221kXBNRB4xQcG` | After Agent #457, finish full CI on the combined heads and classify every failure against `release/14/main`. The Lead runs an independent Astra review with Luna helpers on each PR. Explain both mixed-version save cases before opening the Runtime PR. Merge VibeComfy, then Runtime into `release/14/main` with merge commits, then land Agent pinned to both landed SHAs. The first App re-pin combines Plan 59 App work, FIX-16 (#324) and the FIX-15 re-pin. After FIX-18, re-pin once more, freeze and run FIX-17 on that tuple. [Owner decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7063263106) |
 | R14-FIX-16 Rejected saves stop and explain | [#1186](https://github.com/banodoco/astrid-dev/issues/1186), #720, #732 | Ready | — | Stop retrying and retain the change. Offer “Copy my change out” and “Discard and reload the saved version”. Scene-by-reference moves to Release 15. |
-| R14-FIX-17 Release 13 to 14 update and mixed-version matrix | [#1188](https://github.com/banodoco/astrid-dev/issues/1188) | Ready | — | Start the shipped lifecycle harness now. Run it after FIX-15. |
+| R14-FIX-17 Release 13 to 14 update and mixed-version matrix | [#1188](https://github.com/banodoco/astrid-dev/issues/1188) | Ready | — | Start the shipped lifecycle harness now. Run both mixed-version rows as part of the matrix on the frozen combined tuple. |
 | [R14-FIX-18](packets/R14-FIX-18.md) Four differences from Release 13 are explained | Agent pass-to-fail comparison | Ready | — | Reproduce and classify each ID against published Release 13. |
 | [R14-PUB-1](packets/R14-PUB-1.md) The publication proofs no other packet owns | Publishing Release 14 | Ready | — | Diffs against R13, the RunPod receipt, release notes, the rollback runbook |
 | [R14-P55-01](packets/R14-P55-01.md) Fast-lane design | Plan 55 LS-3 | Done | `r14-P55-01-1` | Design merged into astrid-dev `release/14/plan-55` at `cb5419731` (#803), after the Lead's RS1; RS1.10 and RS1.11 go to LS-7 and LS-9 |
@@ -309,6 +310,7 @@ If a check fails, say which manual step I must do instead of promising automatio
 6. **Plan 53:** your mark-up of the Packs and Generation wording (VA-3, VA-4) and the supporting-aspirations table (VA-5), and the look of the page (VA-10).
 7. **Plan 61:** filing the three drafted issues. The installed run and three fresh starts completed on hosted macOS. A run on your own data is optional.
 8. **Plan 59.** The film still needs the owner’s voice take.
+9. Confirm the $30 RunPod budget for Plans 59, 64 and 65's live cases. [Owner decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7063263106)
 
 **Decided on 21 November.** The owner settled the update requirement, scene-by-reference, publication and the Release 15 speed target and measurement. See the [release brief](../14.md#publication). [Owner decision](https://github.com/banodoco/astrid-dev/issues/796#issuecomment-7061951208)
 
