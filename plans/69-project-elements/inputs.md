@@ -75,7 +75,7 @@ The Agent's two CLI parity failures occurred on both comparison heads. App's nam
 
 ## Inherited Agent model-lock failure (21 November 2026)
 
-Agent Release 15 base `aac1ceb6` and Plan 69 `134c6dd0` contain the same RunPod model lock and recipe pin. The actual hash of `astrid/packs/runpod/models.lock.json` is `e35d5189557b8fe09b54a218b69666a74c678182ea31344245726581130595ff`. The Linux cu130 recipe expects `40f37e271863e67d02fd6bcd6badb00a474eb6ec051ead7e8edf04281b2ef72a`. The release lead reported 35 failures out of 50 in the untouched base’s `tests/packs/runpod/test_h3_release.py`. The manager compared the exact source hashes on both heads. Repair belongs on the release base. Recheck after bringing the current release base into Plan 69 for PE-3.
+Agent Release 15 base `aac1ceb6` and Plan 69 `134c6dd0` contain the same RunPod model lock and recipe pin. The actual hash of `astrid/packs/runpod/models.lock.json` is `e35d5189557b8fe09b54a218b69666a74c678182ea31344245726581130595ff`. The Linux cu130 recipe expects `40f37e271863e67d02fd6bcd6badb00a474eb6ec051ead7e8edf04281b2ef72a`. The release lead reported 35 failures out of 50 in the untouched base’s `tests/packs/runpod/test_h3_release.py`. The manager compared the exact source hashes on both heads. The owner authorized this lane to fix the release base. The focused candidate restored 34 of the 35 failing cases and introduced no new failing IDs. The remaining failure reaches an existing null revision that the earlier digest refusal had masked. [Base repair #473](https://github.com/banodoco/astrid-agent/pull/473) · [Source revision follow-up #1264](https://github.com/banodoco/astrid-dev/issues/1264)
 
 ## References
 
