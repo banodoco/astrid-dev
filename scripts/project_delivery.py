@@ -96,6 +96,11 @@ def load_delivery(root: Path = ROOT) -> RelationshipIndex:
             continue  # Existing catalog-path check owns malformed folder names.
         project = RecordRef("project", project_number(path))
         provenance = path.relative_to(root).as_posix()
+        first_folder = project_folders.get(project.id)
+        if first_folder is not None:
+            raise RelationshipError(
+                f"{provenance} ({project}): duplicate project number {project.id}: "
+                f"plans/{first_folder}/plan.md and {provenance}")
         records.append(project)
         project_folders[project.id] = path.parent.name
         plan_text = path.read_text(encoding="utf-8")
