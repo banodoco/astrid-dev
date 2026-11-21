@@ -617,3 +617,87 @@ None observed
 **FAIL→PASS — provisional recovery (1):**
 - `tests/test_pinokio_platform_adapter.py::test_secret_never_appears_in_receipt_state_or_cli_output`
 
+
+
+---
+
+# Provisional Agent R13→R14 Lanes four-shard comparison — 21 November 2026
+
+Published Agent source `959da7326c982a9197b5d6e2a4489f45e1deef0e` [Lanes 43760673730](https://github.com/banodoco/astrid-agent/actions/runs/43760673730) versus pre-freeze Agent `0020c2e8d7f5d6051db2964a235b97f4ba002a72` [Lanes 44651391728](https://github.com/banodoco/astrid-agent/actions/runs/44651391728). **No qualifying verdict.**
+
+| Job | R13 native IDs | R14 pre-freeze native IDs | PASS→FAIL | PASS→missing/skip | New failing | FAIL→PASS |
+|---|---|---|---:|---:|---:|---:|
+| integration shard 1 | 516 (480 pass, 36 fail, 0 skip) | 517 (481 pass, 36 fail, 0 skip) | 0 | 0 | 0 | 0 |
+| integration shard 2 | 516 (267 pass, 249 fail, 0 skip) | 517 (267 pass, 250 fail, 0 skip) | 1 | 2 | 0 | 0 |
+| integration shard 3 | 516 (372 pass, 143 fail, 1 skip) | 517 (370 pass, 146 fail, 1 skip) | 3 | 0 | 0 | 0 |
+| integration shard 4 | 516 (391 pass, 125 fail, 0 skip) | 516 (391 pass, 125 fail, 0 skip) | 0 | 0 | 0 | 0 |
+
+Lane per-job totals: **4 PASS→FAIL; 2 PASS→missing/skip; 0 new failing; 0 recovered**. Every discrepancy stays open until a source-linked explanation and the frozen comparison.
+
+## integration shard 1
+
+[R13 job](https://github.com/banodoco/astrid-agent/actions/runs/43760673730/job/132954543497) · [Pre-freeze R14 job](https://github.com/banodoco/astrid-agent/actions/runs/44651391728/job/136006878103)
+
+**PASS→FAIL — unresolved (0):**
+None observed
+
+**PASS→missing/skip — omission or possible rename, not yet explained (0):**
+None observed
+
+**New failing IDs — no R13 row (0):**
+None observed
+
+**FAIL→PASS — provisional recovery (0):**
+None observed
+
+## integration shard 2
+
+[R13 job](https://github.com/banodoco/astrid-agent/actions/runs/43760673730/job/132954543399) · [Pre-freeze R14 job](https://github.com/banodoco/astrid-agent/actions/runs/44651391728/job/136006877063)
+
+**PASS→FAIL — unresolved (1):**
+- `tests/editing_conformance/test_historical_shared_redo_authority.py::test_shared_redo_rechecks_source_archive_at_acceptance`
+
+**PASS→missing/skip — omission or possible rename, not yet explained (2):**
+- `tests/core/generation/test_generate_target_journey.py::test_f02_sdk_bound_target_failure_is_read_only[repo]`
+- `tests/editing_conformance/test_native_word_anchor.py::test_equal_text_restore_recovers_the_selected_publications_binding`
+
+**New failing IDs — no R13 row (0):**
+None observed
+
+**FAIL→PASS — provisional recovery (0):**
+None observed
+
+## integration shard 3
+
+[R13 job](https://github.com/banodoco/astrid-agent/actions/runs/43760673730/job/132954543366) · [Pre-freeze R14 job](https://github.com/banodoco/astrid-agent/actions/runs/44651391728/job/136006876749)
+
+**PASS→FAIL — unresolved (3):**
+- `tests/integrations/test_dry_run_equals_live_run.py::test_dry_run_equals_live_run[audio/tts-attached]`
+- `tests/packs/rendering/test_hyperframes_backend.py::test_hyperframes_real_media_render_through_public_service`
+- `tests/packs/rendering/test_hyperframes_backend.py::test_hyperframes_real_render_through_public_service`
+
+**PASS→missing/skip — omission or possible rename, not yet explained (0):**
+None observed
+
+**New failing IDs — no R13 row (0):**
+None observed
+
+**FAIL→PASS — provisional recovery (0):**
+None observed
+
+## integration shard 4
+
+[R13 job](https://github.com/banodoco/astrid-agent/actions/runs/43760673730/job/132954543369) · [Pre-freeze R14 job](https://github.com/banodoco/astrid-agent/actions/runs/44651391728/job/136006877378)
+
+**PASS→FAIL — unresolved (0):**
+None observed
+
+**PASS→missing/skip — omission or possible rename, not yet explained (0):**
+None observed
+
+**New failing IDs — no R13 row (0):**
+None observed
+
+**FAIL→PASS — provisional recovery (0):**
+None observed
+
