@@ -65,6 +65,10 @@ The Agent's two CLI parity failures occurred on both comparison heads. App's nam
 
 - On the current App review candidate `fece2c96` with Agent `134c6dd0` and Runtime `95920f84`, a registered-effect-only preview and managed render matched within one RGB value per channel. A separate normal track rename with the element list returning HTTP 503 saved one full-v2 commit step, advanced the public version once and reopened at that exact head with the renamed track and missing-element reason.
 
+## Inherited Agent model-lock failure (21 November 2026)
+
+Agent Release 15 base `aac1ceb6` and Plan 69 `134c6dd0` contain the same RunPod model lock and recipe pin. The actual hash of `astrid/packs/runpod/models.lock.json` is `e35d5189557b8fe09b54a218b69666a74c678182ea31344245726581130595ff`. The Linux cu130 recipe expects `40f37e271863e67d02fd6bcd6badb00a474eb6ec051ead7e8edf04281b2ef72a`. The release lead reported 35 failures out of 50 in the untouched base’s `tests/packs/runpod/test_h3_release.py`. The manager compared the exact source hashes on both heads. Repair belongs on the release base. Recheck after bringing the current release base into Plan 69 for PE-3.
+
 ## References
 
 - [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), which builds on this plan's branch.
