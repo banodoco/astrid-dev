@@ -51,7 +51,7 @@ The order is SL-1 (a stack), then SL-0 (the fixture, which needs a stack to buil
 
 ## Interfaces and handoff
 
-It consumes the three `release/14/plan-77` branches (App, Agent, Runtime), cut from `release/14/plan-59`; the exact SHAs are in [inputs.md](inputs.md#source-identities). It produces: fixes as PRs into those branches; a fixture and a harness in astrid-app `scripts/save-loop/` that any machine can rerun; and the round rows and plan deltas in [rounds.md](rounds.md), which Plans 63, 75 and 76 and 18 take up.
+It consumes the three `release/15/plan-77` branches (App, Agent, Runtime), cut on 21 November from Release 14's integration of Plans 59, 64 and 65; the exact SHAs are in [inputs.md](inputs.md#source-identities). It produces: fixes as PRs into those branches; a fixture and a harness in astrid-app `scripts/save-loop/` that any machine can rerun; and the round rows and plan deltas in [rounds.md](rounds.md), which Plans 63, 75 and 76 and 18 take up.
 
 ## Completion
 

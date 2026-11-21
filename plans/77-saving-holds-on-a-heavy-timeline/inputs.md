@@ -6,7 +6,7 @@
 
 **Scope decision:** Pending — the design challenge below has not been obtained, so the end state is not yet signed off as such. Next: the first loop round's strategist advice, then the owner's sign-off. On 21 November 2026 the owner restated the end state in their own words ("run the timeline live in the app, and then just check what the speed is, and then optimize it, and then keep on doing that on loop until it was working fast enough") and asked for this pack to be merged to `main`. Background: the owner asked on 18 November 2026, in the Release 14 Lead's session, for this loop: a heavy generated timeline, live tests of every edit, a strategist consulted each round, optimization, and updates to the saving plans from what the loop finds. Codex does the work; the coordinator makes the judgment calls. The owner did not choose the plan's number, title or card list; those are the planner's draft. Source: the owner's message in that session, quoted in the task brief that created this pack (not otherwise recorded).
 
-**Prior art:** The 14-kind sweep and its profiler, 18 November: [results.jsonl](evidence/results.jsonl) (3 saved, 11 refused), [log](evidence/sweep-loaded.log), [commit profile](evidence/sonnet-commit-profile-r14.md) (about 59% of a 3.74 s warm commit is `validate_final_candidate`, a doubled pass inside; 0.22 s on one clip). Design reviews that costed Plans 63, 75 and 76 and 18 from reading, not from a live loop: [final recommendations](evidence/fable-final-recommendations.md), [commit proof fit](evidence/fable-commit-proof-fit.md), [end-state review](evidence/fable-end-state-review.md). The state of everything on the crash day: [handover facts](evidence/handover-facts-20261118.md) and [QUEUE](evidence/QUEUE.md). The seeded harness is on astrid-app `release/14/plan-77` under `scripts/save-loop/`; the profiler helpers `prof_run.py` and `wall_run.py` could not be found on disk, so the profiling in SL-0 and SL-3c is redone from the report.
+**Prior art:** The 14-kind sweep and its profiler, 18 November: [results.jsonl](evidence/results.jsonl) (3 saved, 11 refused), [log](evidence/sweep-loaded.log), [commit profile](evidence/sonnet-commit-profile-r14.md) (about 59% of a 3.74 s warm commit is `validate_final_candidate`, a doubled pass inside; 0.22 s on one clip). Design reviews that costed Plans 63, 75 and 76 and 18 from reading, not from a live loop: [final recommendations](evidence/fable-final-recommendations.md), [commit proof fit](evidence/fable-commit-proof-fit.md), [end-state review](evidence/fable-end-state-review.md). The state of everything on the crash day: [handover facts](evidence/handover-facts-20261118.md) and [QUEUE](evidence/QUEUE.md). The seeded harness is on astrid-app `release/15/plan-77` under `scripts/save-loop/`; the profiler helpers `prof_run.py` and `wall_run.py` could not be found on disk, so the profiling in SL-0 and SL-3c is redone from the report.
 
 **Approach:** Measure first and fix by cause, rather than build the longer designs on estimates. A loop plan (a known end state, tasks from each live round) is the smallest form: three template files, a few setup cards and one standing card, run by the [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md). Alternatives rejected: another one-shot sweep (it missed repeated gestures); starting Plans 63 and 75 first (the same costing gap); a fixed card list (the fixes are not known). The stop-gap speed target is about 2 s; 300 ms stays Plan 75's.
 
@@ -18,8 +18,8 @@
 
 **Run start:** The owner's go is their own message in the main session on 18 November 2026: "write like basically a handover thing for this … make sure that everything is pushed to like a proper release-14 branch … it ultimately should just be like a plan within Astrid-dev that I'm able to give to another machine and they're able to do it … we're going to use Codex for most of the heavy lifting while it just acts as the coordinator, you know, fixing the stuff and making judgment calls on it."
 - **Accountable:** the coordinator session that claims the plan on the new machine; it records its session id in the `Owner` line of [plan.md](plan.md) when it starts.
-- **May, without asking:** open and merge PRs into `release/14/plan-77` in all three repositories after focused proof; add a stack script under `scripts/save-loop/` on App `release/14/plan-77` (the release script itself is not edited); dispatch workers; fix the docs of astrid-dev PR #880 (renumber, Approach lines).
-- **Needs the owner:** anything into `release/14/main` or product `main`; publishing anything; touching any live install or the owner's timelines; paid spend. Plan 77 reaches `release/14/main` only through the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md), on the owner's go.
+- **May, without asking:** open and merge PRs into `release/15/plan-77` in all three repositories after focused proof; add a stack script under `scripts/save-loop/` on App `release/15/plan-77` (the release script itself is not edited); dispatch workers; merge Release 14's integration or `release/15/main` into the plan branches to stay current.
+- **Needs the owner:** anything into `release/15/main`, `release/14/main` or product `main`; publishing anything; touching any live install or the owner's timelines; paid spend. Plan 77 reaches `release/15/main` only through the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md), on the owner's go.
 
 ### Heavy timeline shape
 
@@ -38,13 +38,13 @@ Measured read-only on 18 November 2026 from a copied Release 14 realm (see the d
 | Revisions / commit publications | 13 document revisions; 18 publications; 1 head; timeline version 18 |
 | Side tables | 46 project shots; 237 media transcript documents (not in the timeline document) |
 
-**Renumbering (21 November 2026):** this plan was drafted as Plan 66 and its product branches as `release/14/plan-66`; main had since used 66 for H3 composable core, so it became Plan 69, and then Plan 77 the same day, because `release/14/plan-69` already held unrecorded project-element work in astrid-app, astrid-agent and astrid-runtime (18 November). Its branches are `release/14/plan-77`. PR #880's 64 (fast saving) and 65 (editing together) became 75 and 76. The files under [evidence/](evidence/) are dated copies and keep the old numbers: there, Plan 64 means Plan 75 and Plan 65 means Plan 76.
+**Renumbering (21 November 2026):** this plan was drafted as Plan 66 and its product branches as `release/14/plan-66`; main had since used 66 for H3 composable core, so it became Plan 69, and then Plan 77 the same day, because `release/14/plan-69` already held unrecorded project-element work in astrid-app, astrid-agent and astrid-runtime (18 November). Its branches are `release/15/plan-77`. PR #880's 64 (fast saving) and 65 (editing together) became 75 and 76. The files under [evidence/](evidence/) are dated copies and keep the old numbers: there, Plan 64 means Plan 75 and Plan 65 means Plan 76.
 
 **Discrepancy (not the spec):** the 18 November profile reports 616 clips and a document of about 2.6 MB for "Almost Ready (trial v2)"; the copied realm's "Almost Ready" has 8 clips and 140 KB. The copy probably read a different timeline. The fixture's primary target is the profiled shape, measured live through the stack's API; the table above sets only the asset mix ratios and the track layout.
 
 ## Owner decisions
 
-- **D1 Release.** Decided, 18 November 2026: the owner asked in the Release 14 Lead's session for this work on a proper Release 14 branch, as a plan another machine runs. Release 14; listed in [releases/14.md](../../releases/14.md).
+- **D1 Release.** Decided, 18 November 2026: the owner asked in the Release 14 Lead's session for this work on a proper Release 14 branch, as a plan another machine runs. Moved, 21 November 2026: the owner moved the plan to Release 15 ("I think this should move to release. This should basically be release 15"), because Release 14 makes no speed claim and the saving plans it feeds (63, 75, 76, 18) are Release 15's. Release 15; listed in [releases/15.md](../../releases/15.md).
 - **D9, D10, D14, D15** are open and carried from the [QUEUE](evidence/QUEUE.md); none is decided here:
   - **D9** which release carries Plans 63, 75 and 76 and 18: Release 15 recommended ([final recommendations, 5.4](evidence/fable-final-recommendations.md)).
   - **D10** corpus data: synthetic recommended; the shadow-applier experiment reads a local copy of real history and commits none of it (same file).
@@ -61,17 +61,19 @@ Measured read-only on 18 November 2026 from a copied Release 14 realm (see the d
 
 ## Source identities
 
-On 18 November 2026, all on origin, cut from `release/14/plan-59`:
+Cut on 21 November 2026 from `release/14/int-59-64-65`, the Release 14 Lead's integration of Plans 59, 64 and 65, which contains all of `release/14/main` (with the release script) and all of Plan 59's App and Agent work:
 
 | Repository | Branch | SHA at cut |
 | --- | --- | --- |
-| astrid-app | `release/14/plan-77` | `2ffc0a300` at the cut; head `36d2b8258` after the harness seed |
-| astrid-agent | `release/14/plan-77` | `ec758a9b8` |
-| astrid-runtime | `release/14/plan-77` | `ee235d39d` |
+| astrid-app | `release/15/plan-77` | `1f8da7f42`: the integration head `10a33dd64` plus the harness seed, cherry-picked from `36d2b8258` |
+| astrid-agent | `release/15/plan-77` | `03e2db9a1`, the integration head; its `runtime.lock.json` pins Runtime `8a18168a3` |
+| astrid-runtime | `release/15/plan-77` | `8a18168a3`, the integration head |
 
-On 21 November the App and Agent branches were still named `release/14/plan-66` on origin (heads `36d2b8258` and the Agent's cut); only the Runtime had `release/14/plan-77` (`ee235d39d`). The rename is pending; check with `git ls-remote` before SL-1.
+**Why not `release/15/main`:** on 21 November it was last forwarded on 18 November, carried none of Plan 59 and was 35 commits behind `release/14/main` in the App. When Release 15's main is forwarded from Release 14, merge it into the plan branches.
 
-Merged into `release/14/plan-59` before the cut: Runtime #66 (member-list removal), Runtime #67 (revert of the #62 retention), App #308 (gesture registry read). Destination for every fix: the same repository's `release/14/plan-77`. The uncommitted crash work is on `release/14/plan-77-wip/*`; each branch and its base is listed in the [handover](handover.md#where-everything-is).
+**Runtime difference (checked 21 November):** the Runtime integration carries #62 ("keep verified history across unrelated writes") but not Plan 59's revert of it, #67, so the stack does not run what `release/14/plan-59` ran. That is the integration's choice at that SHA, still under review; record in round 1 which Runtime ran.
+
+**Old branches:** the 18 November branches (`release/14/plan-66` in all three repositories, and `release/15/plan-77` in the Runtime, from an intermediate rename) are superseded. Delete them once nothing reads them. The uncommitted crash work stays on `release/14/plan-66-wip/*` (and, in the Runtime, the same commits under `release/15/plan-77-wip/*`); each branch and its base is in the [handover](handover.md#where-everything-is). Destination for every fix: the same repository's `release/15/plan-77`.
 
 ## References
 
