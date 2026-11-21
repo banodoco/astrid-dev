@@ -14,7 +14,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 
 | Lane | Session | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 Runtime and Agent review batches landed on plan branches. The installed effect and save/reopen proofs passed. The owner resolved the three scope decisions and granted conditional PE-3 approval. The vendor restore, managed-render refusals, exact full CI and review 2 are open. Plan 77 direct stack landed. The unpushed Runtime repair passed the nine-track probe, while the older Runtime refused the heavy seed after 12 clips. The full fixture and baseline remain open. The standalone Release 14 App and Agent forwards are held for the integrated save path ([#796](https://github.com/banodoco/astrid-dev/issues/796)). |
+| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | The Plan 69 review fixes landed on its plan branches. Exact combined full CI and review 2 gate conditional PE-3. Plan 77 owns the checkpoint and commit-cost defects on its branches. The repair, full fixture and baseline are open. Release 14 forwards remain held. |
 | Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
 | Plans 39, 13, 50, 40, 63, 75, 76, 18, 72 | not started | — | Queued; branches not yet cut |
 
