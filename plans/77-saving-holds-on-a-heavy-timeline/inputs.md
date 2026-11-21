@@ -52,6 +52,8 @@ Measured read-only on 18 November 2026 from a copied Release 14 realm (see the d
   - **D14** persist `file_identity` ([QUEUE](evidence/QUEUE.md), item 13). Its full wording is not recorded, and the QUEUE elsewhere calls it "cold start": confirm what it means before asking.
   - **D15** what a refused change looks like, the one most affecting this plan: "park it with everything behind it, with Try again and Discard" in the [final recommendations](evidence/fable-final-recommendations.md); "remove and list, or leave visible and marked" in the [QUEUE](evidence/QUEUE.md). The recommendations differ; the loop's refusals are shown as Try again / Discard until the owner decides.
 - **D2 Review rounds.** Decided as the owner's standing preference (see Review rounds above): up to five advisor rounds at the very end.
+- **D3 Loop cap.** Decided on 21 November 2026, given to the hosting session. Run up to three live rounds. Round 1 records the baseline and its fixes. Rounds 2 and 3 must both pass consecutively for completion. At the cap, write the final round, the deltas for Plans 63, 75, 76 and 18, and a short summary of where saving stands. Bring any unmet completion criteria to the host. The earlier stop rules still apply.
+- **D4 On-demand harness.** Decided on 21 November 2026, given to the hosting session. Land SL-0, SL-1 and SL-2 as a reusable optional test in `scripts/save-loop/`. One command builds an isolated stack, creates the synthetic fixture, runs the matrix, and prints the round table. A short README covers Node 20, ffmpeg, Playwright, 25 GB free, the Linux and macOS routes, outputs, and cleanup.
 
 ## The owner's wider goals
 
