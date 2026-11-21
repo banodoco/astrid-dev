@@ -126,6 +126,15 @@ class StrategyTests(unittest.TestCase):
         for name, body in docs.items():
             self.assertEqual(release_errors(name, body), [])
 
+    def test_duplicate_release_metadata_is_rejected_by_canonical_validator(self):
+        for second in ("13", "16"):
+            with self.subTest(second=second):
+                duplicate = self.RELEASE.replace(
+                    "**Release:** 13", "**Release:** 13\n**Release:** " + second)
+                errors = release_errors("13.md", duplicate)
+                self.assertTrue(any("Release" in e and "duplicat" in e
+                                    for e in errors), errors)
+
     def test_valid_release_brief_passes(self):
         self.assertEqual(release_errors('13.md', self.RELEASE), [])
 

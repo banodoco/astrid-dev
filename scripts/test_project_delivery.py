@@ -171,6 +171,30 @@ class DeliveryCompositionTests(unittest.TestCase):
             with self.subTest(expected=expected):
                 self.assertIn(expected, message)
 
+    def test_gap_heading_identity_must_match_filename(self):
+        # The source file is named CA-001, but declares a different gap.
+        self.write("vision/gaps/CA-001-finish-work.md",
+                   GAP.replace("# CA-001 —", "# CA-002 —"))
+        with self.assertRaises(RelationshipError) as failure:
+            load_delivery(self.root)
+        message = str(failure.exception)
+        for expected in ("vision/gaps/CA-001-finish-work.md",
+                         "gap:CA-001", "CA-002"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
+    def test_duplicate_release_field_cannot_authorize_frozen_issue_link(self):
+        # First field and heading are valid; second field conflicts.
+        self.write("releases/15.md", RELEASE.replace(
+            "**Release:** 15", "**Release:** 15\n**Release:** 16"))
+        with self.assertRaises(RelationshipError) as failure:
+            graph = load_delivery(self.root)
+            frozen_releases_for_issue(graph, 123)
+        message = str(failure.exception)
+        for expected in ("releases/15.md", "release:15", "Release", "duplicat"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, message)
+
     def test_changed_release_heading_cannot_publish_a_false_issue_link(self):
         self.write("releases/15.md",
                    RELEASE.replace("# Release 15 — Demo", "# Release 16 — Demo"))
