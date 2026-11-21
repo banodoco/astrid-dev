@@ -754,5 +754,48 @@ class PackageTests(unittest.TestCase):
                 build_packages(self.root)
 
 
+    def test_top_level_indented_code_and_adjacent_live_links(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        body = ("\n    [one](missing.md)\n    [two](missing.md)\n\n"
+                "    [three](missing.md)\n\n[real](../docs/notes.md)\n")
+        source.write_text(original + body)
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("    [one](missing.md)", text)
+        self.assertIn("    [three](missing.md)", text)
+        self.assertIn("[real](repo/docs/notes.md)", text)
+        source.write_text(original + body + "\n[bad](missing.md)\n")
+        with self.assertRaisesRegex(ValueError, "missing link target"):
+            build_packages(self.root)
+        source.write_text(original + "\n    ## Fake\n\n[bad](#fake)\n")
+        with self.assertRaisesRegex(ValueError, "missing heading"):
+            build_packages(self.root)
+
+    def test_paragraph_and_list_continuations_stay_live(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        for body in ("Paragraph\n    [bad](missing.md)",
+                     "- item\n\n    [bad](missing.md)",
+                     "- item\n  - nested\n\n    [bad](missing.md)",
+                     "-     item\n\n    [bad](missing.md)",
+                     "1.     item\n\n    [bad](missing.md)"):
+            with self.subTest(body=body):
+                source.write_text(original + "\n" + body + "\n")
+                with self.assertRaisesRegex(ValueError, "missing link target"):
+                    build_packages(self.root)
+        source.write_text(original + "\n- item\n\n    [bad](../../outside.md)\n")
+        with self.assertRaisesRegex(ValueError, "escapes checkout"):
+            build_packages(self.root)
+
+    def test_top_level_code_after_closed_list(self):
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\n- item\n\nprose\n\n    [literal](missing.md)\n\n[real](../docs/notes.md)\n")
+        build_packages(self.root)
+        text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+        self.assertIn("    [literal](missing.md)", text)
+        self.assertIn("[real](repo/docs/notes.md)", text)
+
+
 if __name__ == "__main__":
     unittest.main()
