@@ -10,7 +10,7 @@
 
 **Estimate:** About 4 engineering days (3 to 5): about 1.5 for the setup cards, about 0.5 to recover the lost work, and 2 for the first three loop rounds. Further rounds are extra.
 
-**Waiting on:** a machine with 25 GB free and the [handover](handover.md) steps.
+**Waiting on:** [Plan 69](../69-project-elements/plan.md), which runs first by the same manager; a machine with 25 GB free.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -46,6 +46,8 @@ In scope: the fixture, the harness, the loop, recovery of the uncommitted work f
 The [reviews and profile](inputs.md#planning-evidence) say where the time goes (`validate_final_candidate`, about 59% of a commit, with a pass run twice inside) and why edits are refused. The longer-term plans were costed from design reviews with no live loop on a heavy timeline, and the one-shot sweep of 14 edit kinds on 18 November missed the repeated-gesture failures. So this plan measures first, fixes the cheapest causes, and lets the evidence rewrite the longer plans. **Speed risk:** the [profile](evidence/sonnet-commit-profile-r14.md) bounds the known trim: skipping `validate_final_candidate` entirely took the commit from 3.74 s to 1.63 s, and the editor adds its own time on top. The pass that runs twice runs on two different documents (the candidate and the baseline), so it is not a plain duplicate to delete. About 2 s may therefore need more than card-sized fixes; if a round shows that, the loop stops and asks the owner (the workstream's stop rule) and does not start Plan 75's design here. The 14-kind sweep harness is the seed; its first run saved 3 and refused 11 of the 14 scenarios that completed, and then crashed when its browser closed (the disk was nearly full). The seed's timer starts before the gesture and polls the badge every 500 ms, so it cannot judge a 2 s target; SL-2 replaces it.
 
 ## Sequence and readiness
+
+In Release 15 this plan runs second, after [Plan 69](../69-project-elements/plan.md), by the same manager ([brief](../../releases/15/briefs/plans-69-77.md)). Its branches already contain Plan 69's work. Before SL-1, merge into each `release/15/plan-77` whatever is newer: `release/15/main` once Plan 69 has landed there, or `release/15/plan-69` if it has moved but not landed; regenerate pins (Runtime, then Agent, then App; see [Plan 69's handover](../69-project-elements/handover.md#pins)).
 
 The order is SL-1 (a stack), then SL-0 (the fixture, which needs a stack to build on), then SL-2 (the harness, which needs both); SL-0 and SL-2 can be drafted while SL-1 runs. The loop card SL-4 starts when the three are done. Round 1 runs on the plan branches as cut, as the baseline; SL-3's recovered fixes merge after it, so their effect shows in a round. See [tasks.md](tasks.md). The first actions on a new machine are in the [handover](handover.md).
 
