@@ -828,9 +828,51 @@ class PackageTests(unittest.TestCase):
                 source.write_text(original + "\n" + body + "\n")
                 with self.assertRaisesRegex(ValueError, "missing link target"):
                     build_packages(self.root)
-        source.write_text(original + "\n- item\n\n\t[bad](../../outside.md)\n")
-        with self.assertRaisesRegex(ValueError, "escapes checkout"):
-            build_packages(self.root)
+        for body in ("- item\n\n\t[bad](../../outside.md)",
+                     "- item\nlazy continuation\n\n    [bad](../../outside.md)"):
+            source.write_text(original + "\n" + body + "\n")
+            with self.assertRaisesRegex(ValueError, "escapes checkout"):
+                build_packages(self.root)
+
+
+    def test_list_contained_indented_code_matrix(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        bodies = ("- item\n\n      [literal](missing.md)",
+                  "12. item\n\n        [literal](missing.md)",
+                  "- item\n  - nested\n\n        [literal](missing.md)",
+                  "> - item\n>\n>       [literal](missing.md)",
+                  "- item\n\n\t\t[literal](missing.md)")
+        for body in bodies:
+            with self.subTest(body=body):
+                source.write_text(original + "\n" + body + "\n\n[real](../docs/notes.md)\n")
+                build_packages(self.root)
+                text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+                self.assertIn("[literal](missing.md)", text)
+                self.assertIn("[real](repo/docs/notes.md)", text)
+
+    def test_list_code_does_not_hide_live_links_or_traversal(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        bodies = ("- item\n\n    [bad](missing.md)",
+                  "- item\n      [bad](missing.md)",
+                  "- item\nlazy continuation\n\n    [bad](missing.md)",
+                  "12. item\n\n    [bad](missing.md)",
+                  "- item\n  - nested\n\n      [bad](missing.md)",
+                  "> - item\n>\n>     [bad](missing.md)",
+                  "> 1.\titem\n>\n>         [bad](missing.md)",
+                  "- item\n\n\t[bad](missing.md)",
+                  "- item\n  - nested\n\n        [literal](missing.md)\n\n    [bad](missing.md)")
+        for body in bodies:
+            with self.subTest(body=body):
+                source.write_text(original + "\n" + body + "\n")
+                with self.assertRaisesRegex(ValueError, "missing link target"):
+                    build_packages(self.root)
+        for body in ("- item\n\n\t[bad](../../outside.md)",
+                     "- item\nlazy continuation\n\n    [bad](../../outside.md)"):
+            source.write_text(original + "\n" + body + "\n")
+            with self.assertRaisesRegex(ValueError, "escapes checkout"):
+                build_packages(self.root)
 
 
 if __name__ == "__main__":

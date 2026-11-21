@@ -58,13 +58,15 @@ def _active_lines(lines: list[str]) -> list[bool]:
             result.append(False)
         else:
             result.append(True)
-    # Recognize unambiguous top-level and quote-only indented blocks. An
-    # open list or paragraph can contain live indented links, so never mask
-    # ambiguous list content or an indented paragraph continuation.
+    # Retain list containers across lazy paragraph continuations. A code
+    # block in a list starts four columns beyond its innermost item indent;
+    # lesser indentation can contain live links and must be validated.
     previous_blank = True
     previous_depth = 0
-    indented_depth: int | None = None
-    list_indent: int | None = None
+    indented_context: tuple[int, tuple[tuple[int, int], ...]] | None = None
+    list_stack: list[tuple[int, int]] = []  # marker column, content column
+    list_quote_depth = 0
+    ambiguous_quote_list = False
     for index, line in enumerate(lines):
         plain = line.rstrip("\r\n")
         quote = re.match(r"^(?:[ ]{0,3}>[ ]?)+", plain)
@@ -74,26 +76,41 @@ def _active_lines(lines: list[str]) -> list[bool]:
             previous_blank = True
             previous_depth = depth
             continue
-        marker = re.match(r"^([ ]{0,3}(?:[-+*]|\d{1,9}[.)])[ \t]+)", content)
+        if depth != list_quote_depth:
+            list_stack.clear()
+            ambiguous_quote_list = False
+            list_quote_depth = depth
+        # Relative tab stops are unambiguous outside quotes. For a quoted tab,
+        # keep the line live instead of guessing physical-column alignment.
         expanded = content.expandtabs(4)
         leading = len(expanded) - len(expanded.lstrip(" "))
-        if marker:
-            # Excess list padding may begin indented code within the item;
-            # the minimal marker width is the safe boundary for live text.
-            width = leading + len(marker.group(1).lstrip(" ").split()[0]) + 1
-            list_indent = min(list_indent, width) if list_indent is not None else width
-        elif list_indent is not None and not quote and leading < list_indent:
-            list_indent = None
-        # Tab stops after quote markers depend on their physical column. Leave
-        # quoted tabs live; top-level tabs can be measured directly.
-        indented = content.startswith("    ") if quote else expanded.startswith("    ")
-        eligible = result[index] and list_indent is None and indented
+        marker = re.match(r"^([ ]*)([-+*]|\d{1,9}[.)])([ \t]+)", content)
+        if marker and (len(marker.group(1)) < 4 or list_stack):
+            if quote and "\t" in marker.group(3):
+                ambiguous_quote_list = True
+            marker_column = len(marker.group(1))
+            while list_stack and marker_column < list_stack[-1][1]:
+                list_stack.pop()
+            marker_end = marker_column + len(marker.group(2))
+            content_column = len(marker.group(0).expandtabs(4))
+            # CommonMark treats more than four padding columns as one; the
+            # remainder is content, often an indented code example.
+            if content_column - marker_end > 4:
+                content_column = marker_end + 1
+            list_stack.append((marker_column, content_column))
+        elif previous_blank:
+            while list_stack and leading < list_stack[-1][1]:
+                list_stack.pop()
+        threshold = (list_stack[-1][1] if list_stack else 0) + 4
+        indented = leading >= threshold and not (quote and "\t" in content[:len(content) - len(content.lstrip(" \t"))])
+        context = (depth, tuple(list_stack))
+        eligible = result[index] and not marker and indented and not ambiguous_quote_list
         starts_block = previous_blank or depth > previous_depth
-        if eligible and (indented_depth == depth or starts_block):
+        if eligible and (indented_context == context or starts_block):
             result[index] = False
-            indented_depth = depth
+            indented_context = context
         else:
-            indented_depth = None
+            indented_context = None
         previous_blank = False
         previous_depth = depth
     return result
