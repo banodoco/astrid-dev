@@ -204,8 +204,8 @@ class PackageTests(unittest.TestCase):
     def test_reference_style_definition_rewrites_to_repository_link(self):
         path = self.root / "agent" / "roles" / "leader.md"
         path.write_text(ROLE.replace(
-            "[rules](../shared/run-contract.md#rules)",
-            "See [rules][contract].\n\n[contract]: ../shared/run-contract.md#rules"
+            "Follow the shared [rules](../shared/run-contract.md#rules).",
+            "Follow the shared [rules][contract].\n\n[contract]: ../shared/run-contract.md#rules"
         ), encoding="utf-8")
         build_packages(self.root)
         generated = (self.package("astrid-dev-leader") / "SKILL.md").read_text(encoding="utf-8")
@@ -216,8 +216,8 @@ class PackageTests(unittest.TestCase):
     def test_missing_reference_style_file_blocks_build(self):
         path = self.root / "agent" / "roles" / "leader.md"
         path.write_text(ROLE.replace(
-            "[rules](../shared/run-contract.md#rules)",
-            "See [rules][contract].\n\n[contract]: ../shared/absent-contract.md"
+            "Follow the shared [rules](../shared/run-contract.md#rules).",
+            "Follow the shared [rules][contract].\n\n[contract]: ../shared/absent-contract.md"
         ), encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "missing link target"):
             build_packages(self.root)
@@ -226,8 +226,8 @@ class PackageTests(unittest.TestCase):
         build_packages(self.root)
         path = self.root / "agent" / "roles" / "leader.md"
         path.write_text(ROLE.replace(
-            "[rules](../shared/run-contract.md#rules)",
-            "See [rules][contract].\n\n[contract]: ../shared/absent-contract.md"
+            "Follow the shared [rules](../shared/run-contract.md#rules).",
+            "Follow the shared [rules][contract].\n\n[contract]: ../shared/absent-contract.md"
         ), encoding="utf-8")
         self.assertTrue(any("missing link target" in error
                             for error in check_packages(self.root)),
