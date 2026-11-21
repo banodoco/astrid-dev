@@ -7,7 +7,7 @@ Written on 18 November 2026 for whoever runs this plan next, on another machine.
 ## First actions on a new machine
 
 1. **Clone the repositories** (all under `banodoco` on GitHub): `astrid-dev`, `astrid-app`, `astrid-agent`, `astrid-runtime`. Free disk first: 40 GB, and never below 15 GB during a run (the disk filled twice on 18 November from headless browser profiles and stack copies). Needs macOS (the release script uses APFS clones and launchd), Node 20, ffmpeg and Playwright.
-2. **Check out the branches** (all on origin, cut from `release/14/plan-59`): `release/14/plan-69` in each of astrid-app, astrid-agent and astrid-runtime, and astrid-dev `main` (this pack). One worktree per branch; keep the main clones clean. Record your session id in the `Owner` line of [plan.md](plan.md) ([authority](inputs.md#planning-evidence)).
+2. **Check out the branches** (all on origin, cut from `release/14/plan-59`): `release/14/plan-77` in each of astrid-app, astrid-agent and astrid-runtime, and astrid-dev `main` (this pack). One worktree per branch; keep the main clones clean. Record your session id in the `Owner` line of [plan.md](plan.md) ([authority](inputs.md#planning-evidence)).
 3. **Create `run.yaml`** ([below](#runyaml)).
 4. **Build the stack** (SL-1, [below](#build-the-stack)).
 5. **Build the fixture** (SL-0): `scripts/save-loop/build-fixture.*` in astrid-app, not written yet.
@@ -17,7 +17,7 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 
 ## run.yaml
 
-`.otto/` is gitignored, so create the run's `run.yaml` on the new machine from [`skills/shared/templates/run.yaml`](../../skills/shared/templates/run.yaml), under `plans/69-saving-holds-on-a-heavy-timeline/.otto/runs/<run-id>/`.
+`.otto/` is gitignored, so create the run's `run.yaml` on the new machine from [`skills/shared/templates/run.yaml`](../../skills/shared/templates/run.yaml), under `plans/77-saving-holds-on-a-heavy-timeline/.otto/runs/<run-id>/`.
 
 - **Bindings:** bind `N`, `X`, the advisor and the reviewer from the owner's own delegation table (in their global agent instructions: normal, hard and sense-check tiers on Codex). If that table is not on the machine, ask the owner. Do not guess model IDs.
 - **If Codex is unavailable** (on the first machine its usage limit was exhausted until 20 November 00:00), run the same routes on the Claude families in the [run contract's routing table](../../skills/shared/run-contract.md#routing-and-bindings), record `--override`, and carry on. Do not wait.
@@ -34,26 +34,26 @@ Checks for every astrid-dev PR here: `python3 scripts/astrid_dev.py check` and `
 
 ## Where everything is
 
-- **This pack:** astrid-dev `main`, `plans/69-saving-holds-on-a-heavy-timeline/`. Evidence copies (the originals were in a folder not under git): [evidence/](evidence/). Start with `handover-facts-20261118.md`, then `sonnet-commit-profile-r14.md`, `fable-final-recommendations.md`, `fable-commit-proof-fit.md`, `fable-end-state-review.md` and `QUEUE.md`.
-- **Seeded harness:** astrid-app `release/14/plan-69`, `scripts/save-loop/` (`sweep.mjs`, `lib.mjs`, `sweep.b64`; head `36d2b8258`). Read its header for the flags and `SAVE_LOOP_*` environment variables. It attaches over CDP to an existing browser at `127.0.0.1:9540` and targets the owner's `clip-2` and `music-song` at a 1700 by 1500 viewport; SL-2 retargets it. Row ids and pixel coordinates are hard-coded. The profiler helpers `prof_run.py` and `wall_run.py` were not found on disk; `scripts/perf/measure-editor.mjs` already exists in astrid-app.
+- **This pack:** astrid-dev `main`, `plans/77-saving-holds-on-a-heavy-timeline/`. Evidence copies (the originals were in a folder not under git): [evidence/](evidence/). Start with `handover-facts-20261118.md`, then `sonnet-commit-profile-r14.md`, `fable-final-recommendations.md`, `fable-commit-proof-fit.md`, `fable-end-state-review.md` and `QUEUE.md`.
+- **Seeded harness:** astrid-app `release/14/plan-77`, `scripts/save-loop/` (`sweep.mjs`, `lib.mjs`, `sweep.b64`; head `36d2b8258`). Read its header for the flags and `SAVE_LOOP_*` environment variables. It attaches over CDP to an existing browser at `127.0.0.1:9540` and targets the owner's `clip-2` and `music-song` at a 1700 by 1500 viewport; SL-2 retargets it. Row ids and pixel coordinates are hard-coded. The profiler helpers `prof_run.py` and `wall_run.py` were not found on disk; `scripts/perf/measure-editor.mjs` already exists in astrid-app.
 - **Crash work, pushed as wip branches** (verified by GitHub compare on 18 November):
 
-| Repository | Branch under `release/14/plan-69-wip/` | Head | Base | What it holds |
+| Repository | Branch under `release/14/plan-77-wip/` | Head | Base | What it holds |
 | --- | --- | --- | --- | --- |
-| astrid-app | `wt-app-concurrent-drops-registry` | `2402b1d97` | `2ffc0a300` (plan-59 tip, the plan-69 cut), 1 commit | concurrent drops refusing each other (`timelineLocalSaveHandoff(.test).ts`, `useAssetManagement.ts`, `useTimelineCommit.ts`) |
+| astrid-app | `wt-app-concurrent-drops-registry` | `2402b1d97` | `2ffc0a300` (plan-59 tip, the plan-77 cut), 1 commit | concurrent drops refusing each other (`timelineLocalSaveHandoff(.test).ts`, `useAssetManagement.ts`, `useTimelineCommit.ts`) |
 | astrid-agent | `wt-r14-validate-trim` | `2bb8c1095` | `ec758a9b8`, 1 commit | the speed trim of `validate_final_candidate`, barely started, with a golden test |
 | astrid-runtime | `wt-rt-media-digest` | `a3acdc5fc` | `ee235d39d`, 1 commit | the media digest diagnostic log |
 | astrid-agent | `wt-r14-agentbase` | `ed0c6c6e4` | `ec758a9b8`, 1 commit | its only changed file on 18 November was the same golden test (reported inventory); check before ignoring it |
-| astrid-app | `wt-shot-trim` | `11ee51c1e` | `4eb6fb3`, 7 ahead, 74 behind plan-69 | a separate shot-trim task: **out of scope, only listed** |
+| astrid-app | `wt-shot-trim` | `11ee51c1e` | `4eb6fb3`, 7 ahead, 74 behind plan-77 | a separate shot-trim task: **out of scope, only listed** |
 | astrid-agent | `agent-src-main-clone` | `15ca752d1` | `f9642bd`, 6 ahead, 68 behind | same shot-trim task, out of scope |
 | astrid-runtime | `runtime-src-main-clone` | `1b3f36083` | `519b404`, 2 ahead, 16 behind | same shot-trim task, out of scope |
 
-  **Already contained in `release/14/plan-69`** (GitHub compare, ahead 0): App `release/14/same-file-drop`, App `release/14/quick-edits`, Agent `release/14/runtime-pin-r14b`. Merged into plan-59 before the cut (reported): Runtime #66, #67; App #308, #309.
+  **Already contained in `release/14/plan-77`** (GitHub compare, ahead 0): App `release/14/same-file-drop`, App `release/14/quick-edits`, Agent `release/14/runtime-pin-r14b`. Merged into plan-59 before the cut (reported): Runtime #66, #67; App #308, #309.
 - **Release 14 stack run on 18 November:** under `~/astrid-release/release-14-plan-59` on the first machine; stopped. It holds a copy of the owner's data and is not part of this plan.
 
 ## Build the stack
 
-**Where the script is (checked 21 November):** `scripts/astrid-release/` reached astrid-app `release/14/main` with Plan 61 on 20 November (App #320) but is not on `release/14/plan-69`, which was cut from plan-59 before it. Run it from a `release/14/main` checkout (it clones the branches it builds by name), and merge `release/14/main` into `release/14/plan-69` before SL-1 edits it. The real route is `scripts/astrid-release/astrid-release release/14/plan-69` in astrid-app (it also has `status`, `stop` and `update <branch>`). It builds an isolated root under `~/astrid-release/release-14-plan-69` (the branch name with `/` as `-`), refuses the live ports (17340, 2222, 17336, 17391) and never writes the live install. **Known limit (read, not run):** it stops at its start when the machine has no live install or realm, so SL-1 adds an empty-realm option; ports and the editor URL are in SL-1 and SL-1 records the real ones here. Moving a built stack to newer commits is not supported without losing data (issue #825): to test new commits stop it, keep `data/`, delete the root and run it again.
+**Where the script is (checked 21 November):** `scripts/astrid-release/` reached astrid-app `release/14/main` with Plan 61 on 20 November (App #320) but is not on `release/14/plan-77`, which was cut from plan-59 before it. Run it from a `release/14/main` checkout (it clones the branches it builds by name), and merge `release/14/main` into `release/14/plan-77` before SL-1 edits it. The real route is `scripts/astrid-release/astrid-release release/14/plan-77` in astrid-app (it also has `status`, `stop` and `update <branch>`). It builds an isolated root under `~/astrid-release/release-14-plan-77` (the branch name with `/` as `-`), refuses the live ports (17340, 2222, 17336, 17391) and never writes the live install. **Known limit (read, not run):** it stops at its start when the machine has no live install or realm, so SL-1 adds an empty-realm option; ports and the editor URL are in SL-1 and SL-1 records the real ones here. Moving a built stack to newer commits is not supported without losing data (issue #825): to test new commits stop it, keep `data/`, delete the root and run it again.
 
 ## Known broken or open
 
