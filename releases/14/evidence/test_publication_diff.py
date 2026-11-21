@@ -84,7 +84,7 @@ class TestPublicationDiff(unittest.TestCase):
             records = {"app": {"baseline": {"E2E": {"jobs": [{"id": 1, "name": "playwright-default", "conclusion": "failure", "log": str(a)}]}},
                                "candidate": {"E2E": {"jobs": [{"id": 2, "name": "playwright-default", "conclusion": "failure", "log": str(b)}]}}}}
             _, _, issues = mod.evaluate({}, records, Path(p), {}, {})
-            self.assertTrue(any("no comparable native test IDs" in x for x in issues))
+            self.assertTrue(any("complete native Playwright JSON required" in x for x in issues))
 
     def test_explained_pass_to_fail_remains_blocking(self):
         with tempfile.TemporaryDirectory() as p:
