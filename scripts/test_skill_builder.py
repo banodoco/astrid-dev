@@ -950,5 +950,44 @@ class PackageTests(unittest.TestCase):
                     build_packages(self.root)
 
 
+    def test_quote_tab_prefixed_list_code_physical_columns(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        cases = (">\t- item\n>\n>         [literal](missing.md)",
+                 ">\t- item\n>\n>\t\t\t[literal](missing.md)",
+                 ">\t- item\n>\n>         [undefined]",
+                 ">\t1. item\n>\n>          [literal](missing.md)")
+        for body in cases:
+            with self.subTest(body=body):
+                source.write_text(original + "\n" + body + "\n\n[real](../docs/notes.md)\n")
+                build_packages(self.root)
+                text = (self.package("astrid-dev-start") / "SKILL.md").read_text()
+                self.assertIn("[real](repo/docs/notes.md)", text)
+                self.assertIn("[undefined]" if "undefined" in body else "[literal](missing.md)", text)
+
+    def test_quote_tab_prefixed_numbered_list_live_link_safety(self):
+        source = self.root / "agent" / "start.md"
+        original = source.read_text()
+        with TemporaryDirectory() as temp:
+            outside = Path(temp) / "outside.md"
+            outside.write_text("# Outside\n")
+            (self.root / "docs" / "outside.md").symlink_to(outside)
+            cases = (("missing.md", "missing link target"),
+                     ("../../outside.md", "escapes checkout"),
+                     ("%2e%2e/%2e%2e/outside.md", "escapes checkout"),
+                     ("/absolute/path", "absolute filesystem"),
+                     ("file:///tmp/outside", "file:"),
+                     ("C:/outside.md", "absolute filesystem"),
+                     ("../docs/outside.md", "escapes checkout"))
+            for dest, message in cases:
+                with self.subTest(dest=dest):
+                    source.write_text(original + ">\t1. item\n>\n>         [bad](" + dest + ")\n")
+                    with self.assertRaisesRegex(ValueError, message):
+                        build_packages(self.root)
+                    source.write_text(original + ">  \t- item\n>\n>        [bad](" + dest + ")\n")
+                    with self.assertRaisesRegex(ValueError, message):
+                        build_packages(self.root)
+
+
 if __name__ == "__main__":
     unittest.main()

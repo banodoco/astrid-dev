@@ -96,17 +96,25 @@ def _active_lines(lines: list[str]) -> list[bool]:
         if quote and prefix.endswith(">") and content.startswith("\t"):
             leading -= 1
         marker = re.match(r"^([ ]*)([-+*]|\d{1,9}[.)])([ \t]+)", content)
-        if (quote and prefix.endswith(">") and content.startswith("\t")
+        # Tabs in up to three indentation columns before a quoted list
+        # marker are measured at their physical tab stops.
+        split_tab_marker = None
+        if quote and "\t" in whitespace and leading <= 3:
+            split_tab_marker = re.match(r"^([ \t]+)([-+*]|\d{1,9}[.)])([ \t]+)", content)
+            marker = marker or split_tab_marker
+        if (not marker and quote and prefix.endswith(">") and content.startswith("\t")
                 and re.match(r"^(?:[-+*]|\d{1,9}[.)])[ \t]+", content.lstrip(" \t"))):
             # The tab straddles marker whitespace and indentation. Until this
             # quote closes, retain potentially live list content for checking.
             uncertain_quote_container = True
         if marker and (len(marker.group(1)) < 4 or list_stack):
-            marker_column = len(marker.group(1))
+            marker_column = leading if split_tab_marker else len(marker.group(1))
             while list_stack and marker_column < list_stack[-1][1]:
                 list_stack.pop()
             marker_end = marker_column + len(marker.group(2))
             content_column = len((prefix + marker.group(0)).expandtabs(4)) - start_column
+            if split_tab_marker and prefix.endswith(">") and content.startswith("\t"):
+                content_column -= 1
             # CommonMark treats more than four padding columns as one; the
             # remainder is content, often an indented code example.
             if content_column - marker_end > 4:
