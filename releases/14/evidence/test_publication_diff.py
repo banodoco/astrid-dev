@@ -60,6 +60,22 @@ class TestPublicationDiff(unittest.TestCase):
                 "src/foo.test.ts › one > success": "PASS", "src/foo.test.ts › one > refusal": "FAIL",
             })
 
+    def test_playwright_json_has_stable_project_and_nested_titles(self):
+        with tempfile.TemporaryDirectory() as p:
+            f = Path(p) / "playwright.json"
+            f.write_text(json.dumps({"suites": [{"title": "tests/e2e/a.spec.ts", "file": "/work/tests/e2e/a.spec.ts", "suites": [{"title": "editor", "specs": [{"title": "save and reopen", "file": "/work/tests/e2e/a.spec.ts", "tests": [{"projectName": "chromium-desktop", "status": "expected"}, {"projectName": "chromium-mobile", "status": "flaky"}]}]}]}]}))
+            self.assertEqual(mod.parse_playwright_json(f), {
+                "tests/e2e/a.spec.ts › [chromium-desktop] › editor › save and reopen": "PASS",
+                "tests/e2e/a.spec.ts › [chromium-mobile] › editor › save and reopen": "FAIL",
+            })
+
+    def test_playwright_json_requires_native_results(self):
+        with tempfile.TemporaryDirectory() as p:
+            f = Path(p) / "playwright.json"
+            f.write_text(json.dumps({"suites": [{"title": "file", "specs": []}]}))
+            with self.assertRaisesRegex(ValueError, "no Playwright per-test records"):
+                mod.parse_playwright_json(f)
+
     def test_frozen_sha_and_run_id_required_before_fetch(self):
         with self.assertRaisesRegex(ValueError, "frozen full SHA"):
             mod.collect_runs({"baseline": {"agent": {"sha": None}}}, Path("/tmp/unused"))
