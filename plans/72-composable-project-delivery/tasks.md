@@ -2,7 +2,7 @@
 
 [Plan](plan.md) · [Inputs](inputs.md)
 
-**Proposed only:** these cards become executable when the scope is greenlit, a run is recorded in [inputs.md](inputs.md), and current source IDs and the sole writer for each shared surface are verified. Paths include their own tests. **Routes** N/X/S follow the [shared run contract](../../skills/shared/run-contract.md); N helpers may gather evidence for X/S work, but not make review decisions. No cross-repository code changes are authorized.
+**Proposed only:** these cards become executable when the scope is greenlit, a run is recorded in [inputs.md](inputs.md), and current source IDs and the sole writer for each shared surface are verified. Paths include their own tests. **Routes** N/X/S follow the [shared run contract](../../agent/shared/run-contract.md); N helpers may gather evidence for X/S work, but not make review decisions. No cross-repository code changes are authorized.
 
 **Critical path:** PD-0 → PD-1 → PD-2 → PD-4 → RS1 → PD-6 → PD-8 → PD-10 → PD-11 → R. PD-3 depends on PD-2 and feeds PD-4; PD-5 may proceed alongside PD-3/PD-4 after PD-2; PD-7 may proceed beside PD-6 after RS1; PD-9 after PD-6/PD-5. An overlapping function or shared contract requires sequenced writer ownership even if cards appear independent.
 

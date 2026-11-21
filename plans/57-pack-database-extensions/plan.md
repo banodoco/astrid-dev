@@ -12,7 +12,7 @@
 
 **Waiting on:** version 0.1 ([Strategy](../../strategy.md#versions)); the prior-art read and the owner's scope decision
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
 **Vision gaps:** [Frontend and backend extension composition](../../vision/gaps/LS-003-full-stack-contributions.md) (primary): a contribution that needs its own data today has nowhere sanctioned to keep it. [Pack lifecycle under load](../../vision/gaps/F-004-pack-lifecycle.md) (supporting): what a pack stores must survive install, update, rollback and removal.
 

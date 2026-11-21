@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-A compact record for a **new project's** decision. Bugs and small fixes use their issue/PR evidence instead. The [planning skill](../../skills/shared/workstreams/astrid-dev-plan/SKILL.md) describes when a deeper independent review is worthwhile. For a draft, use **Pending — why. Next: action**; do not invent a source or approval.
+A compact record for a **new project's** decision. Bugs and small fixes use their issue/PR evidence instead. The [planning skill](../../agent/shared/workstreams/plan.md) describes when a deeper independent review is worthwhile. For a draft, use **Pending — why. Next: action**; do not invent a source or approval.
 
 **Scope decision:** Pending — The owner has not selected an end state. Next: present meaningful alternatives and record the actual decision.
 
@@ -16,9 +16,9 @@ A compact record for a **new project's** decision. Bugs and small fixes use thei
 
 **Proof and limits:** Pending — Acceptance evidence and supported contexts are not yet known. Next: specify observable results, meaningful failure cases and unresolved assumptions.
 
-**Review rounds:** Pending — None for a simple, bounded project; otherwise recommend a number and say why ([guide](../../skills/shared/run-contract.md#review-and-promotion-boundaries)). Next: the owner confirms.
+**Review rounds:** Pending — None for a simple, bounded project; otherwise recommend a number and say why ([guide](../../agent/shared/run-contract.md#review-and-promotion-boundaries)). Next: the owner confirms.
 
-**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../skills/shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one.
+**Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase or tasks it covers, the accountable session ([who that is](../../agent/shared/run-contract.md#who-answers-for-a-run)), what it may do without asking, what still needs the owner's go, and the advisor session if there is one.
 
 ## Owner decisions
 

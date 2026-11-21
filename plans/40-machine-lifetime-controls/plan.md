@@ -12,7 +12,7 @@
 
 **Waiting on:** lands on Agent `main` with Plan 32, in [Release 13](../../releases/13.md)
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
 **Vision gaps:** [Safe user control](../../vision/gaps/F-002-safe-user-control.md) (primary): a person sees when a rented machine will stop and can keep it, within a spend cap they set. [Portable generation](../../vision/gaps/F-008-portable-generation.md) (supporting): warm machines between jobs make RunPod usable for a working session.
 

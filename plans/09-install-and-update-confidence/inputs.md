@@ -25,7 +25,7 @@ No dirty-work custody is specified in the source plan; establish and record cust
 
 ## Constraints
 
-Preserve user data and the last working version on failed or unsupported operations. Use real hosted tests for supported user paths; mocked coverage does not satisfy the OS/path matrix. Pinokio remains in Plan 07 and pack install/update/rollback remains in Plan 06 PK-9. Follow the shared [run contract](../../skills/shared/run-contract.md) for identity, routes, checks, review, and publication. No plan authorizes execution; preserve existing authority and review limits.
+Preserve user data and the last working version on failed or unsupported operations. Use real hosted tests for supported user paths; mocked coverage does not satisfy the OS/path matrix. Pinokio remains in Plan 07 and pack install/update/rollback remains in Plan 06 PK-9. Follow the shared [run contract](../../agent/shared/run-contract.md) for identity, routes, checks, review, and publication. No plan authorizes execution; preserve existing authority and review limits.
 
 The separately paused [legacy-to-standalone conversion draft](legacy-conversion/inputs.md) records the mixed-owner incident, the independent design critique, and its unresolved recovery-admission policy. Its proposed extension does not change the authority or prior evidence of this plan.
 

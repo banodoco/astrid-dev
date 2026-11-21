@@ -25,6 +25,8 @@ class GoldenTests(unittest.TestCase):
 
     def test_real_tree_and_fixtures_match_golden_output(self):
         expected = (golden.FIXTURES / "golden.txt").read_text(encoding="utf-8").splitlines()
+        # Preserve the exact oracle while showing every introduced diagnostic on failure.
+        self.maxDiff = None
         self.assertEqual(self.collected, expected)
 
     def test_collect_does_not_change_the_repository(self):

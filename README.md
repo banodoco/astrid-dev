@@ -25,7 +25,7 @@ Copy this into your agent:
 ```text
 Help me contribute to Astrid. Start at
 https://github.com/banodoco/astrid-dev and follow
-skills/astrid-dev/SKILL.md. Find relevant existing
+agent/start.md. Find relevant existing
 issues and project work before proposing anything new.
 Help me choose the smallest useful contribution,
 verify it, and follow the repository's review process.
@@ -49,8 +49,8 @@ The vision sets the destination; gaps measure the distance to it; projects, the 
 | Where releases and versions lead | [Strategy](strategy.md) |
 | Each project's owner, status, priority and estimate | [Plan catalog](plans/index.md) |
 | What each release holds: plans, issues, branches | [Release briefs](releases/) |
-| The order a release runs in | [How a release runs](skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs) |
+| The order a release runs in | [How a release runs](agent/shared/workstreams/release.md#how-a-release-runs) |
 | Routes, issues and review | [Contribution workflow](docs/contribution-workflow.md) |
 | The thinking behind it | [Design principles](docs/contribution-design-principles.md) |
-| How an agent contributes | [Contributor skill](skills/astrid-dev/SKILL.md) |
-| What a word means | [Glossary](skills/shared/glossary.md) |
+| How an agent contributes | [Contributor skill](agent/start.md) |
+| What a word means | [Glossary](agent/shared/glossary.md) |

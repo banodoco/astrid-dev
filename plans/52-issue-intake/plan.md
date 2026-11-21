@@ -12,9 +12,9 @@
 
 **Waiting on:** the owner's issue transfers (II-10), her two minutes for II-11, and her approval of the reporting rules (II-9)
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
-**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): what one person or run notices reaches everyone else without a conversation. CA-005's route does not name this plan, and none of its closure-evidence items is about intake, so there is no `Contributes to closure` line; adding one is a [Gap](../../skills/capabilities/astrid-dev-gap/SKILL.md) step for the owner to ask for.
+**Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary): what one person or run notices reaches everyone else without a conversation. CA-005's route does not name this plan, and none of its closure-evidence items is about intake, so there is no `Contributes to closure` line; adding one is a [Gap](../../agent/shared/workstreams/gap.md) step for the owner to ask for.
 
 ## Outcome and scope
 

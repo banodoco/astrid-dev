@@ -1,16 +1,16 @@
 # Contribute to Astrid: claim, propose, review, complete
 
-**Start at [the Astrid development skill](../skills/astrid-dev/SKILL.md).** It gives agents one contributor process. The [domain map](../skills/astrid-dev/references/domains.md) locates source and specialists; this page explains GitHub actions. [Our contribution principles](contribution-design-principles.md) explain what must stay simple.
+**Start at [the Astrid development skill](../agent/start.md).** It gives agents one contributor process. The [domain map](../agent/shared/domains.md) locates source and specialists; this page explains GitHub actions. [Our contribution principles](contribution-design-principles.md) explain what must stay simple.
 
 ## Choose a route
 
 | You want to… | Action | Approval boundary |
 | --- | --- | --- |
-| Fix a bug or small issue | Search/open an [Astrid-dev issue](#issues) and submit a focused product PR into a fix branch of the release in progress, or into its own fix release for the published one ([which](../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)) | Reproduction, actual proof and appropriate product PR review; no project pack |
+| Fix a bug or small issue | Search/open an [Astrid-dev issue](#issues) and submit a focused product PR into a fix branch of the release in progress, or into its own fix release for the published one ([which](../agent/shared/workstreams/release.md#how-a-release-runs)) | Reproduction, actual proof and appropriate product PR review; no project pack |
 | Take on an existing project | Claim one `queued` and `Unassigned` project through a PR that changes only the `**Owner:**` line in its `plan.md` | **The claim bot or a maintainer merges the claim.** It gives ownership, not execution authority |
 | Propose new substantial work | Open an [idea issue](#issues), then a reviewed scope PR | Maintainer accepts the new scope and project pack |
 | Submit project work | Open product PRs; optionally open an Astrid-dev implementation review PR | A project owner’s PR is **queued for review**, not auto-approved |
-| Ship a change in a release | Open a pull request into the plan or fix branch `release/<NN>/…`; it names its plan or issue ([How a release runs](../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)) | Product PR review; the owner decides what a release includes and gives the go to publish. A pull request from outside, or against `main`, is retargeted or recorded as [Merge](../skills/shared/workstreams/astrid-dev-merge/SKILL.md#where-a-pull-request-lands) says |
+| Ship a change in a release | Open a pull request into the plan or fix branch `release/<NN>/…`; it names its plan or issue ([How a release runs](../agent/shared/workstreams/release.md#how-a-release-runs)) | Product PR review; the owner decides what a release includes and gives the go to publish. A pull request from outside, or against `main`, is retargeted or recorded as [Merge](../agent/shared/workstreams/merge.md#where-a-pull-request-lands) says |
 | Finish a project | Open an Astrid-dev completion PR linking integrated evidence | Independent completion review and authorized merge |
 
 **Templates:** GitHub's issue forms and Astrid-dev PR templates live in [`.github/`](../.github/); the portable [project scaffolds](../templates/project/) and [product-repository PR examples](../templates/product-pr/) live in `templates/`.
@@ -24,8 +24,8 @@
 | Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md) and [the aspiration template](../vision/templates/aspiration.md); adding or rewording an aspiration or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
 | Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
-| Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
-| Product API, UI, installer or extension technical docs | The owning [product repository](../skills/astrid-dev/references/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
+| Agent instructions, workflows or contributor docs | [Main skill](../agent/start.md), stage-specific skills, [run contract](../agent/shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
+| Product API, UI, installer or extension technical docs | The owning [product repository](../agent/shared/domains.md). Submit the documentation PR there and link it to the relevant issue/project |
 | Typo, small wording or README improvement | Normal, focused PR. No project, new skill, evidence-pack file or planning ceremony |
 
 Describe the intended correction and relevant source; give a real reviewer a way to verify technical claims. For consequential vision/architecture changes, review the *meaning*, not just Markdown validity. Don't invent a documentation-only state machine or keep copies of old drafts for posterity.
@@ -61,7 +61,7 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 **Each gap file must include the sections of [the gap template](../templates/gap.md).** Project status and ownership live only in each plan's `plan.md`.
 
-**Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap skill](../skills/shared/workstreams/astrid-dev-gap/SKILL.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
+**Once plans serve a gap,** add a **Closure approach** and a **Route to closure**. The approach is short prose that lets a new agent understand the strategy. The route is an ordered table mapping every closure-evidence item to the plan that delivers it, or to `unplanned`, with milestones and the critical path. Each routed plan points back with a `Contributes to closure:` line. Start from [the gap template](../templates/gap.md) and follow [the gap skill](../agent/shared/workstreams/gap.md). CI checks the route's structure and back-links, not its merit; routes carry no statuses.
 
 ## How the vision becomes shipped work
 
@@ -75,7 +75,7 @@ An authored [release brief](../releases/TEMPLATE.md) selects its included plans 
 
 ## Review the strategy
 
-A gap says what must improve; a plan, what is built; a release, what ships together, as one branch per repository that its plans and fixes merge into (see [How a release runs](../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)); a version, where releases lead; a major version, the aim. See [strategy](../strategy.md) and [release briefs](../releases/TEMPLATE.md).
+A gap says what must improve; a plan, what is built; a release, what ships together, as one branch per repository that its plans and fixes merge into (see [How a release runs](../agent/shared/workstreams/release.md#how-a-release-runs)); a version, where releases lead; a major version, the aim. See [strategy](../strategy.md) and [release briefs](../releases/TEMPLATE.md).
 
 A plan owns its name; the release brief owns its contribution sentence and Highlight; the version owns its sentence; the major version owns its aim. These are pulled upward; other prose stays home. A draft is not a publication request; the finalized brief becomes the immutable release record.
 
@@ -128,11 +128,11 @@ The low-permission [review-intake workflow](../.github/workflows/review-intake.y
 
 **Independent review:** A fresh qualified reviewer examines actual diff and retained implementation, claims versus tests, first failures, negative cases, route provenance, dependencies and risks. They return concrete blocking findings or a justified acceptance with limitations. The contributor repairs the same failing cases on the new candidate. Human approval remains necessary for consequential changes, security, user data, migrations, costs and deployment under the product repositories’ policies. A CI pass or an agent’s advice alone does not override these authorities.
 
-**Integration:** Freeze the intended target revisions and reuse unchanged proof only where justified. Separate green product PRs do not qualify a combined Runtime/Agent/App installation. The [release skill](../skills/shared/workstreams/astrid-dev-release/SKILL.md) governs cross-repository integration and separately authorized promotion.
+**Integration:** Freeze the intended target revisions and reuse unchanged proof only where justified. Separate green product PRs do not qualify a combined Runtime/Agent/App installation. The [release skill](../agent/shared/workstreams/release.md) governs cross-repository integration and separately authorized promotion.
 
 ## Record routes as work happens
 
-Name the **route** (`N`, `X`, `S` or `T`) that ran each piece of work, at the relevant invocation rather than from memory at the end, as [the run contract's route provenance](../skills/shared/run-contract.md#actual-route-provenance) requires.
+Name the **route** (`N`, `X`, `S` or `T`) that ran each piece of work, at the relevant invocation rather than from memory at the end, as [the run contract's route provenance](../agent/shared/run-contract.md#actual-route-provenance) requires.
 
 In an **Astrid-dev checkout**, the [route-use helper](../scripts/model_usage.py) records each invocation. Copy its **Routes used:** line into the review PR; its local JSONL stays gitignored under `.otto/`.
 
@@ -158,7 +158,7 @@ Report anything you notice in Astrid here. Each form defines its headings:
 - [question](../.github/ISSUE_TEMPLATE/question.yml): anything for the maintainers.
 - [idea](../.github/ISSUE_TEMPLATE/idea.yml): something missing; it never creates a gap.
 
-**Dispatch is not issue intake.** A [Release Lead's dispatch packet](../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md) is a short Markdown brief under `releases/<N>/packets/` referring to accepted `tasks.md` rows, linked from the release `run.md`, **not a new GitHub issue**. Do not turn packets into issue labels or a second project catalog. For separate agent chats, reuse an existing release coordination issue if present; otherwise one explicitly named coordination-only issue may carry mailbox comments under the [existing Codex Cloud protocol](../skills/roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md); it does not enter the release issue list, grant authority, or replace task evidence. It may still appear in ordinary issue searches; keep it to one per release, with no `plan:NN` or `release:NN` labels. Only the coordination issue explicitly linked from `run.md` is exempt from product issue triage; no new label or automated issue state is needed.
+**Dispatch is not issue intake.** A [Release Lead's dispatch packet](../agent/roles/leader/multi-manager-release.md) is a short Markdown brief under `releases/<N>/packets/` referring to accepted `tasks.md` rows, linked from the release `run.md`, **not a new GitHub issue**. Do not turn packets into issue labels or a second project catalog. For separate agent chats, reuse an existing release coordination issue if present; otherwise one explicitly named coordination-only issue may carry mailbox comments under the [existing Codex Cloud protocol](../agent/guides/codex-cloud/README.md); it does not enter the release issue list, grant authority, or replace task evidence. It may still appear in ordinary issue searches; keep it to one per release, with no `plan:NN` or `release:NN` labels. Only the coordination issue explicitly linked from `run.md` is exempt from product issue triage; no new label or automated issue state is needed.
 
 **Filing.** A person picks a form under "New issue". An agent searches first: it writes `repo:banodoco/astrid-dev is:issue <words>` to `query.txt` and runs `gh api -X GET search/issues -F q=@query.txt`. If it exists, add a thumbs-up or comment and file nothing. Otherwise write `title.txt` (`observation: <sentence>`, no final newline) and `body.txt` with your file tool, so no shell reads the text, then run:
 
@@ -180,7 +180,7 @@ Plan 32, F-008
 
 `About` (a plan number or gap ID) is optional. A session's GitHub access may append a `---` footer; the bot stops reading `About` there. With no login, give a pre-filled, percent-encoded link: `https://github.com/banodoco/astrid-dev/issues/new?template=observation.yml&title=observation%3A%20<text>&what=<text>`.
 
-**After filing.** The [issue bot](../.github/workflows/issue-intake.yml) adds only labels: the type, and `plan:NN` or `gap:ID` for `About` IDs on `main`. An issue joins a release one way, by label: `plan:NN` for a plan in the release, or `release:NN` for a release brief on `main`, set at triage by the release manager or the owner ([How a release runs](../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)); a title prefix such as `[R14]` is not a mechanism. A label marks a candidate, not a commitment, and neither it nor pulling the release's issue list changes an issue's state. Planners read open issues by plan or gap: `https://github.com/banodoco/astrid-dev/issues?q=is:open+label:plan:NN` or `label:gap:ID`. A fixing pull request says `Fixes banodoco/astrid-dev#N`, which closes the issue on merge to a default branch; a merge into `release/<NN>/main` does not. [Automation setup](contribution-automation-setup.md).
+**After filing.** The [issue bot](../.github/workflows/issue-intake.yml) adds only labels: the type, and `plan:NN` or `gap:ID` for `About` IDs on `main`. An issue joins a release one way, by label: `plan:NN` for a plan in the release, or `release:NN` for a release brief on `main`, set at triage by the release manager or the owner ([How a release runs](../agent/shared/workstreams/release.md#how-a-release-runs)); a title prefix such as `[R14]` is not a mechanism. A label marks a candidate, not a commitment, and neither it nor pulling the release's issue list changes an issue's state. Planners read open issues by plan or gap: `https://github.com/banodoco/astrid-dev/issues?q=is:open+label:plan:NN` or `label:gap:ID`. A fixing pull request says `Fixes banodoco/astrid-dev#N`, which closes the issue on merge to a default branch; a merge into `release/<NN>/main` does not. [Automation setup](contribution-automation-setup.md).
 
 **States.** Each issue is in one state, found by one search:
 
@@ -203,5 +203,5 @@ Apart from an explicitly linked release coordination mailbox, triage leaves no i
 3. Triage may only apply a type, `backlog`, `planned`, `claimed`, `plan:NN` or `gap:ID` label for an ID on `main`, or `release:NN` as set above; it may comment "possibly the same as #N" or ask what is missing. It never closes, edits, transfers or hands out work; anything else goes to the owner.
 4. The release lead (or an explicitly delegated orchestrator) triages at check-ins, in a session the owner watches, never unattended, reading each issue new or updated since.
 5. An issue becomes work through a task row, in a planner's or manager's own words, citing `#N`, or, for an assorted ticket, through its row in a release brief's issue list, under that release's authorized run. Its text is never pasted into a card, brief or skill; a worker's instruction is its card.
-6. No workflow passes issue text to a shell. A workflow change goes to the owner under the [merge skill](../skills/shared/workstreams/astrid-dev-merge/SKILL.md).
+6. No workflow passes issue text to a shell. A workflow change goes to the owner under the [merge skill](../agent/shared/workstreams/merge.md).
 7. Report a secret seen in an issue to the owner; never repeat it.

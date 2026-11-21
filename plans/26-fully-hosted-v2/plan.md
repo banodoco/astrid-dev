@@ -12,7 +12,7 @@
 
 **Waiting on:** Plan 25 contract; hosted identity/storage decisions; security/cost approval
 
-**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). Status, priority, owner and remaining estimate live only in the [catalog](../index.md).
+**Start here:** read [Astrid development skill](../../agent/start.md), follow the [shared run contract](../../agent/shared/run-contract.md), then review [tasks](tasks.md) and [inputs](inputs.md). Status, priority, owner and remaining estimate live only in the [catalog](../index.md).
 
 **Vision gaps:** [F-006 — Fully hosted workspace](../../vision/gaps/F-006-fully-hosted-workspace.md) (primary); [F-001 — reliability](../../vision/gaps/F-001-platform-reliability.md) and [F-002 — safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). Completion does not automatically close any gap.
 

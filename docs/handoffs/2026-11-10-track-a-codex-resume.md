@@ -1,6 +1,6 @@
 # Release 12 Track A — session handoff
 
-**Checkpoint: 10 November 2026.** Resume Track A toward a reviewed `A-FROZEN`, final tuple qualification and `GATE-GREEN`; publication is the orchestrator's responsibility. The active authority is [Release 12](../../releases/12.md), [Track A fixes](../../releases/12/fixes.md), and [astrid-dev-manage](../../skills/roles/astrid-dev-manage/SKILL.md). Read them and live refs first. This handoff records evidence and work in progress; it does not relax gates or authorize publication. The separate orchestrator coordinates cross-track handoffs, freezes, reruns and the owner's decisions. In a shared Codex task use native collaboration messages; separate Cloud sessions must follow the release mailbox protocol.
+**Checkpoint: 10 November 2026.** Resume Track A toward a reviewed `A-FROZEN`, final tuple qualification and `GATE-GREEN`; publication is the orchestrator's responsibility. The active authority is [Release 12](../../releases/12.md), [Track A fixes](../../releases/12/fixes.md), and [astrid-dev-manage](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/roles/astrid-dev-manage/SKILL.md). Read them and live refs first. This handoff records evidence and work in progress; it does not relax gates or authorize publication. The separate orchestrator coordinates cross-track handoffs, freezes, reruns and the owner's decisions. In a shared Codex task use native collaboration messages; separate Cloud sessions must follow the release mailbox protocol.
 
 ## Saved product refs
 

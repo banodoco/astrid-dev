@@ -12,7 +12,7 @@
 
 **Waiting on:** scope agreement; Hivemind source review
 
-**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), use the [shared run contract](../../skills/shared/run-contract.md), and inspect [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate are in the [project queue](../../README.md).
+**Start here:** read [Astrid development skill](../../agent/start.md), use the [shared run contract](../../agent/shared/run-contract.md), and inspect [tasks](tasks.md) and [inputs](inputs.md). Current status, owner and estimate are in the [project queue](../../README.md).
 
 **Vision gaps:** [CI-002 — Independently owned, interoperable Hiveminds](../../vision/gaps/CI-002-federated-knowledge.md) (primary). This plan provides the protocol and dataset proof; routine agent use is addressed separately.
 

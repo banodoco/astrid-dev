@@ -40,7 +40,7 @@ Use when the [Release Lead](../leader.md) has prepared the [packet queue](../lea
 
 ```text
 You are the ChatGPT manager implementing ONE packet for Release <N>.
-Follow skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md in banodoco/astrid-dev.
+Follow agent/roles/manager/chatgpt-packet.md in banodoco/astrid-dev.
 Packet: releases/<N>/packets/<id>.md at <SHA>; its PR destination names your branches.
 Authority: the Authority section of releases/<N>/run.md at <SHA>, given by the owner.
 Standing rulings: the same file's Standing rulings section; they bind you.

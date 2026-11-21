@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Trustworthy user control](../../vision/gaps/F-002-safe-user-control.md) (primary).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 Complete the retained concurrent-editing behavior so agent edits respect user edits, surface conflicts, and retry safely without silently overwriting changes. The project remains queued; this plan does not authorize execution.
 
@@ -30,7 +30,7 @@ Run [CE-FINAL](tasks.md#ce-final) and, only for a demonstrated failure, [CE-REPA
 
 ## Completion boundary
 
-Completion means the exact retained tuple passes the scoped checks, required outcomes have no blocking END-review findings, and the reviewed composed candidates are promoted under the existing authority. Proof must cover seven SDK nodes, the unchanged eight-case hosted wrapper, real hosted outcomes, SDK guarantees, and the cooperative limit. This does not claim full-suite coverage or establish future candidate results from historical evidence. The [shared run contract](../../skills/shared/run-contract.md) and the actual product repositories' release policies govern execution and publication; this plan grants neither.
+Completion means the exact retained tuple passes the scoped checks, required outcomes have no blocking END-review findings, and the reviewed composed candidates are promoted under the existing authority. Proof must cover seven SDK nodes, the unchanged eight-case hosted wrapper, real hosted outcomes, SDK guarantees, and the cooperative limit. This does not claim full-suite coverage or establish future candidate results from historical evidence. The [shared run contract](../../agent/shared/run-contract.md) and the actual product repositories' release policies govern execution and publication; this plan grants neither.
 
 ## Read next
 

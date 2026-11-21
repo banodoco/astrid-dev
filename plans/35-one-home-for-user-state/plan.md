@@ -14,7 +14,7 @@
 
 **Vision gaps:** [Local-first projects](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary) · [User control and recovery](../../vision/gaps/F-002-safe-user-control.md) (supporting).
 
-**Contributing:** [Astrid development skill](../../skills/astrid-dev/SKILL.md).
+**Contributing:** [Astrid development skill](../../agent/start.md).
 
 **Draft; not ready for execution.** User choices, project choices and project work have one home: the Runtime. Today they are spread over side files, environment variables and browser storage. A read-only audit on 9 Nov (three code-read sweeps, not runtime-verified) listed the candidates. [inputs.md](inputs.md) records them.
 

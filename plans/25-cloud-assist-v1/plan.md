@@ -12,7 +12,7 @@
 
 **Waiting on:** scope agreement; approved providers and cost limits; local-file custody contract
 
-**Start here:** read [Astrid development skill](../../skills/astrid-dev/SKILL.md), follow the [shared run contract](../../skills/shared/run-contract.md), and review [tasks](tasks.md) and [inputs](inputs.md). Priority, owner, estimate and status live **only** in [plans/index.md](../index.md).
+**Start here:** read [Astrid development skill](../../agent/start.md), follow the [shared run contract](../../agent/shared/run-contract.md), and review [tasks](tasks.md) and [inputs](inputs.md). Priority, owner, estimate and status live **only** in [plans/index.md](../index.md).
 
 **Vision gaps:** [F-005 — Local projects cannot yet use coherent cloud execution](../../vision/gaps/F-005-local-files-cloud-assist.md) (primary); [F-003 — dependable creative execution](../../vision/gaps/F-003-creative-execution.md) and [F-002 — safe user control](../../vision/gaps/F-002-safe-user-control.md) (supporting). Do not claim those cross-cutting gaps closed on V1 alone.
 

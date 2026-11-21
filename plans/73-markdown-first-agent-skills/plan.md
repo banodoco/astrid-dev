@@ -12,7 +12,7 @@
 
 **Waiting on:** First package-contract review RS1 before migration, then final independent review R and required CI before main integration.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six fields above define the catalog row; do not edit the generated catalog or add this plan to [priority.md](../priority.md) without an owner decision. The entry links here deliberately reference the current system until the implementation migration.
+**Start:** [Astrid contributor skill](../../agent/start.md) and [domain map](../../agent/shared/domains.md). The six fields above define the catalog row; do not edit the generated catalog or add this plan to [priority.md](../priority.md) without an owner decision. The entry links here deliberately reference the current system until the implementation migration.
 
 **Vision gaps:** [CA-005 — Many contributors and agents can't yet work in parallel through one clear process](../../vision/gaps/CA-005-parallel-contribution.md) (primary).
 
@@ -72,7 +72,7 @@ The Markdown body is the complete instruction. Workstreams express when to use, 
 
 This is a new, separately useful authoring-and-distribution outcome after the completed [Plan 48](../48-one-record-model/plan.md) and [Plan 51](../51-astrid-dev-clean-up/plan.md); neither owns converting authored `SKILL.md` packages into canonical Markdown and rebuilding the install flow. It contributes to the same existing CA-005 gap rather than inventing a gap that measures a particular implementation.
 
-Reuse [`scripts/document_structure.py`](../../scripts/document_structure.py) for frontmatter and headings; [`scripts/workstreams.py`](../../scripts/workstreams.py) for workstream semantics where still useful; [`scripts/views.py`](../../scripts/views.py) for general generated-page projections and link rebasing; and [`scripts/astrid_dev.py`](../../scripts/astrid_dev.py) as the CLI entry. The old [`sync.sh`](../../sync.sh) has safety behaviors worth retaining in the new installer, but not its package-discovery model. The existing doc [CI workflow](../../.github/workflows/docs.yml) must keep its protected, declared-target writeback guard. Prior-art findings and rejected approaches live only in [inputs.md](inputs.md#planning-evidence).
+Reuse [`scripts/document_structure.py`](../../scripts/document_structure.py) for frontmatter and headings; [`scripts/workstreams.py`](../../scripts/workstreams.py) for workstream semantics where still useful; [`scripts/views.py`](../../scripts/views.py) for general generated-page projections and link rebasing; and [`scripts/astrid_dev.py`](../../scripts/astrid_dev.py) as the CLI entry. The old [`sync.sh`](../../agent/README.md) has safety behaviors worth retaining in the new installer, but not its package-discovery model. The existing doc [CI workflow](../../.github/workflows/docs.yml) must keep its protected, declared-target writeback guard. Prior-art findings and rejected approaches live only in [inputs.md](inputs.md#planning-evidence).
 
 The owner chose the **direction** in a 20 November 2026 planning conversation: Markdown sources, `skill: true`, filename-derived names, noun-based roles (Leader/Orchestrator/Manager/Worker), role-owned workstreams and shared workstreams in `shared/`, with permission for an aggressive cleanup. This is **not** an approved scope or execution go; see [inputs.md](inputs.md#owner-decisions), including the still-open reference-packaging and cutover choices.
 
