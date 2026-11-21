@@ -43,8 +43,17 @@ def _rewrite_links(source: AgentDocument, root: Path) -> str:
             if quoted is None:
                 raise ValueError(f"{source.relative}: unsupported Markdown link {raw!r}")
             address, suffix = quoted.group(1), quoted.group(2) or ""
-            if (not address or address.startswith(("#", "/", "//"))
-                    or _SCHEME.match(address)):
+            if not address:
+                return match.group(0)
+            if address.startswith("#"):
+                # A fragment-only link targets this source's unchanged Markdown body.
+                fragment = unquote(address[1:])
+                if fragment and fragment not in {
+                    anchor for _, _, anchor in markdown_heading_anchors(source.body)
+                }:
+                    raise ValueError(f"{source.relative}: missing heading in {address}")
+                return match.group(0)
+            if address.startswith(("/", "//")) or _SCHEME.match(address):
                 return match.group(0)
             pathpart, sep, anchor = address.partition("#")
             pathpart, _, query = pathpart.partition("?")
@@ -108,6 +117,13 @@ def _assert_package_dir(package: Path, *, stale: bool = False) -> None:
         raise ValueError(f"refusing unmanaged generated package: {package}")
     if not marker.read_text(encoding="utf-8").startswith("agent/"):
         raise ValueError(f"invalid ownership marker: {package}")
+    # Verify every package's SKILL.md before build_packages can retire anything.
+    # A symlink with matching bytes is still foreign content and must be refused.
+    skill = package / "SKILL.md"
+    if skill.is_symlink():
+        raise ValueError(f"{package}: refusing symlinked SKILL.md")
+    if skill.exists() and not skill.is_file():
+        raise ValueError(f"{package}: SKILL.md must be a regular file")
     contents = {path.name for path in package.iterdir()}
     if contents - {MARKER, "SKILL.md", "repo"}:
         raise ValueError(f"unmanaged extra files in {package}: {sorted(contents)}")
