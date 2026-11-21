@@ -4,50 +4,62 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — The owner asked for this plan on 21 November 2026, in the Release 15 Lead session (`session_011EzfW1gtAhRQwk8pgJMzhG`): "another plan for just like being able to use any [media] on the machine without importing it", after asking "what's stopping us from just running it from anywhere?" She has not yet read this end state or answered D1 to D6. Next: she confirms or changes them.
+**Scope decision:** Pending — The owner asked for this plan on 21 November 2026, in the Release 15 Lead session (`session_011EzfW1gtAhRQwk8pgJMzhG`): "another plan for just like being able to use any [media] on the machine without importing it", after asking "what's stopping us from just running it from anywhere?" She has not yet read this end state, the critique's recommendation to build the clone first, or D1 to D7. Next: she confirms or changes them.
 
-**Prior art:** Read on 21 November 2026 at astrid-agent `release/15/main` `aac1ceb6`, astrid-runtime `release/15/main` `1758a6df` and astrid-app `release/15/main`, by an exploration with four read-only helpers. Lines marked † were re-read by the planner; the rest are the exploration's and are re-checked in LK-1.
+**Prior art:** Read on 21 November 2026 at astrid-agent `release/15/main` `aac1ceb6`, astrid-runtime `release/15/main` `1758a6df` and astrid-app `release/15/main` `2ef94b4c`, by an exploration and then by the independent critic, whose corrections are included.
 
-- **Media identity is its content.** A selection records the object id, size, media type and variant id, and each commit that uses it re-checks the stored bytes (`runtime_protocol/timeline_commit_port.py:1040-1066`, `service.py:6614`).
-- **"Verify once" assumes nobody else writes.** The Runtime skips re-hashing while a stored file's device, inode, size and times are unchanged (`runtime_protocol/cas.py:200-215`). [#1222](https://github.com/banodoco/astrid-dev/issues/1222) asks about the same rule.
-- **Readers assume the store.** Preview reads through Runtime object routes (`server.py:548-582`); the Agent's media views refuse anything not stored (`astrid/.../media_views.py:16-53`); the renderer reads only its workspace and listed extra folders (`rendering.py:665-692`); export and recovery pack from the store (`timeline_export.py:425`, `timeline_recovery.py:76-87`); rented machines are given object ids and digests (`remote_worker_deployment.py:183-203`).
-- **Today's copy is not destructive.** † The Runtime stages the request body and stores it (`runtime_protocol/server.py:1129`); it deletes only its own staging files. The user's file is only read.
-- **The editor cannot know a path.** It is a browser app with no desktop shell. A leftover start exists: saved Chromium file handles (`localHandleStore.ts`) and a "local" storage mode that plays them as `blob:` URLs (`localMediaResolver.ts:1-60`), but turning them into project media is stubbed as unavailable (`materializeLocalGeneration.ts:23-34`), and the Agent accepts only the `managed_local` realm (`astrid/sdk/remote.py:1813-1823`).
-- **Negative finding:** #1235 says a "path-backed realm" was removed once. Why was not found; LK-1 must find out before repeating it.
+- **Astrid had in-place media and retired it.** The `external_local` realm kept paths to the user's files, with relocation and fingerprint checks. It was removed because a saved path gave the application continuing authority to read that location; local execution was narrowed to bytes the Runtime owns (astrid-agent commits `a5f46d4e` and `17bfe373`). The critic found an architectural decision, and no evidence of a data-loss incident.
+- **Media identity is its content.** The wire selection has five identity fields; size and media type are resolved metadata (astrid-runtime `contract/schemas/timeline-commit.json:1452`). Consumed selections get byte checks (`runtime_protocol/timeline_commit_port.py:1054`), and closure validation separately requires managed project objects (`timeline_commit_store.py:1625`).
+- **"Verify once" assumes nobody else writes.** The Runtime skips re-hashing while a stored file's device, inode, size and times are unchanged (`runtime_protocol/cas.py:200-215`). [#1222](https://github.com/banodoco/astrid-dev/issues/1222) already questions whether some reads inherit verification they never performed. External files must never inherit that trust.
+- **Readers.** The Agent's `media_views` is an optional fast path for stored objects (`astrid/sdk/media_views.py:16`). The renderer rejects locator fields and reads host-materialized files into memory to verify them (`astrid/core/rendering/assets.py:235`, `:264`), so adding folders to its sandbox is not enough. Export, recovery and rented machines need owned, immutable bytes (`timeline_export.py:345`, `timeline_recovery.py:47`, `remote_worker_deployment.py:184`).
+- **The editor cannot know a path,** but saved browser file handles already support gallery playback and permission recovery (`localMediaResolver.ts:145`); turning them into project media is stubbed (`materializeLocalGeneration.ts:29`).
+- **The Runtime already has a clone helper** (`runtime_protocol/fsclone.py:16`). Its import receives HTTP bytes (`server.py:1129`, `service.py:5696`), so a clone needs a local handoff of the path.
+- **Access.** The Runtime already requires scoped bearer credentials (`server.py:272`) and has directory-handle helpers (`dirfd.py:671`).
 
 **Approach:** Compared with doing less.
 
 | Option | What the creator gets | Days | Verdict |
 | --- | --- | --- | --- |
-| Plan 79 only | Any size, still copied | about 5 | Already proposed for Release 15 |
-| Plan 79 plus a copy-on-write clone | No upload and no extra disk on file systems that support clones (APFS, Btrfs, XFS, ReFS); a plain copy elsewhere (ext4, NTFS, across drives) | 4–6 more | The cheap alternative: D6 |
-| **This plan** | A true link on every file system, with changed and missing states | about 22 | Proposed; the owner asked for it |
+| Plan 79 only | Any size, still copied | about 8 | Proposed for Release 15 |
+| **Clone first (phase 1)** | No upload and no extra disk where the file system clones and the file is on the store's volume; a snapshot that survives edits to the original; a plain copy elsewhere | 4–6 | **Recommended first**, by the critic and the planner |
+| True links (phase 2) | A link on every file system, tracking the live file, with changed and missing states | more than 22 | Only if still wanted after phase 1 |
 | Always link, never copy | — | — | Not viable: export, rented machines and recovery need owned bytes |
 
-**Challenge:** Pending — an independent critique is required before greenlight: this changes a cross-repository contract, user data and a flow every creator uses, and exceeds five days. Next: brief the critic to build as little as possible, to test whether D6's clone gives most of the value, and to check the claims above in code; record findings here.
+**Where a clone works,** from the critic, with sources, not tested here: macOS on APFS (`clonefileat`); Linux on Btrfs and reflink-enabled XFS (`FICLONE`, exposed by Python 3.12); Windows on ReFS (block cloning, in ranges below 4 GB per call). Ordinary ext4, NTFS and any transfer across volumes need a copy. `shutil.copyfile` does not guarantee a clone.
 
-**Proof and limits:** The completion cases in [plan.md](plan.md#completion). Not proven here: network and removable drives beyond "missing", Windows long paths, and portability without copying in.
+**Challenge:** Done on 21 November 2026 by an independent Codex critic (`gpt-6.2-astra`, high effort, read-only brief, no stake in the draft), which read code and history in the three repositories. It did not run the stack, benchmark hashing, test file systems or measure how often creators keep footage and the store on one volume. Its recommendation: **build the clone first.** Findings and what the planner did with each:
 
-**Review rounds:** Recommended: a review stop (RS1) after the contract, because every later task builds on it and a late finding would redo them, and two rounds at the end, because the change reaches user data. Pending — the owner confirms.
+- **Accepted — the earlier removal was deliberate** (above). Now D7, and LK-1 must answer it.
+- **Accepted — a folder list and a freshness check cannot guarantee the bytes rendered.** The contract must say who grants and revokes, open files relative to a held directory handle (symlinks, Windows reparse points, case aliases), and define how each range and render gets verified bytes; coarse timestamps, same-size edits and Windows sharing violations must be tested; the first digest reads every byte. Now in LK-1, LK-2 and LK-3, re-routed to `S`.
+- **Accepted — commit rules reach accepted history.** Availability stays outside accepted revisions; accepting replacement bytes makes a new revision and keeps undo; Plan 63 needs distinct outcomes for "temporarily unavailable" and "stale selection"; re-checking unrelated files would threaten Plan 75's 300 ms and Plan 77's two seconds. Now in LK-1 and LK-4.
+- **Accepted — "copy in later" can fail for good:** a file over the Runtime's limit, deleted or overwritten. The limits are published before a link is accepted, and copy-in is an explicit command (LK-7); automatic copy-in is deferred.
+- **Accepted — the reader inventory was wrong** in the draft (above), and derived thumbnails, transcripts and proxies must be keyed by source digest. Now LK-6, re-routed to `X`.
+- **Accepted — 22 days was too optimistic** for the stated guarantees, and one operating system's proof cannot price the others. Phase 2 is re-estimated by LK-1; the editor work is deferred to phase 3; the wording task is folded into delivery.
+- **Accepted — start with one useful slice:** the clone, for the SDK and CLI on one host, on APFS first. Now LK-0 and phase 1.
+
+**Proof and limits:** The completion cases in [plan.md](plan.md#completion). Not proven here: other operating systems than the one each phase is run on, network and removable drives beyond "missing", and portability without copying in.
+
+**Review rounds:** Recommended: none for phase 1 beyond its focused proof and a bounded-fix check, because it adds no record type; for phase 2, a review stop (RS1) after the contract and two rounds at the end, because the change reaches user data and accepted history. Pending — the owner confirms.
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the phase it covers, the accountable session, what it may do without asking and what still needs the owner's go.
 
 ## Owner decisions
 
-- **D1 — the release.** (a) Release 15. (b) The release after the saving plans land. Recommendation: (b). This plan changes media identity on the commit path Plans 63, 75 and 77 are stabilising, and at about 22 days it would be the second-largest plan in Release 15. Pending.
-- **D2 — the default when adding a file by path.** (a) Copy stays the default; linking is a choice. (b) Link by default. Recommendation: (a) until the changed and missing states have been lived with. Pending.
-- **D3 — what Astrid may read.** (a) Only folders the creator has linked. (b) Any path the creator's own session names. Recommendation: (a); the Runtime is a local server, and (b) lets anything that can reach it read any file. Pending.
-- **D4 — a file that changed.** (a) Flag the clip and refuse new uses until the creator accepts or relinks. (b) Quietly use the new content. Recommendation: (a); (b) changes finished work without anyone choosing it. Pending.
-- **D5 — adding from the editor.** (a) Browse linked folders through the Runtime. (b) A desktop shell that knows file paths. (c) SDK and CLI only; the editor only displays links. Recommendation: (a). Pending.
-- **D6 — the cheaper clone first.** Should the copy-on-write clone (4–6 days on top of Plan 79) come first, with this plan waiting to see whether it is still wanted? Recommendation: decide after the critique; the clone does nothing on NTFS or ext4, which covers most Windows and many Linux installs. Pending.
+- **D1 — the release.** (a) Phase 1 in Release 15, after Plan 79. (b) Phase 1 in the next release. Phase 2 in neither until D6 is answered again. Recommendation: (a) if Plan 79 lands with time to spare, since phase 1 is 4 to 6 days and changes no contract; otherwise (b). Pending.
+- **D2 — the default when adding a file by path.** (a) Clone when possible, copy otherwise, automatically. (b) Ask. For phase 2, linking stays an explicit choice. Recommendation: (a). Pending.
+- **D3 — what Astrid may read.** Phase 1: only a path the creator's own session names, read once at import. Phase 2: (a) one folder the creator grants; (b) any path. Recommendation: (a). Pending.
+- **D4 — a linked file that changed (phase 2).** (a) Flag the clip and refuse new uses until the creator accepts or relinks. (b) Quietly use the new content. Recommendation: (a). Pending.
+- **D5 — the editor (phase 3).** (a) Browse the granted folder through the Runtime. (b) A desktop shell that knows file paths. (c) Build on the saved browser file handles. Recommendation: decide when phase 3 is planned. Pending.
+- **D6 — the clone first.** (a) Build phase 1, use it, then decide whether phase 2 is still wanted. (b) Go straight to true links. Recommendation: (a), as the critic recommends. On a Mac with footage and Astrid on the same disk, the clone already means no upload and no second copy; what it does not give is a clip that follows later edits to the original. Pending.
+- **D7 — bring back a saved path's authority (phase 2).** Astrid removed in-place media so that it never keeps standing permission to read the user's folders. Phase 2 reverses that for one granted folder. (a) Accept that, with the grant visible and revocable. (b) Keep the earlier decision; phase 2 is not built. Recommendation: decide after phase 1. Pending.
 
 ## Source identities
 
-Pending — no code work has started. At run start record, for each repository: the plan branch `release/<NN>/plan-80` cut from that release's branch (the release is D1), the commit it was cut at, and the commits of Plan 79 and Plan 63 it builds on.
+Pending — no code work has started. At run start record, for each repository: the plan branch `release/<NN>/plan-80` cut from that release's branch (the release is D1), the commit it was cut at, and the commits of Plan 79 and, for phase 2, Plan 63 it builds on.
 
 ## References
 
-- [Plan 79](../79-local-media-any-size/plan.md): the copy path, and the answer to "what stops Astrid using the file where it is".
+- [Plan 79](../79-local-media-any-size/plan.md): the copy path and the fallback.
 - [#1235](https://github.com/banodoco/astrid-dev/issues/1235), [#1222](https://github.com/banodoco/astrid-dev/issues/1222).
-- [Plan 63](../63-dependable-saving/plan.md), [Plan 75](../75-fast-saving/plan.md), [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md): the commit path this plan adds a refusal to.
-- [Plan 25](../25-cloud-assist-v1/plan.md): local files with cloud work, which meets linked media at "copy in when owned bytes are needed".
+- [Plan 63](../63-dependable-saving/plan.md), [Plan 75](../75-fast-saving/plan.md), [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md): the commit path phase 2 adds refusals to.
+- Clone support: [Apple `clonefile`](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/man/man2/clonefile.2), [Linux `FICLONE`](https://man7.org/linux/man-pages/man2/FICLONE.2const.html), [Python `fcntl`](https://docs.python.org/3/library/fcntl.html), [Windows ReFS block cloning](https://learn.microsoft.com/en-us/windows-server/storage/refs/block-cloning).

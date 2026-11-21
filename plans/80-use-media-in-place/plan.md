@@ -2,65 +2,69 @@
 
 **Project:** Use media in place
 
-**Goal:** A creator or agent uses any media file already on the computer in a timeline without importing it: Astrid links to the file where it is, takes no second copy, and says plainly when the file has changed or gone.
+**Goal:** A creator or agent uses media already on the computer without uploading it or paying for a second copy on disk: first by an instant clone where the file system allows, and later, if the owner still wants it, by linking to the file where it is.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** About 22 engineering days (15 to 25), in two phases: phase A, agents and the Runtime, about 13; phase B, the editor, about 9. Provisional until the independent critique and the contract task.
+**Estimate:** Phase 1, the clone, 4 to 6 engineering days. Phase 2, true links for agents, more than the 22 days first drafted; it is re-estimated by its contract task (LK-1). Phase 3, the editor and automatic copy-in, is deferred and not estimated.
 
-**Waiting on:** the owner's decisions D1 to D6 in [inputs.md](inputs.md#owner-decisions); the independent critique; [Plan 79](../79-local-media-any-size/plan.md), whose streaming copy is this plan's fallback; and the saving plans ([63](../63-dependable-saving/plan.md), [75](../75-fast-saving/plan.md), [77](../77-saving-holds-on-a-heavy-timeline/plan.md)) landing first, because this plan changes what a clip's identity means.
+**Waiting on:** the owner's decisions D1 to D7 in [inputs.md](inputs.md#owner-decisions), above all D6 (the clone first) and D7 (reversing an earlier decision); [Plan 79](../79-local-media-any-size/plan.md), whose streaming copy is the fallback; and, for phase 2 only, the saving plans ([63](../63-dependable-saving/plan.md), [75](../75-fast-saving/plan.md), [77](../77-saving-holds-on-a-heavy-timeline/plan.md)) landing first.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
-**Vision gaps:** [F-003 — Creative execution isn't yet dependable end to end](../../vision/gaps/F-003-creative-execution.md) (primary): a creator's footage is usable where it already lives. [F-002 — User control and recovery aren't fully proven](../../vision/gaps/F-002-safe-user-control.md) (supporting): the creator decides which folders Astrid may read. Neither route names this plan, so there is no `Contributes to closure` line.
+**Vision gaps:** [F-003 — Creative execution isn't yet dependable end to end](../../vision/gaps/F-003-creative-execution.md) (primary): a creator's footage is usable where it already lives. [F-002 — User control and recovery aren't fully proven](../../vision/gaps/F-002-safe-user-control.md) (supporting): the creator decides what Astrid may read. Neither route names this plan, so there is no `Contributes to closure` line.
 
 ## Outcome and scope
 
-Today every clip is copied into Astrid's store before it can be used. The copy is safe, but it doubles the disk space, takes time for large footage, and is the step where size limits and lost uploads appear. This plan adds a second way to use a file: a **link**.
+Today every clip is copied into Astrid's store before it can be used. The copy is safe, but it doubles the disk space, takes time for large footage, and is the step where size limits and lost uploads appear.
 
-**Included:**
+**Phase 1 — the clone.** When an agent or the CLI adds a file that is on the same volume as Astrid's store, and the file system can clone (APFS on macOS, Btrfs and reflink-enabled XFS on Linux, ReFS on Windows), the Runtime clones it into the store instead of receiving its bytes. A clone is instant and uses no extra disk until one of the two files changes. Astrid's copy is a snapshot: later edits to the original do not reach it. Everywhere else it falls back to Plan 79's streaming copy. Nothing about a clip's identity, saving, preview, render or export changes.
 
-- **Linked media.** A file is linked by its path. Astrid records its size, times and content digest, and reads it where it is. Nothing is copied, moved or changed.
-- **Linked folders.** The creator names the folders Astrid may read. A path outside them is refused.
-- **Honest states.** A linked file is shown as available, changed, or missing. A changed or missing file never silently alters a timeline: existing clips are flagged, and new uses are refused until the creator relinks or accepts the new content.
-- **Relink.** A missing or moved file is pointed at its new place, and accepted only if the content matches, or the creator says to accept the difference.
-- **Copy in when owned bytes are needed.** Export, a rented machine and recovery copy the file into the store at that moment, using Plan 79's streaming import.
-- **From the editor too.** The editor adds media by browsing the linked folders through the Runtime, since a browser never learns a dropped file's path.
+**Phase 2 — true links, for agents.** A file is linked by its path and read where it is, with one folder the creator grants, changed and missing states, relink, and an explicit copy-in command. This reverses an earlier decision (D7) and changes what a clip's identity means, so it starts with a written contract and a review stop.
 
-**Copying stays, and stays the default** unless the owner decides otherwise (D2). Drag and drop into the editor still copies.
+**Phase 3 — deferred.** The editor's states, relink and folder browser, and automatic copy-in for export and rented machines.
 
 **Not included:** watching folders for new files, proxies or transcoding of linked media, links on rented or remote machines, and network-drive reliability beyond showing "missing".
 
 ## Existing work and decision
 
-The Runtime's store identifies media by content digest and skips re-hashing because nothing else can write to it. Preview, the renderer, export, recovery and rented machines all read from that store. A link breaks the assumption all of them rest on, so the load-bearing part of this plan is one written contract for linked media (LK-1), reviewed before any code. There is a leftover start in the editor (saved browser file handles and a "local" storage mode) that is stubbed out; LK-1 decides whether any of it is reused. The findings, the options and the cheaper alternative (a copy-on-write clone, D6) are in [inputs.md](inputs.md#planning-evidence).
+Astrid had this once. A storage mode called `external_local` kept paths to the user's files, with relocation and fingerprint checks, and it was retired on purpose: a saved path gave the application continuing authority to read that location, so local execution was narrowed to bytes the Runtime owns. No data-loss incident was found behind that decision. Phase 2 brings the authority back in a narrower form, and the owner should decide that knowingly (D7).
+
+The independent critique recommended building the clone first. It gives most of the disk and time saving on eligible volumes, keeps every guarantee the saving plans rely on, and the Runtime already has a clone helper. The findings, the options and the critique are in [inputs.md](inputs.md#planning-evidence).
 
 ## Sequence and readiness
 
-1. **LK-1, the contract, then RS1,** a review stop. Everything else builds on it.
-2. **Phase A (agents and the Runtime):** linked folders (LK-2), linking and reading (LK-3), commit rules (LK-4), the SDK and CLI (LK-5), copy in (LK-6), preview and render (LK-7). An agent can then use a linked file end to end.
-3. **Phase B (the editor):** states and relink (LK-8), adding by browsing (LK-9), wording (LK-10).
-4. **LK-11, the live proof, then R.**
+1. **Phase 1: LK-0,** after Plan 79's streaming import exists. It measures the disk used, the time taken and that editing the original leaves Astrid's copy unchanged.
+2. **The owner decides** whether phase 2 is still wanted, having used the clone (D6).
+3. **Phase 2: LK-1, the contract, then RS1,** a review stop. Then one granted folder (LK-2), link and read (LK-3), commit rules (LK-4), the CLI and SDK (LK-5), preview and render (LK-6), and an explicit copy-in command (LK-7).
+4. **LK-8, the live proof, then R.**
 
-**Real dependencies:** Plan 79 for LK-6. The saving plans for LK-4, which adds a refusal to the commit path they are stabilising; starting LK-4 before Plan 63's four outcomes exist would mean writing it twice.
+**Real dependencies:** Plan 79 for LK-0. For phase 2, Plan 63's outcomes: LK-4 needs two new ones, "temporarily unavailable" and "stale selection", and must not slow the commit path that Plans 75 and 77 are measuring.
 
-**Unresolved:** D1 to D6, and whether D6's cheaper clone delivers enough that this plan should wait. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
+**Unresolved:** D1 to D7. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
-**Consumes:** the Runtime's media selection and verification contract and its commit refusals, as Plan 63 leaves them; Plan 79's streaming import. Exact commits are recorded at run start.
+**Consumes:** the Runtime's import validation and catalog publication, its clone helper (`runtime_protocol/fsclone.py`), and Plan 79's streaming import. For phase 2, the media selection and commit contract as Plan 63 leaves it. Exact commits are recorded at run start.
 
-**Produces:** a linked-media record and its rules in the Runtime's `contract/` folder; SDK and CLI commands to link, relink and copy in; editor states for linked media. **Compatibility limit:** a project with linked media is not portable until its files are copied in; export does that. Older Agents and editors must refuse a linked selection clearly, never misread it.
+**Produces:** phase 1, a same-host import that clones, with no new record type. Phase 2, a linked-media record and its rules in the Runtime's `contract/` folder, with an executable schema, and commands to link, relink and copy in. **Compatibility limits, published before any link is accepted:** a project with linked media is not portable until its files are copied in; a linked file larger than the Runtime's object limit, or deleted or overwritten, cannot later be exported, recovered or sent to a rented machine. Older Agents and editors must refuse a linked selection clearly.
 
 ## Completion
 
-- **Works:** a multi-gigabyte file in a linked folder is placed on a timeline from the CLI and from the editor, plays and renders, and Astrid's store has not grown by the file's size.
-- **Changed file:** the file is edited outside Astrid; the clip is flagged as changed, a new use is refused naming the file, and the creator can accept the new content or relink.
-- **Missing file:** the file is moved; the clip is flagged as missing, the timeline still opens and saves, and relinking to the moved file restores it.
-- **Boundary:** a path outside the linked folders is refused, from the SDK, the CLI and the editor.
-- **Owned bytes:** export, and a job on a rented machine, succeed with linked media by copying in, and say that they did.
-- **Negative case:** a file swapped for a different one at the same path is never rendered as the original.
-- **Untouched original:** Astrid never writes to, moves or deletes a linked file.
-- **Limits of the proof:** one operating system for the live run unless the owner asks for more; removable and network drives are proven only as far as "missing". Landing and publishing remain the owner's.
+**Phase 1:**
+
+- **Works:** on an eligible volume, a multi-gigabyte file is added from the CLI in seconds; the store's allocated space grows by far less than the file's size; the clip plays and renders.
+- **Snapshot:** the original is edited afterwards; Astrid's clip is unchanged.
+- **Fallback:** on a volume that cannot clone, or across volumes, the same command succeeds by streaming, and says which it did.
+- **Untouched original:** Astrid never writes to, moves or deletes the source file.
+
+**Phase 2, to be made exact by LK-1:**
+
+- **Works:** a file in the granted folder is linked and placed from the CLI, plays and renders, and the store has not grown by its size.
+- **Changed and missing:** each is flagged; a timeline with a missing link still opens and saves; accepting new content makes a new revision that undo can reverse.
+- **Boundary:** a path outside the granted folder, through a symlink or a case alias, is refused.
+- **Negative case:** a file swapped or edited in place is never rendered as the original.
+
+**Limits of the proof:** one operating system per phase unless the owner asks for more, so cross-platform behaviour is not priced here. Landing and publishing remain the owner's.
