@@ -8,7 +8,7 @@ We want to create the conditions for the community to do more together.
 
 We want a collective that inspires people to attempt more demanding artistic and technical work, helping them grow through collaboration and critique. We also want to reward meaningful contributions by sharing ownership in the company with people who advance our core product and wider ecosystem. An Astrid-centered culture and a legally workable ownership model still need to be established.
 
-## Aspirations
+## Goals
 
 ### Shared challenges and ambition
 

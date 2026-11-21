@@ -8,7 +8,7 @@ Run fully locally, or cheaply and conveniently in the cloud.
 
 Astrid should be built so that creative work can happen entirely on your machine, even offline, with your projects and files under your control. The same work should be convenient and inexpensive to run in the cloud when helpful. People and their agents should choose where work happens, what is shared, and what it costs.
 
-## Aspirations
+## Goals
 
 ### Local work as the default
 

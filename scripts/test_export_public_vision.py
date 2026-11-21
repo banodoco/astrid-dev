@@ -15,21 +15,43 @@ FIXTURE_FILES = Path(__file__).parent / "fixtures" / "vision"
 
 class PublicVisionProjectionTests(unittest.TestCase):
 
-    def test_every_gap_resolves_to_an_aspiration_and_preserves_element_projection(self):
+    def test_every_gap_resolves_to_a_goal_and_preserves_element_projection(self):
+        from vision_subject import parse_subject
         page = self.page
         known = {f"{kind}:{subject['id']}/{item['id']}": item
                  for kind, subjects in (("pillar", page["pillars"]), ("principle", page["principles"]))
-                 for subject in subjects for item in subject["characteristics"]}
-        self.assertEqual(len(known), 31)
-        self.assertEqual(len(page["gaps"]), 22)
+                 for subject in subjects for item in subject["goals"]}
+        # Derive expected identities from the checked-in source files. Adding a
+        # valid goal or gap must not require editing a frozen inventory count.
+        expected_goals = {
+            f"{kind}:{path.stem}/{goal['id']}"
+            for kind, folder in (("pillar", "pillars"), ("principle", "principles"))
+            for path in (self.fixture_root / "vision" / folder).glob("*.md")
+            for goal in parse_subject(path.read_text(encoding="utf-8"), path.as_posix())["goals"]
+        }
+        self.assertEqual(set(known), expected_goals)
+        self.assertEqual(len(known), sum(len(item["goals"]) for item in page["pillars"] + page["principles"]))
+        source_gaps = list((self.fixture_root / "vision/gaps").glob("*.md"))
+        self.assertEqual(len(page["gaps"]), len(source_gaps))
+        self.assertEqual(len({gap["id"] for gap in page["gaps"]}), len(source_gaps))
         for gap in page["gaps"]:
-            refs = [gap["aspiration"], *gap["supportingAspirations"]]
+            refs = [gap["goal"], *gap["supportingGoals"]]
             self.assertTrue(all(ref in known for ref in refs), gap["id"])
-            self.assertEqual(gap["primaryAppliesTo"], gap["aspiration"].split("/")[0])
+            self.assertEqual(gap["primaryAppliesTo"], gap["goal"].split("/")[0])
             self.assertEqual(gap["appliesTo"], list(dict.fromkeys(ref.split("/")[0] for ref in refs)))
         packs = known["pillar:liquid-software/packs-are-live-portable-and-extensible"]
         self.assertIn("**We should:**", packs["detailsMarkdown"])
         self.assertIn("**We should never:**", packs["detailsMarkdown"])
+
+
+    def test_goal_wire_aliases_are_identical_for_cached_v1_consumers(self):
+        # The new goal names are canonical; the prior schema-v1 names remain
+        # strictly identical until cached App clients no longer need them.
+        for subject in self.page["pillars"] + self.page["principles"]:
+            self.assertEqual(subject["goals"], subject["characteristics"])
+        for gap in self.page["gaps"]:
+            self.assertEqual(gap["goal"], gap["aspiration"])
+            self.assertEqual(gap["supportingGoals"], gap["supportingAspirations"])
 
 
     @classmethod
@@ -73,8 +95,8 @@ class PublicVisionProjectionTests(unittest.TestCase):
                 self.assertEqual(subject["statement"], parsed["statement"])
                 self.assertEqual(subject["explanationMarkdown"], parsed["explanationMarkdown"])
                 self.assertEqual(
-                    [(c["id"], c["title"], c["summary"]) for c in subject["characteristics"]],
-                    [(c["id"], c["title"], c["summary"]) for c in parsed["characteristics"]],
+                    [(c["id"], c["title"], c["summary"]) for c in subject["goals"]],
+                    [(c["id"], c["title"], c["summary"]) for c in parsed["goals"]],
                 )
                 self.assertIn(subject["statement"], subject["bodyMarkdown"])
 
@@ -125,12 +147,12 @@ class PublicVisionProjectionTests(unittest.TestCase):
         all_subjects = self.page["pillars"] + self.page["principles"]
         self.assertEqual(len(all_subjects), 8)
         for subject in all_subjects:
-            self.assertGreaterEqual(len(subject["characteristics"]), 2)
+            self.assertGreaterEqual(len(subject["goals"]), 2)
             self.assertTrue(subject["explanationMarkdown"])
-            self.assertEqual(len({c["id"] for c in subject["characteristics"]}),
-                             len(subject["characteristics"]))
+            self.assertEqual(len({c["id"] for c in subject["goals"]}),
+                             len(subject["goals"]))
             self.assertTrue(all(c["summary"].endswith(".") and c["detailsMarkdown"]
-                                for c in subject["characteristics"]))
+                                for c in subject["goals"]))
 
     def test_local_first_promise_is_balanced_without_losing_offline_control(self):
         first = self.page["principles"][0]
@@ -139,15 +161,15 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("local project should remain authoritative", full)
         self.assertIn("costs", full)
 
-    def test_principles_have_concise_openings_and_detailed_characteristics(self):
+    def test_principles_have_concise_openings_and_detailed_goals(self):
         principles = self.page["principles"]
         self.assertEqual(principles[1]["title"], "Completely open by design")
         self.assertEqual(principles[3]["title"], "Eliminate technical wrangling")
         self.assertTrue(all(len(p["statement"].split()) <= 25 for p in principles))
         self.assertTrue(all(20 <= len(p["explanationMarkdown"].split()) <= 105
                             for p in principles))
-        self.assertTrue(all(2 <= len(p["characteristics"]) <= 6 for p in principles))
-        self.assertTrue(all("## Aspirations" in p["bodyMarkdown"] for p in principles))
+        self.assertTrue(all(2 <= len(p["goals"]) <= 6 for p in principles))
+        self.assertTrue(all("## Goals" in p["bodyMarkdown"] for p in principles))
 
     def test_liquid_software_reframes_creative_friction_without_losing_core_constraints(self):
         liquid = self.page["pillars"][1]
@@ -160,7 +182,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertNotIn("not just quick generations", self.page["pillars"][0]["bodyMarkdown"])
         self.assertNotIn("throughput", self.page["pillars"][0]["bodyMarkdown"])
 
-    def test_characteristics_reflect_artistic_agency_agent_tools_and_affordable_cloud(self):
+    def test_goals_reflect_artistic_agency_agent_tools_and_affordable_cloud(self):
         pillars = {pillar["id"]: pillar for pillar in self.page["pillars"]}
         principles = {p["id"]: p for p in self.page["principles"]}
 
@@ -171,21 +193,21 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertNotIn("throughput", ambition["bodyMarkdown"])
 
         liquid = pillars["liquid-software"]
-        self.assertIn("live-tool-composition", {c["id"] for c in liquid["characteristics"]})
+        self.assertIn("live-tool-composition", {c["id"] for c in liquid["goals"]})
         self.assertIn("Agents should be equally free", liquid["bodyMarkdown"])
         self.assertIn("extend its own capabilities", liquid["bodyMarkdown"])
 
         wisdom = pillars["compounding-intelligence"]
-        self.assertEqual(wisdom["characteristics"][0]["title"],
+        self.assertEqual(wisdom["goals"][0]["title"],
                          "An ecosystem of wisdom grounded in real work")
 
         local = principles["local-first-cloud-capable"]
-        self.assertIn("cloud-as-frugal-as-possible", {c["id"] for c in local["characteristics"]})
+        self.assertIn("cloud-as-frugal-as-possible", {c["id"] for c in local["goals"]})
         self.assertIn("cheap turpentine", local["bodyMarkdown"])
         self.assertIn("privacy", local["bodyMarkdown"])
 
         open_design = principles["open-by-design"]
-        self.assertEqual(len(open_design["characteristics"]), 4)
+        self.assertEqual(len(open_design["goals"]), 4)
         self.assertIn("Open decisions and working knowledge", open_design["bodyMarkdown"])
         self.assertIn("With the creator's permission", open_design["bodyMarkdown"])
 
@@ -210,7 +232,7 @@ class PublicVisionProjectionTests(unittest.TestCase):
         self.assertIn("CA-003", gaps)
         self.assertEqual(gaps["CA-003"]["primaryAppliesTo"], "principle:open-by-design")
         self.assertEqual(gaps["CA-003"]["appliesTo"], ["principle:open-by-design"])
-        self.assertEqual(gaps["CA-003"]["supportingAspirations"], [])
+        self.assertEqual(gaps["CA-003"]["supportingGoals"], [])
         self.assertEqual(gaps["CA-004"]["primaryAppliesTo"], "principle:open-by-design")
         self.assertEqual(gaps["CA-003"]["assessment"], "partially evidenced")
         self.assertIn("at least three substantive", gaps["CA-003"]["closureEvidenceMarkdown"])

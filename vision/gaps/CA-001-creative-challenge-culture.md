@@ -1,6 +1,6 @@
 # CA-001 — Astrid doesn't yet have a culture where creatives thrive
 
-**Aspiration:** [Shared challenges and ambition](../pillars/shared-endeavour.md#shared-challenges-and-ambition) (primary) · **Assessment:** Open; prior Banodoco competitions, but no established Astrid-specific program/outcome audit.
+**Goal:** [Shared challenges and ambition](../pillars/shared-endeavour.md#shared-challenges-and-ambition) (primary) · **Assessment:** Open; prior Banodoco competitions, but no established Astrid-specific program/outcome audit.
 
 ## Desired state
 

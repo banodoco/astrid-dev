@@ -1,6 +1,6 @@
 # LS-005 — Agents can't yet reliably create and maintain their own tools
 
-**Aspiration:** [Real-time functionality](../pillars/liquid-software.md#real-time-functionality) (primary) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open; initial assessment (2026-11-10); not implementation proof.
+**Goal:** [Real-time functionality](../pillars/liquid-software.md#real-time-functionality) (primary) · [Explicit permissions and privacy](../principles/in-the-creators-control.md#explicit-permissions-and-privacy) (supporting) · **Assessment:** Open; initial assessment (2026-11-10); not implementation proof.
 
 ## Desired state
 

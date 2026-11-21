@@ -1,6 +1,6 @@
 # F-001 — Reliability isn't proven across supported setups
 
-**Aspiration:** [Dependable execution and recovery](../principles/eliminate-needless-technical-wrangling.md#dependable-execution-and-recovery) (primary) · [Approachable, reversible choices](../principles/in-the-creators-control.md#approachable-reversible-choices) (supporting) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
+**Goal:** [Dependable execution and recovery](../principles/eliminate-needless-technical-wrangling.md#dependable-execution-and-recovery) (primary) · [Approachable, reversible choices](../principles/in-the-creators-control.md#approachable-reversible-choices) (supporting) · **Assessment:** Partially evidenced (2026-11-06; source is existing plan/queue evidence, not a new qualification).
 
 ## Desired state
 

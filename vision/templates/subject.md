@@ -6,42 +6,42 @@ One complete sentence that defines the ambition or operating principle.
 
 ## Explanation
 
-One concise paragraph explaining why this matters and the governing idea behind it. Keep it meaningful and specific, without repeating every aspiration below.
+One concise paragraph explaining why this matters and the governing idea behind it. Keep it meaningful and specific, without repeating every goal below.
 
-## Aspirations
+## Goals
 
-<!-- These are the Goals shown on Astrid's website. Keep this legacy authoring heading and the compatible feed identifiers until an explicitly reviewed schema migration updates all consumers together. -->
+<!-- Goals are the canonical authored name on both this page and Astrid's website. Do not change existing goal slugs: they are referenced by gaps. The public feed retains only its schema-v1 compatibility aliases for older cached clients. -->
 
-<!-- Use [the aspiration template](aspiration.md) for each item below. The
+<!-- Use [the goal template](goal.md) for each item below. The
 summary is always visible; its substantive explanation expands first. Optional
 We should / We should never lists live behind a separate, initially closed
 "We should / We should never" toggle inside that explanation. Keep both lists
 with 1-5 single-sentence bullets each, or omit both completely. Do not add empty
 placeholders or move these decisions into a separate App-only copy. -->
 
-### First distinct aspiration
+### First distinct goal
 
-One sentence explaining what must be true for this aspiration.
+One sentence explaining what must be true for this goal.
 
-A short, substantive explanation with practical implications, boundaries, examples or tradeoffs. This paragraph stays hidden until the reader expands the aspiration.
+A short, substantive explanation with practical implications, boundaries, examples or tradeoffs. This paragraph stays hidden until the reader expands the goal.
 
 **We should:**
 
-- State a concrete choice that advances this aspiration in practice.
+- State a concrete choice that advances this goal in practice.
 
 **We should never:**
 
-- State a meaningful boundary that protects this aspiration from compromise.
+- State a meaningful boundary that protects this goal from compromise.
 
-### Second distinct aspiration
+### Second distinct goal
 
-One sentence explaining what must be true for the second aspiration.
+One sentence explaining what must be true for the second goal.
 
-The fuller explanation of this aspiration, with distinct detail that supports its headline rather than just repeating it.
+The fuller explanation of this goal, with distinct detail that supports its headline rather than just repeating it.
 
-<!-- Each aspiration keeps at least 15 words of explanatory prose. Optional lists
+<!-- Each goal keeps at least 15 words of explanatory prose. Optional lists
 come as a pair, after that prose: each has 1-5 single-sentence bullets. Nothing
-follows the second list before the next aspiration or References section. -->
+follows the second list before the next goal or References section. -->
 
 **We should:**
 

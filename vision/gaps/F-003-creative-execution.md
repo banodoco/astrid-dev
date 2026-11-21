@@ -1,6 +1,6 @@
 # F-003 — Creative execution isn't yet dependable end to end
 
-**Aspiration:** [Dependable execution and recovery](../principles/eliminate-needless-technical-wrangling.md#dependable-execution-and-recovery) (primary) · [Finished artistic work](../pillars/artistic-ambition.md#finished-artistic-work) (supporting) · **Assessment:** Open / foundations exist (2026-11-06).
+**Goal:** [Dependable execution and recovery](../principles/eliminate-needless-technical-wrangling.md#dependable-execution-and-recovery) (primary) · [Finished artistic work](../pillars/artistic-ambition.md#finished-artistic-work) (supporting) · **Assessment:** Open / foundations exist (2026-11-06).
 
 ## Desired state
 

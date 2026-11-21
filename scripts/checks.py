@@ -161,7 +161,7 @@ def _gap_structure(context):
         text = read(root, file.relative_to(root))
         if not text.startswith(f'# {gap_id} —'):
             errors.append(f'{file.name}: title must start with gap ID')
-        for field in ['**Aspiration:**', '**Assessment:**', '## Desired state', '## Current state', '## Gap', '## Closure evidence', '## Sources and reassessment']:
+        for field in ['**Goal:**', '**Assessment:**', '## Desired state', '## Current state', '## Gap', '## Closure evidence', '## Sources and reassessment']:
             if field not in text:
                 errors.append(f'{file.name}: missing {field}')
         try:
@@ -372,7 +372,7 @@ def _completion_impl(context):
 
 def _boundary_impl(context):
     import check_gap_boundaries as gate
-    from gap_relationships import gap_metadata, parse_gap_aspirations
+    from gap_relationships import gap_metadata, parse_gap_goals
     from records import read_text
     required = gate.affected_gaps(context.base, context.root)
     if not required:
@@ -385,7 +385,7 @@ def _boundary_impl(context):
             raise ValueError(f'{gap_id}: duplicate gap files')
         if paths:
             meta = gap_metadata(read_text(context.root, paths[0].relative_to(context.root)))
-            expected[gap_id] = parse_gap_aspirations(meta, context.root / 'vision')
+            expected[gap_id] = parse_gap_goals(meta, context.root / 'vision')
         else:
             expected[gap_id] = None
     return gate.check_pr(required, body, expected)

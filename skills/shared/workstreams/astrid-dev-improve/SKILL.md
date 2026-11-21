@@ -24,7 +24,7 @@ Enter through [astrid-dev](../../../astrid-dev/SKILL.md). Words follow the [glos
 | Running Codex from a Claude session: workers are the default; a Codex manager's check-in | [Codex-in-Claude workstream](../../../roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud.md#use-codex-from-claude-cloud) | judgment |
 | Reading CI results, getting them complete, using GitHub Actions for tests | [green skill](../astrid-dev-green/SKILL.md) | judgment |
 | Installing skills for Codex | the guide for that environment: [Claude cloud](../../../roles/astrid-dev-orchestrate/workstreams/codex-in-claude-cloud/README.md) or [Codex cloud](../../../roles/astrid-dev-orchestrate/workstreams/codex-cloud/README.md) | judgment |
-| Vision wording: an element, an aspiration, its lists | [contribution workflow](../../../../docs/contribution-workflow.md#write-or-improve-documentation) | `subjects`, owner review |
+| Vision wording: an element, an goal, its lists | [contribution workflow](../../../../docs/contribution-workflow.md#write-or-improve-documentation) | `subjects`, owner review |
 | Release rationale, scope and contributions | the [release brief](../../../../releases/TEMPLATE.md) | `release-documents` |
 | Version and major-version decisions, with generated release material | [strategy](../../../../strategy.md); [hierarchy](../../../../docs/contribution-workflow.md#review-the-strategy) | `strategy-consistency`, `generated-views` |
 | A term | [glossary](../../glossary.md) | judgment |

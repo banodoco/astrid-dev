@@ -8,7 +8,7 @@ Your agents handle technical work so you can focus on art.
 
 Models still need installing, environments still break, and jobs still fail. The aim is not to pretend this work disappears, but to empower agents to handle it: setting up and maintaining tools, managing dependencies, running jobs, and recovering from problems. Artists should stay immersed in creating while retaining control over consequential decisions.
 
-## Aspirations
+## Goals
 
 ### Agents handle the setup
 

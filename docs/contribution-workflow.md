@@ -21,7 +21,7 @@
 
 | Writing work | Canonical source and route |
 | --- | --- |
-| Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md) and [the aspiration template](../vision/templates/aspiration.md); adding or rewording an aspiration or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
+| Vision, artistic pillars, creator principles, public copy | [Vision](../vision/README.md). Edit the source files in `vision/` using [the element template](../vision/templates/subject.md) and [the goal template](../vision/templates/goal.md); adding or rewording a vision goal or its lists needs an owner-approved PR. After merge, CI refreshes their derived overview on `main` and publishes the public JSON feed. Don't copy editorial content into Astrid App |
 | Gap statements or gap evidence | Follow [the gap-writing procedure](#define-or-reassess-a-vision-gap). Material changes need a boundary review; evidence-only updates use normal PRs |
 | New project scope, plan decisions or task briefs | [Project catalog and pack](project-format.md); new scope uses reviewed project proposals, existing project changes inherit the owner and accepted scope |
 | Agent instructions, workflows or contributor docs | [Main skill](../skills/astrid-dev/SKILL.md), stage-specific skills, [run contract](../skills/shared/run-contract.md), or this guide—each owns its own concern. For adding checks, generated views, or project fields, see [Extending Astrid-dev](extending.md). Documentation CI checks these paths |
@@ -38,9 +38,9 @@ Before pushing a change to `scripts/` or adding a release brief or plan, run `py
 
 The [vision overview](../vision/README.md) lists current gaps. Each linked record in [`vision/gaps/`](../vision/gaps/) holds the detailed desired state, observed current state, missing outcome, closure evidence, and sources for reassessment. **A gap names a result that would still matter if today's proposed project were replaced.** Before creating one, compare existing gaps and the [plan catalog](../plans/index.md): reuse or refine an outcome where possible. Do not create a gap for a task, technology choice, or project milestone.
 
-Every gap has **one primary aspiration**, the outcome it measures the distance to, and any supporting aspirations that each explain a distinct relationship; never a direct pillar or principle link. Plans link to gaps; gaps do not duplicate the project queue, status or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
+Every gap has **one primary goal**, the outcome it measures the distance to, and any supporting goals that each explain a distinct relationship; never a direct pillar or principle link. Plans link to gaps; gaps do not duplicate the project queue, status or ownership. Assessments are **Open**, **Partially evidenced**, **Closed**, or **Needs recheck**, with dated evidence and limits. Completing a plan does not close a gap automatically.
 
-A planner reads the aspirations of the plan's gaps. Work that would break a **We should never** changes the aspiration first in an owner-approved PR.
+A planner reads the goals of the plan's gaps. Work that would break a **We should never** changes the goal first in an owner-approved PR.
 
 **Changes to evidence** (current state, assessment, or sources) use a normal reviewed PR. **Creating, retiring, renaming, or materially redefining an outcome** requires one short first-principles record in the PR description—not another document:
 
@@ -65,13 +65,28 @@ Use `Supporting connections: None — reason` when appropriate. [CI checks struc
 
 ## How the vision becomes shipped work
 
-The vision contains **elements** in two categories: pillars (ambitions) and principles (guiding design choices). They use the same [element authoring contract](../vision/templates/subject.md), not two different levels. Each element defines individual **vision goals**, shown as **Goals** on the Astrid website. The existing Dev heading `Aspirations`, `Aspiration` gap metadata and aspiration IDs refer to those exact same goals; these source/feed identifiers are retained for compatibility, not a second type of goal.
+The vision contains **elements** in two categories: pillars (ambitions) and principles (guiding design choices). They use the same [element authoring contract](../vision/templates/subject.md), not two different levels. Each element defines individual **vision goals**, shown as **Goals** on the Astrid website. The source files consistently call them **Goals**, and gap files use `**Goal:**` with one primary link and optional supporting links. Goal IDs are the existing stable heading-derived IDs; schema-v1 public feeds temporarily retain former field names as aliases for cached clients, never as a separate kind of entity.
 
 A [gap](../templates/gap.md) measures the distance from current evidence to **one primary vision goal**, with optional supporting goals. A gap records desired/current state, closure evidence and a route to closure; completing a plan does not automatically close the gap. A [project pack](../templates/project/plan.md) declares one primary gap plus optional supporting gaps (or an explicit foundational-enabler exception), with scope, inputs, tasks and proof. A project can serve several gaps, but the primary relationship owns its public classification.
 
 GitHub [issues](#issues) are a different intake path for bugs, observations, questions and ideas. Issues can carry `gap:ID` or `plan:NN` labels, or be triaged directly into a release as `release:NN`. Labels are contextual references, not guaranteed project membership, authorization or a new file-backed record. An accepted issue may become a project task or a direct release fix; do not create a project for every issue.
 
 An authored [release brief](../releases/TEMPLATE.md) selects its included plans and explicitly routed fixes; a release branch integrates and qualifies that selected work. [Strategy](../strategy.md) groups releases into version milestones. Vision, element authoring, gap relationships, project packs, release briefs and generated public views each have existing CI checks; **issue-to-goal coverage and strategic merit are not fully machine-verifiable** and depend on triage and review. Follow each object's own canonical record instead of copying status or authority into other objects.
+
+### How the relationships are validated
+
+All the records above use the same **source → parse → validate links → derive views** pattern, but not the same file layout. The current authored record owns its facts; no registry of copied relationships is maintained:
+
+| Relationship | Authoritative source | Enforcement and projection |
+| --- | --- | --- |
+| Pillar/principle → goals | The two element folders in `vision/`, following `vision/templates/subject.md` | `vision_subject.py` parses both as the same element shape; `subjects` checks the authored sections and goal IDs |
+| Goal → gap | Each gap's single `**Goal:**` line, pointing to actual headings in the elements | `gap_relationships.py` resolves one primary goal and distinct supporting goals; `gap-structure` and boundary reviews check validity |
+| Gap → project | Each project's `plan.md` declares one primary gap plus any supporting gaps, or an explicit foundational-enabler role | `project_contract.py` and `plan-files` check identity/references; each gap's Route to closure and plan backlink are checked without copying the task queue |
+| Issue → plan/gap/release | GitHub issue's `About` references and triaged labels, not a Markdown project file | `issue_intake.py` adds known `gap:ID`/`plan:NN` labels; `release_issues.py` pulls explicitly included issue labels; triage still determines acceptance |
+| Project/fix → release | The release brief's Included plans, branch rows and issue routes | `release-documents`, `active-plans-in-releases` and release branch/fix checks enforce relationships |
+| Release → version | Release Kind and version decisions in `strategy.md` | `strategy-consistency` and generated strategy views build the version story from briefs |
+
+**Structure is not an implementation plan.** New project packs inherit their section and table shape from `templates/project/`, enforced by `pack-shape` on newly introduced packs; existing packs retain their accepted design. The validator checks a project has an identity, named scope, relationships, tasks and evidence—not a prescribed internal task breakdown or technical implementation. Issue triage and whether proof truly meets a vision goal remain human decisions. A generated public view must be a projection of these records, never a second authored truth.
 
 ## Review the strategy
 

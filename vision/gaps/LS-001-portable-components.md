@@ -1,6 +1,6 @@
 # LS-001 — Creative components can't yet move freely
 
-**Aspiration:** [Live tool composition](../pillars/liquid-software.md#live-tool-composition) (primary) · [Control at every layer](../principles/in-the-creators-control.md#control-at-every-layer) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
+**Goal:** [Live tool composition](../pillars/liquid-software.md#live-tool-composition) (primary) · [Control at every layer](../principles/in-the-creators-control.md#control-at-every-layer) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
 
 ## Desired state
 

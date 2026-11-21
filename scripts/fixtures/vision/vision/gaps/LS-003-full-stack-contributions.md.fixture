@@ -1,6 +1,6 @@
 # LS-003 — Frontend and backend extensions don't yet compose
 
-**Aspiration:** [Shared human–agent work](../pillars/liquid-software.md#shared-humanagent-work) (primary) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
+**Goal:** [Shared human–agent work](../pillars/liquid-software.md#shared-humanagent-work) (primary) · [Built to be found and reused](../principles/open-by-design.md#built-to-be-found-and-reused) (supporting) · **Assessment:** Open, source inspection (2026-11-06).
 
 ## Desired state
 

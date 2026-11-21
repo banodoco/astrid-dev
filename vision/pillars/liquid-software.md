@@ -8,7 +8,7 @@ Tools should adapt to creative work as people and agents create together.
 
 “We shape our tools, and thereafter our tools shape us” is a philosophy we should leave in the twentieth century. Astrid is a shared foundation for open, composable creative tools. Their composition and functionality should be adjustable in real time, while people and agents are working. Removing the friction of reshaping software is essential to expanding what we can create, individually and together.
 
-## Aspirations
+## Goals
 
 ### A small, dependable foundation
 

@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 from check_docs import ROOT, read
-from gap_relationships import gap_metadata, parse_gap_aspirations, parse_gap_relationships
+from gap_relationships import gap_metadata, parse_gap_goals, parse_gap_relationships
 from project_contract import plan_gap_ids
 from records import PLAN_CELL, git_output, heading as record_heading, section as record_section
 from vision_subject import parse_subject, render_subject_markdown
@@ -60,15 +60,18 @@ def rewrite_links(text: str, source: Path, revision: str, root: Path) -> str:
 def project_subject(text: str, path: Path, revision: str, root: Path) -> dict:
     """One canonical Markdown shape for pillars and principles alike."""
     parsed = parse_subject(text, path.as_posix())
-    return {
+    result = {
         "statement": parsed["statement"],
         "explanationMarkdown": rewrite_links(parsed["explanationMarkdown"], path, revision, root),
-        "characteristics": [
+        "goals": [
             {**c, "detailsMarkdown": rewrite_links(c["detailsMarkdown"], path, revision, root)}
-            for c in parsed["characteristics"]
+            for c in parsed["goals"]
         ],
         "bodyMarkdown": rewrite_links(render_subject_markdown(parsed), path, revision, root),
     }
+    # Schema-v1 wire alias until older cached Astrid App versions are retired.
+    result["characteristics"] = result["goals"]
+    return result
 
 
 def canonical_agent_prompt(root: Path) -> str:
@@ -139,7 +142,7 @@ def build(root: Path, revision: str) -> dict:
         if len(assessment) != 2 or not (status := STATUS.match(assessment[1].strip())):
             raise ValueError(f"{path}: Assessment must begin with an allowed status")
         relationships, primary_relationship = parse_gap_relationships(metadata, root / "vision")
-        aspiration_refs, primary_aspiration = parse_gap_aspirations(metadata, root / "vision")
+        goal_refs, primary_goal = parse_gap_goals(metadata, root / "vision")
         for relationship in relationships:
             if relationship not in valid_anchors:
                 raise ValueError(f"{path}: unknown vision relationship {relationship}")
@@ -149,8 +152,11 @@ def build(root: Path, revision: str) -> dict:
                "assessmentDetail": assessment[1].strip(),
                "appliesTo": relationships,
                "primaryAppliesTo": primary_relationship,
-               "aspiration": primary_aspiration,
-               "supportingAspirations": aspiration_refs[1:]}
+               "goal": primary_goal,
+               "supportingGoals": goal_refs[1:],
+               # Stable schema-v1 aliases for previously published App clients.
+               "aspiration": primary_goal,
+               "supportingAspirations": goal_refs[1:]}
         for source_title, out_key in [
             ("Desired state", "desiredMarkdown"),
             ("Current state", "currentMarkdown"),
@@ -219,7 +225,7 @@ def render_readme(root: Path, page: dict) -> str:
         "",
         "## Four pillars",
         "",
-        "Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable aspirations.",
+        "Pillars and principles follow [one authoring template](templates/subject.md): a statement, short explanation, and expandable goals.",
         "",
     ]
     for pillar in page["pillars"]:
