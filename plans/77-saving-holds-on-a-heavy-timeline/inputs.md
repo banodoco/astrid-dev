@@ -10,7 +10,7 @@
 
 **Approach:** Measure first and fix by cause, rather than build the longer designs on estimates. A loop plan (a known end state, tasks from each live round) is the smallest form: three template files, a few setup cards and one standing card, run by the [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md). Alternatives rejected: another one-shot sweep (it missed repeated gestures); starting Plans 63 and 75 first (the same costing gap); a fixed card list (the fixes are not known). The stop-gap speed target is about 2 s; 300 ms stays Plan 75's.
 
-**Challenge:** Not yet obtained. The first loop round's strategist advice is the first independent check; the plan's own design is covered by the final review. Known risk: the release script copies the live realm and so may not run on a new machine (see SL-1).
+**Challenge:** Not yet obtained. The first loop round's strategist advice is the first independent check; the plan's own design is covered by the final review. Known risk: the release script copies the live realm and so may not run on a new machine (see SL-1). A sense check on 21 November 2026 (a critic session with three read-only helpers on the code) changed the order, the stack route, the timing method and the first matrix; it is not the design challenge.
 
 **Proof and limits:** Completion in [plan.md](plan.md#completion). Limits: a synthetic fixture stands in for the owner's timeline, so a final run on the real timeline stays the owner's; the heavy shape below is from one timeline copied on 18 November.
 
@@ -18,7 +18,7 @@
 
 **Run start:** The owner's go is their own message in the main session on 18 November 2026: "write like basically a handover thing for this … make sure that everything is pushed to like a proper release-14 branch … it ultimately should just be like a plan within Astrid-dev that I'm able to give to another machine and they're able to do it … we're going to use Codex for most of the heavy lifting while it just acts as the coordinator, you know, fixing the stuff and making judgment calls on it."
 - **Accountable:** the coordinator session that claims the plan on the new machine; it records its session id in the `Owner` line of [plan.md](plan.md) when it starts.
-- **May, without asking:** open and merge PRs into `release/14/plan-77` in all three repositories after focused proof; add an empty-realm option to the release script on App `release/14/plan-77` (and say so in the PR, for Plan 61); dispatch workers; fix the docs of astrid-dev PR #880 (renumber, Approach lines).
+- **May, without asking:** open and merge PRs into `release/14/plan-77` in all three repositories after focused proof; add a stack script under `scripts/save-loop/` on App `release/14/plan-77` (the release script itself is not edited); dispatch workers; fix the docs of astrid-dev PR #880 (renumber, Approach lines).
 - **Needs the owner:** anything into `release/14/main` or product `main`; publishing anything; touching any live install or the owner's timelines; paid spend. Plan 77 reaches `release/14/main` only through the [Release skill](../../skills/capabilities/astrid-dev-release/SKILL.md), on the owner's go.
 
 ### Heavy timeline shape
@@ -68,6 +68,8 @@ On 18 November 2026, all on origin, cut from `release/14/plan-59`:
 | astrid-app | `release/14/plan-77` | `2ffc0a300` at the cut; head `36d2b8258` after the harness seed |
 | astrid-agent | `release/14/plan-77` | `ec758a9b8` |
 | astrid-runtime | `release/14/plan-77` | `ee235d39d` |
+
+On 21 November the App and Agent branches were still named `release/14/plan-66` on origin (heads `36d2b8258` and the Agent's cut); only the Runtime had `release/14/plan-77` (`ee235d39d`). The rename is pending; check with `git ls-remote` before SL-1.
 
 Merged into `release/14/plan-59` before the cut: Runtime #66 (member-list removal), Runtime #67 (revert of the #62 retention), App #308 (gesture registry read). Destination for every fix: the same repository's `release/14/plan-77`. The uncommitted crash work is on `release/14/plan-77-wip/*`; each branch and its base is listed in the [handover](handover.md#where-everything-is).
 
