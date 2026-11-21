@@ -1,6 +1,6 @@
 # H3 RunPod pilot runbook
 
-Portable procedure for an operator on a separate machine. This is based on the successful installed H3 pilot recorded in [`cost.md`](cost.md), [`rehearsal.md`](rehearsal.md), and the `stage-*` logs in this directory. Commands below are templates: replace paths, project, media, target settings, deadline, volume, and cost limits with values authorized for the new run. Do not reuse this run's receipt, output directory, pod ID, or deadline.
+Portable procedure for an operator on a separate machine. This is based on the successful installed H3 pilot recorded in `cost.md`, `rehearsal.md`, and the `stage-*` logs in this directory. Commands below are templates: replace paths, project, media, target settings, deadline, volume, and cost limits with values authorized for the new run. Do not reuse this run's receipt, output directory, pod ID, or deadline.
 
 **Paid boundary:** all steps through the no-rental rehearsal are local/read-only except Astrid project/media imports. `astrid machines claim` and a non-dry-run `generate video` can incur provider charges. Run them only under the operation's explicit budget and deadline. Do not make a second claim if the first is pending or allocated.
 
@@ -17,7 +17,7 @@ Use a fresh program/data/home root, the selected installed Runtime, and a manife
 
 Successful installed Agent directory was `.../stage-program/versions/5ae4e172-6855dfa8-b6833d04`; its `manifest.json` and Python/CLI were used for *all* rehearsal and generation commands. Do not substitute the source checkout or an unrelated venv: RunPod bootstrap requires the installed release manifest.
 
-For local candidate commits, follow [`local-source-install.md`](../../astrid-agent/docs/setup/local-source-install.md): use committed scratch clones, add `repo` as an absolute local directory or `file://` URL, and retain each exact full `sha`. A remote Git URL is not supported in `repo`. For published commits, omit `repo` and let the installer fetch the pinned archive. Do not use uncommitted worktree edits; the installer reads `git archive` at the commit. A typical isolated install, with manifest served from localhost, is:
+For local candidate commits, follow `local-source-install.md`: use committed scratch clones, add `repo` as an absolute local directory or `file://` URL, and retain each exact full `sha`. A remote Git URL is not supported in `repo`. For published commits, omit `repo` and let the installer fetch the pinned archive. Do not use uncommitted worktree edits; the installer reads `git archive` at the commit. A typical isolated install, with manifest served from localhost, is:
 
 The installer needs access to `codeload.github.com` for pinned tool source archives, including Oh My Pi. That host was blocked in this cloud session during a later install even though the pilot's earlier installation succeeded. Where the operator's authorized network permits Git access, the documented exact local-source override can instead name a clean local Git checkout at the manifest's full pinned commit; the installer uses `git archive` for that commit and checks its pinned build inputs. Select this only when the host authorizes that source and transport. Do not disable TLS or bypass a network refusal.
 
@@ -88,7 +88,7 @@ The staged pilot selected existing 300 GB volume `2z2dlu1v8g` (`storage`), mount
 
 ## 4. No-rental rehearsal: do every gate before the paid boundary
 
-Set `ASTRID_BIN`, `ASTRID_PYTHON`, `ASTRID_RUNTIME_DATA_ROOT`, project, and exact input JSON to the installed host values. Use fresh temporary output and receipt paths. Follow the full commands and evidence meanings in [`rehearsal.md`](rehearsal.md), especially its staged rehearsal section:
+Set `ASTRID_BIN`, `ASTRID_PYTHON`, `ASTRID_RUNTIME_DATA_ROOT`, project, and exact input JSON to the installed host values. Use fresh temporary output and receipt paths. Follow the full commands and evidence meanings in `rehearsal.md`, especially its staged rehearsal section:
 
 1. Run `astrid generate video ... --dry-run --json` for the exact H3 entry and inputs. In the successful run it exited 0, returned `ready`, resolved the exact source hash/range `[81.05,84.299)`, and planned 78 input frames at 24 fps. A dry run proves CPU planning/normalization only; it does not perform Runtime admission.
 2. Check `vibecomfy` using the *same installed Python* as the Runtime host. Also read the Runtime capability view through Astrid and confirm `vibecomfy.run` is `ready`. The staged view was ready with required GPU resource. `astrid doctor` still reported missing Remotion `node_modules`; tracing the H3 `after_outputs` path showed it directly calls H3 compose/verify and those modules do not use Remotion. Keep that global doctor warning in the report; don't turn it into a generic healthy claim.
@@ -144,13 +144,13 @@ Release through Astrid's machine release capability/CLI with `"$ASTRID_BIN" mach
 
 - Source checkout/venv was not an installed release; worker bootstrap rejected its missing installed manifest. Use the installer's managed copy and its manifest.
 - Early admission failed because `vibecomfy` was missing from the Runtime Python. The successful staged version contained the exact pinned package; verify same-host import and capability before claim.
-- A retry reused an existing recovery receipt and was refused before admission. Use a fresh unique receipt/output path for a distinct operation. The CLI's video `--resume` discrepancy is documented in [`rehearsal.md`](rehearsal.md); don't rely on it.
+- A retry reused an existing recovery receipt and was refused before admission. Use a fresh unique receipt/output path for a distinct operation. The CLI's video `--resume` discrepancy is documented in `rehearsal.md`; don't rely on it.
 - The first staged volume confirmation failed because the Runtime service lacked proxy/certificate trust. The log showed TLS verification errors. The Runtime was safely restarted with approved inherited proxy/cert settings and the existing key passed only through an in-memory environment allowlist; volume confirmation then succeeded. Never disable TLS verification or expose credential values.
 - Readiness and dry-run did not imply paid success. Only the admitted task proved model preparation, worker execution, H3 composition/verification, and returned artifact. Release confirmation was separately required.
 
 ## Historical evidence map
 
-- Installed-host dry run, receipt disposition, package/capability checks, exact pins and source fetch: [`rehearsal.md`](rehearsal.md), [`rehearsal-evidence/`](rehearsal-evidence/).
-- Claim: [`stage-wait-retry1.log`](stage-wait-retry1.log).
-- Generation and output: [`stage-generation.log`](stage-generation.log), [`composition-open.json`](composition-open.json), [`rehearsal-evidence/final-h3-composition.json`](rehearsal-evidence/final-h3-composition.json), [`rehearsal-evidence/final-h3-verification.json`](rehearsal-evidence/final-h3-verification.json).
-- Release and cost timeline: [`stage-release.log`](stage-release.log), [`cost.md`](cost.md).
+- Installed-host dry run, receipt disposition, package/capability checks, exact pins and source fetch: `rehearsal.md`, `rehearsal-evidence/`.
+- Claim: `stage-wait-retry1.log`.
+- Generation and output: `stage-generation.log`, `composition-open.json`, `rehearsal-evidence/final-h3-composition.json`, `rehearsal-evidence/final-h3-verification.json`.
+- Release and cost timeline: `stage-release.log`, `cost.md`.

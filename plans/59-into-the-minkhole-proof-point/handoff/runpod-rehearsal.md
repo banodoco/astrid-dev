@@ -30,7 +30,7 @@ ASTRID_H3_INPUTS=/absolute/path/to/the/exact/h3-inputs.json
 
 ## 1. Run the H3 CPU planning preview
 
-The documented H3 `--dry-run` normalizes the request, resolves prepare/compile bindings, and writes `plan.json` without submitting a local GPU or RunPod task ([H3 README](../../wt/environment/astrid/packs/h3_av/README.md)). Use a new disposable output directory so the plan does not collide with a real operation journal:
+The documented H3 `--dry-run` normalizes the request, resolves prepare/compile bindings, and writes `plan.json` without submitting a local GPU or RunPod task (the H3 README). Use a new disposable output directory so the plan does not collide with a real operation journal:
 
 ```bash
 ASTRID_DRY_RUN_OUT="$(mktemp -d)/h3-dry-run"
@@ -212,19 +212,19 @@ ASTRID_RUNTIME_DATA_ROOT=/home/user/work/h3/run/pilot/stage-data \
   --dry-run --json
 ```
 
-Exit code was `0`; result `status` was `ready`, `issues` and `fixes` were empty, and target state was `pending_host_readiness`. The plan resolved the source media hash to `aa84f8370736f6fd295f4c8037654a118864060d6b15134625ab9aa88e64f092`, the imported Astrid media handle, and exact source range `81.05` to `84.299` seconds. It measured 78 frames at 24/1 fps with audio and conformed the prefix to 1024×576 at 24 fps. Evidence: [`entry-dry-run.stdout`](rehearsal-evidence/entry-dry-run.stdout), [`entry-dry-run.stderr`](rehearsal-evidence/entry-dry-run.stderr), [`entry-dry-run.exit`](rehearsal-evidence/entry-dry-run.exit). The JSON contains the request prompt; keep it local and do not paste it into shared summaries.
+Exit code was `0`; result `status` was `ready`, `issues` and `fixes` were empty, and target state was `pending_host_readiness`. The plan resolved the source media hash to `aa84f8370736f6fd295f4c8037654a118864060d6b15134625ab9aa88e64f092`, the imported Astrid media handle, and exact source range `81.05` to `84.299` seconds. It measured 78 frames at 24/1 fps with audio and conformed the prefix to 1024×576 at 24 fps. Evidence: `entry-dry-run.stdout`, `entry-dry-run.stderr`, `entry-dry-run.exit`. The JSON contains the request prompt; keep it local and do not paste it into shared summaries.
 
 This proves request normalization and CPU planning for the selected H3 entry. It does not prove live Runtime admission or a RunPod task: installed SDK source sets `check_runtime=not dry_run and not is_remote_target` in `astrid/sdk/generation.py`, and the resulting plan explicitly remains `pending_host_readiness`.
 
 ### Same-host VibeComfy and Runtime capability
 
-The same installed Python reported `vibecomfy` importable from the staged version's `site-packages/vibecomfy/__init__.py`. The installed Runtime capability view was read through `AstridClient` / its workspace transport `list_capabilities(limit=100)` and filtered to `vibecomfy.run`: status `ready`, required resource `gpu`, no unavailable reason. Evidence: [`installed-package-and-pins.stdout`](rehearsal-evidence/installed-package-and-pins.stdout) and [`capability-view.json`](rehearsal-evidence/capability-view.json). `astrid generate list --json` also showed the H3 local entry unavailable for attached local generation because no local ComfyUI target was attached; this is distinct from the ready `vibecomfy.run` capability used by Runtime-hosted generation. Evidence: [`generation-list.json`](rehearsal-evidence/generation-list.json).
+The same installed Python reported `vibecomfy` importable from the staged version's `site-packages/vibecomfy/__init__.py`. The installed Runtime capability view was read through `AstridClient` / its workspace transport `list_capabilities(limit=100)` and filtered to `vibecomfy.run`: status `ready`, required resource `gpu`, no unavailable reason. Evidence: `installed-package-and-pins.stdout` and `capability-view.json`. `astrid generate list --json` also showed the H3 local entry unavailable for attached local generation because no local ComfyUI target was attached; this is distinct from the ready `vibecomfy.run` capability used by Runtime-hosted generation. Evidence: `generation-list.json`.
 
 `astrid doctor --json` did return `healthy: false`: the installed Remotion renderer's `node_modules` is missing. The staged H3 `after_outputs` hook directly imports and calls `h3_av.shared.compose.compose_candidate` and `h3_av.shared.verify.verify_candidate` (`astrid/packs/h3_av/extensions/vibecomfy.workflows/hooks.py:209-227`); these H3 modules use subprocess/ffprobe and no H3 Python source references Remotion. This supports that the missing renderer package is outside the H3 compose/verify code path. The overall doctor warning remains real and this rehearsal does not claim generic Runtime health or paid worker success from the `vibecomfy.run` row alone.
 
 ### Fresh receipt disposition
 
-Candidate receipt path for a future separately authorized operation: `/home/user/work/h3/run/pilot/rehearsal-evidence/stage-pika-operation.recovery.json`. At rehearsal time it did not exist; its parent directory existed and was writable. An exclusive sibling probe file was created, written, fsynced, and removed. Evidence: [`fresh-receipt.json`](rehearsal-evidence/fresh-receipt.json). No actual recovery receipt was created; dry-run does not exercise AdmissionReceipt locking, freeze, or replay semantics. This establishes only fresh-path disposition and basic filesystem writability.
+Candidate receipt path for a future separately authorized operation: `/home/user/work/h3/run/pilot/rehearsal-evidence/stage-pika-operation.recovery.json`. At rehearsal time it did not exist; its parent directory existed and was writable. An exclusive sibling probe file was created, written, fsynced, and removed. Evidence: `fresh-receipt.json`. No actual recovery receipt was created; dry-run does not exercise AdmissionReceipt locking, freeze, or replay semantics. This establishes only fresh-path disposition and basic filesystem writability.
 
 ### Installed pins and managed source fetchability
 
@@ -237,7 +237,7 @@ Using the installed Python, `_installed_manifest_path()` returned `/home/user/wo
 | `src/astrid-runtime` | `6855dfa8df65cf8ae4c002b57134d6505493c17c` | exact, clean |
 | `src/runpod-lifecycle` | `9f88ef7640bc664f697112d966ecefa123d44340` | exact, clean |
 
-Evidence: [`installed-package-and-pins.stdout`](rehearsal-evidence/installed-package-and-pins.stdout), [`managed-sources.stdout`](rehearsal-evidence/managed-sources.stdout), and [`managed-sources.exit`](rehearsal-evidence/managed-sources.exit). `ensure_managed_sources()` made Git network reads and wrote only this isolated source cache. It did not contact RunPod or admit a task.
+Evidence: `installed-package-and-pins.stdout`, `managed-sources.stdout`, and `managed-sources.exit`. `ensure_managed_sources()` made Git network reads and wrote only this isolated source cache. It did not contact RunPod or admit a task.
 
 ### Evidence boundary
 
