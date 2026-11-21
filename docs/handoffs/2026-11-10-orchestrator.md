@@ -50,7 +50,7 @@ Release path:
 1. Release 12 publishes (Plan 29 owns it).
 2. Lift the CI freeze.
 3. Plan 32 merges `main` into int/32 and re-proves.
-4. Cut `cand/release-13` through the [Release skill](https://github.com/banodoco/astrid-dev/blob/4b3e3841af3921d9846389a4cd744f027c1db0b3/skills/capabilities/astrid-dev-release/SKILL.md), carrying int/32, Plan 20 P1.5, Plan 40, the CI-trigger prep, and VibeComfy [#165](https://github.com/banodoco/VibeComfy/pull/165) and [#166](https://github.com/banodoco/VibeComfy/pull/166) via the pin.
+4. Cut `cand/release-13` through the [Release skill](https://github.com/banodoco/astrid-dev/blob/feae835ac8e9e7c904849323064be9d903894065/skills/astrid-dev-release/SKILL.md), carrying int/32, Plan 20 P1.5, Plan 40, the CI-trigger prep, and VibeComfy [#165](https://github.com/banodoco/VibeComfy/pull/165) and [#166](https://github.com/banodoco/VibeComfy/pull/166) via the pin.
 
 ## 3. Owner rules (Hannah, 9–10 Nov). These stand until she changes them.
 
