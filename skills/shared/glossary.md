@@ -118,4 +118,6 @@ One meaning per word; two meanings, two terms.
 
 **lane:** one stream of work within a release, run in its own session with its brief in `releases/<N>/briefs/`.
 
+**loop plan:** a plan whose end state is known but whose tasks come from each round's live measurement; its `tasks.md` has a few setup cards and one standing loop card, run by the [live-loop workstream](../roles/astrid-dev-manage/workstreams/live-loop.md).
+
 **standing lane:** the continuing lane of a release for fixes and small plans arising from actual usage and user reports, alongside its theme.
