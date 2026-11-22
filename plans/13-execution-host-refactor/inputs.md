@@ -32,6 +32,7 @@ The owner asked on 22 November 2026, in the [Release 15 Lead session](https://cl
 - **D3 — local preparation and the command-line lifecycle (EX-8, now in [Plan 83](../83-execution-host-in-modules/tasks.md)).** **Decided 22 November 2026: not in Release 15.** It is custody-sensitive and the map ties it to [Plan 38](../38-one-process-identity/plan.md), which is in Release 16.
 
 - **D4 — one plan, one release.** On 22 November 2026, in the same session, she wrote: "I think plans should typically go all into one release". The Lead agreed and moved EX-4 to EX-9 and RS2 to [Plan 83](../83-execution-host-in-modules/tasks.md) the same day, leaving this plan wholly in Release 15. Nothing in any card changed.
+- **D5 — the review.** **Decided 22 November 2026: one round at the end, by an independent reviewer on Codex Astra; landing waits for its findings.** The row had allowed two rounds, from when this plan held the whole extraction. In the same session she replied "That's perfect" to that wording.
 
 ## Starting code
 

@@ -51,7 +51,7 @@ Also rejected for both halves: moving workflow building to after the task is que
 
 **Proof and limits:** The completion cases in [plan.md](plan.md#completion). Limits: the ceiling test uses a stand-in ComfyUI and a Runtime run from a checkout; the container's numbers were taken from source under shared load; nobody has yet timed `generate` to an admitted task, or any command on an installed Astrid, which US-0 does first. The expected gains (a timeline edit near one second, `generate` roughly halved) are estimates from component timings.
 
-**Review rounds:** Recommended: one round at the end. No review stop is needed: nothing here outlives its command. Pending — the owner confirms.
+**Review rounds:** One round at the end, by an independent reviewer on Codex Astra; landing waits for its findings. No review stop is needed: nothing here outlives its command. The owner agreed to this on 22 November 2026 in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG), replying "That's perfect" to that wording.
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking and what still needs the owner's go.
 
