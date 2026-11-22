@@ -15,7 +15,7 @@
 
 | Option | For | Against |
 | --- | --- | --- |
-| In astrid-app, beside the page, loaded on demand (chosen) | One repository, one release, the page's own tests cover it; three.js already there | An 8,996-line file arrives in the App unless PL-10 splits it |
+| In astrid-app, beside the page, loaded on demand (chosen) | One repository, one release, the page's own tests cover it; three.js already there | An 8,996-line file arrives in the App until PL-9 splits it |
 | Its own package, published from banodoco/planet | The engine can be reused elsewhere | A second release to coordinate for one consumer; the Release 15 branch table does not admit that repository |
 | An embedded frame pointing at a separately hosted planet | No App change to the engine | A transparent planet behind the page's own content cannot be done across a frame |
 
@@ -33,7 +33,7 @@
 - **Accepted — provenance.** The mock-up has no licence and was made in a generating tool. D1 now asks the owner to say it is hers to publish.
 - **Accepted — the page's address, social preview and a failed download** of the planet's code are covered (PL-4, PL-6).
 - **Partly accepted — a pre-rendered loop instead of a live planet.** The critic proposed comparing a transparent video of the planet with live drawing before bringing the engine in. The owner built a live planet and asked for it to perform well, so the live planet stays the default; the trial in PL-0 decides what a phone gets, which may be the still or a lighter planet.
-- **The estimate:** the critic called 12 days optimistic for the proofs and high for a narrower backdrop. With the tasks merged and the split kept it comes to 14.5, and PL-0 re-states it.
+- **The estimate:** the critic called 12 days optimistic for the proofs and high for a narrower backdrop. With the tasks merged and the split kept it came to 14.5; the shared time of day (PL-10), added afterwards, makes it about 16, and PL-0 re-states it.
 
 **Proof and limits:** The completion cases in [plan.md](plan.md#completion). Limits: taste is judged by the manager and the owner, and is recorded as pictures and a written verdict, not as a number; frame rates in a headless browser stand in for real devices.
 
