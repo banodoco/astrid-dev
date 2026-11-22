@@ -4,13 +4,13 @@
 
 **Goal:** The editor's own agent writes a custom element and applies it with the rest of an edit in one commit, with no restart, no outside script and no page reload.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Plan 78 manager
 
 **Estimate:** 4–6 engineering days, one phase.
 
-**Waiting on:** nothing for its base: [Plan 69](../69-project-elements/plan.md)'s product work is on `release/15/plan-69` in all three repositories since 21 November 2026; cut `release/15/plan-78` in astrid-agent from it at run start.
+**Waiting on:** nothing for its base. [Plan 69](../69-project-elements/plan.md) has landed in `release/15/main` in all three repositories, and `release/15/plan-78` is cut in astrid-agent from `release/15/main` (see the Run start line in [inputs](inputs.md#planning-evidence)). Plan 81 edits `commit_session.py` too: `release/15/main` is merged in after it lands, before the final proof. The motion-pack pin in LE-2b waits for the owner's go.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md).
 
@@ -40,15 +40,15 @@ Left out: hosted or shared-pack isolation, cheaper saves on heavy timelines ([pl
 
 ## Existing work and decision
 
-Almost everything exists. `Timeline.commit` already takes many edits as one commit, and `place_element` is that same commit with exactly one `clip.set-element` in it. The open editor already reloads admitted elements when a commit changes the element refs it renders. The pack host already picks up a newly installed pack while idle. Two things are missing: a way to stage a placement inside a commit function, and a cache clear when the Runtime's element lookup misses. The plan adds those two, corrects the skills and proves the flow; it builds no new pack, command surface or publishing path. Sources, the critique of the first draft and the alternatives are in [inputs](inputs.md#planning-evidence). The owner set the direction; the specific scope is not yet greenlit.
+Almost everything exists. `Timeline.commit` already takes many edits as one commit, and `place_element` is that same commit with exactly one `clip.set-element` in it. The open editor already reloads admitted elements when a commit changes the element refs it renders. The pack host already picks up a newly installed pack while idle. Two things are missing: a way to stage a placement inside a commit function, and a cache clear when the Runtime's element lookup misses. The plan adds those two, corrects the skills and proves the flow; it builds no new pack, command surface or publishing path. Sources, the critique of the first draft and the alternatives are in [inputs](inputs.md#planning-evidence). The owner set the direction and approved the scope on 21 November 2026, including the motion-pack pin and the two-round review cap ([inputs](inputs.md#owner-decisions)).
 
 ## Sequence and readiness
 
-LE-1 (batch) and LE-2 (no restart) are independent and run in parallel. LE-4 (the live proof) needs both. One review at the end. The work builds on the plan-69 changes in all three repositories, so it starts once those are on a release line, or from the plan-69 branches if the owner starts it sooner. See [tasks](tasks.md). Recording this plan authorizes no run, release or change to a live stack.
+LE-1 (batch) and LE-2 (no restart) are independent and run in parallel. LE-4 (the live proof) needs both. One review at the end, at most two rounds. The work builds on Plan 69, which has landed in `release/15/main`; the plan branch is `release/15/plan-78`. See [tasks](tasks.md). The plan authorizes no change to a live stack: LE-4 runs on an isolated install with a throwaway project.
 
 ## Interfaces and handoff
 
-Consumes the plan-69 Agent, Runtime and App work (project-pack compile and admission, Runtime serving, the App loader) at the revisions recorded at run start; the donor heads observed while planning are in [inputs](inputs.md#source-identities). Produces one public Agent interface, a placement staged inside `Timeline.commit`, plus corrected skills, and a recorded live proof bound to exact commits. The existing `place_element` call and CLI keep working unchanged. Expected-head, idempotency, conflict and retry behaviour are the existing commit's, not new ones. No release is assigned.
+Consumes the plan-69 Agent, Runtime and App work (project-pack compile and admission, Runtime serving, the App loader) at the revisions recorded at run start; the donor heads observed while planning are in [inputs](inputs.md#source-identities). Produces one public Agent interface, a placement staged inside `Timeline.commit`, plus corrected skills, and a recorded live proof bound to exact commits. The existing `place_element` call and CLI keep working unchanged. Expected-head, idempotency, conflict and retry behaviour are the existing commit's, not new ones. It ships in [Release 15](../../releases/15.md).
 
 ## Completion
 

@@ -10,7 +10,7 @@
 
 **Estimate:** 1.5–2
 
-**Waiting on:** lands on Agent `main` with Plan 32, in [Release 13](../../releases/13.md)
+**Waiting on:** ships in [Release 15](../../releases/15.md) (Release 13 did not carry it). Most of its code is already on Agent `release/15/main` through the Release 13 machines work; what remains is listed in [tasks](tasks.md#reconciled-against-release15main-22-november-2026). Plan 81 edits `astrid/sdk/generation.py` too: `release/15/main` is merged into `release/15/plan-40` after it lands, before the final proof. Landing in `release/15/main` needs the owner's go.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). Project owner, priority, status and estimate live **only** in the [catalog](../index.md).
 
@@ -32,9 +32,9 @@ Everything needed is already in Plan 32's lease owner and journal; this plan add
 
 ## Sequence and readiness
 
-Four tasks, about 1.5–2 days. T1 (the display) and T2 (the owner's keep operation) start at once and in parallel. T3 (the `keep` CLI) needs T2. T4 (wording) follows T1 and T3. One review round ends the plan. See [tasks.md](tasks.md).
+Planned as four tasks (T1 to T4), it grew to T1 to T9 (T5 to T8 are GPU choice, waiting for capacity, setup and claim; T9 keeps the machine after a failed job). The review round is used and its four repairs, R1.1 to R1.4, are the last open work: see [tasks.md](tasks.md).
 
-The plan builds on Plan 32's integration branch, `int/32-one-generation-path`, because the lease owner it changes is there. It lands on Agent `main` with Plan 32 and ships in [Release 12](../../releases/12.md) (Hannah, 10 Nov 2026, superseding [D3](inputs.md#owner-decisions)'s release 13). There are no live GPU tests here: Plan 34 owns live runs.
+The plan was built on Plan 32's integration branch, `int/32-one-generation-path`, and its machines work shipped in the Release 13 line as the redesign in [D14](inputs.md#owner-decisions). It now ships in [Release 15](../../releases/15.md), on `release/15/plan-40` in astrid-agent, cut from `release/15/main`; the old `int/40-machine-lifetime` and `plan40/staging-int40` branches are not merged (they diverge by hundreds of commits and predate the redesign). There are no live GPU tests here: Plan 34 owns live runs.
 
 ## Interfaces and handoff
 
