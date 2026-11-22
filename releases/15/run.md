@@ -2,52 +2,52 @@
 
 The live state of the Release 15 run, rewritten at each check-in by the release manager. The [brief](../15.md) holds intent, included plans, branches and issues; each plan's `tasks.md` holds its progress.
 
-## Now (00:40 UTC, Sun 22 Nov)
+## Now (19:50 UTC, Sun 22 Nov)
 
-One lane is running, the timeline lane (Plans 69 then 77), and a batch of small fixes is waiting to land. Nothing else in the release has a manager or a branch. The owner handed the release to the Lead session `session_011EzfW1gtAhRQwk8pgJMzhG` on 21 November ([#1245](https://github.com/banodoco/astrid-dev/pull/1245)).
+Two lanes are running, a third has its brief, and a fourth is proposed. [Release 14](../14.md) published on 22 November and is forwarded into `release/15/main` in all three product repositories (astrid-app `e3dbad64`, astrid-agent `8807f820`, astrid-runtime `23310dc8`). How lanes are divided, and how capable each orchestrator must be, is in the [Lead skill](../../skills/roles/astrid-dev-lead/SKILL.md#divide-the-release-into-lanes).
 
-- **Release 15 is larger than its title.** It now lists 16 plans: the editing and saving work (69, 77, 78, 63, 76, 18, 79), speed (81), the hardening its brief is named for (39, 13, 50, 40), and 52, 53 and 72. Several are mid-flight on Release 14 branches (39, 52, and 13's mapping) and have no route into `release/15/main` yet. Plans 55 and 75, the tenth-of-a-second redesigns, left the release on 22 November at the owner's request.
-- **The headline has no owner.** Generation tested for real on three systems rests on issues #678 to #683, which no plan or lane owns.
-- **`release/15/main` is red in one place.** In astrid-agent, 35 of 50 tests in `tests/packs/runpod/test_h3_release.py` fail on the untouched branch: it carries Plan 59's model lists with Release 14's recipes, so two pinned digests do not match (`packs/runpod/models.lock.json` and `packs/vibecomfy/models.lock.json`). The standing ruling applies: it is repaired by the forward that follows the Release 14 Lead's combination of Plan 59, not by hand.
+- **Speed of one command (Plan 81) has a measured gain that is not yet landed.** `generate image` went from about 15 s to under 6 s on an installed build; about 42% of the saving is in the Agent and Runtime and about 58% in VibeComfy. Its review failed on correctness, the fixes are in progress on a frozen scope, and the installed re-measurement follows them.
+- **The heavy timeline (Plan 77) has its cause and no fix yet.** Opening a 300-clip project takes about five minutes the first time after the Runtime starts, because the Runtime re-reads and re-verifies the timeline's whole history; the same read stopped a 616-clip build at 432 clips and stops a 432-clip backup from being restored and started. The nine earlier Runtime commits are dropped. Round 7, a cheap verified read of the current head and no long hold on the store lock, is approved by the owner and not yet built.
+- **Plans 69 and 13 have landed.** Plan 13's Release 15 part is complete; the further extraction is Plan 83, in no release.
+- **The release's headline has no lane.** Generation tested for real on three systems rests on issues #678 to #683 and Plan 39; neither has an owner in this release yet.
+- **This board was rewritten from the lanes' reports and records.** CI on the three release heads was not re-read for this rewrite.
 
 ### Timeline to publish
 
-Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the release manager sets the timeline and cut line once Release 14's publication date is known. The cut line is the first decision owed: the release as listed is well over 150 engineering days.
+Not set. The cut line is still the first decision owed: about 150 engineering days of the listed plans have not started.
 
 ### Lanes
 
-| Lane | Session | Brief | State |
+| Lane | Session and routes | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 passed review and landed in all three repositories. App merge `e3dbad64` has the exact reviewed tree and passed every current hosted gate. Plan 77 reproduced the same pre-outbox refusal on two compiled 300-clip restores. The requested V6 drag resolved onto a shot-occupied row even after exact-head history and GETs settled. The next drag uses a verified free interval, followed by the Runtime open profile. The checkpoint remains withheld. [App #368](https://github.com/banodoco/astrid-app/pull/368) |
-| Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
-| Easy wins (issue packet) | Release 15 Lead, with Codex Luna workers | — | Nine fixes, one commit each, in [astrid-agent #475](https://github.com/banodoco/astrid-agent/pull/475) (draft), on `release/15/main` at `aac1ceb6`. Waiting on the owner's go to land. Editor, Runtime and VibeComfy fixes not started |
-| Plan 79 (local media of any size) | not started | — | Queued; scope accepted; starts after Plan 77 lands. The interim 1 GiB limit is in the easy-wins batch |
-| Plan 72 (project delivery) | its own manager, not yet accepted by the Lead | — | Hold. Its manager asked on #1245 for a go, a named single manager and a cut commit. No branch is cut and nothing is authorized until the owner decides its scope, which is still pending |
-| Plans 39, 52 | Release 14 Lead, on `release/14/plan-*` | — | Mid-flight under Release 14; no Release 15 branch or lane. Their accountable session moves when the owner says |
-| Plan 13 (execution host) | not started | — | Queued; all of it (EX-0 to EX-3) is this release's, and the later extraction is Plan 83, in no release; EX-0, the growth guard, and EX-1 need no decision. Its mapping work is on `release/14/plan-13` |
-| Plan 81 (once per command) | not started | [handover](../../plans/81-once-per-command/handover.md) | Queued; researched and ready for a manager; US-1 needs no decision |
-| Plans 50, 40, 53, 63, 76, 18 | not started | — | Queued; branches not yet cut |
+| Timeline: Plan 69, then Plan 77 (a loop plan) | Claude orchestrator `session_011EzfW1FXS3o7GFnNSB7cZS`, hosting a Codex manager | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 landed. Plan 77: cause found, Round 7 approved and not built. The session has used about three quarters of its context; by the Lead skill it hands over at the next landing, not before |
+| Commands: Plan 81, with Plan 13 | Claude orchestrator `session_011EzfW2Ut856AFGZS8ZamHU`, hosting Codex managers on route X | [Plan 81 handover](../../plans/81-once-per-command/handover.md) | Plan 13 landed. Plan 81: gain measured, review failed, fixes in progress on a frozen scope; then one installed re-measurement and the reviewer's check |
+| Vision page: Plan 84 (a taste plan) | a new Claude orchestrator on route X, hosting a Codex manager on route T | start message given to the owner on 22 November | Waiting for the owner to start the session |
+| Small Agent plans: Plan 78 and Plan 40, side by side | proposed: one Claude orchestrator on route X, hosting two Codex managers, Plan 78 on X and Plan 40 on S | start message given to the owner on 22 November | Waiting for the owner to start the session. Both edit files Plan 81 also edits, so each merges `release/15/main` after Plan 81 lands and before its final proof |
+| Build machine for Plan 77's large project | the Release 15 Lead's own session, with a Codex manager per run | — | Holds the only project past 300 clips (432 clips) and its signed backup. It runs commands for the timeline lane on request and is lost if the session's machine is reclaimed |
+| Easy wins (issue packet) | Release 15 Lead, with Codex workers | — | Nine fixes in [astrid-agent #475](https://github.com/banodoco/astrid-agent/pull/475) (draft). Waiting on the owner's go to land |
+| Plan 79 (local media of any size) | not started | — | Queued; starts after Plan 77 lands |
+| Plans 63, 76, 18 (the saving plans) | not started | — | Held: Plan 77's evidence rewrites them, and its finding is in the commit history they build on |
+| Plans 39, 50 and the cross-platform tests (#678 to #683) | not started | — | The release's named theme. Plan 50 waits on its scope decision (D1); Plan 39 competes with Plan 81 for CI runners until that lands |
+| Plans 52, 53 | waiting on the owner | — | Plan 52: her issue transfers and approval of the reporting rules. Plan 53: her mark-up |
+| Plan 72 (project delivery) | its own manager, not yet accepted by the Lead | — | Hold, until the owner decides its scope |
 
 ### Forwards from Release 14
 
-| Repository | Last forward | Waiting |
-| --- | --- | --- |
-| astrid-runtime | `1758a6df9` (#74), `release/14/main` at `8e8711fd2` | nothing |
-| astrid-agent | `aac1ceb68` (#462), `release/14/main` at `7bc1012e5` | nothing |
-| astrid-app | `2ef94b4cf` (#325), `release/14/main` at `e6ca6e803` | R14-FIX-16 (`128c6807a`): conflicts with Plan 59's save work on `release/15/main`; forward after the Release 14 Lead lands `release/14/int-59-64-65`, which combines them |
+Release 14 is published. Its last state is in `release/15/main` in all three repositories: astrid-runtime by #86 and #100, astrid-agent by #482 and #523, astrid-app by #369. Nothing is waiting.
 
 ### Waiting on the owner
 
-- **The cut line:** one release or two. The Lead recommends moving the remaining saving plans (63, 76, 18) to their own release.
-- **Branch protection on `release/15/main`** in each product repository (no deletion, no force-push, required checks). Plan 72's manager reports it is missing; sessions cannot read or set it.
-- **Plan 69's three decisions,** held by the timeline lane: the App #297 revert, narrowing admitted-animation render out of scope, and whether the motion pack is required on a bare install.
+- **The cut line and the headline.** The release is named for every platform and rented machines; what is running is speed and editing. The Lead recommends naming it for what will ship and moving Plans 63, 76, 18 and 39 to the next release.
+- **Starting the two new lanes:** Plan 84, and Plans 78 with 40.
+- **Plan 84's D1:** her statement that the mock-up is hers to publish, before it lands.
+- **Plan 81:** whether its new short check of the speed guard becomes a required check, when its orchestrator brings the measured duration.
 - **The go to land** [astrid-agent #475](https://github.com/banodoco/astrid-agent/pull/475) in `release/15/main`.
-- **Plan 78:** its own lane, or the timeline lane after Plan 69.
-- **Managers for Plan 81 and Plan 13.** Both plans' decisions are made.
-- **A go for Plan 63's first tasks** (the corpus, CC-7, and the server piece, CC-13).
-- **Who owns the cross-platform tests** (#678 to #683): a short plan is needed before any lane.
+- **Plan 50's scope decision (D1),** before it can join a lane.
+- **Releases for Plans 82, 85 and 86,** which are in none.
+- **The VibeComfy `root-clean` gate** ([astrid-dev #1311](https://github.com/banodoco/astrid-dev/issues/1311)): add three entries to its allow list (recommended) or move the files.
+- **Branch protection on `release/15/main`** in each product repository.
 - **Plan 72's scope decision,** then its go or hold.
-- Delete the superseded branches when convenient: `release/14/plan-66` (all three product repositories), `release/14/plan-77` and `release/14/plan-77-wip/*` (astrid-runtime), and `release/14/plan-69` once nobody pushes to it.
 
 ## Standing rulings
 
