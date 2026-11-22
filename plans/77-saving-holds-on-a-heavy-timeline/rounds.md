@@ -223,3 +223,33 @@ The full 85-scenario matrix remains unfinished because its per-row restoring cle
 - **Plan 75:** measure cheap-read availability, warm opening, verification and row CPU separately. The large Runtime CPU interval here includes two failed verification reads.
 - **Plan 76:** retain the simultaneous-writer test. This reduced round used one writing tab, so it gives no contention result.
 - **Plan 18:** keep first usability distinct from transport and durable save readiness. Trace the observed gap between the allowed gesture and an actual dispatch.
+
+
+## Round 5 — 22 November 2026, blocked save at the round cap
+
+App [#358](https://github.com/banodoco/astrid-app/pull/358) `be9cc2407306eff06252c0d54be1c7f5afcacf3f`, Agent [#506](https://github.com/banodoco/astrid-agent/pull/506) `18adee8034973837a97fcd7392cd67f4566fa992` and Runtime [#92](https://github.com/banodoco/astrid-runtime/pull/92) `d7be2f0458a55c1f26e1138a125ffefe382f56f4` are the exact tuple. Generated pins select these two downstream inputs. The installed hook, history and Agent source identities matched Git. The setup used the same verified synthetic v30 restore with 300 roots, 300 media references, nine tracks and ten shots. The public preflight checked one head and the control timeline. The installer materialized the realm and its final claim timed out. The normal authenticated editor became ready on that same Runtime before public preflight and the fresh browser.
+
+| Interval | Round 4 | Round 5 |
+| --- | ---: | ---: |
+| Fresh cold first usable | 42.381 s | 42.669 s |
+| Fresh cold corroborated full opening | 43.334 s | 43.727 s |
+| Cold opening Runtime / browser CPU | 20.53 / 41.21 s | 20.67 / 29.25 s |
+| First complete authenticated metadata read under 1 s after UI marker | 152.779 s, same-Runtime continuation | 205.452 s, fresh run |
+| Warm reload first usable / corroborated full opening | 29.615 / 30.493 s | 27.586 / 28.564 s |
+| Warm opening Runtime / browser CPU | 20.29 / 41.57 s | 19.31 / 40.41 s |
+| First move to unconfirmed save | 31.071 s | 30.960 s |
+| Whole first row wall | 183.739 s | 451.819 s |
+| Whole first row Runtime / browser CPU | 179.77 / 20.09 s | 447.99 / 28.44 s |
+
+The original Round 4 cold browser stopped before its availability result. Its comparison value comes from a fresh browser on the already-running Runtime. Round 5 combined the two deferred-page and hook changes. Ten slower complete metadata responses arrived during the Round 5 availability probe before attempt 24 qualified at 347.988 ms. Cheap reads still timed out after warm reload. The reported row CPU covers the complete observation including authenticated reads and retries. Individual commit cost remains unmeasured.
+
+The only attempted row was `video-move-same-track`. Saving appeared 0.421 s after the gesture, and the badge showed “The save has not been confirmed” with Try again and Discard at 30.960 s. The recorder observed zero scoped timeline commit POSTs before verification. Both after-head reads failed with transport errors. Guarded Undo refused before issuing an edit, leaving eight unattempted repetitions. Independent public postflight recovered the original v30 publication `txn-a3dbef5643ae4893bbe8d7fe5ffb1bbf`, exact revision and content digest, single active head and complete fixture inventory. The owned editor and Runtime shut down, and the fresh browser profile and stack were removed.
+
+The fifth scheduled slot ends the loop. Cold and warm opening missed their provisional targets, and the comparison produced no verified warm save. The full 616-clip fixture and 85-scenario matrix, matched one-clip ratio and two consecutive passing full rounds remain open. The advisor found that two-item pages still drive a complete deferred history walk. Shared history and verification load are consistent with the measured delays. The paired batch and sampled CPU leave the exact work and source of delayed dispatch unresolved. The owner decision through the host is whether to hold this work for a larger redesign or consider a narrower set of demonstrated changes through exact review and release qualification. The retained-history import-cost decision is separate.
+
+The advisor's next design removes the automatic whole-history walk after handoff, and resolves inverse targets on demand against the authenticated current revision and publication. Keep authenticated explicit complete history access, stale-head refusal, receipt checks and content proof. Further wide history or verification changes belong in Plan 75 or a separately accepted plan.
+
+- **Plan 63:** pair the unconfirmed editor symptom with durable local queue, scoped request and authoritative receipt witnesses. Round 5 postflight kept v30, while Round 2 had a late single accepted receipt. Exercise both states distinctly.
+- **Plan 75:** isolate whole-history work, authenticated-read waits and commit service in the profile. Round 5's 447.99 Runtime CPU s include competing reads and repeated verification. A first subsecond read at 205.452 s leaves subsequent service availability unqualified.
+- **Plan 76:** continue to require a verified two-writer overlap and a real rejected clash. Round 5 attempted one writing tab.
+- **Plan 18:** measure first usable UI, authenticated service access and gesture-to-request separately. The editor exposed the affordance and entered Saving while this edit had no observed dispatch.
