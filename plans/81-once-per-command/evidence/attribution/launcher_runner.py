@@ -72,6 +72,7 @@ def main():
   source=work/'source.json'; source.write_text(json.dumps({'profile':'astrid','source_checkout':str(AGENT),'runtime_checkout':str(RUNTIME),'runtime_environment':sys.prefix}))
   env={k:os.environ[k] for k in ('PATH','LANG','LC_ALL','SSL_CERT_FILE') if k in os.environ}
   env.update(HOME=str(work/'home'),TMPDIR=str(work/'tmp'),PYTHONDONTWRITEBYTECODE='1',ASTRID_RUNTIME_DATA_ROOT=str(work/'data'),ASTRID_RUNTIME_SOURCE_MANIFEST=str(source),ASTRID_RUNTIME_CHECKOUT=str(RUNTIME),ASTRID_PACK_HOST_PYTHON=sys.executable,ASTRID_RUNTIME_DOOR_PORT='0',PYTHONPATH=os.pathsep.join(map(str,(work/'hook',AGENT,RUNTIME,VIBE))),A4_HOOK_LOG=str(work/'admissions.jsonl'))
+  cli_env=dict(env); cli_env.pop('A4_HOOK_LOG'); cli_env['PYTHONPATH']=os.pathsep.join(map(str,(AGENT,RUNTIME,VIBE)))
   os.environ.clear(); os.environ.update(env)
   launcher=[sys.executable,'-m','astrid_runtime']; console=str(Path(sys.executable).with_name('astrid'))
   manifest['console']=console; manifest['console_sha256']=hashlib.sha256(Path(console).read_bytes()).hexdigest()
@@ -86,7 +87,7 @@ def main():
   try:
    run(launcher+['workspace','create','--realm-root',str(work/'realm'),'--process-control','sandbox','--hosted-origin','off','--json'])
    with AstridClient.open_from_launcher() as client:
-    identity=subprocess.check_output([sys.executable,'-c','import astrid; print(astrid.__file__)'],env=env,text=True).strip()
+    identity=subprocess.check_output([sys.executable,'-c','import astrid; print(astrid.__file__)'],env=cli_env,text=True).strip()
     if not Path(identity).resolve().is_relative_to(AGENT): raise RuntimeError('console does not import pinned source')
     manifest['agent_module']=identity
     if not (work/'admissions.jsonl.loaded').is_file(): raise RuntimeError('Runtime response hook did not load')
@@ -102,6 +103,7 @@ def main():
     (out/'target-inventory.json').write_text(json.dumps(provider.comfy.object_info(),sort_keys=True,indent=2)+'\n')
     manifest['target_inventory']='target-inventory.json'
     manifest['response_clock']='monotonic_ns; Runtime and target server response emission after write; hook overhead included'
+    manifest['cli_hook']='none; Runtime observer exists only in launcher-managed daemon'
     with contextlib.nullcontext(target_stack.enter_context(attached_comfy(provider.comfy))) as url:
      seen=set()
      for route in ('W','I','E'):
@@ -114,7 +116,7 @@ def main():
         if mode=='timings': base+=['--timings']
         profile=out/f'{label}.prof'
         launch=[console,*base] if mode in ('plain','timings') else ([sys.executable,'-X','importtime','-c','from astrid.console import main; raise SystemExit(main())',*base] if mode=='importtime' else [sys.executable,'-m','cProfile','-o',str(profile),console,*base])
-        before=len(ack); start=time.monotonic_ns(); proc=subprocess.run(launch,env=env,capture_output=True,timeout=240); end=time.monotonic_ns()
+        before=len(ack); start=time.monotonic_ns(); proc=subprocess.run(launch,env=cli_env,capture_output=True,timeout=240); end=time.monotonic_ns()
         (out/f'{label}.stdout').write_bytes(redact(proc.stdout))
         (out/f'{label}.stderr').write_bytes(redact(proc.stderr))
         row={'route':route,'mode':mode,'warmup':n<0,'trial':n+1,'returncode':proc.returncode,'spawn_ns':start,'exit_ns':end,'wall_seconds':(end-start)/1e9,'stdout':f'{label}.stdout','stderr':f'{label}.stderr','profile':profile.name if mode=='cprofile' else None,'load':os.getloadavg(),'prompt':prompt,'argv':[x.replace(url,'<target>').replace(str(work),'<scratch>') for x in launch]}
