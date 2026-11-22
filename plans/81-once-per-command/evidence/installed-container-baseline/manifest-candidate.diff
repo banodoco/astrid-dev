@@ -1,0 +1,15 @@
+5c5,6
+<     "sha": "c0ad6b54aadd21630d98bb5039613e37efe92a8f"
+---
+>     "sha": "bc75d6c592e16582fffc5f1ca1a6aa35508c9ddf",
+>     "repo": "/root/codex/installed-baseline/agent-candidate"
+8,9c9,10
+<     "sha": "5120462d67479dc4719406d0d34440edb616ace1",
+<     "schema_digest": "sha256:9c9e746eb5138f5e92baf5bcd87e8598c6aa92597c92083956b24517c4071923"
+---
+>     "sha": "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
+>     "schema_digest": "sha256:2c6a76e17b4441398ab91e3e9d6283a719fd5b08807447db9dbf2ecc5e1339a2"
+114c115
+<     "sha": "48b5fa9e45630e1bc502651975ec0ef3a5e74c4c"
+---
+>     "sha": "36ea976ffa24ac3ab5b5e48b7b279af7565d5c41"

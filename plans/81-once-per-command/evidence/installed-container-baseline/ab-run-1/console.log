@@ -1,0 +1,48 @@
+SETTING: installed builds, CPU container, stand-in ComfyUI; not covered: a real ComfyUI's node-info answer, GPU work.
+  before: agent c0ad6b54 runtime 5120462d vibecomfy 48b5fa9e lifecycle 9f88ef76 omp @oh-my-pi/pi-coding-agent@18.12.6
+  after: agent bc75d6c5 runtime 72b129e5 vibecomfy 36ea976f lifecycle 9f88ef76 omp @oh-my-pi/pi-coding-agent@18.12.6
+SETTING: installed builds, CPU container, stand-in ComfyUI (not covered: a real ComfyUI's node-info answer, GPU work), shared 4-vCPU box, --no-wait (times Astrid up to 'task queued')
+[same] warm-up, then 5 alternating pairs
+  same-before-warmup             14.454 s  exit 0  load 0.93 -> 1.15
+  same-after-warmup               5.580 s  exit 0  load 0.94 -> 0.94
+  same-before-1                  14.370 s  exit 0  load 0.94 -> 1.10
+  same-after-1                    5.551 s  exit 0  load 0.95 -> 0.95
+  same-before-2                  14.796 s  exit 0  load 0.95 -> 0.95
+  same-after-2                    5.410 s  exit 0  load 0.95 -> 1.12
+  same-before-3                  15.007 s  exit 0  load 0.92 -> 0.94
+  same-after-3                    5.282 s  exit 0  load 0.94 -> 1.03
+  same-before-4                  15.587 s  exit 0  load 0.93 -> 1.03
+  same-after-4                    5.480 s  exit 0  load 0.94 -> 0.95
+  same-before-5                  15.294 s  exit 0  load 0.95 -> 1.03
+  same-after-5                    5.360 s  exit 0  load 0.94 -> 0.94
+[changed] warm-up, then 5 alternating pairs
+  changed-before-warmup          14.957 s  exit 0  load 0.94 -> 1.23
+  changed-after-warmup            5.783 s  exit 0  load 0.93 -> 0.93
+  changed-before-1               15.322 s  exit 0  load 0.93 -> 1.09
+  changed-after-1                 5.719 s  exit 0  load 0.94 -> 1.27
+  changed-before-2               15.049 s  exit 0  load 0.97 -> 0.98
+  changed-after-2                 5.397 s  exit 0  load 0.98 -> 1.06
+  changed-before-3               15.217 s  exit 0  load 0.95 -> 0.96
+  changed-after-3                 5.622 s  exit 0  load 0.96 -> 1.21
+  changed-before-4               14.946 s  exit 0  load 0.97 -> 0.98
+  changed-after-4                 5.624 s  exit 0  load 0.98 -> 1.06
+  changed-before-5               15.429 s  exit 0  load 0.96 -> 0.97
+  changed-after-5                 6.301 s  exit 0  load 0.97 -> 1.05
+[timeline] warm-up, then 5 alternating pairs
+  timeline-before-warmup          2.260 s  exit 0  load 0.95 -> 0.95
+  timeline-after-warmup           2.168 s  exit 0  load 0.95 -> 0.96
+  timeline-before-1               1.183 s  exit 0  load 0.96 -> 0.96
+  timeline-after-1                1.143 s  exit 0  load 0.96 -> 0.96
+  timeline-before-2               1.188 s  exit 0  load 0.96 -> 0.96
+  timeline-after-2                1.499 s  exit 0  load 0.96 -> 0.96
+  timeline-before-3               1.254 s  exit 0  load 0.96 -> 0.96
+  timeline-after-3                1.172 s  exit 0  load 0.96 -> 0.96
+  timeline-before-4               1.365 s  exit 0  load 0.96 -> 0.96
+  timeline-after-4                1.190 s  exit 0  load 0.96 -> 0.96
+  timeline-before-5               1.409 s  exit 0  load 0.96 -> 0.96
+  timeline-after-5                1.108 s  exit 0  load 0.96 -> 0.96
+Traceback (most recent call last):
+  File "/root/codex/installed-baseline/ab_run.py", line 116, in <module>
+    for s in t: names.setdefault((s["stage"], s.get("parent")), []).append((s["seconds"], s["total_seconds"]))
+                                                                                          ~^^^^^^^^^^^^^^^^^
+KeyError: 'total_seconds'
