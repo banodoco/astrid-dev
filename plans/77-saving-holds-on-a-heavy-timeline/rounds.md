@@ -314,3 +314,12 @@ A separate local compiled preview from the same authenticated empty fixture reac
 The owner authorized a separately measured App-only opt-in to fetch verified history on demand. Local candidate `08c0fe11` starts at the exact Round 5 App tree with byte-identical downstream pins and preserves the existing automatic-read assertions in default mode. Independent source review blocked it on incomplete or duplicate ancestry, cancellation visibility after changing timeline, responsiveness when an obsolete request hangs, and test fixture isolation. The candidate remains unmeasured and unpromoted. The Runtime checkpoint stays withheld.
 
 The run archive holds the v30 timeline and source proof at `edit-dispatch-trace/v30/on-vite-retry/{summary,capture-boundary}.md` and the compiled control at `edit-dispatch-trace/empty-opening/packaged/summary.md`.
+
+The source-dev ten-clip control used the same Round 5 tuple, a separate authenticated backup and the same named same-track video move. First usable took 23.985 s. The stable UI marker took 24.867 s with 0.73 Runtime CPU s and 18.43 Chrome CPU s. The qualifying post-open read returned in 0.059 s. Launch-to-read is unobserved on the direct restore route.
+
+| Ten-clip move | Gesture to POST | POST to response | Response to confirmed Saved | Gesture to confirmed Saved |
+| --- | ---: | ---: | ---: | ---: |
+| After first usable | 713.8 ms | 1,829.3 ms | 751.5 ms | 3.295 s |
+| After qualifying read and first Undo | 684.9 ms | 353.2 ms | 374.8 ms | 1.413 s |
+
+Each move issued one matching HTTP 200 POST and independently advanced the public head with no clip, occurrence or media ID loss. Both guarded Undo receipts restored the original revision. This control has no shots, so the difference from the 300-clip fixture varies both the document size and the ownership shape. See `quick-baseline/direct/10/results.jsonl` in the run archive.
