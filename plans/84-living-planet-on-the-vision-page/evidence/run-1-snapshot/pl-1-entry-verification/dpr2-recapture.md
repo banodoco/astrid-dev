@@ -13,7 +13,7 @@ Both hero and stage transforms were `none` before and after. The poster existed 
 
 Final artifacts:
 
-- Laptop: [poster frame](laptop-handoff-dpr2-poster.png), [first-draw frame](laptop-handoff-dpr2-live.png), [raw metrics](laptop-handoff-dpr2.json).
-- Phone: [poster frame](phone-handoff-dpr2-poster.png), [first-draw frame](phone-handoff-dpr2-live.png), [raw metrics](phone-handoff-dpr2.json).
+- Laptop: poster frame (`laptop-handoff-dpr2-poster.png`, not saved in this snapshot), first-draw frame (`laptop-handoff-dpr2-live.png`, not saved in this snapshot), raw metrics (`laptop-handoff-dpr2.json`, not saved in this snapshot).
+- Phone: poster frame (`phone-handoff-dpr2-poster.png`, not saved in this snapshot), first-draw frame (`phone-handoff-dpr2-live.png`, not saved in this snapshot), raw metrics (`phone-handoff-dpr2.json`, not saved in this snapshot).
 
 The earlier DPR-mismatched images remain unchanged. Intermediate DPR 2 captures with an observer setup error or without saved settle counts are retained with `observer-error` and `prior-no-stability` suffixes; use only the four final images and two final JSON files above.

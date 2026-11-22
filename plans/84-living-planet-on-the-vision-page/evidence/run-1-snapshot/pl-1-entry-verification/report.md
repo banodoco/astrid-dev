@@ -15,8 +15,8 @@ Raw commands, logs, exit statuses and Playwright JSON are in this directory: `vi
 
 The focused handoff capture held the engine module request after feed content and title were ready, recorded the poster with the live canvas mounted behind it, then released the module and captured after the poster was removed by `onReady`. In `planetEngine.ts`, `onReady` fires after the first `renderer.render` call. Both pairs show the poster before and the drawn planet after, with no captured console/page errors.
 
-- Laptop 1440x900, DPR 1: [poster before](laptop-handoff-poster-before.png), [live canvas after](laptop-handoff-live-after.png), [metrics](laptop-handoff.json).
-- Phone 390x844, DPR 3: [poster before](phone-handoff-poster-before.png), [live canvas after](phone-handoff-live-after.png), [metrics](phone-handoff.json).
+- Laptop 1440x900, DPR 1: poster before (`laptop-handoff-poster-before.png`, not saved in this snapshot), live canvas after (`laptop-handoff-live-after.png`, not saved in this snapshot), metrics (`laptop-handoff.json`, not saved in this snapshot).
+- Phone 390x844, DPR 3: poster before (`phone-handoff-poster-before.png`, not saved in this snapshot), live canvas after (`phone-handoff-live-after.png`, not saved in this snapshot), metrics (`phone-handoff.json`, not saved in this snapshot).
 
 Chrome's `PerformanceObserver` reported **0 stage-attributed layout-shift score** and 0 layout-shift entries in both render-only windows. Stage rect deltas were laptop x=0, y=-2.545 px, width=0, height=+0.00003 px; phone x=0, y=-14 px, width=0, height=0. So the observed CLS score is zero, while the stage's measured top coordinate changed during the capture interval; the report does not claim exact geometric immobility. The broader loading-to-live captures (`laptop-capture.json`, `phone-capture.json`) also span the feed-loading update and are retained only as context, not used for the render-only CLS claim.
 
