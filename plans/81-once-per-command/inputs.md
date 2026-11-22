@@ -68,7 +68,7 @@ D3 (trusting an install's stamp) and D6 (ComfyUI's node list) are about results 
 
 ## Source identities
 
-No code work has started. Read on 22 November 2026: astrid-agent `release/15/main` at `aac1ceb6`; astrid-runtime `release/15/main` at `1758a6df`; VibeComfy at `e65f4941`. To read, not merge, on `release/14/plan-55`: the meter in `tests/integrations/test_local_speed_meter.py`. At run start record, for astrid-agent and astrid-runtime: `release/15/plan-81`, cut from that repository's `release/15/main`, the commit it was cut at, and whether Plan 77 had landed. Intended destination: `release/15/main`.
+The existing `release/15/plan-81` branches began at astrid-agent `aac1ceb684d22cf67c5bb0ae2c20855b88e4f462` and astrid-runtime `1758a6df9553d64d990f7d86204286c294828679`; both were clean, and Plan 77 had not landed. The landed forward's release heads are Agent `0982317814545d50c8d7e2c623d7f7086bba879b` and Runtime `2cf5890b7185450109254601b83d6dccb535bde4`, merged locally into the plan trees as `d087d59a4677c2b5afb3220b4148c730ee5e27f3` and `6ee03f87555288a7616afc18d154f192317b870c`. Those merge trees equal the respective release heads. The Agent's forward baseline uses its locked Runtime `0af5af11d71016fa08f65058c558c56a47e9b5a7`. VibeComfy was read only at `e65f4941`; the Plan 55 meter was read on `origin/release/14/plan-55`. Destination: the respective `release/15/plan-81` branches.
 
 ## References
 
