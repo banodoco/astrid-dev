@@ -257,7 +257,7 @@ The advisor's next design removes the automatic whole-history walk after handoff
 
 ### Loop closure and evidence archive
 
-The host held promotion of the product changes, including the small deferred pages, hook repair and reinstated retained-history behavior, pending the owner's scope decision. The plan branches retain the measured tuple. A separate App candidate may carry the save-loop fixture, harness and README through independent review and matching CI. Its release PR remains subject to the owner's go.
+The host held promotion of the product changes, including the small deferred pages, hook repair and reinstated retained-history behavior, pending the owner's scope decision. The plan branches retain the measured tuple. The separately authorized save-loop tooling, fixture and README landed in App Release 15 as `ba34e184` after independent scope review and a matching exact Vitest comparison. All 14 paths are under `scripts/save-loop/`. [App #360](https://github.com/banodoco/astrid-app/pull/360)
 
 The recorded seed curves and the authentication-required history reads show that accepted operations can grow far more expensive with the accumulated document and history. The unpaged Round 3 run observed a transport stall of roughly 125–157 s after deferred history began. Round 4's qualifying read arrived about 2.5 minutes after full UI. The Runtime serves its ordinary routes through shared store access while history verification is in progress. Round 5 admitted some slow reads earlier and still took 205.452 s for the first subsecond response. The live evidence supports separating history work, blockage and commit service in the redesign. It leaves the exact cause of the unsent gesture open.
 
