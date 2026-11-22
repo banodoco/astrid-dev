@@ -4,6 +4,8 @@
 
 The editor's chat agent edited a disposable synthetic project on one local machine. The Runtime recorded one new history row and one accepted receipt for seven retargeted clips, their parameter changes and six new titles. Four after-stills were captured on the same open page without a reload. The original accepted response was redirected to scratch and was not independently captured; the receipt evidence is the Runtime history row.
 
+Paths under `/root/codex/le4/` are machine-local to the proof run.
+
 ## Sources and fixture
 
 - Agent `07e7cc0373f03d139d44de26eaa2c5fe6c8d03df`; locked Runtime `3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5`.
@@ -51,6 +53,8 @@ An earlier synthetic rehearsal recorded stale head, wrong or unadmitted revision
 On the fresh isolated install, a Runtime process first resolved an existing effect, then `astrid packs add` installed `le4_probe` and the next shot patch using `probe-cyan` committed without restarting that process. Pack add took 2 s; commit took 2.000 s and returned receipt `txn-8e216465a7a14875a48b8428ef0f6765`. This warm-up was an effect resolution in a successful commit, not a separately issued lookup. A later container restart created a new Runtime process; this no-restart result belongs to the earlier process. Detailed source: `/root/codex/le4/run4/report.md`.
 
 ## Limits
+
+- The prompt asked for the changes “together as one edit, so they appear as one new history entry”. The proof shows the editor’s agent can deliver them as one commit when asked; it does not show that the skills alone lead an agent to choose one commit unprompted.
 
 - This is one synthetic fixture on one machine, not evidence about hosted or shared use. The final chat ran on the 40-clip fixture, not the 136-clip fixture.
 - The editor's admitted-element list and imports share a 30 s deadline. Under load, the list waited on the Runtime store mutex while history was being read and validated; the observed wait does not establish a scaling law. Follow-up: [#1433](https://github.com/banodoco/astrid-dev/issues/1433).
