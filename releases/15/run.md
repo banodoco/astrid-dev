@@ -18,7 +18,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 
 | Lane | Session | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 passed its bounded review. Runtime and Agent landed. App #368 waits for the Release Lead’s consistent Release 14 forward. Plan 77’s 300-clip move was refused before the outbox. The local compiled empty editor reached writable UI in 1.585 s. The checkpoint was withheld and the separate App opt-in is still in source review. |
+| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 passed its bounded review. Runtime and Agent landed. App #368 waits for the Release Lead’s consistent Release 14 forward. Plan 77’s 300-clip move was refused before the outbox. The local compiled empty editor reached writable UI in 1.585 s. The checkpoint was withheld and source review blocked the separate App opt-in. |
 | Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
 | Easy wins (issue packet) | Release 15 Lead, with Codex Luna workers | — | Nine fixes, one commit each, in [astrid-agent #475](https://github.com/banodoco/astrid-agent/pull/475) (draft), on `release/15/main` at `aac1ceb6`. Waiting on the owner's go to land. Editor, Runtime and VibeComfy fixes not started |
 | Plan 79 (local media of any size) | not started | — | Queued; scope accepted; starts after Plan 77 lands. The interim 1 GiB limit is in the easy-wins batch |
