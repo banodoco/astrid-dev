@@ -1,0 +1,3 @@
+start_utc=2026-11-22T18:39:56Z free_kib=43054328
+5d1c249a7564cbdd3acd2e82dd2506998e1341a5b4786f070e9a0080b0ccbbf8  restore-432-copy/realm.sqlite3
+end_utc=2026-11-22T18:39:57Z exit=0

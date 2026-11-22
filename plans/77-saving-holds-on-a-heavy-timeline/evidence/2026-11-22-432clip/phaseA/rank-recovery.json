@@ -1,0 +1,269 @@
+{
+  "sampler_reported_samples": 27616,
+  "sampler_reported_errors": 2550,
+  "rate_hz": 100,
+  "nonblocking": true,
+  "raw_size_bytes": 13159173,
+  "raw_sha256": "7687f6f7917154a51dab4056d89897834aff1eb3c3245781364a5dbf890c955b",
+  "decodable_weighted_samples": 27134,
+  "rejected_weighted_samples_with_recoverable_counts": 2,
+  "rejected_stack_records": {
+    "missing_weight": 1,
+    "malformed_stack": 1
+  },
+  "weighted_sample_count_gap": 480,
+  "top_leaf_frames": [
+    {
+      "frame": "create.<locals>.Validator.descend (jsonschema/validators.py)",
+      "samples": 7786,
+      "percent_of_decodable_samples": 28.69
+    },
+    {
+      "frame": "type (jsonschema/_keywords.py)",
+      "samples": 3167,
+      "percent_of_decodable_samples": 11.67
+    },
+    {
+      "frame": "JSONEncoder.iterencode (json/encoder.py)",
+      "samples": 2074,
+      "percent_of_decodable_samples": 7.64
+    },
+    {
+      "frame": "JSONDecoder.raw_decode (json/decoder.py)",
+      "samples": 1115,
+      "percent_of_decodable_samples": 4.11
+    },
+    {
+      "frame": "deepcopy (copy.py)",
+      "samples": 1024,
+      "percent_of_decodable_samples": 3.77
+    },
+    {
+      "frame": "ref (jsonschema/_keywords.py)",
+      "samples": 959,
+      "percent_of_decodable_samples": 3.53
+    },
+    {
+      "frame": "type.<locals>.<genexpr> (jsonschema/_keywords.py)",
+      "samples": 898,
+      "percent_of_decodable_samples": 3.31
+    },
+    {
+      "frame": "anyOf (jsonschema/_keywords.py)",
+      "samples": 847,
+      "percent_of_decodable_samples": 3.12
+    },
+    {
+      "frame": "finite_json (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 789,
+      "percent_of_decodable_samples": 2.91
+    },
+    {
+      "frame": "_reuse_schema_validators.<locals>.reuse (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 781,
+      "percent_of_decodable_samples": 2.88
+    },
+    {
+      "frame": "TypeChecker.is_type (jsonschema/_types.py)",
+      "samples": 648,
+      "percent_of_decodable_samples": 2.39
+    },
+    {
+      "frame": "_deepcopy_dict (copy.py)",
+      "samples": 645,
+      "percent_of_decodable_samples": 2.38
+    },
+    {
+      "frame": "additionalProperties (jsonschema/_keywords.py)",
+      "samples": 634,
+      "percent_of_decodable_samples": 2.34
+    },
+    {
+      "frame": "_HistoryReadInputs.check (runtime_protocol/timeline_commit_store.py)",
+      "samples": 531,
+      "percent_of_decodable_samples": 1.96
+    },
+    {
+      "frame": "_Error._set (jsonschema/exceptions.py)",
+      "samples": 513,
+      "percent_of_decodable_samples": 1.89
+    },
+    {
+      "frame": "value_equal (runtime_protocol/timeline_commit_producer.py)",
+      "samples": 402,
+      "percent_of_decodable_samples": 1.48
+    },
+    {
+      "frame": "digest (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 401,
+      "percent_of_decodable_samples": 1.48
+    },
+    {
+      "frame": "create.<locals>.Validator.is_type (jsonschema/validators.py)",
+      "samples": 331,
+      "percent_of_decodable_samples": 1.22
+    },
+    {
+      "frame": "value_equal.<locals>.<genexpr> (runtime_protocol/timeline_commit_producer.py)",
+      "samples": 246,
+      "percent_of_decodable_samples": 0.91
+    },
+    {
+      "frame": "properties (jsonschema/_keywords.py)",
+      "samples": 242,
+      "percent_of_decodable_samples": 0.89
+    },
+    {
+      "frame": "items (jsonschema/_keywords.py)",
+      "samples": 202,
+      "percent_of_decodable_samples": 0.74
+    },
+    {
+      "frame": "TimelineCommitStore._history_entry_view (runtime_protocol/timeline_commit_store.py)",
+      "samples": 197,
+      "percent_of_decodable_samples": 0.73
+    },
+    {
+      "frame": "finite_json.<locals>.<genexpr> (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 192,
+      "percent_of_decodable_samples": 0.71
+    },
+    {
+      "frame": "_HistoryReadCursor._read (runtime_protocol/timeline_commit_store.py)",
+      "samples": 185,
+      "percent_of_decodable_samples": 0.68
+    },
+    {
+      "frame": "_reuse_schema_resolution.<locals>.Resolver.in_subresource (runtime_protocol/timeline_commit_validation.py)",
+      "samples": 165,
+      "percent_of_decodable_samples": 0.61
+    }
+  ],
+  "top_inclusive_frames": [
+    {
+      "frame": "Thread._bootstrap_inner (threading.py)",
+      "samples": 16845,
+      "percent_of_decodable_samples": 62.08
+    },
+    {
+      "frame": "Thread.run (threading.py)",
+      "samples": 16845,
+      "percent_of_decodable_samples": 62.08
+    },
+    {
+      "frame": "Thread._bootstrap (threading.py)",
+      "samples": 16845,
+      "percent_of_decodable_samples": 62.08
+    },
+    {
+      "frame": "BaseServer.finish_request (socketserver.py)",
+      "samples": 16649,
+      "percent_of_decodable_samples": 61.36
+    },
+    {
+      "frame": "RuntimeHandler.handle_one_request (runtime_protocol/server.py)",
+      "samples": 16649,
+      "percent_of_decodable_samples": 61.36
+    },
+    {
+      "frame": "ThreadingMixIn.process_request_thread (socketserver.py)",
+      "samples": 16649,
+      "percent_of_decodable_samples": 61.36
+    },
+    {
+      "frame": "BaseHTTPRequestHandler.handle (http/server.py)",
+      "samples": 16649,
+      "percent_of_decodable_samples": 61.36
+    },
+    {
+      "frame": "BaseHTTPRequestHandler.handle_one_request (http/server.py)",
+      "samples": 16649,
+      "percent_of_decodable_samples": 61.36
+    },
+    {
+      "frame": "BaseRequestHandler.__init__ (socketserver.py)",
+      "samples": 16649,
+      "percent_of_decodable_samples": 61.36
+    },
+    {
+      "frame": "RuntimeHandler.do_GET (runtime_protocol/server.py)",
+      "samples": 16648,
+      "percent_of_decodable_samples": 61.35
+    },
+    {
+      "frame": "RuntimeHandler._route (runtime_protocol/server.py)",
+      "samples": 16648,
+      "percent_of_decodable_samples": 61.35
+    },
+    {
+      "frame": "RuntimeHandler._dispatch (runtime_protocol/server.py)",
+      "samples": 16648,
+      "percent_of_decodable_samples": 61.35
+    },
+    {
+      "frame": "_evaluation.<locals>.evaluate (runtime_protocol/timeline_commit_store.py)",
+      "samples": 16645,
+      "percent_of_decodable_samples": 61.34
+    },
+    {
+      "frame": "RuntimeService.list_timeline_commits (runtime_protocol/service.py)",
+      "samples": 16645,
+      "percent_of_decodable_samples": 61.34
+    },
+    {
+      "frame": "_clear_replay_on_refusal.<locals>.wrapped (runtime_protocol/service.py)",
+      "samples": 16645,
+      "percent_of_decodable_samples": 61.34
+    },
+    {
+      "frame": "TimelineCommitStore._read_history (runtime_protocol/timeline_commit_store.py)",
+      "samples": 16621,
+      "percent_of_decodable_samples": 61.26
+    },
+    {
+      "frame": "TimelineCommitStore._history_entry_view (runtime_protocol/timeline_commit_store.py)",
+      "samples": 16049,
+      "percent_of_decodable_samples": 59.15
+    },
+    {
+      "frame": "TimelineCommitStore._history_page.<locals>.<listcomp> (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14990,
+      "percent_of_decodable_samples": 55.24
+    },
+    {
+      "frame": "TimelineCommitStore._history_page (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14990,
+      "percent_of_decodable_samples": 55.24
+    },
+    {
+      "frame": "TimelineCommitStore.history_entry (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14974,
+      "percent_of_decodable_samples": 55.19
+    },
+    {
+      "frame": "create.<locals>.Validator.descend (jsonschema/validators.py)",
+      "samples": 14456,
+      "percent_of_decodable_samples": 53.28
+    },
+    {
+      "frame": "TimelineCommitStore._verify_accepted (runtime_protocol/timeline_commit_store.py)",
+      "samples": 14439,
+      "percent_of_decodable_samples": 53.21
+    },
+    {
+      "frame": "TimelineCommitStore._verify_accepted_replay (runtime_protocol/timeline_commit_store.py)",
+      "samples": 11093,
+      "percent_of_decodable_samples": 40.88
+    },
+    {
+      "frame": "ref (jsonschema/_keywords.py)",
+      "samples": 10515,
+      "percent_of_decodable_samples": 38.75
+    },
+    {
+      "frame": "TimelineCommitStore._historical_sequential (runtime_protocol/timeline_commit_store.py)",
+      "samples": 10368,
+      "percent_of_decodable_samples": 38.21
+    }
+  ]
+}
