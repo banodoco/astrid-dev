@@ -42,7 +42,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 - **Plan 69's three decisions,** held by the timeline lane: the App #297 revert, narrowing admitted-animation render out of scope, and whether the motion pack is required on a bare install.
 - **The go to land** [astrid-agent #475](https://github.com/banodoco/astrid-agent/pull/475) in `release/15/main`.
 - **Plan 78:** its own lane, or the timeline lane after Plan 69.
-- **A manager for Plan 81,** and its decisions D1 to D5.
+- **A manager for Plan 81.** Its decisions are made.
 - **A go for Plan 63's first tasks** (the corpus, CC-7, and the server piece, CC-13).
 - **Who owns the cross-platform tests** (#678 to #683): a short plan is needed before any lane.
 - **Plan 72's scope decision,** then its go or hold.

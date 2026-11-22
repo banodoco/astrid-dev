@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — The owner asked for this plan on 22 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): "I think we should include a sub 1s plan on this release with a sub 0.1s for later", then "can you create that plan and associate with 15 and make the other unplanned, use lunas and terras to properly understand everything for the sub 1s plan so that we can give the plan to a manager to drive to completion". She has not yet read this end state, the estimate of about 20 days, or D1 to D5. Next: she confirms or changes them.
+**Scope decision:** Pending — The owner asked for this plan on 22 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): "I think we should include a sub 1s plan on this release with a sub 0.1s for later", then "can you create that plan and associate with 15 and make the other unplanned, use lunas and terras to properly understand everything for the sub 1s plan so that we can give the plan to a manager to drive to completion". She was then given the end state, the estimate of about 20 days and the recommended answers to D1 to D5, and replied "Agree with your recommendations". The scope stays pending only until the independent critique is recorded below. Next: record it, then mark the scope accepted.
 
 **Prior art:** Read and measured on 22 November 2026 at astrid-agent [`048ab307`](https://github.com/banodoco/astrid-agent/tree/048ab307) (`release/15/main` plus nine small unrelated fixes), astrid-runtime [`1758a6df`](https://github.com/banodoco/astrid-runtime/tree/1758a6df) and VibeComfy `e65f4941`, by four Codex Terra tracers and two Luna helpers. Each marked its claims measured, read or inferred; their full reports are [evidence/research-A.txt](evidence/research-A.txt) to [research-G.txt](evidence/research-G.txt). Measurements are medians of five in one shared container running from source, so they are relative, not absolute.
 
@@ -49,11 +49,11 @@
 
 ## Owner decisions
 
-- **D1 — what the budgets mean.** Under 1 second at the median, on a warm local machine with an installed Astrid, for command to queued and for command to accepted on an ordinary timeline; a heavy timeline stays with Plan 77's two-second target. Recommendation: accept as written. Pending.
-- **D2 — running from source.** (a) Source checkouts must meet the same budgets. (b) They are measured against their own figure, 2 seconds. Recommendation: (b); a source checkout has to prove which code it is running, and a stamped install has done that once. Pending.
-- **D3 — trusting an install.** May packs that came with an installed Astrid skip re-hashing, on the strength of the install's stamp, while a person's own packs and project packs are still hashed? Recommendation: yes. Pending.
-- **D4 — the batch form.** (a) A file of operations. (b) Repeated flags in one command. Recommendation: (a); each item's arguments stay unambiguous. Pending.
-- **D5 — limits for the waits that have none.** Recommendation: reuse the 135 seconds the acquisition lock already has, with the waiting line after 2 seconds. Pending.
+- **D1 — what the budgets mean.** Under 1 second at the median, on a warm local machine with an installed Astrid, for command to queued and for command to accepted on an ordinary timeline; a heavy timeline stays with Plan 77's two-second target. Recommendation: accept as written. **Decided 22 November 2026: accepted as written.** The owner agreed with the Lead's recommendation in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): "Agree with your recommendations".
+- **D2 — running from source.** (a) Source checkouts must meet the same budgets. (b) They are measured against their own figure, 2 seconds. Recommendation: (b); a source checkout has to prove which code it is running, and a stamped install has done that once. **Decided 22 November 2026: (b),** source checkouts are measured against their own figure of 2 seconds. Same source as D1.
+- **D3 — trusting an install.** May packs that came with an installed Astrid skip re-hashing, on the strength of the install's stamp, while a person's own packs and project packs are still hashed? Recommendation: yes. **Decided 22 November 2026: yes.** Same source as D1.
+- **D4 — the batch form.** (a) A file of operations. (b) Repeated flags in one command. Recommendation: (a); each item's arguments stay unambiguous. **Decided 22 November 2026: (a),** a file of operations. Same source as D1.
+- **D5 — limits for the waits that have none.** Recommendation: reuse the 135 seconds the acquisition lock already has, with the waiting line after 2 seconds. **Decided 22 November 2026: yes,** 135 seconds, with the waiting line after 2 seconds. Same source as D1.
 
 ## Source identities
 

@@ -10,7 +10,7 @@
 
 **Estimate:** About 20 engineering days (17 to 24): the timings and the budget test about 5, generation about 9, timeline commands about 4, the waits about 1.5, review about 1. Three workers can run most of it side by side.
 
-**Waiting on:** a manager, and the owner's decisions D1 to D5 in [inputs.md](inputs.md#owner-decisions). US-1 can start without them.
+**Waiting on:** a manager, and the independent critique being recorded. The owner decided D1 to D5 on 22 November 2026 ([inputs.md](inputs.md#owner-decisions)).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. A manager starts at the [handover](handover.md).
 
@@ -53,7 +53,7 @@ It takes three things that already exist, and no more: Plan 55's standing meter,
 
 **Real dependencies:** `release/15/plan-77` edits the timeline SDK files US-6 and US-7 change, and raises the client's request timeout. US-6 and US-7 start from `release/15/main` after Plan 77 lands there, or merge its branch first; the manager records which. US-5 reads Plan 55's branch for its donor commits and must not merge that branch.
 
-**Unresolved:** D1 to D5. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
+**Unresolved:** the number of review rounds. D1 to D5 were decided on 22 November 2026. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
