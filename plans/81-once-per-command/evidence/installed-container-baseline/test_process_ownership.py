@@ -8,7 +8,7 @@ class OwnershipMatcherTests(unittest.TestCase):
         self.root = '/install/program/versions'
         self.snapshot = {
             10: (1, 100, '/bin/bash', ('script',)),
-            11: (10, 110, '/bin/python', (self.root + '/runtime.py',)),
+            11: (10, 110, self.root + '/python', (self.root + '/runtime.py',)),
             12: (10, 120, '/elsewhere/runtime', ()),
             13: (1, 130, self.root + '/runtime', ()),
         }

@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
 # Installed-Astrid A/B/C run: three isolated installs, one shared stand-in ComfyUI, arms alternated per round, load-gated.
 #   before = published Release 14 tuple (omp from npm)
-#   after  = candidate: Agent bc75d6c5 (local pin-bump commit on release/15/plan-81), Runtime 72b129e5, VibeComfy 36ea976f
-#   vc48   = candidate WITHOUT the VibeComfy fix: Agent 9c95c680 (release/15/plan-81 head; same code as bc75d6c5, only the pin files differ),
-#            Runtime 72b129e5, VibeComfy 48b5fa9e (the installer refuses bc75d6c5 with VibeComfy 48b5fa9e: its pin check)
+#   after  = final local candidate: Agent 868053db (scratch repo), Runtime 72b129e5, VibeComfy 06ad021f
+#   vc48   = final comparison candidate: Agent 13d328dc, Runtime 72b129e5, VibeComfy 48b5fa9e
 #   ./run-ab-installed.sh            prepare + validate only (install if absent, versions, --timings check, one UNTIMED command per arm)
 #   ./run-ab-installed.sh --run      prepare, then the gated timed run (fails, does not run ungated, if load < 1.0 is not reached in 10 min)
 # Env: BEFORE_MANIFEST, CANDIDATE_MANIFEST, VC48_MANIFEST (defaults: manifest-omp-npm.json, manifest-candidate.json, manifest-candidate-vc48.json),
 #      ARMS (default "before after vc48"; "before after" gives the two-arm run), EVIDENCE_DIR, LOAD_MAX (1.0), LOAD_WAIT_SECONDS (600),
 #      SAMPLES (5), STANDIN_PORT (18188), KEEP_RUNTIME=1, IB (live install root; default /root/codex/installed-baseline).
 # Setting, every time: installed builds, CPU container, stand-in ComfyUI; not covered: a real ComfyUI's node-info answer, GPU work.
-# Only the candidate arms (after, vc48) run `generate` with --timings; the before build cannot. This difference affects comparisons.
+# Only candidate arms (after, vc48) run `generate` with --timings; the before build cannot. This difference affects comparisons.
 set -euo pipefail
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+: "${ASTRID_RUNTIME_SOURCE_REPO:?set ASTRID_RUNTIME_SOURCE_REPO to a local Runtime Git repository containing each manifest commit}"
+git -C "$ASTRID_RUNTIME_SOURCE_REPO" rev-parse --git-dir >/dev/null || { echo "FAIL: ASTRID_RUNTIME_SOURCE_REPO is not a Git repository" >&2; exit 1; }
 source "$SCRIPT_DIR/runtime-readiness.sh"
 IB=${IB:-/root/codex/installed-baseline}
 case "$IB" in /*) ;; *) echo "IB must be an absolute path" >&2; exit 1;; esac
 MODE=prepare; [ "${1:-}" = "--run" ] && MODE=run
 STAMP=$(date -u +%Y%m%d-%H%M%S)
-EVIDENCE_DIR=${EVIDENCE_DIR:-$IB/evidence/ab-$MODE-$STAMP}; mkdir -p "$EVIDENCE_DIR"
+EVIDENCE_DIR=${EVIDENCE_DIR:-$IB/evidence/ab-$MODE-$STAMP}
+mkdir -p "$(dirname -- "$EVIDENCE_DIR")"
+mkdir -- "$EVIDENCE_DIR" || { echo "FAIL: evidence directory must be fresh: $EVIDENCE_DIR" >&2; exit 1; }
+exec > >(tee "$EVIDENCE_DIR/console.log") 2>&1
 ARMS=${ARMS:-"before after vc48"}
 PORT=${STANDIN_PORT:-18188}
 echo "SETTING: installed builds, CPU container, stand-in ComfyUI; not covered: a real ComfyUI's node-info answer, GPU work."
@@ -30,27 +34,32 @@ arm_env() {  # sets HOME/XDG/TMPDIR/PROGRAM/DATA and the Runtime door port for o
   esac
   H=$IB/home$SUF; PROGRAM=$IB/program$SUF; DATA=$IB/data$SUF; TMPD=$IB/scratch/tmp$SUF
   [ "$1" = before ] && TMPD=$IB/scratch/tmp
-  mkdir -p "$H/.local/share" "$H/.local/state" "$H/.config" "$H/.cache" "$TMPD"
+  mkdir -p "$H/.local/share" "$H/.local/state" "$H/.config" "$H/.cache" "$TMPD" || return 1
   export HOME=$H XDG_DATA_HOME=$H/.local/share XDG_STATE_HOME=$H/.local/state XDG_CONFIG_HOME=$H/.config XDG_CACHE_HOME=$H/.cache TMPDIR=$TMPD
+  unset ASTRID_RUNTIME_LAUNCHER ASTRID_RUNTIME_ENDPOINT ASTRID_RUNTIME_CREDENTIAL ASTRID_RUNTIME_DATA_ROOT ASTRID_PREPARED_CONNECTION ASTRID_TIMELINE_EVAL_ENDPOINT ASTRID_TIMELINE_EVAL_CREDENTIAL ASTRID_TIMELINE_EVAL_REALM_ID ASTRID_TIMELINE_EVAL_ACTOR_ID
   export ASTRID_RUNTIME_DOOR_PORT=$DOOR
 }
 curl -fsS -o "$EVIDENCE_DIR/install.sh" https://astrid.haus/install
 for arm in $ARMS; do
-  ( arm_env $arm; M=$(arm_manifest $arm)
-    cp "$M" "$EVIDENCE_DIR/manifest-$arm.json"
+  ( M=$(arm_manifest "$arm") || exit 1
+    cp "$M" "$EVIDENCE_DIR/manifest-$arm.json" || exit 1
+    arm_env "$arm" || exit 1
     if ! "$PROGRAM/run-astrid" --version >/dev/null 2>&1; then
       echo "installing $arm arm ($(basename "$M"))"
       sh "$EVIDENCE_DIR/install.sh" --manifest "$M" --root "$PROGRAM" --data-root "$DATA" --yes --autostart off --command on --skills off --skill-copies off </dev/null \
         > "$EVIDENCE_DIR/install-$arm.out" 2>&1 || { echo "INSTALL FAILED ($arm): see $EVIDENCE_DIR/install-$arm.out" >&2; exit 1; }
     fi
-    cp "$PROGRAM"/versions/*/manifest.json "$EVIDENCE_DIR/installed-manifest-$arm.json"
+    SELECTED=$(python3 "$SCRIPT_DIR/runtime_attestation.py" --selected "$PROGRAM/current") || exit 1
+    cp "$SELECTED/manifest.json" "$EVIDENCE_DIR/installed-manifest-$arm.json" || exit 1
     python3 - "$M" "$EVIDENCE_DIR/installed-manifest-$arm.json" $arm <<'PY'   # the installed tuple must equal the requested pins
 import json, sys
 want, got = (json.load(open(p)) for p in sys.argv[1:3])
 for k in ("agent", "runtime", "vibecomfy", "lifecycle"):
     if want[k]["sha"] != got[k]["sha"]: sys.exit(f"{sys.argv[3]} arm: installed {k} {got[k]['sha'][:8]} != requested {want[k]['sha'][:8]}; remove that arm's program/data/home and re-run")
 PY
-    "$PROGRAM/run-astrid" --version > "$EVIDENCE_DIR/astrid-version-$arm.txt" 2>&1
+    [ $? -eq 0 ] || exit 1
+    "$PROGRAM/run-astrid" --version > "$EVIDENCE_DIR/astrid-version-$arm.txt" 2>&1 || exit 1
+    python3 "$SCRIPT_DIR/runtime_attestation.py" --source "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" || exit 1
   ) || exit 1
 done
 ( cd "$EVIDENCE_DIR"; sha256sum install.sh manifest-*.json installed-manifest-*.json > hashes.txt )
@@ -64,6 +73,7 @@ PY
 
 # Capture this invocation before launching children; PID alone can be reused.
 SCRIPT_START=$(python3 "$SCRIPT_DIR/process_ownership.py" capture "$$")
+export ASTRID_ATTEST_START_TICKS=$SCRIPT_START PYTHONDONTWRITEBYTECODE=1
 STANDIN_PID=; STANDIN_START=; SAMPLER=; SAMPLER_START=
 cleanup() {
   if [ -n "$SAMPLER_START" ]; then python3 "$SCRIPT_DIR/process_ownership.py" signal "$SAMPLER" "$SAMPLER_START" || echo "Cleanup: sampler already exited or could not be safely signaled." >&2; fi
@@ -74,7 +84,7 @@ cleanup() {
   fi
 }
 trap cleanup EXIT
-BPY=$(echo "$IB"/program/versions/*/py/bin/python | cut -d' ' -f1)   # stand-in runs on the before arm's venv (validated to serve every arm)
+BPY="$(python3 "$SCRIPT_DIR/runtime_attestation.py" --selected "$IB/program/current")/py/bin/python"   # stand-in runs on the before arm's venv (validated to serve every arm)
 "$BPY" -I "$SCRIPT_DIR/standin/standin_comfy.py" --port "$PORT" >"$EVIDENCE_DIR/standin.log" 2>&1 &
 STANDIN_PID=$!
 STANDIN_START=$(python3 "$SCRIPT_DIR/process_ownership.py" capture "$STANDIN_PID" "$$" "$SCRIPT_START") || { echo "FAIL: cannot establish stand-in identity" >&2; exit 1; }
@@ -98,7 +108,10 @@ python3 "$SCRIPT_DIR/load_sampler.py" "$EVIDENCE_DIR/load-samples.txt" &
 SAMPLER=$!
 SAMPLER_START=$(python3 "$SCRIPT_DIR/process_ownership.py" capture "$SAMPLER" "$$" "$SCRIPT_START") || { echo "FAIL: cannot establish sampler identity" >&2; exit 1; }
 for arm in $ARMS; do   # start every Runtime (separate door ports); the first call after a teardown may fail once
-  ( arm_env "$arm"; runtime_ready "$PROGRAM/run-astrid" "$arm" "$EVIDENCE_DIR/runtime-ready-$arm.log" )
+  ( arm_env "$arm" && runtime_ready "$PROGRAM/run-astrid" "$arm" "$EVIDENCE_DIR/runtime-ready-$arm.log" ) || exit 1
+done
+for arm in $ARMS; do
+  ( arm_env "$arm" && python3 "$SCRIPT_DIR/runtime_attestation.py" "$DOOR" "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" "$EVIDENCE_DIR/runtime-listener-$arm.json" ) || exit 1
 done
 cp "$SCRIPT_DIR/standin/media.png" "$EVIDENCE_DIR/media.png"
 
@@ -108,9 +121,22 @@ if [ "$MODE" = prepare ]; then
     ( arm_env $arm; X=""
       if "$PROGRAM/run-astrid" generate image --help | grep -q -- '--timings'; then X="--timings"; echo "  $arm: generate image lists --timings: yes"; else echo "  $arm: generate image lists --timings: no"; fi
       P=prep-$arm-$STAMP
-      "$PROGRAM/run-astrid" projects create $P --name $P --select --json >/dev/null
-      "$PROGRAM/run-astrid" generate image "a red square" --mode t2i --placement "http://127.0.0.1:$PORT" --project $P --no-wait --json $X > "$EVIDENCE_DIR/prep-$arm.json" 2>/dev/null
-      python3 -c "import json;d=json.load(open('$EVIDENCE_DIR/prep-$arm.json'));assert d['ok'] and d['kernel_task_id'];print('  $arm untimed generate: ok, task', d['kernel_task_id'][:8], 'with stage table' if d.get('timings') else 'no stage table')" )
+      attest_prepare() { python3 "$SCRIPT_DIR/runtime_attestation.py" "$DOOR" "$PROGRAM/current" "$EVIDENCE_DIR/manifest-$arm.json" "$EVIDENCE_DIR/prepare-$arm-$1.json"; }
+      attest_prepare projects-before || exit 1
+      "$PROGRAM/run-astrid" projects create "$P" --name "$P" --select --json >/dev/null || exit 1
+      attest_prepare projects-after || exit 1
+      cmp -s "$EVIDENCE_DIR/prepare-$arm-projects-before.json" "$EVIDENCE_DIR/prepare-$arm-projects-after.json" || exit 1
+      attest_prepare generate-before || exit 1
+      "$PROGRAM/run-astrid" generate image "a red square" --mode t2i --placement "http://127.0.0.1:$PORT" --project $P --no-wait --json $X > "$EVIDENCE_DIR/prep-$arm.json" 2>/dev/null || exit 1
+      attest_prepare generate-after || exit 1
+      cmp -s "$EVIDENCE_DIR/prepare-$arm-generate-before.json" "$EVIDENCE_DIR/prepare-$arm-generate-after.json" || exit 1
+      python3 - "$EVIDENCE_DIR/prep-$arm.json" "$arm" <<'PY'
+import json, sys
+with open(sys.argv[1]) as f: d = json.load(f)
+assert d["ok"] and d["kernel_task_id"]
+print(" ", sys.argv[2], "untimed generate: ok, task", d["kernel_task_id"][:8], "with stage table" if d.get("timings") else "no stage table")
+PY
+    ) || exit 1
   done
   echo "prepare OK. Timed run: $0 --run"; exit 0
 fi
@@ -125,7 +151,8 @@ out = {}
 for a in os.environ["ARMS"].split():
     s = suf[a]
     out[a] = {"launcher": f"{IB}/program{s}/run-astrid", "home": f"{IB}/home{s}",
-              "tmp": f"{IB}/scratch/tmp{s}" if a != "before" else f"{IB}/scratch/tmp", "door_port": ports[a]}
+              "tmp": f"{IB}/scratch/tmp{s}" if a != "before" else f"{IB}/scratch/tmp", "door_port": ports[a],
+              "current": f"{IB}/program{s}/current", "manifest": f"{os.environ['EVIDENCE_DIR']}/manifest-{a}.json"}
     if a != "before": out[a]["generate_extra"] = ["--timings"]   # candidate builds only; the published build cannot
 print(json.dumps(out))
 PY

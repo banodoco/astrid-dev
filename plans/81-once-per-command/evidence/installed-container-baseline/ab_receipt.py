@@ -8,6 +8,14 @@ def _duration(value):
 
 
 def generation_error(parsed, args):
+    if args[:2] == ["timelines", "edit"]:
+        data = parsed.get("data")
+        revision = data.get("accepted_revision_id") if isinstance(data, dict) else None
+        if not isinstance(data, dict) or data.get("status") != "accepted":
+            return "timeline output missing accepted status"
+        if not isinstance(revision, str) or not revision.strip():
+            return "timeline output missing accepted_revision_id"
+        return None
     if args[:2] != ["generate", "image"]:
         return None
     task = parsed.get("kernel_task_id")
