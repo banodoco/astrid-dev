@@ -1,0 +1,1 @@
+Initial monitor stopped at 23:17:34 because idle status reported support.healthy=true without discovery or health. That observation is not readiness. Restarted the monitor with discovery and health.status=ok also required; first observation was at 31 seconds, not the scheduled zero.
