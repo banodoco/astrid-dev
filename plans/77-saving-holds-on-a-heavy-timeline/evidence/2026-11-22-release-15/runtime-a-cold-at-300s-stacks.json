@@ -1,0 +1,209 @@
+[
+  [],
+  [
+    {
+      "function": "_pipe_log",
+      "module": "services.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "write",
+      "module": "server.py"
+    },
+    {
+      "function": "_send",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "_attempt",
+      "module": "services.py"
+    },
+    {
+      "function": "_run",
+      "module": "services.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "_run",
+      "module": "services.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "select",
+      "module": "selectors.py"
+    },
+    {
+      "function": "serve_forever",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "start",
+      "module": "threading.py"
+    },
+    {
+      "function": "service_actions",
+      "module": "server.py"
+    },
+    {
+      "function": "serve_forever",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "_main",
+      "module": "cli.py"
+    },
+    {
+      "function": "main",
+      "module": "cli.py"
+    },
+    {
+      "function": "<module>",
+      "module": "__main__.py"
+    },
+    {
+      "function": "_run_code",
+      "module": "<frozen runpy>"
+    },
+    {
+      "function": "_run_module_as_main",
+      "module": "<frozen runpy>"
+    }
+  ]
+]

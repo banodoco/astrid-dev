@@ -1,0 +1,244 @@
+{
+  "cold": {
+    "boundary": "writable",
+    "browser_terminal_failure": null,
+    "elapsed_ms": 165019.739381,
+    "first_usable_ms": 165018.897045,
+    "fixture": {
+      "clips": 300,
+      "shot_occurrences": 10,
+      "tracks": 9
+    },
+    "matched_timeline_commit_posts": 0,
+    "navigation_observed_ms": 43.21710399999995,
+    "opening": "cold",
+    "process_closed": true,
+    "profile_removed": true,
+    "requests_in_flight_at_boundary": [
+      {
+        "headers_ms": 158202.28133,
+        "kind": "fetch",
+        "method": "POST",
+        "route": "/__astrid/local-update-status",
+        "started_ms": 157912.50034499998,
+        "status": 503
+      },
+      {
+        "headers_ms": 165015.03116699998,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/objects/:digest",
+        "started_ms": 163921.232869,
+        "status": 200
+      },
+      {
+        "headers_ms": 165015.05998599998,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/packs/inventory",
+        "started_ms": 163921.363093,
+        "status": 200
+      },
+      {
+        "headers_ms": 165014.29855799998,
+        "kind": "fetch",
+        "method": "POST",
+        "route": "/api/runtime/v1/projects/:project/timelines/:timeline/inspect",
+        "started_ms": 163922.209816,
+        "status": 200
+      },
+      {
+        "headers_ms": 165014.996583,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/objects/:digest",
+        "started_ms": 163928.25279499998,
+        "status": 200
+      },
+      {
+        "headers_ms": 165015.08799099998,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/objects/:digest",
+        "started_ms": 163928.642619,
+        "status": 200
+      },
+      {
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/runtime-config/v1/workspace.json",
+        "started_ms": 165016.15274599998
+      }
+    ],
+    "runtime_cpu_seconds": 155.57,
+    "runtime_cpu_seconds_before_navigation_from_process_birth": 299.62,
+    "runtime_cpu_seconds_navigation_to_boundary": 155.57,
+    "runtime_cpu_ticks_at_boundary": 45519,
+    "runtime_cpu_ticks_at_navigation": 29962,
+    "runtime_profile_present": false,
+    "source": "compiled local preview",
+    "terminal_proof_transport": "browser",
+    "terminal_public_head": {
+      "active_heads": 1,
+      "clips": 300,
+      "occurrences": 10,
+      "verified": true
+    },
+    "ticks_per_second": 100,
+    "timeline_history_requests": [
+      {
+        "failed_ms": 62135.795903000006,
+        "history_has_cursor": false,
+        "history_limit": "50",
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+        "started_ms": 1841.8245590000001
+      },
+      {
+        "finished_ms": 160022.19279099998,
+        "headers_ms": 157693.020119,
+        "history_has_cursor": false,
+        "history_limit": "50",
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+        "started_ms": 151568.594933,
+        "status": 200
+      }
+    ],
+    "versions": {
+      "agent": "8807f820eb47d6018db723511e024a0a123fbe95",
+      "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+      "runtime": "d7be2f0458a55c1f26e1138a125ffefe382f56f4"
+    },
+    "writable_budget_ms": 600000
+  },
+  "same_process": {
+    "boundary": "writable",
+    "browser_terminal_failure": null,
+    "elapsed_ms": 170095.651532,
+    "first_usable_ms": 170094.920765,
+    "fixture": {
+      "clips": 300,
+      "shot_occurrences": 10,
+      "tracks": 9
+    },
+    "matched_timeline_commit_posts": 0,
+    "navigation_observed_ms": 57.667626999999925,
+    "opening": "same process",
+    "process_closed": true,
+    "profile_removed": true,
+    "requests_in_flight_at_boundary": [
+      {
+        "headers_ms": 162475.806739,
+        "kind": "fetch",
+        "method": "POST",
+        "route": "/__astrid/local-update-status",
+        "started_ms": 162204.799694,
+        "status": 503
+      },
+      {
+        "headers_ms": 170088.844904,
+        "kind": "fetch",
+        "method": "POST",
+        "route": "/__astrid/local-update-status",
+        "started_ms": 168613.16139199998,
+        "status": 503
+      },
+      {
+        "headers_ms": 170087.70642499998,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/objects/:digest",
+        "started_ms": 168741.413114,
+        "status": 200
+      },
+      {
+        "headers_ms": 170087.72788999998,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/objects/:digest",
+        "started_ms": 168741.69163599997,
+        "status": 200
+      },
+      {
+        "headers_ms": 170088.792361,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/health",
+        "started_ms": 168744.21544499998,
+        "status": 200
+      },
+      {
+        "headers_ms": 170088.775978,
+        "kind": "fetch",
+        "method": "POST",
+        "route": "/api/runtime/v1/handshake",
+        "started_ms": 168744.25055099998,
+        "status": 200
+      },
+      {
+        "headers_ms": 170088.806365,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/projects/:project/tasks",
+        "started_ms": 168745.138162,
+        "status": 200
+      },
+      {
+        "headers_ms": 170088.82121499997,
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/objects/:digest",
+        "started_ms": 168749.68863999998,
+        "status": 200
+      }
+    ],
+    "runtime_cpu_seconds": 160.1,
+    "runtime_cpu_seconds_before_navigation_from_process_birth": 455.31,
+    "runtime_cpu_seconds_navigation_to_boundary": 160.1,
+    "runtime_cpu_ticks_at_boundary": 61541,
+    "runtime_cpu_ticks_at_navigation": 45531,
+    "runtime_profile_present": false,
+    "source": "compiled local preview",
+    "terminal_proof_transport": "browser",
+    "terminal_public_head": {
+      "active_heads": 1,
+      "clips": 300,
+      "occurrences": 10,
+      "verified": true
+    },
+    "ticks_per_second": 100,
+    "timeline_history_requests": [
+      {
+        "failed_ms": 62314.043313,
+        "history_has_cursor": false,
+        "history_limit": "50",
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+        "started_ms": 1873.2996520000002
+      },
+      {
+        "finished_ms": 163046.64986099998,
+        "headers_ms": 160852.562652,
+        "history_has_cursor": false,
+        "history_limit": "50",
+        "kind": "fetch",
+        "method": "GET",
+        "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+        "started_ms": 122361.791253,
+        "status": 200
+      }
+    ],
+    "versions": {
+      "agent": "8807f820eb47d6018db723511e024a0a123fbe95",
+      "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+      "runtime": "d7be2f0458a55c1f26e1138a125ffefe382f56f4"
+    },
+    "writable_budget_ms": 600000
+  },
+  "same_process_opening_verified": true,
+  "trial": "C Round 5"
+}
