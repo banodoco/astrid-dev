@@ -63,6 +63,8 @@ Measured read-only on 18 November 2026 from a copied Release 14 realm (see the d
 - **D7 Open and CPU.** Decided on 22 November 2026, given to the hosting session. Each round records first usable (the first 15 s visible and editable), full open (the whole timeline loaded and Saved), and gesture-to-Saved timing. The provisional full-fixture launch targets are about 5 s to first usable and 15 s to full open. Measure Runtime and browser process CPU seconds alongside wall time for opening and each scenario. Flag gains that spend more CPU. Loading the first 15 s first is a named candidate when a round finds a card-sized cause. Route a larger document-model change to Plan 75 or a new plan.
 - **D8 Large-shots variant.** Decided on 22 November 2026, given to the hosting session. The optional harness supports `run.sh --variant large-shots` with a few substantial generated shots, many child clips, long durations and large generated assets. Document it in the README and report it alongside the standard fixture when time permits. The full standard fixture remains the completion reference.
 
+- **D12 Save badge.** Decided on 22 November 2026, given to the hosting session. The owner delegates wording judgment to the reviewer. Show an opening state during project load. Untouched work must never show Not saved. Show device-saved and syncing only after the edit is durable locally, and Saved only after Runtime acceptance. A refusal keeps Try again and Discard. Use a bounded fix with proof of the opening, edit and refusal transitions. Schedule it in Round 2 if cheap or in Round 4 with opening.
+
 ## The owner's wider goals
 
 - Humans and agents edit the same timelines.
