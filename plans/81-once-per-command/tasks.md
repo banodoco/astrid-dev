@@ -38,10 +38,10 @@ The binding rulings and corrected review govern these cards. Source and installe
 
 | Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
 | --- | --- | --- | --- | --- | --- |
-| A-4 Raw generation baseline and profiles | N; harness X | — | Source W, I and E fixture and evidence | Five fresh processes per route and profile, three timestamps per attempt, pinned console and provenance | [ ] Fixture preparation underway; no results yet. |
-| A-1 Occurrence rows | X | A-4 raw baseline | Agent timing collector and opt-in display | Nested, repeated and active occurrences; existing timing tests unchanged | [ ] |
-| A-2 Per-invocation start marks | X | A-1 | Both fresh entry points and collector | Fresh console and module calls, fallback and repeated embedded calls | [ ] |
-| A-3 Generation instrumentation | X | A-2 | Corrected review section 5 instrumentation | Conditional route traces and focused unchanged generation tests | [ ] |
+| A-4 Raw generation baseline and profiles | N; harness X | — | Source W, I and E fixture and evidence | Five fresh processes per route and profile, three timestamps per attempt, pinned console and provenance | [ ] Raw source baseline recorded in [evidence PR #1362](https://github.com/banodoco/astrid-dev/pull/1362): W/I/E median CLI exits 12.082/11.567/15.425 s; Runtime and target response emissions measured separately. Profiles outstanding. |
+| A-1 Occurrence rows | X | A-4 raw baseline | Agent timing collector and opt-in display | Nested, repeated and active occurrences; existing timing tests unchanged | [x] [agent #516](https://github.com/banodoco/astrid-agent/pull/516), merge `c532bef434323108663cda5f581c20e4ef4aaf61`; manager reran 11 focused and one integration test. |
+| A-2 Per-invocation start marks | X | A-1 | Both fresh entry points and collector | Fresh console and module calls, fallback and repeated embedded calls | [x] [agent #519](https://github.com/banodoco/astrid-agent/pull/519), merge `a98b143ff30f0b810634286536b69a2e28a7caab`; manager reran 16 focused tests. |
+| A-3 Generation instrumentation | X | A-2 | Corrected review section 5 instrumentation | Conditional route traces and focused unchanged generation tests | [ ] In progress on the pre-fix lineage. |
 | A-6a Attributed pre-fix source baseline | N | A-1 to A-3 | Source W, I and E | Per-process coverage, three timestamps and raw occurrences | [ ] |
 | A-5 Sibling attribution gate | X | A-6a | New gate and versioned baseline | Per-process coverage, positive receipts and real-operation delay proof | [ ] |
 | A-6b Post-fix baseline | N | Fixes and A-5 | Source W, I and E; installed separately | Paired source measurement; installed run on owner's machine | [ ] Installed run needs owner's machine and App forward. |
