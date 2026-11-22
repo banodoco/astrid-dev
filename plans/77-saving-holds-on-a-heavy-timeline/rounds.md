@@ -176,7 +176,7 @@ The local measurement on `52df1a13` and exact Release 15 Runtime `2cf5890b` used
 | 30 | 514 | 146 | 0.1215 | 0.1159 |
 
 The additional statements increase with this history depth. The small elapsed samples include local decode and do not establish a production latency cost. The incoming Runtime revert `05d1ad88` reported about 1,450 extra statements per import on its own workload. This measurement uses the actual local media import. The unchanged concurrent-write ancestry witness separately checks the retained proof while validation is underway. Both are development evidence. The import tradeoff is recorded for the owner before release landing.
-## Round 3 — 22 November 2026, authenticated partial fixture
+## Round 3 attempt — 22 November 2026, no result
 
 The direct Linux installation used App `c5272db09d715bd38332f07e872aa53f6d65947a`, Agent `70d2a0f4c1aa1d7e90ddbd84669f4187f260447c` and Runtime `0bb855c364285b15828bbc9cd99dd6389dc54b36`. The App and Runtime passed normal local startup after the authenticated restore finished. The public preflight confirmed the exact v30 revision, publication `txn-a3dbef5643ae4893bbe8d7fe5ffb1bbf`, 300 root clips and media identities, ten shot targets and one active head. The one-clip control exists. The 616-clip and approximately 2.6 MB fixture requirements and the warm commit ratio remain unqualified.
 
@@ -188,6 +188,8 @@ The direct Linux installation used App `c5272db09d715bd38332f07e872aa53f6d65947a
 | CPU | The matrix stopped before emitting a qualified opening or scenario CPU interval. The Runtime and browser CPU figures are unavailable for this round. |
 
 The primary tab emitted a basis-ready and saved-session handoff during startup, then a lifecycle cancellation. The complete opening and readiness assertions did not finish. The scratch sidecar preserved the original matrix assertions and recorded existing browser phases only. The browser was stopped and its temporary profile removed.
+
+The host classified this attempt as **no result: setup and transport failure before any gesture** on 22 November. It does not consume a saving round. One retry is authorized with bounded transport recovery for startup reads and the original scenario and opening assertions. The retry records the first Runtime request after adoption and keeps any readiness warm-up separate from the browser times. A second zero-gesture attempt counts as Round 3. Round 4 strategy waits for the independent cold-start diagnosis.
 
 **Plan deltas.**
 
