@@ -253,3 +253,20 @@ The advisor's next design removes the automatic whole-history walk after handoff
 - **Plan 75:** isolate whole-history work, authenticated-read waits and commit service in the profile. Round 5's 447.99 Runtime CPU s include competing reads and repeated verification. A first subsecond read at 205.452 s leaves subsequent service availability unqualified.
 - **Plan 76:** continue to require a verified two-writer overlap and a real rejected clash. Round 5 attempted one writing tab.
 - **Plan 18:** measure first usable UI, authenticated service access and gesture-to-request separately. The editor exposed the affordance and entered Saving while this edit had no observed dispatch.
+
+
+### Loop closure and evidence archive
+
+The host held promotion of the product changes, including the small deferred pages, hook repair and reinstated retained-history behavior, pending the owner's scope decision. The plan branches retain the measured tuple. A separate App candidate may carry the save-loop fixture, harness and README through independent review and matching CI. Its release PR remains subject to the owner's go.
+
+The recorded seed curves and the authentication-required history reads show that accepted operations can grow far more expensive with the accumulated document and history. The unpaged Round 3 run observed a transport stall of roughly 125–157 s after deferred history began. Round 4's qualifying read arrived about 2.5 minutes after full UI. The Runtime serves its ordinary routes through shared store access while history verification is in progress. Round 5 admitted some slow reads earlier and still took 205.452 s for the first subsecond response. The live evidence supports separating history work, blockage and commit service in the redesign. It leaves the exact cause of the unsent gesture open.
+
+Once the checkpoint and source witnesses are in place, a redesign can consider a persisted verification checkpoint or serving authenticated reads during verification. The proposed checkpoint still requires an owner decision and exact identity and freshness rules. The run archive holds this ready card at `round4-prep/persisted-verification-checkpoint-card.md` and the retention-cost measurements at `release-forward-0354/import-overhead/`.
+
+| Evidence in the run archive | Path |
+| --- | --- |
+| Round 1 real editor and postflight | `sl-0/checkpoint-retime/round1-partial-288-connected-sweep.log` and `sl-0/checkpoint-retime/after-round1-attempt-composition-index.json` |
+| Round 2 paired seed and partial matrix | `round2/paired-seed-curve.csv` and `round2/partial-288-results.jsonl` |
+| Round 3 no-result and transport diagnosis | `round3/observed-round.md` and `ux-strategy/fable-round3-open-diagnosis.md` |
+| Round 4 cold and continued rows | `round4/results.jsonl` and `round4/continuation/results.jsonl` |
+| Round 5 exact rows and postflight | `round5/results.jsonl` and `round5/postflight-public-head.json` |
