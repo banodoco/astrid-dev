@@ -8,3 +8,6 @@ __pycache__/
 # Common local/editor noise.
 .DS_Store
 Thumbs.db
+
+# Generated from canonical agent Markdown; never commit these packages.
+.generated/
