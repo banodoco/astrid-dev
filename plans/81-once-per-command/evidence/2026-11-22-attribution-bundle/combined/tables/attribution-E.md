@@ -12,41 +12,43 @@ cprofile wall: n=5, median=34.392873 s, min=33.816035 s, max=40.267050 s.
 
 ## Stages
 
+The values are measured in source checkouts. Applicability labels are inferred from the cited code, not measured as a source-vs-installed comparison. `both` means the cited stage exists in both modes, not that its time is equal. `unknown` means this bundle does not establish the applicable mode. The source identity stage is timed in the shared host bootstrap in both profiles; installed startup adds a separate verifier. No installed savings are inferred.
+
 Self and inclusive medians are sums within each trial; missing inclusive data is unknown. Parent names are reported as recorded.
 
-| Stage | Parent | Count median | Self s | Inclusive s |
-| --- | --- | ---: | ---: | ---: |
-| Runtime GET /v1/app-state/user/generation | — | 3.000000 | 0.024507 | unknown |
-| Runtime GET /v1/capabilities | — | 1.000000 | 0.011361 | unknown |
-| Runtime GET /v1/health | — | 1.000000 | 0.006519 | unknown |
-| Runtime GET /v1/objects/sha256%3A074c0ee12e41e59bf5f13f4e199e9bfb674a1ff45179bd571320c70196fd7d67 | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3A0fbdc6f767cf507d617aa7621c611ed67f6cd6182a9e4c0309460dfb2a6231d1 | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3A387d28c73d5e25288243a9a96ca55b8a595753974bb47606adf55c1e16e8cfac | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3A6cec1a01819d67724c0eb28b8232af332bb1a6edc277f0559308fc36fb46ce7b | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7 | — | 3.000000 | 0.018755 | unknown |
-| Runtime GET /v1/objects/sha256%3Abbcbd2db4033baad83a9f4979a6c1d36dbf4df51ba662443fade0a94324b4104 | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3Ac3c5fb93cbe5070d20dd4f32fd1bae756363cf1c0a2e43034143337b7822b0e9 | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3Ad5cd0bfea9d771f671d3e2819964799ec21f7ba0479b91f05ed464d851f4e21c | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3Ae05a80b0493f05248a6d36be66ea87eb1ac7264631fc129295792b795cb0d69f | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3Af02d24aa267b6ef65442462077f5449572483b440a0c81397c4d877df16d19df | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/objects/sha256%3Afcc41ffed7a5681128315f337c1c24ef8210c2008edaac104d980b434fde590a | — | 0.000000 | 0.000000 | unknown |
-| Runtime GET /v1/projects/0f5e5090a0444789b0c430fef2d6f701 | — | 1.000000 | 0.006266 | unknown |
-| Runtime POST /v1/handshake | — | 1.000000 | 0.008065 | unknown |
-| Runtime POST /v1/projects/0f5e5090a0444789b0c430fef2d6f701/objects | — | 3.000000 | 0.034412 | unknown |
-| Runtime POST /v1/tasks | — | 1.000000 | 0.009510 | unknown |
-| Runtime acquisition lock | — | 1.000000 | 0.000283 | unknown |
-| Runtime launcher connection | — | 1.000000 | 1.006597 | unknown |
-| entry lookup | — | 4.000000 | 1.088134 | unknown |
-| in-process Runtime acquisition lock | — | 1.000000 | 0.000016 | unknown |
-| model registry | — | 1.000000 | 0.156983 | unknown |
-| other command work | — | 1.000000 | 6.183114 | unknown |
-| pack discovery | — | 18.000000 | 6.608134 | unknown |
-| pack host attachment | — | 1.000000 | 0.238609 | unknown |
-| pack host lifecycle lock | — | 1.000000 | 0.000033 | unknown |
-| pack host readiness | — | 1.000000 | 0.007645 | unknown |
-| pack host source identity | — | 1.000000 | 0.137152 | unknown |
-| target check | — | 2.000000 | 0.006764 | unknown |
-| workflow build | — | 1.000000 | 0.418777 | unknown |
+| Stage | Parent | Count median | Self s | Inclusive s | Code applicability (inferred) |
+| --- | --- | ---: | ---: | ---: | --- |
+| Runtime GET /v1/app-state/user/generation | — | 3.000000 | 0.024507 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/capabilities | — | 1.000000 | 0.011361 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/health | — | 1.000000 | 0.006519 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3A074c0ee12e41e59bf5f13f4e199e9bfb674a1ff45179bd571320c70196fd7d67 | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3A0fbdc6f767cf507d617aa7621c611ed67f6cd6182a9e4c0309460dfb2a6231d1 | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3A387d28c73d5e25288243a9a96ca55b8a595753974bb47606adf55c1e16e8cfac | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3A6cec1a01819d67724c0eb28b8232af332bb1a6edc277f0559308fc36fb46ce7b | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7 | — | 3.000000 | 0.018755 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3Abbcbd2db4033baad83a9f4979a6c1d36dbf4df51ba662443fade0a94324b4104 | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3Ac3c5fb93cbe5070d20dd4f32fd1bae756363cf1c0a2e43034143337b7822b0e9 | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3Ad5cd0bfea9d771f671d3e2819964799ec21f7ba0479b91f05ed464d851f4e21c | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3Ae05a80b0493f05248a6d36be66ea87eb1ac7264631fc129295792b795cb0d69f | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3Af02d24aa267b6ef65442462077f5449572483b440a0c81397c4d877df16d19df | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/objects/sha256%3Afcc41ffed7a5681128315f337c1c24ef8210c2008edaac104d980b434fde590a | — | 0.000000 | 0.000000 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime GET /v1/projects/0f5e5090a0444789b0c430fef2d6f701 | — | 1.000000 | 0.006266 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime POST /v1/handshake | — | 1.000000 | 0.008065 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime POST /v1/projects/0f5e5090a0444789b0c430fef2d6f701/objects | — | 3.000000 | 0.034412 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime POST /v1/tasks | — | 1.000000 | 0.009510 | unknown | both; inferred: shared Runtime client calls in astrid_runtime_client/generated.py:723-729,822,1251-1280,1540 |
+| Runtime acquisition lock | — | 1.000000 | 0.000283 | unknown | both; inferred: astrid/sdk/autobootstrap.py:463-465 |
+| Runtime launcher connection | — | 1.000000 | 1.006597 | unknown | both; inferred: astrid/sdk/client.py:392-410,469-471 |
+| entry lookup | — | 4.000000 | 1.088134 | unknown | both; inferred: astrid/sdk/generation.py:1066,1731-1751 |
+| in-process Runtime acquisition lock | — | 1.000000 | 0.000016 | unknown | both; inferred: astrid/sdk/autobootstrap.py:465 |
+| model registry | — | 1.000000 | 0.156983 | unknown | both; inferred: astrid/sdk/generation.py:623-626 |
+| other command work | — | 1.000000 | 6.183114 | unknown | unknown; the collector aggregates unmeasured work; astrid/sdk/command_timing.py:64 |
+| pack discovery | — | 18.000000 | 6.608134 | unknown | both; inferred: astrid/core/pack/discovery.py:366 |
+| pack host attachment | — | 1.000000 | 0.238609 | unknown | both; inferred: astrid/sdk/autobootstrap.py:524 |
+| pack host lifecycle lock | — | 1.000000 | 0.000033 | unknown | both; inferred: astrid/sdk/host_bootstrap.py:2241 |
+| pack host readiness | — | 1.000000 | 0.007645 | unknown | both; inferred: astrid/sdk/host_bootstrap.py:2230-2241 |
+| pack host source identity | — | 1.000000 | 0.137152 | unknown | both; inferred: astrid/sdk/host_bootstrap.py:2142,2171-2175 runs the same timed digest stage in installed profile; installed startup also verifies its binding at astrid/core/source_identity.py:102-124 |
+| target check | — | 2.000000 | 0.006764 | unknown | both; inferred: astrid/sdk/generation.py:884,1825-1900 |
+| workflow build | — | 1.000000 | 0.418777 | unknown | both; inferred: astrid/sdk/generation.py:470,1900-1976 |
 
 ## Imports: Packages
 
