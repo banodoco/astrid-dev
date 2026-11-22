@@ -31,3 +31,17 @@ Every card: no wire, schema or store change; no refusal moves later than it is t
 | R Review rounds (at most 1, owner-agreed 22 November 2026), by an independent reviewer on Codex Astra that did none of the work | S | all other tasks | read-only | Rounds per the [run contract](../../skills/shared/run-contract.md): findings become rows `R1.<n>` added directly below this one, each with route, scope, dependencies and proof; landing waits for them | [ ] |
 
 **Lanes:** timings (US-1, US-0, US-2, then US-8); generation (US-5a, US-4, US-3); timeline commands (US-6, US-7). **Merge order within a lane** is the order listed.
+
+## Generation attribution (second manager, 22 Nov)
+
+The binding rulings and corrected review govern these cards. Source and installed measurements are separate; the installed run requires the owner's machine and an observed ComfyUI endpoint. Timing runs share `/tmp/astrid-timing.lock`; CI dispatch is paused until the host announces Release 14 publication.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| A-4 Raw generation baseline and profiles | N; harness X | — | Source W, I and E fixture and evidence | Five fresh processes per route and profile, three timestamps per attempt, pinned console and provenance | [ ] Fixture preparation underway; no results yet. |
+| A-1 Occurrence rows | X | A-4 raw baseline | Agent timing collector and opt-in display | Nested, repeated and active occurrences; existing timing tests unchanged | [ ] |
+| A-2 Per-invocation start marks | X | A-1 | Both fresh entry points and collector | Fresh console and module calls, fallback and repeated embedded calls | [ ] |
+| A-3 Generation instrumentation | X | A-2 | Corrected review section 5 instrumentation | Conditional route traces and focused unchanged generation tests | [ ] |
+| A-6a Attributed pre-fix source baseline | N | A-1 to A-3 | Source W, I and E | Per-process coverage, three timestamps and raw occurrences | [ ] |
+| A-5 Sibling attribution gate | X | A-6a | New gate and versioned baseline | Per-process coverage, positive receipts and real-operation delay proof | [ ] |
+| A-6b Post-fix baseline | N | Fixes and A-5 | Source W, I and E; installed separately | Paired source measurement; installed run on owner's machine | [ ] Installed run needs owner's machine and App forward. |
