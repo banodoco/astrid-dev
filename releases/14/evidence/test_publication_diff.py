@@ -467,16 +467,17 @@ PASSED tests/b.py::test_other
             current = dict(schema_version=1, sealed_prior=accepted, current=accepted[:1])
             inventory.write_text(json.dumps(current))
             manifest.write_text(json.dumps({
-                "inherited_red_sealed_sha256": mod.sealed_prior_digest(current),
                 "setup_failure_ok": {f"{side}/vibecomfy/ci/browser-boot": "setup fixture"
                                      for side in ("baseline", "candidate")},
                 "no_ids_expected": {f"{side}/vibecomfy/ci/{job}": "non-test fixture"
                                     for side in ("baseline", "candidate")
                                     for job in ("browser-boot", "installer")},
             }))
-            args = ["--manifest", str(manifest), "--inherited-red", str(inventory), "--out", str(root / "out")]
+            args = ["--manifest", str(manifest), "--inherited-red", str(inventory), "--inherited-base", "HEAD",
+                    "--out", str(root / "out")]
             with mock.patch.object(mod, "collect_runs", return_value=records), mock.patch.object(
-                    mod, "check_canonical_baseline_diff", return_value=[]):
+                    mod, "check_canonical_baseline_diff", return_value=[]), mock.patch.object(
+                    mod, "resolve_inherited_base", return_value=("a" * 40, current)):
                 self.assertEqual(mod.main([*args, "--generate-candidate-list", str(proposal)]), 1)
                 self.assertEqual(json.loads(inventory.read_text()), current)
                 proposed = json.loads(proposal.read_text())["reds"]

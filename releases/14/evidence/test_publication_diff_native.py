@@ -149,13 +149,14 @@ class NativeProvenanceTests(unittest.TestCase):
         inventory = self.out / "inventory.json"
         inventory.write_text(json.dumps({"schema_version": 1, "sealed_prior": [], "current": []}))
         manifest = self.out / "manifest.json"
-        inputs = {"inherited_red_sealed_sha256": hashlib.sha256(b"[]").hexdigest(), "native_reports": reports}
+        inputs = {"native_reports": reports}
         manifest.write_text(json.dumps(inputs))
         verdict = self.out / "verdict"
-        args = ["--manifest", str(manifest), "--inherited-red", str(inventory), "--out", str(verdict),
+        args = ["--manifest", str(manifest), "--inherited-red", str(inventory), "--inherited-base", "HEAD", "--out", str(verdict),
                 "--junit-xml-r13", str(path), "--junit-xml-r14", str(path)]
         with mock.patch.object(mod, "collect_runs", return_value=self.run), mock.patch.object(
-                mod, "check_canonical_baseline_diff", return_value=[]):
+                mod, "check_canonical_baseline_diff", return_value=[]), mock.patch.object(
+                mod, "resolve_inherited_base", return_value=("a" * 40, {"schema_version": 1, "sealed_prior": [], "current": []})):
             self.assertEqual(mod.main(args), 1)
             report = (verdict / "report.md").read_text()
             self.assertLess(report.index("## LOCAL-EVIDENCE"), report.index("| Repo"))

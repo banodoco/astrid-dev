@@ -94,13 +94,13 @@ class TestInheritedApprovalProofs(unittest.TestCase):
             row={"repo":"agent","workflow":"CI","job":"unit shard 1","id":"tests/a.py::green"}
             inventory={"schema_version":1,"sealed_prior":[row],"current":[row]}
             inv=root/'inventory.json'; inv.write_text(json.dumps(inventory))
-            manifest=root/'manifest.json'; manifest.write_text(json.dumps({"inherited_red_sealed_sha256":mod.sealed_prior_digest(inventory)}))
+            manifest=root/'manifest.json'; manifest.write_text('{}')
             job={"id":1,"name":"unit shard 1","conclusion":"success","log":str(log)}
             records={p:{"baseline":{},"candidate":{}} for p in mod.REPO}
             records["agent"]["baseline"]["CI"]={"id":1,"conclusion":"success","jobs":[job]}
             records["agent"]["candidate"]["CI"]={"id":2,"conclusion":"success","jobs":[dict(job,id=2)]}
-            with mock.patch.object(mod,"collect_runs",return_value=records), mock.patch.object(mod,"check_canonical_baseline_diff",return_value=[]):
-                rc=mod.main(["--manifest",str(manifest),"--inherited-red",str(inv),"--out",str(root/'out')])
+            with mock.patch.object(mod,"collect_runs",return_value=records), mock.patch.object(mod,"check_canonical_baseline_diff",return_value=[]), mock.patch.object(mod,"resolve_inherited_base",return_value=("a"*40,inventory)):
+                rc=mod.main(["--manifest",str(manifest),"--inherited-red",str(inv),"--inherited-base","HEAD","--out",str(root/'out')])
             self.assertEqual(rc,1)
             self.assertIn("approved ID not actually red in baseline",(root/'out'/'report.md').read_text())
 
@@ -111,13 +111,13 @@ class TestInheritedApprovalProofs(unittest.TestCase):
             row={"repo":"agent","workflow":"CI","job":"unit shard 1","id":"tests/a.py::case"}
             inventory={"schema_version":1,"sealed_prior":[row],"current":[row]}
             inv=root/'inventory.json'; inv.write_text(json.dumps(inventory))
-            manifest=root/'manifest.json'; manifest.write_text(json.dumps({"inherited_red_sealed_sha256":mod.sealed_prior_digest(inventory)}))
+            manifest=root/'manifest.json'; manifest.write_text('{}')
             job={"id":1,"name":"unit shard 1","conclusion":"success","log":str(base_log)}
             records={p:{"baseline":{},"candidate":{}} for p in mod.REPO}
             records["agent"]["baseline"]["CI"]={"id":1,"conclusion":"success","jobs":[job]}
             records["agent"]["candidate"]["CI"]={"id":2,"conclusion":"success","jobs":[dict(job,id=2,log=str(candidate_log))]}
-            with mock.patch.object(mod,"collect_runs",return_value=records), mock.patch.object(mod,"check_canonical_baseline_diff",return_value=[]):
-                rc=mod.main(["--manifest",str(manifest),"--inherited-red",str(inv),"--out",str(root/'out')])
+            with mock.patch.object(mod,"collect_runs",return_value=records), mock.patch.object(mod,"check_canonical_baseline_diff",return_value=[]), mock.patch.object(mod,"resolve_inherited_base",return_value=("a"*40,inventory)):
+                rc=mod.main(["--manifest",str(manifest),"--inherited-red",str(inv),"--inherited-base","HEAD","--out",str(root/'out')])
             self.assertEqual(rc,1)
             report=(root/'out'/'report.md').read_text()
             self.assertIn("approved ID not actually red in baseline",report)

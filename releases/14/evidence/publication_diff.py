@@ -38,6 +38,7 @@ PYTEST_CHILD = re.compile(r"^running: .*runpytest-\d+\b")
 PYTEST_TOTAL = re.compile(r"^(?:\d+ (?:passed|failed|skipped|xfailed|xpassed|errors?|warnings?|subtests|deselected)\b|no tests ran).*\bin \d")
 PYTEST_OUTCOMES = dict(PASSED="PASS", FAILED="FAIL", ERROR="ERROR", XFAIL="XFAIL", XPASS="XPASS", SKIPPED="SKIP")
 PYTEST_ADVERSITY = {status: rank for rank, status in enumerate(("PASS", "XFAIL", "SKIP", "XPASS", "FAIL", "ERROR"))}
+STATUS_ADVERSITY = {"PASS": 0, "SKIP": 1, "XFAIL": 1, "FAIL": 2, "ERROR": 3}
 PLAYWRIGHT_LOCATION = r"(?:\[([^]]+)\]\s+)?(?:›\s*)?(.+?\.(?:spec|test)\.[cm]?[jt]sx?):\d+:\d+\s+›\s+"
 PLAYWRIGHT = re.compile(r"^[✓✘×x-]\s*\d+\s+" + PLAYWRIGHT_LOCATION + r"(.+?)(?:\s+\(\d+(?:\.\d+)?(?:ms|s|m)\))?$")
 PLAYWRIGHT_FAILURE = re.compile(r"^(?:##\[error\]\s*)?\d+\)\s+" + PLAYWRIGHT_LOCATION + r"(.+?)\s*$")
@@ -172,6 +173,9 @@ def pytest_job_evidence(log: str) -> tuple[dict[str, str], Counter, list[str]]:
                     child = any(PYTEST_CHILD.match(line) for line in captured)
                     child_finished = any(PYTEST_TOTAL.match(line.strip(" =")) for line in captured)
                     if child and not child_finished:
+                        for child_line in lines[start + 1:end]:
+                            if ((match := PYTEST.fullmatch(child_line)) and match[1] in ("FAILED", "ERROR")) or PYTEST_MALFORMED.match(child_line):
+                                errors.append(f"ambiguous nested pytest child summary: {child_line}")
                         continue
                     parent_progress = [PYTEST_PROGRESS.fullmatch(line) for line in leading[:capture]]
                     parent_ids = {pytest_id(match[1]) for match in parent_progress if match} - {None}
@@ -182,6 +186,9 @@ def pytest_job_evidence(log: str) -> tuple[dict[str, str], Counter, list[str]]:
                         following_ids = {pytest_id(match[2]) for line in following
                                          if (match := PYTEST.fullmatch(line))}
                         if parent_ids & following_ids:
+                            for child_line in lines[start + 1:end]:
+                                if ((match := PYTEST.fullmatch(child_line)) and match[1] in ("FAILED", "ERROR")) or PYTEST_MALFORMED.match(child_line):
+                                    errors.append(f"ambiguous nested pytest child summary: {child_line}")
                             continue
             read_invocation(leading, lines[start + 1:end])
             cursor = min(end + 1, next_start)
@@ -748,12 +755,14 @@ def collect_runs(manifest: dict, out: Path) -> dict:
                         if not log and not log_error:
                             log_error = "job log empty"
                     path.write_bytes(log)
-                    failed_steps = [s["name"] for s in job.get("steps", []) if s.get("conclusion") == "failure"]
+                    step_names = [s["name"] for s in job.get("steps", []) if isinstance(s, dict) and isinstance(s.get("name"), str)]
+                    failed_steps = [s["name"] for s in job.get("steps", [])
+                                    if isinstance(s, dict) and s.get("conclusion") == "failure" and isinstance(s.get("name"), str)]
                     clean_jobs.append({
                         "name": name, "id": job_id, "attempt": attempt,
                         "conclusion": job["conclusion"], "log": str(path),
                         "started_at": job.get("started_at"), "completed_at": job.get("completed_at"),
-                        "failed_steps": failed_steps, "log_error": log_error,
+                        "failed_steps": failed_steps, "step_names": step_names, "log_error": log_error,
                     })
                 records[product][side][workflow] = {"id": run_id, "sha": sha, "conclusion": r.get("conclusion"), "attempt": attempt, "jobs": clean_jobs}
                 latest_after = get_json(prefix)
@@ -829,6 +838,7 @@ def job_inventory(product, workflow, side, run, vitest, playwright, junit, probl
             problems.append(f"{label}: malformed pytest failure evidence {raw!r}; BLOCKS publish")
         inventory[name] = {
             **job, "ids": occurrences(ids), "run_id": run.get("id", ""), "attempt": job.get("attempt", run.get("attempt", "")),
+            "step_names": list(dict.fromkeys(job.get("step_names", job.get("failed_steps", [])))),
             "setup": bool(setup_reason), "setup_reason": setup_reason, "job_outcome": job_outcome,
             "emit_job_row": not ids or job_outcome != "PASS", "skip_groups": skip_groups,
             "parse_errors": parse_errors, "no_ids_reason": no_ids_reason,
@@ -865,7 +875,7 @@ def status_pairs(old, new):
     for state in sorted(common, key=lambda state: (state == "PASS", state)):
         for _ in range(common[state]):
             yield state, state
-    adverse_first = lambda state: (state not in INHERITED_RED_STATUSES, state)
+    adverse_first = lambda state: (STATUS_ADVERSITY.get(state, 4), state)
     yield from zip_longest(sorted((old - common).elements(), key=adverse_first),
                            sorted((new - common).elements(), key=adverse_first), fillvalue="MISSING")
 
@@ -880,6 +890,10 @@ def test_classification(before, after):
     if before in INHERITED_RED_STATUSES and after == "PASS":
         return "fixed"
     return "changed"
+
+
+def state_rank(state):
+    return -1 if state == "MISSING" else STATUS_ADVERSITY.get(state, 4)
 
 
 def compare_job(product, workflow, old, new, id_aliases, dispositions, problems):
@@ -968,6 +982,12 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict, playwright:
     aliases = manifest.get("job_renames", {})
     id_aliases = manifest.get("test_id_renames", {})
     dispositions = manifest.get("dispositions", {})
+    failed_step_exceptions = manifest.get("failed_step_exceptions", {})
+    if not isinstance(failed_step_exceptions, dict) or any(
+            not isinstance(key, str) or not key.strip() or not isinstance(reason, str) or not reason.strip()
+            for key, reason in failed_step_exceptions.items()):
+        problems.append("failed_step_exceptions must map exact candidate/product/workflow/job/step keys to nonempty reason strings")
+        failed_step_exceptions = {}
     playwright, junit = playwright or {}, junit or {}
     exceptions = []
     for table in ("setup_failure_ok", "no_ids_expected"):
@@ -996,6 +1016,12 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict, playwright:
                 links.append((job, match))
             links.extend((None, job) for _, job in sorted(new.items()))
             for before, after in links:
+                if after:
+                    old_names = set((before or {}).get("step_names", (before or {}).get("failed_steps", [])))
+                    for step in after.get("failed_steps", []):
+                        key = f"candidate/{product}/{workflow}/{after['name']}/{step}"
+                        if step not in old_names and not (key in failed_step_exceptions and failed_step_exceptions[key].strip()):
+                            problems.append(f"{key}: failed R14 step absent from all R13 counterpart step names; exact reasoned failed_step_exceptions entry required; BLOCKS publish")
                 compared, job = compare_job(product, workflow, before, after, id_aliases, dispositions, problems)
                 rows.extend(compared)
                 jobs.append(job)
@@ -1015,7 +1041,8 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict, playwright:
         exact_baseline = row["r13_job"] == row["job"] and row["r13_id"] == row["id"]
         if row["id"] == JOB_ID and after == "FAIL" and not (exact_baseline and before == "FAIL"):
             problems.append(f"{'/'.join(key)}: failed job lacks an exact failed counterpart; BLOCKS publish")
-        elif exact_baseline and before in INHERITED_RED_STATUSES and remaining_approvals[key] > 0:
+        elif (exact_baseline and before in INHERITED_RED_STATUSES
+              and state_rank(after) <= state_rank(before) and remaining_approvals[key] > 0):
             remaining_approvals[key] -= 1
         else:
             unapproved[key, before not in INHERITED_RED_STATUSES, after] += 1
@@ -1153,6 +1180,9 @@ def main(argv=None) -> int:
     ap.add_argument("--playwright-inputs", type=Path,
                     help="JSON object mapping SIDE/WORKFLOW/JOB to a native Playwright JSON path")
     a = ap.parse_args(argv)
+    if not a.rehearsal_records and not a.inherited_base:
+        print("non-rehearsal runs require --inherited-base COMMIT", file=sys.stderr)
+        return 2
     try:
         playwright_specs = []
         if a.playwright_inputs:
