@@ -34,7 +34,7 @@ def main():
         parser.error('trials must be positive')
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
-    manifest = {'source': 'source', 'python': sys.version, 'executable': sys.executable,
+    manifest = {'source': 'diagnostic-prepared-connection', 'python': sys.version, 'executable': sys.executable,
                 'platform': platform.platform(), 'cpu_count': os.cpu_count(), 'cpu': next((line.partition(':')[2].strip() for line in Path('/proc/cpuinfo').read_text().splitlines() if line.startswith('model name')), 'unknown'), 'load': os.getloadavg(),
                 'packages': sorted(f"{d.metadata['Name']}=={d.version}" for d in importlib.metadata.distributions() if d.metadata.get('Name')),
                 'revisions': {}, 'seed': 12345, 'sampler': 'not collected', 'trials': []}

@@ -1,4 +1,6 @@
-# CPU attribution harness
+# CPU attribution diagnostic
+
+**This is a diagnostic, not the required baseline.** It uses a prepared connection, bypasses the normal Runtime launcher, timestamps internal task creation rather than the HTTP admission response, and invokes `console.main` through `python -c` instead of the console executable. It must not be used as evidence for the requested fresh-console baseline.
 
 `run.sh OUTPUT [--trials 5] [--modes plain timings importtime cprofile]` holds `/tmp/astrid-timing.lock` for setup, warmups, every trial, drain and teardown. OUTPUT must not exist. The wrapper uses the isolated interpreter at `/root/codex/plan-81m/attribution-evidence.env/bin/python`; `run.py` checks the three exact source revisions and refuses dirty checkouts. The environment must expose Agent, Runtime and VibeComfy to both the CLI and worker subprocesses. This is source-only, CPU-only evidence against the attached validating test target, not installed or GPU evidence.
 
