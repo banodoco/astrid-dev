@@ -10,7 +10,7 @@
 
 **Estimate:** About 10 engineering days if the reuse is kept on disk; it is re-stated by RA-1, which may choose a process that stays running instead and hand most of the work to Plan 55.
 
-**Waiting on:** [Plan 81](../81-once-per-command/plan.md)'s second baseline, which says how much time is left to remove and where; the owner's decisions D1 to D3 in [inputs.md](inputs.md#owner-decisions); a release.
+**Waiting on:** [Plan 81](../81-once-per-command/plan.md) landing. Its second baseline now exists (22 November 2026: `generate image` queued in 5.4 s on an installed build, down from 15.0 s); the owner's decisions D1 to D3 in [inputs.md](inputs.md#owner-decisions); a release.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
@@ -36,14 +36,19 @@ This is the second half of the under-a-second work, split from [Plan 81](../81-o
 
 ## Existing work and decision
 
+**Where the time is after Plan 81** (installed build, CPU container, stand-in ComfyUI, same prompt, 22 November 2026; [evidence](../81-once-per-command/evidence/)): 5.4 s in all. Registry loading 1.09 s (pack discovery 0.48 s of it); candidate preparation 1.06 s (workflow build 0.73 s); Runtime connection 0.80 s (attaching the pack host 0.54 s); qualification 0.51 s; emission 0.41 s; and about 1.5 s outside the named stages, believed to be mostly start-up and imports. Nearly all of it is work the command before already did. The question for each is not whether it can be kept but what is the cheapest way to know it is still valid.
+
+**The order, added 22 November 2026 at the owner's prompting** ("could we preload stuff once it's loaded once? ... why do we need to?"): first what cannot change within an install (RA-0); then what is provably the same by its contents (the compiled workflow, RA-2; a person's own packs, RA-3); then what only ComfyUI knows (RA-4); and, if RA-1 chooses it, the command as a thin client to the host that is already running. Each step pays for itself and makes the next safer.
+
 Two designs answer the same question. Caches on disk, keyed by content, keep the command line as it is and must prove freshness every time. A process that stays running holds the results in memory and knows when they change; that is [Plan 55](../55-local-speed/plan.md)'s resident session, already partly built on its branch and costly to land. Building both wastes one. So this plan starts with a decision made on Plan 81's measurements, not on the dated figures available on 22 November 2026.
 
 Plan 55's branch has the compiled-template work (astrid-agent `24c68a270`, VibeComfy `d8e61a50`), whose template is tied to one process and session. The research and the independent critique that shaped these tasks are Plan 81's ([inputs.md](inputs.md#planning-evidence)).
 
 ## Sequence and readiness
 
-1. **RA-1,** the decision note and its review, once Plan 81's second baseline exists.
-2. **RA-2, RA-3 and RA-4** as RA-1 decides, side by side.
+1. **RA-0,** two measurements and the pieces that cannot go stale: shipped packs kept under the install's stamp, and code a command does not use not loaded. It needs no decision between disk and a running process.
+2. **RA-1,** the decision note and its review.
+3. **RA-2, RA-3 and RA-4** as RA-1 decides, side by side.
 3. **RA-5,** the budget asserted and a real baseline.
 4. **R,** one review round.
 
