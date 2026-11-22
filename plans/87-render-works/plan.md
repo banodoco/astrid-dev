@@ -10,7 +10,7 @@
 
 **Estimate:** About 9 engineering days: 2 to reach a working render on Release 15, 4 to replace the stopgaps with proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check.
 
-**Waiting on:** the owner's heavy test timeline; decisions P1 to P3 in [inputs.md](inputs.md#owner-decisions); a claimed run.
+**Waiting on:** a claimed run. Decisions P1 to P3 are taken ([inputs.md](inputs.md#owner-decisions)).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
@@ -26,7 +26,7 @@ On 22 November 2026 a film project could not be rendered on a Release 14 test st
 
 1. Carry the sixteen changes onto `release/15/main` and get a render working there.
 2. Replace each stopgap with a proper fix, keeping the render working after every replacement.
-3. Render the owner's heavy test timeline end to end, debugging what breaks. A break in the render path is fixed here; anything else becomes an issue.
+3. Render the heavy test timeline end to end, debugging what breaks. The owner named it: the generated heavy fixture built by the App's [`scripts/save-loop/build-fixture.mjs`](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/build-fixture.mjs) ([how to run it](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/README.md)), in both its standard and `large-shots` variants. A break in the render path is fixed here; anything else becomes an issue.
 4. One real render check in CI, built on the test that already executes `rendering.render` against a real Runtime and pack host.
 
 **Not in scope, and where it went**
@@ -89,26 +89,27 @@ This keeps a working render in hand from day 2, makes the render itself the regr
 
 **Phase 3: the heavy timeline (RN-10).** The loop:
 
-1. Import the owner's timeline into the plan stack. Render a short range from its densest part, then the whole thing in one render.
+1. Build the heavy fixture in the plan stack with the App's save-loop builder: the standard variant (616 parent clips, 46 shot occurrences, a 2.6 MB document) and then `large-shots` (three 480-second shots of 32 child clips each, on 90-second generated video and audio sources). It needs no owner media and no GPU. Render a short range from the densest part, then the whole timeline in one render.
 2. On failure, read the first real error. If the cause is in the render path (admission, worker launch, bundling, composition, lease, custody, encode, output), fix it on the plan branch with a focused test and render again.
 3. If the cause is elsewhere, file or update an issue, note the workaround, and continue.
 4. On completion, compare frames against the editor at chosen times and check the audio. A mismatch is a failure.
-5. Stop when one render of the whole timeline completes and matches, twice in a row, with no stopgap on the branch.
+5. Stop when one render of each variant completes and matches, twice in a row, with no stopgap on the branch. The heavy fixture proves scale and long duration; the film timeline from 22 November proves custom elements. Both must pass.
 
 **Phase 4: keep it working (RN-11).** Extend the existing real-render integration test and run it in the lane that already installs Remotion and a browser.
 
-**Blocked on a decision:** RN-5 on P2; RN-10 on P1; the stopgap on RN-8 riding the branch on P3.
+**Decisions:** none open. P1 to P3 were taken on 23 November 2026.
 
 **Risks**
 
 - The heartbeat renewal stop has no known cause. RN-7 may not find it quickly. P3 covers that case.
 - `generic_host.py` is large and changed on Release 15; RN-1 and RN-3 conflict there. Keep RN-3 to the builder and its callers.
-- The heavy timeline will use elements and media the film did not. Phase 3 has no fixed end; the estimate assumes two days.
-- The motion pack's install pin is an open owner decision in [Plan 78](../78-live-custom-element-editing/plan.md). RN-5 depends on it.
+- The heavy fixture is far larger than the film (616 clips and 480-second shots against 3 minutes 16 seconds). Phase 3 has no fixed end; the estimate assumes two days.
+- The fixture builder asks for 25 GiB of free disk and stops below 15 GiB. The session's Mac had under 10. Phase 3 needs a machine with room.
+- The motion pack's install pin is also an open decision in [Plan 78](../78-live-custom-element-editing/plan.md). P2 settles it for rendering; Plan 78's manager should be told before RN-5 starts.
 
 ## Interfaces and handoff
 
-**Consumes:** `release/15/main` heads of astrid-agent, astrid-runtime and astrid-app at cut time; the Runtime pin; the motion pack revision vendored by the App; the two donor branches above; the owner's test timeline as a timeline export.
+**Consumes:** `release/15/main` heads of astrid-agent, astrid-runtime and astrid-app at cut time; the Runtime pin; the motion pack revision vendored by the App; the two donor branches above; the App's save-loop fixture builder on `release/15/plan-77`.
 
 **Produces:** one function that builds a worker's environment for both launch validation and dispatch; one source of pack roots for the bundler; one motion pack revision for preview and render; a Runtime log line for slow requests and a host log line for each failed heartbeat; a real render check in CI.
 
@@ -116,7 +117,7 @@ This keeps a working render in hand from day 2, makes the render itself the regr
 
 ## Completion
 
-- The owner's heavy timeline renders whole, in one product render, twice in a row, on a build of the plan branch with no stopgap commit and no local patch.
+- The heavy fixture, standard and `large-shots`, renders whole, in one product render each, twice in a row, on a build of the plan branch with no stopgap commit and no local patch.
 - Sampled frames match the editor and the audio matches the timeline.
 - The film timeline from 22 November renders whole in one render on the same build.
 - The CI render check is green on the plan branch and fails when any one of RN-2 to RN-6 is reverted.

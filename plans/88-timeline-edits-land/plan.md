@@ -10,7 +10,7 @@
 
 **Estimate:** About 6 engineering days: 1 to land the two sound fixes, 2 for the word-anchored retime rule, 3 for the edit loop on the test timeline.
 
-**Waiting on:** [Plan 87](../87-render-works/plan.md) reaching a working render (its RN-1); decisions T1 and T2 in [inputs.md](inputs.md#owner-decisions); agreement with the managers of Plans 69 and 77 on the boundary; a claimed run.
+**Waiting on:** [Plan 87](../87-render-works/plan.md) reaching a working render (its RN-1); agreement with the managers of Plans 69 and 77 on the boundary; a claimed run. Decisions T1 and T2 are taken ([inputs.md](inputs.md#owner-decisions)).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
@@ -60,7 +60,7 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 3. TE-4: the edit loop on the test timeline.
 4. TE-5: the film's workarounds converted back, as the last real use.
 
-**Blocked on a decision:** TE-3 on T1; TE-4's timeline on T2.
+**Decisions:** none open. T1 and T2 were taken on 23 November 2026.
 
 **Risks**
 
@@ -70,7 +70,7 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 
 ## Interfaces and handoff
 
-**Consumes:** Plan 87's branch and stack; the three donor commits; the test timeline; the film project with its overlay clips and their undo list ([overlay evidence](../87-render-works/evidence/overlay/FRICTION.md)).
+**Consumes:** Plan 87's branch and stack; the three donor commits; the heavy fixture from the App's save-loop builder (the same one Plan 87 renders); the film project with its overlay clips and their undo list ([overlay evidence](../87-render-works/evidence/overlay/FRICTION.md)).
 
 **Produces:** media replacement on shot-owned footage clips through one route; a retime rule that cannot leave a clip disagreeing with its word; a recorded edit loop with each edit's result.
 

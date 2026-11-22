@@ -16,14 +16,14 @@
 
 **Review rounds:** One round at the end.
 
-**Run start:** Pending — waits on Plan 87's RN-1 and on T1 and T2.
+**Run start:** Pending — waits on Plan 87's RN-1 and a claimed run. The owner asked for the plans and issues to be set up, not executed.
 
 ## Owner decisions
 
 | Decision | Options and recommendation | State |
 | --- | --- | --- |
-| T1 Word-anchored retime | (a) Ship the exemption as written; (b) accept a timing-only edit only when the clip's offset from its resolved word is unchanged, else refuse and name the supported form; (c) refuse all such edits until full word binding exists (Plan 18). Recommendation (b). | Open |
-| T2 The test timeline | Use the same heavy timeline the owner supplies for Plan 87, or a separate one built for editing. Recommendation: the same one, so each edit can be rendered on a stack that is already proven to render it. | Open |
+| T1 Word-anchored retime | Decided by the coordinating session at the owner's delegation: accept a timing-only edit only when the clip's offset from its resolved word is unchanged within one frame; otherwise refuse and name the supported form. Rejected: the exemption as written (a clip can drift from its word and be snapped back by a later reflow); refusing everything until full word binding exists (blocks the ripple edit a real film needed). | Decided |
+| T2 The test timeline | Decided: the heavy fixture built by the App's [`scripts/save-loop/build-fixture.mjs`](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/build-fixture.mjs), standard variant, the same one Plan 87 renders, so every edit can be rendered on a stack already proven to render it. The fixture's clips are generated media; the word-anchored cases in the loop (edits 1 and 5) also run on the film project, which has real narration. | Decided |
 
 ## Source identities
 

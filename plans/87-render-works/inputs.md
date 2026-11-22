@@ -16,17 +16,17 @@
 
 **Review rounds:** One round at the end.
 
-**Run start:** Pending — waits on a claimed run and on P1 to P3.
+**Run start:** Pending — waits on a claimed run. The owner asked for the plans and issues to be set up, not executed.
 
 ## Owner decisions
 
-The plan was reshaped on 23 November 2026 at the owner's direction: one plan that gets the renderer working end to end, a second plan for the timeline fixes ([Plan 88](../88-timeline-edits-land/plan.md)), and issues for everything else. The earlier decisions D1 to D7 are closed out below; three remain.
+The plan was reshaped on 23 November 2026 at the owner's direction: one plan that gets the renderer working end to end, a second plan for the timeline fixes ([Plan 88](../88-timeline-edits-land/plan.md)), and issues for everything else. The earlier decisions D1 to D7 are closed out below. P1 was decided by the owner; P2 and P3 by the coordinating session, which the owner asked to decide them. This is plan and issue set-up only: no run has started.
 
 | Decision | Options and recommendation | State |
 | --- | --- | --- |
-| P1 The heavy test timeline | The owner supplies a timeline export. We need it before RN-10; RN-0 to RN-9 run on the film timeline from 22 November. | Open |
-| P2 One motion pack revision | Preview draws the pack vendored with the App (upstream `ec0a9f5`, text defaults to ink); the collection install has no manifest pin and resolved a different revision (text defaults to white). Options: (a) pin the collection install to the App-vendored revision and have render report a difference; (b) vendor the pack into the Agent as well; (c) leave as is. Recommendation (a). The same pin is an open owner decision in [Plan 78](../78-live-custom-element-editing/plan.md); one answer should serve both. | Open |
-| P3 The lease stopgap during the loop | The cause of heartbeat renewals stopping is unknown. Options: (a) the two-hour lease stays on the plan branch until RN-8 replaces it, and blocks merge while present; (b) no long render is attempted until RN-8 lands. Recommendation (a): otherwise RN-10 waits on an open-ended investigation. | Open |
+| P1 The heavy test timeline | Decided by the owner, 23 November 2026: the generated heavy fixture built by the App's [`scripts/save-loop/build-fixture.mjs`](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/build-fixture.mjs) ([how to run it](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/README.md)). It generates its own media and needs no owner media or GPU. Standard variant: 616 parent clips, 46 shot occurrences, a 2.6 MB document. `large-shots` variant: three 480-second shots of 32 child clips each on 90-second generated sources. It asks for 25 GiB free. | Decided |
+| P2 One motion pack revision | Decided by the coordinating session at the owner's delegation: the collection install is pinned to the revision the App vendors (upstream `ec0a9f5`, text defaults to ink), and a render reports a pack revision that differs from the editor's. Rejected: vendoring the pack into the Agent as well (a third copy); leaving it (render and preview disagree, [#1469](https://github.com/banodoco/astrid-dev/issues/1469)). The same pin is open in [Plan 78](../78-live-custom-element-editing/plan.md); tell its manager. | Decided |
+| P3 The lease stopgap during the loop | Decided by the coordinating session at the owner's delegation: the two-hour lease stays on the plan branch until RN-8 replaces it, and the branch cannot be offered for merge while it is there. Rejected: holding every long render until the heartbeat cause is found, because that investigation has no known end. | Decided |
 
 **How D1 to D7 were closed**
 
