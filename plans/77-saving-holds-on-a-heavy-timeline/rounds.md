@@ -92,4 +92,20 @@ These are public SDK commit elapsed times for 12 clip commands per batch. The tw
 
 ### Editor matrix
 
-The harness recovered startup by using a short owned browser directory and the installed editor's ordinary `connect=1` link. A fresh browser then reached the actual Saved badge at 41.211 s with the synthetic fixture visible. That figure measures startup. The unchanged edit-timing matrix is in progress. No scenario result or qualified-heavy claim is recorded yet. [App harness PR #330](https://github.com/banodoco/astrid-app/pull/330)
+The harness recovered startup by using a short owned browser directory and the installed editor's ordinary `connect=1` link. A fresh browser then reached the actual Saved badge at 41.211 s with the synthetic fixture visible. That figure measures startup. The single longer measurement reached Saved with the fixture visible in 171.612 s. A fixture target first appeared at 13.997 s. The observation did not establish when the first 15 s became editable. CPU seconds were unmeasured for this initial matrix. [App harness PR #330](https://github.com/banodoco/astrid-app/pull/330)
+
+| Scenario | Outcome | Gesture end to POST | Time to Saved | Public evidence |
+| --- | --- | ---: | --- | --- |
+| Same-track video move, first repetition | Failed. The browser reported an unconfirmed save and showed Try again and Discard | 17.465 s | No Saved captured | One accepted advance from v27 to v28. The moved video start changed from 0 to 0.5667 s. All 288 clip IDs survived, with one stable current head. |
+| Remaining 84 scenarios and the other two repeats of the first | Unattempted. The sweep stopped at guarded cleanup | — | — | The timeline metadata and revision index sampled different heads around the advance. The follow-up snapshot timed out, so the harness refused to restore without a verified after-head. |
+
+The host accepted this as the failing baseline. The first fix will follow profiling of one history GET, an ordinary 12-command commit, and the browser CPU during one same-track move on the exact stack. The existing seed curve and open/save timing will witness the change.
+
+**Strategist's advice.** Preserve the same-track move as the editor witness. Measure gesture to send, send to public acceptance, and acceptance to Saved where visible. Establish where the history read and commit spend CPU before choosing a shared fix. Keep the guarded cleanup when the publication is uncertain.
+
+**Plan deltas.**
+
+- Plan 63 gets the accepted-once move that was unconfirmed in the browser. Its lost-reply witness should check public reconciliation and badge agreement.
+- Plan 75 gets the heavy history read and batch series, alongside all three open/save spans. Separate history depth from clip count if the first profile leaves attribution unclear.
+- Plan 76 keeps its two-writer witness outstanding. This run exercised one writer and a temporary read disagreement.
+- Plan 18 gets the same-track gesture-to-POST span for its gesture-to-operation comparison.
