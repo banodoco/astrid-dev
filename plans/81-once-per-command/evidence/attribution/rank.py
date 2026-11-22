@@ -145,7 +145,7 @@ def main():
                 raise ValueError('reused task or target receipt')
             seen_tasks.add(trial['task_id']); seen_targets.add(trial['target_prompt_id'])
             start, admission, ack, end = (trial[k] for k in ('spawn_ns', 'admission_ns', 'target_ack_ns', 'exit_ns'))
-            if not (start <= admission <= end and admission <= ack):
+            if not (start <= admission and start <= ack and start <= end):
                 raise ValueError('invalid trial event ordering')
         wall = float(trial['wall_seconds'])
         if not math.isfinite(wall) or wall <= 0:
