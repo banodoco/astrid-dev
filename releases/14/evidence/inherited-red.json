@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "purpose": "Reviewed inherited-red inventory; empty initial state grants no approvals",
+  "key_fields": ["repo", "workflow", "job", "id"],
+  "sealed_prior": [],
+  "current": []
+}
