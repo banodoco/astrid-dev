@@ -1,0 +1,14 @@
+Getting Astrid ready. The first time takes a few minutes.
+Using your workspace at /root/codex/p77box/stack/data.
+Downloading Release 13
+Astrid couldn't finish. Your work is kept.
+HTTPError: HTTP Error 403: Forbidden
+
+Your choice: start at sign-in is off. To turn it on, rerun the install line with --autostart on.
+Your choice: the astrid command is off. To turn it on, rerun the install line with --command on.
+Your choice: Astrid skills are off. To turn them on, rerun the install line with --skills on.
+
+Astrid was NOT installed: setup stopped with an error.
+Setup did not finish; some downloaded files may remain.
+Next: run the same command again; if it fails again, send the error and install log to support.
+Details: /root/codex/p77box/stack/home/.local/state/astrid-runtime/logs/install.log

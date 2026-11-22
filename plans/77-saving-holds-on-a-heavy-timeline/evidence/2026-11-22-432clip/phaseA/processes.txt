@@ -1,0 +1,2 @@
+reader_pid=29635 profiler_pid=29636 start_utc=2026-11-22T18:07:24Z
+reader_exit=0 profiler_exit=0 end_utc=2026-11-22T18:13:47Z
