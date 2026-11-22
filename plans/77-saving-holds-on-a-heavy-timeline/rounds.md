@@ -270,3 +270,7 @@ Once the checkpoint and source witnesses are in place, a redesign can consider a
 | Round 3 no-result and transport diagnosis | `round3/observed-round.md` and `ux-strategy/fable-round3-open-diagnosis.md` |
 | Round 4 cold and continued rows | `round4/results.jsonl` and `round4/continuation/results.jsonl` |
 | Round 5 exact rows and postflight | `round5/results.jsonl` and `round5/postflight-public-head.json` |
+
+## Authorized Round 6 follow-up
+
+The owner approved a persisted verification checkpoint and one measured follow-up on 22 November. The original five-slot results above stand. The separate quick indicator first measures unchanged product at empty, 10, 100 and restored v30 sizes. The checkpoint comparison uses the same restored v30 and reports startup to a subsecond cheap read, cold and warm opening, warm edit to authoritative Saved, and Runtime CPU. Independent verification review precedes the measurement. No current product promotion is approved.
