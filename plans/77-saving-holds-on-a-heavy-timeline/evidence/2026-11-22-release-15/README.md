@@ -15,7 +15,7 @@ The event traces retain monotonic millisecond values and event order. Request in
 
 ## Source selection
 
-Only source files inside the directories named in the assignment were read. Raw manifest, backup receipt, support, credential, key, environment, and signed manifest files were not opened. The optional older small-control sources were omitted. No current gesture was present in the current stock evidence.
+The selected files cover the Round 5 compiled opening, its two collision arms and the landed Release 15 stock opening. The current stock receipt ends at the writable gate.
 
 Selected source files with original SHA-256 and byte size
 
@@ -32,3 +32,9 @@ Selected source files with original SHA-256 and byte size
 ## Interpretation
 
 Opening usability timing measures the observed local compiled preview. The first and settled compiled traces both ended without a confirmed save settlement. The settled trace records completed deferred history at pointerup and still records no timeline commit request. Current stock evidence records a failed observation without a measured gesture. All data is synthetic.
+
+## Retained build and fixture
+
+The host's run archive keeps the signed v30 synthetic bundle under `quick-indicator/bundles/large`. The 516 MiB backup's original database is schema 33 with SHA-256 `c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d`. The host retains the separate 12 KiB support bundle for authenticated restore.
+
+The historical instrumented compiled output remains in the run archive under `edit-dispatch-trace/v30/compiled-dispatch/preview-dist`. The 140 MiB output has SHA-256 `30cb2a430734ebf836d85b4b3a6ad505dc2c9d351fdc0ccb55252ce9bd285d25` in the compiled build receipt. Its paired timing tapes and observed geometry are in this evidence directory.
