@@ -18,7 +18,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 
 | Lane | Session | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 exact App and Runtime CI add no failing IDs. GitHub cancelled both Agent shard matrices. Attempt 2 of the exact retry runs includes the candidate Windows job. Final R2 gates landing. Plan 77 is completing a counted 288-clip Round 2 on the fresh stack after seed commits grew to minutes. |
+| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 App and Runtime comparisons add no failing IDs. Exact Agent CI attempt 2 has Ubuntu tests running and the candidate passed Windows CIM. Final R2 gates landing. Plan 77 partial Round 2 failed its first move and stopped at cleanup. The move published once later. The next comparison will use a restored synthetic fixture. |
 | Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
 | Easy wins (issue packet) | Release 15 Lead, with Codex Luna workers | — | Nine fixes, one commit each, in [astrid-agent #475](https://github.com/banodoco/astrid-agent/pull/475) (draft), on `release/15/main` at `aac1ceb6`. Waiting on the owner's go to land. Editor, Runtime and VibeComfy fixes not started |
 | Plan 79 (local media of any size) | not started | — | Queued; scope accepted; starts after Plan 77 lands. The interim 1 GiB limit is in the easy-wins batch |
