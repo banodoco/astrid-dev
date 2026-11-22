@@ -63,6 +63,7 @@ All decided on 22 November 2026 in the [Release 15 Lead session](https://claude.
 - **D2 — running from source.** Decided: source checkouts are measured against their own figure of 2 seconds.
 - **D4 — the batch form.** Decided: a file of operations.
 - **D5 — limits for the waits that have none.** Decided: 135 seconds, with the waiting line after 2 seconds.
+- **D7 — the VibeComfy hashing fix ships in Release 15.** Decided 22 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): "the [VibeComfy] fix should ship in release 15 as well." The attribution work found one 2.6 MB node-information file hashed 2,348 times in one `generate workflow` process, about 4 s of hashing in an instrumented source run. She had first approved a branch-only change with no merge and no pin; this replaces that. The fix lands on `release/15/plan-81` in VibeComfy (cut from `release/15/main` at `48b5fa9e`, which the Lead created the same day), goes through this plan's review, and on landing the Agent's VibeComfy pin and the two tests that name it move to the landed commit. That pin is the one she approved here; the landing itself is still brought to her.
 
 D3 (trusting an install's stamp) and D6 (ComfyUI's node list) are about results kept between commands and moved to [Plan 82](../82-reuse-across-commands/inputs.md#owner-decisions).
 
