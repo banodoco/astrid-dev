@@ -1,0 +1,220 @@
+{
+  "calibration": {
+    "timings": {
+      "samples": {
+        "changed": {
+          "stages": {
+            "Runtime GET /v1/app-state/user/generation": 0.0670508569996855,
+            "Runtime GET /v1/capabilities": 0.04177265399994212,
+            "Runtime GET /v1/health": 0.02260179200015955,
+            "Runtime GET /v1/objects/sha256%3A35067969e7783aff8fef783039e4faabc096f7f92154585147bfc62747d75769": 0.0,
+            "Runtime GET /v1/objects/sha256%3A37e357724b5f244f7eddfc0e6ecbb919373ec5f907108af6caca5309f49dcee3": 0.0,
+            "Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403": 0.029409039000029225,
+            "Runtime GET /v1/objects/sha256%3A5daecd5201c62010002e905c9603142852c7f9cd807d9843183ab0335fb6eec1": 0.0,
+            "Runtime GET /v1/objects/sha256%3A6d3eda064d6e15cbf228ccabbaaca5f72ebeb3932c434ac377912e71de75100f": 0.0,
+            "Runtime GET /v1/objects/sha256%3A78ada414e7335274a2892b94f98a216cd8250e6ba9a020b78eeb6909cea618a4": 0.0,
+            "Runtime GET /v1/objects/sha256%3A89b9ce295551cf24a14275f32a96c2e0e3447952f4d645ebffb89c1fca4fc592": 0.0,
+            "Runtime GET /v1/objects/sha256%3A8e7de40a210af5278d1f4a1696bb2b195785ebb04a76138b8c009c0f84996552": 0.0,
+            "Runtime GET /v1/objects/sha256%3Ac0f2f1134c2f5c86d7d8942771a30db146cc7ef1e978160c935ee2fc1575242e": 0.0,
+            "Runtime GET /v1/objects/sha256%3Adecd84a45a9967dca5dca8a1e62a45883ed956a95702ecd0f2b5d828b529971e": 0.0,
+            "Runtime GET /v1/objects/sha256%3Ae69d1e63940faf9b7158913aec9596034d088b1da54bf269bc2369a6f11da86e": 0.0,
+            "Runtime GET /v1/projects/{id}": 0.011587018000000171,
+            "Runtime POST /v1/handshake": 0.017142962999969313,
+            "Runtime POST /v1/projects/{id}/objects": 0.08594901800006483,
+            "Runtime POST /v1/tasks": 0.02677597699994294,
+            "Runtime acquisition lock": 0.0008651989999179932,
+            "Runtime launcher connection": 4.498524394000015,
+            "model registry": 0.046670998000081454,
+            "other command work": 11.916958351999256,
+            "pack discovery": 1.8341137399997933,
+            "pack host attachment": 0.5435461409997515,
+            "pack host lifecycle lock": 8.689199989930785e-05,
+            "pack host readiness": 0.01659634200018445,
+            "pack host source identity": 0.2832171439999911,
+            "target check": 0.006372051999960604,
+            "workflow build": 0.34743354000011095
+          },
+          "wall_median": 20.013684695999927
+        },
+        "same": {
+          "stages": {
+            "Runtime GET /v1/app-state/user/generation": 0.0435948429999371,
+            "Runtime GET /v1/capabilities": 0.06837311300000692,
+            "Runtime GET /v1/health": 0.017388084999993225,
+            "Runtime GET /v1/objects/sha256%3A053104913761005e9a67a76677d20709a2c39a83d496b5c99691e74aeeebb4f2": 0.0,
+            "Runtime GET /v1/objects/sha256%3A06e168223f2a909022dde9b9fcf13176f069d13f8823dd6eeb4a1e0319c58bfb": 0.0,
+            "Runtime GET /v1/objects/sha256%3A133ff374eb164e585c57de99db23d90348c5a2c1c4a0be96f10ad58555f09a07": 0.0,
+            "Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403": 0.02424831599978461,
+            "Runtime GET /v1/objects/sha256%3A613df6071a6c16866d6fc113fad4b925b45066486f00187d2a90b498a473b989": 0.0,
+            "Runtime GET /v1/objects/sha256%3A63364b257a9a9d0bab21028d621cf02cd4aeafc2601cece1ec7f93aa919c4da4": 0.0,
+            "Runtime GET /v1/objects/sha256%3Aa93d659d445eac9ae9c79a0580071e4ad4983aac0d836b84f19299080c0e27c7": 0.0,
+            "Runtime GET /v1/objects/sha256%3Ac9e7e4a35479c412071732be653e0d690dbdfc9119e095879b0284efb704631f": 0.0,
+            "Runtime GET /v1/objects/sha256%3Ad444e8c2332f91bda12040da723ebe98cb7578cdedd28ac6d6a862d0d9d54c6f": 0.0,
+            "Runtime GET /v1/objects/sha256%3Aec2773bb2e90a8d02092078fe2dca957e78a0e4ad33cc1fecada9862d604c877": 0.0,
+            "Runtime GET /v1/objects/sha256%3Afeb51ca6b66e229f7bd4e789ad9357a1b2614bac81033558001dbda8b98bb484": 0.0,
+            "Runtime GET /v1/projects/{id}": 0.00970110899993415,
+            "Runtime POST /v1/handshake": 0.021150060999843845,
+            "Runtime POST /v1/projects/{id}/objects": 0.10298917099999017,
+            "Runtime POST /v1/tasks": 0.040126245000010385,
+            "Runtime acquisition lock": 0.0007810350000454491,
+            "Runtime launcher connection": 4.585529325999914,
+            "model registry": 0.046828946999994514,
+            "other command work": 12.34107192800002,
+            "pack discovery": 1.7136692510000557,
+            "pack host attachment": 0.559236397000177,
+            "pack host lifecycle lock": 4.439000008460425e-05,
+            "pack host readiness": 0.0172399589998804,
+            "pack host source identity": 0.27297575099987625,
+            "target check": 0.007079425000029005,
+            "workflow build": 0.30140525299998444
+          },
+          "wall_median": 20.518135563999977
+        },
+        "timeline": {
+          "stages": {
+            "Runtime GET /v1/health": 0.017913765999992393,
+            "Runtime GET /v1/projects/{id}/timelines": 0.13127276499994878,
+            "Runtime GET /v1/projects/{id}/timelines/film/commits": 0.4527736759999925,
+            "Runtime GET /v1/projects/{id}/timelines/film/composition-revisions/{id}": 0.022515268999995897,
+            "Runtime POST /v1/handshake": 0.014386762000185627,
+            "Runtime POST /v1/projects/{id}/timelines/film/commit": 0.5002389270000549,
+            "Runtime POST /v1/projects/{id}/timelines/film/inspect": 0.06520977200000289,
+            "Runtime acquisition lock": 0.0005816640000375628,
+            "Runtime launcher connection": 2.119403229999989,
+            "other command work": 0.7630759635003415
+          },
+          "wall_median": 4.204190759999847
+        }
+      },
+      "start_to_ready": 2.119151090999935,
+      "warm_runtime_acquisition": 7.651372658000014
+    },
+    "visualization": {
+      "error": {
+        "code": "invocation_error",
+        "details": {
+          "kernel_attempt_id": "fadacc9ea991402d9dc3a5ca206a85ff",
+          "kernel_run_id": "ab77aaa3a78f4d06a091356f1bf579a7",
+          "kernel_task_id": "fbfe5175b71f4f558643b6a424bdd8a2",
+          "run_id": "ab77aaa3a78f4d06a091356f1bf579a7",
+          "sdk_category": "runtime",
+          "sdk_error": "CapabilityRuntimeError",
+          "validation": null
+        },
+        "message": "Headline: The render couldn't finish\nDetail: capability 'rendering.timeline_visualize' exited 1: {\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 29979, \"elapsed_ms\": 1777}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 29979, \"elapsed_ms\": 35}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 29979, \"elapsed_ms\": 2052}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 29979, \"elapsed_ms\": 1844}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 29979, \"elapsed_ms\": 33}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"renderer lease channel closed\", \"error_details\": null}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"original host renderer cleanup is unresolved\", \"error_details\": null}\nrenderer lease channel closed\nFix: Review the details, correct the render settings or timeline, and try again."
+      },
+      "exit": 1,
+      "ok": false,
+      "seconds": 65.39019836800003
+    }
+  },
+  "candidate_check": {
+    "timings": {
+      "samples": {
+        "changed": {
+          "stages": {
+            "Runtime GET /v1/app-state/user/generation": 0.055768511999986004,
+            "Runtime GET /v1/capabilities": 0.026781776000007085,
+            "Runtime GET /v1/health": 0.016386991999979728,
+            "Runtime GET /v1/objects/sha256%3A0807518a93afb5324af61a52eda67db7ad051391dbfe57bce52f7d3834733dbb": 0.0,
+            "Runtime GET /v1/objects/sha256%3A186fe20865d7b670e21f879ed934666069056a663684aadd266362a943c82bd0": 0.0,
+            "Runtime GET /v1/objects/sha256%3A322838c47825c9957b9626a380313d6334bc245dbc8fb2a9a66a44457cf9b481": 0.0,
+            "Runtime GET /v1/objects/sha256%3A3d32dc21a202151c5da67eccb2f57f08000b97fd8dcd7b25516443d4f49e9d99": 0.0,
+            "Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403": 0.020851346999734233,
+            "Runtime GET /v1/objects/sha256%3A62254d719056793d9514f99324f22ee207723409622cd4d25591a6be728cc693": 0.0,
+            "Runtime GET /v1/objects/sha256%3A7ad4cb3e12e95dfb81fd2febeb657d4f79ed75f7f9dec209a8a7537eb37fe9e2": 0.0,
+            "Runtime GET /v1/objects/sha256%3A8591e7a0a69140477e7b1427aa36652bfc14b1b77dc2cfcb9e80cb1bda74b5f4": 0.0,
+            "Runtime GET /v1/objects/sha256%3Abe6117c601a672cccc86b36e236a6b78e6c1ded4788e541e9483affabcc2b3a1": 0.0,
+            "Runtime GET /v1/objects/sha256%3Abf1d8d01e47acf2d6a1f19bccd5398f386e4a74c43dadd42d88dee168bcd8b5f": 0.0,
+            "Runtime GET /v1/objects/sha256%3Ada588e37e1998740543158441fd26915afc0e567346accf7f92dbc4cce9df3a8": 0.0,
+            "Runtime GET /v1/projects/{id}": 0.013911156999938612,
+            "Runtime POST /v1/handshake": 0.020179105999886815,
+            "Runtime POST /v1/projects/{id}/objects": 0.15129484799990678,
+            "Runtime POST /v1/tasks": 0.02388381300011133,
+            "Runtime acquisition lock": 0.0009063059999334655,
+            "Runtime launcher connection": 5.062943152999878,
+            "model registry": 0.04064237200032039,
+            "other command work": 12.288554346999945,
+            "pack discovery": 1.8919401259993265,
+            "pack host attachment": 0.6013130079998064,
+            "pack host lifecycle lock": 6.477099987023394e-05,
+            "pack host readiness": 0.025091736999911518,
+            "pack host source identity": 0.3028199020000102,
+            "target check": 0.006519704000083948,
+            "workflow build": 0.3576110779999908
+          },
+          "wall_median": 20.701176699999905
+        },
+        "same": {
+          "stages": {
+            "Runtime GET /v1/app-state/user/generation": 0.05819485800043367,
+            "Runtime GET /v1/capabilities": 0.042781382999919515,
+            "Runtime GET /v1/health": 0.020118989000366128,
+            "Runtime GET /v1/objects/sha256%3A0a902196754aa1fef83ae7ab34838936549cf2f38088bf31e927f6572b42b308": 0.0,
+            "Runtime GET /v1/objects/sha256%3A1ac3ad3ad6bbdbf4fbce1b01ac683e55c10e7e72da92367e85d42969ce0c52ed": 0.0,
+            "Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403": 0.026689960000112478,
+            "Runtime GET /v1/objects/sha256%3A66b64090a3f9c8ffafeb029935c9e3cf62645811402333c5ab037e04ee88052d": 0.0,
+            "Runtime GET /v1/objects/sha256%3A6e96e50c36bc00b30c858eff7824cd2d6ee299e19e6e115a7c469f686c9d687e": 0.0,
+            "Runtime GET /v1/objects/sha256%3A7d401293a139a2a0583f76f1796c4e7e2423ae2d2a5ce9b4b01bace4df803078": 0.0,
+            "Runtime GET /v1/objects/sha256%3Ad659ecf0bcde2f6143ea60f1afb5763f73b5d58d0b1c16586a694c0bed023f48": 0.0,
+            "Runtime GET /v1/objects/sha256%3Ade1990c389bb506dddc2cf9e817f3332fbcfe85aabce126f134b9b3890aa698e": 0.0,
+            "Runtime GET /v1/objects/sha256%3Af26b6513d990f13707ccb138e9df4a857612c7c3b2b47484033ae37113b88cdd": 0.0,
+            "Runtime GET /v1/objects/sha256%3Af5efd3dec0b86d75777f7ff04d71a583da21f75e45b4b8998c112f03b50ff72d": 0.0,
+            "Runtime GET /v1/objects/sha256%3Afb4949f2f680d073c6d081d5ce6dc9ae8f7eba864d16bc0575d3d8b351742a1a": 0.0,
+            "Runtime GET /v1/projects/{id}": 0.009225168000057238,
+            "Runtime POST /v1/handshake": 0.023103206000087084,
+            "Runtime POST /v1/projects/{id}/objects": 0.09622340099963367,
+            "Runtime POST /v1/tasks": 0.03024104500013891,
+            "Runtime acquisition lock": 0.0006957309999506833,
+            "Runtime launcher connection": 4.395535878999908,
+            "model registry": 0.04665658800035999,
+            "other command work": 12.135291050999967,
+            "pack discovery": 1.7668145890002052,
+            "pack host attachment": 0.559415731999934,
+            "pack host lifecycle lock": 7.344799996644724e-05,
+            "pack host readiness": 0.018567739000218353,
+            "pack host source identity": 0.2893069670001296,
+            "target check": 0.008401019000075394,
+            "workflow build": 0.3594908420000138
+          },
+          "wall_median": 20.2076103039999
+        },
+        "timeline": {
+          "stages": {
+            "Runtime GET /v1/health": 0.023045032000027277,
+            "Runtime GET /v1/projects/{id}/timelines": 0.12084405999985393,
+            "Runtime GET /v1/projects/{id}/timelines/film/commits": 0.31282215399983215,
+            "Runtime GET /v1/projects/{id}/timelines/film/composition-revisions/{id}": 0.01729019299978063,
+            "Runtime POST /v1/handshake": 0.009314914000015051,
+            "Runtime POST /v1/projects/{id}/timelines/film/commit": 0.3977659960000892,
+            "Runtime POST /v1/projects/{id}/timelines/film/inspect": 0.04845494999995026,
+            "Runtime acquisition lock": 0.0005435640000541753,
+            "Runtime launcher connection": 2.111118868000176,
+            "other command work": 0.7303348270004335
+          },
+          "wall_median": 3.9534419569999955
+        }
+      },
+      "start_to_ready": 2.016306069999928,
+      "warm_runtime_acquisition": 6.145168100000092
+    },
+    "visualization": {
+      "error": {
+        "code": "invocation_error",
+        "details": {
+          "kernel_attempt_id": "b36066c8e45c4339a1e3e0924ac6240e",
+          "kernel_run_id": "8a26fe8a18c34589a18ffa5286fc4e97",
+          "kernel_task_id": "5c3d3cd1061d4c97b3e48bcc80e6f2f1",
+          "run_id": "8a26fe8a18c34589a18ffa5286fc4e97",
+          "sdk_category": "runtime",
+          "sdk_error": "CapabilityRuntimeError",
+          "validation": null
+        },
+        "message": "Headline: The render couldn't finish\nDetail: capability 'rendering.timeline_visualize' exited 1: {\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23919, \"elapsed_ms\": 2020}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 23919, \"elapsed_ms\": 44}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23919, \"elapsed_ms\": 2084}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"complete_inputs\", \"outcome\": \"completed\", \"process_id\": 23919, \"elapsed_ms\": 2207}\n{\"diagnostic\": \"astrid.remotion_validation_phase\", \"phase\": \"owned_probe\", \"outcome\": \"completed\", \"process_id\": 23919, \"elapsed_ms\": 53}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"renderer lease channel closed\", \"error_details\": null}\n{\"cleanup_error\": null, \"cleanup_error_details\": null, \"cleanup_uncertain\": true, \"diagnostic\": \"astrid.remotion_frame_owner_failure\", \"error\": \"original host renderer cleanup is unresolved\", \"error_details\": null}\nrenderer lease channel closed\nFix: Review the details, correct the render settings or timeline, and try again."
+      },
+      "exit": 1,
+      "ok": false,
+      "seconds": 68.94955514399999
+    }
+  }
+}
