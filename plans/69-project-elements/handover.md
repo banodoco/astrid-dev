@@ -24,6 +24,14 @@ Written on 21 November 2026 by the Release 15 setup session, for the manager who
 - **Merge, never rebase or force-push** ([Release workflow](../../skills/shared/workstreams/astrid-dev-release/SKILL.md#how-a-release-runs)).
 - **The old branches** `release/14/plan-69` are superseded by these; do not push to them.
 
+## Current Release 15 forward on 22 November
+
+The Release 15 Lead landed the owner's forward after this handover was written. The current Runtime base is `2cf5890b7185450109254601b83d6dccb535bde4`, which contains `b51d4e56`. Agent's current base is `0982317814545d50c8d7e2c623d7f7086bba879b`. App's base remains `2ef94b4cf33d0818b642b0ef71fd9a64f58ddc18`. Recheck all three before relying on them. [Runtime #86](https://github.com/banodoco/astrid-runtime/pull/86) · [Agent #482](https://github.com/banodoco/astrid-agent/pull/482)
+
+The forward invalidated the old exact landing comparison. Bring the current base into Plan 69 in Runtime, Agent and App order. Regenerate the contract projections and pins. The Runtime combined contract remains `0.2.15` with digest `sha256:2c6a76e17b4441398ab91e3e9d6283a719fd5b08807447db9dbf2ecc5e1339a2`. The owner-approved test changes pin that existing version in the two current timeline integration assertions. WC10 intentionally builds against a separate frozen `0.2.14` client and keeps its original values.
+
+The host is arranging the exact paired Linux unit shards on separate machines after three cancellation cycles. Send the final Agent plan SHA before anyone runs candidate shards. Use the named selection and compare test IDs against the current Agent base. Obtain the exact Windows, Darwin, wheel and fast-check results from hosted CI. The previous Windows CIM, Darwin and test-gate evidence stays available as history. The current Agent base already carries matching RunPod model lock and recipe hashes, so [Agent #477](https://github.com/banodoco/astrid-agent/pull/477) closed as redundant.
+
 ## Running the tests
 
 - **Agent:** a venv with `pip install -e '.[dev]'`, plus the Runtime at the pinned commit installed into the same venv (`pip install -e <runtime checkout at the pin>`); without it, imports fail with `No module named 'runtime_protocol'`. Element admission needs the renderer's pinned Node, v20.19.4 (`remotion/package.json`): set `ASTRID_NODE_EXECUTABLE` to it and run `npm ci` in `remotion/`. `pytest-xdist` is not in the dev extras, so do not pass `-n`.
