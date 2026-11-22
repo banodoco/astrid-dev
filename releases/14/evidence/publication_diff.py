@@ -25,9 +25,14 @@ BASE = "https://api.github.com/repos/banodoco"
 DEFAULT_INHERITED_RED = Path(__file__).with_name("inherited-red.json")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 GH_TIME = re.compile(r"^\d{4}-\d\d-\d\dT\S+Z\s+")
+GH_LOG_COLUMNS = re.compile(r"^[^\t]*\t([^\t]*)\t\d{4}-\d\d-\d\dT\S+Z\s+")
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 PYTEST = re.compile(r"^(PASSED|FAILED|ERROR|XFAIL|XPASS|SKIPPED) (.+)$")
 PYTEST_PROGRESS = re.compile(r"^(.+::.+?)\s+(PASSED|FAILED|ERROR|XFAIL|XPASS|SKIPPED)\s+\[\s*\d+%\]$")
+PYTEST_SKIP_GROUP = re.compile(r"^SKIPPED \[(\d+)\] .+")
+PYTEST_TOTAL = re.compile(r"^(?:\d+ (?:passed|failed|skipped|xfailed|xpassed|errors?|warnings?|subtests)\b|no tests ran).*\bin \d")
+PYTEST_OUTCOMES = dict(PASSED="PASS", FAILED="FAIL", ERROR="ERROR", XFAIL="XFAIL", XPASS="XPASS", SKIPPED="SKIP")
+PYTEST_ADVERSITY = {status: rank for rank, status in enumerate(("PASS", "XFAIL", "SKIP", "XPASS", "FAIL", "ERROR"))}
 PLAYWRIGHT_LOCATION = r"(?:\[([^]]+)\]\s+)?(?:›\s*)?(.+?\.(?:spec|test)\.[cm]?[jt]sx?):\d+:\d+\s+›\s+"
 PLAYWRIGHT = re.compile(r"^[✓✘×x-]\s*\d+\s+" + PLAYWRIGHT_LOCATION + r"(.+?)(?:\s+\(\d+(?:\.\d+)?(?:ms|s|m)\))?$")
 PLAYWRIGHT_FAILURE = re.compile(r"^(?:##\[error\]\s*)?\d+\)\s+" + PLAYWRIGHT_LOCATION + r"(.+?)\s*$")
@@ -38,7 +43,7 @@ REQUIRED = {"agent": ("CI", "Lanes"), "app": ("Tests", "Lanes", "Direct Journey"
 def clean(line: str) -> str:
     line = ANSI.sub("", line).lstrip("\ufeff")
     # `gh run view --log` prefixes each body with job, step, and timestamp.
-    line = re.sub(r"^[^\t]*\t[^\t]*\t\d{4}-\d\d-\d\dT\S+Z\s+", "", line)
+    line = GH_LOG_COLUMNS.sub("", line)
     return GH_TIME.sub("", line).strip()
 
 
@@ -61,30 +66,59 @@ def pytest_id(rest: str) -> str | None:
     return rest if space < 0 else rest[:space]
 
 
-def parse_pytest(log: str) -> dict[str, str]:
-    progress, summary = {}, {}
-    states = {"PASSED": "PASS", "XFAIL": "XFAIL", "XPASS": "XPASS", "FAILED": "FAIL", "ERROR": "ERROR", "SKIPPED": "SKIP"}
-    rank = {"PASS": 0, "XFAIL": 1, "SKIP": 2, "XPASS": 3, "FAIL": 4, "ERROR": 5}
+def pytest_steps(log):
+    step, lines = None, []
     for raw in log.splitlines():
         line = clean(raw)
-        m = PYTEST.match(line)
-        if m:
-            node, state, target = pytest_id(m.group(2)), states[m.group(1)], summary
-        else:
-            m = PYTEST_PROGRESS.match(line)
-            if not m:
-                continue
-            node, state, target = pytest_id(m.group(1)), states[m.group(2)], progress
-        if not node:
-            continue
-        target[node] = max((target[node], state), key=rank.get) if node in target else state
-    # Summary and progress are duplicate views of a node; keep whichever is
-    # most adverse so a later pass cannot erase a failure or setup error.
-    merged = {}
-    for source in (progress, summary):
-        for node, state in source.items():
-            merged[node] = max((merged[node], state), key=rank.get) if node in merged else state
-    return merged
+        columns = GH_LOG_COLUMNS.match(raw.lstrip("\ufeff"))
+        next_step = columns[1] if columns else step
+        if lines and (next_step != step or line.startswith("##[group]Run ")):
+            yield lines
+            lines = []
+        step = next_step
+        lines.append(line)
+    if lines:
+        yield lines
+
+
+def pytest_job_results(log: str) -> tuple[dict[str, str], int]:
+    outcomes, unbound_skips = {}, 0
+
+    def record(raw_status, native_id):
+        node = pytest_id(native_id)
+        state = PYTEST_OUTCOMES[raw_status]
+        if node and PYTEST_ADVERSITY[state] > PYTEST_ADVERSITY.get(outcomes.get(node), -1):
+            outcomes[node] = state
+
+    for lines in pytest_steps(log):
+        # The parent runner writes its summary after any child output printed
+        # in failure diagnostics. The step boundary keeps separate CI commands.
+        summary_starts = [i for i, line in enumerate(lines) if line.strip(" =") == "short test summary info"]
+        summary_start = summary_starts[-1] + 1 if summary_starts else None
+        diagnostics = next((i for i, line in enumerate(lines)
+                            if line.strip(" =") in ("FAILURES", "ERRORS") or line.startswith("----- Captured ")), len(lines))
+        for line in lines[:min(diagnostics, summary_start or len(lines))]:
+            match = PYTEST_PROGRESS.match(line)
+            if match:
+                record(match[2], match[1])
+        summary = lines[summary_start:] if summary_start is not None else lines[:diagnostics]
+        groups = set()
+        for line in summary:
+            match = PYTEST.match(line)
+            if match:
+                record(match[1], match[2])
+                if PYTEST_SKIP_GROUP.match(line):
+                    groups.add(line)
+            elif summary_start is not None and PYTEST_TOTAL.match(line.strip(" =")):
+                break
+        unbound_skips += sum(int(PYTEST_SKIP_GROUP.match(line)[1]) for line in groups)
+    leftover_skips = max(0, unbound_skips - sum(state == "SKIP" for state in outcomes.values()))
+    return outcomes, leftover_skips
+
+
+def parse_pytest(log: str) -> dict[str, str]:
+    outcomes, _ = pytest_job_results(log)
+    return outcomes
 
 
 def parse_playwright(log: str) -> dict[str, str]:
@@ -454,14 +488,6 @@ def collect_runs(manifest: dict, out: Path) -> dict:
 JOB_ID = "[job]"
 UNATTRIBUTED_SKIP_ID = "[unattributed skip]"
 SETUP_STEP = re.compile(r"^(?:set\s*up|install|check\s*out|configure|build|bootstrap|prepare)\b", re.I)
-PYTEST_SKIP_GROUP = re.compile(r"^SKIPPED \[(\d+)\] .+")
-
-
-def unattributed_pytest_skips(log, ids):
-    groups = {line for raw in log.splitlines() if "SKIPPED [" in raw
-              and PYTEST_SKIP_GROUP.match(line := clean(raw))}
-    reported = sum(int(PYTEST_SKIP_GROUP.match(line)[1]) for line in groups)
-    return max(0, reported - sum(status == "SKIP" for status in ids.values()))
 
 
 def job_inventory(product, workflow, side, run, vitest, playwright, junit, problems):
@@ -481,8 +507,7 @@ def job_inventory(product, workflow, side, run, vitest, playwright, junit, probl
             problems.append(f"{label}: job log missing or empty")
         unattributed_skips = 0
         if product != "app":
-            ids = parse_pytest(log)
-            unattributed_skips = unattributed_pytest_skips(log, ids)
+            ids, unattributed_skips = pytest_job_results(log)
             if unattributed_skips:
                 problems.append(f"{label}: no IDs for {unattributed_skips} reported pytest skip occurrence(s)")
             needs_ids = (

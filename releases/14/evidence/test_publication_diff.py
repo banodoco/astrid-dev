@@ -401,6 +401,27 @@ class TestReviewedInventory(unittest.TestCase):
 
 
 class TestFreezeVerdict(unittest.TestCase):
+    def test_pytest_outer_summary_excludes_nested_capture_and_retains_other_steps(self):
+        log = """##[group]Run first pytest command
+tests/a.py::test_run FAILED [100%]
+----------------------------- Captured stdout call -----------------------------
+=========================== short test summary info ============================
+FAILED check_it.py::test_child - intentional failure
+1 failed in 0.01s
+=========================== short test summary info ============================
+PASSED tests/a.py::test_passed
+Context from a wrapped assertion
+FAILED tests/a.py::test_run - assertion
+1 failed, 1 passed in 0.10s
+##[group]Run second pytest command
+=========================== short test summary info ============================
+PASSED tests/b.py::test_other
+1 passed in 0.10s
+"""
+        self.assertEqual(mod.parse_pytest(log), {
+            "tests/a.py::test_run": "FAIL", "tests/a.py::test_passed": "PASS", "tests/b.py::test_other": "PASS",
+        })
+
     def test_collector_links_jobs_to_explicit_attempt(self):
         with tempfile.TemporaryDirectory() as directory:
             sha = "a" * 40
@@ -484,7 +505,7 @@ class TestFreezeVerdict(unittest.TestCase):
 
     def test_collapsed_pytest_skips_visible_without_inventing_test_ids(self):
         log = "PASSED tests/a.py::test_pass\nSKIPPED [2] tests/a.py:4: platform"
-        self.assertEqual(mod.unattributed_pytest_skips(log, mod.parse_pytest(log)), 2)
+        self.assertEqual(mod.pytest_job_results(log), ({"tests/a.py::test_pass": "PASS"}, 2))
 
 
 if __name__ == "__main__":
