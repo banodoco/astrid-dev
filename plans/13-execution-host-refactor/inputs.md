@@ -40,7 +40,13 @@ The owner asked on 22 November 2026, in the [Release 15 Lead session](https://cl
 
 | Repository | Starting branch + SHA | Retained work / donor SHAs / unpublished changes | Verified predecessor output | Candidate branch | Intended destination |
 |---|---|---|---|---|---|
-| `banodoco/astrid-agent` | TBD at start; historical observations below are not a current base | TBD at start; inspect applicable execution changes, including sandbox process control from PR #109 | TBD; no verified predecessor output recorded | TBD at start | `pre-main`, verify its existence and preserve existing publication policy |
+| `banodoco/astrid-agent` | `release/15/plan-13` at `aac1ceb684d22cf67c5bb0ae2c20855b88e4f462`, clean, cut from `release/15/main` | Characterisation donor `origin/release/14/plan-13` at `9a98aacab3ad4711f05e5cbd654daeebdb46372e` | HM2's eight remaining files brought across in Agent #483 | `release/15/plan-13` | `release/15/main` by the release lead, after the plan's proof and review |
+
+## EX-3 measurement and re-estimate, 22 November 2026
+
+EX-2 took approximately 18 elapsed minutes from dispatch to merge (0.038 eight-hour days; about 12 minutes of worker implementation). The host fell from 18,888 to 18,431 lines, a net 457 after imports and wrappers. No tests moved. A settlement test failed on both the merged base and candidate; patch-removal proof found one insensitive test, so `_task_generation_intent` remained in the host. Agent #485 merged at `0999079bb5c8ab308dc556784f1fa59326ef09f8`.
+
+For Plan 83, allow EX-4 2–3, EX-5 3–4, EX-6 2–3 and EX-7 4–5 engineering days (11–15 total); EX-8 5–7, RS2 2–3 and EX-9 10–14 (17–24 total), plus the final review and any fixes. That is 28–39 engineering days before final review, subject to Plan 38. This is a rough risk allowance, not a linear extrapolation from a single leaf extraction; preserving patch points and the insensitive test are reasons for uncertainty. The owner decides Plan 83's release; decision pending.
 
 ## References and evidence
 
