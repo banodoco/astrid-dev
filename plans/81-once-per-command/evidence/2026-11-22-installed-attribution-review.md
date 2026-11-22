@@ -63,3 +63,30 @@ Primary retained input: `/root/codex/installed-baseline/evidence/ab-run-1/summar
 The local A-5 draft can record scoped witness invocations and the lengths of returned byte buffers where its observer installs before the relevant aliases. It does not establish complete process coverage or global hashing counts: native hash updates, `file_digest` internals, `hashlib.new`, aliases, and subprocesses can escape the existing hooks. Static inspection has not ruled out transitive import-time calls or dynamic aliases. The draft's fresh-interpreter tests still fail its early-install check; the observer is unqualified and no gate is proposed.
 
 The host's requested source-completeness review and [evidence PR #1422](https://github.com/banodoco/astrid-dev/pull/1422) provide the broader plan context. This document adds only the installed attribution and provisional range inventory. It does not commission a reviewer or state a review outcome.
+
+## Installed A/B run 2 update
+
+Run 2 adds a separate three-arm installed comparison; it does not replace run 1's results or revise the preceding attribution assessment. The measured medians were:
+
+| Group | Published before | Candidate after | Candidate vc48 |
+|---|---:|---:|---:|
+| Same-prompt generation | 15.183 s | 5.906 s | 11.294 s |
+| Changed-prompt generation | 15.127 s | 5.453 s | 10.951 s |
+| Timeline edit | 1.113 s | 1.147 s | 1.122 s |
+
+Run 2 used fixed before → after → vc48 ordering and one warm-up plus five measured commands for each arm/group: 9 warmups and 45 measured commands, 54 total. It was run in the shared 4-vCPU CPU container with a stand-in ComfyUI and `--no-wait`; commands stop at task admission, without a real ComfyUI node-info answer or GPU work. Candidate arms used `--timings`; the published arm did not.
+
+Same/changed workflow emission medians were 0.4261/0.4146 s after and 5.8054/5.6831 s vc48. Nested measured stages overlap; they do not sum to process wall. After vs vc48 also changes the Agent pin, so these numbers do not isolate a VibeComfy causal share.
+
+Per-process raw-derived accounting, in seconds, is:
+
+| Group / arm | Median W−S | Median R | Median W−C | W−S share range |
+|---|---:|---:|---:|---:|
+| Same, after | 0.8969 | 0.4412 | 0.4313 | 12.51–16.36% |
+| Changed, after | 0.7688 | 0.4121 | 0.3407 | 13.54–14.48% |
+| Same, vc48 | 0.8129 | 0.4419 | 0.3873 | 6.90–7.95% |
+| Changed, vc48 | 0.7168 | 0.3956 | 0.3103 | 6.43–7.05% |
+
+W is process wall, S the sum of named measured exclusive rows, R residual inside the collector span, and C the collector span. The original run-2 records omitted C even though the raw outputs contain it; `installed-container-baseline/ab-run-2/collector-spans.json` is derived from those raw outputs and records provenance. Both raw stdout/stderr trees for run 1 and run 2 are now retained alongside the summaries. There is no occurrence-count oracle and no whole-process 90% attribution claim.
+
+The result-producing scripts were fixed after run 2. This documentation update did not rerun anything, so the recorded results predate those tooling fixes. The source-only paths in older records are historical paths; installed trees and live checkout trees were separate. Summary ratios are descriptive. The earlier broad cleanup `pkill` carried a risk of matching unrelated processes; the evidence now includes the targeted process-ownership cleanup implementation and focused matcher/child-cleanup tests. Those tests were not run as part of this documentation update. A-5 remains unqualified; A-6 and hash/witness probes do not establish complete process coverage or global occurrence counts. The US-2 fixture runner is included as source evidence, with no new gate result claimed.

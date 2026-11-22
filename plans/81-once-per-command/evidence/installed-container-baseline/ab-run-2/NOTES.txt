@@ -1,0 +1,12 @@
+Installed baseline A/B run 2 evidence
+
+Source capture: /root/codex/plan-81m/installed-baseline-handover/evidence/ab-run-2
+Run-2 summaries, records, manifests, installer/version context, console/stand-in logs, derived collector spans and raw stdout/stderr are retained here. collector-spans.json records each selected raw stdout's original source path through its source_directory, exact C and start fields, and SHA256; the corresponding raw bytes are included. The copied hashes.txt was checked against the copied install.sh and six manifests.
+
+The 54 command records (9 warmups and 45 measured samples) are followed by one records_complete marker (count 54). All 54 recorded wall_seconds are positive and all 54 records have exit_code 0; summary medians contain no zero-valued measured group. This avoids treating an absent timing value as zero. The five numbered samples within each same/changed/timeline group repeat before, after, vc48 ordering; each group also has one warmup per arm. The before arm has no --timings flag; after and vc48 do. Wall-time median differences are descriptive observations from this shared 4-vCPU CPU container run and do not establish causality.
+
+No credential or .env files were read or copied. Retained text was scanned for common credential/token patterns; no matches were found.
+
+Completeness update: the corresponding raw stdout/stderr files are now included in raw/ (976,476 bytes). Original records.jsonl did not contain C (collector duration); collector-spans.json was derived from the raw output and records the C/start values and source path/hash. Raw files are retained here so the provenance can be checked directly. The original records remain unmodified. No occurrence-count oracle or whole-process 90% attribution claim follows from this collector data.
+
+Run 2 has three arms in fixed before → after → vc48 order for each numbered same/changed/timeline sample, plus one warm-up per arm/group: 9 warmups and 45 measured commands, 54 total. The after and vc48 candidate executions used --timings; the published before arm did not. All are CPU stand-in runs ending at task admission; there is no GPU or real ComfyUI execution.
