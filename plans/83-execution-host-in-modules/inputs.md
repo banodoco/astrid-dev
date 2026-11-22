@@ -10,7 +10,7 @@
 
 **Approach:** Plan 13's, in its [Release 15 scope](../13-execution-host-refactor/plan.md#release-15-scope): leaves first, then what the Runtime adapter stands on and the adapter, source custody, review, local preparation, and the class last, as objects and not mixins.
 
-**Challenge:** Reviewed — these rows were reviewed where they were written, in Plan 13, by an independent Codex critic (`gpt-6.2-astra`, high effort, read-only) commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) on 22 November 2026; its report is [critique-extraction.txt](../13-execution-host-refactor/evidence/critique-extraction.txt) and what was done with each finding is in [Plan 13's inputs](../13-execution-host-refactor/inputs.md#extraction-evidence-22-november-2026). The move into this plan changed no card and has had no critique of its own. RS2 is the review of the class design.
+**Challenge:** Reviewed — these rows were reviewed where they were written, in Plan 13, by an independent Codex critic (on the high-judgment role, high effort, read-only) commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) on 22 November 2026; its report is [critique-extraction.txt](../13-execution-host-refactor/evidence/critique-extraction.txt) and what was done with each finding is in [Plan 13's inputs](../13-execution-host-refactor/inputs.md#extraction-evidence-22-november-2026). The move into this plan changed no card and has had no critique of its own. RS2 is the review of the class design.
 
 **Proof and limits:** The completion cases in [plan.md](plan.md#completion). Limits: the estimate is an allowance until Plan 13's first move is measured; the critique ran no tests.
 
