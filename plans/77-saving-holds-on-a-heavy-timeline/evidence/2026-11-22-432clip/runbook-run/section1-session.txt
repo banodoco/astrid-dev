@@ -1,0 +1,3 @@
+launcher_shell_sid= 5860
+  PID   SID  PGID STAT     ELAPSED COMMAND
+ 5868  5868  5868 Ss         00:04 bash /root/codex/p77box/run2/receipts/section1.sh

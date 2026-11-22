@@ -1,0 +1,36 @@
+{
+  "activation_handoff": "/root/codex/p77box/round5-432-readback/working-restore/activation-handoff.json",
+  "destination": "/root/codex/p77box/round5-432-readback/working-restore",
+  "realm_id": "0d6fd08f-8754-489c-8af9-276dcde43762",
+  "source_manifest_sha256": "513e046832a4d8b0649b0942ec433b785268165c66a3ec5eb0bebacd408c483e",
+  "verification": {
+    "authentication": {
+      "algorithm": "hmac-sha256",
+      "key_id": "[withheld]",
+      "key_path": "/root/codex/p77box/support/backup-auth.key"
+    },
+    "cas_manifest_sha256": "700457604aabc47ba7ae28fd5db6f3335132c997055bffade791bcb6dfcda853",
+    "created_at": "2026-11-22T18:24:55.903+00:00",
+    "database_sha256": "5d1c249a7564cbdd3acd2e82dd2506998e1341a5b4786f070e9a0080b0ccbbf8",
+    "files": {
+      "cas-manifest.json": {
+        "sha256": "699dd28c5834fb655ed53eb12e2bc74e76e6765c1233de5d4103158d95ce8238",
+        "size": 167208
+      },
+      "realm.sqlite3": {
+        "sha256": "5d1c249a7564cbdd3acd2e82dd2506998e1341a5b4786f070e9a0080b0ccbbf8",
+        "size": 866476032
+      }
+    },
+    "format_version": 2,
+    "manifest_hmac": "[withheld]",
+    "manifest_sha256": "c05900970fcddd73f7f6f704facd05132dffa35a9c7f7f70136b489f3a2e1b7b",
+    "realm": {
+      "display_name": "Astrid Workspace",
+      "id": "0d6fd08f-8754-489c-8af9-276dcde43762"
+    },
+    "schema": {
+      "version": 33
+    }
+  }
+}

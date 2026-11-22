@@ -1,0 +1,8 @@
+2026-11-22T19:39:13Z
+processes containing owned stack path:
+target=absent
+catalog=absent
+discovery=absent
+port 2400: bind succeeded
+port 17500: bind succeeded
+port 17501: bind succeeded
