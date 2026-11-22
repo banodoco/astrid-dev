@@ -13,13 +13,23 @@ The owner asked on 22 November 2026, in the [Release 15 Lead session](https://cl
 - **Callers can keep working** ([host-check-L3.txt](evidence/host-check-L3.txt)): 13 product files and 140 test files import or use the module; product code uses 30 names, 24 of them private. 47 test patches in 9 files target names on this module; a patched definition that moves stops being patched, which is the rule on every card. `source_identity.py:39`, `scripts/ci_windows_journey.py:468` and the structure baselines name the file.
 - **Why the existing guard did not hold** ([host-check-L4.txt](evidence/host-check-L4.txt)): `tests/test_structure_contracts.py::test_giant_file_inventory_matches_rationale` checks that a hand-edited count is within 50 lines of the real one. The count has been edited upward five times. The test fails today for this file and 17 others.
 
-**Challenge:** Pending — the extraction rows have not yet had an independent critique. Next: commission one, and record here what is accepted and what is set aside.
+**Challenge:** Reviewed — commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) on 22 November 2026 and done by an independent Codex critic (`gpt-6.2-astra`, high effort, read-only, no stake in the draft) against astrid-agent `048ab307` and the HM2 branch. It ran no tests. Its report is [critique-extraction.txt](evidence/critique-extraction.txt). The owner asked that such critiques be weighed, not adopted wholesale; what the planner did with each finding:
+
+- **Accepted — the "stateless" groups have exceptions.** `CapabilityRecord.manifest()` reaches into source custody and `_AttemptLifetime` changes its own state (`generic_host.py` near 3087 and 5304). The helper check had looked at functions, not classes. The first extraction is narrowed to the genuine leaves and routed `X`.
+- **Accepted — the Runtime adapter is not self-contained.** It uses digest, claim and terminal helpers and two readers that belong with the handoff code, and at least 18 tests replace it through imported module names, not the three counted. What it stands on now moves first (EX-4), and both cards are `S`.
+- **Accepted — source custody and worker bindings do not move as one.** Custody needs one accessor for a binding that is installed at run time; worker bindings and adapters import concrete packs under an exemption that covers this file alone, so those parts stay in the host.
+- **Accepted — an identical body is not proof.** A patched name, a replaced `os`, rebound module state, class identity and the `-m` launch are each now a rule on every card. The check of callers had missed that production launches this file with `-m`.
+- **Accepted — do not rename `os` first.** Windows tests replace `generic_host.os`; the rename is not a free prerequisite and is dropped from the path. [#1294](https://github.com/banodoco/astrid-dev/issues/1294) stays open for when those tests move.
+- **Accepted — the guard.** Three fixed ceilings let deletions pay for a longer method and can be raised in the same change. EX-0 is now one check against the merge base, across the execution package, that also stops an oversized function growing.
+- **Accepted — bring the safety net across first.** Eight of the nine characterisation files are still on the Release 14 plan branch. Now EX-1.
+- **Accepted — the estimate.** Eleven days for the first phase was optimistic and thirty is an allowance. The plan now commits to EX-0 to EX-3 and re-estimates on the first measured extraction.
+- **Kept as drafted, and the critic agreed:** owners as objects, not mixins, and the attempt last. Its named risk, handing an unsettled attempt to the reconciliation thread, is written into EX-9 with the test that catches it.
 
 ## Owner decisions
 
-- **D1 — how much in Release 15.** (a) Phase A without local preparation: the guard and EX-1 to EX-5, about 11 days, the file falling by about 6,000 lines. (b) All of it, about 30 days. (c) The guard only (EX-0), about a day and a half. Recommendation: (a); the guard alone stops the growth, and phase A is pure moves with small risk. Pending.
-- **D2 — who may raise a ceiling.** Recommendation: only the owner, in a pull request that changes nothing else. Pending.
-- **D3 — local preparation and the command-line lifecycle (EX-6).** It is custody-sensitive and the map ties it to [Plan 38](../38-one-process-identity/plan.md), which is in Release 16. (a) Wait for Plan 38. (b) Do it in Release 15 with Plan 38's owner agreeing the boundary. Recommendation: (a). Pending.
+- **D1 — how much in Release 15.** (a) The guard, the safety net and the first measured extraction (EX-0 to EX-3), about 5 to 6 days, then a re-estimate. (b) Everything, about 30 days. (c) The guard only (EX-0), about 2 days. Recommendation: (a). The guard alone stops the growth; the first extraction tells us what the rest really costs. Pending.
+- **D2 — who may let the file grow.** With a check against the merge base there is no number to raise; an exception has to be a visible change to the check itself. Recommendation: only the owner approves one, in a pull request that changes nothing else. Pending.
+- **D3 — local preparation and the command-line lifecycle (EX-8).** It is custody-sensitive and the map ties it to [Plan 38](../38-one-process-identity/plan.md), which is in Release 16. Recommendation: it waits for Plan 38. Pending.
 
 ## Starting code
 
