@@ -10,7 +10,7 @@
 
 **Estimate:** About 17 engineering days (14 to 20): the timings, the baseline and the ceiling test about 5.5, generation about 5.5, timeline commands about 4, the client's waits about 2. About 15 without batch edits. Three workers can run most of it side by side.
 
-**Waiting on:** a manager, and a machine with an installed Astrid and a real ComfyUI for the baseline (US-0). The owner's decisions are made ([inputs.md](inputs.md#owner-decisions)). US-1 can start now.
+**Waiting on:** a manager, and the repeatable installed A/B run for the baseline (US-0), which runs in a clean container with a stand-in ComfyUI. The owner's decisions are made ([inputs.md](inputs.md#owner-decisions)). US-1 can start now.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. A manager starts at the [handover](handover.md).
 
@@ -25,7 +25,7 @@ Measured on 22 November 2026 on the Release 15 code, run from source ([inputs.md
 **Included:**
 
 - **Timings everyone can see.** Each stage of both commands is timed, shown on request and in the JSON result, and a command that has waited two seconds says what for.
-- **A real baseline,** on an installed Astrid with a real ComfyUI, before and after.
+- **A repeatable installed baseline,** before and after: the official installer, the published tuple against a candidate manifest, in a clean container with a stand-in ComfyUI, the two arms alternated and the load gate met.
 - **A test that holds the ceilings.** It runs on every pull request against a real Runtime and a stand-in ComfyUI. Its ceilings start at today's numbers and may only fall.
 - **Each thing worked out once per command:** the workflow, the entry, the registries, the timeline's bundle, and a cheaper proof of the source.
 - **Many timeline edits in one command.**
@@ -62,9 +62,9 @@ It takes two things that already exist: Plan 55's standing meter, merged on that
 
 - **Visible:** `--timings` on `generate` and on a timeline edit shows every stage, and the stages add up to the wall time within 10%.
 - **Once:** call counts in tests show one workflow build, one entry resolution, one registry load and one bundle read per command.
-- **Faster, by measurement:** the second baseline shows a timeline edit at or under 1 second on an installed Astrid, and `generate` to queued at no more than 60% of the first baseline. If the installed timeline figure was already under a second, that is recorded and the ceiling is set there.
+- **Faster, by measurement:** the second baseline (the installed A/B run's after arm) shows a timeline edit at or under 1 second on an installed Astrid, and `generate` to queued at no more than 60% of the before arm. If the installed timeline figure was already under a second, that is recorded and the ceiling is set there.
 - **Held:** the ceiling test fails, naming the stage, when a 1.5-second delay is injected into any one stage, and its ceilings were lowered to the new medians.
 - **Slow says why:** a command held behind another process's lock prints what it is waiting for after two seconds, and gives up with a clear message at its limit.
 - **Batch:** twenty clips are added by one command in one accepted commit, and a refused batch changes nothing.
 - **Unchanged behaviour:** every refusal a command gives today before queuing or committing, it still gives, at the same point.
-- **Limits of the proof:** CI uses a stand-in ComfyUI and a Runtime run from a checkout, so the real figures rest on the two baselines. The halving of `generate` is an estimate until the second baseline. Landing and publishing remain the owner's.
+- **Limits of the proof:** CI uses a stand-in ComfyUI and a Runtime run from a checkout, so the figures rest on the two arms of the installed A/B run, quoted as measured on an installed build in a CPU container with a stand-in ComfyUI; a real ComfyUI's node-information answer and GPU work are not measured. The halving of `generate` is an estimate until the second baseline. Landing and publishing remain the owner's.

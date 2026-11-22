@@ -9,7 +9,7 @@ For the manager who takes this plan. Nothing has started. Use the [Manage skill]
 1. **Read** [plan.md](plan.md), [tasks.md](tasks.md), then the research report named in each card ([evidence/](evidence/)). The reports cite lines at the commits in [inputs.md](inputs.md#source-identities); re-check each before briefing a worker.
 2. **The owner's decisions are made** ([inputs.md](inputs.md#owner-decisions)). Nothing here waits on her except the machine for US-0.
 3. **Cut `release/15/plan-81`** from `release/15/main` in astrid-agent and astrid-runtime, and record the commits in the brief's Branches table and in [inputs.md](inputs.md#source-identities).
-4. **Start US-1.** When it lands, arrange US-0 (a real baseline on an installed Astrid with a real ComfyUI; ask the owner whose machine) and run US-2 to record today's numbers before anything is made faster: those are the ceilings.
+4. **Start US-1.** When it lands, run US-0 (the repeatable installed A/B run in a clean container; no machine from the owner is needed) and run US-2 to record today's numbers before anything is made faster: those are the ceilings.
 5. **Then the three lanes.** No card here keeps anything for a later command; if a worker proposes a cache on disk or at module level, that is [Plan 82](../82-reuse-across-commands/plan.md)'s work, not this plan's.
 6. **Run US-0 again at the end** and hand its table to Plan 82.
 
