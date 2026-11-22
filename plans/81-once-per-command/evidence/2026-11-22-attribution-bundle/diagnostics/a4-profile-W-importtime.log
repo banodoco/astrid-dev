@@ -1,0 +1,5 @@
+usage: compare_runner.py [-h] --agent AGENT --agent-sha AGENT_SHA
+                         [--trials TRIALS] [--routes {W,I,E} [{W,I,E} ...]]
+                         [--modes {plain,timings,importtime,cprofile} [{plain,timings,importtime,cprofile} ...]]
+                         output
+compare_runner.py: error: --agent-sha must be a full lowercase 40-character SHA
