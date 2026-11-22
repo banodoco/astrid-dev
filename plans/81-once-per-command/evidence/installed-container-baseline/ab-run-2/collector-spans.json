@@ -1,0 +1,126 @@
+{
+  "source_directory": "/root/codex/plan-81m/installed-baseline-handover/evidence/ab-run-2/raw",
+  "definition": "C is the top-level collector_span_seconds field from each raw stdout JSON; start is preserved verbatim as start provenance. Raw stdout files are not included; each hash pins the corresponding absent raw stdout file.",
+  "samples": [
+    {
+      "name": "same-after-1",
+      "C": 5.3408787040007155,
+      "start": "command entry",
+      "raw_stdout_sha256": "93bdd6562b5a9994cb912d5e3a3462f05a4d52748368093dbbf79cc9a5c15f64"
+    },
+    {
+      "name": "same-after-2",
+      "C": 5.690027418999307,
+      "start": "command entry",
+      "raw_stdout_sha256": "d3f1bd9474bc873ed3b9c7434d80ed2758a965126388fc972cb29a0977236d81"
+    },
+    {
+      "name": "same-after-3",
+      "C": 5.619342126999982,
+      "start": "command entry",
+      "raw_stdout_sha256": "8ebfb3135c3f13aef84c71b9591d699d8d801641b1d76cbc189c60feaab76460"
+    },
+    {
+      "name": "same-after-4",
+      "C": 5.2442043789997115,
+      "start": "command entry",
+      "raw_stdout_sha256": "9850eb7927e2fa6fd306df59531c234fb3fefc0b6bf418e16384dacbf3ca5e38"
+    },
+    {
+      "name": "same-after-5",
+      "C": 5.4746255580012075,
+      "start": "command entry",
+      "raw_stdout_sha256": "a671d9da5dedd0fc87b25ac2b78cb8e4a997e00e9e6036c66ba8607b611d417d"
+    },
+    {
+      "name": "same-vc48-1",
+      "C": 10.570383632000812,
+      "start": "command entry",
+      "raw_stdout_sha256": "876775e24db7ffeb6d3360087c7434eb42047c155237b70ed37d2d6471222125"
+    },
+    {
+      "name": "same-vc48-2",
+      "C": 10.379809371999727,
+      "start": "command entry",
+      "raw_stdout_sha256": "f350e65fb04b2b2002e53eefec7c985afe68002e09c6d172d88c0b8885202c1c"
+    },
+    {
+      "name": "same-vc48-3",
+      "C": 10.906660516000557,
+      "start": "command entry",
+      "raw_stdout_sha256": "26b80d2bcacecbfc52617d61ef80081a0c162452fbacbd3f1de24c88a94d9cb7"
+    },
+    {
+      "name": "same-vc48-4",
+      "C": 10.959016277000046,
+      "start": "command entry",
+      "raw_stdout_sha256": "95b0acffb9053c4551ff154800f13c8cc04923d169841ee567f512c77635a56e"
+    },
+    {
+      "name": "same-vc48-5",
+      "C": 10.905722651999895,
+      "start": "command entry",
+      "raw_stdout_sha256": "c109dbc264cae0b9a843ab55641ad9a4e9eab89b914181be5708ca78fe1d63b3"
+    },
+    {
+      "name": "changed-after-1",
+      "C": 5.112169202999212,
+      "start": "command entry",
+      "raw_stdout_sha256": "c9c7f14ff7e097c7db8871ceb719d14fc04140563c39ede80488a127507a56d1"
+    },
+    {
+      "name": "changed-after-2",
+      "C": 5.027203729998291,
+      "start": "command entry",
+      "raw_stdout_sha256": "37a9c4e2975eafc44315143b9a8e9c7c0b5fd0903101c2c35fd9b00dddb7a3c5"
+    },
+    {
+      "name": "changed-after-3",
+      "C": 5.504924212000333,
+      "start": "command entry",
+      "raw_stdout_sha256": "e6b2b6cc946d658c019e543e5d11c2d84f39e7edc2a4f37a04d95620f1412f8f"
+    },
+    {
+      "name": "changed-after-4",
+      "C": 5.483375911000621,
+      "start": "command entry",
+      "raw_stdout_sha256": "8317cafc36c6a505edfb65505711293fe483012f22f111bd32f2ee269b88226a"
+    },
+    {
+      "name": "changed-after-5",
+      "C": 4.953808538000885,
+      "start": "command entry",
+      "raw_stdout_sha256": "7536f5a91f90d880c9cc0dbf87348065cd442e85405f78f20c2e5759a697563f"
+    },
+    {
+      "name": "changed-vc48-1",
+      "C": 10.616438259999995,
+      "start": "command entry",
+      "raw_stdout_sha256": "8e7ec15b44e919fd2d217cf0959a67b8f8eee3be70d57e5fff02bc64e6950b92"
+    },
+    {
+      "name": "changed-vc48-2",
+      "C": 10.566140099001132,
+      "start": "command entry",
+      "raw_stdout_sha256": "5d91e47e8958aca58936449a9f8e779ef321776688fdfc28fd432686cb32f38e"
+    },
+    {
+      "name": "changed-vc48-3",
+      "C": 10.727978198001438,
+      "start": "command entry",
+      "raw_stdout_sha256": "b4e986e5da2c347be2574f4867b0204776147c20b4d4d25872ee3b61f9ece13e"
+    },
+    {
+      "name": "changed-vc48-4",
+      "C": 11.070503843000552,
+      "start": "command entry",
+      "raw_stdout_sha256": "4ef8a5a2f9e0f3abcc70a5d7444f0d98744dbae71e9562b41e96658472093373"
+    },
+    {
+      "name": "changed-vc48-5",
+      "C": 10.222592815000098,
+      "start": "command entry",
+      "raw_stdout_sha256": "70b6f30d430bead06164754dd13b7dce2f9d8c0267d88bb43b712052c7a9d986"
+    }
+  ]
+}
