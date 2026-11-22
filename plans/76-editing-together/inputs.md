@@ -53,3 +53,7 @@ Before code work, record the actual repository, ref and SHA for each. This plan 
 - [Plan 63 Dependable saving](../63-dependable-saving/plan.md), [Plan 75 Fast saving](../75-fast-saving/plan.md), [Plan 18 Extensible editing](../18-timeline-editing/plan.md).
 - Release 14: [`releases/14.md`](../../releases/14.md); gap: [F-001](../../vision/gaps/F-001-platform-reliability.md).
 - Reviews (held by the Release 14 Lead; their findings are summarised above): `fable-agent-edits.md`, `fable-four-questions.md`.
+
+## Plan 77 evidence for ET-6
+
+Round 5 attempted one writing tab and stopped at the guarded after-head check. Postflight preserved a single v30 head. Round 2's second-tab POST happened later after the first tab's edit remained unconfirmed. ET-6 still needs the controlled simultaneous editor, agent and bundle cases from an authenticated writable head, plus the actual clash and recovery proof. [Plan 77 Round 5 and loop closure](../77-saving-holds-on-a-heavy-timeline/rounds.md#round-5--22-november-2026-blocked-save-at-the-round-cap)

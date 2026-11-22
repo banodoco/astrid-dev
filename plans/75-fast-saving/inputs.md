@@ -91,3 +91,9 @@ Before code work, record the actual repository, ref and SHA for each. This plan 
 - Issues: [#826](https://github.com/banodoco/astrid-dev/issues/826), [#846](https://github.com/banodoco/astrid-dev/issues/846), [#847](https://github.com/banodoco/astrid-dev/issues/847).
 - Release 14: [`releases/14.md`](../../releases/14.md); gap: [F-001](../../vision/gaps/F-001-platform-reliability.md).
 - Reviews and profiles of 17 and 18 November (held by the Release 14 Lead; their findings are summarised above).
+
+## Plan 77 evidence for FS-0 and FS-1
+
+Round 5 on the 300-clip synthetic v30 reached first usable and full opening at 42.669 and 43.727 s cold and 27.586 and 28.564 s warm. The first complete metadata response under one second came 205.452 s after the first UI marker, compared with 152.779 s in the Round 4 continuation. Several slow responses completed earlier in Round 5. The first edit remained unconfirmed. Its 447.99 Runtime CPU s over a 451.819 s whole-row observation include competing reads and repeated verification. Keep opening, verification, transport availability and commit execution as separate intervals in FS-0 and FS-1. Seed batches on the partial fixture grew from seconds to minutes, and the direct history read serialized more than 120 MB in Round 1. [Plan 77 Round 5 and loop closure](../77-saving-holds-on-a-heavy-timeline/rounds.md#round-5--22-november-2026-blocked-save-at-the-round-cap)
+
+The next design can evaluate removing the automatic complete history walk at opening, verifying inverse targets on demand, persisting a verification checkpoint and serving authenticated reads during shared verification. Preserve the exact pin, freshness and receipt conditions for any proposal. The checkpoint remains an owner decision, and these findings do not change Plan 75's release placement. [Plan 77 Round 5 and loop closure](../77-saving-holds-on-a-heavy-timeline/rounds.md#round-5--22-november-2026-blocked-save-at-the-round-cap)

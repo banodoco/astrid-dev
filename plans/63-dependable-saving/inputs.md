@@ -208,3 +208,7 @@ Release 14 fix branches, as recorded on 18 November (identities to be recorded a
 - Principle: [Plan 54](../54-warm-latency/plan.md) "Verify at a trust boundary once"; writer-side lesson: [Plan 59 handover](../59-into-the-minkhole-proof-point/handover.md).
 - Release 14: [`releases/14.md`](../../releases/14.md); gap: [F-001](../../vision/gaps/F-001-platform-reliability.md).
 - Reviews and profiles of 17 and 18 November (the save-failures evidence pack, the save-category design, the stability sequencing, the Release 14 commit profile, the Opus Phase 0 review): held by the Release 14 Lead; their findings are summarised above.
+
+## Plan 77 evidence for CC-5
+
+The reduced Round 5 move entered Saving at 0.421 s and showed an unconfirmed result at 30.960 s with Try again and Discard. The recorder saw no scoped POST before public verification. Immediate reads failed, and independent postflight recovered exact v30. Round 2 had a separate unconfirmed editor outcome followed by a single accepted late write. The CC-5 browser measure should observe durable local queue ownership, first dispatch, the authoritative receipt and the Saved transition separately, and distinguish the two outcomes. [Plan 77 Round 5 and loop closure](../77-saving-holds-on-a-heavy-timeline/rounds.md#round-5--22-november-2026-blocked-save-at-the-round-cap)
