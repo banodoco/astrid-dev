@@ -23,7 +23,7 @@
 | Decision | Options and recommendation | State |
 | --- | --- | --- |
 | T1 Word-anchored retime | Decided by the coordinating session at the owner's delegation: accept a timing-only edit only when the clip's offset from its resolved word is unchanged within one frame; otherwise refuse and name the supported form. Rejected: the exemption as written (a clip can drift from its word and be snapped back by a later reflow); refusing everything until full word binding exists (blocks the ripple edit a real film needed). | Decided |
-| T2 The test timeline | Decided: the heavy fixture built by the App's [`scripts/save-loop/build-fixture.mjs`](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/build-fixture.mjs), standard variant, the same one Plan 87 renders, so every edit can be rendered on a stack already proven to render it. The fixture's clips are generated media; the word-anchored cases in the loop (edits 1 and 5) also run on the film project, which has real narration. | Decided |
+| T2 The test timeline | Decided: the heavy fixture built by the App's [`scripts/save-loop/build-fixture.mjs`](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/build-fixture.mjs), standard variant, the same one Plan 87 renders, so every edit can be rendered on a stack already proven to render it. The builder was on `release/15/plan-77` at filing; use the copy on `release/15/main` or `main` if it has landed. The fixture's clips are generated media; the word-anchored cases in the loop (edits 1 and 5) also run on the film project, which has real narration. | Decided |
 
 ## Source identities
 

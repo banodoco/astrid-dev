@@ -109,7 +109,7 @@ This keeps a working render in hand from day 2, makes the render itself the regr
 
 ## Interfaces and handoff
 
-**Consumes:** `release/15/main` heads of astrid-agent, astrid-runtime and astrid-app at cut time; the Runtime pin; the motion pack revision vendored by the App; the two donor branches above; the App's save-loop fixture builder on `release/15/plan-77`.
+**Consumes:** `release/15/main` heads of astrid-agent, astrid-runtime and astrid-app at cut time; the Runtime pin; the motion pack revision vendored by the App; the two donor branches above; the App's save-loop fixture builder (on `release/15/plan-77` at filing; use the copy on `release/15/main` or `main` if it has landed by then).
 
 **Produces:** one function that builds a worker's environment for both launch validation and dispatch; one source of pack roots for the bundler; one motion pack revision for preview and render; a Runtime log line for slow requests and a host log line for each failed heartbeat; a real render check in CI.
 

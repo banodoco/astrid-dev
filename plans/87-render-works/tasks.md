@@ -32,6 +32,7 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 ## Dispatch notes
 
+- **Where the fixture builder lives.** At filing it is on the App's `release/15/plan-77` branch (`scripts/save-loop/`). It may have landed on `release/15/main` or `main` by the time this runs. At dispatch, look there first and use the landed copy; fall back to the plan-77 branch only if it has not landed. Record the commit used.
 - **RN-1 is not a merge.** The donor branches are evidence. Cherry-pick, resolve, render.
 - **Stopgaps are tracked, not hidden.** The plan branch keeps a short note listing each stopgap commit still present and the task that removes it. The branch is not offered for merge while the note is non-empty.
 - **Restart, do not repair.** If a failed render leaves the stack refusing work, restart the stack and continue. Do not fix recovery here; add what you saw to [#1514](https://github.com/banodoco/astrid-dev/issues/1514).
