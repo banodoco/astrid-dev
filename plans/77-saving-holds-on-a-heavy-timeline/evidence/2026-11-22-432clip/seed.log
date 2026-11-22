@@ -1,0 +1,69 @@
+accepted Add missing fixture tracks: 7 commands elapsed=1785.9ms receipt=txn-dbac4a8741d9464cafe3c5a0803c6b7b revision=authoring-parent-revision-196d6b215ebbc701fd0d70991955e9aebde863846425d46193b522dbedd6148c
+accepted media imports 50/616 in 10101.9 ms receipt=txn-fe94ee34bac04dc6b438cba9611b49a0
+accepted media imports 100/616 in 19827.2 ms receipt=txn-fc63825450614adbb406117aa82db7a1
+accepted media imports 150/616 in 30053.5 ms receipt=txn-e3ae2275c32145c5b3e3a62dc3c83f89
+accepted media imports 200/616 in 41857.2 ms receipt=txn-45069d03941841c8bd78e2578c6cc326
+accepted media imports 250/616 in 53368.5 ms receipt=txn-8ff82b3ba67d449aae790a9b8ddadda2
+accepted media imports 300/616 in 65302.6 ms receipt=txn-caf20c41b3504d02b55e23ec93868c8a
+accepted media imports 350/616 in 77325.7 ms receipt=txn-f9fc001c076a4667914d3707ab71990a
+accepted media imports 400/616 in 89721.9 ms receipt=txn-e6965a1227b745baa4d37a0484200c56
+accepted media imports 450/616 in 102517.9 ms receipt=txn-c0c7c41f0448411384bfe30805cb8d14
+accepted media imports 500/616 in 115901.0 ms receipt=txn-dcecf934834b4fa290e3d361279fcec6
+accepted media imports 550/616 in 128988.1 ms receipt=txn-2ae50d35c52444ecb6d53767c871355d
+accepted media imports 600/616 in 142882.5 ms receipt=txn-2ff4d5ac55454b3cb5e97e51fbe1c928
+accepted media imports 616/616 in 147364.0 ms receipt=txn-c1a98168791242a88cf4ed4ef95f55b4
+accepted Add fixture clips 1-12: 12 commands elapsed=5288.8ms receipt=txn-e8f755ca022b499e830eb0ef53693966 revision=authoring-parent-revision-6df5b334bd66cf2d4d2c9c40cea5e37b008419b23b75f9e991f518e80761c8f4
+accepted Add fixture clips 13-24: 12 commands elapsed=5637.9ms receipt=txn-ad8bcdb63b514061825ee3861addd415 revision=authoring-parent-revision-c1139d9bb4d963ff8fdabeb3aee20dd45b9b83a5908c3b65d49514b71c38df7f
+accepted Add fixture clips 25-36: 12 commands elapsed=7829.3ms receipt=txn-70c9bddb68524da0b7b78ec8a88fd1ac revision=authoring-parent-revision-2d38f9bb94fe66a9c60a79d0fe0436205ac9a22cee7d520bc4b05b08ededa617
+accepted Add fixture clips 37-48: 12 commands elapsed=12423.7ms receipt=txn-f80441de7e5d4d499f8164eff23833dc revision=authoring-parent-revision-83e350c3d07ea49d2e00e6a89cd9c7babe06136a537e1fbc672635b0df98d68d
+accepted Add fixture clips 49-60: 12 commands elapsed=12511.9ms receipt=txn-59ded822049246779d77e728171bc9f3 revision=authoring-parent-revision-98248657baaf7eaae1108a3cacd413ab7d2dc08be40e2729d2d996443ed782f2
+accepted Add fixture clips 61-72: 12 commands elapsed=17193.9ms receipt=txn-181a7e2635394814a4881a82c487663e revision=authoring-parent-revision-b076c57d800254adc841167835f5633f2b651c4c4850ae39db6c88470c6bafd5
+accepted Add fixture clips 73-84: 12 commands elapsed=24348.1ms receipt=txn-e93699810d9f40819e569b09b49c59bb revision=authoring-parent-revision-326a5670d6850edde4953dbd40a6c5d4d488efee374cebdfc6bab229b700024a
+accepted Add fixture clips 85-96: 12 commands elapsed=21742.6ms receipt=txn-9ee650e724364c1dac98bc19059f32c3 revision=authoring-parent-revision-927ca7574a05a0b4692f5883aa6fe6b22c41d0bc929ae6026077ed2199738fde
+accepted Add fixture clips 97-108: 12 commands elapsed=30518.6ms receipt=txn-d9964471c8a945069318d9c2ee105ee2 revision=authoring-parent-revision-0d248249e23633014507e5ac5e39ccc8abdb118016545cc4e4118caab0ce4686
+accepted Add fixture clips 109-120: 12 commands elapsed=35456.9ms receipt=txn-184567b9d77b4dd1812f5f89c3cd4244 revision=authoring-parent-revision-748b1fa2ffb99e22bef2336466bcb2ccdda848020aa6cb243304791070d67da1
+accepted Add fixture clips 121-132: 12 commands elapsed=41319.5ms receipt=txn-1c1b6731abe2457d9517151a46737fa1 revision=authoring-parent-revision-c583862bb12c6be1825ac72bcb65d3a4f94e3157535cbb04049a811c54147ac5
+accepted Add fixture clips 133-144: 12 commands elapsed=46915.4ms receipt=txn-178da44f18724d2191ae9264f4a7a827 revision=authoring-parent-revision-c7321fe4766b00bff5850b033a4527ef4b01b47c098f8b4aea2eff8897177544
+accepted Add fixture clips 145-156: 12 commands elapsed=54436.3ms receipt=txn-b192d407360a444b99f7709882e895a2 revision=authoring-parent-revision-4ab7621a8ae40974cfb00b3562d68db6cee0c2204a8b594b5406c17a0118dcff
+accepted Add fixture clips 157-168: 12 commands elapsed=105230.8ms receipt=txn-5faae9ea3329469f9704bc92a0ac0c9a revision=authoring-parent-revision-9b76cefd52923ca0bbe9eb9400950fdec8dfa02e0ad8a8cbabb4d66fcdbb630a
+accepted Add fixture clips 169-180: 12 commands elapsed=64170.4ms receipt=txn-4f1f9de7efd94423851b6271c3dac289 revision=authoring-parent-revision-cd8cd7605aecb1e0bcb45adfffa8942141b8972391fd9230e43beadf8445d83e
+accepted Add fixture clips 181-192: 12 commands elapsed=71743.7ms receipt=txn-31c9f32794a140d2bd2315bf87ade65b revision=authoring-parent-revision-a7f417c195c153da9510b640d8676ae1681550ae33d5f2673fca6e081e414111
+accepted Add fixture clips 193-204: 12 commands elapsed=162124.1ms receipt=txn-e5163d009d704cf3a528f86ca1bb3b20 revision=authoring-parent-revision-8917493124c589882323b4c33cbf403471d59d2e39752ba1834993d4cdf6124b
+accepted Add fixture clips 205-216: 12 commands elapsed=206011.2ms receipt=txn-63f45c43fd2e49c4a99db50387dde902 revision=authoring-parent-revision-62bd6a13aeb96a303eb7191d0afad5ffd8cea253de70649f135bcf24df02d16a
+accepted Add fixture clips 217-228: 12 commands elapsed=101747.8ms receipt=txn-b99bf75029004a109311d363e9e1d26e revision=authoring-parent-revision-be765ab898be59ea1e6ccc663b5c9413a6f6e4462b0485fcc38a567ab487829d
+accepted Add fixture clips 229-240: 12 commands elapsed=105304.6ms receipt=txn-08bd94666c3e4e94a0af296f8442bfeb revision=authoring-parent-revision-b1f606239fdb0444908047b66ec134b45d613b7687924385ae2924a9db589dd9
+accepted Add fixture clips 241-252: 12 commands elapsed=114873.2ms receipt=txn-cbbb57985f6f42a8a3a422fb06d75a94 revision=authoring-parent-revision-7262254d02386efe2d9c735a7dc795223032015a85fa3a4c4132542d37447d8d
+accepted Add fixture clips 253-264: 12 commands elapsed=243979.4ms receipt=txn-c39d9755dfd640c39203b3ff2e56702b revision=authoring-parent-revision-4faf0af0d33d41384ab5e673d583d4f9dff78d03ddcf883dc605fadb7d03fc7d
+accepted Add fixture clips 265-276: 12 commands elapsed=287007.0ms receipt=txn-0ff8e0e3783b4c04a67ea544f2b031b2 revision=authoring-parent-revision-a29854066b32ae2faadb5989534bcd25aecaf5bcdc5cc6580a036d1b13c23868
+accepted Add fixture clips 277-288: 12 commands elapsed=153393.1ms receipt=txn-ff027530abdc46f89b671f9c9bff27fe revision=authoring-parent-revision-fef60599ac39c188eecbe2f2095a39932f2613437992a1cc901bffd7a0bf8087
+accepted Add fixture clips 289-300: 12 commands elapsed=171378.1ms receipt=txn-983a045c71f941c9b28732e54b6a6f44 revision=authoring-parent-revision-5da75209ed1f020444743486dc4f3488a73d1b0918081fb6fe96295344c1306b
+accepted Add fixture clips 301-312: 12 commands elapsed=193929.9ms receipt=txn-86c37dcc67f741fbbf4edb87bd625bce revision=authoring-parent-revision-de3e0f1dfb28907aa0091625ffffedc41f4de14ac2d21b49001fc63a82aac68b
+accepted Add fixture clips 313-324: 12 commands elapsed=204477.7ms receipt=txn-4f5a725596714719a5ca3854c9508f3a revision=authoring-parent-revision-6d5af5e24a8dc483b98fa59f93160395bb86839722fe8b802bcedaa7031122c7
+accepted Add fixture clips 325-336: 12 commands elapsed=232838.0ms receipt=txn-8b3f069457104199af16faec789e527c revision=authoring-parent-revision-6eaa6eb95c8d414649b42d9d48099a57bf27e25e182c9f0db603638b1a1a9ab5
+accepted Add fixture clips 337-348: 12 commands elapsed=228117.9ms receipt=txn-5c651ecd28f64cdfb0ed62ff29e9fd6c revision=authoring-parent-revision-97ab82af591c706a483fc2e191bf10f103394e41dac4fad14bc46d3d9b25fec5
+accepted Add fixture clips 349-360: 12 commands elapsed=210151.1ms receipt=txn-eb4f18f832f84910b44b736e57f65abe revision=authoring-parent-revision-c51b426717be0e79a07a3e999afc1ad17bf7ea39e8cba358e7a1df057ebabb7c
+accepted Add fixture clips 361-372: 12 commands elapsed=269594.1ms receipt=txn-528396ff05a94f2d90843809060126d1 revision=authoring-parent-revision-1ed22a69394035bc2d77d7711b1cac8fdb16e943b751069e221ea61fefc8f522
+accepted Add fixture clips 373-384: 12 commands elapsed=280342.6ms receipt=txn-fa2c927cf3154f0b99bb3b8a1b1df9a4 revision=authoring-parent-revision-df9096b24349e4730572c237a2d68cfa37f2a200cefb547c4244c8a445b7cec7
+accepted Add fixture clips 385-396: 12 commands elapsed=294552.0ms receipt=txn-c512ccad0b88407a8632f9cb90022bb4 revision=authoring-parent-revision-3f98502d6ec6c071f49cccdf48e019809742e1b900198b7dfdd1ffa5ba2abcf8
+accepted Add fixture clips 397-408: 12 commands elapsed=331081.7ms receipt=txn-24fae03608ee4dbfa65034e4d0360639 revision=authoring-parent-revision-9378bde01f684a1cfdf0e765110e5cc386f9dfcdb8edf73635f5e2e95369eb0b
+accepted Add fixture clips 409-420: 12 commands elapsed=360535.4ms receipt=txn-969a34a1da904e5783aa624be8fcd369 revision=authoring-parent-revision-1c045d7eed891f5132aee349a7c7b6dc85c4542c38d719733c856e5c959ae806
+accepted Add fixture clips 421-432: 12 commands elapsed=418416.2ms receipt=txn-f3cbd404b1a0417ebc39901a3cd2b97a revision=authoring-parent-revision-811ee570a87ee8eb1a3fd7d94309320dd12485a2db35aef4e1f774fb6d4ad69b
+Traceback (most recent call last):
+  File "/root/codex/p77box/fixture/build-c2930794.py", line 273, in <module>
+    heavy_doc, heavy_targets, heavy_times, created_track_count, heavy_track_rows, media_import_elapsed_ms = populate(timeline_id)
+                                                                                                            ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/codex/p77box/fixture/build-c2930794.py", line 201, in populate
+    commit_batch(tl, timeline, f'Add fixture clips {start + 1}-{start + len(batch)}',
+  File "/root/codex/p77box/fixture/build-c2930794.py", line 132, in commit_batch
+    result = tl.commit(edit, label=label, idempotency_key=key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/codex/p77box/stack/program/versions/1d2700baa660/py/lib/python3.11/site-packages/astrid/sdk/timeline/commit_session.py", line 751, in commit
+    bundle = fetch_bundle(self.session.project_id, self.session.timeline_id,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/codex/p77box/stack/program/versions/1d2700baa660/py/lib/python3.11/site-packages/astrid/sdk/timeline/store.py", line 509, in fetch_bundle
+    return read(client)
+           ^^^^^^^^^^^^
+  File "/root/codex/p77box/stack/program/versions/1d2700baa660/py/lib/python3.11/site-packages/astrid/sdk/timeline/store.py", line 474, in read
+    raise TimelineEditError(f"could not open {timeline!r} in {project!r}: {_error_text(opened.error)}")
+astrid.sdk.timeline._common.TimelineEditError: could not open 'save-loop-heavy-c2930794' in '23e489705d764d1497e6c9b830f55ffe': runtime request timed out: the Runtime did not answer list_timeline_commits within 300 s; it only reads, so nothing was written or committed (transport_timeout)
+build-fixture: /root/codex/p77box/stack/program/versions/1d2700baa660/py/bin/python failed (1)

@@ -1,0 +1,17 @@
+{
+  "start_utc": "2026-11-22T18:07:27.723697+00:00",
+  "timeout_seconds": 900,
+  "limit": 50,
+  "cursor": null,
+  "ok": true,
+  "response_bytes": 263792569,
+  "items_in_page": 38,
+  "pages_returned": 1,
+  "next_cursor_present": false,
+  "head": {
+    "publication_id": "txn-f3cbd404b1a0417ebc39901a3cd2b97a",
+    "revision_id": "authoring-parent-revision-811ee570a87ee8eb1a3fd7d94309320dd12485a2db35aef4e1f774fb6d4ad69b"
+  },
+  "end_utc": "2026-11-22T18:13:09.828047+00:00",
+  "elapsed_seconds": 342.1044053380001
+}

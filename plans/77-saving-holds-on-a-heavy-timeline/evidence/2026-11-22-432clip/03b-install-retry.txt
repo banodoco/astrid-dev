@@ -1,0 +1,6 @@
+UTC 2026-11-22T16:26:43Z
+Host approved retry. git fetch --no-tags --depth=1 origin 78f0e0960f471c2c62b943272a48c33366f239fe from https://github.com/banodoco/oh-my-pi into /root/codex/p77box/omp-cache: exit 0; rev-parse commit equals pin.
+Installer command identical to 03-install.txt except --manifest /root/codex/p77box/stack/install-manifest.json; manifest copy differs only in tools.omp.source.repo, changed from GitHub URL to local git cache; pinned SHA unchanged. Installer exit 0, log run/receipts/install-retry.log.
+Installed current 1d2700baa660; installed manifest Agent 18adee8034973837a97fcd7392cd67f4566fa992 Runtime d7be2f0458a55c1f26e1138a125ffefe382f56f4. Installer started and checked Runtime; readiness will be independently verified in phase 4.
+Filesystem     1024-blocks     Used Available Capacity Mounted on
+/dev/vda         264212084 25150032  46999980      35% /

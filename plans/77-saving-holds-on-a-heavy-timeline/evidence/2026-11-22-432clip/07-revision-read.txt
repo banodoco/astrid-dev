@@ -1,0 +1,2 @@
+http_status=200 elapsed_seconds=0.496488
+curl_exit=0 utc=2026-11-22T18:04:01Z

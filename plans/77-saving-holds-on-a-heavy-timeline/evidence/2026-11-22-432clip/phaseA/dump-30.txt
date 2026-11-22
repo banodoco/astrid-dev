@@ -1,0 +1,337 @@
+requested_offset_seconds=30 utc=2026-11-22T18:07:57Z
+Process 1600: /root/codex/p77box/stack/program/versions/1d2700baa660/py/bin/python -X utf8 -I -c import json,os,re,stat,sys
+from dataclasses import dataclass
+from pathlib import Path
+def linked(path: Path) -> bool:
+    if path.is_symlink():
+        return True
+    try:
+        # Path.is_junction is unavailable on the pinned Python 3.11. This
+        # also rejects other Windows reparse points before recursive copies.
+        attributes = getattr(path.lstat(), "st_file_attributes", 0)
+        return bool(attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT"))
+    except FileNotFoundError:
+        return False
+
+def absolute(value: str | Path) -> Path:
+    path = Path(value).expanduser()
+    if not path.is_absolute():
+        raise ValueError(f"An absolute path is required: {path}")
+    path = Path(os.path.abspath(path))
+    for entry in (path, *path.parents):
+        if linked(entry):
+            raise ValueError(f"Managed paths cannot contain links: {entry}")
+    return path
+
+def read_json(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"Expected an object in {path}")
+    return value
+
+def version_id(value: str) -> str:
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}", value):
+        raise ValueError("Invalid installation version identifier.")
+    return value
+
+def install_release(manifest: dict) -> int:
+    """Return the validated decimal release from a staged version manifest."""
+    release = manifest.get("release", 0)
+    if type(release) is not int or release < 0:
+        raise ValueError("The install manifest release must be a nonnegative integer.")
+    return release
+
+def install_identity(version_root: Path) -> dict:
+    """Derive a managed install's identity from its immutable manifest and marker."""
+    managed_by = read_json(version_root.parent.parent / "install.json").get("managed_by")
+    if managed_by not in {None, "pinokio"}:
+        raise ValueError("Invalid installation manager in install record.")
+    return {"release": install_release(read_json(version_root / "manifest.json")),
+            "managed_by": managed_by}
+
+@dataclass(frozen=True)
+class Version:
+    root: Path
+    python: Path
+    profile: Path
+    env: dict[str, str]
+    release: int = 0
+    managed_by: str | None = None
+
+    def __post_init__(self) -> None:
+        if type(self.release) is not int or self.release < 0:
+            raise ValueError("The install manifest release must be a nonnegative integer.")
+        if self.managed_by not in {None, "pinokio"}:
+            raise ValueError("Invalid installation manager.")
+        env = dict(self.env)
+        object.__setattr__(self, "env", env)
+        env["ASTRID_INSTALL_RELEASE"] = str(self.release)
+        env["ASTRID_INSTALL_MANAGED_BY"] = self.managed_by or ""
+
+    def document(self) -> dict:
+        return {"root": str(self.root), "python": str(self.python),
+                "profile": str(self.profile), "env": dict(self.env),
+                "identity": {"release": self.release, "managed_by": self.managed_by}}
+
+    @classmethod
+    def load(cls, value: dict) -> "Version":
+        python = Path(value["python"])
+        absolute(python.parent)  # POSIX venv interpreters themselves are links.
+        root = absolute(value["root"])
+        # Legacy reconstruction is read-only. Persist only after recovery and
+        # successful stop admission (or a healthy repair requiring no stop).
+        identity = value["identity"] if "identity" in value else install_identity(root)
+        if not isinstance(identity, dict):
+            raise ValueError("Invalid installation identity in version record.")
+        release, managed_by = identity.get("release"), identity.get("managed_by")
+        if type(release) is not int or release < 0 or managed_by not in {None, "pinokio"}:
+            raise ValueError("Invalid installation identity in version record.")
+        return cls(root, python, absolute(value["profile"]), value["env"], release, managed_by)
+
+def current(root: Path) -> Version | None:
+    pointer = root / "current"
+    if not pointer.exists():
+        return None
+    name = version_id(pointer.read_text(encoding="utf-8").strip())
+    record = absolute(root / "versions" / name / "version.json")
+    # Removal can delete version metadata before a locked pointer is released.
+    # The service's retained selection can still finish uninstalling this root.
+    if not record.exists() and not linked(record):
+        return None
+    version = Version.load(read_json(record))
+    if version.root != root / "versions" / name:
+        raise ValueError("The current version points outside the managed directory.")
+    return version
+
+def default_program_root(home: Path, system: str) -> Path:
+    if system == "win32":
+        return Path(os.environ.get("LOCALAPPDATA") or home / "AppData" / "Local") / "Astrid"
+    if system == "linux":
+        return Path(os.environ.get("XDG_DATA_HOME") or home / ".local" / "share") / "astrid"
+    return home / ".local" / "share" / "astrid"
+
+def installer_lock_path(home: Path, system: str) -> Path:
+    parent = default_program_root(home, system).parent
+    # The lock must survive removal of program files and workspace data.
+    if system == "win32":
+        parent = parent / "Astrid Installer"
+    return parent / "astrid-install.lock"
+
+def activation_lock_held(root: Path, version: Version, context=None, expected_lock=None) -> bool:
+    """Return whether this unfinished update's activation lock is held."""
+    from runtime_protocol import platform
+
+    if context is not None and not isinstance(context, dict):
+        raise ValueError("Invalid update transaction context.")
+    if isinstance(context, dict) and "activation_lock_path" in context:
+        recorded = context["activation_lock_path"]
+        if not isinstance(recorded, str) or not Path(recorded).is_absolute():
+            raise ValueError("Invalid activation lock path.")
+        path = absolute(recorded)
+        expected = root / ".app-update.lock" if version.managed_by == "pinokio" else expected_lock
+        if expected is None or path != absolute(expected) or str(path) != recorded:
+            raise ValueError("Invalid activation lock path.")
+    elif expected_lock is not None:
+        # A bound action must never downgrade to a lock derived from HOME.
+        raise ValueError("Missing activation lock path.")
+    else:
+        path = (root / ".app-update.lock" if version.managed_by == "pinokio"
+                else installer_lock_path(Path.home(), sys.platform))
+    platform.private_directory(path.parent)
+    with path.open("a+b") as lock:
+        try:
+            platform.lock_file(lock.fileno(), blocking=False)
+        except BlockingIOError:
+            return True
+        platform.unlock_file(lock.fileno())
+    return False
+
+def launch_admission(version: Version, data: Path, *, custody: bool = False, expected_lock=None) -> bool:
+    """Validate the selected managed launch; return whether it is activating.
+
+    The pending journal selects a version, never a process or stop authority.
+    This function is also embedded verbatim in the generated command prelude.
+    """
+    if version.root.parent.name != "versions":
+        return False  # Source checkouts are outside the managed launch contract.
+    root = absolute(version.root.parent.parent)
+    path = absolute(root / "update-transaction.json")
+    try:
+        selected = current(root)
+        if selected is None or selected.document() != version.document():
+            raise ValueError("The managed launch is not the selected version.")
+        if not path.exists():
+            return False
+        transaction = read_json(path)
+        if (transaction.get("format") != "astrid-install-update/v1"
+                or not isinstance(transaction.get("operation_id"), str)
+                or re.fullmatch(r"[0-9a-f]{32}", transaction["operation_id"]) is None
+                or transaction.get("transaction_kind") not in {None, "app", "migration"}
+                or absolute(transaction["data_root"]) != absolute(data)):
+            raise ValueError("Invalid update journal identity.")
+
+        realm = transaction.get("realm")
+        if (not isinstance(realm, dict) or not isinstance(realm.get("realm_id"), str)
+                or not realm["realm_id"] or absolute(realm["realm_root"]) != Path(realm["realm_root"])):
+            raise ValueError("Invalid update workspace identity.")
+        terminal = transaction.get("step") in {"complete", "rolled_back"}
+
+        def retained(value):
+            candidate = Version.load(value)
+            folder = absolute(root / "versions" / version_id(candidate.root.name))
+            if (candidate.root != folder or not candidate.python.is_absolute()
+                    or not candidate.python.is_relative_to(folder)
+                    or not candidate.profile.is_relative_to(folder)
+                    or ("identity" in value and value["identity"] != candidate.document()["identity"])
+                    or any(not isinstance(k, str) or not isinstance(v, str) for k, v in value["env"].items())
+                    or any(str(candidate.document()[key]) != value[key] for key in ("root", "python", "profile"))
+                    or ((not terminal or (folder / "version.json").exists())
+                        and Version.load(read_json(absolute(folder / "version.json"))).document() != candidate.document())):
+                raise ValueError("Invalid managed update version.")
+            return candidate
+
+        old = retained(transaction["old"])
+        candidate = retained(transaction["candidate"]) if transaction.get("candidate") else None
+        step = transaction.get("step")
+        if step in {"complete", "rolled_back"}:
+            return False
+        if version.managed_by == "pinokio" and not custody:
+            raise ValueError("Choose Update to finish")
+        allowed = candidate if step == "switched" else old if step == "rollback_selected" else None
+        if allowed is None or allowed.document() != version.document():
+            raise ValueError("The pending update does not permit this launch.")
+        context = transaction.get("transaction_context", {})
+        if not isinstance(context, dict):
+            raise ValueError("Invalid update transaction context.")
+        if isinstance(context, dict) and context.get("pinokio_lifetime_custody") and not custody:
+            raise ValueError("The stopped update requires its authenticated activation lease.")
+        if not activation_lock_held(root, version, context, expected_lock):
+            raise ValueError("Choose Update to finish")
+        return True
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        if str(exc) == "Choose Update to finish":
+            raise
+        if version.managed_by == "pinokio":
+            raise ValueError("Choose Update to finish") from exc
+        action = ("Run the install line to finish it: curl -fsSL https://astrid.haus/install | sh"
+                  if os.name != "nt" else
+                  "Run the install line to finish it: irm https://astrid.haus/install.ps1 | iex")
+        raise ValueError("An Astrid update was interrupted; " + action) from exc
+
+launch_admission(Version.load({'root': '/root/codex/p77box/stack/program/versions/1d2700baa660', 'python': '/root/codex/p77box/stack/program/versions/1d2700baa660/py/bin/python', 'profile': '/root/codex/p77box/stack/program/versions/1d2700baa660/profile.json', 'env': {'ASTRID_BUN_EXECUTABLE': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/bun/bun-linux-x64/bun', 'ASTRID_CAPABILITY_MATRIX_PATH': '/root/codex/p77box/stack/program/versions/1d2700baa660/a/config/astrid-beta-capabilities.json', 'ASTRID_FFMPEG_EXECUTABLE': '/usr/bin/ffmpeg', 'ASTRID_FFPROBE_EXECUTABLE': '/usr/bin/ffprobe', 'ASTRID_GIT_EXECUTABLE': '/usr/bin/git', 'ASTRID_HOST_EXECUTION_PROFILE': 'installed', 'ASTRID_INSTALL_FFMPEG_SOURCE': 'path', 'ASTRID_INSTALL_FFMPEG_VERSION': '6.1.1-3ubuntu5', 'ASTRID_INSTALL_FFPROBE_VERSION': '6.1.1-3ubuntu5', 'ASTRID_INSTALL_MANAGED_BY': '', 'ASTRID_INSTALL_OMP_COMMIT': '78f0e0960f471c2c62b943272a48c33366f239fe', 'ASTRID_INSTALL_OMP_SOURCE': 'fork', 'ASTRID_INSTALL_OMP_VERSION': '18.12.6', 'ASTRID_INSTALL_RELEASE': '13', 'ASTRID_INSTALL_UV': '/root/codex/p77box/stack/home/.local/share/astrid/bootstrap/uv', 'ASTRID_NODE_EXECUTABLE': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/node/node-v20.19.4-linux-x64/bin/node', 'ASTRID_REMOTION_PROJECT_DIR': '/root/codex/p77box/stack/program/versions/1d2700baa660/a/remotion', 'ASTRID_RUNTIME_DATA_ROOT': '/root/codex/p77box/stack/data', 'ASTRID_RUNTIME_DOOR_PORT': '17501', 'ASTRID_SOURCE_PROVENANCE_ROOT': '/root/codex/p77box/stack/program/versions/1d2700baa660/a', 'ASTRID_TIMELINE_SCHEMA_PYTHONPATH': '/root/codex/p77box/stack/program/versions/1d2700baa660/py/lib/python3.11/site-packages/astrid/core/timeline/schema/timeline-config.schema.json', 'BUN_INSTALL': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/omp', 'BUN_INSTALL_BIN': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/omp/bin', 'PATH': '/root/codex/p77box/stack/program/versions/1d2700baa660/py/bin:/root/codex/p77box/stack/program/versions/1d2700baa660/tools/omp/bin:/root/codex/p77box/stack/program/versions/1d2700baa660/tools/bun/bun-linux-x64:/root/codex/p77box/stack/program/versions/1d2700baa660/tools/node/node-v20.19.4-linux-x64/bin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'PYTHONIOENCODING': 'utf-8'}, 'identity': {'release': 13, 'managed_by': None}}),Path('/root/codex/p77box/stack/data'),custody=False,expected_lock=Path('/root/codex/p77box/stack/home/.local/share/astrid-install.lock'))
+os.environ.update({'ASTRID_BUN_EXECUTABLE': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/bun/bun-linux-x64/bun', 'ASTRID_CAPABILITY_MATRIX_PATH': '/root/codex/p77box/stack/program/versions/1d2700baa660/a/config/astrid-beta-capabilities.json', 'ASTRID_FFMPEG_EXECUTABLE': '/usr/bin/ffmpeg', 'ASTRID_FFPROBE_EXECUTABLE': '/usr/bin/ffprobe', 'ASTRID_GIT_EXECUTABLE': '/usr/bin/git', 'ASTRID_HOST_EXECUTION_PROFILE': 'installed', 'ASTRID_INSTALL_FFMPEG_SOURCE': 'path', 'ASTRID_INSTALL_FFMPEG_VERSION': '6.1.1-3ubuntu5', 'ASTRID_INSTALL_FFPROBE_VERSION': '6.1.1-3ubuntu5', 'ASTRID_INSTALL_MANAGED_BY': '', 'ASTRID_INSTALL_OMP_COMMIT': '78f0e0960f471c2c62b943272a48c33366f239fe', 'ASTRID_INSTALL_OMP_SOURCE': 'fork', 'ASTRID_INSTALL_OMP_VERSION': '18.12.6', 'ASTRID_INSTALL_RELEASE': '13', 'ASTRID_INSTALL_UV': '/root/codex/p77box/stack/home/.local/share/astrid/bootstrap/uv', 'ASTRID_NODE_EXECUTABLE': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/node/node-v20.19.4-linux-x64/bin/node', 'ASTRID_REMOTION_PROJECT_DIR': '/root/codex/p77box/stack/program/versions/1d2700baa660/a/remotion', 'ASTRID_RUNTIME_DATA_ROOT': '/root/codex/p77box/stack/data', 'ASTRID_RUNTIME_DOOR_PORT': '17501', 'ASTRID_SOURCE_PROVENANCE_ROOT': '/root/codex/p77box/stack/program/versions/1d2700baa660/a', 'ASTRID_TIMELINE_SCHEMA_PYTHONPATH': '/root/codex/p77box/stack/program/versions/1d2700baa660/py/lib/python3.11/site-packages/astrid/core/timeline/schema/timeline-config.schema.json', 'BUN_INSTALL': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/omp', 'BUN_INSTALL_BIN': '/root/codex/p77box/stack/program/versions/1d2700baa660/tools/omp/bin', 'PATH': '/root/codex/p77box/stack/program/versions/1d2700baa660/py/bin:/root/codex/p77box/stack/program/versions/1d2700baa660/tools/omp/bin:/root/codex/p77box/stack/program/versions/1d2700baa660/tools/bun/bun-linux-x64:/root/codex/p77box/stack/program/versions/1d2700baa660/tools/node/node-v20.19.4-linux-x64/bin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'PYTHONIOENCODING': 'utf-8'})
+path=Path('/root/codex/p77box/stack/program/service-env.json')
+settings=json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+if (not isinstance(settings,dict) or set(settings)-set(['ASTRID_ALLOW_UNQUALIFIED_GPU', 'ASTRID_WARM_IDLE_SECONDS']) or any(not isinstance(value,str) for value in settings.values())):
+    raise ValueError('Invalid Astrid service-env.json; use the documented string settings.')
+os.environ.update(settings)
+from astrid_runtime.cli import main
+import inspect
+_args=['run', '--profile', 'astrid', '--data-root', '/root/codex/p77box/stack/data', '--source-manifest', '/root/codex/p77box/stack/program/versions/1d2700baa660/profile.json']
+_context={'profile': '/root/codex/p77box/stack/program/versions/1d2700baa660/profile.json', 'data_root': '/root/codex/p77box/stack/data'}
+sys.exit(main(_args, managed_launch=_context) if 'managed_launch' in inspect.signature(main).parameters else main(_args))
+Python v3.11.13 (/root/codex/p77box/stack/home/.local/share/astrid/bootstrap/python/cpython-3.11.13-linux-x86_64-gnu/bin/python3.11)
+
+Thread 1600 (idle): "MainThread"
+    Condition.wait (threading.py:331)
+    Event.wait (threading.py:629)
+    _run_foreground (astrid_runtime/cli.py:529)
+    main (astrid_runtime/cli.py:628)
+    <module> (<string>:233)
+Thread 1606 (idle): "astrid-runtime-protocol"
+    _PollLikeSelector.select (selectors.py:415)
+    BaseServer.serve_forever (socketserver.py:233)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 1607 (idle): "astrid-runtime-door"
+    _PollLikeSelector.select (selectors.py:415)
+    BaseServer.serve_forever (socketserver.py:233)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 1608 (idle): "service-pack-host"
+    Condition.wait (threading.py:331)
+    Event.wait (threading.py:629)
+    ServiceSupervisor._attempt (runtime_protocol/services.py:303)
+    ServiceSupervisor._run (runtime_protocol/services.py:416)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 1609 (idle): "service-chat"
+    Condition.wait (threading.py:331)
+    Event.wait (threading.py:629)
+    ServiceSupervisor._attempt (runtime_protocol/services.py:303)
+    ServiceSupervisor._run (runtime_protocol/services.py:416)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 1611 (idle): "log-pack-host"
+    ServiceSupervisor._pipe_log (runtime_protocol/services.py:251)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 1613 (idle): "log-chat"
+    ServiceSupervisor._pipe_log (runtime_protocol/services.py:251)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 29696 (active+gil): "Thread-3485 (process_request_thread)"
+    JSONEncoder.iterencode (json/encoder.py:258)
+    JSONEncoder.encode (json/encoder.py:200)
+    dumps (json/__init__.py:238)
+    canonical_json (runtime_protocol/util.py:25)
+    digest (runtime_protocol/timeline_commit_validation.py:55)
+    TimelineCommitStore._verify_accepted_record (runtime_protocol/timeline_commit_store.py:1046)
+    TimelineCommitStore._verify_accepted (runtime_protocol/timeline_commit_store.py:924)
+    _evaluation.<locals>.evaluate (runtime_protocol/timeline_commit_store.py:248)
+    TimelineCommitStore._history_entry_view (runtime_protocol/timeline_commit_store.py:1329)
+    _evaluation.<locals>.evaluate (runtime_protocol/timeline_commit_store.py:248)
+    TimelineCommitStore.history_entry (runtime_protocol/timeline_commit_store.py:1289)
+    _evaluation.<locals>.evaluate (runtime_protocol/timeline_commit_store.py:248)
+    TimelineCommitStore._history_page.<locals>.<listcomp> (runtime_protocol/timeline_commit_store.py:1408)
+    TimelineCommitStore._history_page (runtime_protocol/timeline_commit_store.py:1407)
+    TimelineCommitStore._read_history (runtime_protocol/timeline_commit_store.py:1366)
+    _evaluation.<locals>.evaluate (runtime_protocol/timeline_commit_store.py:248)
+    _evaluation.<locals>.evaluate (runtime_protocol/timeline_commit_store.py:234)
+    RuntimeService.list_timeline_commits (runtime_protocol/service.py:3366)
+    _clear_replay_on_refusal.<locals>.wrapped (runtime_protocol/service.py:511)
+    RuntimeHandler._route (runtime_protocol/server.py:964)
+    RuntimeHandler._dispatch (runtime_protocol/server.py:1638)
+    RuntimeHandler.do_GET (runtime_protocol/server.py:1690)
+    BaseHTTPRequestHandler.handle_one_request (http/server.py:424)
+    RuntimeHandler.handle_one_request (runtime_protocol/server.py:272)
+    BaseHTTPRequestHandler.handle (http/server.py:436)
+    BaseRequestHandler.__init__ (socketserver.py:755)
+    BaseServer.finish_request (socketserver.py:361)
+    ThreadingMixIn.process_request_thread (socketserver.py:691)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 29702 (idle): "astrid-runtime-lifetime-reaper"
+    _verified_mutation.<locals>.wrapped (runtime_protocol/service.py:523)
+    RuntimeHTTPServer._reap_task_lifetimes (runtime_protocol/server.py:175)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 29703 (idle): "astrid-runtime-lifetime-reaper"
+    _verified_mutation.<locals>.wrapped (runtime_protocol/service.py:523)
+    RuntimeHTTPServer._reap_task_lifetimes (runtime_protocol/server.py:175)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+Thread 29705 (idle): "Thread-3487 (process_request_thread)"
+    RuntimeHandler._dispatch (runtime_protocol/server.py:1637)
+    RuntimeHandler.do_POST (runtime_protocol/server.py:1696)
+    BaseHTTPRequestHandler.handle_one_request (http/server.py:424)
+    RuntimeHandler.handle_one_request (runtime_protocol/server.py:272)
+    BaseHTTPRequestHandler.handle (http/server.py:436)
+    BaseRequestHandler.__init__ (socketserver.py:755)
+    BaseServer.finish_request (socketserver.py:361)
+    ThreadingMixIn.process_request_thread (socketserver.py:691)
+    Thread.run (threading.py:982)
+    Thread._bootstrap_inner (threading.py:1045)
+    Thread._bootstrap (threading.py:1002)
+exit_code=0

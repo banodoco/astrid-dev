@@ -1,0 +1,5 @@
+py-spy> Sampling process 100 times a second for 300 seconds. Press Control-C to exit.
+
+py-spy> Wrote raw flamegraph data to '/root/codex/p77box/run/receipts/phaseA/profile.json.py-spy.raw'. Samples: 27616 Errors: 2550
+py-spy> You can use the flamegraph.pl script from https://github.com/brendangregg/flamegraph to generate a SVG
+record_exit=0 utc=2026-11-22T18:12:26Z
