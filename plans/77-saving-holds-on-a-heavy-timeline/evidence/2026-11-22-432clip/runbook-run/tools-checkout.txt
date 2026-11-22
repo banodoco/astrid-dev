@@ -1,0 +1,75 @@
+start=2026-11-22T19:16:01Z
+Cloning into '/root/codex/p77box/round5-432-readback-tools'...
+done.
+error: unable to read sha1 file of public/install-manifest.json (7e247db12289df9dcb9654552d71e628b7f33f4e)
+error: unable to read sha1 file of runtime.lock.json (bf94196632b0a95bae7049cbb13c024bdb032902)
+error: unable to read sha1 file of scripts/save-loop/README.md (f15ebf9cbda9bf8f88f14b15b018ab79dfc002bc)
+error: unable to read sha1 file of scripts/save-loop/aggregate-quick.mjs (a17f50f6a4fcc9ec62cbb4fe474d915c982b49da)
+error: unable to read sha1 file of scripts/save-loop/assert.mjs (985a1e9f65a06153a93a473d9389e03ad4c1954f)
+error: unable to read sha1 file of scripts/save-loop/build-fixture.mjs (51a8f34fda0874a37798cf3270b136da3e012477)
+error: unable to read sha1 file of scripts/save-loop/cpu.mjs (a7228366bc54c4517fb40ea19c11d6f58aec923d)
+error: unable to read sha1 file of scripts/save-loop/diagnostics/capture-compiled-v30.mjs (3199a78cd2cfcf08c45932c76cf03d810639a030)
+error: unable to read sha1 file of scripts/save-loop/diagnostics/restart-probe.py (3b5ba0b2f9b74ea12cfeaa97d5c60f7d1988c09b)
+error: unable to read sha1 file of scripts/save-loop/diagnostics/terminal-public-read.mjs (b84ec9bacee0bc51881c259a3891c1f6e781968a)
+error: unable to read sha1 file of scripts/save-loop/diagnostics/trace-geometry-playwright.mjs (0a8cb8f1c4ae40db58d467959d554f0292a0f34a)
+error: unable to read sha1 file of scripts/save-loop/edits.mjs (53ef03a1d459db66ff5ac3dce564f2e72ed597b6)
+error: unable to read sha1 file of scripts/save-loop/lib.mjs (093b32236ca94c12c9d9097e98cd81ecb5bf1fa7)
+error: unable to read sha1 file of scripts/save-loop/quick-aggregate.test.mjs (53df9f56a521719f347df2075db11048fb64ee4a)
+error: unable to read sha1 file of scripts/save-loop/quick-backup-cycle.sh (96a0b8c7b4bad107e7197a8070d578e82c901648)
+error: unable to read sha1 file of scripts/save-loop/quick-runtime-cycle.mjs (bd93d3d131a413708ceda37bb9035750fa4d6fba)
+error: unable to read sha1 file of scripts/save-loop/quick-workflow.test.mjs (d36dc3af4bf9d388955a2dfd752889f39f6f1047)
+error: unable to read sha1 file of scripts/save-loop/quick.mjs (e4993d1f098e74ff7d551b85deaae5db1574c1cb)
+error: unable to read sha1 file of scripts/save-loop/quick.test.mjs (faec459260dbef5bf9c0cc92143b871721198230)
+error: unable to read sha1 file of scripts/save-loop/readiness.mjs (5724cbadb79cda33739e406ef738f8263e972639)
+error: unable to read sha1 file of scripts/save-loop/readiness.test.mjs (866601a89218afebd5c4907dd89b7269dc52e265)
+error: unable to read sha1 file of scripts/save-loop/round4.mjs (906571703bb430e7e60a97a5ff677ed051ebc387)
+error: unable to read sha1 file of scripts/save-loop/run.sh (06198e14d509128ae45f05c1e2bb7c33f5866270)
+error: unable to read sha1 file of scripts/save-loop/start-isolated-linux.sh (44bd80b137cebf6d44cc05068cd074d40edb1f04)
+error: unable to read sha1 file of scripts/save-loop/sweep.mjs (3d9d08dd943e4361218dc3ab9fd43822046d6a85)
+error: unable to read sha1 file of scripts/save-loop/trace-dispatch-build.mjs (92784ae1873c58a3f5f4252d84a890789258c49f)
+error: unable to read sha1 file of scripts/save-loop/trace-dispatch-modules.mjs (daf6fb0bff9eb9010c67bc38781e229d0605a3fb)
+error: unable to read sha1 file of scripts/save-loop/trace-dispatch.mjs (4d4b9546f470841cb937adbe5acbf47b13e7bbc0)
+error: unable to read sha1 file of src/tools/video-editor/runtime/admitted-elements.hosted.test.ts (97b11098185d38125605c5099eb00e2230549ca0)
+error: unable to read sha1 file of src/tools/video-editor/runtime/admitted-elements.test.ts (de3fa748885bbea4531b2257a8b542dc3a690e5a)
+error: unable to read sha1 file of src/tools/video-editor/runtime/admitted-elements.ts (337975594908c094e70944476fb3fe0161c28c37)
+error: unable to read sha1 file of src/tools/video-editor/runtime/admittedElementLoader.test.ts (b63b001190308d229ec324db8788f5fecc3be70b)
+error: unable to read sha1 file of src/tools/video-editor/runtime/admittedElementLoader.ts (ded7c76b61bcdfa38f96e658b470792f1765da26)
+error: unable to read sha1 file of src/tools/video-editor/runtime/runtimeModuleImport.ts (ec9371f8322df908546c76a9e52c21086b862e0e)
+error: invalid object 100644 7e247db12289df9dcb9654552d71e628b7f33f4e for 'public/install-manifest.json'
+HEAD is now at 5b2c76a6a Preserve the Plan 77 profile decoding recovery tool
+D	public/install-manifest.json
+D	runtime.lock.json
+D	scripts/save-loop/README.md
+D	scripts/save-loop/aggregate-quick.mjs
+D	scripts/save-loop/assert.mjs
+D	scripts/save-loop/build-fixture.mjs
+D	scripts/save-loop/cpu.mjs
+D	scripts/save-loop/diagnostics/capture-compiled-v30.mjs
+D	scripts/save-loop/diagnostics/restart-probe.py
+D	scripts/save-loop/diagnostics/terminal-public-read.mjs
+D	scripts/save-loop/diagnostics/trace-geometry-playwright.mjs
+D	scripts/save-loop/edits.mjs
+D	scripts/save-loop/lib.mjs
+D	scripts/save-loop/quick-aggregate.test.mjs
+D	scripts/save-loop/quick-backup-cycle.sh
+D	scripts/save-loop/quick-runtime-cycle.mjs
+D	scripts/save-loop/quick-workflow.test.mjs
+D	scripts/save-loop/quick.mjs
+D	scripts/save-loop/quick.test.mjs
+D	scripts/save-loop/readiness.mjs
+D	scripts/save-loop/readiness.test.mjs
+D	scripts/save-loop/round4.mjs
+D	scripts/save-loop/run.sh
+D	scripts/save-loop/start-isolated-linux.sh
+D	scripts/save-loop/sweep.mjs
+D	scripts/save-loop/trace-dispatch-build.mjs
+D	scripts/save-loop/trace-dispatch-modules.mjs
+D	scripts/save-loop/trace-dispatch.mjs
+D	src/tools/video-editor/runtime/admitted-elements.hosted.test.ts
+D	src/tools/video-editor/runtime/admitted-elements.test.ts
+D	src/tools/video-editor/runtime/admitted-elements.ts
+D	src/tools/video-editor/runtime/admittedElementLoader.test.ts
+D	src/tools/video-editor/runtime/admittedElementLoader.ts
+D	src/tools/video-editor/runtime/runtimeModuleImport.ts
+exit=0
+end=2026-11-22T19:16:05Z
