@@ -1,0 +1,177 @@
+{
+  "boundary": "writable",
+  "cdp_metrics": {
+    "LayoutCount": 58,
+    "LayoutDuration": 0.095733,
+    "RecalcStyleCount": 111,
+    "RecalcStyleDuration": 0.132493,
+    "ScriptDuration": 1.965148,
+    "TaskDuration": 9.959696,
+    "TaskOtherDuration": 7.726913
+  },
+  "elapsed_ms": 13745.063117,
+  "first_usable_ms": 13744.302499,
+  "fixture": {
+    "clips": 300,
+    "shot_occurrences": 10,
+    "tracks": 9
+  },
+  "matched_timeline_commit_posts": 0,
+  "page_timing": {
+    "dom_content_loaded_ms": 33.70000000111759,
+    "dom_interactive_ms": 29,
+    "load_ms": 33.80000000074506,
+    "long_tasks": [
+      {
+        "duration_ms": 85,
+        "start_ms": 195.90000000037253
+      },
+      {
+        "duration_ms": 69,
+        "start_ms": 297.6000000014901
+      },
+      {
+        "duration_ms": 89,
+        "start_ms": 424.30000000074506
+      },
+      {
+        "duration_ms": 195,
+        "start_ms": 599.6000000014901
+      },
+      {
+        "duration_ms": 104,
+        "start_ms": 1093.2000000011176
+      },
+      {
+        "duration_ms": 52,
+        "start_ms": 1322.2000000011176
+      },
+      {
+        "duration_ms": 305,
+        "start_ms": 1398.1000000014901
+      },
+      {
+        "duration_ms": 64,
+        "start_ms": 1709.9000000003725
+      },
+      {
+        "duration_ms": 128,
+        "start_ms": 1776.300000000745
+      },
+      {
+        "duration_ms": 113,
+        "start_ms": 2025.7000000011176
+      },
+      {
+        "duration_ms": 65,
+        "start_ms": 2262.9000000003725
+      },
+      {
+        "duration_ms": 76,
+        "start_ms": 2609.7000000011176
+      },
+      {
+        "duration_ms": 68,
+        "start_ms": 2700.9000000003725
+      },
+      {
+        "duration_ms": 55,
+        "start_ms": 7172.300000000745
+      },
+      {
+        "duration_ms": 53,
+        "start_ms": 7538.800000000745
+      },
+      {
+        "duration_ms": 105,
+        "start_ms": 7756.300000000745
+      },
+      {
+        "duration_ms": 52,
+        "start_ms": 8281.200000001118
+      },
+      {
+        "duration_ms": 91,
+        "start_ms": 8708.10000000149
+      },
+      {
+        "duration_ms": 500,
+        "start_ms": 8802.200000001118
+      },
+      {
+        "duration_ms": 3058,
+        "start_ms": 9422
+      },
+      {
+        "duration_ms": 1130,
+        "start_ms": 12553.10000000149
+      },
+      {
+        "duration_ms": 51,
+        "start_ms": 13684.800000000745
+      }
+    ]
+  },
+  "process_closed": true,
+  "profile_removed": true,
+  "requests_in_flight_at_boundary": [
+    {
+      "headers_ms": 13741.709034,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/objects/:digest",
+      "started_ms": 12550.672834,
+      "status": 200
+    },
+    {
+      "headers_ms": 13741.757354,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/objects/:digest",
+      "started_ms": 12552.618942000001,
+      "status": 200
+    },
+    {
+      "headers_ms": 13741.784867,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/objects/:digest",
+      "started_ms": 12553.649641,
+      "status": 200
+    },
+    {
+      "kind": "fetch",
+      "method": "POST",
+      "route": "/api/runtime/v1/projects/:project/timelines/:timeline/inspect",
+      "started_ms": 13742.07835
+    }
+  ],
+  "runtime_cpu_seconds_before_navigation_from_process_birth": 587.54,
+  "runtime_cpu_seconds_navigation_to_boundary": 6.17,
+  "runtime_cpu_ticks_at_boundary": 59371,
+  "runtime_cpu_ticks_at_navigation": 58754,
+  "source": "compiled local preview",
+  "terminal_proof_transport": "browser",
+  "terminal_public_head": {
+    "active_heads": 1,
+    "clips": 300,
+    "occurrences": 10,
+    "verified": true
+  },
+  "timeline_history_requests": [
+    {
+      "finished_ms": 8802.099273,
+      "headers_ms": 6596.562040000001,
+      "method": "GET",
+      "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+      "started_ms": 1762.2893970000002,
+      "status": 200
+    }
+  ],
+  "versions": {
+    "agent": "8807f820eb47d6018db723511e024a0a123fbe95",
+    "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+    "runtime": "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5"
+  },
+  "writable_budget_ms": 600000
+}

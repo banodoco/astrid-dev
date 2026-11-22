@@ -1,0 +1,297 @@
+{
+  "boundary": "writable",
+  "cdp_metrics": {
+    "LayoutCount": 62,
+    "LayoutDuration": 0.124004,
+    "RecalcStyleCount": 185,
+    "RecalcStyleDuration": 0.357684,
+    "ScriptDuration": 18.464135,
+    "TaskDuration": 31.453829,
+    "TaskOtherDuration": 12.49138
+  },
+  "elapsed_ms": 306552.415799,
+  "first_usable_ms": 306551.996782,
+  "fixture": {
+    "clips": 300,
+    "shot_occurrences": 10,
+    "tracks": 9
+  },
+  "matched_timeline_commit_posts": 0,
+  "page_timing": {
+    "dom_content_loaded_ms": 66.20000000111759,
+    "dom_interactive_ms": 63.30000000074506,
+    "load_ms": 69.90000000037253,
+    "long_tasks": [
+      {
+        "duration_ms": 76,
+        "start_ms": 343
+      },
+      {
+        "duration_ms": 79,
+        "start_ms": 490.80000000074506
+      },
+      {
+        "duration_ms": 51,
+        "start_ms": 612.2000000011176
+      },
+      {
+        "duration_ms": 199,
+        "start_ms": 687.4000000003725
+      },
+      {
+        "duration_ms": 85,
+        "start_ms": 1201.2000000011176
+      },
+      {
+        "duration_ms": 62,
+        "start_ms": 1409.800000000745
+      },
+      {
+        "duration_ms": 343,
+        "start_ms": 1501.9000000003725
+      },
+      {
+        "duration_ms": 72,
+        "start_ms": 1858.5
+      },
+      {
+        "duration_ms": 263,
+        "start_ms": 1941.5999999996275
+      },
+      {
+        "duration_ms": 80,
+        "start_ms": 2427.300000000745
+      },
+      {
+        "duration_ms": 73,
+        "start_ms": 2782.9000000003725
+      },
+      {
+        "duration_ms": 50,
+        "start_ms": 2856.2000000011176
+      },
+      {
+        "duration_ms": 76,
+        "start_ms": 2933.800000000745
+      },
+      {
+        "duration_ms": 71,
+        "start_ms": 7202.700000001118
+      },
+      {
+        "duration_ms": 167,
+        "start_ms": 60615.5
+      },
+      {
+        "duration_ms": 93,
+        "start_ms": 60786.20000000112
+      },
+      {
+        "duration_ms": 95,
+        "start_ms": 60919.09999999963
+      },
+      {
+        "duration_ms": 71,
+        "start_ms": 62419.20000000112
+      },
+      {
+        "duration_ms": 155,
+        "start_ms": 120615.40000000037
+      },
+      {
+        "duration_ms": 79,
+        "start_ms": 120775.70000000112
+      },
+      {
+        "duration_ms": 69,
+        "start_ms": 122365.40000000037
+      },
+      {
+        "duration_ms": 50,
+        "start_ms": 141006.09999999963
+      },
+      {
+        "duration_ms": 140,
+        "start_ms": 180615.40000000037
+      },
+      {
+        "duration_ms": 93,
+        "start_ms": 180758.80000000075
+      },
+      {
+        "duration_ms": 229,
+        "start_ms": 180873.30000000075
+      },
+      {
+        "duration_ms": 189,
+        "start_ms": 240615.40000000037
+      },
+      {
+        "duration_ms": 83,
+        "start_ms": 240811
+      },
+      {
+        "duration_ms": 61,
+        "start_ms": 243074.59999999963
+      },
+      {
+        "duration_ms": 55,
+        "start_ms": 298424.5999999996
+      },
+      {
+        "duration_ms": 99,
+        "start_ms": 298670.7000000011
+      },
+      {
+        "duration_ms": 71,
+        "start_ms": 298961.5
+      },
+      {
+        "duration_ms": 148,
+        "start_ms": 299240.5
+      },
+      {
+        "duration_ms": 101,
+        "start_ms": 300340.4000000004
+      },
+      {
+        "duration_ms": 506,
+        "start_ms": 300484.30000000075
+      },
+      {
+        "duration_ms": 296,
+        "start_ms": 301031.0999999996
+      },
+      {
+        "duration_ms": 56,
+        "start_ms": 301365.5
+      },
+      {
+        "duration_ms": 55,
+        "start_ms": 301496.9000000004
+      },
+      {
+        "duration_ms": 106,
+        "start_ms": 301600.30000000075
+      },
+      {
+        "duration_ms": 50,
+        "start_ms": 301722.80000000075
+      },
+      {
+        "duration_ms": 65,
+        "start_ms": 301804.5
+      },
+      {
+        "duration_ms": 3362,
+        "start_ms": 301872.7000000011
+      },
+      {
+        "duration_ms": 1024,
+        "start_ms": 305468.4000000004
+      },
+      {
+        "duration_ms": 56,
+        "start_ms": 306558.5
+      }
+    ]
+  },
+  "process_closed": true,
+  "profile_removed": true,
+  "requests_in_flight_at_boundary": [
+    {
+      "headers_ms": 306548.10432600003,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/objects/:digest",
+      "started_ms": 305467.267705,
+      "status": 200
+    },
+    {
+      "headers_ms": 306548.28000100004,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/objects/:digest",
+      "started_ms": 305469.753028,
+      "status": 200
+    },
+    {
+      "headers_ms": 306549.022955,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/health",
+      "started_ms": 305473.697685,
+      "status": 200
+    },
+    {
+      "headers_ms": 306548.981493,
+      "kind": "fetch",
+      "method": "POST",
+      "route": "/api/runtime/v1/handshake",
+      "started_ms": 305474.162766,
+      "status": 200
+    },
+    {
+      "headers_ms": 306549.112007,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/health",
+      "started_ms": 305474.25443800003,
+      "status": 200
+    },
+    {
+      "headers_ms": 306549.005013,
+      "kind": "fetch",
+      "method": "POST",
+      "route": "/api/runtime/v1/handshake",
+      "started_ms": 305474.28194,
+      "status": 200
+    },
+    {
+      "headers_ms": 306549.06171000004,
+      "kind": "fetch",
+      "method": "GET",
+      "route": "/api/runtime/v1/objects/:digest",
+      "started_ms": 305474.510803,
+      "status": 200
+    }
+  ],
+  "runtime_cpu_seconds_before_navigation_from_process_birth": 291.8,
+  "runtime_cpu_seconds_navigation_to_boundary": 295.62,
+  "runtime_cpu_ticks_at_boundary": 58742,
+  "runtime_cpu_ticks_at_navigation": 29180,
+  "source": "compiled local preview",
+  "terminal_proof_transport": "browser",
+  "terminal_public_head": {
+    "active_heads": 1,
+    "clips": 300,
+    "occurrences": 10,
+    "verified": true
+  },
+  "timeline_history_requests": [
+    {
+      "method": "GET",
+      "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+      "started_ms": 1907.1335119999999
+    },
+    {
+      "method": "GET",
+      "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+      "started_ms": 122439.91102099999
+    },
+    {
+      "finished_ms": 300445.927975,
+      "headers_ms": 298379.19274800003,
+      "method": "GET",
+      "route": "/api/runtime/v1/projects/:project/timelines/:timeline/commits",
+      "started_ms": 243141.900721,
+      "status": 200
+    }
+  ],
+  "versions": {
+    "agent": "8807f820eb47d6018db723511e024a0a123fbe95",
+    "app": "e3dbad64d402724ac5a35fb6447f18e432c64b78",
+    "runtime": "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5"
+  },
+  "writable_budget_ms": 900000
+}
