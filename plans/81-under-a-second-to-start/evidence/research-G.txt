@@ -1,0 +1,56 @@
+**MEASURED:** The isolated Runtime ran successfully. An empty-timeline edit took **3.809 s median wall time**, and generation was blocked before task creation after **15.585 s**. The one-minute stall did not reproduce in these runs; this does not rule it out on another installation or workload.
+
+Agent was at `048ab3078`; Runtime was at `1758a6df`. Other processes were active in the container, so these are measurements under shared load.
+
+The setup used [env.sh](/tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/plan81/work/env.sh) and [manifest.json](/tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/plan81/work/manifest.json), with HOME, temporary files and data under the permitted work directory. From that directory, the working commands were:
+
+```bash
+source ./env.sh
+PY=/home/user/astrid-agent.env/venv/bin/python
+$PY -m astrid_runtime workspace create --realm-root "$WORK/realm" \
+  --process-control sandbox --hosted-origin off --json
+$PY -m astrid_runtime run --hosted-origin off --json
+# In another shell, after sourcing env.sh:
+$PY -m astrid projects create exp --name Experiment --select --json
+$PY -m astrid timelines create --project exp --slug NAME --name NAME --json
+$PY -m astrid timelines edit NAME --project exp --add-layer media \
+  --layer-asset "$WORK/tiny.png" --on 0 --for 3 --track V1 \
+  --id opening --idempotency-key UNIQUE --json
+$PY -m astrid timelines archive NAME --project exp --json
+$PY -m astrid media list --project exp --json
+$PY -m astrid generate image 'a red square' --project exp \
+  --placement http://127.0.0.1:9 --align check --no-wait --json
+```
+
+The PNG was generated locally. **READ:** The source-manifest fields follow the Runtime integration fixture at [test_astrid_product_down.py:39](/home/user/wt/runtime-r15/tests/test_astrid_product_down.py:39).
+
+**MEASURED:** Medians of five, after one warm-up; each edit used a newly created empty timeline. Wall time is process start to exit. CPU is the CLI process’s own user plus system CPU, excluding its children.
+
+| Command | Wall | Client CPU |
+|---|---:|---:|
+| Timeline create | 3.537 s | 0.766 s |
+| Add PNG layer | 3.809 s | 0.990 s |
+| Timeline archive | 2.950 s | 0.403 s |
+| Media list | 2.735 s | 0.253 s |
+
+All returned success; creates and edits reported `accepted`. Media list ran after imports and contained media.
+
+**MEASURED:** A separate traced edit spent **2.345 s** waiting for `astrid_runtime connect`. The client was observed waiting for that subprocess while it hashed Agent source files. **READ:** The launcher call is at [autobootstrap.py:461](/home/user/astrid-agent/astrid/sdk/autobootstrap.py:461); source hashing is at [source_identity.py:104](/home/user/wt/runtime-r15/runtime_protocol/source_identity.py:104).
+
+HTTP request-to-response-header timings for that edit, grouped by path (`{p}`, `{t}`, and `{rev}` abbreviate identifiers):
+
+| Method and path | Count | Seconds |
+|---|---:|---:|
+| GET `/v1/health` | 4 | 0.002–0.004 |
+| POST `/v1/handshake` | 2 | 0.002 |
+| GET `/v1/projects/{p}/timelines` | 8 | 0.002–0.003 |
+| POST `…/timelines/{t}/inspect` | 4 | 0.002 |
+| GET `…/timelines/{t}/commits` | 3 | 0.005–0.076 |
+| GET `…/composition-revisions/{rev}` | 2 | 0.002 |
+| POST `/v1/projects/{p}/media-imports` | 1 | 0.096 |
+| GET `/v1/projects/{p}/media-selection` and `/verified` | 1 each | 0.003 each |
+| POST `…/timelines/{t}/commit` | 1 | 0.079 |
+
+**MEASURED:** Generation exited 2 with `target_unreachable`, `task_id: null`, and 10.368 s client CPU. A second traced run showed no task-creation request; its 5- and 10-second stack dumps were in pack discovery and file hashing ([discovery.py:102](/home/user/astrid-agent/astrid/core/pack/discovery.py:102)), before the unavailable ComfyUI target was reported. Generation-to-queued remains unknown with a usable target; heavy-timeline latency and the original issue’s precise conditions also remain untested.
+
+The Runtime and the generic host it started were stopped.

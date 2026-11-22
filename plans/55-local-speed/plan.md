@@ -10,7 +10,7 @@
 
 **Estimate:** 2–3
 
-**Waiting on:** LS-3, the design ([R14-P55-01](../../releases/14/packets/R14-P55-01.md)); owner approval for paid GPU work, a Windows tester, re-pins and product-main merges
+**Waiting on:** a release for what remains. On 22 November 2026 the owner asked for the under-a-second work to be its own plan in Release 15, [Plan 81](../81-under-a-second-to-start/plan.md), and for this plan's redesign (the resident session, completion by push, the thin request) to wait in no release as the tenth-of-a-second work. Plan 81 takes this plan's meter as its starting point and reads its template commits as donors. This plan's status, its open pull requests and its accountable session are unchanged here and are the owner's and the Release 14 Lead's to settle. Earlier: owner approval for paid GPU work, a Windows tester, re-pins and product-main merges.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 
