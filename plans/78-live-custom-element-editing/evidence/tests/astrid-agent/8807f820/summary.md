@@ -14,3 +14,5 @@ Candidate `8807f820eb47d6018db723511e024a0a123fbe95`; Python 3.13.18, Runtime `3
 | preexisting | 4 |
 | fixed | 0 |
 | missing | 0 |
+
+Hosted comparison: Release 15 hosted run `45031908687` at the same Agent SHA lists `test_provider_accepts_trim_after_move_and_undoes_only_trim`, `test_stale_head_retries_original_plan_and_created_ids_once`, and `test_legacy_history_undo_and_restore_use_revisions_or_refuse_visibly` as failures. `test_move_reload_and_inverse_import_no_renderer` passes on hosted CI and is an environment difference, not an inherited hosted failure. The local wrapper sets `PYTHONSAFEPATH=1` and passes only the VibeComfy checkout in `PYTHONPATH`; the test's `python -c` child consequently cannot import `tests.helpers`. An interpreter import probe under those settings returned no module. The self-comparison `preexisting.txt` below is a mechanical baseline-versus-itself bucket, not the hosted classification. Candidate hosted CI is compared against the Release 15 hosted failing-ID list.
