@@ -523,8 +523,24 @@ def _probe_exchange(parent: Path) -> None:
             raise OSError(errno.ENOTSUP, "atomic directory exchange probe failed")
 
 
+class PublicationCommittedError(OSError):
+    """Publication succeeded but a later finalization step failed."""
+
+
 def build_packages(root: Path) -> list[str]:
     """Publish an owned real-directory generation using a capability-gated exchange."""
+    published = [False]
+    try:
+        return _build_packages(root, published)
+    except Exception as exc:
+        if published[0]:
+            raise PublicationCommittedError(
+                f"skill generation published; finalization failed: {exc}"
+            ) from exc
+        raise
+
+
+def _build_packages(root: Path, published: list[bool]) -> list[str]:
     root = Path(root).resolve()
     output = _output_root(root)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -578,6 +594,7 @@ def build_packages(root: Path) -> list[str]:
                 created = True
             try:
                 _exchange_paths(output, stage)
+                published[0] = True
             except BaseException:
                 if created:
                     output.rmdir()

@@ -4,6 +4,7 @@ import subprocess
 import select
 import sys
 import threading
+from contextlib import contextmanager
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -911,6 +912,197 @@ with b._build_lock(Path(sys.argv[1])):
             with self.assertRaisesRegex(RuntimeError, "output changed"):
                 build_packages(self.root)
         self.assertEqual((output / "foreign").read_text(), "keep")
+
+    def test_post_publication_cleanup_failure_reports_committed_generation(self):
+        from skill_builder import _build_lock
+        build_packages(self.root)
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\nPublished.\n")
+        @contextmanager
+        def fail_after_lock(parent):
+            with _build_lock(parent):
+                yield
+            raise OSError("finalization failure")
+        with patch("skill_builder._build_lock", fail_after_lock):
+            with self.assertRaisesRegex(OSError, "published.*finalization") as caught:
+                build_packages(self.root)
+        self.assertIsInstance(caught.exception.__cause__, OSError)
+        skill = self.package("astrid-dev-start") / "SKILL.md"
+        self.assertIn("Published.", skill.read_text())
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_installed_symlink_polling_during_repeated_exchanges(self):
+        build_packages(self.root)
+        package = self.package("astrid-dev-start")
+        install = self.root / "install"
+        install.mkdir()
+        link = install / "astrid-dev-start"
+        link.symlink_to(package, target_is_directory=True)
+        source = self.root / "agent" / "start.md"
+        initial = source.read_text()
+        valid = {(link / "SKILL.md").read_text()}
+        for i in range(8):
+            source.write_text(initial + f"\nVersion {i}.\n")
+            valid.add(expected_packages(self.root)["astrid-dev-start"][0])
+        source.write_text(initial)
+        stop, started = threading.Event(), threading.Event()
+        seen, errors = [], []
+        def reader():
+            while not stop.is_set():
+                try:
+                    seen.append((link / "SKILL.md").read_text())
+                    if not (link / "repo" / "agent" / "start.md").is_file():
+                        errors.append("installed repo link unavailable")
+                    started.set()
+                except OSError as exc:
+                    errors.append(repr(exc))
+                    started.set()
+        thread = threading.Thread(target=reader)
+        thread.start()
+        try:
+            self.assertTrue(started.wait(3))
+            for i in range(8):
+                source.write_text(initial + f"\nVersion {i}.\n")
+                build_packages(self.root)
+        finally:
+            stop.set()
+            thread.join(timeout=3)
+        self.assertFalse(thread.is_alive())
+        self.assertTrue(seen)
+        self.assertEqual(errors, [])
+        self.assertTrue(all(item in valid for item in seen))
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_two_real_builders_contend_before_publication(self):
+        build_packages(self.root)
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\nChanged.\n")
+        skill = self.package("astrid-dev-start") / "SKILL.md"
+        before = skill.read_bytes()
+        child = """from pathlib import Path
+import sys
+import skill_builder as b
+original = b._build_output
+def pause(stage, expected):
+    result = original(stage, expected)
+    print('staged', flush=True)
+    sys.stdin.read(1)
+    return result
+b._build_output = pause
+b.build_packages(Path(sys.argv[1]))
+"""
+        process = subprocess.Popen([sys.executable, "-c", child, str(self.root)],
+                                   cwd=Path(__file__).parent, stdin=subprocess.PIPE,
+                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            readable, _, _ = select.select([process.stdout], [], [], 5)
+            self.assertTrue(readable, "first builder did not stage")
+            self.assertEqual(process.stdout.readline().strip(), "staged")
+            with self.assertRaisesRegex(RuntimeError, "another skill build"):
+                build_packages(self.root)
+            self.assertEqual(skill.read_bytes(), before)
+            process.stdin.write("x")
+            process.stdin.flush()
+            self.assertEqual(process.wait(timeout=5), 0)
+        finally:
+            if process.poll() is None:
+                process.kill()
+                process.wait()
+            process.stdin.close()
+            process.stdout.close()
+            process.stderr.close()
+        self.assertIn("Changed.", skill.read_text())
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_crash_orphans_are_preserved_and_not_followed(self):
+        build_packages(self.root)
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\nChanged.\n")
+        child = """from pathlib import Path
+import os, sys
+import skill_builder as b
+root = Path(sys.argv[1]).resolve()
+original = b._exchange_paths
+def crash(left, right):
+    if left == root / b.OUTPUT: os._exit(71)
+    original(left, right)
+b._exchange_paths = crash
+b.build_packages(root)
+"""
+        process = subprocess.run([sys.executable, "-c", child, str(self.root)],
+                                 cwd=Path(__file__).parent, check=False)
+        self.assertEqual(process.returncode, 71)
+        parent = self.root / ".generated"
+        orphans = list(parent.glob(".skills-build-*"))
+        self.assertEqual(len(orphans), 1)
+        artifact = orphans[0] / "skills" / "astrid-dev-start" / "SKILL.md"
+        before = artifact.read_bytes()
+        with TemporaryDirectory() as temp:
+            foreign = Path(temp) / "foreign"
+            foreign.mkdir()
+            (foreign / "keep").write_text("safe")
+            (parent / ".skills-build-foreign").symlink_to(foreign, target_is_directory=True)
+            build_packages(self.root)
+            self.assertEqual(artifact.read_bytes(), before)
+            self.assertTrue((parent / ".skills-build-foreign").is_symlink())
+            self.assertEqual((foreign / "keep").read_text(), "safe")
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_crash_after_exchange_retains_old_recovery_material(self):
+        build_packages(self.root)
+        package = self.package("astrid-dev-start")
+        old = ((package / "SKILL.md").read_bytes(),
+               (package / ".astrid-dev-generated").read_bytes(),
+               os.readlink(package / "repo"))
+        source = self.root / "agent" / "start.md"
+        source.write_text(source.read_text() + "\nChanged.\n")
+        child = """from pathlib import Path
+import os, sys
+import skill_builder as b
+root = Path(sys.argv[1]).resolve()
+original = b._exchange_paths
+def crash(left, right):
+    original(left, right)
+    if left == root / b.OUTPUT: os._exit(72)
+b._exchange_paths = crash
+b.build_packages(root)
+"""
+        result = subprocess.run([sys.executable, "-c", child, str(self.root)],
+                                cwd=Path(__file__).parent, check=False)
+        self.assertEqual(result.returncode, 72)
+        self.assertIn("Changed.", (package / "SKILL.md").read_text())
+        self.assertEqual((package / "repo" / "agent" / "start.md").resolve(), source.resolve())
+        orphans = list((self.root / ".generated").glob(".skills-build-*/skills/astrid-dev-start"))
+        self.assertEqual(len(orphans), 1)
+        orphan = orphans[0]
+        self.assertEqual(((orphan / "SKILL.md").read_bytes(),
+                          (orphan / ".astrid-dev-generated").read_bytes(),
+                          os.readlink(orphan / "repo")), old)
+        build_packages(self.root)
+        self.assertTrue(orphan.is_dir())
+        self.assertEqual(check_packages(self.root), [])
+
+    def test_interrupted_first_publication_can_retry(self):
+        parent = self.root / ".generated"
+        output = parent / "skills"
+        child = """from pathlib import Path
+import os, sys
+import skill_builder as b
+root = Path(sys.argv[1]).resolve()
+original = b._exchange_paths
+def crash(left, right):
+    if left == root / b.OUTPUT: os._exit(71)
+    original(left, right)
+b._exchange_paths = crash
+b.build_packages(root)
+"""
+        result = subprocess.run([sys.executable, "-c", child, str(self.root)],
+                                cwd=Path(__file__).parent, check=False)
+        self.assertEqual(result.returncode, 71)
+        self.assertTrue(output.is_dir())
+        self.assertEqual(list(output.iterdir()), [])
+        build_packages(self.root)
+        self.assertEqual(check_packages(self.root), [])
 
     def test_quoted_reference_definition_rewrites_and_refuses_missing(self):
         source = self.root / "agent" / "start.md"
