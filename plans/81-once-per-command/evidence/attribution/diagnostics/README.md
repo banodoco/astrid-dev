@@ -1,0 +1,7 @@
+# Prepared-connection diagnostics, 22 November 2026
+
+These are **not** the required fresh-console or normal-launcher baseline. Both used an in-process Runtime fixture, a prepared connection, and a `python -c` console call; their admission timestamps observe internal task creation rather than completion of the HTTP response. Endpoint and scratch path values have been redacted. No comparison against a conforming baseline is implied.
+
+`complete-trials-teardown-failed` was invoked as `run.sh /tmp/a4-baseline-third --trials 1 --modes plain`. Each W, I and E warmup and trial had a successful task and associated target prompt; host teardown failed because the target was closed before host cleanup. The initial startup attempt failed importing `runpod_lifecycle`; the second admitted W but its worker failed to import `vibecomfy`. The missing dependency and source paths were repaired in the isolated environment, respectively. The terminal output for these attempts is not retained in this directory.
+
+`interrupted` was invoked as `run.sh /tmp/a4-plain-five --trials 5 --modes plain`. Its target lifetime fix allowed the host to clean up while the target remained open. It was deliberately interrupted after W and some I trials when the launcher and timing-boundary mismatch was identified; it is incomplete. `runner.log` records the interruption. Script metadata capture was extended while this process was running; its manifest lacks the later package and argv fields. These inputs do not establish a complete benchmark.
