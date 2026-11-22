@@ -189,7 +189,9 @@ The direct Linux installation used App `c5272db09d715bd38332f07e872aa53f6d65947a
 
 The primary tab emitted a basis-ready and saved-session handoff during startup, then a lifecycle cancellation. The complete opening and readiness assertions did not finish. The scratch sidecar preserved the original matrix assertions and recorded existing browser phases only. The browser was stopped and its temporary profile removed.
 
-The host classified this attempt as **no result: setup and transport failure before any gesture** on 22 November. It does not consume a saving round. One retry is authorized with bounded transport recovery for startup reads and the original scenario and opening assertions. The retry records the first Runtime request after adoption and keeps any readiness warm-up separate from the browser times. A second zero-gesture attempt counts as Round 3. Round 4 strategy waits for the independent cold-start diagnosis.
+The host classified this attempt as **no result: setup and transport failure before any gesture** on 22 November. The initial retry direction was superseded by the independent cold-start diagnosis and the reduced Round 4. The deferred history call began about 0.13 s after handoff-ready. Existing activity remained stalled for approximately 125–157 s. The evidence identifies the interval and the associated request. Source inspection attributes the stall to full history replay under the shared Runtime store mutex.
+
+Round 4 will record authenticated Runtime readiness separately from cold and warm browser opening, sample when a cheap read responds in under 1 s after the initial UI is ready, and exercise three existing one-clip gestures three times each. It will use guarded Undo or inverse cleanup and retain the original scenario assertions. The 85-scenario matrix remains incomplete. Its current restore cleanup repeats integrity verification per row. Round 5 repeats the reduced selection with the bounded fixes and CPU sampling. This fixture has yet to establish a warm single-save time, and the observed cold stall prevents a two-second any-time save claim.
 
 **Plan deltas.**
 
