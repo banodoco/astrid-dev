@@ -72,7 +72,7 @@ For each side, and each workflow in scope:
 1. Sort with `baseline-diff.py`, never by hand. Give it each same-commit baseline run under its own label.
 2. **Flips:** compare those baseline runs with each other. A test that flips between runs of one commit gets its own row, with both runs, and is never retried until green. **A flip excuses nothing:** a candidate failure that passed on any baseline run is still a regression, and still blocks.
 3. One row per failing or missing id. Each row gives the bucket, candidate SHA, one-line cause, the commit or lane that introduced it, owner, disposition and link.
-   - **A regression,** or a failing new test that checks the candidate's own behaviour: blocks until its owner fixes it.
+   - **A regression,** or a failing new test that checks the candidate's own behaviour: blocks until its owner fixes it, or, for a release, the owner accepts it on that release's [known ledger](../astrid-dev-release/SKILL.md#what-a-release-must-show).
    - **A failing new test that exposes a defect already on the baseline:** prove it on the baseline, keep the test out of the candidate, and give it a row in the green-mains plan.
    - **Preexisting:** listed only.
    - **Missing:** cleared only by a recorded ruling, either a behaviour removed on purpose, or a rename that keeps the coverage ([the contract's ruling](../../run-contract.md#checks-and-failure-repair)). A deleting commit alone doesn't clear it.
