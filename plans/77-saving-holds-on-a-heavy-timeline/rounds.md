@@ -372,3 +372,13 @@ The cold 30 s stack snapshot showed one active Python thread in semantic history
 Among 26,862 decodable weighted py-spy samples, 59.90% included `list_timeline_commits`, 56.23% included `_history_page` and 40.60% included `_verify_accepted_replay`. JSON-schema validation's `descend` accounted for 27.26% of leaf samples, followed by schema `type` at 10.79% and JSON `iterencode` at 7.54%. The scratch py-spy 0.4.1 capture sampled at 100 Hz and reported 3,008 acquisition errors. The archived ranking records the further losses in decoding the raw output. [Profile index](evidence/2026-11-22-release-15/runtime-a-cold-profile-index.json)
 
 After the timed warm run, the standard-size 1440×900 browser showed the V6 target at its original position. Seven rows had visible area, with A2 and A3 below the visible timeline. The viewport check sent no gesture.
+
+### Disposable paired Runtime
+
+Runtime B `c3f811cbddcddb88a5fbae2114c134198265375f` merged the current Runtime release with the nine Round 5 Runtime commits. The SQLite WAL custody guard was included. The later persisted replay checkpoint was withheld. The install used the same App `e3dbad64` and Agent `8807f820`, the same 355 compiled files and a fresh authenticated restore of the same v30 database. The three changed installed Runtime modules matched their Git source bytes. The local Runtime source remained unpushed. [Restore and build identity](evidence/2026-11-22-release-15/runtime-b-reuse-and-restore.json)
+
+B reached the exact writable marker in 176.179 s. The Runtime process used 306.85 CPU s from birth to navigation and 166.78 CPU s from navigation to the marker. Its first limit-50 history request began at 1.984 s and failed near the proxy deadline. Its second began at 122.548 s and completed with HTTP 200 at 169.724 s. The single browser verified the original public v30 with one active head, 300 clip IDs and ten occurrences. The run observed zero timeline commit POSTs and removed the owned stack and profile. [B opening](evidence/2026-11-22-release-15/runtime-b-disposable.json)
+
+B took 130.373 s less than the profiled A cold opening. It made one fewer history attempt. The successful history request took 47.176 s on B and 57.304 s on A. This one-trial pair leaves the individual commit effects and cold-open variability unresolved.
+
+For the historical 22.994 s opening on the full Round 5 tuple, file timestamps place navigation approximately 19m00s after installation began, 17m28s after restore began, and 12m14s after direct adoption began. The Runtime used 19.89 CPU s during the timed browser interval. The pre-navigation process CPU and replay cache state remain unobserved.
