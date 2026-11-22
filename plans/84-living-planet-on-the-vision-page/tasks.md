@@ -138,3 +138,24 @@ Matched hosted baseline [run 45075542144](https://github.com/banodoco/astrid-app
 Warm engine-disabled/live probes isolate first-frame contention: headline ready at 1,390 ms versus 6,449 ms; scene construction was followed by a 5,211 ms main-thread task. [Entry repair PR 372](https://github.com/banodoco/astrid-app/pull/372), candidate `a4447fc`, waits for content, completed page navigation and paint opportunities before engine work, keeping the poster until an actual frame. Independent route N checks pass: six component cases, unchanged entry cases at lines208/338 and scoped lint; TypeScript output exactly matches the eight baseline diagnostics. Visual handoff captures are being corrected to the fixed DPR2 contract. No existing assertion changed. First-frame rendering cost and context-loss fallback remain PL-5 and early PL-4, respectively.
 
 Opened seven pictures under `run/evidence/pl-2/live-review/`: all five hero views, laptop panel and portrait panel. Portrait flow and shared tint accepted. Hero feather rejected on landscape, tablet, laptop and wide: the pale oval covers too much world. Narrow the feather around the complete copy bounds while retaining contrast. Valid glyph stress results at laptop size (black/white immediately behind tint, both palettes): lowest body contrast 4.721:1, lowest large heading 6.153:1; this is not a claim for every viewport/hour. Earlier failing contrast evidence is retained in `contrast-glyph-before-css/`. Full local verdicts: `run/evidence/pl-2/manager-verdicts.md`.
+
+## Run 1 stopped — 22 November 2026
+
+The owner stopped the first run at about 22:38 UTC. The manager, its runner and the check-ins were stopped; nothing is running. All work was already on GitHub and every worktree was clean when it stopped.
+
+**Where the work is (astrid-app, all inside `src/pages/Home/` and the public vision tests):**
+
+| Branch | At | What it holds | State |
+| --- | --- | --- | --- |
+| `release/15/plan-84` | `95a061b3` | The plan branch, cut from `release/15/main` at `e3dbad64`. PL-1 (the engine behind one boundary) is merged, via [pull request 371](https://github.com/banodoco/astrid-app/pull/371) | Public vision CI on this branch fails five Chromium and two WebKit assertions that pass on `release/15/main` (a hosted run on the unmodified base was fully green). Causes found so far: PL-1 left an empty planet slot of about 293 px on phones (fixed on `plan-84/pl-2`), and building the engine blocks the first frame on a software drawing backend (fixed by the entry repair). Not all causes are attributed. No assertion was changed |
+| `plan-84/pl-2` | `0e290681` | PL-2: the Foundations panel, the full-width stage, the phone spacer repair and the compact hero feather | Not a pull request, not accepted. The manager accepted the feather and the phone flow after opening all five sizes. Left to do: combine with the entry repair, re-run only the four focused unchanged specs, and re-measure contrast at the hero edge and in the light palette |
+| `plan-84/pl-1-entry-repair` | `54998927` | The entry repair: the page waits for its content before building the engine, keeps the poster until a real frame, and shows the still planet at once when WebGL2 is unavailable | [Pull request 372](https://github.com/banodoco/astrid-app/pull/372), open, not merged. Hosted Apple WebKit passed 5 of 5 on it |
+
+**Done:** PL-0 (the trial, with the phone ruling revised to a lighter live planet with a runtime step-down guard to be built in PL-5) and PL-1. **Not started:** PL-3, PL-10, PL-4, PL-5, PL-6, PL-7, PL-8, PL-9 and the review; preparation reports for PL-3, PL-4, PL-5, PL-9 and PL-10 are in the evidence snapshot.
+
+**Evidence:** the manager's reports, verdicts and measurements, the entry-sequence concept, the manager's mailbox and 90 compressed final pictures are on the astrid-dev branch [`plan-84/evidence-snapshot`](https://github.com/banodoco/astrid-dev/tree/plan-84/evidence-snapshot/plans/84-living-planet-on-the-vision-page/evidence/run-1-snapshot) (not for merge). The raw captures and traces, about 785 MB, were left on the run's machine and are lost with it.
+
+**Still open outside this plan:** the `releases/15.md` branch-table row for the cut is [pull request 1452](https://github.com/banodoco/astrid-dev/pull/1452), waiting for the owner or the Release 15 Lead.
+
+**To resume:** start a second run from the Run start line in [inputs.md](inputs.md), with the same routes and rules. Its first steps are to merge `plan-84/pl-1-entry-repair` and `plan-84/pl-2` into the plan branch (merge commits), re-run the four focused specs, finish PL-2, and then go on to PL-3 and PL-10.
+

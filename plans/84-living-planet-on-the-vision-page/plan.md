@@ -4,13 +4,13 @@
 
 **Goal:** The public vision page opens on a living 3D planet in place of the hero's pixel-art mink; the planet continues behind one translucent panel, Foundations, that holds the Pillars and the Principles; and it arrives with an authored intro, runs smoothly, and looks right on every device.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** the hosting Orchestrator (`session_011EzfW1Df4SCkBoafGdR1di`), which hosts the plan's manager
 
 **Estimate:** About 16 engineering days, including one shared time of day and splitting the engine into modules: the planet is already built as a mock-up, so this is integration, performance, devices, the intro and polish. It is re-stated after the device trial (PL-0), which decides how much has to be drawn live on a phone.
 
-**Waiting on:** the owner's look on her own phone and laptop (PL-0 and PL-8). Its manager, on the taste route, started on 22 November 2026; D1 in [inputs.md](inputs.md#owner-decisions) is decided.
+**Waiting on:** the owner's go to start a second run. The first run was stopped by the owner on 22 November 2026 after PL-0 and PL-1; PL-2 is nearly done on its own branch. What exists, and where, is in [tasks.md](tasks.md#run-1-stopped--22-november-2026) and [inputs.md](inputs.md).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 
