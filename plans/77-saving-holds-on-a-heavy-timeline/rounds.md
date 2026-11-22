@@ -388,3 +388,38 @@ C cold and same-process openings used separate browser profiles on the same Runt
 For the historical 22.994 s opening on the full Round 5 tuple, file timestamps place navigation approximately 19m00s after installation began, 17m28s after restore began, and 12m14s after direct adoption began. The Runtime used 19.89 CPU s during the timed browser interval. The pre-navigation process CPU and replay cache state remain unobserved.
 
 The nine Runtime commits used in B are out of the Round 7 cut and any earlier landing proposal. Their combined same-process reopen did not qualify. Any future reuse needs a separately measured change with the stock warm-read and import comparisons. The socket timeout and the Runtime proof transitions have separate code paths. [Source audit](evidence/2026-11-22-release-15/runtime-b-memo-audit.md)
+
+
+## Round 7 — current-release opening comparison
+
+On 22 November, compiled App stock `e3dbad64`, Agent `8807f820` and literal installed Runtime `3c28211f` (the same tree as release base `23310dc8`) used an independent authenticated 300-clip v30 restore. The first-cut source tuple is App `f98073ec`, Agent `b7f0e96a` and Runtime `8dfa96ac`. Local test-only pins produced App `e45dd659` and Agent `85278e6f`. The separately restored candidate starts from the same signed bytes. Each successful open independently verified one current head, all 300 clips and ten shot occurrences, with zero timeline commit POSTs.
+
+| Measured interval | Stock | First cut |
+| --- | ---: | ---: |
+| Runtime process birth to navigation | 295.33 CPU s | 311.19 CPU s |
+| Cold navigation to full writable | 312.153 s | 20.792 s |
+| Runtime CPU in the cold browser interval | 301.41 CPU s | 18.12 CPU s |
+| Fresh-profile reopen on the same Runtime | 14.317 s | 4.180 s |
+| Runtime CPU in the reopen interval | 6.43 CPU s | 1.53 CPU s |
+| Native adopt wall time to the same final-claim timeout | about 463.7 s | 507.883 s |
+
+The first cut issued two successful scoped verified-head reads and no scoped history page before writable. The restore and native adopt include offline work beyond the live Runtime CPU clock. Both warmed independently verified the exact original head. The first save attempts stopped at recorder guards with zero observed commit POSTs. Three legal save segments remain unobserved. A container interruption during a separate stock restore or adopt also yielded no browser or save result.
+
+The first cut still verifies the selected current publication and canonical closure. Explicit history retains per-row verification, and doctor retains full history checks. Opening can postpone finding integrity damage limited to an unrelated historical row. The reviewer held promotion for two App guards. Reload and proof of the sole bootstrap publication are required only along native initialization or its interrupted-create recovery, and restore must submit the exact revision and publication the user reviewed. There is no Release 15 landing request from this comparison. [Opening integrity scope](evidence/2026-11-22-release-15/round7-integrity.md).
+
+The owner accepted the opening and later verification trade on 22 November 2026: “Yes, thats okay.” That applies to damage confined to old, unused history. The recommended background check is a separate follow-up after the App safeguards, save measurements and isolated verifier memo. The owner has not approved landing.
+
+App [`cfb894d21`](https://github.com/banodoco/astrid-app/commit/cfb894d21f7372376451dc70fecceea97db589ac) repairs the bootstrap and restore guards. The tests failed first on the earlier branch. All 386 existing IDs in the matched six App files passed on both stock and the repair, and 24 additional IDs passed on the repair. The guarded-save test also failed as intended on an exact stock comparison when its history endpoint was unavailable. The repaired App's installed checks are still pending.
+
+**Plan deltas.**
+
+- Plan 63 gets the distinction between a writable indicator and a proved save. The three save segments are still missing.
+- Plan 75 gets the remaining startup CPU and the much smaller verified-current-head browser interval. The verifier memo is measured separately.
+- Plan 76 still needs the simultaneous-writer round. The focused Runtime HTTP test covers a competing commit and refusal of a stale reply. This measurement used one editor.
+- Plan 18 gets the first full writable and same-process reopen timings, separate from adoption and runtime verification.
+
+### Stock legal move repeat
+
+A separate signed v30 restore opened cold in 308.306 s. Its next fresh browser on the same Runtime opened in 349.084 s and used 332.58 Runtime CPU s during that interval. Earlier stock reopens were 13.744 s, 14.317 s and 14.517 s. The repeat's first two scoped history requests each failed at about 60 s. The later two finished before writable.
+
+The trusted move of `fixture-video-0190` stayed on V6 in the verified free interval. It sent one guarded POST 10.7595 s after release. The HTTP 200 acceptance arrived 32.5641 s after POST with matching original and accepted head pairs and receipt `txn-34fd283db7744d8c8207c3ccdd8c9d08`. The browser recorder did not observe Saved, and the separate public postflight did not return a verified head. The first two intervals are measured. The response-to-Saved interval remains open. The rule for a confirmed save continues to require the exact public head and document. The tested installation shut down safely.
