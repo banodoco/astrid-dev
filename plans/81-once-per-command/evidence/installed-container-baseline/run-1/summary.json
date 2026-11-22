@@ -1,0 +1,649 @@
+{
+  "what": "Plan 81 US-0, today's time on a published installed Astrid (no instrumentation flags)",
+  "when_utc": "2026-11-22T15:24:05.522720+00:00",
+  "machine": {
+    "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
+    "python": "3.13.18",
+    "cpus": 4
+  },
+  "astrid_cmd": "/root/codex/installed-baseline/timed-astrid.py",
+  "comfy_url": "http://127.0.0.1:18188",
+  "groups": {
+    "same": {
+      "runs": 5,
+      "succeeded": 5,
+      "median_wall_seconds": 15.5883,
+      "min_wall_seconds": 15.129,
+      "max_wall_seconds": 15.8855,
+      "distinct_task_ids": 5,
+      "accepted_revisions": null,
+      "runs_detail": [
+        {
+          "name": "generate-same-1",
+          "args": [
+            "generate",
+            "image",
+            "a red square on a plain background",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:21:23.561414+00:00",
+          "wall_seconds": 15.129,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            1.29345703125,
+            1.36328125,
+            1.46923828125
+          ],
+          "load_after": [
+            1.46240234375,
+            1.39501953125,
+            1.4775390625
+          ],
+          "json": true,
+          "task_id": "3ec09d89fbfa49b4be2fb50aa3cdf84c",
+          "revision_id": "6a6d5745c1285e9e9044d7f091f1d3fb84b5b6f5c70be82931abe654099568a5"
+        },
+        {
+          "name": "generate-same-2",
+          "args": [
+            "generate",
+            "image",
+            "a red square on a plain background",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:21:38.690762+00:00",
+          "wall_seconds": 15.3921,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            1.46240234375,
+            1.39501953125,
+            1.4775390625
+          ],
+          "load_after": [
+            1.859375,
+            1.48974609375,
+            1.5078125
+          ],
+          "json": true,
+          "task_id": "7ced7db35e134de882ba2a301d6e7d63",
+          "revision_id": "00763a7088de811eeb6109f3a5c60e37ba2a94d44b20a087e3cbe1f692916c77"
+        },
+        {
+          "name": "generate-same-3",
+          "args": [
+            "generate",
+            "image",
+            "a red square on a plain background",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:21:54.083165+00:00",
+          "wall_seconds": 15.5883,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            1.859375,
+            1.48974609375,
+            1.5078125
+          ],
+          "load_after": [
+            2.10009765625,
+            1.56396484375,
+            1.53271484375
+          ],
+          "json": true,
+          "task_id": "10c2b73c046f4f4db8fe7abe8ef08c24",
+          "revision_id": "a5873d3617b13c70f0630a0d78c3834f770c62686b1fd679ad4567ee74f8f080"
+        },
+        {
+          "name": "generate-same-4",
+          "args": [
+            "generate",
+            "image",
+            "a red square on a plain background",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:22:09.671737+00:00",
+          "wall_seconds": 15.8855,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.10009765625,
+            1.56396484375,
+            1.53271484375
+          ],
+          "load_after": [
+            2.4599609375,
+            1.66845703125,
+            1.56787109375
+          ],
+          "json": true,
+          "task_id": "fa140a18ce9b47eb8c99d34cf59fe80b",
+          "revision_id": "e134b64673d99ecb00d6fb3a0285fd7de4b7fd279d478279bdc3d97b24b07fc4"
+        },
+        {
+          "name": "generate-same-5",
+          "args": [
+            "generate",
+            "image",
+            "a red square on a plain background",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:22:25.557631+00:00",
+          "wall_seconds": 15.6386,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.4599609375,
+            1.66845703125,
+            1.56787109375
+          ],
+          "load_after": [
+            2.27734375,
+            1.66845703125,
+            1.5693359375
+          ],
+          "json": true,
+          "task_id": "5a3112d8d76349c7afa42d2cec453963",
+          "revision_id": "cffd5f50372916370bd8a889b0c3273c876242ef101376b10b160508f308dc54"
+        }
+      ]
+    },
+    "changed": {
+      "runs": 5,
+      "succeeded": 5,
+      "median_wall_seconds": 15.3469,
+      "min_wall_seconds": 15.1032,
+      "max_wall_seconds": 15.8294,
+      "distinct_task_ids": 5,
+      "accepted_revisions": null,
+      "runs_detail": [
+        {
+          "name": "generate-changed-1",
+          "args": [
+            "generate",
+            "image",
+            "a blue square on a plain background, variation 1",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:22:41.196636+00:00",
+          "wall_seconds": 15.2972,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.27734375,
+            1.66845703125,
+            1.5693359375
+          ],
+          "load_after": [
+            2.578125,
+            1.76708984375,
+            1.603515625
+          ],
+          "json": true,
+          "task_id": "502f46c6a67747a7a5e1684aa0b262db",
+          "revision_id": "af889e80908c016b215c28833c63ab851bf8a0b64e0c188c77a97a21fb423251"
+        },
+        {
+          "name": "generate-changed-2",
+          "args": [
+            "generate",
+            "image",
+            "a blue square on a plain background, variation 2",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:22:56.494301+00:00",
+          "wall_seconds": 15.819,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.578125,
+            1.76708984375,
+            1.603515625
+          ],
+          "load_after": [
+            2.91259765625,
+            1.8779296875,
+            1.64306640625
+          ],
+          "json": true,
+          "task_id": "d03fa948ae0f443aab511dd29330db53",
+          "revision_id": "89c900ace525ab5c5ecdd6e7197f7ef898b795953f63f4cde89871afd9902bc9"
+        },
+        {
+          "name": "generate-changed-3",
+          "args": [
+            "generate",
+            "image",
+            "a blue square on a plain background, variation 3",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:23:12.313692+00:00",
+          "wall_seconds": 15.1032,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.91259765625,
+            1.8779296875,
+            1.64306640625
+          ],
+          "load_after": [
+            2.93310546875,
+            1.93359375,
+            1.6650390625
+          ],
+          "json": true,
+          "task_id": "f13c807008d74a0f8cdc69c0c520082d",
+          "revision_id": "6858df98009831173db9d16ec2b3856e04b23af11c7c4148999a93325775aefd"
+        },
+        {
+          "name": "generate-changed-4",
+          "args": [
+            "generate",
+            "image",
+            "a blue square on a plain background, variation 4",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:23:27.417261+00:00",
+          "wall_seconds": 15.8294,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.93310546875,
+            1.93359375,
+            1.6650390625
+          ],
+          "load_after": [
+            3.0830078125,
+            2.0185546875,
+            1.69775390625
+          ],
+          "json": true,
+          "task_id": "a428f54e6c974eec8dc75987581f41fb",
+          "revision_id": "ca704477fa6660fb28f877066c36ef99ff4ff6287f8c68096007d6c36036d908"
+        },
+        {
+          "name": "generate-changed-5",
+          "args": [
+            "generate",
+            "image",
+            "a blue square on a plain background, variation 5",
+            "--mode",
+            "t2i",
+            "--placement",
+            "http://127.0.0.1:18188",
+            "--project",
+            "us0-published-20261122-151111",
+            "--no-wait",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:23:43.247104+00:00",
+          "wall_seconds": 15.3469,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            3.0830078125,
+            2.0185546875,
+            1.69775390625
+          ],
+          "load_after": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "json": true,
+          "task_id": "6e4672f7f42947e3b3f4d1fccd4c6bd6",
+          "revision_id": "4de29992bc53767d08c0e4f9e5ebe74cbbb128639e437c8eb3415de88bff2ff1"
+        }
+      ]
+    },
+    "timeline": {
+      "runs": 5,
+      "succeeded": 5,
+      "median_wall_seconds": 1.166,
+      "min_wall_seconds": 1.0341,
+      "max_wall_seconds": 2.4158,
+      "distinct_task_ids": null,
+      "accepted_revisions": 5,
+      "runs_detail": [
+        {
+          "name": "timeline-edit-1",
+          "args": [
+            "timelines",
+            "edit",
+            "us0-published-20261122-151111",
+            "--project",
+            "us0-published-20261122-151111",
+            "--add-layer",
+            "media",
+            "--layer-asset",
+            "/root/codex/installed-baseline/evidence/run-1/media.png",
+            "--on",
+            "0",
+            "--for",
+            "3",
+            "--track",
+            "V1",
+            "--id",
+            "us0-1",
+            "--idempotency-key",
+            "us0-published-20261122-151111-1",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:23:58.594412+00:00",
+          "wall_seconds": 2.4158,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "load_after": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "json": true,
+          "task_id": null,
+          "revision_id": "authoring-parent-revision-1fe9324d8059322ab1a5f975ae57591d7ab7080bb344d387698e9a351f19d2b0"
+        },
+        {
+          "name": "timeline-edit-2",
+          "args": [
+            "timelines",
+            "edit",
+            "us0-published-20261122-151111",
+            "--project",
+            "us0-published-20261122-151111",
+            "--add-layer",
+            "media",
+            "--layer-asset",
+            "/root/codex/installed-baseline/evidence/run-1/media.png",
+            "--on",
+            "3",
+            "--for",
+            "3",
+            "--track",
+            "V1",
+            "--id",
+            "us0-2",
+            "--idempotency-key",
+            "us0-published-20261122-151111-2",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:24:01.011068+00:00",
+          "wall_seconds": 1.166,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "load_after": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "json": true,
+          "task_id": null,
+          "revision_id": "authoring-parent-revision-b8a9302a0254bd01a7d0597e26078b09c7bd0b18681e74c2ca044963c64b21f8"
+        },
+        {
+          "name": "timeline-edit-3",
+          "args": [
+            "timelines",
+            "edit",
+            "us0-published-20261122-151111",
+            "--project",
+            "us0-published-20261122-151111",
+            "--add-layer",
+            "media",
+            "--layer-asset",
+            "/root/codex/installed-baseline/evidence/run-1/media.png",
+            "--on",
+            "6",
+            "--for",
+            "3",
+            "--track",
+            "V1",
+            "--id",
+            "us0-3",
+            "--idempotency-key",
+            "us0-published-20261122-151111-3",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:24:02.177771+00:00",
+          "wall_seconds": 1.0341,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "load_after": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "json": true,
+          "task_id": null,
+          "revision_id": "authoring-parent-revision-35d579db1632e702288c198eecaa965b91ddb78631af3f1435279a4f55b929b3"
+        },
+        {
+          "name": "timeline-edit-4",
+          "args": [
+            "timelines",
+            "edit",
+            "us0-published-20261122-151111",
+            "--project",
+            "us0-published-20261122-151111",
+            "--add-layer",
+            "media",
+            "--layer-asset",
+            "/root/codex/installed-baseline/evidence/run-1/media.png",
+            "--on",
+            "9",
+            "--for",
+            "3",
+            "--track",
+            "V1",
+            "--id",
+            "us0-4",
+            "--idempotency-key",
+            "us0-published-20261122-151111-4",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:24:03.212537+00:00",
+          "wall_seconds": 1.2111,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.978515625,
+            2.06591796875,
+            1.7216796875
+          ],
+          "load_after": [
+            2.98046875,
+            2.08154296875,
+            1.72900390625
+          ],
+          "json": true,
+          "task_id": null,
+          "revision_id": "authoring-parent-revision-0e5b6b12cfa6f6ab0401ed2c4c306de710f77cdf33c66d52a1a78ca7abebb041"
+        },
+        {
+          "name": "timeline-edit-5",
+          "args": [
+            "timelines",
+            "edit",
+            "us0-published-20261122-151111",
+            "--project",
+            "us0-published-20261122-151111",
+            "--add-layer",
+            "media",
+            "--layer-asset",
+            "/root/codex/installed-baseline/evidence/run-1/media.png",
+            "--on",
+            "12",
+            "--for",
+            "3",
+            "--track",
+            "V1",
+            "--id",
+            "us0-5",
+            "--idempotency-key",
+            "us0-published-20261122-151111-5",
+            "--json"
+          ],
+          "started_at": "2026-11-22T15:24:04.424307+00:00",
+          "wall_seconds": 1.0977,
+          "exit_code": 0,
+          "ok": true,
+          "load_before": [
+            2.98046875,
+            2.08154296875,
+            1.72900390625
+          ],
+          "load_after": [
+            2.98046875,
+            2.08154296875,
+            1.72900390625
+          ],
+          "json": true,
+          "task_id": null,
+          "revision_id": "authoring-parent-revision-f0306e8b80bc066cb58ea10ea3ce258ceb9da01a8ab658d2134775f785b515bf"
+        }
+      ]
+    }
+  },
+  "setup": [
+    {
+      "name": "project-create",
+      "args": [
+        "projects",
+        "create",
+        "us0-published-20261122-151111",
+        "--name",
+        "us0-published-20261122-151111",
+        "--select",
+        "--json"
+      ],
+      "started_at": "2026-11-22T15:11:11.482353+00:00",
+      "wall_seconds": 600.5355,
+      "exit_code": 0,
+      "ok": true,
+      "load_before": [
+        1.607421875,
+        1.54052734375,
+        1.59423828125
+      ],
+      "load_after": [
+        1.17138671875,
+        1.34716796875,
+        1.466796875
+      ],
+      "json": true,
+      "task_id": null,
+      "revision_id": null
+    },
+    {
+      "name": "timeline-create",
+      "args": [
+        "timelines",
+        "create",
+        "--project",
+        "us0-published-20261122-151111",
+        "--slug",
+        "us0-published-20261122-151111",
+        "--name",
+        "us0-published-20261122-151111",
+        "--json"
+      ],
+      "started_at": "2026-11-22T15:21:12.018235+00:00",
+      "wall_seconds": 11.5426,
+      "exit_code": 0,
+      "ok": true,
+      "load_before": [
+        1.17138671875,
+        1.34716796875,
+        1.466796875
+      ],
+      "load_after": [
+        1.29345703125,
+        1.36328125,
+        1.46923828125
+      ],
+      "json": true,
+      "task_id": null,
+      "revision_id": "authoring-parent-revision-78febcdfb5a2cd3fc641624502524fafbe422b14c1e94fdf4fbb9e56d56b3dd7"
+    }
+  ],
+  "astrid_version_output": "astrid/0.1.0"
+}
