@@ -1,0 +1,7 @@
+# US-3 source timing — 22 November 2026
+
+D2's 2-second source figure is not met by US-3 alone: median 2.569 s (candidate `b8a8a172`), launcher connection 1.0 to 1.1 s, other command work 1.0 s; the rest is US-6's. Re-measure after US-6 and on a quieter machine.
+
+Five fresh source-checkout timeline edit processes accepted revisions in 2.524, 2.640, 2.486, 2.596 and 2.569 seconds. Agent was `647834ea0416e2145d8880b055616423e26d6074`; Runtime candidate was `b8a8a172ca73ff2413d108096dfb194fcc9967ae`; VibeComfy was `799d90f619a6723d0b376b7e77aef09c244a0821`. Python 3.13.18 and a real scratch Runtime were used on a shared CPU-only Linux container. The fresh processes ran `python -m astrid timelines edit` with one local image, non-overlapping positions, unique idempotency keys, `--json --timings`; source checkout paths were explicitly supplied in the isolated environment. This is not an installed-machine result.
+
+The Runtime candidate retained both complete Git-backed observations and passed 32 focused source-identity and process-budget tests. In 12 paired component measurements its median capture was 0.520 seconds versus 0.742 seconds before the final batch-balancing change; these component measurements are not a whole-command result. The local run's full commands, stage arrays, identity and cleanup evidence are in `run/us3-measure-runtime-b8a8a172-20261122/`. The scratch Runtime stopped and no owned host remained. The target remains open; this evidence does not assert it passed.
