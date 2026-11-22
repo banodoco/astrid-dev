@@ -4,15 +4,15 @@
 
 ## Planning evidence
 
-**Scope decision:** Included in Release 15 by the owner on 23 November 2026. Reshaped the same day at the owner's direction: this plan gets the renderer working end to end with the fixes in the proper code; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline fixes; everything else is an issue. Filing authority only; no run has started.
+**Scope decision:** Accepted — included in Release 15 by the owner on 23 November 2026, recorded in the [Release 15 brief](../../releases/15.md). Reshaped the same day at the owner's direction: this plan gets the renderer working end to end with the fixes in the proper code; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline fixes; everything else is an issue. Filing authority only; no run has started.
 
-**Prior art:** Plans 27, 39, 59, 69, 76, 77, 78 and 83 were read for overlap ([landscape](evidence/eff/landscape.md)). No plan owns "render works"; Plan 27 keeps export choices, Plan 78 holds the open motion pack pin, Plan 83 the custody module split. The first full draft by an independent judge is kept as [evidence](evidence/shipplan/PLAN.md).
+**Prior art:** Plans 27, 39, 59, 69, 76, 77, 78 and 83 were read for overlap ([landscape](./evidence/eff/landscape.md)). No plan owns "render works"; Plan 27 keeps export choices, Plan 78 holds the open motion pack pin, Plan 83 the custody module split. The first full draft by an independent judge is kept as [evidence](./evidence/shipplan/PLAN.md).
 
 **Approach:** Port the six sound render changes onto a Release 15 plan branch, carry two tracked experiments, write the remaining fixes properly with a short real render after each, prove it on the heavy fixture and the film, and keep one real render check in CI.
 
-**Challenge:** An independent [code review](evidence/review/ASTRA-530.md), a [trial integration](evidence/mergescope/REPORT.md), a [root-cause investigation](evidence/astra20/REPORT.md) and an independent [judge](evidence/shipplan/VERDICTS.md) preceded this reshaping. A [second opinion](evidence/astra-plans/OPINION.md) on the reshaped plan changed sixteen things and was declined on two ([record](#second-opinion)).
+**Challenge:** Reviewed — an independent [code review](./evidence/review/ASTRA-530.md), a [trial integration](./evidence/mergescope/REPORT.md), a [root-cause investigation](./evidence/astra20/REPORT.md) and an independent [judge](./evidence/shipplan/VERDICTS.md) preceded this reshaping. A [second opinion](./evidence/astra-plans/OPINION.md) on the reshaped plan changed sixteen things and was declined on two ([record](#second-opinion)).
 
-**Proof and limits:** A film rendered with the sixteen changes, in four ranges, on a stack cut from an older commit. Nothing has rendered on `release/15/main`. The cause of heartbeat renewals stopping is unknown. Fact checks of the release heads, CI and the branch inventory are in [evidence/eff](evidence/eff/).
+**Proof and limits:** A film rendered with the sixteen changes, in four ranges, on a stack cut from an older commit. Nothing has rendered on `release/15/main`. The cause of heartbeat renewals stopping is unknown. Fact checks of the release heads, CI and the branch inventory are in [evidence/eff](./evidence/eff/).
 
 **Review rounds:** One round at the end.
 

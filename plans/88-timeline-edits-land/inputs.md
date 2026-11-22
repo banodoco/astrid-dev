@@ -4,13 +4,13 @@
 
 ## Planning evidence
 
-**Scope decision:** Included in Release 15 by the owner on 23 November 2026, at whose direction it was written: a second plan, separate from the render plan, that merges the useful timeline fixes from the same session and then iterates on real edits until they work. Filing authority only; no run has started.
+**Scope decision:** Accepted — included in Release 15 by the owner on 23 November 2026, recorded in the [Release 15 brief](../../releases/15.md). It is a second plan, separate from the render plan, that merges the useful timeline fixes from the same session and then iterates on real edits until they work. Filing authority only; no run has started.
 
 **Prior art:** Plans 18, 63, 69, 76 and 77 own the designs around this work; their boundaries are in [plan.md](plan.md#outcome-and-scope). The three donor commits and their two reviews are the starting point. All evidence is held by [Plan 87](../87-render-works/inputs.md).
 
 **Approach:** Land the two sound fixes with tests, replace the unsound exemption with the bounded rule, then use a loop of real edits, each confirmed by read-back and render, as the acceptance test.
 
-**Challenge:** An independent code review and an independent judge both found the exemption unsafe and the media swap sound ([review](../87-render-works/evidence/review/ASTRA-530.md), [verdicts](../87-render-works/evidence/shipplan/VERDICTS.md)). A [second opinion](../87-render-works/evidence/astra-plans/OPINION.md) on this plan tightened TE-3's conditions, split the loop into must-pass edits and probes, and removed a double landing of the donor commits ([record](../87-render-works/inputs.md#second-opinion)).
+**Challenge:** Reviewed — an independent code review and an independent judge both found the exemption unsafe and the media swap sound ([review](../87-render-works/evidence/review/ASTRA-530.md), [verdicts](../87-render-works/evidence/shipplan/VERDICTS.md)). A [second opinion](../87-render-works/evidence/astra-plans/OPINION.md) on this plan tightened TE-3's conditions, split the loop into must-pass edits and probes, and removed a double landing of the donor commits ([record](../87-render-works/inputs.md#second-opinion)).
 
 **Proof and limits:** The donor fixes pass focused tests and have never run against a live Runtime. The loop is the first live proof. It covers one test timeline and one film.
 
