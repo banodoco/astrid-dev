@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 7 engineering days.
+**Estimate:** About 4 engineering days. A shared shape for result files and a generated table are left until a second plan has used the home (see Not included).
 
 **Waiting on:** a release; the owner's decision D1 in [inputs.md](inputs.md#owner-decisions).
 
@@ -23,40 +23,40 @@ On 22 November 2026 two lanes built measuring machinery separately. [Plan 81](..
 **Included:**
 
 - **A shared workstream,** `astrid-dev-measure`, beside the other shared workstreams: the method on one page.
-- **A home in astrid-dev,** `measure/`: the named scenarios with exact definitions, the runner that works across repositories, and a dated table of results per release.
+- **A home in astrid-dev,** `measure/`: a short index of the named scenarios and where each one's driver lives, one runner that works across repositories, and a dated list of results that links to the raw output behind each number.
 - **Everything that exists is kept and placed.** Every measuring tool and result built so far is inventoried, saved where it can be found, and either moved to the home, left where it is with a pointer, or marked superseded. Nothing is lost and nothing lives only on a session's machine.
-- **The tools that drive a product stay with that product** (the editor's harness in the App, the command timings in the Agent) and are listed in the home, each giving its results in one shared shape.
-- **A release is compared with the last.** Qualifying a release runs the scenarios against the release people have now and the candidate, and the table shows any scenario that got slower.
+- **The tools that drive a product stay with that product** (the editor's harness and benchmark in the App, the command timings in the Agent) and are listed in the home.
+- **A release that claims a speed shows it.** At a release's freeze rehearsal, the quick command-line scenarios are run once, paired, against the release people have now, and the result is linked from the release brief. It is a record, not a gate.
 
 **The method, in short** (each line is a lesson of 22 November 2026, recorded in [inputs.md](inputs.md#planning-evidence)): measure what a person runs, an installed build or the compiled editor, never a development build or a source checkout alone; on a quiet machine; before and after alternated in one session; on a saved project built once and restored, not rebuilt; on the current code, with the exact commits written down; split into stages so one number does not hide where the time is; and repeatable by someone who did not write it.
 
-**Not included:** making anything faster (that is each speed plan's work); new timeline scenarios, which are [Plan 86](../86-the-timeline-feels-fast/plan.md)'s; a hosted dashboard; measuring on a GPU or a paid machine.
+**Not included:** a common schema for result files, a generated results table and a check on them: these wait until a second plan has used the home, and then belong with the repository's other generated views and checks; a speed comparison as a condition of every release; making anything faster (that is each speed plan's work); new timeline scenarios, which are [Plan 86](../86-the-timeline-feels-fast/plan.md)'s; a hosted dashboard; measuring on a GPU or a paid machine.
 
 ## Existing work and decision
 
-The inventory is in [inputs.md](inputs.md#what-exists-today). In short: Plan 81's installed before-and-after runner, stand-in ComfyUI and profiler are in that plan's evidence folder; the App has `scripts/save-loop/`; the Agent has command timings behind `--timings`; a page and a ledger entry describe a separate measurement machine; and the first numbers are spread over two plans' evidence folders.
+The inventory is in [inputs.md](inputs.md#what-exists-today). In short: Plan 81's installed before-and-after runner, stand-in ComfyUI and profiler are in that plan's evidence folder; the App has `scripts/save-loop/` and an older editor benchmark, `npm run perf:editor`, used in October 2026 on a real 286-clip film; the Agent has command timings behind `--timings`; a page and a ledger entry describe a separate measurement machine; and the first numbers are spread over two plans' evidence folders.
 
 **Decision: the method and the record live in astrid-dev; the drivers live with what they drive.** astrid-dev is where work across repositories and releases already lives. A driver has to change with its product, so it stays in that repository and is listed here.
 
 ## Sequence and readiness
 
 1. **MS-1,** the inventory, and everything saved.
-2. **MS-2 and MS-3,** side by side: the workstream, and the home with its scenario and result shapes.
-3. **MS-4,** the runner, generalised from Plan 81's.
-4. **MS-5,** the existing drivers give results in the shared shape, and the first table is filled from 22 November's numbers.
-5. **MS-6,** the release comparison.
+2. **MS-2,** the workstream and the home's index.
+3. **MS-3,** one portable runner, from Plan 81's.
+4. **MS-4,** the first results listed, and one scenario run from a clean checkout.
+5. **MS-5,** the paired run at a release's freeze rehearsal.
 6. **R,** one review round.
 
 **Real dependencies:** Plan 81 landed, so its runner is final. Nothing else. **Unresolved:** D1 and a release. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
-**Consumes:** Plan 81's runner and results; the App's save-loop harness as it is; Plan 77's measurements. **Produces:** the workstream; `measure/` with scenarios, runner and results; a release comparison step. **Compatibility:** no product behaviour changes. Existing evidence stays where it is; moved scripts leave a pointer behind.
+**Consumes:** Plan 81's runner and results; the App's save-loop harness as it is; Plan 77's measurements. **Produces:** the workstream; `measure/` with its index, one runner and a list of results; a paired run at freeze rehearsal. **Compatibility:** no product behaviour changes. Existing evidence stays where it is; moved scripts leave a pointer behind.
 
 ## Completion
 
 - **Nothing lost:** every tool and result in the inventory has a recorded place, and none exists only on a session's machine.
-- **One way to measure:** a person who has not seen today's work can run one named scenario against a given set of commits from the workstream alone, and gets a result file in the shared shape.
+- **One way to measure:** from a clean checkout, with no path that exists only on one machine, one pinned scenario runs from the workstream and the runner alone.
 - **The same answer twice:** an independent re-run of Plan 81's before-and-after from the new home reproduces its direction and rough size.
-- **A release is compared:** the table has rows for the published Release 14 and the Release 15 candidate, and a scenario made slower on purpose shows up as slower.
+- **Numbers are kept honest:** each listed result names its exact commits, build, project, machine and load, links its raw output, and is compared only with results taken in the same session on the same machine, project, build and cache state.
 - **Limits of the proof:** scenarios run on a CPU container with a stand-in ComfyUI unless a row says otherwise; what a real ComfyUI or a GPU adds is outside this plan. Landing remains the owner's.
