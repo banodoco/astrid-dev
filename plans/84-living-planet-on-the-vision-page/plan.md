@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 14.5 engineering days, including splitting the engine into modules: the planet is already built as a mock-up, so this is integration, performance, devices, the intro and polish. It is re-stated after the device trial (PL-0), which decides how much has to be drawn live on a phone.
+**Estimate:** About 16 engineering days, including one shared time of day and splitting the engine into modules: the planet is already built as a mock-up, so this is integration, performance, devices, the intro and polish. It is re-stated after the device trial (PL-0), which decides how much has to be drawn live on a phone.
 
 **Waiting on:** a manager on the taste route. The owner's one decision, D1 in [inputs.md](inputs.md#owner-decisions), is needed before landing, not before starting.
 
@@ -24,6 +24,7 @@ The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, serve
 
 - **The planet in the hero,** top right, where the juggling mink is now.
 - **One translucent panel, Foundations,** below the hero that holds both the Pillars and the Principles, with the planet visible behind it. The text stays comfortably readable over a moving background.
+- **One time of day, and spinning the planet changes it.** The public pages already have a sky that follows the visitor's real time and can play through a day. The planet joins it: it arrives lit for the hour the sky shows, and when a visitor spins it the hour moves with it, so the sky behind and the page's colours change as the planet turns.
 - **An intro:** the page's words appear at once; the planet then arrives in an authored entrance, with no empty box, flash or jump in the layout.
 - **The same care on a phone, a tablet, a laptop and a wide screen,** by touch, mouse or keyboard.
 - **A still planet, never a hole,** for a visitor who asks for reduced motion or whose device cannot draw it.
@@ -45,7 +46,7 @@ The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, serve
 
 1. **PL-0,** a short trial of the mock-up as it is, on a real phone and laptop, and the record of where its code and art came from.
 2. **PL-1,** the engine in the App behind a clean boundary, loaded on demand, with a fixed pose so pictures of it can be compared.
-3. **PL-2 and PL-3,** the page's layout and the planet's framing at each size. From here the page looks like the mock-up, and every later task is judged by eye.
+3. **PL-2, PL-3 and PL-10,** the page's layout, the planet's framing at each size, and the planet and the sky sharing one time of day. From here the page looks like the mock-up, and every later task is judged by eye.
 4. **PL-4 and PL-5,** side by side: the still planet and the intro, and speed.
 5. **PL-6,** the page's pictures and tests brought up to the new look.
 6. **PL-7,** the taste rounds.
@@ -64,6 +65,7 @@ The vision page today (astrid-app `src/pages/Home/PublicAstridVision.tsx`, serve
 ## Completion
 
 - **The look:** at five sizes (a phone upright and on its side, a tablet, a laptop, a wide screen) the page matches the mock-up's composition and the manager's judgment, shown by before-and-after pictures and a short recording of the intro at each size; and the owner has looked at the finished page on her own phone and laptop and approved it.
+- **One time of day:** on arrival the planet's light matches the sky's hour; spinning the planet moves the sky, the page's colours and the planet's light together, through a whole day, with one owner of the hour and no flicker or lag between them; and there is a way back to the real time.
 - **The intro:** words first, then the planet's entrance, once per visit, with no layout shift and no empty frame.
 - **Smooth:** on the named phone and laptop from PL-0 the planet holds a steady frame rate while the page scrolls, and it does no work when it is off screen or the tab is hidden. The numbers are set by measurement, not chosen in advance.
 - **No cost before it is wanted:** on a production build, the page's first paint, largest paint and layout shift are no worse than today; the Home page, and a visit that only ever shows the still planet, download none of the planet's code.
