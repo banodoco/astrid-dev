@@ -144,3 +144,4 @@ We assembled this index to support review of a film project's plan, reported def
 - `eff/ci.md`: existing workflows, render tests, fixtures and how CI gets Remotion and a browser. Supports RN-11.
 - `eff/inventory.md`: every commit on the session's branches that is not on `release/15/main`. Supports the sixteen-change table and Plan 88.
 - `eff/cancel.md`: each stuck-state observation with task ids, times and code locations. Supports issue #1514.
+- `astra-plans/OPINION.md`: the independent second opinion on Plans 87 and 88. What was taken and left is in `inputs.md` under "Second opinion".

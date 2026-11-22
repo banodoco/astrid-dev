@@ -8,7 +8,7 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 9 engineering days: 2 to reach a working render on Release 15, 4 to replace the stopgaps with proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check.
+**Estimate:** Provisional, about 9 engineering days: 1 to port the sound fixes, 5 for the proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check. Re-estimate after the lease measurement and the first whole-fixture attempt.
 
 **Waiting on:** a claimed run. Decisions P1 to P3 are taken ([inputs.md](inputs.md#owner-decisions)).
 
@@ -24,8 +24,8 @@ On 22 November 2026 a film project could not be rendered on a Release 14 test st
 
 **In scope**
 
-1. Carry the sixteen changes onto `release/15/main` and get a render working there.
-2. Replace each stopgap with a proper fix, keeping the render working after every replacement.
+1. Carry the six sound render changes onto `release/15/main`, resolving their conflicts once.
+2. Write the remaining fixes properly, using the session's stopgaps as the description of what each has to achieve.
 3. Render the heavy test timeline end to end, debugging what breaks. The owner named it: the generated heavy fixture built by the App's [`scripts/save-loop/build-fixture.mjs`](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/build-fixture.mjs) ([how to run it](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/README.md)), in both its standard and `large-shots` variants. A break in the render path is fixed here; anything else becomes an issue.
 4. One real render check in CI, built on the test that already executes `rendering.render` against a real Runtime and pack host.
 
@@ -51,14 +51,15 @@ Nothing else on the test stack's branches is missing from Release 15: the stack'
 
 **Why rendering had never worked.** Each layer failed and hid the next: asset admission, worker environment check, bundler resolution, composition, lease, process custody. No test ran the real path with a collection-pack element through a command worker, so nothing caught any of it ([root-cause picture](evidence/shipplan/PLAN.md)).
 
-**The decision: get it working first, then make it right, with the render as the test.** The earlier draft of this plan ordered the work as separately designed fixes, each with its own new tests, across two release lines. We chose a shorter route:
+**The decision: port what is sound, write the rest properly, and render at every step.** The earlier draft ordered the work as separately designed fixes, each with its own new tests, across two release lines. We chose a shorter route:
 
-1. Port all sixteen commits, stopgaps included, onto a plan branch cut from `release/15/main`. The two conflicting files are known (`generic_host.py`, `remotion_runtime.py`).
-2. Render. Fix what Release 15's 597 newer commits changed until a render completes.
-3. Replace the stopgaps one at a time. After each replacement, render again. A stopgap leaves the branch only when its proper fix is in and the render still completes.
-4. Nothing merges to `release/15/main` while a stopgap remains.
+1. Cherry-pick the six sound render changes onto a plan branch cut from `release/15/main`. The two conflicting files are known (`generic_host.py`, `remotion_runtime.py`) and are resolved once.
+2. Carry the lease and custody stopgaps as two tracked experiments, because nothing long can render without them and their proper fixes need measurement first.
+3. Write the pack-root, pack-revision and animation fixes directly. Their stopgaps are not ported: porting code that is about to be replaced costs a second conflict resolution, and a render that depends on an override or a suppressed error is not a trustworthy reference.
+4. After each fix, run a short real render. Render the film whole at three milestones. Compare with the editor, never with an earlier render.
+5. Nothing merges to `release/15/main` while an experiment remains.
 
-This keeps a working render in hand from day 2, makes the render itself the regression test for each proper fix, and removes the second release line entirely.
+A first version of this plan ported all sixteen commits before fixing anything. A second opinion showed that sixteen cherry-picks would not reproduce the session's stack anyway (the animation patch lived outside the repository and the pack override needed a machine-local setting), so we changed it ([opinion](evidence/astra-plans/OPINION.md), [what we took and left](inputs.md#second-opinion)).
 
 **The sixteen changes and what happens to each**
 
@@ -68,14 +69,14 @@ This keeps a working render in hand from day 2, makes the render itself the regr
 | Thumbnail metadata and redundant locators projected out | `cb90a4b9` | Keep, add tests (RN-2) |
 | Mismatch error names the differing fields | `7332e03d` | Keep, show values for path fields (RN-3) |
 | Launch validation matches worker contexts | `0f6aea92` | Keep, fold into one environment builder (RN-3) |
-| Command workers use the command readiness rule | `f4f5a321` stopgap | Becomes part of RN-3; correct as written |
-| Empty pack path equals unset | `f84c80be` stopgap | Becomes part of RN-3; correct as written |
-| Worker pack roots; bundler roots via parent mapping; relative shared-import alias | `90380578`, `fa3b6df1`, `54e605c6` stopgaps | Replaced by one fix (RN-4) |
-| Render uses the App-vendored motion pack | `007c40d3` stopgap | Replaced by one pinned revision for preview and render (RN-5) |
-| Fade with an easing no longer fails the render | `221e5003` stopgap | Replaced by a fix where the animation metadata is generated (RN-6) |
-| Two-hour lease requested on every heartbeat | `b051e8cc` stopgap | Replaced after the cause is measured (RN-7, RN-8) |
-| Wait before the custody retry | `7265aa5d` stopgap | Replaced by proper handling of an exiting process (RN-9) |
-| Media swap on shot clips; word-provenance exemption; legacy overrun | `24740fdf`, `d4bf28e4`, `ad10ff6d` | Not render fixes. [Plan 88](../88-timeline-edits-land/plan.md) |
+| Command workers use the command readiness rule | `f4f5a321` stopgap | Ported with the four above; correct as written (RN-3) |
+| Empty pack path equals unset | `f84c80be` stopgap | Ported with the four above; correct as written (RN-3) |
+| Worker pack roots; bundler roots via parent mapping; relative shared-import alias | `90380578`, `fa3b6df1`, `54e605c6` stopgaps | Not ported. One proper fix (RN-4) |
+| Render uses the App-vendored motion pack | `007c40d3` stopgap | Not ported. One pinned revision for preview and render (RN-5) |
+| Fade with an easing no longer fails the render | `221e5003` stopgap | Not ported. The `fade` element declares its easing support (RN-6) |
+| Two-hour lease requested on every heartbeat | `b051e8cc` stopgap | Carried as a tracked experiment; replaced after the cause is measured (RN-7, RN-8) |
+| Wait before the custody retry | `7265aa5d` stopgap | Carried as a tracked experiment; replaced by a bounded retry that keeps every custody check (RN-9) |
+| Media swap on shot clips; word-provenance exemption; legacy overrun | `24740fdf`, `d4bf28e4`, `ad10ff6d` | Not render fixes and not on this branch. [Plan 88](../88-timeline-edits-land/plan.md) lands them |
 
 **Judgement calls made in this reshaping** are recorded with their reasons in [inputs.md](inputs.md#judgement-calls).
 
@@ -83,9 +84,9 @@ This keeps a working render in hand from day 2, makes the render itself the regr
 
 **Branch.** `release/15/plan-87` in astrid-agent, cut from the `release/15/main` head on the day; the same name in astrid-runtime and astrid-app only if a task changes them. It lands on `release/15/main` through the Release 15 Lead.
 
-**Phase 1: a working render on Release 15 (RN-0, RN-1).** Stand up a source-launched stack on the plan branch. Render the session's film timeline first, because we know what a correct result looks like. Record the first failing stage on the unmodified head before porting anything.
+**Phase 1: a render on Release 15 (RN-0, RN-1).** Stand up a source-launched stack and an installed-profile stack on the plan branch, and record the exact versions of everything in them. Record the first failing stage on the unmodified head. Write the reset procedure for a stack left stuck by a failed render. Then port the six sound changes.
 
-**Phase 2: proper fixes (RN-2 to RN-9).** In the order of the table in [tasks.md](tasks.md). RN-2, RN-3 and RN-4 are the critical path. RN-7 runs from day 1, because it only adds measurement and needs long renders to observe.
+**Phase 2: proper fixes (RN-2 to RN-9).** In the order of the table in [tasks.md](tasks.md). RN-3 and RN-4 are the critical path. RN-7 and the short contract render (RN-11) start on day 1.
 
 **Phase 3: the heavy timeline (RN-10).** The loop:
 
@@ -102,6 +103,8 @@ This keeps a working render in hand from day 2, makes the render itself the regr
 **Risks**
 
 - The heartbeat renewal stop has no known cause. RN-7 may not find it quickly. P3 covers that case.
+- Inputs and outputs are read whole into memory, and an attempt has a one-hour default deadline. The heavy fixture may meet both; RN-10 measures them on every run.
+- A failed render can leave the stack refusing work. RN-0's reset procedure is the only recovery this plan provides; if resets start to dominate the loop, the smallest missing clean-up comes back in from [#1514](https://github.com/banodoco/astrid-dev/issues/1514).
 - `generic_host.py` is large and changed on Release 15; RN-1 and RN-3 conflict there. Keep RN-3 to the builder and its callers.
 - The heavy fixture is far larger than the film (616 clips and 480-second shots against 3 minutes 16 seconds). Phase 3 has no fixed end; the estimate assumes two days.
 - The fixture builder asks for 25 GiB of free disk and stops below 15 GiB. The session's Mac had under 10. Phase 3 needs a machine with room.
@@ -117,9 +120,10 @@ This keeps a working render in hand from day 2, makes the render itself the regr
 
 ## Completion
 
-- The heavy fixture, standard and `large-shots`, renders whole, in one product render each, twice in a row, on a build of the plan branch with no stopgap commit and no local patch.
+- The heavy fixture, standard and `large-shots`, renders whole, in one product render each, twice in a row, through to the Runtime's completion receipt and a registered output, on a build of the plan branch with no experiment commit and no local patch.
 - Sampled frames match the editor and the audio matches the timeline.
-- The film timeline from 22 November renders whole in one render on the same build.
+- The film timeline from 22 November renders whole in one render on the same build, on the source stack and the installed stack.
 - The CI render check is green on the plan branch and fails when any one of RN-2 to RN-6 is reverted.
+- After the branch lands, the same three renders complete on a build of `release/15/main` (RN-12). Only then is the goal met.
 - Every defect met during the loop that was not fixed here has an issue.
-- Limits: one machine class, macOS and Linux, source and installed profiles; Windows and render speed are not covered.
+- Limits: one machine class, macOS and Linux; Windows and render speed are not covered.

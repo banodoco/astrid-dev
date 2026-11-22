@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 6 engineering days: 1 to land the two sound fixes, 2 for the word-anchored retime rule, 3 for the edit loop on the test timeline.
+**Estimate:** Provisional, about 6 engineering days: 1 to land the two sound fixes, 2 for the word-anchored retime rule, 3 for the edit loop. Re-estimate once TE-3's feasibility is known.
 
-**Waiting on:** [Plan 87](../87-render-works/plan.md) reaching a working render (its RN-1); agreement with the managers of Plans 69 and 77 on the boundary; a claimed run. Decisions T1 and T2 are taken ([inputs.md](inputs.md#owner-decisions)).
+**Waiting on:** [Plan 87](../87-render-works/plan.md) reaching a working render (its RN-6); agreement with the managers of Plans 69 and 77 on the boundary; a claimed run. Decisions T1 and T2 are taken ([inputs.md](inputs.md#owner-decisions)).
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
@@ -53,7 +53,7 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 
 ## Sequence and readiness
 
-**Branch.** `release/15/plan-88` in astrid-agent, cut from `release/15/plan-87` once Plan 87's RN-1 is done, so the loop has a stack that can render. It lands on `release/15/main` after Plan 87 through the Release 15 Lead.
+**Branch.** `release/15/plan-88` in astrid-agent, cut from `release/15/plan-87` once Plan 87's RN-6 is done, so the loop has a stack that can render the film. The three donor commits are cherry-picked here; Plan 87's branch does not carry them. It lands on `release/15/main` after Plan 87 through the Release 15 Lead.
 
 1. TE-1 and TE-2: cherry-pick, add tests, confirm on the stack with one real swap.
 2. TE-3: the retime rule, behind decision T1.
@@ -78,7 +78,9 @@ Reviews: [code review](../87-render-works/evidence/review/ASTRA-530.md), [verdic
 
 ## Completion
 
-- On a build of the plan branch, each edit in the loop either lands and reads back exactly as intended, with a render showing it, or is stopped by a defect with an issue number.
-- Media swap and ripple retime both land on word-anchored shot clips of the test timeline, and a dry-run reflow afterwards moves no clip.
+- On a build of the plan branch, the three must-pass edits land and read back exactly as intended, with a render showing each: media swap with a new still and a new video, the control re-point, and the ripple retime with narration.
+- An anchored clip moved alone is refused with the supported form named, and a dry-run reflow after the ripple moves no clip.
+- Each probe edit has a recorded result: landed, or blocked with the issue number. A blocked probe does not fail the plan.
 - The film's eleven overlay clips are gone, replaced by in-place swaps; the pause after "two million" is tightened; the film renders whole on Plan 87's stack.
-- Limits: one test timeline and one film; agents editing at the same time are not covered.
+- If TE-3 can only be delivered as a refusal, the ripple edit and the pause tightening move to Plan 18 and this plan says so plainly; the rest still completes.
+- Limits: one generated fixture and one film; agents editing at the same time are probed, not covered.

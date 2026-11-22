@@ -10,19 +10,19 @@
 
 **Approach:** Land the two sound fixes with tests, replace the unsound exemption with the bounded rule, then use a loop of real edits, each confirmed by read-back and render, as the acceptance test.
 
-**Challenge:** An independent code review and an independent judge both found the exemption unsafe and the media swap sound ([review](../87-render-works/evidence/review/ASTRA-530.md), [verdicts](../87-render-works/evidence/shipplan/VERDICTS.md)). A second opinion on this reshaped plan is pending.
+**Challenge:** An independent code review and an independent judge both found the exemption unsafe and the media swap sound ([review](../87-render-works/evidence/review/ASTRA-530.md), [verdicts](../87-render-works/evidence/shipplan/VERDICTS.md)). A [second opinion](../87-render-works/evidence/astra-plans/OPINION.md) on this plan tightened TE-3's conditions, split the loop into must-pass edits and probes, and removed a double landing of the donor commits ([record](../87-render-works/inputs.md#second-opinion)).
 
 **Proof and limits:** The donor fixes pass focused tests and have never run against a live Runtime. The loop is the first live proof. It covers one test timeline and one film.
 
 **Review rounds:** One round at the end.
 
-**Run start:** Pending — waits on Plan 87's RN-1 and a claimed run. The owner asked for the plans and issues to be set up, not executed.
+**Run start:** Pending — waits on Plan 87's RN-6 and a claimed run. The owner asked for the plans and issues to be set up, not executed.
 
 ## Owner decisions
 
 | Decision | Options and recommendation | State |
 | --- | --- | --- |
-| T1 Word-anchored retime | Decided by the coordinating session at the owner's delegation: accept a timing-only edit only when the clip's offset from its resolved word is unchanged within one frame; otherwise refuse and name the supported form. Rejected: the exemption as written (a clip can drift from its word and be snapped back by a later reflow); refusing everything until full word binding exists (blocks the ripple edit a real film needed). | Decided |
+| T1 Word-anchored retime | Decided by the coordinating session at the owner's delegation: accept a timing-only edit only when the clip resolves to the same unique word before and after and its offset from that word is unchanged within one frame at both ends (the full conditions are in TE-3); otherwise refuse and name the supported form. Rejected: the exemption as written (a clip can drift from its word and be snapped back by a later reflow); refusing everything until full word binding exists (blocks the ripple edit a real film needed). | Decided |
 | T2 The test timeline | Decided: the heavy fixture built by the App's [`scripts/save-loop/build-fixture.mjs`](https://github.com/banodoco/astrid-app/blob/release/15/plan-77/scripts/save-loop/build-fixture.mjs), standard variant, the same one Plan 87 renders, so every edit can be rendered on a stack already proven to render it. The builder was on `release/15/plan-77` at filing; use the copy on `release/15/main` or `main` if it has landed. The fixture's clips are generated media; the word-anchored cases in the loop (edits 1 and 5) also run on the film project, which has real narration. | Decided |
 
 ## Source identities

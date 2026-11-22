@@ -8,9 +8,9 @@
 
 **Prior art:** Plans 27, 39, 59, 69, 76, 77, 78 and 83 were read for overlap ([landscape](evidence/eff/landscape.md)). No plan owns "render works"; Plan 27 keeps export choices, Plan 78 holds the open motion pack pin, Plan 83 the custody module split. The first full draft by an independent judge is kept as [evidence](evidence/shipplan/PLAN.md).
 
-**Approach:** Port the sixteen changes onto a Release 15 plan branch, get a render working, replace the stopgaps one by one with the render as the test, prove it on the owner's heavy timeline, then add one real render check to CI.
+**Approach:** Port the six sound render changes onto a Release 15 plan branch, carry two tracked experiments, write the remaining fixes properly with a short real render after each, prove it on the heavy fixture and the film, and keep one real render check in CI.
 
-**Challenge:** An independent [code review](evidence/review/ASTRA-530.md), a [trial integration](evidence/mergescope/REPORT.md), a [root-cause investigation](evidence/astra20/REPORT.md) and an independent [judge](evidence/shipplan/VERDICTS.md) all preceded this reshaping. A second opinion on the reshaped plan is pending.
+**Challenge:** An independent [code review](evidence/review/ASTRA-530.md), a [trial integration](evidence/mergescope/REPORT.md), a [root-cause investigation](evidence/astra20/REPORT.md) and an independent [judge](evidence/shipplan/VERDICTS.md) preceded this reshaping. A [second opinion](evidence/astra-plans/OPINION.md) on the reshaped plan changed sixteen things and was declined on two ([record](#second-opinion)).
 
 **Proof and limits:** A film rendered with the sixteen changes, in four ranges, on a stack cut from an older commit. Nothing has rendered on `release/15/main`. The cause of heartbeat renewals stopping is unknown. Fact checks of the release heads, CI and the branch inventory are in [evidence/eff](evidence/eff/).
 
@@ -44,14 +44,46 @@ The plan was reshaped on 23 November 2026 at the owner's direction: one plan tha
 
 Made by the coordinating session when reshaping the plan; each can be overruled.
 
-1. **Get it working first, then make it right.** The draft built each proper fix separately before any render ran on Release 15. We port everything, stopgaps included, render, then replace stopgaps one by one with the render as the test. Reason: a working render from day 2 is a better regression test than any hand-built one, and it is how the defects were found in the first place.
+1. **Port what is sound, write the rest properly, render at every step.** The draft built each proper fix separately before any render ran on Release 15, across two release lines. We port the six sound changes, carry two experiments, write the other fixes directly, and run a short real render after each. Reason: a real render is a better test than a hand-built one, and it is how the defects were found. (An earlier version ported all sixteen commits first; see the second opinion below.)
 2. **Release 15 only.** Reason: Release 14 is published; every defect site is present on the Release 15 head; a second line doubled the conflict work.
 3. **No new journey.** The draft specified a new render journey with its own fixture. An integration test that executes `rendering.render` against a real Runtime and pack host already exists, as does a full motion pack fixture and a lane that installs Remotion and a browser ([CI facts](evidence/eff/ci.md)). We extend that. Reason: about a day instead of several.
 4. **Custody and lease stay in; recovery goes out.** A heavy render cannot finish while either can kill it, so RN-8 and RN-9 are render-path work. What happens after a failure (poisoned slot, stuck tasks, scratch, cancel wording) does not stop a render from working; restarting the stack is an acceptable workaround during the plan. It is [#1514](https://github.com/banodoco/astrid-dev/issues/1514).
 5. **Resumable renders are an issue, not a task.** The draft added checkpointed renders after the film had to be rendered in ranges. With RN-8 and RN-9 a whole render should finish; resuming is an improvement, not a precondition. [#1515](https://github.com/banodoco/astrid-dev/issues/1515).
-6. **The three timeline commits ride the branch but belong to Plan 88.** Splitting them out of the donor branch before porting would cost a second conflict resolution for no gain; they do not affect rendering.
-7. **Stopgaps may sit on the plan branch, never on the release branch.** Each is a tracked row; the branch cannot be offered for merge while one remains.
+6. **The three timeline commits are not on this branch.** Plan 88 cherry-picks them itself. Reason: one of them is the unsound exemption, and this plan must not land it by carrying it along.
+7. **Two experiments may sit on the plan branch, never on the release branch.** The lease and custody stopgaps are each a tracked row; the branch cannot be offered for merge while one remains.
 8. **Write-path fixes left to their owners.** Plans 77 (active), 76 and 69 (active) already own saving, agents editing together and unbound shot clips. This plan sends evidence and fixes none of it.
+
+## Second opinion
+
+An independent senior review of both plans, with helpers checking facts in the code, on 23 November 2026: [opinion](evidence/astra-plans/OPINION.md). The coordinating session decided each point.
+
+**Taken**
+
+| Point | What changed |
+| --- | --- |
+| Sixteen cherry-picks would not reproduce the session's stack, and a render that depends on an override or a suppressed error is a poor reference | RN-1 ports six sound changes and two tracked experiments; RN-4 to RN-6 are written directly; frames are compared with the editor, never with an earlier render |
+| Whole renders after every replacement are wasteful | A short contract render after each task; the film whole at three milestones |
+| Carrying the timeline commits would land the unsound exemption through this plan | They are not on this branch; Plan 88 lands them |
+| Record the exact versions; check the installed profile early, not only at the end | RN-0 stands up both stacks and records the tuple |
+| RN-3 must keep selected-pack isolation and explicit values | Written into RN-3 |
+| A bundler-only pack-root fix leaves worker discovery, the project compiler's alias and cache identity behind | RN-4 covers every consumer |
+| A render should report the pack revision it actually resolved | Written into RN-5 |
+| The fade failure is a missing declaration in the element's descriptor, not metadata lost by the generator | RN-6 rewritten; our earlier claim was wrong |
+| Measure the host's lease pump, not only the Runtime | Written into RN-7 |
+| Ten minutes does not qualify a lease fix | RN-8's proof covers thirty minutes, set-up through upload, worker death and stale fences |
+| That the uncaptured process was exiting is unproved; nothing alive may be treated as gone | RN-9 rewritten as a bounded retry that keeps every custody check |
+| A heavy render will meet whole-file reads, the one-hour deadline and output ingestion | RN-10 measures memory, wall time, disk and ingestion on every run |
+| "Restart" is not a procedure | RN-0 writes and proves a reset procedure |
+| Proving the plan branch is not proving the release head | RN-12 |
+| The estimates are optimistic | Marked provisional, with two points at which to re-estimate |
+| Superseded Release 14 routing was still in this file | Removed from the source identities |
+
+**Not taken**
+
+| Point | Why |
+| --- | --- |
+| Bring owner-fenced clean-up code back into this plan so the loop does not depend on restarts | The owner asked for cancel and recovery to be an issue ([#1514](https://github.com/banodoco/astrid-dev/issues/1514)). We took the procedure and left the code out, with a stated condition for bringing the smallest piece back |
+| Treat nine and six days as unreliable until more is known | We kept the numbers, as the owner needs a size, and marked them provisional |
 
 ## Moved to issues
 
@@ -85,7 +117,7 @@ Everything found on 22 November that is not in this plan or Plan 88. New issues 
 - [`7265aa5d8`](https://github.com/banodoco/astrid-agent/commit/7265aa5d8cbb8b37c68438713eb5a3b178f7122f) — STOPGAP (do not merge): #1473 custody wait before retry
 - [`221e50033`](https://github.com/banodoco/astrid-agent/commit/221e500330f00aa79aab27844db802c7d4d0455c) — STOPGAP (do not merge): #1500 archive composition fade-easing patch
 
-Proposed implementation destinations, pending D1/D7: shared-contract work in `release/15/plan-87` in each affected repository, cut from its current `release/15/main`; bounded older-line fixes in issue-scoped branches only if that release is still open, then forward to 15. No such implementation branches are created here. Runtime producer/generator changes must precede regenerated Agent pin/client artifacts; App manifest/pack pins follow the exact qualified tuple. The published motion-pack alias requires the override in the bundler process environment; a host-level export can be stripped by child-environment policy, so reproduction must supply it explicitly at that boundary. No end-to-end rerender of the sanitized adaptation is claimed. Composition source/repository identity is still to be resolved from the installed package's provenance before RW-25 dispatch.
+Implementation destination: `release/15/plan-87` in astrid-agent, cut from its `release/15/main` head on the day; the same branch name in astrid-runtime and astrid-app only if a task changes them. Release 14 is published and is not a destination. No implementation branch is created by this filing.
 
 ## References
 
