@@ -41,13 +41,13 @@ The historical instrumented compiled output remains in the run archive under `ed
 
 ## Runtime A opening and profile
 
-The current Runtime A cold opening reached writable in 306.552 s. The warm opening reached writable in 13.745 s. Both receipts match the same app, agent, and runtime SHAs, and share the same runtime process receipt. The warm run has no py-spy profile. The separate original 480 s failure remains a distinct observation.
+The current Runtime A cold opening reached writable in 306.552 s. The warm opening reached writable in 13.744 s. Both receipts match the same app, agent, and runtime SHAs, and share the same runtime process receipt. The warm run has no py-spy profile. The separate original 480 s failure remains a distinct observation.
 
 Both openings use the synthetic v30 fixture with 300 clips, 9 tracks, and 10 shot occurrences. Their terminal public heads were verified with 1 active head, 300 clips, and 10 occurrences. Both matched zero timeline commit POSTs. Both receipts record process closure and profile removal.
 
 The cold receipt retains navigation and writable CPU tick counters, browser timing, CDP task metrics, and long-task start/duration markers. Its commits history GET observations started at 1,907.134 ms, 122,439.911 ms, and 243,141.901 ms. The first two entries have no status or completion time in the source receipt. The third returned 200 with headers at 298,379.193 ms and finished at 300,445.928 ms. The warm history GET started at 1,762.289 ms, returned 200 with headers at 6,596.562 ms, and finished at 8,802.099 ms. The receipts show no matching timeline commit POST.
 
-The cold py-spy report used 100 Hz nonblocking sampling. It reported 27,175 samples and 3,008 errors; 26,862 weighted samples decoded, 22 weighted samples were rejected with recoverable counts, and 291 weighted samples remain as a gap. The original raw capture is 51,298,943 bytes with SHA-256 `1b9e31399146d10df279c112389c33144e99804dba80d4d5aca62e5b80c16dc8`; it remains under host run custody and is not copied here. The archive retains only ranked module basenames and function names.
+The cold py-spy report used 100 Hz nonblocking sampling. It reported 27,175 samples and 3,008 errors. The ranker used 26,862 decodable weighted samples. It rejected 22 weighted samples with recoverable counts and measured a residual gap of 291 weighted samples. The original raw capture is 51,298,943 bytes with SHA-256 `1b9e31399146d10df279c112389c33144e99804dba80d4d5aca62e5b80c16dc8`. The host retains the raw capture in the run archive. The archive retains only ranked module basenames and function names.
 
 The 30 s and 120 s stack snapshots show request-handler stacks in `server.py` through `handle_one_request`, `_dispatch`, and `do_GET`, with `open_object` and `timeline_commit_store.py:evaluate` also present. At 300 s the sampled stacks are mostly `threading.py:wait`, with a small number of request and log-pipe frames. These are sampled stack findings, not proof of a lock wait or contention. Snapshot archives omit thread/process IDs, labels, paths, locals, and other introspection.
 
