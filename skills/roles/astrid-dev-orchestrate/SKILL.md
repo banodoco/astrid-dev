@@ -12,7 +12,7 @@ description: Deploy and supervise Astrid manager sessions, keep authorized work 
 
 **One exception: if you host the manager, you answer for the run.** When Codex runs the project inside your session, you are its [accountable agent](../../shared/run-contract.md#who-answers-for-a-run), not an idle advisor ([below](#use-codex-from-claude-cloud)).
 
-**Across a release, the [Release Lead](../astrid-dev-lead/SKILL.md) owns the release.** An orchestrator coordinates its assigned managers; an existing named release manager retains authority until the owner explicitly transfers that role.
+**Across a release, the [Release Lead](../astrid-dev-lead/SKILL.md) owns the release,** and [chooses your lane and your route](../astrid-dev-lead/SKILL.md#divide-the-release-into-lanes). An orchestrator coordinates its assigned managers; a named release manager keeps authority until the owner transfers it.
 
 **You orchestrate; the manager manages.** If you catch yourself writing a manager's dispatch plan (which tracks run in parallel, per-worker steps, when to escalate), the manage skill is missing a rule: send the manager one line naming the goal, and add the rule to the [manage skill](../astrid-dev-manage/SKILL.md) by PR.
 
