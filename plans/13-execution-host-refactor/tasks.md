@@ -18,7 +18,7 @@ The prepared-worker plumbing card below waits for Plan 14's audit and stays out 
 
 ## Release 15: the extraction
 
-**Now, 22 Nov:** R1 review failed with eight findings; R1.1 through R1.8 are merged at `1087ad8d5ab32dc4a0e5fcbe7d2ce60d4b855bea`; full CI run 44985653063 was cancelled (NO-RESULT); the host has been notified before any retry. The owner decides Plan 83's release after the re-estimate is updated for the repairs. Final CI and the owner decision gate landing. Spend is CPU only.
+**Now, 22 Nov:** R1 review failed with eight findings; R1.1 through R1.8 are merged at `1087ad8d5ab32dc4a0e5fcbe7d2ce60d4b855bea`; full CI run 44985653063 and its host-authorized retry 44987298194 were cancelled (NO-RESULT); the retry completed cancelled at 05:00:59 UTC. The host has been notified; the release lead and owner decide qualification, with no further retry dispatched. The owner decides Plan 83's release after the re-estimate is updated for the repairs. Final CI and the owner decision gate landing. Spend is CPU only.
 
 The start of steps 3 and 4 of the [sequence](plan.md#sequence), drafted on 22 November 2026 from the [map](map.md), four checks of it against today's file and an independent critique ([evidence](evidence/)). The file is 18,888 lines on astrid-agent `release/15/main` at `aac1ceb6`: the `GenericPackHost` class 8,416, other classes 4,709, top-level functions 4,892. Line numbers and counts are re-checked at dispatch.
 
