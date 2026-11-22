@@ -4,7 +4,7 @@ description: Write Astrid agent instructions once as Markdown and publish select
 
 # Astrid agent documents
 
-This directory is the only authored home for the agent instructions used to build and contribute to Astrid. These are ordinary Markdown documents; a skill is a **generated distribution format**, not a second source.
+This directory stages the Markdown-first agent instructions for the planned migration. During the transition, the existing authored [`skills/`](../skills/) tree and its current consumers remain authoritative. The new `agent/` documents and their generated packages are a candidate until the coordinated MS-7–MS-9 cutover is verified and accepted.
 
 ## Where instructions live
 
@@ -26,7 +26,7 @@ skill: true
 ---
 ~~~
 
-There is no authored SKILL.md. The filename stem gives the generated skill name: manager.md becomes astrid-dev-manager; gap.md becomes astrid-dev-gap. Directory placement determines ownership, **not** the generated identity. Duplicate skill stems are an error. Omit skill: true for shared reference guides or workstreams that are only meaningful within their parent role.
+In the new `agent/` tree, sources are not authored as `SKILL.md`; the existing `skills/` tree still contains authored `SKILL.md` files during the transition. The filename stem gives the generated skill name: manager.md becomes astrid-dev-manager; gap.md becomes astrid-dev-gap. Directory placement determines ownership, **not** the generated identity. Duplicate skill stems are an error. Omit skill: true for shared reference guides or workstreams that are only meaningful within their parent role.
 
 A role contains sections for Responsibility, Authority, Responsibilities, and Handoff. A workstream contains sections for When to use, Outcome, Inputs, Procedure, and Completion. Keep actual steps in the procedure rather than repeating a separate five-field contract. Authorization comes from the owner and active run, never from choosing a skill.
 
@@ -41,4 +41,4 @@ python3 scripts/astrid_dev.py skills install --dry-run --destination /existing/s
 python3 scripts/astrid_dev.py skills install --destination /existing/skills
 ~~~
 
-Packages are generated under the ignored .generated/skills/ folder. Each standard SKILL.md has a relative link to canonical references in this checkout, so the skill directory must be installed **as a symlink** to that package while the checkout remains available. Check command and symlink support in each environment. The installer never replaces foreign entries. Skill packaging does not grant additional execution, installation, spend, publication or merge rights.
+The candidate packages are generated under the ignored `.generated/skills/` folder. Building them alone does not switch active legacy consumers; running the install command can retarget owned links in the selected destinations. Each generated `SKILL.md` links to its references in this checkout, so the skill directory must be installed **as a symlink** to that package while the checkout remains available. Check command and symlink support in each environment. The installer never replaces foreign entries. Skill packaging does not grant additional execution, installation, spend, publication or merge rights.
