@@ -31,3 +31,15 @@ Every card: no wire, schema or store change; no refusal moves later than it is t
 | R Review rounds (at most 1, owner-agreed 22 November 2026), by an independent reviewer on Codex Astra that did none of the work | S | all other tasks | read-only | Rounds per the [run contract](../../skills/shared/run-contract.md): findings become rows `R1.<n>` added directly below this one, each with route, scope, dependencies and proof; landing waits for them | [ ] |
 
 **Lanes:** timings (US-1, US-0, US-2, then US-8); generation (US-5a, US-4, US-3); timeline commands (US-6, US-7). **Merge order within a lane** is the order listed.
+
+## Generation speed (owner request, 22 Nov)
+
+The [binding rulings](https://github.com/banodoco/astrid-dev/pull/1357) govern these cards. Each retains existing refusal order, command-local scope and existing tests. Timing runs use the shared lock. F-1 and F-3 may land after the raw A-4 baseline and their own matched before/after measurements; F-2 waits for attribution ranking.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| F-1 Reuse the command's own client to resolve the attached ComfyUI URL | N | Raw A-4 baseline before landing | Agent `astrid/sdk/generation.py`, `astrid/core/generation/placement.py`; pass `client`, not `repo` | Fresh-CLI connection, handshake and health counts; authored UI with conflicting stores; omitted-client behavior and first refusal unchanged | [ ] In development on `p81/f-1` |
+| F-3 Reuse an equivalent default registry for a catalog candidate | N, X equivalence review | F-1 landing; raw A-4 baseline | Agent `astrid/sdk/generation.py`, `astrid/core/generation/backends/vibecomfy.py` | Real loader counts; equivalent plan, bindings, approval digest and missing-model alternatives; absent, scoped, private and substitute backends preserve behavior | [ ] In development on `p81/f-3` |
+| F-2 Read availability declaration lazily once per command | X | Attribution baseline ranks this work; F-1 and F-3 | Agent generation policy readers, entry discovery and existing callers | Refusal order, code, wording, remedy and candidate order unchanged; isolated interleaved commands | [ ] Waiting for attribution ranking |
+| F-4 Reuse validated placement | N | — | — | — | Cut: could skip a live refusal |
+| F-5 Reuse a workflow snapshot | N | Second snapshot setup measured at least 0.2 s | Agent workflow snapshot path | Bundle validation and source retention unchanged | Held pending attribution |
