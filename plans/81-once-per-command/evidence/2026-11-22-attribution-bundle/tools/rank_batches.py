@@ -95,6 +95,40 @@ def fmt(value):
     return 'unknown' if value is None else f'{value:.6f}'
 
 
+# Applicability describes the code path named by each stage, not a measured
+# source-vs-installed comparison. Keep citations tied to the source revision
+# used by this evidence bundle (the paths are relative to the Agent checkout).
+def stage_applicability(stage):
+    if stage == 'pack host source identity':
+        return ('both', 'inferred: astrid/sdk/host_bootstrap.py:2142,2171-2175 runs the same '
+                'timed digest stage in installed profile; installed startup also verifies its '
+                'binding at astrid/core/source_identity.py:102-124')
+    refs = {
+        'Runtime acquisition lock': 'astrid/sdk/autobootstrap.py:463-465',
+        'in-process Runtime acquisition lock': 'astrid/sdk/autobootstrap.py:465',
+        'pack host attachment': 'astrid/sdk/autobootstrap.py:524',
+        'pack host readiness': 'astrid/sdk/host_bootstrap.py:2230-2241',
+        'pack host lifecycle lock': 'astrid/sdk/host_bootstrap.py:2241',
+        'pack discovery': 'astrid/core/pack/discovery.py:366',
+        'entry discovery': 'astrid/sdk/generation.py:1744-1745',
+        'entry lookup': 'astrid/sdk/generation.py:1066,1731-1751',
+        'model registry': 'astrid/sdk/generation.py:623-626',
+        'target check': 'astrid/sdk/generation.py:884,1825-1900',
+        'workflow build': 'astrid/sdk/generation.py:470,1900-1976',
+        'Runtime launcher connection': 'astrid/sdk/client.py:392-410,469-471',
+    }
+    if stage.startswith(('Runtime GET ', 'Runtime POST ')):
+        return ('both', 'inferred: shared Runtime client calls in '
+                'astrid_runtime_client/generated.py:723-729,822,1251-1280,1540')
+    if stage in refs:
+        return ('both', f"inferred: {refs[stage]}")
+    if stage == 'other command work':
+        return ('unknown', 'the collector aggregates unmeasured work; '
+                'astrid/sdk/command_timing.py:64')
+    return ('unknown', 'no specific call site established in this bundle; '
+            'stage collection is generic at astrid/sdk/command_timing.py:140-168')
+
+
 def render(route, groups, root):
     out = [f'# Attribution: {route}', '', 'Descriptive source measurements; cProfile values are profiled measurements and are not converted to plain wall seconds.', '']
     for mode in ('plain', 'timings', 'importtime', 'cprofile'):
@@ -105,9 +139,10 @@ def render(route, groups, root):
     plain = groups.get('plain', [])
     wall = median([float(t['wall_seconds']) for t in plain]) if plain else None
     stages = stage_summary(groups['timings'], root) if groups.get('timings') else []
-    out += ['## Stages', '', 'Self and inclusive medians are sums within each trial; missing inclusive data is unknown. Parent names are reported as recorded.', '', '| Stage | Parent | Count median | Self s | Inclusive s |', '| --- | --- | ---: | ---: | ---: |']
+    out += ['## Stages', '', 'The values are measured in source checkouts. Applicability labels are inferred from the cited code, not measured as a source-vs-installed comparison. `both` means the cited stage exists in both modes, not that its time is equal. `unknown` means this bundle does not establish the applicable mode. The source identity stage is timed in the shared host bootstrap in both profiles; installed startup adds a separate verifier. No installed savings are inferred.', '', 'Self and inclusive medians are sums within each trial; missing inclusive data is unknown. Parent names are reported as recorded.', '', '| Stage | Parent | Count median | Self s | Inclusive s | Code applicability (inferred) |', '| --- | --- | ---: | ---: | ---: | --- |']
     for row in sorted(stages, key=lambda r: (-(r['total_seconds_median'] if r['total_seconds_median'] is not None else -1), r['stage'], r['parent'] or '')):
-        out.append(f"| {row['stage']} | {row['parent'] or '—'} | {fmt(row['count_median'])} | {fmt(row['seconds_median'])} | {fmt(row['total_seconds_median'])} |")
+        applicability, evidence = stage_applicability(row['stage'])
+        out.append(f"| {row['stage']} | {row['parent'] or '—'} | {fmt(row['count_median'])} | {fmt(row['seconds_median'])} | {fmt(row['total_seconds_median'])} | {applicability}; {evidence} |")
     out.append('')
     if groups.get('importtime'):
         for label, rows in zip(('Packages', 'Modules'), import_summary(groups['importtime'], root)):
