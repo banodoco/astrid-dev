@@ -1,36 +1,71 @@
-# Inputs — A render that works, and stays working
+# Inputs — The renderer works end to end
 
 [Plan](plan.md) · [Tasks](tasks.md)
 
 ## Planning evidence
 
-**Scope decision:** Pending — we were asked to file this corrected plan, push an evidence-only stopgap branch, attach sanitized evidence, file missing defects and cross-link PR #530. This is filing authority, not agreement to D1–D7 or a product execution/release start. Next: scope review and explicit decisions.
+**Scope decision:** Reshaped on 23 November 2026 at the owner's direction: this plan gets the renderer working end to end with the fixes in the proper code; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline fixes; everything else is an issue. Filing authority only; no run has started.
 
-**Prior art:** We read the contributor/plan/release/merge/bugfix skills and current project templates, strategy and prior Plans 18, 27, 39, 59, 63, 69, 75–78, 85 and 86. Plan 27 owns export choices; Plan 59 the creative outcome; Plan 39 general green checks; Plans 76/77/18 own large write-path/collaboration/binding designs. We retain the independent judge's draft/verdicts/decision log, review through `0f6aea928`, conditional cherry-pick trials, Astra receipt timeline, reports and render iteration as [indexed evidence](evidence/INDEX.md). Candidate tests cover pieces; the workflow inspection in mergescope found no representative installed/source collection-pack command-worker journey as a merge gate. We have not run product tests or independently qualified those historical claims in this filing.
+**Prior art:** Plans 27, 39, 59, 69, 76, 77, 78 and 83 were read for overlap ([landscape](evidence/eff/landscape.md)). No plan owns "render works"; Plan 27 keeps export choices, Plan 78 holds the open motion pack pin, Plan 83 the custody module split. The first full draft by an independent judge is kept as [evidence](evidence/shipplan/PLAN.md).
 
-**Approach:** Proposed — reuse the sound committed projection/media/context work with its missing tests; consolidate worker/registry ownership through existing channels; replace unsafe exemptions, lease inflation and aliases with contracts in their owning repositories; add one real journey and bounded recovery/checkpoint behavior. No new pack. We reject merging the donor or stopgap archive wholesale. A new plan is justified by independently useful shared render/recovery contracts across repositories; bounded defects still have issues and focused product PRs. Reuse Plan 85's measurement method and Plan 27's output contract.
+**Approach:** Port the sixteen changes onto a Release 15 plan branch, get a render working, replace the stopgaps one by one with the render as the test, prove it on the owner's heavy timeline, then add one real render check to CI.
 
-**Challenge:** The independent judge supplied the verdict table below and [decision log](evidence/shipplan/DECISIONS.md), weighing [code review](evidence/review/ASTRA-530.md) and [trial integration](evidence/mergescope/REPORT.md). Those are recommendations, not accepted decisions. Pending — a fresh simplification critique of the corrected contracts and checkpoint scope before greenlight; the draft predates the new evidence. No fresh architectural approval is claimed by mechanical link/archive checks.
+**Challenge:** An independent [code review](evidence/review/ASTRA-530.md), a [trial integration](evidence/mergescope/REPORT.md), a [root-cause investigation](evidence/astra20/REPORT.md) and an independent [judge](evidence/shipplan/VERDICTS.md) all preceded this reshaping. A second opinion on the reshaped plan is pending.
 
-**Proof and limits:** Filing checks verify document structure, evidence sanitization/indexing and archive correspondence. Historical evidence establishes per-range completion with stopgaps and two distinct failure mechanisms. It does not qualify a clean integrated tuple, identify why heartbeat renewal stops, identify the failed helper executable/eventual exit, or prove any local stopgap fixes a cause. The exact >4 MiB and abandoned-caller cases need isolated reproduction. Seam cleanliness is reported with retained frames; no new numerical seam measurement is claimed.
+**Proof and limits:** A film rendered with the sixteen changes, in four ranges, on a stack cut from an older commit. Nothing has rendered on `release/15/main`. The cause of heartbeat renewals stopping is unknown. Fact checks of the release heads, CI and the branch inventory are in [evidence/eff](evidence/eff/).
 
-**Review rounds:** Proposed — at most two final rounds per phase, plus one shared-contract stop RS1 before dependent integration/qualification. Agreement pending. The later native custody and checkpoint findings warrant the stop despite the historical judge's preference for end-only review. No review budget has been accepted or consumed for future implementation.
+**Review rounds:** One round at the end.
 
-**Run start:** Pending — no product run authorized. The current task authorizes only this scope filing, evidence archive/branch, issue filings and one PR comment. We did not alter the running stack, timeline or installed release tree.
+**Run start:** Pending — waits on a claimed run and on P1 to P3.
 
 ## Owner decisions
 
-All D1–D7 remain open. The following recommendations preserve the judge's options; we have not selected them.
+The plan was reshaped on 23 November 2026 at the owner's direction: one plan that gets the renderer working end to end, a second plan for the timeline fixes ([Plan 88](../88-timeline-edits-land/plan.md)), and issues for everything else. The earlier decisions D1 to D7 are closed out below; three remain.
 
 | Decision | Options and recommendation | State |
 | --- | --- | --- |
-| D1 Target | (a) Render-path fixes to 14 and forward, Plan 69-based fixes to 15; (b) everything to 15. Recommendation (a), conditional on the actual release cut/publication state. No render on current 14 head has been established. | Open |
-| D2 Word-anchored retime | (a) Ship the exemption; (b) allow only unchanged offset from the resolved word, else supported cut-relative refusal; (c) refuse until binding exists. Recommendation (b), subject to resolvable-word/reflow proof. No film edit used the exemption; any first real temporary use requires prior independent audit. | Open |
-| D3 Lease | (a) Ship a longer lease (draft 600 s, later 7,200 s); (b) measure, fix the blocked/stopped renewal path and declare the lease once in Runtime; (c) (b) with a declared 120 s interim at claim/heartbeat only if measurement puts the repair more than a week away. Recommendation (b). The verdict stands: **measure, then fix; a longer lease is wrong**. Astra shows abrupt final renewals at 145.990/155.869 s (32 receipts in C), not gradual slowing; no cause is established. B/F instead fail custody with valid leases at 1,205/200 s. A 7,200 s lease did not protect F. Instrument task reads, pump gates, host locks, request/ACK and thread exits before choosing which path to change. | Open |
-| D4 Launch-context check | (a) Keep adding normalizations; (b) keep effects checks, build environment once, show safe path differences; (c) remove the check. Recommendation (b); retain negative changed-root proof. | Open |
-| D5 Pack roots | Generated registry owns the list and bundler consumes it through the existing explicit channel. Recommendation yes, with pack revision parity and a named shared import rather than global relative aliases. | Open |
-| D6 Outbox interim | Coordinate with Plan 76: dry-run flights never block and sessions do not replay each other's flights. Recommendation yes for the bounded interim; broad collaboration remains Plan 76. | Open |
-| D7 Process | Proposed Plan 87 in Release 15 with older-line fix branches only if D1 is accepted, and a required real render check once green. Existing draft N1–N5 map to #1470/#1471, this plan's RW-7/RW-8, #1472, #1475 and #1477; later defects are now linked below. Release membership and required settings remain review decisions. | Open |
+| P1 The heavy test timeline | The owner supplies a timeline export. We need it before RN-10; RN-0 to RN-9 run on the film timeline from 22 November. | Open |
+| P2 One motion pack revision | Preview draws the pack vendored with the App (upstream `ec0a9f5`, text defaults to ink); the collection install has no manifest pin and resolved a different revision (text defaults to white). Options: (a) pin the collection install to the App-vendored revision and have render report a difference; (b) vendor the pack into the Agent as well; (c) leave as is. Recommendation (a). The same pin is an open owner decision in [Plan 78](../78-live-custom-element-editing/plan.md); one answer should serve both. | Open |
+| P3 The lease stopgap during the loop | The cause of heartbeat renewals stopping is unknown. Options: (a) the two-hour lease stays on the plan branch until RN-8 replaces it, and blocks merge while present; (b) no long render is attempted until RN-8 lands. Recommendation (a): otherwise RN-10 waits on an open-ended investigation. | Open |
+
+**How D1 to D7 were closed**
+
+| Earlier decision | Outcome |
+| --- | --- |
+| D1 Target branch | Closed by fact: Release 14 was published on 22 November 2026 and takes changes only through its Lead ([landscape](evidence/eff/landscape.md)). Everything here targets `release/15/main`. |
+| D2 Word-anchored retime | Moved to [Plan 88](../88-timeline-edits-land/plan.md), which carries the recommendation unchanged. |
+| D3 Lease | Kept as "measure, then fix" (RN-7, RN-8); the interim question is P3. |
+| D4 Launch-context check | Taken as recommended: keep the check, build the environment once, show path differences (RN-3). |
+| D5 Pack roots | Taken as recommended: the generated registry owns the list (RN-4). Revision parity became P2. |
+| D6 Outbox interim | Out of this plan. Belongs to [Plan 76](../76-editing-together/plan.md); evidence is on [#1402](https://github.com/banodoco/astrid-dev/issues/1402). |
+| D7 Process | Two plans (87, 88) in Release 15. Whether the render check becomes a required check stays with the Release 15 Lead. |
+
+## Judgement calls
+
+Made by the coordinating session when reshaping the plan; each can be overruled.
+
+1. **Get it working first, then make it right.** The draft built each proper fix separately before any render ran on Release 15. We port everything, stopgaps included, render, then replace stopgaps one by one with the render as the test. Reason: a working render from day 2 is a better regression test than any hand-built one, and it is how the defects were found in the first place.
+2. **Release 15 only.** Reason: Release 14 is published; every defect site is present on the Release 15 head; a second line doubled the conflict work.
+3. **No new journey.** The draft specified a new render journey with its own fixture. An integration test that executes `rendering.render` against a real Runtime and pack host already exists, as does a full motion pack fixture and a lane that installs Remotion and a browser ([CI facts](evidence/eff/ci.md)). We extend that. Reason: about a day instead of several.
+4. **Custody and lease stay in; recovery goes out.** A heavy render cannot finish while either can kill it, so RN-8 and RN-9 are render-path work. What happens after a failure (poisoned slot, stuck tasks, scratch, cancel wording) does not stop a render from working; restarting the stack is an acceptable workaround during the plan. It is [#1514](https://github.com/banodoco/astrid-dev/issues/1514).
+5. **Resumable renders are an issue, not a task.** The draft added checkpointed renders after the film had to be rendered in ranges. With RN-8 and RN-9 a whole render should finish; resuming is an improvement, not a precondition. [#1515](https://github.com/banodoco/astrid-dev/issues/1515).
+6. **The three timeline commits ride the branch but belong to Plan 88.** Splitting them out of the donor branch before porting would cost a second conflict resolution for no gain; they do not affect rendering.
+7. **Stopgaps may sit on the plan branch, never on the release branch.** Each is a tracked row; the branch cannot be offered for merge while one remains.
+8. **Write-path fixes left to their owners.** Plans 77 (active), 76 and 69 (active) already own saving, agents editing together and unbound shot clips. This plan sends evidence and fixes none of it.
+
+## Moved to issues
+
+Everything found on 22 November that is not in this plan or Plan 88. New issues were filed only where none covered the defect; otherwise our evidence was added to the existing one. The full index is [evidence/tooling/ISSUES.md](evidence/tooling/ISSUES.md).
+
+| Area | Issues |
+| --- | --- |
+| Cancel and recovery after a failed task | [#1514](https://github.com/banodoco/astrid-dev/issues/1514) (umbrella), [#1474](https://github.com/banodoco/astrid-dev/issues/1474), [#1475](https://github.com/banodoco/astrid-dev/issues/1475), [#1502](https://github.com/banodoco/astrid-dev/issues/1502), [#1246](https://github.com/banodoco/astrid-dev/issues/1246), [#1320](https://github.com/banodoco/astrid-dev/issues/1320) |
+| Render visibility and convenience | [#1476](https://github.com/banodoco/astrid-dev/issues/1476), [#1515](https://github.com/banodoco/astrid-dev/issues/1515), [#1477](https://github.com/banodoco/astrid-dev/issues/1477), [#1504](https://github.com/banodoco/astrid-dev/issues/1504), [#1503](https://github.com/banodoco/astrid-dev/issues/1503), [#1501](https://github.com/banodoco/astrid-dev/issues/1501) |
+| Seeing and hearing a timeline as an agent | [#1238](https://github.com/banodoco/astrid-dev/issues/1238), [#748](https://github.com/banodoco/astrid-dev/issues/748), and the viewing, audio-excerpt and listening issues in the index |
+| Editor preview | [#1433](https://github.com/banodoco/astrid-dev/issues/1433), [#1434](https://github.com/banodoco/astrid-dev/issues/1434), [#1435](https://github.com/banodoco/astrid-dev/issues/1435), and the preview-jitter issues in the index |
+| Saving and the write path | [#1401](https://github.com/banodoco/astrid-dev/issues/1401), [#1402](https://github.com/banodoco/astrid-dev/issues/1402), [#1406](https://github.com/banodoco/astrid-dev/issues/1406), [#1409](https://github.com/banodoco/astrid-dev/issues/1409), [#1430](https://github.com/banodoco/astrid-dev/issues/1430), [#1431](https://github.com/banodoco/astrid-dev/issues/1431), [#1436](https://github.com/banodoco/astrid-dev/issues/1436) (Plans 76 and 77) |
+| Source stacks | [#759](https://github.com/banodoco/astrid-dev/issues/759), [#1398](https://github.com/banodoco/astrid-dev/issues/1398), [#1413](https://github.com/banodoco/astrid-dev/issues/1413) |
+| Generation | [#1254](https://github.com/banodoco/astrid-dev/issues/1254) and the sound-effect and listening issues in the index |
 
 ## Source identities
 

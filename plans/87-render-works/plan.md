@@ -1,82 +1,124 @@
-# A render that works, and stays working
+# The renderer works end to end
 
-**Project:** A render that works, and stays working
+**Project:** The renderer works end to end
 
-**Goal:** We can render a real timeline with built-in, collection and project elements, word-anchored clips and imported media on installed and source stacks, recover failed work, and catch a broken render path in CI.
+**Goal:** A heavy real timeline renders from first frame to last in one product render on a build of `release/15/main` with no local patches, and the file matches what the editor shows.
 
 **Status:** queued
 
 **Owner:** Unassigned
 
-**Estimate:** Draft estimate: about 20 engineering days in three phases (8, 6, 6), before the later custody, composition, recovery and checkpoint findings; re-estimate before dispatch.
+**Estimate:** About 9 engineering days: 2 to reach a working render on Release 15, 4 to replace the stopgaps with proper fixes, 2 for the render loop on the heavy timeline, 1 for the CI check.
 
-**Waiting on:** D1–D7, scope review, a claimed run and a current release cut decision.
+**Waiting on:** the owner's heavy test timeline; decisions P1 to P3 in [inputs.md](inputs.md#owner-decisions); a claimed run.
 
-**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
+**Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
-**Vision role:** Foundational enabler — this plan establishes the render/recovery contract and its safety net. [Plan 27](../27-video-render-options/plan.md) retains export choices and presets; [Plan 59](../59-into-the-minkhole-proof-point/plan.md) retains the creative proof point. We do not change a vision gap's closure route in this scope filing.
+**Vision role:** Foundational enabler — rendering is how finished work leaves Astrid. [Plan 27](../27-video-render-options/plan.md) keeps export choices; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline-editing fixes found in the same session; everything else found that day is an issue, listed in [inputs.md](inputs.md#moved-to-issues).
 
 ## Outcome and scope
 
-We propose one dependable path from an admitted timeline to a registered playable render, including recovery and a CI check that uses the product. All decisions in [inputs.md](inputs.md#owner-decisions) remain open. Filing this queued plan authorizes no implementation, integration, release or running-stack change.
+We want one thing: the renderer works, proven on a heavy timeline, with the fixes in the proper code.
 
-The proposed scope retains four groups from the independent draft: (a) registry projection, worker readiness/context, pack resolution, media swap and constrained word retiming; (b) an installed/source render journey in CI and truthful command hints; (c) measured heartbeat renewal, native custody, session/scratch recovery, progress and revert; (d) bounded write-path repairs. We add preview/render pack revision parity, fade/easing parity, early range validation, bounded task inventory, queued-work recovery and resumable/checkpointed rendering. The later additions require a new estimate and contract review before dispatch.
+On 22 November 2026 a film project could not be rendered on a Release 14 test stack. Sixteen changes later it rendered, in four ranges joined outside the product. Seven of those changes are reviewed fixes; nine are stopgaps that prove what is needed but cannot ship as written. Every defect site is still present on today's `release/15/main` ([head check](evidence/eff/heads.md)).
 
-We defer broad save rewrites to [Plan 77](../77-saving-holds-on-a-heavy-timeline/plan.md), collaboration to [Plan 76](../76-editing-together/plan.md), complete word binding to [Plan 18](../18-timeline-editing/plan.md), export controls to Plan 27, and unrelated preview, generation and project-pack CLI defects. Windows render qualification and rendering speed are outside this first journey. We reuse the measurement method from [Plan 85](../85-one-place-to-measure/plan.md) where it applies rather than invent another timing harness.
+**In scope**
+
+1. Carry the sixteen changes onto `release/15/main` and get a render working there.
+2. Replace each stopgap with a proper fix, keeping the render working after every replacement.
+3. Render the owner's heavy test timeline end to end, debugging what breaks. A break in the render path is fixed here; anything else becomes an issue.
+4. One real render check in CI, built on the test that already executes `rendering.render` against a real Runtime and pack host.
+
+**Not in scope, and where it went**
+
+- Timeline editing fixes (media swap on shot clips, moving word-anchored clips, the legacy overrun): [Plan 88](../88-timeline-edits-land/plan.md).
+- Cancel, lease-loss recovery, the poisoned session slot, scratch left by failed renders, tasks stuck as active: [#1514](https://github.com/banodoco/astrid-dev/issues/1514) and the issues it links. During this plan a stuck stack is restarted.
+- Render progress and failure visibility ([#1476](https://github.com/banodoco/astrid-dev/issues/1476)), resumable renders ([#1515](https://github.com/banodoco/astrid-dev/issues/1515)), the export hint ([#1477](https://github.com/banodoco/astrid-dev/issues/1477)), late range validation ([#1504](https://github.com/banodoco/astrid-dev/issues/1504)).
+- Saving, agents editing together and write-path defects: Plans [77](../77-saving-holds-on-a-heavy-timeline/plan.md) and [76](../76-editing-together/plan.md) and their issues.
+- Editor preview defects, generation gaps, Windows, render speed.
+- Release 14. It was published on 22 November and takes changes only through its Lead ([landscape](evidence/eff/landscape.md)).
+
+The full list of what was moved, with issue numbers, is in [inputs.md](inputs.md#moved-to-issues).
 
 ## Existing work and decision
 
-We retain the judge's [per-change verdict table](inputs.md#per-change-verdicts) as recommendations, the sanitized [original plan](evidence/shipplan/PLAN.md), [verdicts](evidence/shipplan/VERDICTS.md) and [decision log](evidence/shipplan/DECISIONS.md) as historical inputs. Their claims are superseded where corrected below. They are not accepted decisions.
+**What exists.** Two branches in astrid-agent, both cut from `83d5f8fe`, a commit already contained in `release/15/main` ([inventory](evidence/eff/inventory.md)):
 
-**Correction — no exemption was used.** The pause-tightening edit was skipped and never published. No edit to a film project used the word-provenance exemption. We remove the draft's retrospective audit task RW-13. Independent anchor-alignment proof is a precondition for the first actual use of any temporary exemption, not an audit of an edit that happened. The unsafe code still exists in the candidate branch; its presence is not evidence of use.
+- [`release/14/r6-fixes`](https://github.com/banodoco/astrid-agent/tree/release/14/r6-fixes) (draft [PR #530](https://github.com/banodoco/astrid-agent/pull/530)): seven commits, reviewed twice ([code review](evidence/review/ASTRA-530.md), [verdicts](evidence/shipplan/VERDICTS.md)).
+- [`release/14/r6-render-stopgaps`](https://github.com/banodoco/astrid-agent/tree/release/14/r6-render-stopgaps): nine more commits, each marked `STOPGAP (do not merge)`. The render that finished ran on these.
 
-**Candidate fixes, per-change verdicts in the plan:** [astrid-agent `release/14/r6-fixes`](https://github.com/banodoco/astrid-agent/tree/release/14/r6-fixes), draft [PR #530](https://github.com/banodoco/astrid-agent/pull/530), head [`ad10ff6de`](https://github.com/banodoco/astrid-agent/commit/ad10ff6de370db547e3ae2af45311751d228f98f). Related component PRs [#525](https://github.com/banodoco/astrid-agent/pull/525) and [#526](https://github.com/banodoco/astrid-agent/pull/526) remain contributed work; we neither close nor merge them in this filing.
+Nothing else on the test stack's branches is missing from Release 15: the stack's Agent, App and Runtime lines are all fully contained in it. So "what we did" is these sixteen commits.
 
-**Reproduction archive, do not merge:** [astrid-agent `release/14/r6-render-stopgaps`](https://github.com/banodoco/astrid-agent/tree/release/14/r6-render-stopgaps), based on `ad10ff6de`. [Inputs](inputs.md#source-identities) links every separate stopgap commit, including the exact untracked library patch. The archive omits the debug dump and replaces the private alias literal with `ASTRID_R6_MOTION_PACK_OVERRIDE`; the recorded run used a hard-coded local path. Both test files are retained as historical evidence, including the syntax-tree assertion that the real repair should replace.
+**Why rendering had never worked.** Each layer failed and hid the next: asset admission, worker environment check, bundler resolution, composition, lease, process custody. No test ran the real path with a collection-pack element through a command worker, so nothing caught any of it ([root-cause picture](evidence/shipplan/PLAN.md)).
 
-### Findings after the independent draft
+**The decision: get it working first, then make it right, with the render as the test.** The earlier draft of this plan ordered the work as separately designed fixes, each with its own new tests, across two release lines. We chose a shorter route:
 
-| Finding | Evidence and confidence | Planned repair |
+1. Port all sixteen commits, stopgaps included, onto a plan branch cut from `release/15/main`. The two conflicting files are known (`generic_host.py`, `remotion_runtime.py`).
+2. Render. Fix what Release 15's 597 newer commits changed until a render completes.
+3. Replace the stopgaps one at a time. After each replacement, render again. A stopgap leaves the branch only when its proper fix is in and the render still completes.
+4. Nothing merges to `release/15/main` while a stopgap remains.
+
+This keeps a working render in hand from day 2, makes the render itself the regression test for each proper fix, and removes the second release line entirely.
+
+**The sixteen changes and what happens to each**
+
+| Change | Commit | In this plan |
 | --- | --- | --- |
-| Preview and render resolve different revisions of the same motion pack. The App-vendored text default is `COLOR.ink`; the collection copy uses `DEFAULT_COLOR = '#FAFAFA'`, yielding white captions on a cream plate. | Recorded finding, [#1469](https://github.com/banodoco/astrid-dev/issues/1469), [before](evidence/take/y-sheet.jpg), [after](evidence/take/probe9.jpg). | RW-30: identify and pin the same pack revision across preview/render. A local App-source alias only demonstrates the mismatch. |
-| `@banodoco/timeline-composition` / `resolveAnimationReferences` refuses an entrance fade with `params.easing`: `Animation 'fade' cannot consume explicit easing progress`; preview accepts it. One clip failed a whole range. | Reported session failure and verified [exact hand patch](https://github.com/banodoco/astrid-agent/blob/release/14/r6-render-stopgaps/docs/r6/timeline-composition-fade-easing.patch); [#1500](https://github.com/banodoco/astrid-dev/issues/1500). Clean-tuple reproduction is pending. | RW-25: one explicit composition contract, preview/render regression; do not ship a silent easing discard. |
-| Custody capture fails at `pid_for_task`, `kern_return: 5`, with pre/post observations still LIVE; render fails about 0.6 s later. The built-in retry excludes that substage. Failures at 1,204.993 s and 200.250 s disprove a fixed twenty-minute limit. | Verified in [Astra report](evidence/astra20/REPORT.md) and [timeline](evidence/astra20/timeline.tsv); [#1473](https://github.com/banodoco/astrid-dev/issues/1473). An exiting short-lived helper race is the leading explanation; executable identity and eventual exit are not retained, so the OS cause is inferred. | RW-23: bounded same-incarnation retry/terminal observation without weakening custody. The three-second wait in `retry-pre-observation` is behind the excluding predicate and cannot fix the recorded signature. |
-| Heartbeat receipts stop abruptly 145.990–155.869 s after claim. One run has 32 successful receipts about 5 s apart, then none; authority expires exactly one last-granted lease later. | Verified by [Astra](evidence/astra20/REPORT.md), [snapshots](evidence/astra20/task-snapshots.json), [timeline](evidence/astra20/timeline.tsv); [#1472](https://github.com/banodoco/astrid-dev/issues/1472). Cause unknown. | RW-10 measures pump/read/lock/send/ACK/exit; RW-11 repairs the measured path. A 600 s, then 7,200 s lease masks stopped renewal and holds reservations longer. |
-| Failed work leaves the host session slot occupied, and the Runtime can still count unresolved expired work as active. | [Range log](evidence/take/ranges-status.log), Astra recovery analysis; [#1474](https://github.com/banodoco/astrid-dev/issues/1474). Expiry is intentionally not stop proof; a dead-task symptom does not authorize blind resource release. | RW-24: one fenced recovery flow spanning native stop evidence, terminal publication, reservations and session retirement; verify the next render without restarting. |
-| Task inventory fails over 4 MiB; an orphaned queued task was claimed after restart. | Retained session observations, [#1501](https://github.com/banodoco/astrid-dev/issues/1501), [#1502](https://github.com/banodoco/astrid-dev/issues/1502), range/adoption log. Exact inventory boundary and stale-client policy need isolated reproduction. | RW-26 bounded pagination; RW-27 explicit queued-work intent and reconciliation. |
-| Changing a file under `remotion/node_modules` invalidates readiness until restart, reported as “Remotion isn't ready on this machine.” | Verified refusal text at 22:34–22:35 in [range log](evidence/take/ranges-status.log); [#1503](https://github.com/banodoco/astrid-dev/issues/1503). | RW-28 names stale validated inputs and the supported restart/revalidation route, retaining the guard. |
-| An end of 196.5667 s is about 0.00003 s beyond the exact timeline end. Refusal is correct, but happens only after admission; rounded values look identical. | Verified in range log at 22:27; [#1504](https://github.com/banodoco/astrid-dev/issues/1504). | RW-29 checks exact frames/time before admission and prints sufficient precision. |
+| Drop the editor's own-object route before the managed render check | `7bf7d908` | Keep, add tests (RN-2) |
+| Thumbnail metadata and redundant locators projected out | `cb90a4b9` | Keep, add tests (RN-2) |
+| Mismatch error names the differing fields | `7332e03d` | Keep, show values for path fields (RN-3) |
+| Launch validation matches worker contexts | `0f6aea92` | Keep, fold into one environment builder (RN-3) |
+| Command workers use the command readiness rule | `f4f5a321` stopgap | Becomes part of RN-3; correct as written |
+| Empty pack path equals unset | `f84c80be` stopgap | Becomes part of RN-3; correct as written |
+| Worker pack roots; bundler roots via parent mapping; relative shared-import alias | `90380578`, `fa3b6df1`, `54e605c6` stopgaps | Replaced by one fix (RN-4) |
+| Render uses the App-vendored motion pack | `007c40d3` stopgap | Replaced by one pinned revision for preview and render (RN-5) |
+| Fade with an easing no longer fails the render | `221e5003` stopgap | Replaced by a fix where the animation metadata is generated (RN-6) |
+| Two-hour lease requested on every heartbeat | `b051e8cc` stopgap | Replaced after the cause is measured (RN-7, RN-8) |
+| Wait before the custody retry | `7265aa5d` stopgap | Replaced by proper handling of an exiting process (RN-9) |
+| Media swap on shot clips; word-provenance exemption; legacy overrun | `24740fdf`, `d4bf28e4`, `ad10ff6d` | Not render fixes. [Plan 88](../88-timeline-edits-land/plan.md) |
 
-**How a film project finally rendered.** Four product-rendered ranges covered 0–50, 50–100, 100–150 and 150–196.5667 s nominally; the last successful request used 196.566666 s, below the exact 196.5666667 s boundary. [The log](evidence/take/ranges-status.log) records all four completed. We joined them outside the product: video stream-copied, audio decoded, trimmed/joined and encoded once ([join.sh](evidence/take/join.sh), [join-n.sh](evidence/take/join-n.sh)). Seams were measured clean in the supplied run; [seam frames](evidence/take/seam50-sheet.jpg) and [other seams](evidence/take/seams-sheet.jpg) retain visual evidence. Numerical seam measurements are not independently reproduced by this filing. This demonstrates the render path per range with stopgaps, not a reliable full-duration render or a proven custody/lease fix. RW-31 brings safe checkpoint/restart behavior into the product.
-
-### Why this is not a simple merge onto release/15/main
-
-About five committed fixes are simple cherry-pick candidates once their missing tests exist. `release/15/main` already contains the branch's cut commit `83d5f8fe`; the 21 extra lineage commits matter only for a merge into `release/14/main`. Both targets nevertheless conflict on launch-context code, and the diagnostic conflict must also be reconciled. The [trial cherry-picks](evidence/mergescope/REPORT.md) skipped conflicted picks, so later clean results are conditional, not an integrated pass.
-
-The stopgaps are not fixes: a hard-coded bundler alias (published as an environment override), a 7,200 s lease, the custody wait, a hand-patched library in node_modules, three pack-path workarounds that should be one, a debug dump (excluded from the archive), and the word-provenance exemption (in the base branch, never used for a film edit). None should arrive in a release by merging this archive.
-
-The real repairs span repositories: lease policy and client generation belong to the Runtime; fade/easing belongs to the composition package; preview/render revision identity spans the App-vendored and collection packs; retired locators are still written by the editor on import. The App → Agent → Runtime pins must move together as a qualified tuple. One root cause, heartbeat renewal stopping, remains unknown. No current CI gate exercises this representative installed/source render journey end to end; individual render-oriented tests do exist. That missing real render check let the breakage pass unnoticed, so it is part of the merge's proof, not an optional extra.
+**Judgement calls made in this reshaping** are recorded with their reasons in [inputs.md](inputs.md#judgement-calls).
 
 ## Sequence and readiness
 
-The shortest proposed path is RW-7 → RW-1/RW-2 → RW-3/RW-25/RW-30 → RW-8, with the journey developed first and run manually against fixes, landing only when green. The long-render/recovery path is RW-10 → RW-11, alongside RW-23 → RW-24 → RW-31. We first run the journey against actual release heads in disposable stacks to establish which lines are broken. This filing runs no product workload.
+**Branch.** `release/15/plan-87` in astrid-agent, cut from the `release/15/main` head on the day; the same name in astrid-runtime and astrid-app only if a task changes them. It lands on `release/15/main` through the Release 15 Lead.
 
-D1 keeps the release choice open: fixes to code actually on 14 can start on current issue-scoped 14 fix branches and flow forward; Plan 69-dependent and design work belongs on current 15 plan branches if that scope is accepted. If 14 has shipped, the release skill's fix-release numbering applies. We do not infer publication from equal branch heads. D7 proposes a Release 15 brief row in this scope PR; there are no product plan branches, activation or ruleset changes yet. Before any implementation, record actual base/dependency revisions, scope, authority and focused checks as [tasks.md](tasks.md) requires.
+**Phase 1: a working render on Release 15 (RN-0, RN-1).** Stand up a source-launched stack on the plan branch. Render the session's film timeline first, because we know what a correct result looks like. Record the first failing stage on the unmodified head before porting anything.
 
-We recommend two final review rounds per phase, pending agreement, with an explicit review stop after the shared render/custody/checkpoint contract and before dependent integration. This differs from the historical judge's no-stop recommendation because later evidence adds a native identity boundary and resumable output custody. The stop protects subsequent tuple qualification from having to rebuild against a wrong contract. The existing independent critique is retained; a fresh simplification critique of the corrected shared contracts is still required before greenlight.
+**Phase 2: proper fixes (RN-2 to RN-9).** In the order of the table in [tasks.md](tasks.md). RN-2, RN-3 and RN-4 are the critical path. RN-7 runs from day 1, because it only adds measurement and needs long renders to observe.
+
+**Phase 3: the heavy timeline (RN-10).** The loop:
+
+1. Import the owner's timeline into the plan stack. Render a short range from its densest part, then the whole thing in one render.
+2. On failure, read the first real error. If the cause is in the render path (admission, worker launch, bundling, composition, lease, custody, encode, output), fix it on the plan branch with a focused test and render again.
+3. If the cause is elsewhere, file or update an issue, note the workaround, and continue.
+4. On completion, compare frames against the editor at chosen times and check the audio. A mismatch is a failure.
+5. Stop when one render of the whole timeline completes and matches, twice in a row, with no stopgap on the branch.
+
+**Phase 4: keep it working (RN-11).** Extend the existing real-render integration test and run it in the lane that already installs Remotion and a browser.
+
+**Blocked on a decision:** RN-5 on P2; RN-10 on P1; the stopgap on RN-8 riding the branch on P3.
+
+**Risks**
+
+- The heartbeat renewal stop has no known cause. RN-7 may not find it quickly. P3 covers that case.
+- `generic_host.py` is large and changed on Release 15; RN-1 and RN-3 conflict there. Keep RN-3 to the builder and its callers.
+- The heavy timeline will use elements and media the film did not. Phase 3 has no fixed end; the estimate assumes two days.
+- The motion pack's install pin is an open owner decision in [Plan 78](../78-live-custom-element-editing/plan.md). RN-5 depends on it.
 
 ## Interfaces and handoff
 
-We consume exact Runtime/Agent/App and pack/composition pins, immutable admitted timeline/media identity, the generated registry and the current task/attempt/fence/epoch protocol. We produce one worker environment builder, registry-owned pack resolution and revision identity, one composition easing rule, measured small fenced heartbeats, bounded custody/recovery, and registered checkpoint outputs. `ASTRID_RENDER_PACK_ROOTS` is an existing channel to reuse, subject to D5. Checkpoints must bind the timeline revision, range/frame boundaries, tuple, pack revisions, output identity and custody; a changed input invalidates reuse.
+**Consumes:** `release/15/main` heads of astrid-agent, astrid-runtime and astrid-app at cut time; the Runtime pin; the motion pack revision vendored by the App; the two donor branches above; the owner's test timeline as a timeline export.
 
-The handoff is the integrated candidate and its receipts, logs, focused tests and journey results, linked in the eventual completion PR. The two existing branches are donors/evidence, never qualified release heads. We retain historical source identities in [inputs.md](inputs.md#source-identities); actual dispatch pins must be refreshed. Product PRs land in accepted plan/fix branches under the release skill, not product `main`.
+**Produces:** one function that builds a worker's environment for both launch validation and dispatch; one source of pack roots for the bundler; one motion pack revision for preview and render; a Runtime log line for slow requests and a host log line for each failed heartbeat; a real render check in CI.
+
+**Handoff:** the plan branch with its render receipts, the frame comparison, and the list of issues filed during the loop. Plan 88 starts from this branch's stack.
 
 ## Completion
 
-- A real installed/source journey on Linux and macOS reaches a Runtime `task.completed` receipt and a registered playable artifact with expected frames, pixels, audio and word timing. Every named negative case fails at the intended boundary.
-- A loaded multi-minute render renews with bounded leases through preparation, draw, encode, ingest and settlement. A crash expires/reconciles safely; a transient custody failure cannot accept a reused PID or silently abandon a live process.
-- Failed/cancelled work reclaims scratch and reservations only with the required stop proof, retires the session slot, and admits the next render without a stack restart. Task inventory and queued-work intent remain inspectable.
-- A resumable render reuses only validated completed ranges/checkpoints, joins with correct frame/sample boundaries, and rejects stale inputs. The same full-duration film-project workflow completes on an exact qualified Release 15 tuple with no local patches or external join procedure.
-- CI runs the representative real render journey and catches deliberately reintroduced pack, worker, composition, admission and recovery failures before integration. Required-check settings remain a separate explicit decision.
-
-Proof is limited to the named timeline fixtures, pinned tuple, supported profiles and two operating systems. A three-second journey does not prove long-render heartbeat/custody reliability; dedicated load, churn and checkpoint cases must do that. Publication remains outside this filing.
+- The owner's heavy timeline renders whole, in one product render, twice in a row, on a build of the plan branch with no stopgap commit and no local patch.
+- Sampled frames match the editor and the audio matches the timeline.
+- The film timeline from 22 November renders whole in one render on the same build.
+- The CI render check is green on the plan branch and fails when any one of RN-2 to RN-6 is reverted.
+- Every defect met during the loop that was not fixed here has an issue.
+- Limits: one machine class, macOS and Linux, source and installed profiles; Windows and render speed are not covered.

@@ -136,3 +136,11 @@ We assembled this index to support review of a film project's plan, reported def
 - [zoom3/FRICTION.md](zoom3/FRICTION.md) — Friction note: Initial project-pack admission using edits/stackpy.sh failed because ASTRID_PROJECT_PACKS_ROOT was absent; retried with sweep/stack-py.sh, which supplies the stack version environment. Supports RW-7 (project-pack fixture context); [#1408](https://github.com/banodoco/astrid-dev/issues/1408) (deferred admission CLI).
 - [INDEX.md](INDEX.md) — This file maps every staged artifact to its subject and the task, issue, or decision it supports. Supports D1–D7 and RW-23–RW-30.
 - [SANITIZER.md](SANITIZER.md) — Selection, redaction, refusal, and media-exclusion policy with the current counts. Supports D7 and all task cards (evidence selection and publication checks).
+
+## Fact checks for the reshaped plan (23 November 2026)
+
+- `eff/heads.md`: whether each render defect is present on the `release/15/main` and `release/14/main` heads, with file and line. Supports RN-1 to RN-9.
+- `eff/landscape.md`: release status and which plans already own neighbouring work. Supports the target-branch call and the scope cuts.
+- `eff/ci.md`: existing workflows, render tests, fixtures and how CI gets Remotion and a browser. Supports RN-11.
+- `eff/inventory.md`: every commit on the session's branches that is not on `release/15/main`. Supports the sixteen-change table and Plan 88.
+- `eff/cancel.md`: each stuck-state observation with task ids, times and code locations. Supports issue #1514.
