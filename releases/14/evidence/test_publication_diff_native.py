@@ -170,5 +170,64 @@ class NativeProvenanceTests(unittest.TestCase):
             self.assertEqual(receipt["candidate/app/Tests/vitest"]["job_id"], 52)
             self.assertEqual(receipt["candidate/app/Tests/vitest"]["approval_reason"], "Owner-reviewed fixture")
 
+    def test_cli_rehearsal_accepts_bound_checkout_vitest_and_writes_native_outcomes(self):
+        # Rehearsal records exercise the real CLI path, including provenance
+        # materialization and the final expected/actual artifact.
+        template = json.loads((Path(__file__).with_name("publication-diff-inputs.json")).read_text())
+        manifest = self.out / "manifest.json"
+        records = {product: {side: {} for side in ("baseline", "candidate")} for product in mod.REPO}
+        for product in mod.REPO:
+            for side in ("baseline", "candidate"):
+                source = template[side][product]
+                sha = source["sha"] or ("a" if side == "baseline" else "b") * 40
+                for workflow, run_id in source["workflows"].items():
+                    run_id = run_id or (101 if side == "baseline" else 201)
+                    source["workflows"][workflow] = run_id
+                    source["sha"] = sha
+                    source["attempts"][workflow] = 1
+                    job_name = "checkout-lanes" if product == "app" and workflow == "Lanes" else "smoke"
+                    jobs = [{"name": job_name, "id": run_id + 1, "attempt": 1, "conclusion": "success",
+                             "log": "", "failed_steps": [], "log_error": None}]
+                    if job_name == "checkout-lanes":
+                        jobs[0]["log"] = str(self._path("playwright", self.contents["playwright"]))
+                    records[product][side][workflow] = {"id": run_id, "sha": sha, "attempt": 1,
+                        "conclusion": "success", "jobs": jobs}
+        report = {"testResults": [{"name": "/work/app/tests/e2e/checkout.test.ts", "assertionResults": [
+            {"fullName": "checkout > accepts card", "status": "passed"},
+            {"fullName": "checkout > accepts card", "status": "passed"}]}]}
+        report_path = self.out / "checkout-vitest.json"
+        report_path.write_text(json.dumps(report))
+        digest = hashlib.sha256(report_path.read_bytes()).hexdigest()
+        bindings = {}
+        for side in ("baseline", "candidate"):
+            run = records["app"][side]["Lanes"]
+            key = f"{side}/app/Lanes/checkout-lanes"
+            bindings[key] = {"type": "local", "run_id": run["id"], "attempt": 1, "sha": run["sha"], "sha256": digest}
+        template["native_reports"] = bindings
+        template["local_evidence_exceptions"] = {
+            key: {**binding, "approve_reason": "CLI regression fixture"} for key, binding in bindings.items()
+        }
+        rehearsal = self.out / "records.json"
+        rehearsal.write_text(json.dumps(records))
+        inventory = self.out / "inventory.json"
+        inventory_data = {"schema_version": 1, "sealed_prior": [], "current": []}
+        inventory.write_text(json.dumps(inventory_data))
+        template["inherited_red_sealed_sha256"] = mod.sealed_prior_digest(inventory_data)
+        manifest.write_text(json.dumps(template))
+        args = ["--manifest", str(manifest), "--inherited-red", str(inventory), "--rehearsal-records", str(rehearsal),
+                "--out", str(self.out / "verdict"), "--playwright-json", f"baseline/Lanes/checkout-lanes={report_path}",
+                "--playwright-json", f"candidate/Lanes/checkout-lanes={report_path}"]
+        with mock.patch.object(mod, "check_canonical_baseline_diff", return_value=[]):
+            self.assertEqual(mod.main(args), 1)  # rehearsal is intentionally non-qualifying
+        outcomes = json.loads((self.out / "verdict" / "playwright-expected-actual.json").read_text())
+        candidate = outcomes["candidate/Lanes/checkout-lanes"]
+        self.assertEqual(candidate["format"], "vitest")
+        self.assertEqual(len(candidate["tests"]), 1)
+        states = next(iter(candidate["tests"].values()))
+        self.assertEqual(len(states), 2)
+        self.assertEqual([row["actual"] for row in states], ["PASS", "PASS"])
+        receipt = json.loads((self.out / "verdict" / "native-report-input-digests.json").read_text())
+        self.assertEqual(receipt["candidate/app/Lanes/checkout-lanes"]["approval_reason"], "CLI regression fixture")
+
 
 if __name__ == "__main__": unittest.main()

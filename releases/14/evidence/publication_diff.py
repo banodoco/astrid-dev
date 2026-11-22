@@ -244,6 +244,8 @@ def parse_vitest_multiset(path: Path) -> dict[str, str | list[str]]:
         name = name.replace("\\", "/")
         if "/src/" in name:
             name = "src/" + name.rsplit("/src/", 1)[1]
+        elif "/tests/" in name:
+            name = "tests/" + name.rsplit("/tests/", 1)[1]
         cases = file.get("assertionResults")
         if not isinstance(cases, list) or not cases:
             raise ValueError(f"{path}: no assertionResults for {name}")
@@ -367,6 +369,34 @@ def parse_playwright_json(path: Path) -> dict[str, str | list[str]]:
         outcome = record["status"]
         output[key] = output.get(key, []) + [outcome] if isinstance(output.get(key), list) else ([output[key], outcome] if key in output else outcome)
     return output
+
+
+def parse_app_native_json(path: Path) -> dict[str, str | list[str]]:
+    """Parse native App test JSON by schema, retaining all test occurrences."""
+    report = json.loads(path.read_text())
+    if isinstance(report, dict) and isinstance(report.get("testResults"), list):
+        return parse_vitest_multiset(path)
+    return parse_playwright_json(path)
+
+
+def app_native_json_format(path: Path) -> str:
+    """Identify the supported native App JSON schema without weakening validation."""
+    report = json.loads(path.read_text())
+    if isinstance(report, dict) and isinstance(report.get("testResults"), list):
+        return "vitest"
+    if isinstance(report, dict) and isinstance(report.get("suites"), list):
+        return "playwright"
+    return "unknown"
+
+
+def app_expected_native_format(workflow: str, job: str) -> str | None:
+    if (workflow, job) == ("Lanes", "checkout-lanes"):
+        return "vitest"
+    if (workflow == "E2E" and job.startswith(("playwright-", "extension-"))
+            or workflow == "Direct Journey" and job in ("direct-journey", "three-products")
+            or workflow == "Lanes" and job in ("quick-journey", "checkout-lanes")):
+        return "playwright"
+    return None
 
 
 def parse_playwright_json_outcomes(path: Path) -> dict[str, list[dict[str, str]]]:
@@ -813,14 +843,23 @@ def job_inventory(product, workflow, side, run, vitest, playwright, junit, probl
             report = playwright.get(f"{side}/{workflow}/{name}")
             if report and skipped:
                 problems.append(f"{label}: native input supplied for a skipped job")
-            ids = parse_playwright_json(report) if report and not skipped else parse_playwright(log)
+            expected_format = app_expected_native_format(workflow, name)
+            actual_format = None
+            if report and not skipped:
+                actual_format = app_native_json_format(report)
+                if expected_format and actual_format != expected_format:
+                    problems.append(f"{label}: expected native {expected_format} JSON, received {actual_format}")
+            ids = (parse_app_native_json(report) if report and not skipped and
+                   (not expected_format or actual_format == expected_format) else
+                   ({} if report and not skipped else parse_playwright(log)))
             needs_native = (
                 workflow == "E2E" and name.startswith(("playwright-", "extension-"))
                 or workflow == "Direct Journey" and name in ("direct-journey", "three-products")
                 or workflow == "Lanes" and name in ("quick-journey", "checkout-lanes")
             )
             if needs_native and not report and not skipped and not (setup_reason and not ids):
-                problems.append(f"{label}: complete native Playwright JSON required")
+                required_format = expected_format or "playwright"
+                problems.append(f"{label}: complete native {required_format.title()} JSON required")
         if skipped:
             ids = {}
         no_ids_reason = ""
@@ -1176,9 +1215,9 @@ def main(argv=None) -> int:
     ap.add_argument("--junit-xml-r13", type=Path, help="full R13 JUnit XML reporter output")
     ap.add_argument("--junit-xml-r14", type=Path, help="full candidate JUnit XML reporter output")
     ap.add_argument("--playwright-json", action="append", default=[], metavar="SIDE/WORKFLOW/JOB=PATH",
-                    help="native per-ID JSON reporter for dot-output E2E/Lanes jobs, on BOTH sides")
+                    help="native JSON by SIDE/WORKFLOW/JOB: Playwright for journey/E2E jobs; Vitest for App Lanes/checkout-lanes; supply each side")
     ap.add_argument("--playwright-inputs", type=Path,
-                    help="JSON object mapping SIDE/WORKFLOW/JOB to a native Playwright JSON path")
+                    help="JSON object mapping SIDE/WORKFLOW/JOB to native report paths (including App Lanes/checkout-lanes Vitest); provenance bindings use SIDE/app/WORKFLOW/JOB in manifest native_reports")
     a = ap.parse_args(argv)
     if not a.rehearsal_records and not a.inherited_base:
         print("non-rehearsal runs require --inherited-base COMMIT", file=sys.stderr)
@@ -1254,9 +1293,18 @@ def main(argv=None) -> int:
         pw_outcomes = {}
         for key, path in playwright.items():
             binding = native_receipt[report_keys[key]]
-            pw_outcomes[key] = {"run_id": binding["run_id"], "job": key.split("/", 2)[2],
+            entry = {"run_id": binding["run_id"], "job": key.split("/", 2)[2],
                                 "job_id": binding["job_id"], "attempt": binding["attempt"],
-                                "tests": parse_playwright_json_outcomes(path)}
+                                "format": app_native_json_format(path)}
+            if entry["format"] == "playwright":
+                entry["tests"] = parse_playwright_json_outcomes(path)
+            else:
+                tests = {}
+                for test_id, states in occurrences(parse_vitest_multiset(path)).items():
+                    tests[test_id] = [{"expected": "not reported", "actual": state, "status": state}
+                                      for state in states]
+                entry["tests"] = tests
+            pw_outcomes[key] = entry
         (a.out / "playwright-expected-actual.json").write_text(json.dumps(pw_outcomes, indent=2) + "\n")
         counts = red_summary(rows)
         (a.out / "counts.json").write_text(json.dumps(counts, indent=2) + "\n")

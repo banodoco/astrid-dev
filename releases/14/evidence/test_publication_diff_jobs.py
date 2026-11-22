@@ -144,7 +144,9 @@ class JobEvaluatorRegressions(unittest.TestCase):
 
     def test_xpass_is_preserved_as_changed_outcome(self):
         report = self.root / "xpass.json"
-        report.write_text("{}")
+        report.write_text(json.dumps({"suites": [{"title": "a.spec.ts", "file": "tests/a.spec.ts",
+            "specs": [{"title": "known", "tests": [{"projectName": "chromium", "status": "unexpected",
+                "expectedStatus": "failed", "results": [{"status": "passed"}]}]}]}]}))
         key = "candidate/E2E/playwright-chromium"
         original = mod.parse_playwright_json
         mod.parse_playwright_json = lambda _path: {"tests/a.spec.ts › known": "XPASS"}
@@ -158,6 +160,70 @@ class JobEvaluatorRegressions(unittest.TestCase):
         self.assertEqual(row["candidate"], "XPASS")
         self.assertEqual(row["classification"], "changed")
         self.assertTrue(any("BLOCKS" in p for p in problems))
+
+    def test_checkout_lanes_accepts_native_vitest_report_without_dropping_occurrences(self):
+        report = {"testResults": [{"name": "/work/app/tests/e2e/checkout.test.ts",
+            "assertionResults": [
+                {"fullName": "checkout > accepts card", "status": "passed"},
+                {"fullName": "checkout > accepts card", "status": "passed"},
+            ]}]}
+        baseline_path = self.root / "checkout-baseline.json"
+        candidate_path = self.root / "checkout-candidate.json"
+        baseline_path.write_text(json.dumps(report))
+        report["testResults"][0]["assertionResults"][1]["status"] = "failed"
+        candidate_path.write_text(json.dumps(report))
+        rows, _, problems = self.evaluate(self.records("app", "Lanes",
+            [self.job("checkout-lanes", "success")], [self.job("checkout-lanes", "failure")]),
+            playwright={"baseline/Lanes/checkout-lanes": baseline_path,
+                        "candidate/Lanes/checkout-lanes": candidate_path})
+        self.assertFalse(any("native Playwright JSON required" in problem for problem in problems))
+        outcome_rows = [row for row in rows if row.get("id") == "tests/e2e/checkout.test.ts › checkout > accepts card"]
+        self.assertEqual(len(outcome_rows), 2)
+        self.assertEqual(Counter((row["r13"], row["candidate"]) for row in outcome_rows),
+                         Counter({("PASS", "PASS"): 1, ("PASS", "FAIL"): 1}))
+
+    def test_checkout_vitest_skipped_assertion_is_not_a_pass(self):
+        path = self.root / "checkout-skipped.json"
+        path.write_text(json.dumps({"testResults": [{"name": "tests/checkout.test.ts", "assertionResults": [
+            {"fullName": "card", "status": "pending"}]}]}))
+        records = self.records("app", "Lanes", [self.job("checkout-lanes", "success")],
+                               [self.job("checkout-lanes", "success")])
+        rows, _, _ = self.evaluate(records, playwright={
+            "baseline/Lanes/checkout-lanes": path, "candidate/Lanes/checkout-lanes": path})
+        row = next(row for row in rows if row["id"] == "tests/checkout.test.ts › card")
+        self.assertEqual((row["r13"], row["candidate"]), ("SKIP", "SKIP"))
+
+    def test_known_app_native_job_format_mismatches_are_rejected(self):
+        playwright_path = self.root / "wrong-playwright.json"
+        playwright_path.write_text(json.dumps({"suites": [{"title": "checkout.test.ts", "file": "tests/checkout.test.ts",
+            "specs": [{"title": "card", "tests": [{"status": "expected", "expectedStatus": "passed",
+                "results": [{"status": "passed"}]}]}]}]}))
+        vitest_path = self.root / "wrong-vitest.json"
+        vitest_path.write_text(json.dumps({"testResults": [{"name": "/app/tests/x.test.ts", "assertionResults": [
+            {"fullName": "x", "status": "passed"}]}]}))
+        checkout_records = self.records("app", "Lanes", [self.job("checkout-lanes", "success")],
+                                        [self.job("checkout-lanes", "success")])
+        _, _, checkout_problems = self.evaluate(checkout_records, playwright={
+            "baseline/Lanes/checkout-lanes": playwright_path, "candidate/Lanes/checkout-lanes": playwright_path})
+        self.assertTrue(any("expected native vitest JSON, received playwright" in issue for issue in checkout_problems))
+        e2e_records = self.records("app", "E2E", [self.job("playwright-chromium", "success")],
+                                   [self.job("playwright-chromium", "success")])
+        _, _, e2e_problems = self.evaluate(e2e_records, playwright={
+            "baseline/E2E/playwright-chromium": vitest_path, "candidate/E2E/playwright-chromium": vitest_path})
+        self.assertTrue(any("expected native playwright JSON, received vitest" in issue for issue in e2e_problems))
+
+    def test_checkout_lanes_skips_reject_supplied_native_input(self):
+        path = self.root / "checkout.json"
+        path.write_text(json.dumps({"testResults": [{"name": "tests/checkout.test.ts", "assertionResults": [
+            {"fullName": "checkout", "status": "passed"}]}]}))
+        records = self.records("app", "Lanes", [self.job("checkout-lanes", "skipped")],
+                               [self.job("checkout-lanes", "skipped")])
+        _, _, problems = self.evaluate(records, {"no_ids_expected": {
+            "baseline/app/Lanes/checkout-lanes": "conditionally skipped",
+            "candidate/app/Lanes/checkout-lanes": "conditionally skipped"}}, playwright={
+            "baseline/Lanes/checkout-lanes": path, "candidate/Lanes/checkout-lanes": path})
+        self.assertGreaterEqual(sum("native input supplied for a skipped job" in issue for issue in problems), 2)
+
 
     def test_playwright_xpass_or_unexpected_pass_is_changed(self):
         report = self.root / "pw.json"
