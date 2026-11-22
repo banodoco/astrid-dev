@@ -115,3 +115,10 @@ The host accepted this as the failing baseline. Three diagnostics used the same 
 - Plan 75 gets the heavy history read and batch series, alongside all three open/save spans. Separate history depth from clip count if the first profile leaves attribution unclear.
 - Plan 76 keeps its two-writer witness outstanding. This run exercised one writer and a temporary read disagreement.
 - Plan 18 gets the same-track gesture-to-POST span for its gesture-to-operation comparison.
+
+
+## Round 2 standard fixture
+
+The fresh standard run started on App `22780a7a`, Agent `da212f2a` and Runtime `712d9754`. The isolated installer, fixture seed and editor matrix are in progress. This tuple includes the three ranked bounded fixes and the current Plan 69 save mirror. The Agent pack/source set is unchanged from the Plan 77 baseline. The optional large-shots variant is available separately through [App #343](https://github.com/banodoco/astrid-app/pull/343) and does not gate the standard run.
+
+Per-change comparisons remain in Round 1's context. [App #340](https://github.com/banodoco/astrid-app/pull/340) reduced four-capture emulated outbox time from 92.173 to 57.557 ms with identical request bodies. [Runtime #84](https://github.com/banodoco/astrid-runtime/pull/84) reduced the 12-claim warm synthetic SQL stage from 212.20 to 53.46 ms and from 94.03 to 25.79 ms across its two histories, with unchanged filtered results. [App #342](https://github.com/banodoco/astrid-app/pull/342) moves the full-history fetch off the editor's readiness path. On the old exact v30 stack the head-only read took 2.462 s and 2.45 Runtime CPU s for 2,162 bytes. The full read took 5.687 s and 5.69 Runtime CPU s for 133,585,133 bytes. The full history still loads later. These are task diagnostics. The integrated wall, CPU, head and refusal results follow the live standard matrix.

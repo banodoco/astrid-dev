@@ -14,7 +14,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 
 | Lane | Session | Brief | State |
 | --- | --- | --- | --- |
-| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 exact App and Runtime CI add no failing IDs. GitHub cancelled the exact Agent candidate and base runs. Their authorized retry and final R2 gate the release landing. Plan 77 completed three diagnostics after the 288-clip baseline failed its first move. The first saving and opening fixes are underway. |
+| Plans 69 then 77 (editing work, then the saving loop) | Codex manager (hosted in Claude session session_011EzfW1FXS3o7GFnNSB7cZS) | [briefs/plans-69-77.md](briefs/plans-69-77.md) | Plan 69 exact App and Runtime CI add no failing IDs. Plan 69’s Agent retry has one added Windows outcome. Its authorized single-job rerun waits for the active workflow to finish. Final R2 still gates landing. Plan 77’s first saving and opening fixes landed on its plan branches. The fresh standard Round 2 run has started. |
 | Plan 78 (live custom-element editing) | not started | — | Queued; builds on Plan 69; not assigned to a lane |
 | Plans 39, 13, 50, 40, 63, 75, 76, 18, 72 | not started | — | Queued; branches not yet cut |
 
