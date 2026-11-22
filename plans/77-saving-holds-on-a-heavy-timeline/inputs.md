@@ -65,6 +65,8 @@ Measured read-only on 18 November 2026 from a copied Release 14 realm (see the d
 
 - **D12 Save badge.** Decided on 22 November 2026, given to the hosting session. The owner delegates wording judgment to the reviewer. Show an opening state during project load. Untouched work must never show Not saved. Show device-saved and syncing only after the edit is durable locally, and Saved only after Runtime acceptance. A refusal keeps Try again and Discard. Use a bounded fix with proof of the opening, edit and refusal transitions. Schedule it in Round 2 if cheap or in Round 4 with opening.
 
+- **D13 History contract staging.** The host decided on 22 November 2026 to take the existing-contract App lazy-read path in Round 2. Keep the optional compact Runtime read projection for Round 4 if Round 2 opening and undo measurements still justify it. If selected, use the official additive contract generation and exact Runtime, Agent and App pins.
+
 ## The owner's wider goals
 
 - Humans and agents edit the same timelines.
