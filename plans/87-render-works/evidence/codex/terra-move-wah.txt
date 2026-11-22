@@ -1,0 +1,12 @@
+**Done — verified** in Almost Ready, [trial v2](http://localhost:2400/tools/video-editor?project=801a01b3a87941a1ab25958c488afdbf&timeline=77f906f3242c48179ab86ca7c3e62eb4).
+
+Revision `5a03c301…` → `6c18659c…`. The wah now runs **26.500–28.933 s**, with gain **0.282**. The revision comparison shows only its start changed.
+
+**Verified nearby tracks, 26.5–29.0 s:**
+
+- SFX: no other clips.
+- VO: `vo-N05-0` 22.476–27.916; `r5-roomtone-06` 27.900–28.667; `vo-N07-0` 28.674–29.743.
+
+**Inferred from the supplied word times:** it overlaps “fulfill on that initial vision,” then “So” and the beginning of “I” at the end.
+
+Revisions and tooling issues are logged in [revisions.log](./wah/revisions.log) and [FRICTION.md](./wah/FRICTION.md).

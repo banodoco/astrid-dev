@@ -1,0 +1,12 @@
+Published the opening fix in **Almost Ready / trial v2**. The element now shows the original floating window at 1× and enables the full 420 px left and 220 px bottom extension when zoom exceeds 1×. The camera was unchanged.
+
+**Verified:** The saved camera holds at 1× through frame 33, then cuts to 2× at frame 34; it does not ease during that interval. The left, top and right original edges leave the view at frame 34. The bottom edge remains within the geometric crop but is hidden by the extension on that same cut. There is no visible gradual stretch.
+
+I inspected every captured frame from 0–40 and the requested later samples. None shows light background inside the zoomed view. The frame-18 opening and mink perch match the pre-extension reference visually. Frames 0–10 are **inferred** to be pixel-identical from the restored element code; matching pre-extension captures for those exact frames were unavailable.
+
+**Verified:** The “tomorrow” centre offsets at frames 163, 164, 170, 178 and 216 are unchanged from the prior measurements, all within 0.04 px of centre.
+
+Element revision: `d2a69a2e…` → `e242f8db…`  
+Timeline revision: `6c18659c…` → `3e54d605…`
+
+Opening contact sheet (source: `~/zoom3/verify/contact-opening.jpg`) · Revision log (source: `~/zoom3/revisions.log`)

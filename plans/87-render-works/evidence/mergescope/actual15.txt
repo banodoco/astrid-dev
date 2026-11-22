@@ -1,0 +1,67 @@
+Checking patch astrid/core/execution/generic_host.py...
+Hunk #1 succeeded at 5310 (offset -371 lines).
+Hunk #2 succeeded at 10337 (offset -368 lines).
+Hunk #3 succeeded at 10374 (offset -368 lines).
+Checking patch astrid/core/rendering/remotion_runtime.py...
+Hunk #1 succeeded at 554 (offset 3 lines).
+error: while searching for:
+            raise RemotionValidationError("runtime validation launch/source differs")
+        matches = [item for item in artifact['contexts'][role]['variants'] if item['context'] == context]
+        if len(matches) != 1:
+            differences = [_context_differences(item.get('context'), context)
+                           for item in artifact['contexts'][role]['variants']]
+            fields = min(differences, key=len) if differences else []
+
+error: patch failed: astrid/core/rendering/remotion_runtime.py:1272
+Checking patch astrid/packs/rendering/rendering/renderers/remotion/run.py...
+Hunk #1 succeeded at 1279 (offset 48 lines).
+Hunk #2 succeeded at 1415 (offset 48 lines).
+Checking patch astrid_runtime_client/generated.py...
+Checking patch remotion/webpack-alias.mjs...
+Hunk #1 succeeded at 224 (offset 11 lines).
+Checking patch tests/core/rendering/test_remotion_host_regressions.py...
+error: while searching for:
+    assert generic_host._record_may_render(record)
+
+    package_parent = str(Path(generic_host.__file__).resolve().parents[3])
+    expected_path = os.pathsep.join(dict.fromkeys((
+        package_parent,
+        *generic_host._dependency_pythonpath(environment),
+        *generic_host._admitted_python_roots(record.source_root, record.definition),
+    )))
+    expected_roots = os.pathsep.join(str(root) for root in host.pack_roots)
+
+error: patch failed: tests/core/rendering/test_remotion_host_regressions.py:76
+error: while searching for:
+    record = next(record for record in host.discover() if record.id == "rendering.render")
+
+    expected_roots = os.pathsep.join(str(root) for root in host.pack_roots)
+    expected_path = os.pathsep.join(dict.fromkeys((
+        str(Path(generic_host.__file__).resolve().parents[3]),
+        *generic_host._dependency_pythonpath(environment),
+        *generic_host._admitted_python_roots(record.source_root, record.definition),
+    )))
+    stale_candidates = generic_host._launch_worker_probe_environments(
+
+error: patch failed: tests/core/rendering/test_remotion_host_regressions.py:115
+error: while searching for:
+        for candidate in launch_candidates
+    )
+
+
+@pytest.mark.parametrize("failure", [
+    FileNotFoundError("missing Node"),
+
+error: patch failed: tests/core/rendering/test_remotion_host_regressions.py:138
+Applied patch astrid/core/execution/generic_host.py cleanly.
+Applying patch astrid/core/rendering/remotion_runtime.py with 1 reject...
+Hunk #1 applied cleanly.
+Rejected hunk #2.
+Applied patch astrid/packs/rendering/rendering/renderers/remotion/run.py cleanly.
+Applied patch astrid_runtime_client/generated.py cleanly.
+Applied patch remotion/webpack-alias.mjs cleanly.
+Applying patch tests/core/rendering/test_remotion_host_regressions.py with 3 rejects...
+Hunk #1 applied cleanly.
+Rejected hunk #2.
+Rejected hunk #3.
+Rejected hunk #4.

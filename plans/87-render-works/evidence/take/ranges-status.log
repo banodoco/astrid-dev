@@ -1,0 +1,36 @@
+21:11:05 START ranges [('0', '50'), ('50', '100'), ('100', '150'), ('150', '196.5667')]
+21:11:39 part 0 [0-50] FAILED try 1 after 33s: Headline: The render couldn't finish | Detail: managed session release was not verified | Fix: Review the details, correct the render settings or timeline, and try again.
+21:12:25 part 0 [0-50] FAILED try 2 after 42s: Headline: The render couldn't finish | Detail: managed session release was not verified | Fix: Review the details, correct the render settings or timeline, and try again.
+21:13:10 part 0 [0-50] FAILED try 3 after 39s: Headline: The render couldn't finish | Detail: managed session release was not verified | Fix: Review the details, correct the render settings or timeline, and try again.
+21:13:16 GIVING UP on part 0
+21:20:22 START ranges [('0', '50'), ('50', '100'), ('100', '150'), ('150', '196.5667')]
+21:28:59 part 0 [0-50] OK in 517s size 39912190 -> ~/take/part0.mp4
+21:38:42 START ranges [('0', '50'), ('50', '100'), ('100', '150'), ('150', '196.5667')]
+21:46:05 part 0 [0-50] OK in 443s size 39951835 -> ~/take/part0.mp4
+21:58:59 part 1 [50-100] FAILED try 1 after 772s: task 0e2e4fe68146438f9c19cfbb155b9098, attempt 70b131ebf9724504aee061f7c452433b: lease expired with unresolved custody; reconciliation required. Recover with: astrid tasks cancel 0e2e4fe68146438f9c19cfbb155b9098
+22:00:58 START ranges [('0', '50'), ('50', '100'), ('100', '150'), ('150', '196.5667')]
+22:00:58 part 0 already done
+22:03:03 ADOPT waiting for task 480bca0b78d64ce89c88ffc626f463cf (part 1, 50-100)
+22:04:33 ADOPT task ended with status failed
+22:08:12 START ranges [('0', '50'), ('50', '100'), ('100', '150'), ('150', '196.5667')]
+22:08:12 part 0 already done
+22:17:20 part 1 [50-100] OK in 548s size 9591908 -> ~/take/part1.mp4
+22:27:18 part 2 [100-150] OK in 596s size 22020993 -> ~/take/part2.mp4
+22:27:28 part 3 [150-196.5667] FAILED try 1 after 8s: range ends at 196.567s, beyond timeline duration 196.567s
+22:27:36 part 3 [150-196.5667] FAILED try 2 after 9s: range ends at 196.567s, beyond timeline duration 196.567s
+22:27:45 part 3 [150-196.5667] FAILED try 3 after 9s: range ends at 196.567s, beyond timeline duration 196.567s
+22:27:45 GIVING UP on part 3
+22:28:25 START ranges [('0', '50'), ('50', '100'), ('100', '150'), ('150', '196.566666')]
+22:28:25 part 0 already done
+22:28:25 part 1 already done
+22:28:25 part 2 already done
+22:33:24 part 3 [150-196.566666] FAILED try 1 after 299s: Headline: The render couldn't finish | Detail: capability 'rendering.render' exited 1: Remotion render failed with exit code 1 | [Tab 0, node_modules/remotion/dist/esm/index.mjs:11135] EncodingError: The source image cannot be decoded. | Browser failed to load blob:http://localhost:60214/bb392f1f-bf25-4a6
+22:34:50 part 3 [150-196.566666] FAILED try 2 after 80s: Headline: The render couldn't finish | Detail: capability 'rendering.render' exited 1: rendering.remotion does not support this render request | reason: runtime validation installed inputs changed | Fix: Review the details, correct the render settings or timeline, and try again.
+22:35:13 part 3 [150-196.566666] FAILED try 3 after 19s: Headline: Remotion isn't ready on this machine | Detail: rendering.render: this task renders with rendering.remotion, which this host cannot run: runtime validation installed inputs changed | Fix: With Node v20.19.4 on PATH, run: `cd ~/Developer/astrid-release-src/wt-r14-r6-fixes/remo
+22:35:17 GIVING UP on part 3
+22:38:53 START ranges [('0', '50'), ('50', '100'), ('100', '150'), ('150', '196.566666')]
+22:38:53 part 0 already done
+22:38:53 part 1 already done
+22:38:53 part 2 already done
+22:46:33 part 3 [150-196.566666] OK in 460s size 18321610 -> ~/take/part3.mp4
+22:46:33 ALL PARTS DONE

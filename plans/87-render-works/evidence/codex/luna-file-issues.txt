@@ -1,0 +1,23 @@
+**Verified:** GitHub confirms seven new issues and seven comments. All new issues are open, and the index is updated in [tooling/ISSUES.md](tooling/ISSUES.md).
+
+### New issues
+
+- [#1430](https://github.com/banodoco/astrid-dev/issues/1430) Restore removed clips or revert a time range to an earlier revision
+- [#1431](https://github.com/banodoco/astrid-dev/issues/1431) Outgoing edit payloads do not distinguish targets from broad assertions
+- [#1432](https://github.com/banodoco/astrid-dev/issues/1432) Timeline.add footage is hidden beneath overlapping shot media
+- [#1433](https://github.com/banodoco/astrid-dev/issues/1433) Editor preview pack loading times out under load with misleading recovery state
+- [#1434](https://github.com/banodoco/astrid-dev/issues/1434) Editor preview playback advances only a few frames in ten seconds under load
+- [#1435](https://github.com/banodoco/astrid-dev/issues/1435) Editor playback time labels truncate and mis-round centiseconds
+- [#1436](https://github.com/banodoco/astrid-dev/issues/1436) SDK dry-run preview crashes while resolving its diff after Runtime success
+
+### Comments added
+
+- **#1403:** Restoring the old clip ID is reserved; a fresh ID hits the missing word-binding refusal.
+- **#1404:** New aliases fail media verification; shot admission also reports capture mismatch with unchanged heads.
+- **#1407:** `set_param` fails to resolve a project-admitted element schema.
+- **#1401:** Confirmed `nudge()` reflow and its source path; no candidate was published.
+- **#1413:** Added transient pack-host timeout evidence wrapped as identity failure advice.
+- **#1262:** Added blank preview evidence after a successful pack retry; cause remains unknown.
+- **#683:** Added the media-window error that omits the clip and measured values.
+
+The other defects were already covered by #1246, #1401–#1409, #1413, #1393–#1394, and #1262. No filing blockers remain.

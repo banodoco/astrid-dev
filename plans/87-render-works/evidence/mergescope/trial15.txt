@@ -1,0 +1,129 @@
+
+### 7bf7d9086
+Auto-merging astrid/packs/rendering/actions/render/managed_timeline.py
+Auto-merging astrid/sdk/authoring_render_preview.py
+Auto-merging astrid/sdk/invocation.py
+Auto-merging astrid/sdk/timeline_filmstrip.py
+Auto-merging tests/packs/rendering/test_managed_timeline_render.py
+[detached HEAD 21e196005] Drop the editor's own-object route before managed render validation
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 15:52:09 2026 +0100
+ 7 files changed, 182 insertions(+), 7 deletions(-)
+RESULT clean
+
+### 24740fdf4
+Auto-merging astrid/sdk/timeline/commit_session.py
+[detached HEAD 4ccb9f8ab] fix(timeline): preserve shot clips when swapping imported media
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 16:53:24 2026 +0100
+ 8 files changed, 696 insertions(+), 28 deletions(-)
+ create mode 100644 astrid/sdk/timeline/media_swap.py
+ create mode 100644 tests/timeline/test_occurrence_media_swap.py
+RESULT clean
+
+### cb90a4b99
+Auto-merging astrid/packs/rendering/actions/render/managed_timeline.py
+Auto-merging tests/packs/rendering/test_managed_timeline_render.py
+[detached HEAD 2a7a1a6b6] fix(render): project thumbnail metadata and redundant object locators safely
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 18:48:50 2026 +0100
+ 3 files changed, 36 insertions(+), 2 deletions(-)
+RESULT clean
+
+### 7332e03d6
+Auto-merging astrid/core/rendering/remotion_runtime.py
+CONFLICT (content): Merge conflict in astrid/core/rendering/remotion_runtime.py
+error: could not apply 7332e03d6... fix(render): name differing launch-context fields without exposing values
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+astrid/core/rendering/remotion_runtime.py
+diff --cc astrid/core/rendering/remotion_runtime.py
+index bfeca52cc,7a4bb4462..000000000
+--- a/astrid/core/rendering/remotion_runtime.py
++++ b/astrid/core/rendering/remotion_runtime.py
+@@@ -1275,13 -1272,15 +1275,25 @@@ def _validated_runtime(project_dir: Pat
+              raise RemotionValidationError("runtime validation launch/source differs")
+          matches = [item for item in artifact['contexts'][role]['variants'] if item['context'] == context]
+          if len(matches) != 1:
+++<<<<<<< HEAD
+ +            differences = [_context_differences(item['context'], context)
+ +                           for item in artifact['contexts'][role]['variants']]
+ +            fields = min(differences, key=len) if differences else []
+ +            detail = ", ".join(fields) if fields else "validated context or role"
+ +            raise RemotionValidationError(
+ +                f"runtime validation consumer context differs in {detail}; "
+ +                "restart the Astrid host after aligning its launch and worker environment, then retry")
+++=======
++             differences = [_context_differences(item.get('context'), context)
++                            for item in artifact['contexts'][role]['variants']]
++             fields = min(differences, key=len) if differences else []
++             detail = ", ".join(fields[:8]) if fields else "validated context or role"
++             if len(fields) > 8:
++                 detail += ", …"
++             raise RemotionValidationError(
++                 f"runtime validation consumer context differs in {detail}: this process's environment was not validated at "
++                 "launch (only the host and Remotion-capable capability workers are)")
+++>>>>>>> 7332e03d6 (fix(render): name differing launch-context fields without exposing values)
+          entry = matches[0]
+          if python_executable is None:
+              facts = entry['closure']['startup']
+RESULT conflict aborted
+
+### d4bf28e4d
+[detached HEAD 1df18a41e] fix(timeline): retain exact legacy word provenance across interval-only edits
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 19:02:02 2026 +0100
+ 2 files changed, 119 insertions(+), 14 deletions(-)
+ create mode 100644 tests/timeline/test_legacy_occurrence_timing_provenance.py
+RESULT clean
+
+### 0f6aea928
+Auto-merging astrid/core/execution/generic_host.py
+CONFLICT (content): Merge conflict in astrid/core/execution/generic_host.py
+Auto-merging tests/core/rendering/test_remotion_host_regressions.py
+error: could not apply 0f6aea928... Align render launch validation with worker contexts
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+astrid/core/execution/generic_host.py
+diff --cc astrid/core/execution/generic_host.py
+index 1518d29aa,47700ffc4..000000000
+--- a/astrid/core/execution/generic_host.py
++++ b/astrid/core/execution/generic_host.py
+@@@ -1437,10 -1592,11 +1437,18 @@@ def _prepare_vibecomfy_execution_identi
+              os.environ["VIBECOMFY_HEADLESS"] = previous_headless
+  
+  
+++<<<<<<< HEAD
+ +def _dependency_pythonpath(environment: Mapping[str, str] | None = None) -> tuple[str, ...]:
+ +    """Keep only approved dependency roots across children."""
+ +    roots = dependency_pythonpath(environment)
+ +    if (os.environ if environment is None else environment).get("ASTRID_HOST_EXECUTION_PROFILE") == "installed":
+++=======
++ def _dependency_pythonpath(environ: Mapping[str, str] | None = None) -> tuple[str, ...]:
++     """Keep only approved dependency roots across children."""
++     environment = os.environ if environ is None else environ
++     roots = dependency_pythonpath(environment)
++     if environment.get("ASTRID_HOST_EXECUTION_PROFILE") == "installed":
+++>>>>>>> 0f6aea928 (Align render launch validation with worker contexts)
+          return roots
+      # Source-mode workers need the Runtime already selected by this host.
+      # Carry its actual origin, without inheriting the caller's PYTHONPATH.
+RESULT conflict aborted
+
+### ad10ff6de
+Auto-merging astrid/sdk/timeline/validation.py
+[detached HEAD c212e3f2c] Allow unchanged legacy occurrence overrun on pure retime
+ Author: AstridPseudon <[email redacted]>
+ Date: Sun Nov 22 19:34:17 2026 +0100
+ 2 files changed, 111 insertions(+), 3 deletions(-)
+RESULT clean
