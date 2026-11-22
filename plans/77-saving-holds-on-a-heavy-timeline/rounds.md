@@ -136,7 +136,7 @@ The last ten matched 12-command batches had a median of 98.730 s in Round 1 and 
 
 One repeat failed in each round. The other 84 scenarios and 254 repeats remained unattempted in Round 2, including the deliberate clash. This counted partial round failed the saving criterion. The late acceptance did not supply a confirmed Saved badge. The fresh browser profile was removed after the runner's cleanup error. The duplicate run identity rows in this exact App build agree. [App #346](https://github.com/banodoco/astrid-app/pull/346) removes that duplicate from later runs.
 
-The next diagnostic compares the strict Runtime and a local-only inverse of `c11cf75` on equivalent restored synthetic state, with per-request replay, verification bytes and timing evidence. The pinned tests remain intact. The host directed subsequent rounds to restore the authenticated synthetic backup, with the restored clip count and qualification described in each result.
+The host directed subsequent rounds to restore the authenticated synthetic backup, with the restored clip count and qualification described in each result.
 
 **Plan deltas.**
 
@@ -144,3 +144,22 @@ The next diagnostic compares the strict Runtime and a local-only inverse of `c11
 - Plan 75 gets the separate 5.589 s delayed single-move response, the multi-command seed curve and the cold-opening CPU. Measure repeated verification separately from stored record size before deciding how much needs a new format.
 - Plan 76 gets a passive second-tab write following a primary action. Identify the outbox owner during recovery and retain a distinct simultaneous-writer clash witness.
 - Plan 18 gets the late-POST span and the 30.484 s partial opening affordance. Keep browser readiness, actor handoff and gesture-to-request timestamps separate.
+
+
+### C11 local development comparison
+
+The same authenticated synthetic v30 started both independent arms with 300 root clips, 300 media identities and ten shot targets. App `76c58ee3` was constant. The strict arm used Agent `da212f2a` and Runtime `712d9754`. The local inverse used Agent `007b6123` with regenerated pins to Runtime `0e1711a2`. Its only Runtime change was the local inverse of the `c11cf75` snapshot comparison. The inverse stayed off the plan branches.
+
+| Twelve-command SDK diagnostic | Strict | Local inverse |
+| --- | ---: | ---: |
+| SDK open | 151.817 s | 141.574 s |
+| SDK commit | 32.374 s | 33.029 s |
+| Runtime service wall | 23.139 s | 23.524 s |
+| Runtime request thread CPU | 22.873 s | 23.219 s |
+| Runtime process CPU | 22.977 s | 23.307 s |
+| RealmStore mutex acquisitions | 104 | 104 |
+| Total acquisition wall | 0.557 ms | 0.128 ms |
+| Accepted replay calls | 1 | 1 |
+| Memo clears | 0 | 0 |
+
+Both arms accepted exactly the twelve one-frame audio moves, preserved the full fixture identities and published one current v31 head. The canonical revision and digest matched, and the canonical response document was 253,434 bytes on each arm. Each instrumented replay observed 18,156,125 metadata bytes, 1,916,699 record bytes and 474,427 result bytes in the persisted JSON fields. Startup and SDK warm-up differed. This comparison did not reproduce the suspected replay invalidation spike and gives no basis to relax the guard. Both diagnostic stacks were stopped and removed. This local SDK batch does not count toward the editor saving rounds or opening targets.
