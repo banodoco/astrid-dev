@@ -81,12 +81,12 @@ class TestPlaywrightParserBoundaries(unittest.TestCase):
         f = self._report([{"status": "skipped", "expectedStatus": "failed", "results": []}])
         self.assertEqual(mod.parse_playwright_json(f)["tests/a.spec.ts › [<default>] › case"], "SKIP")
         audit = mod.parse_playwright_json_outcomes(f)["tests/a.spec.ts › [<default>] › case"][0]
-        self.assertEqual(audit, {"expected": "FAIL", "actual": "MISSING", "status": "PASS"})
+        self.assertEqual(audit, {"expected": "FAIL", "actual": "MISSING", "status": "SKIP"})
 
     def test_expected_status_skipped_is_retained_independently(self):
         f = self._report([{"status": "expected", "expectedStatus": "skipped", "results": [{"status": "skipped"}]}])
         audit = mod.parse_playwright_json_outcomes(f)["tests/a.spec.ts › [<default>] › case"][0]
-        self.assertEqual(audit, {"expected": "SKIP", "actual": "SKIP", "status": "PASS"})
+        self.assertEqual(audit, {"expected": "SKIP", "actual": "SKIP", "status": "SKIP"})
 
 
 class TestPublicationDiff(unittest.TestCase):
@@ -95,7 +95,7 @@ class TestPublicationDiff(unittest.TestCase):
             f = Path(p) / "pw.json"
             f.write_text(json.dumps({"suites": [{"title": "a.spec.ts", "file": "tests/a.spec.ts", "specs": [{"title": "known failure", "tests": [{"projectName": "chromium", "status": "expected", "expectedStatus": "failed", "results": [{"status": "failed"}]}]}]}]}))
             self.assertEqual(mod.parse_playwright_json_outcomes(f), {
-                "tests/a.spec.ts › [chromium] › known failure": [{"expected": "FAIL", "actual": "FAIL", "status": "PASS"}]
+                "tests/a.spec.ts › [chromium] › known failure": [{"expected": "FAIL", "actual": "FAIL", "status": "XFAIL"}]
             })
 
     def test_inherited_red_inventory_is_shrink_only_and_requires_real_baseline_red(self):
@@ -264,7 +264,7 @@ class TestPublicationDiff(unittest.TestCase):
             b.write_text("PASSED tests/b.py::test_new\nFAILED tests/b.py::test_bad - failure\n")
             records = {"agent": {"baseline": {"CI": {"jobs": [{"id": 1, "name": "unit shard 1", "conclusion": "success", "log": str(a)}]}}, "candidate": {"CI": {"jobs": [{"id": 2, "name": "unit shard 1", "conclusion": "success", "log": str(a)}, {"id": 3, "name": "unit shard 2", "conclusion": "failure", "log": str(b)}]}}}}
             rows, _, issues = mod.evaluate({}, records, Path(p), {})
-            self.assertEqual({r["id"] for r in rows if r["job"] == "unit shard 2"}, {"tests/b.py::test_new", "tests/b.py::test_bad"})
+            self.assertEqual({r["id"] for r in rows if r["job"] == "unit shard 2"}, {"[job]", "tests/b.py::test_new", "tests/b.py::test_bad"})
             self.assertTrue(any("test_bad" in issue and "BLOCKS" in issue for issue in issues))
 
     def test_progress_only_ids_are_compared(self):
@@ -328,7 +328,7 @@ class TestPublicationDiff(unittest.TestCase):
             result = mod.parse_playwright_json(f)
             self.assertIn("[<default>]", next(iter(result)))
             self.assertTrue(any("[default]" in key for key in result))
-            self.assertEqual({s for value in result.values() for s in (value if isinstance(value, list) else [value])}, {"FAIL"})
+            self.assertEqual({s for value in result.values() for s in (value if isinstance(value, list) else [value])}, {"FAIL", "XFAIL"})
 
     def test_duplicate_occurrence_comparison_is_order_independent(self):
         self.assertEqual(mod.multiset_diff(["PASS", "FAIL"], ["FAIL", "PASS"]), {})
@@ -432,7 +432,8 @@ PASSED tests/b.py::test_other
             job = {"name": "browser-boot", "status": "completed", "conclusion": "failure", "id": 20,
                    "run_attempt": 2, "steps": [{"name": "Install browsers", "conclusion": "failure"}]}
             prefix = "/VibeComfy/actions/runs/10/attempts/2"
-            receipts = {prefix: run, f"{prefix}/jobs?per_page=100&page=1": {"jobs": [job]}}
+            receipts = {"/VibeComfy/actions/runs/10": run, prefix: run,
+                        f"{prefix}/jobs?per_page=100&page=1": {"jobs": [job]}}
             with mock.patch.object(mod, "REPO", {"vibecomfy": "VibeComfy"}), mock.patch.object(
                     mod, "get_json", side_effect=receipts.__getitem__), mock.patch.object(
                     mod, "api", return_value=b"install failed\n") as logs:
@@ -453,7 +454,6 @@ PASSED tests/b.py::test_other
             log = root / "job.log"
             log.write_text("installation output\n")
             manifest, inventory, proposal = (root / name for name in ("manifest.json", "approved.json", "proposed.json"))
-            manifest.write_text("{}")
             base = {"name": "browser-boot", "id": 1, "attempt": 1, "conclusion": "failure",
                     "failed_steps": ["Install dependencies"], "log": str(log)}
             candidate = dict(base, id=2, attempt=2)
@@ -466,6 +466,14 @@ PASSED tests/b.py::test_other
                         for job in ("browser-boot", "installer")]
             current = dict(schema_version=1, sealed_prior=accepted, current=accepted[:1])
             inventory.write_text(json.dumps(current))
+            manifest.write_text(json.dumps({
+                "inherited_red_sealed_sha256": mod.sealed_prior_digest(current),
+                "setup_failure_ok": {f"{side}/vibecomfy/ci/browser-boot": "setup fixture"
+                                     for side in ("baseline", "candidate")},
+                "no_ids_expected": {f"{side}/vibecomfy/ci/{job}": "non-test fixture"
+                                    for side in ("baseline", "candidate")
+                                    for job in ("browser-boot", "installer")},
+            }))
             args = ["--manifest", str(manifest), "--inherited-red", str(inventory), "--out", str(root / "out")]
             with mock.patch.object(mod, "collect_runs", return_value=records), mock.patch.object(
                     mod, "check_canonical_baseline_diff", return_value=[]):
@@ -474,6 +482,7 @@ PASSED tests/b.py::test_other
                 proposed = json.loads(proposal.read_text())["reds"]
                 self.assertEqual([(row["classification"], row["attempt"]) for row in proposed],
                                  [("red-on-both", 2), ("R14-only", 2)])
+                records["vibecomfy"]["baseline"]["ci"]["jobs"].append(dict(skipped, id=4, attempt=1))
                 current["current"] = accepted
                 inventory.write_text(json.dumps(current))
                 self.assertEqual(mod.main(args), 0)

@@ -7,6 +7,10 @@
       "workflows": {
         "CI": 43760673752,
         "Lanes": 43760673730
+      },
+      "attempts": {
+        "CI": 1,
+        "Lanes": 1
       }
     },
     "app": {
@@ -16,18 +20,30 @@
         "Lanes": 43860030963,
         "Direct Journey": 44078954757,
         "E2E": 43860030918
+      },
+      "attempts": {
+        "Tests": 1,
+        "Lanes": 1,
+        "Direct Journey": 1,
+        "E2E": 1
       }
     },
     "runtime": {
       "sha": "6855dfa8df65cf8ae4c002b57134d6505493c17c",
       "workflows": {
         "CI": 43760268625
+      },
+      "attempts": {
+        "CI": 1
       }
     },
     "vibecomfy": {
       "sha": "dba38f8644c46f652376f2cd5112ea161e40f09b",
       "workflows": {
         "ci": 43868530915
+      },
+      "attempts": {
+        "ci": 1
       }
     }
   },
@@ -35,6 +51,10 @@
     "agent": {
       "sha": null,
       "workflows": {
+        "CI": null,
+        "Lanes": null
+      },
+      "attempts": {
         "CI": null,
         "Lanes": null
       }
@@ -46,11 +66,20 @@
         "Lanes": null,
         "Direct Journey": null,
         "E2E": null
+      },
+      "attempts": {
+        "Tests": null,
+        "Lanes": null,
+        "Direct Journey": null,
+        "E2E": null
       }
     },
     "runtime": {
       "sha": null,
       "workflows": {
+        "CI": null
+      },
+      "attempts": {
         "CI": null
       }
     },
@@ -58,10 +87,17 @@
       "sha": null,
       "workflows": {
         "ci": null
+      },
+      "attempts": {
+        "ci": null
       }
     }
   },
   "job_renames": {},
   "test_id_renames": {},
-  "dispositions": {}
+  "dispositions": {},
+  "native_reports": {},
+  "local_evidence_exceptions": {},
+  "setup_failure_ok": {},
+  "no_ids_expected": {}
 }
