@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 import re
+import os
 
 from document_structure import frontmatter, headings, section
 
@@ -53,6 +54,8 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
         path = root / path
     if path.is_symlink() or not path.is_file():
         raise ValueError("source must be a regular Markdown file, not a symlink")
+    # Resolve the source as well as root: /var and /private/var alias on macOS.
+    path = path.resolve()
     try:
         relative = path.relative_to(root / "agent")
     except ValueError as exc:
@@ -74,6 +77,9 @@ def parse_document(root: Path, path: Path) -> AgentDocument:
     flag = metadata.get("skill", "false")
     if flag not in ("true", "false"):
         raise ValueError("skill must be the literal boolean true or false")
+    if flag == "true" and any(part in (".", "..") or any(c in part for c in "\\\r\n")
+                              for part in relative.parts[:-1]):
+        raise ValueError("skill source directory cannot be represented by an ownership marker")
     if flag == "true" and not _NAME.fullmatch(path.stem):
         raise ValueError("skill filename must be a lowercase kebab-case name")
 
@@ -101,13 +107,28 @@ def discover_documents(root: Path) -> tuple[AgentDocument, ...]:
     """Discover all Markdown sources with no manually maintained package list."""
     root = Path(root).resolve()
     agent_root = root / "agent"
+    # A dangling directory symlink has exists() == False; refuse it before
+    # treating an absent agent source tree as an empty, removable package set.
+    if agent_root.is_symlink():
+        raise ValueError("agent/ must be a real directory")
     if not agent_root.exists():
         return ()
-    if agent_root.is_symlink() or not agent_root.is_dir():
+    if not agent_root.is_dir():
         raise ValueError("agent/ must be a real directory")
     documents: list[AgentDocument] = []
     names: dict[str, Path] = {}
-    paths = sorted(agent_root.rglob("*.md"))
+    # Refuse incomplete inventories before deriving stale package names.
+    def traversal_error(error: OSError) -> None:
+        raise error
+
+    paths: list[Path] = []
+    for directory, dirs, files in os.walk(agent_root, followlinks=False, onerror=traversal_error):
+        for name in dirs + files:
+            entry = Path(directory) / name
+            if entry.is_symlink() and (name in dirs or not entry.exists()):
+                raise ValueError(f"source tree contains a directory or dangling symlink: {entry}")
+        paths.extend(Path(directory) / name for name in files if name.endswith(".md"))
+    paths.sort()
     for path in paths:
         document = parse_document(root, path)
         name = document.skill_name
