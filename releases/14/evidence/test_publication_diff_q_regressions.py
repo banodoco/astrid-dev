@@ -14,7 +14,7 @@ JOB_KEY = ("agent", "CI", "unit shard 1")
 
 
 class TestProbeRegressions(unittest.TestCase):
-    def evaluate_pair(self, baseline_log, candidate_log, approved, *, candidate_steps=None, manifest=None):
+    def evaluate_pair(self, baseline_log, candidate_log, approved, *, candidate_steps=None, manifest=None, step_names=None):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             jobs = []
@@ -24,7 +24,7 @@ class TestProbeRegressions(unittest.TestCase):
                 jobs.append({"name": "unit shard 1", "id": index, "attempt": 1,
                              "conclusion": "failure", "log": str(path),
                              "failed_steps": (["Run tests"] if index == 1 else candidate_steps or ["Run tests"]),
-                             "step_names": ["Run tests"], "log_error": None})
+                             "step_names": step_names or ["Run tests"], "log_error": None})
             records = {repo: {side: {} for side in ("baseline", "candidate")} for repo in mod.REPO}
             for side, run_id, job in (("baseline", 1, jobs[0]), ("candidate", 2, jobs[1])):
                 records["agent"][side]["CI"] = {
@@ -64,6 +64,14 @@ class TestProbeRegressions(unittest.TestCase):
         log = SUMMARY + "FAILED tests/a.py::t1 - old\nPASSED tests/a.py::t3\n== 1 failed, 1 passed in 1s ==\n"
         _, problems = self.evaluate_pair(log, log + "##[group]Run coverage check\nERROR: coverage below threshold\n", approved, candidate_steps=["Run tests", "Run coverage check"])
         self.assertTrue(any("coverage" in problem.lower() or "step" in problem.lower() for problem in problems), problems)
+
+    def test_r1_step_that_passed_on_r13_and_fails_on_r14_blocks(self):
+        approved = Counter({JOB_KEY + ("tests/a.py::t1",): 1, JOB_KEY + ("[job]",): 1})
+        log = SUMMARY + "FAILED tests/a.py::t1 - old\nPASSED tests/a.py::t3\n== 1 failed, 1 passed in 1s ==\n"
+        _, problems = self.evaluate_pair(log, log, approved,
+                                         candidate_steps=["Run tests", "Coverage gate"],
+                                         step_names=["Run tests", "Coverage gate"])
+        self.assertTrue(any("Coverage gate" in problem for problem in problems), problems)
 
     def test_new_step_requires_exact_nonempty_exception(self):
         approved = Counter({JOB_KEY + ("tests/a.py::t1",): 1, JOB_KEY + ("[job]",): 1})

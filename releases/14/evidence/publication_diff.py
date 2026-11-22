@@ -1017,11 +1017,11 @@ def evaluate(manifest: dict, records: dict, out: Path, vitest: dict, playwright:
             links.extend((None, job) for _, job in sorted(new.items()))
             for before, after in links:
                 if after:
-                    old_names = set((before or {}).get("step_names", (before or {}).get("failed_steps", [])))
+                    old_names = set((before or {}).get("failed_steps", []))
                     for step in after.get("failed_steps", []):
                         key = f"candidate/{product}/{workflow}/{after['name']}/{step}"
                         if step not in old_names and not (key in failed_step_exceptions and failed_step_exceptions[key].strip()):
-                            problems.append(f"{key}: failed R14 step absent from all R13 counterpart step names; exact reasoned failed_step_exceptions entry required; BLOCKS publish")
+                            problems.append(f"{key}: failed R14 step did not fail on the R13 counterpart; exact reasoned failed_step_exceptions entry required; BLOCKS publish")
                 compared, job = compare_job(product, workflow, before, after, id_aliases, dispositions, problems)
                 rows.extend(compared)
                 jobs.append(job)
