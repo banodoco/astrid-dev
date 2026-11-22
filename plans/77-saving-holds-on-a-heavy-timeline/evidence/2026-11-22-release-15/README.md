@@ -70,3 +70,9 @@ The C arm reused the same verified 355-file stock compiled artifact inventory as
 `runtime-a-b-c-comparison.md` preserves the A/B/C comparison and its limits, now including the B repeat. B repeat cold reached writable and verified the original head; its same-process opening stopped at 600.048 s without a terminal head after two history attempts with no completed reply. Both openings matched the same Runtime PID and birth identity. This does not establish reliable warm reuse or identify a memo invalidation branch. C warm reached writable in 170.095 s. No A, B, or C trial measured a gesture. Current App and Agent pins are listed with the comparison.
 
 The [replay memo audit](runtime-b-memo-audit.md) traces the nine Runtime changes and the HTTP timeout. It records why the disposable nine-commit combination stays out of Round 7 and its landing sequence.
+
+## First-cut installed comparison
+
+[The legal-save record](round7-legal-save.md) preserves measured intervals, exact accepted result and sample proportions from the repaired compiled candidate. The nonblocking sampling observations are inclusive and overlap. The stock accepted response, browser confirmation and public postflight remain separate observations.
+
+[The compatibility receipt](round7-compatibility.json) records the verified scoped four App pairings and four SDK source-overlay pairings on separate installs of the signed 10-clip fixture. It excludes incidental process, port, local path and realm values. The host retains original source receipts and exact SHA-256 values are included. The private native create, recovery and stale-reviewed restore probe is a separate qualification.

@@ -392,7 +392,7 @@ The nine Runtime commits used in B are out of the Round 7 cut and any earlier la
 
 ## Round 7 — current-release opening comparison
 
-On 22 November, compiled App stock `e3dbad64`, Agent `8807f820` and literal installed Runtime `3c28211f` (the same tree as release base `23310dc8`) used an independent authenticated 300-clip v30 restore. The first-cut source tuple is App `f98073ec`, Agent `b7f0e96a` and Runtime `8dfa96ac`. Local test-only pins produced App `e45dd659` and Agent `85278e6f`. The separately restored candidate starts from the same signed bytes. Each successful open independently verified one current head, all 300 clips and ten shot occurrences, with zero timeline commit POSTs.
+On 22 November, compiled App stock `e3dbad64`, Agent `8807f820` and literal installed Runtime `3c28211f` (the same tree as release base `23310dc8`) used an independent authenticated 300-clip v30 restore. The original opening trial source tuple was App `f98073ec`, Agent `b7f0e96a` and Runtime `8dfa96ac`. Local test-only pins produced App `e45dd659` and Agent `85278e6f`. The separately restored candidate starts from the same signed bytes. Each successful open independently verified one current head, all 300 clips and ten shot occurrences, with zero timeline commit POSTs.
 
 | Measured interval | Stock | First cut |
 | --- | ---: | ---: |
@@ -403,17 +403,17 @@ On 22 November, compiled App stock `e3dbad64`, Agent `8807f820` and literal inst
 | Runtime CPU in the reopen interval | 6.43 CPU s | 1.53 CPU s |
 | Native adopt wall time to the same final-claim timeout | about 463.7 s | 507.883 s |
 
-The first cut issued two successful scoped verified-head reads and no scoped history page before writable. The restore and native adopt include offline work beyond the live Runtime CPU clock. Both warmed independently verified the exact original head. The first save attempts stopped at recorder guards with zero observed commit POSTs. Three legal save segments remain unobserved. A container interruption during a separate stock restore or adopt also yielded no browser or save result.
+The first cut issued two successful scoped verified-head reads and no scoped history page before writable. The restore and native adopt include offline work beyond the live Runtime CPU clock. Both warmed independently verified the exact original head. The initial save attempts stopped at recorder guards with zero observed commit POSTs. The separate stock and repaired-candidate legal repeats are recorded below. A container interruption during a separate stock restore or adopt also yielded no browser or save result.
 
 The first cut still verifies the selected current publication and canonical closure. Explicit history retains per-row verification, and doctor retains full history checks. Opening can postpone finding integrity damage limited to an unrelated historical row. The reviewer held promotion for two App guards. Reload and proof of the sole bootstrap publication are required only along native initialization or its interrupted-create recovery, and restore must submit the exact revision and publication the user reviewed. There is no Release 15 landing request from this comparison. [Opening integrity scope](evidence/2026-11-22-release-15/round7-integrity.md).
 
-The owner accepted the opening and later verification trade on 22 November 2026: “Yes, thats okay.” That applies to damage confined to old, unused history. The recommended background check is a separate follow-up after the App safeguards, save measurements and isolated verifier memo. The owner has not approved landing.
+The owner accepted the opening and later verification trade on 22 November 2026: “Yes, thats okay.” That applies to damage confined to old, unused history. The recommended background check is a separate follow-up after the App safeguards, save measurements and isolated verifier memo. The owner later authorized the lane to land after the Release 15 Lead confirms the full gate. The final qualified statement still needs the owner’s acceptance.
 
-App [`cfb894d21`](https://github.com/banodoco/astrid-app/commit/cfb894d21f7372376451dc70fecceea97db589ac) repairs the bootstrap and restore guards. The tests failed first on the earlier branch. All 386 existing IDs in the matched six App files passed on both stock and the repair, and 24 additional IDs passed on the repair. The guarded-save test also failed as intended on an exact stock comparison when its history endpoint was unavailable. The repaired App's installed checks are still pending.
+App [`cfb894d21`](https://github.com/banodoco/astrid-app/commit/cfb894d21f7372376451dc70fecceea97db589ac) repairs the bootstrap and restore guards. The tests failed first on the earlier branch. All 386 existing IDs in the matched six App files passed on both stock and the repair, and 24 additional IDs passed on the repair. The guarded-save test also failed as intended on an exact stock comparison when its history endpoint was unavailable. The repaired App's installed save and separate 10-clip compatibility evidence are recorded below.
 
 **Plan deltas.**
 
-- Plan 63 gets the distinction between a writable indicator and a proved save. The three save segments are still missing.
+- Plan 63 gets the measured writable-to-save distinction and the verified legal-save intervals below.
 - Plan 75 gets the remaining startup CPU and the much smaller verified-current-head browser interval. The verifier memo is measured separately.
 - Plan 76 still needs the simultaneous-writer round. The focused Runtime HTTP test covers a competing commit and refusal of a stale reply. This measurement used one editor.
 - Plan 18 gets the first full writable and same-process reopen timings, separate from adoption and runtime verification.
@@ -423,3 +423,18 @@ App [`cfb894d21`](https://github.com/banodoco/astrid-app/commit/cfb894d21f737237
 A separate signed v30 restore opened cold in 308.306 s. Its next fresh browser on the same Runtime opened in 349.084 s and used 332.58 Runtime CPU s during that interval. Earlier stock reopens were 13.744 s, 14.317 s and 14.517 s. The repeat's first two scoped history requests each failed at about 60 s. The later two finished before writable.
 
 The trusted move of `fixture-video-0190` stayed on V6 in the verified free interval. It sent one guarded POST 10.7595 s after release. The HTTP 200 acceptance arrived 32.5641 s after POST with matching original and accepted head pairs and receipt `txn-34fd283db7744d8c8207c3ccdd8c9d08`. The browser recorder did not observe Saved, and the separate public postflight did not return a verified head. The first two intervals are measured. The response-to-Saved interval remains open. The rule for a confirmed save continues to require the exact public head and document. The tested installation shut down safely.
+
+
+### Repaired candidate legal move
+
+The installed App `ae3e0db03` contains source `cfb894d21` and generated trial pins for Agent `85278e6f` and Runtime `8dfa96ac`. The compiled browser reached full writable cold in 4.615 s and on a fresh profile with the same Runtime in 37.776 s. The cold Runtime used 293.31 CPU s before navigation and 1.58 CPU s inside the browser interval. This run and the earlier 4.180 s candidate reopen both count as qualified observations and show substantial reopen variance. All timings used the separately restored signed 300-clip v30, one original active head and the complete clip and occurrence inventories.
+
+The same legal V6 move sent one guarded POST 1.515 s from release. The exact HTTP 200 acceptance followed 36.125 s later. Saved followed the response in 0.681 s, for 38.321 s total. The confirmed save preserved one active head, all 300 clips and ten occurrences. The authenticated postflight verified the exact accepted receipt and expected one-clip change. Accepted-history verification occupied 12.06 sampled seconds of the main request thread, while current acceptance validation occupied 2.32. The first cut leaves this Runtime save cost. [Save intervals and profile](evidence/2026-11-22-release-15/round7-legal-save.md) [Opening integrity](evidence/2026-11-22-release-15/round7-integrity.md)
+
+### Ten-clip compatibility control
+
+The signed 10-clip scope provides compatibility and private App safety evidence. The 300-clip data above remains the timing fixture. Against the stock Runtime, the stock and repaired compiled App both reached full writable following HTTP 200 `GET /commits`. Each observed one unchanged authenticated public head, all ten clips and no shot occurrences, with zero commit POSTs. Both exact SDK source overlays also used the existing history read against the officially installed stock Native Runtime. This checks client source behavior; individual SDK packaging was outside this probe.
+
+Two preliminary ancillary probes on the heavy candidate were unqualified. One intercepted the read-only `POST /inspect`; the other collided with the preview launcher’s updater ownership. The signed small control allows only the exact read-only inspect POST and uses sequential primary preview and source launchers.
+
+Against the candidate Runtime, the repaired compiled App reached writable through HTTP 200 `GET /verified-head` with no history GET before writable. The old compiled App reached writable through HTTP 200 `GET /commits`. Both matched the signed public head and inventory, sent zero commit POSTs and removed their profiles. The stock SDK overlay used `list_timeline_commits` and the current SDK overlay used `get_project_timeline_verified_head`; both verified the same scope and closure. The combined controller stopped when the subsequent source-launch preflight could not bind a port. Its owned root and profiles closed. The compatibility result is recorded independently of the private source probe. [Four App pairs and four SDK overlays](evidence/2026-11-22-release-15/round7-compatibility.json)

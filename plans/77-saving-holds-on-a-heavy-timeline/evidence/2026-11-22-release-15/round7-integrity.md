@@ -16,3 +16,5 @@ History and Undo/Redo load verified pages on demand. Restore and writes check th
 The named baseline, acceptance, authenticated-history and input tests outside the focused inventory describe existing coverage. The exact paired and new route results are recorded separately.
 
 On 22 November 2026 the owner accepted detecting damage confined to unused old history later. Her exact reply was “Yes, thats okay.” The recommendation she accepted included a background full-history check. That check is a separate follow-up. Landing still requires installed proof and the owner's go.
+
+On the signed 300-clip fixture the repaired candidate confirmed a legal save in 38.321 seconds, including 36.125 seconds in the Runtime commit request. Stock took 43.324 seconds from releasing the same move to the accepted HTTP response. Stock's browser confirmation and independent public postflight were unobserved. The candidate's faster open still leaves a slow save. The separate remembered-verification follow-up will be reviewed for write integrity.
