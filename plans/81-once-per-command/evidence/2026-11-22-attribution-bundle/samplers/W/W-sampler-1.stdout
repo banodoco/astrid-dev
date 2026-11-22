@@ -1,0 +1,199 @@
+py-spy> Sampling process 100 times a second. Press Control-C to exit.
+
+{
+  "capability_id": "vibecomfy.run",
+  "capability_type": "executor",
+  "error": null,
+  "executor_version": "b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+  "kernel_attempt_id": "",
+  "kernel_run_id": "fa58233b537944869ae1c3384398930c",
+  "kernel_task_id": "72da6aaac2804c10aa293b8b457c3e82",
+  "manifest_path": null,
+  "native_kind": "external",
+  "ok": true,
+  "outputs": {},
+  "raw_result": {
+    "executor_version": "b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+    "kernel_attempt_id": "",
+    "kernel_run_id": "fa58233b537944869ae1c3384398930c",
+    "kernel_task_id": "72da6aaac2804c10aa293b8b457c3e82",
+    "ok": true,
+    "run_id": "fa58233b537944869ae1c3384398930c",
+    "state": "queued",
+    "task": {
+      "attempt_id": null,
+      "capability_digest": "sha256:b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+      "capability_id": "vibecomfy.run",
+      "created_at": "2026-11-22T11:17:37.355+00:00",
+      "expected_effect": {
+        "effect_type": "generation.publish_v1",
+        "payload": {
+          "generation_type": "vibecomfy.run",
+          "groups": [
+            {
+              "group_key": "main",
+              "selectors": [
+                {
+                  "ordinal": 0,
+                  "output_port": "vibecomfy_run",
+                  "required": true,
+                  "selector": "main-0",
+                  "variant_key": "original"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "mode": "t2i",
+            "model": "workflow"
+          },
+          "modality": "image",
+          "partial_success_policy": "reject",
+          "version": 1
+        },
+        "target_id": "368c9f3a294245c9a76028539820f1d9"
+      },
+      "generation_intent": {
+        "groups": [
+          {
+            "group_key": "main",
+            "selectors": [
+              {
+                "ordinal": 0,
+                "required": true,
+                "selector": "main-0",
+                "variant_key": "original"
+              }
+            ]
+          }
+        ],
+        "metadata": {
+          "mode": "t2i",
+          "model": "workflow"
+        },
+        "modality": "image",
+        "partial_success_policy": "reject",
+        "version": 1
+      },
+      "idempotency_key": "d8fa34595449406ea53a27daa6c596a7",
+      "input_object_ids": [
+        "sha256:2dbf2928d53673294dd3d5b126c3b3fc93281cfcc35ef3ea51a0ced2b122e631",
+        "sha256:33f748f204415122e3ef23be8c6f6e28b402dc20bf88afabb99e5c0efbd3ad83",
+        "sha256:3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403"
+      ],
+      "project_id": "368c9f3a294245c9a76028539820f1d9",
+      "run_id": "fa58233b537944869ae1c3384398930c",
+      "runtime_epoch": 1,
+      "schema_version": "1",
+      "spec": {
+        "capability_digest": "sha256:b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+        "input_object_ids": [
+          "sha256:2dbf2928d53673294dd3d5b126c3b3fc93281cfcc35ef3ea51a0ced2b122e631",
+          "sha256:33f748f204415122e3ef23be8c6f6e28b402dc20bf88afabb99e5c0efbd3ad83",
+          "sha256:3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403"
+        ],
+        "schema_version": "1",
+        "spec": {
+          "authority_context": {
+            "executor_version": "b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1"
+          },
+          "capability_id": "vibecomfy.run",
+          "extra_pack_roots": [],
+          "input_digests": [
+            {
+              "digest": "sha256:2dbf2928d53673294dd3d5b126c3b3fc93281cfcc35ef3ea51a0ced2b122e631",
+              "name": "companion"
+            },
+            {
+              "digest": "sha256:33f748f204415122e3ef23be8c6f6e28b402dc20bf88afabb99e5c0efbd3ad83",
+              "name": "python"
+            },
+            {
+              "digest": "sha256:3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403",
+              "name": "source"
+            }
+          ],
+          "inputs": {
+            "comfy_url": "<local-redacted>",
+            "companion": {
+              "bytes": 7724,
+              "digest": "sha256:2dbf2928d53673294dd3d5b126c3b3fc93281cfcc35ef3ea51a0ced2b122e631",
+              "filename": "workflow.vibe.json",
+              "sha256": "2dbf2928d53673294dd3d5b126c3b3fc93281cfcc35ef3ea51a0ced2b122e631"
+            },
+            "python": {
+              "bytes": 9275,
+              "digest": "sha256:33f748f204415122e3ef23be8c6f6e28b402dc20bf88afabb99e5c0efbd3ad83",
+              "filename": "workflow.py",
+              "sha256": "33f748f204415122e3ef23be8c6f6e28b402dc20bf88afabb99e5c0efbd3ad83"
+            },
+            "source": {
+              "bytes": 80196,
+              "digest": "sha256:3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403",
+              "filename": "source.json",
+              "sha256": "3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403"
+            },
+            "workflow_inputs": "{\"prompt\": \"A red cube on a white tabletop. W-sampler-1\", \"seed\": 12345}"
+          },
+          "invocation_preflight": {
+            "api_digest": "sha256:8fdc8ed5304b4cef43dac5ae4018e4c360c048b3bd05aaaf14b037b396aab091",
+            "input_manifest": [
+              "sha256:2dbf2928d53673294dd3d5b126c3b3fc93281cfcc35ef3ea51a0ced2b122e631",
+              "sha256:33f748f204415122e3ef23be8c6f6e28b402dc20bf88afabb99e5c0efbd3ad83",
+              "sha256:3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403"
+            ],
+            "members": {
+              "companion": {
+                "digest": "sha256:2dbf2928d53673294dd3d5b126c3b3fc93281cfcc35ef3ea51a0ced2b122e631",
+                "filename": "workflow.vibe.json"
+              },
+              "python": {
+                "digest": "sha256:33f748f204415122e3ef23be8c6f6e28b402dc20bf88afabb99e5c0efbd3ad83",
+                "filename": "workflow.py"
+              },
+              "source": {
+                "digest": "sha256:3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403",
+                "filename": "source.json"
+              }
+            },
+            "phase": "submission",
+            "reachable_nodes": [
+              "1",
+              "10",
+              "11",
+              "12",
+              "13",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9"
+            ],
+            "resolved_workflow_inputs": {},
+            "revision_id": "c6a84c598998ebab92deff719e17edbba47b895fb84ee4104a90e78d3101b578",
+            "run_inputs": {},
+            "schema_version": 1,
+            "semantic_digest": "c67d6654d2f88300161cefa9c5b0fd1ea45a45c180139d1f38934f9de3ad3187",
+            "workflow_content_digest": "sha256:29b6475645f8fd9e021ab77478e2a5f8184a20bf8160a43649ce233aa5d90daa",
+            "workflow_identity": "image/qwen_image_2_1_turbo"
+          },
+          "kind": "executor",
+          "outputs": {}
+        }
+      },
+      "state": "queued",
+      "task_id": "72da6aaac2804c10aa293b8b457c3e82",
+      "updated_at": "2026-11-22T11:17:37.355+00:00",
+      "version": 1
+    }
+  },
+  "run_id": "fa58233b537944869ae1c3384398930c",
+  "run_root": null
+}
+
+py-spy> Stopped sampling because process exited
+py-spy> Wrote speedscope file to '/root/codex/plan-81m/run/a4-sampler-W-retry/W-sampler-1.speedscope.json'. Samples: 1348 Errors: 0
+py-spy> Visit https://www.speedscope.app/ to view

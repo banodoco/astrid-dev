@@ -1,0 +1,194 @@
+{
+  "capability_id": "vibecomfy.run",
+  "capability_type": "executor",
+  "error": null,
+  "executor_version": "b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+  "kernel_attempt_id": "",
+  "kernel_run_id": "653887df152147ec8808195eec151ad9",
+  "kernel_task_id": "3dad97a4830841198aa548f71b49dd6f",
+  "manifest_path": null,
+  "native_kind": "external",
+  "ok": true,
+  "open_url": "https://astrid.haus/tools/video-editor?project=1d3395e3cdd04e34ab63ee01b024f0e7",
+  "outputs": {},
+  "raw_result": {
+    "executor_version": "b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+    "kernel_attempt_id": "",
+    "kernel_run_id": "653887df152147ec8808195eec151ad9",
+    "kernel_task_id": "3dad97a4830841198aa548f71b49dd6f",
+    "ok": true,
+    "run_id": "653887df152147ec8808195eec151ad9",
+    "state": "queued",
+    "task": {
+      "attempt_id": null,
+      "capability_digest": "sha256:b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+      "capability_id": "vibecomfy.run",
+      "created_at": "2026-11-22T11:14:47.487+00:00",
+      "expected_effect": {
+        "effect_type": "generation.publish_v1",
+        "payload": {
+          "generation_type": "vibecomfy.run",
+          "groups": [
+            {
+              "group_key": "main",
+              "selectors": [
+                {
+                  "ordinal": 0,
+                  "output_port": "vibecomfy_run",
+                  "required": true,
+                  "selector": "main-0",
+                  "variant_key": "original"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "mode": "t2i",
+            "model": "qwen-image-2.1-turbo"
+          },
+          "modality": "image",
+          "partial_success_policy": "reject",
+          "version": 1
+        },
+        "target_id": "1d3395e3cdd04e34ab63ee01b024f0e7"
+      },
+      "generation_intent": {
+        "groups": [
+          {
+            "group_key": "main",
+            "selectors": [
+              {
+                "ordinal": 0,
+                "required": true,
+                "selector": "main-0",
+                "variant_key": "original"
+              }
+            ]
+          }
+        ],
+        "metadata": {
+          "mode": "t2i",
+          "model": "qwen-image-2.1-turbo"
+        },
+        "modality": "image",
+        "partial_success_policy": "reject",
+        "version": 1
+      },
+      "idempotency_key": "810889f612854692af94791ee8fc2ff4",
+      "input_object_ids": [
+        "sha256:2681be6d911fee60c7dc4d1a5db38df31c2455dbcc5fe30dfea4e31b870f8587",
+        "sha256:38619f12ed94d488302dd517980065603bba4afe3534523a2d0c3adacd2a4f7e",
+        "sha256:bad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7"
+      ],
+      "project_id": "1d3395e3cdd04e34ab63ee01b024f0e7",
+      "run_id": "653887df152147ec8808195eec151ad9",
+      "runtime_epoch": 1,
+      "schema_version": "1",
+      "spec": {
+        "capability_digest": "sha256:b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1",
+        "input_object_ids": [
+          "sha256:2681be6d911fee60c7dc4d1a5db38df31c2455dbcc5fe30dfea4e31b870f8587",
+          "sha256:38619f12ed94d488302dd517980065603bba4afe3534523a2d0c3adacd2a4f7e",
+          "sha256:bad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7"
+        ],
+        "schema_version": "1",
+        "spec": {
+          "authority_context": {
+            "executor_version": "b7a48cadfbf80f15baf5d008f1cdb3f87e19a8598496bbcfd7e57d85ffda79d1"
+          },
+          "capability_id": "vibecomfy.run",
+          "extra_pack_roots": [],
+          "input_digests": [
+            {
+              "digest": "sha256:2681be6d911fee60c7dc4d1a5db38df31c2455dbcc5fe30dfea4e31b870f8587",
+              "name": "companion"
+            },
+            {
+              "digest": "sha256:38619f12ed94d488302dd517980065603bba4afe3534523a2d0c3adacd2a4f7e",
+              "name": "python"
+            },
+            {
+              "digest": "sha256:bad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7",
+              "name": "source"
+            }
+          ],
+          "inputs": {
+            "comfy_url": "<local-redacted>",
+            "companion": {
+              "bytes": 7724,
+              "digest": "sha256:2681be6d911fee60c7dc4d1a5db38df31c2455dbcc5fe30dfea4e31b870f8587",
+              "filename": "workflow.vibe.json",
+              "sha256": "2681be6d911fee60c7dc4d1a5db38df31c2455dbcc5fe30dfea4e31b870f8587"
+            },
+            "python": {
+              "bytes": 9276,
+              "digest": "sha256:38619f12ed94d488302dd517980065603bba4afe3534523a2d0c3adacd2a4f7e",
+              "filename": "workflow.py",
+              "sha256": "38619f12ed94d488302dd517980065603bba4afe3534523a2d0c3adacd2a4f7e"
+            },
+            "source": {
+              "bytes": 11105,
+              "digest": "sha256:bad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7",
+              "filename": "qwen_image_2_1_turbo.py",
+              "sha256": "bad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7"
+            },
+            "workflow_inputs": "{\"prompt\": \"A red cube on a white tabletop. I-cprofile-1\", \"seed\": 12345}"
+          },
+          "invocation_preflight": {
+            "api_digest": "sha256:c0e65b729c2857ce8325278c88cfc29ead8c60d69e0a774745a9f52a09da6c90",
+            "input_manifest": [
+              "sha256:2681be6d911fee60c7dc4d1a5db38df31c2455dbcc5fe30dfea4e31b870f8587",
+              "sha256:38619f12ed94d488302dd517980065603bba4afe3534523a2d0c3adacd2a4f7e",
+              "sha256:bad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7"
+            ],
+            "members": {
+              "companion": {
+                "digest": "sha256:2681be6d911fee60c7dc4d1a5db38df31c2455dbcc5fe30dfea4e31b870f8587",
+                "filename": "workflow.vibe.json"
+              },
+              "python": {
+                "digest": "sha256:38619f12ed94d488302dd517980065603bba4afe3534523a2d0c3adacd2a4f7e",
+                "filename": "workflow.py"
+              },
+              "source": {
+                "digest": "sha256:bad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7",
+                "filename": "qwen_image_2_1_turbo.py"
+              }
+            },
+            "phase": "submission",
+            "reachable_nodes": [
+              "1",
+              "10",
+              "11",
+              "12",
+              "13",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9"
+            ],
+            "resolved_workflow_inputs": {},
+            "revision_id": "7ba51b07a289af580cfc6fe0473f0ab6aab3ca517cd0f832492d57143e3d183f",
+            "run_inputs": {},
+            "schema_version": 1,
+            "semantic_digest": "a2fa853d658188451f362f20f4b7c2c5751cc4b5475d3aff2507ce90fe62879f",
+            "workflow_content_digest": "sha256:ebaf514aa8e7f15446f2d7402e1291f6594fd6c4a91c7c81154c49ccf887fc1d",
+            "workflow_identity": "image/qwen_image_2_1_turbo"
+          },
+          "kind": "executor",
+          "outputs": {}
+        }
+      },
+      "state": "queued",
+      "task_id": "3dad97a4830841198aa548f71b49dd6f",
+      "updated_at": "2026-11-22T11:14:47.487+00:00",
+      "version": 1
+    }
+  },
+  "run_id": "653887df152147ec8808195eec151ad9",
+  "run_root": null
+}

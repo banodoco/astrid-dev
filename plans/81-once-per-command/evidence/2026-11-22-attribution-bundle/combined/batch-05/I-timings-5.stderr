@@ -1,0 +1,51 @@
+in-process Runtime acquisition lock: 0.000s
+Runtime acquisition lock: 0.001s
+Runtime launcher connection: 1.158s
+pack host source identity: 0.166s
+pack host readiness: 0.009s
+pack host lifecycle lock: 0.000s
+pack host attachment: 0.395s
+Runtime GET /v1/health: 0.007s
+Runtime POST /v1/handshake: 0.009s
+pack discovery: 0.993s
+pack discovery: 0.104s
+model registry: 0.072s
+Runtime GET /v1/app-state/user/generation: 0.008s
+pack discovery: 0.129s
+Runtime GET /v1/app-state/user/generation: 0.011s
+pack discovery: 0.116s
+pack discovery: 0.006s
+entry discovery: 0.005s
+pack discovery: 0.130s
+pack discovery: 0.131s
+pack discovery: 0.131s
+pack discovery: 0.130s
+pack discovery: 0.113s
+pack discovery: 0.102s
+Runtime GET /v1/app-state/user/generation: 0.007s
+pack discovery: 0.101s
+target check: 0.006s
+target check: 0.000s
+pack discovery: 0.101s
+pack discovery: 0.115s
+pack discovery: 0.110s
+Runtime POST /v1/projects/200b4f234945412da1a5deb49ab39d7d/objects: 0.013s
+workflow build: 0.752s
+Runtime POST /v1/projects/200b4f234945412da1a5deb49ab39d7d/objects: 0.012s
+Runtime POST /v1/projects/200b4f234945412da1a5deb49ab39d7d/objects: 0.013s
+pack discovery: 0.087s
+pack discovery: 0.084s
+pack discovery: 0.092s
+Runtime GET /v1/objects/sha256%3A50377bb153ab509f432a946c9123a43825c5e535a6b80840ae25ea6018f17b92: 0.007s
+Runtime GET /v1/objects/sha256%3Aed36d1e06405f294140d58fe3e37424f0199d4441a037d8a01a36fda6502f496: 0.008s
+Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7: 0.007s
+Runtime GET /v1/capabilities: 0.012s
+Runtime GET /v1/projects/200b4f234945412da1a5deb49ab39d7d: 0.007s
+Runtime GET /v1/objects/sha256%3A50377bb153ab509f432a946c9123a43825c5e535a6b80840ae25ea6018f17b92: 0.008s
+Runtime GET /v1/objects/sha256%3Aed36d1e06405f294140d58fe3e37424f0199d4441a037d8a01a36fda6502f496: 0.006s
+Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7: 0.006s
+Runtime GET /v1/objects/sha256%3A50377bb153ab509f432a946c9123a43825c5e535a6b80840ae25ea6018f17b92: 0.009s
+Runtime GET /v1/objects/sha256%3Aed36d1e06405f294140d58fe3e37424f0199d4441a037d8a01a36fda6502f496: 0.006s
+Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7: 0.006s
+Runtime POST /v1/tasks: 0.013s
+other command work: 6.439s

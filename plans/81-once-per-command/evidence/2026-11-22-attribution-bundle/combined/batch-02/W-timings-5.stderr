@@ -1,0 +1,52 @@
+in-process Runtime acquisition lock: 0.000s
+Runtime acquisition lock: 0.001s
+Runtime launcher connection: 1.104s
+pack host source identity: 0.150s
+pack host readiness: 0.010s
+pack host lifecycle lock: 0.000s
+pack host attachment: 0.356s
+Runtime GET /v1/health: 0.007s
+Runtime POST /v1/handshake: 0.007s
+pack discovery: 0.743s
+Runtime POST /v1/projects/de251aa5b7f8466aae6d95a946dea751/objects: 0.010s
+in-process Runtime acquisition lock: 0.000s
+Runtime acquisition lock: 0.000s
+Runtime launcher connection: 0.949s
+pack host source identity: 0.130s
+pack host readiness: 0.009s
+pack host lifecycle lock: 0.000s
+pack host attachment: 0.208s
+Runtime GET /v1/health: 0.009s
+Runtime POST /v1/handshake: 0.008s
+Runtime GET /v1/app-state/user/generation: 0.008s
+pack discovery: 0.080s
+pack discovery: 0.080s
+model registry: 0.036s
+Runtime GET /v1/app-state/user/generation: 0.007s
+pack discovery: 0.102s
+Runtime GET /v1/app-state/user/generation: 0.008s
+pack discovery: 0.102s
+pack discovery: 0.094s
+Runtime GET /v1/app-state/user/generation: 0.007s
+pack discovery: 0.103s
+target check: 0.007s
+target check: 0.000s
+workflow build: 0.336s
+Runtime POST /v1/projects/de251aa5b7f8466aae6d95a946dea751/objects: 0.018s
+Runtime POST /v1/projects/de251aa5b7f8466aae6d95a946dea751/objects: 0.013s
+pack discovery: 0.102s
+pack discovery: 0.093s
+pack discovery: 0.096s
+Runtime GET /v1/objects/sha256%3A353e245a3cf446db0f2fcdb1cb26471aafa58718216d75a6b2543ab8e3ef5ac3: 0.008s
+Runtime GET /v1/objects/sha256%3Af2f5173e437db3e4d3c3265cc6c189a906be7e15fa1bebf2a99cffa7d1d4898e: 0.008s
+Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403: 0.008s
+Runtime GET /v1/capabilities: 0.015s
+Runtime GET /v1/projects/de251aa5b7f8466aae6d95a946dea751: 0.008s
+Runtime GET /v1/objects/sha256%3A353e245a3cf446db0f2fcdb1cb26471aafa58718216d75a6b2543ab8e3ef5ac3: 0.006s
+Runtime GET /v1/objects/sha256%3Af2f5173e437db3e4d3c3265cc6c189a906be7e15fa1bebf2a99cffa7d1d4898e: 0.007s
+Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403: 0.009s
+Runtime GET /v1/objects/sha256%3A353e245a3cf446db0f2fcdb1cb26471aafa58718216d75a6b2543ab8e3ef5ac3: 0.010s
+Runtime GET /v1/objects/sha256%3Af2f5173e437db3e4d3c3265cc6c189a906be7e15fa1bebf2a99cffa7d1d4898e: 0.009s
+Runtime GET /v1/objects/sha256%3A3eb9cef2866c0186fbe30172701f112b35e574cf3c6575c6e4a6b5dd1e76a403: 0.007s
+Runtime POST /v1/tasks: 0.009s
+other command work: 6.737s

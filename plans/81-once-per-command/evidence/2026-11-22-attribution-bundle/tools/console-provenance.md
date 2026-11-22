@@ -1,0 +1,7 @@
+# Console provenance for later attributed runs
+
+The frozen plain baseline and raw/fix comparison use the console shim installed from the pre-A2 Agent metadata. They continue to use that exact shim and their recorded results must not be relabeled as A2-aware timings.
+
+A-2 changes the console entry point from `astrid.console:main` to `astrid.console:entrypoint`. For the later attributed before/after A-6 pair, prepare an isolated environment and generate the actual console executable from each exact clean candidate's package metadata. Record the candidate SHA, package metadata, interpreter path, executable path and SHA-256, generated entry-point target, and source module path; assert that the console and managed host load the intended candidate. Use the same pinned interpreter and executable path and the same fixture, arguments, clock and timing lock for both sides; switch the candidate-specific shim and source identity deliberately, and preserve the exact bytes/checksum for each side. Verify the A2 startup marks are present. Profile wrappers must execute that candidate's console shim and propagate status. Do not overwrite or mutate the frozen baseline/comparison shim or run them concurrently against the shared venv.
+
+The attributed pre-fix candidate must include A-1–A-3 but exclude F-1–F-4; repeat after fixes with the same route and controls, and do not infer an installed or unprofiled improvement from separately instrumented processes.

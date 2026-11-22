@@ -1,0 +1,37 @@
+Waiting for model registry...
+Waiting for pack discovery...
+Waiting for pack discovery...
+Waiting for pack discovery...
+Waiting for pack discovery...
+Waiting for pack discovery...
+entry lookup ×4: 2.982s (total 19.985s)
+  pack discovery ×6: 12.370s (total 12.370s)
+  model registry: 0.367s (total 4.633s)
+    pack discovery ×2: 4.266s (total 4.266s)
+workflow build: 0.932s (total 1.564s)
+  pack discovery ×3: 0.618s (total 0.618s)
+  Runtime POST /v1/projects/c0f02561ddfd40af8a6e77916b5d1671/objects: 0.014s (total 0.014s)
+  target check: 0.000s (total 0.000s)
+pack discovery ×7: 1.448s (total 1.448s)
+Runtime launcher connection: 0.963s (total 0.963s)
+pack host attachment: 0.365s (total 0.601s)
+  pack host source identity: 0.228s (total 0.228s)
+  pack host readiness: 0.008s (total 0.008s)
+  pack host lifecycle lock: 0.000s (total 0.000s)
+interpreter start: 0.086s (total 0.086s)
+gateway imports: 0.043s (total 0.043s)
+command dispatch: 0.028s (total 0.028s)
+Runtime GET /v1/capabilities: 0.025s (total 0.025s)
+Runtime POST /v1/projects/c0f02561ddfd40af8a6e77916b5d1671/objects ×2: 0.025s (total 0.025s)
+Runtime GET /v1/app-state/user/generation ×3: 0.025s (total 0.025s)
+Runtime GET /v1/objects/sha256%3A8214be52289749942ebbfeff2d7159316050d89f2fe99e9130dfd757680e4f49 ×3: 0.024s (total 0.024s)
+Runtime GET /v1/objects/sha256%3Abad6d33473d91ec6f5eb0104ad0378d0333e747144e2a7321d830bb783d414c7 ×3: 0.022s (total 0.022s)
+Runtime GET /v1/objects/sha256%3A16e0bef5f96e538ca34e2e5bb7292edd39a7fa3df62c0bbb4728c317ebe353be ×3: 0.022s (total 0.022s)
+Runtime GET /v1/health: 0.013s (total 0.013s)
+Runtime POST /v1/tasks: 0.011s (total 0.011s)
+target check: 0.010s (total 0.010s)
+Runtime POST /v1/handshake: 0.010s (total 0.010s)
+Runtime GET /v1/projects/c0f02561ddfd40af8a6e77916b5d1671: 0.009s (total 0.009s)
+Runtime acquisition lock: 0.000s (total 0.000s)
+  in-process Runtime acquisition lock: 0.000s (total 0.000s)
+other command work: 7.751s (23.7%)

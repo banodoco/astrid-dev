@@ -1,0 +1,17 @@
+# W cache-witness caller attribution — 22 November 2026
+
+One instrumented W CLI trial, Agent `2ec9c24123a69916fe726023e2eede4c3386b1ce`, Runtime `182311f9d363712c0339254bd27e091d0e18318d`, VibeComfy `799d90f619a6723d0b376b7e77aef09c244a0821`. Runtime task and target prompt matched and succeeded; teardown exit 0. The probe eagerly imports instrumented modules and records stacks, so its times and call counts describe this observed run, with observer overhead. Raw events: `a2-witness-W/W-plain-1.witness.json`; provenance/receipts: `a2-witness-W/manifest.json`.
+
+The probe observed 9,256 `cache_file_witness` calls. Of these 2,350 checked absent `CURRENT`; 6,906 checked present files, matching the SHA observer's count in its separate W run. The 9,256 are witness calls, not 9,256 hashes. The nearest Astrid frames were:
+
+| Astrid entry into VibeComfy | All witness calls | Present-file witness calls |
+| --- | ---: | ---: |
+| `sdk/generation.py:2001`, `emit_bundle` | 8,888 | 6,644 |
+| `core/generation/entries.py:477`, `_writable_node_bindings` during input description | 360 | 256 |
+| `sdk/generation.py:2003`, `bundle.compile` | 8 | 6 |
+
+The four most frequent immediate three-frame stacks, closest to witness first, are all in `vibecomfy/porting/object_info/consume.py`: `<genexpr>:220 → _sync_reader:220 → _load_pack:270` (1,096); the same first two frames followed by `_load_pack:264`, `_load_index:239`, and `_load_index:243` (1,094 each). Four `_sync_reader:201` stacks and four `_sync_reader:219` stacks each occurred 556 times: they go through those four `_load_index`/`_load_pack` sites into `_resolve_class_type:310/314`. A representative longer path is `_sync_reader → _load_index → _resolve_class_type → output_names → _node_local_output_names → _compute_output_variable_names → _prepare_workflow_for_emit → _build_v2_sidecar → emit_bundle → astrid.sdk.generation:2001`. Thus most observed calls arise inside a single Astrid emission, from repeated class/schema resolution and freshness checking, with smaller independent input-description and compile paths. Counts are call occurrences, not evidence of time saved.
+
+The W capture checked `index.json` 2,350 times, the 0.24.0.1 core object-info JSON 2,348 times and the other core JSON 2,208 times. All before/after metadata tuples matched, including absent `CURRENT`; metadata equality does not prove unchanged file bytes. The separate hash observer measured the 0.24.0.1 file at 2,348 SHA calls / 6.123 GB cumulative input / 4.050 s summed digest-call time; the observers ran separately and may perturb execution.
+
+Code inspection: Astrid captures a target schema provider (`core/generation/entries.py:1256` and backend `vibecomfy.py:527`) and passes it to `bundle.compile` (`sdk/generation.py:2003`); `emit_bundle(workflow, path, provenance)` at `:2001` accepts no schema/provider argument in pinned VibeComfy (`workflow_bundle.py:3234`). Astrid's input binding helper also accepts a provider, but sharing that provider alone does not eliminate the dominant `consume` witness checks inside emission. Existing VibeComfy reader/provider caches still re-witness files to detect mutation and invalidate safely. No supported Astrid flag or command-local argument was identified that avoids the dominant repeated checks without a VibeComfy change or a separately proven change in consistency semantics. This is code inspection, not a proof that no safe optimization exists. No stat-only key is asserted safe; the implementation deliberately hashes bytes to detect same-metadata replacement.
