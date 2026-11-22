@@ -1,0 +1,31 @@
+{
+  "artifact_inventory_sha256": "f8c4fdaa6b7bbfa8df6ccb8dd874973a88ac170ce2cb7220108540d59e806801",
+  "cleanup": {
+    "closed_ports_count": 3,
+    "new_profiles_remaining": 0,
+    "removed_owned_stack": true
+  },
+  "installed_runtime_source_hashes": [
+    {
+      "file": "store.py",
+      "sha256": "c673b9423d220e6660e823456423eda863050092c498750cd7512ce42960bf44"
+    },
+    {
+      "file": "timeline_commit_port.py",
+      "sha256": "44e366d3165d60bdd78adc19e5bd634656155ea93c769bd7be69ec4551f6726a"
+    },
+    {
+      "file": "timeline_commit_store.py",
+      "sha256": "732604da9b48f53e5fabd859ff0c3fcdf64cb29f56f4e435a2e858ea82adefa6"
+    }
+  ],
+  "restore": {
+    "backup_database_sha256": "c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d",
+    "backup_schema": 33,
+    "restored_bytes_match": true,
+    "restored_database_sha256": "c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d",
+    "restored_schema": 33
+  },
+  "reused_stock_dist_file_count": 355,
+  "reused_stock_dist_list_sha256": "f8c4fdaa6b7bbfa8df6ccb8dd874973a88ac170ce2cb7220108540d59e806801"
+}

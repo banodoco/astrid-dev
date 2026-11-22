@@ -1,0 +1,744 @@
+[
+  [
+    {
+      "function": "_pipe_log",
+      "module": "services.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_PATCH",
+      "module": "server.py"
+    },
+    {
+      "function": "do_PUT",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "_prune_pack_leases",
+      "module": "service.py"
+    },
+    {
+      "function": "pack_inventory",
+      "module": "service.py"
+    },
+    {
+      "function": "_route",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "wrapped",
+      "module": "service.py"
+    },
+    {
+      "function": "_reap_task_lifetimes",
+      "module": "server.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "open_object",
+      "module": "service.py"
+    },
+    {
+      "function": "_route",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "open_object",
+      "module": "service.py"
+    },
+    {
+      "function": "_route",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "open_object",
+      "module": "service.py"
+    },
+    {
+      "function": "_route",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "wrapped",
+      "module": "service.py"
+    },
+    {
+      "function": "_reap_task_lifetimes",
+      "module": "server.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "open_object",
+      "module": "service.py"
+    },
+    {
+      "function": "_route",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "open_object",
+      "module": "service.py"
+    },
+    {
+      "function": "_route",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "iterencode",
+      "module": "encoder.py"
+    },
+    {
+      "function": "encode",
+      "module": "encoder.py"
+    },
+    {
+      "function": "dumps",
+      "module": "__init__.py"
+    },
+    {
+      "function": "canonical_json",
+      "module": "util.py"
+    },
+    {
+      "function": "digest",
+      "module": "timeline_commit_validation.py"
+    },
+    {
+      "function": "validate_sequential_capture",
+      "module": "timeline_commit_auth.py"
+    },
+    {
+      "function": "_historical_sequential",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "_verify_accepted_replay",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "_verify_accepted",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "evaluate",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "_history_entry_view",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "evaluate",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "history_entry",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "evaluate",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "<listcomp>",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "_history_page",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "_read_history",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "evaluate",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "evaluate",
+      "module": "timeline_commit_store.py"
+    },
+    {
+      "function": "list_timeline_commits",
+      "module": "service.py"
+    },
+    {
+      "function": "wrapped",
+      "module": "service.py"
+    },
+    {
+      "function": "_route",
+      "module": "server.py"
+    },
+    {
+      "function": "_dispatch",
+      "module": "server.py"
+    },
+    {
+      "function": "do_GET",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle_one_request",
+      "module": "server.py"
+    },
+    {
+      "function": "handle",
+      "module": "server.py"
+    },
+    {
+      "function": "__init__",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "finish_request",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "process_request_thread",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "_attempt",
+      "module": "services.py"
+    },
+    {
+      "function": "_run",
+      "module": "services.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "wait",
+      "module": "threading.py"
+    },
+    {
+      "function": "_run",
+      "module": "services.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "select",
+      "module": "selectors.py"
+    },
+    {
+      "function": "serve_forever",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "select",
+      "module": "selectors.py"
+    },
+    {
+      "function": "serve_forever",
+      "module": "socketserver.py"
+    },
+    {
+      "function": "run",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap_inner",
+      "module": "threading.py"
+    },
+    {
+      "function": "_bootstrap",
+      "module": "threading.py"
+    }
+  ],
+  [
+    {
+      "function": "_main",
+      "module": "cli.py"
+    },
+    {
+      "function": "main",
+      "module": "cli.py"
+    },
+    {
+      "function": "<module>",
+      "module": "__main__.py"
+    },
+    {
+      "function": "_run_code",
+      "module": "<frozen runpy>"
+    },
+    {
+      "function": "_run_module_as_main",
+      "module": "<frozen runpy>"
+    }
+  ]
+]

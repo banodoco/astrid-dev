@@ -1,0 +1,29 @@
+{
+  "sources": [
+    {
+      "sha256": "79de23c45028576946a688686536c2890b5e6558d38a7e4d070e34fdc5bfee97",
+      "size_bytes": 272205,
+      "source": "observed.json"
+    },
+    {
+      "sha256": "74e47ed57e57faa21ffc3d6ba430b655f1029507792094b15bf37e5be49989b5",
+      "size_bytes": 326,
+      "source": "b/cleanup.json"
+    },
+    {
+      "sha256": "b51f68a48d1f96a1a753b44355898d076832d9d1c9ce2534fe6de834e97ec406",
+      "size_bytes": 331,
+      "source": "operator-b/restore-bytes.json"
+    },
+    {
+      "sha256": "bd1f0760463c3b92f4c863cbc86f6667eeab2b709ed594929dde4094be7d8e10",
+      "size_bytes": 163,
+      "source": "operator-b/reused-stock-dist-list.sha256"
+    },
+    {
+      "sha256": "b322603ce5512f54189af5ac1a0e3dd1662758e6993d9af9504ebe0b164e30ca",
+      "size_bytes": 253,
+      "source": "operator-b/installed-runtime-sources.sha256"
+    }
+  ]
+}
