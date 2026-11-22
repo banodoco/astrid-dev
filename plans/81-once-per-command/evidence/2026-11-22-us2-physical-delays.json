@@ -1,0 +1,496 @@
+{
+  "trials": [
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        3.54,
+        3.2,
+        2.59
+      ],
+      "ended_utc": "2026-11-22T06:29:19.682784+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.475,
+          "observed_holds_seconds": [
+            1.5001827819996834,
+            1.5001199379985337,
+            1.5000850960004755,
+            1.5000924940013647,
+            1.5001217299995915
+          ],
+          "stage": "workflow build"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.512,
+          "observed_holds_seconds": [
+            1.5001980619999813,
+            1.500829122000141,
+            1.5001013040000544,
+            1.5000915600012377,
+            1.5001513110000815
+          ],
+          "stage": "Runtime GET /v1/objects/{digest}"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.529,
+          "observed_holds_seconds": [
+            1.5001075039999705,
+            1.500168925998878,
+            1.5001773610001692,
+            1.500090467001428,
+            1.500096912999652
+          ],
+          "stage": "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/commit"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        2.5,
+        2.96,
+        2.31
+      ],
+      "started_utc": "2026-11-22T06:23:46.366209+00:00",
+      "trial": 1
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        3.73,
+        3.32,
+        2.81
+      ],
+      "ended_utc": "2026-11-22T06:35:29.979945+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.5,
+          "observed_holds_seconds": [
+            1.500118754000141,
+            1.5000953300004767,
+            1.5000991850010905,
+            1.5001528109987703,
+            1.5008934819998103
+          ],
+          "stage": "Runtime acquisition lock"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.493,
+          "observed_holds_seconds": [
+            1.5009921040000336,
+            1.5001151949982159,
+            1.5000853079982335,
+            1.5001223710005434,
+            1.500157426999067
+          ],
+          "stage": "Runtime GET /v1/capabilities"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.493,
+          "observed_holds_seconds": [
+            1.5001238199984073,
+            1.5000773500014475,
+            1.5001006860002235,
+            1.5001292189990636,
+            1.5001262459991267
+          ],
+          "stage": "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/composition-revisions/{revision}"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        1.95,
+        2.83,
+        2.49
+      ],
+      "started_utc": "2026-11-22T06:30:00.418405+00:00",
+      "trial": 2
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        4.54,
+        3.61,
+        3.04
+      ],
+      "ended_utc": "2026-11-22T06:41:23.084710+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.489,
+          "observed_holds_seconds": [
+            1.5001257110016013,
+            1.500079976998677,
+            1.50018418900072,
+            1.500104246999399,
+            1.5001710950000415
+          ],
+          "stage": "pack host source identity"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.502,
+          "observed_holds_seconds": [
+            1.5000911300012376,
+            1.5001132890010922,
+            1.5001045110002451,
+            1.500107931000457,
+            1.5001873130004242
+          ],
+          "stage": "target check"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.299,
+          "observed_holds_seconds": [
+            1.5000915240016184,
+            1.5001676840001892,
+            1.5001173780001409,
+            1.5000954200004344,
+            1.5000892120006029
+          ],
+          "stage": "Runtime launcher connection"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        2.46,
+        3.06,
+        2.73
+      ],
+      "started_utc": "2026-11-22T06:35:54.493017+00:00",
+      "trial": 3
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        3.94,
+        3.2,
+        2.92
+      ],
+      "ended_utc": "2026-11-22T06:48:50.955780+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.5,
+          "observed_holds_seconds": [
+            1.5001021740008582,
+            1.5001459180002712,
+            1.5000893140004337,
+            1.5001311250016443,
+            1.5001083820006897
+          ],
+          "stage": "model registry"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.579,
+          "observed_holds_seconds": [
+            1.5000920439997572,
+            1.5001730220010359,
+            1.500105404000351,
+            1.5001338669990218,
+            1.5000976400006039
+          ],
+          "stage": "pack discovery"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.5,
+          "observed_holds_seconds": [
+            1.5001209789988934,
+            1.500172587000634,
+            1.500081214000602,
+            1.5000891079998837,
+            1.5000883029988472
+          ],
+          "stage": "Runtime GET /v1/health"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        0.66,
+        2.45,
+        2.68
+      ],
+      "started_utc": "2026-11-22T06:43:19.653997+00:00",
+      "trial": 4
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        2.85,
+        2.95,
+        2.89
+      ],
+      "ended_utc": "2026-11-22T06:54:31.459938+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.533,
+          "observed_holds_seconds": [
+            1.5001108230007958,
+            1.5001020820000122,
+            1.5000952789996518,
+            1.5001195919994643,
+            1.5001516219999758
+          ],
+          "stage": "Runtime POST /v1/projects/{id}/objects"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.5,
+          "observed_holds_seconds": [
+            1.5000830009994388,
+            1.5000775340013206,
+            1.5001563759997225,
+            1.500089580000349,
+            1.5001078010009223
+          ],
+          "stage": "Runtime GET /v1/app-state/user/{key}"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.498,
+          "observed_holds_seconds": [
+            1.500110503000542,
+            1.5000948489996517,
+            1.5000955799987423,
+            1.500097910000477,
+            1.5001136570008384
+          ],
+          "stage": "Runtime POST /v1/projects/{id}/timelines/{timeline_id}/inspect"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        3.33,
+        3.1,
+        2.89
+      ],
+      "started_utc": "2026-11-22T06:48:59.267181+00:00",
+      "trial": 5
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        3.73,
+        3.28,
+        3.03
+      ],
+      "ended_utc": "2026-11-22T07:00:20.506666+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.517,
+          "observed_holds_seconds": [
+            1.5002588810002635,
+            1.5000967399992078,
+            1.5000939950004977,
+            1.5001432970002497,
+            1.5002548069987824
+          ],
+          "stage": "pack host attachment"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.508,
+          "observed_holds_seconds": [
+            1.500184377999176,
+            1.5001039859998855,
+            1.5078771240005153,
+            1.500108113999886,
+            1.5000870549993124
+          ],
+          "stage": "Runtime POST /v1/tasks"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.489,
+          "observed_holds_seconds": [
+            1.5001351160008198,
+            1.5002309400006197,
+            1.5000823919999675,
+            1.5000809929988463,
+            1.5000812279995444
+          ],
+          "stage": "Runtime GET /v1/projects/{id}/timelines/{timeline_id}/commits"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        2.22,
+        2.8,
+        2.84
+      ],
+      "started_utc": "2026-11-22T06:54:46.376483+00:00",
+      "trial": 6
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        4.49,
+        3.22,
+        2.96
+      ],
+      "ended_utc": "2026-11-22T07:07:32.730708+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.507,
+          "observed_holds_seconds": [
+            1.500111088000267,
+            1.500109402999442,
+            1.50008938999963,
+            1.500102848998722,
+            1.5000892119987839
+          ],
+          "stage": "Runtime GET /v1/projects/{id}"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.516,
+          "observed_holds_seconds": [
+            1.5000810780002212,
+            1.5000982439996733,
+            1.503235117001168,
+            1.5001106319996325,
+            1.5001956070009328
+          ],
+          "stage": "Runtime POST /v1/handshake"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.468,
+          "observed_holds_seconds": [
+            1.5000765579989093,
+            1.5001099029996112,
+            1.500084983999841,
+            1.5001041470004566,
+            1.5000838420000946
+          ],
+          "stage": "Runtime GET /v1/projects/{id}/timelines"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        0.76,
+        2.38,
+        2.73
+      ],
+      "started_utc": "2026-11-22T07:01:56.094270+00:00",
+      "trial": 7
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        3.99,
+        3.48,
+        3.13
+      ],
+      "ended_utc": "2026-11-22T07:13:03.661067+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "same",
+          "max_reported_delta_seconds": 1.5,
+          "observed_holds_seconds": [
+            1.5001297109993175,
+            1.5000936769993132,
+            1.5000912060004339,
+            1.5000903970012587,
+            1.500082554999608
+          ],
+          "stage": "pack host lifecycle lock"
+        },
+        {
+          "distinct_pids": 5,
+          "group": "changed",
+          "max_reported_delta_seconds": 1.503,
+          "observed_holds_seconds": [
+            1.500103594000393,
+            1.5001260219996766,
+            1.5001039279995894,
+            1.5001100650006265,
+            1.5001031970004988
+          ],
+          "stage": "pack host readiness"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        3.87,
+        3.13,
+        2.94
+      ],
+      "started_utc": "2026-11-22T07:07:40.029296+00:00",
+      "trial": 8
+    },
+    {
+      "cleanup_clear": true,
+      "end_load_1_5_15": [
+        3.74,
+        3.38,
+        3.16
+      ],
+      "ended_utc": "2026-11-22T07:18:35.748351+00:00",
+      "groups": [
+        {
+          "distinct_pids": 5,
+          "group": "timeline",
+          "max_reported_delta_seconds": 1.461,
+          "observed_holds_seconds": [
+            1.500079535999248,
+            1.500113751999379,
+            1.5001556790011819,
+            1.5001327669997409,
+            1.5000860479995026
+          ],
+          "stage": "other command work"
+        }
+      ],
+      "identity_unchanged": true,
+      "pytest_exit": 1,
+      "start_load_1_5_15": [
+        3.67,
+        3.42,
+        3.11
+      ],
+      "started_utc": "2026-11-22T07:13:12.445158+00:00",
+      "trial": 9
+    }
+  ]
+}
