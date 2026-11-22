@@ -1,0 +1,16 @@
+Getting Astrid ready. The first time takes a few minutes.
+Using your workspace at /root/codex/p77box/round5-432-readback/installed-data.
+Downloading Release 13
+Creating your workspace
+Starting Release 13
+Checking Release 13 started
+Open https://astrid.haus
+Connect this computer at https://astrid.haus/?connect=1
+
+Your choice: start at sign-in is off. To turn it on, rerun the install line with --autostart on.
+Your choice: the astrid command is off. To turn it on, rerun the install line with --command on.
+Run Astrid with: /root/codex/p77box/round5-432-readback/program/run-astrid
+Your choice: Astrid skills are off. To turn them on, rerun the install line with --skills on.
+
+Astrid installed: Release 13 (build 18adee80).
+Next: run `./run-astrid generate scan` in Astrid's install folder to find your ComfyUI.
