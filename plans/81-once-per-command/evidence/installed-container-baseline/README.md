@@ -1,6 +1,12 @@
+# Final candidate tuples (manifest update)
+
+Current `manifest-candidate.json` selects Agent `868053db361e8355089d23c69b3a72fec60e7f3b` from local scratch repo `/root/codex/plan-81m/final-agent-candidate`, Runtime `72b129e5a2296dc58360a9896cc65fab9db4ad0c`, and VibeComfy `06ad021ffc84f4ae687b144873d3745c7297c43c`. Current `manifest-candidate-vc48.json` selects Agent `13d328dc01638b96bf7e07308737ca380f8eaef8`, the same Runtime, and VibeComfy `48b5fa9e45630e1bc502651975ec0ef3a5e74c4c`. Both candidate manifests retain the npm `omp` override.
+
+**All existing results, measured tables, run records, and historical narrative below refer only to their recorded historical tuples; they are not results for these final candidate heads. The historical measured table is retained as historical evidence. No installs or timing runs were made for the final tuples by this manifest update.** See `CANDIDATE-MANIFEST.md` for provenance and the local-only scratch recipe.
+
 # Copied A/B tooling: current usage and limits
 
-Run `./run-ab-installed.sh` from this copy for preparation, or add `--run` for the timed run. The script loads its driver, stand-in, media and default manifests from its own directory. `IB` selects the absolute live install root and defaults to `/root/codex/installed-baseline`; evidence defaults under that root and can be redirected with `EVIDENCE_DIR`. The default candidate manifest retains its historical absolute `agent.repo` path under `/root/codex/installed-baseline`; supply an appropriate `CANDIDATE_MANIFEST` if that source is unavailable or differs. Starting the wrapper can install or start processes and modify the selected install root.
+Run `./run-ab-installed.sh` from this copy for preparation, or add `--run` for the timed run. The script loads its driver, stand-in, media and default manifests from its own directory. `IB` selects the absolute live install root and defaults to `/root/codex/installed-baseline`; evidence defaults under that root and can be redirected with `EVIDENCE_DIR`. The default candidate manifest uses the scratch `agent.repo` path given above; supply an appropriate `CANDIDATE_MANIFEST` if that source is unavailable or differs. Starting the wrapper can install or start processes and modify the selected install root.
 
 Each round runs arms in fixed order (before, after, vc48), not randomized. The candidate arms use `--timings` for generation while before does not, so their measured wall times include different instrumentation. The after and vc48 builds also differ in Agent pin-generated files. Differences and the calculated ratios are descriptive comparisons, not proof of causal attribution. These CPU-container results use a stand-in ComfyUI and do not measure real ComfyUI node-info answers or GPU work.
 

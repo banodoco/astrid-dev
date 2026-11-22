@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 # Installed-Astrid A/B/C run: three isolated installs, one shared stand-in ComfyUI, arms alternated per round, load-gated.
 #   before = published Release 14 tuple (omp from npm)
-#   after  = candidate: Agent bc75d6c5 (local pin-bump commit on release/15/plan-81), Runtime 72b129e5, VibeComfy 36ea976f
-#   vc48   = candidate WITHOUT the VibeComfy fix: Agent 9c95c680 (release/15/plan-81 head; same code as bc75d6c5, only the pin files differ),
-#            Runtime 72b129e5, VibeComfy 48b5fa9e (the installer refuses bc75d6c5 with VibeComfy 48b5fa9e: its pin check)
+#   after  = final local candidate: Agent 868053db (scratch repo), Runtime 72b129e5, VibeComfy 06ad021f
+#   vc48   = final comparison candidate: Agent 13d328dc, Runtime 72b129e5, VibeComfy 48b5fa9e
 #   ./run-ab-installed.sh            prepare + validate only (install if absent, versions, --timings check, one UNTIMED command per arm)
 #   ./run-ab-installed.sh --run      prepare, then the gated timed run (fails, does not run ungated, if load < 1.0 is not reached in 10 min)
 # Env: BEFORE_MANIFEST, CANDIDATE_MANIFEST, VC48_MANIFEST (defaults: manifest-omp-npm.json, manifest-candidate.json, manifest-candidate-vc48.json),
 #      ARMS (default "before after vc48"; "before after" gives the two-arm run), EVIDENCE_DIR, LOAD_MAX (1.0), LOAD_WAIT_SECONDS (600),
 #      SAMPLES (5), STANDIN_PORT (18188), KEEP_RUNTIME=1, IB (live install root; default /root/codex/installed-baseline).
 # Setting, every time: installed builds, CPU container, stand-in ComfyUI; not covered: a real ComfyUI's node-info answer, GPU work.
-# Only the candidate arms (after, vc48) run `generate` with --timings; the before build cannot. This difference affects comparisons.
+# Only candidate arms (after, vc48) run `generate` with --timings; the before build cannot. This difference affects comparisons.
 set -euo pipefail
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 : "${ASTRID_RUNTIME_SOURCE_REPO:?set ASTRID_RUNTIME_SOURCE_REPO to a local Runtime Git repository containing each manifest commit}"
