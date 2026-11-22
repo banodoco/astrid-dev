@@ -4,7 +4,7 @@
 
 One section per round, newest last, written by the coordinator under the [live-loop workstream](../../skills/roles/astrid-dev-manage/workstreams/live-loop.md#the-round). Each holds: the stack versions; a table of scenario, outcome (saved or refused with the reason shown), time to Saved, head count, anything vanished; The strategist's advice (evidence, not a verdict); the fixes picked and their PRs; and **Plan deltas** for [Plans 63, 75 and 76 and 18](inputs.md#references).
 
-No round has run yet. Round 1, on the plan branches as cut, is the baseline. The 18 November sweep (14 edit kinds, 3 saved, 11 refused, on the owner's copied timeline with the old timer) is earlier evidence, not a baseline: [evidence/results.jsonl](evidence/results.jsonl).
+Round 1 records the partial baseline below. The full fixture is required for Rounds 2 and 3. The 18 November sweep (14 edit kinds, 3 saved, 11 refused, on the owner's copied timeline with the old timer) is earlier evidence, not a baseline: [evidence/results.jsonl](evidence/results.jsonl).
 
 ## Setup checks on 21 November 2026
 
@@ -52,3 +52,60 @@ The tested steeper slope follows the development Runtime. The actual Plan 77 bra
 The baseline stack installed App `8e619302`, Agent `210cad35` and Runtime `86e1b832`. It imported all 616 generated assets in 130 s. The first four accepted 12-command SDK batches took 3.940, 4.891, 6.243 and 12.911 s. Batch 12 took 75.251 s. Estimates from the observed batches put clip seeding near two hours. The owner authorized the full seed with a new report if the projection for clips and shots rises above about three hours.
 
 Two interruptions lost response waiting after Runtime accepted the requests. The public index and canonical composition revision verified the exact contiguous 168-clip prefix and its 168 selected media IDs before continuation. Same-key media imports returned the original receipts. The next two accepted batches reached 192 clips in 23.812 and 72.030 s, respectively. The synthetic timeline is still seeding. Round 1 requires the complete fixture and editor matrix on this tuple.
+
+## Round 1: baseline on plan-77 as cut plus #81, partial fixture of 288 of 616 clips (seed stopped at the three-hour projection)
+
+**Stack.** App `8e619302`, Agent `210cad35`, Runtime `86e1b832`. The seed paused before clip 289 after a public receipt, with 288 exact clip and media identities and nine tracks. One public SDK transaction added the ten shot occurrences required for the existing matrix. The exact root clip rows stayed identical. The editor started at public version 27, publication `txn-7fb668679a4b4943866530767d8edf03`.
+
+Recent fits across 6, 8, 10 and 12 measured batches projected 193–220 minutes for clips plus shots. The fit using the full series was 162 minutes because the early batches were faster. Shot costs were extrapolated from equal-size clip batches.
+
+### Accepted seed batches
+
+These are public SDK commit elapsed times for 12 clip commands per batch. The two missing client replies were independently checked against the exact accepted public revisions.
+
+| Batch | Cumulative clips | Commit seconds |
+| --- | --- | --- |
+| 1 | 12 | 3.940 |
+| 2 | 24 | 4.891 |
+| 3 | 36 | 6.243 |
+| 4 | 48 | 12.911 |
+| 5 | 60 | 7.296 |
+| 6 | 72 | 22.349 |
+| 7 | 84 | 30.812 |
+| 8 | 96 | 37.419 |
+| 9 | 108 | 27.503 |
+| 10 | 120 | 34.830 |
+| 11 | 132 | 33.348 |
+| 12 | 144 | 75.251 |
+| 13 | 156 | Unmeasured after accepted receipt |
+| 14 | 168 | Unmeasured after accepted receipt |
+| 15 | 180 | 23.812 |
+| 16 | 192 | 72.029 |
+| 17 | 204 | 83.292 |
+| 18 | 216 | 162.520 |
+| 19 | 228 | 93.573 |
+| 20 | 240 | 103.887 |
+| 21 | 252 | 115.630 |
+| 22 | 264 | 40.033 |
+| 23 | 276 | 266.674 |
+| 24 | 288 | 153.621 |
+
+### Editor matrix
+
+The harness recovered startup by using a short owned browser directory and the installed editor's ordinary `connect=1` link. A fresh browser then reached the actual Saved badge at 41.211 s with the synthetic fixture visible. That figure measures startup. The single longer measurement reached Saved with the fixture visible in 171.612 s. A fixture target first appeared at 13.997 s. The observation did not establish when the first 15 s became editable. CPU seconds were unmeasured for this initial matrix. [App harness PR #330](https://github.com/banodoco/astrid-app/pull/330)
+
+| Scenario | Outcome | Gesture end to POST | Time to Saved | Public evidence |
+| --- | --- | ---: | --- | --- |
+| Same-track video move, first repetition | Failed. The browser reported an unconfirmed save and showed Try again and Discard | 17.465 s | No Saved captured | One accepted advance from v27 to v28. The moved video start changed from 0 to 0.5667 s. All 288 clip IDs survived, with one stable current head. |
+| Remaining 84 scenarios and the other two repeats of the first | Unattempted. The sweep stopped at guarded cleanup | — | — | The timeline metadata and revision index sampled different heads around the advance. The follow-up snapshot timed out, so the harness refused to restore without a verified after-head. |
+
+The host accepted this as the failing baseline. The first fix will follow profiling of one history GET, an ordinary 12-command commit, and the browser CPU during one same-track move on the exact stack. The existing seed curve and open/save timing will witness the change.
+
+**Strategist's advice.** Preserve the same-track move as the editor witness. Measure gesture to send, send to public acceptance, and acceptance to Saved where visible. Establish where the history read and commit spend CPU before choosing a shared fix. Keep the guarded cleanup when the publication is uncertain.
+
+**Plan deltas.**
+
+- Plan 63 gets the accepted-once move that was unconfirmed in the browser. Its lost-reply witness should check public reconciliation and badge agreement.
+- Plan 75 gets the heavy history read and batch series, alongside all three open/save spans. Separate history depth from clip count if the first profile leaves attribution unclear.
+- Plan 76 keeps its two-writer witness outstanding. This run exercised one writer and a temporary read disagreement.
+- Plan 18 gets the same-track gesture-to-POST span for its gesture-to-operation comparison.
