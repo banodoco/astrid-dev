@@ -4,13 +4,13 @@
 
 **Goal:** A creator finishes Into the Minkhole in Astrid, and a weaker agent can repeat the editing workflow on another timeline.
 
-**Status:** active
+**Status:** done
 
 **Owner:** Hannah
 
 **Estimate:** TBD; the work advances one creative task at a time.
 
-**Waiting on:** Owner decisions recorded under D3: whether `release/14/plan-59` in timeline-composition becomes `main`, the missing license field, and which stray branches and copies the owner deletes.
+**Waiting on:** —
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones.
 

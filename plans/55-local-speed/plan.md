@@ -4,13 +4,13 @@
 
 **Goal:** On your own computer with the model already loaded, a generation comes back in the time the model takes: Astrid adds under a tenth of a second for a caller that is already connected.
 
-**Status:** active
+**Status:** paused
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
 **Estimate:** 2–3
 
-**Waiting on:** a release for what remains. On 22 November 2026 the owner asked for the under-a-second work to be its own plans, [Plan 81](../81-once-per-command/plan.md) in Release 15 and [Plan 82](../82-reuse-across-commands/plan.md) after it, and for this plan's redesign (the resident session, completion by push, the thin request) to wait in no release as the tenth-of-a-second work. Plan 81 takes this plan's meter as its starting point; Plan 82 reads its template commits as donors and first decides between caches on disk and this plan's resident session. This plan's status, its open pull requests and its accountable session are unchanged here and are the owner's and the Release 14 Lead's to settle. Earlier: owner approval for paid GPU work, a Windows tester, re-pins and product-main merges.
+**Waiting on:** Release 15. On 22 November 2026 the owner moved the under-a-second work into separate plans: [Plan 81](../81-once-per-command/plan.md) starts from this plan’s meter, and [Plan 82](../82-reuse-across-commands/plan.md) follows it. This plan’s resident-session redesign remains deferred.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each, then run `python3 scripts/astrid_dev.py sync`. Its priority is its place in [priority.md](../../plans/priority.md).
 

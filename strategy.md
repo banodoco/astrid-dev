@@ -75,6 +75,8 @@ On the way: [Release 12 — Reliable updates](releases/12.md), [Release 13 — O
 - [Plan 38 — One process identity for Agent and Runtime](plans/38-one-process-identity/plan.md) — [Release 16](releases/16.md): one process identity across systems.
 - [Plan 31 — Releases defined and published from astrid-dev](plans/31-releases-from-astrid-dev/plan.md) — [Release 16](releases/16.md): releases and version numbers from astrid-dev.
 - [Plan 19 — First-principles documentation](plans/19-first-principles-documentation/plan.md) — [Release 17](releases/17.md): documentation from purpose to finished work.
+
+[Release 14 issues](releases/14.md#issues): 94
 <!-- strategy-0.1:end -->
 
 #### Version 0.2
