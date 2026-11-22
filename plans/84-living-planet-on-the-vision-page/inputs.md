@@ -15,11 +15,11 @@
 
 | Option | For | Against |
 | --- | --- | --- |
-| In astrid-app, beside the page, loaded on demand (chosen) | One repository, one release, the page's own tests cover it; three.js already there | An 8,996-line file arrives in the App unless PL-10 splits it |
+| In astrid-app, beside the page, loaded on demand (chosen) | One repository, one release, the page's own tests cover it; three.js already there | An 8,996-line file arrives in the App until PL-9 splits it |
 | Its own package, published from banodoco/planet | The engine can be reused elsewhere | A second release to coordinate for one consumer; the Release 15 branch table does not admit that repository |
 | An embedded frame pointing at a separately hosted planet | No App change to the engine | A transparent planet behind the page's own content cannot be done across a frame |
 
-**Challenge:** Reviewed — the owner asked on 22 November 2026 for "Astra to sense check this plan ... in accordance with the ... planning skill". An independent Codex critic (`gpt-6.2-astra`, high effort, read-only, no part in the draft) was commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) the same day, briefed as the [planning skill](../../skills/roles/astrid-dev-plan/SKILL.md) asks: to build as little as possible and to check the plan against the code. Its report is [critique.txt](evidence/critique.txt). It did not measure real devices or production transfer. The owner has asked that such critiques be weighed, not adopted wholesale; what the planner did with each finding:
+**Challenge:** Reviewed — the owner asked on 22 November 2026 for "Astra to sense check this plan ... in accordance with the ... planning skill". An independent Codex critic (on the high-judgment role, high effort, read-only, no part in the draft) was commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) the same day, briefed as the [planning skill](../../skills/roles/astrid-dev-plan/SKILL.md) asks: to build as little as possible and to check the plan against the code. Its report is [critique.txt](evidence/critique.txt). It did not measure real devices or production transfer. The owner has asked that such critiques be weighed, not adopted wholesale; what the planner did with each finding:
 
 - **Accepted — a pillar card already does something.** Choosing one opens its goals, gaps and projects (`PublicAstridVision.tsx` near 605–607); the mock-up's click turns the planet and scrolls away. The draft's "cards move the world" is removed: a click keeps its meaning, and a turn on hover is a taste detail in PL-7.
 - **Partly accepted — the name.** Both headings and both links stay, and a test pins the links, so the panel gets no navigation entry. The owner then asked the Lead to choose its name; it is Foundations (see Owner decisions).
@@ -33,7 +33,7 @@
 - **Accepted — provenance.** The mock-up has no licence and was made in a generating tool. D1 now asks the owner to say it is hers to publish.
 - **Accepted — the page's address, social preview and a failed download** of the planet's code are covered (PL-4, PL-6).
 - **Partly accepted — a pre-rendered loop instead of a live planet.** The critic proposed comparing a transparent video of the planet with live drawing before bringing the engine in. The owner built a live planet and asked for it to perform well, so the live planet stays the default; the trial in PL-0 decides what a phone gets, which may be the still or a lighter planet.
-- **The estimate:** the critic called 12 days optimistic for the proofs and high for a narrower backdrop. With the tasks merged and the split kept it comes to 14.5, and PL-0 re-states it.
+- **The estimate:** the critic called 12 days optimistic for the proofs and high for a narrower backdrop. With the tasks merged and the split kept it came to 14.5; the shared time of day (PL-10), added afterwards, makes it about 16, and PL-0 re-states it.
 
 **Proof and limits:** The completion cases in [plan.md](plan.md#completion). Limits: taste is judged by the manager and the owner, and is recorded as pictures and a written verdict, not as a number; frame rates in a headless browser stand in for real devices.
 
