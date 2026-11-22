@@ -31,3 +31,5 @@ Runtime [#77](https://github.com/banodoco/astrid-runtime/pull/77) took in Plan 6
 ## Loop rounds
 
 - **Round 1, 22 November 2026.** App `8e619302`, Agent `210cad35`, Runtime `86e1b832`. One failed move, zero confirmed saves, 84 unattempted scenarios. The three diagnostics and the ranked batch are in [rounds.md](rounds.md).
+
+- **Round 2, 22 November 2026.** The full standard builder started on App `22780a7a`, Agent `da212f2a` and Runtime `712d9754`. All 616 assets imported. The host capped the seed at 288 root clips after the accepted 12-command batches grew to minutes. This counted partial round uses the same ten-shot shape as Round 1. The seed curve is commit evidence. The 616-clip qualification and full editor sweep still need live results. [App #346](https://github.com/banodoco/astrid-app/pull/346) removes a duplicate run identity from subsequent sweeps. This round retains the original App pin.

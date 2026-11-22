@@ -1,0 +1,45 @@
+The **188-definition census is still true**: 159 functions and 29 classes, same as the map. The host has **102 methods today**, up from 99. Full per-definition name, start/end line, length and map assignment: [current_inventory.csv](/tmp/claude-0/-home-user/adcc8794-0da3-57fa-bccb-62bae6ab6b23/scratchpad/host/work/current_inventory.csv).
+
+### 1. Current AST measurements
+
+**MEASURED** from inclusive AST source spans in [generic_host.py](/home/user/astrid-agent/astrid/core/execution/generic_host.py:1). Module-level statement lines count AST statements outside top-level definitions; they include imports and initialization.
+
+| Measure | Today |
+|---|---:|
+| File lines | 18,888 |
+| Top-level definitions | 188 (159 functions, 29 classes) |
+| Top-level function lines | 4,892 |
+| `GenericPackHost` lines | 8,416 |
+| Other class lines | 4,709 |
+| Module-level statement lines | 398 |
+
+### 2. Inventory drift
+
+- **INFERRED, R11/H04:** Three new methods, grouped by their shutdown/quiescence responsibility and proximity to the map’s session shutdown slice: `_begin_shutdown` (7431–7443), `_wait_for_cleanup_quiescence` (7445–7456), `_shutdown_for_cleanup` (7458–7466).
+- **MEASURED:** No mapped top-level definitions or mapped host methods are missing today.
+
+### 3. Lines by responsibility
+
+**MEASURED** inclusive definition spans; the host class counts once in R11, so its methods are not added again. New methods are inside that class span.
+
+| Group | Lines | Group | Lines |
+|---|---:|---|---:|
+| R01 | 35 | R08 | 771 |
+| R02 | 953 | R09 | 1,291 |
+| R03 | 225 | R10 | 675 |
+| R04 | 400 | R11 | 8,738 |
+| R05 | 491 | R12 | 2,168 |
+| R06 | 735 | R13 | 422 |
+| R07 | 144 | R14 | 969 |
+
+Three largest: **R11, R12, R09**. The longest ten functions/methods: `_run_task_impl` 1689 (12414–14102); `run_task` 747 (11666–12412); `_cli_impl` 598 (18260–18857); `_materialize_inputs` 577 (8828–9404); `_run_command_definition` 486 (10603–11088); `_recover_terminal_requests` 291 (14465–14755); `invoke_capability` 269 (11090–11358); `_child_environment` 262 (10063–10324); `_typed_outputs` 239 (9670–9908); `_interactive_review_authority` 227 (3122–3348).
+
+### 4. Are R03, R05 and R08 leaves?
+
+**MEASURED** by AST name references. “Other functions” below excludes references to classes such as `HostError`.
+
+- **R03:** No function references `self` or `GenericPackHost`; no function references `os`; no cross-group function reference found. Runtime-assigned shared names are referenced by `_managed_asset_identity` (`_MANAGED_ASSET_LOCATOR_KEYS`), `_settlement_media_type` (`_SUFFIX_MEDIA_TYPES`) and `_runtime_output_filename` (`_RUNTIME_OUTPUT_NAMESPACES`).
+- **R05:** No `self`/`GenericPackHost` or `os` references. `_normalize_verified_facts` references `_EXECUTION_FACT_EXACT_KEYS`, `_EXECUTION_FACT_MINIMUM_KEYS`, `_MAX_EXECUTION_FACT_BYTES`; `_is_withdrawn` references `_WITHDRAWN_DISPOSITIONS`. `_task_selector` references R08’s `_admitted_task_spec` at [line 1967](/home/user/astrid-agent/astrid/core/execution/generic_host.py:1967); `_execution_contract` in R08 references R05’s `_canonical_digest` at [line 2896](/home/user/astrid-agent/astrid/core/execution/generic_host.py:2896).
+- **R08:** No `self`/`GenericPackHost` or `os` references. Shared-state references: `_attempt_tree_bytes` (`_TASK_OUTPUT_DIAGNOSTIC_NAMES`); `_storage_path_class` (`_RENDERER_WORKSPACE_MARKERS`); `_storage_envelope_measurement` (`_STORAGE_DIAGNOSTIC_PATH_SAMPLE_LIMIT`, `_TASK_OUTPUT_DIAGNOSTIC_NAMES`); `_claim_blocked_capability` (`_TASK_SPECIFIC_WAITING_REASONS`). Its cross-group function references are `_task_selector` (R05) and `_execution_contract` (R05 helper `_canonical_digest`).
+
+`os` is imported as the Runtime filesystem adapter at line 59: `from runtime_protocol.dirfd import filesystem as os`.

@@ -1,0 +1,32 @@
+**1. History and largest additions**
+
+**MEASURED:** I fetched the full history; the clone is no longer shallow. The file grew from **397 lines (Aug 30)** to **18,888 (Nov 21)**. Checkpoints: Aug 30 397; Sep 5 2,802; Sep 12 4,815; Oct 15 13,519; Oct 21 13,973; Oct 26 14,225; Nov 1 16,197; Nov 8 17,565; Nov 10 17,686; Nov 14 18,228; Nov 21 18,888.
+
+**MEASURED:** Top 12 commits by net lines added to this file (additions minus deletions), with the main code added:
+
+| Net | Commit subject | Main addition |
+|---:|---|---|
+| +3,792 | Preserve validated A23 combined integration before latest review merge | Large integration across helpers, schemas, adapters, and host logic |
+| +1,645 | chore(integration): checkpoint restored candidate | Integrated candidate code |
+| +659 | Plan A candidate C: commit Astrid product overlay | Product workflow and host behavior |
+| +575 | Establish Astrid retained process custody and local preparation | Process custody and preparation |
+| +397 | feat(host): add protocol-isolated generic pack executor host | Initial host and protocol |
+| +386 | Preserve full dirty Astrid integration candidate before pinned-main reconciliation | Integrated candidate code |
+| +379 | Publish Astrid workflow, RunPod, and lifecycle updates | Workflow and lifecycle handling |
+| +363 | Astra output law: receipt-only harvest + Vibe/Wan settlement + lifecycle tests | Output settlement and lifecycle |
+| +325 | Reconcile selected-pack execution with generation safety | Admission and safety checks |
+| +262 | Integrate managed Vibe execution and host session lifecycle | Vibe/session handling |
+| +236 | fix: retain fenced ownership through terminal publication reconciliation | Publication and ownership handling |
+| +224 | Drain task subprocess output while live | Subprocess output handling |
+
+**2. What the growth is**
+
+**READ / INFERRED:** Reading these diffs, my rough allocation of added code is: **new `GenericPackHost` methods 30%**, **top-level helpers/adapters 25%**, **new constants, schemas, and records 15%**, **growth within `run_task` / `_run_task_impl` 20%**, **code that fits existing sibling modules 10%**. These buckets overlap; they describe the dominant purpose of additions, not a line-by-line partition. New exception classes are a small share. Examples of code with a plausible sibling home: process-group handling in `process_group.py`, and network policy/argv logic in `network_policy.py` or `network_broker.py`. **READ:** current `run_task` and `_run_task_impl` are at [generic_host.py:11666](/home/user/astrid-agent/astrid/core/execution/generic_host.py:11666) and [generic_host.py:12414](/home/user/astrid-agent/astrid/core/execution/generic_host.py:12414).
+
+**3. In-flight branches**
+
+**MEASURED:** Against `release/15/main`, plan-55 changes `generic_host.py` by **439 additions and 206 deletions** (**+233 net**); the full execution-directory diff adds `resident_sessions.py` (+608), `resident_worker.py` (+199), and `task_waits.py` (+91), among other changes. Plans 77 and 69 have **no execution-directory diff** against that base, including no changes to this file.
+
+**4. Why the file is the easy path**
+
+**INFERRED:** Module-local helpers are convenient seams: tests can monkeypatch them without a new dependency boundary. For example, the host’s network sandbox helper was added here; [test_local_process_capture.py:22](/home/user/astrid-agent/tests/core/execution/test_local_process_capture.py:22) patches it directly. And the retained-process/local-preparation work added host methods that naturally reach for `self`, keeping orchestration logic beside the central class instead of requiring an explicit collaborator. **READ:** The class begins at [generic_host.py:6689](/home/user/astrid-agent/astrid/core/execution/generic_host.py:6689). The current module has siblings for process and network concerns, but the commits show no consistent rule that sends new concerns there.
