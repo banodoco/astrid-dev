@@ -199,3 +199,27 @@ Round 4 will record authenticated Runtime readiness separately from cold and war
 - Plan 75 should measure the shared Runtime work during concurrent authenticated reads, including history and objects. This round supplies no gesture or commit duration.
 - Plan 76 still needs a two-tab overlap witness that starts from a verified writable timeline. Round 3 did not open the second tab.
 - Plan 18 should measure which asynchronous calls gate first usable opening. The existing phase events can show a temporary handoff, and the public-head and readiness assertions still need to complete.
+
+
+## Round 4 — 22 November 2026, reduced opening and save
+
+The fresh direct-route stack used App `183ae4cf457cb02ec3db434cfeb225644d17af61`, Agent `70d2a0f4c1aa1d7e90ddbd84669f4187f260447c` and Runtime `0bb855c364285b15828bbc9cd99dd6389dc54b36`. The authenticated v30 synthetic restore exposed 300 root clips, 300 media references, nine tracks, ten shot targets and one active head at publication `txn-a3dbef5643ae4893bbe8d7fe5ffb1bbf`. A one-clip control is present on this realm. It supplies no paired warm ratio for this round.
+
+| Interval | First usable | Corroborated full opening | Runtime CPU | Browser CPU |
+| --- | ---: | ---: | ---: | ---: |
+| Fresh restore and fresh browser | 42.381 s | 43.334 s | 20.53 s | 41.21 s |
+| Same Runtime, fresh browser after harness correction | 42.526 s | 43.582 s | 20.63 s | 28.21 s |
+| Same-profile reload in the continuation | 29.615 s | 30.493 s | 20.29 s | 41.57 s |
+
+The initial browser sampled 13 timed-out metadata reads. The fourteenth got HTTP 200 in 3.338 s and the harness rejected the valid unwrapped response. It produced no subsecond-read timing or gesture. [App #356](https://github.com/banodoco/astrid-app/pull/356) landed the one-line harness decoder correction as `408c927195694731f511cec943d0f9eb7e936ffb`. The new browser used the same owned Runtime and verified v30 head. In that continuation, the first complete metadata read under one second arrived 152.779 s after the provisional full UI marker. The fifteenth sample took 20.325 ms. Warm-reload public corroboration retried twice after transport errors. The opening results corroborate UI and public identities. The rendered document does not independently expose its head identity.
+
+The only attempted row was the first of nine, `video-move-same-track`. Saving appeared 0.786 s after the gesture, and “The save has not been confirmed” appeared at 31.071 s with Try again and Discard. No scoped commit POST was observed before the recorder sampled its after-head. Both immediate public reads failed with a transport error. The entire row, including those reads, took 183.739 s and used 179.77 Runtime CPU s and 20.09 browser CPU s. This interval supplies neither commit execution time nor a warm gesture-to-Saved time. Guarded Undo refused before editing. Eight rows were unattempted. An independent later public read verified the exact original v30 revision, publication and content digest, one active head and all 300 clip and media identities and ten shot targets. Both fresh profiles were removed, and the owned stack shut down and was deleted. This round counts as the reduced opening round.
+
+The independent advisor kept the same v30 restore, opening/readiness probes, three existing gestures with three repetitions, timing thresholds and receipt-bound Undo for the Round 5 repeat. [App #354](https://github.com/banodoco/astrid-app/pull/354) yields between authenticated deferred pages of size two, with head-only and foreground targets preserved. [Runtime #89](https://github.com/banodoco/astrid-runtime/pull/89) preserves the live verification hook across transient integrity and historical-render stores. The combined run can measure their joint effect. If cheap reads and writes still stall behind authenticated history work, the result goes to the owner for a design decision.
+
+The full 85-scenario matrix remains unfinished because its per-row restoring cleanup repeats the expensive history verification. The standard 616-clip, approximately 2.6 MB fixture, warm ratio, two consecutive passing full rounds and two-second any-time save claim remain open.
+
+- **Plan 63:** use the observed unconfirmed move to specify evidence across the local durable queue, first dispatched request, receipt and Saved. Keep the known accepted-but-unconfirmed case from Round 2 distinct.
+- **Plan 75:** measure cheap-read availability, warm opening, verification and row CPU separately. The large Runtime CPU interval here includes two failed verification reads.
+- **Plan 76:** retain the simultaneous-writer test. This reduced round used one writing tab, so it gives no contention result.
+- **Plan 18:** keep first usability distinct from transport and durable save readiness. Trace the observed gap between the allowed gesture and an actual dispatch.
