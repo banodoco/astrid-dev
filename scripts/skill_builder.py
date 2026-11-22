@@ -3,7 +3,12 @@ from __future__ import annotations
 
 from pathlib import Path
 import json
+import ctypes
+import errno
 import os
+import stat
+import sys
+from contextlib import contextmanager
 import re
 import shutil
 import tempfile
@@ -438,59 +443,143 @@ def _build_output(output: Path, expected: dict[str, tuple[str, str]]) -> list[st
     return actions
 
 
+_LOCK_CONTENT = b"astrid-dev-skill-build-lock-v1\n"
+
+
+@contextmanager
+def _build_lock(parent: Path):
+    """Nonblocking cooperative lock at a stable, owned, non-symlink path."""
+    try:
+        import fcntl
+    except ImportError as exc:
+        raise OSError(errno.ENOTSUP, "skill build locking unavailable") from exc
+    if not hasattr(os, "O_NOFOLLOW"):
+        raise OSError(errno.ENOTSUP, "safe lock opening unavailable")
+    path = parent / ".skills-build.lock"
+    flags = os.O_RDWR | os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0)
+    # Prepare complete contents before linking the stable lock name. A process
+    # death during setup cannot strand a half-written public lock file.
+    temp_fd, temp_name = tempfile.mkstemp(prefix=".skills-lock-", dir=parent)
+    try:
+        with os.fdopen(temp_fd, "wb") as prepared:
+            prepared.write(_LOCK_CONTENT)
+        try:
+            os.link(temp_name, path, follow_symlinks=False)
+        except FileExistsError:
+            pass
+    finally:
+        os.unlink(temp_name)
+    fd = os.open(path, flags)
+    try:
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid():
+            raise ValueError("refusing foreign skill build lock")
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise RuntimeError("another skill build is in progress") from exc
+        identity = os.stat(path, follow_symlinks=False)
+        if (info.st_dev, info.st_ino) != (identity.st_dev, identity.st_ino):
+            raise ValueError("skill build lock changed during acquisition")
+        if os.read(fd, len(_LOCK_CONTENT) + 1) != _LOCK_CONTENT:
+            raise ValueError("refusing foreign skill build lock")
+        yield
+    finally:
+        os.close(fd)
+
+
+def _exchange_paths(left: Path, right: Path) -> None:
+    """Exchange two existing paths or fail closed if unsupported."""
+    libc = ctypes.CDLL(None, use_errno=True)
+    if sys.platform == "darwin":
+        function = getattr(libc, "renamex_np", None)
+        if function is None:
+            raise OSError(errno.ENOTSUP, "atomic directory exchange unavailable")
+        function.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint]
+        result = function(os.fsencode(left), os.fsencode(right), 2)  # RENAME_SWAP
+    elif sys.platform.startswith("linux"):
+        function = getattr(libc, "renameat2", None)
+        if function is None:
+            raise OSError(errno.ENOTSUP, "atomic directory exchange unavailable")
+        function.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
+        result = function(-100, os.fsencode(left), -100, os.fsencode(right), 2)  # AT_FDCWD, RENAME_EXCHANGE
+    else:
+        raise OSError(errno.ENOTSUP, "atomic directory exchange unavailable")
+    if result != 0:
+        code = ctypes.get_errno()
+        raise OSError(code, os.strerror(code))
+
+
+def _probe_exchange(parent: Path) -> None:
+    """Verify the actual filesystem supports populated-directory exchange."""
+    with tempfile.TemporaryDirectory(prefix=".skills-probe-", dir=parent) as scratch:
+        left, right = Path(scratch) / "left", Path(scratch) / "right"
+        left.mkdir()
+        right.mkdir()
+        (left / "old").touch()
+        (right / "new").touch()
+        _exchange_paths(left, right)
+        if not (left / "new").is_file() or not (right / "old").is_file():
+            raise OSError(errno.ENOTSUP, "atomic directory exchange probe failed")
+
+
 def build_packages(root: Path) -> list[str]:
-    """Stage the complete owned tree and restore it if publication fails."""
+    """Publish an owned real-directory generation using a capability-gated exchange."""
     root = Path(root).resolve()
-    expected = expected_packages(root)
     output = _output_root(root)
     output.parent.mkdir(parents=True, exist_ok=True)
-    if output.exists() and not output.is_dir():
-        raise ValueError("generated skills root is not a directory")
-    existing = {item.name: item for item in output.iterdir()} if output.exists() else {}
-    for name, package in sorted(existing.items()):
-        _assert_package_dir(package, stale=name not in expected)
-    # Preserve the existing refusal for read-only active files and check every
-    # one before doing any work on the staged copy.
-    for name, (content, source) in expected.items():
-        package = existing.get(name)
-        if package is None:
-            continue
-        skill = package / "SKILL.md"
-        if skill.exists() and skill.read_text(encoding="utf-8") != content:
-            with skill.open("r+", encoding="utf-8"):
-                pass
-        marker = package / MARKER
-        if marker.read_text(encoding="utf-8") != source:
-            with marker.open("r+", encoding="utf-8"):
-                pass
-    scratch = Path(tempfile.mkdtemp(prefix=".skills-build-", dir=output.parent))
-    stage = scratch / "skills"
-    backup = scratch / "previous"
-    preserve_backup = False
-    try:
-        if output.exists():
-            shutil.copytree(output, stage, symlinks=True)
-        else:
-            stage.mkdir()
-        actions = _build_output(stage, expected)
-        if not actions and output.exists():
+    with _build_lock(output.parent):
+        _output_root(root)  # Refuse a changed or symlinked output path again.
+        expected = expected_packages(root)
+        if output.exists() and not output.is_dir():
+            raise ValueError("generated skills root is not a directory")
+        initial_stat = output.stat() if output.exists() else None
+        initial_identity = ((initial_stat.st_dev, initial_stat.st_ino) if initial_stat else None)
+        existing = {item.name: item for item in output.iterdir()} if output.exists() else {}
+        for name, package in sorted(existing.items()):
+            _assert_package_dir(package, stale=name not in expected)
+        for name, (content, source) in expected.items():
+            package = existing.get(name)
+            if package is None:
+                continue
+            skill = package / "SKILL.md"
+            if skill.exists() and skill.read_text(encoding="utf-8") != content:
+                with skill.open("r+", encoding="utf-8"):
+                    pass
+            marker = package / MARKER
+            if marker.read_text(encoding="utf-8") != source:
+                with marker.open("r+", encoding="utf-8"):
+                    pass
+        _probe_exchange(output.parent)
+        with tempfile.TemporaryDirectory(prefix=".skills-build-", dir=output.parent,
+                                         ignore_cleanup_errors=True) as scratch:
+            stage = Path(scratch) / "skills"
+            if output.exists():
+                shutil.copytree(output, stage, symlinks=True)
+            else:
+                stage.mkdir()
+            actions = _build_output(stage, expected)
+            if not actions and output.exists():
+                return actions
+            if expected_packages(root) != expected:
+                raise RuntimeError("skill sources changed during build; retry")
+            _output_root(root)
+            current_stat = output.stat() if output.exists() else None
+            current_identity = ((current_stat.st_dev, current_stat.st_ino) if current_stat else None)
+            if current_identity != initial_identity:
+                raise RuntimeError("skill output changed during build; retry")
+            for name, package in sorted(existing.items()):
+                _assert_package_dir(package, stale=name not in expected)
+            # Initial publication creates an empty owned directory without
+            # replacing an existing path; subsequent publication exchanges it.
+            created = False
+            if not output.exists():
+                output.mkdir()
+                created = True
+            try:
+                _exchange_paths(output, stage)
+            except BaseException:
+                if created:
+                    output.rmdir()
+                raise
             return actions
-        had_output = output.exists()
-        if had_output:
-            os.replace(output, backup)
-        try:
-            os.replace(stage, output)
-        except BaseException:
-            if had_output:
-                try:
-                    os.replace(backup, output)
-                except BaseException as rollback_error:
-                    # Never remove the only surviving original if restoration
-                    # itself fails; report the recovery path to the caller.
-                    preserve_backup = True
-                    raise RuntimeError(f"package rollback failed; original retained at {backup}") from rollback_error
-            raise
-        return actions
-    finally:
-        if not preserve_backup:
-            shutil.rmtree(scratch, ignore_errors=True)
