@@ -52,3 +52,7 @@ Runtime [#77](https://github.com/banodoco/astrid-runtime/pull/77) took in Plan 6
 
 
 - **Round 5, 22 November 2026.** App `be9cc240`, Agent `18adee80`, Runtime `d7be2f04`. The 300-clip v30 opened at 42.669 s first usable and 43.727 s corroborated full. Warm full opening took 28.564 s. The first complete metadata reply under a second came 205.452 s after the UI marker. The move remained unconfirmed at 30.960 s and the public after-reads failed. Guarded Undo made no write, leaving eight unattempted repetitions. The whole row took 451.819 s and used 447.99 Runtime CPU s. Independent postflight verified exact v30. The [round record](rounds.md#round-5--22-november-2026-blocked-save-at-the-round-cap) records the stop, limits and plan deltas.
+
+## Compiled drag diagnostics
+
+- The first-writable and settled v30 arms reproduced the same pre-outbox refusal. The pointer requested V6, the planner resolved a shot-occupied row, and capture rejected the edit after about 0.23 s. The settled arm verified the original public head after the gesture. All three save timing segments remain unobserved. The collision-free drag, Runtime open profile, same-process second open and isolated App experiment remain open. [Round record](rounds.md#compiled-drag-at-first-readiness-and-after-history)
