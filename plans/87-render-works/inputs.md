@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Reshaped on 23 November 2026 at the owner's direction: this plan gets the renderer working end to end with the fixes in the proper code; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline fixes; everything else is an issue. Filing authority only; no run has started.
+**Scope decision:** Included in Release 15 by the owner on 23 November 2026. Reshaped the same day at the owner's direction: this plan gets the renderer working end to end with the fixes in the proper code; [Plan 88](../88-timeline-edits-land/plan.md) lands the timeline fixes; everything else is an issue. Filing authority only; no run has started.
 
 **Prior art:** Plans 27, 39, 59, 69, 76, 77, 78 and 83 were read for overlap ([landscape](evidence/eff/landscape.md)). No plan owns "render works"; Plan 27 keeps export choices, Plan 78 holds the open motion pack pin, Plan 83 the custody module split. The first full draft by an independent judge is kept as [evidence](evidence/shipplan/PLAN.md).
 

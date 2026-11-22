@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Proposed on 23 November 2026 at the owner's direction: a second plan, separate from the render plan, that merges the useful timeline fixes from the same session and then iterates on real edits until they work. Filing authority only; no run has started.
+**Scope decision:** Included in Release 15 by the owner on 23 November 2026, at whose direction it was written: a second plan, separate from the render plan, that merges the useful timeline fixes from the same session and then iterates on real edits until they work. Filing authority only; no run has started.
 
 **Prior art:** Plans 18, 63, 69, 76 and 77 own the designs around this work; their boundaries are in [plan.md](plan.md#outcome-and-scope). The three donor commits and their two reviews are the starting point. All evidence is held by [Plan 87](../87-render-works/inputs.md).
 
