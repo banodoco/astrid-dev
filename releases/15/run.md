@@ -24,7 +24,7 @@ Not set. Release 15 starts after Release 14 publishes ([brief](../15.md)); the r
 | Plan 79 (local media of any size) | not started | — | Queued; scope accepted; starts after Plan 77 lands. The interim 1 GiB limit is in the easy-wins batch |
 | Plan 72 (project delivery) | its own manager, not yet accepted by the Lead | — | Hold. Its manager asked on #1245 for a go, a named single manager and a cut commit. No branch is cut and nothing is authorized until the owner decides its scope, which is still pending |
 | Plans 39, 52 | Release 14 Lead, on `release/14/plan-*` | — | Mid-flight under Release 14; no Release 15 branch or lane. Their accountable session moves when the owner says |
-| Plan 13 (execution host) | not started | — | Queued; extraction rows written and critiqued on 22 November; EX-0, the growth guard, and EX-1 need no decision. Its mapping work is on `release/14/plan-13` |
+| Plan 13 (execution host) | not started | — | Queued; all of it (EX-0 to EX-3) is this release's, and the later extraction is Plan 83, in no release; EX-0, the growth guard, and EX-1 need no decision. Its mapping work is on `release/14/plan-13` |
 | Plan 81 (once per command) | not started | [handover](../../plans/81-once-per-command/handover.md) | Queued; researched and ready for a manager; US-1 needs no decision |
 | Plans 50, 40, 53, 63, 76, 18 | not started | — | Queued; branches not yet cut |
 
