@@ -4,7 +4,7 @@
 
 ## Planning evidence
 
-**Scope decision:** Pending — The owner asked for this plan on 22 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): "I think we should include a sub 1s plan on this release with a sub 0.1s for later", then "can you create that plan and associate with 15 and make the other unplanned, use lunas and terras to properly understand everything for the sub 1s plan so that we can give the plan to a manager to drive to completion". She was then given the end state, the estimate of about 20 days and the recommended answers to D1 to D5, and replied "Agree with your recommendations". The scope stays pending only until the independent critique is recorded below. Next: record it, then mark the scope accepted.
+**Scope decision:** Pending — The owner asked for this plan on 22 November 2026, in the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG): "I think we should include a sub 1s plan on this release with a sub 0.1s for later", then "can you create that plan and associate with 15 and make the other unplanned, use lunas and terras to properly understand everything for the sub 1s plan so that we can give the plan to a manager to drive to completion". She was given the first end state, an estimate of about 20 days and the recommended answers to D1 to D5, and replied "Agree with your recommendations". The critique then changed three things she has not seen: the generation budget is not promised until a real baseline is taken, the estimate is about 22 days (18 to 28), and D6 is new. Next: she reads those and confirms.
 
 **Prior art:** Read and measured on 22 November 2026 at astrid-agent [`048ab307`](https://github.com/banodoco/astrid-agent/tree/048ab307) (`release/15/main` plus nine small unrelated fixes), astrid-runtime [`1758a6df`](https://github.com/banodoco/astrid-runtime/tree/1758a6df) and VibeComfy `e65f4941`, by four Codex Terra tracers and two Luna helpers. Each marked its claims measured, read or inferred; their full reports are [evidence/research-A.txt](evidence/research-A.txt) to [research-G.txt](evidence/research-G.txt). Measurements are medians of five in one shared container running from source, so they are relative, not absolute.
 
@@ -39,11 +39,19 @@
 | A resident process that keeps everything in memory | Not here. It is Plan 55's design for a tenth of a second and has been costly to land |
 | Trim imports and start-up | Not here. Start-up is 0.17 to 0.36 s; it matters only below a second |
 
-**Challenge:** Pending — an independent critique is required before greenlight: this plan exceeds five days and changes commands every user and agent runs. Next: record the critic's findings here, with what was accepted and what was set aside and why.
+**Challenge:** Reviewed — commissioned from the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) on 22 November 2026 and done by an independent Codex critic (`gpt-6.2-astra`, high effort, read-only brief, no stake in the draft). It read code and the research; it ran no tests, CI, installed command line or live ComfyUI. The owner asked that its ideas be weighed, not adopted wholesale; each finding below says what the planner did with it.
+
+- **Accepted — one card had the cache wrong.** The draft keyed the compiled workflow on its inputs, so a new prompt would have rebuilt it (3.4 s) and the budget would have held only for a repeated prompt. Now US-5b reuses the compiled workflow and fills in the prompt and seed, and the budget test runs a changed prompt.
+- **Accepted — the generation budget is not yet proven reachable.** After the caching work the likeliest stage to keep it above a second is the live check of ComfyUI's node list (`astrid/core/generation/backends/comfy_target.py:721`), which nobody has timed on a real ComfyUI. Now US-0 takes a real baseline first, a re-estimate gate follows it, and D6 is new.
+- **Accepted — the four caches need four different proofs of freshness.** They are written into RS1's row.
+- **Accepted — card corrections:** the Runtime writes its stage log after replying, so US-1 no longer joins it into the command's result; the daemon fixture runs from a checkout and Windows does not run fast checks on pull requests, so US-2 says what CI can and cannot assert; an installed Astrid already skips source hashing and two more digests precede host attachment (`astrid/sdk/host_bootstrap.py:2169`), now in US-3; named lookups already filter, so US-4 names the caller's default enumeration (`astrid/sdk/generation.py:1697`) and pins the existing tests; US-5 is split into building once per command (US-5a) and reuse across commands (US-5b); US-6 pins the disjoint-edit merge, because refusing every changed head would break valid merges; US-8 is narrowed to the client's own locks and tests thread contention.
+- **Partly accepted — "cut batching first".** It is right that a batch does not help the one-edit budget, and US-7 now says so and is marked first to cut. It stays, because one command per clip is the cost agents feel most and the owner chose its form (D4).
+- **Accepted — the estimate.** Twenty days is plausible for the work; the range was too narrow to promise both budgets. Now about 22 (18 to 28), re-stated at the gate.
+- **Noted:** Plan 77's branch also changes generation input inspection and raises the client's request timeout to 300 seconds.
 
 **Proof and limits:** The completion cases in [plan.md](plan.md#completion). Limits: the budget test uses a stand-in ComfyUI; the container's numbers were taken from source under shared load; nobody has yet timed `generate` to an admitted task, or any command on an installed Astrid, which US-1 and US-2 do first.
 
-**Review rounds:** Recommended: one review stop (RS1) on the cache design note, because a wrong key runs the wrong code and three cards build on it, and one round at the end. Pending — the owner confirms.
+**Review rounds:** Recommended: one review stop (RS1) on the cache design note, because a wrong key could admit a different graph under an earlier approval and three cards build on it, and one round at the end. Pending — the owner confirms.
 
 **Run start:** Pending — No run is authorized. Next: when the owner starts a run, record the date, the tasks it covers, the accountable session, what it may do without asking and what still needs the owner's go.
 
@@ -54,6 +62,7 @@
 - **D3 — trusting an install.** May packs that came with an installed Astrid skip re-hashing, on the strength of the install's stamp, while a person's own packs and project packs are still hashed? Recommendation: yes. **Decided 22 November 2026: yes.** Same source as D1.
 - **D4 — the batch form.** (a) A file of operations. (b) Repeated flags in one command. Recommendation: (a); each item's arguments stay unambiguous. **Decided 22 November 2026: (a),** a file of operations. Same source as D1.
 - **D5 — limits for the waits that have none.** Recommendation: reuse the 135 seconds the acquisition lock already has, with the waiting line after 2 seconds. **Decided 22 November 2026: yes,** 135 seconds, with the waiting line after 2 seconds. Same source as D1.
+- **D6 — ComfyUI's node list.** Each `generate` asks the attached ComfyUI what nodes and models it has. If the baseline shows that this alone takes most of a second: (a) keep asking every time and accept a budget above one second with a real ComfyUI; (b) reuse the last answer for a short time and refresh when ComfyUI rejects a job; (c) ask ComfyUI for a cheap sign that nothing changed, if it has one. Recommendation: none until US-0 measures it; (a) is the safe default. Pending.
 
 ## Source identities
 

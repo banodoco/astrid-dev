@@ -8,9 +8,9 @@
 
 **Owner:** Unassigned
 
-**Estimate:** About 20 engineering days (17 to 24): the timings and the budget test about 5, generation about 9, timeline commands about 4, the waits about 1.5, review about 1. Three workers can run most of it side by side.
+**Estimate:** About 22 engineering days (18 to 28): the timings, baseline and budget test about 6.5, generation about 10.5, timeline commands about 4, the client's waits about 2, reviews about 2. It is re-stated after the first real measurements and the cache design review ([tasks.md](tasks.md)). Three workers can run most of it side by side.
 
-**Waiting on:** a manager, and the independent critique being recorded. The owner decided D1 to D5 on 22 November 2026 ([inputs.md](inputs.md#owner-decisions)).
+**Waiting on:** a manager; a machine with an installed Astrid and a real ComfyUI for the baseline (US-0); the owner reading what the critique changed, and D6. D1 to D5 were decided on 22 November 2026 ([inputs.md](inputs.md#owner-decisions)). US-1 can start now.
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog refreshes itself on `main` after merge, so you need not commit it. Its priority is its place in [priority.md](../../plans/priority.md); a plan not listed there comes after the listed ones. A manager starts at the [handover](handover.md).
 
@@ -22,16 +22,16 @@ Measured on 22 November 2026 on the Release 15 code, run from source ([inputs.md
 
 **Two budgets,** at the median, on a warm local machine with an installed Astrid:
 
-- **Command to queued:** from starting `astrid generate` to the Runtime having admitted the task, under 1 second.
+- **Command to queued:** from starting `astrid generate` to the Runtime having admitted the task, under 1 second, for a repeated prompt and for a changed one. A workflow used for the first time, or one whose files or target changed, is built in full and is outside the budget.
 - **Command to accepted:** from starting an `astrid timelines` edit to the Runtime having accepted the commit, under 1 second on an ordinary timeline.
 
 **Included:**
 
 - **Timings everyone can see.** Each stage of both commands is timed, shown on request and in the JSON result, and a command that has waited two seconds says what for.
-- **A test that holds the budgets.** It runs on every pull request against a real Runtime and a stand-in ComfyUI, and fails when a budget is exceeded.
+- **A test that holds the ceilings.** It runs on every pull request against a real Runtime and a stand-in ComfyUI, and fails when a ceiling is exceeded. One real baseline on an installed Astrid with a real ComfyUI is taken at the start and at the end.
 - **Each thing worked out once.** Source identity, pack discovery, the entry, the registries and the compiled workflow are each computed once and reused while their inputs are unchanged.
 - **Fewer round trips for timeline commands,** and many edits in one command.
-- **No silent waits.** Every lock and wait on these two paths has a limit and a message.
+- **No silent waits in the client.** Every client-side lock on these two paths has a limit and a message; a command waiting on the Runtime says so.
 
 **Also measured, with no budget yet:** starting Astrid until it is ready, and one look at a timeline (`timelines visualize`). The numbers decide whether either needs a plan.
 
@@ -46,14 +46,15 @@ It takes three things that already exist, and no more: Plan 55's standing meter,
 ## Sequence and readiness
 
 1. **US-1, the timings,** first: nothing after it can be proven without them.
-2. **US-2, the budget test,** as soon as US-1 lands. It starts by recording today's numbers as ceilings that may only fall, and ends at the budgets.
-3. **RS1,** a review of one design note: what each cache is keyed on and what makes it stale. It gates US-3, US-4 and US-5 only.
-4. **Three lanes side by side:** generation (US-3, US-4, US-5); timeline commands (US-6, then US-7); waits (US-8).
-5. **R,** one review round on the combined result.
+2. **US-0, one real baseline,** and **US-2, the budget test,** as soon as US-1 lands. US-2 starts by recording today's numbers as ceilings that may only fall.
+3. **RS1,** a review of one design note: what each cache is keyed on and what makes it stale. It gates US-3, US-4 and US-5b.
+4. **The re-estimate gate.** With the baseline and RS1 in, the manager says whether the generation budget is reachable without D6 and re-states the estimate, to the owner.
+5. **Three lanes side by side:** generation (US-5a, then US-3, US-4, US-5b); timeline commands (US-6, then US-7); the client's waits (US-8).
+6. **R,** one review round on the combined result.
 
-**Real dependencies:** `release/15/plan-77` edits the timeline SDK files US-6 and US-7 change, and raises the client's request timeout. US-6 and US-7 start from `release/15/main` after Plan 77 lands there, or merge its branch first; the manager records which. US-5 reads Plan 55's branch for its donor commits and must not merge that branch.
+**Real dependencies:** `release/15/plan-77` edits the timeline SDK files US-6 and US-7 change, and raises the client's request timeout. US-6 and US-7 start from `release/15/main` after Plan 77 lands there, or merge its branch first; the manager records which. US-5b reads Plan 55's branch for its donor commits and must not merge that branch. Plan 77's branch also changes generation input inspection.
 
-**Unresolved:** the number of review rounds. D1 to D5 were decided on 22 November 2026. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
+**Unresolved:** D6 and the number of review rounds. D1 to D5 were decided on 22 November 2026. Recording this plan authorizes no implementation. Task details are in [tasks.md](tasks.md).
 
 ## Interfaces and handoff
 
@@ -63,10 +64,10 @@ It takes three things that already exist, and no more: Plan 55's standing meter,
 
 ## Completion
 
-- **Budgets:** the budget test passes at under 1 second for command to queued and for command to accepted, on Linux and Windows in CI, with the median of at least five warm runs.
+- **Budgets:** on an installed Astrid with a real ComfyUI, the end baseline (US-0) shows under 1 second at the median for command to queued, with a repeated and with a changed prompt, and for command to accepted. In CI the budget test holds the from-source figure of 2 seconds, and the one-second budgets too if an installed-style fixture proves possible.
 - **The test is real:** adding a 1.5-second delay to any one stage makes it fail and names the stage.
 - **Nothing stale:** editing a workflow, a pack file, a model list or a source file between two commands changes the result of the second, and the timings show the value was recomputed.
 - **Slow says why:** a command held behind another process's lock prints what it is waiting for after two seconds, and gives up with a clear message at its limit.
 - **Batch:** twenty clips are added by one command in one accepted commit, and a refused batch changes nothing.
 - **Unchanged behaviour:** every refusal a command gives today before queuing or committing, it still gives, at the same point.
-- **Limits of the proof:** CI uses a stand-in ComfyUI, so the budget excludes a real ComfyUI's own answer times; a live run on an installed Astrid with a real ComfyUI is recorded once at the end and is not a gate. Source checkouts are measured against their own figure (D2). Landing and publishing remain the owner's.
+- **Limits of the proof:** CI uses a stand-in ComfyUI and a Runtime run from a checkout, so the one-second budgets rest on two real baselines, not on every pull request. The generation budget is not promised until the first baseline shows what the live check of ComfyUI's node list costs: if that alone exceeds the budget, D6 decides. Landing and publishing remain the owner's.

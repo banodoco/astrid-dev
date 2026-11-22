@@ -9,8 +9,8 @@ For the manager who takes this plan. Nothing has started. Use the [Manage skill]
 1. **Read** [plan.md](plan.md), [tasks.md](tasks.md), then the research report named in each card ([evidence/](evidence/)). The reports cite lines at the commits in [inputs.md](inputs.md#source-identities); re-check each before briefing a worker.
 2. **Check what is decided.** D1 to D5 in [inputs.md](inputs.md#owner-decisions) are the owner's. US-1 and US-2 need none of them.
 3. **Cut `release/15/plan-81`** from `release/15/main` in astrid-agent, astrid-runtime and VibeComfy, and record the commits in the brief's Branches table and in [inputs.md](inputs.md#source-identities).
-4. **Start US-1.** When it lands, run US-2 to record today's numbers before anything is made faster: those are the ceilings.
-5. **Write the cache design note for RS1** while US-2 runs, and commission its review. Do not dispatch US-3, US-4 or US-5 before RS1 clears.
+4. **Start US-1.** When it lands, arrange US-0 (a real baseline on an installed Astrid with a real ComfyUI; ask the owner whose machine) and run US-2 to record today's numbers before anything is made faster: those are the ceilings.
+5. **Write the cache design note for RS1** while US-2 runs, and commission its review. Do not dispatch US-3, US-4 or US-5b before RS1 clears, and take the re-estimate to the owner first. US-5a needs neither.
 
 ## Workers
 
