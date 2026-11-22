@@ -27,9 +27,9 @@ The owner asked on 22 November 2026, in the [Release 15 Lead session](https://cl
 
 ## Owner decisions
 
-- **D1 — how much in Release 15.** (a) The guard, the safety net and the first measured extraction (EX-0 to EX-3), about 5 to 6 days, then a re-estimate. (b) Everything, about 30 days. (c) The guard only (EX-0), about 2 days. Recommendation: (a). The guard alone stops the growth; the first extraction tells us what the rest really costs. Pending.
+- **D1 — how much in Release 15.** **Decided 22 November 2026: everything that leaves the file without touching the class**, now EX-0 to EX-7. In the [Release 15 Lead session](https://claude.ai/code/session_011EzfW1gtAhRQwk8pgJMzhG) the owner wrote "Let's include them and the first part of the speed stuff on this release", quoting the Lead's earlier line "The first six steps are about 11 days and take roughly 6,000 lines out". Those six steps were the first draft's; the critique then showed that figure was optimistic and that some of that code has to stay in the host, so the same scope is now eight rows, about 16 days and about 4,500 to 5,500 lines. The Lead's own recommendation after the critique had been the smaller EX-0 to EX-3; she chose the larger scope, and EX-3 reports the re-estimate to her.
 - **D2 — who may let the file grow.** With a check against the merge base there is no number to raise; an exception has to be a visible change to the check itself. Recommendation: only the owner approves one, in a pull request that changes nothing else. Pending.
-- **D3 — local preparation and the command-line lifecycle (EX-8).** It is custody-sensitive and the map ties it to [Plan 38](../38-one-process-identity/plan.md), which is in Release 16. Recommendation: it waits for Plan 38. Pending.
+- **D3 — local preparation and the command-line lifecycle (EX-8).** **Decided 22 November 2026: not in Release 15.** It was not among the six steps she included; it is custody-sensitive and the map ties it to [Plan 38](../38-one-process-identity/plan.md), which is in Release 16.
 
 ## Starting code
 

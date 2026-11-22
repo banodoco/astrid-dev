@@ -8,9 +8,9 @@
 
 **Owner:** Release 14 Lead (`session_011EzfW3Zy19ncNecpQnKb7D`), by [packet dispatch](../../releases/14/run.md)
 
-**Estimate:** About 5 to 6 engineering days committed: the growth guard, the safety net and the first, measured extraction. About 25 more as a planning allowance for the rest, re-stated after that first extraction. HM1 to HM3 are done.
+**Estimate:** About 16 engineering days in Release 15 (13 to 19) for the growth guard and everything that leaves the file without touching the class, re-stated after the first measured extraction. About 17 more, in no release, for local preparation and the class itself. HM1 to HM3 are done.
 
-**Waiting on:** the owner's decisions D1 to D3 in [inputs.md](inputs.md#owner-decisions); a manager. It no longer waits for Plan 55, which left Release 15 on 22 November 2026.
+**Waiting on:** a manager for the Release 15 extraction, and the owner's decision D2 in [inputs.md](inputs.md#owner-decisions). The owner chose the Release 15 scope on 22 November 2026. It no longer waits for Plan 55, which left Release 15 the same day.
 
 **Vision role:** Foundational enabler — clarifies execution modules while preserving existing behavior.
 
@@ -36,7 +36,7 @@ Drafted on 22 November 2026 and changed by an independent critique the same day.
 
 **First, nothing can grow.** One check compares a pull request with its merge base: this file may not gain lines, the class may not gain methods, and a function already over 200 lines may not grow. Three fixed numbers would not be enough: deleting code elsewhere could pay for a longer method, and a baseline can be edited in the same change. The existing check only asks that a document's number be updated, and it is failing today ([#1290](https://github.com/banodoco/astrid-dev/issues/1290)). This is a guard, not a size target; the plan still sets none.
 
-**Then one small, measured extraction** of the genuine leaves, and a re-estimate before anything else moves. The first draft called a third of the definitions stateless; the critique found the exceptions among them, and that the Runtime adapter and source custody each stand on helpers that have to move first. So the order after the leaves is: what the adapter stands on, the adapter, source custody, interactive review, local preparation with Plan 38, and last the class. The rows are in [tasks.md](tasks.md#release-15-the-extraction).
+**Then one small, measured extraction** of the genuine leaves, and a re-estimate reported to the owner. The first draft called a third of the definitions stateless; the critique found the exceptions among them, and that the Runtime adapter and source custody each stand on helpers that have to move first. So the order after the leaves is: what the adapter stands on, the adapter, source custody, interactive review, local preparation with Plan 38, and last the class. The rows are in [tasks.md](tasks.md#release-15-the-extraction).
 
 **A move is proved where the name is used.** Tests patch names on this module, Windows tests replace its `os`, production launches it with `-m`, and one test reads its source. A moved function with an identical body can still behave differently. Each card says how that is shown.
 
