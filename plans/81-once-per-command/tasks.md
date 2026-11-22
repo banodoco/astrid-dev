@@ -4,6 +4,10 @@
 
 ## Now — 2026-11-22
 
+The owner approved initial US-2 ceilings as the highest median of at least three independent calibration runs, rounded up to 0.1 s; ceilings may only fall afterward. The owner also approved changing the two US-1 timeline assertions at `tests/sdk/test_command_timings_paths.py:39-45` and `:88-93` for `US-1c`, so timeline JSON carries timings only with `--timings`; no other existing test is authorized to change. The owner lifted the Plan 77 hold for US-6 and US-7; US-6 is underway on its own branch, and US-7 follows it. Plan 77 and subsequent forwards still require integration and inventory comparison when landed.
+
+US-2's integrated candidate `3136181124b2cc5b0e7a0c27a2db021b5c1ba70d` has owner-approved initial ceilings of 20.0 s same prompt, 19.9 s changed prompt and 4.2 s timeline. Two focused gate runs failed timeline at 4.539 s and 4.813 s; generation passed. Paired measurements against the earlier source are underway to distinguish a regression from noise; generation ceilings will be recalibrated down after those measurements. Both failures remain recorded under `run/us2-normalized/` in the run workspace. No ceiling was raised.
+
 Agent plan head is `315b8b7a9336ec3147b399f6bf6f168011d09b27` (US-4); Runtime plan head is `182311f9d363712c0339254bd27e091d0e18318d` (US-3 source hashing partial). Forward inventory: Runtime 29 passed; Agent 132 passed and 13 failed, with 37 setup errors resolved by the pinned-source rerun (34 passed, three failed). US-2 candidate `2217ac4c5943e13ef7ba10d6affddb51036d9d99` is unmerged: request-template calibration and all 24 observed unique physical delay stages are recorded; an earlier changed-prompt gate failed and a later exact candidate gate passed without raising ceilings; US-5a landed; US-8 landed after focused proof; US-2 ceiling decision is with the owner. Spend: CPU only.
 
 Waiting: US-0 on the owner's machine (handoff sent); US-6 and US-7 on Plan 77. US-4 landed after focused verification; US-3 source hashing landed but its D2 timing target remains open. Review R is commissioned by the host after the other work.
