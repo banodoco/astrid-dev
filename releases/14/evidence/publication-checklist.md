@@ -52,26 +52,23 @@ FIX-18's [exact four-ID task](../packets/R14-FIX-18.md) owns their cause/disposi
 ## C. Reproducible final diff procedure (Lead dispatches workflows)
 
 1. Freeze and record **all full 40-character SHAs**: Agent, Runtime, VibeComfy, App, pinned lifecycle, Runtime schema digest, served manifest bytes/digest. Confirm Agent's `runtime.lock.json` and `astrid/packs/runpod/pins.json` agree with App manifest, and Plans 59/64/65/FIX-15/16/17/18 qualify in the intended merge order.
-2. Obtain complete CI, Agent Lanes, App Tests (Vitest per-ID), App Lanes, App Direct Journey and App E2E on exact R13 and frozen candidate source SHAs. The R13 App Vitest log lacks assertion IDs, so the Lead must obtain a native `vitest --reporter=json --outputFile=...` (or equivalent unaltered native assertion-level artifact) on `de7dd1e6`, plus the same form on the frozen App SHA. Existing App E2E and Lanes **dot-reporter logs likewise lack complete passing Playwright IDs**: obtain native `playwright --reporter=json` full suite reports on both exact SHAs for every affected job, or use another native reporter providing complete per-test statuses and stable project IDs. Preserve the original test selectors and assertions. Read `report.md`/artifacts, not inferred test totals. Do not alter or skip a test to make collection green.
-3. Populate the `candidate` SHA and workflow run IDs in [publication-diff-inputs.json](publication-diff-inputs.json) **only after actual runs**. If a workflow is retried, name the exact attempt; do not splice attempt-one results into attempt-two job identities. Explicitly map only verified job/test renames, with provenance. Every `job_renames` and `test_id_renames` value must be an object like `{"to":"new stable ID","reason":"verified cause","source":"PR, run, or source permalink"}`; a plain string or unproven rename remains blocked.
-4. From a checkout of astrid-dev, with read-only GitHub API credentials and **no dispatch**:
+2. Obtain Agent CI and Lanes, App Tests, Lanes, Direct Journey and E2E, Runtime CI and VibeComfy `ci` on the recorded R13 and frozen R14 SHAs. Use full native Vitest JUnit or JSON with the same format on both App SHAs. Obtain native Playwright JSON for each job that uses a dot reporter. Keep the original selectors and assertions. Record the run, job, attempt, source SHA and artifact or command for each supplied report.
+3. Copy [publication-diff-inputs.json](publication-diff-inputs.json) to `$R14_FREEZE_DIR/inputs.json` and fill in the four candidate SHAs and workflow run IDs. Set an `attempts` map beside `workflows` for any workflow whose selected attempt differs from 1. Provide a reason and source for every documented rename, using `{"to":"new stable ID","reason":"verified cause","source":"PR, run, or source permalink"}`. Save the Playwright bindings in `$R14_FREEZE_DIR/playwright.json` as a JSON object mapping each `SIDE/WORKFLOW/JOB` to its native report's absolute path. Use `baseline` and `candidate` as sides and use the exact job names.
+4. From an astrid-dev checkout, export read-only `GH_TOKEN` or `GITHUB_TOKEN` and set `R14_FREEZE_DIR` to the directory containing the final inputs. Run:
 
    ```bash
-   GH_TOKEN="$READ_ONLY_GITHUB_TOKEN" python3 releases/14/evidence/publication_diff.py \
-     --manifest releases/14/evidence/publication-diff-inputs.json \
-     --out /tmp/r14-publication-diff \
-     --vitest-json-r13 /path/to/r13-vitest.json \
-     --vitest-json-r14 /path/to/r14-vitest.json \
-     --playwright-json baseline/E2E/playwright-default=/path/to/r13-default.json \
-     --playwright-json candidate/E2E/playwright-default=/path/to/r14-default.json
-
-   # Add BOTH --playwright-json sides for every other E2E/Lanes dot-reporter
-   # job listed in jobs.csv. Without complete native IDs on both sides,
-   # the comparator returns an unqualified/blocked result.
+   timeout 1200s python3 releases/14/evidence/publication_diff.py \
+     --manifest "${R14_FREEZE_DIR:?}/inputs.json" \
+     --inherited-red "$R14_FREEZE_DIR/inherited-red.json" \
+     --out "$R14_FREEZE_DIR/verdict" \
+     --junit-xml-r13 "$R14_FREEZE_DIR/r13-vitest.xml" \
+     --junit-xml-r14 "$R14_FREEZE_DIR/r14-vitest.xml" \
+     --playwright-inputs "$R14_FREEZE_DIR/playwright.json"
    ```
 
-5. Preserve `report.md`, `jobs.csv`, `all-test-ids.csv`, `resolved-runs.json`, `native-report-input-digests.json`, and the canonical `env/baseline-diff.py` outputs under the **astrid-dev evidence lane** (the Leader must decide what becomes committed versus linked GitHub artifact; no evidence in products). Verify each externally supplied native JSON digest against the original command/artifact and source SHA, attempt and job before accepting it; the comparator records hashes but cannot attest external reporter provenance on its own. Every R13 PASS→candidate FAIL/ERROR/SKIP/MISSING, missing job, newly failing ID, rename, and incomplete ID stream needs an explicit cause and source. **Documenting a genuine PASS→FAIL or deletion does not make it acceptable:** the comparator keeps it BLOCKING until the original passing coverage/behavior is restored and the frozen suite is rerun. A green total with fewer IDs is not a pass. If the script returns nonzero, the publication diff is unqualified.
-6. Lead compares the same frozen candidate to current product `main` using the [release skill](../../../skills/shared/workstreams/astrid-dev-release/SKILL.md#promote-or-publish), respects the sealed Plan 39 ceiling for inherited red IDs, and records each non-test job that changed from success to failure. No test deletion, deselection or loosened expectation.
+5. For the review pass, add `--generate-candidate-list "$R14_FREEZE_DIR/proposed-inherited-red.json"` to write every observed candidate red, with its R13 status and job identity. The Lead and owner review those occurrences before filling the separate [inherited-red.json](inherited-red.json). Each reviewed entry has `repo`, `workflow`, `job`, `id` and an optional `count` (default 1). Use `[job]` as the ID for a job-level failure. Use the previous reviewed inventory as the `sealed_prior` ceiling and retain only still-red entries in `current`. Store the reviewed file at `$R14_FREEZE_DIR/inherited-red.json` for the verdict. A red occurrence outside the approved count, a green entry still listed as red, and missing evidence block publication.
+6. Preserve the verdict outputs in the astrid-dev evidence lane. `report.md` and `counts.json` give the by-repo totals, `r14-only.md` lists each added red by job, and `all-test-ids.csv`, `jobs.csv` and `resolved-runs.json` retain the run and attempt binding. Verify `native-report-input-digests.json` and `playwright-expected-actual.json` against the original command or artifact. The canonical `env/baseline-diff.py` outputs provide an additional Agent diagnostic. A nonzero exit leaves the publication diff unqualified.
+7. Lead compares the same frozen candidate to current product `main` using the [release skill](../../../skills/shared/workstreams/astrid-dev-release/SKILL.md#promote-or-publish), respects the sealed Plan 39 ceiling for inherited red IDs, and records each non-test job that changed from success to failure. Preserve the original tests, selectors and expectations.
 
 **Final diff:** [ ] exact tuple frozen; [ ] eight Agent unit jobs; [ ] four Agent lanes; [ ] complete App Vitest assertion IDs; [ ] full App journey IDs; [ ] job-name comparison; [ ] omissions/renames explained; [ ] no unexplained pass→fail; [ ] Lead review and verdict.
 
