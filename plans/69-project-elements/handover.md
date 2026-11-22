@@ -68,3 +68,8 @@ It writes the Agent's two `runtime.lock.json` files and the App's `runtime.lock.
 - **The owner's go first.** Landing into `release/15/main` needs it ([inputs](inputs.md#planning-evidence)). Ask once PE-1, PE-2 and R are done, then start Plan 77 without waiting; its branches already contain this plan's.
 - **Order:** Runtime, then the Agent re-pinned to the landed Runtime merge commit, then the App re-pinned to both. Each PR names `Plan 69` in its title; the product repositories' `landing reference` check needs a plan or an astrid-dev issue named.
 - **After:** set the plan 69 rows in [releases/15.md](../../releases/15.md#branches) to `merged` and run `python3 scripts/release_branches.py check 15`.
+
+
+## Retained-history witness disposition
+
+The current release base deliberately removed `tests/test_timeline_commit_ancestry.py` through Runtime `05d1ad88`, which reverted #62's retained-history optimization after reported import overhead. The host ruled to carry that deliberate removal on Plan 69. The original file passed all five cases on `c12a2d18`. With the original bytes restored only for the exact combined Runtime probe, `test_head_verification_after_an_unrelated_write_costs_the_same_at_3_and_30_entries` and `test_a_write_in_the_same_project_keeps_the_retained_history` observed 23 to 169 SQL statements and failed. `test_an_import_completes_while_a_commit_is_validating_and_does_not_force_a_rewalk` could not access the inherited `Film.provider` fixture. The two other cases passed. Record these inherited limits in the Plan 69 landing PRs.
