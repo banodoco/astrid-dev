@@ -16,6 +16,32 @@ Steps 1 and 2 of the [sequence](plan.md#sequence), on astrid-agent `release/14/m
 
 The prepared-worker plumbing card below waits for Plan 14's audit and stays out of Release 14.
 
+## Release 15: the extraction
+
+The start of steps 3 and 4 of the [sequence](plan.md#sequence), drafted on 22 November 2026 from the [map](map.md), four checks of it against today's file and an independent critique ([evidence](evidence/)). The file is 18,888 lines on astrid-agent `release/15/main` at `aac1ceb6`: the `GenericPackHost` class 8,416, other classes 4,709, top-level functions 4,892. Line numbers and counts are re-checked at dispatch.
+
+**Task ids:** `EX-0` to `EX-3`, `R`. All four are Release 15's, by the owner's decision of 22 November 2026: the guard, the safety net, the first measured move and the re-estimate. This plan ends there. The rest of the extraction, `EX-4` to `EX-9` and `RS2`, moved to [Plan 83](../83-execution-host-in-modules/tasks.md) on 22 November 2026, so that each plan sits wholly in one release; the numbering continues there. **Test inventory:** the nine `tests/core/execution/test_host_characterisation_*.py` files from HM2 (one is on `release/15/main`; eight are still on `release/14/plan-13`), `tests/test_structure_contracts.py`, `tests/packs/test_capability_bind_contract.py` (it parses this file's source), `tests/core/execution/test_windows_diagnostic_sinks.py` (it replaces `generic_host.os` and rebinds module state), `tests/sdk/test_host_recovery.py`, and the other test files that patch names on this module.
+
+Every card is **a move, proved at the point of use, not by looking the same:**
+
+- No behaviour change, no renamed public name, no new feature; a fix a move uncovers is filed and made separately.
+- `generic_host` keeps exporting every name callers use, and stays runnable as `python -m astrid.core.execution.generic_host`, which production uses (`astrid/sdk/host_bootstrap.py` near 2376).
+- **A patched name must still take effect.** A function with an identical body in a new module looks names up in that module, so a test that patches `generic_host.name` silently stops patching it. For each moved definition, each test that patches it is shown to fail when its patch is removed. A definition whose patch cannot follow it stays where it is.
+- **One class, one object.** A class that moves is the same object from every import path; recovery depends on `isinstance`.
+- **Module state has one home.** A value that is rebound at run time (`_runtime_external_sources`, `_STARTUP_TIMING_LAST`, `_STARTUP_TIMING_SEEN`) is reached through one accessor, never imported by value.
+- **Imports of concrete packs stay in the host.** The structure rules exempt this file alone (`scripts/reshape/authority_lint.py` near 303); a sibling that imported a pack would break them.
+- Each card lowers the guard from EX-0 by what it removed. Never edit, skip or weaken an existing test to pass.
+
+| Task / outcome | Route | Depends on | Scope | Focused proof | Progress |
+| --- | --- | --- | --- | --- | --- |
+| EX-0 Nothing in the execution package can grow past the guard. One check, comparing a pull request with its merge base, so that editing a baseline in the same change cannot bless growth: `generic_host.py` may not gain lines; `GenericPackHost` may not gain methods; a function or method already over 200 lines may not grow, counting nested functions inside it; no file under `astrid/core/execution/` may newly pass 1,200 lines and no function may newly pass 200 | X | D2 | astrid-agent `tests/test_structure_contracts.py`, a comparison in the style of `scripts/reshape/compare_structure_baseline.py`, and the CI step that gives it the merge base. The existing giant-file inventory test and its 18 failures are not this card's ([#1290](https://github.com/banodoco/astrid-dev/issues/1290)) | Each of these fails the check and is named: one line added to the file; one method added to the class; one line added to `_run_task_impl`, directly or in a nested function; a new 1,300-line sibling. A change that removes lines passes. A change that deletes code elsewhere in the file to pay for a longer method fails. Research: L4 | [ ] |
+| EX-1 The safety net is on the branch. The eight HM2 characterisation files still on `release/14/plan-13` are brought to the Release 15 plan branch and pass there | N | — | astrid-agent `tests/core/execution/test_host_characterisation_*.py`; no product code | All nine files pass on `release/15/plan-13`; any that fail are listed with the reason and block the cards that rely on them | [ ] |
+| EX-2 The genuine leaves leave: the shared `HostError` base first, then the input and output naming helpers (R03), the selector and contract helpers that call each other (`_task_selector`, `_execution_contract`, `_canonical_digest` and what they need), and `GenericPackHost._load_matrix`, a static method other code calls directly. `CapabilityRecord`, whose `manifest()` reaches into source custody, and `_AttemptLifetime`, which changes its own phase and deadlines, stay | X | EX-0, EX-1 | astrid-agent `astrid/core/execution/generic_host.py` (near 266, 1956, 3087, 5304, 7722) and new sibling modules; names chosen at dispatch | The rules above, shown for each moved name. The characterisation tests pass unchanged. The guard is lowered by what moved. Research: L1, critique | [ ] |
+| EX-3 The first measured extraction, and the re-estimate. Record for EX-2: days taken, lines removed net of the wrappers and imports left behind, tests that had to move, and what broke. Re-state the estimate for [Plan 83](../83-execution-host-in-modules/tasks.md)'s cards and bring it to the owner, who decides that plan's release | N | EX-2 | this plan's `tasks.md` and `inputs.md` | The figures, and her decision recorded | [ ] |
+| R Review rounds (at most 1, owner-agreed 22 November 2026), by an independent reviewer on Codex Astra that did none of the work | S | all other tasks | read-only | Rounds per the [run contract](../../skills/shared/run-contract.md): findings become rows `R1.<n>` added directly below this one, each with route, scope, dependencies and proof; landing waits for them | [ ] |
+
+**Sizes.** EX-0 to EX-3: about 5 to 6 days.
+
 ## Task index
 
 Only the card below is recorded so far. Scope the rest from the actual source base, preserving the original intent below:

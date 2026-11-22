@@ -1,4 +1,4 @@
-# Handover — Under a second to start
+# Handover — Once per command
 
 [Plan](plan.md) · [Tasks](tasks.md) · [Inputs](inputs.md)
 
@@ -7,14 +7,15 @@ For the manager who takes this plan. Nothing has started. Use the [Manage skill]
 ## First actions
 
 1. **Read** [plan.md](plan.md), [tasks.md](tasks.md), then the research report named in each card ([evidence/](evidence/)). The reports cite lines at the commits in [inputs.md](inputs.md#source-identities); re-check each before briefing a worker.
-2. **Check what is decided.** D1 to D5 in [inputs.md](inputs.md#owner-decisions) are the owner's. US-1 and US-2 need none of them.
-3. **Cut `release/15/plan-81`** from `release/15/main` in astrid-agent, astrid-runtime and VibeComfy, and record the commits in the brief's Branches table and in [inputs.md](inputs.md#source-identities).
+2. **The owner's decisions are made** ([inputs.md](inputs.md#owner-decisions)). Nothing here waits on her except the machine for US-0.
+3. **Cut `release/15/plan-81`** from `release/15/main` in astrid-agent and astrid-runtime, and record the commits in the brief's Branches table and in [inputs.md](inputs.md#source-identities).
 4. **Start US-1.** When it lands, arrange US-0 (a real baseline on an installed Astrid with a real ComfyUI; ask the owner whose machine) and run US-2 to record today's numbers before anything is made faster: those are the ceilings.
-5. **Write the cache design note for RS1** while US-2 runs, and commission its review. Do not dispatch US-3, US-4 or US-5b before RS1 clears, and take the re-estimate to the owner first. US-5a needs neither.
+5. **Then the three lanes.** No card here keeps anything for a later command; if a worker proposes a cache on disk or at module level, that is [Plan 82](../82-reuse-across-commands/plan.md)'s work, not this plan's.
+6. **Run US-0 again at the end** and hand its table to Plan 82.
 
 ## Workers
 
-The owner's standing preference since 21 November 2026 is Codex workers, Luna where the work allows, with the manager reading every diff and re-running every proof. Routes are on each card. Reviews and RS1 go to the high-judgment role.
+The owner's standing preference since 21 November 2026 is Codex workers, Luna where the work allows, with the manager reading every diff and re-running every proof. Routes are on each card. The review goes to the high-judgment role.
 
 ## Standing up a Runtime to measure
 
@@ -40,8 +41,8 @@ The source manifest's fields follow the Runtime fixture at astrid-runtime `tests
 
 ## Known traps
 
-- **Stale is worse than slow.** Every cache in this plan decides which code or which graph runs. If a card cannot state what makes its cache stale, it is not ready.
+- **Once per command means inside one process.** A module-level memo survives into the next command in a long-lived caller such as the agent tool server; pass values along, do not stash them.
 - **Plan 77 is in the same timeline files.** Merge its work before US-6 and US-7, and do not touch the heavy-timeline save path: that is Plan 77's loop.
-- **Plan 55's template belongs to one process** (`prepared.py` near line 567 on its branch). Reusing it across commands is a design decision for RS1, not a cherry-pick.
-- **`release/15/main` has 35 failing tests** in `tests/packs/runpod/test_h3_release.py` from a pinned-digest mismatch. They are not this plan's and must not be fixed here ([run board](../../releases/15/run.md)).
-- **Numbers from a shared container are relative.** Use US-2's own medians as the record.
+- **`release/15/main` has 35 failing tests** in `tests/packs/runpod/test_h3_release.py` from a pinned-digest mismatch ([#1289](https://github.com/banodoco/astrid-dev/issues/1289)). They are not this plan's and must not be fixed here.
+- **Other tests fail on the untouched branch** ([#1291](https://github.com/banodoco/astrid-dev/issues/1291)). Compare base and change by test ID.
+- **Numbers from a shared container are relative.** Use US-0's and US-2's own medians as the record.
