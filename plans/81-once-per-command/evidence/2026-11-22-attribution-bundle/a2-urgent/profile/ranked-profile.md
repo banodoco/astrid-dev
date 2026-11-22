@@ -4,7 +4,7 @@ One cProfile sample per route, with profiling overhead. Self and cumulative seco
 
 ## W
 
-Outer spawn-to-exit 17.868030 s; Runtime response emission 17.590598 s; target response emission 23.005974 s; timing start: process start; exact collector span unavailable; sum of exclusive timing rows 17.597350 s; estimated external residual 0.270680 s. Task `667a5cd241cc437cab29273cc0c6c8b4`, target prompt `slot-2`. Raw: [W-cprofile-1.prof](W-cprofile-1.prof), [W-cprofile-1.stdout](W-cprofile-1.stdout).
+Outer spawn-to-exit 17.868030 s; Runtime response emission 17.590598 s; target response emission 23.005974 s; timing start: process start; exact collector span unavailable; sum of exclusive timing rows 17.597350 s; estimated external residual 0.270680 s. Task `667a5cd241cc437cab29273cc0c6c8b4`, target prompt `slot-2`. Raw: [W-cprofile-1.prof.gz](W-cprofile-1.prof.gz), [W-cprofile-1.stdout](W-cprofile-1.stdout).
 
 | Stage | Parent | Self s | Inclusive s |
 | --- | --- | ---: | ---: |
@@ -156,7 +156,7 @@ Outer spawn-to-exit 17.868030 s; Runtime response emission 17.590598 s; target r
 
 ## I
 
-Outer spawn-to-exit 17.308840 s; Runtime response emission 17.017210 s; target response emission 26.779669 s; timing start: process start; exact collector span unavailable; sum of exclusive timing rows 17.027645 s; estimated external residual 0.281195 s. Task `8c65945786164e2eb0c419cb2bf04117`, target prompt `slot-4`. Raw: [I-cprofile-1.prof](I-cprofile-1.prof), [I-cprofile-1.stdout](I-cprofile-1.stdout).
+Outer spawn-to-exit 17.308840 s; Runtime response emission 17.017210 s; target response emission 26.779669 s; timing start: process start; exact collector span unavailable; sum of exclusive timing rows 17.027645 s; estimated external residual 0.281195 s. Task `8c65945786164e2eb0c419cb2bf04117`, target prompt `slot-4`. Raw: [I-cprofile-1.prof.gz](I-cprofile-1.prof.gz), [I-cprofile-1.stdout](I-cprofile-1.stdout).
 
 | Stage | Parent | Self s | Inclusive s |
 | --- | --- | ---: | ---: |
@@ -307,7 +307,7 @@ Outer spawn-to-exit 17.308840 s; Runtime response emission 17.017210 s; target r
 
 ## E
 
-Outer spawn-to-exit 32.502096 s; Runtime response emission 32.212040 s; target response emission 41.792982 s; timing start: process start; exact collector span unavailable; sum of exclusive timing rows 32.220534 s; estimated external residual 0.281562 s. Task `78e526a44d8d458992e1adebc8bd0879`, target prompt `slot-6`. Raw: [E-cprofile-1.prof](E-cprofile-1.prof), [E-cprofile-1.stdout](E-cprofile-1.stdout).
+Outer spawn-to-exit 32.502096 s; Runtime response emission 32.212040 s; target response emission 41.792982 s; timing start: process start; exact collector span unavailable; sum of exclusive timing rows 32.220534 s; estimated external residual 0.281562 s. Task `78e526a44d8d458992e1adebc8bd0879`, target prompt `slot-6`. Raw: [E-cprofile-1.prof.gz](E-cprofile-1.prof.gz), [E-cprofile-1.stdout](E-cprofile-1.stdout).
 
 | Stage | Parent | Self s | Inclusive s |
 | --- | --- | ---: | ---: |

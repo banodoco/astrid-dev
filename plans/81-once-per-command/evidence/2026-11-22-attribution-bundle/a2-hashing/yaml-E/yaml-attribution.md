@@ -2,7 +2,7 @@
 
 One instrumented process. The safe_load wrapper suppresses its nested load wrapper, so each observed public parse is counted once. Durations may overlap across threads and include parsing, not necessarily only YAML CPU. Direct Loader construction, aliases bound before instrumentation and subprocesses/daemon are outside this observer. Path.read_text links by object identity; open streams use their actual name. Unknown paths remain unknown; fixture basenames may alias. Metadata equality at observations does not prove content equality.
 
-Wall 20.053246 s; peak RSS 196096 KiB; peak retained bytes 8359322; Runtime/target receipts `bacc25b7a5384d2fb5fa103e1560e21d` / `slot-2`; [raw events](E-plain-1.hash.json.gz).
+Wall 20.053246 s; peak RSS 196096 KiB; peak retained bytes 8359322; Runtime/target receipts `bacc25b7a5384d2fb5fa103e1560e21d` / `slot-2`; [raw events in full archive](../../README.md#full-raw-archive).
 
 | API | Count | Unknown path | Sum duration s |
 | --- | ---: | ---: | ---: |
