@@ -163,3 +163,16 @@ The same authenticated synthetic v30 started both independent arms with 300 root
 | Memo clears | 0 | 0 |
 
 Both arms accepted exactly the twelve one-frame audio moves, preserved the full fixture identities and published one current v31 head. The canonical revision and digest matched, and the canonical response document was 253,434 bytes on each arm. Each instrumented replay observed 18,156,125 metadata bytes, 1,916,699 record bytes and 474,427 result bytes in the persisted JSON fields. Startup and SDK warm-up differed. This comparison did not reproduce the suspected replay invalidation spike and gives no basis to relax the guard. Both diagnostic stacks were stopped and removed. This local SDK batch does not count toward the editor saving rounds or opening targets.
+
+### Retained-history forward import measurement
+
+Runtime [#88](https://github.com/banodoco/astrid-runtime/pull/88) carried Plan 77's retained-history verification into the current forward. Its candidate `52df1a13` passed all five unchanged ancestry tests, including the concurrent write during validation. The same 23 cost, WAL, history and descriptor IDs passed on the candidate and both parents. The shared timestamp oracle remains two verifications under Plan 77's strict invalidation, where current Release 15 main pins one.
+
+The local measurement on `52df1a13` and exact Release 15 Runtime `2cf5890b` used the same captured film and deterministic WAV sequence. Five traced imports and five additional untraced imports per side and depth settled, with one stable head.
+
+| Warm history entries | Plan 77 primary SQL statements per import, median | Main primary SQL statements per import, median | Plan 77 untraced seconds per import, median | Main untraced seconds per import, median |
+| --- | ---: | ---: | ---: | ---: |
+| 3 | 190 | 146 | 0.1311 | 0.1017 |
+| 30 | 514 | 146 | 0.1215 | 0.1159 |
+
+The additional statements increase with this history depth. The small elapsed samples include local decode and do not establish a production latency cost. The incoming Runtime revert `05d1ad88` reported about 1,450 extra statements per import on its own workload. This measurement uses the actual local media import. The unchanged concurrent-write ancestry witness separately checks the retained proof while validation is underway. Both are development evidence. The import tradeoff is recorded for the owner before release landing.

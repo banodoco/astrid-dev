@@ -107,3 +107,17 @@ The first verified Linux tuple used App launcher candidate `7fc14d2f` (landed as
 - **Other open items on the crash day** (reported, in [QUEUE.md](evidence/QUEUE.md)): a recovered draft from an old realm loops on Try again with a "Saved" badge; Discard left 37 old-realm outbox rows; an 11 s "Dirty" delay before the first send; the `direct-journey` check fails on plan-59 PRs, suspected pin skew.
 - **Fixture discrepancy:** the copied timeline has 8 clips and 140 KB, while the profile says 616 clips and 2.6 MB. The profile names "Almost Ready (trial v2)", so the copy probably read a different timeline. The fixture targets the profile; see [inputs](inputs.md#heavy-timeline-shape).
 - **Hygiene:** headless profiles and stack copies filled the disk; delete each profile after its run.
+
+## App paths for the Release 15 forward
+
+Plan 69 App `ff0e589a` changes none of these five paths from Release 15 App `2ef94b4c`. Plan 77 App `76c58ee3` changes four from its shared Plan 69 ancestor `74196d9b`. The Lead owns the incoming Release 14 App forward after [App #338](https://github.com/banodoco/astrid-app/pull/338).
+
+| App path | Plan 69 | Plan 77 |
+| --- | --- | --- |
+| `src/tools/travel-between-images/components/ShotTimelinePreview.tsx` | Unchanged | Unchanged |
+| `src/tools/video-editor/commands/localSaveSession.ts` | Unchanged | Declines appends during unresolved or replaying saves, fences dispatch after Discard, and reports accepted-save progress. |
+| `src/tools/video-editor/components/TimelineEditorShellCore.tsx` | Unchanged | Displays a parked drop's reason and actions alongside the ordinary save bar. |
+| `src/tools/video-editor/components/TimelineEditorShellCore.test.tsx` | Unchanged | Waits for the asynchronous save-bar action before exercising Discard. |
+| `src/tools/video-editor/hooks/useTimelineSave.ts` | Unchanged | Handles bootstrap, restart, Discard, deferred history, stale-base recovery and the selected save-bar action. |
+
+Plan 69's adjacent App change gates full-v2 commit on the accepted `0.2.15` contract and protects the retired `0.2.14` admission boundary. Plan 77's adjacent `commitOutbox.ts` change handles project and timeline discard across stale owners and releases empty rows.
