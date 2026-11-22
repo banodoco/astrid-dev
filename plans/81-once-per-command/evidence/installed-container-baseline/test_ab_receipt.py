@@ -1,6 +1,7 @@
 """Generation receipts must substantiate successful timed runs."""
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -37,10 +38,17 @@ class ReceiptTests(unittest.TestCase):
                                 '{"ok": True, "kernel_task_id": "task-1"}))\n')
             launcher.chmod(0o755)
             arm = {"launcher": str(launcher), "home": tmp, "tmp": tmp, "door_port": 1234,
-                   "generate_extra": ["--timings"]}
+                   "generate_extra": ["--timings"], "current": "/fake/current", "manifest": "/fake/manifest"}
             env = dict(os.environ, IB=tmp, EVIDENCE_DIR=tmp, COMFY_URL="test", MEDIA_PNG="test",
                        ARMS_JSON=json.dumps({"after": arm}), LOAD_MAX="1000000", SAMPLES="1")
-            result = subprocess.run([sys.executable, str(ROOT / "ab_run.py")], env=env, capture_output=True, text=True)
+            for filename in ("ab_run.py", "ab_summary.py", "ab_receipt.py"):
+                shutil.copy(ROOT / filename, d / filename)
+            (d / "runtime_attestation.py").write_text(
+                'import json, sys\n'
+                'json.dump({"port": int(sys.argv[1]), "address_hex": "a", "socket_table": "tcp", '
+                '"socket_inode": 1, "pid": 2, "start_ticks": 3, "exe": "x", "cwd": "x", '
+                '"selected_version": "x", "manifest_shas": {}, "scope": "test"}, open(sys.argv[4], "w"))\n')
+            result = subprocess.run([sys.executable, str(d / "ab_run.py")], env=env, capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             record = json.loads((d / "records.jsonl").read_text().splitlines()[-1])
             self.assertFalse(record["ok"])
