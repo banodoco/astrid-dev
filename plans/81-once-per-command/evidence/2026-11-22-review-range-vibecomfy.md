@@ -6,7 +6,7 @@ PR [#182](https://github.com/banodoco/VibeComfy/pull/182), base `48b5fa9e45630e1
 
 ## Recorded proof
 
-- The PR description reports 53 templates with identical bundle bytes, warnings, refusals, and revisions. The reported W witness comparison is **1,727,684 calls and 630,488,716,236 bytes before**, versus **37,190 calls and 13,676,980,048 bytes after**. These are PR-reported counts, not independently reproduced in this record.
+- The PR description reports 53 templates with identical bundle bytes, warnings, refusals, and revisions. Across those 53 templates it reports **1,727,684 witness calls and 630,488,716,236 bytes before**, versus **37,190 calls and 13,676,980,048 bytes after**. These are PR-reported aggregate counts, not independently reproduced in this record.
 - The PR reports 194 existing IDs matched (188 pass and six same failures), 15 new focused cases, and three unchanged same-metadata passing cases. The exact Astrid W candidate count was not reproduced here.
 - The installed A/B candidate tuple includes this VibeComfy head; see [`2026-11-22-installed-attribution-review.md`](2026-11-22-installed-attribution-review.md) and `/root/codex/installed-baseline/evidence/ab-run-1/`. Agent and Runtime changed in the same A/B, so that run does not isolate PR #182’s effect.
 - Source-harness attempts 01 and 02 waited without producing samples. Attempt 03 failed closed at attestation; it did not attest `consume.py` execution in host/descendants and produced no source A/B result. The limits and attempt record are in [`2026-11-22-attribution-completeness.md`](2026-11-22-attribution-completeness.md) and `/root/codex/plan-81m/run/witness-attempts-2026-11-22.tar.gz`.

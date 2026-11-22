@@ -2,7 +2,7 @@
 
 ## Revision range
 
-`release/15/main` `23310dc828765293a2ab39f63728b948e780d94` → `release/15/plan-81` `72b129e5a2296dc58360a9896cc65fab9db4ad0c`. The two changed files are `runtime_protocol/source_identity.py` and `tests/test_source_identity_process_budget.py` (+137/−18). The change adds source-identity process-budget behavior and its tests.
+`release/15/main` `23310dc828765293a2ab39f63728b948e780d94` → `release/15/plan-81` `72b129e5a2296dc58360a9896cc65fab9db4ad0c`. The two changed files are `runtime_protocol/source_identity.py` and `tests/test_source_identity_process_budget.py` (+137/−18). The change batches Git blob hashing through `--stdin-paths`, computes symlink blob IDs in process, and adds process-budget tests.
 
 ## Recorded proof
 
