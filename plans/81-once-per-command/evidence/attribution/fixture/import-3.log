@@ -1,0 +1,3 @@
+import time: 3000 | 6000 | pkg.alpha
+import time: 6000 | 6000 | pkg.beta
+import time: 500 | 500 | other
