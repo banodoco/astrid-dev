@@ -121,8 +121,8 @@ class AttestationSwitch(unittest.TestCase):
         rows = records()
         with tempfile.TemporaryDirectory() as tmp:
             d = Path(tmp)
-            marker = {"records_complete": True, "count": len(rows), "arms": ["before", "after"],
-                      "samples": 2, "qualification_schema": 2, "load_max": 1.0}
+            marker = {"records_complete": True, "count": len(rows), "arms": ["before", "after", "vc48"],
+                      "samples": 5, "qualification_schema": 2, "load_max": 1.0}
             def write():
                 (d / "records.jsonl").write_text("\n".join(json.dumps(r) for r in [*rows, marker]) + "\n")
             write()
