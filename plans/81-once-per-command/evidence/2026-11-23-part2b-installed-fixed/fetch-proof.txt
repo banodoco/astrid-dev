@@ -1,0 +1,2 @@
+trial-agent f2dd143457d7b36158e1d96af1c84ece405131df fetchable
+vibe f9790674e0fc9610a51f4f3567fc1b59ef01128c fetchable
