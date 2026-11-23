@@ -73,7 +73,7 @@
 
 ## Source identities
 
-Planning read: astrid-agent `a91c35dfd`, VibeComfy `dba38f86`; for the amendment, installed Release 15 `dd02e367bc24` (VibeComfy `48b5fa9e`) and astrid-dev `origin/main` `932156e8`. Code work: astrid-agent `release/15/plan-56` from `release/15/main` `045064b6`; VibeComfy `release/15/plan-56` from `c0e910ca` (not `release/15/main` `48b5fa9e`). Base for code work: see the code-work line in this section.
+Planning read: astrid-agent `a91c35dfd`, VibeComfy `dba38f86`; for the amendment, installed Release 15 `dd02e367bc24` (VibeComfy `48b5fa9e`) and astrid-dev `origin/main` `932156e8`. Code work: cut 23 November 2026 by the Release 15 Lead. astrid-agent `release/15/plan-56` at `045064b61eaefb07480d71709dd31a4b72d53b24` (`release/15/main`); VibeComfy `release/15/plan-56` at `c0e910caab9734a551fb2c1a455fff72c3a1b1cb` (VibeComfy `main` and the Agent's pin; it contains VibeComfy `release/15/main` `48b5fa9e`, and the branch, found at `48b5fa9e` with no commits of its own, was fast-forwarded to it). The Lead merges `release/15/main` into both when it moves.
 
 ## References
 
