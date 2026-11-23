@@ -12,7 +12,7 @@ description: Drive one planet-lab packet through a fresh Google AI Studio sessio
 **Procedure:** Check the packet is Ready, open a fresh AI Studio session on `main`, paste the start prompt, supervise to the result note, push `lab/<id>`, then post STATUS.
 **Completion:** The branch exists at a recorded commit with `packets/<id>.result.md`, and a STATUS (or BLOCKED) comment on the mailbox names the packet, branch, commit and AI Studio's own check output.
 
-Use for a lab repository built to be developed in Google AI Studio and imported into an Astrid product repository at the end, as in [Plan 84's lab run](../../../../plans/84-living-planet-on-the-vision-page/ai-studio-run.md). **You are the operator, not the engineer.** AI Studio writes the code; you give it the packet, keep it inside the packet, and move its work to GitHub. You do not review or merge it: the reflection gate does that ([Astra reflection](astra-reflection.md)).
+Use for a lab repository built to be developed in Google AI Studio and imported into an Astrid product repository at the end, as in [Plan 84's lab run](../../../../plans/84-living-planet-on-the-vision-page/ai-studio-run.md). **You are the operator, not the engineer.** AI Studio writes the code; you give it the packet, keep it inside the packet, and move its work to GitHub. You do not review it: a fresh Astra reviewer does ([Astra reflection](astra-reflection.md)), and a packet is merged into the lab's `main` only on that reviewer's accept verdict. When you are also the run's manager, you commission that reviewer and do the merge.
 
 ## Run one packet
 
@@ -37,4 +37,4 @@ You are working in the Astrid planet lab (banodoco/planet), at commit <main SHA>
 If anything in the brief is unclear or looks wrong, stop and write that in the result note instead of guessing.
 ```
 
-**Do not merge, edit briefs, change `LAB_RULES.md`, start a second packet or update the run board's verdicts:** those belong to the reflection reviewer and the owner.
+**Do not merge without an accept verdict, edit briefs yourself, change `LAB_RULES.md`, run two packets in one session or write a verdict:** verdicts and briefs belong to the reflection reviewer, and the look to the owner.

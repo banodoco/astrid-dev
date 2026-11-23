@@ -4,33 +4,37 @@
 
 This is the working document for running Plan 84's remaining work in Google AI Studio. Every planet and page change is made in the **planet lab**, `banodoco/planet`: the real Vision page's files from astrid-app, at the same paths, with the planet engine beside them. When the queue is done, the lab's changes are imported into astrid-app in a few integration packets. The owner chose this on 23 November 2026 ([inputs.md](inputs.md#owner-decisions)).
 
-**State:** set up; not started. Starts on the owner's go.
+**State:** set up; starts when the owner sends the [manager start message](#manager-start-message). The lab's `main` has passed `npm run check` and `npm run build`, and the fidelity check against the App.
 
 ## Who does what
 
 | Role | Who | Does | Workstream |
 | --- | --- | --- | --- |
+| **Manager** | One Codex session, started by the owner with the [start message](#manager-start-message), with browser control of the owner's AI Studio account | Runs the queue: drives each packet through AI Studio as its operator, commissions a reflection for each one, merges accepted packets into the lab's `main`, posts the daily look, keeps this board current | [Run one packet in AI Studio](../../skills/roles/astrid-dev-manage/workstreams/ai-studio-packet.md) for each packet |
 | **Executor** | A fresh Google AI Studio Build session per packet | Changes the lab, runs its tests and build, writes a result note, pushes `lab/<id>` | The lab's [`LAB_RULES.md`](https://github.com/banodoco/planet/blob/main/LAB_RULES.md) and the packet brief |
-| **Operator** | A Codex agent with browser control of the owner's AI Studio account | Opens the session, pastes the start prompt, keeps it to the packet, pushes, reports | [Run one packet in AI Studio](../../skills/roles/astrid-dev-manage/workstreams/ai-studio-packet.md) |
-| **Reflection** | An Astrid agent on the high-judgment role (Astra) | Gates every packet (accept into lab `main`, rework, split), posts the daily look, replans at RF rows | [Reflect on AI Studio lab packets](../../skills/roles/astrid-dev-manage/workstreams/astra-reflection.md) |
+| **Reflection** | A fresh Astra subagent (the high-judgment role) that did none of the work, commissioned by the manager for every gate and RF row | Gates every packet (accept, rework, split), replans at RF rows, drafts the daily look | [Reflect on AI Studio lab packets](../../skills/roles/astrid-dev-manage/workstreams/astra-reflection.md) |
 | **Owner** | The owner | Looks at the lab once a day and replies with notes; final say on the look; gives the go for integration | — |
-| **Integrator** | An Astrid agent in astrid-app (IN rows only) | Imports the lab into astrid-app and proves it there | [Manage](../../skills/roles/astrid-dev-manage/SKILL.md) |
+| **Integrator** | An Astrid agent in astrid-app (IN rows only), commissioned by the manager after the owner's go | Imports the lab into astrid-app and proves it there | [Manage](../../skills/roles/astrid-dev-manage/SKILL.md) |
+
+The manager does not write lab code itself and does not overrule a reflection verdict; it may ask a second Astra reviewer when it disagrees, and takes the disagreement to the owner if they still differ.
 
 ## The loop
 
 1. The board marks a packet **Ready** (its dependencies are Accepted).
-2. The operator runs it in a fresh AI Studio session and pushes `lab/<id>` → **Gate**.
-3. The reflection reviewer reruns the checks and reads the diff → **Accepted** (merged into lab `main`), **Rework** (at most twice) or **Split**.
-4. Once a day the reviewer posts the **daily look**; the owner opens the lab's `main` in AI Studio's preview at the listed sizes and settings and replies with notes. Notes become rework, new packets or rulings below.
-5. At each **RF** row the reviewer re-estimates and rewrites the briefs ahead.
+2. The manager runs it in a fresh AI Studio session and pushes `lab/<id>` → **Gate**.
+3. A fresh Astra subagent reruns the checks and reads the diff → **Accepted** (the manager merges it into lab `main` with a merge commit), **Rework** (at most twice) or **Split**.
+4. Once a day the manager posts the **daily look**; the owner opens the lab's `main` in AI Studio's preview at the listed sizes and settings and replies with notes. Notes become rework, new packets or rulings below.
+5. At each **RF** row an Astra subagent re-estimates and rewrites the briefs ahead; the manager merges the brief changes into the lab's `main` and updates this board.
 
 One packet runs at a time until RF-A; after that, packets with no shared files may run in parallel, two at most.
 
-**Mailbox:** one issue in banodoco/planet, titled `Planet lab mailbox`, created by the operator before EX-00. STATUS, BLOCKED, verdicts, the daily look and the owner's notes are comments on it. Link it here when it exists.
+**Mailbox:** one issue in banodoco/planet, titled `Planet lab mailbox`, created by the manager before EX-00. STATUS, BLOCKED, verdicts, the daily look and the owner's notes are comments on it. The manager links it here when it exists.
+
+**Board updates:** the manager updates this file on astrid-dev `main` through a pull request at least once a day and at every RF row (the repository requires pull requests and passing checks; merge each one once its checks pass).
 
 ## Authority
 
-The owner's go starts the run. Within it, the operator may open AI Studio sessions on the owner's account and push `lab/*` branches; the reflection reviewer may merge accepted `lab/*` branches into the lab's `main`, write and rewrite briefs in `packets/`, and update this board. **Comes to the owner:** anything paid (for example a hosted AI Studio deployment), changing `LAB_RULES.md`'s engine invariants or any existing test, changing `upstream.json`'s base, and the start of integration (IN-01). Landing in astrid-app follows the Release 15 rules in [inputs.md](inputs.md).
+The owner's go (sending the start message) starts the run. Within it, the manager may open AI Studio sessions on the owner's account, push `lab/*` branches, commission Astra subagents, merge a `lab/*` branch into the lab's `main` on an Astra accept verdict, merge Astra's brief rewrites into `packets/`, open the mailbox issue, and update this board and Plan 84's progress through pull requests to astrid-dev `main`. **Comes to the owner:** anything paid (for example a hosted AI Studio deployment), changing `LAB_RULES.md`'s engine invariants or any existing test, changing `upstream.json`'s base, and the start of integration (IN-01). Landing in astrid-app follows the Release 15 rules in [inputs.md](inputs.md).
 
 ## Queue
 
@@ -86,6 +90,51 @@ Briefs: [`packets/`](https://github.com/banodoco/planet/tree/main/packets) in th
 - **`release/15/plan-84`** (PL-1 merged) is the base the integration lands on.
 - **`plan-84/pl-2`** (`0e290681`, the Foundations panel and stage) is the lab's base, so its layout is already in the lab; it merges into the plan branch at IN-01.
 - **[astrid-app#372](https://github.com/banodoco/astrid-app/pull/372)** (entry repair) touches `publicAstridNavigation.ts`, which the lab does not hold. EX-15 rebuilds its fix inside the engine and the wrapper; at IN-01 the integrator keeps whichever is still needed from #372 and closes the rest.
+
+## Plan 84 tasks and the packets that deliver them
+
+The accepted outcome and completion cases in [plan.md](plan.md) are unchanged; this is how the remaining PL tasks map onto the lab's packets.
+
+| Plan task | Delivered by |
+| --- | --- |
+| PL-0, PL-1 | Done in run 1 (the lab starts from PL-1's port) |
+| PL-2 The page's layout | The lab's base (`plan-84/pl-2`), finished by EX-20 |
+| PL-3 Framing for each size | EX-18, EX-19 |
+| PL-10 One time of day | EX-12, EX-13 |
+| PL-4 The still planet and the way in | EX-16, EX-21, EX-22 |
+| PL-5 Speed | EX-14, EX-15; measured on a production build at IN-03 |
+| PL-6 Pictures and tests | EX-01 (the lab's scene fingerprint), IN-02 (the App's captures and workflow) |
+| PL-7 Taste rounds | RF-D and the owner's daily looks |
+| PL-8 The owner's look | IN-04 |
+| PL-9 Engine in modules | EX-01 to EX-11, EX-17 |
+| R Review | Astra gates throughout; one independent review of the integrated App candidate at IN-04 |
+
+## Manager start message
+
+The owner sends this, as the first message, to a new Codex session that can control a browser signed in to the owner's Google AI Studio account and that has GitHub access to banodoco/planet and banodoco/astrid-dev.
+
+```text
+You are the manager of Plan 84's AI Studio run: you farm the planet lab's packets out to Google AI Studio, one at a time, and have each one reviewed by an Astra subagent before the next starts.
+
+Read, in this order, on banodoco/astrid-dev main:
+1. plans/84-living-planet-on-the-vision-page/ai-studio-run.md (this board: your role, the loop, your authority, the queue)
+2. skills/roles/astrid-dev-manage/workstreams/ai-studio-packet.md (how you run each packet in AI Studio)
+3. skills/roles/astrid-dev-manage/workstreams/astra-reflection.md (what each Astra reviewer you commission does)
+Then on banodoco/planet main: LAB_RULES.md and packets/README.md.
+
+Your authority is the board's Authority section; anything it does not list comes to me. You do not write lab code yourself.
+
+Start now:
+1. Create the issue "Planet lab mailbox" in banodoco/planet and link it on the board (pull request to astrid-dev main).
+2. Run EX-00 in a fresh AI Studio Build session connected to banodoco/planet main, using the start prompt in ai-studio-packet.md.
+3. Commission a fresh Astra subagent for the EX-00 gate and then RF-0, and act on their verdicts.
+4. Post STATUS on the mailbox after each step, then continue down the queue.
+
+Each day, post the daily look on the mailbox for me: what was accepted, the lab main commit, and exactly what to open and look at. My replies there are binding on how it looks.
+
+If you cannot drive AI Studio from your browser, post BLOCKED on the mailbox and give me the ready-to-paste start prompt for each packet instead; I will paste it and tell you when it has pushed.
+Never push to the lab's main except by merging an accepted packet, never change LAB_RULES.md, an existing test or upstream.json, and never touch banodoco/astrid-app before I give the go for IN-01.
+```
 
 ## Standing rulings
 
