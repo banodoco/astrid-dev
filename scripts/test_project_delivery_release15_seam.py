@@ -76,6 +76,26 @@ class Release15SourceSeamTests(unittest.TestCase):
         with self.assertRaisesRegex(RelationshipError, "unknown folder"):
             load_delivery(self.root)
 
+    def test_foundational_enabler_does_not_fabricate_goal_gap_delivery(self):
+        authored_enabler = PLAN.replace(
+            "**Vision gaps:** [CA-001](../../vision/gaps/CA-001-finish-work.md) (primary)",
+            "**Vision role:** Foundational enabler — shared internal interpretation",
+        )
+        self.write("plans/72-demo/plan.md", authored_enabler)
+        graph = load_delivery(self.root)
+        plan = RecordRef("project", "72")
+        self.assertIn(plan, graph.records)
+        self.assertIn(plan, graph.enablers)
+        self.assertEqual(graph.outgoing(plan, "addresses"), ())
+        self.assertEqual(
+            graph.incoming(plan, "includes")[0].source, RecordRef("release", "15")
+        )
+        goal = RecordRef("goal", "pillar:shared/finish-work")
+        self.assertEqual(deliveries_for_goal(graph, goal), ())
+        self.assertEqual(
+            frozen_releases_for_issue(graph, 123), (RecordRef("release", "15"),)
+        )
+
     def test_authored_membership_and_frozen_issue_are_independent(self):
         graph = load_delivery(self.root)
         goal = RecordRef("goal", "pillar:shared/finish-work")
