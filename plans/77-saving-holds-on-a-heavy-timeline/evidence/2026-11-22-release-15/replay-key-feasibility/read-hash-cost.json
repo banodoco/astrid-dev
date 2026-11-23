@@ -1,0 +1,146 @@
+{
+  "archive_immutable": true,
+  "bytes_on_disk": 445300736,
+  "excluded": "no CAS byte reads, canonical document parsing, semantic replay, signed depth-1000 dataset, cold OS cache, or end-to-end startup",
+  "logical_structure_sample": {
+    "cpu_s": 0.20599994899999885,
+    "records": 32,
+    "timeline_heads": 3,
+    "wall_s": 0.2142144699992059
+  },
+  "method": "typed SQLite field read + binary length framing and SHA-256, no product verification",
+  "one_pass_fixture_measure": {
+    "cpu_s": 0.863151753,
+    "groups": {
+      "history_edges": {
+        "cpu_s_all_passes": 0.660915618,
+        "one_pass_bytes": 385262075,
+        "one_pass_rows": 32,
+        "wall_s_all_passes": 0.6640211949998047
+      },
+      "history_receipts": {
+        "cpu_s_all_passes": 0.1976009460000001,
+        "one_pass_bytes": 38232822,
+        "one_pass_rows": 32,
+        "wall_s_all_passes": 0.19839551800032496
+      },
+      "internal_images": {
+        "cpu_s_all_passes": 5.863799999983321e-05,
+        "one_pass_bytes": 2633,
+        "one_pass_rows": 13,
+        "wall_s_all_passes": 5.846699968969915e-05
+      },
+      "parent_images": {
+        "cpu_s_all_passes": 0.004072252999999915,
+        "one_pass_bytes": 3695089,
+        "one_pass_rows": 32,
+        "wall_s_all_passes": 0.004070355998919695
+      },
+      "retained_input_bindings": {
+        "cpu_s_all_passes": 4.428100000009039e-05,
+        "one_pass_bytes": 0,
+        "one_pass_rows": 0,
+        "wall_s_all_passes": 4.4100999730289914e-05
+      },
+      "retained_input_content": {
+        "cpu_s_all_passes": 2.4950000000023564e-05,
+        "one_pass_bytes": 0,
+        "one_pass_rows": 0,
+        "wall_s_all_passes": 2.49700005952036e-05
+      },
+      "retained_input_links": {
+        "cpu_s_all_passes": 3.749200000013886e-05,
+        "one_pass_bytes": 0,
+        "one_pass_rows": 0,
+        "wall_s_all_passes": 3.72989998140838e-05
+      },
+      "shot_images": {
+        "cpu_s_all_passes": 9.067699999998347e-05,
+        "one_pass_bytes": 3230,
+        "one_pass_rows": 10,
+        "wall_s_all_passes": 9.062699973583221e-05
+      },
+      "timeline_event_rows": {
+        "cpu_s_all_passes": 0.00027094600000010516,
+        "one_pass_bytes": 28988,
+        "one_pass_rows": 35,
+        "wall_s_all_passes": 0.00027082799897470977
+      }
+    },
+    "passes": 1,
+    "wall_s": 0.8671067169998423
+  },
+  "repeated_same_bytes_throughput_only": {
+    "approximately_equivalent_history_rows": 992,
+    "cpu_s": 21.397305996,
+    "groups": {
+      "history_edges": {
+        "cpu_s_all_passes": 14.813991778,
+        "one_pass_bytes": 385262075,
+        "one_pass_rows": 32,
+        "wall_s_all_passes": 15.054023903998313
+      },
+      "history_receipts": {
+        "cpu_s_all_passes": 6.474559262,
+        "one_pass_bytes": 38232822,
+        "one_pass_rows": 32,
+        "wall_s_all_passes": 6.580151135000051
+      },
+      "internal_images": {
+        "cpu_s_all_passes": 0.0006758170000011887,
+        "one_pass_bytes": 2633,
+        "one_pass_rows": 13,
+        "wall_s_all_passes": 0.0006756900002073962
+      },
+      "parent_images": {
+        "cpu_s_all_passes": 0.10333826200000118,
+        "one_pass_bytes": 3695089,
+        "one_pass_rows": 32,
+        "wall_s_all_passes": 0.10336128899871255
+      },
+      "retained_input_bindings": {
+        "cpu_s_all_passes": 7.684799999907455e-05,
+        "one_pass_bytes": 0,
+        "one_pass_rows": 0,
+        "wall_s_all_passes": 7.678099973418284e-05
+      },
+      "retained_input_content": {
+        "cpu_s_all_passes": 5.6151000002557794e-05,
+        "one_pass_bytes": 0,
+        "one_pass_rows": 0,
+        "wall_s_all_passes": 5.623099968943279e-05
+      },
+      "retained_input_links": {
+        "cpu_s_all_passes": 7.922800000059738e-05,
+        "one_pass_bytes": 0,
+        "one_pass_rows": 0,
+        "wall_s_all_passes": 7.921299948066007e-05
+      },
+      "shot_images": {
+        "cpu_s_all_passes": 0.0005767390000031014,
+        "one_pass_bytes": 3230,
+        "one_pass_rows": 10,
+        "wall_s_all_passes": 0.0005768040009570541
+      },
+      "timeline_event_rows": {
+        "cpu_s_all_passes": 0.003921296999997992,
+        "one_pass_bytes": 28988,
+        "one_pass_rows": 35,
+        "wall_s_all_passes": 0.003921072000593995
+      }
+    },
+    "passes": 31,
+    "wall_s": 21.742961009000283
+  },
+  "sha256": "c0b27bb02c33d5b1e72699749c07adc769dda0c0eb2ceaceab222b630c6e132d",
+  "sqlite_foreign_key_check": {
+    "cpu_s": 0.0045423269999993465,
+    "violation_count": 0,
+    "wall_s": 0.004541202999462257
+  },
+  "sqlite_quick_check": {
+    "cpu_s": 0.08683711399999794,
+    "ok": true,
+    "wall_s": 0.08704416799992032
+  }
+}
