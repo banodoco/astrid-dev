@@ -17,7 +17,7 @@ This directory stages the Markdown-first agent instructions for the planned migr
 
 ## Shared workstreams
 
-Choose a procedure for an already-authorized task; selecting a workstream never grants a new role, approval, or permission. This is the single navigation index for the nine independent shared workstreams; role-specific procedures remain linked from their roles.
+Choose a procedure for an already-authorized task; selecting a workstream never grants a new role, approval, or permission. This is the human navigation index for the nine original shared workstreams; role-specific procedures remain linked from their roles. It is not a package allowlist: a new valid workstream with `skill: true` is discovered and packaged from its Markdown source without an entry here. Add a navigation link when that workstream is accepted for general use.
 
 - [Bugfix](shared/workstreams/bugfix.md) — Investigate incidents, reproduce failures and record safe recovery.
 - [Gap](shared/workstreams/gap.md) — Define vision gaps and evidence for closure.
