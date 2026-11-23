@@ -8,6 +8,8 @@
 
 The Lead cancelled lane-specific App re-pins: the release manager will generate one App pin at the release freeze. The unapplied [four-file candidate and guard outputs](evidence/app-repin-candidate-2026-11-23.md) record the installer manifest, Runtime lock, Agent CLI-surface lock and generated CLI surface, including the existing PR-base release-number guard conflict.
 
+**Correction, 23 November 06:55 UTC:** The Lead superseded the preceding freeze-only ruling: lanes re-pin the App after their Agent lands; the first re-pin sets `release` to 15, later release-branch pins leave it at 15, and the binding release guard compares with published main.
+
 **Part 2 started:** under the Lead’s terms, repair the VibeComfy memo in one working day, obtain a fresh review, and accept it on the measured installed number. It ends with a VibeComfy change and an Agent VibeComfy-pin move.
 
 US-0 is complete as the gated installed-container A/B with a stand-in ComfyUI. Evidence is planned at `plans/81-once-per-command/evidence/installed-container-baseline/runs/2026-11-23-frozen-second-freeze/` (the path is not yet merged). This is not a real ComfyUI or GPU result. In the split/vc48 arm, a shared 4-vCPU CPU container with a stand-in and `--no-wait` measured task admission. Attestation was off, so selected installs do not independently prove the Runtime connection. Medians: same prompt 14.682 → 10.780 s (0.734 ratio), changed prompt 15.177 → 11.057 s (0.729); timeline 1.159 → 1.125 s. The 0.5 generate-ratio target is **not met**. Count the full hosted lane as pending proof; the local 120-second timeout was NO-RESULT. Lead's fallback is marker-only.
