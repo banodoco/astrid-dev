@@ -4,13 +4,13 @@
 
 **Goal:** An agent can make the edits a real film needed on a heavy timeline (swap a clip's media, move word-anchored clips, remove and restore clips) on a build of `release/15/main`, and each edit is confirmed by reading it back and by a render.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Orchestrator session `session_011EzfW2CaMLCifo6wA8AVqu`, hosting one manager
 
 **Estimate:** Provisional, about 6 engineering days: 1 to land the two sound fixes, 2 for the word-anchored retime rule, 3 for the edit loop. Re-estimate once TE-3's feasibility is known.
 
-**Waiting on:** [Plan 87](../87-render-works/plan.md) reaching a working render (its RN-6); agreement with the managers of Plans 69 and 77 on the boundary; a claimed run. Decisions T1 and T2 are taken ([inputs.md](inputs.md#owner-decisions)).
+**Waiting on:** Plan 87's RN-6 for the render-backed proofs only; TE-1 to TE-3's code starts at once
 
 **Start:** [Astrid contributor skill](../../skills/astrid-dev/SKILL.md) and [domain map](../../skills/astrid-dev/references/domains.md). The six lines above are this project's row in the [catalog](../../plans/index.md): change them here, one line each; the catalog is generated.
 
