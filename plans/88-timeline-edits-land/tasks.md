@@ -49,6 +49,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23: TE-3 merged as `cb14daac9`; on `6195c2c3b`, `bash ../astrid-dev/env/agent-pytest.sh -q -rA tests/editing_conformance/test_shot_word_retime_refusal.py tests/editing_conformance/test_commit_boundaries_d12.py tests/timeline/test_legacy_occurrence_timing_provenance.py` passed 76 tests, and 9 focused reflow golden tests passed; four final review regression cases failed before repair and passed after. Host authorized the bounded final repair without another review round; the live read-back and render remain pending RN-6, so TE-3 is not complete.
 
+- 2026-11-23: TE-1 metadata follow-up merged as `850cae55e`; verified image/video dimensions now become registry resolution and audio/video duration is retained. Candidate `b762f41a8`: new still-swap test failed before the change; focused native/swap command passed 94 (`bash ../astrid-dev/env/agent-pytest.sh -q -rA tests/editing_conformance/test_imported_media_metadata.py tests/timeline/test_occurrence_media_swap.py tests/editing_conformance/test_recipe_occurrence_media.py`), new local Runtime PNG import passed separately, and audio binding passed a focused check. Three integration cases excluded by the repository default were run explicitly and failed identically on base `cb14daac9` and candidate, so they are pre-existing; live stack read-back/render remains pending.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
