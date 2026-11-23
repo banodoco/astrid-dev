@@ -4,9 +4,9 @@
 
 **Goal:** Any ComfyUI workflow, on your own ComfyUI, a managed one or a rented machine, either runs or stops with a named next step; a pack Astrid has not reviewed installs after one informed yes, and the saved workflow remembers it.
 
-**Status:** queued
+**Status:** active
 
-**Owner:** Unassigned
+**Owner:** Release 15 Lead (`session_011EzfW2ePdUMAHRAcAm3nur`)
 
 **Estimate:** About 18.5 engineering days (inferred): phase 0 about 2.5, WS-7 with recipe transport 1.5, LE-1 to LE-11 about 8, and 6.5 from the UX review (LE-12 to LE-18 and consent hardening in LE-2), of which 3.75 (LE-12 to LE-15, LE-2 hardening) are needed for the SAM run to pass; a plain 90/10 without the loose-end tasks is about 6.
 

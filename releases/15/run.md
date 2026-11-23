@@ -72,7 +72,8 @@ Added 23 November 2026 at the owner's request. The Lead rewrites this section at
 
 On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ221kXBNRB4xQcG`), asked for Plan 56 to be set up for the [fresh ChatGPT packet workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md).
 
-- **Accountable agent** for Plan 56: the Release 15 Lead, `session_011EzfW1gtAhRQwk8pgJMzhG`; there is no separate plan manager. It writes and orders packets, reviews packet PRs, merges accepted ones into `release/15/plan-56`, merges `release/15/main` into it, keeps `tasks.md` current, runs the review stops (RS1 after WS-7b and LE-2b, and R, up to two rounds) with Codex Astra, and may move the Agent's VibeComfy pin on `release/15/plan-56` with `scripts/vibecomfy_pin.py`. It confirms the landing gate before anything goes into `release/15/main`, and gives hosted CI slots.
+- **Accountable agent** for Plan 56: the Release 15 Lead, `session_011EzfW2ePdUMAHRAcAm3nur`; there is no separate plan manager. It writes and orders packets, reviews packet PRs, merges accepted ones into `release/15/plan-56`, merges `release/15/main` into it, keeps `tasks.md` current, runs the review stops (RS1 after WS-7b and LE-2b, and R, up to two rounds) with Codex Astra, and may move the Agent's VibeComfy pin on `release/15/plan-56` with `scripts/vibecomfy_pin.py`. It confirms the landing gate before anything goes into `release/15/main`, and gives hosted CI slots.
+- **Sessions in use (23 November 2026):** the Lead runs in `session_011EzfW2ePdUMAHRAcAm3nur` (the owner's brief and the Run start named `session_011EzfW1gtAhRQwk8pgJMzhG`; the role and the mailbox name `r15-lead` are unchanged). The Orchestrator is the Codex session `01a20a4e-a34d-7a51-ab59-536b6cfa6869`, posting as `r15-orchestrator-1`. On the owner's override the Orchestrator dispatched P56-01 at 21:44 UTC, before this board reached `main`.
 - **The Orchestrator** acts in the owner's ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace packet sessions and comment on the mailbox; it does not edit the repository.
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch, never dispatches hosted CI and never takes a second packet.
 - **Session mode follows the packet's Route:** N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
@@ -92,8 +93,8 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r15-lead` | `session_011EzfW1gtAhRQwk8pgJMzhG` | 7114639422 |
-| Orchestrator | `r15-orchestrator-1` | `session_011EzfW2WBWyoHTBJggpfEDm` | — |
+| Lead | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7114881197 |
+| Orchestrator | `r15-orchestrator-1` | `01a20a4e-a34d-7a51-ab59-536b6cfa6869` (Codex) | 7114811678 |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
 Cadence and time limits are those of [multi-manager dispatch](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md): the Orchestrator reads the mailbox and checks every open packet each hour; a Running packet with no commit or STATUS for 3 hours is resumed; one that will not load, does not reply 30 minutes after a resume, or is quiet for 6 hours is replaced from its branch head (never two writers on one branch); a Review unanswered for 4 hours is a REQUEST to the Lead and a note to the owner.
@@ -131,7 +132,7 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Ready | — | Dispatch first, alone; its early STATUS proves a packet session can push, open a PR and comment. Pro |
+| [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Running | `r15-P56-01-1` (ChatGPT Pro) | Dispatched 23 November 2026 21:44 UTC; waiting for its first STATUS (branch pushed, draft PR open, mailbox comment). Pro |
 | [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Ready | — | Extra High |
 | [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Ready | — | High |
 | [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Ready | — | Extra High |
@@ -150,7 +151,7 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 The owner pastes this into the Orchestrator's own session (`session_011EzfW2WBWyoHTBJggpfEDm`).
 
 ```text
-You are the Orchestrator for Release 15 Plan 56, reporting to the Lead (mailbox name r15-lead, session_011EzfW1gtAhRQwk8pgJMzhG).
+You are the Orchestrator for Release 15 Plan 56, reporting to the Lead (mailbox name r15-lead, session_011EzfW2ePdUMAHRAcAm3nur).
 Follow skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md in banodoco/astrid-dev.
 Read releases/15/run.md at main, section "Plan 56 dispatch", then on main at every hourly check. Ready rows link the packets.
 Mailbox: https://github.com/banodoco/astrid-dev/issues/1757, format in its first post. Your mailbox name: r15-orchestrator-1.
