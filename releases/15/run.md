@@ -76,14 +76,15 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 - **The Orchestrator** acts in the owner's ChatGPT account at her request, so its start messages are hers. It may start, resume, stop and replace packet sessions and comment on the mailbox; it does not edit the repository.
 - **A packet session may:** push to the branches its packet's PR destination names, open pull requests to that destination, and comment on the mailbox. It never merges, never edits `tasks.md`, never rebases a shared branch, never dispatches hosted CI and never takes a second packet.
 - **Session mode follows the packet's Route:** N High, X Extra High, S Pro ([run contract](../../skills/shared/run-contract.md#chatgpt-session-modes)).
-- **Bases:** astrid-agent `release/15/plan-56` from `release/15/main` (`045064b6`); VibeComfy `release/15/plan-56` from `c0e910ca`, the commit the Agent pins.
+- **Bases:** astrid-agent `release/15/plan-56` from `release/15/main` (`045064b6`); VibeComfy `release/15/plan-56` from `c0e910ca`, the commit the Agent pins, which contains VibeComfy `release/15/main` (`48b5fa9e`), so both branches carry the current `release/15/main`. When `release/15/main` moves, the Lead merges it into `release/15/plan-56`; a packet never does.
 - **Needs the owner:** the live SAM run (WS-L, after R), publishing, anything paid or touching her install or media, and decisions D10–D12 before landing (build to the recommendations meanwhile).
 
 ### Standing rulings (Plan 56)
 
-1. **Different functions in one file are not a conflict** between packets; the same function or the same new test table is. (Proposed 23 November 2026; the Lead confirms or changes it.)
+1. **Different functions in one file are not a conflict** between packets; the same function or the same new test table is. The holder is the task branch, not the packet: a function is free for the next packet once the last task that writes it has merged. (Proposed by the owner and confirmed by the Lead, 23 November 2026.)
 2. **Cross-repo packets never move a pin:** they post `READY-PIN <VibeComfy head>` and the Lead adds the pin commit.
 3. **RS1 and R are commissioned by the Lead,** each by Codex Astra.
+4. **The Plan 56 bases include `release/15/main` of both repositories** (the owner, 23 November 2026, through the Orchestrator); the Lead records each base's head and ancestry in `releases/15.md` Branches.
 
 ### Mailbox
 
@@ -91,7 +92,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r15-lead` | `session_011EzfW1gtAhRQwk8pgJMzhG` | — |
+| Lead | `r15-lead` | `session_011EzfW1gtAhRQwk8pgJMzhG` | 7114639422 |
 | Orchestrator | `r15-orchestrator-1` | `session_011EzfW2WBWyoHTBJggpfEDm` | — |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
@@ -122,7 +123,7 @@ The Orchestrator does these first, posts one STATUS with each as passed or faile
 6. **GitHub from a packet session:** the session can push a `p56/<task id>` branch, open a draft pull request and comment on #1757, in astrid-agent, VibeComfy and astrid-dev.
 7. **GitHub for the Orchestrator:** it can read pull requests, commits and workflow runs in those repositories, and comment on #1757.
 8. **How many ChatGPT sessions the account can run at once.** Tell the Lead if that is below the cap below, and whether Extra High and Pro are offered.
-9. **A packet session can run the tests:** it can build the Agent environment (`env/agent-setup.sh`, VibeComfy at the pin) and run one focused test, for example `tests/core/generation/test_entries.py`.
+9. **A packet session can run the tests:** it can build the Agent environment with astrid-agent's in-repo `scripts/worker-env/agent-setup.sh` (VibeComfy at the Agent's pin) and run one focused test, for example `tests/core/generation/test_entries.py`; for VibeComfy, which has no in-repo copy, astrid-dev `env/vc-setup.sh` and `env/vc-pytest.sh`.
 
 ### Dispatch queue (Plan 56)
 
@@ -138,10 +139,10 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 | [R15-P56-06](packets/R15-P56-06.md) Next-step mappings and `--add` | LE-1b, LE-3, LE-12 | Blocked | — | After P56-01, 02, 03. Extra High |
 | [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Blocked | — | After P56-01 and 05; then the Lead's RS1. Pro |
 | [R15-P56-08](packets/R15-P56-08.md) Lookup suggestions, several packs, models | LE-5, LE-16, LE-9 | Blocked | — | After P56-04 and 06. High |
-| [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Blocked | — | After P56-04, 07 and RS1. Extra High |
+| [R15-P56-09](packets/R15-P56-09.md) Target honesty | LE-8, LE-10, LE-14, LE-17 | Blocked | — | After P56-04, 07 and RS1; its LE-14 after P56-10. Extra High |
 | [R15-P56-10](packets/R15-P56-10.md) Recipe for an unlisted pack | LE-13 | Blocked | — | After P56-05, 06, 07 and RS1. Extra High |
 | [R15-P56-11](packets/R15-P56-11.md) Renderer, wording, skill proof | LE-18b, LE-11, WS-6b | Blocked | — | After every other packet. Extra High |
-| Conflicts (do not run these together) | — | — | — | P56-06 with P56-07 (both write `cli.py:_workflow_command`; P56-07 first, it is the critical path); P56-08 with P56-09 (both write `entries.py:target_schema`); P56-10 with P56-06 and P56-08 (`cli.py`). P56-01 and P56-04 share two files in different functions (`comfyui_engine.py`, `managed_preparation.py`) and may run together under the ruling below. |
+| Conflicts (one task branch at a time writes each) | — | — | — | `cli.py:_workflow_command`: P56-02 (WS-0d, WS-0a), 06, 07, 08, 10; P56-07 goes first of 06, 07, 08 and 10 (critical path) and starts once P56-02's WS-0a has merged. `entries.py:target_schema`: P56-02 (WS-0g), 06 (LE-1b), 08, 09. VibeComfy `_install.py` in the order P56-03, 05, 07, 10, then P56-09's LE-14. `managed_preparation.py:native_failure_diagnostic`: P56-04 (LE-6), then P56-09 (LE-14). P56-01 and P56-04 share `comfyui_engine.py` and `managed_preparation.py` in different functions and may run together (ruling 1). |
 | RS1 and R | Review stops | Lead | — | Codex Astra, commissioned by the Lead: RS1 after P56-07; R after P56-11 (up to two rounds) |
 
 ### Orchestrator launch message

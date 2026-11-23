@@ -13,7 +13,7 @@ Any ComfyUI workflow, on the person's own ComfyUI, a managed one or a rented mac
 | Role | Who | Does |
 | --- | --- | --- |
 | Lead (accountable) | `session_011EzfW1gtAhRQwk8pgJMzhG` | Reads, decides and rules; writes and orders packets; reviews and merges packet PRs into `release/15/plan-56`; runs RS1 and R with Codex Astra; confirms the landing gate; gives CI slots. Sends route `N` workers (Luna, or Haiku) to explore and runs the hourly parallelism pass; never gives them a verdict ([workstream](../../skills/roles/astrid-dev-lead/workstreams/multi-manager-release.md)). |
-| Orchestrator | `session_011EzfW2WBWyoHTBJggpfEDm`, Claude | Starts one fresh ChatGPT session per packet in the owner's account, in the mode its Route sets (N High, X Extra High, S Pro); checks every open packet hourly; resumes or replaces stalled sessions; relays between Lead and packet sessions; posts one STATUS an hour. Does not merge or edit the repository ([workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md)). |
+| Orchestrator | `session_011EzfW2WBWyoHTBJggpfEDm`, Codex | Starts one fresh ChatGPT session per packet in the owner's account, in the mode its Route sets (N High, X Extra High, S Pro); checks every open packet hourly; resumes or replaces stalled sessions; relays between Lead and packet sessions; posts one STATUS an hour. Does not merge or edit the repository ([workstream](../../skills/roles/astrid-dev-orchestrate/workstreams/multi-manager-dispatch.md)). |
 | Packet session | a fresh ChatGPT session per packet | Implements and proves one packet ([chatgpt-packet workstream](../../skills/roles/astrid-dev-manage/workstreams/chatgpt-packet.md)); opens PRs; posts STATUS and BLOCKED; never merges, ticks `tasks.md` or takes a second packet. |
 | Owner | Hannah | Pastes the Orchestrator launch message; WS-L, publishing, paid or personal-machine actions; D10–D12 before landing. |
 
@@ -29,7 +29,7 @@ The board, mailbox ([#1757](https://github.com/banodoco/astrid-dev/issues/1757))
 
 ## How the code is tested
 
-- Agent tests build VibeComfy at the Agent's own pin (`env/agent-setup.sh`, `VIBECOMFY_ENGINE_REVISION`). A card that changes both repos is proved only after the Agent's `release/15/plan-56` points at the plan-56 VibeComfy head, by a generator-only pin commit (`scripts/vibecomfy_pin.py`). The Lead does it; pins into `release/15/main` are also the Lead's.
+- Agent tests build VibeComfy at the Agent's own pin (astrid-agent `scripts/worker-env/agent-setup.sh`, `VIBECOMFY_ENGINE_REVISION`). A card that changes both repos is proved only after the Agent's `release/15/plan-56` points at the plan-56 VibeComfy head, by a generator-only pin commit (`scripts/vibecomfy_pin.py`). The Lead does it; pins into `release/15/main` are also the Lead's.
 - Proofs run on the **CPU stand-in target** defined in [evidence/fixtures/README.md](evidence/fixtures/README.md): a fake ComfyUI `object_info` server and a recorded-answer fake pod runner. No GPU, no SAM weights, no rented machine. The real SAM run is WS-L, the owner's, after R.
 - A packet session never dispatches hosted CI: it posts `READY-CI` on the mailbox and waits for the Lead's slot. The baseline for the Agent's compared run is [releases/15/evidence/agent-ci-baseline-8807f820](../../releases/15/evidence/agent-ci-baseline-8807f820/README.md).
 
