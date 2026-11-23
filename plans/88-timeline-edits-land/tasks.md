@@ -53,6 +53,8 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23 (Lead): Unpark TE-5’s film-shaped builder before TE-4 anchored work because the standard fixture lacks its required structures; use standard/large-shots for non-anchored swap, control and probes 5–9, and film-shaped for anchored swap, ripple and project-pack probe.
 
+- 2026-11-23: TE-5 no-pack builder merged into App plan branch as `be0ca324d` (single builder commit `ee4caa65d`); 12 focused Node tests, 2 embedded Runtime/overrun checks, and a disposable generated-media Runtime builder check passed. The 15-frame ripple/no-op-reflow case remains red and is preserved on backup `206f19b83` for bounded TE-3 diagnosis; pack admission and full render remain unproved, so TE-5 is not complete.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
