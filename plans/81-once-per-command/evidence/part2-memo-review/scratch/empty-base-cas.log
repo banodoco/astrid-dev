@@ -1,0 +1,2 @@
+WorkflowBundleError workflow bundle changed before publication: <tmp>/dest/workflow.py; reload it or choose an explicit --out destination
+reader syncs 0 files ['.workflow.py.vibe.lock']

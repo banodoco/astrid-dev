@@ -1,0 +1,4 @@
+after first staging write [['.workflow.py.3yjqvhgt.py', '0o600', 980], ['.workflow.py.vibe.lock', '0o600', 0], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]]
+transaction digest [['.workflow.py.3yjqvhgt.py', '0o600', 980], ['.workflow.py.8weq9tii.bak', '0o600', 980], ['.workflow.py.vibe.lock', '0o600', 0], ['.workflow.vibe.json.gteo065a.bak', '0o600', 784], ['.workflow.vibe.json.xsudm0wf.json', '0o600', 784], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]]
+OSError scheduled final witness read failure
+final [['.workflow.py.vibe.lock', '0o600', 0], ['workflow.py', '0o600', 980], ['workflow.vibe.json', '0o600', 784]] private staging [] existing bytes preserved True
