@@ -1,0 +1,7 @@
+# Repeated-word reflow control — 23 November 2026
+
+Plan 88 compared an untouched generated 621-clip fixture with its state after a local `Checkout.reflow()` on Agent `dc3eb3ccee51c105acd721d36ebb09cbfd40dca7` and Runtime `737843e9cb92c565c266452dde540832ee2c745b`. No ripple or publication was performed in the control. The fixture used 30 fps, two repeated transcript words, and a shot-owned clip carrying the legacy declaration `"repeat"`.
+
+The control recorded one changed global clip span: `test-film-occ-0/footage-0-3` moved from 0.05–0.15 s to 0.033333–0.133333 s. Reflow reported that the clip followed repeated-word occurrence #2; no placement records changed. The same movement appeared after the proposed ripple. The off-grid 0.05 s starting point and the identical no-ripple result show that this observed snap did not require the ripple. This is evidence about the present reflow choice, not proof that all repeated-word cases behave alike.
+
+The focused disposable control used generated media and an embedded Runtime; its raw output is retained by the run as `run/te5-reflow-control.log` and the independently instrumented post-ripple output as `run/te5-layout-diagnostic.log`. No renderer or live stack was involved. The result supports Plan 18's need for an explicit word binding: TE-3 commit acceptance cannot use reflow's positional choice as evidence of a unique word identity. Frame-aligned fixture setup and the full edit/render acceptance remain separate work.
