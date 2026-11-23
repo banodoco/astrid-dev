@@ -36,7 +36,7 @@ def _identity(path: Path) -> tuple | None:
             os.readlink(path) if path.is_symlink() else None)
 
 
-def _retarget_owned_link(link: Path, source: Path) -> None:
+def _retarget_owned_link(link: Path, source: Path, expected_identity: tuple) -> None:
     """Prepare the new symlink first and replace one owned link in one operation.
 
     Failure to create the staged symlink or replace the destination preserves
@@ -50,6 +50,12 @@ def _retarget_owned_link(link: Path, source: Path) -> None:
         with tempfile.TemporaryDirectory(prefix=".astrid-dev-stage-", dir=link.parent) as tmp:
             staged = Path(tmp) / "package"
             staged.symlink_to(source, target_is_directory=True)
+            # Preflight and the per-item check ran before staging. Recheck
+            # after staging too, so an intervening foreign replacement is not
+            # silently overwritten by our atomic publication. This does not
+            # eliminate a hostile race between this check and os.replace.
+            if _identity(link) != expected_identity:
+                raise ValueError(f"installation entry changed during staged retarget: {link}")
             os.replace(staged, link)
             replaced = True
     except OSError as exc:
@@ -143,7 +149,7 @@ def install_packages(root: Path, destinations: list[Path] | None = None,
         if operation == "retire":
             link.unlink()
         elif operation == "retarget":
-            _retarget_owned_link(link, source)
+            _retarget_owned_link(link, source, identity)
         elif operation == "link":
             try:
                 link.symlink_to(source, target_is_directory=True)

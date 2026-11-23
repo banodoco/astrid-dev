@@ -248,5 +248,66 @@ class InstallTests(unittest.TestCase):
         self.assertTrue(any("already-linked" in x for x in
                             install_packages(self.root, [self.dest])))
 
+    def test_foreign_replacement_during_staging_blocks_atomic_retarget(self):
+        """A foreign writer wins during staging; publication must not overwrite it."""
+        original_package = self.root / "skills/roles/astrid-dev-leader"
+        original_package.mkdir(parents=True)
+        link = self.dest / "astrid-dev-leader"
+        link.symlink_to(original_package, target_is_directory=True)
+        foreign = self.root / "another-repository/skills/leader"
+        foreign.mkdir(parents=True)
+        (foreign / "SKILL.md").write_text("foreign instructions\n", encoding="utf-8")
+        original_symlink = Path.symlink_to
+
+        def inject_during_staging(self, target, *args, **kwargs):
+            result = original_symlink(self, target, *args, **kwargs)
+            if self.name == "package" and self.parent.parent == self.dest:
+                link.unlink()
+                original_symlink(link, foreign, target_is_directory=True)
+            return result
+
+        with patch.object(Path, "symlink_to", inject_during_staging):
+            with self.assertRaisesRegex(ValueError, "changed during staged retarget"):
+                install_packages(self.root, [self.dest])
+        self.assertEqual(link.resolve(), foreign.resolve())
+        self.assertEqual((link / "SKILL.md").read_text(encoding="utf-8"),
+                         "foreign instructions\n")
+        self.assertEqual({p.name for p in self.dest.iterdir()}, {"astrid-dev-leader"})
+        # No silent takeover on a normal follow-up either.
+        with self.assertRaisesRegex(ValueError, "foreign symlink"):
+            install_packages(self.root, [self.dest])
+        self.assertEqual(link.resolve(), foreign.resolve())
+
+    def test_second_destination_retarg_failure_is_partial_and_retryable(self):
+        """A later destination fails; earlier install remains and retry converges."""
+        first, second = self.dest, self.root / "second/skills"
+        second.mkdir(parents=True)
+        old = self.root / "skills/roles/astrid-dev-leader"
+        old.mkdir(parents=True)
+        (old / "SKILL.md").write_text("old leader\n", encoding="utf-8")
+        previous = second / "astrid-dev-leader"
+        previous.symlink_to(old, target_is_directory=True)
+        original_symlink = Path.symlink_to
+
+        def reject_second_stage(self, target, *args, **kwargs):
+            if self.name == "package" and self.parent.parent == second:
+                raise OSError(errno.EPERM, "injected second-destination error")
+            return original_symlink(self, target, *args, **kwargs)
+
+        with patch.object(Path, "symlink_to", reject_second_stage):
+            with self.assertRaisesRegex(ValueError, "previous owned link was preserved"):
+                install_packages(self.root, [first, second])
+        self.assertTrue((first / "astrid-dev-leader/SKILL.md").is_file())
+        self.assertEqual(previous.resolve(), old.resolve())
+        self.assertEqual((previous / "SKILL.md").read_text(encoding="utf-8"),
+                         "old leader\n")
+        self.assertEqual({p.name for p in second.iterdir()}, {"astrid-dev-leader"})
+        # The multi-destination call is deliberately not a transaction.
+        result = install_packages(self.root, [first, second])
+        self.assertTrue(any("already-linked" in x for x in result))
+        self.assertTrue(any("retargeted" in x for x in result))
+        self.assertEqual(previous.resolve(),
+                         (self.root / ".generated/skills/astrid-dev-leader").resolve())
+
 if __name__ == "__main__":
     unittest.main()
