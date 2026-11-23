@@ -288,5 +288,30 @@ print(json.dumps({"errors": errors, "plans": [p["number"] for p in info["plans"]
         )
 
 
+    def test_original_real_repository_delivery_traversal_on_native_release(self):
+        # Run the EXISTING, UNMODIFIED end-to-end oracle from the actual
+        # patched frozen checkout, not the current source PR's source tree.
+        # An inferred plan membership or a mere branch-table row is not proof.
+        test_id = (
+            "test_project_delivery.DeliveryCompositionTests."
+            "test_actual_repository_delivery_traversal"
+        )
+        result = subprocess.run(
+            (sys.executable, "-m", "unittest", test_id),
+            cwd=self.scratch, capture_output=True, text=True,
+            env={
+                **os.environ,
+                "PYTHONPATH": str(self.scratch / "scripts"),
+                "PYTHONDONTWRITEBYTECODE": "1",
+            },
+            check=False,
+        )
+        self.assertEqual(
+            result.returncode, 0,
+            "Original real-tree traversal on the frozen release source:\n"
+            + result.stdout + result.stderr,
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
