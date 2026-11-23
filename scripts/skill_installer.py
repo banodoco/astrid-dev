@@ -8,6 +8,23 @@ import tempfile
 from skill_builder import OUTPUT, check_packages
 
 
+class PartialInstallationError(ValueError):
+    """A later failure left earlier owned link changes installed.
+
+    The completed list contains only operations that actually returned
+    successfully. This records a retryable partial state, not a transaction.
+    """
+
+    def __init__(self, completed_changes: list[str], failed_link: Path, cause: Exception):
+        self.completed_changes = tuple(completed_changes)
+        self.failed_link = failed_link
+        super().__init__(
+            f"partial skill installation: {len(completed_changes)} changes completed "
+            f"before failure at {failed_link}: {cause}; "
+            "inspect the destinations and retry skills install"
+        )
+
+
 def default_destinations() -> list[Path]:
     home = Path.home()
     return [path for path in (home / ".claude/skills", home / ".codex/skills",
@@ -133,29 +150,42 @@ def install_packages(root: Path, destinations: list[Path] | None = None,
     # adding a new skill fails, legacy entry points remain available.
     planned.sort(key=lambda entry: entry[0] == "retire")
     actions = []
+    completed_changes = []
     for operation, link, source, identity in planned:
-        target_identity = next(identity for target, identity in target_identities.values()
-                               if target == link.parent)
-        if _identity(link.parent) != target_identity:
-            raise ValueError(f"destination changed during installation: {link.parent}")
-        if _identity(link) != identity:
-            raise ValueError(f"installation entry changed during preflight: {link}")
-        if operation == "already":
-            actions.append(f"already-linked {link}")
-            continue
-        actions.append(f"{'would-' + operation if dry_run else {'retire': 'retired', 'retarget': 'retargeted', 'link': 'linked'}[operation]} {link}")
-        if dry_run:
-            continue
-        if operation == "retire":
-            link.unlink()
-        elif operation == "retarget":
-            _retarget_owned_link(link, source, identity)
-        elif operation == "link":
-            try:
-                link.symlink_to(source, target_is_directory=True)
-            except OSError as exc:
-                raise ValueError(
-                    f"could not create skill directory symlink {link}: {exc}; "
-                    "confirm link privileges on this platform"
-                ) from exc
+        try:
+            target_identity = next(identity for target, identity in target_identities.values()
+                                   if target == link.parent)
+            if _identity(link.parent) != target_identity:
+                raise ValueError(f"destination changed during installation: {link.parent}")
+            if _identity(link) != identity:
+                raise ValueError(f"installation entry changed during preflight: {link}")
+            if operation == "already":
+                actions.append(f"already-linked {link}")
+                continue
+            label = (
+                f"would-{operation} {link}" if dry_run
+                else f"{'retire': 'retired', 'retarget': 'retargeted', 'link': 'linked'}[operation]} {link}"
+            )
+            if dry_run:
+                actions.append(label)
+                continue
+            if operation == "retire":
+                link.unlink()
+            elif operation == "retarget":
+                _retarget_owned_link(link, source, identity)
+            elif operation == "link":
+                try:
+                    link.symlink_to(source, target_is_directory=True)
+                except OSError as exc:
+                    raise ValueError(
+                        f"could not create skill directory symlink {link}: {exc}; "
+                        "confirm link privileges on this platform"
+                    ) from exc
+            # Count an operation only after it actually returned successfully.
+            actions.append(label)
+            completed_changes.append(label)
+        except (OSError, ValueError) as exc:
+            if not dry_run and completed_changes:
+                raise PartialInstallationError(completed_changes, link, exc) from exc
+            raise
     return actions

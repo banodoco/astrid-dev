@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from skill_builder import build_packages
-from skill_installer import install_packages
+from skill_installer import install_packages, PartialInstallationError
 
 
 ROLE = """---
@@ -309,6 +309,66 @@ class InstallTests(unittest.TestCase):
         self.assertTrue(any("retargeted" in x for x in result))
         self.assertEqual(previous.resolve(),
                          (self.root / ".generated/skills/astrid-dev-leader").resolve())
+
+    def test_partial_failure_reports_only_completed_changes_and_failed_destination(self):
+        old = self.root / "skills/astrid-dev"
+        old.mkdir(parents=True)
+        (self.dest / "astrid-dev").symlink_to(old, target_is_directory=True)
+        worker = self.root / "agent/roles/worker.md"
+        worker.write_text(ROLE.replace("# Leader", "# Worker"), encoding="utf-8")
+        build_packages(self.root)
+        original_symlink = Path.symlink_to
+
+        def fail_worker(self, target, *args, **kwargs):
+            if self.name == "astrid-dev-worker":
+                raise OSError(errno.EIO, "injected later failure")
+            return original_symlink(self, target, *args, **kwargs)
+
+        with patch.object(Path, "symlink_to", fail_worker):
+            with self.assertRaises(PartialInstallationError) as caught:
+                install_packages(self.root, [self.dest])
+        exc = caught.exception
+        self.assertEqual(exc.failed_link, self.dest / "astrid-dev-worker")
+        self.assertEqual(len(exc.completed_changes), 1)
+        self.assertIn("linked", exc.completed_changes[0])
+        self.assertIn("astrid-dev-leader", exc.completed_changes[0])
+        self.assertNotIn("astrid-dev-worker", " ".join(exc.completed_changes))
+        self.assertIn("partial skill installation: 1 changes completed", str(exc))
+        self.assertIn("retry skills install", str(exc))
+        self.assertTrue((self.dest / "astrid-dev-leader/SKILL.md").is_file())
+        self.assertTrue((self.dest / "astrid-dev").is_symlink())
+        install_packages(self.root, [self.dest])
+        self.assertFalse((self.dest / "astrid-dev").is_symlink())
+        self.assertTrue((self.dest / "astrid-dev-worker/SKILL.md").is_file())
+
+    def test_second_destination_error_reports_previous_destination_progress(self):
+        second = self.root / "second/skills"
+        second.mkdir(parents=True)
+        old = self.root / "skills/roles/astrid-dev-leader"
+        old.mkdir(parents=True)
+        (second / "astrid-dev-leader").symlink_to(old, target_is_directory=True)
+        with patch("skill_installer.os.replace", side_effect=OSError(errno.EIO, "injected")):
+            with self.assertRaises(PartialInstallationError) as caught:
+                install_packages(self.root, [self.dest, second])
+        exc = caught.exception
+        self.assertEqual(exc.failed_link, second / "astrid-dev-leader")
+        self.assertEqual(len(exc.completed_changes), 1)
+        self.assertIn(str(self.dest), exc.completed_changes[0])
+        self.assertEqual((second / "astrid-dev-leader").resolve(), old.resolve())
+        self.assertTrue((self.dest / "astrid-dev-leader/SKILL.md").is_file())
+        install_packages(self.root, [self.dest, second])
+        self.assertTrue((second / "astrid-dev-leader/SKILL.md").is_file())
+
+    def test_no_changes_before_failure_does_not_report_partial_installation(self):
+        old = self.root / "skills/roles/astrid-dev-leader"
+        old.mkdir(parents=True)
+        original = self.dest / "astrid-dev-leader"
+        original.symlink_to(old, target_is_directory=True)
+        with patch("skill_installer.os.replace", side_effect=OSError(errno.EIO, "injected")):
+            with self.assertRaisesRegex(ValueError, "previous owned link was preserved") as caught:
+                install_packages(self.root, [self.dest])
+        self.assertNotIsInstance(caught.exception, PartialInstallationError)
+        self.assertEqual(original.resolve(), old.resolve())
 
 if __name__ == "__main__":
     unittest.main()
