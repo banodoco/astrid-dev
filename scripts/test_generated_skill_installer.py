@@ -173,5 +173,77 @@ class InstallTests(unittest.TestCase):
         self.assertFalse(obsolete.is_symlink())
         self.assertTrue((self.dest / "astrid-dev-leader/SKILL.md").is_file())
 
+    def test_cleanup_error_after_committed_retarget_reports_new_link(self):
+        """The prior helper falsely said the old link was preserved on cleanup error."""
+        old = self.root / "skills/roles/astrid-dev-leader"
+        old.mkdir(parents=True)
+        (old / "SKILL.md").write_text("old authority\n", encoding="utf-8")
+        link = self.dest / "astrid-dev-leader"
+        link.symlink_to(old, target_is_directory=True)
+        import tempfile
+        real_temp = tempfile.TemporaryDirectory
+
+        class FailAfterCleanup:
+            def __init__(self, *args, **kwargs):
+                self.inner = real_temp(*args, **kwargs)
+
+            def __enter__(self):
+                return self.inner.__enter__()
+
+            def __exit__(self, *args):
+                self.inner.__exit__(*args)
+                raise OSError(errno.EIO, "injected post-commit cleanup failure")
+
+        with patch("skill_installer.tempfile.TemporaryDirectory", FailAfterCleanup):
+            with self.assertRaisesRegex(ValueError, "new link is installed"):
+                install_packages(self.root, [self.dest])
+        self.assertEqual(
+            link.resolve(), (self.root / ".generated/skills/astrid-dev-leader").resolve())
+        self.assertNotEqual(link.resolve(), old.resolve())
+        self.assertTrue((link / "SKILL.md").is_file())
+        self.assertEqual({entry.name for entry in self.dest.iterdir()}, {"astrid-dev-leader"})
+        self.assertTrue(any("already-linked" in x for x in
+                            install_packages(self.root, [self.dest])))
+
+    def test_late_retarget_failure_preserves_old_entrypoint_and_retry_converges(self):
+        """A partial multi-package attempt must retain legacy start and recover cleanly."""
+        old_start = self.root / "skills/astrid-dev"
+        old_start.mkdir(parents=True)
+        (old_start / "SKILL.md").write_text("original start\n", encoding="utf-8")
+        (self.dest / "astrid-dev").symlink_to(old_start, target_is_directory=True)
+        old_lead = self.root / "skills/roles/astrid-dev-leader"
+        old_lead.mkdir(parents=True)
+        (old_lead / "SKILL.md").write_text("original leader\n", encoding="utf-8")
+        (self.dest / "astrid-dev-leader").symlink_to(old_lead, target_is_directory=True)
+        (self.root / "agent/roles/worker.md").write_text(
+            ROLE.replace("# Leader", "# Worker"), encoding="utf-8")
+        build_packages(self.root)
+
+        real_replace = __import__("os").replace
+
+        def fail_second_retarget(source, destination):
+            if Path(destination).name == "astrid-dev-leader":
+                raise OSError(errno.EIO, "injected later retarget failure")
+            return real_replace(source, destination)
+
+        with patch("skill_installer.os.replace", side_effect=fail_second_retarget):
+            with self.assertRaisesRegex(ValueError, "previous owned link was preserved"):
+                install_packages(self.root, [self.dest])
+        self.assertEqual((self.dest / "astrid-dev").resolve(), old_start.resolve())
+        self.assertEqual((self.dest / "astrid-dev-leader").resolve(), old_lead.resolve())
+        self.assertTrue((self.dest / "astrid-dev").is_symlink())
+        self.assertTrue((self.dest / "astrid-dev-worker/SKILL.md").is_file())
+        foreign = self.dest / "unrelated-user-file"
+        foreign.write_text("never touch\n", encoding="utf-8")
+        result = install_packages(self.root, [self.dest])
+        self.assertTrue(any("retargeted" in x for x in result))
+        self.assertTrue(any("retired" in x for x in result))
+        self.assertFalse((self.dest / "astrid-dev").exists())
+        self.assertTrue((self.dest / "astrid-dev-leader/SKILL.md").is_file())
+        self.assertTrue((self.dest / "astrid-dev-worker/SKILL.md").is_file())
+        self.assertEqual(foreign.read_text(encoding="utf-8"), "never touch\n")
+        self.assertTrue(any("already-linked" in x for x in
+                            install_packages(self.root, [self.dest])))
+
 if __name__ == "__main__":
     unittest.main()

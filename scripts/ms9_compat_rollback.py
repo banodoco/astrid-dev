@@ -235,6 +235,60 @@ def exercise(sha: str, output: Path) -> int:
                       "--dry-run", "--destination", str(dest))
             check(report, "new installer dry run does not change old links",
                   snapshot_links(dest) == before_dry, "legacy links unchanged")
+            # Exercise a later generated retarget fault against the actual old
+            # 15-link layout. Earlier package changes may be partial, but the
+            # old start entry and the failed old skill must stay loadable.
+            injected = """
+import errno
+from pathlib import Path
+from unittest.mock import patch
+from skill_installer import install_packages
+
+original = Path.symlink_to
+def fail_green(self, target, *args, **kwargs):
+    if Path(target).name == "astrid-dev-green":
+        raise OSError(errno.EPERM, "injected later package failure")
+    return original(self, target, *args, **kwargs)
+
+with patch.object(Path, "symlink_to", fail_green):
+    try:
+        install_packages(Path.cwd(), [Path(__import__("sys").argv[1])])
+    except ValueError as exc:
+        if "previous owned link was preserved" not in str(exc):
+            raise
+        print("EXPECTED_PARTIAL_INSTALL_FAILURE " + str(exc))
+    else:
+        raise AssertionError("late retarget did not fail")
+"""
+            fault = command(
+                report, "inject later actual-installer retarget failure",
+                ["python3", "-c", injected, str(dest)], repo / "scripts", env,
+            )
+            check(report, "later installer fault was actually injected",
+                  "EXPECTED_PARTIAL_INSTALL_FAILURE" in fault,
+                  "injected error was observed and classified")
+            check(report, "legacy start survives failed partial migration",
+                  (dest / "astrid-dev").is_symlink() and
+                  (dest / "astrid-dev/SKILL.md").is_file(),
+                  "legacy start remains readable until successful migration")
+            check(report, "failed named skill retains original legacy target",
+                  os.readlink(dest / "astrid-dev-green") == legacy_links["astrid-dev-green"],
+                  "green retained exact old link")
+            partial_links = snapshot_links(dest)
+            check(report, "fault exercised a genuinely partial migration",
+                  partial_links != legacy_links and
+                  any(raw != legacy_links.get(name) for name, raw in partial_links.items()
+                      if name != "astrid-dev" and name != "shared") and
+                  foreign.read_text(encoding="utf-8") == "FOREIGN-PRESERVE\n",
+                  "some generated links installed, old start and foreign entry preserved")
+            generated("retry failed partial migration", "install", "--destination", str(dest))
+            check(report, "retry completed all generated links",
+                  len(snapshot_links(dest)) == 14 and
+                  not (dest / "astrid-dev").is_symlink() and
+                  all((dest / n / "SKILL.md").is_file()
+                      for n in snapshot_links(dest)),
+                  "all 14 packages readable after retry")
+
             generated("transition to generated packages", "install",
                       "--destination", str(dest))
             generated_links = snapshot_links(dest)

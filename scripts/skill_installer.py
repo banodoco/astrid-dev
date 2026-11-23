@@ -43,14 +43,23 @@ def _retarget_owned_link(link: Path, source: Path) -> None:
     the old symlink. This is per-entry only: the entire install set is not a
     transaction, and an uncooperative writer can still race after preflight.
     """
+    replaced = False
     try:
         # The private same-filesystem directory ensures staging cannot replace
-        # an unrelated entry and is removed on both success and failure.
+        # an unrelated entry and is normally removed on success or failure.
         with tempfile.TemporaryDirectory(prefix=".astrid-dev-stage-", dir=link.parent) as tmp:
             staged = Path(tmp) / "package"
             staged.symlink_to(source, target_is_directory=True)
             os.replace(staged, link)
+            replaced = True
     except OSError as exc:
+        if replaced:
+            # TemporaryDirectory cleanup may fail AFTER os.replace committed.
+            # Do not claim the old link survived; report the actual new target.
+            raise ValueError(
+                f"retargeted skill directory symlink {link}, but staging cleanup failed: "
+                f"{exc}; the new link is installed"
+            ) from exc
         raise ValueError(
             f"could not retarget skill directory symlink {link}: {exc}; "
             "the previous owned link was preserved"
