@@ -174,7 +174,7 @@ def exercise(sha, output):
 
             destinations = [temp / client / "skills" for client in ("claude", "codex", "agents")]
             for dest in destinations:
-                dest.mkdir()
+                dest.mkdir(parents=True)
                 foreign = dest / "foreign-user-skill"
                 foreign.write_text("UNCHANGED\n", encoding="utf-8")
                 cli(f"dry-run {dest.parent.name}", "install", "--dry-run", "--destination", str(dest))
