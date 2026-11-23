@@ -2,7 +2,13 @@
 
 Updated 23 November 2026. [Plan](plan.md) · [Tasks and proof](tasks.md) · [Authority and owner decisions](inputs.md). The hosting Orchestrator owns this run; address the Release 15 Lead through the host. The Lead controls landing after confirming its gate in writing; publication and paid resources remain with the owner.
 
-## Current state (23 November, final proof record)
+## Landed (23 November 2026)
+
+- Agent: `release/15/plan-78` landed on astrid-agent `release/15/main` as merge commit `0615e4e99bc06c6b4d201447d8f9f99db3da2dba` (PR 558; parents `b324d7c1` and `64cecdae`; tree equal to the gated head's). Gate: the Release 15 Lead's written confirmation of 23 November 17:08 UTC, item by item. Hosted runs on the exact head, [CI 45199409761](https://github.com/banodoco/astrid-agent/actions/runs/45199409761) and [Lanes 45199416493](https://github.com/banodoco/astrid-agent/actions/runs/45199416493), compared by test id with the baseline: CI 761 FAILED and 328 ERROR against 760 and 328, the only two additions inside the Lead's rulings (the macOS render pair; the Pinokio listener-owner group); Lanes identical to the base's own run (826 ids). The push-triggered CI and Lanes on `release/15/main` and the landing PR's CI were cancelled per the Lead's rule.
+- App: the motion-pack pin (`packs.astrid_motion`) and the generator re-pin to the landed Agent landed on astrid-app `release/15/main` as merge commit `3f5da385004465e81c8054ac27014f916d1f3ded` (PR 378; tree equal to the branch head's; `release` left at 15; the release guard run against published main accepted it). The first PR (376) was closed: its branch name broke the release-branch rule and its CLI-surface vendor lock still pinned the old Agent; both were fixed generator-only.
+- Still open, not part of this landing: release-freeze item RF.1 (live online outcome checks, negatives, the heavy 136-clip run, the 11.0 s still and the chat-agent step, after the Plan 77 save run's Runtime fix; the chat step when Codex returns), and the fix row under astrid-agent issue 1525 (a fresh install does not get the motion pack from Plan 78).
+
+## Current state (23 November, final proof record; superseded by "Landed" above)
 
 - Candidate: Agent `release/15/plan-78` head `64cecdae9f679537f4a6dc82e5102e53b6943ef7` (Plan 78 `c52a4ccf` with Plan 40's landing `8fdf6615` merged as `ef826edf`, and the timeline first cut `b324d7c1`). Runtime lock `737843e9cb92c565c266452dde540832ee2c745b`.
 - Hosted runs dispatched 23 November 14:55 UTC on that exact head: [CI](https://github.com/banodoco/astrid-agent/actions/runs/45199409761) and [Lanes](https://github.com/banodoco/astrid-agent/actions/runs/45199416493). Their by-test-id comparison with the baseline is **pending**.
