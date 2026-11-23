@@ -1,4 +1,5 @@
 import json
+import shutil
 import hashlib
 import subprocess
 from pathlib import Path
@@ -28,6 +29,39 @@ class ListenerEvidence(unittest.TestCase):
             (tree / 'extra.py').unlink()
             (tree / 'runtime_credentials.py').write_text('value = 2\n')
             with self.assertRaisesRegex(ValueError, 'tree mismatch'):
+                verify_runtime_tree(repo, sha, tree)
+
+    def test_installer_build_copies_match_pinned_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp) / 'repo'
+            repo.mkdir()
+            subprocess.run(['git', 'init', '-q', str(repo)], check=True)
+            files = {
+                'runtime_protocol/__init__.py': '',
+                'runtime_protocol/messages/request.py': 'kind = "request"\n',
+                'astrid_runtime/__init__.py': '',
+                'astrid_runtime/cli.py': 'def main(): pass\n',
+            }
+            for name, content in files.items():
+                path = repo / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content)
+            subprocess.run(['git', '-C', str(repo), 'add', 'runtime_protocol', 'astrid_runtime'], check=True)
+            subprocess.run(['git', '-C', str(repo), '-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'fixture'], check=True)
+            sha = subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip()
+            tree = Path(tmp) / 'tree'
+            tree.mkdir()
+            for package in ('runtime_protocol', 'astrid_runtime'):
+                shutil.copytree(repo / package, tree / package)
+                shutil.copytree(repo / package, tree / 'build/lib' / package)
+            self.assertEqual(verify_runtime_tree(repo, sha, tree)['tracked_files'], len(files))
+            copy = tree / 'build/lib/astrid_runtime/cli.py'
+            copy.write_text('def main(): return 1\n')
+            with self.assertRaisesRegex(ValueError, 'tree mismatch'):
+                verify_runtime_tree(repo, sha, tree)
+            copy.write_text(files['astrid_runtime/cli.py'])
+            (tree / 'build/lib/runtime_protocol/extra.py').write_text('bad = True\n')
+            with self.assertRaisesRegex(ValueError, 'untracked executable'):
                 verify_runtime_tree(repo, sha, tree)
 
     def test_sensitive_tracked_paths_are_rejected_before_reading(self):

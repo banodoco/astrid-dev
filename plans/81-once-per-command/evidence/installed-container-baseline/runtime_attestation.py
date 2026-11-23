@@ -47,6 +47,7 @@ def verify_runtime_tree(repo, sha, tree, prefix=""):
     if not listing:
         raise ValueError('empty Runtime Git tree')
     tracked = set()
+    verified_copies = set()
     for item in listing.split(b'\0'):
         if not item:
             continue
@@ -67,24 +68,34 @@ def verify_runtime_tree(repo, sha, tree, prefix=""):
         source_file = lower_parts[-1].endswith('.py')
         if env_file or sensitive_directory or (sensitive_name and not source_file):
             raise ValueError(f'sensitive Runtime path cannot be inspected: {relative}')
-        path = tree / relative
-        parent = tree
-        for part in parts[:-1]:
-            parent = parent / part
-            if parent.is_symlink():
-                raise ValueError(f'Runtime path traverses a symlink: {relative}')
         tracked.add(relative)
         expected = subprocess.run(['git', '-C', str(repo), 'cat-file', 'blob', oid],
                                   check=True, capture_output=True).stdout
-        if mode == '120000':
-            if not path.is_symlink() or os.fsencode(os.readlink(path)) != expected:
-                raise ValueError(f'Runtime tree mismatch: {relative}')
-        elif path.is_symlink() or not path.is_file() or path.read_bytes() != expected or bool(path.stat().st_mode & 0o111) != (mode == '100755'):
-            raise ValueError(f'Runtime tree mismatch: {relative}')
+        paths = [relative]
+        # Installer builds may leave copies of tracked source under build/lib.
+        # Only attest an existing copy against its exact pinned Git entry.
+        if not prefix:
+            copy = Path('build/lib') / relative
+            if (tree / copy).exists() or (tree / copy).is_symlink():
+                paths.append(str(copy))
+        for candidate in paths:
+            path = tree / candidate
+            parent = tree
+            for part in Path(candidate).parts[:-1]:
+                parent = parent / part
+                if parent.is_symlink():
+                    raise ValueError(f'Runtime path traverses a symlink: {candidate}')
+            if mode == '120000':
+                if not path.is_symlink() or os.fsencode(os.readlink(path)) != expected:
+                    raise ValueError(f'Runtime tree mismatch: {candidate}')
+            elif path.is_symlink() or not path.is_file() or path.read_bytes() != expected or bool(path.stat().st_mode & 0o111) != (mode == '100755'):
+                raise ValueError(f'Runtime tree mismatch: {candidate}')
+            if candidate != relative:
+                verified_copies.add(candidate)
     for path in tree.rglob('*'):
         if path.is_symlink() and path.is_dir():
             raise ValueError(f'unverified Runtime directory symlink: {path}')
-        if path.is_file() and path.suffix in ('.py', '.pyc', '.so', '.pth') and str(path.relative_to(tree)) not in tracked:
+        if path.is_file() and path.suffix in ('.py', '.pyc', '.so', '.pth') and str(path.relative_to(tree)) not in tracked | verified_copies:
             raise ValueError(f'untracked executable Runtime import: {path}')
     return {'git_commit': sha, 'tracked_files': len(tracked)}
 
