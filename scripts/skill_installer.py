@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import tempfile
 
 from skill_builder import OUTPUT, check_packages
 
@@ -33,6 +34,27 @@ def _identity(path: Path) -> tuple | None:
         return None
     return (stat.st_dev, stat.st_ino, stat.st_mode,
             os.readlink(path) if path.is_symlink() else None)
+
+
+def _retarget_owned_link(link: Path, source: Path) -> None:
+    """Prepare the new symlink first and replace one owned link in one operation.
+
+    Failure to create the staged symlink or replace the destination preserves
+    the old symlink. This is per-entry only: the entire install set is not a
+    transaction, and an uncooperative writer can still race after preflight.
+    """
+    try:
+        # The private same-filesystem directory ensures staging cannot replace
+        # an unrelated entry and is removed on both success and failure.
+        with tempfile.TemporaryDirectory(prefix=".astrid-dev-stage-", dir=link.parent) as tmp:
+            staged = Path(tmp) / "package"
+            staged.symlink_to(source, target_is_directory=True)
+            os.replace(staged, link)
+    except OSError as exc:
+        raise ValueError(
+            f"could not retarget skill directory symlink {link}: {exc}; "
+            "the previous owned link was preserved"
+        ) from exc
 
 
 def install_packages(root: Path, destinations: list[Path] | None = None,
@@ -92,6 +114,9 @@ def install_packages(root: Path, destinations: list[Path] | None = None,
     for _, link, _, identity in planned:
         if _identity(link) != identity:
             raise ValueError(f"installation entry changed during preflight: {link}")
+    # Publish/retarget requested packages before retiring obsolete names. If
+    # adding a new skill fails, legacy entry points remain available.
+    planned.sort(key=lambda entry: entry[0] == "retire")
     actions = []
     for operation, link, source, identity in planned:
         target_identity = next(identity for target, identity in target_identities.values()
@@ -106,9 +131,11 @@ def install_packages(root: Path, destinations: list[Path] | None = None,
         actions.append(f"{'would-' + operation if dry_run else {'retire': 'retired', 'retarget': 'retargeted', 'link': 'linked'}[operation]} {link}")
         if dry_run:
             continue
-        if operation in ("retire", "retarget"):
+        if operation == "retire":
             link.unlink()
-        if operation in ("link", "retarget"):
+        elif operation == "retarget":
+            _retarget_owned_link(link, source)
+        elif operation == "link":
             try:
                 link.symlink_to(source, target_is_directory=True)
             except OSError as exc:

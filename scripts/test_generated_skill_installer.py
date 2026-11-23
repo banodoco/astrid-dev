@@ -1,7 +1,9 @@
 """Focused installation safety tests for generated skill packages."""
+import errno
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from skill_builder import build_packages
 from skill_installer import install_packages
@@ -120,6 +122,56 @@ class InstallTests(unittest.TestCase):
                             install_packages(self.root, [self.dest])))
         self.assertFalse((self.dest / "astrid-dev-leader").is_symlink())
 
+
+    def test_failed_symlink_staging_preserves_existing_owned_link(self):
+        old = self.root / "skills/roles/astrid-dev-leader"
+        old.mkdir(parents=True)
+        (old / "SKILL.md").write_text("legacy instruction\n", encoding="utf-8")
+        link = self.dest / "astrid-dev-leader"
+        link.symlink_to(old, target_is_directory=True)
+        original = link.readlink()
+        with patch.object(Path, "symlink_to", side_effect=OSError(errno.EPERM, "injected")):
+            with self.assertRaisesRegex(ValueError, "previous owned link was preserved"):
+                install_packages(self.root, [self.dest])
+        self.assertEqual(link.readlink(), original)
+        self.assertEqual((link / "SKILL.md").read_text(encoding="utf-8"), "legacy instruction\n")
+        self.assertEqual(list(self.dest.iterdir()), [link])
+        # After a transient permission failure, a normal retry is still possible.
+        result = install_packages(self.root, [self.dest])
+        self.assertTrue(any("retargeted" in action for action in result))
+        self.assertEqual(link.resolve(), (self.root / ".generated/skills/astrid-dev-leader").resolve())
+
+    def test_failed_atomic_retarget_preserves_original_and_cleans_staging(self):
+        old = self.root / "skills/roles/astrid-dev-leader"
+        old.mkdir(parents=True)
+        (old / "SKILL.md").write_text("old work\n", encoding="utf-8")
+        link = self.dest / "astrid-dev-leader"
+        link.symlink_to(old, target_is_directory=True)
+        raw = link.readlink()
+        with patch("skill_installer.os.replace", side_effect=OSError(errno.EIO, "injected")):
+            with self.assertRaisesRegex(ValueError, "previous owned link was preserved"):
+                install_packages(self.root, [self.dest])
+        self.assertEqual(link.readlink(), raw)
+        self.assertEqual((link / "SKILL.md").read_text(encoding="utf-8"), "old work\n")
+        self.assertEqual({p.name for p in self.dest.iterdir()}, {"astrid-dev-leader"})
+
+    def test_failed_new_package_link_keeps_retirement_candidates_intact(self):
+        old_dir = self.root / "skills/astrid-dev"
+        old_dir.mkdir(parents=True)
+        (old_dir / "SKILL.md").write_text("old entry\n", encoding="utf-8")
+        obsolete = self.dest / "astrid-dev"
+        obsolete.symlink_to(old_dir, target_is_directory=True)
+        with patch.object(Path, "symlink_to", side_effect=OSError(errno.EPERM, "injected")):
+            with self.assertRaisesRegex(ValueError, "could not create skill directory symlink"):
+                install_packages(self.root, [self.dest])
+        self.assertEqual(obsolete.resolve(), old_dir.resolve())
+        self.assertEqual((obsolete / "SKILL.md").read_text(encoding="utf-8"), "old entry\n")
+        self.assertFalse((self.dest / "astrid-dev-leader").exists())
+        self.assertEqual({p.name for p in self.dest.iterdir()}, {"astrid-dev"})
+        # Successful retry publishes the desired skill and then retires old entry.
+        install_packages(self.root, [self.dest])
+        self.assertFalse(obsolete.is_symlink())
+        self.assertTrue((self.dest / "astrid-dev-leader/SKILL.md").is_file())
 
 if __name__ == "__main__":
     unittest.main()
