@@ -204,7 +204,19 @@ cleanup() {
   if (( boundary_checked )); then
     boundary_snapshot after || boundary_unchanged=0
     for part in backup owner owner-locks root data; do
-      if ! cmp -s "$out/boundary-$part.before.txt" "$out/boundary-$part.after.txt"; then
+      case "$part" in
+        root|data)
+          # The Runtime may legitimately create NEW top-level entries here. Fail only if a pre-existing entry is
+          # missing or changed (a line present before but absent after); new entries are recorded, not failed.
+          changed=$(LC_ALL=C comm -23 "$out/boundary-$part.before.txt" "$out/boundary-$part.after.txt")
+          LC_ALL=C comm -13 "$out/boundary-$part.before.txt" "$out/boundary-$part.after.txt" >"$out/boundary-$part.new-entries.txt" || true
+          ;;
+        *)
+          # The signed backup and the owner files must be identical.
+          if cmp -s "$out/boundary-$part.before.txt" "$out/boundary-$part.after.txt"; then changed=''; else changed=different; fi
+          ;;
+      esac
+      if [[ -n "$changed" ]]; then
         boundary_unchanged=0
         differing+="$part "
         diff -- "$out/boundary-$part.before.txt" "$out/boundary-$part.after.txt" >"$out/boundary-$part.diff" || true
