@@ -18,7 +18,7 @@
 - `report.md`: the GitHub issue URL, frozen Agent/Runtime/VibeComfy SHAs and manifest hash, plus notes as you go. For anything that fails or surprises you: the command, the exact error and the task ID. Also a plain list of **every file or folder this test adds outside `C:\astrid-test`;** the clean-up works from that list.
 - `log.txt`: every command you run and its full output, appended as you go.
 - `fixes.diff`: any change you made to Astrid.
-- the diagnostics bundle and the images from A and B (part 6).
+- the diagnostics bundle and any images actually produced by A and B (part 6).
 
 Keep tokens out of everything in the report folder. Do not keep raw credentials in the logs.
 
@@ -144,6 +144,8 @@ Record the `generate scan --json`, `generate targets --json` and `generate defau
 
 ## Part 4: The core cells
 
+**Minimum baseline: A then A2**, after the verified install and ComfyUI connection, where hardware and models allow. **B (image edit) and C (music) are recommended extensions, not prerequisites for a useful feedback session.** Record explicit SKIPPED/BLOCKED with reasons; never pretend a remote result fills a local cell.
+
 `$url` is the ComfyUI address. Work in `C:\astrid-test`.
 
 **Models for A and B** (about 17 GB, shared). Astrid plans the download and writes nothing until you confirm:
@@ -177,7 +179,7 @@ curl.exe -L -C - -o "<models folder>\<subfolder>\<file>" "https://huggingface.co
 
 **Do not inherit Release 13 exemptions.** Record A/A2 cold and warm wall times, overhead, download coverage and image-to-video first-frame behavior. Report real problems even if they were known in Release 13. Check entry IDs and CLI flags against the **installed** Release 15 --help/defaults; if an example was removed, report its replacement rather than silently using another model or paid backend. Approved RunPod cells belong in a **separate remote-results column**; they do not replace the Windows-local evidence.
 
-**Two no-download preflight checks.** Run cells D and E from Part 5 against `$url`, using A for E. Record whether they run or refuse and whether the actual messages name any missing nodes/models correctly. Do not assume Release 15 must refuse just because Release 13 did.
+**Optional no-download preflight checks.** If exploring D or E from Part 5, run their no-download preflight against `$url` first (use A for E). Record whether they run or refuse and whether the actual messages name missing nodes/models correctly. Otherwise record SKIPPED. Do not assume Release 15 must refuse just because Release 13 did.
 
 **For each cell record:** `cell | ran / refused / failed / skipped | wall time | task ID | note`. For "ran", look at the image yourself; for audio and video give the file size and duration, or ask the person to play it. For "failed", add `& $astrid tasks show <task id> --json`. If a job shows no sign of progress for 10 minutes (20 for video), cancel it with `& $astrid tasks cancel <task id>` and record that.
 
@@ -261,7 +263,7 @@ Add a separate RunPod table to report.md: frozen build pins, cell, GPU/region/po
 
 ## Part 6: Clean up and report
 
-1. **Make the diagnostics bundle first;** it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\report\astrid-doctor.zip`. Copy the images from A and B into the report folder too.
+1. **Make the diagnostics bundle first;** it can't be made after uninstall: `& $astrid doctor --bundle C:\astrid-test\report\astrid-doctor.zip`. Copy the images from A and B into the report folder too, if those cells produced them.
 2. **Delete every model this test added to the person's ComfyUI,** from your list. If the person asks to keep some, keep those and say which.
 3. **Do not silently leave unpublished Release 15 installed.** Ask whether to keep the development build, restore the previous published version using the supported rollback/update route, or remove a new test install without deleting any pre-existing data. Any restore/uninstall requires explicit consent. Record the selected final version, backup/rollback result, folders under `%LOCALAPPDATA%` that start with `Astrid`, the `Astrid Runtime` scheduled task, and any `astrid` command remaining.
 4. **Delete the test ComfyUI** and everything else on your list. If RunPod was used, release the exact pod and verify its termination independently in RunPod before closing the test; list any billed volumes or unresolved charges.
