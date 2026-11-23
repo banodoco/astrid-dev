@@ -1,0 +1,20 @@
+{
+  "archive": "exact signed 300-clip v30 immutable read-only SQLite copy",
+  "canonicalize_and_hash_json_once": {
+    "canonical_bytes": 423474620,
+    "cpu_s": 7.604476888,
+    "records": 32,
+    "wall_s": 7.6686529260005045
+  },
+  "scope": "data-only cost probe, no semantic replay, full closure/CAS verification, cold OS cache, or executable product change",
+  "single_grouped_structural_sample": {
+    "cpu_s": 0.011096247000000226,
+    "event_rows": 35,
+    "receipt_count_plan": [
+      "SCAN command_idempotency"
+    ],
+    "records": 32,
+    "timeline_heads": 3,
+    "wall_s": 0.01133798599948932
+  }
+}

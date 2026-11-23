@@ -490,3 +490,7 @@ The source inventory found separate deadlines on the native scan, its parent, th
 The repaired source tuple restored and adopted the signed 300-clip sandbox. The first installation stopped before build and browser navigation at the operator's 25 GiB preflight with about 24.5 GiB available. Runtime shut down idle-safe and removed the owned root. The retry uses the same generated pins and the Lead-approved 20 GiB local preflight. The runner threshold was the only change. The stopped attempt supplies no browser or restart sample.
 
 The Lead is reviewing the separately written second-cut design for clean attestation and observable startup. Its source audit confirmed SQLite WAL and found no durable crash proof for sanctioned writes. [Second-cut design](evidence/2026-11-22-release-15/second-cut-design/DESIGN.md)
+
+### Stored-byte startup feasibility
+
+A read-only diagnostic on the exact signed 300-clip archive read and hashed 427.2 MB across 32 history edges and their related rows in 0.867 s. Repeating the same data to the byte volume of 992 edges took 21.743 s with a warm filesystem cache. One parse, canonical encode and hash of the 32-edge JSON slice took 7.669 s. The repeat is a throughput proxy. Actual depth, cold I/O, complete closure and startup remain unmeasured. The Lead is considering the verification design. [Feasibility note and raw timings](evidence/2026-11-22-release-15/replay-key-feasibility/RESULT.md)
