@@ -50,4 +50,4 @@ Follow the [run contract](../shared/run-contract.md) and existing owner permissi
 
 Use these independent skills as needed within your existing role and authority; selecting a skill does not grant new permissions.
 
-Refer to shared workstreams when needed; they never grant additional permissions.
+Choose from the [shared workstream index](../README.md#shared-workstreams) only within the assigned role and run permissions. The procedures do not grant new authority.

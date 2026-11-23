@@ -15,6 +15,20 @@ This directory stages the Markdown-first agent instructions for the planned migr
 - [Shared run policy](shared/run-contract.md), [glossary](shared/glossary.md) and [domain map](shared/domains.md) are referenced sources, not another role.
 - [Environment guides](guides/) and executable helpers remain separate supporting resources.
 
+## Shared workstreams
+
+Choose a procedure for an already-authorized task; selecting a workstream never grants a new role, approval, or permission. This is the single navigation index for the nine independent shared workstreams; role-specific procedures remain linked from their roles.
+
+- [Bugfix](shared/workstreams/bugfix.md) — Investigate incidents, reproduce failures and record safe recovery.
+- [Gap](shared/workstreams/gap.md) — Define vision gaps and evidence for closure.
+- [GPU validate](shared/workstreams/gpu-validate.md) — Run authorized hardware probes with spend and cleanup controls.
+- [Green](shared/workstreams/green.md) — Compare exact tests to a baseline and repair real regressions.
+- [Improve](shared/workstreams/improve.md) — Change Astrid Dev's canonical rules and checks.
+- [Iterate](shared/workstreams/iterate.md) — Implement and prove one scoped change.
+- [Merge](shared/workstreams/merge.md) — Review and dispose of a contributor PR under its authority.
+- [Plan](shared/workstreams/plan.md) — Define an independently useful, testable project.
+- [Release](shared/workstreams/release.md) — Integrate and qualify a release; publish only on the owner's GO.
+
 ## Author a document
 
 Write one Markdown file with a useful first-level heading and one plain-text description in frontmatter. Add the optional line shown below if independently discovering the document as a skill is useful.

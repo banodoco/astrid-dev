@@ -88,7 +88,7 @@ Each failing cell goes to [Bug fixing](bugfix.md): reproduce it on CPU where pos
 
 ## Evidence record
 
-One file per run: `skills/shared/workstreams/astrid-dev-gpu-validate/records/<YYYY-MM-DD>-<short-sha>.md`, where the short sha is the Agent revision under test. Commit it to astrid-dev, and link it from the plan or release it serves.
+Stage each run's evidence with the owning plan (`plans/<project>/evidence/gpu-validation/<YYYY-MM-DD>-<short-sha>.md`) or release (`releases/<N>/evidence/gpu-validation/<YYYY-MM-DD>-<short-sha>.md`), where the short SHA is the tested Agent revision. Commit to astrid-dev and link from its plan or release; do not put run results under the authored workstream source. This path change takes effect only with the authorized MS-7/D5 cutover.
 
 ```markdown
 # GPU validation — <YYYY-MM-DD> — <short-sha>

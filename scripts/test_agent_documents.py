@@ -174,6 +174,20 @@ class AgentDocumentTests(unittest.TestCase):
         self.assertIn("python3 scripts/astrid_dev.py skills build", workflow)
         self.assertIn("python3 scripts/astrid_dev.py skills check", workflow)
 
+    def test_staged_roles_use_one_shared_workstream_index(self):
+        root = Path(__file__).resolve().parents[1]
+        catalog = (root / "agent/README.md").read_text(encoding="utf-8")
+        self.assertEqual(catalog.count("## Shared workstreams"), 1)
+        for name in ("bugfix", "gap", "gpu-validate", "green", "improve",
+                     "iterate", "merge", "plan", "release"):
+            with self.subTest(workstream=name):
+                self.assertIn(f"(shared/workstreams/{name}.md)", catalog)
+        for role in ("leader", "orchestrator", "manager", "worker"):
+            with self.subTest(role=role):
+                text = (root / "agent/roles" / f"{role}.md").read_text(encoding="utf-8")
+                self.assertIn("[shared workstream index](../README.md#shared-workstreams)", text)
+                self.assertNotIn("Refer to shared workstreams when needed", text)
+
     def test_reject_source_symlink(self):
         original = self.write("shared/workstreams/plan.md", STREAM)
         link = self.root / "agent/shared/workstreams/other.md"
