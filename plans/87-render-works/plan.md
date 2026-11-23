@@ -4,7 +4,7 @@
 
 **Goal:** A heavy real timeline renders from first frame to last in one product render on a build of `release/15/main` with no local patches, and the file matches what the editor shows.
 
-**Status:** active
+**Status:** queued
 
 **Owner:** Orchestrator session `session_011EzfW1FXS3o7GFnNSB7cZS`, hosting one manager
 

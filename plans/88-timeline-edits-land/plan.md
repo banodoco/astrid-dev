@@ -4,7 +4,7 @@
 
 **Goal:** An agent can make the edits a real film needed on a heavy timeline (swap a clip's media, move word-anchored clips, remove and restore clips) on a build of `release/15/main`, and each edit is confirmed by reading it back and by a render.
 
-**Status:** active
+**Status:** queued
 
 **Owner:** Orchestrator session `session_011EzfVz6RTgoXjxNDgJP47L`, hosting one manager
 
