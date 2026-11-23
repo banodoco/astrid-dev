@@ -181,10 +181,15 @@ class FrozenRelease15RehearsalTests(unittest.TestCase):
             )
             if brief.count("\n## Issues\n") != 1:
                 raise AssertionError("frozen brief has no unique Issues section")
-            brief = brief.replace(
-                "\n## Issues\n",
-                "\n" + "\n".join(selected) + "\n\n## Issues\n",
-                1,
+            branch_section, after_issues = brief.split("\n## Issues\n", 1)
+            branch_section = branch_section.rstrip("\n")
+            # Keep all branch-table rows in one uninterrupted Markdown table.
+            # A blank line would create a second table and must fail the test.
+            if not branch_section.splitlines()[-1].startswith("|"):
+                raise AssertionError("frozen release branch table has an unexpected tail")
+            brief = (
+                branch_section + "\n" + "\n".join(selected)
+                + "\n\n## Issues\n" + after_issues
             )
             (cls.scratch / "releases/15.md").write_text(brief, encoding="utf-8")
             cls.composed_release_brief = brief
