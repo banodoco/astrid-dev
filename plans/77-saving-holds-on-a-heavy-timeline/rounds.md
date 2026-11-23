@@ -470,7 +470,16 @@ Three matched before-memo candidate pairs opened the same signed 300-clip head c
 
 The two slow reopens observed changes in live SQLite `total_changes` and physical file metadata. Each retried once, attempted the selected record twice and replayed zero ancestors. The 5.052 s reopen reused the retained selected record. The editor's routine project-selection PUT overlapped one slow read, and a new PUT key writes a durable selection receipt. The recorded evidence establishes a store-version change and narrows one candidate write by timing.
 
-The Lead approved skipping a redundant selection PUT only through the trusted local proxy after Runtime verifies that the same actor already selected the exact project at workspace scope. The paired relay and hosted browser door keep the existing PUT. Their route restrictions remain in place. The App must wait for an earlier selection write to settle before testing the next selection. Requalification requires all three new local no-save reopens to retain the selected record and preserve the live SQLite change count. The stock distribution is in progress. [First-cut gate](evidence/2026-11-22-release-15/first-cut-gate.md#first-cut-scope-after-the-23-november-reopen-decision)
+The Lead approved skipping a redundant selection PUT only through the trusted local proxy after Runtime verifies that the same actor already selected the exact project at workspace scope. The paired relay and hosted browser door keep the existing PUT. Their route restrictions remain in place. The App must wait for an earlier selection write to settle before testing the next selection. Requalification requires all three new local no-save reopens to retain the selected record and preserve the live SQLite change count. The stock distribution completed all three pairs. The repaired tuple is in installed requalification. [First-cut gate](evidence/2026-11-22-release-15/first-cut-gate.md#first-cut-scope-after-the-23-november-reopen-decision)
+
+Both arms used three fresh native Runtime starts, a 600 s observation ceiling and two fresh browser profiles per Runtime. They verified the same signed 300 clips, ten occurrences and single active head. All profiles closed and sent zero timeline commits. The stock first profiles completed their final successful scoped history reads before the next profile opened. Earlier failed reads leave those server completion times unobserved.
+
+| Before-memo arm | Runtime birth to health (s) | Cold browser to writable (s) | No-save reopen to writable (s) |
+| --- | --- | --- | --- |
+| Stock installed Release 15 | 165.061, 152.750, 153.531 | 319.412, 312.843, 307.527 | 13.853, 14.115, 14.948 |
+| First-cut candidate with opt-in miss counters | 159.495, 154.240, 158.484 | 4.947, 20.920, 4.077 | 37.579, 5.052, 34.965 |
+
+The stock median reopen was 14.115 s. The before-memo candidate median was 34.965 s. Both arms shut down idle-safe and removed their owned browser profiles and stack. The new generated trial uses App `148eaf381`, Agent `5e301956` and Runtime `77c38d0`. Its three fresh-profile reopens and retained proof counts remain open.
 
 ### Startup deadline investigation
 
