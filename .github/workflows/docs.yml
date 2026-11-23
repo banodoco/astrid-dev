@@ -64,6 +64,20 @@ jobs:
           name: plan73-ms11-negative-preflight
           path: ${{ runner.temp }}/ms11-negative/
           if-no-files-found: warn
+      - name: Record MS7 MS9 exact-source cutover HOLD inventory
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'p73/')
+        env:
+          PR_SOURCE_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 scripts/ms9_cutover_preflight.py --source-ref "$PR_SOURCE_HEAD" --output-dir "$RUNNER_TEMP/ms9-readiness"
+      - name: Upload MS7 MS9 exact-source decision packet
+        if: always() && github.event_name == 'pull_request' && startsWith(github.head_ref, 'p73/')
+        uses: actions/upload-artifact@v4
+        with:
+          name: plan73-ms9-readiness-hold
+          path: ${{ runner.temp }}/ms9-readiness/
+          if-no-files-found: warn
       - name: Record Plan 73 pre-cutover reference inventory
         if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'p73/')
         run: |
