@@ -30,7 +30,7 @@ The parts exist: VibeComfy's resolver, lock, controlled installer and fetch rece
 
 ## Sequence and readiness
 
-**Phase 0** (standing fixes lane, issue 1731): WS-0a–0e, WS-0g; the unknown-class mapping (old WS-1) is part of LE-1. **Phase 1:** WS-7, LE-1–LE-11, one live run (WS-L). **Phase 2:** WS-5. **Phase 3:** WS-6, then R. Critical path WS-7 → LE-2 → LE-6 → LE-10. [tasks.md](tasks.md) has the details. Recording this plan authorizes no work.
+**Phase 0** (this lane's first cards, issue 1731): WS-0a–0e, WS-0g. **Phase 1:** the three contract cards first on day one (LE-1a, WS-7a, LE-2a), then WS-7b, LE-1b, LE-2b, a review stop (RS1), the rest of LE-3 to LE-18b, and one live run (WS-L, the owner's). **Phase 2:** WS-5. **Phase 3:** WS-6b, then R (up to two Codex Astra rounds). Critical path: WS-7a and LE-1a → LE-2b → RS1 → LE-13 → LE-11 → WS-6b → R; with three workers about 9 elapsed days, with one about 21 (inferred). [tasks.md](tasks.md) has the details and the real conflict hot spots. Recording this plan authorizes no work.
 
 ## Interfaces and handoff
 
