@@ -58,6 +58,12 @@ An immutable taskbook copy was perturbed once per case, and the **same source/ro
 | **I3 paired consumer** | Exact Dev exporter/Goals contract and App main/Goal PR tuple, source-owner authorization if live tests required | Original current schema-v1 plus planned Goal/characteristics compatibility and deliberate unknown/duplicate ref rejection. A source-shape check is not live App proof |
 | **I4 actual outcome** | Approved plan/scope, supported environment and consent, named accountable proof producer and an **independent** verifier | Per-ID real positive *and adverse* creator/product/legal/community outcomes, raw logs, immutable source/setup; **NO-RESULT** until actually executed |
 
+## E: later current-source reconciliation (read-only, no new proof-owner assignment)
+
+At the end of this source read, Dev `main` had moved from `6bbd8496b6ef7bfce9ac82ef76ff66b883a21a7b` to **`388ff3370d52671dd392d9f2dd060887a24d1e58`**. GitHub comparison records **four commits**, primarily Plan 87/88 creation and unrelated release/plan evidence. Directly fetched [P87](https://github.com/banodoco/astrid-dev/blob/388ff3370d52671dd392d9f2dd060887a24d1e58/plans/87-render-works/plan.md) and [P88](https://github.com/banodoco/astrid-dev/blob/388ff3370d52671dd392d9f2dd060887a24d1e58/plans/88-timeline-edits-land/plan.md): both `queued / Unassigned`, both **`Vision role:` coordination plans**, neither `Vision gaps:` and neither a new accountable closure-proof source. The 22 gap file identities and the 29 C2-referenced plan sources are unchanged in that compare.
+
+**Dated E counts, not an unauthorized rewrite of D:** **85 numbered plans**, **74 linked plans**, **11 `Vision role` coordination plans**, still **74 primary + 25 supporting = 99** affirmative authored links serving 20 gaps and still three existing route sections. The [S1 C1 reconciliation](gd9-s1-c1-c2-correction-and-independent-verification-2026-11-23.md) adds this E row. E's **99 affirmative** must not be equated with C's historical **99 raw indexed**. Current-source plan membership is not a product outcome, and a further moving main would require another fresh source check before approval.
+
 ## What this receipt deliberately cannot resolve
 
 1. The original independent RS2 returned **REWORK** with **1/1 consumed**; the original **HOLD is also 1/1 consumed**. Original reviewer outcome is **not converted to PASS** by 68 clean source rows, local Git checks, or any supervisor choosing identity-only. Historical private review counters **UNKNOWN**; no private held-out case or source kit opened.
