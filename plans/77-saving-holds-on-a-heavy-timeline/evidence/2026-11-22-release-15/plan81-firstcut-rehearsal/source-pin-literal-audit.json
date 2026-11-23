@@ -1,0 +1,94 @@
+{
+  "searched_runtime_commits": [
+    "0af5af11d71016fa08f65058c558c56a47e9b5a7",
+    "1046f407428e890be7b034e4e9953bbc402f15e4",
+    "162500fe5119f2d8cea14ad5beeeb62488217a16",
+    "23310dc828765293a2ab39f637f28b948e780d94",
+    "236c0d05083381b6607076903c713e86757b3330",
+    "29a338a8c01789a6aefe955263d53eeda1b21615",
+    "2d07f8aff64a67d92210247b74a0ad0d40b66037",
+    "2d490617691c64c054a7c59c5c6ca9898c613c50",
+    "3ac8cb9fe5a0f3f2badd97cc047cffc717fee79c",
+    "3c28211f3cb7ac4867ad744d8cdeeb38dd4484c5",
+    "3f9c0ca34170cbd3f39d61077ecfe497fc8bbf6b",
+    "42ae24aff8d2cb854f874ce134161077a3ba3641",
+    "4c18af59d233da7cd1c6a13657823ca2b71e37ac",
+    "4f5477cb0f5b03d28bec991a1fe34edcd8fc309f",
+    "5120462d67479dc4719406d0d34440edb616ace1",
+    "6855dfa8df65cf8ae4c002b57134d6505493c17c",
+    "72b129e5a2296dc58360a9896cc65fab9db4ad0c",
+    "744cf24874ea851f95949a706725aba19d18222f",
+    "77c38d037f98f744bd8f41c15d95429c124a8003",
+    "95920f84f41a7f22cac6581b18a7eff391741c31",
+    "a2b017f1036c2ecc9507ffae46759c75351b1270",
+    "ae0b8f5e23d60c578ccff90da77fb248e38ba709",
+    "b00c9ad448f05f977dfbd3cb061a1346a76ed725",
+    "b51d4e56b9d9f55a0e0b6713f8ebad56fb623d64",
+    "c12a2d1825e68564a9ed0814c4d782bf697fa656",
+    "f4c7a4623c84da077daac3e3a9366fc2e6a55051",
+    "f8e394ce46b2f59fff91cb4be273c0c2ca7c96a1",
+    "fe02f592cc23d1faf46adce67c4b07c7a4606301",
+    "ff154ba2079ac1afa58bb6e108410fdede14142a"
+  ],
+  "exact_ref_matches": {
+    "astrid-agent": {
+      "b7f0e96a4934ddb4c123eab791a6e18efb8f79ac": [
+        "b7f0e96a:astrid/resources/runtime.lock.json:71:3c28211f",
+        "b7f0e96a:runtime.lock.json:71:3c28211f",
+        "b7f0e96a:scripts/check_journey_evidence.py:82:f4c7a462",
+        "b7f0e96a:scripts/journey_version_jumps.py:49:f4c7a462",
+        "b7f0e96a:tests/test_diagnostics_callers.py:107:744cf248",
+        "b7f0e96a:tests/test_installer_app_update.py:553:744cf248",
+        "b7f0e96a:tests/test_vendor_lock.py:76:3c28211f",
+        "b7f0e96a:tests/test_windows_path_budget.py:23:3c28211f",
+        "b7f0e96a:tests/upgrade/releases.json:40:f4c7a462"
+      ],
+      "a29383661ad990da7ab43185f1a07132e074fadf": [
+        "a2938366:astrid/resources/runtime.lock.json:71:3c28211f",
+        "a2938366:runtime.lock.json:71:3c28211f",
+        "a2938366:scripts/check_journey_evidence.py:82:f4c7a462",
+        "a2938366:scripts/journey_version_jumps.py:49:f4c7a462",
+        "a2938366:tests/integrations/us2-command-count-capture-evidence.md:10:3c28211f",
+        "a2938366:tests/test_diagnostics_callers.py:107:744cf248",
+        "a2938366:tests/test_installer_app_update.py:553:744cf248",
+        "a2938366:tests/test_vendor_lock.py:76:3c28211f",
+        "a2938366:tests/test_windows_path_budget.py:23:3c28211f",
+        "a2938366:tests/upgrade/releases.json:40:f4c7a462"
+      ],
+      "8807f820eb47d6018db723511e024a0a123fbe95": [
+        "8807f820:astrid/resources/runtime.lock.json:71:3c28211f",
+        "8807f820:runtime.lock.json:71:3c28211f",
+        "8807f820:scripts/check_journey_evidence.py:82:f4c7a462",
+        "8807f820:scripts/journey_version_jumps.py:49:f4c7a462",
+        "8807f820:tests/test_diagnostics_callers.py:107:744cf248",
+        "8807f820:tests/test_installer_app_update.py:553:744cf248",
+        "8807f820:tests/test_vendor_lock.py:76:3c28211f",
+        "8807f820:tests/test_windows_path_budget.py:23:3c28211f",
+        "8807f820:tests/upgrade/releases.json:40:f4c7a462"
+      ]
+    },
+    "astrid-app": {
+      "846ce8cafdf8ca2e58a101a18242c9e50358f89c": [
+        "846ce8ca:public/install-manifest.json:8:3c28211f",
+        "846ce8ca:runtime.lock.json:63:3c28211f",
+        "846ce8ca:scripts/astrid-release/hosted-proof.md:17:6855dfa8",
+        "846ce8ca:scripts/astrid-release/hosted-proof.py:332:6855dfa8",
+        "846ce8ca:src/integrations/runtime/contract-metadata.ts:19:95920f84",
+        "846ce8ca:src/tools/video-editor/hooks/timelineLocalSaveHandoff.test.ts:427:4c18af59"
+      ],
+      "e3dbad64d402724ac5a35fb6447f18e432c64b78": [
+        "e3dbad64:public/install-manifest.json:8:3c28211f",
+        "e3dbad64:runtime.lock.json:63:3c28211f",
+        "e3dbad64:scripts/astrid-release/hosted-proof.md:17:6855dfa8",
+        "e3dbad64:scripts/astrid-release/hosted-proof.py:332:6855dfa8",
+        "e3dbad64:src/integrations/runtime/contract-metadata.ts:19:95920f84",
+        "e3dbad64:src/tools/video-editor/hooks/timelineLocalSaveHandoff.test.ts:427:4c18af59"
+      ]
+    },
+    "astrid-runtime": {
+      "77c38d037f98f744bd8f41c15d95429c124a8003": [],
+      "72b129e5a2296dc58360a9896cc65fab9db4ad0c": [],
+      "23310dc828765293a2ab39f637f28b948e780d94": []
+    }
+  }
+}
