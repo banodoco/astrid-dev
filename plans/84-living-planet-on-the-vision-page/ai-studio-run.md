@@ -23,18 +23,18 @@ The manager does not write lab code itself and does not overrule a reflection ve
 1. The board marks a packet **Ready** (its dependencies are Accepted).
 2. The manager runs it in a fresh AI Studio session and pushes `lab/<id>` → **Gate**.
 3. A fresh Astra subagent reruns the checks and reads the diff → **Accepted** (the manager merges it into lab `main` with a merge commit), **Rework** (at most twice) or **Split**.
-4. Once a day the manager posts the **daily look**; the owner opens the lab's `main` in AI Studio's preview at the listed sizes and settings and replies with notes. Notes become rework, new packets or rulings below.
+4. Once a day the manager gives the owner the **daily look** in its own chat; the owner opens the lab's `main` in AI Studio's preview at the listed sizes and settings and replies there with notes. Notes become rework, new packets or rulings below.
 5. At each **RF** row an Astra subagent re-estimates and rewrites the briefs ahead; the manager merges the brief changes into the lab's `main` and updates this board.
 
 One packet runs at a time until RF-A; after that, packets with no shared files may run in parallel, two at most.
 
-**Mailbox:** one issue in banodoco/planet, titled `Planet lab mailbox`, created by the manager before EX-00. STATUS, BLOCKED, verdicts, the daily look and the owner's notes are comments on it. The manager links it here when it exists.
+**Talking to the owner:** the manager reports straight to the owner in its own chat: a short status after each packet and verdict, anything blocked, and the daily look. There is no mailbox issue. Astra reviewers report their verdicts back to the manager as subagents. Anything that must outlive the chat (each verdict and commit, the owner's rulings on the look) goes on this board.
 
 **Board updates:** the manager updates this file on astrid-dev `main` through a pull request at least once a day and at every RF row (the repository requires pull requests and passing checks; merge each one once its checks pass).
 
 ## Authority
 
-The owner's go (sending the start message) starts the run. Within it, the manager may open AI Studio sessions on the owner's account, push `lab/*` branches, commission Astra subagents, merge a `lab/*` branch into the lab's `main` on an Astra accept verdict, merge Astra's brief rewrites into `packets/`, open the mailbox issue, and update this board and Plan 84's progress through pull requests to astrid-dev `main`. **Comes to the owner:** anything paid (for example a hosted AI Studio deployment), changing `LAB_RULES.md`'s engine invariants or any existing test, changing `upstream.json`'s base, and the start of integration (IN-01). Landing in astrid-app follows the Release 15 rules in [inputs.md](inputs.md).
+The owner's go (sending the start message) starts the run. Within it, the manager may open AI Studio sessions on the owner's account, push `lab/*` branches, commission Astra subagents, merge a `lab/*` branch into the lab's `main` on an Astra accept verdict, merge Astra's brief rewrites into `packets/`, and update this board and Plan 84's progress through pull requests to astrid-dev `main`. **Comes to the owner:** anything paid (for example a hosted AI Studio deployment), changing `LAB_RULES.md`'s engine invariants or any existing test, changing `upstream.json`'s base, and the start of integration (IN-01). Landing in astrid-app follows the Release 15 rules in [inputs.md](inputs.md).
 
 ## Queue
 
@@ -125,14 +125,13 @@ Then on banodoco/planet main: LAB_RULES.md and packets/README.md.
 Your authority is the board's Authority section; anything it does not list comes to me. You do not write lab code yourself.
 
 Start now:
-1. Create the issue "Planet lab mailbox" in banodoco/planet and link it on the board (pull request to astrid-dev main).
-2. Run EX-00 in a fresh AI Studio Build session connected to banodoco/planet main, using the start prompt in ai-studio-packet.md.
-3. Commission a fresh Astra subagent for the EX-00 gate and then RF-0, and act on their verdicts.
-4. Post STATUS on the mailbox after each step, then continue down the queue.
+1. Run EX-00 in a fresh AI Studio Build session connected to banodoco/planet main, using the start prompt in ai-studio-packet.md.
+2. Commission a fresh Astra subagent for the EX-00 gate and then RF-0, and act on their verdicts.
+3. Tell me here, in a few lines, after each packet and verdict, then continue down the queue. Record each verdict on the board.
 
-Each day, post the daily look on the mailbox for me: what was accepted, the lab main commit, and exactly what to open and look at. My replies there are binding on how it looks.
+Report to me directly in this chat; there is no mailbox. Each day, give me the daily look here: what was accepted, the lab main commit, and exactly what to open and look at. My replies here are binding on how it looks; record my rulings on the board.
 
-If you cannot drive AI Studio from your browser, post BLOCKED on the mailbox and give me the ready-to-paste start prompt for each packet instead; I will paste it and tell you when it has pushed.
+If you cannot drive AI Studio from your browser, tell me, and give me the ready-to-paste start prompt for each packet instead; I will paste it and tell you when it has pushed.
 Never push to the lab's main except by merging an accepted packet, never change LAB_RULES.md, an existing test or upstream.json, and never touch banodoco/astrid-app before I give the go for IN-01.
 ```
 
