@@ -23,7 +23,9 @@ Report observable stages such as verifying workspace identity, checking realm da
 
 Status and guarded inspection bind to the expected configured realm UUID and root. When the public caller has supplied neither value, Runtime captures the configured pair and rechecks it before returning an observation or assigning an inspection. Admission still verifies the existing current realm, history, custody and listener. A caller observing progress has no authority to restart an owner, roll back a launch or declare corruption.
 
-The final launch uses the realm selected at admission on both the direct and managed routes. The final launch does not carry the caller’s expected realm UUID and root. A selection change after the last status check can start the newly selected realm. The existing post-start identity check then reports the mismatch. The Lead kept ordinary unscoped startup behavior and queued binding of both launch routes behind the first-cut landing and the remaining installer verifier, SDK and App caller work. The launch-binding step starts with its own reviewed design.
+The launcher custody check prevents two honest launchers from interfering with each other. It uses the verifier’s current kernel parent PID and ordered process birth. A launcher acting as a namespace init or subreaper can adopt an orphan that satisfies those checks. A hostile process running as the same user can already edit the realm’s files and falls outside this custody model.
+
+The final launch uses the realm selected at admission on both the direct and managed routes. The final launch does not carry the caller’s expected realm UUID and root. A selection change after the last status check can start the newly selected realm. The existing post-start identity check then reports the mismatch. The Lead kept ordinary unscoped startup behavior and queued binding of both launch routes behind the first-cut landing and the remaining installer verifier, SDK and App caller work. The launch-binding step starts with its own reviewed design. [Launch-binding issue #1611](https://github.com/banodoco/astrid-dev/issues/1611)
 
 ## Proof before promotion
 
