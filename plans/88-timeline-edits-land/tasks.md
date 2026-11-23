@@ -55,6 +55,9 @@ These are proposed task cards, not dispatch authority. Every source path and sym
 
 - 2026-11-23: TE-5 no-pack builder merged into App plan branch as `be0ca324d` (single builder commit `ee4caa65d`); 12 focused Node tests, 2 embedded Runtime/overrun checks, and a disposable generated-media Runtime builder check passed. The 15-frame ripple/no-op-reflow case remains red and is preserved on backup `206f19b83` for bounded TE-3 diagnosis; pack admission and full render remain unproved, so TE-5 is not complete.
 
+- 2026-11-23: TE-3 stationary-binding repair merged as `b978641c`; exact word/interval and source mapping are required, with 80 focused tests and 9 reflow goldens passing and the Astra source-remapping finding fixed. Full-fixture read-back and render remain pending; host clarified that no clip may move on reflow while the separate historical-overrun occurrence correction is recorded rather than hidden.
+- 2026-11-23: TE-5 pack/animation increment merged as App `8267cb33` (single commit `8263bb92`); 3 focused pack/animation checks and 12 existing unit checks passed without skips. Actual collection/project pack admission and render remain unverified on Plan 87’s stack; TE-5 stays incomplete.
+
 ## The edits in the loop (TE-4)
 
 Each failed, or needed a workaround, on 22 November.
