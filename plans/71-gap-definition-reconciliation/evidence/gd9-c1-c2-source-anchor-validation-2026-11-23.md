@@ -6,7 +6,7 @@
 
 | Input | Pinned identity | What was actually independently checked |
 |---|---|---|
-| [C1/B/C direct source and C2 semantic-audit addendum](gd9-c1-c2-source-anchor-semantic-audit-2026-11-23.md) | Blob `c8ba73d215b2d1ef42f06723062b93dd949c5894` | Every added source path/prefix, C1 arithmetic and source-semantic uncertainty guards |
+| [C1/B/C direct source and C2 semantic-audit addendum](gd9-c1-c2-source-anchor-semantic-audit-2026-11-23.md) | Blob `7c2968b52125c1df2f3ce53342df4aa75ab455d1` | Every added source path/prefix, C1 arithmetic and source-semantic uncertainty guards |
 | [Original frozen C2](gd8-criterion-route-decisions-2026-11-22.md) | Blob `bba487a5357c5c405b266421af6d49e4c5a2f481`, project source `ca97096ba6893108c90a932479e7473f679c724e` | **69/69** matching original criterion/residual rows and source appendix row IDs, in order; ordered source-plan ID lists also match |
 | [Existing C1 corrective matrix](gd8-source-snapshot-reconciliation-2026-11-22.md) | Blob `24866b8e22f53714ed38641554c3328e44eff76d` | Matrix arithmetic 83/92/96 and 60/68/71; targeted independent A/B/C source-plan deltas |
 | [S1 handoff after correction](gd9-s1-c1-c2-correction-and-independent-verification-2026-11-23.md) | Head and Git blob recheck required after commits | New A→B diverged ancestry caveat, latest F overlay and explicit unverified 65/4 claim |
@@ -49,3 +49,13 @@ The immutable audit text was modified *only in memory* for each planted fault. T
 | **S6-NATIVE** | When an eligible independent operator has a disposable exact-head checkout, run original `python3 scripts/astrid_dev.py check`, disposable `sync`, focused/unit tests and `git diff --check` (do not silently treat a stage-dependent `prepare_and_validate.py` failure as PASS or regression); check original pinned public Vision/App contracts | **NO-RESULT here** — this connector-based source checker does not run native code |
 
 **Stop conditions:** No canonical `vision/gaps`, project `tasks.md`, source-plan `Owner:`/status, issue labels, Dev Goals/App, release or skill changes. No fake proof owner, private HOLD inspection, repeated original RS2, integration or merge of overlapping #1444/#1625. Phases 6–7 remain deferred.
+
+## Follow-up: exact B/C direct-plan-prefix check and true-positive P76 correction
+
+**Detected material audit transcription defect (now fixed):** the earlier source-anchor addendum's **P76 B** delta row listed an 11-character prefix `7bff0d7937d`; direct immutable GitHub fetch at the GD-6 B source shows the correct 12-character Git blob prefix is `7bff0d7937d7`. All **other 12 A/B/C delta references** already matched their source blobs. This was an error in *new proposal documentation*, not a branch source change or a change to C1's 10 B + four C positive relationships.
+
+**After correction:** independently fetched all **13 exact A/B/C plan-version files** referenced by the delta table and checked **13/13** exact 12-character blob prefixes and **13/13** authored Vision-gap declarations against the stated IDs. Source-audit blob is now `7c2968b52125c1df2f3ce53342df4aa75ab455d1`. Final classifications remain B +10 new positive declarations, minus P18's former F-001 = 92, and C +4 = 96. Historical raw-index 95/99 and original RS2 REWORK remain separately qualified/consumed.
+
+**Ninth planted negative source specimen:** on an in-memory copy of the corrected audit, truncate the P76 B blob prefix back to `7bff0d7937d`. The exact-source-prefix comparison **REJECTED** it; the corrected source **PASSED**. This is a content/source regression check, not native Git/Python or a product/independent formal review.
+
+**Current new-bounded audit outcome:** source identity and positive authored gap declarations **source-PASS**; independent semantic **65 direct / four bounded wording variants mapping: NO-RESULT** until all four IDs and source spans are independently enumerated; all real positive/adverse product outcomes, accepted accountable proof producers/verifiers and GD-9 owner approval **NO-RESULT**. RS2 **REWORK 1/1 consumed**, HOLD **1/1 consumed**. No canonical changes or merge.
