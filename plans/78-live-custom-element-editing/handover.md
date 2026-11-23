@@ -13,6 +13,9 @@ Updated 23 November 2026. [Plan](plan.md) · [Tasks and proof](tasks.md) · [Aut
 
 **Lead decision, 23 November 04:58:** Replace the leaking lock-free accessor machinery with the single-lock rule below. This is a one-time override of the earlier exit; patching P.1 is refused, and the literal exit is the fallback. Prepare that exit on a local, unpushed branch in parallel, with pack-refresh claims changed to require a restart; record its SHA here. After the single-lock candidate is pushed, one fresh reviewer checks this rule and its callers; a blocking defect triggers the literal exit.
 
+**Literal-exit fallback:** local Agent branch `plan78/literal_exit` at `32cfbcf4c5d05f70f158693901013bba3c3c2282`, never pushed. It restores base registry behavior and says to restart Astrid after installing a pack before using its elements. Its focused run passed 238 tests and had four pre-existing provider failures; a subsequent changed-snapshot and registry check passed 32. LE-1, pin validation, the approved message and the portable App patch remain. Its record wording is staged locally at `/root/codex/plan78/run/literal-exit-plan.md`; it is not the selected candidate.
+
+
 - **Hit:** read the published registry reference once, without a lock; return a hit. Never mutate a published registry.
 - **Miss:** under one lock, reread the published registry and return a hit if present. Read root stamps; if changed from that registry's recorded stamp, discover, publish a new registry with the pre-discovery stamp, and look once more; otherwise return the miss. A miss arriving during discovery waits and then reads again.
 - **Publication:** the first load and every refresh publish through one function holding that same lock; no other code assigns the published reference. Delete generation counters, bounded retries and publication locks on hits. A pack landing after the stamp is read is a documented limit with an issue.
