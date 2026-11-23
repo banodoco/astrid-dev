@@ -496,3 +496,16 @@ The Lead is reviewing the separately written second-cut design for clean attesta
 A read-only diagnostic on the exact signed 300-clip archive read and hashed 427.2 MB across 32 history edges and their related rows in 0.867 s. Repeating the same data to the byte volume of 992 edges took 21.743 s with a warm filesystem cache. One parse, canonical encode and hash of the 32-edge JSON slice took 7.669 s. The repeat is a throughput proxy. Actual depth, cold I/O, complete closure and startup remain unmeasured. The Lead is considering the verification design. [Feasibility note and raw timings](evidence/2026-11-22-release-15/replay-key-feasibility/RESULT.md)
 
 The Lead chose stored-byte verification for the second cut after completion of the first cut and implementation of observable startup. The 32-edge feasibility walk measured 427.2 MB of selected data in 0.867 s. Repeating the same warm bytes to the volume of 992 edges took 21.743 s. Cold and actual 1,000-edge fixture timings remain open. Two ordinary single-command moves in the archive used 2.632 MB each in measured logical text at 288 clips. The exact 300-clip storage delta remains open. [Ruling and measured scope](evidence/2026-11-22-release-15/replay-key-feasibility/lead-ruling.md) [Single-command size receipt](evidence/2026-11-22-release-15/replay-key-feasibility/single-command-storage.json)
+
+### Installed first-cut requalification on 23 November
+
+The repaired tuple used the same signed 300-clip, ten-occurrence realm and one original public head for all three no-save pairs. Each pair started a fresh Runtime and two disposable browser profiles. The first direct 120 s attempt refused at 120.986 s. The separate 600 s attempts reached health in 142.483, 142.992 and 148.002 s.
+
+| Arm | Cold browser to writable (s) | No-save reopen to writable (s) |
+| --- | --- | --- |
+| Stock Release 15 | 319.412, 312.843, 307.527 | 13.853, 14.115, 14.948 |
+| First cut | 4.358, 4.121, 4.955 | 17.146, 4.074, 4.506 |
+
+The cold browser's initial selection GET returned 404 in pair 1 and the fallback PUT completed after its head proof. The next browser sent a GET only and replayed one selected record after SQLite changes moved from 2 to 5. The Lead accepted this as the documented first-selection exception. Both later pairs used the already-persisted selection and retained proof with the same SQLite count and no schema misses, prefix reads or replays. The browser counter decoder rejected the Runtime envelope. A separate typed read of the owned log preserved the original receipts and linked the numeric rows to the finished scoped requests. [Exact installed pins, results and limits](evidence/2026-11-22-release-15/first-cut-installed-requalification/RESULT.md)
+
+The separate guarded move confirmed Saved in 34.254 s. The exact committed public head reopened in 4.802 s in a fresh browser with zero timeline POSTs. Its single `doc.patch` added 2,695,119 bytes of measured logical text to the selected rows. The enclosing round through a clean shutdown grew the SQLite file by 2,895,872 bytes, including allocation and lifecycle effects. [Save and storage receipt](evidence/2026-11-22-release-15/first-cut-installed-requalification/RESULT.md#guarded-save-and-one-command-storage)

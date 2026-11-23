@@ -1,0 +1,467 @@
+{
+  "tuple": {
+    "app": "148eaf381e3f02dc0f0d5dfc61e61ebf37dbc715",
+    "agent": "5e301956dc49c8b9ba4d23a7ce96c6564bd74d2f",
+    "runtime": "77c38d037f98f744bd8f41c15d95429c124a8003"
+  },
+  "signed_head": {
+    "revision": "authoring-parent-revision-9f192b38d84116ee33c8be94208102ef57f38787f4d5cd89c3073bc6e5b3f07d",
+    "publication": "txn-a3dbef5643ae4893bbe8d7fe5ffb1bbf",
+    "content_digest": "sha256:66bddaf88bde38ee8705d755bfb8f80b4cafaec4dce8fb9ffec6eef1ae3b8c95",
+    "active_heads": 1,
+    "clips": 300,
+    "occurrences": 10
+  },
+  "pairs": [
+    {
+      "index": 1,
+      "birth_to_health_s": 142.4828975170003,
+      "first_navigation_to_writable_s": 4.3575999999996275,
+      "second_navigation_to_writable_s": 17.146400000000373,
+      "second_navigation_after_first_s": 5.1997919921875,
+      "first_profile_closed_before_second": true,
+      "first_scoped_requests_finished_before_second": true,
+      "first_scoped_requests": [
+        {
+          "started_ms": 1923.223273,
+          "finished_ms": 3235.015869,
+          "status": 200,
+          "route": "/verified-head"
+        }
+      ],
+      "second_scoped_requests": [
+        {
+          "started_ms": 1769.3249189999997,
+          "finished_ms": 16653.825691000002,
+          "status": 200,
+          "route": "/verified-head"
+        }
+      ],
+      "implementation_stack_dump": {
+        "file": "same-process-reopen-runtime-at-15s.txt",
+        "sha256": "5d38c8f26b20ba6953d6ee75c2a88636ec8cb6b2845d771225002056a3f04f70"
+      },
+      "receipts_sha256": {
+        "cold": "e8f12b140187d404bca91f0cd93d058f582be2d875affce64cf68cf3756fd027",
+        "reopen": "766f3a8aaf26ed13f4772e6ff3c5d859f84737b6e32413da37480ec3cc2479f9"
+      },
+      "local_selection_proof": {
+        "cold": {
+          "complete": true,
+          "scoped_requests": [
+            {
+              "route": "/api/runtime/v1/projects/042a5c0245af40818c4ea6f75d3a4206/timelines/save-loop-heavy-1d4576fd/verified-head",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 1923.223273,
+              "status": 200,
+              "headers_ms": 2622.87266,
+              "finished_ms": 3235.015869
+            }
+          ],
+          "receipts": [
+            {
+              "document_schema_cache_evictions": 0,
+              "document_schema_cache_hits": 0,
+              "document_schema_cache_misses": 0,
+              "isolated_read_retries": 0,
+              "live_total_changes_after": 2,
+              "live_total_changes_before": 2,
+              "selected_record_cache_hits": 1,
+              "selected_record_replay_attempts": 0,
+              "selected_record_verification_attempts": 0,
+              "selected_replay_key_hits": 0,
+              "snapshot_prefix_history_queries": 0,
+              "snapshot_prefix_history_rows_read": 0,
+              "snapshot_prefix_receipt_queries": 0,
+              "snapshot_prefix_receipt_rows_read": 0
+            }
+          ],
+          "error": null,
+          "selection_requests": [
+            {
+              "route": "/api/runtime/v1/projects/selection",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 2569.546459,
+              "status": 404,
+              "headers_ms": 3143.672203,
+              "finished_ms": 3364.831145
+            },
+            {
+              "route": "/api/runtime/v1/projects/selection",
+              "method": "PUT",
+              "kind": "fetch",
+              "started_ms": 4109.571873,
+              "status": 200,
+              "headers_ms": 4153.944464,
+              "finished_ms": 4203.653273
+            }
+          ]
+        },
+        "reopened": {
+          "complete": true,
+          "scoped_requests": [
+            {
+              "route": "/api/runtime/v1/projects/042a5c0245af40818c4ea6f75d3a4206/timelines/save-loop-heavy-1d4576fd/verified-head",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 1769.3249189999997,
+              "status": 200,
+              "headers_ms": 16646.733032,
+              "finished_ms": 16653.825691000002
+            }
+          ],
+          "receipts": [
+            {
+              "document_schema_cache_evictions": 0,
+              "document_schema_cache_hits": 48,
+              "document_schema_cache_misses": 0,
+              "isolated_read_retries": 0,
+              "live_total_changes_after": 5,
+              "live_total_changes_before": 5,
+              "selected_record_cache_hits": 0,
+              "selected_record_replay_attempts": 1,
+              "selected_record_verification_attempts": 1,
+              "selected_replay_key_hits": 0,
+              "snapshot_prefix_history_queries": 1,
+              "snapshot_prefix_history_rows_read": 30,
+              "snapshot_prefix_receipt_queries": 1,
+              "snapshot_prefix_receipt_rows_read": 30
+            }
+          ],
+          "error": null,
+          "selection_requests": [
+            {
+              "route": "/api/runtime/v1/projects/selection",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 2339.583445,
+              "status": 200,
+              "headers_ms": 2927.518462,
+              "finished_ms": 2968.6305169999996
+            }
+          ]
+        },
+        "selection_get_without_put": true,
+        "cold_schema_and_prefix_target": true,
+        "warm_schema_and_prefix_target": true,
+        "retained_record_every_read": false,
+        "sqlite_change_count_same_as_cold": false,
+        "meets_selection_gate": false
+      }
+    },
+    {
+      "index": 2,
+      "birth_to_health_s": 142.9919001749986,
+      "first_navigation_to_writable_s": 4.1205,
+      "second_navigation_to_writable_s": 4.074299999998883,
+      "second_navigation_after_first_s": 4.992271240234375,
+      "first_profile_closed_before_second": true,
+      "first_scoped_requests_finished_before_second": true,
+      "first_scoped_requests": [
+        {
+          "started_ms": 1759.5630579999997,
+          "finished_ms": 2691.615339,
+          "status": 200,
+          "route": "/verified-head"
+        }
+      ],
+      "second_scoped_requests": [
+        {
+          "started_ms": 1784.9933959999998,
+          "finished_ms": 2990.1826759999994,
+          "status": 200,
+          "route": "/verified-head"
+        }
+      ],
+      "implementation_stack_dump": null,
+      "receipts_sha256": {
+        "cold": "7d060e1fc51b038002ccfb299651bb900fc2d4898d93c0eccdfa34509ec015b0",
+        "reopen": "636963db2b4170070cba42ad91839b0df93c55ff6387cf126bff67cd5f76cb96"
+      },
+      "local_selection_proof": {
+        "cold": {
+          "complete": true,
+          "scoped_requests": [
+            {
+              "route": "/api/runtime/v1/projects/042a5c0245af40818c4ea6f75d3a4206/timelines/save-loop-heavy-1d4576fd/verified-head",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 1759.5630579999997,
+              "status": 200,
+              "headers_ms": 2577.447312,
+              "finished_ms": 2691.615339
+            }
+          ],
+          "receipts": [
+            {
+              "document_schema_cache_evictions": 0,
+              "document_schema_cache_hits": 0,
+              "document_schema_cache_misses": 0,
+              "isolated_read_retries": 0,
+              "live_total_changes_after": 2,
+              "live_total_changes_before": 2,
+              "selected_record_cache_hits": 1,
+              "selected_record_replay_attempts": 0,
+              "selected_record_verification_attempts": 0,
+              "selected_replay_key_hits": 0,
+              "snapshot_prefix_history_queries": 0,
+              "snapshot_prefix_history_rows_read": 0,
+              "snapshot_prefix_receipt_queries": 0,
+              "snapshot_prefix_receipt_rows_read": 0
+            }
+          ],
+          "error": null,
+          "selection_requests": [
+            {
+              "route": "/api/runtime/v1/projects/selection",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 2541.283026,
+              "status": 200,
+              "headers_ms": 2679.3619089999997,
+              "finished_ms": 2751.381895
+            }
+          ]
+        },
+        "reopened": {
+          "complete": true,
+          "scoped_requests": [
+            {
+              "route": "/api/runtime/v1/projects/042a5c0245af40818c4ea6f75d3a4206/timelines/save-loop-heavy-1d4576fd/verified-head",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 1784.9933959999998,
+              "status": 200,
+              "headers_ms": 2515.6166510000003,
+              "finished_ms": 2990.1826759999994
+            }
+          ],
+          "receipts": [
+            {
+              "document_schema_cache_evictions": 0,
+              "document_schema_cache_hits": 0,
+              "document_schema_cache_misses": 0,
+              "isolated_read_retries": 0,
+              "live_total_changes_after": 2,
+              "live_total_changes_before": 2,
+              "selected_record_cache_hits": 1,
+              "selected_record_replay_attempts": 0,
+              "selected_record_verification_attempts": 0,
+              "selected_replay_key_hits": 0,
+              "snapshot_prefix_history_queries": 0,
+              "snapshot_prefix_history_rows_read": 0,
+              "snapshot_prefix_receipt_queries": 0,
+              "snapshot_prefix_receipt_rows_read": 0
+            }
+          ],
+          "error": null,
+          "selection_requests": [
+            {
+              "route": "/api/runtime/v1/projects/selection",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 2478.4779150000004,
+              "status": 200,
+              "headers_ms": 2970.5462510000007,
+              "finished_ms": 3011.043923
+            }
+          ]
+        },
+        "selection_get_without_put": true,
+        "cold_schema_and_prefix_target": true,
+        "warm_schema_and_prefix_target": true,
+        "retained_record_every_read": true,
+        "sqlite_change_count_same_as_cold": true,
+        "meets_selection_gate": true
+      }
+    },
+    {
+      "index": 3,
+      "birth_to_health_s": 148.00184042299952,
+      "first_navigation_to_writable_s": 4.955299999998882,
+      "second_navigation_to_writable_s": 4.506300000000745,
+      "second_navigation_after_first_s": 6.005896240234375,
+      "first_profile_closed_before_second": true,
+      "first_scoped_requests_finished_before_second": true,
+      "first_scoped_requests": [
+        {
+          "started_ms": 2207.2604420000002,
+          "finished_ms": 3247.699731,
+          "status": 200,
+          "route": "/verified-head"
+        }
+      ],
+      "second_scoped_requests": [
+        {
+          "started_ms": 1997.8437809999996,
+          "finished_ms": 3416.230684,
+          "status": 200,
+          "route": "/verified-head"
+        }
+      ],
+      "implementation_stack_dump": null,
+      "receipts_sha256": {
+        "cold": "63ddfd2c1d7a1b7732cf603591103304ff2837c409ba1d53eba2cf170b7a5291",
+        "reopen": "a85fa20c2f45c7940a5cf22ff381f94594322063b537c0f692fc27acc78cefe6"
+      },
+      "local_selection_proof": {
+        "cold": {
+          "complete": true,
+          "scoped_requests": [
+            {
+              "route": "/api/runtime/v1/projects/042a5c0245af40818c4ea6f75d3a4206/timelines/save-loop-heavy-1d4576fd/verified-head",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 2207.2604420000002,
+              "status": 200,
+              "headers_ms": 3071.601508,
+              "finished_ms": 3247.699731
+            }
+          ],
+          "receipts": [
+            {
+              "document_schema_cache_evictions": 0,
+              "document_schema_cache_hits": 0,
+              "document_schema_cache_misses": 0,
+              "isolated_read_retries": 0,
+              "live_total_changes_after": 2,
+              "live_total_changes_before": 2,
+              "selected_record_cache_hits": 1,
+              "selected_record_replay_attempts": 0,
+              "selected_record_verification_attempts": 0,
+              "selected_replay_key_hits": 0,
+              "snapshot_prefix_history_queries": 0,
+              "snapshot_prefix_history_rows_read": 0,
+              "snapshot_prefix_receipt_queries": 0,
+              "snapshot_prefix_receipt_rows_read": 0
+            }
+          ],
+          "error": null,
+          "selection_requests": [
+            {
+              "route": "/api/runtime/v1/projects/selection",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 2911.345689,
+              "status": 200,
+              "headers_ms": 3086.159766,
+              "finished_ms": 3258.410375
+            }
+          ]
+        },
+        "reopened": {
+          "complete": true,
+          "scoped_requests": [
+            {
+              "route": "/api/runtime/v1/projects/042a5c0245af40818c4ea6f75d3a4206/timelines/save-loop-heavy-1d4576fd/verified-head",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 1997.8437809999996,
+              "status": 200,
+              "headers_ms": 2806.6440029999994,
+              "finished_ms": 3416.230684
+            }
+          ],
+          "receipts": [
+            {
+              "document_schema_cache_evictions": 0,
+              "document_schema_cache_hits": 0,
+              "document_schema_cache_misses": 0,
+              "isolated_read_retries": 0,
+              "live_total_changes_after": 2,
+              "live_total_changes_before": 2,
+              "selected_record_cache_hits": 1,
+              "selected_record_replay_attempts": 0,
+              "selected_record_verification_attempts": 0,
+              "selected_replay_key_hits": 0,
+              "snapshot_prefix_history_queries": 0,
+              "snapshot_prefix_history_rows_read": 0,
+              "snapshot_prefix_receipt_queries": 0,
+              "snapshot_prefix_receipt_rows_read": 0
+            }
+          ],
+          "error": null,
+          "selection_requests": [
+            {
+              "route": "/api/runtime/v1/projects/selection",
+              "method": "GET",
+              "kind": "fetch",
+              "started_ms": 2743.0947749999996,
+              "status": 200,
+              "headers_ms": 3264.929248999999,
+              "finished_ms": 3426.4674259999993
+            }
+          ]
+        },
+        "selection_get_without_put": true,
+        "cold_schema_and_prefix_target": true,
+        "warm_schema_and_prefix_target": true,
+        "retained_record_every_read": true,
+        "sqlite_change_count_same_as_cold": true,
+        "meets_selection_gate": true
+      }
+    }
+  ],
+  "reopen_seconds": {
+    "samples_sorted": [
+      4.074299999998883,
+      4.506300000000745,
+      17.146400000000373
+    ],
+    "median": 4.506300000000745
+  },
+  "scoped_commit_posts": 0,
+  "cleanup_receipt_sha256": "ad2ecf9e6b6e244e5868f83483ffe65d60b28fd1a758b3af5aed4d9fa11491fa",
+  "counter_attribution": {
+    "method": "Typed observer snapshots of the owned append-only Runtime log, mapped to the ordered completed scoped verified-head GETs",
+    "scope": "independent snapshots; the original browser receipts rejected the envelope and are preserved unchanged",
+    "requests": 6
+  },
+  "selection_gate_passed": false,
+  "lead_selection_gate": {
+    "all_pairs_strict": false,
+    "first_selection_exception_met": true,
+    "same_adopted_realm": true,
+    "later_no_save_reopens_with_zero_replays": [
+      2,
+      3
+    ],
+    "passed": true
+  },
+  "replay_work_targets_met": true,
+  "default_direct_start": {
+    "phase": "ordinary_up_refused",
+    "route": "direct",
+    "only_up_in_measured_start_interval": true,
+    "configured_admission_seconds": 120,
+    "up_start_boottime_s": 11925.10987433,
+    "up_start_epoch_ms": 1795404278001.5132,
+    "startup_command_pid": 5315,
+    "startup_command_cpu_s_last_sample": 0.9,
+    "ordinary_up_exit": 1,
+    "up_return_boottime_s": 12046.095843935
+  },
+  "legal_qualification": {
+    "legal_phase": "verified",
+    "after_save_phase": "verified"
+  },
+  "legal_save": {
+    "gesture_to_post_ms": 1076,
+    "post_to_response_ms": 32576.400000000373,
+    "response_to_saved_ms": 601.7999999988824,
+    "gesture_to_saved_ms": 34254.199999999255
+  },
+  "after_save_reopen": {
+    "writable_ms": 4801.9000000003725,
+    "verified_accepted": {
+      "revision": "authoring-parent-revision-08c5776d80a1a8f657e70b64c6b1cad24ca4e7d6c4febe64c5e6b6d529ad3c70",
+      "publication": "txn-17609c28c96f41f9a9365ff42c872dac",
+      "content_digest": "sha256:33a38192beb07b565db3cad663c16179a6d869ae43dd13590c7cc4f3cabe40e0",
+      "active_heads": 1,
+      "clips": 300,
+      "occurrences": 10
+    }
+  }
+}
