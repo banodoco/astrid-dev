@@ -432,7 +432,7 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
         )
         self.assertIn("P72 FEED SAME-INPUT: bytes=", result.stdout)
 
-    def test_owner_gated_source_closure_rehearses_full_check(self):
+    def test_historical_rows_and_direct_source_selection_classify_full_check(self):
         # CONDITIONAL, scratch-only proof. Never update Release15/main or
         # suggest the Lead has approved these historical branch records.
         # Select only exact current-main Git blobs required by original errors,
@@ -478,6 +478,7 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
         }
         originals = {}
         new_files = []
+        added_historical_rows = 0
         def rows(text):
             match = re.search(r"^## Branches\n(.+?)(?=^## |\Z)", text,
                               re.M | re.S)
@@ -525,6 +526,7 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
                         selected.insert(0, release_rows[0])
                 self.assertEqual(len(selected), len(set(selected)))
                 self.assertFalse(any(line in old_rows for line in selected))
+                added_historical_rows += len(selected)
                 before, after = old_text.split("\n## Issues\n", 1)
                 before = before.rstrip("\n")
                 self.assertTrue(before.splitlines()[-1].startswith("|"))
@@ -532,6 +534,43 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
                     before + "\n" + "\n".join(selected)
                     + "\n\n## Issues\n" + after, encoding="utf-8"
                 )
+
+            # The branch-table-only migration should eliminate every
+            # historical release-documents error, but the 15 Plan72 authored
+            # local links must still be missing until their source is present.
+            self.assertEqual(added_historical_rows, 22)
+
+            def original_check(stage):
+                result = subprocess.run(
+                    (sys.executable, "scripts/astrid_dev.py", "check"),
+                    cwd=self.scratch, text=True, capture_output=True,
+                    env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+                    check=False,
+                )
+                errors = [line for line in result.stdout.splitlines()
+                          if line.startswith("ERROR ")]
+                self.assertEqual(
+                    result.returncode, int(bool(errors)),
+                    f"{stage}: original checker exit/diagnostic disagreement:\n"
+                    + result.stdout + result.stderr,
+                )
+                print(
+                    f"P72 CLOSURE {stage}: checker_exit={result.returncode} "
+                    f"diagnostics={len(errors)} historical_rows="
+                    f"{added_historical_rows}"
+                )
+                for line in errors:
+                    print(f"P72 CLOSURE {stage} ERROR: " + line)
+                return errors
+
+            after_rows = original_check("ROWS")
+            self.assertEqual(len(after_rows), 15, after_rows)
+            self.assertTrue(
+                all(line.startswith("ERROR markdown-links: "
+                                     "plans/72-composable-project-delivery/")
+                    for line in after_rows),
+                after_rows,
+            )
 
             for relative, sha in missing_sources.items():
                 dest = self.scratch / relative
@@ -544,29 +583,36 @@ print("P72 FEED SAME-INPUT: bytes=" + str(len(before))
                 dest.write_bytes(contents)
                 new_files.append(dest)
 
-            result = subprocess.run(
-                (sys.executable, "scripts/astrid_dev.py", "check"),
-                cwd=self.scratch, text=True, capture_output=True,
-                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
-                check=False,
+            residual = original_check("NINE_DIRECT_LINK_SOURCES")
+            # The original Plan72 authored records and all older release
+            # branch tables have had their *direct* dependencies provided.
+            # Transitive links in the copied newer skills remain an honest
+            # HOLD reason, not a reason to skip or weaken markdown-links.
+            self.assertFalse(
+                any(line.startswith("ERROR release-documents: ") for line in residual),
+                residual,
             )
-            errors = [line for line in result.stdout.splitlines()
-                      if line.startswith("ERROR ")]
-            for line in errors:
-                print("P72 CLOSURE CHECK ERROR: " + line)
-            print(
-                "P72 CLOSURE CANDIDATE: checker_exit="
-                + str(result.returncode) + " diagnostics=" + str(len(errors))
-                + " historical_rows=conditional deps="
-                + str(len(missing_sources))
+            self.assertFalse(
+                any(line.startswith("ERROR markdown-links: "
+                                    "plans/72-composable-project-delivery/"
+                                    + name + ":")
+                    for name in ("plan.md", "inputs.md", "tasks.md")
+                    for line in residual),
+                residual,
             )
-            self.assertEqual(
-                result.returncode, 0,
-                "Conditional historical-row and linked-source selection "
-                "still fails the original checker:\n"
-                + result.stdout + result.stderr,
+            self.assertTrue(
+                residual, "The pending owner-controlled dependency closure "
+                          "unexpectedly passed without a full source selection",
             )
-            self.assertEqual(errors, [])
+            self.assertTrue(
+                all(line.startswith("ERROR markdown-links: ") for line in residual),
+                "New non-link checker failures require separate adjudication: "
+                + repr(residual),
+            )
+            self.assertTrue(
+                any("glossary.md" in line for line in residual),
+                "The known transitive shared-skill link must be reported",
+            )
         finally:
             for path, data in originals.items():
                 path.write_bytes(data)
