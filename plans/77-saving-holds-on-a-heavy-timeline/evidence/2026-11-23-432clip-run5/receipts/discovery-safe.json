@@ -1,0 +1,9 @@
+{
+  "active_realm": "0d6fd08f-8754-489c-8af9-276dcde43762",
+  "realm_root": "/root/codex/p77box/run5/stack/direct-data/runtime/realms/0d6fd08f-8754-489c-8af9-276dcde43762",
+  "pid": 7685,
+  "process_birth_id": "proc-start-ticks:4849884;boot:faef980d-65dd-4ae0-bc58-fdaee8072985;pidns:4026531836",
+  "runtime_instance_id": "f82aab3da4f04e87888e34e0b6a7f8ec",
+  "endpoint": "http://127.0.0.1:38175",
+  "door_endpoint": "http://127.0.0.1:17501"
+}

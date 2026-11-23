@@ -1,0 +1,9 @@
+2026-11-23T05:09:20Z before_install free_kib=31742876 required_gib=25
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   39G   31G  57% /
+2026-11-23T05:19:51Z after_restore free_kib=26090192 required_gib=12
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   44G   25G  64% /
+2026-11-23T05:35:10Z before_browser free_kib=25150040 required_gib=10
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda        252G   45G   24G  66% /

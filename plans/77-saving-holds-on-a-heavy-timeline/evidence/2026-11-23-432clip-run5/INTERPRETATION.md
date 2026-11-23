@@ -1,0 +1,29 @@
+# What the 432-clip read-back established
+
+Run 4 stopped before restore because our private mirror omitted the reviewed Runtime commit. Run 5 verified the corrected mirrors and install, restored the signed v33 realm, and published and selected the adopted copy. The adoption command exited 1 with a transport timeout. The same attempt later passed protocol and door health on PID 7685. Shutdown was idle-safe and the proof, working and adopted database hashes agreed. [Run record](MANAGER-RESULT.md) [Log extract](receipts/post-stop-log-extract.md)
+
+## Adoption to observed health took 843 seconds
+
+| Interval | Duration | What finished |
+| --- | ---: | --- |
+| Start → copied | 8.2 s | Early checks and materialization |
+| Copied → migrated and published | 256.8 s | Migration and offline final integrity check, logged together |
+| Published → attached | 243.0 s | Workspace attach and its inspection |
+| Attached → adoption exit | 299.6 s | Bootstrap and final-verification window, ending in the transport timeout |
+| Exit → matching health observed | About 36 s | Protocol and door probes passed on the published instance |
+
+The journal lacks process-birth time in UTC and a separate online verification start or finish, so it cannot split the 299.6 s further. The source runs an online doctor under the store mutex after bootstrap. Its generated HTTP client defaults to **30 s**. The **300 s** offline integrity cap and the explicit **1,800 s** admission budget are separate. The observed 299.6 s covers more than one phase and does not identify the timed-out request. The surviving Runtime and error are consistent with a timed-out online doctor. [Adoption source](https://github.com/banodoco/astrid-runtime/blob/77c38d03/astrid_runtime/workspace_adopt.py#L299-L343) [Online check](https://github.com/banodoco/astrid-runtime/blob/77c38d03/astrid_runtime/operator_upgrade.py#L185-L205) [HTTP client](https://github.com/banodoco/astrid-runtime/blob/77c38d03/packages/python/astrid_runtime_client/generated.py#L636-L650)
+
+Round 5 refused after **321 s**, before publication, with revision verification interrupted during the final offline check. Its separately budgeted working-restore doctor passed in **286 s** against the same database digest. Run 5 passed the publication stage. The later transport failure uses an inherited path. The local 300-clip stock arm at Runtime `3c28211f` also recorded `realm materialized` and `transport_timeout`, in `stock-direct-restart/adopt.json` (SHA-256 `60b7b990818cd38ac1a123d5b2ee1af4d17d2e7855430dac72155f3240522547`). The receipts establish no 432-clip timing delta or effect from the first-cut memo. [Round 5 receipts](../2026-11-22-432clip/runbook-run/RESULT.md)
+
+## The launcher timed out against the correct Runtime
+
+The 60 s wrapper included **57 s of `npm ci`**. The following `--build` launcher logged a timeout just before the wrapper exited, 106 s after the health observation. This points to its pre-build Runtime check. No Vite child or compiled output is attested. Port **38175** came from the selected instance’s protocol discovery. The browser door used **17501**. The unchanged App launcher applies **3 s per request** to health, authenticated handshake and realm, with one shared error message. The log cannot identify the failed route. Record these requests as startup timer **7**, separately from the Vite listen window. [Build log](receipts/build.log) [Discovery](receipts/discovery-safe.json) [App probe](https://github.com/banodoco/astrid-app/blob/846ce8ca/scripts/dev-local-workspace.mjs#L420-L495)
+
+Pack-host’s declaration was generated for `installed-data` and carried into our `direct-data` adoption. Its five logged failures opened the missing discovery file in the installed root. That is a layout fault in this run. Chat also recorded ready-file timeouts. The logs lack timestamps, CPU samples and route or lock traces. They establish neither a restart storm during the failed probe nor CPU saturation. Online doctor remains a plausible cause if handshake or realm waited on the mutex. Core health normally reads a separate snapshot and can pass while those requests wait. The common launcher and adoption paths predate the first cut. A matched 432-clip stock sample of this specific probe is unavailable. [Log extract](receipts/post-stop-log-extract.md) [Service declaration](https://github.com/banodoco/astrid-agent/blob/b7f0e96a/astrid/services.py#L104-L149) [Runtime routing](https://github.com/banodoco/astrid-runtime/blob/77c38d03/runtime_protocol/server.py#L1623-L1662)
+
+## Release and next measurement
+
+Keep the first cut’s 300-clip editing claims conditional on Runtime health and retain the default restart limitation. Run 5 adds signed restore and health evidence under the explicit admission budget. It provides no 432-clip browser opening, reopen, request-count or save measurement. A new read-back requires a fresh authorized start after the startup slice covers the launcher and callers, with service declarations bound to the adopted root. Prove matching custody and authenticated usability before preview. The Lead’s stopped Runtime cannot supply that read-back without a restart, and this run’s authority is closed. [First-cut gate](../2026-11-22-release-15/first-cut-gate.md) [Run disposition](host-decisions.md)
+
+Keep 432 clips as the size control and use separate owned fixtures for about 30 and 1,000 accepted commits. Record preparation, birth-to-admission, core health, authenticated usability and auxiliary readiness separately before cold open, same-process reopen and confirmed saves. Include genuine unclean starts, both launcher routes, a legal move and an add-clip save, with replay, bytes and CPU evidence. Startup coordination keeps verification complete. Flat startup and bounded saves still require their own measured proof. [Second-cut design](../2026-11-22-release-15/second-cut-design/DESIGN.md)
