@@ -86,6 +86,10 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 2. **Cross-repo packets never move a pin:** they post `READY-PIN <VibeComfy head>` and the Lead adds the pin commit.
 3. **RS1 and R are commissioned by the Lead,** each by Codex Astra.
 4. **The Plan 56 bases include `release/15/main` of both repositories** (the owner, 23 November 2026, through the Orchestrator); the Lead records each base's head and ancestry in `releases/15.md` Branches.
+5. **A packet's dependants wait only for the cards they depend on,** not for the whole packet (Lead, 23 November 2026).
+6. **Proof runs where the network is.** ChatGPT packet sandboxes cannot reach `github.com`. Packet sessions publish through the connector and post `READY-PROOF <repo> <PR> <head> <selectors>`. The Lead runs the Agent proofs, the VibeComfy fast suite by id, and the requalification of integrated heads; the Orchestrator may run VibeComfy focused proofs on the owner's computer (Lead, 23 November 2026).
+7. **Hosted CI.** VibeComfy's `ci` runs no unit tests (astrid-dev #1768), so the Lead's local fast suite, compared by id, replaces it (baseline at `c0e910ca`: 758 passed, 9 failed, 9 skipped). Agent `ci.yml` does not trigger on `release/*/plan-*`; the Lead dispatches it on `release/15/plan-56` after each batch and compares it by id with `agent-ci-baseline-8807f820` (Lead, 23 November 2026).
+8. **Batch integration.** The Lead merges accepted VibeComfy PRs with `--no-ff`, tests the integrated tree, pushes that exact tree, and adds one cumulative Agent pin per batch (Lead, 23 November 2026).
 
 ### Mailbox
 
@@ -93,7 +97,7 @@ On 23 November 2026 the owner, in an orchestrating session (`session_011EzfW4BJ2
 
 | Role | Mailbox name | Session | Last processed comment |
 |---|---|---|---|
-| Lead | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7114881197 |
+| Lead | `r15-lead` | `session_011EzfW2ePdUMAHRAcAm3nur` | 7116279618 |
 | Orchestrator | `r15-orchestrator-1` | `01a20a4e-a34d-7a51-ab59-536b6cfa6869` (Codex) | 7114811678 |
 | Packet session | `r15-<packet>-<n>`, for example `r15-P56-01-1` | from the Orchestrator's STATUS | — |
 
@@ -132,11 +136,11 @@ Cap: at most **four** packets in Running or Review at once (the Lead may lower o
 
 | Packet brief | Source plan/tasks | Handoff | Session | Next action / evidence |
 |---|---|---|---|---|
-| [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Running | `r15-P56-01-1` (ChatGPT Pro) | Dispatched 23 November 2026 21:44 UTC; waiting for its first STATUS (branch pushed, draft PR open, mailbox comment). Pro |
-| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Ready | — | Extra High |
-| [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Ready | — | High |
-| [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Ready | — | Extra High |
-| [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Blocked | — | After P56-01 and P56-03. Pro |
+| [R15-P56-01](packets/R15-P56-01.md) The contracts | LE-1a, WS-7a, LE-2a, WS-6a | Done | `r15-P56-01-1` (ChatGPT Pro) | Merged 23 November 2026: Agent #570 (`c3d8ee2d`), VibeComfy #187. Pro |
+| [R15-P56-02](packets/R15-P56-02.md) Phase 0, agent side | WS-0a, WS-0b, WS-0d, WS-0g, LE-15 | Running | `r15-P56-02-1` (Extra High) | WS-0d VibeComfy half merged (#190); Agent #581 open; WS-0a next. Extra High |
+| [R15-P56-03](packets/R15-P56-03.md) Phase 0, catalog and alignment | WS-0c, WS-0e | Running | `r15-P56-03-1` (High) | WS-0c VibeComfy half merged (#188); Agent #573, #574 open; WS-0e fail-closed guard approved. High |
+| [R15-P56-04](packets/R15-P56-04.md) Lookup repair and the doctor check | LE-4, WS-5, LE-6 | Running | `r15-P56-04-1` (Extra High) | LE-4 (#189), WS-5 (#191) and LE-6's VibeComfy half (#192) merged; Agent #577 open. Extra High |
+| [R15-P56-05](packets/R15-P56-05.md) Recipe installed | WS-7b | Ready | — | Dependencies met (WS-7a, WS-0c merged); start first. Pro |
 | [R15-P56-06](packets/R15-P56-06.md) Next-step mappings and `--add` | LE-1b, LE-3, LE-12 | Blocked | — | After P56-01, 02, 03. Extra High |
 | [R15-P56-07](packets/R15-P56-07.md) Consent enforced | LE-2b | Blocked | — | After P56-01 and 05; then the Lead's RS1. Pro |
 | [R15-P56-08](packets/R15-P56-08.md) Lookup suggestions, several packs, models | LE-5, LE-16, LE-9 | Blocked | — | After P56-04 and 06. High |
